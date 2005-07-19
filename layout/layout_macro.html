@@ -34,6 +34,13 @@
     tal:attributes="content email" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
   <!-- /End metatags -->
+  <!-- Begin stylesheets -->
+  <link rel="stylesheet" type="text/css" media="all"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <link rel="stylesheet" type="text/css" media="print"
+    tal:attributes="href here/print.css/absolute_url | nothing" />
+  <link metal:define-slot="style" tal:omit-tag="" />
+  <!-- /End stylesheets -->
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
@@ -43,8 +50,8 @@
      <tal:condition condition="python:surround[link] != '..'">
       <link tal:attributes="
         rel link; 
-        href python:(surround[link].absolute_url() + 
-            (surround[link].get_container() == surround[link] and '/' or ''))"
+        href python:surround[link].absolute_url() +
+            (surround[link].get_container() == surround[link] and '/' or '')"
           tal:condition="python:surround[link] or None"/>
         </tal:condition>
     </tal:repeat>
@@ -82,13 +89,6 @@
   <link rel="copyright" title="Copyright"
     tal:attributes="href here/copyright/absolute_url | nothing" />
   <!-- /End related links -->
-  <!-- Begin stylesheets -->
-  <link rel="stylesheet" type="text/css" media="all"
-    tal:attributes="href here/frontend.css/absolute_url | nothing" />
-  <link rel="stylesheet" type="text/css" media="print"
-    tal:attributes="href here/print.css/absolute_url | nothing" />
-  <link metal:define-slot="style" tal:omit-tag="" />
-  <!-- /End stylesheets -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
     <!-- script slot -->
@@ -97,8 +97,8 @@
 
 <body metal:define-slot="body">
 
-<metal:block define-slot="page_header">
-<!-- Start page_header slot -->
+<metal:block define-slot="header">
+<!-- Start header slot -->
 <div class="header">
   <a class="icon"
     href="http://www.infrae.com/products/silva" 
@@ -121,12 +121,12 @@
   <!-- End top_navigation slot -->
   </metal:block>
 </div>
-<!-- End page_header slot -->
+<!-- End header slot -->
 </metal:block>
 
 <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
 <metal:block define-slot="table_of_contents">
-  <!-- table_of_contents slot -->
+  <!-- Table of contents slot -->
 </metal:block>
 <div class="public">
   <metal:block define-slot="main">
@@ -135,9 +135,9 @@
 </div>
 <br />
 
-<metal:block define-slot="page_footer">
-  <!-- page_footer slot -->
+<metal:block define-slot="footer">
+  <!-- Footer slot -->
 </metal:block>
+
 </body>
 </html>
-

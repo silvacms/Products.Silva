@@ -12,10 +12,11 @@ head
   style
   script
 body
-  page_header
+  header
     top_navigation
   table_of_contents
-  page_footer
+  main: in use
+  footer
 
 Some slots are not active. Activate by removing the 'no' from 'nometal'.
 
@@ -45,12 +46,12 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 </head>
 
 <body nometal:fill-slot="body" tal:omit-tag="">
-<div nometal:fill-slot="page_header" tal:omit-tag="">
-  <!-- begin page_header slot -->
+<div nometal:fill-slot="header" tal:omit-tag="">
+  <!-- begin header slot -->
   <div nometal:fill-slot="top_navigation" tal:omit-tag="">
     <!-- top navigation slot -->
   </div>
-  <!-- end page_header slot -->
+  <!-- end header slot -->
 </div>
 
 <div nometal:fill-slot="table_of_contents" tal:omit-tag="">
@@ -66,7 +67,7 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 </div>
 <!-- end Silva content -->
 
-<div metal:fill-slot="page_footer" tal:omit-tag="">
+<div nometal:fill-slot="footer" tal:omit-tag="">
   <!-- Page footer slot -->
 </div>
 </body>
