@@ -266,21 +266,6 @@ div.middleground a:hover {
   text-decoration: none;
 }
 
-div.middleground a.button {
-  color: #d9f3f1;
-  background: #065e32;
-}
-
-div.middleground a.button:visited {
-  color: #d9f3f1;
-  background: #065e32;
-}
-
-div.middleground a.button:hover {
-  color: #424244;
-  background: #b3d4bf;
-}
-
 div.middleground a.selected {
   /* A selected, highlighted button. There should only be one of these. */
   color: #424244;
@@ -288,16 +273,6 @@ div.middleground a.selected {
   border-color: #3d4b67;
 }
 
-input.warning {
-  font-size: 95%;
-    font-weight: &dtml-buttonWeight;;
-  color : &dtml-destructiveFontColor;; 
-  background : &dtml-destructiveBackground;;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: &dtml-manipulatorPadding;;
-  border: &dtml-destructiveBorder;;
-    cursor: pointer;
-}
 
 /* ___________________________________________________________ footer _____ */
 
@@ -906,12 +881,12 @@ input.executor {
   border: 1px solid #6bb591;
   cursor: pointer;
 }
-
 input.executor[type="submit"]:hover { 
   color : #e5ffec; 
   background : #4393a3; 
   border-color : #8dc1a8;
 }
+
 /* publish screen state coded buttons */
 input.reject {
   font-size: 95%;
@@ -1017,7 +992,7 @@ table.listing a.transport:hover {
   cursor : pointer;
 }
 
-/* _______ execution button _______ */
+/* _______ execution (publish now) _______ */
 
 div.middleground a.executor {
   color: #b3fffb;
@@ -1047,7 +1022,6 @@ table.listing td.parent a {
   color: &dtml-transportFontColor;;
   text-decoration: none;
 }
-
 table.listing td.parent a:hover {
   color : #bfffd3; 
   background : #53538b;
@@ -1057,7 +1031,6 @@ table.listing div.transport-border {
   padding-bottom : 1px;
   border: &dtml-transportBorder;;
 }
-
 table.listing div.transport-border:hover {
   color : #bfffd3; 
   background : #53538b;
@@ -1351,7 +1324,7 @@ input:focus:hover, textarea:focus:hover {
   background : #e3f0e4;
 }
 
-/* cool glow: 53538b */
+/* cool glow */
 input.transport[type="submit"]:hover, button[type="button"]:hover { 
   color : #e5fffe; 
   background : #74748b; 
@@ -1363,7 +1336,7 @@ input.transport[type="submit"]:focus {
   background : #7a83a6;
 }
 
-/* warm glow: 668b69 bfffd3 */
+/* warm glow */
 input.button[type="submit"]:hover, button[type="button"]:hover { 
   color : #e5ffec; 
   background : #548e72; 
@@ -1375,7 +1348,7 @@ input.button[type="submit"]:focus, button[type="button"]:focus {
   background : #538b58;
 }
 
-/* hot glow: 74748b */
+/* hot glow */
 input.warning[type="submit"]:hover { 
   color : #fff5f5; 
   background : #a85353; 
