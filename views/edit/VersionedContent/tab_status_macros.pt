@@ -470,8 +470,8 @@ The message may be viewed by local users.
 <input 
   type="submit" 
   class="button"  
-  title="access key: alt-r" 
-  accesskey="r"
+  title="access key: alt-j" 
+  accesskey="j"
   tal:condition="may_approve_content" 
   value="reject approval request" 
   i18n:attributes="title;value;accesskey reject_approval_request_accesskey" 
