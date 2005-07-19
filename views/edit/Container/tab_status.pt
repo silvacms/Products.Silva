@@ -418,7 +418,7 @@
           accesskey="p"
           type="submit"
           i18n:attributes="value; title"
-          tal:condition="python: approveables or republishables"
+          tal:condition="python: approveables or rejectables or republishables"
         />
       </td>
     </tr>
