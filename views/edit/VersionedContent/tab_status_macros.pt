@@ -148,7 +148,7 @@ This message will remain visible in the status screen for other authors and edit
 />
 </td>
 <td style="vertical-align:middle;" i18n:translate="">
-day / month / year &nbsp;23:59
+day / month / year &nbsp;(23:59)
 </td>
 </tr>
 
@@ -393,9 +393,16 @@ Empty indicates no expiration.
   colspan="2">
 <input class="button"
   type="submit"
-  value="open to public"
+  value="approve for later"
+  title="access key: alt-l"
+  accesskey="l"
+  i18n:attributes="value;title;accesskey open_to_public_accesskey"
+/>
+<input class="executor"
+  type="submit"
+  value="publish now"
   title="access key: alt-o"
-  accesskey="o"
+  accesskey="p"
   i18n:attributes="value;title;accesskey open_to_public_accesskey"
 />
 </td> 
@@ -466,7 +473,7 @@ The message may be viewed by local users.
   title="access key: alt-r" 
   accesskey="r"
   tal:condition="may_approve_content" 
-  value=" Reject approval request " 
+  value="reject approval request" 
   i18n:attributes="title;value;accesskey reject_approval_request_accesskey" 
 />
 <input 
@@ -475,7 +482,7 @@ The message may be viewed by local users.
   title="access key: alt-r" 
   accesskey="r"
   tal:condition="not: may_approve_content" 
-  value=" Withdraw approval request " 
+  value="withdraw approval request" 
   i18n:attributes="title;value;accesskey withdraw_approval_request_accesskey" 
 />
 </td>
@@ -516,8 +523,8 @@ If further editing is required, first revoke the approval.
   type="submit" 
   value="revoke approval" 
   class="button" 
-  title="access key: alt-r" 
-  accesskey="r" 
+  title="access key: alt-v" 
+  accesskey="v" 
   i18n:attributes="value;title;accesskey revoke_approval_accesskey" />
 </td>
 </tr>
