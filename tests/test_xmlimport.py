@@ -13,8 +13,8 @@ from Products.Silva.interfaces import IGhost, IContainer
 from DateTime import DateTime
 
 def testopen(path, rw):
-    finalpath = os.path.join(os.getcwd(), path)
-    return open(finalpath, rw)
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     
@@ -214,7 +214,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        directory = os.getcwd()
+        directory = os.path.dirname(__file__)
         zip_file = ZipFile(
             os.path.join(directory, 'data/test_export.zip'), 'r')
         test_info = xmlimport.ImportInfo()
