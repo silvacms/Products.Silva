@@ -54,6 +54,9 @@
 <h3 i18n:translate="">Global keys that are always available</h3>
 
 <p i18n:translate="">
+  The following access keys are available in every Silva screen.
+</p>
+<p i18n:translate="">
   <span i18n:name="general">
     <span class="subhead" i18n:translate="">General</span></span><br />
   t &nbsp; Jump to top of page<br />
@@ -61,7 +64,7 @@
   / &nbsp; Jump to top of Silva (Silva icon)<br />
   ? &nbsp; Access keys and shortcuts
 </p>
-<p i18n:translate=""> <span name="changing_screens_with_tabs"><span class="subhead"><a name="nav" i18n:translate="">Changing screens with the
+<p i18n:translate=""><span name="changing_screens_with_tabs"><span class="subhead"><a name="nav" i18n:translate="">Changing screens with the
   tabs</a></span></span><br /> The tabs have numbered access keys, starting from
 one going up to five. You can navigate horizontally accross an item&#8217;s
 screens by using alt-1, alt-2, and so forth.  </p>
@@ -89,26 +92,27 @@ screens by using alt-1, alt-2, and so forth.  </p>
 <p i18n:translate="">
   <span i18n:name="listing_header">
     <span class="subhead" i18n:translate="">Listing header</span></span><br />
-  n &nbsp; New<br />
-  s &nbsp; Select list for a new object<br />
-  i &nbsp; Import
+  n &nbsp; new<br />
+  s &nbsp; select list for a new object<br />
+  i &nbsp; import<br />
+  e &nbsp; export
 </p>
 <p i18n:translate="">
   <span i18n:name="listing_body">
     <span class="subhead" i18n:translate="">Listing body</span></span><br />
   p &nbsp; Select list for position number<br />
-  m &nbsp; Move
+  m &nbsp; move
 </p>
 <p i18n:translate="">
   <span i18n:name="listing_footer">
     <span class="subhead" i18n:translate="">Listing footer</span></span><br />
-  a &nbsp; Select all<br />
-  r &nbsp; Rename<br />
-  d &nbsp; Delete<br />
-  x &nbsp; Cut<br />
-  c &nbsp; Copy<br />
-  v &nbsp; Paste<br />
-  g &nbsp; Paste as ghost
+  a &nbsp; select all<br />
+  r &nbsp; rename<br />
+  d &nbsp; delete<br />
+  x &nbsp; cut<br />
+  c &nbsp; copy<br />
+  v &nbsp; paste<br />
+  g &nbsp; paste as ghost
 </p>
 
 <h3 i18n:translate="">Preview screen</h3>
@@ -122,34 +126,61 @@ screens by using alt-1, alt-2, and so forth.  </p>
 <p i18n:translate="">
   <span i18n:name="listing_header">
     <span class="subhead" i18n:translate="">Listing header</span></span><br />
+  i &nbsp; import<br />
   e &nbsp; Export 
 </p>
 <p i18n:translate="">
   <span i18n:name="listing_footer">
     <span class="subhead" i18n:translate="">Listing footer</span></span><br />
-  a &nbsp; Select all<br />
-  n &nbsp; Create new vesions<br />
-  j &nbsp; Reject request for approval<br />
-  v &nbsp; Revoke request for approval<br />
-  c &nbsp; Close public<br />
-  s &nbsp; Change settings<br />
-  o &nbsp; Approve<br />
+  a &nbsp; select all<br />
+  n &nbsp; create new vesions<br />
+  j &nbsp; reject (request for approval)<br />
+  v &nbsp; revoke (request for approval)<br />
+  c &nbsp; close (public version)<br />
+  l &nbsp; approve for later<br />
+  u &nbsp; update settings<br />
+  p &nbsp; publish now<br />
 </p>
 
 <h3 i18n:translate="">Add screen</h3>
 
 <p i18n:translate="">
-  c &nbsp; Cancel<br />
-  a &nbsp; Add<br />
-  e &nbsp; Add and edit/enter
+  c &nbsp; cancel<br />
+  a &nbsp; add<br />
+  e &nbsp; add and edit/enter
 </p>
 
-<h3 i18n:translate="">Silva forms editor</h3>
+<h3 i18n:translate="">Editor screen</h3>
 
 <p i18n:translate="">
-  s &nbsp; Save<br />
-  e &nbsp; Save and exit<br />
-  i &nbsp; Save and insert<br />
+  ( &nbsp; forms editor<br />
+  ) &nbsp; Kupu editor<br />
+  ; &nbsp; public preview<br />
+  p &nbsp; publish now<br />
+</p>
+
+<p i18n:translate="">
+  <span i18n:name="kupu_editor">
+    <span class="subhead" i18n:translate="">Kupu editor</span></span><br />
+  b &nbsp; bold<br />
+  i &nbsp; italic<br />
+  u &nbsp; underline<br />
+  - &nbsp; subscript<br />
+  + &nbsp; superscript<br />
+  # &nbsp; numbered list<br />
+  * &nbsp; bulleted list<br />
+  = &nbsp; definition list<br />
+  z &nbsp; undo<br />
+  y &nbsp; redo<br />
+  h &nbsp; html source<br />
+</p>
+
+<p i18n:translate="">
+  <span i18n:name="forms_editor">
+    <span class="subhead" i18n:translate="">Forms editor</span></span><br />
+  s &nbsp; save<br />
+  e &nbsp; save and exit<br />
+  i &nbsp; save and insert<br />
   tab Use your tab key to edit without using the mouse. Shift-tab goes backwards.
 </p>
 
@@ -197,7 +228,14 @@ If there are two buttons with the same name, the access key for the second is us
   Or, save this link &#8211; <span i18n:name="silva_edit"><a
   href="javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')" i18n:translate="">Silva edit</a></span> 
   &#8211; as a bookmark.
-Thanks to <a href="http://www.ethz.ch/" name="eth_zuerich">ETH Z&uuml;rich</a> for this trick.  <br /><br />
+</p>
+
+<p i18n:translate="">
+  Managers can do the same and create a <a href="javascript:window.location.pathname=(window.location.pathname +'/manage_main').replace(/\/\//,'/')" name="manage">manage...</a> bookmark.
+</p>
+
+<p i18n:translate="">
+  Thanks to <a href="http://www.ethz.ch/" name="eth_zuerich">ETH Z&uuml;rich</a> for this trick.
 </p>
 
 <p i18n:translate="">
