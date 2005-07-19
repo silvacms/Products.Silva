@@ -1,126 +1,70 @@
-/* _________ Stylesheet for Silva 1.1 frontend _______________ */
-/* _________ Silva users can insert their own frontend styles _________ */
-/* _________ Styles modified here will affect the Silva preview  ______ */
-/*
+/* _______ Stylesheet for {__silva_version__} frontend _____________________
+** _______ Silva users can insert their own frontend styles ______________
+** _______ Styles modified here will affect the Silva preview  ___________
+**
 **  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
-** <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" root="get_root_url()" >
+** <dtml-let root="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+**
+**
+** _______ Selector groups _______
+**
+** silva frontend layout
+** alignments
+** typography
+** silva specific typography
+** silva list styles
+** links
+** silva table styles
+** various table layouts
+** CSS2 selectors
 */
 
 body {
-  font: 70% Verdana, Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: #2d374c;
   /* make an absolute path to the image to prevent duplicate caching */
   background-image: url(<dtml-var root>/globals/skyfade.gif); 
   background-repeat: repeat-x;
   background-color: #dde5ee;
-  color: #2d374c;
-  margin: 0;
+  font: 70% Verdana, Helvetica, Arial, sans-serif;
+}
+</dtml-let>
+
+/* ______________________________________________ silva frontend layout _____ */
+
+div.header {
+  margin: 2em 2.1em 0 0;  
 }
 
-/* _________________________________________________________ typography _____ */
-
-h1, h2, h3, h4, h5, h6 {
-  margin : 1.5em 0 0.5em 0;
-  color : #455885;
+div.header a.icon {
+  display: block;
+  float: left;
+  width: 7em;
+  text-align: center;
 }
 
-
-h2 {
-  font-size : 160%;
-  margin-top : 0.9em;
-  margin-bottom : 0.7em;
+/* defines the width of the text in the preview/public layout */
+/* duplicated from silva.css */
+.public {
+  margin-left: 7em;
+  padding-top: 2.3em;
+  max-width: 44em;
+  /* for IE5 */
+  width: 512px;
 }
 
-h3 {
-  font-size : 145%;
-  margin-bottom : 0.6em;
-}
-
-h4 {
-  font-size : 120%;
-}
-
-h5 {
-  font-size : 105%;
-}
-
-h6 {
-  font-size : 90%;
-  color : #676767;
-}
-
-h6.minor {
-  font-size : 90%;
-  font-weight : normal;
-  color : #454545;
-}
-
-.subhead {
-  font-weight : bold;  
-  font-family : verdana, arial, helvetica, sans-serif;
-  color: #333767;
-  line-height : 1.6em;
-} 
-
-p {
-  margin : 0.5em 0em;
-  text-align: left;
-}
-
-pre {
-  font-size: 120%;
-  color: #444466;
-  background: transparent;
-  padding: 0;
-  border: none;
-}
-
-/* Dashed underlines for acronyms in IE - actually abbr is not yet supported by IE */
-acronym, abbr {
-    border-bottom-style:dashed;
-    border-bottom-width:1px;
-}
-
-/* ____________________________________________ silva specific styles _____ */
-
-p.lead {
-  font-weight : bold;
-}
-
-p.annotation {
-  font-style : italic;
-}
-
-div.citation {
-  font-size : 110%;
-  color : #426061;
-  background : #F4F3DB;
-  margin : 1em 3em;
-  padding : 0.4em 2em 1.2em 2em;
-  border : 1px solid #426061;
-}
-
-div.citation p {
-  margin : 0.5em 0em;
-}
-
-div.citation p.author {
-  font-size : 90%;
-  font-weight : bold;
-  margin-bottom : 0;
-}
-
-div.citation p.source {
-  font-size : 90%;
-  margin-top: 0;
-  margin-bottom : 0;
+/* this selector works only for standards compatible browsers like mozilla */
+/* IE ignores this definition below */
+body>div.public {
+  width: 44em;
 }
 
 
-/* ______________________________________________________ align/float _____ */
+/* _______________________________________________________ alignments _____ */
 
 .image-left {
   text-align: left;
@@ -147,68 +91,196 @@ div.citation p.source {
 }
 
 
-/* __________________________________________________ silva list styles _____ */
+/* _________________________________________________________ typography _____ */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em 0;
+  color: #455885;
+}
+
+h2 {
+  margin-top: 0.8em;
+  margin-bottom: 0.7em;
+  font-size: 160%;
+}
+
+h3 {
+  margin-bottom: 0.6em;
+  font-size: 145%;
+}
+
+h4 {
+  font-size: 120%;
+}
+
+h5 {
+  font-size: 105%;
+}
+
+h6 {
+  color: #676767;
+  font-size: 100%;
+}
+
+h6.minor {
+  color: #454545;
+  font-size: 90%;
+}
+
+.subhead {
+  color: #333767;
+  font-weight: bold;  
+  font-family: verdana, arial, helvetica, sans-serif;
+  line-height: 1.6em;
+} 
+
+p {
+  margin: 0.5em 0em;
+  text-align: left;
+}
 
 ul {
-  margin : 0.5em 0em;
+  margin: 0.5em 0em;
   /* override default indent */
   padding-left: 1.4em; 
 }
 
+ol {
+  margin: 0.5em 0em;
+  /* override default indent */
+  padding-left: 1.9em; 
+}
+
+dt {
+  background: transparent;
+  font-weight: bold;
+}
+
+dd {
+  background: transparent;
+  margin-left: 1.5em;
+}
+
+pre {
+  padding: 0;
+  border: none;
+  color: #444466;
+  background-color: transparent;
+  font-size: 120%;
+}
+
+
+/* ________________________________________ silva specific typography _____ */
+
+p.lead {
+  font-weight: bold;
+}
+
+p.annotation {
+  font-style: italic;
+}
+
+div.citation {
+  margin: 1em 3em;
+  padding: 0.4em 2em 1.2em 2em;
+  border: 1px solid #426061;
+  color: #426061;
+  background-color: #f4f3db;
+  font-size: 110%;
+}
+
+div.citation p {
+  margin: 0.5em 0em;
+}
+
+div.citation p.author {
+  margin-bottom: 0;
+  font-size: 90%;
+  font-weight: bold;
+}
+
+div.citation p.source {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 90%;
+}
+
+
+/* __________________________________________________ silva list styles _____ */
+
 ul.disc {
-  list-style-type : disc;
+  list-style-type: disc;
 }
   
 ul.square {
-  list-style-type : square ! important;
+  list-style-type: square ! important;
 } 
 
 ul.circle {
-  list-style-type : circle;
+  list-style-type: circle;
 } 
 
 ul.nobullet {    
   list-style-type: none;   
 }
 
-ol {
-  margin : 0.5em 0em;
-  /* override default indent */
-  padding-left: 1.9em; 
-}
-
 ol.decimal {
-  list-style-type : decimal;
+  list-style-type: decimal;
 } 
 
 ol.upper-roman {
-  list-style-type : upper-roman;
+  list-style-type: upper-roman;
 }
 
 ol.lower-roman {
-  list-style-type : lower-roman;
+  list-style-type: lower-roman;
 }
 
 ol.upper-alpha {
-  list-style-type : upper-alpha;
+  list-style-type: upper-alpha;
 }
 
 ol.lower-alpha {
-  list-style-type : lower-alpha;
-}
-
-dt {
-  font-weight: bold;
-  background : transparent;
-}
-
-dd {
-  background : transparent;
-  margin-left : 1.5em;
+  list-style-type: lower-alpha;
 }
 
 
+/* ____________________________________________________________ links _____ */
 
+span.breadcrumb a {
+  text-decoration: none;
+}  
+span.breadcrumb a:hover {
+  text-decoration: underline;
+}  
+
+/* highlighting index links */
+/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
+a.index-element {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+div.public a:link {
+  color: #0000aa;
+  text-decoration: underline;
+}
+div.public a:visited {
+  color: #4a00b2;
+  text-decoration: underline;
+}
+div.public a:active {
+  color: #3399cc;
+}
+div.public a:hover {
+  color: #0000ff;
+  text-decoration: none;
+}
+
+a img {
+  border: 0;
+}
+  
 /* _________________________________________________ silva table styles _____ */
 
 table.silvatable {
@@ -350,152 +422,18 @@ div.listingBar .previous {
 }
 
 
-/* ______________________________________________ silva frontend layout _____ */
+/*__________________________________________________ CSS2 selectors _____ */ 
 
-div.header {
-  margin : 2em 2.1em 0 0;  
+acronym[title], abbr[title] {
+  cursor:help;
 }
 
-div.header a.icon {
-  float : left;
-  display : block;
-  width : 7em;
-  text-align : center;
+h2 + h3 {
+  margin-top: 0.9em;
 }
 
-/* defines the width of the text in the preview/public layout */
-/* duplicated from silva.css */
-.public {
-  margin-left : 7em;
-  padding-top : 2.3em;
-  max-width : 44em;
-  /* for IE5 */
-  width : 512px;
+h3 + h4 {
+  margin-top: 1em;
 }
-
-.preview_compare {
-  margin-left : 7em;
-  padding-top : 2.3em;
-  margin-right: 7em;
-}
-
-.preview_compare_left, .preview_compare_right {
-  width: 49%;
-}
-
-.preview_compare_left {
-  border-width: 0px;
-  border-color: black;
-  border-style: solid;
-  border-right-width: 1px;
-  padding-right: 2.3em;
-}
-
-.preview_compare_right {
-  padding-left: 2.3em;
-}
-
-/* this selector works only for standards compatible browsers like mozilla */
-/* IE ignores this definition below */
-body>div.public {
-  width : 44em;
-}
-
-
-/* ____________________________________________________________ links _____ */
-
-span.breadcrumb a {
-  text-decoration : none;
-}  
-span.breadcrumb a:hover {
-  text-decoration : underline;
-}  
-
-/* highlighting index links */
-/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
-a.index-element {
-  background-color : transparent;
-  text-decoration : none;
-}
-
-div.public a:link {
-  color : #0000aa;
-  text-decoration : underline;
-}
-div.public a:visited {
-  color : #4a00b2;
-  text-decoration : underline;
-}
-div.public a:active {
-  color : #3399cc;
-}
-div.public a:hover {
-  color : #0000ff;
-  text-decoration : none;
-}
-
-a img {
-  border: 0;
-}
-
-/* __________________________________________________________ buttons _____ */
-
-input.button {
-  font-size: 95%;
-    font-weight: normal;
-    color: #d9f3da;
-  background : #064C29;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-  border: 1px solid #6bb591;
-    cursor: pointer;
-}
-
-button.button {
-  font-size: 95%;
-    font-weight: normal;
-    color: #d9f3da;
-  background : #064C29;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-  border: 1px solid #6bb591;
-    cursor: pointer;
-}
-
-input.transport {
-  font-size: 95%;
-    font-weight: normal;
-  color: #d9f3f1;
-  background: #283365;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-  border: 1px solid #8faecf;
-    cursor: pointer;
-}
-
-input.warning {
-  font-size: 95%;
-    font-weight: normal;
-  color : #fdeaea; 
-  background : #752e2f;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-  border: 1px solid #b48f8f;
-    cursor: pointer;
-}
-
-input.cancel {
-  font-size: 95%;
-    font-weight: normal;
-  color : #ccd7d6;
-  background : #666668;
-  background : #444446;
-  border : 1px solid #b9c2c1;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-    cursor: pointer;
-}
-  
-</dtml-let>
 
 /* end cascade */
