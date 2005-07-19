@@ -15,6 +15,10 @@ Silva changes
         extension, like SilvaLayout, was installed.
 
       - Cosmetic improvements to the public Indexer rendering.
+     
+      - Changed the xmlimporter to import metadata sets that are actually
+        present in the import instead of iterating over all installed metadata
+        sets.
 
   1.3b3
 

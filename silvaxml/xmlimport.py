@@ -1,5 +1,7 @@
 import sys, string
 from StringIO import StringIO
+
+import zLOG
 from sprout.saxext import xmlimport, collapser
 from Products.Silva.Ghost import Ghost, GhostVersion
 from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
@@ -67,16 +69,19 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         metadata = {}
         binding = metadata_service.getMetadata(content)
         if binding is not None:
-            for set_name in binding.collection.keys():
-                set = binding.collection[set_name]
-                elements = self._metadata[set.id]
+            for set_id, elements in self._metadata.items():
+                set = binding.collection.get(set_id, None)
+                if set is None:
+                    zLOG.LOG(
+                    'Silva', zLOG.WARNING, 
+                    "Unknown metadata set %s present in import file.")
+                    continue
                 element_names = elements.keys()
                 for element_name in element_names:
-                    field = binding.getElement(set.id, element_name).field
+                    field = set.getElement(element_name).field
                     elements[element_name] = field.validator.deserializeValue(field, elements[element_name])
-                    
-                # Set data
                 
+                # Set data
                 errors = binding._setData(
                     namespace_key=set.metadata_uri,
                     data=elements,

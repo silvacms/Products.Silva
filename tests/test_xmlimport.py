@@ -13,13 +13,12 @@ from Products.Silva.interfaces import IGhost, IContainer
 from DateTime import DateTime
 
 def testopen(path, rw):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
+    finalpath = os.path.join(os.getcwd(), path)
+    return open(finalpath, rw)
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     
     def test_publication_import(self):
-        directory = os.path.dirname(__file__)
         source_file = testopen('data/test_publication.xml', 'r')
         xmlimport.importFromFile(
             source_file, self.root)
@@ -186,6 +185,27 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('Index', indexer.get_title())
         self.assertEquals('Silva Indexer', indexer.meta_type)
 
+    def test_metadata_import(self):
+	# this is a reproduction of the xmlimport bug
+	# which causes import to fail if an installed metadata set is not
+	# present in the import
+	importfolder = self.add_folder(
+            self.root,
+            'importfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        source_file = testopen('data/test_metadata_import.xml', 'r')
+        xmlimport.importFromFile(
+            source_file, importfolder)
+        source_file.close()
+        linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
+	metadata_service = linkversion.service_metadata
+        binding = metadata_service.getMetadata(linkversion)
+        self.assertEquals(
+           'the short title of the testlink',
+            binding._getData(
+                'silva-content').data['shorttitle'])
+
     def test_zip_import(self):
         from StringIO import StringIO
         from zipfile import ZipFile
@@ -194,7 +214,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        directory = os.path.dirname(__file__)
+        directory = os.getcwd()
         zip_file = ZipFile(
             os.path.join(directory, 'data/test_export.zip'), 'r')
         test_info = xmlimport.ImportInfo()
