@@ -134,7 +134,7 @@ class NoneMember(Persistent, Acquisition.Implicit):
     def fullname(self):
         """fullname
         """
-        return 'unknown user'
+        return 'unknown'
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'email')
