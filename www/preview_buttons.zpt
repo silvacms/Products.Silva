@@ -45,7 +45,7 @@ span.error {
 <div class="message" 
       tal:condition="options/message" 
       style="position:absolute; left:0px; top: 5px; 
-              width: 100%; text-align: center">
+              width: 100%; text-align: right">
   <span tal:attributes="class options/message_type" 
         tal:content="options/message" />
 </div>
