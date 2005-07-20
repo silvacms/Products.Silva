@@ -205,8 +205,8 @@
                       <label style="text-transform:none;"
                         tal:attributes="
                           for identifier;
-                          title string:choose this ${item/meta_type};"
-                        ><img tal:replace="structure python:view.render_icon(item)" />
+                          title string:choose this ${item/meta_type};">
+                          <img tal:replace="structure python:view.render_icon(item)" />
                         <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">id</tal:block>
                       </label>
                     </td>
