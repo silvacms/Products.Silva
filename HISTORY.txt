@@ -19,6 +19,8 @@ Silva changes
       - Changed the xmlimporter to import metadata sets that are actually
         present in the import instead of iterating over all installed metadata
         sets.
+      
+      - Fixed a unicode bug in the xmlimporter.
 
   1.3b3
 

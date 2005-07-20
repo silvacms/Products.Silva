@@ -128,6 +128,8 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def setMaintitle(self):
         main_title = self.getMetadata('silva-content', 'maintitle')
         if main_title is not None:
+            # metadata delivers utf-8, set_title expects unicode
+            main_title = unicode(main_title, 'utf-8')
             self.result().set_title(main_title)        
 
     def setMetadataKey(self, key):

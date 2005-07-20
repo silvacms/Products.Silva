@@ -3,7 +3,7 @@
   <folder id="testfolder3">
     <metadata>
       <set id="silva-content">
-        <silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle>
+        <silva-content:maintitle>This is yet &amp;another; &#165; testfolder</silva-content:maintitle>
         <silva-content:shorttitle></silva-content:shorttitle>
       </set>
       <set id="silva-extra">
