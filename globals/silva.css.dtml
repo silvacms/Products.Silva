@@ -5,23 +5,48 @@
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 /*
-**  _____________________ Silva stylesheet _____________________
+** _______ Silva stylesheet ___________________________________________________
 **
-**  The view crew at Infrae - all seasons of 2003-2005
-**    Thanks to Alexander Limi (limi@plone.org) - October 2002
-**      In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
+** The view crew at Infrae - all seasons of 2003-2005
+**   Thanks to Alexander Limi (limi@plone.org) - October 2002
+**     In turn, thanks to Geir Bækholt, Stian Søiland for input and guidance.
+**
+** _______ Selector groups _______
+**
+** sectors
+**   path bar
+**   matrix nav
+**   flow bar
+**   middleground
+**   footer
+**   personal bar
+**   columns table
+**   listing table
+**   sidebar navigation
+**   focus shapes
+** form definitions
+** info + clipboard
+** feedback
+** typography
+** silva specific styles
+**   align/float
+**   lists
+**   forms
+** links
+** local styles
 */
 
 <dtml-with stylesheet_properties>
 
 body {
+margin: 0;
+padding: 0;
+color: &dtml-mainFontColor;;
 background: &dtml-mainBackground;;
 background-image: url(<dtml-var root>/globals/skyrise.gif);
 background-repeat: repeat-x;
 font: &dtml-mainFont;;
-color: &dtml-mainFontColor;;
-margin: 0;
-padding: 0;
+/* IE only */
 scrollbar-base-color: &dtml-shade70;;
 scrollbar-highlight-color: &dtml-shade70;;
 scrollbar-track-color: &dtml-shade56;;
@@ -31,26 +56,14 @@ scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
 scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
 }
 
+/* _________________________________________________________ sectors _______ */
+
 div.workspace {
 background : &dtml-workspace;;
 margin: 0;
 }
 
-img {
-border: none;
-vertical-align: middle;
-}
-
-img.icon {
-margin: 0em;
-}
-
-a.icon:hover {
-text-decoration: none;
-}
-
-
-/* _________________________________________________________ path bar _____ */
+/* ____________________________________ path bar _______ */
 
 div.pathBar {
 font-size: 90%;
@@ -97,8 +110,7 @@ vertical-align: top;
 margin: 0 0 0 -22px;
 }
 
-
-/* _______________________________________________________ matrix nav _____ */
+/* __________________________________ matrix nav _______ */
 
 div.tabs {
 display : block;
@@ -209,8 +221,7 @@ width : 2em;
 height : 1em;
 }
 
-
-/* _________________________________________ flow bar (or sidewalk :) _____ */
+/* ____________________________________ flow bar _______ */
 
 div.flowBar {
 background: &dtml-mainTabBackgroundSelected;;
@@ -221,8 +232,7 @@ border-bottom: 1px solid #84a7a5;
 clear:both;
 }
 
-
-/* _____________________________________________________ middleground _____ */
+/* ________________________________ middleground _______ */
 
 div.middleground {
 display : block;
@@ -268,8 +278,7 @@ background: #b6d6f3;
 border-color: #3d4b67;
 }
 
-
-/* ___________________________________________________________ footer _____ */
+/* ______________________________________ footer _______ */
 
 div.footer {
 clear: both;
@@ -293,7 +302,7 @@ div.footer a:visited {
 color: &dtml-mainLinkColor;;
 }
 
-/* _____________________________________________________ personal bar _____ */
+/* ________________________________ personal bar _______ */
 
 div.personalBar {
 text-align: center;
@@ -317,8 +326,7 @@ div.personalBar img {
 vertical-align: middle;
 }
 
-
-/* ____________________________________________________ columns table _____ */
+/* _______________________________ columns table _______ */
 
 table {
 font-size: 100%;/* for IE 5.x */
@@ -369,8 +377,7 @@ padding: 0 6px 0 6px;
 vertical-align: top;
 }
 
-
-/* ____________________________________________________ listing table _____ */
+/* _______________________________ listing table _______ */
 
 table.listing {
 color: #444444;
@@ -385,7 +392,7 @@ table.listing img {
 vertical-align: middle;
 }
 
-/* _____________________ rows ______________________ */
+/* ______________ rows ______________ */
 
 table.listing tr.controls {
 color: #c9dfe2;
@@ -421,7 +428,7 @@ height : 0.5em;
 background: &dtml-listingDividerBackground;;
 }
 
-/* _____________________ cells _____________________ */
+/* ______________ cells ______________ */
 
 table.listing th {
 color: &dtml-listingHeaderFontColor;;
@@ -547,8 +554,7 @@ margin: 0;
 color: #c9dfe2;
 }
 
-
-/* ______________ sidebar navigation ______________ */
+/* __________________________ sidebar navigation _______ */
 
 table.listing th.top {
 color: #e3eef0;
@@ -690,8 +696,7 @@ div.normal {
 display: block;
 }
 
-
-/* _____________________________________________________ focus shapes _____ */
+/* ________________________________ focus shapes _______ */
 
 table.sublisting {
 margin-top : 1em;
@@ -718,7 +723,7 @@ padding-top: 7px;
 }
 
 
-/* _______________________________________________________ form stuff _____ */
+/* ________________________________________________ form definitions _______ */
 
 form {
 border: none;
@@ -1032,7 +1037,7 @@ background : #53538b;
 }
 
 
-/* _________________________________________________ info + clipboard _____ */
+/* ________________________________________________ info + clipboard _______ */
 
 div.info {
 color: &dtml-inputFontColor;;
@@ -1095,7 +1100,7 @@ background: &dtml-listingHeaderBackground;;
 
 }
 
-/* _________________________________________________________ feedback _____ */
+/* ________________________________________________________ feedback _______ */
 
 /* feedback under the matrix nav */
 div.fixed-feedback {
@@ -1184,7 +1189,7 @@ border-collapse: collapse;
 }
 
 
-/* _______________________________________________________ typography _____ */
+/* ______________________________________________________ typography _______ */
 
 h1 {
 font-size: &dtml-headingSize1;;
@@ -1231,9 +1236,22 @@ background-color: transparent;
 </dtml-let>
 
 
-/* ____________________________________________ Silva specific styles _____ */
+/* ___________________________________________ Silva specific styles _______ */
 
-/* ______________________________________________________ align/float _____ */
+img {
+border: none;
+vertical-align: middle;
+}
+
+img.icon {
+margin: 0em;
+}
+
+a.icon:hover {
+text-decoration: none;
+}
+
+/* _________________________________ align/float _______ */
 
 .image-left {
 text-align: left;
@@ -1259,8 +1277,7 @@ margin-left: 1em;
 clear: none;
 }
 
-
-/* ____________________________________________________________ lists _____ */
+/* _______________________________________ lists _______ */
 
 dt {
 background : transparent;
@@ -1291,9 +1308,7 @@ padding-left : 1em;
 line-height : 130%;
 }
 
-
-/* ____________________________________________________________ forms _____ */
-
+/* _______________________________________ forms _______ */
 
 .fixIE6widget {
 width : 90%;
@@ -1399,7 +1414,7 @@ background : #b9e3e8 none;
 }
 
 
-/* ____________________________________________________________ links _____ */
+/* ___________________________________________________________ links _______ */
 
 a:link {
 color : #0000aa;
@@ -1548,7 +1563,7 @@ text-decoration : underline;
 }
 
 
-/* _____________________________________________________ local styles _____ */
+/* ____________________________________________________ local styles _______ */
 
 /* was ebebeb e9e5ec */
 .hilite {
