@@ -209,18 +209,6 @@
                         ><img tal:replace="structure python:view.render_icon(item)" />
                         <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">id</tal:block>
                       </label>
-                      <img alt="content approved or published"
-                        border="0"
-                        height="10"
-                        title="content is approved or published"
-                        width="10"
-                        tal:define="
-                          is_published item/is_version_published | nothing;
-                          is_approved item/is_version_approved | nothing"
-                        tal:condition="python:is_published or is_approved"
-                        tal:attributes="src string:${root_url}/globals/checkmark.gif"
-                        i18n:attributes="alt;title"
-                      />
                     </td>
                     <tal:block replace="nothing">
                       _______ title cell _______
@@ -243,6 +231,19 @@
                       _______ author / publish downlink cell _______
                     </tal:block>
                     <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+                        <img style="float:right"
+                          alt="content approved or published"
+                          border="0"
+                          height="10"
+                          title="content is approved or published"
+                          width="10"
+                          tal:define="
+                            is_published item/is_version_published | nothing;
+                            is_approved item/is_version_approved | nothing"
+                          tal:condition="python:is_published or is_approved"
+                          tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                          i18n:attributes="alt;title"
+                        />
                       <tal:block condition="python:not item.implements_container() and item.implements_versioned_content()">
                         <span tal:content="structure last_author" />
                       </tal:block>
