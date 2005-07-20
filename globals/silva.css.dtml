@@ -39,494 +39,508 @@
 <dtml-with stylesheet_properties>
 
 body {
-margin: 0;
-padding: 0;
-color: &dtml-mainFontColor;;
-background: &dtml-mainBackground;;
-background-image: url(<dtml-var root>/globals/skyrise.gif);
-background-repeat: repeat-x;
-font: &dtml-mainFont;;
-/* IE only */
-scrollbar-base-color: &dtml-shade70;;
-scrollbar-highlight-color: &dtml-shade70;;
-scrollbar-track-color: &dtml-shade56;;
-scrollbar-darkshadow-color: &dtml-shade56;;
-scrollbar-3dlight-color: &dtml-mainTabBorderColorSelected;;
-scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
-scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
+  margin: 0;
+  padding: 0;
+  color: &dtml-mainFontColor;;
+  background: &dtml-mainBackground;;
+  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-repeat: repeat-x;
+  font: &dtml-mainFont;;
+  /* IE only */
+  scrollbar-base-color: &dtml-shade70;;
+  scrollbar-highlight-color: &dtml-shade70;;
+  scrollbar-track-color: &dtml-shade56;;
+  scrollbar-darkshadow-color: &dtml-shade56;;
+  scrollbar-3dlight-color: &dtml-mainTabBorderColorSelected;;
+  scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
+  scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
 }
 
 /* _________________________________________________________ sectors _______ */
 
 div.workspace {
-background : &dtml-workspace;;
-margin: 0;
+  background: &dtml-workspace;;
+  margin: 0;
 }
 
 /* ____________________________________ path bar _______ */
 
 div.pathBar {
-font-size: 90%;
-color: &dtml-shade36;;
-background-image: url(<dtml-var root>/globals/skylight.gif);
-background-repeat: repeat-x;
-background-color: &dtml-pathBarBackground;;
-padding: 0em 4px 0.2em 22px;
-border: none;
-line-height: 1.4em;
+  font-size: 90%;
+  color: &dtml-shade36;;
+  background-image: url(<dtml-var root>/globals/skylight.gif);
+  background-repeat: repeat-x;
+  background-color: &dtml-pathBarBackground;;
+  padding: 0em 4px 0.2em 22px;
+  border: none;
+  line-height: 1.4em;
 }
 
 div.pathBar a {
-color: &dtml-shade26;;
-font-weight: &dtml-mainTabFontWeight;;
-margin: 0;
+  color: &dtml-shade26;;
+  font-weight: &dtml-mainTabFontWeight;;
+  margin: 0;
 }
 div.pathBar a:visited {
-color: &dtml-shade26;;
+  color: &dtml-shade26;;
 }
 div.pathBar a:hover {
-color: &dtml-shade42;;
-text-decoration: underline;
+  color: &dtml-shade42;;
+  text-decoration: underline;
 }
 
 div.pathBar a.manage {
-color: &dtml-shade50;;
-margin-left: 0.5em ! important;
+  color: &dtml-shade50;;
+  margin-left: 0.5em ! important;
 }
 
 div.pathBar a.idea {
-color: &dtml-shade78;;
+  color: &dtml-shade78;;
 }
 div.pathBar a.idea:visited {
-color: &dtml-shade78;;
+  color: &dtml-shade78;;
 }
 div.pathBar a.idea:hover {
-color: &dtml-shade96;;
-text-decoration: none;
+  color: &dtml-shade96;;
+  text-decoration: none;
 }
 
 div.pathBar img {
-vertical-align: top;
-margin: 0 0 0 -22px;
+  vertical-align: top;
+  margin: 0 0 0 -22px;
 }
 
 /* __________________________________ matrix nav _______ */
 
 div.tabs {
-display : block;
-height : 1.2em;
-background-image: url(<dtml-var root>/globals/skyrise.gif);
-background-repeat: repeat-x;
-background-color: &dtml-mainTabBackdrop;;
-margin : 0;
-padding: 0 16px 0 16px;
-border-width: 1px;
-border-style: none none solid none;
-border-bottom-color: &dtml-shade80;;
+  display: block;
+  height: 1.2em;
+  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-repeat: repeat-x;
+  background-color: &dtml-mainTabBackdrop;;
+  margin: 0;
+  padding: 0 16px 0 16px;
+  border-width: 1px;
+  border-style: none none solid none;
+  border-bottom-color: &dtml-shade80;;
 }
 
 div.tabs a {
-/* The normal, unselected tabs. They are all links */
-float : left;
-display : block;
-width : 7.5em;
-height : 1.1em;
-color: &dtml-mainTabFontColor;;
-background: &dtml-mainTabBackground;;
-border-color: &dtml-mainTabBorderColor;;
-border-width: 1px;
-border-style: solid solid solid solid;
-border-bottom-color: &dtml-shade50;;
-margin: 0;
-padding: 0;
-text-align : center;
-font-weight: &dtml-mainTabFontWeight;;
+  /* The normal, unselected tabs. They are all links */
+  float: left;
+  display: block;
+  width: 7.5em;
+  height: 1.1em;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-mainTabBackground;;
+  border-color: &dtml-mainTabBorderColor;;
+  border-width: 1px;
+  border-style: solid solid solid solid;
+  border-bottom-color: &dtml-shade50;;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: &dtml-mainTabFontWeight;;
 }
 
 div.tabs a:visited {
-color: &dtml-mainTabFontColor;;
-background: &dtml-mainTabBackground;;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-mainTabBackground;;
 }
 
 div.tabs a:hover {
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
-text-decoration: none;
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  text-decoration: none;
 }
 
 div.tabs a.selected {
-/* The selected tab. There's only one of these */
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  /* The selected tab. There's only one of these */
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.selected:visited {
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
-/* The parent tab of a subscreen. There might be one of these :) */
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundRecede;;
-border-bottom-color: &dtml-mainTabBackground;;
+  /* The parent tab of a subscreen. There might be one of these :) */
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundRecede;;
+  border-bottom-color: &dtml-mainTabBackground;;
 }
 
 div.tabs a.recede:hover {
-background: &dtml-mainTabBackgroundSelected;;
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.left {
-/* The left side of the tab. */
-width : 1.5em;
-border-style: solid none solid solid;
+  /* The left side of the tab. */
+  width: 1.5em;
+  border-style: solid none solid solid;
 }
 
 div.tabs a.left:hover {
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.right {
-/* The right side of the tab. */
-width : 1.5em;
-border-style: solid solid solid none;
+  /* The right side of the tab. */
+  width: 1.5em;
+  border-style: solid solid solid none;
 }
 
 div.tabs a.right:hover {
-border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 /* help (available as accesskey link) */
 div.tabs a.normal {
-float: right;
-width: 0em;
-display: none;
+  float: right;
+  width: 0em;
+  display: none;
 }
 
 div.tabs img {
-margin: 0.3em 0 0 0;
-border: none;
-vertical-align : bottom;
+  margin: 0.3em 0 0 0;
+  border: none;
+  vertical-align: bottom;
 }
 
 div.tabs div.air {
-display : block;
-float : left;
-background : transparent;
-width : 2em;
-height : 1em;
+  display: block;
+  float: left;
+  background: transparent;
+  width: 2em;
+  height: 1em;
 }
 
 /* ____________________________________ flow bar _______ */
 
 div.flowBar {
-background: &dtml-mainTabBackgroundSelected;;
-margin: 0;
-padding: 0;
-border-top: 3px solid &dtml-mainTabBackgroundSelected;;
-border-bottom: 1px solid #84a7a5;
-clear:both;
+  background: &dtml-mainTabBackgroundSelected;;
+  margin: 0;
+  padding: 0;
+  border-top: 3px solid &dtml-mainTabBackgroundSelected;;
+  border-bottom: 1px solid #84a7a5;
+  clear:both;
 }
 
 /* ________________________________ middleground _______ */
 
 div.middleground {
-display : block;
-height : 1.7em;
-background-color: #677a8c;
-margin : 0;
-padding: 0 17px 0 17px;
-border-bottom: 1px solid #456555;
+  display: block;
+  height: 1.7em;
+  background-color: #677a8c;
+  margin: 0;
+  padding: 0 17px 0 17px;
+  border-bottom: 1px solid #456555;
 }
 
 div.middleground a {
-/* The normal, unselected buttons. They are all links */
-float : left;
-display : block;
-width : 12em;
-height : 1.3em;
-color: &dtml-transportFontColor;;
-background: #4d5680;
-margin: 1px 1em 1px 1.5em;
-padding: 0;
-border-color: #8faecf;
-border-width: 1px;
-border-style: solid solid solid solid;
-text-align : center;
-font-weight: &dtml-mainTabFontWeight;;
+  /* The normal, unselected buttons. They are all links */
+  float: left;
+  display: block;
+  width: 12em;
+  height: 1.3em;
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
+  margin: 1px 1em 1px 1.5em;
+  padding: 0;
+  border-color: #8faecf;
+  border-width: 1px;
+  border-style: solid solid solid solid;
+  text-align: center;
+  font-weight: &dtml-mainTabFontWeight;;
 }
-
 div.middleground a:visited {
-color: &dtml-transportFontColor;;
-background: #4d5680;
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
 }
-
 div.middleground a:hover {
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-text-decoration: none;
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  text-decoration: none;
 }
 
 div.middleground a.selected {
-/* A selected, highlighted button. There should only be one of these. */
-color: #424244;
-background: #b6d6f3;
-border-color: #3d4b67;
+  /* A selected, highlighted button. There should only be one of these. */
+  color: #424244;
+  background: #b6d6f3;
+  border-color: #3d4b67;
+}
+
+/* _______ execution (publish now) _______ */
+
+div.middleground a.executor {
+  color: #b3fffb;
+  background: #417278;
+}
+div.middleground a.executor:hover {
+  border-color: #8dc1a8;
+  color: #e5ffec;
+  background: #4393a3;
+}
+div.middleground a.executor:active {
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
 }
 
 /* ______________________________________ footer _______ */
 
 div.footer {
-clear: both;
-font-size: 94%;
-color: &dtml-shade30;;
-background: &dtml-listingTopBackground;;
-margin: 0.5em 0em 0em 0em;
-padding: 0em 16px 0.1em 16px;
-border-top: &dtml-shade60;1px solid;
-border-bottom: none;
+  clear: both;
+  font-size: 94%;
+  color: &dtml-shade30;;
+  background: &dtml-listingTopBackground;;
+  margin: 0.5em 0em 0em 0em;
+  padding: 0em 16px 0.1em 16px;
+  border-top: &dtml-shade60;1px solid;
+  border-bottom: none;
 }
 
 div.footer a {
-color: &dtml-mainLinkColor;;
-font-weight: &dtml-mainTabFontWeight;;
-padding: 0;
-margin: 0;
-text-decoration: none;
+  color: &dtml-mainLinkColor;;
+  font-weight: &dtml-mainTabFontWeight;;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
 }
 div.footer a:visited {
-color: &dtml-mainLinkColor;;
+  color: &dtml-mainLinkColor;;
 }
 
 /* ________________________________ personal bar _______ */
 
 div.personalBar {
-text-align: center;
-background: #505e65;
-margin: 0em 0em 0em 0em;
-padding: 0.1em 16px 0.2em 16px;
-border-bottom: &dtml-shade30;1px solid;
+  text-align: center;
+  background: #505e65;
+  margin: 0em 0em 0em 0em;
+  padding: 0.1em 16px 0.2em 16px;
+  border-bottom: &dtml-shade30;1px solid;
 }
 
 div.personalBar a {
-color: #b7cee6;
-padding: 0;
-margin: 0;
-text-decoration: none;
+  color: #b7cee6;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
 }
 div.personalBar a:visited {
-color: #b7cee6;
+  color: #b7cee6;
 }
 
 div.personalBar img {
-vertical-align: middle;
+  vertical-align: middle;
 }
 
 /* _______________________________ columns table _______ */
 
 table {
-font-size: 100%;/* for IE 5.x */
+  font-size: 100%;/* for IE 5.x */
 }
 
 table.columns {
-width: 100%;
-padding: 0;
+  width: 100%;
+  padding: 0;
 }
 
 table.columns tr {
-vertical-align: top;
+  vertical-align: top;
 }
 
 /* 3 column table (default) */
 table.columns td.left {
-width: 20%;
-padding: 0 7px 0 6px;
-vertical-align: top;
+  width: 20%;
+  padding: 0 7px 0 6px;
+  vertical-align: top;
 }
 table.columns td.main {
-width: 60%;
-padding: 0 6px 0 0;
-vertical-align: top;
+  width: 60%;
+  padding: 0 6px 0 0;
+  vertical-align: top;
 }
 table.columns td.right {
-width: 20%;
-padding: 0 6px 0 0;
-vertical-align: top;
+  width: 20%;
+  padding: 0 6px 0 0;
+  vertical-align: top;
 }
 
 /* 2 column table */
 table.columns2 td.left {
-width: 20%;
-padding: 0 0 0 6px;
-vertical-align: top;
+  width: 20%;
+  padding: 0 0 0 6px;
+  vertical-align: top;
 }
 table.columns2 td.main {
-width: 80%;
-padding: 0 6px 0 7px;
-vertical-align: top;
+  width: 80%;
+  padding: 0 6px 0 7px;
+  vertical-align: top;
 }
 
 /* 1 column */
 table.columns1 td.main {
-width: 100%;
-padding: 0 6px 0 6px;
-vertical-align: top;
+  width: 100%;
+  padding: 0 6px 0 6px;
+  vertical-align: top;
 }
 
 /* _______________________________ listing table _______ */
 
 table.listing {
-color: #444444;
-width: 100%;
-margin: 0em 0em 2em 0em;
-border-left: &dtml-listingBorder;;
-border-bottom: &dtml-listingBorder;;
-border-collapse: collapse;
+  color: #444444;
+  width: 100%;
+  margin: 0em 0em 2em 0em;
+  border-left: &dtml-listingBorder;;
+  border-bottom: &dtml-listingBorder;;
+  border-collapse: collapse;
 }
 
 table.listing img {
-vertical-align: middle;
+  vertical-align: middle;
 }
 
 /* ______________ rows ______________ */
 
 table.listing tr.controls {
-color: #c9dfe2;
-background: &dtml-listingControlsBackground;;
-text-align : right;
-/* in case it's empty */
-height : 0.2em;
+  color: #c9dfe2;
+  background: &dtml-listingControlsBackground;;
+  text-align: right;
+  /* in case it's empty */
+  height: 0.2em;
 }
 
 table.listing tr.top-controls {
-background: &dtml-listingTopControlsBackground;;
-/* in case it's empty */
-height : 0.2em;
+  background: &dtml-listingTopControlsBackground;;
+  /* in case it's empty */
+  height: 0.2em;
 }
 
 table.listing tr.odd {
-background: &dtml-listingOddBackground;;
+  background: &dtml-listingOddBackground;;
 }
 
 /* applies only to mozilla comp. browsers */
 td.main>table.listing tr.odd:hover td,
 td.main>table.listing tr.even:hover td {
-background-color: #e5f2ff;
+  background-color: #e5f2ff;
 }
 
 table.listing tr.inter-controls td {
-color: #c9dfe2;
-background: &dtml-listingInterControlsBackground;;
+  color: #c9dfe2;
+  background: &dtml-listingInterControlsBackground;;
 }
 
 tr.divider, th.divider, td.divider {
-height : 0.5em;
-background: &dtml-listingDividerBackground;;
+  height: 0.5em;
+  background: &dtml-listingDividerBackground;;
 }
 
 /* ______________ cells ______________ */
 
 table.listing th {
-color: &dtml-listingHeaderFontColor;;
-background: &dtml-listingHeaderBackground;;
-padding: 0em 0.6em 0em 0.6em;
-border-top: none;
-border-bottom: &dtml-listingBorder;;
-border-right: &dtml-listingBorder;;
-font-weight: normal;
-text-align: left;
-white-space: nowrap;
+  color: &dtml-listingHeaderFontColor;;
+  background: &dtml-listingHeaderBackground;;
+  padding: 0em 0.6em 0em 0.6em;
+  border-top: none;
+  border-bottom: &dtml-listingBorder;;
+  border-right: &dtml-listingBorder;;
+  font-weight: normal;
+  text-align: left;
+  white-space: nowrap;
 }
 
 table.listing th.listing-left {
-width: 2%;
-text-align: left;
-padding-left: 0.4em;
+  width: 2%;
+  text-align: left;
+  padding-left: 0.4em;
 }
 
 table.listing th.listing-right {
-width: 4%;
-text-align: right;
-padding-right: 0.4em;
+  width: 4%;
+  text-align: right;
+  padding-right: 0.4em;
 }
 
 table.listing th.align-left, table.listing td.align-left {
-text-align: left;
+  text-align: left;
 }
 table.listing th.align-center, table.listing td.align-center {
-text-align: center;
+  text-align: center;
 }
 table.listing th.align-right, table.listing td.align-right {
-text-align: right;
+  text-align: right;
 }
 
 table.listing td {
-border-right: &dtml-listingBorder;;
-padding: 0em 0.6em;
-vertical-align: top;
-text-align: left;
+  border-right: &dtml-listingBorder;;
+  padding: 0em 0.6em;
+  vertical-align: top;
+  text-align: left;
 }
 
 /* cycle text color */
 table.listing tr.even td {
-color: #333;
-background: &dtml-listingEvenBackground;;
+  color: #333;
+  background: &dtml-listingEvenBackground;;
 }
 
 /* _______ title cell _______ */
 table.listing td.top {
-color: &dtml-shade40;;
-background: &dtml-listingTopBackground;;
-border: &dtml-listingBorder;;
-padding: 0em;
+  color: &dtml-shade40;;
+  background: &dtml-listingTopBackground;;
+  border: &dtml-listingBorder;;
+  padding: 0em;
 }
 table.listing td.top h2 {
-color: &dtml-listingTopHeadingColor;;
-text-align: left;
-margin: 0.1em 0.4em;
-border: none;
+  color: &dtml-listingTopHeadingColor;;
+  text-align: left;
+  margin: 0.1em 0.4em;
+  border: none;
 }
 table.listing td.top img {
-vertical-align: top;
+  vertical-align: top;
 }
 
 table.listing tr.top-controls td {
-padding: 0em 0.4em;
+  padding: 0em 0.4em;
 }
 
 div.controls {
-padding: 0.2em 0 0.2em 0
+  padding: 0.2em 0 0.2em 0
 }
 
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-color: &dtml-listingTopControlsHeadingColor;;
-margin: 0.1em 0.2em 0.2em 0.2em;
-padding: 0em;
-border: none;
-line-height : 100%;
+  color: &dtml-listingTopControlsHeadingColor;;
+  margin: 0.1em 0.2em 0.2em 0.2em;
+  padding: 0em;
+  border: none;
+  line-height: 100%;
 }
 
 table.listing td.listing-left {
-text-align: left;
-padding: 0em 0.4em;
-white-space: nowrap;
+  text-align: left;
+  padding: 0em 0.4em;
+  white-space: nowrap;
 }
 
 table.listing td.listing-right {
-white-space: nowrap;
+  white-space: nowrap;
 }
 
 table.listing tr.controls td, tr.inter-controls td {
-padding: 0em 0.4em;
+  padding: 0em 0.4em;
 }
 
 table.listing td.field-title {
-text-align : right;
+  text-align: right;
 }
 
 /* 
@@ -536,232 +550,232 @@ text-align : right;
 */
 
 table#sortable tbody a {
-display: block;
+  display: block;
 }
 
 table#sortable a.icon img {
-float: left;
-margin-right: 0.5em;
+  float: left;
+  margin-right: 0.5em;
 }
 
 /* reset the margin for the up/down arrows */
 table#sortable td.listing-right a.icon img {
-margin: 0;
+  margin: 0;
 }
 
 /* rename this selector */
 .widebody {
-color: #c9dfe2;
+  color: #c9dfe2;
 }
 
 /* __________________________ sidebar navigation _______ */
 
 table.listing th.top {
-color: #e3eef0;
-background: &dtml-listingHeaderBackground;;
-padding: 0;
-border-top: &dtml-listingBorder;;
-vertical-align: bottom;
-text-align: center;
+  color: #e3eef0;
+  background: &dtml-listingHeaderBackground;;
+  padding: 0;
+  border-top: &dtml-listingBorder;;
+  vertical-align: bottom;
+  text-align: center;
 }
 
 table.listing th.top img {
-vertical-align: bottom;
-padding: 0.5em 0 0 0;
+  vertical-align: bottom;
+  padding: 0.5em 0 0 0;
 }
 
 table.listing th.top a.normal:link {
-display : block;
-color: &dtml-mainTabFontColor;;
-background: &dtml-listingHeaderBackground;;
+  display: block;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing th.top a.normal:visited {
-display : block;
-color: &dtml-mainTabFontColor;;
-background: &dtml-listingHeaderBackground;;
+  display: block;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing th.top a.normal:hover {
-display : block;
-color: &dtml-mainTabFontColorSelected;;
-background: #d2e6f8;
-text-decoration: none;
+  display: block;
+  color: &dtml-mainTabFontColorSelected;;
+  background: #d2e6f8;
+  text-decoration: none;
 }
 
 /* _______ uplinks _______ */
 table.listing a.top {
-display : block;
-width : 1.4em;
-background: &dtml-listingHeaderBackground;;
-float: left;
-margin: 0em;
-border-right: &dtml-listingBorder;;
-padding: 0em 0.2em;
+  display: block;
+  width: 1.4em;
+  background: &dtml-listingHeaderBackground;;
+  float: left;
+  margin: 0em;
+  border-right: &dtml-listingBorder;;
+  padding: 0em 0.2em;
 }
 
 table.listing a.up {
-display : block;
-width : 1.4em;
-background: &dtml-listingHeaderBackground;;
-float: right;
-margin: 0em;
-border-left: &dtml-listingBorder;;
-padding: 0em 0.2em;
+  display: block;
+  width: 1.4em;
+  background: &dtml-listingHeaderBackground;;
+  float: right;
+  margin: 0em;
+  border-left: &dtml-listingBorder;;
+  padding: 0em 0.2em;
 }
 
 table.listing a.top:hover {
-color: &dtml-mainTabBackgroundSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-border-style: solid solid none none;
-text-decoration: none;
+  color: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-style: solid solid none none;
+  text-decoration: none;
 }
 
 table.listing a.up:hover {
-color: &dtml-mainTabBackgroundSelected;;
-background: &dtml-mainTabBackgroundSelected;;
-border-style: solid none none solid;
-text-decoration: none;
+  color: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
+  border-style: solid none none solid;
+  text-decoration: none;
 }
 
 td.selected {
-background: &dtml-oddRowBackground;;
-padding-left: 0 ! important;
-padding-right: 0 ! important;
-border-top: &dtml-listingBorder;;
-border-bottom: &dtml-listingBorder;;
+  background: &dtml-oddRowBackground;;
+  padding-left: 0 ! important;
+  padding-right: 0 ! important;
+  border-top: &dtml-listingBorder;;
+  border-bottom: &dtml-listingBorder;;
 }
 
 td.unselected {
-background: &dtml-evenRowBackground;;
-padding-left: 0 ! important;
-padding-right: 0 ! important;
-border-top: 1px solid &dtml-evenRowBackground;;
-border-bottom:  1px solid &dtml-evenRowBackground;;
+  background: &dtml-evenRowBackground;;
+  padding-left: 0 ! important;
+  padding-right: 0 ! important;
+  border-top: 1px solid &dtml-evenRowBackground;;
+  border-bottom:  1px solid &dtml-evenRowBackground;;
 }
 
 td.unselected:hover {
-color: &dtml-mainTabFontColorSelected;;
-background-color: #dae7fa;
-cursor : pointer;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: #dae7fa;
+  cursor: pointer;
 } 
 
 table.listing td a.normal:link {
-display : block;
-color: &dtml-mainTabFontColor;;
-background: &dtml-listingHeaderBackground;;
+  display: block;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing th.top a.normal:visited {
-display : block;
-color: &dtml-mainTabFontColor;;
-background: &dtml-listingHeaderBackground;;
+  display: block;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing th.top a.normal:hover {
-display : block;
-color: &dtml-mainTabFontColorSelected;;
-background: #d2e6f8;
-text-decoration: none;
+  display: block;
+  color: &dtml-mainTabFontColorSelected;;
+  background: #d2e6f8;
+  text-decoration: none;
 }
 
 /* _______ slidelinks _______ */
 table.listing a.left {
-display : block;
-width : 8px;
-height : 16px;
-float: left;
+  display: block;
+  width: 8px;
+  height: 16px;
+  float: left;
 }
 
 table.listing a.right {
-display : block;
-width : 8px;
-height : 16px;
-float: right;
+  display: block;
+  width: 8px;
+  height: 16px;
+  float: right;
 }
 
 table.listing a.left:hover {
-background-image: url(<dtml-var root>/globals/slideleft.gif);
-background-color: transparent;
-text-decoration: none;
+  background-image: url(<dtml-var root>/globals/slideleft.gif);
+  background-color: transparent;
+  text-decoration: none;
 }
 
 table.listing a.right:hover {
-background-image: url(<dtml-var root>/globals/slideright.gif);
-background-color: transparent;
-text-decoration: none;
+  background-image: url(<dtml-var root>/globals/slideright.gif);
+  background-color: transparent;
+  text-decoration: none;
 }
 
 div.normal {
-display: block;
+  display: block;
 }
 
 /* ________________________________ focus shapes _______ */
 
 table.sublisting {
-margin-top : 1em;
+  margin-top: 1em;
 }
 
 table.interlisting {
-margin : 0;
+  margin: 0;
 }
 
 /* used to shape non-nested listing tables */
 .focus-box {
-/* for IE5 */
-width : 73%;
-max-width : 56em;
-margin : 0 7px 0 7px;
+  /* for IE5 */
+  width: 73%;
+  max-width: 56em;
+  margin: 0 7px 0 7px;
 }
 
 .focus-rectangle {
-/* for IE5 */
-width : 96%;/* for IE6 */
-max-width : 98%;
-margin : 0 7px;
-padding-top: 7px;
+  /* for IE5 */
+  width: 96%;/* for IE6 */
+  max-width: 98%;
+  margin: 0 7px;
+  padding-top: 7px;
 }
 
 
 /* ________________________________________________ form definitions _______ */
 
 form {
-border: none;
-margin: 0;
+  border: none;
+  margin: 0;
 }
 
 input {
-color : &dtml-inputFontColor;;
-background : &dtml-inputBackground;;
-margin-top: 1px;
-margin-bottom: 1px;/* IE bug fix */
-padding: 0.1em;
-border: &dtml-inputBorder;;
-vertical-align: middle;
-font: &dtml-inputFont;;
+  color: &dtml-inputFontColor;;
+  background: &dtml-inputBackground;;
+  margin-top: 1px;
+  margin-bottom: 1px;/* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
+  vertical-align: middle;
+  font: &dtml-inputFont;;
 }
 
 textarea {
-font: &dtml-inputFont;;
-color : &dtml-inputFontColor;;
-background : &dtml-inputBackground;;
-padding: 0.1em;
-border: &dtml-inputBorder;;
+  font: &dtml-inputFont;;
+  color: &dtml-inputFontColor;;
+  background: &dtml-inputBackground;;
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
 }
 
 textarea.readable {
-font: 100% Verdana, Helvetica, Arial, sans-serif;
+  font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
 input.store, select.store {
-font: &dtml-inputFont;;
-color : &dtml-inputFontColor;;
-background : &dtml-inputBackground;;
-width: 90%;
-margin-top: 1px;
-margin-bottom: 1px;/* IE bug fix */
-padding: 0.1em;
-border: &dtml-inputBorder;;
+  font: &dtml-inputFont;;
+  color: &dtml-inputFontColor;;
+  background: &dtml-inputBackground;;
+  width: 90%;
+  margin-top: 1px;
+  margin-bottom: 1px;/* IE bug fix */
+  padding: 0.1em;
+  border: &dtml-inputBorder;;
 }
 
 /* 
@@ -770,466 +784,450 @@ border: &dtml-inputBorder;;
 */
 td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
 td>input.store, td>textarea.store, td>select.store {
-width: 100%;
+  width: 100%;
 }
 
 select {
-font: &dtml-inputFont;;
-font-size: 90%;
-color : &dtml-mainTabFontColorSelected;;
-background : &dtml-inputBackground;;
-margin: 0.1em;
-border : 1px solid &dtml-nightShade;;
-vertical-align: top;
-line-height : 96%;
+  font: &dtml-inputFont;;
+  font-size: 90%;
+  color: &dtml-mainTabFontColorSelected;;
+  background: &dtml-inputBackground;;
+  margin: 0.1em;
+  border: 1px solid &dtml-nightShade;;
+  vertical-align: top;
+  line-height: 96%;
 }
 
 select.store {
-font-size: 90%;
-line-height : 96%;
+  font-size: 90%;
+  line-height: 96%;
 }
 
 optgroup {
-font-size: 100%;
+  font-size: 100%;
 }
 
 select.transport {
-color: &dtml-transportFontColor;;
-background : &dtml-transportBackground;;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
 }
 
 select.manipulator {
-color: &dtml-manipulatorFontColor;;
-background : &dtml-manipulatorBackground;;
+  color: &dtml-manipulatorFontColor;;
+  background: &dtml-manipulatorBackground;;
 }
 
 input[type="checkbox"] {
-color : &dtml-shade56;;
-background : &dtml-inputBackground;;
-border : 1px solid &dtml-inputBorder;;
+  color: &dtml-shade56;;
+  background: &dtml-inputBackground;;
+  border: 1px solid &dtml-inputBorder;;
 }
 
 /* checkboxes used (only) for deletion */
 input.warning-checkbox {
-color : &dtml-shade56;;
-background : #ead5d3;
+  color: &dtml-shade56;;
+  background: #ead5d3;
 }
 
 input.button {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background : &dtml-manipulatorBackground;;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-manipulatorBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: &dtml-manipulatorBackground;;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+  cursor: pointer;
 }
 
 button.button {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background : &dtml-manipulatorBackground;;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-manipulatorBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: &dtml-manipulatorBackground;;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+  cursor: pointer;
 }
 
 input.transport {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-transportFontColor;;
-background: &dtml-transportBackground;;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-transportBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-transportBorder;;
+  cursor: pointer;
 }
 
 input.warning {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color : &dtml-destructiveFontColor;;
-background : &dtml-destructiveBackground;;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-destructiveBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-destructiveFontColor;;
+  background: &dtml-destructiveBackground;;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-destructiveBorder;;
+  cursor: pointer;
 }
 
 input.cancel {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color : &dtml-cancelFontColor;;
-background : #666668;
-background : &dtml-cancelBackground;;
-border : &dtml-cancelBorder;;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-cancelFontColor;;
+  background: #666668;
+  background: &dtml-cancelBackground;;
+  border: &dtml-cancelBorder;;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  cursor: pointer;
 }
 
 input.executor {
-font-size: 95%;
-font-weight: normal;
-color: #b3fffb;
-background : #284d5b;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: 0 0.2em;
-border: 1px solid #6bb591;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: normal;
+  color: #b3fffb;
+  background: #21565b;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: 0 0.2em;
+  border: 1px solid #6bb591;
+  cursor: pointer;
 }
 input.executor[type="submit"]:hover {
-color : #e5ffec;
-background : #4393a3;
-border-color : #8dc1a8;
+  color: #e5ffec;
+  background: #4393a3;
+  border-color: #8dc1a8;
 }
 
 /* publish screen state coded buttons */
 input.reject {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background : #8f7f01;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-manipulatorBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: #8f7f01;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+  cursor: pointer;
 }
 input.revoke {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background : #008c55;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-manipulatorBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: #008c55;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+  cursor: pointer;
 }
 input.close {
-font-size: 95%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background : #202080;
-margin: 0.2em 0.2em 0.1em 0.2em;
-padding: &dtml-manipulatorPadding;;
-border: &dtml-manipulatorBorder;;
-cursor: pointer;
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: #202080;
+  margin: 0.2em 0.2em 0.1em 0.2em;
+  padding: &dtml-manipulatorPadding;;
+  border: &dtml-manipulatorBorder;;
+  cursor: pointer;
 }
 
 
 /* _______ form labels _______ */
 
 label {
-color : #403f80;
+  color: #403f80;
 }
 
 tr.controls label, tr.inter-controls label {
-color: &dtml-listingHeaderFontColor;;
+  color: &dtml-listingHeaderFontColor;;
 }
 
 th label {
-color: &dtml-listingHeaderFontColor;;
+  color: &dtml-listingHeaderFontColor;;
 }
 
 
 /* _______ pseudo form button selectors, matches button style _______ */
 
 table.listing a.button:link {
-font-size: 100%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background: &dtml-manipulatorBackground;;
-border: &dtml-manipulatorBorder;;
-margin: 0.1em 0.2em;
-padding: 0em 1em 0.1em 1em;
-text-decoration : none;
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: &dtml-manipulatorBackground;;
+  border: &dtml-manipulatorBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration: none;
 }
 table.listing a.button:visited {
-font-size: 100%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-manipulatorFontColor;;
-background: &dtml-manipulatorBackground;;
-border: &dtml-manipulatorBorder;;
-margin: 0.1em 0.2em;
-padding: 0em 1em 0.1em 1em;
-text-decoration : none;
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-manipulatorFontColor;;
+  background: &dtml-manipulatorBackground;;
+  border: &dtml-manipulatorBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration: none;
 }
 table.listing a.button:hover {
-color : #bfffd3;
-background : #668b69;
-cursor : pointer;
+  color: #bfffd3;
+  background: #668b69;
+  cursor: pointer;
 }
 
 /* _______ transport between screens _______ */
 
 table.listing a.transport:link {
-font-size: 100%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-transportFontColor;;
-background: &dtml-transportBackground;;
-border: &dtml-transportBorder;;
-margin: 0.1em 0.2em;
-padding: 0em 1em 0.1em 1em;
-text-decoration : none;
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
+  border: &dtml-transportBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration: none;
 }
 table.listing a.transport:visited {
-font-size: 100%;
-font-weight: &dtml-buttonWeight;;
-color: &dtml-transportFontColor;;
-background: &dtml-transportBackground;;
-border: &dtml-transportBorder;;
-margin: 0.1em 0.2em;
-padding: 0em 1em 0.1em 1em;
-text-decoration : none;
+  font-size: 100%;
+  font-weight: &dtml-buttonWeight;;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
+  border: &dtml-transportBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
+  text-decoration: none;
 }
 table.listing a.transport:hover {
-color : #e5fffe;
-background : #74748b;
-border-color : #99b4cf;
-cursor : pointer;
-}
-
-/* _______ execution (publish now) _______ */
-
-div.middleground a.executor {
-color: #b3fffb;
-background : #417278;
-}
-div.middleground a.executor:hover {
-border-color : #8dc1a8;
-color : #e5ffec;
-background : #4393a3;
-}
-div.middleground a.executor:active {
-color: &dtml-mainTabFontColorSelected;;
-background: &dtml-mainTabBackgroundSelected;;
+  color: #e5fffe;
+  background: #74748b;
+  border-color: #99b4cf;
+  cursor: pointer;
 }
 
 /* _______ subscreen parent links _______ */
 
 table.listing td.parent {
-background: &dtml-transportBackground;;
-padding : 0;
-border: &dtml-listingBorder;;
-text-align : center;
-vertical-align : bottom;
+  background: &dtml-transportBackground;;
+  padding: 0;
+  border: &dtml-listingBorder;;
+  text-align: center;
+  vertical-align: bottom;
 }
 
 table.listing td.parent a {
-color: &dtml-transportFontColor;;
-text-decoration: none;
+  color: &dtml-transportFontColor;;
+  text-decoration: none;
 }
 table.listing td.parent a:hover {
-color : #bfffd3;
-background : #53538b;
+  color: #bfffd3;
+  background: #53538b;
 }
 
 table.listing div.transport-border {
-padding-bottom : 1px;
-border: &dtml-transportBorder;;
+  padding-bottom: 1px;
+  border: &dtml-transportBorder;;
 }
 table.listing div.transport-border:hover {
-color : #bfffd3;
-background : #53538b;
+  color: #bfffd3;
+  background: #53538b;
 }
 
 
 /* ________________________________________________ info + clipboard _______ */
 
 div.info {
-color: &dtml-inputFontColor;;
-background: &dtml-evenRowBackground;;
-margin: 0;
-padding: 0.1em 0.5em 0.5em 0.5em;
-border: &dtml-listingBorder;;
-width : 100%;/* fix IE glitch */
+  color: &dtml-inputFontColor;;
+  background: &dtml-evenRowBackground;;
+  margin: 0;
+  padding: 0.1em 0.5em 0.5em 0.5em;
+  border: &dtml-listingBorder;;
+  width: 100%;/* fix IE glitch */
 }
 
 div.info h3 {
-color: &dtml-inputFontColor;;
-margin-top : 0.4em;
-margin-bottom : 0.2em;
+  color: &dtml-inputFontColor;;
+  margin-top: 0.4em;
+  margin-bottom: 0.2em;
 }
 
 div.info p {
-text-align : left;
-margin-top : 0.3em;
-margin-bottom : 0em;
+  text-align: left;
+  margin-top: 0.3em;
+  margin-bottom: 0em;
 }
 
 div.info p span.orientation {
-display: block;
-text-align: center;
-border: 1px dotted black;
-margin-top: 0.3em;
+  display: block;
+  text-align: center;
+  border: 1px dotted black;
+  margin-top: 0.3em;
 }
 
 div.info p span.portrait {
-width: 4.5em;
-height: 6em;
+  width: 4.5em;
+  height: 6em;
 }
 
 div.info p span.landscape {
-width: 6.5em;
-height: 3.5em;
+  width: 6.5em;
+  height: 3.5em;
 }
 
 div.info p span.square {
-width: 4em;
-height: 4em;
+  width: 4em;
+  height: 4em;
 }
 
 select.clipboard, select.clipboard:focus, select.clipboard:hover {
-color : &dtml-shade26;;;
-background : &dtml-listingEvenBackground;;
-font-size: 90%;
-margin-top: 0.1em;
-margin-bottom: -0.5em;
-border : 1px solid &dtml-shade60;;
-line-height : 96%;
-width: 100%;
-max-width: 100%;
+  color: &dtml-shade26;;;
+  background: &dtml-listingEvenBackground;;
+  font-size: 90%;
+  margin-top: 0.1em;
+  margin-bottom: -0.5em;
+  border: 1px solid &dtml-shade60;;
+  line-height: 96%;
+  width: 100%;
+  max-width: 100%;
 }
 
 select.clipboard option.disabled {
-color: #dbf3f6;
-background: &dtml-listingHeaderBackground;;
-
+  color: #dbf3f6;
+  background: &dtml-listingHeaderBackground;;
+  
 }
 
 /* ________________________________________________________ feedback _______ */
 
 /* feedback under the matrix nav */
 div.fixed-feedback {
-position:relative;/* for IE6 peakaboo bug */
+  position:relative;/* for IE6 peakaboo bug */
 color: #555;
-background: #f3f3d9;
-margin: 0;
-border-bottom: &dtml-inputBorder;;
-padding: 0em 9px 0.1em 9px;
+  background: #f3f3d9;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 9px 0.1em 9px;
 }
 div.fixed-alert {
-position:relative;/* for IE6 peakaboo bug */
+  position:relative;/* for IE6 peakaboo bug */
 color: #3c2d50;
-background: #f7d1d1;
-margin: 0;
-border-bottom: &dtml-inputBorder;;
-padding: 0em 9px 0.1em 9px;
+  background: #f7d1d1;
+  margin: 0;
+  border-bottom: &dtml-inputBorder;;
+  padding: 0em 9px 0.1em 9px;
 }
 div.fixed-clear {
-background: transparent;
-margin: 0;
-padding: 0em 9px 0.1em 9px;
-border-bottom: 1px solid &dtml-workspace;;
+  background: transparent;
+  margin: 0;
+  padding: 0em 9px 0.1em 9px;
+  border-bottom: 1px solid &dtml-workspace;;
 }
 div.fixed-clear a.reveal {
-color: &dtml-shade96;;
+  color: &dtml-shade96;;
 }
 div.fixed-clear a.reveal:visited {
-color: &dtml-shade96;;
+  color: &dtml-shade96;;
 } 
 div.fixed-clear a.reveal:hover {
-color: &dtml-shade58;;
-text-decoration: none;
+  color: &dtml-shade58;;
+  text-decoration: none;
 }
 
 /* floating feedback  */
 div.feedback {
-color: #555;
-background: #f3f3d9;
-margin: 0;
-border: &dtml-inputBorder;;
-padding: 0.4em 0.7em 0.7em 0.7em;
+  color: #555;
+  background: #f3f3d9;
+  margin: 0;
+  border: &dtml-inputBorder;;
+  padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.alert {
-color: #3c2d50;
-background: #f7d1d1;
-margin: 0;
-border: &dtml-inputBorder;;
-padding: 0.4em 0.7em 0.7em 0.7em;
+  color: #3c2d50;
+  background: #f7d1d1;
+  margin: 0;
+  border: &dtml-inputBorder;;
+  padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.feedback a {
-color: &dtml-mainLinkColor;;
-text-decoration: underline;
+  color: &dtml-mainLinkColor;;
+  text-decoration: underline;
 }
 
 /* table row/cell feedback  */
 table.listing tr.feedback, table.listing td.feedback {
-color: #555555;
-background: #f3f3d9;
-padding-top : 0.1em;
-padding-bottom : 0.2em;
+  color: #555555;
+  background: #f3f3d9;
+  padding-top: 0.1em;
+  padding-bottom: 0.2em;
 }
 table.listing tr.alert, table.listing td.alert {
-color: #3c2d50;
-background: #f7d1d1;
-padding-top : 0.1em;
-padding-bottom : 0.2em;
+  color: #3c2d50;
+  background: #f7d1d1;
+  padding-top: 0.1em;
+  padding-bottom: 0.2em;
 }
 
 
 /* _______ message box in content publish screen _______ */
 
 table.listing .message {
-padding : 0;
+  padding: 0;
 }
 
 table.listing div.message {
-font-weight: normal;
-color: #2e2e77;
-background: &dtml-messageBackground;;
-margin : 0;
-padding: 0.2em 0.6em 0.2em 0.6em;
-border: &dtml-messageBorder;;
-border-style: solid none solid none;
-border-collapse: collapse;
+  font-weight: normal;
+  color: #2e2e77;
+  background: &dtml-messageBackground;;
+  margin: 0;
+  padding: 0.2em 0.6em 0.2em 0.6em;
+  border: &dtml-messageBorder;;
+  border-style: solid none solid none;
+  border-collapse: collapse;
 }
 
 
 /* ______________________________________________________ typography _______ */
 
 h1 {
-font-size: &dtml-headingSize1;;
+  font-size: &dtml-headingSize1;;
 }
 
 h2 {
-font-size: &dtml-headingSize2;;
+  font-size: &dtml-headingSize2;;
 }
 
 h3 {
-font-size: &dtml-headingSize3;;
+  font-size: &dtml-headingSize3;;
 }
 
 h4 {
-font-size: &dtml-headingSize4;;
+  font-size: &dtml-headingSize4;;
 }
 
 h5 {
-font-size: &dtml-headingSize5;;
+  font-size: &dtml-headingSize5;;
 }
 
 h6 {
-font-size: &dtml-headingSize6;;
+  font-size: &dtml-headingSize6;;
 }
 
 h1, h2, h3, h4, h5, h6 {
-font-weight: bold;
-margin: 0em 0em 1em 0em;
-padding: 0;
-border: none;
+  font-weight: bold;
+  margin: 0em 0em 1em 0em;
+  padding: 0;
+  border: none;
 }
 
 code {
-font-size : 120%;
+  font-size: 120%;
 }
 
 a {
-text-decoration: none;
-color: &dtml-mainLinkColor;;
-background-color: transparent;
+  text-decoration: none;
+  color: &dtml-mainLinkColor;;
+  background-color: transparent;
 }
 
 </dtml-with>
@@ -1239,327 +1237,327 @@ background-color: transparent;
 /* ___________________________________________ Silva specific styles _______ */
 
 img {
-border: none;
-vertical-align: middle;
+  border: none;
+  vertical-align: middle;
 }
 
 img.icon {
-margin: 0em;
+  margin: 0em;
 }
 
 a.icon:hover {
-text-decoration: none;
+  text-decoration: none;
 }
 
 /* _________________________________ align/float _______ */
 
 .image-left {
-text-align: left;
+  text-align: left;
 }
 
 .image-center {
-text-align: center;
+  text-align: center;
 }
 
 .image-right {
-text-align: right;
+  text-align: right;
 }
 
 .float-left {
-float: left;
-margin-right: 1em;
-clear: none;
+  float: left;
+  margin-right: 1em;
+  clear: none;
 }
 
 .float-right {
-float: right;
-margin-left: 1em;
-clear: none;
+  float: right;
+  margin-left: 1em;
+  clear: none;
 }
 
 /* _______________________________________ lists _______ */
 
 dt {
-background : transparent;
+  background: transparent;
 }
 
 dd {
-background : transparent;
-margin-left : 2.5em;
+  background: transparent;
+  margin-left: 2.5em;
 }
 
 ul {
-list-style-type : circle;
-list-style-image: none
+  list-style-type: circle;
+  list-style-image: none
 }
 
 ul.tips {
-list-style-type : square;
-margin-left : 0.1em;
-margin-top : 0.2em;
-padding-left : 1em;
-line-height : 130%;
+  list-style-type: square;
+  margin-left: 0.1em;
+  margin-top: 0.2em;
+  padding-left: 1em;
+  line-height: 130%;
 }
 
 ul.tips-nested {
-list-style-type : circle;
-margin-left : 0.5em;
-padding-left : 1em;
-line-height : 130%;
+  list-style-type: circle;
+  margin-left: 0.5em;
+  padding-left: 1em;
+  line-height: 130%;
 }
 
 /* _______________________________________ forms _______ */
 
 .fixIE6widget {
-width : 90%;
+  width: 90%;
 }
 
 input:focus, textarea:focus {
-color : #333355;
-background : #e3f0e4 none;
+  color: #333355;
+  background: #e3f0e4 none;
 }
 
 input:hover, textarea:hover {
-color : #333355;
-background : #e3f0e4 none;
+  color: #333355;
+  background: #e3f0e4 none;
 }
 
 select:focus, select:hover {
-color : #333344;
-background : #c3d5e7;
+  color: #333344;
+  background: #c3d5e7;
 }
 
 input:focus:hover, textarea:focus:hover {
-color : #333355;
-background : #e3f0e4;
+  color: #333355;
+  background: #e3f0e4;
 }
 
 /* cool glow */
 input.transport[type="submit"]:hover, button[type="button"]:hover {
-color : #e5fffe;
-background : #74748b;
-border-color : #99b4cf;
+  color: #e5fffe;
+  background: #74748b;
+  border-color: #99b4cf;
 }
 
 input.transport[type="submit"]:focus {
-color : #e9f7ff;
-background : #7a83a6;
+  color: #e9f7ff;
+  background: #7a83a6;
 }
 
 /* warm glow */
 input.button[type="submit"]:hover, button[type="button"]:hover {
-color : #e5ffec;
-background : #548e72;
-border-color : #8dc1a8;
+  color: #e5ffec;
+  background: #548e72;
+  border-color: #8dc1a8;
 }
 
 input.button[type="submit"]:focus, button[type="button"]:focus {
-color : #bfffd3;
-background : #538b58;
+  color: #bfffd3;
+  background: #538b58;
 }
 
 /* hot glow */
 input.warning[type="submit"]:hover {
-color : #fff5f5;
-background : #a85353;
-border-color : #cdb1a3;
+  color: #fff5f5;
+  background: #a85353;
+  border-color: #cdb1a3;
 }
 
 input.warning[type="submit"]:focus {
-color : #f0c0c0;
-background : #53538b;
+  color: #f0c0c0;
+  background: #53538b;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover {
-color : #bfffd3;
-background : #69878c;
+  color: #bfffd3;
+  background: #69878c;
 }
 
 input[type="submit"]:focus, input[type="button"]:focus {
-color : #bfffd3;
-background : #008a8a;
+  color: #bfffd3;
+  background: #008a8a;
 }
 
 /* publish screen state coded buttons */
 input.reject[type="submit"]:hover {
-color : #e5ffec;
-background : #9b8800;
-border-color : #8dc1a8;
+  color: #e5ffec;
+  background: #9b8800;
+  border-color: #8dc1a8;
 }
 input.revoke[type="submit"]:hover {
-color : #e5ffec;
-background : #009a62;
-border-color : #8dc1a8;
+  color: #e5ffec;
+  background: #009a62;
+  border-color: #8dc1a8;
 }
 input.close[type="submit"]:hover {
-color : #e5ffec;
-background : #4a4aa7;
-border-color : #8dc1a8;
+  color: #e5ffec;
+  background: #4a4aa7;
+  border-color: #8dc1a8;
 }
 
 /* image button */
 input.imagebutton {
-background : transparent;
-border : 0;
+  background: transparent;
+  border: 0;
 }
 
 input[type="checkbox"]:focus, input[type="radio"]:focus {
-color : #777;
-background : #dee9eb;
+  color: #777;
+  background: #dee9eb;
 }
 
 input[type="checkbox"]:hover, input[type="radio"]:hover {
-color : #777;
-background : #b9e3e8 none;
+  color: #777;
+  background: #b9e3e8 none;
 }
 
 
 /* ___________________________________________________________ links _______ */
 
 a:link {
-color : #0000aa;
-text-decoration : none;
+  color: #0000aa;
+  text-decoration: none;
 }
 a:visited {
-color : #5900b2;
-text-decoration : none;
+  color: #5900b2;
+  text-decoration: none;
 }
 
 a:active {
-color : #3399cc;
+  color: #3399cc;
 }
 a:hover {
-color : #0000aa;
-text-decoration : underline;
+  color: #0000aa;
+  text-decoration: underline;
 }
 
 /* blacklink selectors */
 a.blacklink:link {
-color : #333333;
-text-decoration : none;
+  color: #333333;
+  text-decoration: none;
 }
 a.blacklink:visited {
-color : #333333;
-text-decoration : none;
+  color: #333333;
+  text-decoration: none;
 }
 a.blacklink:hover {
-color : #333333;
-text-decoration : underline;
+  color: #333333;
+  text-decoration: underline;
 }
 
 /* underline (blue) selectors */
 a.underline:link {
-color : #000080;
-text-decoration : underline;
+  color: #000080;
+  text-decoration: underline;
 }
 a.underline:visited {
-color : #000080;
-text-decoration : underline;
+  color: #000080;
+  text-decoration: underline;
 }
 a.underline:hover {
-color : #005050;
-text-decoration : none;
+  color: #005050;
+  text-decoration: none;
 }
 
 /* highlighting index links */
 a.index-element {
-background-color : #e9ff97;
-text-decoration : none;
+  background-color: #e9ff97;
+  text-decoration: none;
 }
 
 /* draft (red) selectors */
 .draft, a.draft {
-color : #cc0000;
+  color: #cc0000;
 }
 
 /* pending (yellow) selectors */
 .pending, a.pending {
-color : #8f7f01;
+  color: #8f7f01;
 }
 
 /* approved (green) selectors */
 .approved, a.approved {
-color : #007746;
+  color: #007746;
 }
 
 /* published (blue) selectors */
 .published, a.published {
-color : #000080;
+  color: #000080;
 }
 
 /* closed (gray) selectors */
 .closed, a.closed {
-color : #666666;
+  color: #666666;
 }
 
 /* draft (red) selectors */
 a.draft:link {
-color : #cc0000;
-text-decoration : none;
+  color: #cc0000;
+  text-decoration: none;
 }
 a.draft:visited {
-color : #cc0000;
-text-decoration : none;
+  color: #cc0000;
+  text-decoration: none;
 }
 a.draft:hover {
-color : #cc0000;
-text-decoration : underline;
+  color: #cc0000;
+  text-decoration: underline;
 }
 
 /* pending (yellow) selectors */
 a.pending:link {
-color : #8f7f01;
-text-decoration : none;
+  color: #8f7f01;
+  text-decoration: none;
 }
 a.pending:visited {
-color : #8f7f01;
-text-decoration : none;
+  color: #8f7f01;
+  text-decoration: none;
 }
 a.pending:hover {
-color : #8f7f01;
-text-decoration : underline;
+  color: #8f7f01;
+  text-decoration: underline;
 }
 
 /* approved (green) selectors */
 a.approved:link {
-color : #007746;
-text-decoration : none;
+  color: #007746;
+  text-decoration: none;
 }
 a.approved:visited {
-color : #007746;
-text-decoration : none;
+  color: #007746;
+  text-decoration: none;
 }
 a.approved:hover {
-color : #007746;
-text-decoration : underline;
+  color: #007746;
+  text-decoration: underline;
 }
 
 /* published (blue) selectors */
 a.published:link {
-color : #000080;
-text-decoration : none;
+  color: #000080;
+  text-decoration: none;
 }
 a.published:visited {
-color : #000080;
-text-decoration : none;
+  color: #000080;
+  text-decoration: none;
 }
 a.published:hover {
-color : #000080;
-text-decoration : underline;
+  color: #000080;
+  text-decoration: underline;
 }
 
 /* closed (gray) selectors */
 a.closed:link {
-color : #666666;
-text-decoration : none;
+  color: #666666;
+  text-decoration: none;
 }
 a.closed:visited {
-color : #666666;
-text-decoration : none;
+  color: #666666;
+  text-decoration: none;
 }
 a.closed:hover {
-color : #666666;
-text-decoration : underline;
+  color: #666666;
+  text-decoration: underline;
 }
 
 
@@ -1567,76 +1565,76 @@ text-decoration : underline;
 
 /* was ebebeb e9e5ec */
 .hilite {
-background : #ebecef;
+  background: #ebecef;
 }
 
 /* form datetime field punctuation */
 .punctuation {
-font-family : impact, verdana, arial, helvetica, sans-serif;
-font-size : 15px;
+  font-family: impact, verdana, arial, helvetica, sans-serif;
+  font-size: 15px;
 }
 
 .required {
-font-family : impact, verdana, arial, helvetica, sans-serif;
-font-size : 18px;
-color: #cc0000;
+  font-family: impact, verdana, arial, helvetica, sans-serif;
+  font-size: 18px;
+  color: #cc0000;
 }
 
 .warning {
-color : #aa0000;
+  color: #aa0000;
 }
 
 .error {
-color : #cc0000;
-background: transparent;
+  color: #cc0000;
+  background: transparent;
 }
 
 .fault {
-color : #ff1111;
+  color: #ff1111;
 }
 
 .subhead {
-font-weight : bold;
-font-family : verdana, arial, helvetica, sans-serif;
-color: #333767;
-line-height : 1.8em;
+  font-weight: bold;
+  font-family: verdana, arial, helvetica, sans-serif;
+  color: #333767;
+  line-height: 1.8em;
 } 
 
 .idea {
-color : #634d82;
+  color: #634d82;
 }
 
 /* defines the width of the text in help, etc */
 .readable {
-/* for IE5 */
-width : 512px;
-max-width : 40em;
-line-height: 1.3em;
-text-align: left;
+  /* for IE5 */
+  width: 512px;
+  max-width: 40em;
+  line-height: 1.3em;
+  text-align: left;
 }
 
 /* defines the width of the text in the preview/public layout */
 /* duplicated in frontend.css */
 .public {
-margin-left : 7em;
-padding-top : 2.3em;
-max-width : 40em;
-/* for IE5 */
-width : 512px;
+  margin-left: 7em;
+  padding-top: 2.3em;
+  max-width: 40em;
+  /* for IE5 */
+  width: 512px;
 }
 
 /* definitions for batching */
 div.listingBar {
-width: 60em;
-margin: 2em 0;
+  width: 60em;
+  margin: 2em 0;
 }
 
 div.listingBar .next {
-margin-left: 5em;
+  margin-left: 5em;
 } 
 
 div.listingBar .previous {
-margin-right: 5em;
+  margin-right: 5em;
 }
 
 /* style is a filter */
