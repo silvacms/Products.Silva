@@ -268,12 +268,12 @@ If this content should expire, set the time.
   <th class="align-right" colspan="2"
     tal:define="field view/tab_status_form_change_settings/clear_expiration">
     <label 
-      title="access key: alt-u" 
-      accesskey="u"
+      title="access key: alt-o" 
+      accesskey="o"
       tal:attributes="for field/id"
       i18n:attributes="title;accesskey clear_expiration_time_accesskey"
       i18n:translate=""
-      >clear ex<u>p</u>iration?
+      >clear expirati<u>o</u>n?
     </label>
     <tal:block 
       attributes="id field/id"
@@ -367,12 +367,12 @@ Empty indicates no expiration.
 <tr>
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_editor/publish_now_flag">
-  <label title="access key: alt-u" 
-    accesskey="u"
-    i18n:attributes="title;accesskey publish_right_now_accesskey"
-    i18n:translate=""
-    tal:attributes="for field/id">
-    p<u>u</u>blish right now?
+    <label title="access key: alt-u" 
+      accesskey="u"
+      i18n:attributes="title;accesskey publish_right_now_accesskey"
+      i18n:translate=""
+      tal:attributes="for field/id">
+      p<u>u</u>blish right now?
   </label>
 <tal:block 
   attributes="id field/id" 
