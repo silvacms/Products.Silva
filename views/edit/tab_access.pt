@@ -184,7 +184,7 @@
         <tal:block replace="nothing"> 
           ____________ pending roles management ____________
         </tal:block>
-        <!-- Pending role requests -->
+        <!-- Pending role request listing -->
         <tal:block condition="allow_authentication_requests">
           <form action="."
             method="POST"
@@ -320,7 +320,7 @@
     <tal:block replace="nothing">
       _______________ group roles management ________________
     </tal:block>
-    <tr>
+    <tr tal:condition="python:model.sec_groups_enabled() or group_service">
       <td class="main"
         style="padding-top:2em;">
         <tal:block condition="python:model.sec_groups_enabled()">
