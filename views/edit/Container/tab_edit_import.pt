@@ -179,8 +179,8 @@
           />
         </td>
         <td i18n:translate="">
-          Locate a zip file containing Assets to import or a zip file created
-          by a full media export.
+          Locate a zip file containing Assets or a zip file created
+          by a Silva full media export.
         </td>
       </tr>
 
@@ -200,7 +200,7 @@
           />
         </td>
         <td i18n:translate="">
-          Provide an optional title for all Assets created from the contents
+          Set a title for all Assets created from the contents
           of a zip file with Assets.
         </td>
       </tr>
