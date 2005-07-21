@@ -7,18 +7,20 @@
   i18n:domain="silva">
 <body>
 <metal:block define-macro="select_all">
-  <tal:block define="sid select_id | python:'';
-                     global aid_postfix aid_postfix | python:0;
-                     global aid_postfix python:aid_postfix + 1">
+  <tal:block define="
+    sid select_id | python:'';
+    global aid_postfix aid_postfix | python:0;
+    global aid_postfix python:aid_postfix + 1">
   <input name="all"
     type="checkbox"
     value="whatever"
     id="all"
     title="select all: alt-a"
-    tal:attributes="onclick string:toggleSelect(this, '${sid}');;;
-                     id string:all_${aid_postfix};
-                     name string:all_${aid_postfix};
-                     "
+    tal:attributes="
+      onclick string:toggleSelect(this, '${sid}');;;
+      id string:all_${aid_postfix};
+      name string:all_${aid_postfix};
+      "
     i18n:attributes="title"
   />
   </tal:block>
