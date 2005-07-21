@@ -22,6 +22,9 @@ Silva changes
       
       - Fixed a unicode bug in the xmlimporter.
 
+      - Fixed an API incompatibility with Zope 2.7.7 ZCTextIndex (fix works
+        with 2.7.6 as well).
+
   1.3b3
 
     Note: there were a few internal betas, this is the first public one.
