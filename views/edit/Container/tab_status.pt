@@ -322,7 +322,7 @@
             accesskey="x"
             i18n:attributes="title;accesskey expiration_time_accesskey"
             i18n:translate="">
-            &nbsp;expiration time
+            &nbsp;&nbsp;expiration time
           </label>
           <tal:block
             condition="redisplay_timing_form"
