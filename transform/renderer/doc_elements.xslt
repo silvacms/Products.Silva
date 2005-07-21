@@ -335,8 +335,17 @@
     <xsl:apply-templates />
   </xsl:template>
   
+  <xsl:template match="*" mode="copy">
+    <xsl:element name="{name()}">
+      <xsl:apply-templates select="node()|@*" mode="copy"/>
+    </xsl:element>
+  </xsl:template>
+  <xsl:template match="@*" mode="copy">
+    <xsl:copy/>
+  </xsl:template>
+
   <xsl:template match="doc:rendered_html">
-    <xsl:copy-of select="./@*|node()" />
+    <xsl:apply-templates mode="copy" />
   </xsl:template>
   
   <xsl:template match="doc:parameter" />
@@ -377,5 +386,4 @@
       <xsl:apply-templates />
     </td>
   </xsl:template>
-
 </xsl:stylesheet>

@@ -25,6 +25,9 @@ Silva changes
       - Fixed an API incompatibility with Zope 2.7.7 ZCTextIndex (fix works
         with 2.7.6 as well).
 
+      - Suppressed the xsltrenderer's copying of silva related namespace
+        attributes and declarations in rendered html. 
+
   1.3b3
 
     Note: there were a few internal betas, this is the first public one.
