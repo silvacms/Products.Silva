@@ -563,11 +563,6 @@ table#sortable td.listing-right a.icon img {
   margin: 0;
 }
 
-/* rename this selector */
-.widebody {
-  color: #c9dfe2;
-}
-
 /* __________________________ sidebar navigation _______ */
 
 table.listing th.top {

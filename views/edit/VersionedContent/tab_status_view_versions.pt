@@ -34,18 +34,6 @@
 </metal:block>
 
 <metal:block fill-slot="main" tal:omit-tag="">
-  <span tal:replace="nothing"> _______ XXX turned off: link to see page in public/local style _______ </span>
-  <span tal:replace="nothing" class="widebody">
-    <a 
-      style="float:right; margin-right:3em;" 
-      title="see the content in the public layout: alt-;" 
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html" 
-      target="_blank" 
-      i18n:attributes="title;accesskey presentation_preview_accesskey"
-      i18n:translate="" 
-      >Presentation&nbsp;preview</a></span>
-
   <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
   <div class="preview_compare">
     <table>

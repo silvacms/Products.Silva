@@ -250,16 +250,14 @@ If this content should expire, set the time.
 <tr>
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_change_settings/publish_now_flag">
-  <span class="widebody">
-    <label 
-      title="access key: alt-u" 
-      accesskey="u"
-      i18n:attributes="title;accesskey publish_right_now_accesskey"
-      i18n:translate=""
-      tal:attributes="for field/id">
-      p<u>u</u>blish right now?
+  <label 
+    title="access key: alt-u" 
+    accesskey="u"
+    i18n:attributes="title;accesskey publish_right_now_accesskey"
+    i18n:translate=""
+    tal:attributes="for field/id">
+    p<u>u</u>blish right now?
   </label>
-</span>
 <tal:block 
   attributes="id field/id"
   replace="structure python: field.render()"
@@ -269,16 +267,14 @@ If this content should expire, set the time.
 <tr>
   <th class="align-right" colspan="2"
     tal:define="field view/tab_status_form_change_settings/clear_expiration">
-    <span class="widebody">
-      <label 
-        title="access key: alt-u" 
-        accesskey="u"
-        tal:attributes="for field/id"
-        i18n:attributes="title;accesskey clear_expiration_time_accesskey"
-        i18n:translate=""
-        >clear ex<u>p</u>iration?
+    <label 
+      title="access key: alt-u" 
+      accesskey="u"
+      tal:attributes="for field/id"
+      i18n:attributes="title;accesskey clear_expiration_time_accesskey"
+      i18n:translate=""
+      >clear ex<u>p</u>iration?
     </label>
-  </span>
     <tal:block 
       attributes="id field/id"
       replace="structure python: field.render()"
@@ -371,16 +367,13 @@ Empty indicates no expiration.
 <tr>
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_editor/publish_now_flag">
-  <span class="widebody">
-    <label 
-      title="access key: alt-u" 
-      accesskey="u"
-      i18n:attributes="title;accesskey publish_right_now_accesskey"
-      i18n:translate=""
-      tal:attributes="for field/id">
-      p<u>u</u>blish right now?
+  <label title="access key: alt-u" 
+    accesskey="u"
+    i18n:attributes="title;accesskey publish_right_now_accesskey"
+    i18n:translate=""
+    tal:attributes="for field/id">
+    p<u>u</u>blish right now?
   </label>
-</span>
 <tal:block 
   attributes="id field/id" 
   replace="structure python: field.render(REQUEST=request)"

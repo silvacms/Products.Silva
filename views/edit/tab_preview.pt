@@ -28,18 +28,6 @@
 </metal:block>
 
 <metal:block fill-slot="main" tal:omit-tag="">
-  <span tal:replace="nothing"> _______ XXX turned off: link to see page in public/local style _______ </span>
-  <span tal:replace="nothing" class="widebody">
-    <a 
-      style="float:right; margin-right:3em;" 
-      title="see the content in the public layout: alt-;" 
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html" 
-      target="_blank" 
-      i18n:attributes="title;accesskey presentation_preview_accesskey"
-      i18n:translate="" 
-      >Presentation&nbsp;preview</a></span>
-
   <span tal:replace="nothing"> _______ closed message _______ </span>
   <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
     <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
