@@ -236,7 +236,7 @@
           <td class="align-right">
             <label for="export_last_version"
               i18n:translate="">
-              export only last version?
+              export newest versions?
             </label>
           </td>
           <td class="align-center">
@@ -246,7 +246,7 @@
               />
           </td>
           <td i18n:translate="">
-            Check to export only the last version. 
+            Check to export only the latest version. 
           </td>
         </tr>
       </tbody>
