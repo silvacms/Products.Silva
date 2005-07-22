@@ -474,7 +474,7 @@
                 <th class="controls listing-right" colspan="2">
                   <span tal:condition="may_change_content"
                     tal:omit-tag="">
-                    <span tal:condition="published | editables | closed"
+                    <span tal:condition="python:(published or editables or closed)"
                       i18n:translate="">
                       publishing actions
                     </span>&nbsp;
