@@ -1036,7 +1036,8 @@ table.listing div.transport-border:hover {
 div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
-  margin: 0;
+  /* correct 1px for table border collapse */
+  margin: -1px 0 0 0;
   padding: 0.1em 0.5em 0.5em 0.5em;
   border: &dtml-listingBorder;;
   /* fix IE glitch? */
@@ -1091,7 +1092,6 @@ select.clipboard, select.clipboard:focus, select.clipboard:hover {
 select.clipboard option.disabled {
   color: #dbf3f6;
   background: &dtml-listingHeaderBackground;;
-  
 }
 
 /* ________________________________________________________ feedback _______ */
@@ -1099,7 +1099,7 @@ select.clipboard option.disabled {
 /* feedback under the matrix nav */
 div.fixed-feedback {
   position:relative;/* for IE6 peakaboo bug */
-color: #555;
+  color: #555;
   background: #f3f3d9;
   margin: 0;
   border-bottom: &dtml-inputBorder;;
@@ -1107,7 +1107,7 @@ color: #555;
 }
 div.fixed-alert {
   position:relative;/* for IE6 peakaboo bug */
-color: #3c2d50;
+  color: #3c2d50;
   background: #f7d1d1;
   margin: 0;
   border-bottom: &dtml-inputBorder;;
