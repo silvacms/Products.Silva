@@ -277,11 +277,11 @@ div.middleground a.selected {
   border-color: #3d4b67;
 }
 
-/* _______ execution (publish now) _______ */
+/* _______ middleground executor (publish now) _______ */
 
 div.middleground a.executor {
   color: #b3fffb;
-  background: #417278;
+  background: #38656c;
 }
 div.middleground a.executor:hover {
   border-color: #8dc1a8;
@@ -982,12 +982,17 @@ table.listing a.transport:link {
   background: &dtml-transportBackground;;
   border: &dtml-transportBorder;;
   margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
+  padding: 0em 0.8em 0.1em 1em;
   text-decoration: none;
 }
 table.listing a.transport:visited {
+  font-size: 95%;
+  font-weight: &dtml-buttonWeight;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
+  border: &dtml-transportBorder;;
+  margin: 0.1em 0.2em;
+  padding: 0em 1em 0.1em 1em;
   text-decoration: none;
 }
 table.listing a.transport:hover {
