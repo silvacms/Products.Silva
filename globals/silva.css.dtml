@@ -976,7 +976,7 @@ table.listing a.button:hover {
 /* _______ transport between screens _______ */
 
 table.listing a.transport:link {
-  font-size: 100%;
+  font-size: 95%;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
@@ -986,13 +986,8 @@ table.listing a.transport:link {
   text-decoration: none;
 }
 table.listing a.transport:visited {
-  font-size: 100%;
-  font-weight: &dtml-buttonWeight;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
-  border: &dtml-transportBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
   text-decoration: none;
 }
 table.listing a.transport:hover {
