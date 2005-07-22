@@ -472,7 +472,7 @@
                   </tal:block>
                 </th>
                 <th class="controls listing-right" colspan="2">
-                  <span tal:condition="published | editables | closed"
+                  <span tal:condition="may_change_content | published | editables | closed"
                         i18n:translate="">
                     publishing actions</span>&nbsp;
                 </th>
