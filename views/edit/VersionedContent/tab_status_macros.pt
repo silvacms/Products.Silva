@@ -18,21 +18,21 @@
     "
   tal:condition="start_time"
   >
-  <br />
-  <p style="margin-top:0.3em; margin-bottom:0.2em;">
+<br />
+<p style="margin-top:0.3em; margin-bottom:0.2em;">
 
-  <span class="subhead" tal:condition="not:end_time" i18n:translate="">
-  Publication time of public version
-  </span>
-  <span class="subhead" tal:condition="end_time" i18n:translate="">
-  Publication and expiration time of public version
-  </span>
+<span class="subhead" tal:condition="not:end_time" i18n:translate="">
+Publication time of public version
+</span>
+<span class="subhead" tal:condition="end_time" i18n:translate="">
+Publication and expiration time of public version
+</span>
 
-  <br />
-  <tal:block
-    replace="
-      structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
-  </p>
+<br />
+<tal:block
+  replace="
+    structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
+</p>
 </metal:block>
   
 <span tal:replace="nothing"> _______ messages _______ </span>
@@ -83,8 +83,8 @@ A previous request for approval has been rejected / withdrawn by
 <span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on 
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>.
 <comment tal:condition="nothing" i18n:name="comment"><tal:block i18n:translate=""> actually the last message may not have been written
-   by the person withdrawing the request; if this person for example made an empty reject,
-   this is the message of the requester ...</tal:block>
+  by the person withdrawing the request; if this person for example made an empty reject,
+  this is the message of the requester ...</tal:block>
 </comment>
 The last message regarding this issue is:
 </td>
@@ -250,14 +250,14 @@ If this content should expire, set the time.
 <tr>
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_change_settings/publish_now_flag">
-  <label 
-    title="access key: alt-u" 
-    accesskey="u"
-    i18n:attributes="title;accesskey publish_right_now_accesskey"
-    i18n:translate=""
-    tal:attributes="for field/id">
-    p<u>u</u>blish right now?
-  </label>
+<label 
+  title="access key: alt-u" 
+  accesskey="u"
+  i18n:attributes="title;accesskey publish_right_now_accesskey"
+  i18n:translate=""
+  tal:attributes="for field/id">
+  p<u>u</u>blish right now?
+</label>
 <tal:block 
   attributes="id field/id"
   replace="structure python: field.render()"
@@ -265,21 +265,21 @@ If this content should expire, set the time.
 </th>
 </tr>
 <tr>
-  <th class="align-right" colspan="2"
-    tal:define="field view/tab_status_form_change_settings/clear_expiration">
-    <label 
-      title="access key: alt-o" 
-      accesskey="o"
-      tal:attributes="for field/id"
-      i18n:attributes="title;accesskey clear_expiration_time_accesskey"
-      i18n:translate=""
-      >clear expirati<u>o</u>n?
-    </label>
-    <tal:block 
-      attributes="id field/id"
-      replace="structure python: field.render()"
-    />
-  </th>
+<th class="align-right" colspan="2"
+  tal:define="field view/tab_status_form_change_settings/clear_expiration">
+<label 
+  title="access key: alt-o" 
+  accesskey="o"
+  tal:attributes="for field/id"
+  i18n:attributes="title;accesskey clear_expiration_time_accesskey"
+  i18n:translate=""
+  >clear expirati<u>o</u>n?
+</label>
+<tal:block 
+  attributes="id field/id"
+  replace="structure python: field.render()"
+/>
+</th>
 </tr>
 
 <tr class="inter-controls">
@@ -304,20 +304,20 @@ If this content should expire, set the time.
 <table class="listing sublisting">
 <tr class="top-controls">
 <td colspan="2">
-  <h3>
-    <span tal:condition="python:not closed or (unapproved and (closed or published))"
-      i18n:translate="">
-      publish new version
-    </span>
-    <span tal:condition="python: closed and not unapproved" i18n:translate="">
-      publish closed version
-    </span>
-  </h3>
+<h3>
+<span tal:condition="python:not closed or (unapproved and (closed or published))"
+  i18n:translate="">
+  publish new version
+</span>
+<span tal:condition="python: closed and not unapproved" i18n:translate="">
+  publish closed version
+</span>
+</h3>
 </td>
 </tr>
 
 <tr>
-  <th class="align-right" i18n:translate="">
+<th class="align-right" i18n:translate="">
 settings
 </th>
 <th style="width:40%" i18n:translate="">
@@ -347,13 +347,12 @@ day / month / year &nbsp;(23:59)
 <tr class="odd"
   tal:define="field view/tab_status_form_editor/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-  <label 
-    title="access key: alt-i"
-    accesskey="i"
-    
-    i18n:attributes="title;accesskey expiration_time_accesskey"
-    i18n:translate=""
-    tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
+<label 
+  title="access key: alt-i"
+  accesskey="i"
+  i18n:attributes="title;accesskey expiration_time_accesskey"
+  i18n:translate=""
+  tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
 <tal:block 
   attributes="id field/id"
   replace="structure python: field.render(REQUEST=request)"
@@ -367,13 +366,13 @@ Empty indicates no expiration.
 <tr>
 <th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_editor/publish_now_flag">
-    <label title="access key: alt-u" 
-      accesskey="u"
-      i18n:attributes="title;accesskey publish_right_now_accesskey"
-      i18n:translate=""
-      tal:attributes="for field/id">
-      p<u>u</u>blish right now?
-  </label>
+<label title="access key: alt-u" 
+  accesskey="u"
+  i18n:attributes="title;accesskey publish_right_now_accesskey"
+  i18n:translate=""
+  tal:attributes="for field/id">
+  p<u>u</u>blish right now?
+</label>
 <tal:block 
   attributes="id field/id" 
   replace="structure python: field.render(REQUEST=request)"
@@ -589,13 +588,13 @@ If necessary, the published version of this content can be manually closed (take
 <tfoot>
 <tr class="controls">
 <td class="align-right">
-  <input class="button"
-    type="submit"
-    value="close published version"
-    title="access key: alt-c"
-    accesskey="c" 
-    i18n:attributes="value;title;accesskey close_published_version_accesskey"
-    />
+<input class="button"
+  type="submit"
+  value="close published version"
+  title="access key: alt-c"
+  accesskey="c" 
+  i18n:attributes="value;title;accesskey close_published_version_accesskey"
+  />
 </td>
 </tr>
 </tfoot>
