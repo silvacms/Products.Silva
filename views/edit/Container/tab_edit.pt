@@ -504,7 +504,7 @@
                       />
                     </div>
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
-                      <div style="float: left; margin-left:0.2em;">
+                      <div style="float: left; margin-left:0.2em; margin-right:0.7em;">
                         <select class="manipulator"
                           name="new_position"
                           title="move selected items to"
@@ -544,7 +544,6 @@
                           i18n:attributes="value;title;accesskey move_accesskey"
                         />
                       </div>
-                      &nbsp;
                       <input class="transport"
                         name="tab_edit_rename_start:method"
                         type="submit"
