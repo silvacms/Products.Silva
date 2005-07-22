@@ -236,11 +236,12 @@ div.flowBar {
 
 div.middleground {
   display: block;
-  height: 1.7em;
+  height: 1.6em;
   background-color: #677a8c;
   margin: 0;
   padding: 0 17px 0 17px;
   border-bottom: 1px solid #456555;
+  font-size: 105%;
 }
 
 div.middleground a {
@@ -1038,7 +1039,7 @@ div.info {
   margin: 0;
   padding: 0.1em 0.5em 0.5em 0.5em;
   border: &dtml-listingBorder;;
-  width: 100%;/* fix IE glitch */
+  /* fix IE glitch? */
 }
 
 div.info h3 {
@@ -1216,7 +1217,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 code {
-  font-size: 120%;
+  font-size: 140%;
 }
 
 a {
