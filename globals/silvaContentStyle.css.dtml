@@ -72,7 +72,7 @@ div.flowBar {
 /* _____________________________________________________ middleground _____ */
 
 div.middleground {
-  background-color: #5d8872;
+  background-color: #628f79;
 }
 
 div.middleground a:hover {
