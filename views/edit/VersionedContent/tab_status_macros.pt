@@ -394,7 +394,7 @@ Empty indicates no expiration.
 <input class="executor"
   type="submit"
   value="publish now"
-  title="access key: alt-o"
+  title="access key: alt-p"
   accesskey="p"
   i18n:attributes="value;title;accesskey open_to_public_accesskey"
 />
