@@ -696,6 +696,13 @@ table.listing a.right {
   float: right;
 }
 
+table.listing a.navicon {
+  display: block;
+  width: 19px;
+  height: 100%;
+  float: left;
+}
+
 table.listing a.left:hover {
   background-image: url(<dtml-var root>/globals/slideleft.gif);
   background-color: transparent;
