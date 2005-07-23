@@ -8,9 +8,9 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="    
-    model request/model;
-    publication model;
-    tree publication/get_container_tree;
+    model           request/model;
+    publication     model;
+    tree            publication/get_container_tree;
     publication_url string:${publication/absolute_url}/edit/{__vein_id__};
 ">
 
@@ -52,13 +52,14 @@
 
 <tal:block repeat="indent_item tree">
   <tr tal:define="
-    item python:indent_item[1];
+    item   python:indent_item[1];
     indent python:indent_item[0];
     ">
     <td class="{__class__}"
       tal:define="
         item_url string:${item/absolute_url};
-        title item/get_short_title_editable">
+        vein_url string:${item_url}/edit/{__vein_id__};
+        title    item/get_short_title_editable">
       <a class="right" 
         title="slide to the publish screen"
         tal:attributes="href string:${item_url}/edit/tab_status"
@@ -72,25 +73,26 @@
         &nbsp;
       </a>
       <a class="navicon"
-        title="container"
-        tal:attributes="href string:${item_url}/edit/{__vein_id__}"
+        tal:attributes="
+          href  string:${vein_url};
+          style python:'padding-left:'+str(indent * 10 + 4)+'px';
+          title item/meta_type;
+        "
         i18n:attributes="title">
         <img tal:replace="structure python:here.render_icon(item)" />
       </a>
       <div class="normal"
-        tal:attributes="
-          style python:'padding-left:'+str(indent * 10 + 8)+'px';
-          onclick string:javascript:window.location='${item_url}/edit/{__vein_id__}'">
+        tal:attributes="onclick string:javascript:window.location='${vein_url}'">
         <a class="blacklink"
           tal:attributes="
-            href string:${item_url}/edit/{__vein_id__};
+            href string:${vein_url};
             title string:id: ${item/id};"
           tal:content="title">
           title
         </a>
         <a class="normal"
           tal:attributes="
-            href string:${item_url}/edit/{__vein_id__};
+            href string:${vein_url};
             title string:id: ${item/id};"
           tal:condition="python:title == ''"
           tal:content="item/id"
