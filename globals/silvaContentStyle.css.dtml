@@ -107,6 +107,23 @@ div.middleground a.normal:hover {
 }
 
 
+/* ____________________________________________________ sidebar stack _____ */
+
+td.selected {
+  background: #dbeae2;
+}
+
+td.unselected {
+  background: #cadcd2;
+  border-top-color: #cadcd2;
+  border-bottom-color: #cadcd2;
+}
+
+td.unselected:hover {
+  background-color: #e4f4ec;
+} 
+
+
 /* ____________________________________________ content listing table _____ */
 
 table.listing td.top {
