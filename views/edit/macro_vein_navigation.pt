@@ -112,7 +112,7 @@
       </tr>
       <tr>
         <td class="unselected"
-          style="border-top:none; padding-left:2px ! important;">
+          style="border-top:none; padding-left:1px ! important;">
           <div class="normal"
             tal:attributes="onclick string:javascript:window.location='${container_vein_url}'">
             <a class="right" 
