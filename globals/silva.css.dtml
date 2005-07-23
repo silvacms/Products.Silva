@@ -599,6 +599,12 @@ table.listing th.top a.normal:hover {
   text-decoration: none;
 }
 
+table.listing th.subth {
+  color: #e9f5f7;
+  background: #92a3ad;
+  text-align: center;
+}
+
 /* _______ uplinks _______ */
 table.listing a.top {
   display: block;
