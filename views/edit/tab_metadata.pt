@@ -42,6 +42,21 @@
         i18n:translate=""
         ><u>a</u>ddables...</a>
     </tal:block>
+    <tal:block define="
+      permissions view/get_silva_permissions;
+      unapproved_version model/get_unapproved_version | nothing;
+      have_approve_permission permissions/ApproveSilvaContent | nothing;
+      ">
+      <a title="publish this document: alt-p"
+        accesskey="p"
+        class="executor"
+        tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
+        i18n:translate=""
+        i18n:attributes="title;accesskey open_to_public_accesskey"
+        tal:condition="python: unapproved_version and have_approve_permission">
+        publish&nbsp;now
+      </a>
+    </tal:block>
   </div>
 </metal:block>
 
@@ -65,7 +80,7 @@
         
         <td class="main"
           tal:define="display_flag python:1;">
-          <tal:block replace="nothing">edit editable version metadata</tal:block>
+          <tal:block replace="nothing"> _______ edit editable version metadata _______ </tal:block>
           <tal:block condition="model/implements_versioning">
             <tal:block 
               define="content model/get_editable | nothing;"
@@ -73,31 +88,30 @@
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
             </tal:block>
             
-            <tal:block replace="nothing">view previewable version metadata</tal:block>
+            <tal:block replace="nothing"> _______ view previewable version metadata _______ </tal:block>
             <tal:block 
               define="content model/get_previewable | nothing;"
-              condition="model/get_approved_version"
-              >
+              condition="model/get_approved_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
                   <tal:block i18n:translate="">metadata
                   <tal:block condition="not: model/implements_container" i18n:name="for_approved_version_of_title">
                     <tal:block i18n:translate="">for approved version of
-                      &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</tal:block>
-                  </tal:block></tal:block>
+                      &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
+                    </tal:block>
+                  </tal:block>
+                  </tal:block>
                 </h2>
               </metal:block>
             </tal:block>
             
-            <tal:block replace="nothing">view public version metadata</tal:block>
+            <tal:block replace="nothing"> _______ view public version metadata _______ </tal:block>
             <tal:block 
               define="
                 content model/get_viewable | nothing;
                 display_flag python:0"
-              condition="
-                model/get_public_version"
-              >
+              condition="model/get_public_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
@@ -110,14 +124,12 @@
               </metal:block>
             </tal:block>
 
-            <tal:block replace="nothing">view closed version metadata</tal:block>
+            <tal:block replace="nothing"> _______ view closed version metadata _______ </tal:block>
             <tal:block 
               define="
                 content model/get_last_closed | nothing;
                 display_flag python:0"
-              condition="
-                python: not model.get_next_version() and not model.get_public_version()"
-              >
+              condition="python: not model.get_next_version() and not model.get_public_version()">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
@@ -131,7 +143,7 @@
             </tal:block>
           </tal:block>
           
-          <tal:block replace="nothing">edit single version metadata</tal:block>
+          <tal:block replace="nothing"> _______ edit single version metadata _______ </tal:block>
           <tal:block condition="not: model/implements_versioning">
             <tal:block define="content model">
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
