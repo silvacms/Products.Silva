@@ -1335,6 +1335,7 @@ input:focus:hover, textarea:focus:hover {
 }
 
 select:focus, select:hover {
+  color: #333344;
   background-color: #c3d5e7;
 }
 
