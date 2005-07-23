@@ -185,10 +185,7 @@
              class status_style;
              title string:id: ${item/id};
           ">
-            <em tal:condition="is_default"
-              i18n:translate="">
-              index of
-            </em>
+            <em tal:condition="is_default" i18n:translate="">index:</em>
             <span tal:replace="python: title == '' and item.id or title">
               title
             </span>
