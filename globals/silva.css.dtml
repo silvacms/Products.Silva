@@ -31,7 +31,7 @@
 ** silva specific styles
 **   align/float
 **   lists
-**   forms
+**   forms eye candy
 ** links
 ** local styles
 */
@@ -1315,30 +1315,27 @@ ul.tips-nested {
   line-height: 130%;
 }
 
-/* _______________________________________ forms _______ */
+/* _____________________________ forms eye candy _______ */
 
 .fixIE6widget {
   width: 90%;
 }
 
 input:focus, textarea:focus {
-  color: #333355;
-  background: #e3f0e4 none;
+  border-color : #05c188;
+  background-color: #e3f0e4;
 }
 
 input:hover, textarea:hover {
-  color: #333355;
-  background: #e3f0e4 none;
-}
-
-select:focus, select:hover {
-  color: #333344;
-  background: #c3d5e7;
+  background-color: #ebf7ee;
 }
 
 input:focus:hover, textarea:focus:hover {
-  color: #333355;
-  background: #e3f0e4;
+  background-color: #f1fdf4;
+}
+
+select:focus, select:hover {
+  background-color: #c3d5e7;
 }
 
 /* cool glow */
