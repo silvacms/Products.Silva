@@ -128,13 +128,13 @@
             </a>
             <a class="blacklink"
               href="top"
-              tal:attributes="
-                href container_vein_url;
-                title string:id: ${container/id};
-              "
               tal:content="python: container.get_short_title_editable() == '' and container.id or container.get_short_title_editable()"
-              i18n:attributes="title">
-                container
+              i18n:attributes="title"
+              tal:attributes="
+                href  container_vein_url;
+                title string:id: ${container/id};
+              ">
+              container
             </a>
           </div>
         </td>
@@ -180,9 +180,9 @@
             style   string:padding-left:8px;
             onclick string:javascript:window.location='${item_vein_url}'">
           <a tal:attributes="
-             href  item_vein_url;
-             class status_style;
-             title string:id: ${item/id};
+            href  item_vein_url;
+             lass status_style;
+            title string:id: ${item/id};
           ">
             <em tal:condition="is_default" i18n:translate="">index:</em>
             <span tal:replace="python: title == '' and item.id or title">
