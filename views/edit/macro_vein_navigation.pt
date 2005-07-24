@@ -181,7 +181,7 @@
             onclick string:javascript:window.location='${item_vein_url}'">
           <a tal:attributes="
             href  item_vein_url;
-             lass status_style;
+            class status_style;
             title string:id: ${item/id};
           ">
             <em tal:condition="is_default" i18n:translate="">index:</em>
