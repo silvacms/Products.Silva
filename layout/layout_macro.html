@@ -44,46 +44,18 @@
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
-  <!-- Access navigation links - remove if not needed for better performance -->
+  <!-- Access navigation links -->
   <tal:block define="surround here/get_document_navigation_links | nothing">
     <tal:repeat repeat="link surround/keys">
      <tal:condition condition="python:surround[link] != '..'">
-      <link tal:attributes="
+      <link tal:condition="python:surround[link] or None"
+        tal:attributes="
         rel link; 
-        href python:surround[link].absolute_url() +
-            (surround[link].get_container() == surround[link] and '/' or '')"
-          tal:condition="python:surround[link] or None"/>
-        </tal:condition>
+        href python:surround[link].absolute_url() + (surround[link].get_container() == surround[link] and '/' or '')"
+        />
+      </tal:condition>
     </tal:repeat>
-    <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href
-    surround/up" />
-  </tal:block>
-  <tal:block define="doclinks here/get_document_index_links | nothing">
-    <link rel="index" tal:attributes="href doclinks/index"
-        tal:condition="doclinks/index | nothing" />
-    <link rel="contents" tal:attributes="href doclinks/contents"
-        tal:condition="doclinks/contents | nothing" />
-  </tal:block>
-  <tal:block define="types here/get_document_chapter_links | nothing">
-      <tal:repeat repeat="item types/chapter"
-        tal:condition="types/chapter | nothing">
-          <link rel="chapter" tal:attributes="title item/title; href
-            item/url;"/>
-      </tal:repeat>
-      <tal:repeat repeat="item types/section"
-        tal:condition="types/section | nothing">
-          <link rel="section" tal:attributes="title item/title; href item/url;" />
-      </tal:repeat>
-      <tal:repeat repeat="item types/subsection"
-        tal:condition="types/subsection | nothing">
-          <link rel="subsection" tal:attributes="title item/title; href
-          item/url;" />
-      </tal:repeat>
-      <tal:repeat repeat="item types/subsubsection"
-        tal:condition="types/subsubsection | nothing">
-          <link rel="subsubsection" tal:attributes="title item/title;
-          href item/url;" />
-      </tal:repeat>
+    <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href surround/up" />
   </tal:block>
   <!-- /End access navigation links -->
   <link rel="copyright" title="Copyright"
