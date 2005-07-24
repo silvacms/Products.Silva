@@ -67,12 +67,12 @@
       </th>
     </tr>
   </thead>
-  <tal:block replace="nothing">
-    _____________________ sidebar for containers _____________________
-  </tal:block>
   <tbody>
     <tal:block replace="nothing">
       ______________ vein navigation stack ______________
+    </tal:block>
+    <tal:block replace="nothing">
+      _____________________ sidebar for containers _____________________
     </tal:block>
     <tal:block condition="python: model.implements_container()">
       <metal:define-slot define-slot="sidebar">
@@ -80,11 +80,11 @@
       </metal:define-slot>
     </tal:block>
     <tal:block replace="nothing">
-      _____________________ sidebar for items _____________________
+      _____________________ sidebar for folder items _____________________
     </tal:block>
     <tal:condition condition="not:model/implements_container">
       <tal:block replace="nothing">
-        ______________ level navigation stack ______________ 
+        ______________ level navigation ______________ 
       </tal:block>
       <tal:define define="
         objects            python:model.get_tree(0);
@@ -106,7 +106,6 @@
           items
         </th>
       </tr>
-      
       <tr tal:replace="nothing">
         _______ level container row _______
       </tr>
