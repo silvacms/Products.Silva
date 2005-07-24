@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 # python
 import re
@@ -26,9 +26,9 @@ URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@
 _url_match = re.compile(URL_PATTERN)
 
 class Link(CatalogedVersionedContent):
-    __doc__ = _("""A Link makes it possible to include links to external sites &#8211; 
+    __doc__ = _("""A Silva Link makes it possible to include links to external sites &#8211; 
        outside of Silva &#8211; in a Table of Contents. The content of a Link 
-       is simply a hyperlink, beginning with &#8220;http://....&#8221;.
+       is simply a hyperlink, beginning with &#8220;http://....&#8221;, or https, ftp, news, and mailto.
     """)
     security = ClassSecurityInfo()
 

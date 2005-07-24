@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.94 $
+# $Revision: 1.95 $
 
 # Zope
 from OFS import SimpleItem
@@ -222,11 +222,11 @@ class GhostBase:
 
 class Ghost(CatalogedVersionedContent):
     __doc__ = _("""Ghosts are special documents that function as a
-       placeholder for an object in another location (like an alias,
+       placeholder for an item in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
        Visitor to another location, a ghost object keeps the Visitor in the
        current publication, and presents the content of the ghosted item.
-       The ghost object inherits properties from its location (e.g. layout 
+       The ghost inherits properties from its location (e.g. layout 
        and stylesheets).  
     """)
     

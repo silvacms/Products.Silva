@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.10 2005/01/19 14:26:09 faassen Exp $
+# $Id: AutoTOC.py,v 1.11 2005/07/24 04:00:43 kitblake Exp $
 
 # Zope
 from Globals import InitializeClass
@@ -24,7 +24,7 @@ icon = "www/autotoc.png"
 addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
-    __doc__ = _("""Automatically displays a table of contents. If it's named 'index', the parent folder will show a table of contents when requested (e.g. http://www.x.yz/silva/myFolder/).""")
+    __doc__ = _("""This is a special document that automatically displays a table of contents. Usually it&#8217;s used as an &#8216;index&#8217; document. In that case the parent folder shows a table of contents when accessed (e.g. http://www.x.yz/silva/myFolder/).""")
 
     security = ClassSecurityInfo()
 

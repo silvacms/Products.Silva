@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.64 $
+# $Revision: 1.65 $
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -24,8 +24,9 @@ icon="www/silvapublication.gif"
 addable_priority = -0.5
 
 class Publication(Folder.Folder):
-    __doc__ = _("""Publications function as the major organizing blocks of a Silva site. 
-       They are comparable to binders, and can contain folders, documents, and assets. 
+    __doc__ = _("""Publications are special folders. They function as the 
+       major organizing blocks of a Silva site. They are comparable to 
+       binders, and can contain folders, documents, and assets. 
        Publications are opaque. They instill a threshold of view, showing
        only the contents of the current publication. This keeps the overview
        screens manageable. Publications have configuration settings that
