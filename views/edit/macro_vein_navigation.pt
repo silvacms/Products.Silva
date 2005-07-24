@@ -158,7 +158,7 @@
         tal:define="title item/get_short_title_editable">
         <a class="right" 
           title="slide to the publish screen"
-          tal:condition="item/implements_versioning"
+          tal:condition="python:item.implements_versioning() or item.implements_container()"
           tal:attributes="href string:${item_url}/edit/tab_status"
           i18n:attributes="title">
           &nbsp;
