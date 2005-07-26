@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_silvaviews.py,v 1.2 2005/05/23 16:30:21 faassen Exp $
+# $Id: test_silvaviews.py,v 1.3 2005/07/26 20:36:37 walco Exp $
 
 from __future__ import nested_scopes
 
@@ -72,6 +72,19 @@ path =  (
     '/doc2/edit/doc2/edit/doc2/edit/doc2/edit/doc2/edit'
     '/testimage')
     
+path_to_nonexisting_content = (
+    '/root/publication/folder'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+     '/testimag')
+ 
 class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
@@ -113,6 +126,16 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         object = self.root.restrictedTraverse(path, None)
         self.assertEquals('testimage', object.id)
         # In the ideal situation, this would result in None instead
+
+    def test_traverse_through_borked_edit_path_to_nonexisting_content(self):
+        object = self.root.restrictedTraverse(path_to_nonexisting_content, None)
+        self.assertEquals(None, object)
+
+    def test_publish_nonexisting_content(self):
+        uf = self.root.acl_users
+        uf._doAddUser('manager', 'r00t', ['Manager'], [])
+        response = self.publish(path_to_nonexisting_content, basic='manager:rOOt')
+        self.assertEquals(404, response.getStatus())
         
     def test_traverse_to_silvadocument_tab_metadata_view(self):
         # In an earlier attempt to get the described behaviour the
