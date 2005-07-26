@@ -64,7 +64,7 @@ contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
 evenRowBackground:string=#c6d2dd
-oddRowBackground:string=#cde0f2
+oddRowBackground:string=#dae7fa
 
 listingTopBackground:string=#c4d6e7
 listingTopHeadingColor:string=#2d2d4c

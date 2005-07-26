@@ -110,7 +110,7 @@ div.middleground a.normal:hover {
 /* ____________________________________________________ sidebar stack _____ */
 
 td.selected {
-  background: #dbeae2;
+  background: #e4f4ec;
 }
 
 td.unselected {
@@ -120,7 +120,7 @@ td.unselected {
 }
 
 td.unselected:hover {
-  background-color: #e4f4ec;
+  background-color: #ddece6;
 } 
 
 

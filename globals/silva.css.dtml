@@ -658,7 +658,7 @@ td.unselected {
 
 td.unselected:hover {
   color: &dtml-mainTabFontColorSelected;;
-  background-color: #dae7fa;
+  background-color: #cee2f5;
   cursor: pointer;
 } 
 
@@ -1323,15 +1323,15 @@ ul.tips-nested {
 
 input:focus, textarea:focus {
   border-color : #05c188;
-  background-color: #e3f0e4;
+  background-color: #e8f7ef;
 }
 
 input:hover, textarea:hover {
-  background-color: #ebf7ee;
+  background-color: #e3f0e4;
 }
 
 input:focus:hover, textarea:focus:hover {
-  background-color: #f1fdf4;
+  background-color: #effbf2;
 }
 
 select:focus, select:hover {
