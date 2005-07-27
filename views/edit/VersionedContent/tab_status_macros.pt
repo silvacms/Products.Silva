@@ -301,7 +301,7 @@ If this content should expire, set the time.
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
 <form action="tab_status_approve" method="POST">
-<table class="listing sublisting">
+<table class="listing">
 <tr class="top-controls">
 <td colspan="2">
 <h3>
@@ -489,7 +489,7 @@ The message may be viewed by local users.
 <div tal:omit-tag=""
   metal:define-macro="revoke_approval">
 <form action="tab_status_revoke" method="POST">
-<table class="listing sublisting">
+<table class="listing">
 <thead>
 <tr class="top-controls">
 <td>

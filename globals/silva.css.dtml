@@ -398,7 +398,7 @@ table.columns1 td.main {
 table.listing {
   color: #444444;
   width: 100%;
-  margin: 0em 0em 2em 0em;
+  margin: 0em 0em 1em 0em;
   border-left: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
   border-collapse: collapse;
@@ -724,10 +724,11 @@ div.normal {
 
 table.sublisting {
   margin-top: 1em;
+  margin-bottom: 1em;
 }
 
+/* niu? */
 table.interlisting {
-  margin: 0;
 }
 
 /* used to shape non-nested listing tables */
