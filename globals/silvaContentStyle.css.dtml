@@ -110,9 +110,9 @@ td.selected {
 }
 
 td.unselected {
-  background: #cadcd2;
-  border-top-color: #cadcd2;
-  border-bottom-color: #cadcd2;
+  background: #c0d5ce;
+  border-top-color: #c0d5ce;
+  border-bottom-color: #c0d5ce;
 }
 
 td.unselected:hover {
