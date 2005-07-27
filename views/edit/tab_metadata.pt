@@ -11,7 +11,6 @@
     global vein string:metadata;"
   i18n:domain="silva">
 
-<!-- tab_metadata for content (non-Container) objects -->
 <metal:block use-macro="here/macro_index/macros/master">
   
 <metal:block metal:fill-slot="middleground">
@@ -25,14 +24,14 @@
       tal:attributes="href string:${url}/edit/tab_settings"
       i18n:attributes="title;accesskey tab_settings_accesskey"
       i18n:translate=""
-      >s<u>e</u>ttings...</a>
+      >settings...</a>
     <tal:block condition="context/is_subscribable_content">
       <a title="manage subscriptions: alt-u"
         accesskey="u"
         tal:attributes="href string:${url}/edit/tab_subscriptions"
         i18n:attributes="title;accesskey manage_subscriptions_accesskey"
         i18n:translate=""
-        >s<u>u</u>bscriptions...</a>
+        >subscriptions...</a>
     </tal:block>
     <tal:block condition="python: ispublication and may_approve_content">
       <a title="change the addables allowed in this publication: alt-a"
@@ -40,7 +39,7 @@
         accesskey="a"
         i18n:attributes="title;accesskey configure_addables_accesskey"
         i18n:translate=""
-        ><u>a</u>ddables...</a>
+        >addables...</a>
     </tal:block>
     <tal:block define="
       permissions view/get_silva_permissions;
