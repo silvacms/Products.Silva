@@ -75,12 +75,8 @@ div.middleground {
   background-color: #628f79;
 }
 
-div.middleground a:hover {
-  background: &dtml-contentTabBackgroundSelected;;
-}
-
 div.middleground a.selected {
-  /* The selected tab. There's only one of these */
+  /* The selected tab. There's only one  */
   color: &dtml-mainTabFontColorSelected;;
   background: #a7d4b6;
   border-color: &dtml-mainTabBorderColor;;
@@ -92,7 +88,7 @@ div.middleground a.selected:visited {
 }
 
 /* niu */
-/* extra button floating right */
+/* extra button floating right
 div.middleground a.normal {
   width : 10em;
 }
@@ -105,12 +101,12 @@ div.middleground a.normal:hover {
   background: &dtml-contentTabBackgroundSelected;;
   text-decoration: none;
 }
-
+*/
 
 /* ____________________________________________________ sidebar stack _____ */
 
 td.selected {
-  background: #e4f4ec;
+  background: #ddece6;
 }
 
 td.unselected {
@@ -120,7 +116,7 @@ td.unselected {
 }
 
 td.unselected:hover {
-  background-color: #ddece6;
+  background-color: #d4e9e7;
 } 
 
 
