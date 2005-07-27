@@ -265,8 +265,9 @@ div.middleground a:visited {
   background: #4d5680;
 }
 div.middleground a:hover {
-  color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  color: #e5fffe;
+  background: #74748b;
+  border-color: #99b4cf;
   text-decoration: none;
 }
 
@@ -286,7 +287,7 @@ div.middleground a.executor {
 div.middleground a.executor:hover {
   border-color: #8dc1a8;
   color: #e5ffec;
-  background: #4393a3;
+  background: #538da3;
 }
 div.middleground a.executor:active {
   color: &dtml-mainTabFontColorSelected;;
@@ -906,7 +907,7 @@ input.executor {
 }
 input.executor[type="submit"]:hover {
   color: #e5ffec;
-  background: #4393a3;
+  background: #538da3;
   border-color: #8dc1a8;
 }
 
