@@ -27,7 +27,8 @@
     >
     <input type="hidden" name="returntotab" tal:attributes="value template/id"/>    
     <table class="listing"
-      tal:condition="binding">
+      tal:condition="binding"
+      tal:attributes="style python:test(is_container, nothing, 'margin-bottom:2em')">
       <thead>
         <tr tal:replace="nothing">
           ______________ vein + title row ______________
