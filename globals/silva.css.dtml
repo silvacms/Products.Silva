@@ -726,12 +726,6 @@ form.sublisting {
   padding-top: 1em;
 }
 
-/* niu */
-table.sublisting {
-}
-table.interlisting {
-}
-
 /* used to shape non-nested listing tables */
 .focus-box {
   /* for IE5 */
