@@ -281,11 +281,11 @@
   global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
 
-<form action="." enctype="multipart/form-data" method="POST">
+<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
   <input type="hidden" 
     name="refs"
     tal:attributes="value python: '||'.join(refs)" />
-  <table class="listing sublisting">
+  <table class="listing">
     <thead>
       <tr tal:replace="nothing">
         ______________ vein + title row ______________

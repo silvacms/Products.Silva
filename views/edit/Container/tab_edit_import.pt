@@ -253,8 +253,8 @@
   global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
 
-<form action="." enctype="multipart/form-data" method="POST">
-  <table class="listing sublisting">
+<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
+  <table class="listing">
     <thead>
       <tr tal:replace="nothing">
         ______________ vein + title row ______________
