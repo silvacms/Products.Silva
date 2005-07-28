@@ -722,14 +722,13 @@ div.normal {
 
 /* ________________________________ focus shapes _______ */
 
-table.sublisting {
-}
-
 form.sublisting {
   padding-top: 1em;
 }
 
-/* niu? */
+/* niu */
+table.sublisting {
+}
 table.interlisting {
 }
 

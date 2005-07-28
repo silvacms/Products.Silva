@@ -180,10 +180,6 @@ _______ manual close section here _______
 </div>
 </check>
 
-
-<span tal:replace="nothing"> _____________________ export focus box _____________________ </span>
- <form class="sublisting" action="." enctype="multipart/form-data" method="POST">
-
 <tal:replace replace="nothing">
 <span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and approved">
@@ -230,12 +226,15 @@ _______ manual close section here _______
 </div>
 </tal:replace>
 
+<span tal:replace="nothing"> _____________________ versioning focus box _____________________ </span>
+<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
+
       <!-- version management -->
       <tal:block define="versions here/get_sorted_model_versions">
         <input type="hidden" 
                 name="refs:list"
                 tal:attributes="value python: request['model'].create_ref(request['model'])" />
-        <table class="listing sublisting" id="sortable" tal:condition="may_change_content">
+        <table class="listing" id="sortable" tal:condition="may_change_content">
           <thead>
             <tr>
               <td class="top" colspan="7">
