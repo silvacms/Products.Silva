@@ -229,133 +229,135 @@ _______ manual close section here _______
 <span tal:replace="nothing"> _____________________ versioning focus box _____________________ </span>
 <form class="sublisting" action="." enctype="multipart/form-data" method="POST">
 
-      <!-- version management -->
-      <tal:block define="versions here/get_sorted_model_versions">
-        <input type="hidden" 
-                name="refs:list"
-                tal:attributes="value python: request['model'].create_ref(request['model'])" />
-        <table class="listing" id="sortable" tal:condition="may_change_content">
-          <thead>
-            <tr>
-              <td class="top" colspan="7">
-                 <h2 tal:attributes="title string:id: ${model/id}">
-                   <img tal:replace="structure python:view.render_icon(model)" />
-                   <tal:block i18n:translate="">
-                   manage versions of &#xab;<tal:block 
-                      content="string:${model/get_title_or_id}"
-                      i18n:name="export_id">id</tal:block>&#xbb;
-                   </tal:block>
-                 </h2>
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th width="1%">&#xa0;</th>
-              <th width="25%" i18n:translate="">modification time</th>
-              <th width="25%" i18n:translate="">publication time</th>
-              <th width="25%" i18n:translate="">expiration time</th>
-              <th width="1%" i18n:translate="">last author</th>
-              <th width="1%" i18n:translate="">creator</th>
-              <th i18n:translate="">version status</th>
-            </tr>
-            <tr tal:repeat="version versions"
-                tal:attributes="class python: test(repeat['version'].odd(), 'odd', 'even')">
-              <tal:block define="versionid version/id;
-                                  modificationtime python: vmadapter.getVersionModificationTime(versionid);
-                                  publicationtime python: vmadapter.getVersionPublicationTime(versionid);
-                                  expirationtime python: vmadapter.getVersionExpirationTime(versionid);
-                                  lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
-                                  creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
-                                  version_status python: vmadapter.getVersionStatus(versionid);
-                                  style python: ((version_status == 'unapproved' and 'draft') or 
-                                                  (version_status == 'last_closed' and 'closed') or
-                                                  version_status);
-              ">
-                <td class="listing-left">
-                  <input type="checkbox" 
-                          name="versions:list" 
-                          tal:attributes="value version/id; id string:version_${version/id}" />
-                  <label tal:attributes="for string:version_${version/id}"
-                          tal:content="version/id">
-                    id
-                  </label>
-                </td>
-                <td style="white-space: nowrap"
-                    tal:content="python: mangle.DateTime(modificationtime).toStr() or '-'">
-                  modificationtime
-                </td>
-                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr() or '-'">
-                  publicationtime
-                </td>
-                <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr() or '-'">
-                  expirationtime
-                </td>
-                <td style="white-space: nowrap" tal:content="lastauthor">
-                  last author
-                </td>
-                <td style="white-space: nowrap" tal:content="creator">
-                  creator
-                </td>
-                <td>
-                  <a tal:content="version_status"
-                      tal:attributes="href python:('%s/edit/tab_status_view_version?version=%s' % 
-                                                    (model.absolute_url(), version.id));
-                                     	title python:here.tab_status_get_status_link_title(version.get_title());
-                                     	class style"
-				     	i18n:translate="">
-                    version_status
-                  </a>
-                </td>
-              </tal:block>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr tal:condition="versions">
-              <th class="listing-left"
-                colspan="3">
-                <tal:define define="select_id string:versions">
-                  <metal:block use-macro="view/macro_select_all/macros/select_all" />
-                </tal:define>
-              </th>
-              <th colspan="4">
-                &#xa0;
-              </th>
-            </tr>
-            <tr class="controls">
-              <td class="align-right" colspan="7">
-                <input class="transport"
-                  type="submit"
-                  name="tab_status_view_versions_start:method"
-                  title="view the selected versions next to each other: alt-="
-                  value="compare..."
-                  accesskey="="
-                  i18n:attributes="value;title;accesskey compare_accesskey"
-                />
-                <input class="warning"
-                  type="submit"
-                  name="tab_status_delete_versions:method"
-                  value="delete"
-                  title="there's no undo: alt-d"
-                  accesskey="d"
-                  onclick="if (!confirm('Are you sure?')) return false"
-                  i18n:attributes="value;title;onclick;accesskey delete_accesskey"
-                />
-                <input class="button"
-                  type="submit"
-                  name="tab_status_revert_to_old:method"
-                  value="copy for editing"
-                  title="create a new editable version of the selected old one: alt-f"
-                  accesskey="f"
-                  i18n:attributes="value;title;accesskey copy_for_editing_accesskey"
-                />
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </tal:block>
+<!-- version management -->
+<tal:block define="versions here/get_sorted_model_versions">
+  <input type="hidden" 
+    name="refs:list"
+    tal:attributes="value python: request['model'].create_ref(request['model'])" />
+  <table class="listing" id="sortable" tal:condition="may_change_content">
+    <thead>
+      <tr>
+        <td class="top" colspan="7">
+           <h2 tal:attributes="title string:id: ${model/id}">
+             <img tal:replace="structure python:view.render_icon(model)" />
+             <tal:block i18n:translate="">
+             manage versions of &#xab;<tal:block 
+                content="string:${model/get_title_or_id}"
+                i18n:name="export_id">id</tal:block>&#xbb;
+             </tal:block>
+           </h2>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th width="1%">&#xa0;</th>
+        <th width="25%" i18n:translate="">modification time</th>
+        <th width="25%" i18n:translate="">publication time</th>
+        <th width="25%" i18n:translate="">expiration time</th>
+        <th width="1%" i18n:translate="">last author</th>
+        <th width="1%" i18n:translate="">creator</th>
+        <th i18n:translate="">version status</th>
+      </tr>
+      <tr tal:repeat="version versions"
+          tal:attributes="class python: test(repeat['version'].odd(), 'odd', 'even')">
+        <tal:block define="
+          versionid version/id;
+          modificationtime python: vmadapter.getVersionModificationTime(versionid);
+          publicationtime python: vmadapter.getVersionPublicationTime(versionid);
+          expirationtime python: vmadapter.getVersionExpirationTime(versionid);
+          lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
+          creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
+          version_status python: vmadapter.getVersionStatus(versionid);
+          style python: ((version_status == 'unapproved' and 'draft') or 
+                          (version_status == 'last_closed' and 'closed') or
+                          version_status);
+        ">
+          <td class="listing-left">
+            <input type="checkbox" 
+              name="versions:list" 
+              tal:attributes="value version/id; id string:version_${version/id}" />
+            <label tal:attributes="for string:version_${version/id}"
+              tal:content="version/id">
+              id
+            </label>
+          </td>
+          <td style="white-space: nowrap"
+            tal:content="python: mangle.DateTime(modificationtime).toStr() or '-'">
+            modificationtime
+          </td>
+          <td style="white-space: nowrap" tal:content="python: mangle.DateTime(publicationtime).toStr() or '-'">
+            publicationtime
+          </td>
+          <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr() or '-'">
+            expirationtime
+          </td>
+          <td style="white-space: nowrap" tal:content="lastauthor">
+            last author
+          </td>
+          <td style="white-space: nowrap" tal:content="creator">
+            creator
+          </td>
+          <td>
+            <a tal:content="version_status"
+              tal:attributes="
+                href python:('%s/edit/tab_status_view_version?version=%s' % (model.absolute_url(), version.id));
+                title python:here.tab_status_get_status_link_title(version.get_title());
+                class style"
+              i18n:translate="">
+              version_status
+            </a>
+          </td>
+        </tal:block>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr tal:condition="versions">
+        <th class="listing-left"
+          colspan="3">
+          <tal:define define="select_id string:versions">
+            <metal:block use-macro="view/macro_select_all/macros/select_all" />
+          </tal:define>
+        </th>
+        <th colspan="4">
+          &#xa0;
+        </th>
+      </tr>
+      <tr class="controls">
+        <td class="align-right" colspan="7">
+          <input class="transport"
+            type="submit"
+            name="tab_status_view_versions_start:method"
+            title="view the selected versions next to each other: alt-="
+            value="compare..."
+            accesskey="="
+            i18n:attributes="value;title;accesskey compare_accesskey"
+          />
+          <input class="warning"
+            type="submit"
+            name="tab_status_delete_versions:method"
+            value="delete"
+            title="there's no undo: alt-d"
+            accesskey="d"
+            onclick="if (!confirm('Are you sure?')) return false"
+            i18n:attributes="value;title;onclick;accesskey delete_accesskey"
+          />
+          <input class="button"
+            type="submit"
+            name="tab_status_revert_to_old:method"
+            value="copy for editing"
+            title="create a new editable version of the selected old one: alt-f"
+            accesskey="f"
+            i18n:attributes="value;title;accesskey copy_for_editing_accesskey"
+          />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</tal:block>
 
- </form>
+</form>
+
       </td>
       <tal:block replace="nothing">
         _____________________ right column _____________________ 
