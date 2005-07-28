@@ -778,15 +778,10 @@ textarea.readable {
   font: 100% Verdana, Helvetica, Arial, sans-serif;
 }
 
-input.store, select.store {
-  font: &dtml-inputFont;;
-  color: &dtml-inputFontColor;;
-  background: &dtml-inputBackground;;
-  width: 90%;
+input.store, select.store, textarea.store {
+  width: 93%;
   margin-top: 1px;
   margin-bottom: 1px;/* IE bug fix */
-  padding: 0.1em;
-  border: &dtml-inputBorder;;
 }
 
 /* 
