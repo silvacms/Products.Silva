@@ -726,7 +726,7 @@ table.sublisting {
 }
 
 form.sublisting {
-  margin-top: 1em;
+  padding-top: 1em;
 }
 
 /* niu? */
