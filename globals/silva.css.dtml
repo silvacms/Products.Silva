@@ -723,8 +723,10 @@ div.normal {
 /* ________________________________ focus shapes _______ */
 
 table.sublisting {
+}
+
+form.sublisting {
   margin-top: 1em;
-  margin-bottom: 1em;
 }
 
 /* niu? */

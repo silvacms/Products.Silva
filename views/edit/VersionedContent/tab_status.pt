@@ -182,7 +182,7 @@ _______ manual close section here _______
 
 
 <span tal:replace="nothing"> _____________________ export focus box _____________________ </span>
- <form action="." enctype="multipart/form-data" method="POST">
+ <form class="sublisting" action="." enctype="multipart/form-data" method="POST">
 
 <tal:replace replace="nothing">
 <span tal:replace="nothing"> _______ status: content is approved, not published _______ </span>
