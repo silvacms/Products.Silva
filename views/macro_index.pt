@@ -44,7 +44,7 @@
 </title>
 <link href="globals/favicon.ico"
   rel="shortcut icon"
-  tal:attributes="href string:${root_url}/globals/favicon.ico"
+  tal:attributes="href string:$root_url/globals/favicon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
@@ -59,20 +59,14 @@
   rel="stylesheet"
   type="text/css"
   tal:condition="python: not model.implements_container()"
-  tal:attributes="href string:${root_url}/globals/silvaContentStyle.css"
+  tal:attributes="href string:$root_url/globals/silvaContentStyle.css"
 />
+<tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
+<metal:block define-slot="frontend" />
+<tal:block replace="nothing"> _______ hook for local style tag _______ </tal:block>
+<metal:block define-slot="style" />
 <tal:block replace="nothing"> _______ hook for metatype stylesheet _______ </tal:block>
 <metal:block define-slot="metatype_css" />
-<tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
-<tal:block condition="nothing">
-      XXX sucky, this needs to be done from tab_preview, we don't want 
-      hard-coded dependencies here
-</tal:block>
-<link rel="stylesheet"
-  type="text/css"
-  tal:condition="python:template.id == 'tab_preview'"
-  tal:attributes="href here/frontend.css/absolute_url | nothing"
-/>
 <tal:block replace="nothing"> _______ hook for application specific stylesheet _______ </tal:block>
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
@@ -80,7 +74,7 @@
 <tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
 <script type="text/javascript" tal:replace="nothing"
   xml:space="preserve"
-  tal:attributes="src string:${root_url}/globals/plone_javascripts.js"
+  tal:attributes="src string:$root_url/globals/plone_javascripts.js"
 >
 <!-- Plone Javascript -->
 </script>
@@ -103,7 +97,7 @@ function handle_default_action(element, event, action)
 <tal:block tal:replace="nothing"> _______ moz site navigation_______ </tal:block>
 <link rel="top" title="Up to Silva top" 
   tal:condition="python:type != 'Silva Root'"
-  tal:attributes="href string:${root_url}/edit" i18n:attributes="title" />
+  tal:attributes="href string:$root_url/edit" i18n:attributes="title" />
 <link rel="up" href="../../edit" title="Up one level" 
   tal:condition="python:type != 'Silva Root'" i18n:attributes="title" />
 <link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
@@ -159,7 +153,7 @@ function handle_default_action(element, event, action)
         &nbsp;&nbsp;&nbsp;
         <a class="reveal"
           title="jump to silva root in zodb: alt-'"
-          tal:attributes="href string:${root_url}/manage_main"
+          tal:attributes="href string:$root_url/manage_main"
           accesskey="'"
           i18n:attributes="title;accesskey sroot_accesskey"
           i18n:translate="">
@@ -168,7 +162,7 @@ function handle_default_action(element, event, action)
         &nbsp;&nbsp;&nbsp;
         <a class="reveal"
           title="jump to silva services: alt-`"
-          tal:attributes="href string:${root_url}/manage_services"
+          tal:attributes="href string:$root_url/manage_services"
           accesskey="`"
           i18n:attributes="title;accesskey sservices_accesskey"
           i18n:translate="">
@@ -206,7 +200,7 @@ function handle_default_action(element, event, action)
         border="0"
         height="16"
         width="16"
-        tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+        tal:attributes="src string:$root_url/globals/up_to_top_gray.gif"
         i18n:attributes="alt"
       />
     </a>
@@ -221,7 +215,7 @@ function handle_default_action(element, event, action)
         border="0"
         height="16"
         width="16"
-        tal:attributes="src string:${root_url}/globals/up_to_top_gray.gif"
+        tal:attributes="src string:$root_url/globals/up_to_top_gray.gif"
         i18n:attributes="alt"
       />
     </a>
@@ -240,7 +234,7 @@ function handle_default_action(element, event, action)
     <div style="float: left;"> 
       <tal:block i18n:translate="">contact:</tal:block>
     <a shape="rect"
-      tal:attributes="href string:mailto:${email}">
+      tal:attributes="href string:mailto:$email">
       <tal:block tal:condition="name" tal:content="name">
       </tal:block>
       <tal:block tal:condition="python:not name">
@@ -283,7 +277,7 @@ function handle_default_action(element, event, action)
       <img border="0"
         height="9"
         width="9"
-        tal:attributes="src string:${root_url}/globals/user.png"
+        tal:attributes="src string:$root_url/globals/user.png"
       />
       <span i18n:translate="">user settings</span>
     </a>
@@ -308,7 +302,7 @@ function handle_default_action(element, event, action)
     title="Request an additional role in this location: alt-,"
     accesskey=","
     tal:condition="view/service_members/allow_authentication_requests"
-    tal:attributes="href string:public/request_roles?last_url=${url}/edit/${template/id}"
+    tal:attributes="href string:public/request_roles?last_url=$url/edit/${template/id}"
     i18n:attributes="title;accesskey request_access_accesskey"
     i18n:translate="">
     request access
