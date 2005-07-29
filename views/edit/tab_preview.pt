@@ -70,24 +70,24 @@ h2 {
     <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
   </div>
 
-<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
 <tal:block replace="nothing">
   _____________________ sidebar _____________________
 </tal:block>
 <div class="vein"
   style="float:left; width:20%; padding:2px 8px;">
-  <metal:block use-macro="view/macro_vein_navigation/macros/vein">
-    <metal:fill-slot fill-slot="sidebar">
-      <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', vein)" />
-    </metal:fill-slot>
-  </metal:block>
+<metal:block use-macro="view/macro_vein_navigation/macros/vein">
+<metal:fill-slot fill-slot="sidebar">
+<tal:block replace="structure python: view.service_sidebar.render(model, 'tab_preview', vein)" />
+</metal:fill-slot>
+</metal:block>
 </div>
 
-  <div class="public"
-    tal:content="structure model/preview">
-    <!-- this text is replaced by Silva content -->
-  </div>
-  <br />
+<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+<div class="public"
+  tal:content="structure model/preview">
+  <!-- this text is replaced by Silva content -->
+</div>
+<br />
 
 </metal:block>
 </metal:block>
