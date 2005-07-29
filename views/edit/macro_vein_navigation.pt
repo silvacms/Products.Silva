@@ -23,7 +23,7 @@ _______ used in almost every screen except user lookup _______
 
 <metal:define-macro define-macro="vein">
 <table class="listing" cellspacing="0"
-  style="border-collapse:separate; margin-top:-1px;">
+  style="border-collapse:separate;">
   <thead>
     <tr>
       <th class="top"
