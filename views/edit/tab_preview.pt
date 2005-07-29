@@ -24,8 +24,8 @@
 <metal:block fill-slot="style">
 <style type="text/css">
 div.public {
-  margin-left: 22%;
-  padding: 0.3em 1em 1em 1em;
+  margin-left: 21%;
+  padding: 0.3em 7px 1em 7px;
   border: 1px solid #678;
   background-color: #e3ecf7;
 }
@@ -66,7 +66,8 @@ h2 {
 
 <metal:block fill-slot="main" tal:omit-tag="">
   <span tal:replace="nothing"> _______ closed message _______ </span>
-  <div class="feedback" style="width:70%;" tal:condition="here/tab_preview_needs_feedback">
+  <div class="feedback" style="float:right; width:19%; margin:0 7px;" 
+    tal:condition="here/tab_preview_needs_feedback">
     <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
   </div>
 
@@ -74,7 +75,7 @@ h2 {
   _____________________ sidebar _____________________
 </tal:block>
 <div class="vein"
-  style="float:left; width:20%; padding:2px 8px;">
+  style="float:left; width:19%; padding:2px 8px;">
 <metal:block use-macro="view/macro_vein_navigation/macros/vein">
 <metal:fill-slot fill-slot="sidebar">
 <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_preview', vein)" />
