@@ -820,8 +820,7 @@ select.manipulator {
 
 input[type="checkbox"] {
   color: &dtml-shade56;;
-  background: &dtml-inputBackground;;
-  border: 1px solid &dtml-inputBorder;;
+  padding: 0;
 }
 
 /* checkboxes used (only) for deletion */
