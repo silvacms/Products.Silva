@@ -192,7 +192,7 @@ function handle_default_action(element, event, action)
 <!-- _______ white space + jump to top _______ -->
 </span>
 <div style="clear: both;">
-  <div style="float: left;">
+  <div style="float:left; width:50%">
     <a href="#top"
       title="jump to top: alt-t" 
       i18n:attributes="title">
@@ -205,7 +205,7 @@ function handle_default_action(element, event, action)
       />
     </a>
   </div>
-  <div style="float: right;">
+  <div style="float:right; width:50%; text-align:right;">
     <a 
       accesskey="t"
       href="#top"
@@ -220,7 +220,6 @@ function handle_default_action(element, event, action)
       />
     </a>
   </div>
-  &nbsp;
 </div>
 
 <span tal:replace="nothing">
