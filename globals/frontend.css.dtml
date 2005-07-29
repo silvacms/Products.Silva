@@ -1,4 +1,4 @@
-/* _______ Stylesheet for {__silva_version__} frontend _____________________
+/* _______ Stylesheet for Silva 1.3 (CVS/UNRELEASED) frontend _____________________
 ** _______ Silva users can insert their own frontend styles ______________
 ** _______ Styles modified here will affect the Silva preview  ___________
 **
@@ -48,19 +48,16 @@ div.header a.icon {
 }
 
 /* defines the width of the text in the preview/public layout */
-/* duplicated from silva.css */
-.public {
+div.public {
   margin-left: 7em;
   padding-top: 2.3em;
-  max-width: 44em;
-  /* for IE5 */
-  width: 512px;
+  width: 52%; /* for IE5 */
 }
 
-/* this selector works only for standards compatible browsers like mozilla */
-/* IE ignores this definition below */
-body>div.public {
-  width: 44em;
+/* this selector works only for standards compatible browsers like mozilla
+** IE ignores this definition */
+div.workspace>div.public {
+  max-width: 50em;
 }
 
 
