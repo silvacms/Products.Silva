@@ -204,7 +204,7 @@ function handle_default_action(element, event, action)
     />
   </a>
 </div>
-<div style="float:right; width:50%; text-align:right;">
+<div style="float:right; text-align:right;">
   <a 
     accesskey="t"
     href="#top"
