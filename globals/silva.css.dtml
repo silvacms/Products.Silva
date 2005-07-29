@@ -70,7 +70,7 @@ div.pathbar {
   color: &dtml-shade36;;
   background-image: url(<dtml-var root>/globals/skylight.gif);
   background-repeat: repeat-x;
-  background-color: &dtml-pathbarBackground;;
+  background-color: &dtml-pathBarBackground;;
   padding: 0em 4px 0.2em 22px;
   border: none;
   line-height: 1.4em;
