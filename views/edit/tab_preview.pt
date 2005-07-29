@@ -13,6 +13,28 @@
 
 <metal:block metal:use-macro="here/macro_index/macros/master">
 
+<metal:block fill-slot="frontend">
+<link rel="stylesheet"
+  comment="tab_preview"
+  type="text/css"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
+/>
+</metal:block>
+
+<metal:block fill-slot="style">
+<style type="text/css">
+div.public {
+  margin-left: 22%;
+  padding: 0.3em 1em 1em 1em;
+  border: 1px solid #678;
+  background-color: #e3ecf7;
+}
+h2 {
+  margin-top: 0.3em;
+}
+</style>
+</metal:block>
+
 <metal:block metal:fill-slot="middleground">
   <div class="middleground"
     tal:define="active python: editor == 'kupu'">
@@ -48,13 +70,18 @@
     <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
   </div>
 
-  <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
-<style type="text/css">
-.public {
-  margin-left : 1.5em;
-  padding-top : 0.3em;
-}
-</style>
+<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+<tal:block replace="nothing">
+  _____________________ sidebar _____________________
+</tal:block>
+<div class="vein"
+  style="float:left; width:20%; padding:2px 8px;">
+  <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+    <metal:fill-slot fill-slot="sidebar">
+      <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', vein)" />
+    </metal:fill-slot>
+  </metal:block>
+</div>
 
   <div class="public"
     tal:content="structure model/preview">
