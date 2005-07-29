@@ -23,11 +23,19 @@
 
 <metal:block fill-slot="style">
 <style type="text/css">
-div.public {
-  margin-left: 21%;
+div.preview {
+  margin:-1px 0 0 0;
   padding: 0.3em 1em 1em 1em;
   border: 1px solid #789;
   background-color: #e3ecf7;
+}
+div.public {
+  margin-left: 0;
+  padding-top: 0;
+  width: 508px; /* for IE5 */
+}
+div.preview>div.public {
+  width: 42em;
 }
 h2 {
   margin-top: 0.3em;
@@ -65,30 +73,41 @@ h2 {
 </metal:block>
 
 <metal:block fill-slot="main" tal:omit-tag="">
-  <span tal:replace="nothing"> _______ closed message _______ </span>
-  <div class="feedback" style="float:right; width:19%; margin:0 8px;" 
-    tal:condition="here/tab_preview_needs_feedback">
-    <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
-  </div>
-
-<tal:block replace="nothing">
-  _____________________ sidebar _____________________
-</tal:block>
-<div class="vein"
-  style="float:left; width:19%; margin:0 8px;">
-<metal:block use-macro="view/macro_vein_navigation/macros/vein">
-<metal:fill-slot fill-slot="sidebar">
-<tal:block replace="structure python: view.service_sidebar.render(model, 'tab_preview', vein)" />
-</metal:fill-slot>
-</metal:block>
-</div>
-
-<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
-<div class="public"
-  tal:content="structure model/preview">
-  <!-- this text is replaced by Silva content -->
-</div>
-<br />
+  <table class="columns columns3">
+    <tbody>
+      <tr>
+        <tal:block replace="nothing">
+          _____________________ sidebar _____________________
+        </tal:block>
+        <td class="left">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_preview', vein)" />
+            </metal:fill-slot>
+          </metal:block>
+        </td>
+        <tal:block replace="nothing">
+          _____________________ main _____________________
+        </tal:block>
+        <td class="main">
+          <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+          <div class="preview">
+            <div class="public"
+              tal:content="structure model/preview">
+              <!-- this text is replaced by Silva content -->
+            </div>
+          </div>
+        </td>
+        <td class="right">        
+          <span tal:replace="nothing"> _______ closed message _______ </span>
+          <div class="feedback" style="" 
+            tal:condition="here/tab_preview_needs_feedback">
+            <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </metal:block>
 </metal:block>
