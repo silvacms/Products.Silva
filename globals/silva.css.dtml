@@ -1612,16 +1612,6 @@ a.closed:hover {
   text-align: left;
 }
 
-/* defines the width of the text in the preview/public layout */
-/* duplicated in frontend.css */
-.public {
-  margin-left: 7em;
-  padding-top: 2.3em;
-  max-width: 40em;
-  /* for IE5 */
-  width: 512px;
-}
-
 /* definitions for batching */
 div.listingBar {
   width: 60em;
