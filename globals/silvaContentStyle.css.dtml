@@ -64,7 +64,7 @@ div.tabs a.normal:visited {
 
 /* _________________________________________________________ flow bar _____ */
 
-div.flowBar {
+div.flowbar {
   border-top: 3px solid &dtml-contentTabBackgroundSelected;;
 }
 

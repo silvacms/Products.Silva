@@ -14,9 +14,9 @@
 ** _______ Selector groups _______
 **
 ** sectors
-**   path bar
+**   pathbar
 **   matrix nav
-**   flow bar
+**   flowbar
 **   middleground
 **   footer
 **   personal bar
@@ -65,47 +65,47 @@ div.workspace {
 
 /* ____________________________________ path bar _______ */
 
-div.pathBar {
+div.pathbar {
   font-size: 90%;
   color: &dtml-shade36;;
   background-image: url(<dtml-var root>/globals/skylight.gif);
   background-repeat: repeat-x;
-  background-color: &dtml-pathBarBackground;;
+  background-color: &dtml-pathbarBackground;;
   padding: 0em 4px 0.2em 22px;
   border: none;
   line-height: 1.4em;
 }
 
-div.pathBar a {
+div.pathbar a {
   color: &dtml-shade26;;
   font-weight: &dtml-mainTabFontWeight;;
   margin: 0;
 }
-div.pathBar a:visited {
+div.pathbar a:visited {
   color: &dtml-shade26;;
 }
-div.pathBar a:hover {
+div.pathbar a:hover {
   color: &dtml-shade42;;
   text-decoration: underline;
 }
 
-div.pathBar a.manage {
+div.pathbar a.manage {
   color: &dtml-shade50;;
   margin-left: 0.5em ! important;
 }
 
-div.pathBar a.idea {
+div.pathbar a.idea {
   color: &dtml-shade78;;
 }
-div.pathBar a.idea:visited {
+div.pathbar a.idea:visited {
   color: &dtml-shade78;;
 }
-div.pathBar a.idea:hover {
+div.pathbar a.idea:hover {
   color: &dtml-shade96;;
   text-decoration: none;
 }
 
-div.pathBar img {
+div.pathbar img {
   vertical-align: top;
   margin: 0 0 0 -22px;
 }
@@ -223,7 +223,7 @@ div.tabs div.air {
 
 /* ____________________________________ flow bar _______ */
 
-div.flowBar {
+div.flowbar {
   background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
@@ -320,7 +320,7 @@ div.footer a:visited {
 
 /* ________________________________ personal bar _______ */
 
-div.personalBar {
+div.personalbar {
   text-align: center;
   background: #505e65;
   margin: 0em 0em 0em 0em;
@@ -328,17 +328,17 @@ div.personalBar {
   border-bottom: &dtml-shade30;1px solid;
 }
 
-div.personalBar a {
+div.personalbar a {
   color: #b7cee6;
   padding: 0;
   margin: 0;
   text-decoration: none;
 }
-div.personalBar a:visited {
+div.personalbar a:visited {
   color: #b7cee6;
 }
 
-div.personalBar img {
+div.personalbar img {
   vertical-align: middle;
 }
 
@@ -1613,16 +1613,16 @@ a.closed:hover {
 }
 
 /* definitions for batching */
-div.listingBar {
+div.listingbar {
   width: 60em;
   margin: 2em 0;
 }
 
-div.listingBar .next {
+div.listingbar .next {
   margin-left: 5em;
 } 
 
-div.listingBar .previous {
+div.listingbar .previous {
   margin-right: 5em;
 }
 
