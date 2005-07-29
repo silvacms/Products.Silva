@@ -818,17 +818,6 @@ select.manipulator {
   background: &dtml-manipulatorBackground;;
 }
 
-input[type="checkbox"] {
-  color: &dtml-shade56;;
-  padding: 0;
-}
-
-/* checkboxes used (only) for deletion */
-input.warning-checkbox {
-  color: &dtml-shade56;;
-  background: #ead5d3;
-}
-
 input.button {
   font-size: 95%;
   font-weight: &dtml-buttonWeight;;
