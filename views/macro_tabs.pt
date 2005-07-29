@@ -31,14 +31,14 @@
       href=""
       title="Silva top: alt-/"
       accesskey="/"
-      tal:attributes="href string:${root_url}/edit/tab_edit"
+      tal:attributes="href string:$root_url/edit/tab_edit"
       i18n:attributes="title;accesskey silva_top_accesskey"
       >
       <img alt="Silva"
         height="14"
         width="14"
         border="0"
-        tal:attributes="src string:${root_url}/globals/silva_emblem.png"
+        tal:attributes="src string:$root_url/globals/silva_emblem.png"
       />
     </a>
     <a name="top"> </a>
