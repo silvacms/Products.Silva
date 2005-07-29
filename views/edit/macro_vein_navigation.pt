@@ -116,9 +116,9 @@ ______________ macro plateau: level navigation ______________
 <tr tal:replace="nothing">
   _______ subheading row _______
 </tr>
-<tr tal:define="type python:here.id.lower()">
+<tr tal:define="gentype python:model.meta_type.startswith('Silva ') and model.meta_type[6:].lower() or model.meta_type">
   <th class="subth"
-    tal:content="string:$type siblings">
+    tal:content="string:$gentype siblings">
     items
   </th>
 </tr>
