@@ -64,8 +64,11 @@
             </tr>
             <tr class="top-controls">
               <td colspan="4">
-                <h3>
-                  <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+                <h3 tal:define="
+                  set binding/?set_name/setTitle | set_name;
+                  label python:set == 'silva-extra' and 'silva-meta' or set;
+                  ">
+                    <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="label" />&#xbb;
                 </h3>
               </td>
             </tr>
@@ -106,9 +109,13 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <tal:block content="element/title" i18n:translate="">
+                    <label 
+                      tal:content="element/title" 
+                      tal:attributes="for element_name"
+                      tal:omit-tag="not:element/isEditable"
+                      i18n:translate="">
                       Element name
-                    </tal:block>
+                    </label>
                     <span class="warning"
                       tal:condition="element/isRequired">
                       *

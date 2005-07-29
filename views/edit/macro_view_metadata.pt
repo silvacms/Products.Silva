@@ -50,8 +50,11 @@
           </tr>
           <tr class="top-controls">
             <td colspan="2">
-              <h3>
-                <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="binding/?set_name/setTitle | set_name" />&#xbb;
+              <h3 tal:define="
+                set binding/?set_name/setTitle | set_name;
+                label python:set == 'silva-extra' and 'silva-meta' or set;
+                ">
+                  <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="label" />&#xbb;
               </h3>
             </td>
           </tr>
