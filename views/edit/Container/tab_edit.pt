@@ -177,9 +177,9 @@
                       _______ checkbox + position cell _______
                     </tal:block>
                     <td class="listing-left">
-                      <input name="ids:list"
+                      <input class="min"
                         type="checkbox"
-                        value="value"
+                        name="ids:list"
                         tal:attributes="
                           value item_info/item_id;
                           id item_info/item_id;
@@ -357,8 +357,9 @@
                       _______ checkbox + position cell _______
                     </tal:block>
                     <td class="listing-left">
-                      <input name="ids:list"
+                      <input class="min"
                         type="checkbox"
+                        name="ids:list"
                         tal:attributes="
                           value asset_info/asset_id;
                           id asset_info/asset_id;"

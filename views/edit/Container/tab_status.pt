@@ -139,9 +139,9 @@
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
-          <input name="refs:list"
+          <input class="min"
             type="checkbox"
-            value="value"
+            name="refs:list"
             tal:define="ref obj/ref | nothing"
             tal:condition="ref"
             tal:attributes="

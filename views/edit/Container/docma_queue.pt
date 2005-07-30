@@ -176,7 +176,8 @@
           tal:condition="python: format == job.format"
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td class="listing-left">
-            <input name="storageids:list"
+            <input class="min"
+              name="storageids:list"
               type="checkbox"
               tal:attributes="value python: '%s|%s' % (job.id, job.format)" />
             <span tal:content="job/id">job id</span>

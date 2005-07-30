@@ -75,14 +75,13 @@
           tal:define="iterate repeat/groupid/odd;"
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td>
-            <input class="warning-checkbox"
-              name="groupids:list"
+            <input class="min"
               type="checkbox"
-              value="groupid"
+              name="groupids:list"
               tal:attributes="
                 value groupid;
-                id groupid"
-            />
+                id groupid;
+            " />
             &nbsp;
             <label tal:content="groupid"
               tal:attributes="for groupid">

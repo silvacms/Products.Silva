@@ -274,7 +274,8 @@ _______ manual close section here _______
                           version_status);
         ">
           <td class="listing-left">
-            <input type="checkbox" 
+            <input class="min"
+              type="checkbox" 
               name="versions:list" 
               tal:attributes="value version/id; id string:version_${version/id}" />
             <label tal:attributes="for string:version_${version/id}"

@@ -187,12 +187,11 @@
         <tal:define define="iterate repeat/group/odd">
           <tr tal:attributes="class python:iterate and 'odd' or 'even'">
             <td nowrap="1">
-              <input class="warning-checkbox"
-                name="groupids:list"
+              <input class="min"
                 type="checkbox"
-                value=""
-                tal:attributes="value group/id;"
-              />
+                name="groupids:list"
+                tal:attributes="value group/id;
+              " />
               <a class="icon"
                 title="edit"
                 tal:attributes="

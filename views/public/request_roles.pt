@@ -57,11 +57,13 @@
   <p>
     <span i18n:translate="">Choose role(s) to request</span>:<br />
     <tal:repeat repeat="role view/get_available_roles">
-    <input type="checkbox" name="roles:list" 
-     tal:attributes="
-      value role;
-      id role;"
-    />
+    <input class="min"
+      type="checkbox"
+      name="roles:list" 
+      tal:attributes="
+        value role;
+        id role;
+    " />
     <label tal:attributes="for role"
       tal:content="role">
       Role

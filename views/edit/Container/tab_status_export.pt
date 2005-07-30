@@ -129,7 +129,8 @@
                   </label>
                 </td>
                 <td width="8%" class="align-center">
-                  <input type="checkbox"
+                  <input class="min"
+                    type="checkbox"
                     name="with_sub_publications"
                     id="with_sub_publications"
                    />
@@ -146,7 +147,8 @@
                   </label>
                 </td>
                 <td class="align-center">
-                  <input type="checkbox"
+                  <input class="min"
+                    type="checkbox"
                     name="export_last_version"
                     id="export_last_version"
                   />
@@ -223,7 +225,8 @@
             </label>
           </td>
           <td width="8%" class="align-center">
-            <input type="checkbox"
+            <input class="min"
+              type="checkbox"
               name="with_sub_publications"
               id="with_sub_publications"
             />
@@ -240,7 +243,8 @@
             </label>
           </td>
           <td class="align-center">
-              <input type="checkbox"
+              <input class="min"
+                type="checkbox"
                 name="export_last_version"
                 id="export_last_version"
               />
@@ -339,7 +343,8 @@
           </label>
         </td>
         <td>
-          <input type="checkbox"
+          <input class="min"
+            type="checkbox"
             name="with_sub_publications"
             id="docma_with_sub_publications"
           />
@@ -356,7 +361,8 @@
           </label>
         </td>
         <td>
-          <input type="checkbox"
+          <input class="min"
+            type="checkbox"
             name="export_last_version"
             id="docma_export_last_version"
           />
@@ -374,7 +380,8 @@
           </label>
         </td>
         <td>
-          <input type="checkbox"
+          <input class="min"
+            type="checkbox"
             name="export_closed_content"
             id="docma_export_closed_content"
           />

@@ -74,10 +74,9 @@
           tal:define="iterate repeat/iprange/odd;"
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td>
-            <input class="warning-checkbox"
-              name="ipranges:list"
+            <input class="min"
               type="checkbox"
-              value="iprange"
+              name="ipranges:list"
               tal:attributes="value iprange"
             />
             &nbsp;

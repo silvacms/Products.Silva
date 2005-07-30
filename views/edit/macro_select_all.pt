@@ -11,10 +11,9 @@
     sid select_id | python:'';
     global aid_postfix aid_postfix | python:0;
     global aid_postfix python:aid_postfix + 1">
-  <input name="all"
+  <input class="min"
     type="checkbox"
-    value="whatever"
-    id="all"
+    name="all"
     title="select all: alt-a"
     tal:attributes="
       onclick string:toggleSelect(this, '${sid}');;;

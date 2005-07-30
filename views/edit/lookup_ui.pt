@@ -161,9 +161,9 @@
                 <tr tal:define="iterate repeat/member/odd"
                   tal:attributes="class python:iterate and 'odd' or 'even';">
                   <td>
-                    <input name="userids:list"
+                    <input class="min"
                       type="checkbox"
-                      value=""
+                      name="userids:list"
                       tal:attributes="
                         value member/userid;
                         id member/userid" />

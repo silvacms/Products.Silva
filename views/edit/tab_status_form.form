@@ -81,7 +81,7 @@
           <title>clear expiration</title>
           <description></description>
           <external_validator></external_validator>
-          <extra>id="clear_expiration" style="margin-left:0;"</extra>
+          <extra>class="min" id="clear_expiration" style="margin-left:0;"</extra>
         </values>
         <tales>
         </tales>

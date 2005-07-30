@@ -89,9 +89,9 @@
                     fullname member/fullname;"
                   tal:attributes="class python: iterate and 'odd' or 'even';">
                   <td class="align-left">
-                    <input name="userids:list"
+                    <input class="min"
                       type="checkbox"
-                      value="userid"
+                      name="userids:list"
                       tal:attributes="
                         value userid;
                         id fullname;" />
@@ -115,10 +115,9 @@
                         tal:attributes="for string:revoke_${local}-${userid}">
                         local
                       </label>
-                        <input class="warning-checkbox"
-                          name="revoke_roles:list"
+                        <input class="min"
                           type="checkbox"
-                          value=""
+                          name="revoke_roles:list"
                           tal:define="
                             global revokeable_roles python: 1;
                             enable python: i_am_manager or local not in managers_only_options;
@@ -218,8 +217,9 @@
                   requested_role python:req[1];"
                   tal:attributes="class python: iterate and 'odd' or 'even';">
                   <td>
-                    <input name="requests:list"
+                    <input class="min"
                       type="checkbox"
+                      name="requests:list"
                       tal:attributes="
                         value python: '|'.join(req);
                         id string:pending_${member/userid};" />
@@ -382,9 +382,9 @@
                       iterate repeat/group/odd"
                     tal:attributes="class python: iterate and 'odd' or 'even';">
                     <td class="align-left">
-                      <input name="groups:list"
+                      <input class="min"
                         type="checkbox"
-                        value="group"
+                        name="groups:list"
                         tal:attributes="
                           value group;
                           id group;" />
@@ -415,9 +415,9 @@
                           local
                         </label>
                         &nbsp;
-                          <input class="warning-checkbox"
-                            name="revoke_roles:list"
+                          <input class="min"
                             type="checkbox"
+                            name="revoke_roles:list"
                             value=""
                             tal:define="
                               global revokeable_groups python: 1;

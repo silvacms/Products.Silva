@@ -212,7 +212,8 @@
           </span>
         </td>
         <td>
-          <input type="checkbox"
+          <input class="min"
+            type="checkbox"
             name="recreate_dirs"
             checked="checked"
           />
