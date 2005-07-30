@@ -1399,6 +1399,12 @@ input[type="checkbox"]:hover, input[type="radio"]:hover {
   background: #b9e3e8 none;
 }
 
+/* hide stupid Exporer padding around checkboxes */
+input.min {
+  border: none;
+  background-color: transparent;
+}
+
 
 /* ___________________________________________________________ links _______ */
 
