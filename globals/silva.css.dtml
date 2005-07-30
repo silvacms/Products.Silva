@@ -455,6 +455,7 @@ table.listing th {
   border-right: &dtml-listingBorder;;
   font-weight: normal;
   text-align: left;
+  vertical-align: middle;
   white-space: nowrap;
 }
 
