@@ -189,7 +189,7 @@ function handle_default_action(element, event, action)
 <div style="float:left; width:16px">
   <a href="#top"
     title="jump to top: alt-t" 
-    i18n:attributes="title;accesskey jump_to_top_accesskey">
+    i18n:attributes="title;">
     <img alt="jump to top: alt-t"
       border="0"
       height="16"
