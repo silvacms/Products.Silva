@@ -770,10 +770,6 @@ textarea {
   border: &dtml-inputBorder;;
 }
 
-textarea.readable {
-  font: 100% Verdana, Helvetica, Arial, sans-serif;
-}
-
 input.store, select.store, textarea.store {
   width: 93%;
   margin-top: 1px;
@@ -786,7 +782,7 @@ input.store, select.store, textarea.store {
 */
 td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
 td>input.store, td>textarea.store, td>select.store {
-  width: 100%;
+  width: 99%;
 }
 
 select {
