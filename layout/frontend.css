@@ -55,17 +55,20 @@ div.preview {
   background-color: #e3ecf7;
 }
 
-/* defines the width of the text in the preview/public layout */
+/* defines the width of the text in the preview and public layout */
 div.public {
   margin-left: 7em;
   padding-top: 2.3em;
-  width: 52%; /* for IE5 */
+  width: 504px; /* for IE5 */
 }
-
 /* this selector works only for standards compatible browsers like mozilla
 ** IE ignores this definition */
 body>div.public {
-  max-width: 44em;
+  width: 45em;
+}
+/* preview width */
+div.preview>div.public {
+  width: 45em;
 }
 
 
@@ -99,7 +102,7 @@ body>div.public {
 /* _________________________________________________________ typography _____ */
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 1em 0 0.5em 0;
+  margin: 1em 0 0 0;
   color: #455885;
 }
 
@@ -115,21 +118,24 @@ h3 {
 }
 
 h4 {
+  margin-bottom: 0.5em;
   font-size: 120%;
 }
 
 h5 {
-  font-size: 105%;
+  margin-bottom: 0.2em;
+  font-size: 110%;
 }
 
 h6 {
+  margin-bottom: 0.1em;
   color: #676767;
-  font-size: 100%;
+  font-size: 105%;
 }
 
 h6.minor {
   color: #454545;
-  font-size: 90%;
+  font-size: 100%;
 }
 
 .subhead {
@@ -434,11 +440,27 @@ acronym[title], abbr[title] {
 }
 
 h2 + h3 {
-  margin-top: 0.9em;
+  margin-top: 0;
 }
 
 h3 + h4 {
-  margin-top: 1em;
+  margin-top: 0;
+}
+
+h4 + h5 {
+  margin-top: 0;
+}
+
+h5 + h6 {
+  margin-top: 0;
+}
+
+h5 + p {
+  margin-top: 0.3em;
+}
+
+h6 + p, h6.minor + p {
+  margin-top: 0;
 }
 
 /* end cascade */
