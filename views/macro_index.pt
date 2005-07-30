@@ -8,32 +8,32 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    view here;
-    model request/model;
+    view    here;
+    model   request/model;
     trigger model/security_trigger;
-    mangle modules/Products/Silva/mangle;
+    mangle  modules/Products/Silva/mangle;
 
-    type model/meta_type;
-    url model/absolute_url;
-    title python: model.get_title_editable() or model.id;
+    type    model/meta_type;
+    url     model/absolute_url;
+    title   python: model.get_title_editable() or model.id;
 
     root_url model/get_root_url;
-    global publication model/get_publication;
-    global containing_publication publication/../get_publication | publication;
+    global   publication model/get_publication;
+    global   containing_publication publication/../get_publication | publication;
     
-    content_type view/set_content_type;
+    content_type      view/set_content_type;
     set_cache_headers view/set_cache_headers;
 
-    silva_permissions view/get_silva_permissions;
+    silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
-    may_change_content silva_permissions/ChangeSilvaContent | nothing;    
+    may_change_content  silva_permissions/ChangeSilvaContent | nothing;    
 
     message_type options/message_type | request/message_type | nothing;
-    message options/message | request/message | nothing;
+    message      options/message | request/message | nothing;
 
-    dummy python: here.recordError(type, message);
-    dummy python: here.REQUEST.set('edit_mode', 1);
-    dummy python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
+    dummy  python: here.recordError(type, message);
+    dummy  python: here.REQUEST.set('edit_mode', 1);
+    dummy  python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
     editor python: request.SESSION.get('editor', None) or view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
 
 ">
@@ -74,9 +74,7 @@
 <tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
 <script type="text/javascript" tal:replace="nothing"
   xml:space="preserve"
-  tal:attributes="src string:$root_url/globals/plone_javascripts.js"
->
-<!-- Plone Javascript -->
+  tal:attributes="src string:$root_url/globals/plone_javascripts.js">
 </script>
 <script language="JavaScript">
 // can be attached to formfields so that pressing enter makes the form use
@@ -93,7 +91,6 @@ function handle_default_action(element, event, action)
 </script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
-
 <tal:block tal:replace="nothing"> _______ moz site navigation_______ </tal:block>
 <link rel="top" title="Up to Silva top" 
   tal:condition="python:type != 'Silva Root'"
@@ -133,7 +130,6 @@ function handle_default_action(element, event, action)
     </tal:block>
   </div>
 </tal:block>
-
 <tal:block condition="not: message">
   <div class="fixed-clear" 
     tal:define="
@@ -176,7 +172,6 @@ function handle_default_action(element, event, action)
     </tal:block>
   </div>
 </tal:block>
-
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
@@ -191,10 +186,10 @@ function handle_default_action(element, event, action)
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
-<div style="float:left; width:50%">
+<div style="float:left; width:16px">
   <a href="#top"
     title="jump to top: alt-t" 
-    i18n:attributes="title">
+    i18n:attributes="title;accesskey jump_to_top_accesskey">
     <img alt="jump to top: alt-t"
       border="0"
       height="16"
@@ -204,10 +199,9 @@ function handle_default_action(element, event, action)
     />
   </a>
 </div>
-<div style="float:right; text-align:right;">
-  <a 
+<div style="float:right; text-align:right; width:16px">
+  <a href="#top"
     accesskey="t"
-    href="#top"
     title="jump to top: alt-t"
     i18n:attributes="title;accesskey jump_to_top_accesskey">
     <img alt="jump to top: alt-t"
@@ -225,7 +219,7 @@ function handle_default_action(element, event, action)
 </span>
 <div class="footer"
   tal:define="
-    name python: view.get_metadata_element('silva-extra', 'contactname');
+    name  python: view.get_metadata_element('silva-extra', 'contactname');
     email python: view.get_metadata_element('silva-extra', 'contactemail');
     ">
     <div style="float: left;"> 
@@ -260,8 +254,7 @@ function handle_default_action(element, event, action)
 <!-- ______________ user tools ______________ -->
 </span>
 <div class="personalbar"
-  tal:define="userid request/AUTHENTICATED_USER/getUserName"
->
+  tal:define="userid request/AUTHENTICATED_USER/getUserName">
   <div style="float: left;">
     <a href=""
       title="Change your settings: alt-~"
