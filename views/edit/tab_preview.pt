@@ -7,15 +7,12 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="
-    global vein string:preview;"
+  tal:define="global vein string:preview"
   i18n:domain="silva">
-
 <metal:block metal:use-macro="here/macro_index/macros/master">
 
 <metal:block fill-slot="frontend">
 <link rel="stylesheet"
-  comment="tab_preview"
   type="text/css"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
 />
@@ -23,19 +20,13 @@
 
 <metal:block fill-slot="style">
 <style type="text/css">
-div.preview {
-  margin:-1px 0 0 0;
-  padding: 0.3em 1em 1em 1em;
-  border: 1px solid #789;
-  background-color: #e3ecf7;
-}
 div.public {
   margin-left: 0;
   padding-top: 0;
   width: 508px; /* for IE5 */
 }
 div.preview>div.public {
-  width: 42em;
+  width: 44em;
 }
 h2 {
   margin-top: 0.3em;
@@ -55,8 +46,8 @@ h2 {
       public&nbsp;preview...
     </a>
     <tal:block define="
-      permissions view/get_silva_permissions;
-      unapproved_version model/get_unapproved_version | nothing;
+      permissions             view/get_silva_permissions;
+      unapproved_version      model/get_unapproved_version | nothing;
       have_approve_permission permissions/ApproveSilvaContent | nothing;
     ">
       <a title="publish this document: alt-p"
@@ -72,7 +63,7 @@ h2 {
   </div>
 </metal:block>
 
-<metal:block fill-slot="main" tal:omit-tag="">
+<metal:block fill-slot="main">
   <table class="columns columns3">
     <tbody>
       <tr>
@@ -90,7 +81,9 @@ h2 {
           _____________________ main _____________________
         </tal:block>
         <td class="main">
-          <span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
+        <tal:block replace="nothing">
+          ______________ content area, here the XML is rendered in HTML ______________ 
+        </tal:block>
           <div class="preview">
             <div class="public"
               tal:content="structure model/preview">
@@ -108,8 +101,7 @@ h2 {
       </tr>
     </tbody>
   </table>
-
-</metal:block>
 </metal:block>
 
+</metal:block>
 </html>

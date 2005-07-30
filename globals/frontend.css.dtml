@@ -47,7 +47,15 @@ div.header a.icon {
   text-align: center;
 }
 
-/* defines the width of the text in the preview/public layout */
+//* layout for the content area in the preview screen */
+div.preview {
+  margin: -1px 0 0 0;
+  padding: 0.3em 1em 1em 1em;
+  border: 1px solid #789;
+  background-color: #e3ecf7;
+}
+
+* defines the width of the text in the preview/public layout */
 div.public {
   margin-left: 7em;
   padding-top: 2.3em;
@@ -56,8 +64,8 @@ div.public {
 
 /* this selector works only for standards compatible browsers like mozilla
 ** IE ignores this definition */
-div.workspace>div.public {
-  max-width: 50em;
+body>div.public {
+  max-width: 44em;
 }
 
 
