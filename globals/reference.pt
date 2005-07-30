@@ -33,8 +33,8 @@
     title="Silva info: alt-s"
     accesskey="s"
     i18n:attributes="title;accesskey silva_info_accesskey">
-    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
-      tal:attributes="href here/globals/silva_32.png/absolute_url | nothing" /></a>
+    <img width="32" height="32" border="0" alt="Silva icon"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" /></a>
       &nbsp;<tal:block i18n:translate=""><span i18n:name="Silva">Silva</span> &#8211; independent content management</tal:block>
 </h2>
 
