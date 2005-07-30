@@ -527,7 +527,8 @@
       <tal:block replace="nothing"> 
         ___________ access restriction by role __________
       </tal:block>
-      <td class="main">
+      <td class="main"
+        style="padding-top:2em;">
         <form action="."
           method="POST"
           tal:define="
