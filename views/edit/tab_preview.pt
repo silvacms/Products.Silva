@@ -23,10 +23,6 @@
 div.public {
   margin-left: 0;
   padding-top: 0;
-  width: 508px; /* for IE5 */
-}
-div.preview>div.public {
-  width: 44em;
 }
 h2 {
   margin-top: 0.3em;
