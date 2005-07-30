@@ -7,7 +7,8 @@
   >
 
 <head>
-  <title i18n:translate="">Silva - Reference</title>
+  <title i18n:translate="">Silva Reference</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <!-- Links to favicon and stylesheet -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
