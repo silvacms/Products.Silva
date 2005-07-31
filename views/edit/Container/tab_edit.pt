@@ -14,7 +14,7 @@
 <metal:block fill-slot="main">
 
 <form action="."
-  method="POST"
+  method="post"
   name="silvaObjects"
   tal:define="
     default_document model/get_default;
@@ -151,7 +151,7 @@
                   author
                 </th>
                 <th class="nosort listing-right">
-                  &nbsp;<span i18n:translate="" omit-tag="">shift</span>&nbsp;
+                  &nbsp;<span i18n:translate="" tal:omit-tag="">shift</span>&nbsp;
                 </th>
               </tr>
 
