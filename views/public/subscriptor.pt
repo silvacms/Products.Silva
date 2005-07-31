@@ -9,16 +9,21 @@
     title model/get_title;
     show_form options/show_form | python: True;
     feedback options/message | nothing;
+    message_type options/message_type | nothing;
+    warning python:message_type == 'warning' and message_type or nothing;
     subscr_emailaddress options/subscr_emailaddress | nothing; 
     cancel_emailaddress options/cancel_emailaddress | nothing; 
     path python: '/'.join(model.getPhysicalPath());"
   i18n:domain="silva"
   >
-  <div class="feedback" 
-    i18n:translate="" 
-    tal:content="feedback"
+  <div class="feedback"
     tal:condition="feedback">
-    feedback message
+    <span tal:content="feedback"
+      tal:attributes="class warning | nothing"
+      tal:omit-tag="not:warning"
+      i18n:translate="">
+      feedback message
+    </span>
   </div>
   <tal:block condition="show_form">
     <div class="subscriptionform">
