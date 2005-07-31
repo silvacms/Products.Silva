@@ -91,7 +91,7 @@ h2 {
             </div>
           </div>
         </td>
-        <td class="right">        
+        <td class="right">
           <span tal:replace="nothing"> _______ closed message _______ </span>
           <div class="feedback" style="" 
             tal:condition="here/tab_preview_needs_feedback">
