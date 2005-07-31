@@ -1034,8 +1034,7 @@ table.listing div.transport-border:hover {
 div.info {
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
-  /* correct 1px for table border collapse */
-  margin : -1px 0 0 0;
+  margin : 0;
   padding: 0.1em 0.5em 0.5em 0.5em;
   border: &dtml-listingBorder;;
   /* fix IE glitch? */
