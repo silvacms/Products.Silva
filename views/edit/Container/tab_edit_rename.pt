@@ -63,8 +63,12 @@
               &nbsp;
           </td>
           <td>
-            <input type="text" name="name" style="width: 100%" value="value"
-              tal:attributes="name string:id_${object/getId}; value object/getId" />
+            <input class="store"
+              type="text"
+              name="name"
+              value="value"
+              tal:attributes="name string:id_${object/getId}; value object/getId"
+            />
           </td>
           </tr>
 
@@ -87,10 +91,9 @@
                 title object/get_title_editable | object/get_title;
                 is_title_editable object/can_set_title;
           ">
-            <input
+            <input class="store"
               type="text"
               name="name"
-              style="width: 100%"
               value="value"
               tal:condition="is_title_editable"
               tal:attributes="
