@@ -232,7 +232,7 @@
         <tal:block replace="nothing">
           _______ public version cell _______
         </tal:block>
-        <td class="align-right"
+        <td class="listing-right"
           tal:define="
             public_status obj/public_status | nothing;
             start_time obj/public_version_publication_datetime | nothing;
@@ -254,9 +254,7 @@
           </a>
           <tal:block
             condition="python: public_status == 'closed'">
-            <span i18n:translate=""
-              define="
-                global new_versionables python: closed and (state != 'pending' and state != 'approved') or new_versionables;">
+            <span i18n:translate="">
               closed
             </span>
           </tal:block>
