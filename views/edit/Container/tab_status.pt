@@ -14,7 +14,7 @@
 <metal:block fill-slot="main">
 
 <form action="."
-  method="POST"
+  method="post"
   name="silvaObjects"
   tal:define="
     objects model/get_processed_status_tree;
