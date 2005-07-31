@@ -465,13 +465,13 @@
                 ______________ select all row ______________
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
-                <th class="controls listing-left"
+                <td class="controls listing-left"
                   colspan="4">
                   <tal:block define="select_id string:ids">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                   </tal:block>
-                </th>
-                <th class="controls listing-right" colspan="2">
+                </td>
+                <td class="controls listing-right" colspan="2">
                   <span tal:condition="may_change_content"
                     tal:omit-tag="">
                     <span tal:condition="python:(published or editables or closed)"
@@ -479,7 +479,7 @@
                       publishing actions
                     </span>&nbsp;
                   </span>
-                </th>
+                </td>
               </tr>
               <tal:block replace="nothing">
                 ______________ controls ______________
@@ -535,8 +535,8 @@
                           </option>
                         </select>
                         <label for="new_position"
-                          title="access key: alt-p"
-                          accesskey="p"
+                          title="access key: alt-o"
+                          accesskey="o"
                           i18n:attributes="title;accesskey new_position_accesskey"
                         >
                         </label>
