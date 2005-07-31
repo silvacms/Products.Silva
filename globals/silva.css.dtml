@@ -42,7 +42,7 @@ body {
   margin: 0;
   padding: 0;
   color: &dtml-mainFontColor;;
-  background: &dtml-mainBackground;;
+  background-color: &dtml-mainBackground;;
   background-image: url(<dtml-var root>/globals/skyrise.gif);
   background-repeat: repeat-x;
   font: &dtml-mainFont;;
