@@ -1040,6 +1040,11 @@ div.info {
   /* fix IE glitch? */
 }
 
+/* not for IE */
+td.right>div.info {
+  margin-top:-1px;
+}
+
 div.info h3 {
   color: &dtml-inputFontColor;;
   margin-top: 0.4em;
