@@ -266,6 +266,7 @@ function handle_default_action(element, event, action)
       <img border="0"
         height="9"
         width="9"
+        alt="user icon"
         tal:attributes="src string:$root_url/globals/user.png"
       />
       <span i18n:translate="">user settings</span>
