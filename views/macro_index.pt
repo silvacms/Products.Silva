@@ -76,7 +76,7 @@
   xml:space="preserve"
   tal:attributes="src string:$root_url/globals/plone_javascripts.js">
 </script>
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 // can be attached to formfields so that pressing enter makes the form use
 // a specific action, useful in forms with more than 1 submit button
 function handle_default_action(element, event, action)
