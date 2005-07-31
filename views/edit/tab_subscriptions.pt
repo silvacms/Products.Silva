@@ -11,7 +11,6 @@
     vein string:subscriptions;
     global active_tab string:tab_metadata;
     global parent_screen_name string:properties;"
-    
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
@@ -20,9 +19,9 @@
   tal:define="
     model request/model;
     dummy context/get_subscribable;
-    type model/meta_type;
-    path model/getPhysicalPath;
-    url model/absolute_url;
+    type  model/meta_type;
+    path  model/getPhysicalPath;
+    url   model/absolute_url;
     
     title python: model.get_title_editable() or model.id;
     
@@ -140,6 +139,7 @@
           >
           <h3>
             <img class="icon"
+              style="margin-top:-1px;"
               width="13"
               height="9"
               alt="subscriptions icon" 
