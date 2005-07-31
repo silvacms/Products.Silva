@@ -458,20 +458,17 @@
                   </tr>
                 </tal:block>
               </tal:block>
-            </tbody>
-
-            <tfoot>
               <tal:block replace="nothing">
                 ______________ select all row ______________
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
-                <td class="controls listing-left"
+                <th class="controls listing-left"
                   colspan="4">
                   <tal:block define="select_id string:ids">
                     <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                   </tal:block>
-                </td>
-                <td class="controls listing-right" colspan="2">
+                </th>
+                <th class="controls listing-right" colspan="2">
                   <span tal:condition="may_change_content"
                     tal:omit-tag="">
                     <span tal:condition="python:(published or editables or closed)"
@@ -479,7 +476,7 @@
                       publishing actions
                     </span>&nbsp;
                   </span>
-                </td>
+                </th>
               </tr>
               <tal:block replace="nothing">
                 ______________ controls ______________
@@ -615,7 +612,7 @@
                   </tal:block>
                 </td>
               </tr>
-            </tfoot>
+            </tbody>
           </table>
 
         </td>
