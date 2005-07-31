@@ -131,6 +131,163 @@
               </tr>
             </thead>
 
+            <tfoot>
+              <tal:block replace="nothing">
+                ______________ select all row ______________
+              </tal:block>
+              <tr tal:condition="python:(default_document or publishables or assets)">
+                <th class="controls listing-left"
+                  colspan="4">
+                  <tal:block define="select_id string:ids">
+                    <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+                  </tal:block>
+                </th>
+                <th class="controls listing-right" colspan="2">
+                  <span tal:condition="may_change_content"
+                    tal:omit-tag="">
+                    <span tal:condition="python:(published or editables or closed)"
+                      i18n:translate="">
+                      publishing actions
+                    </span>&nbsp;
+                  </span>
+                </th>
+              </tr>
+              <tal:block replace="nothing">
+                ______________ controls ______________
+              </tal:block>
+              <tr class="controls">
+                <td colspan="6">
+                  <tal:block condition="may_change_content">
+                    <div style="float: right;">
+                      <input class="close" 
+                        name="tab_edit_close:method" 
+                        value="close" 
+                        title="close published items: alt-l" 
+                        accesskey="l" 
+                        type="submit" 
+                        i18n:attributes="value; title" 
+                        tal:condition="python:published"
+                      />
+                      <input class="executor" 
+                        name="tab_edit_open_now:method" 
+                        value="publish now" 
+                        title="publish new versions: alt-p" 
+                        accesskey="p" 
+                        type="submit" 
+                        i18n:attributes="value; title"
+                        tal:condition="python:editables or closed"
+                      />
+                    </div>
+                    <tal:block tal:condition="python:(default_document or publishables or assets)">
+                      <div style="float: left; margin-left:0.2em; margin-right:0.7em;">
+                        <select class="manipulator"
+                          name="new_position"
+                          id="new_position"
+                          title="move selected items to"
+                          tal:define="length python: len(publishables) - test(default_document, 1, 0)"
+                          i18n:attributes="title">
+                          <option value="position">
+                            <span i18n:translate="" tal:omit-tag="">position</span>:
+                          </option>
+                          <tal:block repeat="item python:range(length)">                            
+                            <option value="0"   
+                              tal:define="pos repeat/item/number"
+                              tal:content="pos"
+                              tal:attributes="
+                                value pos;
+                                selected python: str(pos) == position and 'selected' or nothing;
+                                " />
+                          </tal:block>
+                          <option value="0"
+                            tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
+                            i18n:translate=""
+                          >
+                            end
+                          </option>
+                        </select>
+                        <label for="new_position"
+                          title="access key: alt-o"
+                          accesskey="o"
+                          i18n:attributes="title;accesskey new_position_accesskey"
+                        >
+                        </label>
+                        <input class="button"
+                          name="tab_edit_move_to:method"
+                          type="submit"
+                          value="move"
+                          title="move selected items into position: alt-m"
+                          accesskey="m"
+                          i18n:attributes="value;title;accesskey move_accesskey"
+                        />
+                      </div>
+                      <input class="transport"
+                        name="tab_edit_rename_start:method"
+                        type="submit"
+                        value="rename..."
+                        title="rename and retitle items: alt-r"
+                        accesskey="r" 
+                        i18n:attributes="value;title;accesskey rename_accesskey"
+                      />
+                      <input class="button"
+                        name="tab_edit_cut:method"
+                        type="submit"
+                        value="cut"
+                        title="cut items: alt-x"
+                        accesskey="x" 
+                        i18n:attributes="value;title;accesskey cut_accesskey"
+                      />               
+                    </tal:block>
+                  </tal:block>
+                  <tal:block tal:condition="python:(default_document or publishables or assets)">
+                      <input class="button"
+                        name="tab_edit_copy:method"
+                        type="submit"
+                        value="copy"
+                        title="copy items: alt-c"
+                        accesskey="c" 
+                        i18n:attributes="value;title;accesskey copy_accesskey"
+                      />
+                  </tal:block>
+                  <tal:block condition="may_change_content">                  
+                    <tal:block replace="nothing">
+                      ______________ paste (to ghost) controls exist even
+                      if there's no content (there should be something on 
+                      the clipboard though). ______________
+                    </tal:block>
+                    <tal:block condition="python:request.has_key('__cp')">
+                      <input class="button"
+                        name="tab_edit_paste:method"
+                        type="submit"
+                        value="paste"
+                        title="paste items: alt-v" 
+                        accesskey="v" 
+                        i18n:attributes="value;title;accesskey paste_accesskey"
+                      />
+                      <input class="button"
+                        name="tab_edit_paste_to_ghost:method"
+                        type="submit"
+                        value="paste ghost"
+                        title="paste (items on clipboard) as ghost objects: alt-g"
+                        accesskey="g" 
+                        i18n:attributes="value;title;accesskey paste_ghost_accesskey"
+                      />
+                    </tal:block>
+                    <tal:block tal:condition="python:(default_document or publishables or assets)">
+                      <input class="warning"
+                        name="tab_edit_delete:method"
+                        type="submit"
+                        value="delete"
+                        title="there's no undo: alt-d"
+                        accesskey="d"
+                        onclick="return confirm('Really delete?')"
+                        i18n:attributes="value;title;onclick;accesskey delete_accesskey"
+                      />
+                    </tal:block>
+                  </tal:block>
+                </td>
+              </tr>
+            </tfoot>
+
             <tbody>
               <tal:block replace="nothing">
                 ______________ listing header ______________
@@ -458,162 +615,8 @@
                   </tr>
                 </tal:block>
               </tal:block>
-
-              <tal:block replace="nothing">
-                ______________ select all row ______________
-              </tal:block>
-              <tr tal:condition="python:(default_document or publishables or assets)">
-                <th class="controls listing-left"
-                  colspan="4">
-                  <tal:block define="select_id string:ids">
-                    <metal:block use-macro="view/macro_select_all/macros/select_all"/>
-                  </tal:block>
-                </th>
-                <th class="controls listing-right" colspan="2">
-                  <span tal:condition="may_change_content"
-                    tal:omit-tag="">
-                    <span tal:condition="python:(published or editables or closed)"
-                      i18n:translate="">
-                      publishing actions
-                    </span>&nbsp;
-                  </span>
-                </th>
-              </tr>
-              <tal:block replace="nothing">
-                ______________ controls ______________
-              </tal:block>
-              <tr class="controls">
-                <td colspan="6">
-                  <tal:block condition="may_change_content">
-                    <div style="float: right;">
-                      <input class="close" 
-                        name="tab_edit_close:method" 
-                        value="close" 
-                        title="close published items: alt-l" 
-                        accesskey="l" 
-                        type="submit" 
-                        i18n:attributes="value; title" 
-                        tal:condition="python:published"
-                      />
-                      <input class="executor" 
-                        name="tab_edit_open_now:method" 
-                        value="publish now" 
-                        title="publish new versions: alt-p" 
-                        accesskey="p" 
-                        type="submit" 
-                        i18n:attributes="value; title"
-                        tal:condition="python:editables or closed"
-                      />
-                    </div>
-                    <tal:block tal:condition="python:(default_document or publishables or assets)">
-                      <div style="float: left; margin-left:0.2em; margin-right:0.7em;">
-                        <select class="manipulator"
-                          name="new_position"
-                          id="new_position"
-                          title="move selected items to"
-                          tal:define="length python: len(publishables) - test(default_document, 1, 0)"
-                          i18n:attributes="title">
-                          <option value="position">
-                            <span i18n:translate="" tal:omit-tag="">position</span>:
-                          </option>
-                          <tal:block repeat="item python:range(length)">                            
-                            <option value="0"   
-                              tal:define="pos repeat/item/number"
-                              tal:content="pos"
-                              tal:attributes="
-                                value pos;
-                                selected python: str(pos) == position and 'selected' or nothing;
-                                " />
-                          </tal:block>
-                          <option value="0"
-                            tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
-                            i18n:translate=""
-                          >
-                            end
-                          </option>
-                        </select>
-                        <label for="new_position"
-                          title="access key: alt-o"
-                          accesskey="o"
-                          i18n:attributes="title;accesskey new_position_accesskey"
-                        >
-                        </label>
-                        <input class="button"
-                          name="tab_edit_move_to:method"
-                          type="submit"
-                          value="move"
-                          title="move selected items into position: alt-m"
-                          accesskey="m"
-                          i18n:attributes="value;title;accesskey move_accesskey"
-                        />
-                      </div>
-                      <input class="transport"
-                        name="tab_edit_rename_start:method"
-                        type="submit"
-                        value="rename..."
-                        title="rename and retitle items: alt-r"
-                        accesskey="r" 
-                        i18n:attributes="value;title;accesskey rename_accesskey"
-                      />
-                      <input class="button"
-                        name="tab_edit_cut:method"
-                        type="submit"
-                        value="cut"
-                        title="cut items: alt-x"
-                        accesskey="x" 
-                        i18n:attributes="value;title;accesskey cut_accesskey"
-                      />               
-                    </tal:block>
-                  </tal:block>
-                  <tal:block tal:condition="python:(default_document or publishables or assets)">
-                      <input class="button"
-                        name="tab_edit_copy:method"
-                        type="submit"
-                        value="copy"
-                        title="copy items: alt-c"
-                        accesskey="c" 
-                        i18n:attributes="value;title;accesskey copy_accesskey"
-                      />
-                  </tal:block>
-                  <tal:block condition="may_change_content">                  
-                    <tal:block replace="nothing">
-                      ______________ paste (to ghost) controls exist even
-                      if there's no content (there should be something on 
-                      the clipboard though). ______________
-                    </tal:block>
-                    <tal:block condition="python:request.has_key('__cp')">
-                      <input class="button"
-                        name="tab_edit_paste:method"
-                        type="submit"
-                        value="paste"
-                        title="paste items: alt-v" 
-                        accesskey="v" 
-                        i18n:attributes="value;title;accesskey paste_accesskey"
-                      />
-                      <input class="button"
-                        name="tab_edit_paste_to_ghost:method"
-                        type="submit"
-                        value="paste ghost"
-                        title="paste (items on clipboard) as ghost objects: alt-g"
-                        accesskey="g" 
-                        i18n:attributes="value;title;accesskey paste_ghost_accesskey"
-                      />
-                    </tal:block>
-                    <tal:block tal:condition="python:(default_document or publishables or assets)">
-                      <input class="warning"
-                        name="tab_edit_delete:method"
-                        type="submit"
-                        value="delete"
-                        title="there's no undo: alt-d"
-                        accesskey="d"
-                        onclick="return confirm('Really delete?')"
-                        i18n:attributes="value;title;onclick;accesskey delete_accesskey"
-                      />
-                    </tal:block>
-                  </tal:block>
-                </td>
-              </tr>
             </tbody>
+
           </table>
 
         </td>
