@@ -53,7 +53,7 @@ h2 {
       <a title="publish this document: alt-p"
         accesskey="p"
         class="executor"
-        tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
+        tal:attributes="href string:${model/absolute_url}/edit/tab_preview_publish"
         i18n:translate=""
         i18n:attributes="title;accesskey open_to_public_accesskey"
         tal:condition="python: unapproved_version and have_approve_permission">
