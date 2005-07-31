@@ -22,8 +22,9 @@ _______ renders the uplinks cap and navigation stack _______
 _______ used in almost every screen except user lookup _______
 
 <metal:define-macro define-macro="vein">
-<table class="listing" cellspacing="0"
-  style="border-collapse:separate;">
+<table class="listing"
+  cellspacing="0"
+  style="border-collapse:separate; margin-top:-1px;">
   <thead>
     <tr>
       <th class="top"
