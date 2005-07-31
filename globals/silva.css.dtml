@@ -66,20 +66,20 @@ div.workspace {
 /* ____________________________________ path bar _______ */
 
 div.pathbar {
-  font-size: 90%;
+  border: none;
+  padding: 0em 4px 0.2em 22px;
   color: &dtml-shade36;;
   background-image: url(<dtml-var root>/globals/skylight.gif);
   background-repeat: repeat-x;
   background-color: &dtml-pathBarBackground;;
-  padding: 0em 4px 0.2em 22px;
-  border: none;
+  font-size: 90%;
   line-height: 1.4em;
 }
 
 div.pathbar a {
+  margin: 0;
   color: &dtml-shade26;;
   font-weight: &dtml-mainTabFontWeight;;
-  margin: 0;
 }
 div.pathbar a:visited {
   color: &dtml-shade26;;
@@ -90,8 +90,8 @@ div.pathbar a:hover {
 }
 
 div.pathbar a.manage {
-  color: &dtml-shade50;;
   margin-left: 0.5em ! important;
+  color: &dtml-shade50;;
 }
 
 div.pathbar a.idea {
@@ -106,8 +106,8 @@ div.pathbar a.idea:hover {
 }
 
 div.pathbar img {
-  vertical-align: top;
   margin: 0 0 0 -22px;
+  vertical-align: top;
 }
 
 /* __________________________________ matrix nav _______ */
@@ -115,14 +115,14 @@ div.pathbar img {
 div.tabs {
   display: block;
   height: 1.2em;
-  background-image: url(<dtml-var root>/globals/skyrise.gif);
-  background-repeat: repeat-x;
-  background-color: &dtml-mainTabBackdrop;;
   margin: 0;
   padding: 0 16px 0 16px;
   border-width: 1px;
   border-style: none none solid none;
   border-bottom-color: &dtml-shade80;;
+  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-repeat: repeat-x;
+  background-color: &dtml-mainTabBackdrop;;
 }
 
 div.tabs a {
@@ -131,14 +131,14 @@ div.tabs a {
   display: block;
   width: 7.5em;
   height: 1.1em;
-  color: &dtml-mainTabFontColor;;
-  background: &dtml-mainTabBackground;;
+  margin: 0;
+  padding: 0;
   border-color: &dtml-mainTabBorderColor;;
   border-width: 1px;
   border-style: solid solid solid solid;
   border-bottom-color: &dtml-shade50;;
-  margin: 0;
-  padding: 0;
+  color: &dtml-mainTabFontColor;;
+  background: &dtml-mainTabBackground;;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
@@ -149,35 +149,35 @@ div.tabs a:visited {
 }
 
 div.tabs a:hover {
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundSelected;;
-  border-bottom-color: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
 }
 
 div.tabs a.selected {
   /* The selected tab. There's only one of these */
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundSelected;;
-  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.selected:visited {
+  border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundSelected;;
-  border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
+  border-bottom-color: &dtml-mainTabBackground;;
   /* The parent tab of a subscreen. There might be one of these :) */
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-mainTabBackgroundRecede;;
-  border-bottom-color: &dtml-mainTabBackground;;
 }
 
 div.tabs a.recede:hover {
-  background: &dtml-mainTabBackgroundSelected;;
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
+  background: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.left {
@@ -202,9 +202,9 @@ div.tabs a.right:hover {
 
 /* help (available as accesskey link) */
 div.tabs a.normal {
+  display: none;
   float: right;
   width: 0em;
-  display: none;
 }
 
 div.tabs img {
@@ -216,19 +216,19 @@ div.tabs img {
 div.tabs div.air {
   display: block;
   float: left;
-  background: transparent;
   width: 2em;
   height: 1em;
+  background: transparent;
 }
 
 /* ____________________________________ flow bar _______ */
 
 div.flowbar {
-  background: &dtml-mainTabBackgroundSelected;;
   margin: 0;
   padding: 0;
   border-top: 3px solid &dtml-mainTabBackgroundSelected;;
   border-bottom: 1px solid #84a7a5;
+  background: &dtml-mainTabBackgroundSelected;;
   clear:both;
 }
 
@@ -237,10 +237,10 @@ div.flowbar {
 div.middleground {
   display: block;
   height: 1.6em;
-  background-color: #677a8c;
   margin: 0;
   padding: 0 17px 0 17px;
   border-bottom: 1px solid #456555;
+  background-color: #677a8c;
   font-size: 105%;
 }
 
@@ -250,13 +250,13 @@ div.middleground a {
   display: block;
   width: 12em;
   height: 1.3em;
-  color: &dtml-transportFontColor;;
-  background: #4d5680;
   margin: 1px 1em 1px 1.5em;
   padding: 0;
   border-color: #8faecf;
   border-width: 1px;
   border-style: solid solid solid solid;
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
@@ -265,17 +265,17 @@ div.middleground a:visited {
   background: #4d5680;
 }
 div.middleground a:hover {
+  border-color: #99b4cf;
   color: #e5fffe;
   background: #74748b;
-  border-color: #99b4cf;
   text-decoration: none;
 }
 
 div.middleground a.selected {
   /* A selected, highlighted button. There should only be one of these. */
+  border-color: #3d4b67;
   color: #424244;
   background: #b6d6f3;
-  border-color: #3d4b67;
 }
 
 /* _______ middleground executor (publish now) _______ */
@@ -298,20 +298,20 @@ div.middleground a.executor:active {
 
 div.footer {
   clear: both;
-  font-size: 94%;
-  color: &dtml-shade30;;
-  background: &dtml-listingTopBackground;;
   margin: 0.5em 0em 0em 0em;
   padding: 0em 16px 0.1em 16px;
   border-top: &dtml-shade60;1px solid;
   border-bottom: none;
+  color: &dtml-shade30;;
+  background: &dtml-listingTopBackground;;
+  font-size: 94%;
 }
 
 div.footer a {
+  margin: 0;
+  padding: 0;
   color: &dtml-mainLinkColor;;
   font-weight: &dtml-mainTabFontWeight;;
-  padding: 0;
-  margin: 0;
   text-decoration: none;
 }
 div.footer a:visited {
@@ -321,17 +321,17 @@ div.footer a:visited {
 /* ________________________________ personal bar _______ */
 
 div.personalbar {
-  text-align: center;
-  background: #505e65;
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
   border-bottom: &dtml-shade30;1px solid;
+  background: #505e65;
+  text-align: center;
 }
 
 div.personalbar a {
-  color: #b7cee6;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  color: #b7cee6;
   text-decoration: none;
 }
 div.personalbar a:visited {
@@ -396,12 +396,12 @@ table.columns1 td.main {
 /* _______________________________ listing table _______ */
 
 table.listing {
-  color: #444444;
   width: 100%;
   margin: 0em 0em 1em 0em;
   border-left: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
   border-collapse: collapse;
+  color: #444444;
 }
 
 table.listing img {
@@ -411,11 +411,11 @@ table.listing img {
 /* ______________ rows ______________ */
 
 table.listing tr.controls {
-  color: #c9dfe2;
-  background: &dtml-listingControlsBackground;;
   text-align: right;
   /* in case it's empty */
   height: 0.2em;
+  color: #c9dfe2;
+  background: &dtml-listingControlsBackground;;
 }
 
 table.listing tr.top-controls {
@@ -429,8 +429,7 @@ table.listing tr.odd {
 }
 
 /* applies only to mozilla comp. browsers */
-td.main>table.listing tr.odd:hover td,
-td.main>table.listing tr.even:hover td {
+td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
   background-color: #e5f2ff;
 }
 
@@ -447,12 +446,12 @@ tr.divider, th.divider, td.divider {
 /* ______________ cells ______________ */
 
 table.listing th {
-  color: &dtml-listingHeaderFontColor;;
-  background: &dtml-listingHeaderBackground;;
-  padding: 0em 0.6em 0em 0.6em;
+  padding: 0em 0.6em;
   border-top: none;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
+  color: &dtml-listingHeaderFontColor;;
+  background: &dtml-listingHeaderBackground;;
   font-weight: normal;
   text-align: left;
   vertical-align: middle;
@@ -461,14 +460,14 @@ table.listing th {
 
 table.listing th.listing-left {
   width: 2%;
-  text-align: left;
   padding-left: 0.4em;
+  text-align: left;
 }
 
 table.listing th.listing-right {
   width: 4%;
-  text-align: right;
   padding-right: 0.4em;
+  text-align: right;
 }
 
 table.listing th.align-left, table.listing td.align-left {
@@ -482,10 +481,10 @@ table.listing th.align-right, table.listing td.align-right {
 }
 
 table.listing td {
-  border-right: &dtml-listingBorder;;
   padding: 0em 0.6em;
-  vertical-align: top;
+  border-right: &dtml-listingBorder;;
   text-align: left;
+  vertical-align: top;
 }
 
 /* cycle text color */
@@ -496,16 +495,16 @@ table.listing tr.even td {
 
 /* _______ title cell _______ */
 table.listing td.top {
+  padding: 0em;
+  border: &dtml-listingBorder;;
   color: &dtml-shade40;;
   background: &dtml-listingTopBackground;;
-  border: &dtml-listingBorder;;
-  padding: 0em;
 }
 table.listing td.top h2 {
-  color: &dtml-listingTopHeadingColor;;
-  text-align: left;
   margin: 0.1em 0.4em;
   border: none;
+  color: &dtml-listingTopHeadingColor;;
+  text-align: left;
 }
 table.listing td.top img {
   vertical-align: top;
@@ -521,20 +520,21 @@ div.controls {
 
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-  color: &dtml-listingTopControlsHeadingColor;;
   margin: 0.1em 0.2em 0.2em 0.2em;
   padding: 0em;
   border: none;
+  color: &dtml-listingTopControlsHeadingColor;;
   line-height: 100%;
 }
 
 table.listing td.listing-left {
-  text-align: left;
   padding: 0em 0.4em;
+  text-align: left;
   white-space: nowrap;
 }
 
 table.listing td.listing-right {
+  text-align: right;
   white-space: nowrap;
 }
 
@@ -569,12 +569,12 @@ table#sortable td.listing-right a.icon img {
 /* __________________________ sidebar navigation _______ */
 
 table.listing th.top {
-  color: #e3eef0;
-  background: &dtml-listingHeaderBackground;;
   padding: 0;
   border-top: &dtml-listingBorder;;
-  vertical-align: bottom;
+  color: #e3eef0;
+  background: &dtml-listingHeaderBackground;;
   text-align: center;
+  vertical-align: bottom;
 }
 
 table.listing th.top img {
@@ -610,52 +610,52 @@ table.listing th.subth {
 /* _______ uplinks _______ */
 table.listing a.top {
   display: block;
-  width: 1.4em;
-  background: &dtml-listingHeaderBackground;;
   float: left;
+  width: 1.4em;
   margin: 0em;
   border-right: &dtml-listingBorder;;
   padding: 0em 0.2em;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing a.up {
   display: block;
-  width: 1.4em;
-  background: &dtml-listingHeaderBackground;;
   float: right;
+  width: 1.4em;
   margin: 0em;
   border-left: &dtml-listingBorder;;
   padding: 0em 0.2em;
+  background: &dtml-listingHeaderBackground;;
 }
 
 table.listing a.top:hover {
+  border-style: solid solid none none;
   color: &dtml-mainTabBackgroundSelected;;
   background: &dtml-mainTabBackgroundSelected;;
-  border-style: solid solid none none;
   text-decoration: none;
 }
 
 table.listing a.up:hover {
+  border-style: solid none none solid;
   color: &dtml-mainTabBackgroundSelected;;
   background: &dtml-mainTabBackgroundSelected;;
-  border-style: solid none none solid;
   text-decoration: none;
 }
 
 td.selected {
-  background: &dtml-oddRowBackground;;
   padding-left: 0 ! important;
   padding-right: 0 ! important;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
+  background: &dtml-oddRowBackground;;
 }
 
 td.unselected {
-  background: &dtml-evenRowBackground;;
   padding-left: 0 ! important;
   padding-right: 0 ! important;
   border-top: 1px solid &dtml-evenRowBackground;;
   border-bottom:  1px solid &dtml-evenRowBackground;;
+  background: &dtml-evenRowBackground;;
 }
 
 td.unselected:hover {
@@ -686,23 +686,23 @@ table.listing th.top a.normal:hover {
 /* _______ slidelinks _______ */
 table.listing a.left {
   display: block;
+  float: left;
   width: 8px;
   height: 16px;
-  float: left;
 }
 
 table.listing a.right {
   display: block;
+  float: right;
   width: 8px;
   height: 16px;
-  float: right;
 }
 
 table.listing a.navicon {
   display: block;
+  float: left;
   width: 19px;
   height: 100%;
-  float: left;
 }
 
 table.listing a.left:hover {
@@ -1584,9 +1584,9 @@ a.closed:hover {
 }
 
 .subhead {
+  color: #333767;
   font-weight: bold;
   font-family: verdana, arial, helvetica, sans-serif;
-  color: #333767;
   line-height: 1.8em;
 } 
 

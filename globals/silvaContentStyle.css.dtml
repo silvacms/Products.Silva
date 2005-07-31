@@ -22,20 +22,20 @@ div.tabs a:visited {
 }
 
 div.tabs a.selected {
-  background: &dtml-contentTabBackgroundSelected;;
   border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  background: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.selected:visited {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
-  border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundSelected;;
-  border-bottom-color: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.left:hover {
@@ -47,14 +47,14 @@ div.tabs a.right:hover {
 }
 
 div.tabs a.recede {
+  border-bottom: #8b939b 1px solid;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundRecede;;
-  border-bottom: #8b939b 1px solid;
 }
 
 div.tabs a.recede:hover {
-  background: &dtml-contentTabBackgroundSelected;;
   border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  background: &dtml-contentTabBackgroundSelected;;
 }
 
 div.tabs a.normal:visited {
@@ -77,9 +77,9 @@ div.middleground {
 
 div.middleground a.selected {
   /* The selected tab. There's only one  */
+  border-color: &dtml-mainTabBorderColor;;
   color: &dtml-mainTabFontColorSelected;;
   background: #a7d4b6;
-  border-color: &dtml-mainTabBorderColor;;
 }
 
 div.middleground a.selected:visited {
@@ -110,9 +110,9 @@ td.selected {
 }
 
 td.unselected {
-  background: #c0d5ce;
   border-top-color: #c0d5ce;
   border-bottom-color: #c0d5ce;
+  background: #c0d5ce;
 }
 
 td.unselected:hover {
