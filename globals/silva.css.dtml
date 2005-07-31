@@ -255,10 +255,12 @@ div.middleground a {
   border-color: #8faecf;
   border-width: 1px;
   border-style: solid solid solid solid;
-  color: &dtml-transportFontColor;;
-  background: #4d5680;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
+}
+div.middleground a:link {
+  color: &dtml-transportFontColor;;
+  background: #4d5680;
 }
 div.middleground a:visited {
   color: &dtml-transportFontColor;;
@@ -269,6 +271,10 @@ div.middleground a:hover {
   color: #e5fffe;
   background: #74748b;
   text-decoration: none;
+}
+div.middleground a:active {
+  color: #bfffd3;
+  background: #008a8a;
 }
 
 div.middleground a.selected {
@@ -290,9 +296,10 @@ div.middleground a.executor:hover {
   background: #538da3;
 }
 div.middleground a.executor:active {
-  color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  color: #bfffd3;
+  background: #008a8a;
 }
+
 
 /* ______________________________________ footer _______ */
 
