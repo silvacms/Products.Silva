@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    vein string:Subscriptions;
+    vein string:subscriptions;
     global active_tab string:tab_metadata;
     global parent_screen_name string:properties;"
     
@@ -111,8 +111,8 @@
                         type="submit"
                         name="tab_subscriptions_submit:method"
                         value="save subscription settings"
-                        title="access key: alt-c"
-                        accesskey="c"
+                        title="access key: alt-s"
+                        accesskey="s"
                         i18n:attributes="title;value"
                       />
                     </td>
@@ -138,8 +138,15 @@
             subscribable request/subscribable;
             is_subscribable subscribable/isSubscribable;"
           >
-          <h3 i18n:translate="">
-            Subscriptions info
+          <h3>
+            <img class="icon"
+              width="13"
+              height="9"
+              alt="subscriptions icon" 
+              tal:attributes="src string:${root_url}/globals/subscribe.gif"
+              i18n:attributes="alt"
+            />
+            <span i18n:translate="">Subscriptions info</span>
           </h3>
           <p>
             <span class="subhead" i18n:translate="">
