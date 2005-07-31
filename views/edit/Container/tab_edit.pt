@@ -458,6 +458,7 @@
                   </tr>
                 </tal:block>
               </tal:block>
+
               <tal:block replace="nothing">
                 ______________ select all row ______________
               </tal:block>
