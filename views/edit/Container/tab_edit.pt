@@ -87,6 +87,7 @@
                   </label>
                   <select class="transport"
                     name="meta_type"
+                    id="meta_type"
                     title="select a new item: alt-s"
                     tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
                     i18n:attributes="title"
@@ -510,11 +511,12 @@
                       <div style="float: left; margin-left:0.2em; margin-right:0.7em;">
                         <select class="manipulator"
                           name="new_position"
+                          id="new_position"
                           title="move selected items to"
                           tal:define="length python: len(publishables) - test(default_document, 1, 0)"
                           i18n:attributes="title">
                           <option value="position">
-                            <span i18n:translate="">position</span>:
+                            <span i18n:translate="" tal:omit-tag="">position</span>:
                           </option>
                           <tal:block repeat="item python:range(length)">                            
                             <option value="0"   
