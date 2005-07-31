@@ -46,14 +46,6 @@ body {
   background-image: url(<dtml-var root>/globals/skyrise.gif);
   background-repeat: repeat-x;
   font: &dtml-mainFont;;
-  /* IE only */
-  scrollbar-base-color: &dtml-shade70;;
-  scrollbar-highlight-color: &dtml-shade70;;
-  scrollbar-track-color: &dtml-shade56;;
-  scrollbar-darkshadow-color: &dtml-shade56;;
-  scrollbar-3dlight-color: &dtml-mainTabBorderColorSelected;;
-  scrollbar-shadow-color: &dtml-mainTabBorderColorSelected;;
-  scrollbar-arrow-color: &dtml-mainTabFontColorSelected;;
 }
 
 /* _________________________________________________________ sectors _______ */
