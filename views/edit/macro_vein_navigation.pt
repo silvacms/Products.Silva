@@ -34,7 +34,7 @@ _______ used in almost every screen except user lookup _______
           publication            model/get_publication;
           containing_publication publication/../get_publication | publication;
           query_string           query_string | nothing;
-          vein_id                template_id | python: template.id + test(query_string, query_string, '');
+          global vein_id         template_id | python: template.id + test(query_string, query_string, '');
         ">
         <a class="up"
           href="../../edit/tab_edit"
@@ -111,7 +111,7 @@ ______________ macro plateau: level navigation ______________
   items              python: default_doc_list + model.get_ordered_publishables() + model.get_assets();
   container          model/aq_parent/get_container;
   container_url      string:${container/absolute_url};
-  container_vein_url string:${container/absolute_url}/edit/tab_$vein;
+  container_vein_url string:${container/absolute_url}/edit/$vein_id;
   ">
 
 <tr tal:replace="nothing">
@@ -165,7 +165,7 @@ ______________ macro plateau: level navigation ______________
   <tal:define define="
     is_default    python: item is default_document;
     item_url      item/absolute_url;
-    item_vein_url string:$item_url/edit/tab_$vein;
+    item_vein_url string:$item_url/edit/$vein_id;
     status_style  python:item.get_object_status()[1];
     location      python: model.id == item.id and 'selected' or 'unselected';
   ">
