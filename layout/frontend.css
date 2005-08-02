@@ -437,23 +437,10 @@ div.listingBar .previous {
 /* ___________________________________________ subscription forms _______ */
 
 div.subscriptionform, div.cancellationform {
-  margin: 1.2em 0 1.2em 0;
+  margin: 1.2em 0;
   padding: 0em 1em 0.7em 1em;
   border: 1px solid #797f7f;
   background-color: #d9f2d2;
-}
-
-div.subscriptionform p, div.cancellationform  p,
-div.subscriptionform h3, div.cancellationform  h3 {
-  margin-right: 0;
-}
-
-div.backlink {
-  margin-top: 1.5em;
-}
-
-span.warning {
- color: #aa0000;
 }
 
 div.feedback {
@@ -467,18 +454,26 @@ div.feedback:first-letter {
   text-transform: capitalize;
 }
 
+span.warning {
+ color: #aa0000;
+}
+
+div.backlink {
+  margin-top: 1.5em;
+}
+
 input {
   padding: 0.1em;
-  border: 1px solid #797f7f;
+  border: 1px solid #03956a;
   color: #333767;
   background: #e8f7ef;
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
 
 input.button {
-  margin: 0.2em 0.2em 0.1em 0.2em;
+  margin: 0.1em 0.2em;
   padding: 0 0.2em;
-  border: 1px solid #8faecf;
+  border: 1px solid #557;
   color: #d9f3f1;
   background: #283365;
   font-size: 95%;
