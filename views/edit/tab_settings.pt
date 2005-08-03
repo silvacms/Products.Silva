@@ -41,6 +41,7 @@
               <table class="listing"
                 tal:define="
                   editable model/get_editable;
+                  iscontainer model/implements_container;
                   isfolder python: type == 'Silva Folder';
                   ispublication python: type == 'Silva Publication' or type == 'Silva Root';
                   isghostfolder python: type == 'Silva Ghost Folder';
@@ -62,8 +63,8 @@
                 </tr>
               </thead>
               <tbody>
-                
-                <tr class="top-controls">
+                <tr class="top-controls"
+                  tal:condition="iscontainer">
                   <td colspan="3">
                     <h3>
                       <span i18n:translate="">container type</span>
@@ -87,7 +88,8 @@
                     </tal:block>
                   </td>
                 </tr>
-                <tr class="controls">
+                <tr class="controls"
+                  tal:condition="iscontainer">
                   <td class="align-right" colspan="3">
                     <input class="button" type="submit"
                       value="convert to folder"
@@ -108,7 +110,7 @@
                   </td>
                 </tr>
                 
-                <tr>
+                <tr tal:condition="iscontainer">
                   <td 
                     class="divider" 
                     colspan="3" 
