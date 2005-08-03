@@ -16,32 +16,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
   
 <metal:block metal:fill-slot="middleground">
-  <div class="middleground">
-    <a class="selected" 
-      title="various settings: alt-e" 
-      accesskey="e"
-      href="">
-      settings
-    </a>
-    <tal:block condition="context/is_subscribable_content">
-      <a title="manage subscriptions: alt-u"
-        accesskey="u"
-        tal:attributes="href string:${url}/edit/tab_subscriptions"
-        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
-        i18n:translate="">
-        subscriptions...
-      </a>
-    </tal:block>
-    <a title="change the addables allowed in this publication: alt-d"
-      accesskey="d"
-      tal:define="ispublication python: type == 'Silva Publication' or type == 'Silva Root';"
-      tal:condition="ispublication"
-      tal:attributes="href string:${url}/edit/tab_addables"
-      i18n:attributes="title;accesskey tab_addables"
-      i18n:translate="">
-      addables...
-    </a>
-  </div>
+  <metal:block use-macro="here/macro_middleground/macros/properties" />
 </metal:block>
 
 <metal:block fill-slot="main">
@@ -305,5 +280,7 @@
     </tbody>
   </table>
 </metal:block>
+
 </metal:block>
+
 </html>

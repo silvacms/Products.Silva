@@ -14,49 +14,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
   
 <metal:block metal:fill-slot="middleground">
-  <div class="middleground"
-    tal:define="
-      isfolder python: type == 'Silva Folder';
-      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
-      isghostfolder python: type == 'Silva Ghost Folder';">
-    <a title="miscellaneous settings: alt-e"
-      accesskey="e"
-      tal:attributes="href string:${url}/edit/tab_settings"
-      i18n:attributes="title;accesskey tab_settings_accesskey"
-      i18n:translate=""
-      >settings...</a>
-    <tal:block condition="context/is_subscribable_content">
-      <a title="manage subscriptions: alt-u"
-        accesskey="u"
-        tal:attributes="href string:${url}/edit/tab_subscriptions"
-        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
-        i18n:translate=""
-        >subscriptions...</a>
-    </tal:block>
-    <tal:block condition="python: ispublication and may_approve_content">
-      <a title="change the addables allowed in this publication: alt-a"
-        href="tab_addables"
-        accesskey="a"
-        i18n:attributes="title;accesskey configure_addables_accesskey"
-        i18n:translate=""
-        >addables...</a>
-    </tal:block>
-    <tal:block define="
-      permissions view/get_silva_permissions;
-      unapproved_version model/get_unapproved_version | nothing;
-      have_approve_permission permissions/ApproveSilvaContent | nothing;
-      ">
-      <a title="publish this document: alt-p"
-        accesskey="p"
-        class="executor"
-        tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
-        i18n:translate=""
-        i18n:attributes="title;accesskey open_to_public_accesskey"
-        tal:condition="python: unapproved_version and have_approve_permission">
-        publish&nbsp;now
-      </a>
-    </tal:block>
-  </div>
+  <metal:block use-macro="here/macro_middleground/macros/properties" />
 </metal:block>
 
 <metal:block fill-slot="main">

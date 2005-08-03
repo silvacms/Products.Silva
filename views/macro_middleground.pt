@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html note="insert properties middleground"
+  tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<metal:block define-macro="properties">
+<div class="middleground">
+  <a title="miscellaneous settings: alt-e" accesskey="e"
+    tal:define="
+      vein string:settings;
+      link_id string:tab_settings;
+      selected python:link_id == template.id;
+      class python:selected and 'selected' or nothing;
+      ellipsis python:not selected  and '...' or '';
+    "
+    tal:content="string:$vein$ellipsis"
+    tal:attributes="
+      href string:$url/edit/$link_id;
+      class class;
+      "
+    i18n:attributes="title;accesskey tab_settings_accesskey"
+    i18n:translate="">
+    settings...
+  </a>
+  <a title="manage subscriptions: alt-u"
+    accesskey="u"
+    tal:define="
+      vein string:subscriptions;
+      link_id string:tab_subscriptions;
+      selected python:link_id == template.id;
+      class python:selected and 'selected' or nothing;
+      ellipsis python:not selected  and '...' or '';
+    "
+    tal:condition="context/is_subscribable_content"
+    tal:content="string:$vein$ellipsis"
+    tal:attributes="
+      href string:$url/edit/$link_id;
+      class class;
+    "
+    i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+    i18n:translate="">
+    subscriptions...
+  </a>
+  <a title="change the addables allowed in this publication: alt-d"
+    accesskey="d"
+    tal:define="
+      vein string:addables;
+      link_id string:tab_addables;
+      selected python:link_id == template.id;
+      class python:selected and 'selected' or nothing;
+      ellipsis python:not selected  and '...' or '';
+      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+    "
+      tal:condition="ispublication"
+    tal:content="string:$vein$ellipsis"
+    tal:attributes="
+      href string:$url/edit/$link_id;
+      class class;
+    "
+    i18n:attributes="title;accesskey tab_addables_accesskey"
+    i18n:translate="">
+    addables...
+  </a>
+<tal:block define="
+  permissions view/get_silva_permissions;
+  unapproved_version model/get_unapproved_version | nothing;
+  have_approve_permission permissions/ApproveSilvaContent | nothing;
+  ">
+  <a title="publish this document: alt-p"
+    accesskey="p"
+    class="executor"
+    tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
+    i18n:translate=""
+    i18n:attributes="title;accesskey open_to_public_accesskey"
+    tal:condition="python: unapproved_version and have_approve_permission">
+    publish&nbsp;now
+  </a>
+</tal:block>
+</div>
+</metal:block>
+
+</html>
