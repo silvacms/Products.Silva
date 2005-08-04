@@ -35,16 +35,19 @@
         </tr>
         <tr>
           <td class="top" colspan="4">
-            <h2 metal:define-slot="table_title" i18n:translate="">
+            <h2 metal:define-slot="table_title">
               <img tal:replace="structure python:view.render_icon(model)" />
-              <tal:block i18n:translate="">
-                metadata
-                <tal:block condition="not: model/implements_container" i18n:name="for_title">
-                  <span i18n:translate="">
-                    for &#xab;<tal:block content="string:${title}"
-                    i18n:name="metadata_title">
-                    title</tal:block>&#xbb;</span>
-                </tal:block>
+              <tal:block i18n:translate="">properties</tal:block>
+              <tal:block condition="model/implements_container"
+                i18n:translate="">
+                  of &#xab;<tal:block content="string:${title}"
+                    i18n:name="title">title</tal:block>&#xbb;
+              </tal:block>
+              <tal:block condition="not: model/implements_container"
+                i18n:translate="">
+                  of &#xab;<tal:block content="string:${title}"
+                  i18n:name="title">
+                  title</tal:block>&#xbb;
               </tal:block>
             </h2>
           </td>

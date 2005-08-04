@@ -250,7 +250,7 @@
               />
           </td>
           <td i18n:translate="">
-            Check to export only the latest version. 
+            If not checked the published version is exported.
           </td>
         </tr>
       </tbody>

@@ -54,9 +54,9 @@
               <tr>
                 <td class="top"
                   colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}">
+                  <h2>
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="">user roles for &#xab;<span tal:replace="title" i18n:name="title">title</span>&#xbb;</span>
+                    <span i18n:translate="">user roles for</span> &#xab;<tal:block replace="title">title</tal:block>&#xbb;
                   </h2>
                 </td>
               </tr>
@@ -332,8 +332,11 @@
               </span><br /><span i18n:translate="">
               You are seeing this message because the Silva Groups extension is installed on the file system, 
               but a Groups Service hasn't been added to this Silva instance. To install one, go to the 
-              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services" i18n:name="silva_root_in_the_ZMI"><span i18n:translate="">Silva Root in the ZMI</span></a>,
-              choose &#8220;Groups Service&#8221; from the add list and give it the id <code i18n:name="service_groups">service_groups</code>. 
+              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services"
+                tal:content="string:Silva Root in the ZMI"
+                i18n:name="silva_root_in_the_ZMI" i18n:translate="">Silva Root in the ZMI</a>,
+              choose &#8220;Groups Service&#8221; from the add list and give it the id 
+              <code tal:content="string:service_groups" i18n:name="service_groups">service_groups</code>. 
               No further configuration is necessary.</span>
           </div>
           <tal:block condition="group_service">
@@ -547,7 +550,8 @@
                   colspan="2">
                   <h2 tal:attributes="title string:id: ${model/id}">
                     <img tal:replace="structure python:view.render_icon(model)" />
-                    <span i18n:translate="" tal:omit-tag="">public view access restrictions for</span> &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
+                    <span i18n:translate="" tal:omit-tag="">public view access restrictions for</span> 
+                    &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
                   </h2>
                 </td>
               </tr>

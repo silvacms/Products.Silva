@@ -35,7 +35,7 @@
         <p class="p" i18n:translate="">
           Fill in your email address if you want to receive email
           notifications whenever a new version of this page or its
-          subsections becomes available.
+          subdocuments becomes available.
         </p>
         <span i18n:translate="">email address</span><span class="warning">*</span>
         <input type="hidden" name="path" tal:attributes="value path"/>
@@ -58,8 +58,8 @@
           &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
         </h3>
         <p class="p" i18n:translate="">
-          Fill in your email address here if you want to unsubscribe
-          from email notifications for this page and its subsections.
+          Fill in your email address if you want to unsubscribe
+          from email notifications for this page and its subdocuments.
         </p>
         <span i18n:translate="">email address</span><span class="warning">*</span>
         <input type="hidden" name="path" tal:attributes="value path"/>

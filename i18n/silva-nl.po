@@ -1921,8 +1921,8 @@ msgstr "Item om naar te verwijzen opzoeken: alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:64
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:60
-msgid "metadata ${for_public_version_of}"
-msgstr "metadata ${for_public_version_of}"
+msgid "properties ${for_public_version_of}"
+msgstr "eigenschappen ${for_public_version_of}"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:67
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:63
@@ -2637,11 +2637,11 @@ msgstr "importeren en uitpakken zipbestand (.zip)"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid ""
-"Locate a zip file containing Assets to import or a zip file created by a "
-"full media export."
+"Locate a zip file containing Assets or a zip file created by a "
+"Silva full media export."
 msgstr ""
-"Een zipbestand met 'Assets' of een zipbestand gegenereerd door een volledige "
-"media export opzoeken om te importeren."
+"Een zipbestand met 'Assets' of een zipbestand gegenereerd door een Silva "
+"volledige media export opzoeken om te importeren."
 
 #: /views/edit/Container/tab_edit_import.pt:189
 msgid "title for assets"
@@ -2653,7 +2653,7 @@ msgstr "Optionele titel voor alle assets"
 
 #: /views/edit/Container/tab_edit_import.pt:202
 msgid ""
-"Provide an optional title for all Assets created from the contents of a zip "
+"Set a title for all Assets created from the contents of a zip "
 "file with Assets."
 msgstr ""
 "Een optionele titel ingeven voor alle Assets gegenereerd uit de inhoud van "
@@ -2982,8 +2982,8 @@ msgid "published"
 msgstr "gepubliceerd"
 
 #: /views/edit/Container/tab_status.pt:158
-msgid "index of"
-msgstr "index van"
+msgid "index:"
+msgstr "index:"
 
 #: /views/edit/Container/tab_status.pt:223
 msgid "public version"
@@ -3015,15 +3015,6 @@ msgstr "sneltoets: alt-m"
 msgid "publish time"
 msgstr "publicatie-tijd"
 
-#: /views/edit/Container/tab_status.pt:306
-msgid "p<u>u</u>blish&nbsp;now?"
-msgstr "nu&nbsp;p<u>u</u>bliceren?"
-
-# Default: "u"
-#: /views/edit/Container/tab_status.pt:306
-msgid "publish_now_accesskey"
-msgstr ""
-
 #: /views/edit/Container/tab_status.pt:334
 msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
@@ -3035,8 +3026,8 @@ msgstr "sneltoets: alt-x"
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
 #: /doc/silva-extra.xml:453
-msgid "expiration time"
-msgstr "verlooptijdstip"
+msgid "&nbsp;&nbsp;expiration time"
+msgstr "&nbsp;&nbsp;verlooptijdstip"
 
 # Default: "x"
 #: /views/edit/Container/tab_status.pt:334
@@ -3046,14 +3037,14 @@ msgstr "verlooptijdstip"
 msgid "expiration_time_accesskey"
 msgstr ""
 
-# Default: "p"
+# Default: "o"
 #: /views/edit/Container/tab_status.pt:353
 msgid "clear_expiration_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:353
-msgid "clear&nbsp;ex<u>p</u>iration"
-msgstr "verloo<u>p</u>tijdstip&nbsp;wissen"
+msgid "clear&nbsp;expiration"
+msgstr "verlooptijdstip&nbsp;wissen"
 
 #: /views/edit/Container/tab_status.pt:371
 msgid "reject pending request for approval: alt-j"
@@ -3065,9 +3056,12 @@ msgid "reject_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:371
-#: /views/edit/VersionedContent/tab_status_macros.pt:417
 msgid "reject"
 msgstr "afwijzen"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:417
+msgid "reject approval request"
+msgstr "aanvraag voor goedkeuring afwijzen"
 
 #: /views/edit/Container/tab_status.pt:380
 msgid "withdraw approval of approved versions: alt-v"
@@ -3095,37 +3089,50 @@ msgstr ""
 msgid "create new versions of published docs: alt-n"
 msgstr "nieuwe versies van gepubliceerde documenten aanmaken: alt-n"
 
-# Default: "s"
+# Default: "u"
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "set_timing_accesskey"
+msgid "update_timing_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "change publish and expiration times: alt-s"
-msgstr "publicatie- en verlooptijdstip veranderen: alt-s"
+msgid "change publish and expiration times: alt-u"
+msgstr "publicatie- en verlooptijdstip veranderen: alt-u"
 
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "set timing"
+msgid "update timing"
 msgstr "tijdstippen instellen"
 
 #: /views/edit/Container/tab_status.pt:421
-msgid "approve or publish new versions: alt-o"
-msgstr "nieuwe versies goedkeuren of publiceren: alt-o"
+msgid "approve new versions for publication at a later date: alt-l"
+msgstr "nieuwe versies goedkeuren voor publicatie in de toekomst: alt-l"
 
-# Default: "o"
+# Default: "l"
 #: /views/edit/Container/tab_status.pt:421
 #: /views/edit/VersionedContent/macro_tab_edit.pt:42
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "open_to_public_accesskey"
+msgid "approve_for_later_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:421
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "open to public"
-msgstr "publiek toegankelijk maken"
+msgid "approve for later"
+msgstr "goedkeuren voor later"
+
+#: /views/edit/Container/tab_status.pt:306
+msgid "publish now"
+msgstr "nu publiceren"
+
+# Default: "p"
+#: /views/edit/Container/tab_status.pt:306
+msgid "publish_now_accesskey"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:421
+msgid "publish new versions: alt-p"
+msgstr "nieuwe versies publiceren: alt-p"
 
 #: /views/edit/Container/tab_status.pt:439
 msgid "withdraw pending request for approval: alt-w"
@@ -4296,7 +4303,7 @@ msgstr "-"
 #: /views/edit/VersionedContent/tab_status.pt:90
 #: /views/edit/VersionedContent/tab_status.pt:114
 msgid "content-editor"
-msgstr "bewerken"
+msgstr "inhoud editor"
 
 #: /views/edit/document_lookup.pt:371
 msgid "insert the reference: alt-p"
@@ -4365,8 +4372,8 @@ msgstr "De 'ghost' is in een onbepaalde staat."
 #: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:104
 #: /views/edit/tab_metadata.pt:124
 #: /views/edit/Container/GhostFolder/tab_edit.pt:450
-msgid "metadata"
-msgstr "metadata"
+msgid "properties"
+msgstr "eigenschappen"
 
 #: /views/edit/hyperlink_lookup.pt:235 /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
@@ -4517,8 +4524,8 @@ msgid "x"
 msgstr ""
 
 #: /views/edit/macro_edit_metadata.pt:41 /views/edit/macro_view_metadata.pt:39
-msgid "metadata ${for_title}"
-msgstr "metadata ${for_title}"
+msgid "properties ${for_title}"
+msgstr "eigenschappen ${for_title}"
 
 #: /views/edit/macro_edit_metadata.pt:67 /views/edit/macro_view_metadata.pt:54
 msgid "metadata set"
@@ -4647,7 +4654,7 @@ msgstr "scherm herladen"
 
 #: /views/edit/macro_view_metadata.pt:108 /views/edit/tab_settings.pt:143
 msgid "content renderer"
-msgstr "inhouds-'renderer'"
+msgstr "inhouds-&#8216;renderer&#8217;"
 
 #: /views/edit/macro_view_metadata.pt:117 /views/edit/tab_settings.pt:163
 msgid "renderer"
@@ -4832,7 +4839,7 @@ msgstr "toekennen"
 
 #: /views/edit/tab_access.pt:331
 msgid "A Groups Service is not installed"
-msgstr "Er is geen 'Groups Service' geïnstalleerd"
+msgstr "Er is geen &#8216;Groups Service&#8217; geïnstalleerd"
 
 #: /views/edit/tab_access.pt:335
 msgid "Silva Root in the ZMI"
@@ -4846,10 +4853,10 @@ msgid ""
 "Groups Service&#8221; from the add list and give it the id "
 "${service_groups}. No further configuration is necessary."
 msgstr ""
-"Je ziet deze melding omdat de 'Silva Groups' extensie is geïnstalleerd op "
-"het filesysteem, maar er geen 'Groups Service' aan deze Silva instantie is "
+"Je ziet deze melding omdat de &#8216;Silva Groups&#8217; extensie is geïnstalleerd op "
+"het filesysteem, maar er geen &#8216;Groups Service&#8217; aan deze Silva instantie is "
 "toegevoegd. Ga, om er één te installeren, naar de ${silva_root_in_the_ZMI}, "
-"kies &#8220;Groups Service&#8221; uit de 'add' lijst en geef die het id "
+"kies &#8220;Groups Service&#8221; uit de &#8216;add&#8217; lijst en geef die het id "
 "${service_groups}. Verdere configuratie is niet nodig."
 
 #: /views/edit/tab_access.pt:356
@@ -4916,8 +4923,8 @@ msgstr ""
 "lagergelegen niveaus."
 
 #: /views/edit/tab_access.pt:59
-msgid "user roles for &#xab;${title}&#xbb;"
-msgstr "gebruikersrollen voor &#xab;${title}&#xbb;"
+msgid "user roles for"
+msgstr "gebruikersrollen voor"
 
 #: /views/edit/tab_access.pt:594
 msgid "acquire restriction"
@@ -5039,63 +5046,64 @@ msgstr "voor gesloten versie van &#xab;${title}&#xbb;"
 #: /views/edit/tab_metadata.pt:23
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-#, fuzzy
-msgid "miscellaneous settings: alt-s"
-msgstr "Je instellingen veranderen: alt-~"
+msgid "various settings: alt-e"
+msgstr "verschillende instellingen veranderen: alt-e"
 
 #: /views/edit/tab_metadata.pt:23
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-#, fuzzy
-msgid "<u>s</u>ettings..."
-msgstr "terug..."
+msgid "settings..."
+msgstr "instellingen..."
 
-# Default: "i"
+# Default: "e"
 #: /views/edit/tab_metadata.pt:23 /views/edit/tab_addables.pt:20
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/Container/Publication/tab_addables.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-msgid "tab_settings_accesskey"
-msgstr ""
+msgid "settings_accesskey"
+msgstr "e"
 
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-#, fuzzy
 msgid "manage subscriptions: alt-u"
-msgstr "emailnotificaties beheren: alt-m"
+msgstr "emailnotificaties beheren: alt-u"
 
-# Default: "m"
+# Default: "u"
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-msgid "manage_subscriptions_accesskey"
+msgid "subscriptions_accesskey"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-#, fuzzy
-msgid "s<u>u</u>bscriptions..."
-msgstr "emailnotificaties beheren..."
+msgid "subscriptions..."
+msgstr "emailnotificaties..."
 
-# Default: "c"
+#: /views/edit/tab_metadata.pt:30
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:27
+#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
+msgid "subscriptions"
+msgstr "emailnotificaties"
+
+# Default: "d"
 #: /views/edit/tab_metadata.pt:38
-msgid "configure_addables_accesskey"
-msgstr ""
+msgid "addables_accesskey"
+msgstr "d"
 
 #: /views/edit/tab_metadata.pt:38
-#, fuzzy
-msgid "<u>a</u>ddables..."
-msgstr "toevoeg-instellingen configureren..."
+msgid "addables..."
+msgstr "toevoeg-instellingen..."
 
 #: /views/edit/tab_metadata.pt:38
-msgid "change the addables allowed in this publication: alt-a"
-msgstr "toevoeg-instellingen voor deze publicatie veranderen: alt-a"
+msgid "change the addables allowed in this publication: alt-d"
+msgstr "toevoeg-instellingen voor deze publicatie veranderen: alt-d"
 
 #: /views/edit/tab_metadata.pt:85
-msgid "metadata ${for_approved_version_of_title}"
-msgstr "metadata ${for_approved_version_of_title}"
+msgid "properties ${for_approved_version_of_title}"
+msgstr "eigenschappen ${for_approved_version_of_title}"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:32
@@ -5140,6 +5148,12 @@ msgstr "omzetten naar publicatie"
 msgid "change container type to a publication: alt-p"
 msgstr "verander het container type naar een publicatie: alt-p"
 
+#: /views/edit/tab_settings.pt:86
+msgid "This Silva Folder can be converted to a Publication "
+"(may take awhile if it&#8217;s large)."
+msgstr "Deze map kan veranderen in een Publicatie (het kan even "
+"duren als het groot is)."
+
 # Default: "p"
 #: /views/edit/tab_settings.pt:120
 msgid "convert_to_publication_accesskey"
@@ -5163,7 +5177,6 @@ msgid "change renderer: alt-c"
 msgstr "renderer wijzigen: alt-c"
 
 #: /views/edit/tab_settings.pt:219 /views/edit/tab_settings.pt:290
-#, fuzzy
 msgid "layout settings for &#xab;${title}&#xbb;"
 msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
 
@@ -5730,7 +5743,7 @@ msgstr "Email-notificaties activeren voor &#xab;${title_or_id}&#xbb;"
 #: /views/public/subscriptor.pt:30
 msgid ""
 "Fill in your email address if you want to receive email notifications "
-"whenever a new version of this page or its subsections becomes available."
+"whenever a new version of this page or its subdocuments becomes available."
 msgstr ""
 "Vul uw email-adres in als u email-notificaties wilt ontvangen telkens "
 "wanneer er een nieuwe versie van deze pagina of de onderliggende inhoud "
@@ -5746,10 +5759,10 @@ msgstr "Email-notificaties deactiveren voor &#xab;${title_or_id}&#xbb;"
 
 #: /views/public/subscriptor.pt:55
 msgid ""
-"Fill in your email address here if you want to unsubscribe from email "
-"notifications for this page and its subsections."
+"Fill in your email address if you want to unsubscribe from email "
+"notifications for this page and its subdocuments."
 msgstr ""
-"Vul hier uw emailadres in als u de email-notificaties wilt deactiveren voor "
+"Vul uw emailadres in als u de email-notificaties wilt deactiveren voor "
 "deze pagina en alle onderliggende inhoud."
 
 #: /views/public/subscriptor.pt:64

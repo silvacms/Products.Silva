@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html tal:omit-tag=""
+<html note="this is the properties screen"
+  tal:omit-tag=""
   lang="en"
   xml:lang="en"
   xmlns="http://www.w3.org/1999/xhtml"
@@ -52,7 +53,8 @@
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
-                  <tal:block i18n:translate="">metadata
+                  <tal:block i18n:translate="">properties</tal:block>
+                  <tal:block i18n:translate="">
                   <tal:block condition="not: model/implements_container" i18n:name="for_approved_version_of_title">
                     <tal:block i18n:translate="">for approved version of
                       &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
@@ -72,9 +74,9 @@
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
-                  <tal:block i18n:translate="">metadata</tal:block>
+                  <tal:block i18n:translate="">properties</tal:block>
                   <span tal:condition="not: model/implements_container" i18n:translate="">
-                    for published version of
+                    for public version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
                   </span>
                 </h2>
@@ -90,7 +92,7 @@
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure python:view.render_icon(model)" />
-                  <tal:block i18n:translate="">metadata</tal:block>
+                  <tal:block i18n:translate="">properties</tal:block>
                   <span tal:condition="not: model/implements_container" i18n:translate="">
                     for closed version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;

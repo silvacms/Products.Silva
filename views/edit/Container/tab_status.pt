@@ -337,7 +337,7 @@
             accesskey="o"
             i18n:attributes="title;accesskey clear_expiration_accesskey"
             i18n:translate="">
-            clear&nbsp;expirati<u>o</u>n
+            clear&nbsp;expiration
           </label>
           <field tal:replace="structure view/tab_status_form/clear_expiration/render" />
         </tal:block>

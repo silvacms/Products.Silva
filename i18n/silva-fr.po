@@ -99,7 +99,7 @@ msgstr ""
 "symbolique, raccourci). A différence de l'hyperlien qui dirige le Visiteur "
 "vers un autre emplacement, un objet ghost garde le Visiteur dans la "
 "publicaton courante, et présente le contenu de l'item ghosted.\n"
-"       L'objet ghost hérite les propriétés de son emplacement (par exemple "
+"       L&#8217;objet ghost hérite les propriétés de son emplacement (par exemple "
 "affichage et feuille de style) . \n"
 "   "
 
@@ -1991,8 +1991,8 @@ msgstr "Trouver item en relation à : alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:64
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:60
-msgid "metadata ${for_public_version_of}"
-msgstr "metadata ${for_public_version_of}"
+msgid "of &#xab;${title}&#xbb;"
+msgstr "de &#xab;${title}&#xbb;"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:67
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:63
@@ -2709,8 +2709,8 @@ msgstr "importer et extraire un fichier zip (.zip)"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid ""
-"Locate a zip file containing Assets to import or a zip file created by a "
-"full media export."
+"Locate a zip file containing Assets or a zip file created by a "
+"Silva full media export."
 msgstr ""
 "Trouver un fichier zip cpntanant des éléments Assets à importer ou un "
 "fichier zip créé par une exportation compléte full media."
@@ -2725,7 +2725,7 @@ msgstr "Titre facultatif pour tous les éléments assets"
 
 #: /views/edit/Container/tab_edit_import.pt:202
 msgid ""
-"Provide an optional title for all Assets created from the contents of a zip "
+"Set a title for all Assets created from the contents of a zip "
 "file with Assets."
 msgstr ""
 "Fournir un titre facultatif pour tous les éléments Assets créés à partir du "
@@ -3059,8 +3059,8 @@ msgid "published"
 msgstr "publié"
 
 #: /views/edit/Container/tab_status.pt:158
-msgid "index of"
-msgstr "index de"
+msgid "index:"
+msgstr "index:"
 
 #: /views/edit/Container/tab_status.pt:223
 msgid "public version"
@@ -3092,15 +3092,6 @@ msgstr "touche d'accès: alt-m"
 msgid "publish time"
 msgstr "date de publication"
 
-#: /views/edit/Container/tab_status.pt:306
-msgid "p<u>u</u>blish&nbsp;now?"
-msgstr "p<u>u</u>blier&nbsp;maintenant?"
-
-# Default: "u"
-#: /views/edit/Container/tab_status.pt:306
-msgid "publish_now_accesskey"
-msgstr ""
-
 #: /views/edit/Container/tab_status.pt:334
 msgid "access key: alt-x"
 msgstr "touche d'accès: alt-x"
@@ -3112,8 +3103,8 @@ msgstr "touche d'accès: alt-x"
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
 #: /doc/silva-extra.xml:453
-msgid "expiration time"
-msgstr "date d'expiration"
+msgid "&nbsp;&nbsp;expiration time"
+msgstr "&nbsp;&nbsp;date d'expiration"
 
 # Default: "x"
 #: /views/edit/Container/tab_status.pt:334
@@ -3123,14 +3114,14 @@ msgstr "date d'expiration"
 msgid "expiration_time_accesskey"
 msgstr ""
 
-# Default: "p"
+# Default: "o"
 #: /views/edit/Container/tab_status.pt:353
 msgid "clear_expiration_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:353
-msgid "clear&nbsp;ex<u>p</u>iration"
-msgstr "remise à zéro&nbsp;ex<u>p</u>iration"
+msgid "clear&nbsp;expiration"
+msgstr "remise à zéro&nbsp;expiration"
 
 #: /views/edit/Container/tab_status.pt:371
 msgid "reject pending request for approval: alt-j"
@@ -3142,9 +3133,12 @@ msgid "reject_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:371
-#: /views/edit/VersionedContent/tab_status_macros.pt:417
 msgid "reject"
 msgstr "refuser"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:417
+msgid "reject approval request"
+msgstr "refus demandes d'approbation"
 
 #: /views/edit/Container/tab_status.pt:380
 msgid "withdraw approval of approved versions: alt-v"
@@ -3172,37 +3166,50 @@ msgstr ""
 msgid "create new versions of published docs: alt-n"
 msgstr "créer des nouvelles versions des documents publiés: alt-n"
 
-# Default: "s"
+# Default: "u"
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "set_timing_accesskey"
+msgid "update_timing_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "change publish and expiration times: alt-s"
-msgstr "modifier date de publication et d'expiration: alt-s"
+msgid "change publish and expiration times: alt-u"
+msgstr "modifier date de publication et d'expiration: alt-u"
 
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "set timing"
+msgid "update timing"
 msgstr "activer dates"
 
 #: /views/edit/Container/tab_status.pt:421
-msgid "approve or publish new versions: alt-o"
-msgstr "approuve ou publie nouvelles versions: alt-o"
+msgid "approve new versions for publication at a later date: alt-l"
+msgstr "approuve ou publie nouvelles versions: alt-l"
 
-# Default: "o"
+# Default: "l"
 #: /views/edit/Container/tab_status.pt:421
 #: /views/edit/VersionedContent/macro_tab_edit.pt:42
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "open_to_public_accesskey"
+msgid "approve_for_later_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:421
 #: /views/edit/VersionedContent/tab_status_macros.pt:394
-msgid "open to public"
+msgid "approve for later"
 msgstr "ouvert au public"
+
+#: /views/edit/Container/tab_status.pt:306
+msgid "publish now"
+msgstr "publier maintenant"
+
+# Default: "p"
+#: /views/edit/Container/tab_status.pt:306
+msgid "publish_now_accesskey"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:413
+msgid "publish new versions: alt-p"
+msgstr "publier maintenant: alt-p"
 
 #: /views/edit/Container/tab_status.pt:439
 msgid "withdraw pending request for approval: alt-w"
@@ -4445,8 +4452,8 @@ msgstr "L'état du ghost est indéfini."
 #: /views/edit/hyperlink_lookup.pt:215 /views/edit/tab_metadata.pt:104
 #: /views/edit/tab_metadata.pt:124
 #: /views/edit/Container/GhostFolder/tab_edit.pt:450
-msgid "metadata"
-msgstr "metadata"
+msgid "properties"
+msgstr "propriétés"
 
 #: /views/edit/hyperlink_lookup.pt:235 /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
@@ -4599,8 +4606,8 @@ msgid "x"
 msgstr "x"
 
 #: /views/edit/macro_edit_metadata.pt:41 /views/edit/macro_view_metadata.pt:39
-msgid "metadata ${for_title}"
-msgstr "metadata ${for_title}"
+msgid "propeties ${for_title}"
+msgstr "propriétés ${for_title}"
 
 #: /views/edit/macro_edit_metadata.pt:67 /views/edit/macro_view_metadata.pt:54
 msgid "metadata set"
@@ -4681,7 +4688,7 @@ msgstr ""
 
 #: /views/edit/macro_select_all.pt:24
 msgid "select <u>a</u>ll"
-msgstr "choisir tout <u>a</u>ll"
+msgstr "choisir tout"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
@@ -4930,7 +4937,7 @@ msgid ""
 msgstr ""
 "L'extension Silva Groups est installée dans le système de fichiers, mais le "
 "service Groups n'a pas été ajouté à cette instance Silva. Pour l'installer, "
-"aller à  ${silva_root_in_the_ZMI},choisir &#8220;Groups Service&#8221; à "
+"aller à  ${silva_root_in_the_ZMI}, choisir &#8220;Groups Service&#8221; à "
 "partir de la liste ajouter  et lui donner l'id ${service_groups}. Aucune "
 "autre configuration est nécessaire."
 
@@ -4998,8 +5005,8 @@ msgstr ""
 "inférieurs"
 
 #: /views/edit/tab_access.pt:59
-msgid "user roles for &#xab;${title}&#xbb;"
-msgstr "rôles utilisateur pour &#xab;${title}&#xbb;"
+msgid "user roles for"
+msgstr "rôles utilisateur pour"
 
 #: /views/edit/tab_access.pt:594
 msgid "acquire restriction"
@@ -5121,64 +5128,64 @@ msgstr ""
 #: /views/edit/tab_metadata.pt:23
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-#, fuzzy
-msgid "miscellaneous settings: alt-s"
-msgstr "Modifier vos paramétres: alt-~"
+msgid "various settings: alt-e"
+msgstr "Modifier vos paramétres: alt-e"
 
 #: /views/edit/tab_metadata.pt:23
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-#, fuzzy
-msgid "<u>s</u>ettings..."
-msgstr "retour<u>k</u>..."
+msgid "settings..."
+msgstr "paramétres..."
 
-# Default: "b"
+# Default: "e"
 #: /views/edit/tab_metadata.pt:23 /views/edit/tab_addables.pt:20
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 #: /views/edit/Container/Publication/tab_addables.pt:20
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:20
-#, fuzzy
-msgid "tab_settings_accesskey"
-msgstr "bottom_accesskey"
+msgid "settings_accesskey"
+msgstr "settings_accesskey"
 
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-#, fuzzy
 msgid "manage subscriptions: alt-u"
-msgstr "gérer abonnements: alt-m"
+msgstr "gérer abonnements: alt-u"
 
-# Default: "m"
+# Default: "u"
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-msgid "manage_subscriptions_accesskey"
-msgstr ""
+msgid "subscriptions_accesskey"
+msgstr "u"
 
 #: /views/edit/tab_metadata.pt:30
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
-#, fuzzy
-msgid "s<u>u</u>bscriptions..."
-msgstr "<u>G</u>érer abonnements..."
+msgid "subscriptions..."
+msgstr "abonnements..."
 
-# Default: "a"
+#: /views/edit/tab_metadata.pt:30
+#: /views/edit/Container/GhostFolder/tab_metadata.pt:27
+#: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
+msgid "subscriptions"
+msgstr "abonnements"
+
+# Default: "d"
 #: /views/edit/tab_metadata.pt:38
-msgid "configure_addables_accesskey"
+msgid "addables_accesskey"
 msgstr ""
 
 #: /views/edit/tab_metadata.pt:38
-#, fuzzy
-msgid "<u>a</u>ddables..."
-msgstr "configurer hérit<u>a</u>ges..."
+msgid "addables..."
+msgstr "héritages..."
 
 #: /views/edit/tab_metadata.pt:38
-msgid "change the addables allowed in this publication: alt-a"
-msgstr "modifie les éléments d'héritage disponibles dans cette publication"
+msgid "change the addables allowed in this publication: alt-d"
+msgstr "modifie les éléments d'héritage disponibles dans cette publication: alt-d"
 
 #: /views/edit/tab_metadata.pt:85
-msgid "metadata ${for_approved_version_of_title}"
-msgstr "metadata ${for_approved_version_of_title}"
+msgid "properties ${for_approved_version_of_title}"
+msgstr "propriétés ${for_approved_version_of_title}"
 
 #: /views/edit/tab_preview.pt:19
 #: /views/edit/VersionedContent/macro_tab_edit.pt:32
@@ -5828,7 +5835,7 @@ msgstr "S'abonner à &#xab;${title_or_id}&#xbb;"
 #: /views/public/subscriptor.pt:30
 msgid ""
 "Fill in your email address if you want to receive email notifications "
-"whenever a new version of this page or its subsections becomes available."
+"whenever a new version of this page or its subdocuments becomes available."
 msgstr ""
 "Pour recevoir des notifications email dès qu'une nouvelle version de cette "
 "page ou de ses sections devient disponible remplissez avec votre adresse "
@@ -5844,8 +5851,8 @@ msgstr "Se désabonner de &#xab;${title_or_id}&#xbb;"
 
 #: /views/public/subscriptor.pt:55
 msgid ""
-"Fill in your email address here if you want to unsubscribe from email "
-"notifications for this page and its subsections."
+"Fill in your email address if you want to unsubscribe from email "
+"notifications for this page and its subdocuments."
 msgstr ""
 "Pour vous désabonner des notifications email pour cette page et ses sous "
 "sections remplissez votre adresse email ici"
@@ -5872,16 +5879,14 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ msgid "change Folder into Publication: alt-c"
 #~ msgstr "convertir Dossier en Publication: alt-c"
 
-#, fuzzy
-#~ msgid "<u>c</u>onvert to publication"
+#~ msgid "convert to publication"
 #~ msgstr "transformer en publication"
 
-#, fuzzy
-#~ msgid "<u>c</u>onvert to folder"
+#~ msgid "convert to folder"
 #~ msgstr "convertir à dossier"
 
-#~ msgid "change Publication into Folder: alt-c"
-#~ msgstr "change Publication au Dossier: alt-c"
+#~ msgid "change Publication into Folder: alt-f"
+#~ msgstr "change Publication au Dossier: alt-f"
 
 #~ msgid "convert this ghost folder to a normal folder: alt-c"
 #~ msgstr "convertir ce dossier ghost à dossier normal"
@@ -5889,12 +5894,11 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ msgid "convert this ghost folder to a normal publication: alt-p"
 #~ msgstr "convertir ce dossier ghost à une publication normal: alt-p"
 
-#, fuzzy
-#~ msgid "settings and properties for &#xab;${title}&#xbb;"
-#~ msgstr "propriétés de &#xab;${title}&#xbb;"
+#~ msgid "for &#xab;${title}&#xbb;"
+#~ msgstr "de &#xab;${title}&#xbb;"
 
-#~ msgid "metadata of &#8216;original&#8217;"
-#~ msgstr "metadata of &#8216;original&#8217;"
+#~ msgid "of &#8216;original&#8217;"
+#~ msgstr "de &#8216;original&#8217;"
 
 #~ msgid "Layout has been copied for customization."
 #~ msgstr "La maquette a été copiée pour personnalisation"

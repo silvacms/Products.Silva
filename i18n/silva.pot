@@ -2907,7 +2907,7 @@ msgid "change publish and expiration times: alt-s"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:454
-msgid "set timing"
+msgid "update timing"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:465
@@ -5354,7 +5354,7 @@ msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
 #: /views/public/subscriptor.pt:30
-msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subsections becomes available."
+msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subdocuments becomes available."
 msgstr ""
 
 #: /views/public/subscriptor.pt:40
@@ -5366,7 +5366,7 @@ msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
 #: /views/public/subscriptor.pt:55
-msgid "Fill in your email address here if you want to unsubscribe from email notifications for this page and its subsections."
+msgid "Fill in your email address if you want to unsubscribe from email notifications for this page and its subdocuments."
 msgstr ""
 
 #: /views/public/subscriptor.pt:64

@@ -86,7 +86,7 @@
       <span class="subhead" i18n:translate="">Content is published</span><br />
       <tal:block i18n:translate="">
       This content is published (online for the public).<br />
-      If you wish you can make an editable copy by going to the <a
+      If you wish you can make an editable copy by going to the <a tal:content="string:editor"
       href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
       </tal:block>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
@@ -109,8 +109,8 @@
     <td class="feedback" colspan="3">
       <span class="subhead" i18n:translate="">Content is closed</span><br />
       <tal:block i18n:translate="">  
-        This content was once published but is now closed.<br /> If you
-        wish you can make an editable copy in the <a
+        This content was once published but is now closed.<br /> 
+        If you wish you can make an editable copy in the <a tal:content="string:editor"
         href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
       </tal:block>
      <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
