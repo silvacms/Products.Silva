@@ -33,10 +33,11 @@ if result.has_key('editor'):
         model.set_editor(result['editor'])
         messages.append(unicode(_('Editor updated')))
 
-if request.has_key('language'):
+if request.has_key('langsetting'):
     languageProvider = context.getLanguageProvider()
-    if request['language'] != languageProvider.getPreferredLanguage():
-        languageProvider.setPreferredLanguage(request['language'])
+    if (str(request['langsetting']) != 
+            str(languageProvider.getPreferredLanguage())):
+        languageProvider.setPreferredLanguage(request['langsetting'])
         messages.append(unicode(_('Language updated')))
 
 if len(messages)==0:

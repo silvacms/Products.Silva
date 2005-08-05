@@ -92,7 +92,7 @@ function focus_editor() {
           i18n:translate="">
           preferred language
         </td>
-        <td><select size="1" name="language">
+        <td><select size="1" name="langsetting">
             <tal:block tal:repeat="lang languages">
             <option 
               tal:attributes="
