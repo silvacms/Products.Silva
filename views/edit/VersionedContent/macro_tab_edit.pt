@@ -72,7 +72,7 @@
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
 <form action="tab_edit_break_lock" method="POST">
-  <div class="feedback"><span class="warning">
+  <div class="fixed-feedback"><span class="warning">
       <tal:block i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
         and is temporarily locked.
@@ -97,9 +97,9 @@
       name="came_from_view"
       tal:attributes="value template/id"
     />
-    <div class="feedback">
+    <div class="fixed-feedback">
       <input class="button"
-        style="margin-left:0;"
+        style="margin-left:6px;"
         type="submit"
         value="new version"
         title="work on a new version while the previous one stays online: alt-n"
@@ -118,10 +118,10 @@
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
 <tal:condition condition="python: model.get_approved_version()">
 <form action="tab_edit_revoke_approval" method="POST">
-  <div class="feedback">
+  <div class="fixed-feedback">
     <input 
       class="button" 
-      style="margin-left:0;" 
+      style="margin-left:6px;"
       type="submit" 
       value="revoke approval" 
       title="'first un-approve' this item in order to edit: alt-r" 
@@ -138,10 +138,10 @@
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
 <form action="tab_status_withdraw" method="POST">
-  <div class="feedback">
+  <div class="fixed-feedback">
     <input 
       class="button" 
-      style="margin-left:0;" 
+      style="margin-left:6px;"
       type="submit" 
       value="withdraw request" 
       title="withdraw a request for approval in order to edit: alt-w" 
