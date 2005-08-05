@@ -7,13 +7,11 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="
-    global vein string:editor;
-    "
   i18n:domain="silva">
-<metal:block define-macro="editor">
 
-<metal:block use-macro="here/macro_index/macros/master">
+<metal:define-macro metal:define-macro="editor">
+<metal:use-macro metal:use-macro="here/macro_index/macros/master">
+
 <metal:block fill-slot="metatype_css">
   <metal:block define-slot="editor_css" />
 </metal:block>
@@ -22,13 +20,10 @@
  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
-<metal:block 
-  metal:fill-slot="middleground"
+<metal:block fill-slot="middleground"
   tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
-
     <metal:block define-slot="editor_selection" />
-
     <a title="see the content in the public layout: alt-;"
       accesskey=";"
       tal:attributes="href string:${model/absolute_url}/preview_html"
@@ -36,9 +31,9 @@
       i18n:attributes="title;accesskey public_preview_accesskey">
       public&nbsp;preview...
     </a>
-
-    <tal:block define="permissions view/get_silva_permissions;
-                        have_approve_permission permissions/ApproveSilvaContent | nothing">
+    <tal:block define="
+      permissions view/get_silva_permissions;
+      have_approve_permission permissions/ApproveSilvaContent | nothing">
       <a title="publish this document: alt-p"
         accesskey="p"
         class="executor"
@@ -49,45 +44,40 @@
         publish&nbsp;now
       </a>
     </tal:block>
-
   </div>
 </metal:block>
 
-<metal:block fill-slot="main"
+<metal:fill-slot metal:fill-slot="main"
   tal:define="
     is_locked model/sec_is_locked;
     request_pending python:model.is_version_approval_requested();
     unapproved_version model/get_unapproved_version;
-">
+  ">
 
 <span tal:replace="nothing"> _________ show editor ____ </span>
-<tal:block
-  tal:condition="python:unapproved_version and not request_pending and not is_locked" 
-  >
-
-<metal:block define-slot="editor_content" />
-
+<tal:block condition="python:unapproved_version and not request_pending and not is_locked">
+  <metal:block define-slot="editor_content" />
 </tal:block>
 
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
-<form action="tab_edit_break_lock" method="POST">
-  <div class="fixed-feedback"><span class="warning">
-      <tal:block i18n:translate="">
-        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
-        and is temporarily locked.
-      </tal:block>
-    </span><br />
-    <input 
-      class="warning"
-      style="margin-left:0;"
-      type="submit" 
-      value="break lock" 
-      title="Somebody else just edited this item, unlock it: alt-u" 
-      accesskey="u"
-      i18n:attributes="value;title;accesskey break_lock_accesskey"/>
-  </div>
-</form>
+  <form action="tab_edit_break_lock" method="POST">
+    <div class="fixed-feedback"><span class="warning">
+        <tal:block i18n:translate="">
+          <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
+          and is temporarily locked.
+        </tal:block>
+      </span><br />
+      <input 
+        class="warning"
+        style="margin-left:6px;"
+        type="submit" 
+        value="break lock" 
+        title="Somebody else just edited this item, unlock it: alt-u" 
+        accesskey="u"
+        i18n:attributes="value;title;accesskey break_lock_accesskey"/>
+    </div>
+  </form>
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
@@ -117,48 +107,48 @@
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
 <tal:condition condition="python: model.get_approved_version()">
-<form action="tab_edit_revoke_approval" method="POST">
-  <div class="fixed-feedback">
-    <input 
-      class="button" 
-      style="margin-left:6px;"
-      type="submit" 
-      value="revoke approval" 
-      title="'first un-approve' this item in order to edit: alt-r" 
-      accesskey="r"
-      i18n:attributes="value;title;accesskey revoke_approval_accesskey"/>
-      <span i18n:translate="">
-        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
-      </span>
-  </div>
-</form>
+  <form action="tab_edit_revoke_approval" method="POST">
+    <div class="fixed-feedback">
+      <input 
+        class="button" 
+        style="margin-left:6px;"
+        type="submit" 
+        value="revoke approval" 
+        title="'first un-approve' this item in order to edit: alt-r" 
+        accesskey="r"
+        i18n:attributes="value;title;accesskey revoke_approval_accesskey"/>
+        <span i18n:translate="">
+          <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
+        </span>
+    </div>
+  </form>
   <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
-<form action="tab_status_withdraw" method="POST">
-  <div class="fixed-feedback">
-    <input 
-      class="button" 
-      style="margin-left:6px;"
-      type="submit" 
-      value="withdraw request" 
-      title="withdraw a request for approval in order to edit: alt-w" 
-      accesskey="w"
-      i18n:attributes="value;title;accesskey withdraw_request_accesskey"/>
-    <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
-    <input type="hidden" name="tab_name" value="edit" />
-    <span i18n:translate="">
-      <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
-    </span>
-  </div>
-</form>
+  <form action="tab_status_withdraw" method="POST">
+    <div class="fixed-feedback">
+      <input 
+        class="button" 
+        style="margin-left:6px;"
+        type="submit" 
+        value="withdraw request" 
+        title="withdraw a request for approval in order to edit: alt-w" 
+        accesskey="w"
+        i18n:attributes="value;title;accesskey withdraw_request_accesskey"/>
+      <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
+      <input type="hidden" name="tab_name" value="edit" />
+      <span i18n:translate="">
+        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
+      </span>
+    </div>
+  </form>
   <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
-</metal:block>
-</metal:block>
-</metal:block>
-</html>
+</metal:fill-slot>
 
+</metal:use-macro>
+</metal:define-macro>
+</html>
