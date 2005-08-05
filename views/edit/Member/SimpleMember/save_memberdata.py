@@ -35,8 +35,9 @@ if result.has_key('editor'):
 
 if request.has_key('language'):
     languageProvider = context.getLanguageProvider()
-    languageProvider.setPreferredLanguage(request['language'])
-    messages.append(unicode(_('Language updated')))
+    if request['language'] != languageProvider.getPreferredLanguage():
+        languageProvider.setPreferredLanguage(request['language'])
+        messages.append(unicode(_('Language updated')))
 
 if len(messages)==0:
     messages.append(unicode(_('Nothing changed.')))
