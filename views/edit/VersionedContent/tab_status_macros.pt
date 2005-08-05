@@ -232,8 +232,8 @@ notes
   tal:define="field view/tab_status_form_change_settings/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
 <label 
-  title="access key: alt-i (some platforms)" 
-  accesskey="i"
+  title="access key: alt-n (some platforms)" 
+  accesskey="n"
   tal:attributes="for field/id"
   i18n:attributes="title;accesskey expiration_time_accesskey"
   i18n:translate=""
@@ -273,7 +273,7 @@ If this content should expire, set the time.
   tal:attributes="for field/id"
   i18n:attributes="title;accesskey clear_expiration_time_accesskey"
   i18n:translate=""
-  >clear expirati<u>o</u>n?
+  >clear expiration
 </label>
 <tal:block 
   attributes="id field/id"
@@ -285,7 +285,7 @@ If this content should expire, set the time.
 <tr class="inter-controls">
 <td class="align-right"
   colspan="2">
-<input type="submit" value="update timings" class="button"  title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
+<input type="submit" value="update timing" class="button"  title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
 </td>
 </tr>
 </form>

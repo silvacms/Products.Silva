@@ -182,8 +182,8 @@ msgid ""
 msgstr "Publicaties dienen als de hoofdbouwstenen van een Silva site."
 
 #: /SilvaObject.py:356
-msgid "Sorry, this ${meta_type} version is not viewable."
-msgstr "Sorry, deze ${meta_type} versie kan niet bekeken worden."
+msgid "Sorry, this ${meta_type} is not viewable."
+msgstr "Sorry, deze ${meta_type} kan niet bekeken worden."
 
 #: /Version.py:207
 msgid "unapproved"
@@ -204,6 +204,10 @@ msgstr "publiek"
 #: /Version.py:208
 msgid "draft"
 msgstr "klad"
+
+#: /Version.py:208
+msgid "pending"
+msgstr "uitstaande"
 
 #: /Version.py:208 /views/edit/Container/tab_status.pt:239
 msgid "closed"
@@ -3521,20 +3525,20 @@ msgstr ""
 "1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:25
-msgid "fullname updated"
-msgstr "Volledige naam bijgewerkt"
+msgid "Full name updated"
+msgstr "Naam bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:29
-msgid "e-mail updated"
-msgstr "e-mail bijgewerkt"
+msgid "Email updated"
+msgstr "E-mail bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:34
-msgid "editor updated"
-msgstr "'editor' bijgewerkt"
+msgid "Editor updated"
+msgstr "Editor bijgewerkt"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:39
-msgid "language updated"
-msgstr "taalinstellingen aangepast"
+msgid "Language updated"
+msgstr "Taalinstellingen aangepast"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:42
 msgid "Nothing changed."
@@ -3561,8 +3565,8 @@ msgid "Add read only view here?"
 msgstr "Alleen-lezen weergave hier toevoegen?"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:57
-msgid "member data of &#xab;${title}&#xbb;"
-msgstr "gegevens van lid &#xab;${title}&#xbb;"
+msgid "member data of"
+msgstr "gegevens van lid"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:65
 msgid "characteristic"
@@ -4296,7 +4300,7 @@ msgstr "inhoud goedgekeurd of gepubliceerd"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:327
 #: /views/edit/Container/GhostFolder/tab_edit.pt:363
 msgid "n/a"
-msgstr "-"
+msgstr "n.v.t."
 
 # Default: "editor"
 #: /views/edit/document_lookup.pt:315 /views/edit/Container/tab_edit.pt:391

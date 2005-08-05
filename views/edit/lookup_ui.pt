@@ -36,7 +36,7 @@
       <td class="left">
 
         <span tal:replace="nothing">
-          ______________ parent screen transport ______________
+          ______________ previous screen transport ______________
         </span>
         <table class="listing">
           <thead>
@@ -96,7 +96,7 @@
                   name (or part of name)
                 </td>
                 <td class="align-right"
-                  style="width:70%;">
+                  style="width:60%;">
                   <input class="store"
                     name="name"
                     type="text"

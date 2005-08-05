@@ -193,7 +193,8 @@
             tal:attributes="
               class obj/status_style | default;
               href string:${obj_url}/edit/tab_status;"
-              i18n:attributes="title">
+              i18n:attributes="title"
+              i18n:translate="">
               <tal:block content="obj/status">
               </tal:block>
           </a>

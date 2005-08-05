@@ -22,21 +22,21 @@ except FormValidationError, e:
 messages = []
 if model.fullname() != result['fullname']:
     model.set_fullname(result['fullname'])
-    messages.append(unicode(_('fullname updated')))
+    messages.append(unicode(_('Full name updated')))
 
 if model.email() != result['email']:
     model.set_email(result['email'])
-    messages.append(unicode(_('e-mail updated')))
+    messages.append(unicode(_('Email updated')))
 
 if result.has_key('editor'):
     if model.editor() != result['editor']:
         model.set_editor(result['editor'])
-        messages.append(unicode(_('editor updated')))
+        messages.append(unicode(_('Editor updated')))
 
 if request.has_key('language'):
     languageProvider = context.getLanguageProvider()
     languageProvider.setPreferredLanguage(request['language'])
-    messages.append(unicode(_('language updated')))
+    messages.append(unicode(_('Language updated')))
 
 if len(messages)==0:
     messages.append(unicode(_('Nothing changed.')))

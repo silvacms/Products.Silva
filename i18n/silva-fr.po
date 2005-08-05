@@ -245,8 +245,8 @@ msgstr ""
 
 # not viewable - n'est pas disponible
 #: /SilvaObject.py:356
-msgid "Sorry, this ${meta_type} version is not viewable."
-msgstr "Désolé, cette version de ${meta_type} n'est pas disponible."
+msgid "Sorry, this ${meta_type} is not viewable."
+msgstr "Désolé, cette ${meta_type} n'est pas disponible."
 
 #: /Version.py:207
 msgid "unapproved"
@@ -269,6 +269,10 @@ msgstr "public"
 #: /Version.py:208
 msgid "draft"
 msgstr "projet de publication"
+
+#: /Version.py:208
+msgid "pending"
+msgstr "en cours"
 
 #: /Version.py:208 /views/edit/Container/tab_status.pt:239
 msgid "closed"
@@ -3583,7 +3587,7 @@ msgstr "Le membre est approuvé"
 
 #: /views/edit/Member/SimpleMember/memberform.form:69
 msgid "preferred editor"
-msgstr ""
+msgstr "editeur préféré"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid ""
@@ -3596,21 +3600,20 @@ msgstr ""
 "ou Mozilla 1.3.1+)"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:25
-msgid "fullname updated"
-msgstr "nom complet mis à jour"
+msgid "Full name updated"
+msgstr "nom mis à jour"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:29
-msgid "e-mail updated"
+msgid "Email updated"
 msgstr "mail mis à jour"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:34
-msgid "editor updated"
+msgid "Editor updated"
 msgstr "editeur mis à jour"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:39
-#, fuzzy
-msgid "language updated"
-msgstr "nom complet mis à jour"
+msgid "Language updated"
+msgstr "langage changement"
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:42
 msgid "Nothing changed."
@@ -3637,17 +3640,16 @@ msgid "Add read only view here?"
 msgstr "Ajouter vue en lecture seulement ici?"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:57
-msgid "member data of &#xab;${title}&#xbb;"
-msgstr "member data of &#xab;${title}&#xbb;"
+msgid "member data of"
+msgstr "Paramétres pour"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:65
 msgid "characteristic"
 msgstr "caractéristique"
 
 #: /views/edit/Member/SimpleMember/tab_edit.pt:90
-#, fuzzy
 msgid "preferred language"
-msgstr "editeur préféré"
+msgstr "langage préféré"
 
 #: /views/edit/VersionedContent/Ghost/edit.pt:110
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
@@ -5205,13 +5207,13 @@ msgstr "apperçu&nbsp;public..."
 
 #: /views/edit/tab_preview.pt:45
 msgid "This is a closed version. You see it, but the public won't!"
-msgstr "Ceci est une version privée. Vous pouvez la voir, mais pas le public"
+msgstr "Ceci est une version privée. Vous pouvez la voir, mais pas le public."
 
 #: /views/edit/tab_settings.pt:112
 msgid "change container type to a folder: alt-f"
 msgstr ""
 
-# Default: "c"
+# Default: "f"
 #: /views/edit/tab_settings.pt:112
 msgid "convert_to_folder_accesskey"
 msgstr ""

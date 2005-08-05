@@ -205,5 +205,5 @@ InitializeClass(CatalogedVersion)
 
 def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
-                 _('closed'), _('draft'), _('public'),)
+                 _('closed'), _('draft'), _('pending'), _('public'),)
 
