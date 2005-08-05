@@ -1303,7 +1303,7 @@ ul.tips-nested {
 }
 
 input:focus, textarea:focus {
-  border-color : #05c188;
+  border-color : #04c78e;
   background-color: #e8f7ef;
 }
 

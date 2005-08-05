@@ -93,7 +93,7 @@ listingTopControlsHeadingColorContent:string=#ddeee3
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#333767
 inputBackground:string=#d5e7e7
-inputBorder:string=1px solid #477
+inputBorder:string=1px solid #599
 
 buttonWeight:string=normal
 controlBackground:string=#d5e7e7
