@@ -69,7 +69,6 @@ function focus_editor() {
           content
         </th>
       </tr>
-
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
       <tr tal:attributes="class python:iterate and 'even' or 'odd'" tal:condition="python:field.id != 'editor' or len(field['items']) > 1">
@@ -84,15 +83,16 @@ function focus_editor() {
       </tr>
       </tal:define>
       </tal:repeat>
-      <tr tal:define="provider here/getLanguageProvider;
-                      languages provider/getAvailableLanguages"
-          tal:condition="python: len(languages) > 1">
-        <td 
-          class="field-title" 
+      <tr tal:define="
+        provider here/getLanguageProvider;
+        languages provider/getAvailableLanguages"
+        tal:condition="python: len(languages) > 1">
+        <td class="field-title" 
           i18n:translate="">
           preferred language
         </td>
-        <td><select size="1" name="langsetting">
+        <td>
+          <select size="1" name="langsetting">
             <tal:block tal:repeat="lang languages">
             <option 
               tal:attributes="
@@ -110,7 +110,8 @@ function focus_editor() {
         <td>
           &nbsp;
         </td>
-        <td class="align-right" i18n:translate="">
+        <td class="align-right"
+          i18n:translate="">
           Approved member?&nbsp;
           <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" i18n:name="yes_no">&nbsp;</span>
           <input class="button"
@@ -124,7 +125,6 @@ function focus_editor() {
           />
         </td>
       </tr>
-
       <tr class="controls">
         <td class="align-right"
           colspan="2">
@@ -152,8 +152,8 @@ function focus_editor() {
   </table>
 </form>
 
-
-<div class="info" tal:condition="not:silva_permissions/ChangeSilvaAccess">
+<div class="info"
+  tal:condition="not:silva_permissions/ChangeSilvaAccess">
   <h3 i18n:translate="">Dear <span tal:content="python:user.getId()" i18n:name="user_id"/><br />
     You are not allowed to edit membership data of member <span tal:content="model/id" i18n:name="member_id"/>
   </h3>
