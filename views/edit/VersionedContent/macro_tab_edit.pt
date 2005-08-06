@@ -81,7 +81,7 @@ h2 {
       </span><br />
       <input 
         class="warning"
-        style="margin-left:6px; margin-bottom:0.2em;"
+        style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit" 
         value="break lock" 
         title="Somebody else just edited this item, unlock it: alt-u" 
@@ -100,7 +100,7 @@ h2 {
     />
     <div class="fixed-feedback">
       <input class="button"
-        style="margin-left:6px; margin-bottom:0.2em;"
+        style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit"
         value="new version"
         title="work on a new version while the previous one stays online: alt-n"
@@ -120,7 +120,7 @@ h2 {
   <form action="tab_edit_revoke_approval" method="POST">
     <div class="fixed-feedback">
       <input class="button" 
-        style="margin-left:6px; margin-bottom:0.2em;"
+        style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit" 
         value="revoke approval" 
         title="'first un-approve' this item in order to edit: alt-r" 
@@ -138,7 +138,7 @@ h2 {
   <form action="tab_status_withdraw" method="POST">
     <div class="fixed-feedback">
       <input class="button"
-        style="margin-left:6px; margin-bottom:0.2em;"
+        style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit" 
         value="withdraw request" 
         title="withdraw a request for approval in order to edit: alt-w" 
