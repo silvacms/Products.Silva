@@ -101,9 +101,10 @@ function handle_default_action(element, event, action)
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title"/>
 </head>
 
-<body tal:attributes="onload python: test(vein == 'editor' and editor == 'kupu', 
-                                          'startKupu()', 
-                                          'if (window.focus_editor) window.focus_editor()')">
+<body tal:attributes="onload 
+    python: test(vein == 'editor' and editor == 'kupu' and model.get_unapproved_version(), 
+                 'startKupu()', 
+                 'if (window.focus_editor) window.focus_editor()')">
 <!-- __________________________ Start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
@@ -129,48 +130,50 @@ function handle_default_action(element, event, action)
     </tal:block>
   </div>
 </tal:block>
-<tal:block condition="not: message">
-  <div class="fixed-clear" 
-    tal:define="
-      in_development_mode model/sec_in_development_mode;
-      editing_a_silva_document python: (type == 'Silva Document' and template.id == 'tab_edit')"
-    tal:omit-tag="python: editor == 'kupu' and editing_a_silva_document">
-    <tal:block condition="python: in_development_mode">
-      <tal:block condition="python: not editing_a_silva_document">
-        <a class="reveal"
-          href="/manage_main"
-          title="jump to zope root: alt-z"
-          accesskey="z"
-          i18n:attributes="title;accesskey zroot_accesskey"
-          i18n:translate="">
-          zroot...
-        </a>
-        &nbsp;&nbsp;&nbsp;
-        <a class="reveal"
-          title="jump to silva root in zodb: alt-'"
-          tal:attributes="href string:$root_url/manage_main"
-          accesskey="'"
-          i18n:attributes="title;accesskey sroot_accesskey"
-          i18n:translate="">
-          sroot...
-        </a>
-        &nbsp;&nbsp;&nbsp;
-        <a class="reveal"
-          title="jump to silva services: alt-`"
-          tal:attributes="href string:$root_url/manage_services"
-          accesskey="`"
-          i18n:attributes="title;accesskey sservices_accesskey"
-          i18n:translate="">
-          sservices...
-        </a>
+<metal:define-slot define-slot="notice">
+  <tal:block condition="not: message">
+    <div class="fixed-clear" 
+      tal:define="
+        in_development_mode model/sec_in_development_mode;
+        editing_a_silva_document python: (type == 'Silva Document' and template.id == 'tab_edit')"
+      tal:omit-tag="python: editor == 'kupu' and editing_a_silva_document">
+      <tal:block condition="python: in_development_mode">
+        <tal:block condition="python: not editing_a_silva_document">
+          <a class="reveal"
+            href="/manage_main"
+            title="jump to zope root: alt-z"
+            accesskey="z"
+            i18n:attributes="title;accesskey zroot_accesskey"
+            i18n:translate="">
+            zroot...
+          </a>
+          &nbsp;&nbsp;&nbsp;
+          <a class="reveal"
+            title="jump to silva root in zodb: alt-'"
+            tal:attributes="href string:$root_url/manage_main"
+            accesskey="'"
+            i18n:attributes="title;accesskey sroot_accesskey"
+            i18n:translate="">
+            sroot...
+          </a>
+          &nbsp;&nbsp;&nbsp;
+          <a class="reveal"
+            title="jump to silva services: alt-`"
+            tal:attributes="href string:$root_url/manage_services"
+            accesskey="`"
+            i18n:attributes="title;accesskey sservices_accesskey"
+            i18n:translate="">
+            sservices...
+          </a>
+        </tal:block>
       </tal:block>
-    </tal:block>
-    <tal:block condition="
-      python: not (in_development_mode or editing_a_silva_document)">
-      &nbsp;
-    </tal:block>
-  </div>
-</tal:block>
+      <tal:block condition="
+        python: not (in_development_mode or editing_a_silva_document)">
+        &nbsp;
+      </tal:block>
+    </div>
+  </tal:block>
+</metal:define-slot>
 <span tal:replace="nothing">
 <!-- ______________ end feedback ______________ -->
 </span>
