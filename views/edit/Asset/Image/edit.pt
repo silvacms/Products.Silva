@@ -65,15 +65,14 @@
       <p>
       <span class="subhead" i18n:translate="">original</span><br />
         <a href="" class="underline"
-          title="view the original image"
+          title="view the original image: alt-v"
           accesskey="v"
           tal:attributes="href python:model.url(hires=1)"
-          i18n:attributes="title;accesskey view_original_image_accesskey"
-          i18n:translate="">
+          i18n:attributes="title;accesskey view_original_image_accesskey">
           <tal:condition condition="model/thumbnail_image">
             <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
           </tal:condition>
-          view unscaled image
+          <tal:block i18n:translate="">view unscaled image</tal:block>
         </a>
       </p>
       <p tal:condition="model/hires_image" 
