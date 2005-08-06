@@ -2608,7 +2608,6 @@ msgstr "Fermé: ${ids}"
 
 #: /views/edit/Container/tab_edit_close.py:43
 #: /views/edit/Container/tab_status_close.py:52
-#, fuzzy
 msgid "<span class=\"error\">could not close: ${ids}</span>"
 msgstr "<span class=\"error\">ne peut pas approuver: ${ids}</span>"
 
@@ -5252,7 +5251,6 @@ msgid "change renderer: alt-c"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:219 /views/edit/tab_settings.pt:290
-#, fuzzy
 msgid "layout settings for &#xab;${title}&#xbb;"
 msgstr "configuration héritage d'objets pour &#xab;${title}&#xbb;"
 
@@ -5293,7 +5291,6 @@ msgstr ""
 "créer une nouvelle version éditable de l'ancienne version  choisie: alt-f"
 
 #: /views/edit/tab_settings_save_renderer.py:17
-#, fuzzy
 msgid "Renderer setting saved."
 msgstr "paramétres utilisateur"
 

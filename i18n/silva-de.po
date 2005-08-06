@@ -3654,7 +3654,7 @@ msgstr ""
 #: /views/edit/VersionedContent/macro_tab_edit.pt:131
 #: /views/edit/VersionedContent/macro_tab_edit.pt:153
 msgid "Note:"
-msgstr "Anmerkung: "
+msgstr "Anmerkung:"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:81
 msgid "Somebody else just edited this item, unlock it: alt-u"
@@ -5177,9 +5177,8 @@ msgstr ""
 "Neue editierbare Version der ausgewählten alten Version erzeugen: alt-f"
 
 #: /views/edit/tab_settings_save_renderer.py:17
-#, fuzzy
 msgid "Renderer setting saved."
-msgstr "Benutzereinstellungen"
+msgstr "Einstellung gespeichert."
 
 #: /views/edit/tab_status_form.form:53
 #: /views/edit/VersionedContent/tab_status_form_author.form:73
