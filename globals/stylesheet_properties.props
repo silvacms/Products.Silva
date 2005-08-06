@@ -1,5 +1,3 @@
-plone_skin:string=Plone Core
-
 noShade:string=white
 shade98:string=#f3f8fa
 shade96:string=#eaf3f5
