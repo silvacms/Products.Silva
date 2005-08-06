@@ -603,7 +603,7 @@ table.listing th.top a.normal:hover {
 
 table.listing th.subth {
   color: #e9f5f7;
-  background: #92a3ad;
+  background: #9aa;
   text-align: center;
 }
 
@@ -791,7 +791,7 @@ select {
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-inputBackground;;
   margin: 0.1em;
-  border: 1px solid &dtml-nightShade;;
+  border: 1px solid #344;
   vertical-align: top;
   line-height: 96%;
 }
