@@ -1096,7 +1096,7 @@ div.fixed-feedback {
   color: #555;
   background: #f3f3d9;
   margin: 0;
-  border-bottom: &dtml-inputBorder;;
+  border-bottom: &dtml-listingBorder;;
   padding: 0em 9px 0.1em 9px;
 }
 div.fixed-alert {
@@ -1104,7 +1104,7 @@ div.fixed-alert {
   color: #3c2d50;
   background: #f7d1d1;
   margin: 0;
-  border-bottom: &dtml-inputBorder;;
+  border-bottom: &dtml-listingBorder;;
   padding: 0em 9px 0.1em 9px;
 }
 div.fixed-clear {
@@ -1129,14 +1129,14 @@ div.feedback {
   color: #555;
   background: #f3f3d9;
   margin: 0;
-  border: &dtml-inputBorder;;
+  border: &dtml-listingBorder;;
   padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.alert {
   color: #3c2d50;
   background: #f7d1d1;
   margin: 0;
-  border: &dtml-inputBorder;;
+  border: &dtml-listingBorder;;
   padding: 0.4em 0.7em 0.7em 0.7em;
 }
 div.feedback a {
