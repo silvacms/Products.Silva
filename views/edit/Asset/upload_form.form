@@ -25,10 +25,11 @@
           <title>file</title>
           <description>Locate a file.</description>
           <external_validator></external_validator>
-          <extra>title="access key: alt-f" accesskey="f"</extra>
+          <extra></extra>
           <required type="int">1</required>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
         </tales>
       </field>
       </fields>

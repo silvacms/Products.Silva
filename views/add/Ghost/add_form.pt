@@ -52,8 +52,10 @@
   <tal:define define="oddrow repeat/field/odd">
   <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
     <td class="align-right">
-      <span tal:condition="python:field.getId() != 'content_url'"
-        tal:replace="python:unicode(field['title']).lower()" />
+      <tal:block tal:condition="python:field.getId() != 'content_url'">
+        <span tal:replace="structure field/title" /><span class="warning"
+          tal:condition="field/is_required">*</span>
+      </tal:block>
       <tal:block tal:condition="python:field.getId() == 'content_url'">
         <script type="text/javascript"
            tal:content="structure here/reference.js" />
@@ -65,9 +67,9 @@
           tal:define="asset_context model"
           tal:attributes="onclick python:here.reference_js(); url python:here.reference_url(asset_context)"
           i18n:attributes="value;title;accesskey reference_accesskey"
-        />
+        /><span class="warning"
+          tal:condition="field/is_required">*</span>
       </tal:block>
-      <span class="warning" tal:condition="python:field.is_required()">*</span>
     </td>
     <td tal:content="structure python:field.render_from_request(request)">
       <input />

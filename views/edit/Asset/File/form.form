@@ -23,16 +23,17 @@
           <display_maxwidth></display_maxwidth>
           <display_width type="int">41</display_width>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>title</title>
           <truncate type="int">0</truncate>
           <description>Optional, but useful.</description>
-          <extra>style="width:100%"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
       </field>
       </fields>

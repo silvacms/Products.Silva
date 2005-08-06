@@ -60,11 +60,16 @@
   </tr>
   <tal:repeat repeat="field here/form/get_fields">
   <tal:define define="iterate repeat/field/odd">
-  <tr tal:attributes="class python:test(iterate, 'odd', 'even')">
+  <tr tal:attributes="class python:iterate and 'odd' or 'even'">
     <td class="align-right">
-      <tal:block tal:content="python:field['title']" i18n:translate="">
+      <label tal:content="structure field/title"
+        tal:attributes="
+          for string:field_${field/id};
+          accesskey python:field.id == 'file' and 'f' or nothing;
+        ">
         title
-      </tal:block><span class="warning" tal:condition="python:field.is_required()">*</span>
+      </label><span class="warning"
+        tal:condition="field/is_required">*</span>
     </td>
     <td>
       <input tal:replace="structure python:field.render_from_request(request)" />

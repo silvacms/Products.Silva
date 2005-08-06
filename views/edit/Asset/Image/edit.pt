@@ -152,9 +152,10 @@
           <tal:define define="iterate repeat/field/odd">
             <tr tal:attributes="class python:iterate and 'odd' or 'even'">
               <td class="field-title">
-                <span tal:content="python:field['title']" >
-                  title</span><span class="warning"
-                  tal:condition="python:field.is_required()">*</span>
+                <label tal:content="field/title"
+                  tal:attributes="for string:field_${field/id}">
+                  title</label><span class="warning"
+                  tal:condition="field/is_required">*</span>
               </td>
               <td>
                 <input tal:replace="structure python:field.render_from_request(request)" />

@@ -32,6 +32,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
       </field>
       <field><id>object_title</id> <type>TextAreaField</type>
@@ -53,6 +54,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
       </field>
       <field><id>file</id> <type>FileField</type>
@@ -70,6 +72,7 @@
           <extra></extra>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
         </tales>
       </field>
       </fields>

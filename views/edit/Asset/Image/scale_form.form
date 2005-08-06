@@ -59,6 +59,7 @@
         </values>
         <tales>
           <default>python: form.REQUEST.model.getWebScale() or '100%'</default>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>
@@ -88,6 +89,7 @@
         </values>
         <tales>
           <default>python: form.REQUEST.model.getWebCrop()</default>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>

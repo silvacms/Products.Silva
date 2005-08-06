@@ -33,6 +33,7 @@
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>

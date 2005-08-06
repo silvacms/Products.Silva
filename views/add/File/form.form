@@ -23,15 +23,16 @@
           <display_maxwidth></display_maxwidth>
           <display_width type="int">20</display_width>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra>class="store"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
       </field>
       <field><id>object_title</id> <type>TextAreaField</type>
@@ -45,14 +46,15 @@
           <external_validator></external_validator>
           <height type="int">2</height>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>title</title>
           <description></description>
-          <extra>class="store"</extra>
+          <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}"</extra>
         </tales>
       </field>
       <field><id>file</id> <type>FileField</type>
@@ -70,6 +72,7 @@
           <required type="int">1</required>
         </values>
         <tales>
+          <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
         </tales>
       </field>
       </fields>
