@@ -1593,17 +1593,17 @@ msgid "original"
 msgstr "origineel"
 
 #: /views/edit/Asset/Image/edit.pt:67
-msgid "view the original image"
-msgstr ""
+msgid "view the original image: alt-v"
+msgstr "originele afbeelding bekijken: alt-v"
 
 # Default: "v"
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view_original_image_accesskey"
-msgstr ""
+msgstr "v"
 
 #: /views/edit/Asset/Image/edit.pt:74
-msgid "<br /> view unscaled image"
-msgstr "<br /> ongeschaalde afbeelding bekijken"
+msgid "view unscaled image"
+msgstr "ongeschaalde afbeelding bekijken"
 
 #: /views/edit/Asset/Image/edit.pt:81
 msgid "orientation"

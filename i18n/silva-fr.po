@@ -1659,17 +1659,17 @@ msgid "original"
 msgstr "original"
 
 #: /views/edit/Asset/Image/edit.pt:67
-msgid "view the original image"
-msgstr "apperçu image originale"
+msgid "view the original image: alt-v"
+msgstr "apperçu image originale: alt-v"
 
 # Default: "v"
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view_original_image_accesskey"
-msgstr ""
+msgstr "v"
 
 #: /views/edit/Asset/Image/edit.pt:74
-msgid "<br /> view unscaled image"
-msgstr "<br /> apperçu image sans modifier échelle"
+msgid "view unscaled image"
+msgstr "apperçu image sans modifier échelle"
 
 #: /views/edit/Asset/Image/edit.pt:81
 msgid "orientation"
@@ -1763,7 +1763,7 @@ msgstr "Format Image web"
 
 #: /views/edit/Asset/Image/scale_form.form:49
 msgid "scaling"
-msgstr "Echelle"
+msgstr "echelle"
 
 #: /views/edit/Asset/Image/scale_form.form:57
 msgid ""

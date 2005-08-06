@@ -1536,7 +1536,7 @@ msgstr "Dimensionen"
 
 #: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:66
 msgid "image"
-msgstr " "
+msgstr "Bilder"
 
 #: /views/edit/Asset/Image/edit.pt:57
 msgid "<br /> scaled to ${WxH} pixels"
@@ -1547,17 +1547,17 @@ msgid "original"
 msgstr "Original"
 
 #: /views/edit/Asset/Image/edit.pt:67
-msgid "view the original image"
-msgstr "Das ursprüngliche Bild ansehen"
+msgid "view the original image: alt-v"
+msgstr "Das ursprüngliche Bild ansehen: alt-v"
 
 # Default: "v"
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view_original_image_accesskey"
-msgstr ""
+msgstr "v"
 
 #: /views/edit/Asset/Image/edit.pt:74
-msgid "<br /> view unscaled image"
-msgstr "<br /> nicht skaliertes Bild ansehen"
+msgid "view unscaled image"
+msgstr "nicht skaliertes Bild ansehen"
 
 #: /views/edit/Asset/Image/edit.pt:81
 msgid "orientation"
