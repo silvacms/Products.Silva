@@ -12,9 +12,25 @@
 <metal:define-macro metal:define-macro="editor">
 <metal:use-macro metal:use-macro="here/macro_index/macros/master">
 
-<metal:block fill-slot="metatype_css">
-  <metal:block define-slot="editor_css" />
-</metal:block>
+<metal:fill-slot fill-slot="metatype_css">
+<tal:condition condition="python: not model.get_unapproved_version() and model.meta_type == 'Silva Document'">
+<link rel="stylesheet"
+  type="text/css"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
+/>
+<style type="text/css">
+div.public {
+  margin-top: 1.5em;
+  padding: 0.3em 1em;
+  border: 1px solid #789;
+  background-color: #e3ecf7;}
+h2 {
+  margin-top: 0.3em;
+}
+</style>
+</tal:condition>
+<metal:block define-slot="editor_css" />
+</metal:fill-slot>
 
 <metal:block fill-slot="refresher">
  <metal:block define-slot="editor_refresher" />
@@ -47,18 +63,13 @@
   </div>
 </metal:block>
 
-<metal:fill-slot metal:fill-slot="main"
+<span tal:replace="nothing"> ______________ author may not edit: notify why ______________ </span>
+<metal:fill-slot fill-slot="notice"
   tal:define="
     is_locked model/sec_is_locked;
     request_pending python:model.is_version_approval_requested();
     unapproved_version model/get_unapproved_version;
   ">
-
-<span tal:replace="nothing"> _________ show editor ____ </span>
-<tal:block condition="python:unapproved_version and not request_pending and not is_locked">
-  <metal:block define-slot="editor_content" />
-</tal:block>
-
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
   <form action="tab_edit_break_lock" method="POST">
@@ -70,7 +81,7 @@
       </span><br />
       <input 
         class="warning"
-        style="margin-left:6px;"
+        style="margin-left:6px; margin-bottom:0.2em;"
         type="submit" 
         value="break lock" 
         title="Somebody else just edited this item, unlock it: alt-u" 
@@ -89,7 +100,7 @@
     />
     <div class="fixed-feedback">
       <input class="button"
-        style="margin-left:6px;"
+        style="margin-left:6px; margin-bottom:0.2em;"
         type="submit"
         value="new version"
         title="work on a new version while the previous one stays online: alt-n"
@@ -102,16 +113,14 @@
       </tal:block>
     </div>
   </form>
-  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
 <tal:condition condition="python: model.get_approved_version()">
   <form action="tab_edit_revoke_approval" method="POST">
     <div class="fixed-feedback">
-      <input 
-        class="button" 
-        style="margin-left:6px;"
+      <input class="button" 
+        style="margin-left:6px; margin-bottom:0.2em;"
         type="submit" 
         value="revoke approval" 
         title="'first un-approve' this item in order to edit: alt-r" 
@@ -122,16 +131,14 @@
         </span>
     </div>
   </form>
-  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
   <form action="tab_status_withdraw" method="POST">
     <div class="fixed-feedback">
-      <input 
-        class="button" 
-        style="margin-left:6px;"
+      <input class="button"
+        style="margin-left:6px; margin-bottom:0.2em;"
         type="submit" 
         value="withdraw request" 
         title="withdraw a request for approval in order to edit: alt-w" 
@@ -144,9 +151,29 @@
       </span>
     </div>
   </form>
-  <div tal:replace="structure here/edit_info | nothing" />
 </tal:condition>
 
+<tal:block condition="python:not model.get_unapproved_version() and model.meta_type == 'Silva Document'">
+  <div class="public"
+    tal:content="structure model/preview">
+    <!-- this text is replaced by Silva content -->
+  </div>
+</tal:block>
+</metal:fill-slot>
+
+<span tal:replace="nothing"> ______________ author may edit ______________ </span>
+<metal:fill-slot fill-slot="main"
+  tal:define="
+    is_locked model/sec_is_locked;
+    request_pending python:model.is_version_approval_requested();
+    unapproved_version model/get_unapproved_version;
+  ">
+<span tal:replace="nothing"> _________ show editor ____ </span>
+<tal:block condition="python:unapproved_version and not request_pending and not is_locked">
+  <metal:block define-slot="editor_content" />
+</tal:block>
+<span tal:replace="nothing"> _________ show ghost info ____ </span>
+<div tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
 
 </metal:use-macro>
