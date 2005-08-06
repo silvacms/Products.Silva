@@ -72,14 +72,14 @@ listingTopHeadingColor:string=#2d2d4c
 listingTopControlsBackground:string=#616d73
 listingTopControlsHeadingColor:string=#d0e4f6
 
-listingHeaderBackground:string=#829199
+listingHeaderBackground:string=#899
 listingHeaderFontColor:string=#e0eefc
 
-listingInterControlsBackground:string=#77858c
+listingInterControlsBackground:string=#788
 listingControlsBackground:string=#6c797f
 listingDividerBackground:string=#6c7a7f
 
-listingBorder:string=1px solid #77858c
+listingBorder:string=1px solid #788
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
 listingLinkHover:string=underline
@@ -91,7 +91,7 @@ listingTopControlsHeadingColorContent:string=#ddeee3
 
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
-inputFontColor:string=#333767
+inputFontColor:string=#337
 inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #599
 
@@ -130,4 +130,4 @@ headingSize6:string=100%
 
 messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
 messageBackground:string=#d9f4eb
-messageBorder:string=1px solid #555577
+messageBorder:string=1px solid #557
