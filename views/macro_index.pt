@@ -103,16 +103,16 @@ function handle_default_action(element, event, action)
 
 <body tal:attributes="onload 
     python: test(vein == 'editor' and editor == 'kupu' and model.get_unapproved_version(), 
-                 'startKupu()', 
-                 'if (window.focus_editor) window.focus_editor()')">
-<!-- __________________________ Start matrix tabs _________________________ -->
+                'startKupu()', 
+                'if (window.focus_editor) window.focus_editor()')">
+<!-- __________________________ start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....
 </metal:block>
-<!-- ___________________________ End matrix tabs __________________________ -->
-<!-- ___________________________ Start workspace __________________________ -->
+<!-- ___________________________ /end matrix tabs __________________________ -->
+<!-- ___________________________ start workspace __________________________ -->
 <div class="workspace">
-  <metal:block define-slot="middleground" />
+<metal:block define-slot="middleground" />
 
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
@@ -175,16 +175,16 @@ function handle_default_action(element, event, action)
   </tal:block>
 </metal:define-slot>
 <span tal:replace="nothing">
-<!-- ______________ end feedback ______________ -->
+<!-- ______________ /end feedback ______________ -->
 </span>
 
-<!-- _____________________ Start main _____________________ -->
+<!-- _____________________ start main _____________________ -->
 <div metal:define-slot="main">
   Here the local content (a.k.a. "model") is inserted (this text will be replaced).
 </div>
-<!-- _____________________ End main _____________________ -->
+<!-- _____________________ /end main _____________________ -->
 
-<!-- ____________________________ Start footer ____________________________ -->
+<!-- ____________________________ start footer ____________________________ -->
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
@@ -302,15 +302,15 @@ function handle_default_action(element, event, action)
   </a>
 </div>
 <span tal:replace="nothing">
-  <!-- ____________________________ footer ends _____________________________ -->
+  <!-- ____________________________ /end footer _____________________________ -->
 </span>
 
 <span tal:replace="nothing">
-<!-- ____________________________ workspace ends ____________________________ -->
+<!-- ____________________________ /end workspace ____________________________ -->
 </span>
 </div>
  
-<!-- served by <tal:block replace="string:(page served by ${request/HTTP_HOST})" /> -->
+<tal:block replace="structure string:<!-- served by ${request/HTTP_HOST} -->" />
 
 </body>
 </html>
