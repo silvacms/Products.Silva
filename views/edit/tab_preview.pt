@@ -9,6 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="global vein string:preview"
   i18n:domain="silva">
+
 <metal:block use-macro="here/macro_index/macros/master">
 
 <metal:block fill-slot="frontend">
@@ -94,7 +95,7 @@ h2 {
           </div>
         </td>
         <td class="right">
-          <span tal:replace="nothing"> _______ closed message _______ </span>
+          <span tal:replace="nothing"> _______ closed notice _______ </span>
           <div class="feedback" style="margin-top:-1px;" 
             tal:condition="here/tab_preview_needs_feedback">
             <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
