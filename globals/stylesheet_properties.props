@@ -67,17 +67,17 @@ oddRowBackground:string=#dae7fa
 listingTopBackground:string=#c4d6e7
 listingTopHeadingColor:string=#2d2d4c
 
-listingTopControlsBackground:string=#616d73
+listingTopControlsBackground:string=#678
 listingTopControlsHeadingColor:string=#d0e4f6
 
-listingHeaderBackground:string=#899
+listingHeaderBackground:string=#89a
 listingHeaderFontColor:string=#e0eefc
 
-listingInterControlsBackground:string=#788
-listingControlsBackground:string=#6c797f
+listingInterControlsBackground:string=#789
+listingControlsBackground:string=#567
 listingDividerBackground:string=#6c7a7f
 
-listingBorder:string=1px solid #788
+listingBorder:string=1px solid #789
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
 listingLinkHover:string=underline

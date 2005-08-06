@@ -603,7 +603,7 @@ table.listing th.top a.normal:hover {
 
 table.listing th.subth {
   color: #e9f5f7;
-  background: #9aa;
+  background: #9ab;
   text-align: center;
 }
 
