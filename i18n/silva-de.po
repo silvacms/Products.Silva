@@ -2610,7 +2610,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:189
 msgid "title for assets"
-msgstr "Titel für XXX"
+msgstr "Titel für Dateien"
 
 #: /views/edit/Container/tab_edit_import.pt:194
 msgid "Optional title for all assets"
@@ -2722,8 +2722,8 @@ msgid "export_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:77
-msgid "import silva xml (.xml)"
-msgstr "Silva-XML importieren (.xml)"
+msgid "import silva xml"
+msgstr "Silva XML importieren"
 
 #: /views/edit/Container/tab_edit_import_docma.py:19
 msgid "Select a file for upload"

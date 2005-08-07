@@ -2761,8 +2761,8 @@ msgid "export_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:77
-msgid "import silva xml (.xml)"
-msgstr "silva xml (.xml) importeren"
+msgid "import silva xml"
+msgstr "silva xml importeren"
 
 #: /views/edit/Container/tab_edit_import_docma.py:19
 msgid "Select a file for upload"
