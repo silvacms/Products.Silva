@@ -4573,7 +4573,7 @@ msgstr "vers écran précédent: alt-k"
 
 #: /views/edit/lookup_ui.pt:51
 msgid "bac<u>k</u>..."
-msgstr "retour<u>k</u>..."
+msgstr "retour..."
 
 #: /views/edit/lookup_ui.pt:78
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"

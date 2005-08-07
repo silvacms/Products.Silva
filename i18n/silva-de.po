@@ -5105,15 +5105,27 @@ msgstr ""
 # Default: "f"
 #: /views/edit/tab_settings.pt:112
 msgid "convert_to_folder_accesskey"
-msgstr ""
-
-#: /views/edit/tab_settings.pt:112
-msgid "convert to folder"
-msgstr ""
+msgstr "f"
 
 #: /views/edit/tab_settings.pt:120
 msgid "convert to publication"
-msgstr ""
+msgstr "In Publikation umwandeln"
+
+#: /views/edit/tab_settings.pt:112
+msgid "convert to folder"
+msgstr "In Ordner umwandeln"
+
+# /views/edit/tab_settings.pt
+msgid "change Publication into Folder: alt-f"
+msgstr "Publikation in Ordner umwandeln: alt-f"
+
+# /views/edit/tab_settings.pt
+msgid "convert this ghost folder to a normal folder: alt-c"
+msgstr "Diesen Ghost-Ordner in einen normalen Ordner umwandeln: alt-c"
+
+# /views/edit/tab_settings.pt
+msgid "convert this ghost folder to a normal publication: alt-p"
+msgstr "Diesen Ghost-Ordner in eine normale Publikation umwandeln: alt-p"
 
 #: /views/edit/tab_settings.pt:120
 msgid "change container type to a publication: alt-p"
@@ -5744,21 +5756,6 @@ msgstr "Dokument"
 
 #~ msgid "change Folder into Publication: alt-p"
 #~ msgstr "Ordner in Publikation umwandeln: alt-p"
-
-#~ msgid "convert to publication"
-#~ msgstr "In Publikation umwandeln"
-
-#~ msgid "convert to folder"
-#~ msgstr "In Ordner umwandeln"
-
-#~ msgid "change Publication into Folder: alt-f"
-#~ msgstr "Publikation in Ordner umwandeln: alt-f"
-
-#~ msgid "convert this ghost folder to a normal folder: alt-c"
-#~ msgstr "Diesen Ghost-Ordner in einen normalen Ordner umwandeln: alt-c"
-
-#~ msgid "convert this ghost folder to a normal publication: alt-p"
-#~ msgstr "Diesen Ghost-Ordner in eine normale Publikation umwandeln: alt-p"
 
 #~ msgid "properties for &#xab;${title}&#xbb;"
 #~ msgstr "Eigenschaften von &#xab;${title}&#xbb;"
