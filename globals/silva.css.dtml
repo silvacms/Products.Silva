@@ -1032,7 +1032,7 @@ div.info {
   /* fix IE glitch? */
 }
 
-/* not for IE */
+/* not seen by IE */
 td.right>div.info {
   margin-top:-1px;
 }
@@ -1088,6 +1088,7 @@ select.clipboard option.disabled {
   background: &dtml-listingHeaderBackground;;
 }
 
+
 /* ________________________________________________________ feedback _______ */
 
 /* feedback under the matrix nav */
@@ -1122,6 +1123,11 @@ div.fixed-clear a.reveal:visited {
 div.fixed-clear a.reveal:hover {
   color: &dtml-shade58;;
   text-decoration: none;
+}
+
+/* not seen by IE */
+td.right>div.feedback {
+  margin-top:-1px;
 }
 
 /* floating feedback  */
