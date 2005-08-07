@@ -110,11 +110,12 @@
 
             <tbody>
               <tr>
-                <th width="30%" class="align-right"
+                <th class="align-right"
+                  width="30%"
                   i18n:translate="">
                   options
                 </th>
-                <th>
+                <th width="3%">
                 </th>
                 <th i18n:translate="">
                   note
@@ -128,7 +129,7 @@
                     include sub publications?
                   </label>
                 </td>
-                <td width="8%" class="align-center">
+                <td class="align-center">
                   <input class="min"
                     type="checkbox"
                     name="with_sub_publications"
@@ -210,7 +211,7 @@
             i18n:translate="">
             options
           </th>
-          <th>
+          <th width="3%">
           </th>
           <th i18n:translate="">
             note
@@ -224,7 +225,7 @@
               include sub publications?
             </label>
           </td>
-          <td width="8%" class="align-center">
+          <td class="align-center">
             <input class="min"
               type="checkbox"
               name="with_sub_publications"
