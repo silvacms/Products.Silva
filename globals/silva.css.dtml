@@ -1089,7 +1089,7 @@ select.clipboard option.disabled {
 
 /* feedback under the matrix nav */
 div.fixed-feedback {
-  position:relative; /* for IE6 peakaboo bug */
+  position:relative; /* for IE6 peekaboo bug */
   margin: 0;
   border-bottom: &dtml-listingBorder;;
   padding: 0em 9px 0.1em 9px;
@@ -1105,6 +1105,7 @@ div.fixed-alert {
   background: #f7d1d1;
 }
 div.fixed-clear {
+  position:relative; /* for IE6 peekaboo bug */
   margin: 0;
   padding: 0em 9px 0.1em 9px;
   border-bottom: 1px solid &dtml-workspace;;
@@ -1128,6 +1129,7 @@ td.right>div.feedback {
 
 /* floating feedback  */
 div.feedback {
+  position:relative; /* for IE6 peekaboo bug */
   margin: 0;
   border: &dtml-listingBorder;;
   padding: 0.4em 0.7em 0.7em 0.7em;
