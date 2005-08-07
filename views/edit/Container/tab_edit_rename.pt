@@ -18,7 +18,7 @@
 
 <tal:condition condition="python:view.REQUEST.has_key('ids')">
 <div class="focus-rectangle"
-  style="padding-top:0;">
+  style="padding-top:1px;">
   <form action="tab_edit_rename_submit" method="POST">
     <table class="listing">
       <thead>

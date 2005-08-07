@@ -75,7 +75,7 @@ listingHeaderBackground:string=#7c8c9c
 listingHeaderFontColor:string=#e0eefc
 
 listingInterControlsBackground:string=#789
-listingDividerBackground:string=#6c7a7f
+listingDividerBackground:string=#89a
 
 listingBorder:string=1px solid #678
 listingEvenBackground:string=#cfdbe7
