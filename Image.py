@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.66 2005/05/06 16:36:17 guido Exp $
+# $Id: Image.py,v 1.67 2005/08/07 06:51:19 kitblake Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -361,7 +361,7 @@ class Image(Asset):
         'class' in the output tag to work around this.
         """
         image, img_src = self._get_image_and_src(hires, thumbnail)
-        title = self.get_title()
+        title = self.get_title_or_id()
         width, height = self.getDimensions(image)
         named = []
         
