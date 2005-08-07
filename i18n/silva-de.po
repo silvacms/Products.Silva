@@ -4617,6 +4617,10 @@ msgstr "zur einschließenden Publikation: alt-["
 msgid "reload screen"
 msgstr "Ansicht neu laden"
 
+#: /views/edit/macro_vein_navigation.pt:59
+msgid "siblings"
+msgstr "Geschwister"
+
 #: /views/edit/macro_view_metadata.pt:108 /views/edit/tab_settings.pt:143
 msgid "content renderer"
 msgstr "Inhalts &#8216;renderer&#8217;"
@@ -5733,6 +5737,10 @@ msgstr ""
 #: /views/render_form_errors.py:15
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
+
+#: /views/edit/macro_vein_navigation.pt:59
+msgid "document"
+msgstr "Dokument"
 
 #~ msgid "change Folder into Publication: alt-p"
 #~ msgstr "Ordner in Publikation umwandeln: alt-p"

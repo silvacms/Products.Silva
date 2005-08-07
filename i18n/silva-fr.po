@@ -4737,6 +4737,10 @@ msgstr "vers niveau zéro de la publication: alt-["
 msgid "reload screen"
 msgstr "rafraîchir écran"
 
+#: /views/edit/macro_vein_navigation.pt:59
+msgid "siblings"
+msgstr "fratrie"
+
 #: /views/edit/macro_view_metadata.pt:108 /views/edit/tab_settings.pt:143
 msgid "content renderer"
 msgstr "rendu de contenu"
