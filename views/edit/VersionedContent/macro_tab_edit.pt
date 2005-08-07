@@ -153,12 +153,6 @@ h2 {
   </form>
 </tal:condition>
 
-<tal:block condition="python:not model.get_unapproved_version() and model.meta_type == 'Silva Document'">
-  <div class="public"
-    tal:content="structure model/preview">
-    <!-- this text is replaced by Silva content -->
-  </div>
-</tal:block>
 </metal:fill-slot>
 
 <span tal:replace="nothing"> ______________ author may edit ______________ </span>
@@ -172,8 +166,18 @@ h2 {
 <tal:block condition="python:unapproved_version and not request_pending and not is_locked">
   <metal:block define-slot="editor_content" />
 </tal:block>
-<span tal:replace="nothing"> _________ show ghost info ____ </span>
-<div tal:replace="structure here/edit_info | nothing" />
+
+<span tal:replace="nothing"> _________ or preview document ____ </span>
+<tal:block condition="python:not model.get_unapproved_version() and model.meta_type == 'Silva Document'">
+  <div class="public"
+    tal:content="structure model/preview">
+    <!-- this text is replaced by Silva content -->
+  </div>
+</tal:block>
+
+<span tal:replace="nothing"> _________ or show ghost info ____ </span>
+<div tal:condition="not:unapproved_version"
+tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
 
 </metal:use-macro>

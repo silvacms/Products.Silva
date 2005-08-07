@@ -14,8 +14,7 @@
     title model/get_title;
     vein string:edit;
 ">
-<table class="columns columns3"
-  style="margin-top:1em;">
+<table class="columns columns3">
   <tbody>
     <tr>
       <tal:block replace="nothing">
