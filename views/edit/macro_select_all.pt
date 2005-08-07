@@ -25,7 +25,8 @@
   </tal:block>
   <label for="all"
     accesskey="a"
-    i18n:attributes="accesskey select_all_accesskey;"
+    title="select all: alt-a"
+    i18n:attributes="title; accesskey select_all_accesskey;"
     tal:attributes="for string:all_${aid_postfix};"
     >
     <span i18n:translate="">select <u>a</u>ll</span>
