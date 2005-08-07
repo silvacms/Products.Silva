@@ -9,17 +9,16 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
+_______ macro vein _______
+_______ renders the uplinks cap and navigation stack _______
+_______ used in almost every screen except user lookup _______
+
 TOC
 ---
 macro vein
   slot sidebar
   slot plateau
 macro plateau
-
-
-_______ macro vein _______
-_______ renders the uplinks cap and navigation stack _______
-_______ used in almost every screen except user lookup _______
 
 <metal:define-macro define-macro="vein">
 <table class="listing"
