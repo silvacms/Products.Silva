@@ -360,36 +360,36 @@ table.columns tr {
 /* 3 column table (default) */
 table.columns td.left {
   width: 20%;
-  padding: 1px 8px 0 8px;
+  padding: 0 8px 0 8px;
   vertical-align: top;
 }
 table.columns td.main {
   width: 60%;
-  padding : 1px 7px 0 0;
+  padding : 0 7px 0 0;
   vertical-align: top;
 }
 table.columns td.right {
   width: 20%;
-  padding: 1px 8px 0 0;
+  padding: 0 8px 0 0;
   vertical-align: top;
 }
 
 /* 2 column table */
 table.columns2 td.left {
   width: 20%;
-  padding: 1px 0 0 7px;
+  padding: 0 0 0 7px;
   vertical-align: top;
 }
 table.columns2 td.main {
   width: 80%;
-  padding: 1px 7px 0 8px;
+  padding: 0 7px 0 8px;
   vertical-align: top;
 }
 
 /* 1 column */
 table.columns1 td.main {
   width: 100%;
-  padding: 1px 7px 0 7px;
+  padding: 0 7px 0 7px;
   vertical-align: top;
 }
 
@@ -1105,11 +1105,11 @@ div.fixed-alert {
   background: #f7d1d1;
 }
 div.fixed-clear {
-  position:relative; /* for IE6 peekaboo bug */
   margin: 0;
   padding: 0em 9px 0.1em 9px;
   border-bottom: 1px solid &dtml-workspace;;
   background: transparent;
+  z-index: -1
 }
 div.fixed-clear a.reveal {
   color: &dtml-shade96;;
