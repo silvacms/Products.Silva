@@ -360,36 +360,36 @@ table.columns tr {
 /* 3 column table (default) */
 table.columns td.left {
   width: 20%;
-  padding: 0 8px 0 8px;
+  padding: 1px 8px 0 8px;
   vertical-align: top;
 }
 table.columns td.main {
   width: 60%;
-  padding : 0 7px 0 0;
+  padding : 1px 7px 0 0;
   vertical-align: top;
 }
 table.columns td.right {
   width: 20%;
-  padding: 0 8px 0 0;
+  padding: 1px 8px 0 0;
   vertical-align: top;
 }
 
 /* 2 column table */
 table.columns2 td.left {
   width: 20%;
-  padding: 0 0 0 7px;
+  padding: 1px 0 0 7px;
   vertical-align: top;
 }
 table.columns2 td.main {
   width: 80%;
-  padding: 0 7px 0 8px;
+  padding: 1px 7px 0 8px;
   vertical-align: top;
 }
 
 /* 1 column */
 table.columns1 td.main {
   width: 100%;
-  padding: 0 7px 0 7px;
+  padding: 1px 7px 0 7px;
   vertical-align: top;
 }
 
@@ -574,12 +574,11 @@ table.listing th.top {
   color: #e3eef0;
   background: &dtml-listingHeaderBackground;;
   text-align: center;
-  vertical-align: bottom;
 }
 
 table.listing th.top img {
   vertical-align: bottom;
-  padding: 0.5em 0 0 0;
+  padding: 0.4em 0 0 0;
 }
 
 table.listing th.top a.normal:link {
@@ -603,7 +602,7 @@ table.listing th.top a.normal:hover {
 
 table.listing th.subth {
   color: #e9f5f7;
-  background: #9ab;
+  background: #89a;
   text-align: center;
 }
 
@@ -793,6 +792,7 @@ select {
   font: &dtml-inputFont;;
   font-size: 90%;
   line-height: 96%;
+  vertical-align: top;
 }
 
 select.store {
