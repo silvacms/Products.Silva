@@ -98,7 +98,7 @@
                     </a>
                   <h3 i18n:translate="">
                     export to Silva xml (.xml)
-                    <tal:block i18n:name="or_adobe">
+                    <tal:block i18n:name="or_pdf">
                       <tal:condition condition="view/service_docmapdf | nothing">
                         <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
                       </tal:condition>

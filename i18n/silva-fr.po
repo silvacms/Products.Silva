@@ -2706,8 +2706,8 @@ msgid "access key: alt-i"
 msgstr "touche d'accès: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:146
-msgid "import and extract zip archive (.zip)"
-msgstr "importer et extraire un fichier zip (.zip)"
+msgid "import and extract zip archive"
+msgstr "importer et extraire un fichier zip"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid ""
@@ -3295,8 +3295,12 @@ msgid "no unapproved version"
 msgstr "aucune version sans approbation"
 
 #: /views/edit/Container/tab_status_export.pt:101
-msgid "export to Silva xml (.xml) ${or_adobe}"
-msgstr "exporter à xml Silva (.xml) ${or_adobe}"
+msgid "export to Silva xml (.xml) ${or_pdf}"
+msgstr "exporter à xml Silva (.xml) ${or_pdf}"
+
+#: /views/edit/Container/tab_status_export.pt:101
+msgid "or_pdf"
+msgstr "ou pdf"
 
 #: /views/edit/Container/tab_status_export.pt:113
 #: /views/edit/Container/tab_status_export.pt:207
@@ -3323,7 +3327,7 @@ msgstr "Si ce n'est pas coché la version publiée est exportée"
 # Default: "p"
 #: /views/edit/Container/tab_status_export.pt:166
 msgid "export_pdf_accesskey"
-msgstr ""
+msgstr "p"
 
 #: /views/edit/Container/tab_status_export.pt:166
 msgid "export pdf"
@@ -4925,7 +4929,7 @@ msgstr "attribue"
 
 #: /views/edit/tab_access.pt:331
 msgid "A Groups Service is not installed"
-msgstr "Le service Groups n'est pas installé"
+msgstr "Le service Groups n&#8217;est pas installé"
 
 #: /views/edit/tab_access.pt:335
 msgid "Silva Root in the ZMI"

@@ -39,8 +39,9 @@
 ">
 
 <head>
-<title tal:content="title">
-  Title
+<title>
+  <tal:block content="title">title</tal:block> &#8211;
+  <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
 <link href="globals/favicon.ico"
   rel="shortcut icon"

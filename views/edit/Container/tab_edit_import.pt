@@ -75,7 +75,7 @@
             export
           </a>
           <h3 i18n:translate="">
-            import silva xml (.xml)
+            import silva xml
           </h3>
         </td>
       </tr>
@@ -144,7 +144,7 @@
       <tr class="top-controls">
         <td colspan="3">
           <h3 i18n:translate="">
-            import and extract zip archive (.zip)
+            import and extract zip archive
           </h3>
         </td>
       </tr>

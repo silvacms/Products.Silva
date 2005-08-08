@@ -2636,8 +2636,8 @@ msgid "access key: alt-i"
 msgstr "sneltoets: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:146
-msgid "import and extract zip archive (.zip)"
-msgstr "importeren en uitpakken zipbestand (.zip)"
+msgid "import and extract zip archive"
+msgstr "importeren en uitpakken zipbestand"
 
 #: /views/edit/Container/tab_edit_import.pt:181
 msgid ""
@@ -3221,8 +3221,12 @@ msgid "no unapproved version"
 msgstr "geen versie die wacht op goedkeuring"
 
 #: /views/edit/Container/tab_status_export.pt:101
-msgid "export to Silva xml (.xml) ${or_adobe}"
-msgstr "naar Silva xml (.xml) ${or_adobe} exporteren"
+msgid "export to Silva xml (.xml) ${or_pdf}"
+msgstr "naar Silva xml exporteren (.xml) ${or_pdf}"
+
+#: /views/edit/Container/tab_status_export.pt:101
+msgid "or_pdf"
+msgstr "of pdf"
 
 #: /views/edit/Container/tab_status_export.pt:113
 #: /views/edit/Container/tab_status_export.pt:207

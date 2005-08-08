@@ -2597,7 +2597,7 @@ msgid "access key: alt-i"
 msgstr "Kurzwahl: alt-i"
 
 #: /views/edit/Container/tab_edit_import.pt:146
-msgid "import and extract zip archive (.zip)"
+msgid "import and extract zip archive"
 msgstr "ZIP Archiv importieren und auspacken"
 
 #: /views/edit/Container/tab_edit_import.pt:181
@@ -3187,8 +3187,12 @@ msgid "no unapproved version"
 msgstr "keine nicht genehmigte Version"
 
 #: /views/edit/Container/tab_status_export.pt:101
-msgid "export to Silva xml (.xml) ${or_adobe}"
-msgstr "Als Silva XML ${or_adobe} exportieren"
+msgid "export to Silva xml (.xml) ${or_pdf}"
+msgstr "Als Silva XML exportieren (.xml) ${or_pdf}"
+
+#: /views/edit/Container/tab_status_export.pt:101
+msgid "or_pdf"
+msgstr "oder PDF"
 
 #: /views/edit/Container/tab_status_export.pt:113
 #: /views/edit/Container/tab_status_export.pt:207
