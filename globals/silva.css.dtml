@@ -1123,9 +1123,9 @@ div.fixed-clear a.reveal:hover {
   text-decoration: none;
 }
 
-/* not seen by IE */
-td.right>div.feedback {
-  margin-top:-1px;
+/* for notifications in right column */
+td.right div.feedback {
+  margin-top : 0;
 }
 
 /* floating feedback  */
