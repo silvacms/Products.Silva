@@ -72,8 +72,9 @@ h2 {
   ">
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
-  <form action="tab_edit_break_lock" method="POST">
-    <div class="fixed-feedback"><span class="warning">
+  <div class="fixed-feedback">
+    <form action="tab_edit_break_lock" method="POST">
+      <span class="warning">
         <tal:block i18n:translate="">
           <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
           and is temporarily locked.
@@ -87,18 +88,18 @@ h2 {
         title="Somebody else just edited this item, unlock it: alt-u" 
         accesskey="u"
         i18n:attributes="value;title;accesskey break_lock_accesskey"/>
-    </div>
-  </form>
+    </form>
+  </div>
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
 <tal:condition condition="python: not model.get_next_version()">
-  <form action="tab_edit_make_copy" method="POST">
-    <input type="hidden"
-      name="came_from_view"
-      tal:attributes="value template/id"
-    />
-    <div class="fixed-feedback">
+  <div class="fixed-feedback">
+    <form action="tab_edit_make_copy" method="POST">
+      <input type="hidden"
+        name="came_from_view"
+        tal:attributes="value template/id"
+      />
       <input class="button"
         style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit"
@@ -111,14 +112,14 @@ h2 {
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
         content. Changes can only be made in a new version.
       </tal:block>
-    </div>
-  </form>
+    </form>
+  </div>
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
 <tal:condition condition="python: model.get_approved_version()">
-  <form action="tab_edit_revoke_approval" method="POST">
-    <div class="fixed-feedback">
+  <div class="fixed-feedback">
+    <form action="tab_edit_revoke_approval" method="POST">
       <input class="button" 
         style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit" 
@@ -129,14 +130,14 @@ h2 {
         <span i18n:translate="">
           <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
         </span>
-    </div>
-  </form>
+    </form>
+  </div>
 </tal:condition>
 
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
-  <form action="tab_status_withdraw" method="POST">
-    <div class="fixed-feedback">
+  <div class="fixed-feedback">
+    <form action="tab_status_withdraw" method="POST">
       <input class="button"
         style="margin-left:-1px; margin-bottom:0.1em;"
         type="submit" 
@@ -149,8 +150,8 @@ h2 {
       <span i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
       </span>
-    </div>
-  </form>
+    </form>
+  </div>
 </tal:condition>
 
 </metal:fill-slot>
@@ -166,7 +167,6 @@ h2 {
 <tal:block condition="python:unapproved_version and not request_pending and not is_locked">
   <metal:block define-slot="editor_content" />
 </tal:block>
-
 <span tal:replace="nothing"> _________ or preview document ____ </span>
 <tal:block condition="python:not model.get_unapproved_version() and model.meta_type == 'Silva Document'">
   <div class="public"
@@ -174,10 +174,9 @@ h2 {
     <!-- this text is replaced by Silva content -->
   </div>
 </tal:block>
-
 <span tal:replace="nothing"> _________ or show ghost info ____ </span>
 <div tal:condition="not:unapproved_version"
-tal:replace="structure here/edit_info | nothing" />
+  tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
 
 </metal:use-macro>
