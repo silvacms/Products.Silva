@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.67 2005/08/07 06:51:19 kitblake Exp $
+# $Id: Image.py,v 1.68 2005/08/12 10:26:45 guido Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -706,7 +706,12 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     context._setObject(id, img)
     img = getattr(context, id)
     if file:
-        img.set_image(file)
+        try:
+            img.set_image(file)
+        except ValueError:
+            # uploaded contents is not a proper image file
+            get_transaction().abort()
+            raise
     img.set_title(title)
 
     add_and_edit(context, id, REQUEST)
