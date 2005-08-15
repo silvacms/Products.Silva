@@ -2748,7 +2748,7 @@ msgstr "Wählen Sie einen oder mehrere Aufträge zum Importieren aus"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:39
 msgid "Could not import ${newid}"
-msgstr "Konnte nicht importiert werden ${newid}"
+msgstr "Konnte nicht importiert werden: ${newid}"
 
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:50
 #: /views/edit/Container/tab_edit_import_w2s.py:40
@@ -2785,7 +2785,7 @@ msgstr "Objekt(e) ${ids} verschoben"
 
 #: /views/edit/Container/tab_edit_move_to.py:44
 msgid ", <span class=\"error\">but could not move ${ids}</span>"
-msgstr ", <span class=\"error\">nicht verschoben ${ids}</span>"
+msgstr ", <span class=\"error\">nicht verschoben: ${ids}</span>"
 
 #: /views/edit/Container/tab_edit_move_to.py:49
 msgid "Could not move ${ids}."
