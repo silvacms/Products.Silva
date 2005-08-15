@@ -5144,7 +5144,7 @@ msgid ""
 "this content.\n"
 "            "
 msgstr ""
-"Liste der Emailadressen (eine pro Zeile), die zur Zeit aif diesen Inhalt "
+"Liste der Emailadressen (eine pro Zeile), die zur Zeit auf diesen Inhalt "
 "abonniert sind."
 
 #: /views/edit/tab_subscriptions_form.form:66
