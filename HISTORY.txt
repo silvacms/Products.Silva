@@ -28,6 +28,9 @@ Silva changes
       - Suppressed the xsltrenderer's copying of silva related namespace
         attributes and declarations in rendered html. 
 
+      - Fixed a bug where unknown classnames used on p-tags (usually after
+        copy/paste to Kupu) confused the editor and widget renderer.
+
   1.3b3
 
     Note: there were a few internal betas, this is the first public one.
