@@ -5,6 +5,32 @@ Silva changes
 
   Current CVS
 
+    Features added
+
+      - All Silva css files (silva, silvaContentStyle, frontend) have been
+        cleaned up, a table of contents added, and the properties have been
+        reordered following W3C recommendations. They validate.
+
+      - The border color of focused form fields highlights. 
+
+      - Editable metadata fields now have labels, allowing the field to be
+        focused with a mouse click.
+
+      - The content workspace now has a sidebar, which displays siblings of 
+        the item in the current folder.
+
+      - The middleground of properties and its subscreens is now handled by
+        a macro.
+
+      - A macro_nonscreen has been added, for situations where the user clicks
+        to a screen that doesn't exist, e.g. there is no addables screen for
+        folders, but the user can navigate to it via the sidebar. 
+
+      - macro_index has been cleaned up, and doesn't try to load Kupu unless
+        Kupu is needed.
+
+      - The service_subscriptions has a service icon.
+
     Bugs fixed
 
       - Fixed a bug in the editor transformations that made that external
@@ -31,9 +57,27 @@ Silva changes
       - Fixed a bug where unknown classnames used on p-tags (usually after
         copy/paste to Kupu) confused the editor and widget renderer.
 
+      - The user clipboard no longer hits the right side of the window.
+
+      - Numerous i18n bugs have been fixed.
+
+      - The form field widths have been fixed in the csv source edit screen.
+
+      - Various bugs and the layout have been fixed in tab_status_macros.
+
+      - If a document heading is empty, an empty h2 tag is not rendered.
+
+      - Feedback in user settings (always saying the language has been 
+        edited, even if it wasn't) has been fixed.
+
+      - Access keys in the contents screen have been fixed, so it is now
+        possible to add items using just the keyboard.
+
+      - A bug in the select_all macro js has been fixed.
+
   1.3b3
 
-    Note: there were a few internal betas, this is the first public one.
+    Note: there were a couple internal betas, this is the first public one.
 
     Features added
 
@@ -52,9 +96,10 @@ Silva changes
         as it cannot always be guaranteed to be correct.
 
       - Public preview mode now has a back button to go back to the
-        Silva UI. Note that in order for this to work, you have to
-        update layout templates, or at least, preview_html in the
-        Silva root (change 'preview' in it to 'public_preview').
+        Silva UI. For EXISTING SILVA SETUPS, the preview_html Python
+        script in the Silva root needs to be edited so it reads:
+        return context.index_html(view_method='public_preview')
+        (change 'preview' to 'public_preview').
 
       - Metadata sets can have a 'category' property. This property
         can be used to define special purpose metadata sets.
@@ -64,6 +109,21 @@ Silva changes
 
       - Export button in publish screen was replaced to a more logical 
         location.
+
+      - The publsh screen controls have been reorganized and a publish
+        now button has been added, saving users a click (the publish now
+        checkbox is gone).
+
+      - A publish now button has been added to almost all screens where a 
+        user my want to publish now, including contents, preview, public
+        preview, propoerties and its subscreens. 
+
+      - Users can close and publish (now) content in the contents screen. 
+        This makes moving of items much easier, obviating the need to switch
+        to the publish screen to close.
+
+      - Both the contents and the publish screen have import and export 
+        (transport) buttons.
 
     Bugs fixed
 
@@ -116,6 +176,7 @@ Silva changes
       - Fixed issue 1301, Kupu now uses object.get_title() where appropriate.
 
       - Updated Silva software version number to 1.3
+
   1.2
 
     Bugs fixed
