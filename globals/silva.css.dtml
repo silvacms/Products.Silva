@@ -401,7 +401,7 @@ table.listing {
   border-left: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
   border-collapse: collapse;
-  color: #444444;
+  color: #444;
 }
 
 table.listing img {
@@ -1153,7 +1153,7 @@ div.feedback a {
 table.listing tr.feedback, table.listing td.feedback {
   padding-top: 0.1em;
   padding-bottom: 0.2em;
-  color: #555555;
+  color: #555;
   background: #f3f3d9;
 }
 table.listing tr.alert, table.listing td.alert {
@@ -1431,15 +1431,15 @@ a:hover {
 
 /* blacklink selectors */
 a.blacklink:link {
-  color: #333333;
+  color: #333;
   text-decoration: none;
 }
 a.blacklink:visited {
-  color: #333333;
+  color: #333;
   text-decoration: none;
 }
 a.blacklink:hover {
-  color: #333333;
+  color: #333;
   text-decoration: underline;
 }
 
@@ -1485,7 +1485,7 @@ a.index-element {
 
 /* closed (gray) selectors */
 .closed, a.closed {
-  color: #666666;
+  color: #666;
 }
 
 /* draft (red) selectors */
@@ -1546,15 +1546,15 @@ a.published:hover {
 
 /* closed (gray) selectors */
 a.closed:link {
-  color: #666666;
+  color: #666;
   text-decoration: none;
 }
 a.closed:visited {
-  color: #666666;
+  color: #666;
   text-decoration: none;
 }
 a.closed:hover {
-  color: #666666;
+  color: #666;
   text-decoration: underline;
 }
 

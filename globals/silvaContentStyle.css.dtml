@@ -47,7 +47,7 @@ div.tabs a.right:hover {
 }
 
 div.tabs a.recede {
-  border-bottom: #8b939b 1px solid;
+  border-bottom: 1px #8b939b solid;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-contentTabBackgroundRecede;;
 }
@@ -90,7 +90,7 @@ div.middleground a.selected:visited {
 /* niu */
 /* extra button floating right
 div.middleground a.normal {
-  width : 10em;
+  width: 10em;
 }
 div.middleground a.normal:visited {
   color: &dtml-transportFontColor;;
