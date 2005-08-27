@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html note="non-screen placeholder"
+  tal:omit-tag=""
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    model      request/model;
+    type       model/meta_type;
+    url        model/absolute_url;
+    title      python: model.get_title_editable() or model.id;
+    vein       string:subscriptions;
+    active_tab string:tab_metadata;
+    parent_screen_name string:properties;
+  "
+  i18n:domain="silva">
+
+<metal:use-macro use-macro="here/macro_nonscreen/macros/shell">
+
+  <metal:fill-slot fill-slot="middlepass">
+    <metal:block use-macro="here/macro_middleground/macros/properties" />
+  </metal:fill-slot>
+  
+  <h2 metal:fill-slot="table_title">
+    <img tal:replace="structure python:view.render_icon(model)" />
+    <tal:block i18n:translate="">manage subscriptions for &#xab;<tal:block content="title" i18n:name="title" />&#xbb;</tal:block>
+  </h2>
+  
+  <metal:fill-slot fill-slot="message">
+    <tal:block i18n:translate="">
+      This <span tal:replace="vein" /> screen doesn&#8217;t have settings, 
+      because it&#8217;s not possible to subscribe to a <span tal:replace="type" />. 
+      Only documents that contain textual content, or folders that contain them, 
+      can be subscribed to.
+    </tal:block>
+  </metal:fill-slot>
+
+</metal:use-macro>
+
+</html>

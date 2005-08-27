@@ -1,104 +1,1 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html tal:omit-tag=""
-  lang="en"
-  xml:lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:notal="http://www.infrae.com/silva/notal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="
-    global vein string:addables;
-    global active_tab string:tab_metadata;
-    global parent_screen_name string:properties;
-    "
-  i18n:domain="silva">
-
-<metal:block use-macro="here/macro_index/macros/master">
-
-<metal:block metal:fill-slot="middleground">
-  <metal:block use-macro="here/macro_middleground/macros/properties" />
-</metal:block>
-  
-<metal:block fill-slot="main">
-<tal:block 
-  define="
-    global view here;
-    global model request/model;"
-  condition="may_approve_content"
->
-
-<form method="POST" name="form" action="tab_addables_submit">
-  <table class="columns columns2">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">
-          _____________________ sidebar _____________________
-        </tal:block>
-        <td class="left">
-          <tal:block replace="nothing">
-            ______________ vein navigation ______________
-          </tal:block >
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_addables', vein)" />
-            </metal:fill-slot>
-          </metal:use-macro>
-        </td>
-        <td class="main">
-          <tal:block replace="nothing">
-            _____________________ main subtable _____________________
-          </tal:block>
-
-            <table class="listing">
-              <thead>
-                <tr tal:replace="nothing">
-                  ______________ icon + vein + title row ______________
-                </tr>
-                <tr>
-                  <td class="top" colspan="3">
-                    <h2>
-                      <img tal:replace="structure python:view.render_icon(model)" />
-                      <span i18n:translate=""> addable settings for
-                        &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
-                      </span>
-                    </h2>
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th class="align-right"
-                    width="12%"
-                    i18n:translate="">
-                    element
-                  </th>
-                  <th i18n:translate="">
-                    content
-                  </th>
-                  <th width="60%" i18n:translate="">
-                    note
-                  </th>
-                </tr>
-                
-                <tr class="odd">
-                  <td
-                    colspan="3"
-                    i18n:translate=""
-                    >
-                    The addables setting can only done on Silva Publications.
-                  </td>
-                </tr>
-            </table>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</form>
-
-</tal:block>
-</metal:block>
-
-</metal:block>
-
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html note="non-screen"  tal:omit-tag=""  lang="en"  xml:lang="en"  xmlns="http://www.w3.org/1999/xhtml"  xmlns:metal="http://xml.zope.org/namespaces/metal"  xmlns:notal="http://www.infrae.com/silva/notal"  xmlns:tal="http://xml.zope.org/namespaces/tal"  xmlns:i18n="http://xml.zope.org/namespaces/i18n"  tal:define="    model      request/model;    type       model/meta_type;    vein       string:addables;    vein_id    template/id;    active_tab string:tab_metadata;    parent_screen_name string:properties;    "  i18n:domain="silva"><metal:use-macro use-macro="here/macro_nonscreen/macros/shell"><metal:fill-slot fill-slot="middlepass">  <metal:block use-macro="here/macro_middleground/macros/properties" /></metal:fill-slot>  <metal:fill-slot fill-slot="message">  <tal:block i18n:translate="">    The addables settings can only be changed on Silva Publications.    A <span tal:replace="string:$type">item</span> doesn&#8217;t     have that capability.   </tal:block></metal:fill-slot></metal:use-macro></html>
