@@ -22,7 +22,7 @@
 div.public {
   margin-top: 1em;
   margin-left: 16px;
-  padding: 0.3em 1em;
+  padding: 0.3em 1em 0.7em;
   border: 1px solid #789;
   background-color: #e3ecf7;}
 h2 {
