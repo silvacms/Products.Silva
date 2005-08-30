@@ -58,20 +58,6 @@
           <date_separator>python:form.get_date_punctuation()</date_separator>
         </tales>
       </field>
-      <field><id>publish_now_flag</id> <type>CheckBoxField</type>
-        <values>
-          <alternate_name></alternate_name>
-          <hidden type="int">0</hidden>
-          <css_class></css_class>
-          <default type="int">0</default>
-          <title>publish now</title>
-          <description></description>
-          <external_validator></external_validator>
-          <extra></extra>
-        </values>
-        <tales>
-        </tales>
-      </field>
       <field><id>clear_expiration</id> <type>CheckBoxField</type>
         <values>
           <alternate_name></alternate_name>

@@ -249,23 +249,6 @@ If this content should expire, set the time.
 
 <tr>
 <th class="align-right" colspan="2"
-  tal:define="field view/tab_status_form_change_settings/publish_now_flag">
-<label 
-  title="access key: alt-u" 
-  accesskey="u"
-  i18n:attributes="title;accesskey publish_right_now_accesskey"
-  i18n:translate=""
-  tal:attributes="for field/id">
-  p<u>u</u>blish right now?
-</label>
-<tal:block 
-  attributes="id field/id"
-  replace="structure python: field.render()"
-/>
-</th>
-</tr>
-<tr>
-<th class="align-right" colspan="2"
   tal:define="field view/tab_status_form_change_settings/clear_expiration">
 <label 
   title="access key: alt-o" 
@@ -361,23 +344,6 @@ day / month / year &nbsp;(23:59)
 <td style="vertical-align:middle;" i18n:translate="">
 Empty indicates no expiration.
 </td>
-</tr>
-
-<tr>
-<th class="align-right" colspan="2"
-  tal:define="field view/tab_status_form_editor/publish_now_flag">
-<label title="access key: alt-u" 
-  accesskey="u"
-  i18n:attributes="title;accesskey publish_right_now_accesskey"
-  i18n:translate=""
-  tal:attributes="for field/id">
-  p<u>u</u>blish right now?
-</label>
-<tal:block 
-  attributes="id field/id" 
-  replace="structure python: field.render(REQUEST=request)"
-/>
-</th>
 </tr>
 
 <tr class="inter-controls">

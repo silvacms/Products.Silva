@@ -21,10 +21,7 @@ except FormValidationError, e:
 
 import DateTime
 
-if result['publish_now_flag']:
-    model.set_unapproved_version_publication_datetime(DateTime.DateTime())
-else:
-    model.set_unapproved_version_publication_datetime(result['publish_datetime'])
+model.set_unapproved_version_publication_datetime(result['publish_datetime'])
 
 expiration = result['expiration_datetime']
 if expiration:
