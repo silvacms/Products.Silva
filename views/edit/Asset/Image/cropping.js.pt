@@ -186,7 +186,7 @@ function Cropper(layer, dragbar, resizehandle, minwidth, minheight) {
     
     this.insertCropCoords = function(event) {
         // Append to previously focused text area
-        field_web_crop = opener.document.getElementById('web_crop');
+        field_web_crop = opener.document.getElementById('field_web_crop');
         var x1 = this.left();
         var y1 = this.top();
         
