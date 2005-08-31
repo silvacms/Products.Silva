@@ -75,7 +75,7 @@ message text
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <div metal:define-macro="request_approval" tal:omit-tag="">
-<form action="tab_status_request" method="POST">
+<form action="." method="POST">
 <tr tal:condition="python:model.get_approval_request_message()">
 <td class="feedback"
  colspan="2" i18n:translate="">
@@ -177,6 +177,7 @@ If this content should expire, set the time.
 <input 
   type="submit" 
   value="request approval" 
+  name="tab_status_request:method"
   class="button" 
   title="access key: alt-r" 
   accesskey="r" 

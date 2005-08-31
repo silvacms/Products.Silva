@@ -30,6 +30,7 @@ h2 {
 }
 </style>
 </tal:condition>
+<base tal:attributes="href string:${model/absolute_url}/edit/" />
 <metal:block define-slot="editor_css" />
 </metal:fill-slot>
 
@@ -138,7 +139,7 @@ h2 {
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
   <div class="fixed-feedback">
-    <form action="tab_status_withdraw" method="POST">
+    <form action="tab_edit_withdraw" method="POST">
       <input class="button"
         style="margin-left: 7px; margin-bottom:0.1em;"
         type="submit" 

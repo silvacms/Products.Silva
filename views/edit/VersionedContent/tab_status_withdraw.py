@@ -14,26 +14,16 @@ model = request.model
 
 is_rejection = request['rejection_status'] == 'true'
 
-# XXX fishy: if no message, we are called from the edit tab ...
-# also use dummy message, if author leaves input box empty
-message = request.get('message','')
 if message:
     message = unicode(message, 'UTF-8')
     view  = context.tab_status
 else:
-    tab_name = request['tab_name']
     if is_rejection:
-        message = ("Approval was rejected via the %s screen "
+        message = ("Approval was rejected via the status screen "
                     "(automatically generated message).") 
     else:
-        message = ("Approval was withdrawn via the %s screen. "
+        message = ("Approval was withdrawn via the status screen. "
                     "(automatically generated message)""")
-    message = message % tab_name
-    # next fish
-    if tab_name == 'edit':
-        view = context.tab_edit
-    else:
-        view = context.tab_status
 
 
 if model.get_unapproved_version() is None:
@@ -62,4 +52,4 @@ if is_rejection:
 else:
     message = _('Withdrew request for approval')
 
-return view(message_type="feedback", message=message)
+return context.tab_status(message_type="feedback", message=message)
