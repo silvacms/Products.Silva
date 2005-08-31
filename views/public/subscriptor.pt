@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- _______ Silva version v1.0b _______ -->
 <tal:block define="here request/model;">
 <metal:block use-macro="request/model/layout_macro.html/macros/layout">
 <metal:block fill-slot="main">
 <tal:block
   define="
+    dummy python:context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;; charset=UTF-8');
     model request/model;
     title model/get_title;
     show_form options/show_form | python: True;
