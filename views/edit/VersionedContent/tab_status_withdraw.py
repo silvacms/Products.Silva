@@ -14,16 +14,12 @@ model = request.model
 
 is_rejection = request['rejection_status'] == 'true'
 
-if message:
-    message = unicode(message, 'UTF-8')
-    view  = context.tab_status
+if is_rejection:
+    message = ("Approval was rejected via the status screen "
+                "(automatically generated message).") 
 else:
-    if is_rejection:
-        message = ("Approval was rejected via the status screen "
-                    "(automatically generated message).") 
-    else:
-        message = ("Approval was withdrawn via the status screen. "
-                    "(automatically generated message)""")
+    message = ("Approval was withdrawn via the status screen. "
+                "(automatically generated message)""")
 
 
 if model.get_unapproved_version() is None:
