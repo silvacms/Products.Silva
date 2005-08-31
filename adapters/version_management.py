@@ -164,7 +164,7 @@ class VersionManagementAdapter(adapter.Adapter):
         binding = self.context.service_metadata.getMetadata(version)
         if binding is None:
             return None
-        binding['silva-extra']['modificationtime']
+        return binding['silva-extra']['modificationtime']
 
     # XXX currently the following 2 methods have a very non-optimal 
     # implementation, hopefully in the future we can change the underlying
