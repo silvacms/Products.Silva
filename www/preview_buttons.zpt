@@ -69,12 +69,16 @@ span.error {
   accesskey="b" />
 </tal:block>
 
-<input class="executor"
-  tal:condition="options/unapproved"
-  style="position:absolute; top:0px; right:0px;"
-  name="edit/preview_open_now:method"
-  type="submit"
-  value="publish now"
-  title="publish this document immediately: alt-p"
-  accesskey="p" />
+<tal:block define="silva_permissions here/public/get_silva_permissions">
+  <input class="executor"
+    tal:condition="python: (silva_permissions['ApproveSilvaContent'] and 
+                              options['unapproved'])"
+    style="position:absolute; top:0px; right:0px;"
+    name="edit/preview_open_now:method"
+    type="submit"
+    value="publish now"
+    title="publish this document immediately: alt-p"
+    accesskey="p" />
+</tal:block>
+
 </form>
