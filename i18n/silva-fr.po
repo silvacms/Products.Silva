@@ -10,6 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language-code: fr\n"
 "Language-name: French\n"
+"X-Is-Fallback-For: fr-fr fr-be fr-ca fr-lu fr-mc fr-ch\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
 

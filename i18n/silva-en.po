@@ -9,6 +9,7 @@ msgstr "Project-Id-Version: Silva\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-code: en\n"
 "Language-name: English\n"
+"X-Is-Fallback-For: en-au en-bz en-ca en-ie en-jm en-nz en-ph en-za en-tt en-gb en-us en-zw\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
 
