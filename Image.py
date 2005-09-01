@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.68 2005/08/12 10:26:45 guido Exp $
+# $Id: Image.py,v 1.69 2005/09/01 12:08:50 guido Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -311,7 +311,10 @@ class Image(Asset):
             if (width, height) == (0, 0):
                 width = height = None
         if not (isinstance(width, IntType) and isinstance(height, IntType)):
-            width, height = self._get_dimensions_from_image_data(img)
+            try:
+                width, height = self._get_dimensions_from_image_data(img)
+            except TypeError:
+                return (0, 0)
             if img.meta_type == 'Image':
                 img.width = width
                 img.height = height
@@ -387,7 +390,7 @@ class Image(Asset):
         """
         try:
             return self._getPILImage(self.image).format
-        except ValueError:
+        except (ValueError, TypeError):
             # XXX i18n - should we translate this?
             return 'unknown'
 
