@@ -583,7 +583,7 @@
                       if there's no content (there should be something on 
                       the clipboard though). ______________
                     </tal:block>
-                    <tal:block condition="python:request.has_key('__cp')">
+                    <tal:block condition="python:request.has_key('__cp') and request['__cp'] is not None">
                       <input class="button"
                         name="tab_edit_paste:method"
                         type="submit"

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.169 $
+# $Revision: 1.170 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -316,7 +316,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # HACK
         # determine if we're cut-paste or copy-pasting, wish we
         # didn't have to..
-        if not REQUEST.has_key('__cp'):
+        if not REQUEST.has_key('__cp') or REQUEST['__cp'] is None:
             return
         op, ref = _cb_decode(REQUEST['__cp'])
 
@@ -361,6 +361,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             msg.set_mapping({'id': paste_id})
             messages.append(unicode(msg))
         
+        # on cut/paste, clear the clipboard when done
+        if op == 1:
+            REQUEST['__cp'] = None
+
         return message_type, ', '.join(messages).capitalize()
             
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
