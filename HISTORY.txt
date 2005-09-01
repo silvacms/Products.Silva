@@ -75,6 +75,42 @@ Silva changes
 
       - A bug in the select_all macro js has been fixed.
 
+      - Fixed incompatibility of code source forms between editors, requires 
+        Kupu 1.3 (issue 1351).
+
+      - Fixed problem with paths, that made that if you'd revoke a pending
+        version of an object using the button in tab_edit of that object and 
+        then would edit it with Kupu, saving would fail (issue 1345).
+
+      - Fixed hyperlink support in headings in Kupu (issue 1324).
+
+      - Fixed the request approval button (issue 1337).
+
+      - Removed 'publish now' button from the public preview screen for 
+        authors (who are not allowed to publish anything) (issue 1369).
+
+      - Fixed image cropping button (issue 921).
+
+      - Fixed charset problems in public/subscriptor view (issue 1357).
+
+      - Fixed modification time in tab_status' version management table (issue
+        1355).
+
+      - Fixed SilvaMetadata tests (XML validation problem) (issue 1354).
+
+      - Fixed AttributeError (__call__) on DummyMessageID (issue 1342).
+
+      - Fixed some bugs in Image, when an image was stored on the FS and
+        removed, a Silva Image object referring to it didn't work anymore
+        (issue 1350).
+
+      - Added 'X-Is-Fallback-For' directive in the appropriate .po files
+        (providing information about fallbacks for e.g. de-ch to de)
+        (issue 1305).
+
+      - After a cut/paste action, the paste buttons now (correctly) disappear
+        from view (issue 1326).
+
   1.3b3
 
     Note: there were a couple internal betas, this is the first public one.
