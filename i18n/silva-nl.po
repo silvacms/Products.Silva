@@ -4097,23 +4097,12 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:85
 msgid ""
-"actually the last message may not have been written by the person "
-"withdrawing the request; if this person for example made an empty reject, "
-"this is the message of the requester ..."
-msgstr ""
-"de laatste boodschap hoeft niet noodzakelijkerwijs door de persoon "
-"geschreven te zijn die de aanvraag intrekt; als deze persoon bijvoorbeeld "
-"een lege afwijzing heeft gemaakt, is dit de boodschap van degene die de "
-"aanvraag heeft ingediend..."
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:85
-msgid ""
 "A previous request for approval has been rejected / withdrawn by "
-"${requester} on ${some_date}. ${comment} The last message regarding this "
+"${requester} on ${some_date}. The last message regarding this "
 "issue is:"
 msgstr ""
 "Een vorige aanvraag om goedkeuring is geweigerd / ingetrokken door "
-"${requester} op ${some_date}. ${comment} De laatste boodschap hierover is:"
+"${requester} op ${some_date}. De laatste boodschap hierover is:"
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
 msgid "There is no unapproved version."

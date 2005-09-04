@@ -4173,22 +4173,12 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:85
 msgid ""
-"actually the last message may not have been written by the person "
-"withdrawing the request; if this person for example made an empty reject, "
-"this is the message of the requester ..."
-msgstr ""
-"le dernier message peut ne pas avoir été écrit par la personne qui répond à "
-"votre demande; si cette personne par example réalise un refus vide, voici  "
-"le message du demandeur ..."
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:85
-msgid ""
 "A previous request for approval has been rejected / withdrawn by "
-"${requester} on ${some_date}. ${comment} The last message regarding this "
+"${requester} on ${some_date}. The last message regarding this "
 "issue is:"
 msgstr ""
 "Une demande d'approbation précédente a été rejetée  / retournée par "
-"${requester} le ${some_date}. ${comment} Le dernier message concernant cette "
+"${requester} le ${some_date}. Le dernier message concernant cette "
 "question est:"
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
