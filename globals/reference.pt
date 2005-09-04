@@ -4,7 +4,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
-  >
+>
 
 <head>
   <title i18n:translate="">Silva Reference</title>
@@ -97,13 +97,13 @@
 <h4 i18n:translate="">Thanks to....</h4>
 
 <p i18n:translate="">
-  The people at <a href="http://www.ethz.ch/"><span i18n:name="eth_zuerich">ETH Z&uuml;rich</span></a> for their feedback, contributions, and innovation.
+  The people at <span i18n:name="eth_zuerich"><a href="http://www.ethz.ch/">ETH Z&uuml;rich</a></span> for their feedback, contributions, and innovation.
 </p>
 <p i18n:translate="">
-  Jan Smith at <a href="http://ozzope.org"><span i18n:name="ozzope">ozzope.org</span></a> for advice, hosting the documentation wiki, and her tutorials.
+  Jan Smith at <span i18n:name="ozzope"><a href="http://ozzope.org">ozzope.org</a></span> for advice, hosting the documentation wiki, and her tutorials.
 </p>
 <p i18n:translate="">
-  Many thanks go to Hans Verster at the <a href="http://www.eur.nl/"><span i18n:name="eur">Erasmus University Rotterdam</span></a> for his vision and support.
+  Many thanks go to Hans Verster at the <span i18n:name="eur"><a href="http://www.eur.nl/">Erasmus University Rotterdam</a></span> for his vision and support.
 </p>
 <p i18n:translate="">
   <br />
