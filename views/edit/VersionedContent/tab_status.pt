@@ -86,8 +86,8 @@
       <span class="subhead" i18n:translate="">Content is published</span><br />
       <tal:block i18n:translate="">
       This content is published (online for the public).<br />
-      If you wish you can make an editable copy by going to the <a tal:content="string:editor"
-      href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
+      If you wish you can make an editable copy by going to the <span i18n:name="editor">
+         <a href="tab_edit"><tal:block i18n:translate="content-editor">editor</tal:block></a></span>.
       </tal:block>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </td>
