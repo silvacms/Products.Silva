@@ -82,12 +82,12 @@ message text
 A previous request for approval has been rejected / withdrawn by 
 <span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on 
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>.
-<comment tal:condition="nothing" i18n:name="comment"><tal:block i18n:translate=""> actually the last message may not have been written
-  by the person withdrawing the request; if this person for example made an empty reject,
-  this is the message of the requester ...</tal:block>
-</comment>
 The last message regarding this issue is:
 </td>
+<tal:comment condition="nothing"> actually the last message may not have been written
+  by the person withdrawing the request; if this person for example made an empty reject,
+  this is the message of the requester ...
+</tal:comment>
 </tr>
 
 <tr class="even"
