@@ -328,6 +328,10 @@ msgstr ""
 msgid "Subject of content in this area."
 msgstr ""
 
+#: /doc/silva-extra.xml:453
+msgid "expiration time"
+msgstr ""
+
 #: /doc/silva-extra.xml:569
 msgid "User who last edited this content."
 msgstr ""
@@ -3770,11 +3774,7 @@ msgid "close_published_version_accesskey"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:85
-msgid "actually the last message may not have been written by the person withdrawing the request; if this person for example made an empty reject, this is the message of the requester ..."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:85
-msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. ${comment} The last message regarding this issue is:"
+msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. The last message regarding this issue is:"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
