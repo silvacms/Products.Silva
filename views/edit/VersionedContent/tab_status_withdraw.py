@@ -11,15 +11,18 @@ from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
+view = context.tab_status
 
 is_rejection = request['rejection_status'] == 'true'
 
-if is_rejection:
-    message = ("Approval was rejected via the status screen "
-                "(automatically generated message).") 
-else:
-    message = ("Approval was withdrawn via the status screen. "
-                "(automatically generated message)""")
+message = request.form.get('message')
+if not message:
+    if is_rejection:
+        message = ("Approval was rejected via the status screen "
+                   "(automatically generated message).") 
+    else:
+        message = ("Approval was withdrawn via the status screen. "
+                   "(automatically generated message)")
 
 
 if model.get_unapproved_version() is None:
