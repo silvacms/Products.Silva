@@ -7,7 +7,8 @@
 
 <head>
   <title i18n:translate="">Silva help</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
+    tal:define="dummy python:request.RESPONSE.setHeader('Content-Type','text/html;; charset=UTF-8')" />
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="stylesheet" href="frontend.css" type="text/css" />
