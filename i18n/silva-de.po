@@ -25,8 +25,8 @@ msgid ""
 "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
 msgstr ""
 "Zeigt automatisch ein Inhaltsverzeichnis an. Wenn es 'index' genannt wird, "
-"zeigt der übergeordnete Ordner auf Anforderung ein Inhaltsverzeichnis an (z."
-"B. http://www.x.yz/silva/myFolder/)."
+"stellt sich der übergeordnete Ordner in der öffentlichen Version "
+"als Inhaltsverzeichnis dar."
 
 #: /DocmaService.py:117
 msgid "Not connected"
@@ -74,7 +74,7 @@ msgid ""
 "       screen.\n"
 "    "
 msgstr ""
-"Die Präsentation der Information innerhalb einer Publikation wird durch "
+"Die Strukturierung der Information innerhalb einer Publikation wird durch "
 "Ordner erreicht. Diese bestimmen die Hierarchie, die der Benutzer sieht. "
 "Ordner in der obersten Ebene definieren die Abschnitte der Publikation, "
 "Unterordner definieren Kapitel usw. Beachten Sie, daß Ordner im Unterschied "
@@ -213,7 +213,7 @@ msgstr ""
 
 #: /SilvaObject.py:332
 msgid "Sorry, this ${meta_type} is not viewable."
-msgstr "Diese ${meta_type} kann nicht angezeigt werden."
+msgstr "Dieser Inhalt wird gerade überarbeitet und kann daher nicht angezeigt werden."
 
 #: /Version.py:207
 msgid "unapproved"
@@ -329,7 +329,7 @@ msgstr "Eine vorhergehende Version hat breits diese Id (${id})."
 #: /Versioning.py:94 /views/edit/VersionedContent/tab_edit_publish.py:12
 msgid "There is no unapproved version to approve."
 msgstr ""
-"Es existiert keine nicht bewilligte Version, die bewilligt werden könnte."
+"Es existiert keine Version, die bewilligt werden könnte."
 
 #: /Versioning.py:97
 msgid "There already is an approved version."
@@ -497,7 +497,7 @@ msgid ""
 "Usually the first letter of the button is the access key. You can always "
 "hover over the button to see the tooltip."
 msgstr ""
-"Die Eingenschaften-, Zugriff- und Publizierenschirme haben, ebenso wie ihre "
+"Die Eigenschaften-, Zugriff- und Publizierenschirme haben, ebenso wie ihre "
 "Unterschirme (wie Nachschlagen, Import und Export), Kurzwahlen für die "
 "meisten ihrer Knöpfe. Üblicherweise ist der erste Buchstabe im Knopf die "
 "Kurzwahl. Sie kann aber immer durch ein Ansteuern des Knopfes mit der Maus "
@@ -2327,6 +2327,12 @@ msgstr ""
 msgid "publish now"
 msgstr "Jetzt veröffentlichen"
 
+#: /views/edit/VersionedContent/macro_tab_edit:XXX
+msgid "publish&nbsp;now"
+msgstr "Jetzt&nbsp;veröffentlichen"
+
+
+
 #: /views/edit/Container/tab_edit.pt:508
 msgid "move selected items to"
 msgstr "ausgewählte Objekte verschieben nach"
@@ -3071,10 +3077,10 @@ msgstr ""
 msgid "create new versions of published docs: alt-n"
 msgstr "Neue Versionen der veröffentlichten Dokumente erstellen: alt-n"
 
-# Default: "u"
+# Default: "s"
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "update_timing_accesskey"
+msgid "set_timing_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:410
@@ -3084,7 +3090,7 @@ msgstr "Veröffentlichungs- und Verfallsdaten ändern: alt-u"
 
 #: /views/edit/Container/tab_status.pt:410
 #: /views/edit/Container/tab_status.pt:469
-msgid "update timing"
+msgid "set timing"
 msgstr "Zeitvorgaben speichern"
 
 #: /views/edit/Container/tab_status.pt:421
@@ -3345,7 +3351,7 @@ msgstr "Neu Version konnte nicht erzeugt werden für: ${ids}"
 
 #: /views/edit/Container/tab_status_reject.py:15
 msgid "Nothing was selected, so no approval was rejected."
-msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung abgelehnt."
+msgstr "Es war nichts ausgewählt, folglich wurde keine Anfrage abgelehnt."
 
 #: /views/edit/Container/tab_status_reject.py:42
 #: /views/edit/Container/tab_status_withdraw.py:32
@@ -3698,7 +3704,7 @@ msgstr "Inhalt ist veröffentlicht"
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
 #: /views/edit/VersionedContent/tab_status_revoke.py:23
 msgid "Revoked approval."
-msgstr "Zustimmung zurückziehen."
+msgstr "Veröffentlichung zurückgezogen."
 
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
@@ -3821,11 +3827,11 @@ msgstr "Veröffentlichungseinstellungen geändert."
 
 #: /views/edit/VersionedContent/tab_status_close.py:16
 msgid "There is no public version to close"
-msgstr "Es gibt keine öffentliche Version die geschlossen werden kann."
+msgstr "Es gibt keine öffentliche Version, die geschlossen werden kann."
 
 #: /views/edit/VersionedContent/tab_status_close.py:21
 msgid "Closed public version."
-msgstr "Öffentlich Version geschlossen."
+msgstr "Öffentliche Version geschlossen."
 
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:19
 msgid "No versions selected"
@@ -5090,7 +5096,7 @@ msgstr "erlaubten Erweiterungen für diese Publikation konfigurieren: alt-d"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:27
 msgid "publish this document: alt-p"
-msgstr "Diese Dokumente Publizieren: alt-p"
+msgstr "Dieses Dokument publizieren: alt-p"
 
 #: /views/edit/tab_metadata.pt:85
 msgid "metadata ${for_approved_version_of_title}"
