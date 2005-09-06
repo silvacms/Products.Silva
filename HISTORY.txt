@@ -111,6 +111,10 @@ Silva changes
       - After a cut/paste action, the paste buttons now (correctly) disappear
         from view (issue 1326).
 
+      - Fixed problems with IE mangling URLs (hrefs of anchors and src for
+        images), by storing an additional attribute and reading that if 
+        available. Requires Kupu 1.2.2.
+
   1.3b3
 
     Note: there were a couple internal betas, this is the first public one.
