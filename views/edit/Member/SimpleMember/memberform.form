@@ -64,7 +64,7 @@
           <items type="list">['field editor', 'kupu']</items>
           <external_validator></external_validator>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>preferred editor</title>
           <first_item type="int">0</first_item>

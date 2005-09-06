@@ -86,13 +86,14 @@ function focus_editor() {
       <tr tal:define="
         provider here/getLanguageProvider;
         languages provider/getAvailableLanguages"
-        tal:condition="python: len(languages) > 1">
+        tal:condition="python: len(languages) > 1"
+        class="even">
         <td class="field-title" 
           i18n:translate="">
           preferred language
         </td>
         <td>
-          <select size="1" name="langsetting">
+          <select class="store" size="1" name="langsetting">
             <tal:block tal:repeat="lang languages">
             <option 
               tal:attributes="
