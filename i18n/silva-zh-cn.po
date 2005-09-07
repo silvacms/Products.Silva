@@ -43,9 +43,6 @@ msgstr "导入..."
 msgid "modify"
 msgstr "修改"
 
-msgid "preview"
-msgstr "预览"
-
 msgid "modified"
 msgstr "修改日期"
 
