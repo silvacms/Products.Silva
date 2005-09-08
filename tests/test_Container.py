@@ -330,9 +330,10 @@ class ContainerTestCase(ContainerBaseTestCase):
 
 
     def test_rotten_default(self):
-        """ test for issue 85: if default is something odd, is_published should not create endless loop.
-        actually this has been an issue if the "index" does not have a "is_published"
-        and acquired it from container itself, causing the endless loop."""
+        # test for issue 85: if default is something odd,
+        # "is_published" should not create endless loop.
+        # actually this has been an issue if the "index" does not have a "is_published"
+        # and acquired it from container itself, causing the endless loop.
 
         self.root.manage_addProduct['Silva'].manage_addFolder('folder6','Folder with broken index')
         folder = self.root.folder6
