@@ -115,6 +115,9 @@ Silva changes
         images), by storing an additional attribute and reading that if 
         available. Requires Kupu 1.2.2.
 
+      - Fixed bug in exporting ZODB-based files to the filesystem (for 
+        ExtFile), which also fixed a unit test (issue 1384).
+
   1.3b3
 
     Note: there were a couple internal betas, this is the first public one.
