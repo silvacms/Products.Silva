@@ -1,12 +1,11 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Revision: 1.41 $
 
 # Python
 import os
 import string
-import StringIO
 from cgi import escape
 try:
     from cStringIO import StringIO
@@ -373,7 +372,7 @@ class FilesService(SimpleItem.SimpleItem):
                 manage_tabs_message='Settings Changed')
 
     security.declareProtected(
-        'View management screens', 'manage_convertImageStorage')
+        'View management screens', 'manage_convertStorage')
     def manage_convertStorage(self, REQUEST=None):
         """converts images and files to be stored like set in files service"""
         from Products.Silva.Image import ImageStorageConverter
@@ -382,7 +381,7 @@ class FilesService(SimpleItem.SimpleItem):
             StorageConverterHelper(self.aq_parent), '0.1', upgrade.AnyMetaType)
         upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
         upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
-        upg.upgrade(self.aq_parent, '0.0', '0.1')
+        upg.upgradeTree(self.aq_parent, '0.1')
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(manage_tabs_message=(
                 'Silva Files and Images converted. See Zope log for details.'))
@@ -401,7 +400,7 @@ class FileStorageConverter:
         if adapted is None:
             return context
         data = adapted.getData()
-        data = StringIO.StringIO(data)
+        data = StringIO(data)
         id = context.id
         title = context.get_title()
         files_service = context.service_files
