@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Current CVS
+  1.3
 
     Features added
 

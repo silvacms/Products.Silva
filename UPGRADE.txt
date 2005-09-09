@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.3.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.52 $
+CVS:        $Revision: 1.53 $
 
 Introduction
 ------------
@@ -86,7 +86,7 @@ Upgrading from Silva 1.2 to silva 1.3
 -------------------------------------
 
 Apart from the regular 'upgrade' step, you'll have to upgrade to Zope
-2.7.6, as this is now the recommended Zope version.
+2.7.7, as this is now the recommended Zope version.
 
 Upgrading from Silva 1.2 to Silva 1.2.1
 ---------------------------------------
