@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.3.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.21 $
+CVS:        $Revision: 1.22 $
 
 Introduction
 ------------
@@ -44,7 +44,7 @@ The infrastructure used by Silva to attach views to content objects.
 
 http://www.infrae.com/download/SilvaViews
 
-FileSystemSite 1.4.1 (DCI)
+FileSystemSite 1.4.2 (DCI)
 --------------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
@@ -55,8 +55,8 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.9 (DCI)
-----------------------
+Formulator 1.10 (DCI)
+---------------------
 
 Formulator is a Zope extension for the easy construction, display and
 validation of web forms. Silva and various extension use this for the
@@ -64,8 +64,8 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 0.9 (DCI)
------------------------
+SilvaMetadata 0.10 (DCI)
+------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
 with Zope object types. The metadata can be configured to be cataloged
@@ -103,7 +103,7 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Kupu 1.2.1 (DI)
+Kupu 1.2.2 (DI)
 ---------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
@@ -205,7 +205,7 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNews 1.0 (EX)
+SilvaNews 1.2 (EX)
 ------------------
 
 SilvaNews builds on Silva and SilvaDocument to provide News
@@ -215,7 +215,7 @@ site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-Docma Server 0.7
+Docma Server 0.8
 ----------------
 
 A separate system that can sit on a Windows machine and translate
