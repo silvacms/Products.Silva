@@ -454,8 +454,7 @@
           i18n:attributes="value;title;accesskey new_version_accesskey"
         />
       </td>
-      <td class="align-right"
-        colspan="2">
+      <td class="align-right">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
@@ -466,7 +465,7 @@
           i18n:attributes="value;title;accesskey set_timing_accesskey"
         />
       </td>
-      <td class="align-right">
+      <td class="align-right" colspan="2">
         <input class="button"
           type="submit"
           name="tab_status_request_approval:method"
@@ -475,6 +474,15 @@
           accesskey="r"
           tal:condition="approveables"
           i18n:attributes="value;title;accesskey request_approval_accesskey"
+        />
+        <input class="executor"
+          type="submit"
+          name="tab_status_request_approval_now:method"
+          value="request approval now"
+          title="request immediate approval for new versions: alt-q"
+          accesskey="r"
+          tal:condition="approveables"
+          i18n:attributes="value;title;accesskey request_approval_now_accesskey"
         />
       </td>
     </tr>
