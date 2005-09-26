@@ -5,6 +5,8 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
+from datetime import datetime, timedelta    
+    
 import SilvaTestCase
 from DateTime import DateTime
 from StringIO import StringIO
@@ -158,6 +160,42 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(len(objids), 1)
         self.assertEquals(objids, ['10'])
 
+    def _setupModificationTimes(self):
+        versions = self.adapter.getVersions()
+        versions.reverse()
+        then = datetime.now()
+        for version in versions:
+            then -= timedelta(days=1)
+            moddate = DateTime(then.isoformat())
+            binding = self.doc.service_metadata.getMetadata(version)
+            binding.setValues('silva-extra', {'modificationtime': moddate}, 0)
+        
+    def test_deleteOldVersionsByAge1(self):
+        self._setupModificationTimes()
+        max_age = 5
+        self.adapter.deleteOldVersionsByAge(max_age)
+        self.assertEquals(
+            ['6', '7', '8', '9', '10'],
+            self.doc.objectIds('Silva Document Version'))
+
+    def test_deleteOldVersionsByAge2(self):
+        self._setupModificationTimes()
+        max_age = 5
+        max_to_keep = 8
+        self.adapter.deleteOldVersionsByAge(max_age, max_to_keep)
+        self.assertEquals(
+            ['6', '7', '8', '9', '10'],
+            self.doc.objectIds('Silva Document Version'))
+            
+    def test_deleteOldVersionsByAge3(self):
+        self._setupModificationTimes()
+        max_age = 5
+        max_to_keep = 2
+        self.adapter.deleteOldVersionsByAge(max_age, max_to_keep)
+        self.assertEquals(
+            ['8', '9', '10'],
+            self.doc.objectIds('Silva Document Version'))
+            
     # catalog tests, see if the adapter methods that change
     # workflow in some way result in correct catalog changes
     def test_revertPreviousToEditable_catalog(self):

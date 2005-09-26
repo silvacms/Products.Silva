@@ -1,5 +1,10 @@
+from datetime import datetime, timedelta
+
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+
+from DateTime import DateTime
+
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters.interfaces import IVersionManagement
 from Products.Silva.interfaces import IVersion
@@ -139,24 +144,53 @@ class VersionManagementAdapter(adapter.Adapter):
         delret = self.context.manage_delObjects(delids)
         return ret
 
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                                'deleteOldVersions')
-    def deleteOldVersions(self, number_to_keep=0):
-        versions = self.getVersionIds()
+    def _getOldVersionIds(self):
         unapproved = self.getUnapprovedVersion()
         approved = self.getApprovedVersion()
         public = self.getPublishedVersion()
-        if unapproved is not None and unapproved.id in versions:
-            versions.remove(unapproved.id)
-        if approved is not None and unapproved.id in versions:
-            versions.remove(approved.id)
-        if public is not None and public.id in versions:
-            versions.remove(public.id)
-        if len(versions) > number_to_keep:
+        version_ids = self.getVersionIds()
+        if unapproved is not None and unapproved.id in version_ids:
+            version_ids.remove(unapproved.id)
+        if approved is not None and unapproved.id in version_ids:
+            version_ids.remove(approved.id)
+        if public is not None and public.id in version_ids:
+            version_ids.remove(public.id)
+        return version_ids
+    
+    security.declareProtected(
+        SilvaPermissions.ViewManagementScreens, 'deleteOldVersions')
+    def deleteOldVersions(self, number_to_keep=0):
+        version_ids = self._getOldVersionIds()
+        if len(version_ids) > number_to_keep:
             if number_to_keep > 0:
-                versions = versions[:-number_to_keep]
-            self.context.manage_delObjects(versions)
+                version_ids = version_ids[:-number_to_keep]
+            self.context.manage_delObjects(version_ids)
 
+    security.declareProtected(
+        SilvaPermissions.ViewManagementScreens, 'deleteOldVersionsByAge')
+    def deleteOldVersionsByAge(self, max_age, number_to_keep=None):
+        """Delete old versions.
+
+        Deletes all version older than max_age, but keep no more than
+        number_to_keep versions (if provided).
+        """
+        then = datetime.now() - timedelta(days=max_age)
+        oldest_time = DateTime(then.isoformat())
+        version_ids = self._getOldVersionIds()
+        index = None
+        for id in version_ids:
+            if self.getVersionModificationTime(id) >= oldest_time:
+                break
+            index = version_ids.index(id)
+
+        delete_ids = []            
+        if index is not None:
+            delete_ids = version_ids[:index]
+        self.context.manage_delObjects(delete_ids)
+        
+        if number_to_keep is not None:
+            self.deleteOldVersions(number_to_keep)
+            
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionModificationTime')
     def getVersionModificationTime(self, versionid):
