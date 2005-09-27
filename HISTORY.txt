@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.4 (CVS/Unreleased)
+
+    Features added
+
+      - Added a JavaScript registry for onload handlers and used that to
+        do some refactoring of the tab_edit pagetemplates.
+
+      - Added support for Kupu 1.3.
+
   1.3
 
     Features added

@@ -19,12 +19,10 @@ xhtml = model.editor_storage(editor='kupu')
 return ('<html>\n'
         '<head>\n'
         '<title>%s</title>\n'
-        '<link type="text/css" rel="stylesheet" href="%s" />\n'
+        '<link href="%s" type="text/css" rel="stylesheet" />\n'
         '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
-        '<meta name="docref" content="%s" />\n'
         '</head>\n'
         '%s\n'
         '</html>' % (model.get_title_editable(), 
                         getattr(context.globals, 'kupu.css').absolute_url(),
-                        docref,
                         xhtml))

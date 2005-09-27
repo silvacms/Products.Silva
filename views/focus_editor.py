@@ -19,4 +19,6 @@ function focus_editor() {
      }
   }
 }
+// register the function to the onload registry
+window.onload_registry.register(focus_editor);
 ''' % (focussed_form_element)

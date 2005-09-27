@@ -38,6 +38,10 @@ h2 {
  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
+<metal:block fill-slot="script">
+  <metal:block define-slot="script" />
+</metal:block>
+
 <metal:block fill-slot="middleground"
   tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">

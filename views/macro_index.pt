@@ -77,19 +77,10 @@
   xml:space="preserve"
   tal:attributes="src string:$root_url/globals/plone_javascripts.js">
 </script>
-<script language="JavaScript" type="text/javascript">
-// can be attached to formfields so that pressing enter makes the form use
-// a specific action, useful in forms with more than 1 submit button
-function handle_default_action(element, event, action)
-{
-    code = event.which ? event.which : event.keyCode;
-    if (code == 10 || code == 13)
-    {
-        element.form.action = action;
-        element.form.submit();
-    }
-}
-</script>
+<script type="text/javascript" 
+        tal:attributes="src here/helperscripts.js/absolute_url"></script>
+<script type="text/javascript" 
+        tal:attributes="src here/handler_registry.js/absolute_url"></script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
 <tal:block tal:replace="nothing"> _______ moz site navigation_______ </tal:block>
@@ -102,10 +93,7 @@ function handle_default_action(element, event, action)
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title"/>
 </head>
 
-<body tal:attributes="onload 
-    python: test(vein == 'editor' and editor == 'kupu' and model.get_unapproved_version(), 
-                'startKupu()', 
-                'if (window.focus_editor) window.focus_editor()')">
+<body onload="window.onload_registry.callHandlers()">
 <!-- __________________________ start matrix tabs _________________________ -->
 <metal:block use-macro="here/macro_tabs/macros/tabs">
   top navigation plugs in here....

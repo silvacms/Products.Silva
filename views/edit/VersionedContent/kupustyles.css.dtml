@@ -82,22 +82,24 @@ div.kupu-tb {
   border: none;
 }
 
-span.kupu-tb-buttongroup button.kupu-save {background-image: url("<dtml-var root>/kupu/kupuimages/save.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("<dtml-var root>/kupu/kupuimages/save.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-spellchecker {background-image: url("<dtml-var root>/kupu/kupuimages/text-check.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-spellchecker:hover {background-image: url("<dtml-var root>/kupu/kupuimages/text-check.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-save {background-image: url("<dtml-var root>/kupu/kupuimages/save.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("<dtml-var root>/kupu/kupuimages/save.png"); background-color: #b3d4bf;}
 span.kupu-tb-buttongroup button.kupu-logo {background-image: url("<dtml-var root>/kupu/kupuimages/kupu_icon.gif"); background-color: transparent;}
 span.kupu-tb-buttongroup button.kupu-logo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/kupu_icon.gif");}
 
-span.kupu-tb-buttongroup button.kupu-bold {background-image: url("<dtml-var root>/kupu/kupuimages/bold.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/bold.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-italic {background-image: url("<dtml-var root>/kupu/kupuimages/italic.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-italic:hover, span.kupu-tb-buttongroup button.kupu-italic-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/italic.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-underline {background-image: url("<dtml-var root>/kupu/kupuimages/underline.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-underline:hover, span.kupu-tb-buttongroup button.kupu-underline-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/underline.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-bold {background-image: url("<dtml-var root>/kupu/kupuimages/bold.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/bold.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-italic {background-image: url("<dtml-var root>/kupu/kupuimages/italic.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-italic:hover, span.kupu-tb-buttongroup button.kupu-italic-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/italic.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-underline {background-image: url("<dtml-var root>/kupu/kupuimages/underline.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-underline:hover, span.kupu-tb-buttongroup button.kupu-underline-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/underline.png"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-subscript {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-subscript:hover, span.kupu-tb-buttongroup button.kupu-subscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-superscript {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-superscript:hover, span.kupu-tb-buttongroup button.kupu-superscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-subscript {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-subscript:hover, span.kupu-tb-buttongroup button.kupu-subscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/subscript.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-superscript {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-superscript:hover, span.kupu-tb-buttongroup button.kupu-superscript-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/superscript.png"); background-color: #b3d4bf;}
 
 span.kupu-tb-buttongroup button.kupu-hilitecolor {display: none;}
 span.kupu-tb-buttongroup button.kupu-forecolor {display: none;}
@@ -111,20 +113,20 @@ span.kupu-tb-buttongroup button.kupu-justifyright {display: none;}
 span.kupu-tb-buttongroup button.kupu-indent {display: none;}
 span.kupu-tb-buttongroup button.kupu-outdent {display: none;}
 
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/list.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/list.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/numbered.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/numbered.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertunorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/unordered-list.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/unordered-list.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("<dtml-var root>/kupu/kupuimages/ordered-list.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/ordered-list.png"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("<dtml-var root>/kupu/kupuimages/definitionlist.png"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-undo {background-image: url("<dtml-var root>/kupu/kupuimages/undo.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/undo.gif"); background-color: #b3d4bf;}
-span.kupu-tb-buttongroup button.kupu-redo {background-image: url("<dtml-var root>/kupu/kupuimages/redo.gif"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/redo.gif"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-undo {background-image: url("<dtml-var root>/kupu/kupuimages/undo.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/undo.png"); background-color: #b3d4bf;}
+span.kupu-tb-buttongroup button.kupu-redo {background-image: url("<dtml-var root>/kupu/kupuimages/redo.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("<dtml-var root>/kupu/kupuimages/redo.png"); background-color: #b3d4bf;}
 
-span.kupu-tb-buttongroup button.kupu-source {background-image: url("<dtml-var root>/kupu/kupuimages/source.gif"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-source {background-image: url("<dtml-var root>/kupu/kupuimages/view-source.png"); background-color: #cedae8;}
 
 span.kupu-tb-buttongroup button.kupu-hyperlink {background-image: url("<dtml-var root>/kupu/kupuimages/link.png"); background-color: #cedae8;}
 span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {background-image: url("<dtml-var root>/kupu/kupuimages/link.png"); background-color: #b3d4bf;}
@@ -185,15 +187,24 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   font-size: 1.1em;
   font-weight: normal;
   color: #ecfff3;
+  background-image: url('<dtml-var root>/kupu_silva/closed_arrow.gif');
+  background-repeat: no-repeat;
+  background-position: center left;
   background-color: #829199;
   width: 100%;
   max-width: 22em;
   margin-top: 0;
-  margin-bottom: 0em;
-  padding-left: 0.6em;
+  margin-bottom: 0px;
+  padding-left: 12px;
   border: solid 1px #6c797f;
   border-style: solid none none none;
   text-align: left;
+  cursor: default;
+}
+
+div.kupu-toolbox h1.kupu-toolbox-heading-opened, 
+div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
+  background-image: url('<dtml-var root>/kupu_silva/opened_arrow.gif');
 }
 
 div.kupu-tooltray {
@@ -246,10 +257,10 @@ div#kupu-fgcolorchooser div:hover {
 }
 
 #kupu-toolbox-properties {
-    display: none;
+  display: none;
 }
 
-#kupu-toolbox-properties input {
+#kupu-toolbox-properties .metadata-input {
   width: 16em;
 }
 
@@ -261,6 +272,23 @@ div#kupu-fgcolorchooser div:hover {
   font-size: x-small;
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
 
+}
+
+.kupu-properties-checkbox-outerdiv {
+  cursor: default;
+}
+
+.kupu-properties-checkbox-line {
+}
+
+.kupu-properties-checkbox-input {
+  clear: left;
+  float: left;
+}
+
+.kupu-properties-checkbox-item-title {
+  float: left;
+  width: 14em;
 }
 
 #kupu-toolbox-debug {
