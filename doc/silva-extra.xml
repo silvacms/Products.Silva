@@ -786,9 +786,9 @@
     <field_values>
       <value key="description" type="str" value="If this is enabled, this content (and anything it contains!) will not show up in tables of content." />
       <value key="first_item" type="int" value="0" />
-      <value key="title" type="str" value="Hide from Tables of Content" />
-      <value key="default" type="str" value="Do Not Hide" />
-      <value key="items" type="list" value="[('Hide', 'Hide'), ('Do Not Hide', 'Do Not Hide')]" />
+      <value key="title" type="str" value="hide from tables of content" />
+      <value key="default" type="str" value="do not hide" />
+      <value key="items" type="list" value="[('do not hide', 'do not hide'), ('hide', 'hide')]" />
       <value key="required" type="int" value="1" />
       <value key="enabled" type="int" value="1" />
       <value key="whitespace_preserve" type="int" value="0" />
