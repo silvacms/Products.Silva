@@ -8,7 +8,8 @@
 ##title=Revoke approval of approved content
 ##
 from Products.Silva.i18n import translate as _
-from Products.Silva.adapters.version_management import getVersionManagementAdapter
+from Products.Silva.adapters.version_management import \
+        getVersionManagementAdapter
 
 view = context
 request = context.REQUEST
@@ -16,7 +17,8 @@ model = request.model
 adapter = getVersionManagementAdapter(model)
 
 if not request.has_key('versions'):
-    return view.tab_status(message_type="error", message=_("No versions selected"))
+    return view.tab_status(message_type="error", 
+                            message=_("No versions selected"))
 
 versions = request['versions']
 if not same_type(versions, []):
@@ -25,7 +27,8 @@ if not same_type(versions, []):
     versions = [versions,]
 
 if len(versions) == len(adapter.getVersionIds()):
-    return view.tab_status(message_type="error", message=_("Can't delete all versions"))
+    return view.tab_status(message_type="error", 
+                                message=_("Can't delete all versions"))
     
 result = adapter.deleteVersions(versions)
 
@@ -40,4 +43,5 @@ for id, error in result:
         msg.set_mapping({'id': id})
         messages.append('<span class="error">' + unicode(msg) + '</span>')
 
-return view.tab_status(message_type="feedback", message=', '.join(messages).capitalize())
+return view.tab_status(message_type="feedback", 
+                        message=', '.join(messages).capitalize())
