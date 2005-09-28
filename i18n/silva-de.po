@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Wed Sep  7 17:07:52 2005\n"
+"POT-Creation-Date: Wed Sep 28 18:46:28 2005\n"
 "PO-Revision-Date: 2004-12-21 16:11+0100\n"
 "Last-Translator: Guido Goldstein <gst@infrae.com>\n"
 "Language-Team: Name <email>\n"
@@ -40,12 +40,12 @@ msgstr "Einstellungen geändert."
 msgid "Validation error(s)"
 msgstr "Fehler in der Validierung"
 
-#: /File.py:137 /views/edit/Container/docma_queue.pt:167
+#: /File.py:136 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
 msgstr "Download"
 
-#: /File.py:48
+#: /File.py:47
 msgid ""
 "Any digital file can be uploaded as Silva content. \n"
 "       For instance large files such as pdf docs or mpegs can be placed in "
@@ -275,8 +275,8 @@ msgstr ""
 msgid "No public version to close."
 msgstr "Keine öffentliche Version zum Schliessen vorhanden."
 
-#: /Versioning.py:242 /adapters/version_management.py:81
-#: /adapters/version_management.py:89
+#: /Versioning.py:242 /adapters/version_management.py:82
+#: /adapters/version_management.py:90
 msgid "No unapproved version available"
 msgstr "Keine nicht genehmigte Version verfügbar"
 
@@ -343,11 +343,11 @@ msgstr "Es existiert keine Version, die bewilligt werden könnte."
 msgid "There already is an approved version."
 msgstr "Bewilligte Version bereits vorhanden."
 
-#: /adapters/version_management.py:113
+#: /adapters/version_management.py:114
 msgid "Can not delete all versions"
 msgstr "Es können nicht alle Versionen gelöscht werden."
 
-#: /adapters/version_management.py:259
+#: /adapters/version_management.py:289
 msgid "no such version ${version}"
 msgstr "Keine Version ${version}"
 
@@ -423,6 +423,16 @@ msgstr "EMail Adresse der Kontaktperson."
 #: /doc/silva-extra.xml:740
 msgid "contact email"
 msgstr "Kontaktemail"
+
+#: /doc/silva-extra.xml:787
+msgid ""
+"If this is enabled, this content (and anything it contains!) will not show "
+"up in tables of content."
+msgstr ""
+
+#: /doc/silva-extra.xml:789
+msgid "hide from tables of content"
+msgstr ""
 
 #: /doc/silva-extra.xml:94
 msgid "keywords"
@@ -2222,6 +2232,7 @@ msgstr "Import beendet: ${msg}"
 #: /views/edit/Container/tab_status_new_version.py:36
 #: /views/edit/Container/tab_status_reject.py:36
 #: /views/edit/Container/tab_status_request_approval.py:50
+#: /views/edit/Container/tab_status_request_approval_now.py:52
 #: /views/edit/Container/tab_status_revoke.py:36
 #: /views/edit/Container/tab_status_withdraw.py:26
 #: /views/edit/VersionedContent/preview_open_now.py:16
@@ -3154,7 +3165,7 @@ msgstr "Veröffentlichungs- und Verfallsdaten ändern: alt-u"
 
 # Default: "s"
 #: /views/edit/Container/tab_status.pt:402
-#: /views/edit/Container/tab_status.pt:459
+#: /views/edit/Container/tab_status.pt:458
 msgid "set_timing_accesskey"
 msgstr ""
 
@@ -3181,28 +3192,41 @@ msgstr "Zurücknehmen"
 msgid "revoke approval of approved versions: alt-v"
 msgstr "Bewilligung für bewilligtes Objekt zurückziehen: alt-v"
 
-#: /views/edit/Container/tab_status.pt:459
+#: /views/edit/Container/tab_status.pt:458
 msgid "change publish and expiration times: alt-s"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:459
+#: /views/edit/Container/tab_status.pt:458
 msgid "set timing"
 msgstr "Zeitvorgaben speichern"
 
-#: /views/edit/Container/tab_status.pt:470
+#: /views/edit/Container/tab_status.pt:467
 msgid "request approval for new versions: alt-r"
 msgstr "Bewilligung für neue Versionen beantragen: alt-r"
 
 # Default: "r"
-#: /views/edit/Container/tab_status.pt:470
+#: /views/edit/Container/tab_status.pt:467
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request_approval_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:470
+#: /views/edit/Container/tab_status.pt:467
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request approval"
 msgstr "Bewilligung beantragen"
+
+# Default: "r"
+#: /views/edit/Container/tab_status.pt:476
+msgid "request_approval_now_accesskey"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:476
+msgid "request immediate approval for new versions: alt-q"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:476
+msgid "request approval now"
+msgstr ""
 
 #: /views/edit/Container/tab_status_approve.py:77
 msgid "no publication time was set"
@@ -3241,6 +3265,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_change_settings.py:87
 #: /views/edit/Container/tab_status_reject.py:39
 #: /views/edit/Container/tab_status_request_approval.py:54
+#: /views/edit/Container/tab_status_request_approval_now.py:56
 #: /views/edit/Container/tab_status_withdraw.py:29
 msgid "no unapproved version"
 msgstr "keine nicht genehmigte Version"
@@ -3400,10 +3425,12 @@ msgid "Not rejected: ${ids}"
 msgstr "Nicht abgelehnt: ${ids}"
 
 #: /views/edit/Container/tab_status_request_approval.py:15
+#: /views/edit/Container/tab_status_request_approval_now.py:19
 msgid "Nothing was selected, so no approval was requested."
 msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung angefragt."
 
 #: /views/edit/Container/tab_status_request_approval.py:58
+#: /views/edit/Container/tab_status_request_approval_now.py:60
 msgid "approval already requested"
 msgstr "Bewilligung war bereits angefragt"
 
@@ -3412,10 +3439,12 @@ msgid "no publication time set"
 msgstr "Keine Veröffentlichungszeit gesetzt"
 
 #: /views/edit/Container/tab_status_request_approval.py:86
+#: /views/edit/Container/tab_status_request_approval_now.py:80
 msgid "Request approval for: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_request_approval.py:91
+#: /views/edit/Container/tab_status_request_approval_now.py:85
 msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
 msgstr ""
 
@@ -3662,12 +3691,12 @@ msgstr "Link ändern"
 msgid "Link changed"
 msgstr "Link geändert"
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:105
+#: /views/edit/VersionedContent/macro_tab_edit.pt:109
 msgid "work on a new version while the previous one stays online: alt-n"
 msgstr ""
 "Bearbeiten einer neuen Version, während die vorherige online bleibt: alt-n"
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:114
+#: /views/edit/VersionedContent/macro_tab_edit.pt:118
 msgid ""
 "${note} there is already a published or closed version of this content. "
 "Changes can only be made in a new version."
@@ -3675,11 +3704,11 @@ msgstr ""
 "${note} es existiert bereits eine publizierte oder geschlossene Version "
 "dieses Inhaltes. Änderungen können nur in einer neuen Version gemacht werden."
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:125
+#: /views/edit/VersionedContent/macro_tab_edit.pt:129
 msgid "'first un-approve' this item in order to edit: alt-r"
 msgstr "Widerrufen der Genehmigung des Dokumentes: alt-r"
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:133
+#: /views/edit/VersionedContent/macro_tab_edit.pt:137
 msgid ""
 "${note} this version is approved but not yet public. In order to make "
 "changes you need to first revoke the approval."
@@ -3687,20 +3716,20 @@ msgstr ""
 "$(note} diese Version ist bewilligt aber noch nicht veröffentlicht. Um "
 "Äderungen durchführen zu können, muß erst die Bewilligung entzogen werden."
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:143
+#: /views/edit/VersionedContent/macro_tab_edit.pt:147
 msgid "withdraw request"
 msgstr "Anfrage zurücknehmen"
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:143
+#: /views/edit/VersionedContent/macro_tab_edit.pt:147
 msgid "withdraw a request for approval in order to edit: alt-w"
 msgstr "Anfrage auf Genehmigung zum bearbeiten zurücknehmen: alt-w"
 
 # Default: "w"
-#: /views/edit/VersionedContent/macro_tab_edit.pt:143
+#: /views/edit/VersionedContent/macro_tab_edit.pt:147
 msgid "withdraw_request_accesskey"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:153
+#: /views/edit/VersionedContent/macro_tab_edit.pt:157
 msgid ""
 "${note} this version has an request for approval pending. In order to make "
 "changes you need to first withdraw the pending request."
@@ -3708,7 +3737,7 @@ msgstr ""
 "${note} Für diese Version liegt eine Bewilligungsanfrage vor. Um Änderungen "
 "durchführen zu können, muß erst der Antrag zurückgenommen werden."
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:81
+#: /views/edit/VersionedContent/macro_tab_edit.pt:85
 msgid ""
 "${note} This object is already being edited by another user, and is "
 "temporarily locked."
@@ -3716,23 +3745,23 @@ msgstr ""
 "${note} Dieses Objekt wird bereits von einem anderen Benutzer bearbeitet und "
 "ist zeitweilig gesperrt."
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:81
-#: /views/edit/VersionedContent/macro_tab_edit.pt:114
-#: /views/edit/VersionedContent/macro_tab_edit.pt:133
-#: /views/edit/VersionedContent/macro_tab_edit.pt:153
+#: /views/edit/VersionedContent/macro_tab_edit.pt:85
+#: /views/edit/VersionedContent/macro_tab_edit.pt:118
+#: /views/edit/VersionedContent/macro_tab_edit.pt:137
+#: /views/edit/VersionedContent/macro_tab_edit.pt:157
 msgid "Note:"
 msgstr "Anmerkung:"
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:85
+#: /views/edit/VersionedContent/macro_tab_edit.pt:89
 msgid "Somebody else just edited this item, unlock it: alt-u"
 msgstr "Jemand hat diesen Eintrag gerade geändert, zum Entsperren: alt-u"
 
 # Default: "u"
-#: /views/edit/VersionedContent/macro_tab_edit.pt:85
+#: /views/edit/VersionedContent/macro_tab_edit.pt:89
 msgid "break_lock_accesskey"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:85
+#: /views/edit/VersionedContent/macro_tab_edit.pt:89
 msgid "break lock"
 msgstr "Sperre entfernen"
 
@@ -3914,19 +3943,19 @@ msgstr "Es gibt keine öffentliche Version, die geschlossen werden kann."
 msgid "Closed public version."
 msgstr "Öffentliche Version geschlossen."
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:19
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:21
 msgid "No versions selected"
 msgstr "Keine Versionen ausgewählt"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:28
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:31
 msgid "Can't delete all versions"
 msgstr "Es können nicht alle Versionen gelöscht werden"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:35
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:38
 msgid "could not delete ${id}: ${error}"
 msgstr "Konnte nicht gelöscht werden ${id}: ${error}"
 
-#: /views/edit/VersionedContent/tab_status_delete_versions.py:39
+#: /views/edit/VersionedContent/tab_status_delete_versions.py:42
 msgid "deleted ${id}"
 msgstr "gelöscht ${id}"
 
@@ -4696,7 +4725,7 @@ msgstr ""
 "Zum Bearbeiten zuerst die Bewilligung für diesen Eintrag zurücknehmen: alt-r"
 
 #: /views/edit/macro_view_metadata.pt:146
-#: /views/edit/VersionedContent/macro_tab_edit.pt:125
+#: /views/edit/VersionedContent/macro_tab_edit.pt:129
 #: /views/edit/VersionedContent/tab_status_macros.pt:463
 #: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "revoke approval"
@@ -4704,7 +4733,7 @@ msgstr "Genehmigung widerrufen"
 
 # Default: "r"
 #: /views/edit/macro_view_metadata.pt:146
-#: /views/edit/VersionedContent/macro_tab_edit.pt:125
+#: /views/edit/VersionedContent/macro_tab_edit.pt:129
 #: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "revoke_approval_accesskey"
 msgstr ""
@@ -4717,14 +4746,14 @@ msgstr "Neue Version dieses Inhalts erzeugen: alt-n"
 #: /views/edit/macro_view_metadata.pt:166
 #: /views/edit/Container/tab_status.pt:381
 #: /views/edit/Container/tab_status.pt:447
-#: /views/edit/VersionedContent/macro_tab_edit.pt:105
+#: /views/edit/VersionedContent/macro_tab_edit.pt:109
 msgid "new_version_accesskey"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:166
 #: /views/edit/Container/tab_status.pt:381
 #: /views/edit/Container/tab_status.pt:447
-#: /views/edit/VersionedContent/macro_tab_edit.pt:105
+#: /views/edit/VersionedContent/macro_tab_edit.pt:109
 msgid "new version"
 msgstr "Neue Version"
 
@@ -5068,31 +5097,31 @@ msgstr ""
 "Öffentlichkeit nicht."
 
 #: /views/edit/tab_preview.pt:41
-#: /views/edit/VersionedContent/macro_tab_edit.pt:45
+#: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "see the content in the public layout: alt-;"
 msgstr "Vorschau des Dokumentes: alt-;"
 
 # Default: ";"
 #: /views/edit/tab_preview.pt:41
-#: /views/edit/VersionedContent/macro_tab_edit.pt:45
+#: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "public_preview_accesskey"
 msgstr ""
 
 #: /views/edit/tab_preview.pt:41
-#: /views/edit/VersionedContent/macro_tab_edit.pt:45
+#: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "public&nbsp;preview..."
 msgstr "Vorschau"
 
 # Default: "p"
 #: /views/edit/tab_preview.pt:54 /views/edit/Container/tab_status.pt:393
-#: /views/edit/VersionedContent/macro_tab_edit.pt:55
+#: /views/edit/VersionedContent/macro_tab_edit.pt:59
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
 #: /views/edit/VersionedContent/tab_status_macros.pt:360
 msgid "open_to_public_accesskey"
 msgstr ""
 
 #: /views/edit/tab_preview.pt:54
-#: /views/edit/VersionedContent/macro_tab_edit.pt:55
+#: /views/edit/VersionedContent/macro_tab_edit.pt:59
 msgid "publish&nbsp;now"
 msgstr "Jetzt&nbsp;veröffentlichen"
 
@@ -5321,130 +5350,130 @@ msgstr "&laquo; Vorherige ${n} Einträge"
 msgid "Next ${n} items &raquo;"
 msgstr "Nächsten ${n} Einträge &raquo;"
 
-#: /views/macro_index.pt:101
-msgid "Help with access keys"
-msgstr "Hilfe zu Kurzwahlen"
-
-#: /views/macro_index.pt:102
-msgid "Silva copyright info"
-msgstr "Silva Copyrightinformationen"
-
 # Default: "z"
-#: /views/macro_index.pt:143
+#: /views/macro_index.pt:131
 msgid "zroot_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:143
+#: /views/macro_index.pt:131
 msgid "jump to zope root: alt-z"
 msgstr "Gehe zu Zope-Root: alt-z"
 
-#: /views/macro_index.pt:143
+#: /views/macro_index.pt:131
 msgid "zroot..."
 msgstr ""
 
 # Default: "'"
-#: /views/macro_index.pt:152
+#: /views/macro_index.pt:140
 msgid "sroot_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:152
+#: /views/macro_index.pt:140
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:152
+#: /views/macro_index.pt:140
 msgid "jump to silva root in zodb: alt-'"
 msgstr "Zum Silvastamm in der ZODB: alt-'"
 
-#: /views/macro_index.pt:161
+#: /views/macro_index.pt:149
 msgid "sservices..."
 msgstr ""
 
-#: /views/macro_index.pt:161
+#: /views/macro_index.pt:149
 msgid "jump to silva services: alt-`"
 msgstr "Gehe zu Silva-Services: alt-`"
 
 # Default: "`"
-#: /views/macro_index.pt:161
+#: /views/macro_index.pt:149
 msgid "sservices_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:192 /views/macro_index.pt:195
-#: /views/macro_index.pt:205 /views/macro_index.pt:209
+#: /views/macro_index.pt:180 /views/macro_index.pt:183
+#: /views/macro_index.pt:193 /views/macro_index.pt:197
 msgid "jump to top: alt-t"
 msgstr "Zur obersten Ebene springen: alt-j"
 
 # Default: "t"
-#: /views/macro_index.pt:205
+#: /views/macro_index.pt:193
 msgid "jump_to_top_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:228
+#: /views/macro_index.pt:216
 msgid "contact:"
 msgstr "Kontakt:"
 
-#: /views/macro_index.pt:236
+#: /views/macro_index.pt:224
 msgid "no name"
 msgstr "Kein Name"
 
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:231
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:231
 msgid "view public version"
 msgstr "öffentliche Version ansehen"
 
 # Default: ":"
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:231
 msgid "view_public_version_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:261
+#: /views/macro_index.pt:249
 msgid "Change your settings: alt-~"
 msgstr "Benutzereinstellungen ändern: alt-~"
 
 # Default: "~"
-#: /views/macro_index.pt:261
+#: /views/macro_index.pt:249
 msgid "user_settings_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:275
+#: /views/macro_index.pt:263
 msgid "user settings"
 msgstr "Benutzereinstellungen"
 
-#: /views/macro_index.pt:279
+#: /views/macro_index.pt:267
 msgid "Logout of Silva: alt-q"
 msgstr "aus Silva abmelden: alt-q"
 
 # Default: "q"
-#: /views/macro_index.pt:279
+#: /views/macro_index.pt:267
 msgid "logout_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:288
+#: /views/macro_index.pt:276
 msgid "logout ${role} ${userid}"
 msgstr "Logout ${role} ${userid}"
 
-#: /views/macro_index.pt:294
+#: /views/macro_index.pt:282
 msgid "Request an additional role in this location: alt-,"
 msgstr "Eine zusätzliche Rolle beantragen: alt-,"
 
-#: /views/macro_index.pt:294
+#: /views/macro_index.pt:282
 msgid "request access"
 msgstr "Zugang beantragen"
 
 # Default: ","
-#: /views/macro_index.pt:294
+#: /views/macro_index.pt:282
 msgid "request_access_accesskey"
 msgstr ""
 
-#: /views/macro_index.pt:96
+#: /views/macro_index.pt:87
 msgid "Up to Silva top"
 msgstr "Zur obersten Silvaebene"
 
-#: /views/macro_index.pt:99
+#: /views/macro_index.pt:90
 msgid "Up one level"
 msgstr "eine Ebene nach oben"
+
+#: /views/macro_index.pt:92
+msgid "Help with access keys"
+msgstr "Hilfe zu Kurzwahlen"
+
+#: /views/macro_index.pt:93
+msgid "Silva copyright info"
+msgstr "Silva Copyrightinformationen"
 
 # Default: "e"
 #: /views/macro_middleground.pt:15
@@ -5488,7 +5517,7 @@ msgid "publish now"
 msgstr "Jetzt veröffentlichen"
 
 #: /views/macro_middleground.pt:76 /views/edit/tab_preview.pt:54
-#: /views/edit/VersionedContent/macro_tab_edit.pt:55
+#: /views/edit/VersionedContent/macro_tab_edit.pt:59
 msgid "publish this document: alt-p"
 msgstr "Dieses Dokument publizieren: alt-p"
 
