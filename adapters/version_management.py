@@ -51,11 +51,7 @@ class VersionManagementAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionIds')
     def getVersionIds(self):
-        objects = self.context.objectValues()
-        ret = []
-        for object in objects:
-            if IVersion.isImplementedBy(object):
-                ret.append(object.id)
+        ret = [v.id for v in self.getVersions()]
         return ret
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
