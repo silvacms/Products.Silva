@@ -161,3 +161,10 @@ class ILanguageProvider(Interface):
 
     def getPreferredLanguage():
         """gets the preferred language"""
+
+class IPath(Interface):
+    def pathToUrl(path):
+        """convert a physical path to a URL"""
+
+    def urlToPath(url):
+        """convert a HTTP URL to a physical path"""

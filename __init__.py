@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.136 $
+# $Revision: 1.137 $
 # Zope
 import zLOG
 # Silva
@@ -243,7 +243,8 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch', 'adapters', 'version_management')
+    return name in ('mangle', 'batch', 'adapters', 
+                        'version_management', 'path')
 
 from AccessControl import allow_module
 
@@ -254,6 +255,7 @@ allow_module('Products.Silva.adapters.version_management')
 allow_module('Products.Silva.adapters.archivefileimport')
 allow_module('Products.Silva.adapters.languageprovider')
 allow_module('Products.Silva.adapters.zipfileimport')
+allow_module('Products.Silva.adapters.path')
 allow_module('Products.Silva.roleinfo')
 allow_module('Products.Silva.i18n')
 
