@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.3.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.53 $
+CVS:        $Revision: 1.54 $
 
 Introduction
 ------------
@@ -81,6 +81,14 @@ Steps to take during a major Silva upgrade:
   refresh all installed Silva extensions as well as upgrade the Silva
   content that needs upgrading. Note that this will take a while if
   your site is large.
+
+Upgrading from Silva 1.3 to silva 1.4
+-------------------------------------
+
+A field has been added to the silva-extra metadata-set. To ensure that 
+existing content keeps working, go to service_metdata in services, remove
+the silva-extra metadataset, go to service extensions and click refresh
+on Silva.
 
 Upgrading from Silva 1.2 to silva 1.3
 -------------------------------------

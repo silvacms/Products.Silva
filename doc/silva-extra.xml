@@ -767,4 +767,62 @@
      <value key="index_type">Cosine Measure</value>
    </index_args>
   </metadata_element>
+  <metadata_element id="hide_from_tocs">
+    <index_type>TextIndex</index_type>
+    <index_p>0</index_p>
+    <field_type>RadioField</field_type>
+    <acquire_p>0</acquire_p>
+    <read_only_p>0</read_only_p>
+    <read_guard>
+      <roles></roles>
+      <permissions></permissions>
+      <expr></expr>
+    </read_guard>
+    <write_guard>
+      <roles></roles>
+      <permissions></permissions>
+      <expr></expr>
+    </write_guard>
+    <field_values>
+      <value key="description" type="str" value="If this is enabled, this content (and anything it contains!) will not show up in tables of content." />
+      <value key="first_item" type="int" value="0" />
+      <value key="title" type="str" value="Hide from Tables of Content" />
+      <value key="default" type="str" value="Do Not Hide" />
+      <value key="items" type="list" value="[('Hide', 'Hide'), ('Do Not Hide', 'Do Not Hide')]" />
+      <value key="required" type="int" value="1" />
+      <value key="enabled" type="int" value="1" />
+      <value key="whitespace_preserve" type="int" value="0" />
+      <value key="external_validator" type="str" value="" />
+      <value key="extra_item" type="str" value="" />
+      <value key="unicode" type="int" value="1" />
+      <value key="css_class" type="str" value="" />
+      <value key="hidden" type="int" value="0" />
+      <value key="alternate_name" type="str" value="" />
+      <value key="orientation" type="str" value="vertical" />
+    </field_values>
+    <field_tales>
+      <value key="description"></value>
+      <value key="first_item"></value>
+      <value key="title"></value>
+      <value key="default"></value>
+      <value key="css_class"></value>
+      <value key="required"></value>
+      <value key="enabled"></value>
+      <value key="external_validator"></value>
+      <value key="extra_item"></value>
+      <value key="unicode"></value>
+      <value key="whitespace_preserve"></value>
+      <value key="hidden"></value>
+      <value key="items"></value>
+      <value key="alternate_name"></value>
+      <value key="orientation"></value>
+    </field_tales>
+    <field_messages>
+      <message name="external_validator_failed">The input failed the external validator.</message>
+      <message name="required_not_found">Input is required but no input given.</message>
+      <message name="unknown_selection">You selected an item that was not in the list.</message>
+    </field_messages>
+    <index_args>
+    </index_args>
+  </metadata_element>
 </metadata_set>

@@ -456,12 +456,14 @@ class IContainer(ISilvaObject, IPublishable):
 
     def get_public_tree():
         """Get tree of all publishables that are public.
+        and not hidden from tocs
         PUBLIC
         """
         pass
 
     def get_public_tree_all():
         """Get tree of all publishables that are public,
+        and not hidden from tocs
         including the publishables in subpublications.
         PUBLIC
         """

@@ -58,7 +58,7 @@ if obj != root:
                             'description': parent.get_title()}
     items.append(data)
 
-for indent, child in obj.get_public_tree(0):
+for indent, child in obj.get_tree(0):
     if child.implements_container():
         path = '/'.join(child.getPhysicalPath())
         data = {'id': path,
