@@ -400,11 +400,12 @@ msgstr "e-mail contact"
 msgid ""
 "If this is enabled, this content (and anything it contains!) will not show "
 "up in tables of content."
-msgstr ""
+msgstr "Indien verbergen is ingeschakeld, wordt deze inhoud (en alles wat er"
+"in zit!) niet getoond in inhoudsopgaves."
 
 #: /doc/silva-extra.xml:789
 msgid "hide from tables of content"
-msgstr ""
+msgstr "verbergen voor inhoudsopgaves"
 
 #: /doc/silva-extra.xml:94
 msgid "keywords"
@@ -423,6 +424,8 @@ msgid ""
 "${listing_body}<br /> p &nbsp; Select list for position number<br /> m "
 "&nbsp; move"
 msgstr ""
+"${listing_body}<br /> p &nbsp; Lijst selecteren voor positie nummer<br /> m "
+"&nbsp; verplaatsen"
 
 #: /globals/accesskeys.pt:104
 msgid "Listing body"
@@ -434,6 +437,9 @@ msgid ""
 "&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
 "paste<br /> g &nbsp; paste as ghost"
 msgstr ""
+"${listing_footer}<br /> a &nbsp; alles selecteren<br /> r &nbsp; hernoemen<br /> d "
+"&nbsp; verwijderen<br /> x &nbsp; knippen<br /> c &nbsp; kopieren<br /> v &nbsp; "
+"plakken<br /> g &nbsp; als ghost plakken"
 
 #: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
 msgid "Listing footer"
@@ -453,7 +459,7 @@ msgstr "Publicatiescherm (map)"
 
 #: /globals/accesskeys.pt:129
 msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
-msgstr ""
+msgstr "${listing_header}<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
 
 #: /globals/accesskeys.pt:135
 msgid ""
@@ -463,6 +469,11 @@ msgid ""
 "approve for later<br /> u &nbsp; update settings<br /> p &nbsp; publish "
 "now<br />"
 msgstr ""
+"${listing_footer}<br /> a &nbsp; alles selecteren<br /> n &nbsp; nieuwe "
+"versies aanmaken<br /> j &nbsp; weigeren (verzoek om goedkeuring)<br /> v &nbsp; intrekken "
+"(verzoek om goedkeuring)<br /> c &nbsp; sluiten (publieke versie)<br /> l &nbsp; "
+"goedkeuren voor later<br /> u &nbsp; instellingen bijwerken<br /> p &nbsp; nu publiceren"
+"<br />"
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
@@ -470,17 +481,19 @@ msgstr "Scherm toevoegen"
 
 #: /globals/accesskeys.pt:149
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
-msgstr ""
+msgstr "c &nbsp; annuleren<br /> a &nbsp; toevoegen<br /> e &nbsp; toevoegen en bewerken/ingaan"
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
-msgstr ""
+msgstr "Editorscherm"
 
 #: /globals/accesskeys.pt:157
 msgid ""
 "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
 "preview<br /> p &nbsp; publish now<br />"
 msgstr ""
+"( &nbsp; formulier-editor<br /> ) &nbsp; Kupu-editor<br /> ; &nbsp; publiek "
+"voorbeeld<br /> p &nbsp; nu publiceren<br />"
 
 #: /globals/accesskeys.pt:165
 msgid ""
@@ -489,6 +502,10 @@ msgid ""
 "numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
 "list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
 msgstr ""
+"${kupu_editor}<br /> b &nbsp; vetgedrukt<br /> i &nbsp; schuingedrukt<br /> u &nbsp; "
+"onderstreept<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # &nbsp; "
+"genummerde lijst<br /> * &nbsp; niet genummerde lijst<br /> = &nbsp; definitielijst"
+"<br /> z &nbsp; ongedaan maken<br /> y &nbsp; opnieuw<br /> h &nbsp; html-bron<br />"
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
@@ -500,10 +517,13 @@ msgid ""
 "&nbsp; save and insert<br /> tab Use your tab key to edit without using the "
 "mouse. Shift-tab goes backwards."
 msgstr ""
+"${forms_editor}<br /> s &nbsp; opslaan<br /> e &nbsp; opslaan en sluiten<br /> i "
+"&nbsp; opslaan en invoegen<br /> tab Gebruik de tab-toets om te bewerken zonder de "
+"muis te gebruiken. Shift-tab gaat terug."
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
-msgstr ""
+msgstr "Formulier-editor"
 
 #: /globals/accesskeys.pt:189
 msgid "Other screens"
@@ -620,7 +640,7 @@ msgstr "Silva bewerken"
 
 #: /globals/accesskeys.pt:230
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
-msgstr ""
+msgstr "Of, sla deze link &#8211; ${silva_edit} &#8211; op als een bookmark."
 
 #: /globals/accesskeys.pt:235
 msgid ""
@@ -628,12 +648,16 @@ msgid ""
 "pathname=(window.location.pathname +'/manage_main').replace(/\\/\\//,'/')\" "
 "name=\"manage\">manage...</a> bookmark."
 msgstr ""
+"Beheerders kunnen hetzelfde doen en een <a href=\"javascript:window.location."
+"pathname=(window.location.pathname +'/manage_main').replace(/\\/\\//,'/')\" "
+"name=\"manage\">beheren...</a> bookmark aanmaken."
 
 #: /globals/accesskeys.pt:239
 msgid ""
 "Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> for this trick."
-msgstr ""
+"Dank aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
+"rich</a> voor deze tip."
 
 #: /globals/accesskeys.pt:245
 msgid "Tip for Mozilla/Netscape users"
@@ -730,7 +754,7 @@ msgstr "Globale toetsen die altijd werken"
 
 #: /globals/accesskeys.pt:58
 msgid "The following access keys are available in every Silva screen."
-msgstr ""
+msgstr "De volgende sneltoetsen zijn in elk Silva-scherm beschikbaar."
 
 #: /globals/accesskeys.pt:62
 msgid ""
@@ -757,6 +781,9 @@ msgid ""
 "starting from one going up to five. You can navigate horizontally accross an "
 "item&#8217;s screens by using alt-1, alt-2, and so forth."
 msgstr ""
+"${changing_screens_with_tabs}<br /> De tabs hebben genummerde sneltoetsen, "
+"van 1 tot en met 5. Horizontaal binnen de schermen van een item navigeren "
+"is mogelijk door alt-1, alt-2, etc. te gebruiken."
 
 #: /globals/accesskeys.pt:73
 msgid ""
