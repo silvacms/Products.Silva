@@ -794,6 +794,12 @@ msgid ""
 "keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, "
 "alt-$, and alt-% (note that the characters resemble the number)."
 msgstr ""
+"Elke tab heeft een toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" alt="
+"\"tree\" />, het hoge boompje links. Die link leidt naar de top van de "
+"huidige publicatie, in dezelfde tab, of &#8216;ader&#8217;. De sneltoets "
+"is het shift-teken van het corresponderende cijfer (op een engels "
+"toetsenbord). Dus alt-!, alt-@, alt-#, "
+"alt-$, en alt-% (merk op dat de tekens op de nummers lijken.)"
 
 #: /globals/accesskeys.pt:76
 msgid ""
@@ -804,6 +810,12 @@ msgid ""
 "the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less "
 "than five tabs, you still add five to get the uplink key."
 msgstr ""
+"Rechts van elke tab staat een uplink <img src=\"up_level.gif\" height=\"9\" "
+"width=\"9\" alt=\"bush\" />, een kort boompje dat één niveau omhoog leidt binnen "
+"dezelfde ader. De sneltoetsen voor de uplinks zijn de overgebleven cijfers (tel "
+"vijf op bij de sneltoets voor het tabje). In een scherm met vijf tabs zijn "
+"de uplinks alt-6, alt-7, alt-8, alt-9, en alt-0. Indien er minder dan vijf "
+"tabs zijn, moet er nog steeds vijf opgeteld worden voor de uplink-sneltoets."
 
 #: /globals/accesskeys.pt:80
 msgid "${footer_page_info_row}<br /> : &nbsp; See public page<br />"
@@ -838,6 +850,8 @@ msgid ""
 "${listing_header}<br /> n &nbsp; new<br /> s &nbsp; select list for a new "
 "object<br /> i &nbsp; import<br /> e &nbsp; export"
 msgstr ""
+"${listing_header}<br /> n &nbsp; nieuw<br /> s &nbsp; lijst selecteren voor een nieuw "
+"object<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
 
 #: /globals/accesskeys.pt:96 /globals/accesskeys.pt:130
 msgid "Listing header"
@@ -869,7 +883,7 @@ msgstr ""
 
 #: /globals/reference.pt:10
 msgid "Silva Reference"
-msgstr ""
+msgstr "Silva Referentie"
 
 #: /globals/reference.pt:101
 msgid ""
@@ -900,10 +914,12 @@ msgid ""
 "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
 "2005 Infrae. All rights reserved."
 msgstr ""
+"<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+"2005 Infrae. Alle rechten voorbehouden."
 
 #: /globals/reference.pt:39
 msgid "${Silva} &#8211; independent content management"
-msgstr ""
+msgstr "${Silva} &#8211; onafhankelijk content management"
 
 #: /globals/reference.pt:64
 msgid "Credits"
@@ -1863,7 +1879,7 @@ msgstr "status van &#xab;${title}&#xbb;"
 
 #: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
 msgid "A automatically has a published state."
-msgstr ""
+msgstr "A heeft automatisch de status 'gepubliceerd'."
 
 #: /views/edit/Asset/tab_subscriptions.pt:35
 #: /views/edit/Content/tab_subscriptions.pt:35
@@ -1872,6 +1888,9 @@ msgid ""
 "subscribe to a . Only documents that contain textual content, or folders "
 "that contain them, can be subscribed to."
 msgstr ""
+"Dit scherm heeft geen instellingen, omdat het niet mogelijk is om u te "
+"abonneren op een . U kunt zich alleen abonneren op documenten die "
+"tekstuele inhoud bevatten, en mappen met zulke documenten."
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
@@ -1986,7 +2005,7 @@ msgstr "Item om naar te verwijzen opzoeken: alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 msgid "miscellaneous settings: alt-e"
-msgstr ""
+msgstr "diverse instellingen: alt-e"
 
 # Default: "e"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
@@ -1995,7 +2014,7 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 msgid "s<u>e</u>ttings..."
-msgstr ""
+msgstr "inst<u>e</u>llingen..."
 
 # Default: "u"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
@@ -2004,11 +2023,11 @@ msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 msgid "s<u>u</u>bscriptions..."
-msgstr ""
+msgstr "<u>u</u> abonneren..."
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:64
 msgid "metadata ${for_public_version_of}"
-msgstr ""
+msgstr "metadata ${for_public_version_of}"
 
 #: /views/edit/Container/Publication/copy_layout_submit.py:12
 msgid "Layout copied"
@@ -2424,7 +2443,7 @@ msgstr "importeren..."
 #: /views/edit/Container/tab_edit.pt:116
 #: /views/edit/Container/tab_status.pt:87
 msgid "export to xml or convert for export: alt-e"
-msgstr ""
+msgstr "naar xml exporteren of converteren voor export: alt-e"
 
 #: /views/edit/Container/tab_edit.pt:116
 #: /views/edit/Container/tab_status.pt:87
@@ -2461,7 +2480,7 @@ msgstr "publicatie-acties"
 
 #: /views/edit/Container/tab_edit.pt:491
 msgid "close published items: alt-l"
-msgstr ""
+msgstr "gepubliceerde items sluiten: alt-l"
 
 #: /views/edit/Container/tab_edit.pt:491
 #: /views/edit/Container/tab_status.pt:372
@@ -3462,12 +3481,12 @@ msgstr "geen publicatie-tijdstip ingesteld"
 #: /views/edit/Container/tab_status_request_approval.py:86
 #: /views/edit/Container/tab_status_request_approval_now.py:80
 msgid "Request approval for: ${ids}"
-msgstr ""
+msgstr "Goedkeuring aanvragen voor: ${ids}"
 
 #: /views/edit/Container/tab_status_request_approval.py:91
 #: /views/edit/Container/tab_status_request_approval_now.py:85
 msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
-msgstr ""
+msgstr "<span class=\"error\">Geen verzoek tot goedkeuring voor: ${ids}</span>"
 
 #: /views/edit/Container/tab_status_revoke.py:15
 msgid "Nothing was selected, so no approval was revoked."
@@ -3695,7 +3714,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:49
 msgid "of public version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "van publieke versie van &#xab;${title}&#xbb;"
 
 #: /views/edit/VersionedContent/Link/edit.pt:72
 msgid "link url"
@@ -3885,7 +3904,7 @@ msgstr "publicatie-tijdstip"
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
 #: /doc/silva-extra.xml:453
 msgid "expiration time"
-msgstr ""
+msgstr "verlooptijd"
 
 #: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:567
 msgid "last author"
@@ -4025,7 +4044,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:150
 #: /views/edit/VersionedContent/tab_status_macros.pt:326
 msgid "day / month / year &nbsp;(23:59)"
-msgstr ""
+msgstr "dag / maand / jaar &nbsp;(23:59)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 msgid "access key: alt-i (some platforms)"
@@ -4065,7 +4084,7 @@ msgstr "<u>p</u>ublicatie tijdstip:"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:235
 msgid "access key: alt-n (some platforms)"
-msgstr ""
+msgstr "sneltoets: alt-n (sommige platformen)"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:24
 msgid "Publication time of public version"
@@ -4100,7 +4119,7 @@ msgstr "Leeg betekent: verloopt niet."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
 msgid "access key: alt-l"
-msgstr ""
+msgstr "sneltoets: alt-l"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:385
 msgid "request"
@@ -4133,11 +4152,11 @@ msgstr "aanvraag voor goedkeuring afwijzen"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:429
 msgid "access key: alt-j"
-msgstr ""
+msgstr "sneltoets: alt-j"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:438
 msgid "withdraw approval request"
-msgstr ""
+msgstr "verzoek om goedkeuring intrekken"
 
 # Default: "r"
 #: /views/edit/VersionedContent/tab_status_macros.pt:438
@@ -4155,7 +4174,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:481
 msgid "access key: alt-v"
-msgstr ""
+msgstr "sneltoets: alt-v"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:504
 msgid "revert to previous version"
@@ -4457,7 +4476,7 @@ msgstr "De 'ghost' is in een onbepaalde staat."
 #: /views/edit/hyperlink_lookup.pt:215
 #: /views/edit/Container/GhostFolder/tab_edit.pt:450
 msgid "metadata"
-msgstr ""
+msgstr "metadata"
 
 #: /views/edit/hyperlink_lookup.pt:235 /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:352
@@ -4604,7 +4623,7 @@ msgstr "&#134; overerfbaar"
 
 #: /views/edit/macro_edit_metadata.pt:43 /views/edit/macro_edit_metadata.pt:48
 msgid "of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "van &#xab;${title}&#xbb;"
 
 #: /views/edit/macro_edit_metadata.pt:74 /views/edit/macro_view_metadata.pt:57
 msgid "metadata set"
@@ -5108,10 +5127,12 @@ msgid ""
 "The addables settings can only be changed on Silva Publications. A "
 "doesn&#8217;t have that capability."
 msgstr ""
+"De toevoeg-instellingen kunnen alleen veranderd worden voor Silva Publicaties. Een "
+"heeft die moeglijkheid niet."
 
 #: /views/edit/tab_metadata.pt:58
 msgid "${for_approved_version_of_title}"
-msgstr ""
+msgstr "${for_approved_version_of_title}"
 
 #: /views/edit/tab_metadata.pt:80
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:67
@@ -5155,7 +5176,7 @@ msgstr ""
 #: /views/edit/tab_preview.pt:54
 #: /views/edit/VersionedContent/macro_tab_edit.pt:59
 msgid "publish&nbsp;now"
-msgstr ""
+msgstr "nu&nbsp;publiceren"
 
 #: /views/edit/tab_settings.pt:105
 msgid "convert to publication"
@@ -5210,13 +5231,15 @@ msgstr "instellingen voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_settings.pt:70
 msgid "container type"
-msgstr ""
+msgstr "type container"
 
 #: /views/edit/tab_settings.pt:76
 msgid ""
 "This Ghost Folder can be converted to a normal Publication or Folder. All "
 "ghosted content will be duplicated and can then be edited."
 msgstr ""
+"Deze Ghost-map kan naar een normale publicatie of map geconverteerd worden. Alle "
+"ghost-inhoud wordt dan gedupliceerd en kan daarna bewerkt worden."
 
 #: /views/edit/tab_settings.pt:82
 msgid ""
@@ -5231,6 +5254,8 @@ msgid ""
 "This Silva Publication can be converted to a Silva Folder (may take awhile "
 "if it&#8217;s large)."
 msgstr ""
+"Deze Silva Publicatie kan geconverteerd worden naar een Silva map (kan even duren "
+"voor een grote publicatie)."
 
 #: /views/edit/tab_settings.pt:97
 msgid "change container type to a folder: alt-f"
@@ -5272,7 +5297,7 @@ msgstr "Van dit type inhoud kunnen geen email-notificaties verstuurd worden."
 
 #: /views/edit/tab_subscriptions.pt:146
 msgid "subscriptions icon"
-msgstr ""
+msgstr "abonneer-icoon"
 
 #: /views/edit/tab_subscriptions.pt:154
 msgid "Subscriptions info"
@@ -5308,7 +5333,7 @@ msgstr "Geen andere abonnementen op dit object."
 #: /views/edit/Asset/tab_subscriptions.pt:29
 #: /views/edit/Content/tab_subscriptions.pt:29
 msgid "manage subscriptions for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "abonemmenten beheren voor &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_subscriptions_form.form:27
 msgid ""
@@ -5559,11 +5584,11 @@ msgstr "nu publiceren"
 #: /views/macro_middleground.pt:76 /views/edit/tab_preview.pt:54
 #: /views/edit/VersionedContent/macro_tab_edit.pt:59
 msgid "publish this document: alt-p"
-msgstr ""
+msgstr "dit document publiceren: alt-p"
 
 #: /views/macro_nonscreen.pt:53
 msgid "&#xab;${title}&#xbb;"
-msgstr ""
+msgstr "&#xab;${title}&#xbb;"
 
 #: /views/macro_tabs.pt:21
 msgid "Silva info: alt-|"
