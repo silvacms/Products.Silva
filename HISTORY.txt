@@ -17,6 +17,9 @@ Silva changes
         of content, that content (and what it contains) will not show up in
         tables of content.
 
+      - Added a link_type attribute to Link (Version) objects. Adding 
+        relative links is now possible.
+
   1.3
 
     Features added
