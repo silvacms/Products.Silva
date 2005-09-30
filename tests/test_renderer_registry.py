@@ -73,8 +73,8 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
             ['(Default)',
              OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
-             'Basic XSLT Renderer (No Title)',
-             'Images on Right'],
+             'Images on Right',
+             'Without Title Renderer (Same as basic but without the document title)'],
             reg.getFormRenderersList('Silva Document'))
 
     def test_getRendererNamesForMetaType(self):
@@ -84,8 +84,8 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             [OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
-             'Basic XSLT Renderer (No Title)',
-             'Images on Right'],
+             'Images on Right',
+             'Without Title Renderer (Same as basic but without the document title)'],
             reg.getRendererNamesForMetaType('Silva Document'))
         
     def test_doesRendererExistForMetaType(self):
