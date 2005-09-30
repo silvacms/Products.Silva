@@ -29,7 +29,7 @@ def registerDefaultRenderers():
 
     reg.registerRenderer(
         'Silva Document',
-        'Basic XSLT Renderer (No Title)',
+        'Without Title Renderer (Same as basic but without the document title)',
         NoTitleRenderer())
         
     reg.registerRenderer(
