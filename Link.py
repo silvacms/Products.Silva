@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 
 # python
 import re
@@ -70,7 +70,7 @@ InitializeClass(Link)
 manage_addLinkForm = PageTemplateFile("www/linkAdd", globals(),
                                        __name__='manage_addLinkForm')
  
-def manage_addLink(self, id, title, url, REQUEST=None):
+def manage_addLink(self, id, title, url, link_type='absolute', REQUEST=None):
     """Add a Link."""
     if not mangle.Id(self, id).isValid():
         return
@@ -79,7 +79,7 @@ def manage_addLink(self, id, title, url, REQUEST=None):
     object = getattr(self, id)
     # add first version
     object.manage_addProduct['Silva'].manage_addLinkVersion(
-        '0', title, url)
+        '0', title, url, link_type=link_type)
     object.create_version('0', None, None)
     add_and_edit(self, id, REQUEST)
     return ''
@@ -91,11 +91,14 @@ class LinkVersion(CatalogedVersion):
 
     __implements__ = IVersion
 
-    def __init__(self, id, url):
+    _link_type = 'absolute'
+    
+    def __init__(self, id, url, link_type='absolute'):
         LinkVersion.inheritedAttribute('__init__')(self,
                                                    id, 'not the real title')
+        self._link_type = link_type
         self.set_url(url)
-
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_url')
     def get_url(self):
         return self._url
@@ -126,7 +129,7 @@ class LinkVersion(CatalogedVersion):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        if not self.is_valid_url(url):
+        if self._link_type == 'absolute' and not self.is_valid_url(url):
             url = 'http://' + url
         self._url = url
 
@@ -136,9 +139,9 @@ manage_addLinkVersionForm = PageTemplateFile(
     "www/linkversionAdd", globals(),
     __name__='manage_addLinkVersionForm')
                                                                                 
-def manage_addLinkVersion(self, id, title, url, REQUEST=None):
+def manage_addLinkVersion(self, id, title, url, link_type='absolute', REQUEST=None):
     """Add a Link version."""
-    object = LinkVersion(id, url)
+    object = LinkVersion(id, url, link_type=link_type)
     self._setObject(id, object)
     self._getOb(id).set_title(title)
     add_and_edit(self, id, REQUEST)
