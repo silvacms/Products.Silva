@@ -20,6 +20,14 @@ Silva changes
       - Added a link_type attribute to Link (Version) objects. Adding 
         relative links is now possible.
 
+    Bugs Fixed
+
+      - When content without a maintitle was exported, it could not be
+        imported again.
+
+      - Image tags in exported silva documents had their src attribute 
+        converted to an absolute url on export.
+
   1.3
 
     Features added

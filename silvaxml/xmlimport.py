@@ -162,7 +162,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         return self._metadata_set
 
     def getMetadata(self, set, key):
-        return self._metadata[set][key]
+        return self._metadata[set].get(key)
 
     def getWorkflowVersion(self, version_id):
         return self._parent_handler._workflow[version_id]
