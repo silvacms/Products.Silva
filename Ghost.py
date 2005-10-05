@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.96 $
+# $Revision: 1.97 $
 
 # Zope
 from OFS import SimpleItem
@@ -15,6 +15,7 @@ from Version import CatalogedVersion
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 import SilvaPermissions
+from adapters.path import PathAdapter
 # misc
 from helpers import add_and_edit
 import urlparse
@@ -95,9 +96,9 @@ class GhostBase:
     def set_haunted_url(self, content_url):
         """Set content url.
         """
-        # simplify url
-        scheme, netloc, path, parameters, query, fragment = \
-                urlparse.urlparse(content_url)
+        pad = PathAdapter(self.REQUEST)
+        path = pad.urlToPath(content_url)
+        
         path_elements = path.split('/')
 
         # Cut off 'edit' and anything after it
@@ -108,30 +109,18 @@ class GhostBase:
         else:
             path_elements = path_elements[:idx]
 
-        content_url = '/'.join(path_elements)
-
         if path_elements[0] == '':
-            # absolute, so traverse relatively from silva root
-            traversal_root = silva_root = self.get_root()
-            silva_root_url = '/' + silva_root.absolute_url(1)
-
-            if not silva_root_url.endswith('/'):
-                silva_root_url = silva_root_url + '/'            
-
-            # Cut the 'silva root url' part off from the content url.
-            # This will result in a relative (to the silva root) path
-            # to the object            
-            if content_url.startswith(silva_root_url):
-                # replace only first occurence
-                content_url = content_url.replace(silva_root_url, '', 1)
+            traversal_root = self.get_root()
         else:
-            # relative, so traverse from ghost's container:
             traversal_root = self.get_container()
 
         # Now resolve it...
-        target = traversal_root.unrestrictedTraverse(content_url, None)
+        target = traversal_root.unrestrictedTraverse(path_elements, None)
         if target is None:
-            self._content_path = path_elements
+            
+            (scheme, netloc, path, parameters, query, fragment) = \
+                                            urlparse.urlparse(content_url)
+            self._content_path = path.split('/')
         else:
             # ...and get physical path for it
             self._content_path = target.getPhysicalPath()
@@ -146,8 +135,10 @@ class GhostBase:
         object = self.get_root().unrestrictedTraverse(self._content_path, None)
         if object is None:    
             return '/'.join(self._content_path)
-        else:
-            return '/' + object.absolute_url(1)
+
+        pad = PathAdapter(self.REQUEST)
+        url = pad.pathToUrlPath('/'.join(object.getPhysicalPath()))
+        return url
         
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunted_path')

@@ -7,17 +7,27 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global vein string:hyperlink;"
+  tal:define="global vein string:contents;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_no_tabs/macros/master">
+<metal:block fill-slot="script">
+  <script type="text/javascript" tal:attributes="src here/reference.js/absolute_url">
+  </script>
+</metal:block>
 <metal:block fill-slot="main"
   tal:define="
-    default_document model/get_default;
-    default_doc_list python: test(default_document, [default_document], []);
-    publishables python: default_doc_list + model.get_ordered_publishables();
-    assets model/get_assets;asset_context request/asset_context | request/SESSION/asset_context | string:/;
-    dummy python: request.SESSION.set('asset_context', asset_context);
+    objects python:model.get_tree();
+    silva_permissions here/get_silva_permissions;
+    filter request/filter | request/SESSION/filter | python:[];
+    show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
+    obj_context request/obj_context | request/SESSION/obj_context | string:/;
+    folder_context request/folder_context | request/SESSION/folder_context | string:/;
+    dummy python: request.SESSION.set('filter', filter);
+    dummy python: request.SESSION.set('obj_context', obj_context);
+    dummy python: request.SESSION.set('folder_context', folder_context);
+    pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
+    
 ">
 
 <table class="columns columns2">
@@ -26,31 +36,38 @@
       <tal:block replace="nothing">
         _____________________ sidebar _____________________
       </tal:block>
-      <td class="left"
-        style="width:25%; padding:0;">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-          <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'hyperlink_lookup', vein)" />
-          </metal:fill-slot>
-        </metal:use-macro>
-      </td>
+        <td class="left" style="width:25%; padding:0;">
+          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'object_lookup?filter=%s&amp;show_add=%s' % (filter, show_add), vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
+        </td>
 
-      <tal:block replace="nothing">
-        _____________________ main subtable _____________________
-      </tal:block>
-      <td class="main"
-        style="width:75%; padding:0;">
+        <tal:block replace="nothing">
+          _____________________ main subtable _____________________
+        </tal:block>
+        <td class="main"
+          style="width:75%; padding:0;">
 
         <table class="listing"
           style="margin:0;"
-          id="sortable">
+          id="sortable"
+          tal:define="
+            ret python:here.object_lookup_get_objects(filter, int(show_add));
+            default_document python: ret[0];
+            publishables python: ret[1];
+            assets python: ret[2];
+            addable_types python: ret[3];
+            global first_checked python:False;
+            ">
           <thead>
             <tal:block replace="nothing">
               ______________ vein + title row ______________
             </tal:block>
             <tr>
               <td class="top"
-                colspan="5">
+                colspan="6">
                 <h2 tal:attributes="title string:id: ${model/id}">
                   <img tal:replace="structure python:view.render_icon(model)" />
                   &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
@@ -62,42 +79,51 @@
               ______________ top controls row ______________
             </tal:block>
             <tr class="top-controls">
-              <td class="align-right"
-                colspan="5">
+              <td colspan="6">
+                <div style="float: left;"
+                    tal:condition="python: may_change_content and addable_types">
+                  <input class="transport"
+                    name="add_object:method"
+                    type="submit"
+                    value="new..."
+                    title="add a new item - alt-n"
+                    accesskey="n"
+                    tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
+                    i18n:attributes="value;title;accesskey new_accesskey"
+                  />
+                  <label for="meta_type" 
+                    title="access key: alt-s" 
+                    accesskey="s"
+                    i18n:attributes="title;accesskey select_new_item_accesskey"
+                  >
+                  </label>
+                  <select class="transport"
+                            name="meta_type"
+                            id="meta_type"
+                            title="select a new item: alt-s"
+                            tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
+                            i18n:attributes="title"
+                      >
+                    <option value="None" i18n:translate="">
+                      select:
+                    </option>
+                    <tal:block tal:repeat="addable model/get_silva_addables">
+                      <option tal:condition="python:here.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
+                        tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                        tal:attributes="value addable/name" />
+                    </tal:block>
+                  </select>
+                  <input type="hidden"
+                    name="lookup_mode:int"
+                    value="1"
+                  />
+                </div>
               </td>
             </tr>
           </thead>
-
-          <script language="JavaScript">
-            <!--
-            function setReference() {
-            doc = document.all ? document.all : document;
-            l = doc.mumble_form.mumble.length;
-            if (l) {
-            for (i=0; i<l; i++) {
-            if (doc.mumble_form.mumble[i].checked) {
-            reference = doc.mumble_form.mumble[i];
-            break;
-            }
-            }
-            } else {
-            // Just one radio button available.
-            // So element itself and not a NodeList returned *sigh*.
-            reference = doc.mumble_form.mumble;
-            }
-            // Split from value attribute, since NS4 does not know of a id attribute
-            retrieved = reference.value;
-            splitpos = retrieved.indexOf('||');
-            id = retrieved.substring(0, splitpos)
-            value = retrieved.substring(splitpos + 2, retrieved.length);
-            // Send back id and reference to calling window
-            opener.insertAssetReference(id, value, self);
-            }
-            //-->
-          </script>
-
-          <form name="mumble_form"
-            id="mumble_form">
+          
+          <form name="objectform" id="objectform" action="." method="POST"
+                onsubmit="return false">
             <tbody>
               <tal:block replace="nothing">
                 ______________ listing header ______________
@@ -134,34 +160,44 @@
                 ______________ default + publishables ______________
               </tal:block>
               <tal:block
-                repeat="item publishables">
+                repeat="item python: default_document and [default_document] + publishables or publishables">
                 <tal:block define="
                   is_default python: item is default_document;
                   item_url item/absolute_url;
-                  identifier python:'%s||%s' % (item.id, mangle.Path.fromObject(asset_context, item));
+                  id item/id;
+                  title item/get_title_editable;
+                  path python: pathadapter.pathToUrlPath(
+                                  mangle.Path.fromObject(obj_context, item));
                   status_style python:item.get_object_status()[1];
-                  oddrow repeat/item/odd">
+                  oddrow repeat/item/odd;
+                  checked not: first_checked;
+                  global first_checked python: True;
+                  ">
                   <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
                     <tal:block replace="nothing">
                       _______ checkbox + position cell _______
                     </tal:block>
                     <td class="listing-left">
                       <input type="radio"
-                        name="mumble"
+                        name="object"
                         tal:attributes="
-                          value identifier;
-                          id identifier;"
+                          value path;
+                          id id;
+                          lookup:id id;
+                          lookup:title title;
+                          checked checked;
+                          "
                       />
                       <label 
                         tal:condition="default_document"
                         tal:content="repeat/item/index"
-                        tal:attributes="for identifier">
+                        tal:attributes="for id">
                         # with default doc, starts at 0
                       </label>
                       <label 
                         tal:condition="not: default_document"
                         tal:content="repeat/item/number"
-                        tal:attributes="for identifier">
+                        tal:attributes="for id">
                         # without default doc, starts at 1
                       </label>
                     </td>
@@ -171,7 +207,7 @@
                     <td>
                       <label style="text-transform:none;"
                         tal:attributes="
-                          for identifier;
+                          for id;
                           title string:choose this ${item/meta_type};
                           ">
                         <img tal:replace="structure python:view.render_icon(item)" />
@@ -267,11 +303,14 @@
                 <tal:block define="
                   asset_url asset/absolute_url;
                   oddrow repeat/asset/odd;
-                  identifier python:'%s||%s' % (asset.id, mangle.Path.fromObject(asset_context, asset));
+                  id asset/id;
+                  title asset/get_title;
+                  path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(obj_context, asset));
+                  checked not: first_checked;
+                  global first_checked python: True;
                   ">
                   <tr 
-                    tal:define="title python:(asset.get_title());
-                                show_top_border repeat/asset/start;"
+                    tal:define="show_top_border repeat/asset/start;"
                     tal:attributes="class python:oddrow and 'odd' or 'even';
                                     style python:show_top_border and 'border-top: 1px solid #77858c' or nothing">
                     <tal:block replace="nothing">
@@ -279,14 +318,18 @@
                     </tal:block>
                     <td class="listing-left">
                       <input type="radio"
-                        name="mumble"
+                        name="object"
                         tal:attributes="
-                          value identifier;
-                          id identifier;"
+                          id id;
+                          lookup:id id;
+                          lookup:title title;
+                          value path;
+                          checked checked;
+                          "
                       />
                       <label 
                         tal:condition="default_document"
-                        tal:attributes="for identifier"
+                        tal:attributes="for id"
                         i18n:translate="">
                         &#8211;
                       </label>
@@ -297,7 +340,7 @@
                     <td>
                       <label style="text-transform:none;"
                         tal:attributes="
-                          for identifier;
+                          for id;
                           title string:choose this ${asset/meta_type};
                           ">
                         <img tal:replace="structure python:view.render_icon(asset)" />
@@ -344,41 +387,49 @@
                       unknown
                     </td>
                   </tr>
+
                 </tal:block>
               </tal:block>
             </tbody>
           </form>
+
 
           <tfoot>
             <tal:block replace="nothing">
               ______________ controls ______________
             </tal:block>
             <tr class="controls">
-              <td class="align-right"
-                colspan="5">
-                <input class="cancel"
-                  style="float:left;"
-                  type="button"
-                  name="cancel"
-                  value="cancel"
-                  title="cancel operation: alt-c"
-                  accesskey="c"
-                  onclick="window.close();return false;"
-                  i18n:attributes="title;value;accesskey cancel_accesskey"
+             <td class="align-right"
+               colspan="5">
+               <input class="cancel"
+                 style="float:left;"
+                 type="button"
+                 name="cancel"
+                 value="cancel"
+                 title="cancel operation: alt-c"
+                 accesskey="c"
+                 i18n:attributes="title;value;accesskey cancel_accesskey"
+                 onclick="window.close();return false;"
                 />
-                <input class="transport"
-                  type="button"
-                  name="place"
-                  value="place reference..."
-                  title="insert a reference to this asset: alt-p"
-                  accesskey="p" 
-                  onclick="setReference();return false;" 
-                  tal:condition="python: publishables or assets"
-                  i18n:attributes="title;value;accesskey place_reference_accesskey"
+               <input class="transport"
+                 type="button"
+                 name="place"
+                 value="place reference..."
+                 title="insert a reference to this asset: alt-p"
+                 accesskey="p"
+                 onclick="window.reference.setReference(
+                              document.getElementById('objectform'), 
+                              'object'); return false;" 
+                 tal:condition="python: publishables or assets or default"
+                 i18n:attributes="title;value;accesskey
+                 place_reference_accesskey"
                 />
-              </td>
+             </td>
             </tr>
           </tfoot>
+
+
+
         </table>
 
       </td>

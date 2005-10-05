@@ -6,12 +6,12 @@ model = context.REQUEST.model
 view = context
 REQUEST = context.REQUEST
 
-mode_asset = REQUEST.get('mode_asset', 0)
+lookup_mode = REQUEST.get('lookup_mode', 0)
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
-    if mode_asset:
-        return view.asset_lookup()
+    if lookup_mode:
+        return view.object_lookup()
     return view.tab_edit()
 
 # validate form
@@ -58,8 +58,8 @@ object = getattr(model, id)
 # update last author info in new object
 object.sec_update_last_author_info()
 
-if mode_asset:
-    return view.asset_lookup()
+if lookup_mode:
+    return view.object_lookup()
 
 # now go to tab_edit in case of add and edit, back to container if not.
 if REQUEST.has_key('add_edit_submit'):

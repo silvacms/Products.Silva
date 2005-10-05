@@ -12,6 +12,11 @@
     "
   i18n:domain="silva">
 <metal:block use-macro="here/macro_tab_edit/macros/editor">
+<metal:block fill-slot="script">
+  <script type="text/javascript" 
+            tal:attributes="src here/reference.js/absolute_url">
+  </script>
+</metal:block>
 
 <metal:block fill-slot="editor_content">
 

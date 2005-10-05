@@ -10,10 +10,15 @@
   tal:define="
     global vein string:add;
     global active_tab string:tab_edit;
-    global mode_asset request/mode_asset | python:0;
-    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
+    lookup_mode request/lookup_mode | python:0;
+    use_macro python: (lookup_mode and [here.macro_no_tabs] or [here.macro_index])[0]"
   i18n:domain="silva">
-<metal:block metal:use-macro="use_macro/macros/master">
+<metal:block use-macro="use_macro/macros/master">
+<metal:block fill-slot="script">
+  <script type="text/javascript" 
+            tal:attributes="src here/reference.js/absolute_url">
+  </script>
+</metal:block>
 <metal:block fill-slot="main">
 <script type="text/javascript" 
   tal:content="structure python:here.focus_editor('field_object_id')" />
@@ -21,8 +26,8 @@
 <div class="focus-rectangle">
 <form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
-<input type="hidden" name="mode_asset:int" value="0"
-  tal:attributes="value mode_asset" />
+<input type="hidden" name="lookup_mode:int" value="0"
+  tal:attributes="value lookup_mode" />
 <table class="listing">
 <thead>
   <tr>
@@ -57,15 +62,20 @@
           tal:condition="field/is_required">*</span>
       </tal:block>
       <tal:block tal:condition="python:field.getId() == 'content_url'">
-        <script type="text/javascript"
-           tal:content="structure here/reference.js" />
         <input class="transport"
           type="button"
           value="reference..."
           title="find the content this ghost should refer to: alt-r"
           accesskey="r"
           tal:define="asset_context model"
-          tal:attributes="onclick python:here.reference_js(); url python:here.reference_url(asset_context)"
+          tal:attributes="onclick string: reference.getReference(
+                                    function(path, id, title) {
+                                      document.getElementsByName(
+                                        'field_content_url'
+                                      )[0].value = path;;
+                                    },
+                                    '${asset_context/absolute_url}',
+                                    'Content', true)"
           i18n:attributes="value;title;accesskey reference_accesskey"
         /><span class="warning"
           tal:condition="field/is_required">*</span>
@@ -104,7 +114,7 @@
         accesskey="s"
         i18n:attributes="value;title;accesskey save_accesskey"
       />
-      <tal:condition condition="python: not mode_asset" >
+      <tal:condition condition="python: not lookup_mode" >
       <!--XXX: Here be i18n issues:-->
       <input class="button"
         type="submit"

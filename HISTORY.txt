@@ -20,6 +20,10 @@ Silva changes
       - Added a link_type attribute to Link (Version) objects. Adding 
         relative links is now possible.
 
+      - Browsing to objects (for e.g. link and image lookups) has been 
+        refactored, now there's only a single implementation of the lookup
+        window, and somewhat cleaner HTML.
+
     Bugs Fixed
 
       - When content without a maintitle was exported, it could not be

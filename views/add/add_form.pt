@@ -10,8 +10,8 @@
   tal:define="
     global vein string:add;
     global active_tab string:tab_edit;
-    global mode_asset request/mode_asset | python:0;
-    global use_macro python: (mode_asset and [here.macro_no_tabs] or [here.macro_index])[0]"
+    global lookup_mode request/lookup_mode | python:0;
+    global use_macro python: (lookup_mode and [here.macro_no_tabs] or [here.macro_index])[0]"
   i18n:domain="silva">
 
 <metal:block metal:use-macro="use_macro/macros/master">
@@ -25,8 +25,8 @@
   name="focusbox"
   enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
-<input type="hidden" name="mode_asset:int" value="0"
-  tal:attributes="value mode_asset" />
+<input type="hidden" name="lookup_mode:int" value="0"
+  tal:attributes="value lookup_mode" />
 <table class="listing">
 <thead>
   <tr>
@@ -103,7 +103,7 @@
         accesskey="s"
         i18n:attributes="value;title;accesskey save_accesskey"
       />
-      <tal:condition condition="python: not mode_asset" >
+      <tal:condition condition="python: not lookup_mode" >
       <input class="button"
         type="submit"
         name="add_edit_submit"

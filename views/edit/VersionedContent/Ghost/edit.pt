@@ -69,15 +69,20 @@
 
       <tr class="even">
         <td class="align-right">
-          <script type="text/javascript"
-            tal:content="structure here/reference.js" />
           <input class="transport" 
             type="button" 
             value="reference..."
             title="Locate item to refer to: alt-r"
             accesskey="r"
             tal:define="asset_context python:here.get_start_container();"
-            tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Content&asset_context=%s\', \'_reference_\', \'form\', \'content_url\');;return false;;' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
+            tal:attributes="onclick string: reference.getReference(
+                                      function(path, id, title) {
+                                        document.getElementsByName(
+                                          'content_url'
+                                        )[0].value = path;;
+                                      },
+                                      '${asset_context/absolute_url}',
+                                      'Content', true)"
             i18n:attributes="value;title;accesskey locate_item_to_refer_to_accesskey"
             /><span class="warning">*</span>
         </td>

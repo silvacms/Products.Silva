@@ -64,6 +64,7 @@ function handle_default_action(element, event, action)
 }
 
 </script>
+<metal:block define-slot="script" />
 </head>
 <body tal:attributes="onload string:if (window.focus_editor) window.focus_editor()">
 

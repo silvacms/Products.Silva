@@ -1,6 +1,7 @@
 from urlparse import urlparse
 
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
+from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters.interfaces import IPath
@@ -19,13 +20,11 @@ class PathAdapter(adapter.Adapter):
     """
 
     __implements__ = IPath
-    security = ClassSecurityInfo()
+    __allow_access_to_unprotected_subobjects__ = True
 
     def __init__(self, request):
         self.request = request
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'urlToPath')
     def urlToPath(self, url):
         """convert a HTTP URL to a Zope path
 
@@ -41,9 +40,7 @@ class PathAdapter(adapter.Adapter):
         request = self.request
         return '/'.join(request.physicalPathFromURL(path))
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'pathToUrl')
-    def pathToUrl(self, path):
+    def pathToUrlPath(self, path):
         """convert a Zope physical path to a URL
 
             returns an absolute path relative from the HTTP virtual host
@@ -58,6 +55,11 @@ class PathAdapter(adapter.Adapter):
         url = request.physicalPathToURL(path.split('/'))
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
         return path
+
+InitializeClass(PathAdapter)
+
+def __allow_access_to_unprotected_subobjects__(name, value=None):
+    return name in ('getPathAdapter')
 
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getPathAdapter')

@@ -5,7 +5,8 @@ from Acquisition import aq_base
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
-from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
+from Products.Silva.interfaces import IVersionedContent, IContent, IContainer,\
+                    IAsset, IPublishable
 
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates
@@ -257,5 +258,108 @@ class ViewCode:
         if getattr(image, 'meta_type', None) != 'Silva Image':
             image = None
         return image
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'object_lookup_get_objects')
+    def object_lookup_get_objects(self, filter=[], show_add=False):
+        """Returns objects to be displayed for the lookup window
+            
+            filter: 'Asset', 'Content', a certain meta_type (string) or a 
+                        list of meta_types
+
+            show_add: whether or not to show the 'add' button (to add new 
+                        objects)
+
+            returns a tuple with 4 values:
+
+              default - can be None or refers to the default object (index)
+
+              publishables - an ordered list of publishable items
+
+              assets - a list of assets (ordered by id)
+
+              addables - a list of meta_types that are allowed to be added 
+                        to the page
+        """
+
+        model = self.REQUEST.model
+
+        default = None
+        ordered_publishables = []
+        assets = []
+        addables = []
+
+        if show_add:
+            all_addables = self.get_silva_addables()
+
+        if filter == 'Asset':
+            assets = model.get_assets()
+            if show_add:
+                addables = [a['name'] for a in all_addables if 
+                                IAsset.isImplementedByInstancesOf(
+                                    a['instance'])]
+        elif filter == 'Content':
+            default = model.get_default()
+            ordered_publishables = []
+            if default:
+                ordered_publishables.append(default)
+            ordered_publishables.extend(
+                [o for o in model.get_ordered_publishables() if 
+                    o.implements_content()]
+            )
+            if show_add:
+                addables = [a['name'] for a in all_addables if
+                                IContent.isImplementedByInstancesOf(
+                                    a['instance'])]
+        elif filter == 'Container':
+            ordered_publishables = [o for o in model.get_ordered_publishables() 
+                                      if o.implements_container()]
+            if show_add:
+                addables = [a['name'] for a in all_addables if 
+                                IContainer.isImplementedByInstancesOf(
+                                    a['instance'])]
+        elif filter == 'Publishable':
+            default = model.get_default()
+            ordered_publishables = []
+            if default:
+                ordered_publishables.append(default)
+            ordered_publishables.extend(model.get_ordered_publishables())
+            if show_add:
+                addables = [a['name'] for a in all_addables if
+                                IPublishable.isImplementedByInstancesOf(
+                                    a['instance'])]
+        else:
+            # get all objects using filter, then divide them the way they 
+            # should be returned
+            if not filter:
+                # return everything
+                default = model.get_default()
+                ordered_publishables = model.get_ordered_publishables()
+                assets = model.get_assets()
+                if show_add:
+                    addables = [a['name'] for a in all_addables]
+            else:
+                objects = model.objectValues(filter)
+                defaultobj = model.get_default()
+                if defaultobj and defaultobj in objects:
+                    default = defaultobj
+                for o in model.get_ordered_publishables():
+                    if o in objects:
+                        ordered_publishables.append(o)
+                for o in model.get_assets():
+                    if o in objects:
+                        assets.append(o)
+
+                if show_add:
+                    addables = [a['name'] for a in all_addables if 
+                                  (isinstance(filter, list) and 
+                                      a['name'] in filter) or
+                                  (isinstance(filter, str) and 
+                                      a['name'] == filter)]
+
+        # sort the assets
+        assets.sort(lambda a, b: cmp(a.id, b.id))
+
+        return (default, ordered_publishables, assets, addables)
 
 InitializeClass(ViewCode)
