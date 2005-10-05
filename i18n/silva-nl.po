@@ -3077,7 +3077,7 @@ msgstr "Veranderd in publicatie"
 
 #: /views/edit/Container/tab_status.pt:106
 msgid "modify / preview"
-msgstr "bewerken / bekijken"
+msgstr "bewerken / voorbeeld"
 
 #: /views/edit/Container/tab_status.pt:109
 msgid "revision"
@@ -5163,7 +5163,7 @@ msgstr ""
 #: /views/edit/tab_preview.pt:41
 #: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "public&nbsp;preview..."
-msgstr "publieke&nbsp;preview..."
+msgstr "publiek&nbsp;voorbeeld..."
 
 # Default: "p"
 #: /views/edit/tab_preview.pt:54 /views/edit/Container/tab_status.pt:393
