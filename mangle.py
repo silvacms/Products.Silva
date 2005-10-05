@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.34 2005/10/05 13:58:54 guido Exp $
+# $Id: mangle.py,v 1.35 2005/10/05 14:10:27 guido Exp $
 # Python
 import string
 import re
@@ -304,10 +304,10 @@ class _Path:
         """
         if type(obj_context) == type(''):
             obj_context = obj_context.split('/')
-        assert type(obj_context) == type([]), "obj_context is not list type"
+        assert type(obj_context) in [list, tuple], \
+                        "obj_context is not list type"
         obj_path = obj.getPhysicalPath()
-        ret = '/'.join(self(obj_context, obj_path))
-        return ret
+        return '/'.join(self(obj_context, obj_path))
 
     def toAbsolute(self, context_path, relative_path):
         """make a relative path absolute

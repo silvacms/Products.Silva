@@ -21,11 +21,7 @@
     silva_permissions here/get_silva_permissions;
     filter request/filter | request/SESSION/filter | python:[];
     show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
-    obj_context request/obj_context | request/SESSION/obj_context | string:/;
-    folder_context request/folder_context | request/SESSION/folder_context | string:/;
     dummy python: request.SESSION.set('filter', filter);
-    dummy python: request.SESSION.set('obj_context', obj_context);
-    dummy python: request.SESSION.set('folder_context', folder_context);
     pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
     
 ">
@@ -167,7 +163,7 @@
                   id item/id;
                   title item/get_title_editable;
                   path python: pathadapter.pathToUrlPath(
-                                  mangle.Path.fromObject(obj_context, item));
+                                  mangle.Path.fromObject(model.getPhysicalPath(), item));
                   status_style python:item.get_object_status()[1];
                   oddrow repeat/item/odd;
                   checked not: first_checked;
@@ -305,7 +301,7 @@
                   oddrow repeat/asset/odd;
                   id asset/id;
                   title asset/get_title;
-                  path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(obj_context, asset));
+                  path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(model.getPhysicalPath(), asset));
                   checked not: first_checked;
                   global first_checked python: True;
                   ">
