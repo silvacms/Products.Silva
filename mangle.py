@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.33 2005/05/06 16:36:17 guido Exp $
+# $Id: mangle.py,v 1.34 2005/10/05 13:58:54 guido Exp $
 # Python
 import string
 import re
@@ -84,6 +84,7 @@ class Id:
         'getBatch',
         'getDocmaFormatName',
         'globals',
+        'home',
         'index_html',
         'insert',
         'kupu',
@@ -229,7 +230,7 @@ class Id:
             # now it may be a Zope object, which is allowed (for now)
             # or it is an attribute (which is disallowed)
             if not hasattr(attr, 'meta_type'):
-                # not a zope object (guessing ...)            
+                # not a zope object (guessing ...)
                 return self.RESERVED
         
         return self.OK
@@ -305,7 +306,8 @@ class _Path:
             obj_context = obj_context.split('/')
         assert type(obj_context) == type([]), "obj_context is not list type"
         obj_path = obj.getPhysicalPath()
-        return '/'.join(self(obj_context, obj_path))
+        ret = '/'.join(self(obj_context, obj_path))
+        return ret
 
     def toAbsolute(self, context_path, relative_path):
         """make a relative path absolute
