@@ -192,7 +192,7 @@ msgstr ""
 
 #: /SilvaObject.py:332
 msgid "Sorry, this ${meta_type} is not viewable."
-msgstr "Sorry, deze ${meta_type} kan niet bekeken worden."
+msgstr "Sorry, dit object van het type ${meta_type} kan niet bekeken worden."
 
 #: /Version.py:207
 msgid "unapproved"
