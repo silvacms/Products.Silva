@@ -19,10 +19,10 @@
   tal:define="
     objects python:model.get_tree();
     silva_permissions here/get_silva_permissions;
-    filter python: (request.get('filter') or 
-                        request.SESSION.get('lookup:filter') or 
-                        []);
-    startpath python: (request.get('filter') and 
+    filter python: request.get('filter');
+    filter python: test(filter is None, request.SESSION.get('lookup:filter'),
+                          filter);
+    startpath python: ((request.get('filter') is not None) and 
                         '/'.join(model.getPhysicalPath()) or
                         request.SESSION.get('lookup:startpath'));
     show_add python: request.get('show_add', 
