@@ -19,10 +19,17 @@
   tal:define="
     objects python:model.get_tree();
     silva_permissions here/get_silva_permissions;
-    filter request/filter | request/SESSION/filter | python:[];
-    startpath request/startpath | python: '/'.join(model.getPhysicalPath());
-    show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
-    dummy python: request.SESSION.set('filter', filter);
+    filter python: (request.get('filter') or 
+                        request.SESSION.get('lookup:filter') or 
+                        []);
+    startpath python: (request.get('filter') and 
+                        '/'.join(model.getPhysicalPath()) or
+                        request.SESSION.get('lookup:startpath'));
+    show_add python: request.get('show_add', 
+                        request.SESSION.get('lookup:show_add', '0'));
+    dummy python: request.SESSION.set('lookup:filter', filter);
+    dummy python: request.SESSION.set('lookup:show_add', show_add);
+    dummy python: request.SESSION.set('lookup:startpath', startpath);
     pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
     
 ">
@@ -36,7 +43,7 @@
         <td class="left" style="width:25%; padding:0;">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'object_lookup?filter=%s&amp;show_add=%s&amp;startpath=%s' % (filter, show_add, startpath), vein)" />
+              <tal:block replace="structure python: view.service_sidebar.render(model, 'object_lookup', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
