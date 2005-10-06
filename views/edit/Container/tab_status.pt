@@ -73,27 +73,27 @@
         </h3>
 	<div class="controls" 
 	  style="float: right;">
-          <a class="transport"
+          <input
+            class="transport"
+            name="tab_status_import:method"
+            type="submit"
             style="margin-right:0.6em;"
-            href="tab_edit_import"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
+            value="import..."
             tal:condition="may_change_content"
-            i18n:attributes="title;accesskey import_accesskey"
-            i18n:translate=""
-          >
-            import...
-          </a>
-          <a class="transport"
-            href="tab_status_export"
+            i18n:attributes="title;value"
+          />
+          <input
+            class="transport"
+            name="tab_status_export:method"
+            type="submit"
             title="export to xml or convert for export: alt-e"
             accesskey="e"
+            value="export..."
             tal:condition="may_change_content"
-            i18n:attributes="title;accesskey import_accesskey"
-            i18n:translate=""
-          >
-            export...
-          </a>
+            i18n:attributes="title;value"
+          />
 	</div>
       </td>
     </tr>

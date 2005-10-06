@@ -104,25 +104,17 @@
                   </div>
                   <div class="controls"
                     style="float:right;">
-                    <a class="transport"
-                      href="tab_edit_import"
+                    <input
+                      class="transport"
+                      name="tab_status_import:method"
+                      type="submit"
+                      style="margin-right:0.6em;"
                       title="import xml data or a zip file: alt-i"
                       accesskey="i"
+                      value="import..."
                       tal:condition="may_change_content"
-                      i18n:attributes="title;accesskey import_accesskey"
-                      i18n:translate=""
-                    >
-                      import...</a>
-                    <a class="transport"
-                      href="tab_status_export"
-                      title="export to xml or convert for export: alt-e"
-                      accesskey="e"
-                      tal:condition="may_change_content"
-                      i18n:attributes="title;accesskey import_accesskey"
-                      i18n:translate=""
-                    >
-                      export...
-                    </a>
+                      i18n:attributes="title;value"
+                    />
                     <span tal:condition="not:may_change_content" tal:omit-tag="">
                       &nbsp;
                     </span>
