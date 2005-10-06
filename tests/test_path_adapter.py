@@ -1,6 +1,6 @@
 # Copyright (c) 2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -22,9 +22,9 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
             protocol='http', hostname='foo.bar.com', port='80')
         request.setVirtualRoot(('', ))
     
-    def test_pathToUrl(self):
+    def test_pathToUrlPath(self):
         path_adapter = path.getPathAdapter(self.request)
-        ptu = path_adapter.pathToUrl
+        ptu = path_adapter.pathToUrlPath
         self.assertEquals(ptu('foo'), 'foo')
         self.assertEquals(ptu('index'), 'index')
         self.assertEquals(ptu('/root/foo/index'), '/index')
