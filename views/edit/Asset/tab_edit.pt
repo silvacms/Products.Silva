@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="vein string:3dit;"
+  tal:define="vein string:edit;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
