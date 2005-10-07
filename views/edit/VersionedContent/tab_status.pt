@@ -40,6 +40,9 @@
         </tal:block>
 
 <form action="." enctype="multipart/form-data" method="POST">
+  <input type="hidden" 
+    name="refs:list"
+    tal:attributes="value python: request['model'].create_ref(request['model'])" />
 <table class="listing">
 <thead>
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>

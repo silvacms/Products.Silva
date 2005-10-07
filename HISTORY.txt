@@ -7,8 +7,13 @@ Silva changes
 
     Bugs fixed
 
+      - Exporting of versioned content was broken, since it always picked
+        up the entire container. Fixed now.
+
       - When content without a maintitle was exported, it could not be
         imported again. 
+
+      - Fixed bug where exporting of anything but containers was impossible.
 
   1.3
 
