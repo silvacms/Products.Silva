@@ -656,7 +656,7 @@ msgstr ""
 msgid ""
 "Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> for this trick."
-"Dank aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
+msgstr "Dank aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> voor deze tip."
 
 #: /globals/accesskeys.pt:245
