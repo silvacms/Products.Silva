@@ -7,10 +7,10 @@ Meta
 Copyright (c) 2002-2005 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.3.x
+Valid for:  Silva 1.4.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.22 $
+CVS:        $Revision: 1.23 $
 
 Introduction
 ------------
@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.3 (DC)
+Silva 1.4 (DC)
 --------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
@@ -112,7 +112,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.3 (DE)
+SilvaDocument 1.4 (DE)
 ----------------------
 
 Silva extension for XML-based documents. Contains a through the web

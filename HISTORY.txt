@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  1.4 (CVS/Unreleased)
+  1.4
 
     Features added
 
