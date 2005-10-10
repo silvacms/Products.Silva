@@ -114,7 +114,7 @@
                       value="save addables settings"
                       title="save addable settings for this publication: alt-a"
                       accesskey="a"
-                      i18n:attributes="value;title;accesskey save_addables_settings_accesskey"
+                      i18n:attributes="value;title"
                     />
                   </td>
                 </tr>

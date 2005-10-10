@@ -99,7 +99,7 @@
                       name="tab_edit_to_folder:method"
                       title="change container type to a folder: alt-f"
                       accesskey="f" 
-                      i18n:attributes="value;title;accesskey convert_to_folder_accesskey"
+                      i18n:attributes="value;title"
                       tal:condition="python: ispublication or isghostfolder"
                     />
                     <input class="button" type="submit"
@@ -107,7 +107,7 @@
                       name="tab_edit_to_publication:method"
                       title="change container type to a publication: alt-p"
                       accesskey="p"
-                      i18n:attributes="value;title;accesskey convert_to_publication_accesskey"
+                      i18n:attributes="value;title"
                       tal:condition="python: isfolder or isghostfolder"
                     />
                   </td>
@@ -177,7 +177,7 @@
                       type="submit"
                       title="change renderer: alt-c"
                       accesskey="c"
-                      i18n:attributes="value;title;accesskey change_renderer_accesskey"
+                      i18n:attributes="value;title"
                     />
                   </td>
                 </tr>

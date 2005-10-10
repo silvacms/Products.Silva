@@ -149,7 +149,7 @@
                     value="revoke approval" 
                     title="first 'un-approve' this item in order to edit: alt-r" 
                     accesskey="r"
-                    i18n:attributes="value;title;accesskey revoke_approval_accesskey"
+                    i18n:attributes="value;title"
                   />
                 </form>
               </tal:block>
@@ -168,7 +168,7 @@
                     value="new version"
                     title="create a new version of this content: alt-n"
                     accesskey="n"
-                    i18n:attributes="value;title;accesskey new_version_accesskey"
+                    i18n:attributes="value;title"
                   />
                 </form>
               </tal:block>

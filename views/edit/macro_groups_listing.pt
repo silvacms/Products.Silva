@@ -80,7 +80,7 @@
                     title="groups administration: alt-g"
                     accesskey="g"
                     tal:attributes="href string:${model/absolute_url}/edit/tab_access_groups"
-                    i18n:attributes="title;accesskey groups_admin_accesskey"
+                    i18n:attributes="title"
                     i18n:translate="">
                     <u>g</u>roups admin...
                   </a>

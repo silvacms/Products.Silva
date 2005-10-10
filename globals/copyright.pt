@@ -18,7 +18,7 @@
   href="javascript:history.back();"
   title="access key: alt-b"
   accesskey="b"
-  i18n:attributes="title;accesskey back_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   >
   back
@@ -28,7 +28,7 @@
   <a href="http://www.infrae.com/products/silva"
     title="Silva info: alt-s"
     accesskey="s"
-    i18n:attributes="title;accesskey silva_info_accesskey"
+    i18n:attributes="title"
     >
     <img width="32"
       height="32"

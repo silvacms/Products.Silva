@@ -41,7 +41,7 @@ macro plateau
           accesskey="]"
           tal:condition="not: model_is_root"
           tal:attributes="href string:../../edit/$vein_id"
-          i18n:attributes="title;accesskey up_one_level_accesskey">
+          i18n:attributes="title">
           <img width="9"
             height="9"
             border="0"

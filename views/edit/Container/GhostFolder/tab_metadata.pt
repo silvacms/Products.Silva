@@ -20,14 +20,14 @@
     <a title="miscellaneous settings: alt-e"
       accesskey="e"
       tal:attributes="href string:${url}/edit/tab_settings"
-      i18n:attributes="title;accesskey tab_settings_accesskey"
+      i18n:attributes="title"
       i18n:translate=""
       >s<u>e</u>ttings...</a>
     <tal:block condition="context/is_subscribable_content">
       <a title="manage subscriptions: alt-u"
         accesskey="u"
         tal:attributes="href string:${url}/edit/tab_subscriptions"
-        i18n:attributes="title;accesskey manage_subscriptions_accesskey"
+        i18n:attributes="title"
         i18n:translate=""
         >s<u>u</u>bscriptions...</a>
     </tal:block>

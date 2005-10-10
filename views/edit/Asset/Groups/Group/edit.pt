@@ -110,7 +110,7 @@
             accesskey="r"
             onclick="return confirm('Really remove?')"
             tal:condition="userids"
-            i18n:attributes="title;value;onclick;accesskey remove_users_accesskey"
+            i18n:attributes="title;value;"
           />
         </td> 
       </tr>
@@ -160,7 +160,7 @@
                   value="copy users from group(s)" 
                   title="transfer members from selected groups"
                   accesskey="c"
-                  i18n:attributes="title;value;accesskey copy_users_from_group_accesskey"
+                  i18n:attributes="title;value"
                 />
               </metal:block>
             </metal:block>

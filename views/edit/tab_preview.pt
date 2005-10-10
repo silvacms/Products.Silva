@@ -43,7 +43,7 @@ h2 {
       accesskey=";"
       tal:attributes="href string:${model/absolute_url}/preview_html"
       i18n:translate=""
-      i18n:attributes="title;accesskey public_preview_accesskey">
+      i18n:attributes="title">
       public&nbsp;preview...
     </a>
     <tal:block define="
@@ -56,7 +56,7 @@ h2 {
         class="executor"
         tal:attributes="href string:${model/absolute_url}/edit/tab_preview_publish"
         i18n:translate=""
-        i18n:attributes="title;accesskey open_to_public_accesskey"
+        i18n:attributes="title"
         tal:condition="python: unapproved_version and have_approve_permission">
         publish&nbsp;now
       </a>

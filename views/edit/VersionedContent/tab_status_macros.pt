@@ -139,7 +139,7 @@ This message will remain visible in the status screen for other authors and edit
    accesskey="m"
    tal:attributes="for field/id"
    i18n:translate=""
-   i18n:attributes="title;accesskey content_publish_time_accesskey"
+   i18n:attributes="title"
    >
    content publish ti<u>m</u>e</label>
 <tal:block 
@@ -159,7 +159,7 @@ day / month / year &nbsp;(23:59)
   title="access key: alt-i (some platforms)" 
   accesskey="i"
   tal:attributes="for field/id"
-  i18n:attributes="title;accesskey expiration_time_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   >expiratio<u>n</u> time</label>&nbsp;
 <tal:block 
@@ -181,7 +181,7 @@ If this content should expire, set the time.
   class="button" 
   title="access key: alt-r" 
   accesskey="r" 
-  i18n:attributes="value;title;accesskey request_approval_accesskey" />
+  i18n:attributes="value;title" />
 </td>
 </tr>
 </form>
@@ -236,7 +236,7 @@ notes
   title="access key: alt-n (some platforms)" 
   accesskey="n"
   tal:attributes="for field/id"
-  i18n:attributes="title;accesskey expiration_time_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   >expiratio<u>n</u> time</label>&nbsp;
 <tal:block attributes="id field/id"
@@ -255,7 +255,7 @@ If this content should expire, set the time.
   title="access key: alt-o" 
   accesskey="o"
   tal:attributes="for field/id"
-  i18n:attributes="title;accesskey clear_expiration_time_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   >clear expiration
 </label>
@@ -314,7 +314,7 @@ notes
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
   accesskey="m"
-  i18n:attributes="title;accesskey content_publish_time_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   tal:attributes="for field/id"
   >content publish ti<u>m</u>e</label>&nbsp;
@@ -334,7 +334,7 @@ day / month / year &nbsp;(23:59)
 <label 
   title="access key: alt-i"
   accesskey="i"
-  i18n:attributes="title;accesskey expiration_time_accesskey"
+  i18n:attributes="title"
   i18n:translate=""
   tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
 <tal:block 
@@ -355,14 +355,14 @@ Empty indicates no expiration.
   value="approve for later"
   title="access key: alt-l"
   accesskey="l"
-  i18n:attributes="value;title;accesskey open_to_public_accesskey"
+  i18n:attributes="value;title"
 />
 <input class="executor"
   type="submit"
   value="publish now"
   title="access key: alt-p"
   accesskey="p"
-  i18n:attributes="value;title;accesskey open_to_public_accesskey"
+  i18n:attributes="value;title"
 />
 </td> 
 </tr>
@@ -433,7 +433,7 @@ The message may be viewed by local users.
   accesskey="j"
   tal:condition="may_approve_content" 
   value="reject approval request" 
-  i18n:attributes="title;value;accesskey reject_approval_request_accesskey" 
+  i18n:attributes="title;value" 
 />
 <input 
   type="submit" 
@@ -442,7 +442,7 @@ The message may be viewed by local users.
   accesskey="r"
   tal:condition="not: may_approve_content" 
   value="withdraw approval request" 
-  i18n:attributes="title;value;accesskey withdraw_approval_request_accesskey" 
+  i18n:attributes="title;value" 
 />
 </td>
 </tr>
@@ -484,7 +484,7 @@ If further editing is required, first revoke the approval.
   class="button" 
   title="access key: alt-v" 
   accesskey="v" 
-  i18n:attributes="value;title;accesskey revoke_approval_accesskey" />
+  i18n:attributes="value;title" />
 </td>
 </tr>
 </tfoot>
@@ -521,7 +521,7 @@ made to the current version.
   title="access key: alt-p"
   accesskey="p"
   onclick="return confirm('Really revert ?')"
-  i18n:attributes="value;title;onclick;accesskey revert_to_previous_accesskey"
+  i18n:attributes="value;title"
 />
 </td>
 </tr>
@@ -560,7 +560,7 @@ If necessary, the published version of this content can be manually closed (take
   value="close published version"
   title="access key: alt-c"
   accesskey="c" 
-  i18n:attributes="value;title;accesskey close_published_version_accesskey"
+  i18n:attributes="value;title"
   />
 </td>
 </tr>

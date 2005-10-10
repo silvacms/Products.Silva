@@ -91,7 +91,7 @@
             value="change link"
             title="access key: alt-c"
             accesskey="c"
-            i18n:attributes="value;title;accesskey change_link_accesskey"
+            i18n:attributes="value;title"
            />
         </td>
       </tr>

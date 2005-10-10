@@ -68,7 +68,7 @@
           title="view the original image: alt-v"
           accesskey="v"
           tal:attributes="href python:model.url(hires=1)"
-          i18n:attributes="title;accesskey view_original_image_accesskey">
+          i18n:attributes="title">
           <tal:condition condition="model/thumbnail_image">
             <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
           </tal:condition>
@@ -180,7 +180,7 @@
               accesskey="o"
               tal:define="asset_context python:request.model"
               tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
-              i18n:attributes="title;value;accesskey set_crop_coordinates_accesskey"
+              i18n:attributes="title;value"
               />
           </td>
           <td class="align-right">
@@ -190,7 +190,7 @@
               value="change"
               title="access key: alt-c"
               accesskey="c"
-              i18n:attributes="title;value;accesskey change_accesskey"
+              i18n:attributes="title;value"
             />
           </td>
         </tr>

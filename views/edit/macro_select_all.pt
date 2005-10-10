@@ -26,7 +26,7 @@
   <label for="all"
     accesskey="a"
     title="select all: alt-a"
-    i18n:attributes="title; accesskey select_all_accesskey;"
+    i18n:attributes="title"
     tal:attributes="for string:all_${aid_postfix};"
     >
     <span i18n:translate="">select <u>a</u>ll</span>

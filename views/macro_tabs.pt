@@ -22,7 +22,7 @@
         href="globals/reference"
         title="Silva info: alt-|"
         accesskey="|"
-        i18n:attributes="title;accesskey silva_info_accesskey"
+        i18n:attributes="title"
         >
         Silva
       </a>
@@ -32,7 +32,7 @@
       title="Silva top: alt-/"
       accesskey="/"
       tal:attributes="href string:$root_url/edit/tab_edit"
-      i18n:attributes="title;accesskey silva_top_accesskey"
+      i18n:attributes="title"
       >
       <img alt="Silva"
         height="14"
@@ -61,7 +61,7 @@
         title="Zope manage_main: alt-."
         accesskey="."
         tal:attributes="href python:'%s/manage_main' % url"
-        i18n:attributes="title;accesskey manage_accesskey"
+        i18n:attributes="title"
         i18n:translate=""
       >
         &middot; manage...
@@ -70,7 +70,6 @@
     <a 
       href="#bottom" 
       accesskey="b"
-      i18n:attributes="accesskey bottom_accesskey;"
       >
     </a>
   </div>
@@ -85,7 +84,7 @@
     accesskey="?"
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
-    i18n:attributes="title;accesskey silva_accesskeys_accesskey"
+    i18n:attributes="title"
     ></a>
  
   <tal:repeat tal:repeat="item tabs">

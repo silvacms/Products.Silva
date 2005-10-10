@@ -50,7 +50,7 @@ h2 {
       accesskey=";"
       tal:attributes="href string:${model/absolute_url}/preview_html"
       i18n:translate=""
-      i18n:attributes="title;accesskey public_preview_accesskey">
+      i18n:attributes="title">
       public&nbsp;preview...
     </a>
     <tal:block define="
@@ -61,7 +61,7 @@ h2 {
         class="executor"
         tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
         i18n:translate=""
-        i18n:attributes="title;accesskey open_to_public_accesskey"
+        i18n:attributes="title"
         tal:condition="python: unapproved_version and have_approve_permission">
         publish&nbsp;now
       </a>
@@ -93,7 +93,7 @@ h2 {
         value="break lock" 
         title="Somebody else just edited this item, unlock it: alt-u" 
         accesskey="u"
-        i18n:attributes="value;title;accesskey break_lock_accesskey"/>
+        i18n:attributes="value;title"/>
     </form>
   </div>
 </tal:condition>
@@ -112,7 +112,7 @@ h2 {
         value="new version"
         title="work on a new version while the previous one stays online: alt-n"
         accesskey="n"
-        i18n:attributes="value;title;accesskey new_version_accesskey"
+        i18n:attributes="value;title"
       />
       <tal:block i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
@@ -132,7 +132,7 @@ h2 {
         value="revoke approval" 
         title="'first un-approve' this item in order to edit: alt-r" 
         accesskey="r"
-        i18n:attributes="value;title;accesskey revoke_approval_accesskey"/>
+        i18n:attributes="value;title"/>
         <span i18n:translate="">
           <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
         </span>
@@ -150,7 +150,7 @@ h2 {
         value="withdraw request" 
         title="withdraw a request for approval in order to edit: alt-w" 
         accesskey="w"
-        i18n:attributes="value;title;accesskey withdraw_request_accesskey"/>
+        i18n:attributes="value;title"/>
       <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
       <input type="hidden" name="tab_name" value="edit" />
       <span i18n:translate="">

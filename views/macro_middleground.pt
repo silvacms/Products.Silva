@@ -25,7 +25,7 @@
       href string:$url/edit/$link_id;
       class class;
       "
-    i18n:attributes="title;accesskey settings_accesskey"
+    i18n:attributes="title"
     i18n:translate="">
     settings...
   </a>
@@ -44,7 +44,7 @@
       href string:$url/edit/$link_id;
       class class;
     "
-    i18n:attributes="title;accesskey subscriptions_accesskey"
+    i18n:attributes="title"
     i18n:translate="">
     subscriptions...
   </a>
@@ -64,7 +64,7 @@
       href string:$url/edit/$link_id;
       class class;
     "
-    i18n:attributes="title;accesskey addables_accesskey"
+    i18n:attributes="title"
     i18n:translate="">
     addables...
   </a>
@@ -78,7 +78,7 @@
     class="executor"
     tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
     i18n:translate=""
-    i18n:attributes="title;accesskey publish_now_accesskey"
+    i18n:attributes="title"
     tal:condition="python: unapproved_version and have_approve_permission">
     publish now
   </a>

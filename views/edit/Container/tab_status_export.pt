@@ -92,7 +92,7 @@
                       href="tab_edit_import"
                       title="over to the import screen: alt-i"
                       accesskey="i"
-                      i18n:attributes="title;accesskey import_accesskey"
+                      i18n:attributes="title"
                       i18n:translate="">
                       import...
                     </a>
@@ -173,7 +173,7 @@
                       value="export pdf"
                       title="access key: alt-p"
                       accesskey="p"
-                      i18n:attributes="value;title;accesskey export_pdf_accesskey"
+                      i18n:attributes="value;title"
                     />
                   </tal:condition>
                   <input class="button"
@@ -182,7 +182,7 @@
                     value="export xml"
                     title="access key: alt-e"
                     accesskey="e"
-                    i18n:attributes="value;title;access_key export_xml_accesskey"
+                    i18n:attributes="value;title"
                   />
                 </td>
               </tr>
@@ -268,7 +268,7 @@
         value="export zip"
         title="access key: alt-z"
         accesskey="z"
-        i18n:attributes="value;title;accesskey export_zip_accesskey"
+        i18n:attributes="value;title"
         />
         </td>
         </tr>
@@ -461,7 +461,7 @@
           value="export to Docma"
           title="export the selection to word: alt-d"
           accesskey="d"
-          i18n:attributes="value;title;accesskey export_to_docma_accesskey"
+          i18n:attributes="value;title"
         />
         </tal:block>
         </td>
@@ -487,7 +487,7 @@
     title="there's no undo: alt-x"
     type="submit"
     value="remove" 
-    i18n:attributes="value;title;onclick;accesskey remove_accesskey"
+    i18n:attributes="value;title"
   />
 </metal:fill-slot>
 </metal:use-macro>

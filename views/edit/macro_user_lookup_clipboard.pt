@@ -35,7 +35,7 @@
                     accesskey="l"
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate=""
-                    i18n:attributes="title;accesskey lookup_users_accesskey">
+                    i18n:attributes="title">
                     lookup users...
                   </a>
                 </metal:block>

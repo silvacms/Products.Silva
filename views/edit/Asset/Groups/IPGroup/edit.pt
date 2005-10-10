@@ -105,7 +105,7 @@
             accesskey="r"
             onclick="return confirm('Really remove?')"
             tal:condition="ipranges"
-            i18n:attributes="title;value;onclick;accesskey remove_ranges_accesskey"
+            i18n:attributes="title;value"
           />
         </td> 
       </tr>

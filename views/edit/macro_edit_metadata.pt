@@ -191,7 +191,7 @@
                 value="save"
                 title="access key: alt-s"
                 accesskey="s"
-                i18n:attributes="value;title;accesskey save_accesskey"
+                i18n:attributes="value;title"
               />
             </td>
           </tr>

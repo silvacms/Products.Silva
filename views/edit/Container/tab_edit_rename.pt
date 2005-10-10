@@ -125,7 +125,7 @@
               value="rename"
               title="access key: alt-r"
               accesskey="r"
-              i18n:attributes="value;title;accesskey rename_accesskey"
+              i18n:attributes="value;title"
             />
             <input class="cancel"
               type="button"
@@ -134,7 +134,7 @@
               onclick="history.back()" 
               title="access key: alt-c" 
               accesskey="c"
-              i18n:attributes="value;title;accesskey cancel_accesskey"
+              i18n:attributes="value;title"
             />
           </td>
         </tr>

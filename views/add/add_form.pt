@@ -93,7 +93,7 @@
         value="cancel"
         title="access key: alt-c"
         accesskey="c"
-        i18n:attributes="value;title;accesskey cancel_accesskey"
+        i18n:attributes="value;title;"
       />
       <input class="button"
         type="submit"
@@ -101,7 +101,7 @@
         value="save"
         title="access key: alt-s"
         accesskey="s"
-        i18n:attributes="value;title;accesskey save_accesskey"
+        i18n:attributes="value;title"
       />
       <tal:condition condition="python: not lookup_mode" >
       <input class="button"
@@ -111,7 +111,7 @@
         title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title;accesskey save_and_edit_accesskey"
+        i18n:attributes="value;title"
       />
       </tal:condition>
     </td>

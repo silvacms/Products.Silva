@@ -42,7 +42,7 @@
             title="reload to update the queue lists: alt-r"
             accesskey="r"
             tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
-            i18n:attributes="title;accesskey refresh_queue_lists_accesskey"
+            i18n:attributes="title"
             i18n:translate=""
           >
             <u>r</u>efresh queue lists
@@ -235,7 +235,7 @@
                 title="there's no undo: alt-x"
                 type="submit"
                 value="remove" 
-                i18n:attributes="value;title;onclick;accesskey remove_accesskey" 
+                i18n:attributes="value;title" 
               />
               <input class="button"
                 accesskey="m"
@@ -243,14 +243,14 @@
                 title="import to the current location and remove from the list: alt-m"
                 type="submit"
                 value="import and remove" 
-                i18n:attributes="value;title;accesskey import_and_remove_accesskey" />
+                i18n:attributes="value;title" />
               <input class="button"
                 accesskey="p"
                 name="tab_edit_import_w2s:method"
                 title="import to the current location: alt-p"
                 type="submit"
                 value="import"
-                i18n:attributes="value;title;accesskey import_accesskey" />
+                i18n:attributes="value;title" />
             </div>
           </tal:condition>
         </td>

@@ -177,7 +177,7 @@
               title="alt-u"
               accesskey="u"
               style="float: right"
-              i18n:attributes="value;title;accesskey use_coordinates_accesskey"
+              i18n:attributes="value;title"
             />
         </div>
         <div style="top: 0px; margin-left: 200px;">

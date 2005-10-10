@@ -24,7 +24,7 @@
   title="access key: alt-b"
   accesskey="b"
   
-  i18n:attributes="title;accesskey back_accesskey"
+  i18n:attributes="title"
   i18n:translate="">
   back
 </a>
@@ -33,7 +33,7 @@
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-s"
     accesskey="s"
-    i18n:attributes="title;accesskey silva_info_accesskey">
+    i18n:attributes="title">
     <img width="32" height="32" border="0" alt="Silva icon"
       tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" /></a>
       &nbsp;<tal:block i18n:translate=""><span i18n:name="Silva">Silva</span> &#8211; independent content management</tal:block>
@@ -112,7 +112,7 @@
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
-    i18n:attributes="title;accesskey info_accesskey"
+    i18n:attributes="title"
     i18n:name="silva_icon"
     >
     <img style="float:right; margin-top:1.3em;"

@@ -121,7 +121,7 @@ function focus_editor() {
             value="approve now"
             title="approve member: alt-a"
             accesskey="a"
-            i18n:attributes="title;value;accesskey approve_now_accesskey"
+            i18n:attributes="title;value"
             tal:condition="python: ((silva_permissions['ChangeSilvaAccess'] and model.id != user.getId()) or silva_permissions['ChangeSilvaViewRegistry']) and not model.is_approved()"
           />
         </td>
@@ -136,7 +136,7 @@ function focus_editor() {
             value="close"
             title="close window: alt-c"
             accesskey="c"
-            i18n:attributes="title;value;accesskey close_accesskey"
+            i18n:attributes="title;value"
             onclick="window.close(); window.opener.location.reload(); return false;" 
           />
           <input class="button"
@@ -145,7 +145,7 @@ function focus_editor() {
             value="save"
             title="save member data: alt-s"
             accesskey="s"
-            i18n:attributes="title;value;accesskey save_accesskey"
+            i18n:attributes="title;value"
           />
         </td>
       </tr>

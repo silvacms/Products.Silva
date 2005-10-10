@@ -101,7 +101,7 @@
                   value="Find"
                   title="access key: alt-f"
                   accesskey="f"
-                  i18n:attributes="value;title;accesskey find_accesskey"
+                  i18n:attributes="value;title"
                 />
               </td>
             </tr>

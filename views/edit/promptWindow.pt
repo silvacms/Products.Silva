@@ -47,7 +47,7 @@
             title="save the document you were working on: alt-s"
             accesskey="s"
             onclick="window.opener.saveHelper(); window.close()" 
-            i18n:attributes="value;title;accesskey save_accesskey" 
+            i18n:attributes="value;title" 
           />
         </td>
       </tr>

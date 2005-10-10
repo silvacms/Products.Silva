@@ -77,12 +77,12 @@
                     title="add a new item - alt-n"
                     accesskey="n"
                     tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
-                    i18n:attributes="value;title;accesskey new_accesskey"
+                    i18n:attributes="value;title"
                   />
                   <label for="meta_type" 
                     title="access key: alt-s" 
                     accesskey="s"
-                    i18n:attributes="title;accesskey select_new_item_accesskey"
+                    i18n:attributes="title"
                   >
                   </label>
                   <select class="transport"
@@ -530,7 +530,7 @@
                         <label for="new_position"
                           title="access key: alt-o"
                           accesskey="o"
-                          i18n:attributes="title;accesskey new_position_accesskey"
+                          i18n:attributes="title"
                         >
                         </label>
                         <input class="button"
@@ -539,7 +539,7 @@
                           value="move"
                           title="move selected items into position: alt-m"
                           accesskey="m"
-                          i18n:attributes="value;title;accesskey move_accesskey"
+                          i18n:attributes="value;title"
                         />
                       </div>
                       <input class="transport"
@@ -548,7 +548,7 @@
                         value="rename..."
                         title="rename and retitle items: alt-r"
                         accesskey="r" 
-                        i18n:attributes="value;title;accesskey rename_accesskey"
+                        i18n:attributes="value;title"
                       />
                       <input class="button"
                         name="tab_edit_cut:method"
@@ -556,7 +556,7 @@
                         value="cut"
                         title="cut items: alt-x"
                         accesskey="x" 
-                        i18n:attributes="value;title;accesskey cut_accesskey"
+                        i18n:attributes="value;title"
                       />               
                     </tal:block>
                   </tal:block>
@@ -567,7 +567,7 @@
                         value="copy"
                         title="copy items: alt-c"
                         accesskey="c" 
-                        i18n:attributes="value;title;accesskey copy_accesskey"
+                        i18n:attributes="value;title"
                       />
                   </tal:block>
                   <tal:block condition="may_change_content">                  
@@ -583,7 +583,7 @@
                         value="paste"
                         title="paste items: alt-v" 
                         accesskey="v" 
-                        i18n:attributes="value;title;accesskey paste_accesskey"
+                        i18n:attributes="value;title"
                       />
                       <input class="button"
                         name="tab_edit_paste_to_ghost:method"
@@ -591,7 +591,7 @@
                         value="paste ghost"
                         title="paste (items on clipboard) as ghost objects: alt-g"
                         accesskey="g" 
-                        i18n:attributes="value;title;accesskey paste_ghost_accesskey"
+                        i18n:attributes="value;title"
                       />
                     </tal:block>
                     <tal:block tal:condition="python:(default_document or publishables or assets)">
@@ -602,7 +602,7 @@
                         title="there's no undo: alt-d"
                         accesskey="d"
                         onclick="return confirm('Really delete?')"
-                        i18n:attributes="value;title;onclick;accesskey delete_accesskey"
+                        i18n:attributes="value;title"
                       />
                     </tal:block>
                   </tal:block>

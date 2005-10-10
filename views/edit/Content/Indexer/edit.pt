@@ -77,7 +77,7 @@
             value="update index"
             title="access key: alt-u"
             accesskey="u"
-            i18n:attributes="value;title;accesskey update_index_accesskey"
+            i18n:attributes="value;title"
            />
         </td>
       </tr>

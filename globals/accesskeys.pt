@@ -20,7 +20,7 @@
   href="javascript:history.back();" 
   title="access key: alt-r"
   accesskey="r"
-  i18n:attributes="title;accesskey return_accesskey"
+  i18n:attributes="title"
   i18n:translate="">
   return
 </a>
@@ -29,7 +29,7 @@
     href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
-    i18n:attributes="title;accesskey info_accesskey">
+    i18n:attributes="title">
     <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
       tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
   </a>
@@ -270,7 +270,7 @@ If there are two buttons with the same name, the access key for the second is us
   href="javascript:history.back();" 
   title="access key: alt-r"
   accesskey="r"
-  i18n:attributes="title;accesskey return_accesskey"
+  i18n:attributes="title"
   i18n:translate="">
   return
   </a>

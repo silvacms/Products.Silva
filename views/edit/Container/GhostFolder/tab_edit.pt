@@ -98,7 +98,7 @@
                                           },
                                           '${asset_context/absolute_url}',
                                           'Container', true)"
-                i18n:attributes="value;title;accesskey reference_accesskey"
+                i18n:attributes="value;title"
               /><span class="warning">*</span>
            </td>
            <td>
@@ -157,7 +157,7 @@
                  value="save reference"
                  title="access key: alt-s"
                  accesskey="s"
-                 i18n:attributes="value;title;accesskey save_reference_accesskey"
+                 i18n:attributes="value;title"
               />
            </td>
         </tr>
@@ -212,7 +212,7 @@
                 title="re-synchronize with content from the source folder: alt-e"
                 accesskey="e"
                 tal:condition="not:link_status"
-                i18n:attributes="value;title;accesskey resync_ghost_folder_accesskey"
+                i18n:attributes="value;title"
                />
             </form>
          </div>

@@ -56,7 +56,7 @@
       href="http://www.infrae.com/products/silva" 
       title="Silva info on the Infrae site: alt-i"
       accesskey="i"
-      i18n:attributes="title;accesskey info_accesskey">
+      i18n:attributes="title">
       <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
         tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
     </a>

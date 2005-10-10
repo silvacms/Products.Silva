@@ -93,12 +93,12 @@
                     title="add a new item - alt-n"
                     accesskey="n"
                     tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
-                    i18n:attributes="value;title;accesskey new_accesskey"
+                    i18n:attributes="value;title"
                   />
                   <label for="meta_type" 
                     title="access key: alt-s" 
                     accesskey="s"
-                    i18n:attributes="title;accesskey select_new_item_accesskey"
+                    i18n:attributes="title"
                   >
                   </label>
                   <select class="transport"
@@ -412,7 +412,7 @@
                  value="cancel"
                  title="cancel operation: alt-c"
                  accesskey="c"
-                 i18n:attributes="title;value;accesskey cancel_accesskey"
+                 i18n:attributes="title;value"
                  onclick="window.close();return false;"
                 />
                <input class="transport"
@@ -425,8 +425,7 @@
                               document.getElementById('objectform'), 
                               'object'); return false;" 
                  tal:condition="python: publishables or assets or default"
-                 i18n:attributes="title;value;accesskey
-                 place_reference_accesskey"
+                 i18n:attributes="title;value"
                 />
              </td>
             </tr>
