@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Sep 28 18:46:28 2005\n"
+"POT-Creation-Date: Mon Oct 10 16:39:06 2005\n"
 "PO-Revision-Date: 2004-12-07 13:27+0100\n"
 "Last-Translator: Guido Wesdorp <guido@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -52,7 +52,8 @@ msgid ""
 "    "
 msgstr ""
 "Elk bestand kan worden gebruikt als Silva content, bijvoorbeeld "
-"pdfdocumenten of mpeg films. File objecten hebben ook metadata."
+"pdfdocumenten of mpeg films. File objecten hebben ook metadata.\n"
+"    "
 
 #: /Folder.py:338 /Folder.py:403
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
@@ -75,9 +76,10 @@ msgid ""
 "    "
 msgstr ""
 "Folders kunnen gebruikt worden om een publicatie te structureren. Zij "
-"bepalen de hiërarchie die een site-bezoeker ziet."
+"bepalen de hiërarchie die een site-bezoeker ziet.\n"
+"    "
 
-#: /Ghost.py:224
+#: /Ghost.py:215
 msgid ""
 "Ghosts are special documents that function as a\n"
 "       placeholder for an item in another location (like an alias,\n"
@@ -89,7 +91,8 @@ msgid ""
 "    "
 msgstr ""
 "Ghosts zijn speciale documenten die fungeren als verwijzing naar een object "
-"in een andere locatie."
+"in een andere locatie.\n"
+"    "
 
 #: /GhostFolder.py:127
 msgid ""
@@ -149,7 +152,9 @@ msgid ""
 "    "
 msgstr ""
 "Verschillende grafische bestandsformaten (gif, jpg, png) kunnenworden "
-"toegevoegd en gebruikt worden in documenten, of als zichtbare inhoud dienen."
+"toegevoegd en gebruikt worden in documenten, of als zichtbare inhoud "
+"dienen.\n"
+"    "
 
 #: /Indexer.py:24
 msgid ""
@@ -162,7 +167,8 @@ msgid ""
 "    "
 msgstr ""
 "Indexers kunnen worden gebruikt als de index achterin een boek. Referenties "
-"moeten wel gemarkeerd zijn in tekst om ze te kunnen opnemen."
+"moeten wel gemarkeerd zijn in tekst om ze te kunnen opnemen.\n"
+"    "
 
 #: /Link.py:29
 msgid ""
@@ -172,7 +178,8 @@ msgid ""
 "       &#8220;http://....&#8221;, or https, ftp, news, and mailto.\n"
 "    "
 msgstr ""
-"Het Link-object maakt het mogelijk links naar externe sites op tenemen."
+"Het Link-object maakt het mogelijk links naar externe sites op tenemen.\n"
+"    "
 
 #: /Publication.py:27
 msgid ""
@@ -188,7 +195,8 @@ msgid ""
 "    "
 msgstr ""
 "Publicaties zijn speciale mappen, en dienen als de hoofdbouwstenen van een "
-"Silva site."
+"Silva site.\n"
+"    "
 
 #: /SilvaObject.py:332
 msgid "Sorry, this ${meta_type} is not viewable."
@@ -327,7 +335,6 @@ msgstr "versie bestaat niet ${version}"
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Informatie over Silva op de Infrae site: alt-i"
 
-# Default: "i"
 #: /default/layout_macro.html.pt:55 /globals/accesskeys.pt:28
 msgid "info_accesskey"
 msgstr "i"
@@ -400,8 +407,9 @@ msgstr "e-mail contact"
 msgid ""
 "If this is enabled, this content (and anything it contains!) will not show "
 "up in tables of content."
-msgstr "Indien verbergen is ingeschakeld, wordt deze inhoud (en alles wat er"
-"in zit!) niet getoond in inhoudsopgaves."
+msgstr ""
+"Indien verbergen is ingeschakeld, wordt deze inhoud (en alles wat erin zit!) "
+"niet getoond in inhoudsopgaves."
 
 #: /doc/silva-extra.xml:789
 msgid "hide from tables of content"
@@ -437,9 +445,9 @@ msgid ""
 "&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
 "paste<br /> g &nbsp; paste as ghost"
 msgstr ""
-"${listing_footer}<br /> a &nbsp; alles selecteren<br /> r &nbsp; hernoemen<br /> d "
-"&nbsp; verwijderen<br /> x &nbsp; knippen<br /> c &nbsp; kopieren<br /> v &nbsp; "
-"plakken<br /> g &nbsp; als ghost plakken"
+"${listing_footer}<br /> a &nbsp; alles selecteren<br /> r &nbsp; "
+"hernoemen<br /> d &nbsp; verwijderen<br /> x &nbsp; knippen<br /> c &nbsp; "
+"kopieren<br /> v &nbsp; plakken<br /> g &nbsp; als ghost plakken"
 
 #: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
 msgid "Listing footer"
@@ -470,10 +478,10 @@ msgid ""
 "now<br />"
 msgstr ""
 "${listing_footer}<br /> a &nbsp; alles selecteren<br /> n &nbsp; nieuwe "
-"versies aanmaken<br /> j &nbsp; weigeren (verzoek om goedkeuring)<br /> v &nbsp; intrekken "
-"(verzoek om goedkeuring)<br /> c &nbsp; sluiten (publieke versie)<br /> l &nbsp; "
-"goedkeuren voor later<br /> u &nbsp; instellingen bijwerken<br /> p &nbsp; nu publiceren"
-"<br />"
+"versies aanmaken<br /> j &nbsp; weigeren (verzoek om goedkeuring)<br /> v "
+"&nbsp; intrekken (verzoek om goedkeuring)<br /> c &nbsp; sluiten (publieke "
+"versie)<br /> l &nbsp; goedkeuren voor later<br /> u &nbsp; instellingen "
+"bijwerken<br /> p &nbsp; nu publiceren<br />"
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
@@ -481,7 +489,9 @@ msgstr "Scherm toevoegen"
 
 #: /globals/accesskeys.pt:149
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
-msgstr "c &nbsp; annuleren<br /> a &nbsp; toevoegen<br /> e &nbsp; toevoegen en bewerken/ingaan"
+msgstr ""
+"c &nbsp; annuleren<br /> a &nbsp; toevoegen<br /> e &nbsp; toevoegen en "
+"bewerken/ingaan"
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
@@ -502,10 +512,11 @@ msgid ""
 "numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
 "list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
 msgstr ""
-"${kupu_editor}<br /> b &nbsp; vetgedrukt<br /> i &nbsp; schuingedrukt<br /> u &nbsp; "
-"onderstreept<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # &nbsp; "
-"genummerde lijst<br /> * &nbsp; niet genummerde lijst<br /> = &nbsp; definitielijst"
-"<br /> z &nbsp; ongedaan maken<br /> y &nbsp; opnieuw<br /> h &nbsp; html-bron<br />"
+"${kupu_editor}<br /> b &nbsp; vetgedrukt<br /> i &nbsp; schuingedrukt<br /> "
+"u &nbsp; onderstreept<br /> - &nbsp; subscript<br /> + &nbsp; "
+"superscript<br /> # &nbsp; genummerde lijst<br /> * &nbsp; niet genummerde "
+"lijst<br /> = &nbsp; definitielijst<br /> z &nbsp; ongedaan maken<br /> y "
+"&nbsp; opnieuw<br /> h &nbsp; html-bron<br />"
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
@@ -517,9 +528,9 @@ msgid ""
 "&nbsp; save and insert<br /> tab Use your tab key to edit without using the "
 "mouse. Shift-tab goes backwards."
 msgstr ""
-"${forms_editor}<br /> s &nbsp; opslaan<br /> e &nbsp; opslaan en sluiten<br /> i "
-"&nbsp; opslaan en invoegen<br /> tab Gebruik de tab-toets om te bewerken zonder de "
-"muis te gebruiken. Shift-tab gaat terug."
+"${forms_editor}<br /> s &nbsp; opslaan<br /> e &nbsp; opslaan en sluiten<br /"
+"> i &nbsp; opslaan en invoegen<br /> tab Gebruik de tab-toets om te bewerken "
+"zonder de muis te gebruiken. Shift-tab gaat terug."
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
@@ -533,7 +544,6 @@ msgstr "Andere schermen"
 msgid "return"
 msgstr "terug"
 
-# Default: "r"
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:269
 msgid "return_accesskey"
 msgstr ""
@@ -553,8 +563,8 @@ msgid ""
 "hover over the button to see the tooltip."
 msgstr ""
 "De schermen 'Eigenschappen', 'Toegang', en 'Publiceren' en hun sub-schermen "
-"(zoals 'Opzoeken', 'Importeren', en 'Exporteren') hebben sneltoetsen voor  "
-"de meeste knoppen. Plaats de muis boven de knop om de tooltip te zien."
+"(zoals 'Opzoeken', 'Importeren', en 'Exporteren') hebben sneltoetsen voor de "
+"meeste knoppen. Plaats de muis boven de knop om de tooltip te zien."
 
 #: /globals/accesskeys.pt:194
 msgid ""
@@ -600,9 +610,6 @@ msgid ""
 "right arrow to go forward. On the Mac, command-left arrow and command-right "
 "arrow do this."
 msgstr ""
-"De meeste browsers gebruiken alt-linker pijltje om terug te gaan, en alt-"
-"rechter pijltje om verder te gaan. Op Apple systemen doen command-linker "
-"pijltje en command-rechter pijltje hetzelfde."
 
 #: /globals/accesskeys.pt:212
 msgid ""
@@ -616,7 +623,7 @@ msgid ""
 "can be changed by altering the the 'help_url' property in the Silva root. "
 "See the properties tab in the Zope Management Interface."
 msgstr ""
-"Om verdere documentatie aan te maken, kan de hyperlink van de Silva help-"
+"Om verdere documentatie aan te maken, kan de hyperlink van de Silva help- "
 "link worden gewijzigd door de 'help_url' eigenschap in de Silva root aan te "
 "passen. Zie de tab 'Eigenschappen' in de Zope Management Interface."
 
@@ -656,7 +663,7 @@ msgstr ""
 msgid ""
 "Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> for this trick."
-msgstr 
+msgstr ""
 "Dank aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> voor deze tip."
 
@@ -783,8 +790,8 @@ msgid ""
 "item&#8217;s screens by using alt-1, alt-2, and so forth."
 msgstr ""
 "${changing_screens_with_tabs}<br /> De tabs hebben genummerde sneltoetsen, "
-"van 1 tot en met 5. Horizontaal binnen de schermen van een item navigeren "
-"is mogelijk door alt-1, alt-2, etc. te gebruiken."
+"van 1 tot en met 5. Horizontaal binnen de schermen van een item navigeren is "
+"mogelijk door alt-1, alt-2, etc. te gebruiken."
 
 #: /globals/accesskeys.pt:73
 msgid ""
@@ -795,12 +802,12 @@ msgid ""
 "keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, "
 "alt-$, and alt-% (note that the characters resemble the number)."
 msgstr ""
-"Elke tab heeft een toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" alt="
-"\"tree\" />, het hoge boompje links. Die link leidt naar de top van de "
-"huidige publicatie, in dezelfde tab, of &#8216;ader&#8217;. De sneltoets "
-"is het shift-teken van het corresponderende cijfer (op een engels "
-"toetsenbord). Dus alt-!, alt-@, alt-#, "
-"alt-$, en alt-% (merk op dat de tekens op de nummers lijken.)"
+"Elke tab heeft een toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" "
+"alt=\"tree\" />, het hoge boompje links. Die link leidt naar de top van de "
+"huidige publicatie, in dezelfde tab, of &#8216;ader&#8217;. De sneltoets is "
+"het shift-teken van het corresponderende cijfer (op een engels toetsenbord). "
+"Dus alt-!, alt-@, alt-#, alt-$, en alt-% (merk op dat de tekens op de "
+"nummers lijken.)"
 
 #: /globals/accesskeys.pt:76
 msgid ""
@@ -812,11 +819,12 @@ msgid ""
 "than five tabs, you still add five to get the uplink key."
 msgstr ""
 "Rechts van elke tab staat een uplink <img src=\"up_level.gif\" height=\"9\" "
-"width=\"9\" alt=\"bush\" />, een kort boompje dat één niveau omhoog leidt binnen "
-"dezelfde ader. De sneltoetsen voor de uplinks zijn de overgebleven cijfers (tel "
-"vijf op bij de sneltoets voor het tabje). In een scherm met vijf tabs zijn "
-"de uplinks alt-6, alt-7, alt-8, alt-9, en alt-0. Indien er minder dan vijf "
-"tabs zijn, moet er nog steeds vijf opgeteld worden voor de uplink-sneltoets."
+"width=\"9\" alt=\"bush\" />, een kort boompje dat één niveau omhoog leidt "
+"binnen dezelfde ader. De sneltoetsen voor de uplinks zijn de overgebleven "
+"cijfers (tel vijf op bij de sneltoets voor het tabje). In een scherm met "
+"vijf tabs zijn de uplinks alt-6, alt-7, alt-8, alt-9, en alt-0. Indien er "
+"minder dan vijf tabs zijn, moet er nog steeds vijf opgeteld worden voor de "
+"uplink-sneltoets."
 
 #: /globals/accesskeys.pt:80
 msgid "${footer_page_info_row}<br /> : &nbsp; See public page<br />"
@@ -851,8 +859,8 @@ msgid ""
 "${listing_header}<br /> n &nbsp; new<br /> s &nbsp; select list for a new "
 "object<br /> i &nbsp; import<br /> e &nbsp; export"
 msgstr ""
-"${listing_header}<br /> n &nbsp; nieuw<br /> s &nbsp; lijst selecteren voor een nieuw "
-"object<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
+"${listing_header}<br /> n &nbsp; nieuw<br /> s &nbsp; lijst selecteren voor "
+"een nieuw object<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
 
 #: /globals/accesskeys.pt:96 /globals/accesskeys.pt:130
 msgid "Listing header"
@@ -867,7 +875,6 @@ msgstr "sneltoets: alt-b"
 msgid "back"
 msgstr "terug"
 
-# Default: "b"
 #: /globals/copyright.pt:17 /globals/reference.pt:22
 #: /views/edit/lookup_ui.pt:45
 msgid "back_accesskey"
@@ -877,7 +884,6 @@ msgstr ""
 msgid "Silva info: alt-s"
 msgstr ""
 
-# Default: "s"
 #: /globals/copyright.pt:28 /globals/reference.pt:33 /views/macro_tabs.pt:21
 msgid "silva_info_accesskey"
 msgstr ""
@@ -1022,7 +1028,7 @@ msgid "ChiefEditor"
 msgstr "Hoofdredacteur"
 
 #: /views/add/File/add_submit.py:68 /views/add/Groups/add_submit.py:60
-#: /views/add/Image/add_submit.py:68 /views/add/add_submit.py:51
+#: /views/add/Image/add_submit.py:68 /views/add/add_submit.py:58
 msgid "Added ${meta_type} ${id}."
 msgstr "${meta_type} ${id} toegevoegd."
 
@@ -1042,31 +1048,30 @@ msgstr "Kies een item om in de folder aan te maken."
 msgid "first item"
 msgstr "eerste item"
 
-#: /views/add/Ghost/add_form.pt:32 /views/add/GhostFolder/add_form.pt:32
+#: /views/add/Ghost/add_form.pt:37 /views/add/GhostFolder/add_form.pt:37
 msgid "create ${meta_type}"
 msgstr "${meta_type} aanmaken"
 
-#: /views/add/Ghost/add_form.pt:40 /views/add/GhostFolder/add_form.pt:40
-#: /views/edit/Container/GhostFolder/tab_edit.pt:68
+#: /views/add/Ghost/add_form.pt:45 /views/add/GhostFolder/add_form.pt:45
+#: /views/edit/Container/GhostFolder/tab_edit.pt:73
 #: /views/edit/VersionedContent/Ghost/edit.pt:57
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
 #: /views/edit/VersionedContent/Link/edit.pt:61
 msgid "attributes"
 msgstr "attributen"
 
-#: /views/add/Ghost/add_form.pt:62
+#: /views/add/Ghost/add_form.pt:65
 msgid "find the content this ghost should refer to: alt-r"
 msgstr "zoek het object waar deze 'ghost' naar moet wijzen: alt-r"
 
-# Default: "r"
-#: /views/add/Ghost/add_form.pt:62 /views/add/GhostFolder/add_form.pt:64
-#: /views/edit/Container/GhostFolder/tab_edit.pt:84
+#: /views/add/Ghost/add_form.pt:65 /views/add/GhostFolder/add_form.pt:67
+#: /views/edit/Container/GhostFolder/tab_edit.pt:87
 msgid "reference_accesskey"
 msgstr ""
 
-#: /views/add/Ghost/add_form.pt:62 /views/add/GhostFolder/add_form.pt:64
-#: /views/edit/Container/GhostFolder/tab_edit.pt:84
-#: /views/edit/VersionedContent/Ghost/edit.pt:74
+#: /views/add/Ghost/add_form.pt:65 /views/add/GhostFolder/add_form.pt:67
+#: /views/edit/Container/GhostFolder/tab_edit.pt:87
+#: /views/edit/VersionedContent/Ghost/edit.pt:72
 msgid "reference..."
 msgstr "verwijzing..."
 
@@ -1079,11 +1084,11 @@ msgstr "url"
 msgid "Location of originating document."
 msgstr "Locatie van oorspronkelijk document."
 
-#: /views/add/GhostFolder/add_form.pt:64
+#: /views/add/GhostFolder/add_form.pt:67
 msgid "find the folder this ghost should refer to: alt-r"
 msgstr "zoek de folder waar deze ghost naar moet wijzen: alt-r"
 
-#: /views/add/GhostFolder/add_form.pt:84
+#: /views/add/GhostFolder/add_form.pt:94
 msgid ""
 "Location of originating folder. Depending on how much content there is, "
 "<span class=\"warning\">creation may take a while</span>."
@@ -1115,6 +1120,17 @@ msgstr "Leeg of incorrect bestand."
 msgid "Link url."
 msgstr "Link url."
 
+#: /views/add/Link/form.form:85
+msgid ""
+"For absolute links the url will be checked, and 'http://' will be prepended "
+"if necessary. Relative links can contain anything, so it is the author's "
+"responsibility to create valid urls."
+msgstr ""
+
+#: /views/add/Link/form.form:94
+msgid "link type"
+msgstr ""
+
 #: /views/add/Publication/form.form:62
 msgid "What type of object should be added after creating the folder."
 msgstr ""
@@ -1124,18 +1140,17 @@ msgstr ""
 msgid "First item"
 msgstr "Eerste item"
 
-# Default: "e"
-#: /views/add/add_form.pt:107 /views/add/Ghost/add_form.pt:109
-#: /views/add/GhostFolder/add_form.pt:116
+#: /views/add/add_form.pt:107 /views/add/Ghost/add_form.pt:119
+#: /views/add/GhostFolder/add_form.pt:126
 #: /views/edit/Container/tab_access_groups.pt:136
 msgid "save_and_edit_accesskey"
 msgstr ""
 
-#: /views/add/add_form.pt:107 /views/add/Ghost/add_form.pt:109
-#: /views/add/GhostFolder/add_form.pt:116
+#: /views/add/add_form.pt:107 /views/add/Ghost/add_form.pt:119
+#: /views/add/GhostFolder/add_form.pt:126
 #: /views/edit/Container/tab_access_groups.pt:136
 #: /views/edit/Container/tab_status_export.pt:179
-#: /views/edit/VersionedContent/tab_status.pt:59
+#: /views/edit/VersionedContent/tab_status.pt:62
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
 
@@ -1147,8 +1162,8 @@ msgstr "${TOC_or_meta_type} aanmaken"
 msgid "aspect"
 msgstr "aspect"
 
-#: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:43
-#: /views/add/GhostFolder/add_form.pt:45 /views/edit/macro_edit_metadata.pt:84
+#: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:48
+#: /views/add/GhostFolder/add_form.pt:50 /views/edit/macro_edit_metadata.pt:84
 #: /views/edit/macro_view_metadata.pt:66 /views/edit/tab_settings.pt:138
 #: /views/edit/tab_subscriptions.pt:82
 #: /views/edit/Asset/macro_asset_edit.pt:69
@@ -1158,7 +1173,7 @@ msgstr "aspect"
 #: /views/edit/Container/tab_edit_import.pt:160
 #: /views/edit/Container/tab_edit_import.pt:299
 #: /views/edit/Container/tab_status_export.pt:332
-#: /views/edit/Container/GhostFolder/tab_edit.pt:72
+#: /views/edit/Container/GhostFolder/tab_edit.pt:77
 #: /views/edit/Container/Publication/tab_addables.pt:79
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
@@ -1168,8 +1183,8 @@ msgstr "aspect"
 msgid "content"
 msgstr "inhoud"
 
-#: /views/add/add_form.pt:57 /views/add/Ghost/add_form.pt:46
-#: /views/add/GhostFolder/add_form.pt:48
+#: /views/add/add_form.pt:57 /views/add/Ghost/add_form.pt:51
+#: /views/add/GhostFolder/add_form.pt:53
 #: /views/edit/Content/Indexer/edit.pt:55
 #: /views/edit/VersionedContent/tab_status_macros.pt:115
 #: /views/edit/VersionedContent/tab_status_macros.pt:207
@@ -1178,43 +1193,16 @@ msgstr "inhoud"
 msgid "notes"
 msgstr "notities"
 
-#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:90
-#: /views/add/GhostFolder/add_form.pt:98 /views/edit/Asset/Image/edit.pt:187
+#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:100
+#: /views/add/GhostFolder/add_form.pt:108 /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:130
 #: /views/edit/VersionedContent/tab_status_macros.pt:558
 #: /views/edit/VersionedContent/Link/edit.pt:89
 msgid "access key: alt-c"
 msgstr "sneltoets: alt-c"
 
-# Default: "c"
-#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:90
-#: /views/add/GhostFolder/add_form.pt:98 /views/edit/asset_lookup.pt:234
-#: /views/edit/hyperlink_lookup.pt:359
-#: /views/edit/Container/tab_edit_rename.pt:130
-msgid "cancel_accesskey"
-msgstr ""
-
-#: /views/add/add_form.pt:89 /views/add/Ghost/add_form.pt:90
-#: /views/add/GhostFolder/add_form.pt:98 /views/edit/asset_lookup.pt:234
-#: /views/edit/hyperlink_lookup.pt:359 /views/edit/promptWindow.pt:35
-#: /views/edit/Container/tab_edit_rename.pt:130
-msgid "cancel"
-msgstr "afbreken"
-
-#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:99
-#: /views/add/GhostFolder/add_form.pt:107 /views/edit/lookup_ui.pt:110
-#: /views/edit/macro_edit_metadata.pt:188 /views/edit/tab_subscriptions.pt:114
-#: /views/edit/Asset/macro_asset_edit.pt:96
-#: /views/edit/Container/tab_access_groups.pt:128
-#: /views/edit/Container/tab_edit.pt:82
-#: /views/edit/Container/GhostFolder/tab_edit.pt:144
-#: /views/edit/VersionedContent/Ghost/edit.pt:134
-#: /views/public/subscriptor.pt:45
-msgid "access key: alt-s"
-msgstr "sneltoets: alt-s"
-
-#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:99
-#: /views/add/GhostFolder/add_form.pt:107
+#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:109
+#: /views/add/GhostFolder/add_form.pt:117
 #: /views/edit/macro_edit_metadata.pt:188
 #: /views/edit/Asset/macro_asset_edit.pt:96
 #: /views/edit/Container/tab_access_groups.pt:128
@@ -1222,9 +1210,8 @@ msgstr "sneltoets: alt-s"
 msgid "save"
 msgstr "opslaan"
 
-# Default: "s"
-#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:99
-#: /views/add/GhostFolder/add_form.pt:107
+#: /views/add/add_form.pt:98 /views/add/Ghost/add_form.pt:109
+#: /views/add/GhostFolder/add_form.pt:117
 #: /views/edit/macro_edit_metadata.pt:188 /views/edit/promptWindow.pt:44
 #: /views/edit/Asset/macro_asset_edit.pt:96
 #: /views/edit/Container/tab_access_groups.pt:128
@@ -1358,7 +1345,6 @@ msgstr "Geen andere gebruikers toegevoegd (zaten ze al in deze groep?)"
 msgid "No users selected, so none added."
 msgstr "Geen gebruikers geselecteerd, dus ook niet toegevoegd."
 
-# Default: "r"
 #: /views/edit/Asset/Groups/Group/edit.pt:105
 msgid "remove_users_accesskey"
 msgstr ""
@@ -1371,7 +1357,6 @@ msgstr "geselecteerde gebruiker(s) uit deze groep verwijderen: alt-r"
 msgid "remove users"
 msgstr "gebruikers verwijderen"
 
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/Asset/Groups/Group/edit.pt:105
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:100
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
@@ -1388,7 +1373,6 @@ msgstr ""
 "\"Dingen die u kunt doen als 'virtual groups' niet op zijn originele locatie "
 "staat\""
 
-# Default: "a"
 #: /views/edit/Asset/Groups/Group/edit.pt:137
 msgid "add_to_group_accesskey"
 msgstr ""
@@ -1410,7 +1394,6 @@ msgstr "gebruikers van groep(en) kopiëren"
 msgid "transfer members from selected groups"
 msgstr "leden van geselecteerde groepen verplaatsen"
 
-# Default: "c"
 #: /views/edit/Asset/Groups/Group/edit.pt:157
 msgid "copy_users_from_group_accesskey"
 msgstr ""
@@ -1455,7 +1438,6 @@ msgstr "Range(s) ${copied} toegevoegd."
 msgid "Nothing copied."
 msgstr "Niets gekopieerd."
 
-# Default: "r"
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:100
 msgid "remove_ranges_accesskey"
 msgstr ""
@@ -1482,9 +1464,6 @@ msgid ""
 "(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
 "&nbsp;10.1.1.0/255.255.255.0)."
 msgstr ""
-"<strong>Kan zijn:</strong><br /> IP&nbsp;(zoals: 10.1.1.1), <br /> IP-"
-"IP&nbsp;(zoals:&nbsp;10.1.1.1-10.1.1.255) of<br /> IP/Netmask&nbsp;(zoals:"
-"&nbsp;10.1.1.0/255.255.255.0)."
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:156
 msgid "add an ip or an ip range"
@@ -1544,7 +1523,6 @@ msgstr "geselecteerde groep(en) verwijderen uit deze 'virtual group': alt-r"
 msgid "remove group"
 msgstr "groep verwijderen"
 
-# Default: "r"
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
 msgid "remove_group_accesskey"
 msgstr ""
@@ -1587,9 +1565,9 @@ msgstr "Groep(en) ${removed} uit groep verwijderd."
 #: /views/edit/Content/SimpleContent/get_tabs.py:4
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:17
 #: /views/edit/VersionedContent/Link/get_tabs.py:15
-#: /views/edit/Container/GhostFolder/tab_edit.pt:221
-#: /views/edit/Container/GhostFolder/tab_edit.pt:284
-#: /views/edit/Container/GhostFolder/tab_edit.pt:420
+#: /views/edit/Container/GhostFolder/tab_edit.pt:231
+#: /views/edit/Container/GhostFolder/tab_edit.pt:294
+#: /views/edit/Container/GhostFolder/tab_edit.pt:430
 msgid "edit"
 msgstr "bewerken"
 
@@ -1615,7 +1593,6 @@ msgstr ""
 "geef het midden van het af te snijden gebied aan door in de afbeelding te "
 "klikken: alt-o"
 
-# Default: "o"
 #: /views/edit/Asset/Image/edit.pt:176
 msgid "set_crop_coordinates_accesskey"
 msgstr ""
@@ -1624,7 +1601,6 @@ msgstr ""
 msgid "change"
 msgstr "veranderen"
 
-# Default: "c"
 #: /views/edit/Asset/Image/edit.pt:187
 msgid "change_accesskey"
 msgstr ""
@@ -1657,7 +1633,6 @@ msgstr "origineel"
 msgid "view the original image: alt-v"
 msgstr "originele afbeelding bekijken: alt-v"
 
-# Default: "v"
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view_original_image_accesskey"
 msgstr "v"
@@ -1732,7 +1707,6 @@ msgstr "250x250 pixels"
 msgid "250x250 pixel"
 msgstr "250x250 pixels"
 
-# Default: "u"
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:173
 msgid "use_coordinates_accesskey"
 msgstr ""
@@ -1783,9 +1757,10 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"Afbeelding afsnijden/uitsnijden voor het web: gebruik de knop &amp;#8216;"
-"afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-X2xY2 in om de "
-"afsnijdmaten te definiëren."
+"              Afbeelding afsnijden/uitsnijden voor het web: gebruik de knop "
+"&amp;#8216;afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-X2xY2 in "
+"om de afsnijdmaten te definiëren.\n"
+"          "
 
 #: /views/edit/Asset/Image/scale_submit.py:12
 msgid "Scaling and/or format changed"
@@ -1816,11 +1791,11 @@ msgstr "Afbeelding bijgewerkt."
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:18
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
 #: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
-#: /views/edit/hyperlink_lookup.pt:313 /views/edit/Container/tab_edit.pt:145
-#: /views/edit/Container/tab_edit.pt:223 /views/edit/Container/tab_edit.pt:410
-#: /views/edit/Container/GhostFolder/tab_edit.pt:224
-#: /views/edit/Container/GhostFolder/tab_edit.pt:300
-#: /views/edit/Container/GhostFolder/tab_edit.pt:435
+#: /views/object_lookup.pt:360 /views/edit/Container/tab_edit.pt:137
+#: /views/edit/Container/tab_edit.pt:215 /views/edit/Container/tab_edit.pt:402
+#: /views/edit/Container/GhostFolder/tab_edit.pt:234
+#: /views/edit/Container/GhostFolder/tab_edit.pt:310
+#: /views/edit/Container/GhostFolder/tab_edit.pt:445
 msgid "preview"
 msgstr "voorbeeld"
 
@@ -1833,8 +1808,8 @@ msgstr "voorbeeld"
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
 #: /views/edit/macro_edit_metadata.pt:40 /views/edit/tab_metadata.pt:56
 #: /views/edit/tab_metadata.pt:77 /views/edit/tab_metadata.pt:95
-#: /views/edit/Container/tab_edit.pt:237 /views/edit/Container/tab_edit.pt:246
-#: /views/edit/Container/tab_edit.pt:425 /views/edit/Container/tab_edit.pt:434
+#: /views/edit/Container/tab_edit.pt:229 /views/edit/Container/tab_edit.pt:238
+#: /views/edit/Container/tab_edit.pt:417 /views/edit/Container/tab_edit.pt:426
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
 msgid "properties"
 msgstr "eigenschappen"
@@ -1859,7 +1834,6 @@ msgstr "uploaden"
 msgid "upload file"
 msgstr "bestand uploaden"
 
-# Default: "u"
 #: /views/edit/Asset/macro_asset_edit.pt:182
 msgid "upload_file_accesskey"
 msgstr ""
@@ -1876,7 +1850,7 @@ msgid "characterization"
 msgstr "karakteristiek"
 
 #: /views/edit/Asset/tab_status.pt:26 /views/edit/Content/tab_status.pt:26
-#: /views/edit/VersionedContent/tab_status.pt:50
+#: /views/edit/VersionedContent/tab_status.pt:53
 msgid "status of &#xab;${title}&#xbb;"
 msgstr "status van &#xab;${title}&#xbb;"
 
@@ -1892,8 +1866,8 @@ msgid ""
 "that contain them, can be subscribed to."
 msgstr ""
 "Dit scherm heeft geen instellingen, omdat het niet mogelijk is om u te "
-"abonneren op een . U kunt zich alleen abonneren op documenten die "
-"tekstuele inhoud bevatten, en mappen met zulke documenten."
+"abonneren op een . U kunt zich alleen abonneren op documenten die tekstuele "
+"inhoud bevatten, en mappen met zulke documenten."
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
@@ -1920,11 +1894,11 @@ msgstr "inhoud"
 #: /views/edit/Container/get_tabs.py:21
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
-#: /views/edit/hyperlink_lookup.pt:243 /views/edit/Container/tab_edit.pt:273
-#: /views/edit/Container/tab_edit.pt:282
+#: /views/object_lookup.pt:283 /views/edit/Container/tab_edit.pt:265
+#: /views/edit/Container/tab_edit.pt:274
 #: /views/edit/Container/tab_status.pt:191
 #: /views/edit/Container/tab_status.pt:201
-#: /views/edit/Container/GhostFolder/tab_edit.pt:359
+#: /views/edit/Container/GhostFolder/tab_edit.pt:369
 msgid "publish"
 msgstr "publiceren"
 
@@ -1948,61 +1922,59 @@ msgstr ""
 msgid "Ghost Folder synchronized"
 msgstr "'Ghost Folder' gesynchroniseerd"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:103
-#: /views/edit/VersionedContent/Ghost/edit.pt:93
+#: /views/edit/Container/GhostFolder/tab_edit.pt:113
+#: /views/edit/VersionedContent/Ghost/edit.pt:98
 msgid "Path to original (begins with &#8216;/&#8217;)."
 msgstr "Pad naar origineel (begint met &#8216;/&#8217;)."
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:110
-#: /views/edit/VersionedContent/Ghost/edit.pt:100
+#: /views/edit/Container/GhostFolder/tab_edit.pt:120
+#: /views/edit/VersionedContent/Ghost/edit.pt:105
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
 msgid "link"
 msgstr "link"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:120
+#: /views/edit/Container/GhostFolder/tab_edit.pt:130
 msgid "Link to contents screen of original."
 msgstr "Link naar scherm 'inhoud' van origineel."
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:127
-#: /views/edit/VersionedContent/Ghost/edit.pt:117
+#: /views/edit/Container/GhostFolder/tab_edit.pt:137
+#: /views/edit/VersionedContent/Ghost/edit.pt:122
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:81
 msgid "problem"
 msgstr "probleem"
 
-# Default: "s"
-#: /views/edit/Container/GhostFolder/tab_edit.pt:144
-#: /views/edit/VersionedContent/Ghost/edit.pt:134
+#: /views/edit/Container/GhostFolder/tab_edit.pt:154
+#: /views/edit/VersionedContent/Ghost/edit.pt:139
 msgid "save_reference_accesskey"
 msgstr ""
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:144
-#: /views/edit/VersionedContent/Ghost/edit.pt:134
+#: /views/edit/Container/GhostFolder/tab_edit.pt:154
+#: /views/edit/VersionedContent/Ghost/edit.pt:139
 msgid "save reference"
 msgstr "verwijzing opslaan"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:184
+#: /views/edit/Container/GhostFolder/tab_edit.pt:194
 msgid "ghost folder contents"
 msgstr "'ghost folder' inhoud"
 
-# Default: "e"
-#: /views/edit/Container/GhostFolder/tab_edit.pt:198
+#: /views/edit/Container/GhostFolder/tab_edit.pt:208
 msgid "resync_ghost_folder_accesskey"
 msgstr ""
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:198
+#: /views/edit/Container/GhostFolder/tab_edit.pt:208
 msgid "re-synchronize with content from the source folder: alt-e"
 msgstr "hersynchroniseren met de inhoud van de bronfolder: alt-e"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:198
+#: /views/edit/Container/GhostFolder/tab_edit.pt:208
 msgid "resync ghost folder"
 msgstr "'ghost folder' hersynchroniseren"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:55
+#: /views/edit/Container/GhostFolder/tab_edit.pt:60
 msgid "ghost folder of &#xab;${title}&#xbb;"
 msgstr "'ghost folder' van &#xab;${title}&#xbb;"
 
-#: /views/edit/Container/GhostFolder/tab_edit.pt:84
-#: /views/edit/VersionedContent/Ghost/edit.pt:74
+#: /views/edit/Container/GhostFolder/tab_edit.pt:87
+#: /views/edit/VersionedContent/Ghost/edit.pt:72
 msgid "Locate item to refer to: alt-r"
 msgstr "Item om naar te verwijzen opzoeken: alt-r"
 
@@ -2010,7 +1982,6 @@ msgstr "Item om naar te verwijzen opzoeken: alt-r"
 msgid "miscellaneous settings: alt-e"
 msgstr "diverse instellingen: alt-e"
 
-# Default: "e"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 msgid "tab_settings_accesskey"
 msgstr ""
@@ -2019,7 +1990,6 @@ msgstr ""
 msgid "s<u>e</u>ttings..."
 msgstr "inst<u>e</u>llingen..."
 
-# Default: "u"
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 msgid "manage_subscriptions_accesskey"
 msgstr ""
@@ -2060,7 +2030,6 @@ msgstr "toevoeg-instellingen opslaan"
 msgid "save addable settings for this publication: alt-a"
 msgstr "toevoeg-instellingen voor deze publicatie opslaan: alt-a"
 
-# Default: "a"
 #: /views/edit/Container/Publication/tab_addables.pt:111
 msgid "save_addables_settings_accesskey"
 msgstr ""
@@ -2092,7 +2061,7 @@ msgid ""
 "publication above."
 msgstr ""
 "Als overerven niet is aangevinkt, bepalen deze instellingen wat voor items "
-"in deze publicatie mogen worden toegevoegd. Anders worden de toevoeg-"
+"in deze publicatie mogen worden toegevoegd. Anders worden de toevoeg- "
 "instellingen overgeërfd van de bovenliggende publicatie."
 
 #: /views/edit/Container/Publication/tab_addables_submit.py:34
@@ -2138,7 +2107,6 @@ msgstr "eigenaar"
 msgid "there's no undo: alt-x"
 msgstr "kan niet ongedaan worden gemaakt: alt-x"
 
-# Default: "x"
 #: /views/edit/Container/docma_queue.pt:231
 #: /views/edit/Container/tab_status_export.pt:483
 msgid "remove_accesskey"
@@ -2157,7 +2125,6 @@ msgstr "verwijderen"
 msgid "description"
 msgstr "omschrijving"
 
-# Default: "m"
 #: /views/edit/Container/docma_queue.pt:240
 msgid "import_and_remove_accesskey"
 msgstr ""
@@ -2174,26 +2141,21 @@ msgstr "importeren en verwijderen"
 msgid "import to the current location: alt-p"
 msgstr "naar de huidige locatie importeren: alt-p"
 
-# Default: "p"
-#: /views/edit/Container/docma_queue.pt:247
-#: /views/edit/Container/tab_edit.pt:107 /views/edit/Container/tab_edit.pt:116
-#: /views/edit/Container/tab_edit_import.pt:120
-#: /views/edit/Container/tab_status.pt:76
-#: /views/edit/Container/tab_status.pt:87
-#: /views/edit/Container/tab_status_export.pt:90
-msgid "import_accesskey"
-msgstr ""
-
 #: /views/edit/Container/docma_queue.pt:247
 #: /views/edit/Container/tab_edit_import.pt:120
 msgid "import"
 msgstr "importeren"
 
+#: /views/edit/Container/docma_queue.pt:247
+#: /views/edit/Container/tab_edit_import.pt:120
+#: /views/edit/Container/tab_status_export.pt:90
+msgid "import_accesskey"
+msgstr ""
+
 #: /views/edit/Container/docma_queue.pt:40
 msgid "reload to update the queue lists: alt-r"
 msgstr "herladen om de wachtrij te verversen: alt-r"
 
-# Default: "r"
 #: /views/edit/Container/docma_queue.pt:40
 msgid "refresh_queue_lists_accesskey"
 msgstr ""
@@ -2356,22 +2318,20 @@ msgstr "Er zijn geen groepen gedefinieerd op deze locatie."
 msgid "delete selected groups: alt-d"
 msgstr "geselecteerde groepen verwijderen: alt-d"
 
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/Container/tab_access_groups.pt:249
-#: /views/edit/Container/tab_edit.pt:605
+#: /views/edit/Container/tab_edit.pt:598
 msgid "return confirm('Really delete?')"
 msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
-# Default: "d"
 #: /views/edit/Container/tab_access_groups.pt:249
-#: /views/edit/Container/tab_edit.pt:605
-#: /views/edit/VersionedContent/tab_status.pt:337
+#: /views/edit/Container/tab_edit.pt:598
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "delete_accesskey"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:249
-#: /views/edit/Container/tab_edit.pt:605
-#: /views/edit/VersionedContent/tab_status.pt:337
+#: /views/edit/Container/tab_edit.pt:598
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "delete"
 msgstr "verwijderen"
 
@@ -2443,191 +2403,152 @@ msgstr "xml-gegevens of een zipbestand importeren: alt-i"
 msgid "import..."
 msgstr "importeren..."
 
-#: /views/edit/Container/tab_edit.pt:116
-#: /views/edit/Container/tab_status.pt:87
-msgid "export to xml or convert for export: alt-e"
-msgstr "naar xml exporteren of converteren voor export: alt-e"
-
-#: /views/edit/Container/tab_edit.pt:116
-#: /views/edit/Container/tab_status.pt:87
-#: /views/edit/VersionedContent/tab_status.pt:59
-msgid "export..."
-msgstr "exporteren..."
-
-#: /views/edit/Container/tab_edit.pt:142 /views/edit/Container/tab_edit.pt:208
+#: /views/edit/Container/tab_edit.pt:134 /views/edit/Container/tab_edit.pt:200
 msgid "modify"
 msgstr "bewerken"
 
-#: /views/edit/Container/tab_edit.pt:155
+#: /views/edit/Container/tab_edit.pt:147
 msgid "shift"
 msgstr "herordenen"
 
-#: /views/edit/Container/tab_edit.pt:259
-#: /views/edit/Container/GhostFolder/tab_edit.pt:334
+#: /views/edit/Container/tab_edit.pt:251
+#: /views/edit/Container/GhostFolder/tab_edit.pt:344
 msgid "content approved, or published..."
 msgstr "inhoud goedgekeurd, of gepubliceerd..."
 
-#: /views/edit/Container/tab_edit.pt:301 /views/edit/Container/tab_edit.pt:306
+#: /views/edit/Container/tab_edit.pt:293 /views/edit/Container/tab_edit.pt:298
 msgid "move down"
 msgstr "naar beneden verplaatsen"
 
-#: /views/edit/Container/tab_edit.pt:314 /views/edit/Container/tab_edit.pt:319
+#: /views/edit/Container/tab_edit.pt:306 /views/edit/Container/tab_edit.pt:311
 msgid "move up"
 msgstr "naar boven verplaatsen"
 
-#: /views/edit/Container/tab_edit.pt:477
+#: /views/edit/Container/tab_edit.pt:386
+#: /views/edit/VersionedContent/tab_status.pt:93
+msgid "content-editor"
+msgstr "inhoud editor"
+
+#: /views/edit/Container/tab_edit.pt:469
 #: /views/edit/Container/tab_status.pt:71
-#: /views/edit/VersionedContent/tab_status.pt:56
+#: /views/edit/VersionedContent/tab_status.pt:59
 msgid "publishing actions"
 msgstr "publicatie-acties"
 
-#: /views/edit/Container/tab_edit.pt:491
+#: /views/edit/Container/tab_edit.pt:484
 msgid "close published items: alt-l"
 msgstr "gepubliceerde items sluiten: alt-l"
 
-#: /views/edit/Container/tab_edit.pt:491
+#: /views/edit/Container/tab_edit.pt:484
 #: /views/edit/Container/tab_status.pt:372
 #: /views/edit/Member/SimpleMember/tab_edit.pt:132
 msgid "close"
 msgstr "sluiten"
 
-#: /views/edit/Container/tab_edit.pt:500
+#: /views/edit/Container/tab_edit.pt:493
 #: /views/edit/Container/tab_status.pt:411
 msgid "publish new versions: alt-p"
 msgstr "nieuwe versies publiceren: alt-p"
 
-#: /views/edit/Container/tab_edit.pt:512
+#: /views/edit/Container/tab_edit.pt:505
 msgid "move selected items to"
 msgstr "geselecteerde items verplaatsen naar"
 
-#: /views/edit/Container/tab_edit.pt:519
+#: /views/edit/Container/tab_edit.pt:512
 msgid "position"
 msgstr "positie"
 
-#: /views/edit/Container/tab_edit.pt:530
+#: /views/edit/Container/tab_edit.pt:523
 msgid "end"
 msgstr "einde"
 
-# Default: "p"
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:530
 msgid "new_position_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:537
+#: /views/edit/Container/tab_edit.pt:530
 #: /views/edit/Container/tab_status.pt:336
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 msgid "access key: alt-o"
 msgstr "sneltoets: alt-o"
 
-# Default: "m"
-#: /views/edit/Container/tab_edit.pt:543
+#: /views/edit/Container/tab_edit.pt:536
 msgid "move_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:543
+#: /views/edit/Container/tab_edit.pt:536
 msgid "move selected items into position: alt-m"
 msgstr "geselecteerde items naar positie verplaatsen: alt-m"
 
-#: /views/edit/Container/tab_edit.pt:543
+#: /views/edit/Container/tab_edit.pt:536
 msgid "move"
 msgstr "verplaatsen"
 
-#: /views/edit/Container/tab_edit.pt:552
+#: /views/edit/Container/tab_edit.pt:545
 msgid "rename and retitle items: alt-r"
 msgstr "naam en titel van items veranderen: alt-r"
 
-#: /views/edit/Container/tab_edit.pt:552
+#: /views/edit/Container/tab_edit.pt:545
 msgid "rename..."
 msgstr "hernoemen..."
 
-# Default: "r"
-#: /views/edit/Container/tab_edit.pt:552
+#: /views/edit/Container/tab_edit.pt:545
 #: /views/edit/Container/tab_edit_rename.pt:122
 msgid "rename_accesskey"
 msgstr ""
 
-# Default: "x"
-#: /views/edit/Container/tab_edit.pt:560
+#: /views/edit/Container/tab_edit.pt:553
 msgid "cut_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:560
+#: /views/edit/Container/tab_edit.pt:553
 msgid "cut"
 msgstr "knippen"
 
-#: /views/edit/Container/tab_edit.pt:560
+#: /views/edit/Container/tab_edit.pt:553
 msgid "cut items: alt-x"
 msgstr "items knippen: alt-x"
 
-#: /views/edit/Container/tab_edit.pt:571
+#: /views/edit/Container/tab_edit.pt:564
 msgid "copy"
 msgstr "kopiëren"
 
-# Default: "c"
-#: /views/edit/Container/tab_edit.pt:571
+#: /views/edit/Container/tab_edit.pt:564
 msgid "copy_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:571
+#: /views/edit/Container/tab_edit.pt:564
 msgid "copy items: alt-c"
 msgstr "items kopiëren: alt-c"
 
-# Default: "v"
-#: /views/edit/Container/tab_edit.pt:587
+#: /views/edit/Container/tab_edit.pt:580
 msgid "paste_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:587
+#: /views/edit/Container/tab_edit.pt:580
 msgid "paste items: alt-v"
 msgstr "items plakken: alt-v"
 
-#: /views/edit/Container/tab_edit.pt:587
+#: /views/edit/Container/tab_edit.pt:580
 msgid "paste"
 msgstr "plakken"
 
-#: /views/edit/Container/tab_edit.pt:595
+#: /views/edit/Container/tab_edit.pt:588
 msgid "paste (items on clipboard) as ghost objects: alt-g"
 msgstr "items als ghost objecten op clipboard plakken: alt-g"
 
-#: /views/edit/Container/tab_edit.pt:595
+#: /views/edit/Container/tab_edit.pt:588
 msgid "paste ghost"
 msgstr "ghost plakken"
 
-# Default: "g"
-#: /views/edit/Container/tab_edit.pt:595
+#: /views/edit/Container/tab_edit.pt:588
 msgid "paste_ghost_accesskey"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:605
-#: /views/edit/VersionedContent/tab_status.pt:337
+#: /views/edit/Container/tab_edit.pt:598
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "there's no undo: alt-d"
 msgstr "items verwijderen (er is geen undo): alt-d"
-
-#: /views/edit/Container/tab_edit.pt:73
-msgid "new..."
-msgstr "nieuw..."
-
-#: /views/edit/Container/tab_edit.pt:73
-msgid "add a new item - alt-n"
-msgstr "een nieuw item toevoegen - alt-n"
-
-# Default: "n"
-#: /views/edit/Container/tab_edit.pt:73
-msgid "new_accesskey"
-msgstr ""
-
-# Default: "s"
-#: /views/edit/Container/tab_edit.pt:82
-msgid "select_new_item_accesskey"
-msgstr ""
-
-#: /views/edit/Container/tab_edit.pt:88
-msgid "select a new item: alt-s"
-msgstr "een nieuw item selecteren: alt-s"
-
-#: /views/edit/Container/tab_edit.pt:95
-msgid "select:"
-msgstr "selecteren:"
 
 #: /views/edit/Container/tab_edit_activate.py:15
 msgid "Nothing was selected, so nothing is activated."
@@ -2804,7 +2725,6 @@ msgstr ""
 "De subdirectorystructuur van een zipbestand met Assets recreëren door Silva "
 "Folders toe te voegen."
 
-# Default: "z"
 #: /views/edit/Container/tab_edit_import.pt:230
 msgid "import_zip_accesskey"
 msgstr ""
@@ -2837,7 +2757,7 @@ msgid ""
 "Locate a Word file to upload. It'll be converted and appear in the list of "
 "processed items below. It can be imported anywhere in Silva."
 msgstr ""
-"Zoek een Word-bestand om te uploaden. Het zal worden geconverteerd en in de  "
+"Zoek een Word-bestand om te uploaden. Het zal worden geconverteerd en in de "
 "lijst met verwerkte items terecht komen die hier onder staat. Het kan overal "
 "in Silva worden geïmporteerd."
 
@@ -2861,7 +2781,6 @@ msgstr ""
 "Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items "
 "getoond."
 
-# Default: "u"
 #: /views/edit/Container/tab_edit_import.pt:354
 msgid "upload_accesskey"
 msgstr ""
@@ -2882,9 +2801,8 @@ msgstr "naar het export scherm: alt-e"
 msgid "export"
 msgstr "exporteren"
 
-# Default: "e"
 #: /views/edit/Container/tab_edit_import.pt:68
-#: /views/edit/VersionedContent/tab_status.pt:59
+#: /views/edit/VersionedContent/tab_status.pt:62
 msgid "export_accesskey"
 msgstr ""
 
@@ -3110,7 +3028,6 @@ msgstr "Er zijn hier geen items die gepubliceerd kunnen worden."
 msgid "day / month / year"
 msgstr "dag / maand / jaar"
 
-# Default: "m"
 #: /views/edit/Container/tab_status.pt:301
 msgid "publish_time_accesskey"
 msgstr ""
@@ -3136,7 +3053,6 @@ msgstr "&nbsp;&nbsp;verlooptijdstip"
 msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
 
-# Default: "x"
 #: /views/edit/Container/tab_status.pt:318
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
 #: /views/edit/VersionedContent/tab_status_macros.pt:235
@@ -3144,7 +3060,6 @@ msgstr "sneltoets: alt-x"
 msgid "expiration_time_accesskey"
 msgstr ""
 
-# Default: "o"
 #: /views/edit/Container/tab_status.pt:336
 msgid "clear_expiration_accesskey"
 msgstr ""
@@ -3157,7 +3072,6 @@ msgstr "verlooptijdstip&nbsp;wissen"
 msgid "reject pending request for approval: alt-j"
 msgstr "uitstaande aanvraag voor goedkeuring afwijzen: alt-j"
 
-# Default: "j"
 #: /views/edit/Container/tab_status.pt:354
 msgid "reject_accesskey"
 msgstr ""
@@ -3176,7 +3090,6 @@ msgstr "goedkeuring van goedgekeurde versies intrekken: alt-v"
 msgid "revoke"
 msgstr "intrekken"
 
-# Default: "v"
 #: /views/edit/Container/tab_status.pt:363
 #: /views/edit/Container/tab_status.pt:438
 msgid "revoke_accesskey"
@@ -3186,7 +3099,6 @@ msgstr ""
 msgid "close published items: alt-c"
 msgstr "gepubliceerde items sluiten: alt-c"
 
-# Default: "c"
 #: /views/edit/Container/tab_status.pt:372
 #: /views/edit/Member/SimpleMember/tab_edit.pt:132
 msgid "close_accesskey"
@@ -3210,7 +3122,6 @@ msgstr "goedkeuren voor later"
 msgid "change publish and expiration times: alt-u"
 msgstr "publicatie- en verlooptijdstip veranderen: alt-u"
 
-# Default: "u"
 #: /views/edit/Container/tab_status.pt:402
 #: /views/edit/Container/tab_status.pt:458
 msgid "set_timing_accesskey"
@@ -3225,7 +3136,6 @@ msgstr "tijdstippen instellen"
 msgid "withdraw pending request for approval: alt-w"
 msgstr "uitstaand aanvraag voor goedkeuring intrekken: alt-w"
 
-# Default: "w"
 #: /views/edit/Container/tab_status.pt:429
 msgid "withdraw_accesskey"
 msgstr ""
@@ -3251,7 +3161,6 @@ msgstr ""
 msgid "request approval for new versions: alt-r"
 msgstr "goedkeuring van nieuwe versies aanvragen: alt-r"
 
-# Default: "r"
 #: /views/edit/Container/tab_status.pt:467
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request_approval_accesskey"
@@ -3262,7 +3171,6 @@ msgstr ""
 msgid "request approval"
 msgstr "goedkeuring aanvragen"
 
-# Default: "r"
 #: /views/edit/Container/tab_status.pt:476
 msgid "request_approval_now_accesskey"
 msgstr ""
@@ -3274,6 +3182,15 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:476
 msgid "request approval now"
 msgstr ""
+
+#: /views/edit/Container/tab_status.pt:87
+msgid "export to xml or convert for export: alt-e"
+msgstr "naar xml exporteren of converteren voor export: alt-e"
+
+#: /views/edit/Container/tab_status.pt:87
+#: /views/edit/VersionedContent/tab_status.pt:62
+msgid "export..."
+msgstr "exporteren..."
 
 #: /views/edit/Container/tab_status_approve.py:77
 msgid "no publication time was set"
@@ -3341,7 +3258,6 @@ msgstr "nieuwste versies exporteren?"
 msgid "If not checked the published version is exported."
 msgstr "Indien niet aangevinkt wordt de gepubliceerde versie geëxporteerd."
 
-# Default: "p"
 #: /views/edit/Container/tab_status_export.pt:170
 msgid "export_pdf_accesskey"
 msgstr ""
@@ -3372,7 +3288,6 @@ msgstr "volledige media exporteren (.zip)"
 msgid "export zip"
 msgstr "zipbestand exporteren"
 
-# Default: "z"
 #: /views/edit/Container/tab_status_export.pt:265
 msgid "export_zip_accesskey"
 msgstr ""
@@ -3405,7 +3320,6 @@ msgstr "naar Docma exporteren"
 msgid "export the selection to word: alt-d"
 msgstr "de selectie naar word exporteren: alt-d"
 
-# Default: "d"
 #: /views/edit/Container/tab_status_export.pt:458
 msgid "export_to_docma_accesskey"
 msgstr ""
@@ -3585,7 +3499,6 @@ msgstr ""
 msgid "update index"
 msgstr "index bijwerken"
 
-# Default: "u"
 #: /views/edit/Content/Indexer/edit.pt:75
 msgid "update_index_accesskey"
 msgstr ""
@@ -3594,10 +3507,9 @@ msgstr ""
 msgid "Index updated"
 msgstr "Index bijgewerkt"
 
-#: /views/edit/Content/SimpleContent/get_tabs.py:6
-#: /views/edit/hyperlink_lookup.pt:223
+#: /views/edit/Content/SimpleContent/get_tabs.py:6 /views/object_lookup.pt:263
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:65
-#: /views/edit/Container/GhostFolder/tab_edit.pt:323
+#: /views/edit/Container/GhostFolder/tab_edit.pt:333
 #: /views/edit/VersionedContent/tab_status_macros.pt:304
 msgid "settings"
 msgstr "instellingen"
@@ -3617,7 +3529,7 @@ msgstr "Lid goedgekeurd"
 
 #: /views/edit/Member/SimpleMember/memberform.form:69
 msgid "preferred editor"
-msgstr "voorkeurs-editor "
+msgstr "voorkeurs-editor"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid ""
@@ -3681,7 +3593,7 @@ msgstr "karakteristiek"
 msgid "preferred language"
 msgstr "gewenste taal"
 
-#: /views/edit/VersionedContent/Ghost/edit.pt:110
+#: /views/edit/VersionedContent/Ghost/edit.pt:115
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
 msgid "Link to editor screen of original."
 msgstr "Link naar 'bewerken' scherm van origineel."
@@ -3690,8 +3602,7 @@ msgstr "Link naar 'bewerken' scherm van origineel."
 msgid "ghost of &#xab;${name}&#xbb;"
 msgstr "'ghost' van &#xab;${name}&#xbb;"
 
-# Default: "r"
-#: /views/edit/VersionedContent/Ghost/edit.pt:74
+#: /views/edit/VersionedContent/Ghost/edit.pt:72
 msgid "locate_item_to_refer_to_accesskey"
 msgstr ""
 
@@ -3723,7 +3634,6 @@ msgstr "van publieke versie van &#xab;${title}&#xbb;"
 msgid "link url"
 msgstr "link url"
 
-# Default: "c"
 #: /views/edit/VersionedContent/Link/edit.pt:89
 msgid "change_link_accesskey"
 msgstr ""
@@ -3769,7 +3679,6 @@ msgstr "aanvraag intrekken"
 msgid "withdraw a request for approval in order to edit: alt-w"
 msgstr "een aanvraag voor goedkeuring intrekken om te kunnen bewerken: alt-w"
 
-# Default: "w"
 #: /views/edit/VersionedContent/macro_tab_edit.pt:147
 msgid "withdraw_request_accesskey"
 msgstr ""
@@ -3802,7 +3711,6 @@ msgstr "N.B.:"
 msgid "Somebody else just edited this item, unlock it: alt-u"
 msgstr "Iemand anders heeft dit item zojuist bewerkt. Blokkade opheffen: alt-u"
 
-# Default: "u"
 #: /views/edit/VersionedContent/macro_tab_edit.pt:89
 msgid "break_lock_accesskey"
 msgstr ""
@@ -3812,7 +3720,7 @@ msgid "break lock"
 msgstr "Blokkade verbreken"
 
 #: /views/edit/VersionedContent/preview_open_now.py:12
-#: /views/edit/VersionedContent/tab_status.pt:86
+#: /views/edit/VersionedContent/tab_status.pt:89
 msgid "Content is published"
 msgstr "Inhoud is gepubliceerd"
 
@@ -3868,7 +3776,11 @@ msgstr "Aanvraag voor goedkeuring geweigerd"
 msgid "Withdrew request for approval"
 msgstr "Aanvraag voor goedkeuring ingetrokken"
 
-#: /views/edit/VersionedContent/tab_status.pt:100
+#: /views/edit/VersionedContent/tab_status.pt:102
+msgid "Published version exists"
+msgstr "Er bestaat een gepubliceerde versie"
+
+#: /views/edit/VersionedContent/tab_status.pt:103
 msgid ""
 "Note: an older version of this content is online.<br /> Publishing this "
 "version will replace the public version."
@@ -3876,11 +3788,11 @@ msgstr ""
 "N.B.: een oudere versie van deze inhoud staat online.<br /> Het publiceren "
 "van deze versie zal de publieke versie vervangen."
 
-#: /views/edit/VersionedContent/tab_status.pt:110
+#: /views/edit/VersionedContent/tab_status.pt:113
 msgid "Content is closed"
 msgstr "Inhoud is gesloten"
 
-#: /views/edit/VersionedContent/tab_status.pt:113
+#: /views/edit/VersionedContent/tab_status.pt:116
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
@@ -3888,19 +3800,19 @@ msgstr ""
 "Deze inhoud was ooit gepubliceerd maar is nu gesloten.<br /> Indien gewenst, "
 "kan er een bewerkbare kopie gemaakt worden in '${editor}'."
 
-#: /views/edit/VersionedContent/tab_status.pt:244
+#: /views/edit/VersionedContent/tab_status.pt:247
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "versies beheren van &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:335
+#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:335
 msgid "modification time"
 msgstr "modificatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:394
+#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:394
 msgid "publication time"
 msgstr "publicatie-tijdstip"
 
-#: /views/edit/VersionedContent/tab_status.pt:257
+#: /views/edit/VersionedContent/tab_status.pt:260
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
@@ -3909,68 +3821,61 @@ msgstr "publicatie-tijdstip"
 msgid "expiration time"
 msgstr "verlooptijd"
 
-#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:567
+#: /views/edit/VersionedContent/tab_status.pt:261 /doc/silva-extra.xml:567
 msgid "last author"
 msgstr "laatste auteur"
 
-#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:509
+#: /views/edit/VersionedContent/tab_status.pt:262 /doc/silva-extra.xml:509
 msgid "creator"
 msgstr "aangemaakt"
 
-#: /views/edit/VersionedContent/tab_status.pt:260
+#: /views/edit/VersionedContent/tab_status.pt:263
 msgid "version status"
 msgstr "versie-status"
 
-#: /views/edit/VersionedContent/tab_status.pt:329
+#: /views/edit/VersionedContent/tab_status.pt:332
 msgid "compare..."
 msgstr "vergelijken..."
 
-# Default: "c"
-#: /views/edit/VersionedContent/tab_status.pt:329
+#: /views/edit/VersionedContent/tab_status.pt:332
 msgid "compare_accesskey"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:329
+#: /views/edit/VersionedContent/tab_status.pt:332
 msgid "view the selected versions next to each other: alt-="
 msgstr "de geselecteerde versies naast elkaar bekijken: alt-="
 
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
-#: /views/edit/VersionedContent/tab_status.pt:337
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "if (!confirm('Are you sure?')) return false"
 msgstr "if (!confirm('Weet u het zeker?')) return false"
 
-#: /views/edit/VersionedContent/tab_status.pt:346
+#: /views/edit/VersionedContent/tab_status.pt:349
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr "nieuwe bewerkbare versie van geselecteerde oude versie aanmaken: alt-f"
 
-# Default: "f"
-#: /views/edit/VersionedContent/tab_status.pt:346
+#: /views/edit/VersionedContent/tab_status.pt:349
 msgid "copy_for_editing_accesskey"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:346
+#: /views/edit/VersionedContent/tab_status.pt:349
 msgid "copy for editing"
 msgstr "kopiëren om te bewerken"
 
-#: /views/edit/VersionedContent/tab_status.pt:76
+#: /views/edit/VersionedContent/tab_status.pt:79
 msgid "Content is approved, not published"
 msgstr "Inhoud is goedgekeurd, niet gepubliceerd"
 
-#: /views/edit/VersionedContent/tab_status.pt:77
+#: /views/edit/VersionedContent/tab_status.pt:80
 msgid "Publication settings can be changed."
 msgstr "Publicatie-instellingen kunnen worden veranderd."
 
-#: /views/edit/VersionedContent/tab_status.pt:89
+#: /views/edit/VersionedContent/tab_status.pt:92
 msgid ""
 "This content is published (online for the public).<br /> If you wish you can "
 "make an editable copy by going to the ${editor}."
 msgstr ""
 "Deze inhoud is gepubliceerd (online voor publiek).<br /> Indien gewenst, kan "
 "er een bewerkbare kopie van worden gemaakt door naar '${editor}' te gaan."
-
-#: /views/edit/VersionedContent/tab_status.pt:99
-msgid "Published version exists"
-msgstr "Er bestaat een gepubliceerde versie"
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -4038,7 +3943,6 @@ msgstr ""
 msgid "content publish ti<u>m</u>e"
 msgstr "publicatie-<u>m</u>oment inhoud"
 
-# Default: "m"
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:315
 msgid "content_publish_time_accesskey"
@@ -4076,7 +3980,6 @@ msgstr "huidige tijdstippen"
 msgid "access key: alt-m (some platforms)"
 msgstr "sneltoets: alt-p (sommige platforms)"
 
-# Default: "m"
 #: /views/edit/VersionedContent/tab_status_macros.pt:215
 msgid "access_key_publish_datetime"
 msgstr "p"
@@ -4093,7 +3996,6 @@ msgstr "sneltoets: alt-n (sommige platformen)"
 msgid "Publication time of public version"
 msgstr "Publicatietijdstip van publieke versie"
 
-# Default: "u"
 #: /views/edit/VersionedContent/tab_status_macros.pt:254
 msgid "clear_expiration_time_accesskey"
 msgstr ""
@@ -4144,7 +4046,6 @@ msgstr "intrekking"
 msgid "The message may be viewed by local users."
 msgstr "De boodschap mag door lokale gebruikers bekeken worden."
 
-# Default: "r"
 #: /views/edit/VersionedContent/tab_status_macros.pt:429
 msgid "reject_approval_request_accesskey"
 msgstr ""
@@ -4161,7 +4062,6 @@ msgstr "sneltoets: alt-j"
 msgid "withdraw approval request"
 msgstr "verzoek om goedkeuring intrekken"
 
-# Default: "r"
 #: /views/edit/VersionedContent/tab_status_macros.pt:438
 msgid "withdraw_approval_request_accesskey"
 msgstr ""
@@ -4193,7 +4093,6 @@ msgstr ""
 "(gepubliceerde) versie. Dit kan daarna niet meer worden ongedaan gemaakt en "
 "gooit alle wijzigingen die in de huidige versie zijn gemaakt weg."
 
-# JS onclick string, not very nice but it works, make sure to copy JS code 1:1
 #: /views/edit/VersionedContent/tab_status_macros.pt:518
 msgid "return confirm('Really revert ?')"
 msgstr "return confirm('Terug naar vorige versie?')"
@@ -4202,7 +4101,6 @@ msgstr "return confirm('Terug naar vorige versie?')"
 msgid "revert to previous"
 msgstr "terugvallen op vorige"
 
-# Default: "p"
 #: /views/edit/VersionedContent/tab_status_macros.pt:518
 msgid "revert_to_previous_accesskey"
 msgstr ""
@@ -4223,7 +4121,6 @@ msgstr ""
 msgid "close published version"
 msgstr "gepubliceerde versie sluiten"
 
-# Default: "c"
 #: /views/edit/VersionedContent/tab_status_macros.pt:558
 msgid "close_published_version_accesskey"
 msgstr ""
@@ -4315,106 +4212,9 @@ msgstr "Rol(len) ingetrokken voor ${list}"
 msgid "Role(s) revoked"
 msgstr "Rol(len) ingetrokken"
 
-#: /views/edit/asset_lookup.pt:148 /views/edit/document_lookup.pt:150
-#: /views/edit/hyperlink_lookup.pt:109
-msgid "select"
-msgstr "selecteren"
-
-#: /views/edit/asset_lookup.pt:151 /views/edit/document_lookup.pt:153
-#: /views/edit/document_lookup.pt:332 /views/edit/hyperlink_lookup.pt:112
-#: /views/edit/hyperlink_lookup.pt:199
-msgid "view"
-msgstr "bekijken"
-
-#: /views/edit/asset_lookup.pt:154 /views/edit/document_lookup.pt:156
-#: /views/edit/hyperlink_lookup.pt:115
-#: /views/edit/Container/tab_access_groups.pt:179
-#: /views/edit/Container/tab_edit.pt:148
-#: /views/edit/Container/GhostFolder/tab_edit.pt:227
-msgid "modified"
-msgstr "aangepast"
-
-#: /views/edit/asset_lookup.pt:157 /views/edit/document_lookup.pt:159
-#: /views/edit/hyperlink_lookup.pt:118 /views/edit/Container/tab_edit.pt:151
-#: /views/edit/Container/GhostFolder/tab_edit.pt:230
-msgid "author"
-msgstr "auteur"
-
-#: /views/edit/asset_lookup.pt:192
-msgid "view this asset"
-msgstr "dit asset bekijken"
-
-#: /views/edit/asset_lookup.pt:219
-msgid "No ${asset} in this folder."
-msgstr "Geen ${asset} in deze folder."
-
-#: /views/edit/asset_lookup.pt:234 /views/edit/hyperlink_lookup.pt:359
-msgid "cancel operation: alt-c"
-msgstr "operatie annuleren: alt-c"
-
-#: /views/edit/asset_lookup.pt:244 /views/edit/document_lookup.pt:372
-#: /views/edit/hyperlink_lookup.pt:369
-msgid "place reference..."
-msgstr "verwijzing plaatsen..."
-
-# Default: "p"
-#: /views/edit/asset_lookup.pt:244 /views/edit/document_lookup.pt:372
-#: /views/edit/hyperlink_lookup.pt:369
-msgid "place_reference_accesskey"
-msgstr ""
-
-#: /views/edit/asset_lookup.pt:244 /views/edit/hyperlink_lookup.pt:369
-msgid "insert a reference to this asset: alt-p"
-msgstr "een verwijzing naar dit asset invoegen: alt-p"
-
-#: /views/edit/asset_lookup.pt:84
-msgid "add a new item: alt-n"
-msgstr "nieuw item toevoegen: alt-n"
-
-# Default: "n"
-#: /views/edit/asset_lookup.pt:84
-msgid "add_new_item_accesskey"
-msgstr ""
-
 #: /views/edit/clear_mapping.py:20
 msgid "map cleared"
 msgstr "'map' leeggemaakt"
-
-#: /views/edit/document_lookup.pt:169 /views/edit/hyperlink_lookup.pt:128
-#: /views/edit/Container/tab_edit.pt:164
-#: /views/edit/Container/GhostFolder/tab_edit.pt:240
-msgid "There is no content here."
-msgstr "Er bevindt zich hier geen inhoud."
-
-#: /views/edit/document_lookup.pt:227 /views/edit/document_lookup.pt:251
-#: /views/edit/document_lookup.pt:349 /views/edit/hyperlink_lookup.pt:228
-#: /views/edit/hyperlink_lookup.pt:248 /views/edit/Container/tab_edit.pt:252
-#: /views/edit/Container/tab_edit.pt:288
-#: /views/edit/Container/tab_status.pt:207
-#: /views/edit/Container/GhostFolder/tab_edit.pt:327
-#: /views/edit/Container/GhostFolder/tab_edit.pt:363
-msgid "n/a"
-msgstr "n.v.t."
-
-#: /views/edit/document_lookup.pt:234
-msgid "content is approved or published"
-msgstr "inhoud is goedgekeurd of gepubliceerd"
-
-#: /views/edit/document_lookup.pt:234 /views/edit/hyperlink_lookup.pt:182
-#: /views/edit/Container/tab_edit.pt:265
-#: /views/edit/Container/GhostFolder/tab_edit.pt:344
-msgid "content approved or published"
-msgstr "inhoud goedgekeurd of gepubliceerd"
-
-# Default: "editor"
-#: /views/edit/document_lookup.pt:316 /views/edit/Container/tab_edit.pt:394
-#: /views/edit/VersionedContent/tab_status.pt:90
-msgid "content-editor"
-msgstr "inhoud editor"
-
-#: /views/edit/document_lookup.pt:372
-msgid "insert the reference: alt-p"
-msgstr "de verwijzing invoegen: alt-p"
 
 #: /views/edit/get_ghost_link_status_text.py:16
 msgid "You have to enter a path here."
@@ -4476,25 +4276,6 @@ msgstr ""
 msgid "The ghost is in an undefined state."
 msgstr "De 'ghost' is in een onbepaalde staat."
 
-#: /views/edit/hyperlink_lookup.pt:215
-#: /views/edit/Container/GhostFolder/tab_edit.pt:450
-msgid "metadata"
-msgstr "metadata"
-
-#: /views/edit/hyperlink_lookup.pt:235 /views/edit/Container/docma_queue.pt:79
-#: /views/edit/Container/GhostFolder/tab_edit.pt:352
-msgid "status"
-msgstr "status"
-
-#: /views/edit/hyperlink_lookup.pt:287
-msgid "&#8211;"
-msgstr "&#8211;"
-
-#: /views/edit/hyperlink_lookup.pt:334 /views/edit/Container/tab_edit.pt:440
-#: /views/edit/Container/GhostFolder/tab_edit.pt:459
-msgid "unknown"
-msgstr "onbekend"
-
 #: /views/edit/lookup_add_to_selection.py:20
 msgid "Users selected."
 msgstr "Gebruikers geselecteerd."
@@ -4532,12 +4313,10 @@ msgstr "Gezocht naar '${string}'."
 msgid "search"
 msgstr "zoeken"
 
-# Default: "s"
 #: /views/edit/lookup_ui.pt:110
 msgid "search_accesskey"
 msgstr ""
 
-# Default: "a"
 #: /views/edit/lookup_ui.pt:130 /views/edit/lookup_ui.pt:199
 msgid "add_to_clipboard_accesskey"
 msgstr ""
@@ -4574,7 +4353,6 @@ msgstr "Naar het scherm 'toegang' terugkeren met dit 'clipboard': alt-u"
 msgid "<u>u</u>se clipboard..."
 msgstr "'clipboard' gebr<u>u</u>iken..."
 
-# Default: "u"
 #: /views/edit/lookup_ui.pt:218
 msgid "use_clipboard_accesskey"
 msgstr ""
@@ -4583,7 +4361,6 @@ msgstr ""
 msgid "remove user"
 msgstr "gebruiker verwijderen"
 
-# Default: "r"
 #: /views/edit/lookup_ui.pt:230
 msgid "remove_user_accesskey"
 msgstr ""
@@ -4656,19 +4433,17 @@ msgstr "overgeërfde inhoud"
 #: /views/edit/Container/tab_status_export.pt:120
 #: /views/edit/Container/tab_status_export.pt:217
 #: /views/edit/Container/tab_status_export.pt:335
-#: /views/edit/Container/GhostFolder/tab_edit.pt:75
+#: /views/edit/Container/GhostFolder/tab_edit.pt:80
 #: /views/edit/Container/Publication/tab_addables.pt:82
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
 msgid "note"
 msgstr "notitie"
 
-# Default: "select groups:"
 #: /views/edit/macro_groups_listing.pt:106
 msgid "select_groups"
 msgstr "selecteer groepen:"
 
-# Default: "No groups available"
 #: /views/edit/macro_groups_listing.pt:119
 msgid "no_groups_available"
 msgstr "Geen groupen aanwezig"
@@ -4677,7 +4452,6 @@ msgstr "Geen groupen aanwezig"
 msgid "existing ${type} groups"
 msgstr "bestaande ${type} groepen"
 
-# Default: "g"
 #: /views/edit/macro_groups_listing.pt:78
 msgid "groups_admin_accesskey"
 msgstr ""
@@ -4699,7 +4473,6 @@ msgstr "ctrl-klik voor 'multi-selecteren'"
 msgid "select all: alt-a"
 msgstr "alles selecteren: alt-a"
 
-# Default: "a"
 #: /views/edit/macro_select_all.pt:26
 msgid "select_all_accesskey"
 msgstr ""
@@ -4716,7 +4489,6 @@ msgstr "gebruikers-'clipboard'"
 msgid "lookup users..."
 msgstr "gebruikers opzoeken..."
 
-# Default: "l"
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup_users_accesskey"
 msgstr ""
@@ -4742,7 +4514,6 @@ msgstr "siblings"
 msgid "index:"
 msgstr "index:"
 
-# Default: "]"
 #: /views/edit/macro_vein_navigation.pt:38
 msgid "up_one_level_accesskey"
 msgstr ""
@@ -4782,7 +4553,6 @@ msgstr ""
 msgid "revoke approval"
 msgstr "goedkeuring intrekken"
 
-# Default: "r"
 #: /views/edit/macro_view_metadata.pt:146
 #: /views/edit/VersionedContent/macro_tab_edit.pt:129
 #: /views/edit/VersionedContent/tab_status_macros.pt:481
@@ -4793,7 +4563,6 @@ msgstr ""
 msgid "create a new version of this content: alt-n"
 msgstr "een nieuwe versie van deze inhoud aanmaken: alt-n"
 
-# Default: "n"
 #: /views/edit/macro_view_metadata.pt:166
 #: /views/edit/Container/tab_status.pt:381
 #: /views/edit/Container/tab_status.pt:447
@@ -4911,7 +4680,6 @@ msgstr "Er zijn geen rollen aangevraagd."
 msgid "access key: alt-d"
 msgstr "sneltoets: alt-d"
 
-# Default: "d"
 #: /views/edit/tab_access.pt:253
 msgid "deny_role_accesskey"
 msgstr ""
@@ -4920,7 +4688,6 @@ msgstr ""
 msgid "deny role"
 msgstr "rol weigeren"
 
-# Default: "g"
 #: /views/edit/tab_access.pt:265
 msgid "grant_role_accesskey"
 msgstr ""
@@ -4933,7 +4700,6 @@ msgstr "sneltoets: alt-g"
 msgid "grant role"
 msgstr "rol toekennen"
 
-# Default: "a"
 #: /views/edit/tab_access.pt:273
 msgid "grant_and_approve_accesskey"
 msgstr ""
@@ -5130,8 +4896,8 @@ msgid ""
 "The addables settings can only be changed on Silva Publications. A "
 "doesn&#8217;t have that capability."
 msgstr ""
-"De toevoeg-instellingen kunnen alleen veranderd worden voor Silva Publicaties. Een "
-"heeft die moeglijkheid niet."
+"De toevoeg-instellingen kunnen alleen veranderd worden voor Silva "
+"Publicaties. Een heeft die moeglijkheid niet."
 
 #: /views/edit/tab_metadata.pt:58
 msgid "${for_approved_version_of_title}"
@@ -5157,7 +4923,6 @@ msgstr ""
 msgid "see the content in the public layout: alt-;"
 msgstr "de inhoud in de publieke vormgeving bekijken: alt-;"
 
-# Default: ";"
 #: /views/edit/tab_preview.pt:41
 #: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "public_preview_accesskey"
@@ -5168,7 +4933,6 @@ msgstr ""
 msgid "public&nbsp;preview..."
 msgstr "publiek&nbsp;voorbeeld..."
 
-# Default: "p"
 #: /views/edit/tab_preview.pt:54 /views/edit/Container/tab_status.pt:393
 #: /views/edit/VersionedContent/macro_tab_edit.pt:59
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
@@ -5189,7 +4953,6 @@ msgstr "omzetten naar publicatie"
 msgid "change container type to a publication: alt-p"
 msgstr "verander het container type naar een publicatie: alt-p"
 
-# Default: "p"
 #: /views/edit/tab_settings.pt:105
 msgid "convert_to_publication_accesskey"
 msgstr ""
@@ -5198,7 +4961,6 @@ msgstr ""
 msgid "Select a renderer to render this content."
 msgstr "Selecteer een renderer om deze inhoud weer te geven."
 
-# Default: "c"
 #: /views/edit/tab_settings.pt:174
 msgid "change_renderer_accesskey"
 msgstr ""
@@ -5241,8 +5003,8 @@ msgid ""
 "This Ghost Folder can be converted to a normal Publication or Folder. All "
 "ghosted content will be duplicated and can then be edited."
 msgstr ""
-"Deze Ghost-map kan naar een normale publicatie of map geconverteerd worden. Alle "
-"ghost-inhoud wordt dan gedupliceerd en kan daarna bewerkt worden."
+"Deze Ghost-map kan naar een normale publicatie of map geconverteerd worden. "
+"Alle ghost-inhoud wordt dan gedupliceerd en kan daarna bewerkt worden."
 
 #: /views/edit/tab_settings.pt:82
 msgid ""
@@ -5257,14 +5019,13 @@ msgid ""
 "This Silva Publication can be converted to a Silva Folder (may take awhile "
 "if it&#8217;s large)."
 msgstr ""
-"Deze Silva Publicatie kan geconverteerd worden naar een Silva map (kan even duren "
-"voor een grote publicatie)."
+"Deze Silva Publicatie kan geconverteerd worden naar een Silva map (kan even "
+"duren voor een grote publicatie)."
 
 #: /views/edit/tab_settings.pt:97
 msgid "change container type to a folder: alt-f"
 msgstr "container type veranderen in een map: alt-f"
 
-# Default: "c"
 #: /views/edit/tab_settings.pt:97
 msgid "convert_to_folder_accesskey"
 msgstr ""
@@ -5365,7 +5126,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"              Lijst van email-adressen (één per regel) die email-"
+"              Lijst van email-adressen (één per regel) die email- "
 "notificaties ontvangen van deze inhoud.\n"
 "            "
 
@@ -5393,7 +5154,6 @@ msgstr "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
 msgid "logout link"
 msgstr "uitlog-link"
 
-# Default: "l"
 #: /views/logout.pt:37
 msgid "logout_link_accesskey"
 msgstr ""
@@ -5418,7 +5178,6 @@ msgstr "&laquo; Vorige ${n} items"
 msgid "Next ${n} items &raquo;"
 msgstr "Volgende ${n} items &raquo;"
 
-# Default: "z"
 #: /views/macro_index.pt:131
 msgid "zroot_accesskey"
 msgstr ""
@@ -5431,7 +5190,6 @@ msgstr "naar zope root: alt-z"
 msgid "zroot..."
 msgstr "zroot..."
 
-# Default: "'"
 #: /views/macro_index.pt:140
 msgid "sroot_accesskey"
 msgstr ""
@@ -5452,7 +5210,6 @@ msgstr "sservices..."
 msgid "jump to silva services: alt-`"
 msgstr "naar silva services: alt-`"
 
-# Default: "`"
 #: /views/macro_index.pt:149
 msgid "sservices_accesskey"
 msgstr ""
@@ -5462,7 +5219,6 @@ msgstr ""
 msgid "jump to top: alt-t"
 msgstr "naar bovenste niveau: alt-t"
 
-# Default: "t"
 #: /views/macro_index.pt:193
 msgid "jump_to_top_accesskey"
 msgstr ""
@@ -5483,7 +5239,6 @@ msgstr "Silva verlaten en publieke pagina bekijken: alt-:"
 msgid "view public version"
 msgstr "publieke versie bekijken"
 
-# Default: ":"
 #: /views/macro_index.pt:231
 msgid "view_public_version_accesskey"
 msgstr ""
@@ -5492,7 +5247,6 @@ msgstr ""
 msgid "Change your settings: alt-~"
 msgstr "Je instellingen veranderen: alt-~"
 
-# Default: "~"
 #: /views/macro_index.pt:249
 msgid "user_settings_accesskey"
 msgstr ""
@@ -5505,7 +5259,6 @@ msgstr "gebruikersinstellingen"
 msgid "Logout of Silva: alt-q"
 msgstr "Uit Silva uitloggen: alt-q"
 
-# Default: "q"
 #: /views/macro_index.pt:267
 msgid "logout_accesskey"
 msgstr ""
@@ -5522,7 +5275,6 @@ msgstr "Een extra rol aanvragen voor deze locatie: alt-,"
 msgid "request access"
 msgstr "toegang aanvragen"
 
-# Default: ","
 #: /views/macro_index.pt:282
 msgid "request_access_accesskey"
 msgstr ""
@@ -5543,7 +5295,6 @@ msgstr "Hulp bij sneltoetsen"
 msgid "Silva copyright info"
 msgstr "Silva copyright info"
 
-# Default: "e"
 #: /views/macro_middleground.pt:15
 msgid "settings_accesskey"
 msgstr "e"
@@ -5552,7 +5303,6 @@ msgstr "e"
 msgid "various settings: alt-e"
 msgstr "verschillende instellingen veranderen: alt-e"
 
-# Default: "u"
 #: /views/macro_middleground.pt:32
 msgid "subscriptions_accesskey"
 msgstr ""
@@ -5562,7 +5312,6 @@ msgstr ""
 msgid "manage subscriptions: alt-u"
 msgstr "emailnotificaties beheren: alt-u"
 
-# Default: "d"
 #: /views/macro_middleground.pt:51
 msgid "addables_accesskey"
 msgstr "d"
@@ -5571,12 +5320,11 @@ msgstr "d"
 msgid "change the addables allowed in this publication: alt-d"
 msgstr "toevoeg-instellingen voor deze publicatie veranderen: alt-d"
 
-# Default: "p"
 #: /views/macro_middleground.pt:76
 msgid "publish_now_accesskey"
 msgstr ""
 
-#: /views/macro_middleground.pt:76 /views/edit/Container/tab_edit.pt:500
+#: /views/macro_middleground.pt:76 /views/edit/Container/tab_edit.pt:493
 #: /views/edit/Container/tab_status.pt:411
 #: /views/edit/VersionedContent/tab_status_macros.pt:360
 #: /views/edit/tab_status_form.form:67
@@ -5601,12 +5349,10 @@ msgstr "Silva info: alt-|"
 msgid "Silva top: alt-/"
 msgstr "Silva top: alt-/"
 
-# Default: "/"
 #: /views/macro_tabs.pt:30
 msgid "silva_top_accesskey"
 msgstr ""
 
-# Default: "."
 #: /views/macro_tabs.pt:60
 msgid "manage_accesskey"
 msgstr ""
@@ -5619,7 +5365,6 @@ msgstr "&middot; beheren..."
 msgid "Zope manage_main: alt-."
 msgstr "Zope 'manage_main': alt-."
 
-# Default: "b"
 #: /views/macro_tabs.pt:70
 msgid "bottom_accesskey"
 msgstr ""
@@ -5628,9 +5373,129 @@ msgstr ""
 msgid "Silva access keys: alt-?"
 msgstr "Silva sneltoetsen: alt-?"
 
-# Default: "?"
 #: /views/macro_tabs.pt:83
 msgid "silva_accesskeys_accesskey"
+msgstr ""
+
+#: /views/object_lookup.pt:104 /views/edit/Container/tab_edit.pt:88
+msgid "select a new item: alt-s"
+msgstr "een nieuw item selecteren: alt-s"
+
+#: /views/object_lookup.pt:111 /views/edit/Container/tab_edit.pt:95
+msgid "select:"
+msgstr "selecteren:"
+
+#: /views/object_lookup.pt:139
+msgid "select"
+msgstr "selecteren"
+
+#: /views/object_lookup.pt:142 /views/object_lookup.pt:239
+msgid "view"
+msgstr "bekijken"
+
+#: /views/object_lookup.pt:145 /views/edit/Container/tab_access_groups.pt:179
+#: /views/edit/Container/tab_edit.pt:140
+#: /views/edit/Container/GhostFolder/tab_edit.pt:237
+msgid "modified"
+msgstr "aangepast"
+
+#: /views/object_lookup.pt:148 /views/edit/Container/tab_edit.pt:143
+#: /views/edit/Container/GhostFolder/tab_edit.pt:240
+msgid "author"
+msgstr "auteur"
+
+#: /views/object_lookup.pt:158 /views/edit/Container/tab_edit.pt:156
+#: /views/edit/Container/GhostFolder/tab_edit.pt:250
+msgid "There is no content here."
+msgstr "Er bevindt zich hier geen inhoud."
+
+#: /views/object_lookup.pt:222 /views/edit/Container/tab_edit.pt:257
+#: /views/edit/Container/GhostFolder/tab_edit.pt:354
+msgid "content approved or published"
+msgstr "inhoud goedgekeurd of gepubliceerd"
+
+#: /views/object_lookup.pt:255
+#: /views/edit/Container/GhostFolder/tab_edit.pt:460
+msgid "metadata"
+msgstr "metadata"
+
+#: /views/object_lookup.pt:268 /views/object_lookup.pt:288
+#: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:280
+#: /views/edit/Container/tab_status.pt:207
+#: /views/edit/Container/GhostFolder/tab_edit.pt:337
+#: /views/edit/Container/GhostFolder/tab_edit.pt:373
+msgid "n/a"
+msgstr "n.v.t."
+
+#: /views/object_lookup.pt:275 /views/edit/Container/docma_queue.pt:79
+#: /views/edit/Container/GhostFolder/tab_edit.pt:362
+msgid "status"
+msgstr "status"
+
+#: /views/object_lookup.pt:334
+msgid "&#8211;"
+msgstr "&#8211;"
+
+#: /views/object_lookup.pt:381 /views/edit/Container/tab_edit.pt:432
+#: /views/edit/Container/GhostFolder/tab_edit.pt:469
+msgid "unknown"
+msgstr "onbekend"
+
+#: /views/object_lookup.pt:408
+msgid "cancel operation: alt-c"
+msgstr "operatie annuleren: alt-c"
+
+#: /views/object_lookup.pt:408 /views/add/add_form.pt:89
+#: /views/add/Ghost/add_form.pt:100 /views/add/GhostFolder/add_form.pt:108
+#: /views/edit/Container/tab_edit_rename.pt:130
+msgid "cancel_accesskey"
+msgstr ""
+
+#: /views/object_lookup.pt:408 /views/add/add_form.pt:89
+#: /views/add/Ghost/add_form.pt:100 /views/add/GhostFolder/add_form.pt:108
+#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
+msgid "cancel"
+msgstr "afbreken"
+
+#: /views/object_lookup.pt:418
+msgid "insert a reference to this asset: alt-p"
+msgstr "een verwijzing naar dit asset invoegen: alt-p"
+
+#: /views/object_lookup.pt:418
+msgid "place reference..."
+msgstr "verwijzing plaatsen..."
+
+#: /views/object_lookup.pt:418
+msgid "place_reference_accesskey"
+msgstr ""
+
+#: /views/object_lookup.pt:89 /views/edit/Container/tab_edit.pt:73
+msgid "new..."
+msgstr "nieuw..."
+
+#: /views/object_lookup.pt:89 /views/edit/Container/tab_edit.pt:73
+msgid "add a new item - alt-n"
+msgstr "een nieuw item toevoegen - alt-n"
+
+#: /views/object_lookup.pt:89 /views/edit/Container/tab_edit.pt:73
+msgid "new_accesskey"
+msgstr ""
+
+#: /views/object_lookup.pt:98 /views/add/add_form.pt:98
+#: /views/add/Ghost/add_form.pt:109 /views/add/GhostFolder/add_form.pt:117
+#: /views/edit/lookup_ui.pt:110 /views/edit/macro_edit_metadata.pt:188
+#: /views/edit/tab_subscriptions.pt:114
+#: /views/edit/Asset/macro_asset_edit.pt:96
+#: /views/edit/Container/tab_access_groups.pt:128
+#: /views/edit/Container/tab_edit.pt:82
+#: /views/edit/Container/GhostFolder/tab_edit.pt:154
+#: /views/edit/VersionedContent/Ghost/edit.pt:139
+#: /views/public/subscriptor.pt:45
+msgid "access key: alt-s"
+msgstr "sneltoets: alt-s"
+
+#: /views/object_lookup.pt:98 /views/edit/Container/tab_edit.pt:82
+msgid "select_new_item_accesskey"
 msgstr ""
 
 #: /views/public/Ghost/preview/render.py:15
@@ -5683,7 +5548,7 @@ msgid ""
 "You have been successfully subscribed. This means you will receive email "
 "notifications whenever a new version of these pages becomes available."
 msgstr ""
-"Activering van email-notificaties gelukt. Dat betekent dat u email-"
+"Activering van email-notificaties gelukt. Dat betekent dat u email- "
 "notificaties ontvangt telkens wanneer er een nieuwe versie van deze pagina's "
 "beschikbaar komt."
 
@@ -5716,7 +5581,6 @@ msgstr "Kies (een) rol(len) om aan te vragen"
 msgid " Send request "
 msgstr " Verstuur aanvraag "
 
-# Default: "s"
 #: /views/public/request_roles.pt:73
 msgid "send_request_accesskey"
 msgstr ""
@@ -5773,7 +5637,6 @@ msgstr "Inhoud"
 msgid "Note"
 msgstr "Notitie"
 
-# Default: "f"
 #: /views/public/search.pt:98
 msgid "find_accesskey"
 msgstr ""
@@ -5799,8 +5662,9 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Selecteer één of meer (met de ctrl-toets) objecttypen om in te zoeken. Als "
-"er niets is geselecteerd, wordt in alle typen gezocht."
+"              Selecteer één of meer (met de ctrl-toets) objecttypen om in te "
+"zoeken. Als er niets is geselecteerd, wordt in alle typen gezocht.\n"
+"            "
 
 #: /views/public/search_form.form:32
 msgid ""
@@ -5809,7 +5673,8 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Gebruik de 'asterisk' ('*') als joker."
+"              Gebruik de 'asterisk' ('*') als joker.\n"
+"            "
 
 #: /views/public/search_form.form:59
 msgid ""
@@ -5830,7 +5695,9 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"Aanvinken om zoekopdracht te beperken to de sub-boom van deze inhoud."
+"              Aanvinken om zoekopdracht te beperken to de sub-boom van deze "
+"inhoud.\n"
+"            "
 
 #: /views/public/search_results.pt:18
 msgid "Search results"
@@ -5893,6 +5760,39 @@ msgstr "Terug naar &#xab;${title_or_id}&#xbb;"
 #: /views/render_form_errors.py:25
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid ""
+#~ "Don&#8217;t forget that most browsers use alt-left arrow to go back, and "
+#~ "alt-right arrow to go forward. On the Mac, command-left arrow and "
+#~ "command- right arrow do this."
+#~ msgstr ""
+#~ "De meeste browsers gebruiken alt-linker pijltje om terug te gaan, en alt- "
+#~ "rechter pijltje om verder te gaan. Op Apple systemen doen command-linker "
+#~ "pijltje en command-rechter pijltje hetzelfde."
+
+#~ msgid ""
+#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ msgstr ""
+#~ "<strong>Kan zijn:</strong><br /> IP&nbsp;(zoals: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(zoals:&nbsp;10.1.1.1-10.1.1.255) of<br /> IP/Netmask&nbsp;(zoals:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+
+#~ msgid "view this asset"
+#~ msgstr "dit asset bekijken"
+
+#~ msgid "No ${asset} in this folder."
+#~ msgstr "Geen ${asset} in deze folder."
+
+#~ msgid "add a new item: alt-n"
+#~ msgstr "nieuw item toevoegen: alt-n"
+
+#~ msgid "content is approved or published"
+#~ msgstr "inhoud is goedgekeurd of gepubliceerd"
+
+#~ msgid "insert the reference: alt-p"
+#~ msgstr "de verwijzing invoegen: alt-p"
 
 #~ msgid ""
 #~ "${listing_footer}<br /> a &nbsp; Select all<br /> r &nbsp; Rename<br /> d "
