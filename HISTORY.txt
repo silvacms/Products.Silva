@@ -24,6 +24,10 @@ Silva changes
         refactored, now there's only a single implementation of the lookup
         window, and somewhat cleaner HTML.
 
+      - It is now possible to have table cells without a width attribute,
+        which means you can style your tables through css entirely. To use
+        this feature, give the column widths a value of '*'.
+
     Bugs Fixed
 
       - When content without a maintitle was exported, it could not be
