@@ -14,6 +14,16 @@
 <metal:block fill-slot="script">
   <script type="text/javascript" tal:attributes="src here/reference.js/absolute_url">
   </script>
+  <script type="text/javascript">
+
+    window.onload_registry.register(
+        function() {
+            var title = 'Lookup window ' + opener.object_lookup_level;
+            document.title = title;
+        }
+    );
+  
+  </script>
 </metal:block>
 <metal:block fill-slot="main"
   tal:define="

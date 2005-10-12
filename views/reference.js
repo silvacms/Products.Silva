@@ -17,17 +17,25 @@ this.reference = new function() {
             the item)
         */
         reference_lib.setHandler(handler);
-        var leftpos = (screen.width - winwidth) / 2;
-        var toppos = (screen.height - winheight) / 2;
+        var level = null;
+        if (opener && opener.object_lookup_level !== undefined) {
+            level = opener.object_lookup_level + 1;
+        } else {
+            level = 1;
+        };
+        var leftpos = (screen.width - winwidth) / 2 + ((level - 1) * 10);
+        var toppos = (screen.height - winheight) / 2 + ((level - 1) * 10);
+        var winname = 'object_lookup_window_' + level;
         var win = window.open(startpath + 
                               '/edit/object_lookup?filter=' + filter + '&' +
-                              'show_add=' + (show_add ? '1' : '0'),
-                              'object_lookup_window',
+                              'show_add=' + (show_add ? '1' : '0') + '&',
+                              winname,
                               'toolbar=yes,status=yes,scrollbars=yes,' +
                               'resizable=yes,width=' + winwidth +
                               ',height=' + winheight +
                               ',left=' + leftpos + ',top=' + toppos);
         win.focus();
+        window.object_lookup_level = level;
     };
     
     this.setReference = function(form, radioname) {
