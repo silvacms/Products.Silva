@@ -49,24 +49,13 @@
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
-<script language="JavaScript">
-
-// can be attached to formfields so that pressing enter makes the form use
-// a specific action, useful in forms with more than 1 submit button
-function handle_default_action(element, event, action)
-{
-    code = event.which ? event.which : event.keyCode;
-    if (code == 10 || code == 13)
-    {
-        element.form.action = action;
-        element.form.submit();
-    }
-}
-
-</script>
+<script type="text/javascript" 
+        tal:attributes="src here/helperscripts.js/absolute_url"></script>
+<script type="text/javascript" 
+        tal:attributes="src here/handler_registry.js/absolute_url"></script>
 <metal:block define-slot="script" />
 </head>
-<body tal:attributes="onload string:if (window.focus_editor) window.focus_editor()">
+<body onload="window.onload_registry.callHandlers()">
 
 <span tal:replace="nothing">
 <!-- ____________________________ start workspace ____________________________ -->
