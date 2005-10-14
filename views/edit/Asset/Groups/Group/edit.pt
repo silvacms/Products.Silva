@@ -140,7 +140,7 @@
                 value="add to group" 
                 title="add selected users to this group"
                 accesskey="a"
-                i18n:attributes="title;value;accesskey add_to_group_accesskey"
+                i18n:attributes="title;value"
               />
             </metal:block>
           </metal:block>

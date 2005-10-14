@@ -108,7 +108,7 @@
             accesskey="r"
             onclick="return confirm('Really remove?')"
             tal:condition="groupids"
-            i18n:attributes="title;value;onclick;accesskey remove_group_accesskey"
+            i18n:attributes="title;value"
           />
         </td> 
       </tr>

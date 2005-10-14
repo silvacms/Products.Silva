@@ -210,9 +210,6 @@ If there are two buttons with the same name, the access key for the second is us
   </li>
 </ul>
 <p i18n:translate="">
-  Someday browsers will automatically underline the access key of a link or button. In the meantime, send a mail and complain.
-</p>
-<p i18n:translate="">
   If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
 </p>
 
