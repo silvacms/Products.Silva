@@ -1,18 +1,22 @@
+# Italian translation for silva
+# Copyright (c) (c) 2005 Canonical Ltd, and Rosetta Contributors 2005
+# This file is distributed under the same license as the silva package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2005.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: silva-zh-cn\n"
-"POT-Creation-Date: Mon Oct 10 18:51:59 2005\n"
-"PO-Revision-Date: 2005-05-03 14:43+0100\n"
-"Last-Translator: Marco Sens\n"
-"Language-Team: marco.sens\n"
+"Project-Id-Version: silva\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: Fri Oct 14 15:32:37 2005\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-code: zh-cn\n"
-"Language-name: Chinese Simplified\n"
-"Preferred-encodings: utf-8\n"
-"Domain: silva\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"X-Rosetta-Version: 0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 
 #: /AutoTOC.py:27
 msgid ""
@@ -478,11 +482,11 @@ msgstr ""
 msgid "Other screens"
 msgstr ""
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:269
+#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 msgid "return"
 msgstr ""
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:269
+#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:122
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 #: /views/edit/VersionedContent/tab_status_macros.pt:438
@@ -534,86 +538,80 @@ msgstr ""
 
 #: /globals/accesskeys.pt:212
 msgid ""
-"Someday browsers will automatically underline the access key of a link or "
-"button. In the meantime, send a mail and complain."
-msgstr ""
-
-#: /globals/accesskeys.pt:215
-msgid ""
 "If you wish to create additional docs, the hyperlink of the Silva help link "
 "can be changed by altering the the 'help_url' property in the Silva root. "
 "See the properties tab in the Zope Management Interface."
 msgstr ""
 
-#: /globals/accesskeys.pt:219
+#: /globals/accesskeys.pt:216
 msgid "Tip: one click editing"
 msgstr ""
 
-#: /globals/accesskeys.pt:223
+#: /globals/accesskeys.pt:220
 msgid ""
 "When viewing a public Silva page, switching to the SMI is is easiest if "
 "there's a bookmark on your toolbar. Add a bookmark with the following "
 "javascript:"
 msgstr ""
 
-#: /globals/accesskeys.pt:230
+#: /globals/accesskeys.pt:227
 msgid "Silva edit"
 msgstr ""
 
-#: /globals/accesskeys.pt:230
+#: /globals/accesskeys.pt:227
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
 msgstr ""
 
-#: /globals/accesskeys.pt:235
+#: /globals/accesskeys.pt:232
 msgid ""
 "Managers can do the same and create a <a href=\"javascript:window.location."
 "pathname=(window.location.pathname +'/manage_main').replace(/\\/\\//,'/')\" "
 "name=\"manage\">manage...</a> bookmark."
 msgstr ""
 
-#: /globals/accesskeys.pt:239
+#: /globals/accesskeys.pt:236
 msgid ""
 "Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
 "rich</a> for this trick."
 msgstr ""
 
-#: /globals/accesskeys.pt:245
+#: /globals/accesskeys.pt:242
 msgid "Tip for Mozilla/Netscape users"
 msgstr ""
 
-#: /globals/accesskeys.pt:247
+#: /globals/accesskeys.pt:244
 msgid ""
 "${tip_for_mozilla_users}<br /> Using the &#8220;Find As You Type&#8221; "
 "feature will make keyboard navigation to hyperlinks &#8211; such as item "
 "names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
 msgstr ""
 
-#: /globals/accesskeys.pt:250 /views/edit/Container/tab_edit_new.pt:79
+#: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:79
 msgid "Silva documentation"
 msgstr ""
 
-#: /globals/accesskeys.pt:254
+#: /globals/accesskeys.pt:251
 msgid ""
 "The most up to date documentation can be found at:<br /> "
 "${silva_documentation_link}"
 msgstr ""
 
-#: /globals/accesskeys.pt:256
+#: /globals/accesskeys.pt:253
 msgid ""
 "The technical documentation is included in the Silva product in &#8216;"
 "plain&#8217; structured text, gracefully degraded for text mode (no links, "
 "unicode entities, etc.)."
 msgstr ""
 
-#: /globals/accesskeys.pt:263
+#: /globals/accesskeys.pt:260
 msgid "Contact"
 msgstr ""
 
-#: /globals/accesskeys.pt:264
+#: /globals/accesskeys.pt:261
 msgid "Feedback"
 msgstr ""
 
-#: /globals/accesskeys.pt:264
+#: /globals/accesskeys.pt:261
 msgid "<br /> ${contact}<br /> ${feedback} is welcome."
 msgstr ""
 
@@ -853,7 +851,7 @@ msgstr ""
 
 #: /roleinfo.py:23
 msgid "Manager"
-msgstr "管理员"
+msgstr ""
 
 #: /roleinfo.py:24
 msgid "Viewer"
@@ -1002,8 +1000,8 @@ msgid "aspect"
 msgstr ""
 
 #: /views/add/add_form.pt:53 /views/add/Ghost/add_form.pt:48
-#: /views/add/GhostFolder/add_form.pt:50 /views/edit/macro_edit_metadata.pt:84
-#: /views/edit/macro_view_metadata.pt:66 /views/edit/tab_settings.pt:138
+#: /views/add/GhostFolder/add_form.pt:50 /views/edit/tab_settings.pt:138
+#: /views/edit/macro_edit_metadata.pt:84 /views/edit/macro_view_metadata.pt:66
 #: /views/edit/tab_subscriptions.pt:82
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:154
@@ -1167,10 +1165,6 @@ msgid "\"Things to do when virtual groups is not in its original location\""
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/edit.pt:137
-msgid "add_to_group_accesskey"
-msgstr ""
-
-#: /views/edit/Asset/Groups/Group/edit.pt:137
 msgid "add selected users to this group"
 msgstr ""
 
@@ -1301,19 +1295,11 @@ msgid "No groups selected, so none added."
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
-msgid "remove_group_accesskey"
-msgstr ""
-
-#: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
 msgid "remove selected group(s) from this virtual group: alt-r"
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
 msgid "remove group"
-msgstr ""
-
-#: /views/edit/Asset/Groups/VirtualGroup/edit.pt:103
-msgid "return confirm('Really remove?')"
 msgstr ""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:139
@@ -1549,13 +1535,13 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:18
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
 #: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
-#: /views/object_lookup.pt:360 /views/edit/Container/tab_edit.pt:137
+#: /views/object_lookup.pt:370 /views/edit/Container/tab_edit.pt:137
 #: /views/edit/Container/tab_edit.pt:215 /views/edit/Container/tab_edit.pt:402
 #: /views/edit/Container/GhostFolder/tab_edit.pt:234
 #: /views/edit/Container/GhostFolder/tab_edit.pt:310
 #: /views/edit/Container/GhostFolder/tab_edit.pt:445
 msgid "preview"
-msgstr "预览"
+msgstr ""
 
 #: /views/edit/Asset/get_tabs.py:16
 #: /views/edit/Container/GhostFolder/get_tabs.py:19
@@ -1570,7 +1556,7 @@ msgstr "预览"
 #: /views/edit/Container/tab_edit.pt:417 /views/edit/Container/tab_edit.pt:426
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
 msgid "properties"
-msgstr "属性"
+msgstr ""
 
 #: /views/edit/Asset/get_tabs.py:17
 #: /views/edit/Container/GhostFolder/get_tabs.py:20
@@ -1581,7 +1567,7 @@ msgstr "属性"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:20
 #: /views/edit/VersionedContent/Link/get_tabs.py:18
 msgid "access"
-msgstr "权限"
+msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:143
 #: /views/edit/Container/tab_edit_import.pt:354
@@ -1639,19 +1625,19 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
 #: /views/edit/Container/get_tabs.py:17 /views/edit/get_authorized_tabs.py:14
 msgid "contents"
-msgstr "内容"
+msgstr ""
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:21
 #: /views/edit/Container/get_tabs.py:21
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
-#: /views/object_lookup.pt:283 /views/edit/Container/tab_edit.pt:265
+#: /views/object_lookup.pt:293 /views/edit/Container/tab_edit.pt:265
 #: /views/edit/Container/tab_edit.pt:274
 #: /views/edit/Container/tab_status.pt:191
 #: /views/edit/Container/tab_status.pt:201
 #: /views/edit/Container/GhostFolder/tab_edit.pt:369
 msgid "publish"
-msgstr "发布"
+msgstr ""
 
 #: /views/edit/Container/GhostFolder/submit.py:19
 msgid ""
@@ -2024,7 +2010,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:598
 #: /views/edit/VersionedContent/tab_status.pt:340
 msgid "delete"
-msgstr "删除"
+msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:67
 msgid "groups in &#xab;${title}&#xbb;"
@@ -2082,34 +2068,34 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:107
 #: /views/edit/Container/tab_status.pt:76
 msgid "import xml data or a zip file: alt-i"
-msgstr "导入 xml 数据或 zip 文件: alt-i"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:107
 #: /views/edit/Container/tab_status.pt:76
 #: /views/edit/Container/tab_status_export.pt:90
 msgid "import..."
-msgstr "导入..."
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:134 /views/edit/Container/tab_edit.pt:200
 msgid "modify"
-msgstr "修改"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:147
 msgid "shift"
-msgstr "切换"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:251
 #: /views/edit/Container/GhostFolder/tab_edit.pt:344
 msgid "content approved, or published..."
-msgstr "已批准或已发布的内容..."
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:293 /views/edit/Container/tab_edit.pt:298
 msgid "move down"
-msgstr "下移"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:306 /views/edit/Container/tab_edit.pt:311
 msgid "move up"
-msgstr "上移"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:386
 #: /views/edit/VersionedContent/tab_status.pt:93
@@ -2139,15 +2125,15 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:505
 msgid "move selected items to"
-msgstr "将选定项目移至"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:512
 msgid "position"
-msgstr "位置"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:523
 msgid "end"
-msgstr "最后一行"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:530
 #: /views/edit/Container/tab_status.pt:336
@@ -2157,56 +2143,56 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:536
 msgid "move selected items into position: alt-m"
-msgstr "将选定项目移至位置: alt-m"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:536
 msgid "move"
-msgstr "移动"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:545
 msgid "rename and retitle items: alt-r"
-msgstr "重命名项目: alt-r"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:545
 msgid "rename..."
-msgstr "重命名…"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:553
 msgid "cut"
-msgstr "剪切"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:553
 msgid "cut items: alt-x"
-msgstr "剪切项目: alt-x"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:564
 msgid "copy"
-msgstr "复制"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:564
 msgid "copy items: alt-c"
-msgstr "复制项目: alt-c"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:580
 msgid "paste items: alt-v"
-msgstr "粘贴项目: alt-v"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:580
 msgid "paste"
-msgstr "粘贴"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:588
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "粘贴（剪贴簿上的项目）为快捷对象: alt-g"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:588
 msgid "paste ghost"
-msgstr "粘贴快捷对象"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:598
 #: /views/edit/VersionedContent/tab_status.pt:340
 msgid "there's no undo: alt-d"
-msgstr "此操作不可撤销: alt-d"
+msgstr ""
 
 #: /views/edit/Container/tab_edit_activate.py:15
 msgid "Nothing was selected, so nothing is activated."
@@ -2562,7 +2548,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename.pt:81
 msgid "no title"
-msgstr "无标题"
+msgstr ""
 
 #: /views/edit/Container/tab_edit_rename_start.py:13
 msgid "Nothing was selected, so nothing can be renamed."
@@ -3040,7 +3026,7 @@ msgstr ""
 msgid "Index updated"
 msgstr ""
 
-#: /views/edit/Content/SimpleContent/get_tabs.py:6 /views/object_lookup.pt:263
+#: /views/edit/Content/SimpleContent/get_tabs.py:6 /views/object_lookup.pt:273
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:65
 #: /views/edit/Container/GhostFolder/tab_edit.pt:333
 #: /views/edit/VersionedContent/tab_status_macros.pt:304
@@ -3822,35 +3808,8 @@ msgstr ""
 msgid "metadata set"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:79 /views/edit/macro_view_metadata.pt:62
-#: /views/edit/tab_settings.pt:133 /views/edit/tab_subscriptions.pt:77
-#: /views/edit/Asset/macro_asset_edit.pt:64
-#: /views/edit/Asset/Image/edit.pt:139
-#: /views/edit/Container/tab_edit_import.pt:86
-#: /views/edit/Container/tab_edit_import.pt:155
-#: /views/edit/Container/tab_edit_import.pt:294
-#: /views/edit/Container/Publication/tab_addables.pt:74
-msgid "element"
-msgstr ""
-
 #: /views/edit/macro_edit_metadata.pt:87
 msgid "acquired content"
-msgstr ""
-
-#: /views/edit/macro_edit_metadata.pt:90 /views/edit/tab_access.pt:574
-#: /views/edit/tab_access.pt:747 /views/edit/tab_settings.pt:141
-#: /views/edit/tab_subscriptions.pt:85 /views/edit/Asset/Image/edit.pt:147
-#: /views/edit/Container/tab_edit_import.pt:94
-#: /views/edit/Container/tab_edit_import.pt:163
-#: /views/edit/Container/tab_edit_import.pt:302
-#: /views/edit/Container/tab_status_export.pt:120
-#: /views/edit/Container/tab_status_export.pt:217
-#: /views/edit/Container/tab_status_export.pt:335
-#: /views/edit/Container/GhostFolder/tab_edit.pt:80
-#: /views/edit/Container/Publication/tab_addables.pt:82
-#: /views/edit/VersionedContent/Ghost/edit.pt:65
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
-msgid "note"
 msgstr ""
 
 #: /views/edit/macro_groups_listing.pt:106
@@ -3880,11 +3839,11 @@ msgstr ""
 
 #: /views/edit/macro_select_all.pt:14 /views/edit/macro_select_all.pt:26
 msgid "select all: alt-a"
-msgstr "全选: alt-a"
+msgstr ""
 
 #: /views/edit/macro_select_all.pt:32
 msgid "select <u>a</u>ll"
-msgstr "全选"
+msgstr ""
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
@@ -3927,14 +3886,6 @@ msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:65
 msgid "reload screen"
-msgstr "刷新屏幕"
-
-#: /views/edit/macro_view_metadata.pt:111 /views/edit/tab_settings.pt:128
-msgid "content renderer"
-msgstr ""
-
-#: /views/edit/macro_view_metadata.pt:120 /views/edit/tab_settings.pt:148
-msgid "renderer"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:146
@@ -4257,10 +4208,6 @@ msgstr ""
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:98 /views/edit/tab_settings.pt:260
-msgid "for closed version of &#xab;${title}&#xbb;"
-msgstr ""
-
 #: /views/edit/tab_preview.pt:101
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
@@ -4286,6 +4233,41 @@ msgstr ""
 
 #: /views/edit/tab_settings.pt:105
 msgid "change container type to a publication: alt-p"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:128 /views/edit/macro_view_metadata.pt:111
+msgid "content renderer"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:133 /views/edit/macro_edit_metadata.pt:79
+#: /views/edit/macro_view_metadata.pt:62 /views/edit/tab_subscriptions.pt:77
+#: /views/edit/Asset/macro_asset_edit.pt:64
+#: /views/edit/Asset/Image/edit.pt:139
+#: /views/edit/Container/tab_edit_import.pt:86
+#: /views/edit/Container/tab_edit_import.pt:155
+#: /views/edit/Container/tab_edit_import.pt:294
+#: /views/edit/Container/Publication/tab_addables.pt:74
+msgid "element"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:141 /views/edit/macro_edit_metadata.pt:90
+#: /views/edit/tab_access.pt:574 /views/edit/tab_access.pt:747
+#: /views/edit/tab_subscriptions.pt:85 /views/edit/Asset/Image/edit.pt:147
+#: /views/edit/Container/tab_edit_import.pt:94
+#: /views/edit/Container/tab_edit_import.pt:163
+#: /views/edit/Container/tab_edit_import.pt:302
+#: /views/edit/Container/tab_status_export.pt:120
+#: /views/edit/Container/tab_status_export.pt:217
+#: /views/edit/Container/tab_status_export.pt:335
+#: /views/edit/Container/GhostFolder/tab_edit.pt:80
+#: /views/edit/Container/Publication/tab_addables.pt:82
+#: /views/edit/VersionedContent/Ghost/edit.pt:65
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
+msgid "note"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:148 /views/edit/macro_view_metadata.pt:120
+msgid "renderer"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:167
@@ -4315,6 +4297,10 @@ msgstr ""
 
 #: /views/edit/tab_settings.pt:240
 msgid "for published version of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:260 /views/edit/tab_metadata.pt:98
+msgid "for closed version of &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:58
@@ -4479,7 +4465,7 @@ msgstr ""
 
 #: /views/macro_index.pt:131
 msgid "jump to zope root: alt-z"
-msgstr "跳至 zope 根目录: alt-z"
+msgstr ""
 
 #: /views/macro_index.pt:131
 msgid "zroot..."
@@ -4491,7 +4477,7 @@ msgstr ""
 
 #: /views/macro_index.pt:140
 msgid "jump to silva root in zodb: alt-'"
-msgstr "跳至 zodb 中的 silva 根目录: alt-'"
+msgstr ""
 
 #: /views/macro_index.pt:149
 msgid "sservices..."
@@ -4499,7 +4485,7 @@ msgstr ""
 
 #: /views/macro_index.pt:149
 msgid "jump to silva services: alt-`"
-msgstr "跳至 silva 服务页面: alt-`"
+msgstr ""
 
 #: /views/macro_index.pt:180 /views/macro_index.pt:183
 #: /views/macro_index.pt:193 /views/macro_index.pt:197
@@ -4508,35 +4494,35 @@ msgstr ""
 
 #: /views/macro_index.pt:216
 msgid "contact:"
-msgstr "联系人:"
+msgstr ""
 
 #: /views/macro_index.pt:224
 msgid "no name"
-msgstr "佚名"
+msgstr ""
 
 #: /views/macro_index.pt:231
 msgid "Leave Silva and view the public page: alt-:"
-msgstr "离开 Silva 并查看公共页面: alt-:"
+msgstr ""
 
 #: /views/macro_index.pt:231
 msgid "view public version"
-msgstr "查看公共版本"
+msgstr ""
 
 #: /views/macro_index.pt:249
 msgid "Change your settings: alt-~"
-msgstr "更改设置: alt-~"
+msgstr ""
 
 #: /views/macro_index.pt:263
 msgid "user settings"
-msgstr "用户设置"
+msgstr ""
 
 #: /views/macro_index.pt:267
 msgid "Logout of Silva: alt-q"
-msgstr "注销 Silva: alt-q"
+msgstr ""
 
 #: /views/macro_index.pt:276
 msgid "logout ${role} ${userid}"
-msgstr "注销 ${role} ${userid}"
+msgstr ""
 
 #: /views/macro_index.pt:282
 msgid "Request an additional role in this location: alt-,"
@@ -4612,97 +4598,7 @@ msgstr ""
 msgid "Silva access keys: alt-?"
 msgstr ""
 
-#: /views/object_lookup.pt:104 /views/edit/Container/tab_edit.pt:88
-msgid "select a new item: alt-s"
-msgstr "选择新项目: alt-s"
-
-#: /views/object_lookup.pt:111 /views/edit/Container/tab_edit.pt:95
-msgid "select:"
-msgstr "选择:"
-
-#: /views/object_lookup.pt:139
-msgid "select"
-msgstr ""
-
-#: /views/object_lookup.pt:142 /views/object_lookup.pt:239
-msgid "view"
-msgstr ""
-
-#: /views/object_lookup.pt:145 /views/edit/Container/tab_access_groups.pt:179
-#: /views/edit/Container/tab_edit.pt:140
-#: /views/edit/Container/GhostFolder/tab_edit.pt:237
-msgid "modified"
-msgstr "修改日期"
-
-#: /views/object_lookup.pt:148 /views/edit/Container/tab_edit.pt:143
-#: /views/edit/Container/GhostFolder/tab_edit.pt:240
-msgid "author"
-msgstr "作者"
-
-#: /views/object_lookup.pt:158 /views/edit/Container/tab_edit.pt:156
-#: /views/edit/Container/GhostFolder/tab_edit.pt:250
-msgid "There is no content here."
-msgstr ""
-
-#: /views/object_lookup.pt:222 /views/edit/Container/tab_edit.pt:257
-#: /views/edit/Container/GhostFolder/tab_edit.pt:354
-msgid "content approved or published"
-msgstr ""
-
-#: /views/object_lookup.pt:255
-#: /views/edit/Container/GhostFolder/tab_edit.pt:460
-msgid "metadata"
-msgstr ""
-
-#: /views/object_lookup.pt:268 /views/object_lookup.pt:288
-#: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:280
-#: /views/edit/Container/tab_status.pt:207
-#: /views/edit/Container/GhostFolder/tab_edit.pt:337
-#: /views/edit/Container/GhostFolder/tab_edit.pt:373
-msgid "n/a"
-msgstr "-"
-
-#: /views/object_lookup.pt:275 /views/edit/Container/docma_queue.pt:79
-#: /views/edit/Container/GhostFolder/tab_edit.pt:362
-msgid "status"
-msgstr ""
-
-#: /views/object_lookup.pt:334
-msgid "&#8211;"
-msgstr ""
-
-#: /views/object_lookup.pt:381 /views/edit/Container/tab_edit.pt:432
-#: /views/edit/Container/GhostFolder/tab_edit.pt:469
-msgid "unknown"
-msgstr ""
-
-#: /views/object_lookup.pt:408
-msgid "cancel operation: alt-c"
-msgstr ""
-
-#: /views/object_lookup.pt:408 /views/add/add_form.pt:89
-#: /views/add/Ghost/add_form.pt:100 /views/add/GhostFolder/add_form.pt:108
-#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
-msgid "cancel"
-msgstr ""
-
-#: /views/object_lookup.pt:418
-msgid "insert a reference to this asset: alt-p"
-msgstr ""
-
-#: /views/object_lookup.pt:418
-msgid "place reference..."
-msgstr ""
-
-#: /views/object_lookup.pt:89 /views/edit/Container/tab_edit.pt:73
-msgid "new..."
-msgstr "新建..."
-
-#: /views/object_lookup.pt:89 /views/edit/Container/tab_edit.pt:73
-msgid "add a new item - alt-n"
-msgstr "添加新项目: alt-n"
-
-#: /views/object_lookup.pt:98 /views/add/add_form.pt:98
+#: /views/object_lookup.pt:108 /views/add/add_form.pt:98
 #: /views/add/Ghost/add_form.pt:109 /views/add/GhostFolder/add_form.pt:117
 #: /views/edit/lookup_ui.pt:110 /views/edit/macro_edit_metadata.pt:188
 #: /views/edit/tab_subscriptions.pt:114
@@ -4713,6 +4609,96 @@ msgstr "添加新项目: alt-n"
 #: /views/edit/VersionedContent/Ghost/edit.pt:139
 #: /views/public/subscriptor.pt:45
 msgid "access key: alt-s"
+msgstr ""
+
+#: /views/object_lookup.pt:114 /views/edit/Container/tab_edit.pt:88
+msgid "select a new item: alt-s"
+msgstr ""
+
+#: /views/object_lookup.pt:121 /views/edit/Container/tab_edit.pt:95
+msgid "select:"
+msgstr ""
+
+#: /views/object_lookup.pt:149
+msgid "select"
+msgstr ""
+
+#: /views/object_lookup.pt:152 /views/object_lookup.pt:249
+msgid "view"
+msgstr ""
+
+#: /views/object_lookup.pt:155 /views/edit/Container/tab_access_groups.pt:179
+#: /views/edit/Container/tab_edit.pt:140
+#: /views/edit/Container/GhostFolder/tab_edit.pt:237
+msgid "modified"
+msgstr ""
+
+#: /views/object_lookup.pt:158 /views/edit/Container/tab_edit.pt:143
+#: /views/edit/Container/GhostFolder/tab_edit.pt:240
+msgid "author"
+msgstr ""
+
+#: /views/object_lookup.pt:168 /views/edit/Container/tab_edit.pt:156
+#: /views/edit/Container/GhostFolder/tab_edit.pt:250
+msgid "There is no content here."
+msgstr ""
+
+#: /views/object_lookup.pt:232 /views/edit/Container/tab_edit.pt:257
+#: /views/edit/Container/GhostFolder/tab_edit.pt:354
+msgid "content approved or published"
+msgstr ""
+
+#: /views/object_lookup.pt:265
+#: /views/edit/Container/GhostFolder/tab_edit.pt:460
+msgid "metadata"
+msgstr ""
+
+#: /views/object_lookup.pt:278 /views/object_lookup.pt:298
+#: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:280
+#: /views/edit/Container/tab_status.pt:207
+#: /views/edit/Container/GhostFolder/tab_edit.pt:337
+#: /views/edit/Container/GhostFolder/tab_edit.pt:373
+msgid "n/a"
+msgstr ""
+
+#: /views/object_lookup.pt:285 /views/edit/Container/docma_queue.pt:79
+#: /views/edit/Container/GhostFolder/tab_edit.pt:362
+msgid "status"
+msgstr ""
+
+#: /views/object_lookup.pt:344
+msgid "&#8211;"
+msgstr ""
+
+#: /views/object_lookup.pt:391 /views/edit/Container/tab_edit.pt:432
+#: /views/edit/Container/GhostFolder/tab_edit.pt:469
+msgid "unknown"
+msgstr ""
+
+#: /views/object_lookup.pt:418
+msgid "cancel operation: alt-c"
+msgstr ""
+
+#: /views/object_lookup.pt:418 /views/add/add_form.pt:89
+#: /views/add/Ghost/add_form.pt:100 /views/add/GhostFolder/add_form.pt:108
+#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
+msgid "cancel"
+msgstr ""
+
+#: /views/object_lookup.pt:428
+msgid "insert a reference to this asset: alt-p"
+msgstr ""
+
+#: /views/object_lookup.pt:428
+msgid "place reference..."
+msgstr ""
+
+#: /views/object_lookup.pt:99 /views/edit/Container/tab_edit.pt:73
+msgid "new..."
+msgstr ""
+
+#: /views/object_lookup.pt:99 /views/edit/Container/tab_edit.pt:73
+msgid "add a new item - alt-n"
 msgstr ""
 
 #: /views/public/Ghost/preview/render.py:15
@@ -4943,24 +4929,3 @@ msgstr ""
 #: /views/render_form_errors.py:25
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-
-#~ msgid "manage..."
-#~ msgstr "管理主界面..."
-
-#~ msgid "access key: alt-1"
-#~ msgstr "访问键: alt-1"
-
-#~ msgid "access key: alt-2"
-#~ msgstr "访问键: alt-2"
-
-#~ msgid "access key: alt-3"
-#~ msgstr "访问键: alt-3"
-
-#~ msgid "access key: alt-4"
-#~ msgstr "访问键: alt-4"
-
-#~ msgid "access key: alt-5"
-#~ msgstr "访问键: alt-5"
-
-#~ msgid "jump to top: alt-["
-#~ msgstr "跳至页首: alt-["
