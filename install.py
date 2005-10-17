@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.113 2005/03/03 09:50:04 jw Exp $
+# $Id: install.py,v 1.114 2005/10/17 13:21:23 jw Exp $
 """Install for Silva Core
 """
 # Python
@@ -19,6 +19,7 @@ from Products.Silva.fssite import manage_addDirectoryView
 from Products.Silva.fssite import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
+from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
 from Products.Silva.SimpleMembership import SimpleMemberService
 from Products.Silva import File
@@ -270,6 +271,9 @@ def configureMiscServices(root):
         root.manage_addProduct['Silva'] \
             .manage_addSidebarService('service_sidebar', 
             'Silva Content Tree Navigation')
+    if not hasattr(root, 'service_toc_filter'):
+        filter_service = TOCFilterService()
+        root._setObject(filter_service.id, filter_service)
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.173 $
+# $Revision: 1.174 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -793,11 +793,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         for item in self.get_ordered_publishables():
             if not item.is_published():
                 continue
-            if self.service_metadata.getMetadataValue(
-                item.get_viewable(),
-                'silva-extra',
-                'hide_from_tocs') == 'hide':
-                    continue
+            if self.service_toc_filter.filter(item):
+                continue
             if (IContainer.isImplementedBy(item) and
                 (item.is_transparent() or include_non_transparent_containers)):
                 l.append((indent, item))
