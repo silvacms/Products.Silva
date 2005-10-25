@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.118 2005/07/24 06:45:08 kitblake Exp $
+# $Id: SilvaObject.py,v 1.119 2005/10/25 10:05:23 jw Exp $
 
 # python
 from types import StringType
@@ -331,7 +331,7 @@ class SilvaObject(Security, ViewCode):
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.')
             msg.set_mapping({'meta_type': self.meta_type})
-            return '<p>%s</p>' % msg
+            return '<p>%s</p>' % msg.translate()
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result
