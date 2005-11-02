@@ -186,7 +186,7 @@ Silva changes
       - Export button in publish screen was replaced to a more logical 
         location.
 
-      - The publsh screen controls have been reorganized and a publish
+      - The publish screen controls have been reorganized and a publish
         now button has been added, saving users a click (the publish now
         checkbox is gone).
 
