@@ -106,7 +106,7 @@
                     style="float:right;">
                     <input
                       class="transport"
-                      name="tab_status_import:method"
+                      name="tab_edit_import:method"
                       type="submit"
                       style="margin-right:0.6em;"
                       title="import xml data or a zip file: alt-i"
