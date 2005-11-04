@@ -74,7 +74,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                 if set is None:
                     zLOG.LOG(
                     'Silva', zLOG.WARNING, 
-                    "Unknown metadata set %s present in import file.")
+                    "Unknown metadata set %s present in import file." % set_id)
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
