@@ -7,7 +7,7 @@ ms = context.service_metadata
 
 editable = model.get_editable()
 binding = ms.getMetadata(editable)
-all_errors = binding.setValuesFromRequest(request)
+all_errors = binding.setValuesFromRequest(request, reindex=1)
 
 if all_errors:
     # There were errors...
