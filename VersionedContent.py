@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.65 $
+# $Revision: 1.66 $
 
 # Python
 from StringIO import StringIO
@@ -413,15 +413,21 @@ class CatalogedVersionedContent(VersionedContent):
     def manage_afterAdd(self, item, container):
         CatalogedVersionedContent.inheritedAttribute('manage_afterAdd')(
             self, item, container)
-        for version in self._get_indexable_versions():
-            version.index_object()
+        self.indexVersions()
 
     def manage_beforeDelete(self, item, container):
         CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(
             self, item, container)
+        self.unindexVersions()
+    
+    def indexVersions(self):
+        for version in self._get_indexable_versions():
+            version.index_object()
+
+    def unindexVersions(self):
         for version in self._get_indexable_versions():
             version.unindex_object()
-
+        
     def _get_indexable_versions(self):
         version_ids = [self.get_next_version(),
                        self.get_public_version()]
