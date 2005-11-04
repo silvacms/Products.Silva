@@ -293,6 +293,10 @@ class GhostHandler(SilvaBaseHandler):
             object = getattr(self.parent(), uid)
             self.setResult(object)
 
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'ghost'):
+            self.result().indexVersions()
+            
 class GhostContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -358,7 +362,11 @@ class LinkHandler(SilvaBaseHandler):
             object = Link(uid)
             self.parent()._setObject(uid, object)
             self.setResult(getattr(self.parent(), uid))
-        
+
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'link'):
+            self.result().indexVersions()
+            
 class LinkContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
