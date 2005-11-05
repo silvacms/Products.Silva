@@ -67,17 +67,12 @@
       ______________ top controls row ______________
     </tal:block>
     <tr class="top-controls">
-      <td colspan="6" class="align-right">
-        <h3 style="float:left;" i18n:translate="">
-          publishing actions
-        </h3>
-	<div class="controls" 
-	  style="float: right;">
+      <td colspan="6">
+        <div style="float: right;">
           <input
             class="transport"
             name="tab_edit_import:method"
             type="submit"
-            style="margin-right:0.6em;"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
             value="import..."
@@ -94,7 +89,10 @@
             tal:condition="may_change_content"
             i18n:attributes="title;value"
           />
-	</div>
+        </div>
+        <h3 i18n:translate="">
+          publishing actions
+        </h3>
       </td>
     </tr>
   </thead>
@@ -349,7 +347,7 @@
     </tal:block>
     <tr class="controls"
       tal:condition="may_approve_content">
-      <td colspan="3"
+      <td colspan="2"
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -389,7 +387,7 @@
         />
       </td>
       <td class="align-right"
-        colspan="3">
+        colspan="4">
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
@@ -424,7 +422,7 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="3"
+      <td colspan="2"
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -454,7 +452,7 @@
           i18n:attributes="value;title"
         />
       </td>
-      <td class="align-right" colspan="3">
+      <td class="align-right" colspan="4">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
