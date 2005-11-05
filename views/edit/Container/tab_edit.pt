@@ -102,8 +102,7 @@
                     </tal:block>
                   </select>
                   </div>
-                  <div class="controls"
-                    style="float:right;">
+                  <div style="float:right;">
                     <input
                       class="transport"
                       name="tab_edit_import:method"
@@ -117,8 +116,8 @@
                     <span tal:condition="not:may_change_content" tal:omit-tag="">
                       &nbsp;
                     </span>
-                </div>
-               </td>
+                  </div>
+                </td>
               </tr>
             </thead>
 
