@@ -347,7 +347,7 @@
     </tal:block>
     <tr class="controls"
       tal:condition="may_approve_content">
-      <td colspan="2"
+      <td colspan="2" 
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -387,7 +387,7 @@
         />
       </td>
       <td class="align-right"
-        colspan="4">
+        colspan="4"> 
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
@@ -422,7 +422,7 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="2"
+      <td colspan="2" 
         style="border-style:none;">
         <input class="reject"
           type="submit"
@@ -452,7 +452,8 @@
           i18n:attributes="value;title"
         />
       </td>
-      <td class="align-right" colspan="4">
+      <td class="align-right"
+        colspan="4">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
