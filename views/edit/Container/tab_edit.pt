@@ -108,7 +108,6 @@
                       class="transport"
                       name="tab_edit_import:method"
                       type="submit"
-                      style="margin-right:0.6em;"
                       title="import xml data or a zip file: alt-i"
                       accesskey="i"
                       value="import..."
