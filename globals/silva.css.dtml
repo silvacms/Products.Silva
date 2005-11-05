@@ -514,10 +514,6 @@ table.listing tr.top-controls td {
   padding: 0em 0.4em;
 }
 
-div.controls {
-  padding: 0.2em 0 0.2em 0
-}
-
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
   margin: 0.1em 0.2em 0.2em 0.2em;
