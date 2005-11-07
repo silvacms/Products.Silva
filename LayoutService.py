@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 
 # Zope
 from OFS import SimpleItem
@@ -14,7 +14,7 @@ import SilvaPermissions
 from LayoutRegistry import layoutRegistry, DEFAULT_LAYOUT
 import LayoutRegistry
 import install
-import whrandom
+import random
 import copy
 
 class LayoutService(SimpleItem.SimpleItem):
@@ -162,9 +162,9 @@ class LayoutService(SimpleItem.SimpleItem):
             publication.set_layout_key(None)
         
     def _get_unique_layout_key(self):
-        unique = str(whrandom.random())
+        unique = str(random.random())
         while self._used_layouts.has_key(unique):
-            unique = str(whrandom.random())
+            unique = str(random.random())
         return unique
 
     def has_layout(self, publication):
