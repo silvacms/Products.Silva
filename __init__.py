@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.137 $
+# $Revision: 1.138 $
 # Zope
 import zLOG
 # Silva
@@ -327,9 +327,18 @@ def initialize_upgrade():
     from Products.Silva import upgrade_100
     upgrade_100.initialize()
 
+    from Products.Silva import upgrade_110
+    upgrade_110.initialize()
+    
     from Products.Silva import upgrade_120
     upgrade_120.initialize()
 
+    from Products.Silva import upgrade_130
+    upgrade_130.initialize()
+    
+    from Products.Silva import upgrade_140
+    upgrade_140.initialize()
+    
 #------------------------------------------------------------------------------
 # Monkey patches
 #------------------------------------------------------------------------------
