@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 
 # python
 import re
@@ -99,7 +99,7 @@ class LinkVersion(CatalogedVersion):
         self._link_type = link_type
         self.set_url(url)
         
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'get_url')
+    security.declareProtected(SilvaPermissions.View, 'get_url')
     def get_url(self):
         return self._url
 
