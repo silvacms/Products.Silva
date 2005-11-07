@@ -56,4 +56,3 @@ class RefreshAll:
 def initialize():
     upgrade.registry.registerUpgrader(ImageUpgrade(), '1.0', 'Silva Image')
     upgrade.registry.registerUpgrader(RefreshAll(), '1.0', 'Silva Root')
-

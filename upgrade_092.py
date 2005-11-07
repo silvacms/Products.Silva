@@ -460,5 +460,3 @@ def initialize():
     upgrade_registry.register('Silva DemoObject Version', convert_no_bullet_lists_092, '0.9.2')
 
     upgrade_registry.register('Silva Indexer', update_indexers_092, '0.9.2')
-
-
