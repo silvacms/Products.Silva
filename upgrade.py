@@ -143,6 +143,11 @@ class UpgradeRegistry:
         versions = self.__registry.keys()
         versions.sort(lambda x, y: cmp(self._vers_str_to_int(x),
             self._vers_str_to_int(y)))
+            
+        # XXX this code is confusing, but correct. We might want to redo
+        # the whole version-registry-upgraders-shebang into something more
+        # understandable.
+            
         try:
             version_index = versions.index(from_version)
         except ValueError:
