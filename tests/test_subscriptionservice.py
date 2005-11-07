@@ -1,6 +1,6 @@
 
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -9,14 +9,9 @@ import SilvaTestCase
 
 from Products.Silva.adapters import subscribable
 from Products.Silva import MAILHOST_ID, MAILDROPHOST_AVAILABLE
+from Products.Silva import subscriptionerrors as errors    
 
 import mocksmtpserver,asyncore
-
-if MAILDROPHOST_AVAILABLE:
-    from Testing import ZopeTestCase
-    ZopeTestCase.installProduct('MaildropHost')
-
-from Products.Silva import subscriptionerrors as errors    
    
 def _patched_send(*args, **kwargs):
     return

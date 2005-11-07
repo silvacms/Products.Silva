@@ -17,6 +17,13 @@ ZopeTestCase.installProduct('FileSystemSite')
 ZopeTestCase.installProduct('ParsedXML')
 ZopeTestCase.installProduct('XMLWidgets')
 ZopeTestCase.installProduct('ProxyIndex')
+try:
+    # if available, it is installed by Silva.install.installSubscriptions
+    from Products.MaildropHost import MaildropHost
+    ZopeTestCase.installProduct('MaildropHost')    
+except ImportError:
+    pass
+
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
 ZopeTestCase.installProduct('SilvaDocument')
