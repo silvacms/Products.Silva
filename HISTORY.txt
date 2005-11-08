@@ -30,11 +30,28 @@ Silva changes
 
     Bugs Fixed
 
+      - Un-fixed a Zope-2.7.7 compatibility issue with using ZCTextIndex.
+        The original fix was basically a work arround for Zope bug. This
+        means Silva can no longer work properly with Zope-2.7.7.
+
+      - Updated tests/README.txt to reflect the now preferred way for
+        running the tests. ZopeTestCase-0.9.8 is now required.
+
       - When content without a maintitle was exported, it could not be
         imported again.
 
       - Image tags in exported silva documents had their src attribute 
         converted to an absolute url on export.
+
+      - In some cases the registered upgraders for the new Silva version
+        would not run. This is fixed by regsitering upgraders for all Silva
+        versions, even if the particular version didn't really have any
+        upgrading to do.
+
+      - Saving metadata in tab_metadata did not trigger a catalog reindex
+        action.
+
+      - The test_subscriptions would fail if the MaildropHost was installed.
 
   1.3
 
