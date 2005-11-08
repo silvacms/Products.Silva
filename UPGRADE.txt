@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.4.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.55 $
+CVS:        $Revision: 1.56 $
 
 Introduction
 ------------
@@ -84,6 +84,10 @@ Steps to take during a major Silva upgrade:
 
 Upgrading from Silva 1.3 to silva 1.4
 -------------------------------------
+
+Apart from the regular 'upgrade' step, you'll have to upgrade to Zope
+2.7.8, as this is now the recommended Zope version. This Silva version will
+no longer work properly with Zope-2.7.7.
 
 A field has been added to the silva-extra metadata-set. To ensure that 
 existing content keeps working, go to service_metdata in services, remove
