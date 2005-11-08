@@ -2,6 +2,10 @@
 Developer level changes in Silva
 ================================
 
+From 1.3 to 1.4:
+
+* For running the unit tests, ZopeTestCase 0.9.8 is now required.
+
 From 1.2 to 1.3:
 
 * Metadata sets can have a 'category' property. This property can be used
