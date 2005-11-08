@@ -1,37 +1,27 @@
 Running tests
 =============
 
-You need ZopeTestCase. It needs to be installed in your SOFTWARE_HOME
-in lib/python/Testing. Currently there is no released version that
-works, unfortunately; you need to check a version from CVS at the
-Plone Collective (http://collective.sourceforge.net).
+You need ZopeTestCase, version 0.9.8 or higher.
 
-In an INSTANCE_HOME setup you need to set environment variables to the
-right places:
+It needs to be installed in your SOFTWARE_HOME in lib/python/Testing. You
+can download released versions of ZopeTestCase here:
 
-  INSTANCE_HOME to /path/to/zope_instance
+  http://www.zope.org/Members/shh/ZopeTestCase
 
-  SOFTWARE_HOME to /path/to/zope_software/lib/python
+To run the Silva tests you can use the ``test`` subcommand of ``zopectl``
+of your Zope instance. So, assuming the current working directory is your
+Zope instance::
 
-Setting environment variables in bash is like:
-    
-  export INSTANCE_HOME=/path/to/zope_instance
+  ./bin/zopectl test --dir Products/Silva
 
-Don't worry that the test runner reports a different INSTANCE_HOME
-when actually running; this is normal.
+In case you'd like to run only one particular set of tests you can do this::
 
-(People who don't run INSTANCE_HOME, please supply instructions how to
-run tests in your setup here.)
- 
-Individual test modules have the 'test_' prefix. You can run these
-individual modules with Python (the same Python version as the one
-your Zope is running with):
+  ./bin/zopectl test --dir Products/Silva test_silvaviews
 
-  python test_foo.py
+There're a lot more options for the test subcommand. For more information
+you can issue::
 
-You can also run all test modules automatically:
-
-  python runalltests.py
+  ./bin/zopectl test --help
 
 Writing tests
 =============
@@ -65,35 +55,3 @@ Troubleshooting
 If the test framework starts up but then before the first test is run
 gives an error about persistence, you may have forgotten to import
 SilvaTestCase.
-
-Status
-======
-
-This is a temporary list showing the status of the test suite. This
-list will go away in the future as all test modules always have to
-work.
-
-test_CatalogedVersioning .. errors 1 (to do with catalog, test in 2.6.2)
-test_Container           .. ok
-test_Copy                .. errors 2 (title change, username issue)
-test_Ghost               .. errors 1 (render_view issue)
-test_Publishable         .. ok
-test_Security            .. ok
-test_ServiceLayouts      .. broken (can't test without product installed..)
-test_SilvaObject         .. ok
-test_SimpleMembership    .. ok
-test_VersionedContent    .. ok
-test_Versioning          .. ok
-test_catalog             .. ok
-test_convert             .. ok
-test_file                .. ok
-test_icon                .. ok
-test_mangle              .. ok
-
-runalltests result: 
-
-119 tests, failures=3, errors=4
-
-  
-
-
