@@ -6,7 +6,7 @@ __version__ = '0.3.0'
 
 from Testing import ZopeTestCase
 
-_user_name = ZopeTestCase._user_name
+user_name = ZopeTestCase.user_name
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
@@ -97,7 +97,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''Sets up the fixture. Do not override, 
            use the hooks instead.
         '''
-        self._clear()
+        ### self._clear() # This certainly shouldn't be here!
+        get_transaction().abort()
+        noSecurityManager()
         self.beforeSetUp()
         try:
             self.app = self._app()
@@ -107,10 +109,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 self._setupRootUser()
                 self.login()
                 self.app.REQUEST.AUTHENTICATED_USER=\
-                         self.app.acl_users.getUser(ZopeTestCase._user_name)
+                         self.app.acl_users.getUser(ZopeTestCase.user_name)
             self.afterSetUp()
         except:
             self.beforeClose()
+            self._clear()
             raise
 
     def tearDown(self):
@@ -127,27 +130,29 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _setupRootUser(self):
         '''Creates the root user.'''
         uf = self.root.acl_users
-        uf._doAddUser(_user_name, 'secret', ['ChiefEditor'], [])
+        uf._doAddUser(user_name, 'secret', ['ChiefEditor'], [])
 
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
-        if self._configure_root:
-            # This is paranoia mostly as the transaction
-            # should be aborted anyway...
-            try: self.root.acl_users._doDelUsers([_user_name])
-            except: pass
-            try: self.root.Members._delObject(_user_name)
-            except: pass
-        if call_close_hook:
-            self.beforeClose()
-        self._close()
-        self.logout()
-        self.afterClear()
-        
+        try:
+            if self._configure_root:
+                # This is paranoia mostly as the transaction
+                # should be aborted anyway...
+                try: self.root.acl_users._doDelUsers([user_name])
+                except: pass
+                try: self.root.Members._delObject(user_name)
+                except: pass
+            if call_close_hook:
+                self.beforeClose()
+        finally:
+            self._close()
+            self.logout()
+            self.afterClear()
+
     def _close(self):
         '''Closes the ZODB connection.'''
-        ZopeTestCase.closeConnections()
-
+        ZopeTestCase.close(self.app)
+        
     def addObject(self, container, type_name, id, product='Silva',
             **kw):
         getattr(container.manage_addProduct[product],
@@ -158,7 +163,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     # Security interfaces
 
-    def setRoles(self, roles, name=_user_name):
+    def setRoles(self, roles, name=user_name):
         '''Changes the roles assigned to a user.'''
         uf = self.root.acl_users
         uf._doChangeUser(name, None, roles, []) 
@@ -179,7 +184,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         ZopeTestCase.installProduct(extension)
         self.getRoot().service_extensions.install(extension)
 
-    def login(self, name=_user_name):
+    def login(self, name=user_name):
         '''Logs in as the specified user.'''
         uf = self.root.acl_users
         user = uf.getUserById(name).__of__(uf)
@@ -236,6 +241,7 @@ if hasattr(Publish, '_requests'):
     # PlacelessTranslationService stores a list of requests on Publish
     Publish._requests[get_ident()] = app.REQUEST
 setupSilvaRoot(app, id='root')
+get_transaction().commit()
 ZopeTestCase.close(app)
 # remove the translation service if it was installed
 if cp_id is not None:
