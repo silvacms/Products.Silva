@@ -123,20 +123,20 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # gotcha    
         self.root.folder4.ghost6.sec_update_last_author_info()        
         self.assertEquals(
-            ZopeTestCase._user_name,
+            ZopeTestCase.user_name,
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
         # copy ghost to folder 4 and check author
         # XXX maybe we should rename the user inbetween ?
         self.root.folder4.action_copy(['ghost6'], self.app.REQUEST)
         self.root.folder5.action_paste(self.app.REQUEST)
         self.assertEquals(
-            ZopeTestCase._user_name,
+            ZopeTestCase.user_name,
             self.root.folder5.ghost6.sec_get_last_author_info().fullname())
         # move ghost to root and check author        
         self.root.folder4.action_cut(['ghost6'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.assertEquals(
-            ZopeTestCase._user_name,
+            ZopeTestCase.user_name,
             self.root.ghost6.sec_get_last_author_info().fullname())
         
 

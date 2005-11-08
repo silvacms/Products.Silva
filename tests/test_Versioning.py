@@ -209,7 +209,7 @@ class VersioningTestCase(SilvaTestCase.SilvaTestCase):
         self._check_version_state()
         self.versioning.request_version_approval('foo')
         self._check_version_state(approval_requested=true)
-        self.assertEquals(ZopeTestCase._user_name, self.versioning.get_approval_requester())
+        self.assertEquals(ZopeTestCase.user_name, self.versioning.get_approval_requester())
         self.assertEquals('foo',
                           self.versioning.get_approval_request_message())
         self.versioning.withdraw_version_approval('Withdraw message')
