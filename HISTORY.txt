@@ -53,6 +53,17 @@ Silva changes
 
       - The test_subscriptions would fail if the MaildropHost was installed.
 
+      - pathToUrl() (path.py) has been renamed to pathToUrlPath(). Fixed
+        tests accordingly.
+
+      - Various issues in Kupu have been addressed.
+
+      - Fixed various unicode errors related to PTS.
+
+      - Fixed bug where En didn't appear in the language list.
+
+      - i18n cleanups.
+
   1.3
 
     Features added
