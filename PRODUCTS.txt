@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.4.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.23 $
+CVS:        $Revision: 1.24 $
 
 Introduction
 ------------
@@ -103,7 +103,7 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Kupu 1.2.2 (DI)
+Kupu 1.3.1 (DI)
 ---------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
@@ -205,13 +205,13 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNews 1.2 (EX)
-------------------
+SilvaNewsNetwork 2.0 (EX)
+-------------------------
 
-SilvaNews builds on Silva and SilvaDocument to provide News
-Publication, News Filters and News Viewers as well as News Articles
-and Agenda Items to build a distributed news system for your Silva
-site. It also contains RSS export and import facilities.
+SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
+SilvaDocument to provide News Publication, News Filters and News Viewers as 
+well as News Articles and Agenda Items to build a distributed news system 
+for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
