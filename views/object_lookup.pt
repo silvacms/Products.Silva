@@ -68,7 +68,7 @@
           style="margin:0;"
           id="sortable"
           tal:define="
-            ret python:here.object_lookup_get_objects(filter, int(show_add));
+            ret python:model.object_lookup_get_objects(filter, int(show_add));
             default_document python: ret[0];
             publishables python: ret[1];
             assets python: ret[2];
