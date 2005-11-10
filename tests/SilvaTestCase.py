@@ -29,6 +29,14 @@ ZopeTestCase.installProduct('SilvaViews')
 ZopeTestCase.installProduct('SilvaDocument')
 ZopeTestCase.installProduct('Silva')
 
+try:
+    from Products.SilvaDocument.externalsource \
+         import AVAILABLE as EXTL_AVAILABLE
+except ImportError: pass
+else:
+    if EXTL_AVAILABLE:
+        ZopeTestCase.installProduct('SilvaExternalSources')
+
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User
 
