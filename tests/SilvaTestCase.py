@@ -5,6 +5,18 @@
 __version__ = '0.3.0'
 
 from Testing import ZopeTestCase
+try: 				# post initial Silva 1.4 release
+    from Products.Silva.transactions import transaction
+except ImportError:
+    try: 			# Zope 2.8 style transactions
+        import transaction
+    except ImportError: 	# Old-style transactions
+        class BBBTransactionMan:
+            def begin(self):              get_transaction().begin()
+            def commit(self, sub=False):  get_transaction().commit(sub)
+            def abort(self, sub=False):   get_transaction().abort(sub)
+            def get(self):                return get_transaction()
+        transaction = BBBTransactionMan()
 
 user_name = ZopeTestCase.user_name
 ZopeTestCase.installProduct('ZCatalog')
@@ -92,21 +104,21 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
            at the start of setUp(). By default begins
            a new transaction.
         '''
-        get_transaction().begin()
+        transaction.begin()
 
     def beforeClose(self):
         '''Called before the ZODB connection is closed,
            at the end of tearDown(). By default aborts
            the transaction.
         '''
-        get_transaction().abort()
+        transaction.abort()
 
     def setUp(self):     
         '''Sets up the fixture. Do not override, 
            use the hooks instead.
         '''
         ### self._clear() # This certainly shouldn't be here!
-        get_transaction().abort()
+        transaction.abort()
         noSecurityManager()
         self.beforeSetUp()
         try:
@@ -166,7 +178,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         getattr(container.manage_addProduct[product],
             'manage_add%s' % type_name)(id, **kw)
         # gives the new object a _p_jar ...
-        get_transaction().commit(1)
+        transaction.get().commit(1)
         return getattr(container, id)
 
     # Security interfaces
@@ -237,7 +249,7 @@ def setupSilvaRoot(app, id='root', quiet=0):
         factory.manage_addRoot(id, '')
         root = app.root
         noSecurityManager()
-        get_transaction().commit()
+        transaction.commit()
         if not quiet:
             ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
 
@@ -249,7 +261,7 @@ if hasattr(Publish, '_requests'):
     # PlacelessTranslationService stores a list of requests on Publish
     Publish._requests[get_ident()] = app.REQUEST
 setupSilvaRoot(app, id='root')
-get_transaction().commit()
+transaction.commit()
 ZopeTestCase.close(app)
 # remove the translation service if it was installed
 if cp_id is not None:

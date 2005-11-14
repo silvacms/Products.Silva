@@ -8,6 +8,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
+from SilvaTestCase import transaction
 # Zope
 from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
@@ -211,7 +212,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
-        get_transaction().commit(1)
+        transaction.get().commit(1)
         # We just see if we can call the 'getXML()' on the xmlsource adapter
         # without failure. This will test/prove that we *do* need to provide
         # an ExportInfo object to the exporter.exportToString() in the
@@ -239,7 +240,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
-        get_transaction().commit(1)
+        transaction.get().commit(1)
         # we will now unregister the image producer, to test whether 
         # fallback kicks in
         xmlexport.theXMLExporter._mapping[Image] = None

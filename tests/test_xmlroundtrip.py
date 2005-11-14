@@ -6,6 +6,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
+from SilvaTestCase import transaction
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.SilvaMetadata.Compatibility import getToolByName
@@ -53,7 +54,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id,
             'image5.jpg')
-        get_transaction().commit(1)
+        transaction.get().commit(1)
         testfolder = importfolder.testfolder
         xmlexport.initializeXMLExportRegistry()
         settings = xmlexport.ExportSettings()
