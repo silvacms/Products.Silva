@@ -1,10 +1,12 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetdata.py,v 1.4 2005/01/19 14:26:09 faassen Exp $
+# $Id: assetdata.py,v 1.5 2005/11/14 18:06:13 faassen Exp $
 #
 
 # XXX These asset adapters are a temporary solution and will not be
 # necessary once the assets get a consistent API
+
+from zope.interface import implements
 
 import Globals
 from Products.Silva.adapters import adapter
@@ -12,7 +14,7 @@ from Products.Silva.adapters import interfaces
 
 class FileData(adapter.Adapter):
     
-    __implements__ = interfaces.IAssetData
+    implements(interfaces.IAssetData)
 
     def _getDataForFile(self, file):
         if file.meta_type == 'File': # OFS.Image.File
@@ -29,7 +31,7 @@ class FileData(adapter.Adapter):
     
 class FlashData(FileData):
     
-    __implements__ = interfaces.IAssetData
+    implements(interfaces.IAssetData)
 
     def getData(self):
         file = self.context._flash
@@ -37,7 +39,7 @@ class FlashData(FileData):
 
 class ImageData(adapter.Adapter):
     
-    __implements__ = interfaces.IAssetData
+    implements(interfaces.IAssetData)
 
     def getData(self):
         image = getattr(self.context, 'hires_image', None)

@@ -1,6 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
+
+from zope.interface import implements
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -23,7 +25,7 @@ class SimpleContent(Content, SimpleItem):
     
     meta_type = "Silva Simple Content"
 
-    __implements__ = IContent
+    implements(IContent)
 
     def is_deletable(self):
         """this is always deletable"""

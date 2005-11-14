@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.119 2005/10/25 10:05:23 jw Exp $
+# $Id: SilvaObject.py,v 1.120 2005/11/14 18:06:12 faassen Exp $
 
 # python
 from types import StringType
@@ -251,9 +251,9 @@ class SilvaObject(Security, ViewCode):
 
         result = []
         item = self
-        while ISilvaObject.isImplementedBy(item):
+        while ISilvaObject.providedBy(item):
             if ignore_index: # Should the index be included?
-                if not (IContent.isImplementedBy(item) and item.is_default()):
+                if not (IContent.providedBy(item) and item.is_default()):
                     result.append(item)
             else:
                 result.append(item)
@@ -349,42 +349,42 @@ class SilvaObject(Security, ViewCode):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_publishable')
     def implements_publishable(self):
-        return IPublishable.isImplementedBy(self)
+        return IPublishable.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_asset')
     def implements_asset(self):
-        return IAsset.isImplementedBy(self)
+        return IAsset.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_content')
     def implements_content(self):
-        return IContent.isImplementedBy(self)
+        return IContent.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_container')
     def implements_container(self):
-        return IContainer.isImplementedBy(self)
+        return IContainer.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_publication')
     def implements_publication(self):
-        return IPublication.isImplementedBy(self)
+        return IPublication.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_root')
     def implements_root(self):
-        return IRoot.isImplementedBy(self)
+        return IRoot.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioning')
     def implements_versioning(self):
-        return IVersioning.isImplementedBy(self)
+        return IVersioning.providedBy(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'implements_versioned_content')
     def implements_versioned_content(self):
-        return IVersionedContent.isImplementedBy(self)
+        return IVersionedContent.providedBy(self)
 
     security.declareProtected(
         SilvaPermissions.ViewAuthenticated, 'security_trigger')

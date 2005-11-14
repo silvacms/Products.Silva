@@ -1,6 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.65 $
+# $Revision: 1.66 $
+
+from zope.interface import implements
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -37,7 +39,7 @@ class Publication(Folder.Folder):
     
     meta_type = "Silva Publication"
 
-    __implements__ = IPublication
+    implements(IPublication)
 
     _addables_allowed_in_publication = None
 
@@ -168,7 +170,7 @@ class Publication(Folder.Folder):
         current = self
         root = self.get_root()
         while 1:
-            if IPublication.isImplementedBy(current):
+            if IPublication.providedBy(current):
                 addables = current._addables_allowed_in_publication
                 if addables is not None:
                     return addables

@@ -9,12 +9,14 @@ from Products.Silva import interfaces
 from Products.Silva import SilvaPermissions
 from Products.Silva.adapters import adapter
 
+from zope.interface import implements
+
 class Haunted(adapter.Adapter):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
     """
     
-    __implements__ = (interfaces.IHaunted, )
+    implements(interfaces.IHaunted)
     
     security = ClassSecurityInfo()
     
@@ -36,7 +38,7 @@ class HauntedGhost(Haunted):
     objects (Ghosts).
     """
     
-    __implements__ = (interfaces.IHaunted, )
+    implements(interfaces.IHaunted)
     
     security = ClassSecurityInfo()
     
@@ -64,10 +66,10 @@ class HauntedGhost(Haunted):
 
 def getHaunted(context):
     # XXX do we want to support container types too for this adapter?
-    if interfaces.IGhost.isImplementedBy(context):
+    if interfaces.IGhost.providedBy(context):
         # It's a Ghost, return HauntedGhost adapter
         return HauntedGhost(context).__of__(context)
-    if interfaces.IContent.isImplementedBy(context):
+    if interfaces.IContent.providedBy(context):
         # If it is 'normal' content, we supply the Haunted adapter for it
         return Haunted(context).__of__(context)
     return None

@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
@@ -12,7 +14,7 @@ from interfaces import IVersion
 
 class Version(SimpleItem):
 
-    __implements__ = IVersion
+    implements(IVersion)
 
     security = ClassSecurityInfo()
 

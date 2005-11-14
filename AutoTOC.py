@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.12 2005/08/05 16:00:26 kitblake Exp $
+# $Id: AutoTOC.py,v 1.13 2005/11/14 18:06:12 faassen Exp $
+
+from zope.interface import implements
 
 # Zope
 from Globals import InitializeClass
@@ -33,7 +35,7 @@ class AutoTOC(Content, SimpleItem):
 
     meta_type = "Silva AutoTOC"
 
-    __implements__ = IContent
+    implements(IContent)
 
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id,
@@ -75,7 +77,7 @@ def manage_addAutoTOC(self, id, title, REQUEST=None):
 
 class AutoTOCPolicy(Persistent):
 
-    __implements__ = IContainerPolicy
+    implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         container.manage_addProduct['Silva'].manage_addAutoTOC(

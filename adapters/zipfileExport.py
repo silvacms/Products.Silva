@@ -1,5 +1,7 @@
+
 from StringIO import StringIO
 # Zope
+from zope.interface import implements
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 # Silva Adapters
@@ -12,7 +14,7 @@ class ZipfileExportAdapter(adapter.Adapter):
     the export to zipfiles. 
     """
 
-    __implements__ = (interfaces.IZipfileExporter, )
+    implements(interfaces.IZipfileExporter)
     
     security = ClassSecurityInfo()
 

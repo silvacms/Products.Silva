@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.10 2005/01/19 14:26:09 faassen Exp $
+# $Id: icon.py,v 1.11 2005/11/14 18:06:12 faassen Exp $
 
 """Sivla icon registry"""
 
@@ -24,14 +24,14 @@ class _IconRegistry:
         self._icon_mapping = {}
     
     def getIcon(self, object):
-        if IGhostContent.isImplementedBy(object):
+        if IGhostContent.providedBy(object):
             version = object.getLastVersion()
             if version.get_link_status() == version.LINK_OK:
                 kind = 'link_ok'
             else:
                 kind = 'link_broken'
             identifier = ('ghost', kind)
-        elif IGhostFolder.isImplementedBy(object):
+        elif IGhostFolder.providedBy(object):
             if object.get_link_status() == object.LINK_OK:
                 if object.implements_publication():
                     kind = 'publication'
@@ -40,15 +40,15 @@ class _IconRegistry:
             else:
                 kind = 'link_broken'
             identifier = ('ghostfolder', kind)      
-        elif IFile.isImplementedBy(object):
+        elif IFile.providedBy(object):
             identifier = ('mime_type', object.get_mime_type())
-        elif ISilvaObject.isImplementedBy(object):
+        elif ISilvaObject.providedBy(object):
             identifier = ('meta_type', object.meta_type)
         else:
             try:
                 # if this call gets an object rather then a class as
                 # argument it will raise an AttributeError on __hash__
-                ISilvaObject.isImplementedByInstancesOf(object)
+                ISilvaObject.implementedBy(object)
             except AttributeError:
                 raise RegistryError, "Icon not found"
             else:

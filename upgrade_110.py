@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 # zope imports
 import zLOG
 # silva imports
@@ -6,7 +8,7 @@ from Products.Silva import upgrade
 
 class DummyUpgrader:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def upgrade(self, silvaroot):
         return silvaroot

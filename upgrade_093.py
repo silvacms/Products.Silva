@@ -1,8 +1,9 @@
-from __future__ import nested_scopes
 
 import string
 import re
 import os
+
+from zope.interface import implements
 
 # zope imports
 import zLOG
@@ -24,7 +25,7 @@ from Products.SilvaMetadata.Exceptions import BindingError
 class MovedViewRegistry:
     """handle view registry beeing moved out of the core"""
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         svr = root.service_view_registry
@@ -45,7 +46,7 @@ class MovedDocument:
         core Silva Document.
     """
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         root.manage_delObjects(['service_widgets', 'service_editor',
@@ -73,7 +74,7 @@ class UpgradeAccessRestriction:
 
     """
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     ACCESS_RESTRICTION_PROPERTY = 'access_restriction'
 
@@ -139,9 +140,9 @@ class UpgradeAccessRestriction:
                 obj.absolute_url(), ipg.absolute_url()))
         
     def _createIPGroup(self, context):
-        if not IContainer.isImplementedBy(context):
+        if not IContainer.providedBy(context):
             context = context.aq_parent
-        assert IContainer.isImplementedBy(context)
+        assert IContainer.providedBy(context)
         id = 'access_restriction_upgrade_group'
         id_template = id + '_%i'
         counter = 0
@@ -249,7 +250,7 @@ class UpgradeAccessRestriction:
 
 class UpgradeTime:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         try:
@@ -284,7 +285,7 @@ class SimpleMetadataUpgrade:
         or renaming fields. Adding should be fine though.
     """
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def __init__(self, name, filename):
         """constructor
@@ -305,7 +306,7 @@ class SimpleMetadataUpgrade:
 
 class Reindex:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         if hasattr(obj.aq_base, 'reindex_object'):
@@ -314,7 +315,7 @@ class Reindex:
 
 class PublicRenderingCacheFlusher:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         if isinstance(obj, VersionedContent):
@@ -323,7 +324,7 @@ class PublicRenderingCacheFlusher:
 
 class GroupsService:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade Groups Service ' + repr(obj))
@@ -338,11 +339,11 @@ class BuryDemoObjectCorpses:
     This upgrades deletes all broken object which have been DemoObject
     instances before this class went away.
     """
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         # upgrade containers only
-        if not IContainer.isImplementedBy(obj):
+        if not IContainer.providedBy(obj):
             return obj
 
         broken_ids = obj.objectIds('Silva DemoObject')
@@ -360,7 +361,7 @@ class BuryDemoObjectCorpses:
 class RefreshAll:
     " refresh all products and installs SilvaDocument "
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         zLOG.LOG('Silva', zLOG.INFO, 'install SilvaDocument')
@@ -372,7 +373,7 @@ class RefreshAll:
 class ClearEditorCache:
     " Clear widget cache and other caches "
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         editor_service = getattr(root, 'service_editor', None)
@@ -393,7 +394,7 @@ class CheckServiceMembers:
     Copied from the upgrade_092 module
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):        
         sm = getattr(root, 'service_members', None)
@@ -410,10 +411,10 @@ class SetAuthorInfoOnVersion:
     """ Reset author info to version object for VersionedContent objects
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def upgrade(self, obj):
-        if IVersionedContent.isImplementedBy(obj):
+        if IVersionedContent.providedBy(obj):
             versions = []
             versions.append(obj.get_viewable())
             versions.append(obj.get_previewable())
@@ -439,7 +440,7 @@ class RemoveOldMetadataIndexes:
         metadata sets, in those way too much fields got indexed.
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, service_catalog):
         if service_catalog.id != 'service_catalog':
@@ -463,10 +464,10 @@ class SetTitleFromIndexOnContainer:
     container to that of the index document, if it has one.
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, container):
-        if not IContainer.isImplementedBy(container):
+        if not IContainer.providedBy(container):
             print 'This container object does not implement IContainer! (%s)' % repr(container)
             return container
         index = container.get_default() #getattr(container.aq_base, 'index', None)

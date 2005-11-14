@@ -1,7 +1,9 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.7 2005/01/19 14:26:09 faassen Exp $
+# $Id: security.py,v 1.8 2005/11/14 18:06:13 faassen Exp $
 #
+from zope.interface import implements
+
 import Globals
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo,\
@@ -20,7 +22,7 @@ from types import ListType
 module_security = ModuleSecurityInfo('Products.Silva.adapters.security')
 
 class ViewerSecurityAdapter(adapter.Adapter):
-    __implements__ = interfaces.IViewerSecurity
+    implements(interfaces.IViewerSecurity)
 
     security = ClassSecurityInfo()
 
@@ -29,7 +31,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     def setAcquired(self):
         # if we're root, we can't set it to acquire, just give
         # everybody permission again
-        if silva_interfaces.IRoot.isImplementedBy(self.context):
+        if silva_interfaces.IRoot.providedBy(self.context):
             self.context.manage_permission(
                 SilvaPermissions.View,
                 roles=roleinfo.ALL_ROLES,
@@ -54,7 +56,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'isAcquired')
     def isAcquired(self):
-        if (silva_interfaces.IRoot.isImplementedBy(self.context) and
+        if (silva_interfaces.IRoot.providedBy(self.context) and
             self.getMinimumRole() == 'Anonymous'):
             return 1
         # it's unbelievable, but that's the Zope API..
@@ -71,7 +73,7 @@ class ViewerSecurityAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getMinimumRoleAbove')
     def getMinimumRoleAbove(self):
-        if silva_interfaces.IRoot.isImplementedBy(self.context):
+        if silva_interfaces.IRoot.providedBy(self.context):
             return 'Anonymous'
         else:
             parent = aq_parent(aq_inner(self.context))
@@ -95,7 +97,7 @@ LOCK_DURATION = (1./24./60.)*20.
 # on the Security mixin.
 
 class LockAdapter(adapter.Adapter):
-    __implements__ = interfaces.ILockable
+    implements(interfaces.ILockable)
         
     security = ClassSecurityInfo()
     

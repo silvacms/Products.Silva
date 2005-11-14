@@ -1,5 +1,5 @@
-from __future__ import nested_scopes
 
+from zope.interface import implements
 # zope imports
 import zLOG
 import DateTime
@@ -14,7 +14,7 @@ threshold = 500
 class GeneralUpgrader:
     """wrapper for upgrade functions"""
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def __init__(self, upgrade_handler):
         """constructor
@@ -62,7 +62,7 @@ class UpgradeRegistry:
         
 
     def registerUpgrader(self, upgrader, version, meta_type):
-        assert IUpgrader.isImplementedBy(upgrader)
+        assert IUpgrader.providedBy(upgrader)
         self.__registry.setdefault(version, {}).setdefault(meta_type, []).\
             append(upgrader)
 
@@ -195,9 +195,9 @@ def check_reserved_ids(obj):
     while object_list:
         o = object_list[0]
         del object_list[0]
-        if IContainer.isImplementedBy(o):
+        if IContainer.providedBy(o):
             object_list.extend(o.objectValues())
-        if not ISilvaObject.isImplementedBy(o):
+        if not ISilvaObject.providedBy(o):
             continue
         old_id = o.getId()
         id = mangle.Id(o.aq_parent, old_id, allow_dup=1)

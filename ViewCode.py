@@ -124,7 +124,7 @@ class ViewCode:
             is_published = status[2] == 'published'
             is_approved = status[0] == 'approved'
             is_closed = status[2] == 'closed'
-            is_versioned_content = IVersionedContent.isImplementedBy(item)
+            is_versioned_content = IVersionedContent.providedBy(item)
             d = {
                 'number': i,
                 'item': item,
@@ -138,9 +138,9 @@ class ViewCode:
                 'modification_time': mangle.DateTime(modification_datetime).toShortStr(),
                 'last_author': item.sec_get_last_author_info().fullname(),
                 'is_default': item is default,
-                'is_container': IContainer.isImplementedBy(item),
+                'is_container': IContainer.providedBy(item),
                 'is_versioned_content': is_versioned_content,
-                'is_content': IContent.isImplementedBy(item) and not is_versioned_content,
+                'is_content': IContent.providedBy(item) and not is_versioned_content,
                 'is_editable': is_editable,
                 'is_published': is_published,
                 'is_approved': is_approved,
@@ -296,7 +296,7 @@ class ViewCode:
             assets = model.get_assets()
             if show_add:
                 addables = [a['name'] for a in all_addables if 
-                                IAsset.isImplementedByInstancesOf(
+                                IAsset.implementedBy(
                                     a['instance'])]
         elif filter == 'Content':
             default = model.get_default()
@@ -309,14 +309,14 @@ class ViewCode:
             )
             if show_add:
                 addables = [a['name'] for a in all_addables if
-                                IContent.isImplementedByInstancesOf(
+                                IContent.implementedBy(
                                     a['instance'])]
         elif filter == 'Container':
             ordered_publishables = [o for o in model.get_ordered_publishables() 
                                       if o.implements_container()]
             if show_add:
                 addables = [a['name'] for a in all_addables if 
-                                IContainer.isImplementedByInstancesOf(
+                                IContainer.implementedBy(
                                     a['instance'])]
         elif filter == 'Publishable':
             default = model.get_default()
@@ -326,7 +326,7 @@ class ViewCode:
             ordered_publishables.extend(model.get_ordered_publishables())
             if show_add:
                 addables = [a['name'] for a in all_addables if
-                                IPublishable.isImplementedByInstancesOf(
+                                IPublishable.implementedBy(
                                     a['instance'])]
         else:
             # get all objects using filter, then divide them the way they 

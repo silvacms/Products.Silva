@@ -4,14 +4,16 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-from Interface.Verify import verifyClass
-from Interface.Exceptions import BrokenImplementation, DoesNotImplement, BrokenMethodImplementation
+from zope.interface.verify import verifyClass
+from zope.interface.exceptions import BrokenImplementation, DoesNotImplement,\
+     BrokenMethodImplementation
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 xslt = True
 try: 	 
-    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+    from Products.Silva.transform.renderer.imagesonrightrenderer import\
+         ImagesOnRightRenderer
     from Products.Silva.transform.renderer.xsltrendererbase import RenderError
 except ImportError: 	
     xslt = False
@@ -26,7 +28,8 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         images_on_right = ImagesOnRightRenderer()
         try:
             verifyClass(IRenderer, ImagesOnRightRenderer)
-        except (BrokenImplementation, DoesNotImplement, BrokenMethodImplementation):
+        except (BrokenImplementation, DoesNotImplement,
+                BrokenMethodImplementation):
             self.fail("ImagesOnRightRenderer does not implement IRenderer")
 
     def test_renders_images_on_right(self):

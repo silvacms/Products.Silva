@@ -1,8 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.6 2005/03/02 08:35:50 jw Exp $
-
-from __future__ import nested_scopes
+# $Id: test_image.py,v 1.7 2005/11/14 18:06:13 faassen Exp $
 
 import os, sys
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 # zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -16,7 +18,7 @@ from interfaces import IMember, IMemberService
 class SimpleMember(Member, Security, SimpleItem.SimpleItem):
     """Silva Simple Member"""
 
-    __implements__ = IMember
+    implements(IMember)
 
     security = ClassSecurityInfo()
 
@@ -135,7 +137,7 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     return ''
 
 class SimpleMemberService(SimpleItem.SimpleItem):
-    __implements__ = IMemberService
+    implements(IMemberService)
 
     security = ClassSecurityInfo()
 

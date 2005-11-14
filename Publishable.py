@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
+from zope.interface import implements
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -18,7 +19,7 @@ class Publishable:
     """
     security = ClassSecurityInfo()
         
-    __implements__ = IPublishable
+    implements(IPublishable)
 
     _active_flag = 1
 
@@ -64,7 +65,7 @@ class Publishable:
         if not self._active_flag:
             return 0
         # can't deactivate default
-        if IContent.isImplementedBy(self) and self.is_default():
+        if IContent.providedBy(self) and self.is_default():
             return 0
         # can't deactivate something published
         if self.is_published():
@@ -75,7 +76,7 @@ class Publishable:
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
     def is_published(self):
-        if IVersioning.isImplementedBy(self):
+        if IVersioning.providedBy(self):
             return self.is_version_published()
         else:
             return 1
@@ -83,7 +84,7 @@ class Publishable:
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
     def is_approved(self):
-        if IVersioning.isImplementedBy(self):
+        if IVersioning.providedBy(self):
             return self.is_version_approved()
         else:
             # never be approved if there is no versioning
@@ -120,7 +121,7 @@ class Publishable:
             return 0
         # check all containers to see if they are inactive as well
         object = self.aq_parent
-        while IContainer.isImplementedBy(object):
+        while IContainer.providedBy(object):
             if not object.is_active():
                 return 0
             object = object.aq_parent
@@ -153,7 +154,7 @@ class Publishable:
         if container is None:
             return {}
 
-        if IContent.isImplementedBy(self) and self.is_default():
+        if IContent.providedBy(self) and self.is_default():
             return container.get_document_navigation_links()
         
         result = { 'up': '..' }
@@ -246,7 +247,7 @@ class Publishable:
         while 1:
             if node is top:
                 return node
-            if IContainer.isImplementedBy(node):
+            if IContainer.providedBy(node):
                 container = node.aq_parent
             container = node.aq_parent 
             #objects = container.get_public_tree(0)
@@ -263,7 +264,7 @@ class Publishable:
             # folder or not
             if prev_i == -1:
                 return container
-            elif prev_i >= 0 and IContainer.isImplementedBy(objects[prev_i][1]):
+            elif prev_i >= 0 and IContainer.providedBy(objects[prev_i][1]):
                 return self._get_last_helper(objects[i-1][1])
     
             if prev_i >= 0:
@@ -275,7 +276,7 @@ class Publishable:
         """ Returns the next object in the Publication tree """
         node = self
         top = self.get_publication()
-        if IContainer.isImplementedBy(node):
+        if IContainer.providedBy(node):
             #objects = node.get_public_tree(0)
             objects = node.get_public_tree_helper(0)
             if objects:
@@ -314,7 +315,7 @@ class Publishable:
         public_tree = []
         tree = self.get_public_tree(depth)
         for item in tree:
-            if IPublication.isImplementedBy(item[1]):
+            if IPublication.providedBy(item[1]):
                 continue
             else:
                 public_tree.append(item)
@@ -330,9 +331,9 @@ class Publishable:
         """ returns the last object in a tree """
         node = root
         while 1:
-            if IContent.isImplementedBy(node):
+            if IContent.providedBy(node):
                 return node
-            if IContainer.isImplementedBy(node):
+            if IContainer.providedBy(node):
                 objects = node.get_public_tree(0)
                 if not objects:
                     return node 

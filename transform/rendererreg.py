@@ -1,8 +1,10 @@
+from zope.interface import implements
+
 from Products.Silva.transform.interfaces import IRendererRegistry
 
 class RendererRegistry(object):
 
-    __implements__ = IRendererRegistry
+    implements(IRendererRegistry)
 
     def __init__(self):
         self._renderers = {}

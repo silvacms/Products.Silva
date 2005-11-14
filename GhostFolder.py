@@ -1,8 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.39 2005/01/19 14:26:09 faassen Exp $
+# $Id: GhostFolder.py,v 1.40 2005/11/14 18:06:12 faassen Exp $
 
-from __future__ import nested_scopes
+from zope.interface import implements
 
 #zope
 import OFS.Folder
@@ -133,7 +133,9 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
        (physically duplicated) while documents are ghosted.""")
 
     meta_type = 'Silva Ghost Folder'
-    __implements__ = IContainer, IGhostFolder
+
+    implements(IContainer, IGhostFolder)
+    
     security = ClassSecurityInfo()
 
     _active_flag = 1
@@ -166,7 +168,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         if self.get_link_status() != self.LINK_OK:
             return
         ghost = self
-        assert IContainer.isImplementedBy(haunted)
+        assert IContainer.providedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
         upd = SyncContainer(self, None, haunted, None, self)
         updaters = [upd]
@@ -192,7 +194,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             g_ob_new = None
             
             for h_if, g_if, update_class in self._sync_map:
-                if h_if and not h_if.isImplementedBy(h_ob):
+                if h_if and not h_if.providedBy(h_ob):
                     continue
                 if g_ob is None:
                     # matching haunted interface, no ghost -> create
@@ -201,7 +203,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     updaters.append(uc)
                     g_ob_new = uc.create()
                     break
-                if g_if and not g_if.isImplementedBy(g_ob):
+                if g_if and not g_if.providedBy(g_ob):
                     # haunted interface machces but ghost interface doesn't
                     continue
                 # haunted interface and ghost interface match -> update
@@ -213,7 +215,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             
             msg = "no updater was called for %r" % ((self, h_container, h_ob, g_container, g_ob), )
             assert g_ob_new is not None, msg
-            if IContainer.isImplementedBy(h_ob):
+            if IContainer.providedBy(h_ob):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
         for updater in updaters:
             updater.finish()
@@ -236,8 +238,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                     has to be created
                 haunted and ghost are the objects passed in
         """
-        assert IContainer.isImplementedBy(haunted)
-        assert IContainer.isImplementedBy(ghost)
+        assert IContainer.providedBy(haunted)
+        assert IContainer.providedBy(ghost)
         h_ids = list(haunted.objectIds())
         g_ids = list(ghost.objectIds())
         h_ids.sort()
@@ -277,11 +279,11 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             return self.LINK_EMPTY
         if content is None:
             return self.LINK_VOID
-        if IGhost.isImplementedBy(content):
+        if IGhost.providedBy(content):
             return self.LINK_GHOST
-        if IContent.isImplementedBy(content):
+        if IContent.providedBy(content):
             return self.LINK_CONTENT
-        if not IContainer.isImplementedBy(content):
+        if not IContainer.providedBy(content):
             return self.LINK_NO_FOLDER
         if self.isReferencingSelf(content):
             return self.LINK_CIRC
@@ -345,20 +347,20 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def is_transparent(self):
         """show in subtree? depends on haunted object"""
         content = self.get_haunted_unrestricted()
-        if IContainer.isImplementedBy(content):
+        if IContainer.providedBy(content):
             return content.is_transparent()
         return 0
     
     def get_publication(self):
         """returns self if haunted object is a publication"""
         content = self.get_haunted_unrestricted()
-        if IPublication.isImplementedBy(content):
+        if IPublication.providedBy(content):
             return self.aq_inner
         return self.aq_inner.aq_parent.get_publication()
 
     def implements_publication(self):
         content = self.get_haunted_unrestricted()
-        if ISilvaObject.isImplementedBy(content):
+        if ISilvaObject.providedBy(content):
             return content.implements_publication()
         return 0
 
@@ -370,9 +372,9 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         # ativate all containing objects, depth first
         while activate_list:
             object = activate_list.pop()
-            if IContainer.isImplementedBy(object):
+            if IContainer.providedBy(object):
                 activate_list += object.objectValues()
-            if IVersionedContent.isImplementedBy(object):
+            if IVersionedContent.providedBy(object):
                 if object.is_published():
                     continue
                 if not object.get_unapproved_version():

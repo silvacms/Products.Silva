@@ -1,6 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
+
+from zope.interface import implements
 
 # python
 import re
@@ -35,7 +37,7 @@ class Link(CatalogedVersionedContent):
 
     meta_type = "Silva Link"
 
-    __implements__ = IVersionedContent
+    implements(IVersionedContent)
 
     def __init__(self, id):
         Link.inheritedAttribute('__init__')(self, id)
@@ -89,7 +91,7 @@ class LinkVersion(CatalogedVersion):
     
     meta_type = "Silva Link Version"
 
-    __implements__ = IVersion
+    implements(IVersion)
 
     _link_type = 'absolute'
     

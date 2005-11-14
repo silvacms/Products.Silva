@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 import Globals
@@ -8,7 +10,8 @@ import Acquisition
 from interfaces import IMember
 
 class Member(Persistent, Acquisition.Implicit):
-    __implements__ = IMember
+    implements(IMember)
+    
     security = ClassSecurityInfo()
     
     def __init__(self, userid, fullname, email, is_approved):
@@ -64,7 +67,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
     """A member object returned by cloneMember
     """
 
-    __implements__ = IMember
+    implements(IMember)
 
     security = ClassSecurityInfo()
 
@@ -118,7 +121,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
         return self._editor
     
 class NoneMember(Persistent, Acquisition.Implicit):
-    __implements__ = IMember
+    implements(IMember)
 
     security = ClassSecurityInfo()
     

@@ -5,6 +5,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
+from zope.interface import implements
 from DateTime import DateTime
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
@@ -15,7 +16,7 @@ expected_html2 = '<h2 class="heading">This is a rendering test</h2>\n\n<p class=
 
 class FakeRenderer:
 
-    __implements__ = IRenderer
+    implements(IRenderer)
 
     def render(self, version):
         return "I faked all my renderings."

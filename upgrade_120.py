@@ -1,4 +1,4 @@
-from __future__ import nested_scopes
+from zope.interface import implements
 
 # zope imports
 import zLOG
@@ -17,7 +17,7 @@ class CatalogUpgrade:
     without removing anything.
     """
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -33,7 +33,7 @@ class ReindexHauntedPath:
     subscriptions feature - This reindexing is an expensive operation!
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -49,7 +49,7 @@ class UpdateIndexers:
     up to date.
     """
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def upgrade(self, indexer):
         zLOG.LOG(
@@ -61,7 +61,7 @@ class UpdateIndexers:
 class RefreshAll:
     " refresh all products "
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 

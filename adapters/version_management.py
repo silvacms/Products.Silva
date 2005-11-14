@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from zope.interface import implements
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 
@@ -19,7 +20,7 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management
 class VersionManagementAdapter(adapter.Adapter):
     """Adapter to manage Silva versions (duh?)"""
     
-    __implements__ = IVersionManagement
+    implements(IVersionManagement)
     security = ClassSecurityInfo()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -58,7 +59,7 @@ class VersionManagementAdapter(adapter.Adapter):
                                 'getVersions')
     def getVersions(self, sort_attribute='id'):
         objects = [o for o in self.context.objectValues() if 
-                    IVersion.isImplementedBy(o)]
+                    IVersion.providedBy(o)]
         if sort_attribute == 'id':
             objects.sort(lambda a, b: cmp(int(a.id), int(b.id)))
         elif sort_attribute:

@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.16 2005/01/19 14:26:09 faassen Exp $
+# $Id: VirtualGroup.py,v 1.17 2005/11/14 18:06:12 faassen Exp $
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -22,7 +24,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
 
     meta_type = "Silva Virtual Group"
     
-    __implements__ = ISilvaObject
+    implements(ISilvaObject)
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},

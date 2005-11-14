@@ -1,4 +1,4 @@
-from __future__ import nested_scopes
+from zope.interface import implements
 
 import string
 import re
@@ -28,7 +28,7 @@ import sys
 class ImageUpgrade:
     """handle view registry beeing moved out of the core"""
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, image):
         if image.hires_image is None:
@@ -46,7 +46,7 @@ class ImageUpgrade:
 class RefreshAll:
     " refresh all products "
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, root):
         zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 

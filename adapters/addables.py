@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 import Globals
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Products.Silva import SilvaPermissions, interfaces
@@ -6,7 +8,7 @@ from Products.Silva.adapters.interfaces import IAddables
 
 class BaseAddablesAdapter(adapter.Adapter):
 
-    __implements__ = IAddables
+    implements(IAddables)
     security = ClassSecurityInfo()
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -78,9 +80,9 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.addables')
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getAddablesAdapter')
 def getAddablesAdapter(context):
-    if interfaces.IRoot.isImplementedBy(context):
+    if interfaces.IRoot.providedBy(context):
         return RootAddablesAdapter(context).__of__(context)
-    elif interfaces.IPublication.isImplementedBy(context):
+    elif interfaces.IPublication.providedBy(context):
         return PublicationAddablesAdapter(context).__of__(context)
     else:
         return AddablesAdapter(context).__of__(context)

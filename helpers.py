@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 # Zope
 from AccessControl import ModuleSecurityInfo
 # Silva 
@@ -33,22 +33,22 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
     """
-    if IVersioning.isImplementedBy(object):
+    if IVersioning.providedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
-    if IContainer.isImplementedBy(object):
+    if IContainer.providedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
     
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
     """
-    if IVersioning.isImplementedBy(object):
+    if IVersioning.providedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
         if object.is_version_published():
             object.close_version()
-    if IContainer.isImplementedBy(object):
+    if IContainer.providedBy(object):
         default = object.get_default()
         if default:
             unapprove_close_helper(default)

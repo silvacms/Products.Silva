@@ -1,5 +1,7 @@
+
 from DateTime import DateTime
 # Zope
+from zope.interface import implements
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 
@@ -16,7 +18,7 @@ except ImportError:
 class PTSLanguageProvider(adapter.Adapter):
     """
     """
-    __implements__ = (interfaces.ILanguageProvider,)
+    implements(interfaces.ILanguageProvider)
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(SilvaPermissions.ReadSilvaContent)

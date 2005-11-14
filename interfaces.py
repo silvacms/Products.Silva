@@ -1,4 +1,4 @@
-from Interface import Interface
+from zope.interface import Interface
 
 from AccessControl import ModuleSecurityInfo
 module_security = ModuleSecurityInfo('Products.Silva.interfaces')

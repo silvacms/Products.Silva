@@ -20,7 +20,7 @@ class CatalogTestCase(SilvaTestCase.SilvaTestCase):
         catalog_statuses = []
         for brain in results:
             object = brain.getObject()
-            self.assert_(IVersion.isImplementedBy(object))
+            self.assert_(IVersion.providedBy(object))
             catalog_statuses.append(object.version_status())
         catalog_statuses.sort()
         self.assertEquals(statuses, catalog_statuses)

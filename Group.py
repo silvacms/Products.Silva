@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -27,7 +29,7 @@ class Group(SilvaObject, SimpleItem):
 
     meta_type = "Silva Group"
 
-    __implements__ = ISilvaObject
+    implements(ISilvaObject)
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},

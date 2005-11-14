@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: archivefileimport.py,v 1.5 2005/01/19 14:26:09 faassen Exp $
+# $Id: archivefileimport.py,v 1.6 2005/11/14 18:06:13 faassen Exp $
 #
 # Python
 import os.path
@@ -9,6 +9,8 @@ try:
     from cStringIO import StringIO
 except:
     from StringIO import StringIO
+    
+from zope.interface import implements
 # Zope
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
@@ -33,7 +35,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
     the 'directory' structure contained in the archive file.
     """
 
-    __implements__ = (interfaces.IArchiveFileImporter, )
+    implements(interfaces.IArchiveFileImporter, )
     
     security = ClassSecurityInfo()
 
@@ -102,7 +104,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         
         while id in context.objectIds():
             obj = context[id]
-            if IContainer.isImplementedBy(obj):
+            if IContainer.providedBy(obj):
                 return obj
             id = str(idObj.new())
         context.manage_addProduct['Silva'].manage_addFolder(id, id)
@@ -124,7 +126,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
 Globals.InitializeClass(ArchiveFileImportAdapter)
 
 def getArchiveFileImportAdapter(context):
-    if not silva_interfaces.IContainer.isImplementedBy(context):
+    if not silva_interfaces.IContainer.providedBy(context):
         # raise some exception here?
         return None
     return ArchiveFileImportAdapter(context).__of__(context)

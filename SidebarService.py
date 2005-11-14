@@ -1,7 +1,9 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.21 2005/01/19 14:26:09 faassen Exp $
+# $Id: SidebarService.py,v 1.22 2005/11/14 18:06:12 faassen Exp $
 # Zope
+from zope.interface import implements
+
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -23,7 +25,7 @@ class SidebarService(SimpleItem):
     
     security = ClassSecurityInfo()
 
-    __implements__ = ISidebarService
+    implements(ISidebarService)
     
     cache_container_id = 'temp_folder'
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.77 $
+# $Revision: 1.78 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass, DevelopmentMode
@@ -158,7 +158,7 @@ class Security(AccessManager):
     def _sec_get_userids_deep_helper(self, l):
         for userid in self.sec_get_userids():
             l.append(userid)
-        if IContainer.isImplementedBy(self):
+        if IContainer.providedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_userids_deep_helper(l)
             for item in self.get_nonactive_publishables():
@@ -185,7 +185,7 @@ class Security(AccessManager):
                 if result:
                     return result
                 
-            if IRoot.isImplementedBy(obj):
+            if IRoot.providedBy(obj):
                 break
             obj = obj.aq_parent
         return []
@@ -232,7 +232,7 @@ class Security(AccessManager):
         """Get the info of the last author (this is a IMember object)
         """
         # containers have no author
-        if IContainer.isImplementedBy(self):
+        if IContainer.providedBy(self):
             return noneMember.__of__(self)
         
         # get cached author info (may be None)
@@ -312,7 +312,7 @@ class Security(AccessManager):
         """
         userids = {}
         parent = self.aq_inner.aq_parent
-        while IContainer.isImplementedBy(parent):
+        while IContainer.providedBy(parent):
             for userid in parent.sec_get_local_defined_userids():
                 userids[userid] = 1
             parent = parent.aq_inner.aq_parent
@@ -326,7 +326,7 @@ class Security(AccessManager):
         """
         roles = {}
         parent = self.aq_inner.aq_parent
-        while IContainer.isImplementedBy(parent):
+        while IContainer.providedBy(parent):
             for role in parent.sec_get_local_roles_for_userid(userid):
                 roles[role] = 1
             parent = parent.aq_inner.aq_parent
@@ -346,7 +346,7 @@ class Security(AccessManager):
     def _sec_get_downward_defined_userids_helper(self, d):
         for userid in self.sec_get_userids():
             d[userid] = 1
-        if IContainer.isImplementedBy(self):
+        if IContainer.providedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_downward_defined_userids_helper(d)
             for item in self.get_nonactive_publishables():
@@ -410,7 +410,7 @@ class Security(AccessManager):
         """
         parent = self.aq_inner.aq_parent
         groups = {}
-        while IContainer.isImplementedBy(parent):
+        while IContainer.providedBy(parent):
             for group in parent.sec_get_local_defined_groups():
                 groups[group] = 1
             parent = parent.aq_inner.aq_parent
@@ -424,7 +424,7 @@ class Security(AccessManager):
         """
         parent = self.aq_inner.aq_parent
         roles = {}
-        while IContainer.isImplementedBy(parent):
+        while IContainer.providedBy(parent):
             for role in parent.sec_get_local_roles_for_group(group):
                 roles[role] = 1
             parent = parent.aq_inner.aq_parent
@@ -443,7 +443,7 @@ class Security(AccessManager):
     def _sec_get_downward_defined_groups_helper(self, d):
         for group in self.sec_get_local_defined_groups():
             d[group] = 1
-        if IContainer.isImplementedBy(self):
+        if IContainer.providedBy(self):
             for item in self.get_ordered_publishables():
                 item._sec_get_downward_defined_groups_helper(d)
             for item in self.get_nonactive_publishables():

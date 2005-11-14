@@ -1,6 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
+
+from zope.interface import implements
 
 # Python
 from bisect import insort_right
@@ -65,7 +67,7 @@ class ContainerPolicyRegistry(SimpleItem):
         msg = ('The object %(policy)s does not implement IContainerPolicy, '
                     'try restarting Zope.')
         msg = msg % {'policy': repr(policy)}
-        assert IContainerPolicy.isImplementedByInstancesOf(policy), msg
+        assert IContainerPolicy.implementedBy(policy), msg
         self._policies[name] = (policy(), priority)
         self._p_changed = 1
 
@@ -86,7 +88,7 @@ def manage_addContainerPolicyRegistry(dispatcher):
 
 class NothingPolicy(Persistent):
 
-    __implements__ = IContainerPolicy
+    implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         pass

@@ -1,9 +1,11 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 
 # Python
 from StringIO import StringIO
+
+from zope.interface import implements
 
 # Zope
 from OFS import Folder
@@ -40,7 +42,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     # created by the object's factory function
     _version_count = 1
 
-    __implements__ = IVersionedContent
+    implements(IVersionedContent)
 
     # for backwards compatibilty - ugh.
     _cached_checked = {}

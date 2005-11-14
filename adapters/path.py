@@ -1,5 +1,7 @@
 from urlparse import urlparse
 
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
@@ -19,7 +21,7 @@ class PathAdapter(adapter.Adapter):
         obviously acquisition can not be used
     """
 
-    __implements__ = IPath
+    implements(IPath)
     __allow_access_to_unprotected_subobjects__ = True
 
     def __init__(self, request):

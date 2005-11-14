@@ -172,8 +172,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # check whether we got ghosts (or subcontainers)
         for obj in version.objectValues():            
             self.assert_(
-                IGhost.isImplementedBy(obj) or
-                IContainer.isImplementedBy(obj))
+                IGhost.providedBy(obj) or
+                IContainer.providedBy(obj))
 
     def test_indexer_import(self):
         source_file = testopen('data/test_indexer.xml', 'r')

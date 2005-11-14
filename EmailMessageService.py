@@ -1,6 +1,8 @@
 #python
 import sys, string, smtplib
 
+from zope.interface import implements
+
 # zope
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
@@ -30,7 +32,7 @@ class EmailMessageService(SimpleItem.SimpleItem):
 
     security = ClassSecurityInfo()
 
-    __implements__ = IMessageService
+    implements(IMessageService)
 
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},

@@ -18,9 +18,11 @@ NOT_SUBSCRIBABLE = 0
 SUBSCRIBABLE = 1
 ACQUIRE_SUBSCRIBABILITY = 2
 
+from zope.interface import implements
+
 class Subscription:
 
-    __implements__ = (interfaces.ISubscription, )
+    implements(interfaces.ISubscription)
 
     def __init__(self, emailaddress, contentsubscribedto):
         self._emailaddress = emailaddress
@@ -38,7 +40,7 @@ class Subscribable(adapter.Adapter):
     handling subscriptions.
     """
     
-    __implements__ = (interfaces.ISubscribable, )
+    implements(interfaces.ISubscribable)
     
     security = ClassSecurityInfo()
     
@@ -187,7 +189,7 @@ class SubscribableRoot(Subscribable):
 
     security = ClassSecurityInfo()
 
-    __implements__ = (interfaces.ISubscribable, )
+    implements(interfaces.ISubscribable)
     
     def __init__(self, context):
         adapter.Adapter.__init__(self, context)
@@ -223,10 +225,10 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.subscribable')
 module_security.declareProtected(
     SilvaPermissions.ApproveSilvaContent, 'getSubscribable')
 def getSubscribable(context):
-    if interfaces.IRoot.isImplementedBy(context):
+    if interfaces.IRoot.providedBy(context):
         return SubscribableRoot(context).__of__(context)
-    if interfaces.IContainer.isImplementedBy(context):
+    if interfaces.IContainer.providedBy(context):
         return Subscribable(context).__of__(context)
-    if interfaces.IVersionedContent.isImplementedBy(context):
+    if interfaces.IVersionedContent.providedBy(context):
         return Subscribable(context).__of__(context)
     return None

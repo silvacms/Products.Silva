@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.51 $
+# $Revision: 1.52 $
+
+from zope.interface import implements
 
 # Zope
 from DateTime import DateTime
@@ -38,7 +40,7 @@ class Versioning:
     """
     security = ClassSecurityInfo()
 
-    __implements__ = IVersioning
+    implements(IVersioning)
     
     _unapproved_version = empty_version
     _approved_version = empty_version
@@ -98,7 +100,7 @@ class Versioning:
         if self._unapproved_version[1] is None:
             raise VersioningError,\
                   _('Cannot approve version without publication datetime.')
-        if IPublishable.isImplementedBy(self):
+        if IPublishable.providedBy(self):
             if not self.can_approve():
                 raise VersioningError,\
                       _('Cannot approve version; not allowed.')

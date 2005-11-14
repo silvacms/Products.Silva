@@ -1,4 +1,4 @@
-from Interface import Interface
+from zope.interface import Interface
 
 class IViewerSecurity(Interface):
     def setAcquired():

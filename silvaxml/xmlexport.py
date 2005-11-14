@@ -156,7 +156,7 @@ class FolderProducer(SilvaBaseProducer):
             self.subsax(default)
             self.endElement('default')
         for object in self.context.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and
+            if (IPublication.providedBy(object) and
                     not self.getSettings().withSubPublications()):
                 continue
             self.subsax(object)
@@ -181,7 +181,7 @@ class PublicationProducer(SilvaBaseProducer):
             self.subsax(default)
             self.endElement('default')
         for object in self.context.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and
+            if (IPublication.providedBy(object) and
                     not self.getSettings().withSubPublications()):
                 continue
             self.subsax(object)
@@ -270,7 +270,7 @@ class GhostFolderProducer(SilvaBaseProducer):
             self.subsax(default)
             self.endElement('default')
         for object in content.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and
+            if (IPublication.providedBy(object) and
                     not self.getSettings().withSubPublications()):
                 continue
             self.subsax(object)

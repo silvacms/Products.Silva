@@ -1,8 +1,6 @@
 # Credit, where credit is due: code originally written for Plone
 # by Helge Tesdal / Plone Solutions.
 #
-# Python
-from __future__ import nested_scopes
 # Zope
 from AccessControl import ModuleSecurityInfo
 from ZTUtils.Batch import Batch as ZTUBatch

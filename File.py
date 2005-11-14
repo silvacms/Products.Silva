@@ -1,8 +1,9 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.41 $
+# $Revision: 1.42 $
 
+from zope.interface import implements
 # Python
 import os
 import string
@@ -54,7 +55,8 @@ class File(Asset):
     
     meta_type = "Silva File"
 
-    __implements__ = (WriteLockInterface, IFile)
+    __implements__ = (WriteLockInterface,)
+    implements(IFile)
     
     def __init__(self, id, title):
         File.inheritedAttribute('__init__')(self, id, title)
@@ -393,7 +395,7 @@ manage_addFilesServiceForm = PageTemplateFile(
 
 class FileStorageConverter:
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def upgrade(self, context):
         adapted = assetdata.getAssetDataAdapter(context)
@@ -421,7 +423,7 @@ class FileStorageConverter:
 
 class StorageConverterHelper:
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
     
     def __init__(self, initialcontext):
         self.initialcontext = initialcontext

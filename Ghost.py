@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.97 $
+# $Revision: 1.98 $
+
+from zope.interface import implements
 
 # Zope
 from OFS import SimpleItem
@@ -225,7 +227,7 @@ class Ghost(CatalogedVersionedContent):
 
     meta_type = "Silva Ghost"
 
-    __implements__ = IVersionedContent, IGhostContent
+    implements(IVersionedContent, IGhostContent)
     
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)
@@ -333,11 +335,11 @@ class GhostVersion(GhostBase, CatalogedVersion):
             return self.LINK_EMPTY
         if content is None:
             return self.LINK_VOID
-        if IContainer.isImplementedBy(content):
+        if IContainer.providedBy(content):
             return self.LINK_FOLDER
-        if not IContent.isImplementedBy(content):
+        if not IContent.providedBy(content):
             return self.LINK_NO_CONTENT
-        if IGhost.isImplementedBy(content):
+        if IGhost.providedBy(content):
             return self.LINK_GHOST
         return self.LINK_OK
         
@@ -388,9 +390,9 @@ def ghostFactory(container, id, haunted_object):
     """
     addProduct = container.manage_addProduct['Silva']
     content_url = '/'.join(haunted_object.getPhysicalPath())
-    if IContainer.isImplementedBy(haunted_object):
+    if IContainer.providedBy(haunted_object):
         factory = addProduct.manage_addGhostFolder
-    elif IContent.isImplementedBy(haunted_object):
+    elif IContent.providedBy(haunted_object):
         if haunted_object.meta_type == 'Silva Ghost':
             version = getLastVersionFromGhost(haunted_object)
             content_url = version.get_haunted_url()
@@ -401,10 +403,10 @@ def ghostFactory(container, id, haunted_object):
 
 
 def canBeHaunted(to_be_haunted):
-    if IGhost.isImplementedBy(to_be_haunted):
+    if IGhost.providedBy(to_be_haunted):
         return 0
-    if (IContainer.isImplementedBy(to_be_haunted) or
-            IContent.isImplementedBy(to_be_haunted)):
+    if (IContainer.providedBy(to_be_haunted) or
+            IContent.providedBy(to_be_haunted)):
         return 1
     return 0
 

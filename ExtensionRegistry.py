@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 
 from bisect import insort_right
 
@@ -77,7 +77,7 @@ class ExtensionRegistry:
                 ('meta_type', meta_type),
                 icon_path,
                 module.__dict__)
-        if ISilvaObject.isImplementedByInstancesOf(klass):
+        if ISilvaObject.implementedBy(klass):
             for i in range(len(self._silva_addables)):
                 if self._silva_addables[i]._meta_type['name'] == meta_type:
                     del(self._silva_addables[i])

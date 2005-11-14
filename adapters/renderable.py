@@ -1,10 +1,11 @@
+from zope.interface import implements
 import Globals
 from Products.Silva.adapters import adapter
 from Products.Silva.transform.interfaces import IRenderable
 
 class RenderableAdapter(adapter.Adapter):
 
-    __implements__ = IRenderable
+    implements(IRenderable)
 
     def view(self):
         """Display the view of this version using the selected renderer.

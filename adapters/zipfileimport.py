@@ -1,4 +1,6 @@
 from StringIO import StringIO
+from zope.interface import implements
+
 # Zope
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
@@ -14,7 +16,7 @@ class ZipfileImportAdapter(adapter.Adapter):
     the full media import from zipfiles. 
     """
 
-    __implements__ = (interfaces.IZipfileImporter, )
+    implements(interfaces.IZipfileImporter)
     
     security = ClassSecurityInfo()
 
@@ -61,7 +63,7 @@ class ZipfileImportAdapter(adapter.Adapter):
 Globals.InitializeClass(ZipfileImportAdapter)
 
 def getZipfileImportAdapter(context):
-    if not silva_interfaces.IContainer.isImplementedBy(context):
+    if not silva_interfaces.IContainer.providedBy(context):
         # raise some exception here?
         return None
 

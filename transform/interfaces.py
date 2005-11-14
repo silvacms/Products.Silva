@@ -1,4 +1,4 @@
-from Interface import Interface
+from zope.interface import Interface
 
 class IRenderable(Interface):
     """I'm implemented by objects that can be rendered."""

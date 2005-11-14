@@ -66,7 +66,7 @@ class ContainerTestCase(ContainerBaseTestCase):
     def test_get_default(self):
         doc = self.folder4.get_default()
         self.assertEquals(doc.get_title(), 'Folder4')
-        self.assert_(IContent.isImplementedBy(doc),
+        self.assert_(IContent.providedBy(doc),
                      'doc is not a Content object')
         self.assert_(doc.is_default(),
                      'Default document is_default gives false')
@@ -267,7 +267,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         for bad_id in ('service_foo', 'edit', 'manage_main', 'index_html'):
             r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument(bad_id, 'This should not work')
             obj = getattr(self.root, bad_id, None)            
-            self.assert_(not IVersionedContent.isImplementedBy(obj),
+            self.assert_(not IVersionedContent.providedBy(obj),
                          'should not have created document with id '+bad_id)
         
         # during rename

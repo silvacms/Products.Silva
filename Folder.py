@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.175 $
+# $Revision: 1.176 $
+
+from zope.interface import implements
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -73,7 +75,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         inherited_manage_options[1:]
         )
 
-    __implements__ = IContainer
+    implements(IContainer)
         
     def __init__(self, id):
         Folder.inheritedAttribute('__init__')(
@@ -107,12 +109,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # changed
         if item.id == 'index':
             item = item.get_container()
-        if not IContainer.isImplementedBy(item):
+        if not IContainer.providedBy(item):
             return
         service_sidebar = self.aq_inner.service_sidebar
         service_sidebar.invalidate(item)
-        if (IPublication.isImplementedBy(item) and 
-                not IRoot.isImplementedBy(item)):
+        if (IPublication.providedBy(item) and 
+                not IRoot.providedBy(item)):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
     # MANIPULATORS
@@ -193,9 +195,9 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """Make sure item is in ordered_ids when it should be after
         active status changed.
         """
-        if not IPublishable.isImplementedBy(item):
+        if not IPublishable.providedBy(item):
             return
-        if IContent.isImplementedBy(item) and item.is_default():
+        if IContent.providedBy(item) and item.is_default():
             return
         ids = self._ordered_ids
         id = item.id
@@ -220,9 +222,9 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         self._refresh_ordered_ids(item)
         
     def _remove_ordered_id(self, item):
-        if not IPublishable.isImplementedBy(item):
+        if not IPublishable.providedBy(item):
             return
-        if IContent.isImplementedBy(item) and item.is_default():
+        if IContent.providedBy(item) and item.is_default():
             return
         ids = self._ordered_ids
         if item.is_active() and item.id in ids:
@@ -239,13 +241,13 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         ids = []
         for object in self.objectValues():
-            if not IPublishable.isImplementedBy(object):
+            if not IPublishable.providedBy(object):
                 continue
-            if IContent.isImplementedBy(object) and object.is_default():
+            if IContent.providedBy(object) and object.is_default():
                 continue
             if object.is_active():
                 ids.append(object.id)
-            if IContainer.isImplementedBy(object):
+            if IContainer.providedBy(object):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
 
@@ -413,7 +415,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             ghost = ghostFactory(self, paste_id, item)
             if ghost.meta_type == 'Silva Ghost Folder':
                 ghost.haunt()
-        elif IGhost.isImplementedBy(item):
+        elif IGhost.providedBy(item):
             content_url = item.get_haunted_url()
             item._factory(self, paste_id, content_url)
         else:
@@ -525,7 +527,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return (
             addable_dict.has_key('instance') and
-            ISilvaObject.isImplementedByInstancesOf(
+            ISilvaObject.implementedBy(
             addable_dict['instance']) and
             not self.get_root().is_silva_addable_forbidden(
             addable_dict['name']) and
@@ -667,7 +669,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def get_nonactive_publishables(self):
         result = []
         for object in self.objectValues():
-            if (IPublishable.isImplementedBy(object) and
+            if (IPublishable.providedBy(object) and
                 not object.is_active()):
                 result.append(object)
         result.sort(lambda x, y: cmp(x.getId(), y.getId()))
@@ -678,7 +680,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def get_silva_asset_types(self):
         result = [addable_dict['name']
                   for addable_dict in extensionRegistry.get_addables()
-                    if IAsset.isImplementedByInstancesOf(addable_dict['instance'])]
+                    if IAsset.implementedBy(addable_dict['instance'])]
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -771,7 +773,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             if item.getId() == 'index':
                 # default document should not be inserted
                 continue
-            if (IContainer.isImplementedBy(item) and
+            if (IContainer.providedBy(item) and
                 item.is_transparent()):
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
@@ -781,7 +783,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
 
     def _get_container_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
-            if not IContainer.isImplementedBy(item):
+            if not IContainer.providedBy(item):
                 continue
             if item.is_transparent():
                 l.append((indent, item))
@@ -796,7 +798,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 continue
             if self.service_toc_filter.filter(item):
                 continue
-            if (IContainer.isImplementedBy(item) and
+            if (IContainer.providedBy(item) and
                 (item.is_transparent() or include_non_transparent_containers)):
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
@@ -805,14 +807,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 l.append((indent, item))
 
     def _get_status_tree_helper(self, l, indent, depth):
-        if IContainer.isImplementedBy(self):
+        if IContainer.providedBy(self):
             default = self.get_default()
             if default is not None:
                 l.append((indent, default))
 
         for item in self.get_ordered_publishables():
             l.append((indent, item))
-            if not IContainer.isImplementedBy(item):
+            if not IContainer.providedBy(item):
                 continue
             if (depth == -1 or indent < depth) and item.is_transparent():
                 item._get_status_tree_helper(l, indent+1, depth)
@@ -849,7 +851,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if default is not None:
             default.to_xml(context)
         for object in self.get_ordered_publishables():
-            if (IPublication.isImplementedBy(object) and 
+            if (IPublication.providedBy(object) and 
                     not context.with_sub_publications):
                 continue
             object.to_xml(context)

@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 from Products.Silva.interfaces import IContent, IGhost, IContainer
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
@@ -5,7 +7,7 @@ from Products.Silva.adapters import interfaces
 class IndexableAdapter(adapter.Adapter):
     """
     """
-    __implements__ = (interfaces.IIndexable,)
+    implements(interfaces.IIndexable)
 
     def getTitle(self):
         return self.getContext().get_title()
@@ -51,10 +53,10 @@ def getIndexableAdapter(context):
     if context.meta_type == "Silva Document":
         return DocumentIndexesAdapter(context).__of__(context)
 
-    if IGhost.isImplementedBy(context): 
+    if IGhost.providedBy(context): 
         return GhostIndexesAdapter(context).__of__(context) 
 
-    if IContainer.isImplementedBy(context):
+    if IContainer.providedBy(context):
         return ContainerIndexesAdapter(context).__of__(context) 
     
     return IndexableAdapter(context).__of__(context)

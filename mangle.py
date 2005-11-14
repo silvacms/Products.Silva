@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.35 2005/10/05 14:10:27 guido Exp $
+# $Id: mangle.py,v 1.36 2005/11/14 18:06:12 faassen Exp $
 # Python
 import string
 import re
@@ -197,7 +197,7 @@ class Id:
         if self._instance is not None:
             for interface, prefixes in \
                     self._reserved_ids_for_interface.items():
-                if interface.isImplementedBy(self._instance):
+                if interface.providedBy(self._instance):
                     if maybe_id in prefixes:
                         return self.RESERVED
         if self._interface is not None:
@@ -206,14 +206,14 @@ class Id:
 
         attr = getattr(folder.aq_inner, maybe_id, _marker)
         if attr is not _marker:
-            if ISilvaObject.isImplementedBy(attr):
+            if ISilvaObject.providedBy(attr):
                 # there is a silva object with the same id
                 if allow_dup: return self.OK
                 attr = getattr(folder.aq_base, maybe_id, _marker)
                 if attr is _marker:
                     # shadowing a content object is ok (hopefully)
                     return self.OK
-                if IAsset.isImplementedBy(attr):
+                if IAsset.providedBy(attr):
                     return self.IN_USE_ASSET
                 # else it must be a content object (?)
                 return self.IN_USE_CONTENT

@@ -1,6 +1,8 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.6 2005/01/19 14:26:09 faassen Exp $
+# $Id: IPGroup.py,v 1.7 2005/11/14 18:06:12 faassen Exp $
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -22,7 +24,7 @@ class IPGroup(SilvaObject, SimpleItem):
 
     meta_type = "Silva IP Group"
     
-    __implements__ = ISilvaObject
+    implements(ISilvaObject)
 
     def __init__(self, id, title, group_name):
         IPGroup.inheritedAttribute('__init__')(self, id, title)

@@ -1,4 +1,3 @@
-from __future__ import nested_scopes
 
 # zope imports
 import zLOG
@@ -197,7 +196,7 @@ set_el_name_mapping = {
 def get_versions_or_self(obj):
     #print 'Getting versions of', obj.id
     ret = []
-    if IVersionedContent.isImplementedBy(obj):
+    if IVersionedContent.providedBy(obj):
         versions = []
         for version in ['_unapproved_version', '_approved_version',
                         '_public_version']:
@@ -365,7 +364,7 @@ def catalog_092(obj):
     
 def catalog_version_092(obj):
     """Do initial catalogin of objects"""
-    #if not ICatalogedVersion.isImplementedBy(obj):
+    #if not ICatalogedVersion.providedBy(obj):
     #    return
     if obj.version_status() in ['last_closed', 'closed']:
         return

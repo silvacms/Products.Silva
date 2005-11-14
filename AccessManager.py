@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
@@ -8,7 +10,7 @@ class AccessManager:
     """Mixin class for objects to request local roles on the object"""
 
     security = ClassSecurityInfo()
-    __implements__ = IAccessManager
+    implements(IAccessManager)
 
     # this method needs low permission settings because it should be useable by visitors
     security.declareProtected(SilvaPermissions.ViewAuthenticated,

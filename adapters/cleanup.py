@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.7 2005/11/14 07:03:30 sacco Exp $
+# $Id: cleanup.py,v 1.8 2005/11/14 18:06:13 faassen Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
@@ -142,9 +142,9 @@ class ContainerCleanupAdapter(CleanupAdapter):
 module_security.declareProtected(SilvaPermissions.ViewManagementScreens, 
                                     'getCleanupVersionsAdapter')    
 def getCleanupVersionsAdapter(context):
-    if silvaInterfaces.IContainer.isImplementedBy(context):
+    if silvaInterfaces.IContainer.providedBy(context):
         return ContainerCleanupAdapter(context).__of__(context)
-    elif silvaInterfaces.IVersioning.isImplementedBy(context):
+    elif silvaInterfaces.IVersioning.providedBy(context):
         return VersionedContentCleanupAdapter(context).__of__(context)
     else:
         return None

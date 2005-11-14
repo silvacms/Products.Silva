@@ -1,13 +1,15 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.70 2005/11/14 07:03:30 sacco Exp $
+# $Id: Image.py,v 1.71 2005/11/14 18:06:12 faassen Exp $
 # Python
 import re, string
 from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
 from cgi import escape
+
+from zope.interface import implements
 # Zope
 import OFS
 from AccessControl import ClassSecurityInfo
@@ -55,7 +57,8 @@ class Image(Asset):
 
     meta_type = "Silva Image"
 
-    __implements__ = (WriteLockInterface, IAsset)
+    __implements__ = (WriteLockInterface,)
+    implements(IAsset)
     
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
@@ -723,7 +726,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
 
 class ImageStorageConverter:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, asset):
         assert asset.meta_type == 'Silva Image'

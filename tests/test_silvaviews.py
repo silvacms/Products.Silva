@@ -1,8 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_silvaviews.py,v 1.3 2005/07/26 20:36:37 walco Exp $
-
-from __future__ import nested_scopes
+# $Id: test_silvaviews.py,v 1.4 2005/11/14 18:06:13 faassen Exp $
 
 import os, sys
 if __name__ == '__main__':

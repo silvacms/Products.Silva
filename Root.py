@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.93 $
+# $Revision: 1.94 $
+
+from zope.interface import implements
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -32,7 +34,7 @@ class Root(Publication):
     
     meta_type = "Silva Root"
 
-    __implements__ = IRoot
+    implements(IRoot)
 
     inherited_manage_options = Publication.manage_options
     manage_options= (
