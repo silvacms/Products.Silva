@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.69 2005/09/01 12:08:50 guido Exp $
+# $Id: Image.py,v 1.70 2005/11/14 07:03:30 sacco Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -20,6 +20,7 @@ import zLOG
 from webdav.common import Conflict
 
 # Silva
+from Products.Silva.transactions import transaction
 import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle
@@ -713,7 +714,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
             img.set_image(file)
         except ValueError:
             # uploaded contents is not a proper image file
-            get_transaction().abort()
+            transaction.abort()
             raise
     img.set_title(title)
 

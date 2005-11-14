@@ -1,10 +1,11 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.6 2005/01/19 14:26:09 faassen Exp $
+# $Id: cleanup.py,v 1.7 2005/11/14 07:03:30 sacco Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from Products.Silva.transactions import transaction
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
 from Products.Silva import interfaces as silvaInterfaces
@@ -130,7 +131,7 @@ class ContainerCleanupAdapter(CleanupAdapter):
             if adapter is not None:                                
                 if statistics['threshold'] > threshold:
                     print 'commit sub transaction'
-                    get_transaction().commit(1)
+                    transaction.get().commit(1)
                     self.context._p_jar.cacheGC()
                     statistics['threshold'] = 0
                 getattr(adapter, remove_method)(statistics)

@@ -3,6 +3,7 @@ from StringIO import StringIO
 
 import zLOG
 from sprout.saxext import xmlimport, collapser
+from Products.Silva.transactions import transaction
 from Products.Silva.Ghost import Ghost, GhostVersion
 from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder
@@ -442,7 +443,7 @@ class UnknownContentHandler(SilvaBaseHandler):
                     'zexps/' + self.getData('zip_id')))
             # Commit subtransaction to be able to get to a valid
             # connection (the _p_jar attribute on the object)
-            get_transaction().commit(1)
+            transaction.get().commit(1)
             ob = self.parent()._p_jar.importFile(file)
             id = ob.id
             if hasattr(id, 'im_func'):

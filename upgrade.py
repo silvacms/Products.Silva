@@ -6,6 +6,7 @@ import DateTime
 
 # silva imports
 from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
+from Products.Silva.transactions import transaction
 from Products.Silva import mangle
 
 threshold = 500
@@ -124,7 +125,7 @@ class UpgradeRegistry:
                 stats['threshold'] += 1                
                 if stats['threshold'] > threshold:
                     #print '#### Commit sub transaction ####'
-                    get_transaction().commit(1)
+                    transaction.get().commit(1)
                     if hasattr(o, '_p_jar') and o._p_jar is not None:
                         o._p_jar.cacheGC()
                     else:

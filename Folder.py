@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.174 $
+# $Revision: 1.175 $
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -11,6 +11,7 @@ from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from zExceptions import InternalError
 # Silva
+from Products.Silva.transactions import transaction
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from SilvaObject import SilvaObject
@@ -441,7 +442,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             container.manage_addProduct['Silva'].manage_addPublication(
                 convert_id, self.get_title(), create_default=0)
         ## assure the folder/pub has a _p_jar
-        get_transaction().commit(1)
+        transaction.get().commit(1)
         folder = getattr(container, convert_id)
         # copy all contents into new folder
         cb = self.manage_copyObjects(self.objectIds())

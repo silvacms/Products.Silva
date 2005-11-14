@@ -5,6 +5,7 @@
 # public domain
 
 import os, sys
+from Products.Silva.transactions import transaction
 
 def ignore_dir(fullfn):
     """ filter function for ignoring certain directories """
@@ -89,12 +90,15 @@ if __name__=='__main__':
     print "importing zope"
     print "using INSTANCE_HOME =", instance_home
     print "      SOFTWARE_HOME =", software_home
-    import Zope
-    Zope.startup()
+    try:
+        import Zope2
+    except ImportError:  	# for Zope 2.7
+        import Zope as Zope2
+    Zope2.startup()
 
     print "beginning transaction"
-    get_transaction().begin()
-    connection = Zope.DB.open()
+    transaction.begin()
+    connection = Zope2.DB.open()
     target = connection.root()['Application']
 
     sourcefn, targetpath = args
@@ -105,5 +109,5 @@ if __name__=='__main__':
 
     fs_to_zodb(sourcefn, target)
 
-    get_transaction().commit()
+    transaction.commit()
     print "Committed, Finished"
