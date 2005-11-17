@@ -1,20 +1,6 @@
-from zope.interface import implements
-
-# zope imports
-import zLOG
 # silva imports
-from Products.Silva.interfaces import IUpgrader
-from Products.Silva import upgrade
-
-class DummyUpgrader:
-
-    implements(IUpgrader)
-    
-    def upgrade(self, silvaroot):
-        return silvaroot
-    
-# There's not real upgrade from 1.0 to 1.1 however, we still register
-# a dummy upgrader to keep the upgrader version registry coherent.
+from Products.Silva import upgrade, upgrade_100
 
 def initialize():
-    upgrade.registry.registerUpgrader(DummyUpgrader(), '1.1', 'Silva Root')
+    upgrade.registry.registerUpgrader(
+        upgrade_100.RefreshAll(), '1.1', 'Silva Root')
