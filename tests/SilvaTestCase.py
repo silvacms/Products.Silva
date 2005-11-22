@@ -2,7 +2,7 @@
 # SilvaTestCase
 #
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 from Testing import ZopeTestCase
 try: 				# post initial Silva 1.4 release
@@ -38,16 +38,10 @@ except ImportError:
 
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
+if ZopeTestCase.hasProduct('SilvaExternalSources'):
+    ZopeTestCase.installProduct('SilvaExternalSources')
 ZopeTestCase.installProduct('SilvaDocument')
 ZopeTestCase.installProduct('Silva')
-
-try:
-    from Products.SilvaDocument.externalsource \
-         import AVAILABLE as EXTL_AVAILABLE
-except ImportError: pass
-else:
-    if EXTL_AVAILABLE:
-        ZopeTestCase.installProduct('SilvaExternalSources')
 
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User
@@ -117,7 +111,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''Sets up the fixture. Do not override, 
            use the hooks instead.
         '''
-        ### self._clear() # This certainly shouldn't be here!
         transaction.abort()
         noSecurityManager()
         self.beforeSetUp()
