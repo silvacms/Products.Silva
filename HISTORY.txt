@@ -11,6 +11,13 @@ Silva changes
         instead of old-style interfaces. See doc/developer_changes for
 	more details.
 
+    Bugs fixed
+
+      - Added missing 'is_default' method on SilvaObject, it was already
+        available on Content but some new functionality (closing objects
+        from tab_edit of Container types) made that it was required for
+        other types as well.
+
   1.4
 
     Features added
