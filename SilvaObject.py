@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.119 2005/10/25 10:05:23 jw Exp $
+# $Id: SilvaObject.py,v 1.119.2.1 2005/11/30 10:01:39 guido Exp $
 
 # python
 from types import StringType
@@ -343,6 +343,16 @@ class SilvaObject(Security, ViewCode):
             raise NoViewError, msg
         else:
             return view.render()
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_default')
+    def is_default(self):
+        """returns True if the SilvaObject is a default document
+        
+            by default return False, overridden on Content where an actual
+            check is done
+        """
+        return False
 
     # these help the UI that can't query interfaces directly
 
