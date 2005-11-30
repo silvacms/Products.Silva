@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  Current development version
+
+    Bugs fixed
+
+      - Added missing 'is_default' method on SilvaObject, it was already
+        available on Content but some new functionality (closing objects
+        from tab_edit of Container types) made that it was required for
+        other types as well.
+
   1.4.1
 
     Bugs fixed
