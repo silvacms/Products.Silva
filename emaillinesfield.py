@@ -31,6 +31,5 @@ EmailLinesValidatorInstance = EmailLinesValidator()
 class EmailLinesField(LinesField):
     meta_type = 'EmailLinesField'
     validator = EmailLinesValidatorInstance
-    
+
 FieldRegistry.registerField(EmailLinesField, 'www/EmailField.gif')    
-FieldRegistry.initializeFields()
