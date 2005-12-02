@@ -33,4 +33,3 @@ class EmailLinesField(LinesField):
     validator = EmailLinesValidatorInstance
     
 FieldRegistry.registerField(EmailLinesField, 'www/EmailField.gif')    
-FieldRegistry.initializeFields()
