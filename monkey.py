@@ -13,7 +13,26 @@ def fix_TALInterpreter_unicode_support():
     from TAL import TALInterpreter
     TALInterpreter.str = TALInterpreter.ustr
 
+def monkey_zope3_message_id():
+    """Unfortunately we have to convince the Zope 3 message id of a few things.
+
+    * set_mapping function exists
+
+    * set_mapping (and friends..) can be used from Python scripts.
+    """
+    
+    from zope.i18nmessageid.messageid import MessageID
+
+    # monkey patch set_mapping into zope 3 message id..
+    def set_mapping(self, d):
+        self.mapping = d
+
+    MessageID.set_mapping = set_mapping
+
+    # and open it up for Zope 2...
+    MessageID.__allow_access_to_unprotected_subobjects__ = True
+
 def patch_all():
     # perform all patches
     fix_TALInterpreter_unicode_support()
-
+    monkey_zope3_message_id()
