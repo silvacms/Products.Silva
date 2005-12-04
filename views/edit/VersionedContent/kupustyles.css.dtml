@@ -69,8 +69,8 @@ div.kupu-tb {
 #kupu-tb-buttons button {
   margin-top: 0;
   margin-left: 0;
-  height: 24px;
-  width: 24px;
+  height: 22px;
+  width: 22px;
   background-repeat: no-repeat;
 }
 
@@ -195,7 +195,7 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   max-width: 22em;
   margin-top: 0;
   margin-bottom: 0px;
-  padding-left: 12px;
+  padding-left: 14px;
   border: solid 1px #6c797f;
   border-style: solid none none none;
   text-align: left;
