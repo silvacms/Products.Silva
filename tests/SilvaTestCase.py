@@ -46,22 +46,10 @@ ZopeTestCase.installProduct('Silva')
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User
 
-# some stuff to get the REQUEST object available to the PlacelessTranslationService
-from ZPublisher import Publish
-from thread import get_ident
-
 from Acquisition import aq_base
 import time
 
-# i18n stuff
-try:
-    from Products import PlacelessTranslationService
-except ImportError:
-    make_translation_service = lambda x: None
-    cp_id = None
-else:
-    make_translation_service = PlacelessTranslationService.make_translation_service
-    cp_id = PlacelessTranslationService.cp_id
+from zope.app.tests import placelesssetup
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
@@ -114,6 +102,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         transaction.abort()
         noSecurityManager()
         self.beforeSetUp()
+        # BBB should be able to remove this in Zope 2.9
+        placelesssetup.setUp()
         try:
             self.app = self._app()
             self.silva = self.root = self.getRoot()
@@ -135,7 +125,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         self.beforeTearDown()
         self._clear(1)
-
+        # BBB should be able to remove this in Zope 2.9
+        placelesssetup.tearDown()
+        
     def _app(self):
         '''Returns the app object for a test.'''
         return ZopeTestCase.app()
@@ -248,14 +240,6 @@ def setupSilvaRoot(app, id='root', quiet=0):
 
 # Create a Silva site in the test (demo-) storage
 app = ZopeTestCase.app()
-# create a translation service (if PlacelessTranslationService is installed)
-make_translation_service(app)
-if hasattr(Publish, '_requests'):
-    # PlacelessTranslationService stores a list of requests on Publish
-    Publish._requests[get_ident()] = app.REQUEST
 setupSilvaRoot(app, id='root')
 transaction.commit()
 ZopeTestCase.close(app)
-# remove the translation service if it was installed
-if cp_id is not None:
-    app.manage_delObjects([cp_id])
