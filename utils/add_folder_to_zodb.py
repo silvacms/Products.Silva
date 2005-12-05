@@ -5,7 +5,7 @@
 # public domain
 
 import os, sys
-from Products.Silva.transactions import transaction
+import transaction
 
 def ignore_dir(fullfn):
     """ filter function for ignoring certain directories """

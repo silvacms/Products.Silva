@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.94 $
+# $Revision: 1.95 $
 
 from zope.interface import implements
 
@@ -9,8 +9,8 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
 from DateTime import DateTime
+import transaction
 # Silva
-from Products.Silva.transactions import transaction
 from Publication import Publication
 import SilvaPermissions
 import install

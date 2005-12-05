@@ -3,10 +3,10 @@ from zope.interface import implements
 # zope imports
 import zLOG
 import DateTime
+import transaction
 
 # silva imports
 from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
-from Products.Silva.transactions import transaction
 from Products.Silva import mangle
 
 threshold = 500

@@ -1,11 +1,11 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.8 2005/11/14 18:06:13 faassen Exp $
+# $Id: cleanup.py,v 1.9 2005/12/05 17:25:37 faassen Exp $
 #
 import Globals
+import transaction
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
-from Products.Silva.transactions import transaction
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
 from Products.Silva import interfaces as silvaInterfaces

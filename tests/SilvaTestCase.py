@@ -5,18 +5,8 @@
 __version__ = '0.3.1'
 
 from Testing import ZopeTestCase
-try: 				# post initial Silva 1.4 release
-    from Products.Silva.transactions import transaction
-except ImportError:
-    try: 			# Zope 2.8 style transactions
-        import transaction
-    except ImportError: 	# Old-style transactions
-        class BBBTransactionMan:
-            def begin(self):              get_transaction().begin()
-            def commit(self, sub=False):  get_transaction().commit(sub)
-            def abort(self, sub=False):   get_transaction().abort(sub)
-            def get(self):                return get_transaction()
-        transaction = BBBTransactionMan()
+
+import transaction
 
 user_name = ZopeTestCase.user_name
 ZopeTestCase.installProduct('ZCatalog')
