@@ -14,6 +14,6 @@ result = version.render_view()
 if result is None:
     msg = _("This ghost is broken. (${haunted_url})")
     msg.set_mapping({'haunted_url': version.get_haunted_url()})
-    return unicode(msg)
+    return msg
 else:
     return result

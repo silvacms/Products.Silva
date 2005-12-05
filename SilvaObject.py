@@ -1,10 +1,11 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.121 2005/11/30 09:59:47 guido Exp $
+# $Id: SilvaObject.py,v 1.122 2005/12/05 17:17:32 faassen Exp $
 
 # python
 from types import StringType
 import os
+from zope.i18n import translate
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -331,7 +332,7 @@ class SilvaObject(Security, ViewCode):
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.')
             msg.set_mapping({'meta_type': self.meta_type})
-            return '<p>%s</p>' % msg.translate()
+            return '<p>%s</p>' % translate(msg, context=self.REQUEST)
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result

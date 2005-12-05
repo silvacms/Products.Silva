@@ -12,6 +12,6 @@ from Products.Silva.i18n import translate as _
 version = context.REQUEST.model
 result = version.render_view()
 if result is None:
-   return unicode(_("This 'ghost' document is broken. Please inform the site administrator."))
+   return _("This 'ghost' document is broken. Please inform the site administrator.")
 else:
    return result
