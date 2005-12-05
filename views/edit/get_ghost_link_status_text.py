@@ -13,30 +13,30 @@ status = ghost_version.get_link_status()
 if status == ghost_version.LINK_OK:
     return ''
 elif status == ghost_version.LINK_EMPTY:
-    return unicode(_('You have to enter a path here.'))
+    return _('You have to enter a path here.')
 elif status == ghost_version.LINK_VOID:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to does '
-              'not exist.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to does '
+            'not exist.')
 elif status == ghost_version.LINK_FOLDER:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is a '
-              'container.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is a '
+            'container.')
 elif status == ghost_version.LINK_GHOST:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
-              'itself a ghost.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
+            'itself a ghost.')
 elif status == ghost_version.LINK_NO_CONTENT:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
-              'not a content object.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
+            'not a content object.')
 elif status == ghost_version.LINK_CONTENT:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is a '
-              'content object.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is a '
+            'content object.')
 elif status == ghost_version.LINK_NO_FOLDER:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
-              'not a container.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
+            'not a container.')
 elif status == ghost_version.LINK_CIRC:
-    msg = _(('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
-              'either the ghost itself or an ancestor of the ghost.'))
+    msg = _('The object &#xab;${haunted_url}&#xbb; the ghost points to is '
+            'either the ghost itself or an ancestor of the ghost.')
 else:
-    return unicode(_('The ghost is in an undefined state.'))
+    return _('The ghost is in an undefined state.')
 msg.set_mapping({'haunted_url': ghost_version.get_haunted_url()})
-return unicode(msg)
+return msg
 
