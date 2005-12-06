@@ -13,6 +13,42 @@ def fix_TALInterpreter_unicode_support():
     from TAL import TALInterpreter
     TALInterpreter.str = TALInterpreter.ustr
 
+from zope.i18nmessageid import MessageID
+from TAL.TALInterpreter import ustr
+def silva_do_insertStructure_tal(self, (expr, repldict, block)):
+    structure = self.engine.evaluateStructure(expr)
+    if structure is None:
+        return
+    if isinstance(structure, MessageID):
+        # translate structure
+        structure = self.engine.translate(structure.domain,
+                                          structure,
+                                          structure.mapping,
+                                          default=structure.default)
+    if structure is self.Default:
+        self.interpret(block)
+        return
+    text = ustr(structure)
+    if not (repldict or self.strictinsert):
+        # Take a shortcut, no error checking
+        self.stream_write(text)
+        return
+    if self.html:
+        self.insertHTMLStructure(text, repldict)
+    else:
+        self.insertXMLStructure(text, repldict)
+    
+def fix_TALInterpreter_structure_i18n():
+    """Silva relies on the TAL interpreter to translate
+
+    tal:content="structure .." as well; the Zope 2 TAL interpreter
+    doesn't do it.
+    We monkey it with our own do_insertStructure_tal so to make it happen...
+    """
+    from TAL.TALInterpreter import TALInterpreter
+    TALInterpreter.bytecode_handlers['insertStructure'] = silva_do_insertStructure_tal
+    TALInterpreter.bytecode_handlers_tal['insertStructure'] = silva_do_insertStructure_tal
+    
 def monkey_zope3_message_id():
     """Unfortunately we have to convince the Zope 3 message id of a few things.
 
@@ -25,7 +61,7 @@ def monkey_zope3_message_id():
 
     # monkey patch set_mapping into zope 3 message id..
     def set_mapping(self, d):
-        self.mapping = d
+        self.mapping = d    
 
     MessageID.set_mapping = set_mapping
 
@@ -35,4 +71,5 @@ def monkey_zope3_message_id():
 def patch_all():
     # perform all patches
     fix_TALInterpreter_unicode_support()
+    fix_TALInterpreter_structure_i18n()
     monkey_zope3_message_id()
