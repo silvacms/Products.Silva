@@ -8,19 +8,22 @@
 ##title=
 ##
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
+
 result = []
+request = context.REQUEST
 for error in validation_error.errors:
     error_text = error.error_text
     title = error.field['title']
-    # if error_text or title is a MessageIDUnicode instance,
-    # call it to transform it to
-    # a plain string first
-    if callable(error_text):
-        error_text = error_text()
-    if callable(title):
-        title = title()
+
+    # translate error_text and title first
+    error_text = translate(error_text, context=request)
+    title = translate(title, context=request)
+    
     result.append('<li class="error">%s: %s</li>\n' % 
                     (title, error_text))
+
 return ("""<dl style="margin:0; padding:0.3em 0 0.2em 0;"><dt>""" + 
-unicode(_("Sorry, there are problems with these form fields:")) + 
+translate(_("Sorry, there are problems with these form fields:"),
+            context=request) + 
 """</dt><dd><ul class="tips">""" + ' '.join(result) + "</ul></dd></dl>")
