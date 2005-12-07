@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.11 2005/11/14 18:06:12 faassen Exp $
+# $Id: icon.py,v 1.12 2005/12/07 18:41:25 faassen Exp $
 
 """Sivla icon registry"""
 
@@ -47,9 +47,9 @@ class _IconRegistry:
         else:
             try:
                 # if this call gets an object rather then a class as
-                # argument it will raise an AttributeError on __hash__
+                # argument it will raise a TypeError
                 ISilvaObject.implementedBy(object)
-            except AttributeError:
+            except TypeError:
                 raise RegistryError, "Icon not found"
             else:
                 identifier = ('meta_type', object.meta_type)
