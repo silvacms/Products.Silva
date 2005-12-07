@@ -65,11 +65,20 @@ def monkey_zope3_message_id():
 
     MessageID.set_mapping = set_mapping
 
-    # and open it up for Zope 2...
-    MessageID.__allow_access_to_unprotected_subobjects__ = True
+    # XXX opening up of MessageID further is done in Formulator, which
+    # also needs it.. Since Silva depends on Formulator this is okay for now
 
+def allow_translate():
+    """Allow the importing and use of the zope.i18n.translate function
+    in page templates.
+    """
+    from AccessControl import allow_module
+    # XXX is this opening up too much..?
+    allow_module('zope.i18n')
+    
 def patch_all():
     # perform all patches
     fix_TALInterpreter_unicode_support()
     fix_TALInterpreter_structure_i18n()
     monkey_zope3_message_id()
+    allow_translate()
