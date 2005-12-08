@@ -23,7 +23,7 @@ Silva changes
         and views, using Five. This is a first step of a long
         evolutionary transition for the Silva UI.
 
-      - Converted ViewerSecurity, Indexable to Zope 3 adapters.
+      - Converted IViewerSecurity, IIndexable, IHaunted to Zope 3 adapters.
 
     Bugs fixed
 

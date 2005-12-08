@@ -26,4 +26,16 @@
     factory=".indexable.IndexableAdapter"
     />
   
+  <adapter
+    for="Products.Silva.interfaces.IGhost"
+    provides="Products.Silva.interfaces.IHaunted"
+    factory=".haunted.HauntedGhost"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IContent"
+    provides="Products.Silva.interfaces.IHaunted"
+    factory=".haunted.Haunted"
+    />
+
 </configure>

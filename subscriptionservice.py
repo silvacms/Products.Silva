@@ -17,7 +17,8 @@ from Products.Silva import helpers
 from Products.Silva import SilvaPermissions
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
-from Products.Silva.adapters import subscribable, haunted
+from Products.Silva.adapters import subscribable
+from Products.Silva.interfaces import IHaunted
 
 class SubscriptionService(Folder.Folder):
     """Subscription Service
@@ -198,7 +199,7 @@ class SubscriptionService(Folder.Folder):
         # first send notification for content
         self._sendNotificationEmail(content)
         # now send email for potential haunting ghosts
-        adapted = haunted.getHaunted(content)
+        adapted = IHaunted(content)
         thehaunting = adapted.getHaunting()
         for haunting in thehaunting:
             self._sendNotificationEmail(haunting)

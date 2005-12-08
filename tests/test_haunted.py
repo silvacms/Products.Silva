@@ -1,6 +1,6 @@
 7# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -8,10 +8,8 @@ if __name__ == '__main__':
 import SilvaTestCase
 
 from DateTime import DateTime
-
 from Products.Silva import Ghost
-
-from Products.Silva.adapters import haunted
+from Products.Silva.interfaces import IHaunted
 
 class HauntedTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Haunted adapter.
@@ -35,18 +33,15 @@ class HauntedTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_getHaunting(self):
         # No adapter for non-content or containers objects
-        notadapted = haunted.getHaunted(self.root.service_catalog)
-        self.assertEquals(notadapted, None)
-        notadapted = haunted.getHaunted(self.publication)
-        self.assertEquals(notadapted, None)
-        notadapted = haunted.getHaunted(self.folder)
-        self.assertEquals(notadapted, None)
+        self.assertRaises(TypeError, IHaunted, self.root.service_catalog)
+        self.assertRaises(TypeError, IHaunted, self.publication)
+        self.assertRaises(TypeError, IHaunted, self.folder)
         # Test getting an adapter for content
-        adapted = haunted.getHaunted(self.doc1)
+        adapted = IHaunted(self.doc1)
         self.assert_(adapted)
-        adapted = haunted.getHaunted(self.link)
+        adapted = IHaunted(self.link)
         self.assert_(adapted)
-        adapted = haunted.getHaunted(self.ghost)
+        adapted = IHaunted(self.ghost)
         self.assert_(adapted)
         # Create a ghost of the doc the haunting list for this object
         ghostofdoc = Ghost.ghostFactory(self.root, 'ghostofdoc', self.doc1)
@@ -55,7 +50,7 @@ class HauntedTestCase(SilvaTestCase.SilvaTestCase):
         ghostofdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
         ghostofdoc.approve_version()
         # See if it works :)
-        adapted = haunted.getHaunted(self.doc1)
+        adapted = IHaunted(self.doc1)
         thehaunting = adapted.getHaunting()
         ghost = thehaunting.next()
         self.assertEquals(ghostofdoc.getPhysicalPath(), ghost.getPhysicalPath())
