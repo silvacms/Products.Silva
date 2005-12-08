@@ -15,6 +15,9 @@ Silva changes
         architecture, using Five. See doc/developer_changes for more
         details.
 
+      - Some parts of the Silva UI are now based on Zope 3 adapters and
+        views, using Five. This is the start of a long transition.
+
     Bugs fixed
 
       - Added missing 'is_default' method on SilvaObject, it was already

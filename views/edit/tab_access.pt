@@ -532,10 +532,10 @@
       </tal:block>
       <td class="main"
         style="padding-top:2em;">
-        <form action="."
+        <form action=".."
           method="POST"
           tal:define="
-            info view/get_viewer_role_info; 
+            info model/@@get_viewer_role_info; 
             acquired info/acquired;
             selected_role info/selected_role;
             "
@@ -599,7 +599,7 @@
                   <input
                     class="cancel"
                     type="submit"
-                    name="tab_access_acquire_minimum_role_submit:method"
+                    name="@@acquire_minimum_role_submit:method"
                     value="acquire restriction"
                     title="cancel the access restriction at this level, making it inherit from above"
                     i18n:attributes="title;value"
@@ -621,7 +621,7 @@
                   <input 
                     class="button"
                     type="submit"
-                    name="tab_access_minimum_role_submit:method"
+                    name="@@minimum_role_submit:method"
                     value="set restriction"
                     title="restrict access to users with a specific role"
                     i18n:attributes="title;value"
@@ -713,7 +713,7 @@
       </tal:block>
       <td class="main">
         <table class="listing"
-            tal:define="info view/get_viewer_role_info;
+            tal:define="info model/@@get_viewer_role_info;
                         selected_role info/selected_role">
           <thead>
             <tal:block replace="nothing"> 
