@@ -18,7 +18,7 @@ from Products.Silva.i18n import translate as _
 module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management')
 
 class VersionManagementAdapter(adapter.Adapter):
-    """Adapter to manage Silva versions (duh?)"""
+    """Adapter to manage Silva versions"""
     
     implements(IVersionManagement)
     security = ClassSecurityInfo()
