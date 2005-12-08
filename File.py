@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.42 $
+# $Revision: 1.43 $
 
 from zope.interface import implements
 # Python
@@ -21,8 +21,6 @@ from mimetypes import guess_extension
 from helpers import add_and_edit, fix_content_type_header
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
-# Silva adapters
-from Products.Silva.adapters import assetdata
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
@@ -39,6 +37,7 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
+from Products.Silva.adapters.interfaces import IAssetData
 from interfaces import IFile, IAsset, IUpgrader
 
 icon="www/silvafile.png"
@@ -398,7 +397,8 @@ class FileStorageConverter:
     implements(IUpgrader)
     
     def upgrade(self, context):
-        adapted = assetdata.getAssetDataAdapter(context)
+        adapted = IAssetData(context)
+        # XXX not sure this makes sense after adapter conversion..
         if adapted is None:
             return context
         data = adapted.getData()

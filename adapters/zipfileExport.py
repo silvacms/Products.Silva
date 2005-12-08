@@ -5,8 +5,7 @@ from zope.interface import implements
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 # Silva Adapters
-from Products.Silva.adapters import adapter, interfaces, assetdata
-from Products.Silva.adapters import interfaces
+from Products.Silva.adapters import adapter, interfaces
 from Products.Silva import SilvaPermissions
 
 class ZipfileExportAdapter(adapter.Adapter):
@@ -41,8 +40,8 @@ class ZipfileExportAdapter(adapter.Adapter):
         # process data from the export, i.e. export binaries
         for path, id in info.getAssetPaths():
             asset = context.restrictedTraverse(path)
-            # XXX Code will change when AssetDataAdapters are phased out
-            adapter = assetdata.getAssetDataAdapter(asset)
+            # XXX Code will change when AssetData adapters are phased out
+            adapter = interfaces.IAssetData(asset)
             if adapter is not None:
                 asset_path = 'assets/%s' % id
                 archive.writestr(

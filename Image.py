@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.72 2005/12/05 17:25:37 faassen Exp $
+# $Id: Image.py,v 1.73 2005/12/08 17:51:54 faassen Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -28,6 +28,8 @@ from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import upgrade
 from Products.Silva.i18n import translate as _
+from Products.Silva.interfaces import IAsset
+
 # misc
 from helpers import add_and_edit, fix_content_type_header
 
@@ -42,7 +44,7 @@ try:
 except ImportError:  
     pass
 
-from interfaces import IAsset, IUpgrader
+from interfaces import IImage, IUpgrader
 
 from Products.Silva.i18n import translate as _
 
@@ -58,7 +60,7 @@ class Image(Asset):
     meta_type = "Silva Image"
 
     __implements__ = (WriteLockInterface,)
-    implements(IAsset)
+    implements(IImage)
     
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')

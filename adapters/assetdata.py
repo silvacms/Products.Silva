@@ -1,20 +1,20 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetdata.py,v 1.5 2005/11/14 18:06:13 faassen Exp $
+# $Id: assetdata.py,v 1.6 2005/12/08 17:51:54 faassen Exp $
 #
 
 # XXX These asset adapters are a temporary solution and will not be
 # necessary once the assets get a consistent API
 
 from zope.interface import implements
-
-import Globals
-from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 
-class FileData(adapter.Adapter):
+class FileData(object):
     
     implements(interfaces.IAssetData)
+
+    def __init__(self, context):
+        self.context = context
 
     def _getDataForFile(self, file):
         if file.meta_type == 'File': # OFS.Image.File
@@ -28,7 +28,7 @@ class FileData(adapter.Adapter):
     def getData(self):
         file = self.context._file
         return self._getDataForFile(file)
-    
+
 class FlashData(FileData):
     
     implements(interfaces.IAssetData)
@@ -37,9 +37,12 @@ class FlashData(FileData):
         file = self.context._flash
         return self._getDataForFile(file)
 
-class ImageData(adapter.Adapter):
-    
+class ImageData(object):
+
     implements(interfaces.IAssetData)
+
+    def __init__(self, context):
+        self.context = context
 
     def getData(self):
         image = getattr(self.context, 'hires_image', None)
@@ -54,13 +57,4 @@ class ImageData(adapter.Adapter):
             return open(ref, 'rb').read()
         else:
             return None
-    
-def getAssetDataAdapter(context):
-    if context.meta_type == 'Silva File':
-        return FileData(context)
-    elif context.meta_type == 'Silva Image':
-        return ImageData(context)
-    elif context.meta_type == 'Silva Flash':
-        return FlashData(context)
-    return None
-            
+             

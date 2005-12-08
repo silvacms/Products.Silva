@@ -892,6 +892,18 @@ class IFile(IAsset):
         """
         pass
 
+# XXX just so we can register an adapter. SilvaFlashAsset should
+# start using this
+class IFlash(IFile):
+    """Marker interface for flash assets.
+    """
+    pass
+
+# XXX should be extended to non-marker status
+class IImage(IAsset):
+    """Marker interface for image assets.
+    """
+    
 class IMember(Interface):
     # ACCESSORS
     def userid():

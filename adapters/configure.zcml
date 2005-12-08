@@ -38,4 +38,22 @@
     factory=".haunted.Haunted"
     />
 
+  <adapter
+    for="Products.Silva.interfaces.IFile"
+    provides="Products.Silva.adapters.interfaces.IAssetData"
+    factory=".assetdata.FileData"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IFlash"
+    provides="Products.Silva.adapters.interfaces.IAssetData"
+    factory=".assetdata.FlashData"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IImage"
+    provides="Products.Silva.adapters.interfaces.IAssetData"
+    factory=".assetdata.ImageData"
+    />
+
 </configure>
