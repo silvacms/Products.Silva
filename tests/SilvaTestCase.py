@@ -14,7 +14,6 @@ ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
 ZopeTestCase.installProduct('PythonScripts')
 ZopeTestCase.installProduct('PageTemplates')
-ZopeTestCase.installProduct('Five')
 ZopeTestCase.installProduct('Formulator')
 ZopeTestCase.installProduct('FileSystemSite')
 ZopeTestCase.installProduct('ParsedXML')
@@ -33,6 +32,7 @@ if ZopeTestCase.hasProduct('SilvaExternalSources'):
     ZopeTestCase.installProduct('SilvaExternalSources')
 ZopeTestCase.installProduct('SilvaDocument')
 ZopeTestCase.installProduct('Silva')
+ZopeTestCase.installProduct('Five')
 
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User

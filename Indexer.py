@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
@@ -16,9 +16,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
+from Products.Silva.adapters.interfaces import IIndexable
 
 from interfaces import IContent, IContainer, IPublication
-from adapters.indexableadapter import getIndexableAdapter
     
 icon = "www/silvaindexer.png"
 
@@ -81,8 +81,7 @@ class Indexer(Content, SimpleItem):
         result = {}
         # get tree of all subobjects
         for object in self._getIndexables():
-            #
-            indexable = getIndexableAdapter(object)
+            indexable = IIndexable(object)
             indexes = indexable.getIndexes()
             if not indexes:
                 continue

@@ -3,9 +3,27 @@
   xmlns:five="http://namespaces.zope.org/five">
 
   <adapter
-     for="Products.Silva.interfaces.ISilvaObject"
-     provides=".interfaces.IViewerSecurity"
-     factory=".security.ViewerSecurityAdapter"
-     />
-
+    for="Products.Silva.interfaces.ISilvaObject"
+    provides=".interfaces.IViewerSecurity"
+    factory=".security.ViewerSecurityAdapter"
+    />
+  
+  <adapter
+    for="Products.Silva.interfaces.IGhost"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.GhostIndexableAdapter"
+    />
+  
+  <adapter
+    for="Products.Silva.interfaces.IContainer"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.ContainerIndexableAdapter"
+    />
+  
+  <adapter
+    for="Products.Silva.interfaces.ISilvaObject"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.IndexableAdapter"
+    />
+  
 </configure>
