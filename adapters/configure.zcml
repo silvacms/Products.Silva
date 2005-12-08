@@ -2,4 +2,10 @@
   xmlns="http://namespaces.zope.org/zope"
   xmlns:five="http://namespaces.zope.org/five">
 
+  <adapter
+     for="Products.Silva.interfaces.ISilvaObject"
+     provides=".interfaces.IViewerSecurity"
+     factory=".security.ViewerSecurityAdapter"
+     />
+
 </configure>

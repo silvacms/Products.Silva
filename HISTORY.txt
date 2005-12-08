@@ -15,8 +15,9 @@ Silva changes
         architecture, using Five. See doc/developer_changes for more
         details.
 
-      - Some parts of the Silva UI are now based on Zope 3 adapters and
-        views, using Five. This is the start of a long transition.
+      - Some parts of the Silva UI are now based on Zope 3 adapters
+        and views, using Five. This is a first step of a long
+        evolutionary transition for the Silva UI.
 
     Bugs fixed
 

@@ -1,12 +1,13 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import os, sys, time
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
 
+from Products.Silva.adapters.interfaces import IViewerSecurity
 from Products.Silva.adapters import security
 from AccessControl.SecurityManagement import newSecurityManager
 
@@ -15,40 +16,40 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         # by default, all viewer roles can view silva root
         self.assertEquals(
             'Anonymous',
-            security.getViewerSecurityAdapter(self.root).getMinimumRole())
+            IViewerSecurity(self.root).getMinimumRole())
 
     def test_defaultAcquire(self):
         self.add_folder(self.root, 'test', 'Test')
         self.assertEquals(
             'Anonymous',
-            security.getViewerSecurityAdapter(self.root.test).getMinimumRole())
+            IViewerSecurity(self.root.test).getMinimumRole())
         
     def test_setMinimumRole(self):
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
         self.assertEquals(
             'Viewer',
             viewer_security.getMinimumRole())
 
     def test_setMinimumRole2(self):
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer +')
         self.assertEquals(
             'Viewer +',
             viewer_security.getMinimumRole())
         
     def test_getDefaultMinimumRole(self):
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         self.assertEquals(
             'Anonymous',
             viewer_security.getMinimumRole())
 
     def test_acquireRestriction(self):
         # acquire restriction by default
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
         self.add_folder(self.root, 'test', 'Test')
-        lower_viewer_security = security.getViewerSecurityAdapter(
+        lower_viewer_security = IViewerSecurity(
             self.root.test)
         self.assertEquals(
             'Viewer',
@@ -58,9 +59,9 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         # it is possible to open a folder in a restricted area
         # further than would be possible according to acquisition
         self.add_folder(self.root, 'test', 'Test')
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
-        lower_viewer_security = security.getViewerSecurityAdapter(
+        lower_viewer_security = IViewerSecurity(
             self.root.test)
         lower_viewer_security.setMinimumRole('Authenticated')
         self.assertEquals(
@@ -79,9 +80,9 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.add_folder(self.root, 'alpha', 'Alpha')
         self.add_folder(self.root.alpha, 'beta', 'Beta')
         
-        s_alpha = security.getViewerSecurityAdapter(self.root.alpha)
+        s_alpha = IViewerSecurity(self.root.alpha)
         s_alpha.setMinimumRole('Viewer')
-        s_beta = security.getViewerSecurityAdapter(
+        s_beta = IViewerSecurity(
             self.root.alpha.beta)
         s_beta.setMinimumRole('Authenticated')
         self.assertEquals(
@@ -95,7 +96,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
                           s_beta.getMinimumRole())
 
     def test_restrictAndOpenRoot(self):
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
         self.assertEquals('Viewer',
                           viewer_security.getMinimumRole())
@@ -106,7 +107,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
                           viewer_security.getMinimumRole())
 
     def test_restrictedAndOpenRoot2(self):
-        viewer_security = security.getViewerSecurityAdapter(self.root)
+        viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
         self.assertEquals('Viewer',
                           viewer_security.getMinimumRole())
@@ -120,9 +121,9 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.add_folder(self.root, 'alpha', 'Alpha')
         self.add_folder(self.root.alpha, 'beta', 'Beta')
         
-        s_alpha = security.getViewerSecurityAdapter(self.root.alpha)
+        s_alpha = IViewerSecurity(self.root.alpha)
         s_alpha.setMinimumRole('Viewer')
-        s_beta = security.getViewerSecurityAdapter(
+        s_beta = IViewerSecurity(
             self.root.alpha.beta)
         self.assertEquals(s_beta.getMinimumRole(),
                           s_beta.getMinimumRoleAbove())

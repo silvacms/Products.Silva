@@ -14,6 +14,7 @@ ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
 ZopeTestCase.installProduct('PythonScripts')
 ZopeTestCase.installProduct('PageTemplates')
+ZopeTestCase.installProduct('Five')
 ZopeTestCase.installProduct('Formulator')
 ZopeTestCase.installProduct('FileSystemSite')
 ZopeTestCase.installProduct('ParsedXML')
@@ -92,8 +93,10 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         transaction.abort()
         noSecurityManager()
         self.beforeSetUp()
-        # BBB should be able to remove this in Zope 2.9
-        placelesssetup.setUp()
+        # XXX should be able to remove this in Zope 2.9
+        # XXX even worse, it shouldn't be there in Zope 2.8 as it
+        # somehow breaks the tests..
+        #placelesssetup.setUp()
         try:
             self.app = self._app()
             self.silva = self.root = self.getRoot()
@@ -115,8 +118,10 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         self.beforeTearDown()
         self._clear(1)
-        # BBB should be able to remove this in Zope 2.9
-        placelesssetup.tearDown()
+        # XXX should be able to remove this in Zope 2.9
+        # XXX even worse, it shouldn't be there in Zope 2.8 as it
+        # somehow breaks the tests..
+        #placelesssetup.tearDown()
         
     def _app(self):
         '''Returns the app object for a test.'''

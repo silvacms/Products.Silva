@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.8 2005/11/14 18:06:13 faassen Exp $
+# $Id: security.py,v 1.9 2005/12/08 14:18:18 faassen Exp $
 #
 from zope.interface import implements
 
@@ -19,15 +19,12 @@ from Products.Silva.adapters import interfaces
 from DateTime import DateTime
 from types import ListType
 
-module_security = ModuleSecurityInfo('Products.Silva.adapters.security')
-
-class ViewerSecurityAdapter(adapter.Adapter):
+class ViewerSecurityAdapter(object):
     implements(interfaces.IViewerSecurity)
 
-    security = ClassSecurityInfo()
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'setAcquired')
+    def __init__(self, context):
+        self.context = context
+        
     def setAcquired(self):
         # if we're root, we can't set it to acquire, just give
         # everybody permission again
@@ -42,8 +39,6 @@ class ViewerSecurityAdapter(adapter.Adapter):
                 roles=(),
                 acquire=1)
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'setMinimumRole')
     def setMinimumRole(self, role):
         if role == 'Anonymous':
             self.setAcquired()
@@ -53,8 +48,6 @@ class ViewerSecurityAdapter(adapter.Adapter):
                 roles=roleinfo.getRolesAbove(role),
                 acquire=0)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'isAcquired')
     def isAcquired(self):
         if (silva_interfaces.IRoot.providedBy(self.context) and
             self.getMinimumRole() == 'Anonymous'):
@@ -63,32 +56,22 @@ class ViewerSecurityAdapter(adapter.Adapter):
         p = Permission(SilvaPermissions.View, (), self.context)
         return type(p.getRoles(default=[])) is ListType
                 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'getMinimumRole')
     def getMinimumRole(self):
         # XXX this only works if rolesForPermissionOn returns roles
         # in definition order..
-        return str(rolesForPermissionOn(SilvaPermissions.View, self.context)[0])
+        return str(rolesForPermissionOn(
+            SilvaPermissions.View, self.context)[0])
     
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'getMinimumRoleAbove')
     def getMinimumRoleAbove(self):
         if silva_interfaces.IRoot.providedBy(self.context):
             return 'Anonymous'
         else:
             parent = aq_parent(aq_inner(self.context))
-            return getViewerSecurityAdapter(parent).getMinimumRole()
-
-Globals.InitializeClass(ViewerSecurityAdapter)
+            return interfaces.IViewerSecurity(parent).getMinimumRole()
 
 # XXX in the future we want to define a getAdapter
 # ViewerSecurityAdapter should then be defined for every ISilvaObject
 # (probably we'd define another adapter on IRoot and refactor this one)
-module_security.declareProtected(
-    SilvaPermissions.ReadSilvaContent,
-    'getViewerSecurityAdapter')
-def getViewerSecurityAdapter(context):
-    return ViewerSecurityAdapter(context).__of__(context)
 
 # 20 minutes, expressed as a fraction of a day
 LOCK_DURATION = (1./24./60.)*20.
@@ -130,8 +113,5 @@ class LockAdapter(adapter.Adapter):
 
 Globals.InitializeClass(LockAdapter)
 
-module_security.declareProtected(
-    SilvaPermissions.ChangeSilvaContent,
-    'getLockAdapter')
 def getLockAdapter(context):
     return LockAdapter(context).__of__(context)

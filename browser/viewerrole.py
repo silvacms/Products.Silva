@@ -1,13 +1,13 @@
 from Products.Silva.i18n import translate as _
 
-from Products.Silva.adapters.security import getViewerSecurityAdapter
+from Products.Silva.adapters.interfaces import IViewerSecurity
 from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
 from Products.Five import BrowserView
 
 class ViewerRole(BrowserView):
     def getViewerRoleInfo(self):
-        viewer_security = getViewerSecurityAdapter(self.context.aq_inner)
+        viewer_security = IViewerSecurity(self.context.aq_inner)
 
         acquired = viewer_security.isAcquired()
         selected_role = viewer_security.getMinimumRole()
@@ -31,7 +31,7 @@ class ViewerRole(BrowserView):
 
         context = self.context.aq_inner
         
-        viewer_security = getViewerSecurityAdapter(context)
+        viewer_security = IViewerSecurity(context)
     
         old_role = viewer_security.getMinimumRole()
         role = self.request['role']
@@ -56,7 +56,7 @@ class ViewerRole(BrowserView):
         
         context = self.context.aq_inner
         
-        viewer_security = getViewerSecurityAdapter(context)
+        viewer_security = IViewerSecurity(context)
         viewer_security.setAcquired()
         return context.edit['tab_access'](
             message_type='feedback',

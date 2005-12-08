@@ -13,7 +13,7 @@ from AccessControl import Owned
 # silva imports
 from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion, IVersionedContent
 from Products.Silva import upgrade
-from Products.Silva.adapters import security
+from Products.Silva.adapters.interfaces import IViewerSecurity
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
@@ -117,7 +117,7 @@ class UpgradeAccessRestriction:
                 obj.absolute_url(), ))
                 
     def _none_allowed(self, obj, ar):
-        adapter = security.getViewerSecurityAdapter(obj)
+        adapter = IViewerSecurity(obj)
         if adapter.getMinimumRole() == 'Anonymous':
             adapter.setMinimumRole('Viewer')
             zLOG.LOG('Silva', 'Access restriction removed',
@@ -127,7 +127,7 @@ class UpgradeAccessRestriction:
                 "any ip addresses access.\n" % obj.absolute_url())
 
     def _restrict(self, obj, ar):
-        adapter = security.getViewerSecurityAdapter(obj)
+        adapter = IViewerSecurity(obj)
         if adapter.getMinimumRole() == 'Anonymous':
             adapter.setMinimumRole('Viewer')
         ipg = self._createIPGroup(obj)
