@@ -13,7 +13,34 @@ def fix_TALInterpreter_unicode_support():
     from TAL import TALInterpreter
     TALInterpreter.str = TALInterpreter.ustr
 
+# monkey patch to disable the spellchecker feature of Kupu if the spellchecker 
+# binary can not be found: if the feature is used but the binary is not 
+# available, the system goes into a spin(!)
+def disable_spellchecker_if_necessary():
+    from Products.kupu.python import spellcheck
+    import os
+    command = spellcheck.COMMAND
+    if ' ' in command:
+        command = command.split(' ')[0]
+    pipe = os.popen('which %s 2> /dev/null' % command)
+    try:
+        path = pipe.read()
+    finally:
+        pipe.close()
+    if not path.strip():
+        print 'no %s found, monkey-patching Kupu' % command
+        # we don't have the binary: disable
+        class DummySpellChecker:
+            def check(self, text):
+                return {}
+        spellcheck.SpellChecker = DummySpellChecker
+        print 'dir spellcheck:', dir(spellcheck)
+        print 'spellchecker:', spellcheck.SpellChecker
+    else:
+        print '%s found, not patching Kupu' % command
+    
 def patch_all():
     # perform all patches
+    disable_spellchecker_if_necessary()
     fix_TALInterpreter_unicode_support()
 
