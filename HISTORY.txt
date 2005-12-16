@@ -5,6 +5,11 @@ Silva changes
 
   Current development version
 
+    Features added
+
+      - Added monkey patch to disable spell checking in Kupu if there's no
+        spell checking application installed on the server.
+
     Bugs fixed
 
       - Added missing 'is_default' method on SilvaObject, it was already
