@@ -183,6 +183,114 @@
      <value key="index_type">Cosine Measure</value>
    </index_args>
  </metadata_element>
+ <metadata_element id="language">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>ListField</field_type>
+   <acquire_p>1</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+     <value key="alternate_name" type="str" value="" />
+     <value key="hidden" type="int" value="0" />
+     <value key="unicode" type="int" value="1" />
+     <value key="max_linelength" type="str" value="" />
+     <value key="max_lines" type="str" value="" />
+     <value key="width" type="int" value="40" />
+     <value key="external_validator" type="str" value="" />
+     <value key="height" type="int" value="3" />
+     <value key="required" type="int" value="0" />
+     <value key="css_class" type="str" value="store" />
+     <value key="default" type="str" value="" />
+     <value key="title" type="str" value="description" />
+     <value key="items" type="list" value="[('Select a Language:' ,''),
+       ('Abkhazian', 'AB'), ('Afan Oromo', 'OM'), ('Afar', 'AA'), 
+       ('Afrikaans', 'AF'), ('Albanian', 'SQ'), ('Amharic', 'AM'), 
+       ('Arabic', 'AR'), ('Armenian', 'HY'), ('Assamese', 'AS'), 
+       ('Aymara', 'AY'), ('Azerbaijani', 'AZ'), ('Bangla Bengali', 'BN'), 
+       ('Bashkir', 'BA'), ('Basque', 'EU'), ('Bhutani', 'DZ'), 
+       ('Bihari', 'BH'), ('Bislama', 'BI'), ('Breton', 'BR'), 
+       ('Bulgarian', 'BG'), ('Burmese', 'MY'), ('Byelorussian', 'BE'), 
+       ('Cambodian', 'KM'), ('Catalan', 'CA'), ('Chinese', 'ZH'), 
+       ('Corsican', 'CO'), ('Croatian', 'HR'), ('Czech', 'CS'), 
+       ('Danish', 'DA'), ('Dutch', 'NL'), ('English', 'EN'), 
+       ('Esperanto', 'EO'), ('Estonian', 'ET'), ('Faeroese', 'FO'), 
+       ('Fiji', 'FJ'), ('Finnish', 'FI'), ('French', 'FR'), 
+       ('Frisian', 'FY'), ('Gaelic Scots Gaelic', 'GD'), ('Galician', 'GL'),
+       ('Georgian', 'KA'), ('German', 'DE'), ('Greek', 'EL'), 
+       ('Greenlandic', 'KL'), ('Guarani', 'GN'), ('Gujarati', 'GU'), 
+       ('Hausa', 'HA'), ('Hebrew', 'IW'), ('Hindi', 'HI'), 
+       ('Hungarian', 'HU'), ('Icelandic', 'IS'), ('Indonesian', 'IN'), 
+       ('Interlingua', 'IA'), ('Interlingue', 'IE'), ('Inupiak', 'IK'), 
+       ('Irish', 'GA'), ('Italian', 'IT'), ('Japanese', 'JA'), 
+       ('Javanese', 'JW'), ('Kannada', 'KN'), ('Kashmiri', 'KS'), 
+       ('Kazakh', 'KK'), ('Kinyarwanda', 'RW'), ('Kirghiz', 'KY'), 
+       ('Kirundi', 'RN'), ('Korean', 'KO'), ('Kurdish', 'KU'), 
+       ('Laothian', 'LO'), ('Latin', 'LA'), ('Lettish Latvian', 'LV'), 
+       ('Lingala', 'LN'), ('Lithuanian', 'LT'), ('Macedonian', 'MK'), 
+       ('Malagasy', 'MG'), ('Malayalam', 'ML'), ('Malay', 'MS'), 
+       ('Maltese', 'MT'), ('Maori', 'MI'), ('Marathi', 'MR'), 
+       ('Moldavian', 'MO'), ('Mongolian', 'MN'), ('Nauru', 'NA'), 
+       ('Nepali', 'NE'), ('Norwegian', 'NO'), ('Occitan', 'OC'), 
+       ('Oriya', 'OR'), ('Persian', 'FA'), ('Polish', 'PL'), 
+       ('Portuguese', 'PT'), ('Punjabi', 'PA'), ('Pushto Pashto', 'PS'), 
+       ('Quechua', 'QU'), ('Rhaeto-Romance', 'RM'), ('Romanian', 'RO'), 
+       ('Russian', 'RU'), ('Samoan', 'SM'), ('Sangro', 'SG'), 
+       ('Sanskrit', 'SA'), ('Serbian', 'SR'), ('Serbo-Croatian', 'SH'), 
+       ('Sesotho', 'ST'), ('Setswana', 'TN'), ('Shona', 'SN'), 
+       ('Sindhi', 'SD'), ('Singhalese', 'SI'), ('Siswati', 'SS'), 
+       ('Slovak', 'SK'), ('Slovenian', 'SL'), ('Somali', 'SO'), 
+       ('Spanish', 'ES'), ('Sudanese', 'SU'), ('Swahili', 'SW'), 
+       ('Swedish', 'SV'), ('Tagalog', 'TL'), ('Tajik', 'TG'), 
+       ('Tamil', 'TA'), ('Tatar', 'TT'), ('Tegulu', 'TE'), ('Thai', 'TH'), 
+       ('Tibetan', 'BO'), ('Tigrinya', 'TI'), ('Tonga', 'TO'), 
+       ('Tsonga', 'TS'), ('Turkish', 'TR'), ('Turkmen', 'TK'), 
+       ('Twi', 'TW'), ('Ukrainian', 'UK'), ('Urdu', 'UR'), ('Uzbek', 'UZ'),
+       ('Vietnamese', 'VI'), ('Volapuk', 'VO'), ('Welsh', 'CY'), 
+       ('Wolof', 'WO'), ('Xhosa', 'XH'), ('Yiddish', 'JI'), 
+       ('Yoruba', 'YO'), ('Zulu', 'ZU')]" />
+     <value key="description" type="str" value="Language of content in this area." />
+     <value key="max_length" type="str" value="" />
+     <value key="whitespace_preserve" type="int" value="0" />
+     <value key="extra" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="alternate_name"></value>
+     <value key="hidden"></value>
+     <value key="unicode"></value>
+     <value key="max_linelength"></value>
+     <value key="max_lines"></value>
+     <value key="width"></value>
+     <value key="external_validator"></value>
+     <value key="height"></value>
+     <value key="required"></value>
+     <value key="css_class"></value>
+     <value key="default"></value>
+     <value key="title"></value>
+     <value key="description"></value>
+     <value key="max_length"></value>
+     <value key="whitespace_preserve"></value>
+     <value key="extra">string: id="${here/id}"</value>
+   </field_tales>
+   <field_messages>
+   </field_messages>
+   <index_args>
+     <value key="lexicon_id">silva_lexicon</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="index_type">Cosine Measure</value>
+   </index_args>
+ </metadata_element>
+ 
+ 
  <metadata_element id="comment">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
