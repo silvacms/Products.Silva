@@ -26,6 +26,9 @@ Silva changes
       - Converted IViewerSecurity, IIndexable, IHaunted, IAssetData to
         Zope 3 adapters.
 
+      - The silva-extra metadata set now has a language field that stores
+        a ISO 639 two letter language code.
+
     Bugs fixed
 
       - Added missing 'is_default' method on SilvaObject, it was already
