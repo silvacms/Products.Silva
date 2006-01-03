@@ -291,7 +291,7 @@
     <span class="underline"><xsl:apply-templates mode="text-content" /></span>
   </xsl:template>
 
-  <xsl:template match="doc:index">
+  <xsl:template match="doc:index" mode="text-content">
     <a id="{@name}" />
   </xsl:template>
 
