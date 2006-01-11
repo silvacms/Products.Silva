@@ -84,6 +84,40 @@ this::
 Zope 3 will likely evolve ways to make the generation of `.mo` files
 more automatic in the future and Silva will follow.
 
+Zope 3 adapters
+---------------
+
+Quite a few adapters in the `adapters` directory have been converted
+to use Zope 3 patterns. That is, Silva looks them up by interface now
+in the standard Zope 3 pattern. They also get registered through ZCML.
+
+Here's an example of some ZCML registrations::
+
+  <adapter
+    for="Products.Silva.interfaces.IGhost"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.GhostIndexableAdapter"
+    />
+  
+  <adapter
+    for="Products.Silva.interfaces.IContainer"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.ContainerIndexableAdapter"
+    />
+  
+  <adapter
+    for="Products.Silva.interfaces.ISilvaObject"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.IndexableAdapter"
+    />
+
+And here's how you look it up in Python code::
+
+  indexable = IIndexable(my_content_object)
+
+You can then call methods on 'indexable'; to see which methods exist
+you can consult `adapters/interfaces.py`.
+
 From 1.3 to 1.4
 ===============
 
