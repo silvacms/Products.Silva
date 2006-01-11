@@ -2,11 +2,58 @@
 Developer level changes in Silva
 ================================
 
-From 1.3 to 1.4:
+From 1.4 to 1.5
+===============
+
+Five
+----
+
+Zope 2.8 includes a significant portion of Zope 3, and includes Five. Silva
+does need a later version of Five than included with Zope 2.8 however,
+namely Five 1.2, which can be easily installed as a product and which
+ships with the Five tarball.
+
+Zope 3 interfaces
+-----------------
+
+Silva now uses Zope 3 interfaces throughout, instead of Zope 2 interfaces.
+
+If you use interfaces in your own code, import the `Interface` base class like
+this::
+
+  from zope.interface import Interface
+
+Instead of using `__implements__`, state that your class implements
+interfaces using the `implements` class annotation::
+
+  from zope.interface import implements
+
+  ...
+ 
+  class Foo:
+      implements(IFoo)
+
+You can check whether an instance provides an interface (i.e. whether
+its class implements an interface or the interface directly provides
+an interface) using `providedBy` (in Zope 2 this used to be written
+'isImplementedBy')::
+
+  IFoo.providedBy(instance)
+
+In the rare case you want to check whether a *class* implements an
+interface (i.e. whether its instances will provide that instance), you
+use `implementedBy` (this used to be `isImplementedByInstancesOf` in
+Zope 2)::
+
+  IFoo.implementedBy(some_class)
+
+From 1.3 to 1.4
+===============
 
 * For running the unit tests, ZopeTestCase 0.9.8 is now required.
 
-From 1.2 to 1.3:
+From 1.2 to 1.3
+===============
 
 * Metadata sets can have a 'category' property. This property can be used
   to define special purpose metadata sets. This is used now for the
@@ -20,7 +67,8 @@ From 1.2 to 1.3:
 
 * MetadataTool.setMetadataValues() has been removed.
 
-From 1.1 to 1.2:
+From 1.1 to 1.2
+===============
 
 * the 'action_paste' and 'action_paste_to_ghost' methods on Folder have
   a new signature, instead of returning a list of messages it now returns
@@ -78,7 +126,8 @@ From 1.1 to 1.2:
       Version object (of course it still refers to the object itself
       in case the object is not of a versioned type)
 
-From 1.0 to 1.1:
+From 1.0 to 1.1
+===============
 
 * The previously deprecated method 'archive_file_import' on Folder.py and
   the ImportArchive module have been removed. Code that depended on this
