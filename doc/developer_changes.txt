@@ -47,6 +47,43 @@ Zope 2)::
 
   IFoo.implementedBy(some_class)
 
+Five-based i18n
+---------------
+
+Silva now uses Zope 3 based i18n infrastructure, and
+PlacelessTranslationService is not in use anymore.
+
+All the translations of a product (such as `Silva`, `SilvaDocument`,
+etc) are now in a directory, i18n which is registered in that
+product's `configure.zcml` with the following simple directive::
+
+    <!-- i18n -->
+  <i18n:registerTranslations directory="i18n" />
+
+The i18n directory has the following structure::
+
+* a `.pot` file, such as `silva.pot`
+
+* an `__init__.py` file.
+
+* for each language, a subdirectory, such as `de`.
+
+This language subdirectory follows a standard pattern derives from the
+standard `gettext` tool. It contains a single subdirectory called
+`LC_MESSAGES`. This directory contains a `.po` file and a `.mo` file,
+such as `silva.mo` and `silva.po`.
+
+The `.mo` file is a compiled version of the `.po` file. Zope only
+consults the `.mo` files when looking for translations, so be sure to
+update the `.mo` file whenever you change the `.po` file. You can do
+this (on linux) with the standard `msgfmt` tool, with a command like
+this::
+
+  msgfmt silva.po -o silva.mo
+
+Zope 3 will likely evolve ways to make the generation of `.mo` files
+more automatic in the future.
+
 From 1.3 to 1.4
 ===============
 
