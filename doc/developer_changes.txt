@@ -82,7 +82,7 @@ this::
   msgfmt silva.po -o silva.mo
 
 Zope 3 will likely evolve ways to make the generation of `.mo` files
-more automatic in the future.
+more automatic in the future and Silva will follow.
 
 From 1.3 to 1.4
 ===============
