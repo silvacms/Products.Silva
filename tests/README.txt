@@ -1,13 +1,6 @@
 Running tests
 =============
 
-You need ZopeTestCase, version 0.9.8 or higher.
-
-It needs to be installed in your SOFTWARE_HOME in lib/python/Testing. You
-can download released versions of ZopeTestCase here:
-
-  http://www.zope.org/Members/shh/ZopeTestCase
-
 To run the Silva tests you can use the ``test`` subcommand of ``zopectl``
 of your Zope instance. So, assuming the current working directory is your
 Zope instance::
