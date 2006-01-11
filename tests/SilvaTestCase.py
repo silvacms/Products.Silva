@@ -97,6 +97,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         # XXX even worse, it shouldn't be there in Zope 2.8 as it
         # somehow breaks the tests..
         #placelesssetup.setUp()
+        # Philipp suggests we use this:
+        #zcml.load_config('configure.zcml', Products.Five)
+        # but still placelesssetup.tearDown()
+        # this would be slower than installProduct('Five'), but
+        # the advantage is that these tests would mix with
+        # Five's tests, or any tests that use zcml as part of the test
         try:
             self.app = self._app()
             self.silva = self.root = self.getRoot()
