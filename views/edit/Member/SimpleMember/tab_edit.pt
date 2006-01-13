@@ -99,7 +99,7 @@ function focus_editor() {
               tal:attributes="
                 value lang;
                 selected python: lang == provider.getPreferredLanguage() and 'selected' or None" 
-              tal:content="lang">language</option>
+              tal:content="python:provider.getLanguageName(lang)">language</option>
             </tal:block>
           </select>
         </td>
