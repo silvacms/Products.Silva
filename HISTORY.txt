@@ -9,7 +9,7 @@ Silva changes
 
       - Changed over Silva so it works with Zope 2.8/Zope 3 interfaces
         instead of old-style interfaces. See doc/developer_changes for
-	more details.
+        more details. 
       
       - Adjusted test infrastructure so it works with Five.
 
@@ -19,9 +19,10 @@ Silva changes
         architecture, using Five. See doc/developer_changes for more
         details.
 
-      - Some parts of the Silva UI are now based on Zope 3 adapters
-        and views, using Five. This is a first step of a long
-        evolutionary transition for the Silva UI.
+      - Some parts of the Silva UI (for instance the lookup window in the
+        edit views) are now based on Zope 3 adapters and views, using Five.
+        This is a first step of a long evolutionary transition for the Silva
+        UI.
 
       - Converted IViewerSecurity, IIndexable, IHaunted, IAssetData to
         Zope 3 adapters.
