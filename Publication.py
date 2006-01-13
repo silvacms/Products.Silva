@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.66 $
+# $Revision: 1.67 $
 
 from zope.interface import implements
 
@@ -43,54 +43,12 @@ class Publication(Folder.Folder):
 
     _addables_allowed_in_publication = None
 
-    layout_key = None
-
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(
             self, id)
-        self.layout_key = None
     
     # MANIPULATORS
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'set_layout')
-    def set_layout(self, layout_name):
-        """Set template layout
-        """
-        service_layouts = self.get_root().service_layouts
-        if service_layouts.has_own_layout(self):
-            service_layouts.remove_layout(self)
-        if layout_name:
-            layout = service_layouts.setup_layout(layout_name, self)
-    
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'copy_layout')
-    def copy_layout(self):
-        """Copy layout to publication
-        to be able to customize it.
-        """
-        service_layouts = self.get_root().service_layouts
-        layout = service_layouts.copy_layout(self)
-    
-    def get_layout_key(self, own=0):
-        layout_key = self.get_own_layout_key()
-        if layout_key or (self == self.get_root()):
-            return layout_key
-        else:
-            return self.get_publication().aq_parent.get_publication().get_layout_key()
-
-    def get_own_layout_key(self):
-        return self.layout_key
-
-    def set_layout_key(self, value):
-        self.layout_key = value 
-
-    def layout_copied(self):
-        return self.service_layouts.layout_copied(self)
-
-    def get_layout_folder(self):
-        return self.service_layouts.get_layout_folder(self)
-
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')
     def set_silva_addables_allowed_in_publication(self, addables):
@@ -110,35 +68,6 @@ class Publication(Folder.Folder):
         service_layouts.clone_layout(self)
 
     # ACCESSORS
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_layout')
-    def get_layout(self):
-        """Get template layout (own or acquired).
-        """
-        if not hasattr(self, "layout_key"):
-            self.layout_key = None
-        service_layouts = self.get_root().service_layouts
-        return service_layouts.get_layout_name(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_layout_description')
-    def get_layout_description(self):
-        """Get template layout description (own or acquired).
-        """
-        if not hasattr(self, "layout_key"):
-            self.layout_key = None
-        service_layouts = self.get_root().service_layouts
-        return service_layouts.get_layout_description(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_own_layout')
-    def get_own_layout(self):
-        """Get own template layout (not acquired).
-        """
-        if not hasattr(self, "layout_key"):
-            self.layout_key = None
-        service_layouts = self.get_root().service_layouts
-        return service_layouts.get_own_layout_name(self)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')

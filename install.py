@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.114 2005/10/17 13:21:23 jw Exp $
+# $Id: install.py,v 1.115 2006/01/13 13:40:29 faassen Exp $
 """Install for Silva Core
 """
 # Python
@@ -70,20 +70,6 @@ def add_fss_directory_view(obj, name, base, *args):
                          "path: %s, FSS path: %s" % ( abs_path, exp_path ))
     # -- end sanity check --
 
-    # -- sanity check because of FSS 1.1 createDirectoryView bug --
-##     try:
-##         from Products.FileSystemSite.DirectoryView import _dirreg
-##         info = _dirreg.getDirectoryInfo(path)
-##     except:
-##         pass
-##     else:
-##         # XXX need to comment this out to make tests run in INSTANCE_HOME
-##         # situation..
-##         if info is None:
-##             raise ValueError('Not a FSS registered directory: %s' % path)
-
-    # -- end sanity check because of FSS 1.1 bug --
-
     # FSS should eat the path now and work correctly with it
     manage_addDirectoryView(obj, path, name)
 
@@ -105,12 +91,6 @@ def install(root):
     if not hasattr(root, 'service_resources'):
         # folder containing some extra views and resources
         root.manage_addFolder('service_resources')
-    # if necessary, create service_resources/Layouts
-    # XXX this could move to installFromScratch later once all installs
-    # have been upgraded
-    if not hasattr(root.service_resources, 'Layouts'):
-        #folder containing installed Layouts
-        root.service_resources.manage_addFolder('Layouts')
         
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
@@ -142,16 +122,6 @@ def install(root):
     configureMetadata(root)
     
     configureContainerPolicies(root)
-    
-    # if necessary, create service_layouts
-    # XXX this could move to installFromScratch later once all installs
-    # have been upgraded
-    if not hasattr(root, 'service_layouts'):
-        root.manage_addProduct['Silva'].manage_addLayoutService(
-        'service_layouts', 'Silva Layouts Configuration')
-        configure_default_layout_package(root)
-    from LayoutRegistry import DEFAULT_LAYOUT
-    root.set_layout(DEFAULT_LAYOUT)
 
     # install the renderer registry service
     if not hasattr(root, 'service_renderer_registry'):
@@ -162,12 +132,6 @@ def install(root):
     installKupu(root)
     
     installSubscriptions(root)
-
-def configure_default_layout_package(root):
-    from LayoutRegistry import DEFAULT_LAYOUT
-    service_layouts = root.service_layouts
-    if DEFAULT_LAYOUT not in service_layouts.get_installed_names():
-        root.service_layouts.install(DEFAULT_LAYOUT)    
 
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -304,10 +268,6 @@ def configureSecurity(root):
     for add_permission in add_permissions:
         root.manage_permission(add_permission, roleinfo.AUTHOR_ROLES)
 
-    # chief editor can customize a layout
-    root.manage_permission('Add Page Templates', roleinfo.CHIEF_ROLES)
-    root.manage_permission('Add Folders', roleinfo.CHIEF_ROLES)
-
     # chief editors and up may also place groups.
     root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
@@ -371,9 +331,11 @@ def configureLayout(root, default_if_existent=0):
                'get_metadata_element.py', 'get_layout_macro.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
         
-    add_helper(root, 'frontend.css', globals(), dtml_add_helper, default_if_existent)
+    add_helper(root, 'frontend.css', globals(),
+               dtml_add_helper, default_if_existent)
 
-    add_helper(root, 'print.css', globals(), dtml_add_helper, default_if_existent)
+    add_helper(root, 'print.css', globals(),
+               dtml_add_helper, default_if_existent)
     
 def configureMembership(root):
     """Install membership code into root.

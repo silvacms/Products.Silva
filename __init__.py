@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.140 $
+# $Revision: 1.141 $
 # Zope
 import zLOG
 # Silva
@@ -55,8 +55,6 @@ def initialize(context):
     from Products.Silva.ImporterRegistry import importer_registry
     from Products.Silva.ExtensionRegistry import extensionRegistry
     import ExtensionService
-    from LayoutRegistry import layoutRegistry
-    import LayoutService
     import RendererRegistryService
     import SimpleMembership
     import EmailMessageService
@@ -68,14 +66,6 @@ def initialize(context):
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
-    from Products.Silva.LayoutRegistry import layoutRegistry
-    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT
-    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DESCRIPTION
-    from Products.Silva.LayoutRegistry import DEFAULT_LAYOUT_DIRECTORY
-    
-    layoutRegistry.register(
-        DEFAULT_LAYOUT, DEFAULT_LAYOUT_DESCRIPTION, __file__,
-        DEFAULT_LAYOUT_DIRECTORY)
 
     extensionRegistry.register(
         'Silva', 'Silva Core', context, [
@@ -89,13 +79,6 @@ def initialize(context):
         constructors = (ExtensionService.manage_addExtensionServiceForm,
                         ExtensionService.manage_addExtensionService),
         icon = "www/extension_service.gif"
-        )
-
-    context.registerClass(
-        LayoutService.LayoutService,
-        constructors = (LayoutService.manage_addLayoutServiceForm,
-                        LayoutService.manage_addLayoutService),
-        icon = "www/layout_service.png"
         )
 
     context.registerClass(
