@@ -41,7 +41,7 @@ Silva changes
         from tab_edit of Container types) made that it was required for
         other types as well.
 
-      - Never really an official feature, the FileSystemSite layout
+      - Never really an official feature, the FileSystemSite-based layout
         system has been removed from the code. This means that
         service_layouts is now gone.
 
