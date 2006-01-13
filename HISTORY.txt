@@ -29,12 +29,21 @@ Silva changes
       - The silva-extra metadata set now has a language field that stores
         a ISO 639 two letter language code.
 
+      - Language setting in the user preferences is now shown as human
+        readable text, not as a language code. Moreover, using Zope 3's
+        locale database, names for languages are shown in the configured
+        language.
+
     Bugs fixed
 
       - Added missing 'is_default' method on SilvaObject, it was already
         available on Content but some new functionality (closing objects
         from tab_edit of Container types) made that it was required for
         other types as well.
+
+      - Never really an official feature, the FileSystemSite layout
+        system has been removed from the code. This means that
+        service_layouts is now gone.
 
   1.4
 
