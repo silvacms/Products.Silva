@@ -33,14 +33,15 @@ macro plateau
           publication            model/get_publication;
           containing_publication publication/../get_publication | publication;
           query_string           query_string | nothing;
-          global vein_id         string:foobar;
-        ">
+          global vein_id         template_id | python: template.id + test(query_string, query_string, '');
+          edit                   python:test(vein_id == '@@object_lookup' , '/', '/edit/');
+          up                     python:test(vein_id == '@@object_lookup' , '..', '../..');
+          ">
         <a class="up"
-          href="../../edit/tab_edit"
           title="up one level: alt-]"
           accesskey="]"
           tal:condition="not: model_is_root"
-          tal:attributes="href string:../../edit/$vein_id"
+          tal:attributes="href string:${up}${edit}$vein_id"
           i18n:attributes="title">
           <img width="9"
             height="9"
@@ -54,7 +55,7 @@ macro plateau
           accesskey="["
           i18n:attributes="title"
           tal:condition="not: model_is_root"
-          tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + '/edit/' + vein_id) or (publication.absolute_url() + '/edit/' + vein_id)">
+          tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + edit + vein_id) or (publication.absolute_url() + edit + vein_id)">
           <img width="9"
             height="9"
             border="0"

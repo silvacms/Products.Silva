@@ -37,9 +37,7 @@
       objects context/get_tree;
       silva_permissions context/edit/get_silva_permissions;
       filter python: request.get('filter');
-      startpath python: ((request.get('filter') is not None) and 
-      '/'.join(context.getPhysicalPath()) or
-      request.SESSION.get('lookup:startpath'));
+      startpath python: request.SESSION.get('lookup:startpath') or '/'.join(context.getPhysicalPath());
       show_add python: request.get('show_add', 
       request.SESSION.get('lookup:show_add', '0'));
       dummy python: request.SESSION.set('lookup:filter', filter);
