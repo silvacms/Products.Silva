@@ -11,8 +11,12 @@ lookup_mode = REQUEST.get('lookup_mode', 0)
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
     if lookup_mode:
-        return view.object_lookup()
-    return view.tab_edit()
+        if return_url:
+            REQUEST.RESPONSE.redirect(return_url)
+        else:
+            return view.object_lookup()
+    else:
+        return view.tab_edit()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
@@ -59,10 +63,15 @@ object = getattr(model, id)
 object.sec_update_last_author_info()
 
 if lookup_mode:
-    return view.object_lookup()
+    if return_url:
+        REQUEST.RESPONSE.redirect(return_url)
+    else:
+        return view.object_lookup()
 
 # now go to tab_edit in case of add and edit, back to container if not.
-if REQUEST.has_key('add_edit_submit'):
+if return_url:
+    REQUEST.RESPONSE.redirect(return_url)
+elif REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
     message = _("Added ${meta_type} ${id}.")

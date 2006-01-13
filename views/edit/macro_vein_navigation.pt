@@ -33,7 +33,7 @@ macro plateau
           publication            model/get_publication;
           containing_publication publication/../get_publication | publication;
           query_string           query_string | nothing;
-          global vein_id         template_id | python: template.id + test(query_string, query_string, '');
+          global vein_id         string:foobar;
         ">
         <a class="up"
           href="../../edit/tab_edit"

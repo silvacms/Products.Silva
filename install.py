@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.115 2006/01/13 13:40:29 faassen Exp $
+# $Id: install.py,v 1.116 2006/01/13 18:21:04 eric Exp $
+
 """Install for Silva Core
 """
 # Python
@@ -132,6 +133,12 @@ def install(root):
     installKupu(root)
     
     installSubscriptions(root)
+        
+def configure_default_layout_package(root):
+    from LayoutRegistry import DEFAULT_LAYOUT
+    service_layouts = root.service_layouts
+    if DEFAULT_LAYOUT not in service_layouts.get_installed_names():
+        root.service_layouts.install(DEFAULT_LAYOUT)    
 
 def uninstall(root):
     unregisterViews(root.service_view_registry)

@@ -3,33 +3,49 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five">
 
-  <!--
-  Should put it all in this layer
-  <browser:layer name="silva_ui" />
-  -->
- 
   <browser:page
-      for="Products.Silva.interfaces.ISilvaObject"
-      name="get_viewer_role_info"
-      class=".viewerrole.ViewerRole"
-      attribute="getViewerRoleInfo"
-      permission="silva.ChangeSilvaAccess"
-   />
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="get_viewer_role_info"
+    class=".viewerrole.ViewerRole"
+    attribute="getViewerRoleInfo"
+    permission="silva.ChangeSilvaAccess"
+  />
 
   <browser:page
-      for="Products.Silva.interfaces.ISilvaObject"
-      name="minimum_role_submit"
-      class=".viewerrole.ViewerRole"
-      attribute="submitMinimumRole"
-      permission="silva.ChangeSilvaAccess" 
-   />
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="minimum_role_submit"
+    class=".viewerrole.ViewerRole"
+    attribute="submitMinimumRole"
+    permission="silva.ChangeSilvaAccess" 
+  />
 
   <browser:page
-      for="Products.Silva.interfaces.ISilvaObject"
-      name="acquire_minimum_role_submit"
-      class=".viewerrole.ViewerRole"
-      attribute="submitAcquiredMinimumRole"
-      permission="silva.ChangeSilvaAccess" 
-   />
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="acquire_minimum_role_submit"
+    class=".viewerrole.ViewerRole"
+    attribute="submitAcquiredMinimumRole"
+    permission="silva.ChangeSilvaAccess" 
+  />
 
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="object_lookup"
+    class=".lookup.ObjectLookup"
+    template="object_lookup.pt"
+    permission="silva.ChangeSilvaContent" 
+  />
+
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="sidebar"
+    class=".lookup.SidebarView"
+    permission="silva.ChangeSilvaContent"
+  />
+  
+  <browser:resourceDirectory
+    name="scripts"
+    directory="scripts"
+    permission="zope2.Public"
+  />
+  
 </configure>
