@@ -29,12 +29,14 @@ class LanguageProvider(adapter.Adapter):
         silva_domain = zapi.getUtility(ITranslationDomain, 'silva')
         # XXX awful hack, but we don't have access to any
         # 'getAvailableLanguages' functionality apparently..
-        return silva_domain._catalogs.keys()
+        return ['none'] + silva_domain._catalogs.keys()
 
     security.declarePublic('getLanguageName')
     def getLanguageName(self, language_id):
         """Get the name of the language, in the current language.
         """
+        if language_id == 'none':
+            return _(u'Use browser language setting')
         self._setupLocale()
         name = self.context.REQUEST.locale.displayNames.languages.get(
             language_id)
@@ -64,38 +66,26 @@ class LanguageProvider(adapter.Adapter):
         else:
             # No combination gave us an existing locale, so use the default,
             # which is guaranteed to exist
-            request.locale = locales.getLocale(None, None, None)
-        
-    def getLocale(self):
-        # XXX zope 3 has locale on the request; Five doesn't have that yet
-        langs = IUserPreferredLanguages(
-            self.context.REQUEST).getPreferredLanguages()
-        for httplang in langs:
-            parts = (httplang.split('-') + [None, None])[:3]
-            try:
-                self._locale = locales.getLocale(*parts)
-                return
-            except LoadLocaleError:
-                # Just try the next combination
-                pass
-
-            
-        language = self.getPreferredLanguage()
-        
+            request.locale = locales.getLocale(None, None, None)        
         
     security.declarePublic('setPreferredLanguage')
     def setPreferredLanguage(self, language):
+        response = self.context.REQUEST.RESPONSE
         path = '/'.join(
             self.context.get_publication().get_root().getPhysicalPath())
-        self.context.REQUEST.RESPONSE.setCookie(
+        if language == 'none':
+            response.expireCookie('silva_language', path=path)
+            return
+        response.setCookie(
             'silva_language', language, 
             path=path, expires=(DateTime()+365).rfc822())
     
     security.declarePublic('getPreferredLanguage')
     def getPreferredLanguage(self):
-        return IUserPreferredLanguages(
+        result = IUserPreferredLanguages(
             self.context.REQUEST).getPreferredLanguages()[0]
-
+        return result
+    
 Globals.InitializeClass(LanguageProvider)
 
 # somehow we could access this from a python script before, but
