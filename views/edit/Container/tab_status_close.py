@@ -1,5 +1,6 @@
 ##parameters=refs=None
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
@@ -46,11 +47,11 @@ if closed_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Closed: ${ids}')
     message.set_mapping({'ids': view.quotify_list(closed_ids)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 if not_closed:
     message = _('<span class="error">could not close: ${ids}</span>')
     message.set_mapping({'ids': view.quotify_list_ext(not_closed)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )
