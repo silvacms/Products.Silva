@@ -17,6 +17,8 @@ Silva changes
         from tab_edit of Container types) made that it was required for
         other types as well.
 
+      - Kupu now uses frontend.css instead of an almost entire copy.
+
   1.4.1
 
     Bugs fixed
