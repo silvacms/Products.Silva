@@ -475,6 +475,9 @@ class IContainer(ISilvaObject, IPublishable):
         """
         pass
 
+class IFolder(IContainer):
+    pass
+
 class IPublication(IContainer):
     """An interface supported by publication objects.
     """
@@ -1124,3 +1127,7 @@ class IHaunted(Interface):
         """Return iterator of objects (ghosts) haunting the adapted object.
         """
         pass
+
+class IAutoTOC(IContent):
+    pass
+

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.177 $
+# $Revision: 1.178 $
 
 from zope.interface import implements
 
@@ -40,7 +40,7 @@ from Products.ParsedXML.ExtraDOM import writeStream
 
 from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
-from interfaces import IContainer, IPublication, IRoot
+from interfaces import IContainer, IFolder, IPublication, IRoot
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
@@ -75,7 +75,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         inherited_manage_options[1:]
         )
 
-    implements(IContainer)
+    implements(IFolder)
         
     def __init__(self, id):
         Folder.inheritedAttribute('__init__')(

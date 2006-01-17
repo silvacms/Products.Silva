@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.13 2005/11/14 18:06:12 faassen Exp $
+# $Id: AutoTOC.py,v 1.14 2006/01/17 17:00:06 faassen Exp $
 
 from zope.interface import implements
 
@@ -19,7 +19,7 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IContent, IContainerPolicy
+from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.helpers import add_and_edit
 
 icon = "www/autotoc.png"
@@ -35,7 +35,7 @@ class AutoTOC(Content, SimpleItem):
 
     meta_type = "Silva AutoTOC"
 
-    implements(IContent)
+    implements(IAutoTOC)
 
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id,
