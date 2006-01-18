@@ -19,6 +19,9 @@ Silva changes
 
       - Kupu now uses frontend.css instead of an almost entire copy.
 
+      - Moved 'get_extsource_url.py' out of SilvaDocument to the core to
+        allow using it from other products.
+
   1.4.1
 
     Bugs fixed
