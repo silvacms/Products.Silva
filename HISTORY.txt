@@ -7,15 +7,16 @@ Silva changes
 
     Features added
 
-      - Changed over Silva so it works with Zope 2.8/Zope 3 interfaces
-        instead of old-style interfaces. See doc/developer_changes for
-        more details. 
+      - Changed over Silva so it works with Zope 2.8/Five/Zope 3
+        interfaces instead of old-style interfaces. See
+        doc/developer_changes for more details. These interfaces were
+        in SilvaLayout as marker interfaces in the past.
       
       - Adjusted test infrastructure so it works with Five.
 
       - Use Zope 2.8 style transactions.
 
-      - Changed over Silva so it works with the Zope 3 translation
+      - Changed over Silva so it works with the Five/Zope 3 translation
         architecture, using Five. See doc/developer_changes for more
         details.
 
@@ -45,6 +46,10 @@ Silva changes
       - Never really an official feature, the FileSystemSite-based layout
         system has been removed from the code. This means that
         service_layouts is now gone.
+
+      - SilvaDocument's 'fulltext' method returns a list as it did in
+        the past, now that Zope has been bugfixed to handle this
+        again.
 
   1.4
 
