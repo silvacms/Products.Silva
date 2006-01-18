@@ -2,6 +2,8 @@ import os
 import libxml2, libxslt
 import urllib
 
+from zope.interface import implements
+
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -27,7 +29,7 @@ class ErrorHandler:
 
 class XSLTRendererBase(Acquisition.Implicit):
 
-    __implements__ = IRenderer
+    implements(IRenderer)
 
     security = ClassSecurityInfo()
     security.declareObjectPublic()
