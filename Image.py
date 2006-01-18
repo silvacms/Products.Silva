@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.73 2005/12/08 17:51:54 faassen Exp $
+# $Id: Image.py,v 1.74 2006/01/18 18:17:43 faassen Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -553,9 +553,17 @@ class Image(Asset):
             # no thumbnail
             self.thumbnail_image = None
             return
-        thumb = image.copy()
-        ts = self.thumbnail_size
-        thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
+        try:
+            thumb = image.copy()
+            ts = self.thumbnail_size
+            thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
+        except IOError, exc_err:
+            if str(exc_err.args[0]) == "cannot read interlaced PNG files":
+                self.thumbnail_image = None
+                del exc_err
+                return
+            else:
+                raise
         thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)

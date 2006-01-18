@@ -51,6 +51,9 @@ Silva changes
         the past, now that Zope has been bugfixed to handle this
         again.
 
+      - Fallback so that interlaced PNG files now work with Silva
+        Images, even though thumbnails are disabled in that case.
+
   1.4
 
     Features added
