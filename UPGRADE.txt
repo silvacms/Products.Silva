@@ -8,10 +8,10 @@ Meta
 Copyright (c) 2002-2005 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.4.x
+Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.57 $
+CVS:        $Revision: 1.58 $
 
 Introduction
 ------------
@@ -92,8 +92,9 @@ PlacelessTranslationService is not in use by Silva anymore, so can be
 safely removed.
 
 Five 1.2 is a requirement of this version of Silva; see PRODUCTS.txt
-for more information.
- 
+for more information about requirements. In particular, Silva 1.5
+also needs the latest version of Formulator.
+
 Upgrading from Silva 1.3 to Silva 1.4
 -------------------------------------
 
