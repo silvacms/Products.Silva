@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.26 $
+CVS:        $Revision: 1.27 $
 
 Introduction
 ------------
@@ -120,7 +120,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.4 (DE)
+SilvaDocument 1.5 (DE)
 ----------------------
 
 Silva extension for XML-based documents. Contains a through the web
