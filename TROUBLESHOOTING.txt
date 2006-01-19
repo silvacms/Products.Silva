@@ -1,5 +1,16 @@
 Installation problems
 
+  When I start up Silva 1.5, I get:
+
+  WARNING OFS.Application Duplicate Product name
+  After loading Product 'Five' from '/some/where/Products',
+  I skipped the one in '/some/where/else/lib/python/Products'.
+
+    This is normal. Zope 2.8 ships with an older version of Five than
+    the one required by Silva. Silva ships with Five 1.2, and since
+    this is placed in the Products directory this overrides the
+    version in the Zope core.
+
   After installing the Silva Product and restarting Zope, the server
   does not respond to HTTP request.
 
