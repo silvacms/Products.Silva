@@ -20,11 +20,13 @@ return ('<html>\n'
         '<head>\n'
         '<title>%s</title>\n'
         '<link type="text/css" rel="stylesheet" href="%s" />\n'
+        '<link type="text/css" rel="stylesheet" href="%s" />\n'
         '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
         '<meta name="docref" content="%s" />\n'
         '</head>\n'
         '%s\n'
         '</html>' % (model.get_title_editable(), 
+                        getattr(context.globals, 'frontend.css').absolute_url(),
                         getattr(context.globals, 'kupu.css').absolute_url(),
                         docref,
                         xhtml))
