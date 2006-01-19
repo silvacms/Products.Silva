@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.95 $
+# $Revision: 1.96 $
 
 from zope.interface import implements
 
@@ -182,7 +182,7 @@ class Root(Publication):
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '1.4'
+        return '1.5'
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
