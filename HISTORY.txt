@@ -10,8 +10,9 @@ Silva changes
       - A lot more places where i18n interpolation wasn't taking place
         anymore (${foo} in message texts) are fixed.
 
-      - Restore "install default layout" functionality; we were too vigorous
-        in removing layout related code and removed too much.
+      - Restore "install default layout" functionality for ZODB
+        layout; we were too vigorous in removing layout related code
+        and removed too much.
 
       - Removed some more traces of FileSystemSite-based layout system.
 
