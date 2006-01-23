@@ -7,6 +7,11 @@ Silva changes
 
     Bugs fixed
 
+      - Container policies are not hardcoded anymore for container add
+        forms (add folder or add publication). Instead, the
+        information on what container policies are available is
+        retrieved from the service where they are registered.
+
       - A lot more places where i18n interpolation wasn't taking place
         anymore (${foo} in message texts) are fixed.
 

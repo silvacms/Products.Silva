@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 
 from zope.interface import implements
 
@@ -59,10 +59,19 @@ class ContainerPolicyRegistry(SimpleItem):
         for key, value in self._policies.items():
             insort_right(sorted_policies, _Policy(key, value[1]))
         return [p._name for p in sorted_policies]
+
+    def listAddablePolicies(self, model):
+        """return a formulator items list of policies available
+        in the current context"""
+        allowed_addables = model.get_silva_addables_allowed()
+        return [ (p,p) for p in self.listPolicies()
+                 if p in allowed_addables or p == 'None']
     
     def register(self, name, policy, priority=0.0):
         """register policy
-
+        If policy is simple and is a factory for a silva content type, 'name'
+        should be the silva conte type's meta_type.  This is required to hide
+        policies which create addables not allowed in the publication.
         Policy should be the container policy class."""
         msg = ('The object %(policy)s does not implement IContainerPolicy, '
                     'try restarting Zope.')

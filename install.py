@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.117 2006/01/23 14:02:08 faassen Exp $
+# $Id: install.py,v 1.118 2006/01/23 15:52:47 faassen Exp $
 
 """Install for Silva Core
 """
@@ -592,8 +592,8 @@ def configureContainerPolicies(root):
         root.manage_addProduct['Silva'] \
             .manage_addContainerPolicyRegistry()
     cpr = root.service_containerpolicy
-    cpr.register('None', NothingPolicy, 0)
-    cpr.register('Auto TOC', AutoTOCPolicy, 0)
+    cpr.register('None', NothingPolicy, 100)
+    cpr.register('Silva AutoTOC', AutoTOCPolicy, 0)
 
 def installSilvaDocument(root):
     # installs Silva Document if available

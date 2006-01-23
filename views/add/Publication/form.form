@@ -73,7 +73,7 @@
           <first_item type="int">1</first_item>
         </values>
         <tales>
-          <items type="list">python:[i[:2] for i in ('Silva Document', 'Silva Document', 'Silva Document'), ('Automatic Table of Contents', 'Auto TOC', 'Silva AutoTOC'), ('None', 'None', 'None') if i[2] == 'None' or i[2] in form.REQUEST.model.get_silva_addables_allowed()]</items>
+              <items type="list">python:form.service_containerpolicy.listAddablePolicies(form.REQUEST.model)</items>
         </tales>
         <messages>
           <message name="external_validator_failed">The input failed the external validator.</message>
