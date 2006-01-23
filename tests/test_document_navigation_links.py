@@ -200,7 +200,7 @@ class SubFolderIndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'folder',
             'Folder with an Indexer',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         self.folder2 = self.add_folder(
             self.root, 
             'folder2',

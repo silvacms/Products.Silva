@@ -524,7 +524,7 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'folder',
             'Folder with an Auto TOC',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
 
         self.a = a = self.add_document(self.folder, 'a', 'Document A')
         self.root.manage_addProduct['Silva'].manage_addIndexer('indexer',
@@ -559,7 +559,7 @@ class SubFolderIndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'folder',
             'Folder with an Indexer',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         self.subfolder = self.add_folder(
             self.folder, 
             'subfolder',

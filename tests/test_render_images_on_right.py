@@ -39,7 +39,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
             self.root,
             'silva_xslt',
             'This is a testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
@@ -71,7 +71,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
             self.root,
             'silva_xslt',
             'This is a testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()

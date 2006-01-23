@@ -25,15 +25,15 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
         self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
         self.folder4 = folder4 = self.add_folder(
-            self.root, 'folder4', 'Folder4', policy_name='Auto TOC')
+            self.root, 'folder4', 'Folder4', policy_name='Silva AutoTOC')
         self.folder5 = folder5 = self.add_folder(
-            self.root, 'folder5', 'Folder5', policy_name='Auto TOC')
+            self.root, 'folder5', 'Folder5', policy_name='Silva AutoTOC')
         self.folder6 = folder6 = self.add_folder(
             self.root, 'folder6', 'Folder6', policy_name='Silva Document')
         self.subdoc = subdoc = self.add_document(
             folder4, 'subdoc', 'Subdoc')
         self.subfolder = subfolder = self.add_folder(
-            folder4, 'subfolder', 'Subfolder', policy_name='Auto TOC')
+            folder4, 'subfolder', 'Subfolder', policy_name='Silva AutoTOC')
         self.subsubdoc = subsubdoc = self.add_document(
             subfolder, 'subsubdoc', 'Subsubdoc')
 

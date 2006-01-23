@@ -33,7 +33,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         source_file = testopen('data/test_folder.xml', 'r')
         xmlimport.importFromFile(
             source_file, importfolder)
@@ -48,7 +48,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         source_file = testopen('data/test_link.xml', 'r')
         xmlimport.importFromFile(
             source_file, importfolder)
@@ -76,7 +76,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         # import the ghost
         source_file = testopen('data/test_autotoc.xml', 'r')
         xmlimport.importFromFile(
@@ -122,12 +122,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         haunted_folder = self.add_folder(
             importfolder,
             'testfolder2',
             'This is <boo>a</boo> haunted testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         # add some content.
         haunted_folder.manage_addProduct['SilvaDocument'].manage_addDocument(
             'foo', 'Foo')
@@ -193,7 +193,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         source_file = testopen('data/test_metadata_import.xml', 'r')
         xmlimport.importFromFile(
             source_file, importfolder)
@@ -213,7 +213,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         directory = os.path.dirname(__file__)
         zip_file = ZipFile(
             os.path.join(directory, 'data/test_export.zip'), 'r')

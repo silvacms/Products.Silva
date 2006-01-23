@@ -49,7 +49,7 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.subfolder_autotoc = subfolder_autotoc = self.add_folder(
             subfolder, 'folder_with_autotoc', 
             'Folder with AutoTOC index document',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
 
         getattr(subfolder.index, '0').content.manage_edit(
             '<doc>'

@@ -41,7 +41,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
             self.root,
             'silva_xslt',
             'This is a testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()

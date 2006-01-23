@@ -26,7 +26,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         zip_file = ZipFile(os.path.join(directory, 'data/test_export.zip'), 'r')

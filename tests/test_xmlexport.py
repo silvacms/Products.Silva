@@ -26,12 +26,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         # We will now do some horrible, horrible stuff to be able to test
         # the export, while ignoring the export date, which we can't know
         # about beforehand. Also I don't see how to get this within 80
@@ -57,12 +57,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addLink(
             testfolder2,
             'test_link',
@@ -74,7 +74,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder3',
             'This is yet &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addGhost(
             testfolder3, 'caspar', '/root/testfolder/testfolder2/test_link')
         # export of a broken link
@@ -106,12 +106,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addLink(
             testfolder2,
             'test_link',
@@ -121,7 +121,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder3',
             'This is yet &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addGhostFolder(
             testfolder3,
             'caspar',
@@ -157,12 +157,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addLink(
             testfolder2,
             'test_link',
@@ -197,12 +197,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addLink(
             testfolder2,
             'test_link',
@@ -225,12 +225,12 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         testfolder2 = self.add_folder(
             testfolder,
             'testfolder2',
             'This is &another; testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addLink(
             testfolder2,
             'test_link',
