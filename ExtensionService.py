@@ -1,7 +1,7 @@
 
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -119,7 +119,16 @@ class ExtensionService(SimpleItem.SimpleItem):
         self.get_root().upgrade_silva_object(version, path)
         return self.manage_partialUpgradeForm(manage_tabs_message=
             "Content upgrade succeeded. See event log for details.")
-                
+
+    security.declareProtected('View management screens', 'install_layout')
+    def install_layout(self):
+        """Install core layout.
+        """
+        root = self.aq_inner.aq_parent
+        install.configureLayout(root, 1)
+        return self.manage_main(manage_tabs_message = 	 
+                                'Default layout code installed')
+    
     # ACCESSORS
 
     security.declareProtected('View management screens', 'get_names')
