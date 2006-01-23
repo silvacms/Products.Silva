@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.98 $
+# $Revision: 1.99 $
 
 from zope.interface import implements
 
@@ -177,8 +177,7 @@ class GhostBase:
     def get_haunted_unrestricted(self, check=1):
         """Get the real content object.
         """
-        path = self._content_path
-        return self._get_object_at(path, check)
+        return self._get_object_at(self._content_path, check)
 
     security.declareProtected(SilvaPermissions.View,'get_haunted')
     def get_haunted(self):
