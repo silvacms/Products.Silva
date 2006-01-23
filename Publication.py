@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.67 $
+# $Revision: 1.68 $
 
 from zope.interface import implements
 
@@ -61,12 +61,6 @@ class Publication(Folder.Folder):
         """
         self._to_folder_or_publication_helper(to_folder=1)
         
-
-    def manage_afterClone(self, item):
-        Folder.Folder.inheritedAttribute('manage_afterClone')(self, item)
-        service_layouts = self.get_root().service_layouts
-        service_layouts.clone_layout(self)
-
     # ACCESSORS
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
