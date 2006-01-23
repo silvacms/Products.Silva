@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.5b2
+
+    Bugs fixed
+
+      - A lot more places where i18n interpolation wasn't taking place
+        anymore (${foo} in message texts) are fixed.
+
   1.5b1
 
     Features added

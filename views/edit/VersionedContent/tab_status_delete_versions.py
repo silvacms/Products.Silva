@@ -10,6 +10,7 @@
 from Products.Silva.i18n import translate as _
 from Products.Silva.adapters.version_management import \
         getVersionManagementAdapter
+from zope.i18n import translate
 
 view = context
 request = context.REQUEST
@@ -37,11 +38,11 @@ for id, error in result:
     if error is not None:
         msg = _('could not delete ${id}: ${error}')
         msg.set_mapping({'id': id, 'error': error})
-        messages.append(unicode(msg))
+        messages.append(translate(msg))
     else:
         msg = _('deleted ${id}')
         msg.set_mapping({'id': id})
-        messages.append('<span class="error">' + unicode(msg) + '</span>')
+        messages.append('<span class="error">' + translate(msg) + '</span>')
 
 return view.tab_status(message_type="feedback", 
                         message=', '.join(messages).capitalize())

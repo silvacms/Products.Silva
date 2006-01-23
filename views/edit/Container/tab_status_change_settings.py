@@ -1,5 +1,6 @@
 ##parameters=refs=None
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
@@ -102,11 +103,11 @@ if changed_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Changed settings on: ${ids}')
     message.set_mapping({'ids': view.quotify_list(changed_ids)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 if not_changed:
     message = _('<span class="error">could not change settings on: ${ids}</span>')
     message.set_mapping({'ids': view.quotify_list_ext(not_changed)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

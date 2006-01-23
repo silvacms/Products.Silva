@@ -1,5 +1,6 @@
 from Products.Silva.adapters import archivefileimport, zipfileimport
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 view = context
 request = view.REQUEST
@@ -23,7 +24,7 @@ try:
         importer = archivefileimport.getArchiveFileImportAdapter(model)
         succeeded, failed = importer.importArchive(archive, title, recreate)
 except archivefileimport.BadZipfile, e:
-    msg = unicode(_('Something bad with the zipfile;')) + ' ' + str(e)
+    msg = translate(_('Something bad with the zipfile;')) + ' ' + str(e)
     message_type='alert'
 else:
     msg = []
@@ -31,14 +32,14 @@ else:
     if succeeded:  
         message = _('added ${succeeded}')
         message.set_mapping({'succeeded': view.quotify_list(succeeded)})
-        msg.append(unicode(message))
+        msg.append(translate(message))
     else:
         message_type='alert'
 
     if failed:
         message = _('<span class="warning">could not add: ${failed}</span>')
         message.set_mapping({'failed': view.quotify_list(failed)})
-        msg.append(unicode(message))
+        msg.append(translate(message))
     msg = ' '.join(msg)
 
 message = _('Finished importing: ${msg}')

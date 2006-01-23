@@ -1,5 +1,6 @@
 ##parameters=ids=None
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
@@ -40,5 +41,5 @@ if publish:
         context.service_messages.send_pending_messages()
 
 request.form['message_type'] = message_type
-request.form['message'] = unicode(message)
+request.form['message'] = translate(message)
 return model.preview_html()

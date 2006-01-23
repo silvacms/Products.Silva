@@ -1,4 +1,5 @@
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 view = context
 request = view.REQUEST
@@ -22,26 +23,26 @@ except FormValidationError, e:
 messages = []
 if model.fullname() != result['fullname']:
     model.set_fullname(result['fullname'])
-    messages.append(unicode(_('Full name updated')))
+    messages.append(translate(_('Full name updated')))
 
 if model.email() != result['email']:
     model.set_email(result['email'])
-    messages.append(unicode(_('Email updated')))
+    messages.append(translate(_('Email updated')))
 
 if result.has_key('editor'):
     if model.editor() != result['editor']:
         model.set_editor(result['editor'])
-        messages.append(unicode(_('Editor updated')))
+        messages.append(translate(_('Editor updated')))
 
 if request.has_key('langsetting'):
     languageProvider = context.getLanguageProvider()
     if (str(request['langsetting']) != 
             str(languageProvider.getPreferredLanguage())):
         languageProvider.setPreferredLanguage(request['langsetting'])
-        messages.append(unicode(_('Language updated')))
+        messages.append(translate(_('Language updated')))
 
 if len(messages)==0:
-    messages.append(unicode(_('Nothing changed.')))
+    messages.append(translate(_('Nothing changed.')))
 
 request.SESSION['message_type'] = 'feedback'
 request.SESSION['message'] = ', '.join(messages)

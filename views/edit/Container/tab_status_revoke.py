@@ -7,6 +7,7 @@ view = context
 
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
+from zope.i18n import translate
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
@@ -45,12 +46,12 @@ if revoked_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Revoked approval of: ${ids}')
     message.set_mapping({'ids': view.quotify_list(revoked_ids)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 if not_revoked:
     message = _('Could not revoke approval of: ${ids}')
     message.set_mapping({'ids': view.quotify_list_ext(not_revoked)})
-    msg.append('<span class="error">' + unicode(message) + '</span>')
+    msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

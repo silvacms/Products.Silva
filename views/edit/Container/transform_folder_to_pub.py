@@ -8,5 +8,6 @@
 ##title=
 ##
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
-return unicode(_("Not yet :)"))
+return translate(_("Not yet :)"))

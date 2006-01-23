@@ -1,5 +1,6 @@
 ##parameters=refs=None
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
@@ -42,12 +43,12 @@ if approved_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Withdrawn request for approval for: ${list}')
     message.set_mapping({'list': view.quotify_list(approved_ids)})
-    msg.append(unicode(message))
+    msg.append(translate(message))
 
 if not_approved:
     message = _('Not withdrawn: ${list}')
     message.set_mapping({'list': view.quotify_list_ext(not_approved)})
-    msg.append('<span class="error">' + unicode(message) + '</span>')
+    msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

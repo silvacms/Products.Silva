@@ -10,6 +10,7 @@
 import random
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 form = context.REQUEST.form
 model = context.REQUEST.model
@@ -29,7 +30,7 @@ for key in form.keys():
             msgid = _(u'&#xab;${item}&#xbb; could not be renamed to ${new} (invalid id)')
             msgid.set_mapping({'item': oldid,
                               'new': unicode(form[key], 'UTF-8')})
-            messages.append(unicode(msgid))
+            messages.append(translate(msgid))
             message_type = 'error'
         else:
             newtitle = form.get("title_" + oldid, None)
@@ -45,7 +46,7 @@ for item in items:
         message_type = 'feedback'
         msgid = _('&#xab;${item}&#xbb; renamed successfully')
         msgid.set_mapping({'item': item[0]})
-        messages.append(unicode(msgid))
+        messages.append(translate(msgid))
     else:
         to_rename.append(item)
 
@@ -66,7 +67,7 @@ while 1:
             msgid.set_mapping({'item': item[0],
                               'new': item[1],
                               'status': context.add.get_id_status_text(id)})
-            messages.append(unicode(msgid))
+            messages.append(translate(msgid))
             message_type = 'error'
         elif not item[1] in model.objectIds():
             # The item can be renamed without any problems, so do that
@@ -78,13 +79,13 @@ while 1:
                     message_type = 'error'
                     msgid = _('&#xab;${item}&#xbb; could not be renamed')
                     msgid.set_mapping({'item': item[0]})
-                    messages.append(unicode(msgid))
+                    messages.append(translate(msgid))
                 else:
                     if message_type is None:
                         message_type = 'feedback'
                     msgid = _('&#xab;${item}&#xbb; renamed successfully')
                     msgid.set_mapping({'item': item[0]})
-                    messages.append(unicode(msgid))
+                    messages.append(translate(msgid))
             else:
                 # for the index, if the title is set before the id is changed,
                 # the title of the container is changed instead...
@@ -93,13 +94,13 @@ while 1:
                     message_type = 'error'
                     msgid = _('&#xab;${item}&#xbb; could not be renamed')
                     msgid.set_mapping({'item': item[0]})
-                    messages.append(unicode(msgid))
+                    messages.append(translate(msgid))
                 else:
                     if message_type is None:
                         message_type = 'feedback'
                     msgid = _('&#xab;${item}&#xbb; renamed successfully')
                     msgid.set_mapping({'item': item[0]})
-                    messages.append(unicode(msgid))
+                    messages.append(translate(msgid))
                     if item[2] is not None:
                         obj = getattr(model, item[1])
                         obj.set_title(mangle.String.inputConvert(item[2]))
@@ -139,7 +140,7 @@ for item in not_renamed:
         message_type = 'error'
         msgid = _('&#xab;${item}&#xbb; could not be renamed')
         msgid.set_mapping({'item': item[0][0]})
-        messages.append(unicode(msgid))
+        messages.append(translate(msgid))
     else:
         renamed_now.append(item)
 
@@ -160,13 +161,13 @@ for item in renamed_now:
         message_type = 'error'
         msgid = _('&#xab;${item}&#xbb; could not be renamed')
         msgid.set_mapping({'item' : oldid})
-        messages.append(unicode(msgid))
+        messages.append(translate(msgid))
     else:
         if message_type is None:
             message_type = 'feedback'
         msgid = _('&#xab;${item}&#xbb; renamed successfully')
         msgid.set_mapping({'item' : oldid})
-        messages.append(unicode(msgid))
+        messages.append(translate(msgid))
     if oldid == 'index' and item[0][2] is not None:
         # set title of new obj so the title of container
         # does not get affected
