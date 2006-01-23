@@ -3,6 +3,7 @@
 # from Products.Silva.adapters.interfaces import IViewerSecurity
 # from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
+from Products.Silva.interfaces import IContent, IContainer, IAsset, IPublishable
 from DateTime import DateTime
 from AccessControl import getSecurityManager
 from Products.Five import BrowserView
@@ -20,7 +21,8 @@ class ObjectLookup(BrowserView):
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
                'alt="%(alt)s" />')
         if obj is None:
-            icon_path = '%s/globals/silvageneric.gif' % self.context.REQUEST['BASE2']
+            icon_path = ('%s/globals/silvageneric.gif' %
+                         self.context.REQUEST['BASE2'])
             return tag % {'icon_path': icon_path, 'alt': meta_type}
         try:
             icon_path = '%s/%s' % (self.context.REQUEST['BASE1'],
@@ -28,7 +30,8 @@ class ObjectLookup(BrowserView):
         except icon.RegistryError:
             icon_path = getattr(aq_base(obj), 'icon', None)
             if icon_path is None:
-                icon_path = '%s/globals/silvageneric.gif' % self.context.REQUEST['BASE2']
+                icon_path = ('%s/globals/silvageneric.gif' %
+                             self.context.REQUEST['BASE2'])
             meta_type = getattr(obj, 'meta_type')
         return tag % {'icon_path': icon_path, 'alt': meta_type}
     
@@ -83,8 +86,9 @@ class ObjectLookup(BrowserView):
                                 IContent.implementedBy(
                                     a['instance'])]
         elif filter == 'Container':
-            ordered_publishables = [o for o in model.get_ordered_publishables() 
-                                      if o.implements_container()]
+            ordered_publishables = [
+                o for o in model.get_ordered_publishables() 
+                if o.implements_container()]
             if show_add:
                 addables = [a['name'] for a in all_addables if 
                                 IContainer.implementedBy(
