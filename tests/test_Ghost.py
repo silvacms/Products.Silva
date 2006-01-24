@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.38 $
+# $Revision: 1.39 $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -289,6 +289,59 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(metadata_newpub.get('silva-content', 'maintitle'),
             'snafu')
 
+    def test_circular_links(self):
+        # add some content in a tree
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'f', 'F')
+        f = self.root.f
+        f.manage_addProduct['Silva'].manage_addFolder(
+            'g', 'G')
+        g = self.root.f.g
+        g.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'foo', 'Foo')
+        doc = g.foo
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'h', 'H')
+        # add a non-circular ghost folder
+        self.root.manage_addProduct['Silva'].manage_addGhostFolder(
+            'gf1',
+            '/root/f/g')
+        self.assertEquals('/root/f/g',
+                          self.root.gf1.get_haunted_url())
+        self.assertEquals(self.root.gf1.LINK_OK,
+                          self.root.gf1.get_link_status())
+        # now change link to circular
+        self.root.gf1.set_haunted_url('/root')
+        self.assertEquals(self.root.gf1.LINK_CIRC,
+                          self.root.gf1.get_link_status())
+        # set up some more complicated circular setup
+        g.manage_addProduct['Silva'].manage_addGhostFolder(
+            'gf2',
+            '/root/f/g')
+        gf2 = g.gf2
+        self.assertEquals(
+            gf2.LINK_CIRC,
+            gf2.get_link_status())
+        gf2.set_haunted_url('/root/f/g/gf2')
+        self.assertEquals(
+            gf2.LINK_GHOST,
+            gf2.get_link_status())
+        gf2.set_haunted_url('/root/f/g')
+        self.assertEquals(
+            gf2.LINK_CIRC,
+            gf2.get_link_status())
+        gf2.set_haunted_url('/root')
+        self.assertEquals(
+            gf2.LINK_CIRC,
+            gf2.get_link_status())
+        gf2.set_haunted_url('/root/h')
+        self.assertEquals(
+            gf2.LINK_OK,
+            gf2.get_link_status())
+
+        #self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
+        #self.assertEquals(None, ghost.get_editable().get_link_status())
+        
 if __name__ == '__main__':
     framework()
 else:

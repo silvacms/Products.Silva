@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.99 $
+# $Revision: 1.100 $
 
 from zope.interface import implements
 
@@ -161,8 +161,7 @@ class GhostBase:
         # publically?
         if path is None:
             return None
-
-        content = self.aq_parent.unrestrictedTraverse(path, None)
+        content = self.aq_inner.aq_parent.unrestrictedTraverse(path, None)
         if content is None:
             return None
         # check if it's valid

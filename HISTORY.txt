@@ -21,6 +21,14 @@ Silva changes
 
       - Removed some more traces of FileSystemSite-based layout system.
 
+      - Some fixes in the refactored lookup window code.
+
+      - Some cleanups of GhostFolder code, fixing an error that
+        appeared when Five views interacted with them.
+
+      - Fix in Ghost code stops another error related to Five view
+        interaction with acquisition.
+
   1.5b1
 
     Features added

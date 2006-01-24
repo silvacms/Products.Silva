@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.40 2005/11/14 18:06:12 faassen Exp $
+# $Id: GhostFolder.py,v 1.41 2006/01/24 11:10:45 faassen Exp $
 
 from zope.interface import implements
 
@@ -288,27 +288,19 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         if self.isReferencingSelf(content):
             return self.LINK_CIRC
         return self.LINK_OK
-               
-    def isReferencingSelf(self, content=None):
+
+    def isReferencingSelf(self, content):
         """returns True if ghost folder references self or a ancestor of self
         """
         if content is None:
             content = self.get_haunted_unrestricted(check=0)
-        if content is None:
-            # if we're not referncing anything it is not a circ ref for sure
-            return 0
+            if content is None:
+                # if we're not referencing anything it is not a circular
+                # reference for sure
+                return False
         content_path = content.getPhysicalPath()
-        chain = self.aq_chain[:]
-        app = self.getPhysicalRoot()
-        while chain:
-            ancestor = chain[0]
-            del(chain[0])
-            if ancestor is app:
-                # anything farther up the tree is not `referencable'. 
-                chain = []
-            if ancestor.getPhysicalPath() == content_path:
-                return 1
-        return 0
+        self_path = self.getPhysicalPath()
+        return content_path == self_path[:len(content_path)]
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_publication')
