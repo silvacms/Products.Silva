@@ -69,8 +69,8 @@ div.kupu-tb {
 #kupu-tb-buttons button {
   margin-top: 0;
   margin-left: 0;
-  height: 22px;
-  width: 22px;
+  height: 24px;
+  width: 24px;
   background-repeat: no-repeat;
 }
 
