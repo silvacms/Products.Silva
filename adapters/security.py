@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: security.py,v 1.9 2005/12/08 14:18:18 faassen Exp $
+# $Id: security.py,v 1.10 2006/01/24 16:12:01 faassen Exp $
 #
 from zope.interface import implements
 

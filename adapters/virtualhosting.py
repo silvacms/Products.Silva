@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: virtualhosting.py,v 1.7 2005/01/19 14:26:09 faassen Exp $
+# $Id: virtualhosting.py,v 1.8 2006/01/24 16:12:01 faassen Exp $
 #
 import Globals
 from Acquisition import aq_parent, aq_inner

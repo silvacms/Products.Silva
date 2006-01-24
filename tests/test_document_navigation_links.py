@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2005 Infrae. All rights reserved.
+# Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
 import os, sys

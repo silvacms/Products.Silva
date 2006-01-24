@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_fileservices.py,v 1.5 2005/03/16 18:39:04 faassen Exp $
+# $Id: test_fileservices.py,v 1.6 2006/01/24 16:13:33 faassen Exp $
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))

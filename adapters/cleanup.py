@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: cleanup.py,v 1.9 2005/12/05 17:25:37 faassen Exp $
+# $Id: cleanup.py,v 1.10 2006/01/24 16:12:01 faassen Exp $
 #
 import Globals
 import transaction
