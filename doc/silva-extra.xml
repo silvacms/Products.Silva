@@ -211,7 +211,7 @@
      <value key="required" type="int" value="0" />
      <value key="css_class" type="str" value="store" />
      <value key="default" type="str" value="" />
-     <value key="title" type="str" value="description" />
+     <value key="title" type="str" value="language" />
      <value key="items" type="list" value="[('Select a Language:' ,''),
        ('Abkhazian', 'AB'), ('Afan Oromo', 'OM'), ('Afar', 'AA'), 
        ('Afrikaans', 'AF'), ('Albanian', 'SQ'), ('Amharic', 'AM'), 
