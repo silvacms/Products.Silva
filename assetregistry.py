@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetregistry.py,v 1.3 2005/01/19 14:26:09 faassen Exp $
+# $Id: assetregistry.py,v 1.4 2006/01/24 16:14:13 faassen Exp $
 from Products.Silva import ExtensionRegistry
 
 """mimetype-to-asset-factory registry"""

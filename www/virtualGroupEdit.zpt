@@ -1,7 +1,7 @@
 <!--
-Copyright (c) 2002-2005 Infrae. All rights reserved.
+Copyright (c) 2002-2006 Infrae. All rights reserved.
 See also LICENSE.txt
-$Id: virtualGroupEdit.zpt,v 1.6 2005/01/19 14:26:10 faassen Exp $
+$Id: virtualGroupEdit.zpt,v 1.7 2006/01/24 16:14:13 faassen Exp $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 

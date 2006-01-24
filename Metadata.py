@@ -1,4 +1,4 @@
-#Copyright (c) 2002-2005 Infrae. All rights reserved.
+#Copyright (c) 2002-2006 Infrae. All rights reserved.
 #See also LICENSE.txt
 """
 Purpose:
@@ -13,7 +13,7 @@ Purpose:
       content types for the metadata system is inappropriate, as metadata
       needs to be versioned along with actual content.
 
-$Id: Metadata.py,v 1.25 2005/11/14 18:06:12 faassen Exp $    
+$Id: Metadata.py,v 1.26 2006/01/24 16:14:12 faassen Exp $    
 """
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType

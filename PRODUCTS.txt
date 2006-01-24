@@ -4,13 +4,13 @@ Silva Products
 Meta
 ----
 
-Copyright (c) 2002-2005 Infrae. All rights reserved.  See also
+Copyright (c) 2002-2006 Infrae. All rights reserved.  See also
 LICENSE.txt
 
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.27 $
+CVS:        $Revision: 1.28 $
 
 Introduction
 ------------

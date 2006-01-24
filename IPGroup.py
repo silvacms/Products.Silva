@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2005 Infrae. All rights reserved.
+# Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.7 2005/11/14 18:06:12 faassen Exp $
+# $Id: IPGroup.py,v 1.8 2006/01/24 16:14:12 faassen Exp $
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo, Unauthorized

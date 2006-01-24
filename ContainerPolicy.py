@@ -1,6 +1,6 @@
-# Copyright (c) 2003-2005 Infrae. All rights reserved.
+# Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 
 from zope.interface import implements
 

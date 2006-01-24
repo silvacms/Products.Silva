@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.16 2005/11/14 18:06:12 faassen Exp $
+# $Id: DocmaService.py,v 1.17 2006/01/24 16:14:12 faassen Exp $
 
 # Python
 import xmlrpclib

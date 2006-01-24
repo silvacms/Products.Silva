@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.22 2005/11/14 18:06:12 faassen Exp $
+# $Id: SidebarService.py,v 1.23 2006/01/24 16:14:12 faassen Exp $
 # Zope
 from zope.interface import implements
 

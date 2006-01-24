@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2005 Infrae. All rights reserved.
+# Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: AutoTOC.py,v 1.14 2006/01/17 17:00:06 faassen Exp $
+# $Id: AutoTOC.py,v 1.15 2006/01/24 16:14:12 faassen Exp $
 
 from zope.interface import implements
 
