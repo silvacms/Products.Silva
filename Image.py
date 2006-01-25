@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.75 2006/01/24 16:14:12 faassen Exp $
+# $Id: Image.py,v 1.76 2006/01/25 18:13:30 faassen Exp $
 # Python
 import re, string
 from cStringIO import StringIO
@@ -84,10 +84,12 @@ class Image(Asset):
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
         self.image = None # should create default 
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'image')
-    
+     
+    # commented this out to shut up a security warning. assuming this is safe 
+    # as image is a full-blown zope object with its own security checks   
+    #security.declareProtected(SilvaPermissions.AccessContentsInformation,
+    #                          'image')
+
     security.declareProtected(SilvaPermissions.View, 'index_html')
     def index_html(self, view_method=None, REQUEST=None):
         """view image data

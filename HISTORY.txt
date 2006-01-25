@@ -29,6 +29,8 @@ Silva changes
       - Fix in Ghost code stops another error related to Five view
         interaction with acquisition.
 
+      - Eliminated Zope 2.8.5 warnings on startup.
+
   1.5b1
 
     Features added

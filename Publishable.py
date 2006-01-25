@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 from zope.interface import implements
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -140,7 +140,7 @@ class Publishable:
         return self.get_container() 
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_old_fashioned_navigation_links')
+                              'get_document_navigation_links')
     def get_document_navigation_links(self):
         """
         Create a dictionary with top, up, first, previous, next, last links.

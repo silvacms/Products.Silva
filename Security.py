@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.79 $
+# $Revision: 1.80 $
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass, DevelopmentMode
@@ -129,7 +129,7 @@ class Security(AccessManager):
         return getSecurityManager().getUser().has_role(['Manager'], self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_get_user_ids')
+                              'sec_get_userids')
     def sec_get_userids(self):
         """Get the userids that have local roles here that we care about.
         """

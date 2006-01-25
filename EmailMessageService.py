@@ -85,9 +85,12 @@ class EmailMessageService(SimpleItem.SimpleItem):
         for field in [host, port, fromaddr, send_email_enabled, debug]:
             edit_form._setObject(field.id, field)
         self.edit_form = edit_form
-        
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'edit_form')
+
+    # edit_form is a full-fledged zope 2 object so should not need
+    # a security declaration. Removing to prevent warnings.
+    #security.declareProtected(SilvaPermissions.ViewManagementScreens,
+    #                          'edit_form')
+    
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_edit')

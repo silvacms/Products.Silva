@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.17 2006/01/24 16:14:12 faassen Exp $
+# $Id: DocmaService.py,v 1.18 2006/01/25 18:13:30 faassen Exp $
 
 # Python
 import xmlrpclib
@@ -144,7 +144,7 @@ class DocmaService(SimpleItem):
         return server.getIdentIndex(ident)
 
     security.declareProtected(Permissions.access_contents_information,
-                              'get_estimated_time')
+                              'get_estimated_time_for_type')
     def get_estimated_time_for_type(self, type):
         """Returns the estimated time 1 item takes to process"""
         server = xmlrpclib.Server("http://%s:%s" % (self._host, self._port))

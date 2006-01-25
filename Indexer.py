@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
@@ -54,7 +54,7 @@ class Indexer(Content, SimpleItem):
         return result
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'getIndex')
+                              'getIndexEntry')
     def getIndexEntry(self, name):
         """Returns a list of (title, path) tuples for an entry name in the
         index, sorted alphabetically on title

@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: IPGroup.py,v 1.8 2006/01/24 16:14:12 faassen Exp $
+# $Id: IPGroup.py,v 1.9 2006/01/25 18:13:30 faassen Exp $
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo, Unauthorized
@@ -55,7 +55,7 @@ class IPGroup(SilvaObject, SimpleItem):
 
     # MANIPULATORS
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'addGroup')
+        SilvaPermissions.ChangeSilvaAccess, 'addIPRange')
     def addIPRange(self, iprange):
         """add a group to the ip group"""
         if not self.isValid():
@@ -65,7 +65,7 @@ class IPGroup(SilvaObject, SimpleItem):
         gs.addIPRangeToIPGroup(iprange, self._group_name)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'copyGroupsFromVirtualGroups')
+        SilvaPermissions.ChangeSilvaAccess, 'copyIPRangesFromIPGroups')
     def copyIPRangesFromIPGroups(self, ipgroups):
         """copy ip ranges from ip groups"""
         sg = self.service_groups
@@ -83,7 +83,7 @@ class IPGroup(SilvaObject, SimpleItem):
         return add_ranges
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'removeGroup')
+        SilvaPermissions.ChangeSilvaAccess, 'removeIPRange')
     def removeIPRange(self, iprange):
         """removes a group from the vgroup"""
         if not self.isValid():
@@ -94,7 +94,7 @@ class IPGroup(SilvaObject, SimpleItem):
     
     # ACCESSORS    
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'listGroups')
+        SilvaPermissions.ChangeSilvaAccess, 'listIPRanges')
     def listIPRanges(self):
         """list ip ranges in ipgroups """
         if not self.isValid():

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo, Unauthorized
@@ -81,7 +81,7 @@ class Group(SilvaObject, SimpleItem):
         self.service_groups.addUserToZODBGroup(userid, self._group_name)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'copyUsersFromGroup')
+        SilvaPermissions.ChangeSilvaAccess, 'copyUsersFromGroups')
     def copyUsersFromGroups(self, groups):
         """copy users from other groups to this group"""
         if not self.isValid():
@@ -93,7 +93,8 @@ class Group(SilvaObject, SimpleItem):
         users = {}
         for group in groups:        
             if sg.isVirtualGroup(group):
-                self._copyUsersFromGroupsHelper(sg.listGroupsInVirtualGroup(group))
+                self._copyUsersFromGroupsHelper(
+                    sg.listGroupsInVirtualGroup(group))
             elif sg.isNormalGroup(group):
                 for user in sg.listUsersInZODBGroup(group):
                     users[user] = 1

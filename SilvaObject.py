@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.123 2006/01/24 16:14:12 faassen Exp $
+# $Id: SilvaObject.py,v 1.124 2006/01/25 18:13:31 faassen Exp $
 
 # python
 from types import StringType
@@ -528,7 +528,14 @@ class SilvaObject(Security, ViewCode):
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                                 'PROPFIND')
+    def PROPFIND(self, REQUEST, RESPONSE):
+        """Just call superclass implementation.
 
+        Used to shut up security warning.
+        """
+        return SilvaObject.inheritedAttribute('PROPFIND')(
+            self, REQUEST, RESPONSE)
+        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PROPPATCH')
     def PROPPATCH(self):

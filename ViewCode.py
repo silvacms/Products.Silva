@@ -153,7 +153,7 @@ class ViewCode:
         return result
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_processed_asset_tree')
+                              'get_processed_assets')
     def get_processed_assets(self):
         result = []
         render_icon = self.render_icon

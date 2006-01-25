@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.69 $
+# $Revision: 1.70 $
 
 from zope.interface import implements
 
@@ -107,7 +107,7 @@ class Publication(Folder.Folder):
         return self._addables_allowed_in_publication is None
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_document_links')
+                              'get_document_chapter_links')
     def get_document_chapter_links(self, depth=0):
         """returns a dict for document links (accessibility).
 
