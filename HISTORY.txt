@@ -31,6 +31,8 @@ Silva changes
 
       - Eliminated Zope 2.8.5 warnings on startup.
 
+      - Access screen can be accessed again by authors.
+
   1.5b1
 
     Features added

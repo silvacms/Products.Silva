@@ -8,7 +8,7 @@
     name="get_viewer_role_info"
     class=".viewerrole.ViewerRole"
     attribute="getViewerRoleInfo"
-    permission="silva.ChangeSilvaAccess"
+    permission="silva.ReadSilvaContent"
   />
 
   <browser:page
