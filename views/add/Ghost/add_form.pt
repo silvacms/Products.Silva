@@ -11,6 +11,7 @@
     global vein string:add;
     global active_tab string:tab_edit;
     lookup_mode request/lookup_mode | python:0;
+    global return_url request/return_url | python:'';
     use_macro python: (lookup_mode and [here.macro_no_tabs] or [here.macro_index])[0]"
   i18n:domain="silva">
 <metal:block use-macro="use_macro/macros/master">
@@ -28,12 +29,16 @@
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <input type="hidden" name="lookup_mode:int" value="0"
   tal:attributes="value lookup_mode" />
+<input type="hidden"
+  name="return_url"
+  tal:attributes="value return_url"
+/>
 <table class="listing">
 <thead>
   <tr>
     <td class="top location" colspan="3">
     <h2>
-      <img tal:replace="structure python:view.render_icon_by_meta_type(request.meta_type)" />&nbsp;
+      <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />&nbsp;
       <tal:block i18n:translate="">create <span tal:replace="python: request.meta_type" i18n:name="meta_type" /></tal:block>
     </h2>
     </td>
