@@ -300,22 +300,31 @@ table.silvatable {
   border-collapse: collapse;
   margin-bottom: 1em;
 }
+
 table.silvatable tr {
   vertical-align: top;
 } 
+
 table.silvatable tr.rowheading {
   font-weight: bold;
 } 
+
 table.silvatable td {
   border-right: none ! important;
 } 
-table.silvatable th.align-left, table.silvatable td.align-left {
+
+table.silvatable th.align-left, table.silvatable td.align-left,
+table.silvatable th.align-left p, table.silvatable td.align-left p {
   text-align: left;
 }
-table.silvatable th.align-center, table.silvatable td.align-center {
+
+table.silvatable th.align-center, table.silvatable td.align-center,
+table.silvatable th.align-center p, table.silvatable td.align-center p {
   text-align: center;
 }
-table.silvatable th.align-right, table.silvatable td.align-right {
+
+table.silvatable th.align-right, table.silvatable td.align-right,
+table.silvatable th.align-right p, table.silvatable td.align-right p {
   text-align: right;
 }
 
