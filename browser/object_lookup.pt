@@ -152,7 +152,7 @@
                     <tal:block replace="nothing">
                       ______________ listing header ______________
                     </tal:block>
-                    <tr tal:condition="python:(default_document or publishables or assets)">
+                    <tr tal:condition="python:(publishables or assets)">
                       <th class="listing-right">
                         #&nbsp;
                       </th>
@@ -174,7 +174,7 @@
                       ______________ if no publishables in this folder ______________
                     </tal:block>
                     <tr class="odd"
-                      tal:condition="python: not(default_document or publishables or assets)">
+                      tal:condition="python: not(publishables or assets)">
                       <td colspan="5" i18n:translate="">
                         There is no content here.
                       </td>
@@ -184,7 +184,7 @@
                       ______________ default + publishables ______________
                     </tal:block>
                     <tal:block
-                      repeat="item python: default_document and [default_document] + publishables or publishables">
+                      repeat="item publishables">
                       <tal:block define="
                         is_default python: item is default_document;
                         item_url item/absolute_url;
