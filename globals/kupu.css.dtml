@@ -43,6 +43,21 @@ a.index-element {
   text-decoration : none;
 }
 
+table td.align-left, table th.align-left,
+table td.align-left p, table th.align-left p {
+  text-align: left;
+}
+ 
+table td.align-center, table th.align-center,
+table td.align-center p, table th.align-center p {
+  text-align: center;
+}
+ 
+table td.align-right, table th.align-right,
+table td.align-right p, table th.align-right p {
+  text-align: right;
+}
+
 </dtml-let>
 
 /* end cascade */
