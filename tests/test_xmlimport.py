@@ -72,12 +72,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
                 'silva-extra').data['creator'])
 
     def test_autotoc_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        # import the ghost
         source_file = testopen('data/test_autotoc.xml', 'r')
         xmlimport.importFromFile(
             source_file,
@@ -86,7 +80,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
 
         autotoc = self.root.autotokkies
         self.assertEquals(
-            'Tokkies, now with car',
+            'Autotoc 1',
             autotoc.get_title())
         self.assertEquals(
             'Silva AutoTOC',
@@ -253,6 +247,36 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             '/silva/silva/testfolder/testfolder2/test_link',
             importfolder.testfolder.testfolder2['haunting_the_neighbour'].get_haunted_url()) 
 
+    def test_replace_objects(self):
+        source_file = testopen('data/test_autotoc.xml', 'r')
+        xmlimport.importFromFile(
+            source_file,
+            self.root)
+        source_file.close()
+
+        autotoc = self.root.autotokkies
+        self.assertEquals(
+            'Autotoc 1',
+            autotoc.get_title())
+        self.assertEquals(
+            'Silva AutoTOC',
+            autotoc.meta_type)
+
+        source_file = testopen('data/test_autotoc2.xml', 'r')
+        xmlimport.importReplaceFromFile(
+            source_file,
+            self.root)
+        source_file.close()
+
+        autotoc = self.root.autotokkies
+        self.assertEquals(
+            'Autotoc 2',
+            autotoc.get_title())
+        self.assertEquals(
+            'Silva AutoTOC',
+            autotoc.meta_type)
+
+        
 if __name__ == '__main__':
     framework()
 else:

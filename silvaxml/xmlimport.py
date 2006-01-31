@@ -170,18 +170,28 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
 
     def metadataMultiValue(self):
         return self._metadata_multivalue
-    
+
+    def generateOrReplaceId(self, id):
+        parent = self.parent()
+        if self.settings().replaceObjects():
+            if id in parent.objectIds():
+                parent.manage_delObjects([id])
+            return id
+        else:
+            return generateUniqueId(id, parent)
+
 class SilvaExportRootHandler(SilvaBaseHandler):
     pass
 
 class FolderHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
+            parent = self.parent()
             id = attrs[(None, 'id')].encode('utf-8')
-            uid = generateUniqueId(id, self.parent())
-            self.parent().manage_addProduct['Silva'].manage_addFolder(
+            uid = generateUniqueId(id, parent)
+            parent.manage_addProduct['Silva'].manage_addFolder(
                 uid, '', create_default=0)
-            self.setResult(getattr(self.parent(), uid))
+            self.setResult(getattr(parent, uid))
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
@@ -207,7 +217,7 @@ class AutoTOCHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'auto_toc'):
             id = str(attrs[(None, 'id')])
-            uid = generateUniqueId(id, self.parent())
+            uid = self.generateOrReplaceId(id)
             self.parent().manage_addProduct['Silva'].manage_addAutoTOC(
                 uid, '')
             self.setResult(getattr(self.parent(), uid))
@@ -221,7 +231,7 @@ class IndexerHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'indexer'):
             id = str(attrs[(None, 'id')])
-            uid = generateUniqueId(id, self.parent())
+            uid = self.generateOrReplaceId(id)
             self.parent().manage_addProduct['Silva'].manage_addIndexer(
                 uid, '')
             self.setResult(getattr(self.parent(), uid))
@@ -288,7 +298,7 @@ class GhostHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'ghost'):
             id = attrs[(None, 'id')].encode('utf-8')
-            uid = generateUniqueId(id, self.parent())
+            uid = self.generateOrReplaceId(id)
             object = Ghost(uid)
             self.parent()._setObject(id, object)
             object = getattr(self.parent(), uid)
@@ -359,7 +369,7 @@ class LinkHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'link'):
             id = attrs[(None, 'id')].encode('utf-8')
-            uid = generateUniqueId(id, self.parent())
+            uid = self.generateOrReplaceId(id)
             object = Link(uid)
             self.parent()._setObject(uid, object)
             self.setResult(getattr(self.parent(), uid))
@@ -404,11 +414,12 @@ class ImageHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'image_asset'):
             id = self.getData('id')
+            uid = self.generateOrReplaceId(id)
             info = self.getInfo()
             file = StringIO(
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
-            self.parent().manage_addProduct['Silva'].manage_addImage(id, '', file)
+            self.parent().manage_addProduct['Silva'].manage_addImage(uid, '', file)
             
 class FileHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -423,11 +434,12 @@ class FileHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'file_asset'):
             id = self.getData('id')
+            uid = self.generateOrReplaceId(id)
             info = self.getInfo()
             file = StringIO(
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
-            self.parent().manage_addProduct['Silva'].manage_addFile(id, '', file)
+            self.parent().manage_addProduct['Silva'].manage_addFile(uid, '', file)
             
 class UnknownContentHandler(SilvaBaseHandler):
     def getOverrides(self):
@@ -471,13 +483,17 @@ class URLHandler(SilvaBaseHandler):
         self.parentHandler().setData('url', chrs)
 
 class ImportSettings(xmlimport.BaseSettings):
-    def __init__(self):
+    def __init__(self, replace_objects=False):
         xmlimport.BaseSettings.__init__(
             self,
             ignore_not_allowed=True,
             import_filter_factory=collapser.CollapsingHandler
             )
-
+        self._replace_objects = replace_objects
+    
+    def replaceObjects(self):
+        return self._replace_objects
+            
 class ImportInfo:
     def __init__(self):
         self._asset_paths = {}
@@ -563,6 +579,19 @@ def updateVersionCount(versionhandler):
 
 def importFromFile(source_file, import_container, info=None):
     settings = ImportSettings()
+    info = info or ImportInfo()
+    theXMLImporter.importFromFile(
+        source_file,
+        result=import_container,
+        settings=settings,
+        info=info)
+    # sync all ghost folders after all is imported
+    info.syncGhostFolders()
+    info.updateIndexers()
+    return import_container
+
+def importReplaceFromFile(source_file, import_container, info=None):
+    settings = ImportSettings(replace_objects=True)
     info = info or ImportInfo()
     theXMLImporter.importFromFile(
         source_file,
