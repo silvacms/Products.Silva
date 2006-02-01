@@ -1,8 +1,9 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.179 $
+# $Revision: 1.180 $
 
 from zope.interface import implements
+from zope.i18n import translate
 
 # Zope
 from OFS import Folder, SimpleItem
@@ -44,8 +45,6 @@ from interfaces import IContainer, IFolder, IPublication, IRoot
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
-
-from Products.Silva.i18n import translate as _
 
 icon="www/silvafolder.gif"
 addable_priority = -.5
@@ -341,7 +340,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
                                 'this type of container'))
                 msg.set_mapping({'id': item.id})
-                messages.append(unicode(msg))
+                messages.append(translate(msg))
                 message_type = 'error'
 
         if len(paths) == 0:
@@ -362,7 +361,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             object.sec_update_last_author_info()
             msg = _('pasted &#xab;${id}&#xbb;')
             msg.set_mapping({'id': paste_id})
-            messages.append(unicode(msg))
+            messages.append(translate(msg))
         
         # on cut/paste, clear the clipboard when done
         if op == 1:
@@ -401,12 +400,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 self._ghost_paste(paste_id, item, REQUEST)
                 msg = _('pasted &#xab;${id}&#xbb;')
                 msg.set_mapping({'id': paste_id})
-                messages.append(unicode(msg))
+                messages.append(translate(msg))
             else:
                 msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
                                 'this type of container'))
                 msg.set_mapping({'id': item.id})
-                messages.append(unicode(msg))
+                messages.append(translate(msg))
                 message_type = 'error'
         return message_type, ', '.join(messages).capitalize()
 
