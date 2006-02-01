@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: icon.py,v 1.13 2006/01/24 16:14:13 faassen Exp $
+# $Id: icon.py,v 1.14 2006/02/01 13:44:32 faassen Exp $
 
 """Sivla icon registry"""
 
@@ -45,14 +45,10 @@ class _IconRegistry:
         elif ISilvaObject.providedBy(object):
             identifier = ('meta_type', object.meta_type)
         else:
-            try:
-                # if this call gets an object rather then a class as
-                # argument it will raise a TypeError
-                ISilvaObject.implementedBy(object)
-            except TypeError:
+            meta_type = getattr(object, 'meta_type', None)
+            if meta_type is None:
                 raise RegistryError, "Icon not found"
-            else:
-                identifier = ('meta_type', object.meta_type)
+            identifier = ('meta_type', meta_type)
         return self.getIconByIdentifier(identifier)
 
     def getIconByIdentifier(self, identifier):
