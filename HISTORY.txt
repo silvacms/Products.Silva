@@ -13,7 +13,8 @@ Silva changes
         retrieved from the service where they are registered.
 
       - A lot more places where i18n interpolation wasn't taking place
-        anymore (${foo} in message texts) are fixed.
+        anymore (${foo} in message texts) are fixed by using an 
+        explicit call to zope.i18n.translate() instead of unicode().
 
       - Restore "install default layout" functionality for ZODB
         layout; we were too vigorous in removing layout related code
