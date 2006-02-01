@@ -40,6 +40,15 @@ Silva changes
       - get_layout_macro was stored with DOS line endings, switched
         to Unix to be in line with the rest of the source code.
 
+      - Further bugfixes in Kupu and Kupu integration, includes Kupu
+        1.3.5.
+
+    Features added
+
+      - Already available in beta 1, but not in our HISTORY.txt
+        file. Buttons have been added to the UI to publish and close
+        content more directly.
+
   1.5b1
 
     Features added
