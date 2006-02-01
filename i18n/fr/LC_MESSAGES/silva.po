@@ -54,12 +54,11 @@ msgid ""
 "       methods in the concrete subclasses. (sorry) -->\n"
 "    "
 msgstr ""
-"Toute donnée numérique peut être processé en tant que contenu Silva. \n"
-"       Ainsi, des fichiers lourds tels que documents pdf ou  mpeg peuvent "
-"être        placés dans un\n"
-"  site. Les fichiers objet ont des metadata aussi bien. \n"
-"       <!-- Abstract base class. Depends on a _file attribute and various \n"
-"       methods in the concrete subclasses. (sorry) -->\n"
+"Toute donnée numérique peut être processé en tant que contenu Silva. Ainsi, "
+"des fichiers lourds tels que documents pdf ou mpeg peuvent être placés dans "
+"un site. Les objets fichiers disposent également de metadonnées. <!-- "
+"Abstract base class. Depends on a _file attribute and various methods in the "
+"concrete subclasses. (sorry) -->\n"
 "    "
 
 #: /Folder.py:340 /Folder.py:405
@@ -127,13 +126,11 @@ msgid ""
 msgstr ""
 "Les Dossiers Ghost sont similaires aux Ghosts mais ne sont pas seulement\n"
 "        un emplacement pour un document, Ils créent des emplacements \n"
-"       et/ou des copies de tous les contenus  du dossier        &#8216;"
-"original&#8217;.\n"
+"       et/ou des copies de tous les contenus  du dossier        ‘original’.\n"
 "       L'avantage des  Dossiers Ghost réside dans le fait que les contenus \n"
 "       restent synchronisés avec l'original, moyennant une synchronisation\n"
 "       manuelle ou automatique. Quand un dossier est soumis à ghost,\n"
-"       les éléments actifs de contenu  &#8211; tels que Images et Fichiers "
-"&#8211;\n"
+"       les éléments actifs de contenu  – tels que Images et Fichiers –\n"
 "         sont copiés (physiquemt dupliqués) en même temps que les documents\n"
 "        sont soumis à ghost."
 
@@ -222,7 +219,6 @@ msgstr ""
 # binder -classeur de, organisateur de bibliothéque
 # instill - inspirer, donner l'idée de
 # threshold -seuil, pas de la porte, antesalle
-# overview - vue d'ensemble
 #: /Publication.py:29
 msgid ""
 "Publications are special folders. They function as the \n"
@@ -600,8 +596,7 @@ msgid ""
 "${listing_body}<br /> p &nbsp; Select list for position number<br /> m "
 "&nbsp; move"
 msgstr ""
-"${listing_body}<br /> p &nbsp; Liste de choix position numéro<br /> m &nbsp; "
-"move"
+"${listing_body}<br /> p   Liste de choix position numéro<br /> m   move"
 
 #: /globals/accesskeys.pt:104
 msgid "Listing body"
@@ -613,9 +608,9 @@ msgid ""
 "&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
 "paste<br /> g &nbsp; paste as ghost"
 msgstr ""
-"${listing_footer}<br /> a &nbsp; choisir tout<br /> r &nbsp; renommer<br /> "
-"d &nbsp; effacer<br /> x &nbsp; couper<br /> c &nbsp; copierbr /> v &nbsp; "
-"coller<br /> g &nbsp; coller comme ghost"
+"${listing_footer}<br /> a   choisir tout<br /> r   renommer<br /> d   "
+"effacer<br /> x   couper<br /> c   copierbr /> v   coller<br /> g   coller "
+"comme ghost"
 
 #: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
 msgid "Listing footer"
@@ -635,7 +630,7 @@ msgstr "Publier écran (dossier)"
 
 #: /globals/accesskeys.pt:129
 msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
-msgstr "${listing_header}<br /> i &nbsp; importer<br /> e &nbsp; Exporter"
+msgstr "${listing_header}<br /> i   importer<br /> e   Exporter"
 
 #: /globals/accesskeys.pt:135
 msgid ""
@@ -645,11 +640,11 @@ msgid ""
 "approve for later<br /> u &nbsp; update settings<br /> p &nbsp; publish "
 "now<br />"
 msgstr ""
-"${listing_footer}<br /> a &nbsp; choisir tout<br /> n &nbsp; crer nouvelles "
-"versions<br /> j &nbsp; réfuser (demande de publication)<br /> v &nbsp; "
-"révoquer (demande de publication)<br /> c &nbsp; fermer (version publique)"
-"<br /> l &nbsp; approuvé plus tard<br /> u &nbsp; mettre à jour "
-"paramètres<br /> p &nbsp; publier maintenant<br />"
+"${listing_footer}<br /> a   choisir tout<br /> n   crer nouvelles "
+"versions<br /> j   réfuser (demande de publication)<br /> v   révoquer "
+"(demande de publication)<br /> c   fermer (version publique)<br /> l   "
+"approuvé plus tard<br /> u   mettre à jour paramètres<br /> p   publier "
+"maintenant<br />"
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
@@ -657,9 +652,7 @@ msgstr "Ajouter écran"
 
 #: /globals/accesskeys.pt:149
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
-msgstr ""
-"c &nbsp; annuler<br /> a &nbsp; ajouter<br /> e &nbsp; ajouter et editer/"
-"valider"
+msgstr "c   annuler<br /> a   ajouter<br /> e   ajouter et editer/valider"
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
@@ -670,8 +663,8 @@ msgid ""
 "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
 "preview<br /> p &nbsp; publish now<br />"
 msgstr ""
-"( &nbsp; éditeur mode formulaire<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; "
-"apperçu publique<br /> p &nbsp; publier maintenant<br />"
+"(   éditeur mode formulaire<br /> )   Kupu editor<br /> ;   apperçu "
+"publique<br /> p   publier maintenant<br />"
 
 #: /globals/accesskeys.pt:165
 msgid ""
@@ -680,15 +673,14 @@ msgid ""
 "numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
 "list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
 msgstr ""
-"${kupu_editor}<br /> b &nbsp; gras<br /> i &nbsp; italique<br /> u &nbsp; "
-"souligné<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # &nbsp; "
-"liste numérotée<br /> * &nbsp; liste à puces<br /> = &nbsp; liste de "
-"définitions br /> z &nbsp; défaire<br /> y &nbsp; refaire<br /> h &nbsp; "
-"source html<br />"
+"${kupu_editor}<br /> b   gras<br /> i   italique<br /> u   souligné<br /> "
+"-   subscript<br /> +   superscript<br /> #   liste numérotée<br /> *   "
+"liste à puces<br /> =   liste de définitions br /> z   défaire<br /> y   "
+"refaire<br /> h   source html<br />"
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
-msgstr "Kupu editor"
+msgstr "Editeur Kupu"
 
 #: /globals/accesskeys.pt:181
 msgid ""
@@ -696,9 +688,9 @@ msgid ""
 "&nbsp; save and insert<br /> tab Use your tab key to edit without using the "
 "mouse. Shift-tab goes backwards."
 msgstr ""
-"${forms_editor}<br /> s &nbsp; sauvegarder<br /> e &nbsp; sauvegarder et "
-"quitter<br /> i &nbsp; sauvegarder et insérer<br /> tab Utiliser la touche "
-"tab pour editer sans utiliser la souris. Shift-tab fait touche retour."
+"${forms_editor}<br /> s   sauvegarder<br /> e   sauvegarder et quitter<br /> "
+"i   sauvegarder et insérer<br /> tab Utiliser la touche tab pour editer sans "
+"utiliser la souris. Shift-tab fait touche retour."
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
@@ -741,10 +733,9 @@ msgid ""
 msgstr ""
 "En cas de se retrouver avec deux boutons avec le même nom, la touche d'accès "
 "pour le deuxième est la première lettre du deuxième mot. (par exemple pour "
-"&#8220;get image reference&#8221; et &#8220;get link reference&#8221;, les "
-"touches d'accès sont &#8216;g&#8217; et &#8216;l&#8217;). Il arrive qu'il y "
-"ait multiples du même bouton, dans ce cas seulement le premier aura une "
-"touche d'accès."
+"“get image reference” et “get link reference”, les touches d'accès sont ‘g’ "
+"et ‘l’). Il arrive qu'il y ait multiples du même bouton, dans ce cas "
+"seulement le premier aura une touche d'accès."
 
 #: /globals/accesskeys.pt:198
 msgid "Notes"
@@ -769,8 +760,8 @@ msgid ""
 msgstr ""
 "Mozilla et Internet Explorer gérent les touches d'accès aux hyperliens d'une "
 "manière différente. Mozilla démarre l'action quand Explorer seulement met en "
-"surbrillance le lien, et ensuite vous valider avec entrée pour y aller.Les "
-"deux navigateurs agissent sur les bouton de la même manière, en initiant "
+"surbrillance le lien, et ensuite vous validez avec entrée pour l'activer. "
+"Les deux navigateurs agissent sur les bouton de la même manière, en initiant "
 "l'action immédiatement."
 
 #: /globals/accesskeys.pt:208
@@ -813,8 +804,7 @@ msgstr "Editer Silva"
 
 #: /globals/accesskeys.pt:227
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
-msgstr ""
-"Ou, sauvegarder ce lien &#8211; ${silva_edit} &#8211; comme marque pages."
+msgstr "Ou, sauvegarder ce lien – ${silva_edit} – comme marque pages."
 
 #: /globals/accesskeys.pt:232
 msgid ""
@@ -833,7 +823,7 @@ msgid ""
 "rich</a> for this trick."
 msgstr ""
 "Remerciements à<a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH "
-"Z&uuml;rich</a> pour cette astuce."
+"Zürich</a> pour cette astuce."
 
 #: /globals/accesskeys.pt:242
 msgid "Tip for Mozilla/Netscape users"
@@ -845,9 +835,9 @@ msgid ""
 "feature will make keyboard navigation to hyperlinks &#8211; such as item "
 "names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
 msgstr ""
-"${tip_for_mozilla_users}<br /> Using the &#8220;Find As You Type&#8221; "
-"feature will make keyboard navigation to hyperlinks &#8211; such as item "
-"names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
+"${tip_for_mozilla_users}<br /> Using the “Find As You Type” feature will "
+"make keyboard navigation to hyperlinks – such as item names – remarkably "
+"easy. See:<br /> ${typeaheadfind_link}"
 
 #: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:79
 msgid "Silva documentation"
@@ -4344,7 +4334,6 @@ msgstr "index:"
 msgid "up one level: alt-]"
 msgstr "monter d'un niveau: alt-]"
 
-# containing publication
 #: /views/edit/macro_vein_navigation.pt:53
 #: /views/edit/macro_vein_navigation.pt:59
 msgid "up to containing publication: alt-["
@@ -4793,8 +4782,7 @@ msgstr "convertir à dossier"
 #: /views/edit/tab_settings_save_renderer.py:10
 #, fuzzy
 msgid "There's no editable version to set the renderer on."
-msgstr ""
-"créer une nouvelle version éditable de l'ancienne version  choisie: alt-f"
+msgstr "Il n'y pas de nouvelle version à éditer pour activer renderer."
 
 #: /views/edit/tab_settings_save_renderer.py:17
 msgid "Renderer setting saved."

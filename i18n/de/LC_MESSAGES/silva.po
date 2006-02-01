@@ -11,11 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-code: de\n"
-"Language-name: German\n"
+"Language-name: Deutsch\n"
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: /AutoTOC.py:29
 msgid ""
@@ -101,7 +100,7 @@ msgstr ""
 "Ghosts sind besondere Dokumente, die als Platzhalter für Objekte an anderer "
 "Stelle fungieren (wie Aliase, symbolische Links). Im Gegensatz zu "
 "Hyperlinks, die den Besucher an eine andere Stelle befördern, belässt ein "
-"Ghost Objekt die Besucherin der aktuellen Publikation und stellt den Inhalt "
+"Ghost Objekt die Besucher in der aktuellen Publikation und stellt den Inhalt "
 "des referenzierten Objektes dort dar. Das Ghost Objekt ererbt die "
 "Eigenschaften desjenigen Objektes, welches es referenziert.\n"
 "    "
@@ -627,7 +626,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
-msgstr ""
+msgstr "Bearbeiter Fenster"
 
 #: /globals/accesskeys.pt:157
 msgid ""
@@ -645,7 +644,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
-msgstr ""
+msgstr "Kupu Bearbeitungsprogramm"
 
 #: /globals/accesskeys.pt:181
 msgid ""
@@ -660,7 +659,7 @@ msgstr "Formulareditor"
 
 #: /globals/accesskeys.pt:189
 msgid "Other screens"
-msgstr ""
+msgstr "Andere Fenster"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 msgid "return"
@@ -919,7 +918,7 @@ msgstr "Silva Hilfe"
 
 #: /globals/accesskeys.pt:92
 msgid "Contents screen (folder)"
-msgstr ""
+msgstr "Inhaltsübersicht (Ordner)"
 
 #: /globals/accesskeys.pt:95
 msgid ""
@@ -1474,6 +1473,8 @@ msgid ""
 "(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
 "&nbsp;10.1.1.0/255.255.255.0)."
 msgstr ""
+"<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: "
+"10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: 10.1.1.0/255.255.255.0)."
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:156
 msgid "add an ip or an ip range"
@@ -4182,7 +4183,7 @@ msgstr "Anmerkung"
 
 #: /views/edit/macro_groups_listing.pt:106
 msgid "select_groups"
-msgstr ""
+msgstr "ausgewählte_Gruppen"
 
 #: /views/edit/macro_groups_listing.pt:119
 msgid "no_groups_available"
@@ -4591,7 +4592,7 @@ msgstr ""
 
 #: /views/edit/tab_metadata.pt:98 /views/edit/tab_settings.pt:260
 msgid "for closed version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "für die abgeschlossene Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_preview.pt:101
 msgid "This is a closed version. You see it, but the public won't!"
@@ -4641,41 +4642,48 @@ msgstr "Erweiterungseinstellungen für &#xab;${title}&#xbb;"
 #: /views/edit/tab_settings.pt:218 /views/edit/tab_settings.pt:237
 #: /views/edit/tab_settings.pt:257
 msgid "layout settings"
-msgstr ""
+msgstr "Layout Einstellungen"
 
 #: /views/edit/tab_settings.pt:221
 msgid "for approved version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_settings.pt:240
 msgid "for published version of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "für die publizierte Version von &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_settings.pt:58
 msgid "settings for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Einstellungen für &#xab;${title}&#xbb;"
 
 #: /views/edit/tab_settings.pt:70
 msgid "container type"
-msgstr ""
+msgstr "Behälter Type"
 
 #: /views/edit/tab_settings.pt:76
 msgid ""
 "This Ghost Folder can be converted to a normal Publication or Folder. All "
 "ghosted content will be duplicated and can then be edited."
 msgstr ""
+"Dieser \"Ghost\"-Ordner kann in eine normale Publikation umgewandelt werden. "
+"Der Inhalt des \"Ghost\"-Ordners wird dupliziert und kann danach editiert "
+"werden."
 
 #: /views/edit/tab_settings.pt:82
 msgid ""
 "This Silva Folder can be converted to a Publication (may take awhile if "
 "it&#8217;s large)."
 msgstr ""
+"Dieser Silva-Ordner kann in eine Publikation umgewandelt werden (wenn der "
+"Ordner groß ist, kann dieser Vorgang einige Zeit beanspruchen)."
 
 #: /views/edit/tab_settings.pt:87
 msgid ""
 "This Silva Publication can be converted to a Silva Folder (may take awhile "
 "if it&#8217;s large)."
 msgstr ""
+"Diese Silva-Publikation kann in einen Ordner umgewandelt werden (wenn die "
+"Publikation groß ist, kann dieser Vorgang einige Zeit beanspruchen)."
 
 #: /views/edit/tab_settings.pt:97
 msgid "change container type to a folder: alt-f"
@@ -4711,7 +4719,7 @@ msgstr "Dieses Objekt ist nicht abonierbar."
 
 #: /views/edit/tab_subscriptions.pt:146
 msgid "subscriptions icon"
-msgstr ""
+msgstr "Abonnement Symbol"
 
 #: /views/edit/tab_subscriptions.pt:154
 msgid "Subscriptions info"
@@ -4745,7 +4753,7 @@ msgstr "Keine weiteren Abonnements für dieses Objekt."
 #: /views/edit/Asset/tab_subscriptions.pt:29
 #: /views/edit/Content/tab_subscriptions.pt:29
 msgid "manage subscriptions for &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "Abbonements für &#xab;${title}&#xbb; bearbeiten"
 
 #: /views/edit/tab_subscriptions_form.form:27
 msgid ""
@@ -4800,7 +4808,7 @@ msgstr ""
 
 #: /views/logout.pt:37
 msgid "logout link"
-msgstr ""
+msgstr "Link zum Abmelden"
 
 #: /views/logout.pt:37
 msgid "accesskey: alt-l"
@@ -4948,7 +4956,7 @@ msgstr "Silva"
 
 #: /views/macro_tabs.pt:60
 msgid "&middot; manage..."
-msgstr ""
+msgstr "&middot; bearbeiten"
 
 #: /views/macro_tabs.pt:60
 msgid "Zope manage_main: alt-."
@@ -5200,14 +5208,16 @@ msgid ""
 "Fill in your email address if you want to unsubscribe from email "
 "notifications for this page and its subdocuments."
 msgstr ""
+"Tragen Sie hier Ihre E-Mail Adresse ein, wenn Sie E-Mail Benachrichtigungen "
+"von dieser Seite und ihren Folgeseiten abbestellen wollen."
 
 #: /views/public/subscriptor.pt:69
 msgid "unsubscribe"
-msgstr "Abonnement beenden"
+msgstr "abbestellen"
 
 #: /views/public/subscriptor.pt:82
 msgid "Return to &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "zurück zu &#xab;${title_or_id}&#xbb;"
 
 #: /views/render_form_errors.py:27
 msgid "Sorry, there are problems with these form fields:"
@@ -5230,15 +5240,6 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "Layout has been removed."
 #~ msgstr "Das Layout wurde entfernt."
-
-#~ msgid ""
-#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
-#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
-#~ "&nbsp;10.1.1.0/255.255.255.0)."
-#~ msgstr ""
-#~ "<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: "
-#~ "10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: "
-#~ "10.1.1.0/255.255.255.0)."
 
 #~ msgid "view_original_image_accesskey"
 #~ msgstr "v"
@@ -5266,6 +5267,15 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "addables_accesskey"
 #~ msgstr "d"
+
+#~ msgid ""
+#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ msgstr ""
+#~ "<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: "
+#~ "10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: "
+#~ "10.1.1.0/255.255.255.0)."
 
 #~ msgid "view this asset"
 #~ msgstr "Anlage ansehen"

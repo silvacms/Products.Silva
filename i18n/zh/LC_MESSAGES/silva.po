@@ -12,7 +12,6 @@ msgstr ""
 "Language-name: Chinese Simplified\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
-"Plural-Forms: nplurals=1; plural=0\n"
 
 #: /AutoTOC.py:29
 msgid ""
@@ -4846,6 +4845,8 @@ msgid ""
 "\n"
 "            "
 msgstr ""
+"\n"
+"            "
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
