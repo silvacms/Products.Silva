@@ -35,13 +35,13 @@ interfaces using the `implements` class annotation::
 
 You can check whether an instance provides an interface (i.e. whether
 its class implements an interface or the interface directly provides
-an interface) using `providedBy` (in Zope 2 this used to be written
+an interface) using `providedBy` (in Zope 2 this used to be 
 'isImplementedBy')::
 
   IFoo.providedBy(instance)
 
 In the rare case you want to check whether a *class* implements an
-interface (i.e. whether its instances will provide that instance), you
+interface (i.e. whether its instances will provide that interface), you
 use `implementedBy` (this used to be `isImplementedByInstancesOf` in
 Zope 2)::
 
