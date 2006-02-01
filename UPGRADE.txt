@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.59 $
+CVS:        $Revision: 1.60 $
 
 Introduction
 ------------
@@ -85,7 +85,7 @@ Steps to take during a major Silva upgrade:
 Upgrading from Silva 1.4 to Silva 1.5
 -------------------------------------
 
-Zope 2.8.4 or later is required to run Silva 1.5, so you will have to
+Zope 2.8.5 or later is required to run Silva 1.5, so you will have to
 upgrade your Zope besides the regular upgrade step.
 
 PlacelessTranslationService is not in use by Silva anymore, so can be

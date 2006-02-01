@@ -11,7 +11,7 @@ See also LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen
 Email:      faassen@infrae.com
-CVS:        $Revision: 1.57 $
+CVS:        $Revision: 1.58 $
 
 Introduction
 ------------
@@ -29,7 +29,7 @@ Checklist for Zope administrators
 
 Here is a quick checklist what to do to install Silva:
 
-* You need a recent Zope (2.8.4 is recommended, other versions are not
+* You need a recent Zope (2.8.5 is recommended, other versions are not
   properly tested) with Python 2.3.
 
 * Download an appropriate Silva ``-all.tgz`` for the version you want
