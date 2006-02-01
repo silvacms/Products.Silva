@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.29 $
+CVS:        $Revision: 1.30 $
 
 Introduction
 ------------
@@ -111,7 +111,7 @@ ship with a version of Five.
 
 http://codespeak.net/z3/five
 
-Kupu 1.3.4 (DI)
+Kupu 1.3.5 (DI)
 ---------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
