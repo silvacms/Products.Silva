@@ -32,6 +32,12 @@ Silva changes
       - Eliminated Zope 2.8.5 warnings on startup.
 
       - Access screen can be accessed again by authors.
+ 
+      - Slight simplification of icon generation code which in some
+        circumstances gave rise to a bug.
+
+      - get_layout_macro was stored with DOS line endings, switched
+        to Unix to be in line with the rest of the source code.
 
   1.5b1
 
