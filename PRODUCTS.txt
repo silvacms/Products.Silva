@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.28 $
+CVS:        $Revision: 1.29 $
 
 Introduction
 ------------
@@ -55,8 +55,8 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.11 (DCI)
----------------------
+Formulator 1.11.1 (DCI)
+-----------------------
 
 Formulator is a Zope extension for the easy construction, display and
 validation of web forms. Silva and various extension use this for the
@@ -146,7 +146,7 @@ SilvaDocument. XMLWidgets integrates with it.
 
 http://www.infrae.com/download/ParsedXML
 
-Groups 0.4 (IX)
+Groups 0.5 (IX)
 ---------------
 
 Groups support is optional; Silva should run without the Groups
