@@ -11,7 +11,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.60 $
+CVS:        $Revision: 1.61 $
 
 Introduction
 ------------
@@ -81,6 +81,10 @@ Steps to take during a major Silva upgrade:
   refresh all installed Silva extensions as well as upgrade the Silva
   content that needs upgrading. Note that this will take a while if
   your site is large.
+
+- When testing Silva, it may be the WYSIWYG editor (Kupu) still
+  retrieves files cached by the browser from a previous version of
+  Silva. Clearing the browser cache should help.
 
 Upgrading from Silva 1.4 to Silva 1.5
 -------------------------------------

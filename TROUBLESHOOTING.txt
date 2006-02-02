@@ -11,6 +11,12 @@ Installation problems
     this is placed in the Products directory this overrides the
     version in the Zope core.
 
+  Kupu (WYSIWYG editor) does not work correctly after upgrade
+
+    This may be because your browser still is caching javascript files
+    from an older version of Kupu. Try restarting your browser, or
+    clearing your browser cache.
+
   Public layout is not working
 
     If you installed the SilvaLayout product into Zope, you need to
