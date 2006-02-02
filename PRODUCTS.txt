@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.31 $
+CVS:        $Revision: 1.32 $
 
 Introduction
 ------------
@@ -219,6 +219,15 @@ well as News Articles and Agenda Items to build a distributed news system
 for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
+
+SilvaLayout 0.5
+---------------
+
+Advanced website layout system based on Zope 3 technologies. If you
+install this, the default Silva layout system won't work anymore, so
+only install this when you want to try using the new system.
+
+http://www.infrae.com/download/SilvaLayout
 
 Docma Server 0.8
 ----------------
