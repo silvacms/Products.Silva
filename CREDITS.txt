@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 1.5.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
-  CVS:        $Revision: 1.32 $
+  CVS:        $Revision: 1.33 $
 
 Silva is developed by Infrae (http://www.infrae.com). Initial (and
 continued) development was for the Erasmus University Rotterdam
@@ -40,6 +40,10 @@ External developers:
 French translation:
 
   José Joaquim Pombar <pombar.joaquin@wanadoo.fr>
+
+German translation:
+
+  Joachim Breitner, Marc Petitmermet, Marion Neuhold, lwilbrandt
 
 Hebrew translation:
 

@@ -49,6 +49,9 @@ Silva changes
         file. Buttons have been added to the UI to publish and close
         content more directly.
 
+      - Added the newest translations from the Launchpad Rosetta system.
+        (https://launchpad.net/products/silva/+translations)
+
   1.5b1
 
     Features added
