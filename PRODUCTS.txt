@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.30 $
+CVS:        $Revision: 1.31 $
 
 Introduction
 ------------
@@ -180,7 +180,7 @@ http://www.dataflake.org/software/ldapuserfolder/
 ExtFile 1.4.2 (IX)
 ------------------
 
-Note: Silva 1.5b1 is not compatible yet with ExtFile.
+Note: Silva 1.5 is not compatible yet with ExtFile.
 
 If you plan to manage large upload files with Silva, you may want to
 avoid storing them in the ZODB, instead putting them in the filesystem
@@ -211,7 +211,7 @@ http://www.infrae.com/download/SilvaExternalSources
 SilvaNewsNetwork 2.0 (EX)
 -------------------------
 
-Note: SilvaNewsNetwork is not yet updated to work with Silva 1.5b1.
+Note: SilvaNewsNetwork is not yet updated to work with Silva 1.5.
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
 SilvaDocument to provide News Publication, News Filters and News Viewers as 
