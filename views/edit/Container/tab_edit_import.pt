@@ -223,6 +223,24 @@
           adding Silva Folders. 
         </td>
       </tr>
+      <tr class="even">
+        <td class="align-right">
+          <span i18n:translate="">
+            replace content
+          </span>
+        </td>
+        <td>
+          <input class="min"
+            type="checkbox"
+            name="replace_content"
+            checked="checked"
+          />
+        </td>
+        <td i18n:translate="">
+          Replace Content Objects with the Objects from the import when they
+          have the same ids.
+        </td>
+      </tr>
 
       <tr class="controls">
         <td class="align-right"

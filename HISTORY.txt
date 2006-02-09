@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  Under development
+
+    Features added
+
+      - The import has an extra option: 'replace content' which, when 
+        enabled, replaces existing content objects with objects from the 
+        import when they have the same ids.
+
   1.5
 
     Bugs fixed

@@ -13,13 +13,14 @@ if archive is None or not archive:
         
 
 recreate = request.get('recreate_dirs', None)
+replace = request.get('replace_content', False)
 title = unicode(request.get('title', ''), 'utf-8')
 importer = zipfileimport.getZipfileImportAdapter(model)
 fullmedia = importer.isFullmediaArchive(archive)
 
 try:
     if fullmedia:
-        succeeded, failed = importer.importFromZip(model, archive)
+        succeeded, failed = importer.importFromZip(model, archive,  replace)
     else:
         importer = archivefileimport.getArchiveFileImportAdapter(model)
         succeeded, failed = importer.importArchive(archive, title, recreate)

@@ -35,7 +35,7 @@ class ZipfileImportAdapter(adapter.Adapter):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importFromZip')    
-    def importFromZip(self, container, zipfile):
+    def importFromZip(self, container, zipfile, replace=0):
         """ imports fullmedia zipfile 
         """
         from zipfile import ZipFile
@@ -46,10 +46,16 @@ class ZipfileImportAdapter(adapter.Adapter):
         info = xmlimport.ImportInfo()
         info.setZipFile(archive)
         source_file = StringIO(archive.read('silva.xml'))
-        result = xmlimport.importFromFile(
-            source_file,
-            container,
-            info=info)
+        if replace:
+            result = xmlimport.importReplaceFromFile(
+                source_file,
+                container,
+                info=info)
+        else:
+            result = xmlimport.importFromFile(
+                source_file,
+                container,
+                info=info)
         source_file.close()
         archive.close()
 

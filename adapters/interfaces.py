@@ -60,12 +60,12 @@ class IZipfileImporter(Interface):
         """Tests if the zip archive is a fullmedia archive
         """
 
-    def importFromZip(context, zipname, settings):
+    def importFromZip(context, zipname, replace=False):
         """Import Silva content from a full media zip file.
 
         context -- The content object to be imported into
         zipname -- The filename of the zip archive
-        settings -- The import settings
+        replace -- Replace content objects with identical ids.
         """
 
 class IZipfileExporter(Interface):
