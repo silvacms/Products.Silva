@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.32 $
+CVS:        $Revision: 1.33 $
 
 Introduction
 ------------
@@ -199,7 +199,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 0.10 (EX)
+SilvaExternalSources 0.12 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
