@@ -10,7 +10,7 @@ LICENSE.txt
 Valid for:  Silva 1.5.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.33 $
+CVS:        $Revision: 1.34 $
 
 Introduction
 ------------
@@ -208,10 +208,8 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNewsNetwork 2.0 (EX)
+SilvaNewsNetwork 2.1 (EX)
 -------------------------
-
-Note: SilvaNewsNetwork is not yet updated to work with Silva 1.5.
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
 SilvaDocument to provide News Publication, News Filters and News Viewers as 
