@@ -7,10 +7,10 @@ Meta
 Copyright (c) 2002-2006 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.4.x
+Valid for:  Silva 1.4.2
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.24.2.1 $
+CVS:        $Revision: 1.24.2.2 $
 
 Introduction
 ------------
@@ -27,8 +27,8 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.4 (DC)
---------------
+Silva 1.4.2 (DC)
+----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
@@ -103,7 +103,7 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Kupu 1.3.1 (DI)
+Kupu 1.3.5 (DI)
 ---------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
@@ -112,8 +112,8 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.4 (DE)
-----------------------
+SilvaDocument 1.4.2 (DE)
+------------------------
 
 Silva extension for XML-based documents. Contains a through the web
 editing system for them. This is shipped along with the core, though
