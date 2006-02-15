@@ -199,7 +199,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 0.10 (EX)
+SilvaExternalSources 0.12 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
@@ -208,10 +208,8 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNewsNetwork 2.0 (EX)
+SilvaNewsNetwork 2.1 (EX)
 -------------------------
-
-Note: SilvaNewsNetwork is not yet updated to work with Silva 1.5.
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
 SilvaDocument to provide News Publication, News Filters and News Viewers as 
