@@ -3,6 +3,16 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.5.1
+
+    Bugs fixed
+
+      - The new lookup window was registering resources under the name
+        scripts. This name is too broad and was in fact being
+        overridden by a Silva extension that introduced its own
+        scripts, causing the Silva core to break. Renamed this to
+        silva_scripts in the core.
+
   1.5
 
     Bugs fixed

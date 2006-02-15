@@ -43,7 +43,7 @@
   />
   
   <browser:resourceDirectory
-    name="scripts"
+    name="silva_scripts"
     directory="scripts"
     permission="zope2.Public"
   />
