@@ -8,6 +8,7 @@ from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
 from cgi import escape
+from zope.i18n import translate
 
 from zope.interface import implements
 # Zope
@@ -45,8 +46,6 @@ except ImportError:
     pass
 
 from interfaces import IImage, IUpgrader
-
-from Products.Silva.i18n import translate as _
 
 icon = "www/silvaimage.gif"
 addable_priority = -0.4
@@ -225,6 +224,7 @@ class Image(Asset):
                 msg = _(("'${scale}' is not a valid scale identifier. "
                             "Probably a percent symbol is missing."))
                 msg.set_mapping({'scale': scale})
+                msg = translate(msg)
                 raise ValueError, msg
             cropbox = self.getCropBox()
             if cropbox:
@@ -244,6 +244,7 @@ class Image(Asset):
                 msg = _(("'${scale} is not a valid scale identifier. "
                             "At least one number is required."))
                 msg.set_mapping({'scale': scale})
+                msg = translate(msg)
                 raise ValueError, msg
             if width == '*':
                 height = int(height)
@@ -268,6 +269,7 @@ class Image(Asset):
         if m is None:
             msg = _("'${crop} is not a valid crop identifier")
             msg.set_mapping({'crop': crop})
+            msg = translate(msg)
             raise ValueError, msg
         x1 = int(m.group(1))
         y1 = int(m.group(2))
@@ -294,6 +296,7 @@ class Image(Asset):
         if x1 >= x2 or y1 >= y2:
             msg = _("'${crop}' defines an impossible cropping")
             msg.set_mapping({'crop': crop})
+            msg = translate(msg)
             raise ValueError, msg
         return (x1, y1, x2, y2)
 
