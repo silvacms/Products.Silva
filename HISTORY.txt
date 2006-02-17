@@ -3,6 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.5.2 (under development)
+
+    Bugs fixed
+
+      - The cropping dialog was broken, fixed.
+
+      - Fixed non-interpolation issues with message ids in the image
+        UI.
+
   1.5.1
 
     Bugs fixed
