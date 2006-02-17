@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Under development
+Under development
 
     Features added
 
@@ -13,11 +13,31 @@ Silva changes
 
     Bugs fixed
 
-      - Ported bug from 1.5 branch: The new lookup window was
-        registering resources under the name scripts. This name is too
-        broad and was in fact being overridden by a Silva extension
-        that introduced its own scripts, causing the Silva core to
-        break. Renamed this to silva_scripts in the core.  1.5
+      - nothing yet
+  
+    Ported from 1.5 branch
+
+      - The new lookup window was registering resources under the name
+        scripts. This name is too broad and was in fact being
+        overridden by a Silva extension that introduced its own
+        scripts, causing the Silva core to break. Renamed this to
+        silva_scripts in the core.
+     
+      - The cropping dialog was broken, fixed.
+
+      - Fixed non-interpolation issues with message ids in the image
+        UI.
+
+  1.5
+  
+    Features added
+
+      - Already available in beta 1, but not in our HISTORY.txt
+        file. Buttons have been added to the UI to publish and close
+        content more directly.
+
+      - Added the newest translations from the Launchpad Rosetta system.
+        (https://launchpad.net/products/silva/+translations)
 
     Bugs fixed
 
@@ -56,15 +76,6 @@ Silva changes
 
       - Further bugfixes in Kupu and Kupu integration, includes Kupu
         1.3.5.
-
-    Features added
-
-      - Already available in beta 1, but not in our HISTORY.txt
-        file. Buttons have been added to the UI to publish and close
-        content more directly.
-
-      - Added the newest translations from the Launchpad Rosetta system.
-        (https://launchpad.net/products/silva/+translations)
 
   1.5b1
 
