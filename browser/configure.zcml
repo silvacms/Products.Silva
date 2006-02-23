@@ -55,6 +55,13 @@
     class=".emptyaction.EmptyAction"
     permission="silva.ChangeSilvaContent"
   />
+
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="additional_metadata"
+    class=".emptyaction.EmptyAction"
+    permission="silva.ChangeSilvaContent"
+  />
   
   <browser:resourceDirectory
     name="silva_scripts"

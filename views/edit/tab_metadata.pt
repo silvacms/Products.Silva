@@ -35,6 +35,11 @@
         <tal:block replace="nothing">
           _____________________ main _____________________
         </tal:block>
+
+        <span tal:replace="nothing">
+          Here we insert a metadata/property related view
+        </span>
+        <tal:block replace="structure model/@@additional_metadata"/>
         
         <td class="main"
           tal:define="display_flag python:1;">
