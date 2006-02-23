@@ -229,7 +229,14 @@ _______ manual close section here _______
 </div>
 </tal:replace>
 
-<span tal:replace="nothing"> _____________________ versioning focus box _____________________ </span>
+<span tal:replace="nothing">
+  Here we insert the additional_status_actions view
+</span>
+<tal:block replace="structure model/@@additional_status_action"/>
+
+<span tal:replace="nothing">
+  _____________________ versioning focus box _____________________
+</span>
 <form class="sublisting" action="." enctype="multipart/form-data" method="POST">
 
 <!-- version management -->

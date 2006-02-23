@@ -41,6 +41,20 @@
     class=".lookup.SidebarView"
     permission="silva.ChangeSilvaContent"
   />
+
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="additional_export_action"
+    class=".emptyaction.EmptyAction"
+    permission="silva.ChangeSilvaContent"
+  />
+  
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="additional_status_action"
+    class=".emptyaction.EmptyAction"
+    permission="silva.ChangeSilvaContent"
+  />
   
   <browser:resourceDirectory
     name="silva_scripts"
