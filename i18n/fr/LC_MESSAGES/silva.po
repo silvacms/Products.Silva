@@ -237,7 +237,7 @@ msgstr ""
 "       Elles peuvent être assimilées à un classeur de bibliothèques, et "
 "peuvent disposer de dossiers, documents et éléments de contenus.\n"
 "       Les publications ne sont pas transparentes. Elles nous présentent\n"
-"       un apperçu du contenu de la publication en cours . Ceci  permet\n"
+"       un aperçu du contenu de la publication en cours . Ceci  permet\n"
 "       une gestion de la vue d'ensemble. Les paramétres de configuration\n"
 "       des Publications permettent de définir les objets de base et les\n"
 "       extensions disponibles. Pour des sites complexes, des sous- "
@@ -618,11 +618,11 @@ msgstr "Liste pied de page"
 
 #: /globals/accesskeys.pt:120
 msgid "Preview screen"
-msgstr "Ecran apperçu"
+msgstr "Ecran aperçu"
 
 #: /globals/accesskeys.pt:122
 msgid "; &nbsp; See public preview<br />"
-msgstr "; &nbsp; Voir apperçu public<br />"
+msgstr "; &nbsp; Voir aperçu public<br />"
 
 #: /globals/accesskeys.pt:126
 msgid "Publish screen (folder)"
@@ -663,7 +663,7 @@ msgid ""
 "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
 "preview<br /> p &nbsp; publish now<br />"
 msgstr ""
-"(   éditeur mode formulaire<br /> )   Kupu editor<br /> ;   apperçu "
+"(   éditeur mode formulaire<br /> )   Kupu editor<br /> ;   aperçu "
 "publique<br /> p   publier maintenant<br />"
 
 #: /globals/accesskeys.pt:165
@@ -1722,11 +1722,11 @@ msgstr "original"
 
 #: /views/edit/Asset/Image/edit.pt:67
 msgid "view the original image: alt-v"
-msgstr "apperçu image originale: alt-v"
+msgstr "aperçu image originale: alt-v"
 
 #: /views/edit/Asset/Image/edit.pt:75
 msgid "view unscaled image"
-msgstr "apperçu image sans modifier échelle"
+msgstr "aperçu image sans modifier échelle"
 
 #: /views/edit/Asset/Image/edit.pt:80
 msgid "orientation"
@@ -1879,7 +1879,7 @@ msgstr "Image mise à jour"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:310
 #: /views/edit/Container/GhostFolder/tab_edit.pt:445
 msgid "preview"
-msgstr "apperçu"
+msgstr "aperçu"
 
 #: /views/edit/Asset/get_tabs.py:16
 #: /views/edit/Container/GhostFolder/get_tabs.py:19
@@ -2963,7 +2963,7 @@ msgstr "Transformé en publication"
 
 #: /views/edit/Container/tab_status.pt:104
 msgid "modify / preview"
-msgstr "modifier /apperçu"
+msgstr "modifier /aperçu"
 
 #: /views/edit/Container/tab_status.pt:107
 msgid "revision"
@@ -3248,7 +3248,7 @@ msgstr "${id} de ${parent_id}"
 
 #: /views/edit/Container/tab_status_get_preview_title.py:12
 msgid "preview ${id}"
-msgstr "apperçu ${id}"
+msgstr "aperçu ${id}"
 
 #: /views/edit/Container/tab_status_new_version.py:16
 msgid "Nothing was selected, so no new version was created."
@@ -3372,7 +3372,7 @@ msgstr ""
 
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid "preview screen"
-msgstr "apperçu écran"
+msgstr "aperçu écran"
 
 #: /views/edit/Content/Indexer/edit.pt:63
 msgid ""
@@ -4690,12 +4690,12 @@ msgstr "Ceci est une version privée. Vous pouvez la voir, mais pas le public."
 #: /views/edit/tab_preview.pt:41
 #: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "see the content in the public layout: alt-;"
-msgstr "voir contenu d'apperçu public: alt-;"
+msgstr "voir contenu d'aperçu public: alt-;"
 
 #: /views/edit/tab_preview.pt:41
 #: /views/edit/VersionedContent/macro_tab_edit.pt:49
 msgid "public&nbsp;preview..."
-msgstr "apperçu&nbsp;public..."
+msgstr "aperçu&nbsp;public..."
 
 #: /views/edit/tab_preview.pt:54
 #: /views/edit/VersionedContent/macro_tab_edit.pt:59
@@ -4963,7 +4963,7 @@ msgstr "Quitter Silva et aller à la page publique: alt-:"
 
 #: /views/macro_index.pt:231
 msgid "view public version"
-msgstr "apperçu version publique"
+msgstr "aperçu version publique"
 
 #: /views/macro_index.pt:249
 msgid "Change your settings: alt-~"
