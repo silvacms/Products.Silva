@@ -528,13 +528,6 @@ class SilvaObject(Security, ViewCode):
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                                 'PROPFIND')
-    def PROPFIND(self, REQUEST, RESPONSE):
-        """Just call superclass implementation.
-
-        Used to shut up security warning.
-        """
-        return SilvaObject.inheritedAttribute('PROPFIND')(
-            self, REQUEST, RESPONSE)
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PROPPATCH')
