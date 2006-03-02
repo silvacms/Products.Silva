@@ -13,7 +13,8 @@ Under development
 
     Bugs fixed
 
-      - nothing yet
+      - FSDTMLMethod and FSPageTemplate were imported directly 
+        from FileSystemSite product instead of from fssite module
   
     Ported from 1.5 branch
 
