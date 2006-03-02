@@ -38,9 +38,9 @@ def initialize(context):
     # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
     from Products.Silva.fssite import FSImage
+    from Products.Silva.fssite import FSDTMLMethod
+    from Products.Silva.fssite import FSPageTemplate
     from Products.Silva.silvaxml import xmlexport, xmlimport
-    from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
-    from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
     from Products.Silva.transform.renderer import defaultregistration     
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)

@@ -2,6 +2,14 @@ Copyright (c) 2002-2006 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
+  
+  after 1.5.2
+   
+    Bugs fixed
+
+      - FSDTMLMethod and FSPageTemplate were imported directly 
+        from FileSystemSite product instead of from fssite module
+   
 
   1.5.2
 
