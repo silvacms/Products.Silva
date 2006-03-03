@@ -243,7 +243,7 @@
     
   <xsl:template match="doc:image[@link]">
     <xsl:choose>
-      <xsl:when test="string-length(@link) &gt; 0"
+      <xsl:when test="string-length(@link) &gt; 0">
         <xsl:choose>
           <xsl:when test="@link_to_hires=1">
             <a href="{@link}" target="{@target}?hires" title="@title">
