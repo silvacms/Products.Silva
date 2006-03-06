@@ -307,7 +307,12 @@ class _Path:
         assert type(obj_context) in [list, tuple], \
                         "obj_context is not list type"
         obj_path = obj.getPhysicalPath()
-        return '/'.join(self(obj_context, obj_path))
+        rel_path = '/'.join(self(obj_context, obj_path))
+        if rel_path == '':
+            # points to same object, to avoid problems we return an absolute
+            # path
+            return '/'.join(obj_path)
+        return rel_path
 
     def toAbsolute(self, context_path, relative_path):
         """make a relative path absolute
