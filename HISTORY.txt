@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  Current SVN
+
+    Bugs fixed:
+
+      - Changed mangle.Path.fromObject() so it doesn't return '' anymore when
+        from and to objects are the same.
+
   1.4.2
 
     Features added
