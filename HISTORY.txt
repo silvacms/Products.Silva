@@ -32,6 +32,10 @@ Under development
       - Fixed non-interpolation issues with message ids in the image
         UI.
 
+      - Fix in the public preview screen; it broke for ghosts and
+        other objects that only register the 'public' view for
+        versions.
+
   1.5
   
     Features added
