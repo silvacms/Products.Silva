@@ -219,11 +219,18 @@ class VersionedContent(Content, Versioning, Folder.Folder):
                 # if got something odd, we'll
                 # just report we don't have a back_url
                 back_url = None
+
+        # check whether this should have a publish now button
+        show_publish_now = (
+            self.get_unapproved_version() is not None and
+            getSecurityManager().checkPermission(
+            'Approve Silva content', self))
+
         # prepare arguments for preview_buttons page template
         args = {
             'message': REQUEST.get('message', ''),
             'message_type': REQUEST.get('message_type', ''),
-            'unapproved': self.get_unapproved_version() is not None,
+            'show_publish_now': show_publish_now,
             'back_url': back_url,
             }
         # now render html

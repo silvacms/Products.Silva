@@ -10,6 +10,8 @@ Silva changes
       - FSDTMLMethod and FSPageTemplate were imported directly 
         from FileSystemSite product instead of from fssite module
    
+      - Public preview of Ghosts was broken. Fixed this by making the
+        general public preview code slightly more robust.
 
   1.5.2
 
