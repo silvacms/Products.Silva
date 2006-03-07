@@ -253,7 +253,8 @@
               />
           </td>
           <td i18n:translate="">
-            If not checked the published version is exported.
+            If checked only the most recent version is exported. If 
+            not checked all versions are exported.
           </td>
         </tr>
       </tbody>
