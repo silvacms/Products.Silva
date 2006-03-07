@@ -13,6 +13,8 @@ Silva changes
       - Public preview of Ghosts was broken. Fixed this by making the
         general public preview code slightly more robust.
 
+      - Small context bug fixes in the LookupWindowWidget.
+
   1.5.2
 
     Bugs fixed
