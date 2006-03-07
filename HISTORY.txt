@@ -36,6 +36,8 @@ Under development
         other objects that only register the 'public' view for
         versions.
 
+      - Small context bug fixes in the LookupWindowWidget.
+
   1.5
   
     Features added

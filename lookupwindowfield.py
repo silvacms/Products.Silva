@@ -67,8 +67,16 @@ class LookupWindowWidget(TextWidget):
         if model is None:
             # XXX not sure yet either
             return ''
+        # when inside Kupu, 'model' points to the ExternalSource, which is not
+        # very useful... however, in that case a request variable 'docref' will
+        # be available to refer to the original model...
+        if request.has_key('docref'):
+            # we're in an ExternalSource, use the document in which it is
+            # placed instead of the source as the model
+            model = model.resolve_ref(request['docref'])
+        container = model.get_container()
         interpolate = {
-            'url': model.absolute_url(),
+            'url': container.absolute_url(),
             'field_id': key}
         return field.get_value('onclick') % interpolate
     
