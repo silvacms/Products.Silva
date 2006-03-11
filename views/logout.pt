@@ -37,6 +37,7 @@
       <a href="/manage_zmi_logout"
         title="accesskey: alt-l"
         accesskey="l"
+        tal:attributes="href string:${request/model/absolute_url}/manage_zmi_logout"
         i18n:attributes="title"
         i18n:translate="">logout link</a>.
       <br />
