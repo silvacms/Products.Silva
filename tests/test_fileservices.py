@@ -12,6 +12,7 @@ from Testing.ZopeTestCase import utils
 from StringIO import StringIO
 
 from Products.Silva import File
+from Products.Silva.Image import havePIL
 
 try:
     from Products import ExtFile
@@ -59,7 +60,10 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         file_handle.close()
 
     def _test_image(self, id, context):
-        file_handle = testopen('test_image_data/photo.tif', 'rb')
+        if havePIL:
+            file_handle = testopen('test_image_data/photo.tif', 'rb')
+        else:
+            file_handle = testopen('test_image_data/silva.png', 'rb')
         context.manage_addProduct['Silva'].manage_addImage(
             id, 'Test Image', file_handle)
         file_handle.close()
