@@ -284,7 +284,8 @@
 <tal:condition condition="docma_running">
 
 <tal:define define="
-  global userid view/REQUEST/AUTHENTICATED_USER;
+  global user view/REQUEST/AUTHENTICATED_USER;
+  global userid user/getId;
   global queue view/service_docma/get_queue;
   global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
@@ -404,7 +405,7 @@
             type="text"
             name="email"
             tal:attributes="
-              value python:here.service_members.get_member(user.getUserName()).email() or ''"
+              value python:here.service_members.get_member(user.getId()).email() or ''"
           />
         </td>
         <td i18n:translate="">

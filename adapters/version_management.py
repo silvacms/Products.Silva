@@ -251,7 +251,7 @@ class VersionManagementAdapter(adapter.Adapter):
                                 'getVersionCreatorInfo')
     def getVersionCreatorInfo(self, versionid):
         version = self.getVersionById(versionid)
-        return self.context.sec_get_member(version.getOwner().getUserName())
+        return self.context.sec_get_member(version.getOwner().getId())
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionStatus')

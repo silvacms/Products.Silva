@@ -10,6 +10,7 @@ from AccessControl import Permissions, ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva.helpers import add_and_edit
+from Products.Silva.i18n import translate as _
 
 class Job:
     __allow_access_to_unprotected_subobjects__ = 1

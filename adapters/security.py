@@ -89,9 +89,9 @@ class LockAdapter(adapter.Adapter):
     def createLock(self):
         if self.isLocked():
             return 0
-        username = getSecurityManager().getUser().getUserName()
+        user_id = getSecurityManager().getUser().getId()
         dt = DateTime()
-        self.context._lock_info = username, dt
+        self.context._lock_info = user_id, dt
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -104,12 +104,12 @@ class LockAdapter(adapter.Adapter):
     def isLocked(self):
         if self.context._lock_info is None:
             return 0
-        username, dt = self.context._lock_info
+        user_id, dt = self.context._lock_info
         current_dt = DateTime()
         if current_dt - dt >= LOCK_DURATION:
             return 0
-        current_username = getSecurityManager().getUser().getUserName()
-        return username != current_username
+        current_user_id = getSecurityManager().getUser().getId()
+        return user_id != current_user_id
 
 Globals.InitializeClass(LockAdapter)
 

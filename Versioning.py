@@ -6,7 +6,7 @@ from zope.interface import implements
 
 # Zope
 from DateTime import DateTime
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 import ExtensionClass
 # Silva
@@ -146,7 +146,7 @@ class Versioning:
             expiration_date_str = 'The version will expire at %s\n' % \
                                   _format_date_helper(expiration_datetime)
             
-        editor = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        editor = getSecurityManager().getUser().getId()
         text = "\nVersion was approved for publication by %s.\n%s%s" % \
                 (editor, publication_date_str, expiration_date_str)
         self._send_message(editor, info.requester,
@@ -173,7 +173,7 @@ class Versioning:
 
         # send messages to editor
         # XXX should the last author be informed, too?
-        author = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        author = getSecurityManager().getUser().getId()
         text = "\nVersion was unapproved by %s." % author
         self._send_message_to_editors(author, 'Unapproved', text)
         if self._request_for_approval_info.requester is not None:
@@ -283,7 +283,7 @@ class Versioning:
         last_author = self.sec_get_last_author_info()
 
         info = self._get_editable_rfa_info()
-        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.requester = getSecurityManager().getUser().getId()
         info.request_date = DateTime()
         info.request_pending=1
         self._set_approval_request_message(message)
@@ -330,7 +330,7 @@ class Versioning:
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
         orginal_requester = info.requester
-        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
         # send messages
@@ -360,7 +360,7 @@ class Versioning:
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
         original_requester = info.requester
-        info.requester = self.REQUEST.AUTHENTICATED_USER.getUserName()
+        info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
         # send message back to requester

@@ -407,7 +407,7 @@ class SilvaObject(Security, ViewCode):
         # create a member implicitely, if not already there
         #if hasattr(self.get_root(),'service_members'):
         #    self.get_root().service_members.get_member(
-        #        self.REQUEST.AUTHENTICATED_USER.getUserName())
+        #        self.REQUEST.AUTHENTICATED_USER.getId())
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_zip')

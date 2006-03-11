@@ -94,9 +94,9 @@ class Security(AccessManager):
         """
         if self.sec_is_locked():
             return 0
-        username = getSecurityManager().getUser().getUserName()
+        user_id = getSecurityManager().getUser().getId()
         dt = DateTime()
-        self._lock_info = username, dt
+        self._lock_info = user_id, dt
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -114,12 +114,12 @@ class Security(AccessManager):
         """
         if self._lock_info is None:
             return 0
-        username, dt = self._lock_info
+        user_id, dt = self._lock_info
         current_dt = DateTime()
         if current_dt - dt >= LOCK_DURATION:
             return 0
-        current_username = getSecurityManager().getUser().getUserName()
-        return username != current_username
+        current_user_id = getSecurityManager().getUser().getId()
+        return user_id != current_user_id
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_have_management_rights')
@@ -251,14 +251,12 @@ class Security(AccessManager):
     def sec_update_last_author_info(self):
         """Update the author info with the current author.
         """
-        from AccessControl import getSecurityManager
-        security = getSecurityManager()
         version = self.get_editable()
         if version is not None:
-            userid = security.getUser().getUserName()
+            userid = getSecurityManager().getUser().getId()
             version._last_author_userid = userid
             version._last_author_info = self.sec_get_member(userid).aq_base
-            # XXX perfomance issue?
+            # XXX performance issue?
             try:
                 binding = self.service_metadata.getMetadata(version)
             except BindingError:
@@ -271,7 +269,7 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_creator_info')
     def sec_get_creator_info(self):
-        return self.sec_get_member(self.getOwner().getUserName())
+        return self.sec_get_member(self.getOwner().getId())
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_userids')
