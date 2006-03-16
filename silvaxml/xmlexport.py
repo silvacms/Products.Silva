@@ -4,9 +4,10 @@ the existing export machinery.
 """
 from StringIO import StringIO
 from sprout.saxext import xmlexport
-from Products.Silva.interfaces import IPublication
 from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
+from Products.Silva.interfaces import IPublication
+from Products.Silva.adapters import version_management
 
 NS_SILVA = 'http://infrae.com/ns/silva'
 NS_SILVA_CONTENT = 'http://infrae.com/namespaces/metadata/silva'
@@ -129,7 +130,9 @@ class VersionedContentProducer(SilvaBaseProducer):
         """Export the XML of the versions themselves.
         """
         if self.getSettings().allVersions():
-            for version in self.context.objectValues():
+            vm = version_management.getVersionManagementAdapter(self.context)
+            for version in vm.getVersions():
+                # getVersions will order by id - most recent last.
                 self.subsax(version)
         else:
             # XXX handle single version export. Is previewable right? Is
