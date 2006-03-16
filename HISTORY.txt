@@ -24,6 +24,8 @@ Under development
 
     Ported from 1.5 branch
 
+      - Add ZCatalog index upgrader to comply with an API change in Zope.
+
       - The new lookup window was registering resources under the name
         scripts. This name is too broad and was in fact being
         overridden by a Silva extension that introduced its own
