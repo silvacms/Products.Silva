@@ -43,6 +43,8 @@ Under development
 
       - Small context bug fixes in the LookupWindowWidget.
 
+      - Some text related to reserved ids wasn't properly translated.
+
   1.5
   
     Features added
