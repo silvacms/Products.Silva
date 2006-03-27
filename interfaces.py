@@ -435,7 +435,7 @@ class IContainer(ISilvaObject, IPublishable):
         """
         pass
 
-    def get_assets_of_type():
+    def get_assets_of_type(meta_type):
         """Get list of assets of a certain meta_type.
         PUBLIC
         """
