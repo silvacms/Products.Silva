@@ -188,6 +188,9 @@ class FolderHandler(SilvaBaseHandler):
         if name == (NS_URI, 'folder'):
             parent = self.parent()
             id = attrs[(None, 'id')].encode('utf-8')
+            if self.settings().replaceObjects() and id in parent.objectIds():
+                self.setResult(getattr(parent, id))    
+                return
             uid = generateUniqueId(id, parent)
             parent.manage_addProduct['Silva'].manage_addFolder(
                 uid, '', create_default=0)
@@ -195,7 +198,6 @@ class FolderHandler(SilvaBaseHandler):
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
-
             self.setMaintitle()
             self.storeMetadata()
 
@@ -203,10 +205,14 @@ class PublicationHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
             id = str(attrs[(None, 'id')])
-            uid = generateUniqueId(id, self.parent())
+            parent = self.parent()
+            if self.settings().replaceObjects() and id in parent.objectIds():
+                self.setResult(getattr(parent, id))    
+                return
+            uid = generateUniqueId(id, parent)
             self.parent().manage_addProduct['Silva'].manage_addPublication(
                 uid, '', create_default=0)
-            self.setResult(getattr(self.parent(), uid))
+            self.setResult(getattr(parent, uid))
                 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
