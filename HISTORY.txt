@@ -48,6 +48,9 @@ Under development
 
       - Some text related to reserved ids wasn't properly translated.
 
+      - Failure in user preferences dialog if the browser for some reason
+        has no preferred languages configured whatsoever.
+
   1.5
   
     Features added
