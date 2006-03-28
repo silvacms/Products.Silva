@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.2.2 (DC)
+Silva 1.2.3 (DC)
 ----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
