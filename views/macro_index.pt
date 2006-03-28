@@ -20,10 +20,6 @@
     root_url model/get_root_url;
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
-    
-    content_type      view/set_content_type;
-    set_cache_headers view/set_cache_headers;
-
     silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;    
@@ -38,7 +34,7 @@
     editor python: request.SESSION.get('editor', None) or current_member.editor();
 
 ">
-
+  <tal:block define="dummy context/@@headers" />
 <head>
 <title>
   <tal:block content="title">title</tal:block> &#8211;

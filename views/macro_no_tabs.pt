@@ -15,21 +15,16 @@
     type model/meta_type;
     url model/absolute_url;
     title python: model.get_title_editable() or model.id;
-    
     root_url model/get_root_url;
     global publication model/get_publication;
     global containing_publication publication/../get_publication | publication;
-    
-    content_type silvaview/set_content_type;
-    set_cache_headers silvaview/set_cache_headers;
-
     silva_permissions silvaview/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;
 
     mangle python:modules['Products'].Silva.mangle;
 ">
-
+  <tal:block define="dummy context/@@headers" />
 <head>
 <title tal:content="title">
   Title

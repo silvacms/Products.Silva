@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html metal:use-macro="here/layout_macro.html/macros/layout"
   lang="en"
   xml:lang="en"
@@ -9,6 +10,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   >
+  <tal:block define="dummy context/@@headers" />
   <head>
     <style media="all"
       type="text/css"
@@ -22,10 +24,8 @@
       tal:define="
         view here;
         model request/model;
-        icon python:view.render_icon(model);
-        content_type here/set_content_type;"
+        icon python:view.render_icon(model);"
       >
-      <tal:block define="dummy here/set_content_type" />
       <form method="POST" name="form" action=".">
         <table class="listing">
           <thead>

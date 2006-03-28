@@ -62,6 +62,13 @@
     class=".emptyaction.EmptyAction"
     permission="silva.ChangeSilvaContent"
   />
+
+  <browser:page
+    name="headers"
+    for="Products.Silva.interfaces.ISilvaObject"
+    class="Products.Silva.browser.headers.Headers"
+    permission="zope2.View"
+  />
   
   <browser:resourceDirectory
     name="silva_scripts"

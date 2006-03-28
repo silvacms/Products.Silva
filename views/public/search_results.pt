@@ -9,6 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   >
+  <tal:block define="dummy context/@@headers" />
   <head>
     <style media="all"
       type="text/css"
@@ -21,15 +22,11 @@
     <metal:block fill-slot="main"
       tal:define="
         view here;
-        content_type here/set_content_type;
-
         model request/model;
         icon python:view.render_icon(model);          
-
         results view/perform_search;
         batch python:view.getBatch(results);"
       >
-      <tal:block define="dummy here/set_content_type" />
       <form method="POST" name="form" action=".">
 
       <tal:block tal:condition="results">    
