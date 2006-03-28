@@ -21,6 +21,9 @@ Silva changes
         from and to objects are the same.
   
       - Some text related to reserved ids wasn't properly translated.
+ 
+      - Failure in user preferences dialog if the browser for some reason
+        has no preferred languages configured whatsoever.
 
       - Fixed bug in XML export (to_xml()) of Link objects, escaping 
         (entitizing) title and url properly now.

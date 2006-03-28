@@ -82,9 +82,11 @@ class LanguageProvider(adapter.Adapter):
     
     security.declarePublic('getPreferredLanguage')
     def getPreferredLanguage(self):
-        result = IUserPreferredLanguages(
-            self.context.REQUEST).getPreferredLanguages()[0]
-        return result
+        try:
+            return IUserPreferredLanguages(
+                self.context.REQUEST).getPreferredLanguages()[0]
+        except IndexError:
+            return None
     
 Globals.InitializeClass(LanguageProvider)
 
