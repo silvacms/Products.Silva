@@ -14,7 +14,7 @@ from Version import CatalogedVersion
 import SilvaPermissions
 from interfaces import IVersionedContent, IVersion
 import mangle
-from helpers import add_and_edit
+from helpers import add_and_edit, translateCdata
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
@@ -60,8 +60,8 @@ class Link(CatalogedVersionedContent):
             
         version = getattr(self, version_id)
         f.write('<silva_link id="%s">' % self.id)
-        f.write('<title>%s</title>' % version.get_title())
-        f.write('<url>%s</url>' % version.get_url())
+        f.write('<title>%s</title>' % translateCdata(version.get_title()))
+        f.write('<url>%s</url>' % translateCdata(version.get_url()))
         export_metadata(version, context)
         f.write('</silva_link>')
 
