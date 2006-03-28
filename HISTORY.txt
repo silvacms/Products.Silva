@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  1.2.5
+  1.2.3
 
     Bugs fixed
 
@@ -14,16 +14,8 @@ Silva changes
         interpolated properly (while the normal messageid does allow such
         interpolation).
 
-  1.2.4
-
-    Bugs fixed
-
       - When content without a maintitle was exported, it could not be
         imported again. 
-
-  1.2.3
-
-    Bugs fixed
 
       - Fixed a unicode bug in SilvaDocument where certain
         combinations of non-ascii characters could sometimes cause
