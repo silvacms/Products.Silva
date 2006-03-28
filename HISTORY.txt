@@ -13,6 +13,10 @@ Silva changes
       - Fixed bug in XML export (to_xml()) of Link objects, escaping 
         (entitizing) title and url properly now.
 
+      - Error in i18n/dummymessageid.py where non-string types weren't 
+        interpolated properly (while the normal messageid does allow such
+        interpolation).
+
   1.4.2
 
     Features added
