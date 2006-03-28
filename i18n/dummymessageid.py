@@ -1,4 +1,4 @@
-import re
+import re, types
 
 class DummyMessageID:
     """Dummy MessageID object
@@ -39,7 +39,10 @@ class DummyMessageID:
             if not match:
                 break
             try:
-                s = s.replace(match.group(0), mapping[match.group(1)])
+                rep = mapping[match.group(1)]
+                if type(rep) not in types.StringTypes:
+                    rep = str(rep)
+                s = s.replace(match.group(0), rep)
             except KeyError:
                 raise KeyError, match.group(1)
         self.__parsed = s
