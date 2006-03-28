@@ -22,6 +22,9 @@ Under development
       - Handle user with user id different from login properly
         (issue 1471)
 
+      - Fixed bug in XML export (to_xml()) of Link objects, escaping 
+        (entitizing) title and url properly now.
+
     Ported from 1.5 branch
 
       - Add ZCatalog index upgrader to comply with an API change in Zope.
