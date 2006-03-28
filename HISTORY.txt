@@ -3,6 +3,17 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.2.5
+
+    Bugs fixed
+
+      - Error in Link where XML entities weren't escaped properly for the
+        title and url in XML export.
+
+      - Error in i18n/dummymessageid.py where non-string types weren't 
+        interpolated properly (while the normal messageid does allow such
+        interpolation).
+
   1.2.4
 
     Bugs fixed
