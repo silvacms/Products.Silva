@@ -6,7 +6,10 @@ Silva changes
 Under development
 
     Features added
-
+    
+      - Added the possibility of using silva lookup to filter on multiple 
+        meta-types.
+    
       - The import has an extra option: 'replace content' which, when
         enabled, replaces existing content objects with objects from the
         import when they have the same ids. It treats folderish strcutures in
