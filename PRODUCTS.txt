@@ -93,8 +93,8 @@ available plugin index. Used by SilvaMetadata.
 
 http://www.infrae.com/download/ProxyIndex
 
-Sprout 0.6.2 (DCI)
-------------------
+Sprout 0.7 (DCI)
+----------------
 
 Sprout is a pure-python library that can also be installed as a Zope
 product for convenience. It contains various support modules for
