@@ -12,7 +12,7 @@ class Headers(BrowserView):
         """
         content_tags = self.set_content_type()
         cache_tags = self.set_cache()
-        return content_tags + '/n' + cache_tags
+        return content_tags + '\n' + cache_tags
         
     def set_content_type(self):
         """docstring
@@ -44,4 +44,4 @@ class Headers(BrowserView):
                 placed.append(key)
             else:
                 response.addHeader(key, value)
-        return '/n'.join(tags)
+        return '\n'.join(tags)
