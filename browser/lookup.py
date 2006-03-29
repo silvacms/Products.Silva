@@ -35,7 +35,7 @@ class ObjectLookup(BrowserView):
             meta_type = getattr(obj, 'meta_type')
         return tag % {'icon_path': icon_path, 'alt': meta_type}
     
-    def objectLookupGetObjects(self, filter=[], show_add=False):
+    def objectLookupGetObjects(self, filter=None, show_add=False):
         """Returns objects to be displayed for the lookup window
             
             filter: 'Asset', 'Content', a certain meta_type (string) or a 
@@ -63,16 +63,21 @@ class ObjectLookup(BrowserView):
         assets = []
         addables = []
 
+        filter = filter or []
+        
         if show_add:
             all_addables = model.get_silva_addables()
 
-        if filter == 'Asset':
+        if isinstance(filter, str):
+            filter = filter.split("|")
+        
+        if filter == ['Asset']:
             assets = model.get_assets()
             if show_add:
                 addables = [a['name'] for a in all_addables if 
                                 IAsset.implementedBy(
                                     a['instance'])]
-        elif filter == 'Content':
+        elif filter == ['Content']:
             default = model.get_default()
             ordered_publishables = []
             if default:
@@ -85,7 +90,7 @@ class ObjectLookup(BrowserView):
                 addables = [a['name'] for a in all_addables if
                                 IContent.implementedBy(
                                     a['instance'])]
-        elif filter == 'Container':
+        elif filter == ['Container']:
             ordered_publishables = [
                 o for o in model.get_ordered_publishables() 
                 if o.implements_container()]
@@ -93,7 +98,7 @@ class ObjectLookup(BrowserView):
                 addables = [a['name'] for a in all_addables if 
                                 IContainer.implementedBy(
                                     a['instance'])]
-        elif filter == 'Publishable':
+        elif filter == ['Publishable']:
             default = model.get_default()
             ordered_publishables = []
             if default:
@@ -126,11 +131,7 @@ class ObjectLookup(BrowserView):
                         assets.append(o)
 
                 if show_add:
-                    addables = [a['name'] for a in all_addables if 
-                                  (isinstance(filter, list) and 
-                                      a['name'] in filter) or
-                                  (isinstance(filter, str) and 
-                                      a['name'] == filter)]
+                    addables = [a['name'] for a in all_addables if a['name'] in filter]
 
         # sort the assets
         assets.sort(lambda a, b: cmp(a.id, b.id))

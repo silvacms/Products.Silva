@@ -44,8 +44,7 @@
       dummy python: request.SESSION.set('lookup:show_add', show_add);
       dummy python: request.SESSION.set('lookup:startpath', startpath);
       pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
-    
-      ">
+      filter_string python: '|'.join(filter)">
       <table class="columns columns2">
         <tbody>
           <tr>
@@ -56,7 +55,7 @@
               <tal:block define="template_id string:@@object_lookup">
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
-                    <tal:block define="sb context/@@sidebar" replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter, show_add) , vein)" />
+                    <tal:block define="sb context/@@sidebar" replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
@@ -138,7 +137,7 @@
                         />
                         <input type="hidden"
                           name="return_url"
-                          tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter}&show_add=${show_add}"
+                          tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
                         />
                         </form>
                       </div>
