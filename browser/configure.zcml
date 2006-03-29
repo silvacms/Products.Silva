@@ -64,9 +64,34 @@
   />
 
   <browser:page
-    name="headers"
     for="Products.Silva.interfaces.ISilvaObject"
+    name="set_content_type_and_cache"
     class="Products.Silva.browser.headers.Headers"
+    attribute="set_content_type_and_cache"
+    permission="zope2.View"
+  />
+
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="set_content_type"
+    class="Products.Silva.browser.headers.Headers"
+    attribute="set_content_type"
+    permission="zope2.View"
+  />
+  
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="set_cache"
+    class="Products.Silva.browser.headers.Headers"
+    attribute="set_cache"
+    permission="zope2.View"
+  />
+  
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="set_headers"
+    class="Products.Silva.browser.headers.Headers"
+    attribute="set_headers"
     permission="zope2.View"
   />
   

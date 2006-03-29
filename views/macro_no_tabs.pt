@@ -24,8 +24,8 @@
 
     mangle python:modules['Products'].Silva.mangle;
 ">
-  <tal:block define="dummy request/model/@@headers" />
 <head>
+  <tal:block replace="structure request/model/@@set_content_type_and_cache" />
 <title tal:content="title">
   Title
 </title>
