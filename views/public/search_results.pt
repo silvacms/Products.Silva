@@ -9,7 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   >
-  <tal:block define="dummy context/@@headers" />
+  <tal:block define="dummy request/model/@@headers" />
   <head>
     <style media="all"
       type="text/css"

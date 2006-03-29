@@ -34,7 +34,7 @@
     editor python: request.SESSION.get('editor', None) or current_member.editor();
 
 ">
-  <tal:block define="dummy context/@@headers" />
+  <tal:block define="dummy request/model/@@headers" />
 <head>
 <title>
   <tal:block content="title">title</tal:block> &#8211;

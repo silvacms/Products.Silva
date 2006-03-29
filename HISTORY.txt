@@ -7,9 +7,14 @@ Under development
 
     Features added
 
-      - The import has an extra option: 'replace content' which, when 
-        enabled, replaces existing content objects with objects from the 
-        import when they have the same ids.
+      - The import has an extra option: 'replace content' which, when
+        enabled, replaces existing content objects with objects from the
+        import when they have the same ids. It treats folderish strcutures in
+        the same way a POSIX cp would: i.e. in the target folders are used 
+        if they exist, and created if not.
+
+      - moved the set_content_type and set_cache_headers scripts into the 
+        new view system, to the view 'headers'. 
 
     Bugs fixed
 
