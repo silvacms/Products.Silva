@@ -24,4 +24,6 @@ if model.get_next_version():
 model.sec_update_last_author_info()
 model.create_copy()
 
-return view(message_type="feedback", message=_("New version created."))
+request.RESPONSE.redirect('%s/edit?message_type=feedback&message=%s' % 
+    (model.absolute_url(), _("New version created.")))
+return ''
