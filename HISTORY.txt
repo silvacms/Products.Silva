@@ -28,6 +28,9 @@ Silva changes
       - Fixed bug in XML export (to_xml()) of Link objects, escaping 
         (entitizing) title and url properly now.
 
+      - The back button should now always go back to the last edit page
+        visited.
+
   1.5.2
 
     Bugs fixed
