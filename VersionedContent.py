@@ -201,24 +201,38 @@ class VersionedContent(Content, Versioning, Folder.Folder):
 
         REQUEST = self.REQUEST
         SESSION = REQUEST.SESSION
+        
+        # have to make sure the clients don't cache the public preview page
+        # because of the back button
+        # XXX copied from view/set_cache_headers.py, loading stuff from the
+        # views is somewhat messy... but perhaps i should have done that 
+        # anyway?
+        response = REQUEST.RESPONSE
+        headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
+                    ('Last-Modified', 
+                        DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
+                    ('Cache-Control', 'no-cache, must-revalidate'),
+                    ('Cache-Control', 'post-check=0, pre-check=0'),
+                    ('Pragma', 'no-cache'),
+                    ]
 
-        # first try to find where we need to go back from session
-        # XXX ugh, this means that once session is set, back behavior can never
-        # be correct again, unless we clear session from the other tab_edit
-        # and tab_preview page where the public preview button exists,
-        # which we do not do right now
-        back_url = SESSION.get('public_preview_back_url', None)
-        if back_url is None:
-            # okay, let's look for the HTTP referer
-            back_url = REQUEST.get('HTTP_REFERER', None)
-            if (back_url is not None and
-                back_url.startswith(self.absolute_url())):
-                # got something, so set in session for next time
-                SESSION['public_preview_back_url'] = back_url
+        placed = []
+        for key, value in headers:
+            if key not in placed:
+                response.setHeader(key, value)
+                placed.append(key)
             else:
-                # if got something odd, we'll
-                # just report we don't have a back_url
-                back_url = None
+                response.addHeader(key, value)
+                
+        # make sure the back button points to the last edit screen visited
+        back_url = SESSION.get('public_preview_back_url', None)
+        # [sic]
+        referer = REQUEST.get('HTTP_REFERER', None)
+        if (referer and 'edit' in referer.split('/') and 
+                not referer.endswith('/public_html')):
+            # set the referer as the target for the back button...
+            SESSION['public_preview_back_url'] = referer
+            back_url = referer
 
         # check whether this should have a publish now button
         show_publish_now = (
