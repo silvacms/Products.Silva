@@ -59,6 +59,9 @@ Under development
       - Failure in user preferences dialog if the browser for some reason
         has no preferred languages configured whatsoever.
 
+      - The back button should now always go back to the last edit page
+        visited.
+
   1.5
   
     Features added
