@@ -305,10 +305,10 @@ div#kupu-fgcolorchooser div:hover {
 
 #kupu-toolbox-extsource #extsourceform select {
   width: 14em;
-};
+}
 
-#kuput-toolbox-extsource #extsourceform textarea {
+#kupu-toolbox-extsource #extsourceform textarea {
   width: 14em;
-};
+}
 
 </dtml-let>
