@@ -67,6 +67,8 @@ Under development
         the back button sometimes caused the make_copy script to get triggered)
         and making the URL in tab_edit look better after creating a new copy.
 
+      - File uploads were broken due to a missing return_url variable. Fixed.
+
   1.5
   
     Features added
