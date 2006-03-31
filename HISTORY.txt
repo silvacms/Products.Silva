@@ -5,6 +5,10 @@ Silva changes
   
   after 1.5.2
    
+    Features added
+ 
+      - Silva was tested with Zope 2.8.6.
+
     Bugs fixed
 
       - Add ZCatalog index upgrader to comply with an API change in Zope.
