@@ -196,8 +196,8 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 0.10 (EX)
-------------------------------
+SilvaExternalSources 0.10.4 (EX)
+--------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated

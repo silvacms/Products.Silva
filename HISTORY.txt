@@ -20,6 +20,8 @@ Silva changes
         interpolated properly (while the normal messageid does allow such
         interpolation).
 
+      - Fixed multi-value form element support in external sources.
+
   1.4.2
 
     Features added
