@@ -19,7 +19,7 @@ Under development
       - moved the set_content_type and set_cache_headers scripts into the 
         new view system, to the view 'headers'. 
 
-    Bugs fixed
+    Bugs fixed:
 
       - FSDTMLMethod and FSPageTemplate were imported directly 
         from FileSystemSite product instead of from fssite module
@@ -34,6 +34,9 @@ Under development
         (entitizing) title and url properly now.
 
     Ported from 1.5 branch
+
+      - Explicitly delete model from request in view_version() to break a
+        cyclic reference that prevents model from being garbage collected.
 
       - Add ZCatalog index upgrader to comply with an API change in Zope.
 
