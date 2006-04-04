@@ -22,6 +22,14 @@ Silva changes
 
       - Fixed multi-value form element support in external sources.
 
+      - The tab_edit_make_copy script now redirects to tab_edit instead of
+        returning it, fixing a problem with public preview (where pressing 
+        the back button sometimes caused the make_copy script to get triggered)
+        and making the URL in tab_edit look better after creating a new copy.
+
+      - The back button in the public preview should now always go back to the 
+        last edit page visited.
+
   1.4.2
 
     Features added
