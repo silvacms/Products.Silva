@@ -24,7 +24,7 @@ class LookupWindowWidget(TextWidget):
     default_onclick_handler = """reference.getReference(
     function(path, id, title) {
         document.getElementsByName('%(field_id)s')[0].value = path;;
-        }, '%(url)s', '', true)"
+        }, '%(url)s', '', true)
         """
     
     onclick = fields.TextAreaField(
