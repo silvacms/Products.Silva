@@ -33,6 +33,8 @@ Under development
       - Fixed bug in XML export (to_xml()) of Link objects, escaping 
         (entitizing) title and url properly now.
 
+      - Removed quote (probably typo) from some JS string in lookupwindowfield.
+
     Ported from 1.5 branch
 
       - Explicitly delete model from request in view_version() to break a
