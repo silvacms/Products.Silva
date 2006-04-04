@@ -326,8 +326,8 @@ class SilvaObject(Security, ViewCode):
         content = self.get_viewable()
         return self.view_version('public', content)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent, 
-                                'view_version')
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'view_version')
     def view_version(self, view_type, version):
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.')
@@ -336,15 +336,23 @@ class SilvaObject(Security, ViewCode):
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result
-        self.REQUEST.model = version
+        request = self.REQUEST
+        request.model = version
+        request.other['model'] = version
         try:
-            view = self.service_view_registry.get_view(view_type, version.meta_type)
+            view = self.service_view_registry.get_view(
+                view_type, version.meta_type)
         except KeyError:
             msg = 'no %s view defined' % view_type
             raise NoViewError, msg
         else:
-            return view.render()
-
+            rendered = view.render()
+            try:
+                del request.model
+            except AttributeError, e:
+                pass
+            return rendered
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_default')
     def is_default(self):
