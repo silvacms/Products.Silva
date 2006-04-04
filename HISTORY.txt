@@ -72,6 +72,8 @@ Under development
 
       - File uploads were broken due to a missing return_url variable. Fixed.
 
+      - Fixed multi-value form element support in external sources.
+
   1.5
   
     Features added
