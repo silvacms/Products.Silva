@@ -9,7 +9,10 @@ Silva changes
  
       - Silva was tested with Zope 2.8.6.
 
-    Bugs fixed
+    Bugs fixed:
+
+      - Explicitly delete model from request in view_version() to break a
+        cyclic reference that prevents model from being garbage collected.
 
       - Add ZCatalog index upgrader to comply with an API change in Zope.
 
