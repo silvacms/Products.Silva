@@ -66,130 +66,6 @@
           </table>
         </div>
 
-        <form action="." enctype="multipart/form-data" method="POST">
-          <input type="hidden" 
-            name="refs"
-            tal:attributes="value python: '||'.join(refs)" />
-          <table class="listing">
-            <thead>
-              <tr tal:replace="nothing">
-                ______________ vein + title row ______________
-              </tr>
-              <tr>
-                <td class="top"
-                  colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure python:view.render_icon(model)" />
-                    <tal:block i18n:translate="">export from
-                      &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
-                  </h2>
-                </td>
-              </tr>
-              <tr class="top-controls">
-                <td colspan="3">
-                    <a class="transport"
-                      style="float: right;"
-                      href="tab_edit_import"
-                      title="over to the import screen: alt-i"
-                      accesskey="i"
-                      i18n:attributes="title"
-                      i18n:translate="">
-                      import...
-                    </a>
-                  <h3 i18n:translate="">
-                    export to Silva xml (.xml)
-                    <tal:block i18n:name="or_pdf">
-                      <tal:condition condition="view/service_docmapdf | nothing">
-                        <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
-                      </tal:condition>
-                    </tal:block>
-                  </h3>
-                </td>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <th class="align-right"
-                  width="30%"
-                  i18n:translate="">
-                  options
-                </th>
-                <th width="3%">
-                </th>
-                <th i18n:translate="">
-                  note
-                </th>
-              </tr>
-
-              <tr class="odd">
-                <td class="align-right">
-                  <label for="with_sub_publications"
-                    i18n:translate="">
-                    include sub publications?
-                  </label>
-                </td>
-                <td class="align-center">
-                  <input class="min"
-                    type="checkbox"
-                    name="with_sub_publications"
-                    id="with_sub_publications"
-                   />
-                </td>
-                <td>
-                </td>
-              </tr>
-
-              <tr class="even">
-                <td class="align-right">
-                  <label for="export_last_version"
-                    i18n:translate="">
-                    export newest versions?
-                  </label>
-                </td>
-                <td class="align-center">
-                  <input class="min"
-                    type="checkbox"
-                    name="export_last_version"
-                    id="export_last_version"
-                    checked="checked"
-                  />
-                </td>
-                <td i18n:translate="">
-                  If not checked the published version is exported.
-                </td>
-              </tr>
-            </tbody>
-
-            <tfoot>
-              <tr class="controls">
-                <td class="align-right"
-                  colspan="3">
-                  <tal:condition
-                  condition="view/service_docmapdf | nothing">
-                    <input class="button"
-                      type="submit"
-                      name="download_pdf_selected:method"
-                      value="export pdf"
-                      title="access key: alt-p"
-                      accesskey="p"
-                      i18n:attributes="value;title"
-                    />
-                  </tal:condition>
-                  <input class="button"
-                    type="submit"
-                    name="download_xml_selected:method"
-                    value="export xml"
-                    title="access key: alt-e"
-                    accesskey="e"
-                    i18n:attributes="value;title"
-                  />
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </form>
-
     <form tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
       action="." enctype="multipart/form-data" method="POST">
       <input type="hidden" 
@@ -197,6 +73,16 @@
         tal:attributes="value python: '||'.join(refs)" />
       <table class="listing">
       <thead>
+        <tr>
+          <td class="top"
+            colspan="3">
+            <h2 tal:attributes="title string:id: ${model/id}">
+              <img tal:replace="structure python:view.render_icon(model)" />
+              <tal:block i18n:translate="">export from
+                &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
+            </h2>
+          </td>
+        </tr>
         <tr class="top-controls">
           <td colspan="3">
             <h3 i18n:translate="">
@@ -275,6 +161,113 @@
         </tr>
       </tfoot>
       </table>
+      </form>
+      
+      <form action="." enctype="multipart/form-data" method="POST"
+        tal:condition="view/service_docmapdf | nothing">
+        <input type="hidden" 
+          name="refs"
+          tal:attributes="value python: '||'.join(refs)" />
+        <table class="listing">
+          <thead>
+            <tr class="top-controls">
+              <td colspan="3">
+                <a class="transport"
+                  style="float: right;"
+                  href="tab_edit_import"
+                  title="over to the import screen: alt-i"
+                  accesskey="i"
+                  i18n:attributes="title"
+                  i18n:translate="">
+                  import...
+                </a>
+                <h3 i18n:translate="">
+                  export to Silva xml (.xml)
+                  <tal:block i18n:name="or_pdf">
+                    <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
+                  </tal:block>
+                </h3>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th class="align-right"
+                width="30%"
+                i18n:translate="">
+                options
+              </th>
+              <th width="3%">
+              </th>
+              <th i18n:translate="">
+                note
+              </th>
+            </tr>
+
+            <tr class="odd">
+              <td class="align-right">
+                <label for="with_sub_publications"
+                  i18n:translate="">
+                  include sub publications?
+                </label>
+              </td>
+              <td class="align-center">
+                <input class="min"
+                  type="checkbox"
+                  name="with_sub_publications"
+                  id="with_sub_publications"
+                />
+              </td>
+              <td>
+              </td>
+            </tr>
+
+            <tr class="even">
+              <td class="align-right">
+                <label for="export_last_version"
+                  i18n:translate="">
+                  export newest versions?
+                </label>
+              </td>
+              <td class="align-center">
+                <input class="min"
+                  type="checkbox"
+                  name="export_last_version"
+                  id="export_last_version"
+                  checked="checked"
+                />
+              </td>
+              <td i18n:translate="">
+                If not checked the published version is exported.
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr class="controls">
+              <td class="align-right"
+                colspan="3">
+                <input class="button"
+                  type="submit"
+                  name="download_pdf_selected:method"
+                  value="export pdf"
+                  title="access key: alt-p"
+                  accesskey="p"
+                  i18n:attributes="value;title"
+                />
+                <input class="button"
+                  type="submit"
+                  name="download_xml_selected:method"
+                  value="export xml"
+                  title="access key: alt-e"
+                  accesskey="e"
+                  i18n:attributes="value;title"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </form>
 
 <span tal:replace="nothing">
