@@ -9,6 +9,8 @@ Silva changes
  
       - Silva was tested with Zope 2.8.6.
 
+      - Updated i18n.
+
     Bugs fixed:
 
       - Explicitly delete model from request in view_version() to break a
