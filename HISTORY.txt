@@ -76,6 +76,11 @@ Under development
 
       - Fixed multi-value form element support in external sources.
 
+      - Anchor links are rendered in a non-HTML compliant but in a
+        Silva backwards compatible way.
+
+      - XSLT and widgets based renderer for anchor links are identical.
+ 
   1.5
   
     Features added
