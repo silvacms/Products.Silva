@@ -292,7 +292,7 @@
   </xsl:template>
 
   <xsl:template match="doc:index" mode="text-content">
-    <a id="{@name}" />
+    <a class="index-element" name="{@name}" />
   </xsl:template>
 
   <xsl:template match="doc:toc">

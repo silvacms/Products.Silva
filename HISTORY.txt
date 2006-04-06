@@ -51,6 +51,11 @@ Silva changes
 
       - A bug was found in the Sprout extension; Silva now requires Sprout 0.7.
 
+      - Anchor links are rendered in a non-HTML complaint but in a
+        Silva backwards compatible way.
+
+      - XSLT and widgets based renderer for anchor links are identical.
+
   1.5.2
 
     Bugs fixed
