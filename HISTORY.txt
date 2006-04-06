@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
   
-  after 1.5.2
+  1.5.3
    
     Features added
  
