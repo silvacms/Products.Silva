@@ -27,8 +27,8 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.5i.3 (DC)
------------------
+Silva 1.5.3 (DC)
+----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
