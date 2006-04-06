@@ -161,7 +161,7 @@ def initialize(context):
         pass
     else:
         registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
-        registerDirectory('%s/silva' % os.path.dirname(kupu.__file__), globals())
+        registerDirectory('%s/kupu' % os.path.dirname(__file__), globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system
