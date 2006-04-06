@@ -505,15 +505,12 @@ def generateAnchorName(s):
 
     HTML 4 also requires the first character to be in [A-Z a-z].
     """
-    # we solve this by generating a hex digest of a md5 hash.
-    # this is not guaranteed to be unique but hopefully good enough,
-    # and it's fairly short.
-
-    # convert to a bytestream first (UTF-8) if necessary
+    # we do not really solve this now, so what we return is not
+    # XHTML compliant at all, but we must return the string for
+    # backwards compatibility (and XSLT compatibility, which doesn't
+    # use this code path at all..)
     if isinstance(s, unicode):
         s = s.encode('UTF-8')
-    # because a hex digest can still start with a non-alphabetic character,
-    # we prefix everything with a capital A
-    return 'A' + md5.new(s).hexdigest()
+    return s
 
 module_security.declarePublic('generateAnchorName')

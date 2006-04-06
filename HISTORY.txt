@@ -30,6 +30,13 @@ Silva changes
       - The back button in the public preview should now always go back to the 
         last edit page visited.
 
+      - Port from Silva 1.5: index item rendering is back to what it was:
+        not (X)HTML compliant if users enter the wrong text, but
+        backwards compatible with older Silva versions.
+
+      - XSLT renderer renders index items the same way as the widget
+        renderer.
+
   1.4.2
 
     Features added
