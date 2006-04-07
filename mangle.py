@@ -87,8 +87,6 @@ class Id:
         'home',
         'index_html',
         'insert',
-        'kupu',
-        'kupu_silva',
         'layout_macro.html',
         'logout',
         'lookup',

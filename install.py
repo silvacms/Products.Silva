@@ -641,10 +641,12 @@ def installKupu(root):
     except:
         pass
     else:
-        if not hasattr(root, 'kupu'):
-            add_fss_directory_view(root, 'kupu', kupu.__file__, 'common')
-        if not hasattr(root, 'kupu_silva'):
-            add_fss_directory_view(root, 'kupu_silva', __file__, 'kupu')
+        if not hasattr(root, 'service_kupu'):
+            add_fss_directory_view(root, 'service_kupu', 
+                                    kupu.__file__, 'common')
+        if not hasattr(root, 'service_kupu_silva'):
+            add_fss_directory_view(root, 'service_kupu_silva', 
+                                    __file__, 'kupu')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""

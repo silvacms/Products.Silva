@@ -16,8 +16,16 @@ Under development
         the same way a POSIX cp would: i.e. in the target folders are used 
         if they exist, and created if not.
 
-      - moved the set_content_type and set_cache_headers scripts into the 
+      - Moved the set_content_type and set_cache_headers scripts into the 
         new view system, to the view 'headers'. 
+
+      - Switched to Kupu 1.4 (the current 'trunk' (unreleased) version).
+
+      - Moved the 'kupu/silva' directory to 'Silva/kupu' (so to the Silva core)
+        to ease release management.
+
+      - Renamed 'kupu' and 'kupu_silva' in the Silva root to 'service_kupu' and
+        'service_kupu_silva', respectively.
 
     Bugs fixed:
 

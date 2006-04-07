@@ -72,7 +72,7 @@
           <unicode>1</unicode>
         </values>
         <tales>
-          <items type="list">python: hasattr(form, 'kupu') and ['forms editor', 'kupu'] or ['forms editor']</items>
+          <items type="list">python: hasattr(form, 'service_kupu') and ['forms editor', 'kupu'] or ['forms editor']</items>
         </tales>
       </field>
 

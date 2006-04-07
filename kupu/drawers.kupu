@@ -10,12 +10,12 @@
 
   <kupu:part name="styles">
     <link href="kupu_silva/kupudrawerstyles.css" rel="stylesheet" type="text/css" 
-            tal:attributes="href string:${root_url}/kupu_silva/kupudrawerstyles.css" />
+            tal:attributes="href string:${root_url}/service_kupu_silva/kupudrawerstyles.css" />
   </kupu:part>
 
   <kupu:part name="jsincludes">
     <script type="text/javascript" src="kupu/kupudrawers.js"
-            tal:attributes="src string:${root_url}/kupu/kupudrawers.js"> </script>
+            tal:attributes="src string:${root_url}/service_kupu/kupudrawers.js"> </script>
   </kupu:part>
 
   <kupu:part name="buttons">
@@ -28,8 +28,8 @@
   </kupu:part>
 
   <kupu:part name="xmlconfig">
-    <image_xsl_uri tal:content="string:${root_url}/kupu_silva/imagedrawer.xsl">kupudrawers/imagedrawer.xsl</image_xsl_uri>
-    <link_xsl_uri tal:content="string:${root_url}/kupu/kupudrawers/linkdrawer.xsl">kupudrawers/linkdrawer.xsl</link_xsl_uri>
+    <image_xsl_uri tal:content="string:${root_url}/service_kupu_silva/imagedrawer.xsl">kupudrawers/imagedrawer.xsl</image_xsl_uri>
+    <link_xsl_uri tal:content="string:${root_url}/service_kupu/kupudrawers/linkdrawer.xsl">kupudrawers/linkdrawer.xsl</link_xsl_uri>
     <image_libraries_uri tal:content="string:${model/absolute_url}/edit/kupu_imagelibraries">kupu_imagelibraries</image_libraries_uri>
     <link_libraries_uri>kupudrawers/demolibraries.xml</link_libraries_uri>
     <search_images_uri> </search_images_uri>

@@ -2,6 +2,31 @@
 Developer level changes in Silva
 ================================
 
+From 1.5 to 1.6
+===============
+
+Kupu
+----
+
+When switching to Kupu 1.4 (currently unreleased) we decided to make some
+changes in the way Silva uses it: instead of having a 'silva' directory inside
+the Kupu package containing Silva-speficic Kupu code, there's now a 'kupu'
+directory in the Silva core package. This should make it easier to release
+Silva seperately from Kupu, since most of the required changes for Silva can
+be done in Silva itself, so hopefully a lot of times a change in Silva's Kupu
+will only require a Silva release, not a Kupu one.
+
+This means that changes on Silva tools and template should now be done inside
+that new directory, and also that creating the 'kupumacros.html' file should
+be done from there: calling 'make' in Silva/kupu will result in what used to
+require calling 'make silvamacros' in kupu/silva.
+
+An additional change made is that the FileSystemSite directories that used to
+be called 'kupu' and 'kupu_silva' (residing in the Silva root) are now called
+'service_kupu' and 'service_kupu_silva'. This will break existing Silva 
+extensions that implement a custom Kupu edit view. Make sure to update any
+URLs pointing to those objects in your extensions.
+
 From 1.4 to 1.5
 ===============
 
