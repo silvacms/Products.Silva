@@ -34,9 +34,8 @@ macro plateau
           containing_publication publication/../get_publication | publication;
           query_string           query_string | nothing;
           global vein_id         template_id | python: template.id + test(query_string, query_string, '');
-          url                    python:request.get('URL0');
-          edit                   python:test('@@' in url, '/', '/edit/');
-          up                     python:test('@@' in url, '..', '../..');
+          edit                   python:test('@@' in vein_id, '/', '/edit/');
+          up                     python:test('@@' in vein_id, '..', '../..');
           ">
         <a class="up"
           title="up one level: alt-]"
