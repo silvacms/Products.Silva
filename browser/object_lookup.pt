@@ -36,14 +36,14 @@
       tal:define="
       objects context/get_tree;
       silva_permissions context/edit/get_silva_permissions;
-      filter python: request.get('filter');
+      filter request/filter | request/SESSION/filter | string:Content;
       filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
-      startpath python: request.SESSION.get('lookup:startpath') or '/'.join(context.getPhysicalPath());
+      startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
       show_add python: request.get('show_add', 
-      request.SESSION.get('lookup:show_add', '0'));
-      dummy python: request.SESSION.set('lookup:filter', filter);
-      dummy python: request.SESSION.set('lookup:show_add', show_add);
-      dummy python: request.SESSION.set('lookup:startpath', startpath);
+      request.SESSION.get('show_add', '0'));
+      dummy python: request.SESSION.set('filter', filter);
+      dummy python: request.SESSION.set('show_add', show_add);
+      dummy python: request.SESSION.set('startpath', startpath);
       pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
       filter_string python: '|'.join(filter)">
       <table class="columns columns2">
@@ -441,7 +441,7 @@
                         title="insert a reference to this asset: alt-p"
                         accesskey="p"
                         onclick="window.reference.setReference(
-                        document.getElementById('objectform'), 
+                        window.document.getElementById('objectform'), 
                         'object'); return false;" 
                         tal:condition="python: publishables or assets or default"
                         i18n:attributes="title;value"
