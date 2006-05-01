@@ -23,7 +23,8 @@ try:
         succeeded, failed = importer.importFromZip(model, archive,  replace)
     else:
         importer = archivefileimport.getArchiveFileImportAdapter(model)
-        succeeded, failed = importer.importArchive(archive, title, recreate)
+        succeeded, failed = importer.importArchive(
+            archive, title, recreate, replace)
 except archivefileimport.BadZipfile, e:
     msg = translate(_('Something bad with the zipfile;')) + ' ' + str(e)
     message_type='alert'

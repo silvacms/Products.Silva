@@ -40,7 +40,7 @@ class ILockable(Interface):
         """
 
 class IArchiveFileImporter(Interface):
-    def importArchive(archivefile, assettitle=None, recreatedirs=1):
+    def importArchive(archivefile, assettitle=None, recreatedirs=1, replace=0):
         """Import archive file
         
         Use 'assettitle' for the title to set on all assets created
@@ -49,6 +49,8 @@ class IArchiveFileImporter(Interface):
         Silva Containers (probably Silva Folders) reflecting the structure
         of the archive file. This substructure will be created relative to
         the adapted context.
+        
+        If replace is true, replace items with identical ids.
         
         Return a tuple with the list of succeeded items and failed items
         providing feedback on what archive contents have succesfully been 

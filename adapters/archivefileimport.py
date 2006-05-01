@@ -13,7 +13,7 @@ except:
 from zope.interface import implements
 # Zope
 import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 from OFS import content_types
 # Silva
 from Products.Silva import interfaces as silva_interfaces
@@ -41,7 +41,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importArchive')    
-    def importArchive(self, archive, assettitle='', recreatedirs=1):
+    def importArchive(self, archive, assettitle='', recreatedirs=1, replace=0):
         zip = zipfile.ZipFile(archive)
         
         # Lists the names of the files in the archive which were succesfully 
@@ -60,7 +60,8 @@ class ArchiveFileImportAdapter(adapter.Adapter):
             
             if recreatedirs and path:
                 dirs = path.split('/')
-                container = self._getSilvaContainer(self.context, dirs)
+                container = self._getSilvaContainer(
+                    self.context, dirs, replace)
                 if container is None:
                     failed_list.append('/'.join(dirs))
                     # Creating the folder failed - bailout for this
@@ -72,11 +73,8 @@ class ArchiveFileImportAdapter(adapter.Adapter):
                 
             # Actually add object...
             factory = self._getFactoryForMimeType(mimetype)
-            
-            id = self._getUniqueId(
-                container, filename, file=extracted_file, 
-                interface=silva_interfaces.IAsset)
-            
+
+            id = self._makeId(filename, container, extracted_file, replace)
             added_object = factory(
                 container, id, assettitle, extracted_file)
             if added_object is None:
@@ -89,10 +87,24 @@ class ArchiveFileImportAdapter(adapter.Adapter):
 
         return succeeded_list, failed_list
     
-    def _getSilvaContainer(self, context, path):
+    def _makeId(self, filename, container, extracted_file, replace):
+        if replace:
+            id = filename
+            if id in container.objectIds():
+                container.manage_delObjects([id])
+        else:
+            id = self._getUniqueId(
+                container, filename, file=extracted_file, 
+                interface=silva_interfaces.IAsset)
+        return id
+    
+    def _getSilvaContainer(self, context, path, replace=0):
         container = context
         for id in path:
-            container = self._addSilvaContainer(container, id)
+            if replace and id in container.objectIds():
+                container = getattr(container, id)
+            else:
+                container = self._addSilvaContainer(container, id)
         return container
     
     def _addSilvaContainer(self, context, id):
@@ -125,6 +137,14 @@ class ArchiveFileImportAdapter(adapter.Adapter):
     
 Globals.InitializeClass(ArchiveFileImportAdapter)
 
+allow_module('Products.Silva.adapters.archivefileimport')
+
+__allow_access_to_unprotected_subobjects__ = True
+    
+module_security = ModuleSecurityInfo('Products.Silva.adapters.archivefileimport')
+    
+module_security.declareProtected(
+    SilvaPermissions.ChangeSilvaContent, 'getArchiveFileImportAdapter')
 def getArchiveFileImportAdapter(context):
     if not silva_interfaces.IContainer.providedBy(context):
         # raise some exception here?
