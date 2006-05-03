@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
   
+  1.5.4
+
+    Bugs Fixed:
+
+      - The lookup window had a javascript bug, and the content type filtering
+        was not working correctly, both are fixed.
+
   1.5.3
    
     Features added
