@@ -36,16 +36,16 @@
       tal:define="
       objects context/get_tree;
       silva_permissions context/edit/get_silva_permissions;
-      filter python: request.get('filter');
-      startpath python: request.SESSION.get('lookup:startpath') or '/'.join(context.getPhysicalPath());
+      filter request/filter | request/SESSION/filter | string:Content;
+      filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
+      startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
       show_add python: request.get('show_add', 
-      request.SESSION.get('lookup:show_add', '0'));
-      dummy python: request.SESSION.set('lookup:filter', filter);
-      dummy python: request.SESSION.set('lookup:show_add', show_add);
-      dummy python: request.SESSION.set('lookup:startpath', startpath);
+      request.SESSION.get('show_add', '0'));
+      dummy python: request.SESSION.set('filter', filter);
+      dummy python: request.SESSION.set('show_add', show_add);
+      dummy python: request.SESSION.set('startpath', startpath);
       pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
-    
-      ">
+      filter_string python: '|'.join(filter)">
       <table class="columns columns2">
         <tbody>
           <tr>
@@ -56,7 +56,7 @@
               <tal:block define="template_id string:@@object_lookup">
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
-                    <tal:block define="sb context/@@sidebar" replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter, show_add) , vein)" />
+                    <tal:block define="sb context/@@sidebar" replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
@@ -138,7 +138,7 @@
                         />
                         <input type="hidden"
                           name="return_url"
-                          tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter}&show_add=${show_add}"
+                          tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
                         />
                         </form>
                       </div>
@@ -441,7 +441,7 @@
                         title="insert a reference to this asset: alt-p"
                         accesskey="p"
                         onclick="window.reference.setReference(
-                        document.getElementById('objectform'), 
+                        window.document.getElementById('objectform'), 
                         'object'); return false;" 
                         tal:condition="python: publishables or assets or default"
                         i18n:attributes="title;value"
