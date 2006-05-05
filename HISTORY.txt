@@ -33,6 +33,10 @@ Under development
         did not take into account the 'replace identical ids' option. It 
         does now.
 
+      - The lookup window had some problems with incorrect content type
+        filtering, and a strange javascript issue, where 'document' was
+        empty. Both are fixed.
+
       - FSDTMLMethod and FSPageTemplate were imported directly 
         from FileSystemSite product instead of from fssite module
 
