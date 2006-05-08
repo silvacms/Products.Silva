@@ -36,7 +36,7 @@
       tal:define="
       objects context/get_tree;
       silva_permissions context/edit/get_silva_permissions;
-      filter request/filter | request/SESSION/filter;
+      filter request/filter | request/SESSION/filter | nothing;
       filter python: filter or 'Content';  
       filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
       startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
