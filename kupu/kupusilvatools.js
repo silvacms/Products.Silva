@@ -54,6 +54,7 @@ SilvaLinkTool.prototype.updateLink = function (linkel, url, type,
         };
         linkel.style.color = this.linkcolor;
     };
+    this.editor.content_changed = true;
 };
 
 SilvaLinkTool.prototype.createContextMenuElements = function(selNode, event) {
@@ -118,6 +119,8 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
         target = this.targetinput.value;
      };
     this.tool.createLink(url, 'link', null, target);
+    this.editor.content_changed = true;
+    this.editor.updateState();
 };
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
@@ -320,6 +323,7 @@ SilvaImageTool.prototype.createImage = function(url, alttext, imgclass) {
     };
     img = this.editor.insertNodeAtSelection(img, 1);
     this.editor.logMessage(_('Image inserted'));
+    this.editor.content_changed = true;
     this.editor.updateState();
     return img;
 };
@@ -335,6 +339,7 @@ SilvaImageTool.prototype.setTarget = function() {
         this.editor.logMessage('No image selected!', 1);
     };
     image.setAttribute('target', target);
+    this.editor.content_changed = true;
 };
 
 SilvaImageTool.prototype.setSrc = function() {
@@ -347,6 +352,7 @@ SilvaImageTool.prototype.setSrc = function() {
     var src = this.urlinput.value;
     img.setAttribute('src', src);
     img.setAttribute('silva_src', src);
+    this.editor.content_changed = true;
     this.editor.logMessage('Image updated');
 };
 
@@ -367,6 +373,7 @@ SilvaImageTool.prototype.setHires = function() {
         image.setAttribute('link', this.linkinput.value);
         this.linkinput.disabled = false;
     };
+    this.editor.content_changed = true;
 };
 
 SilvaImageTool.prototype.setLink = function() {
@@ -379,6 +386,7 @@ SilvaImageTool.prototype.setLink = function() {
     };
     image.setAttribute('link', link);
     image.setAttribute('link_to_hires', '0');
+    this.editor.content_changed = true;
 };
 
 SilvaImageTool.prototype.setTitle = function() {
@@ -390,6 +398,7 @@ SilvaImageTool.prototype.setTitle = function() {
     };
     var title = this.titleinput.value;
     image.setAttribute('title', title);
+    this.editor.content_changed = true;
 };
 
 SilvaImageTool.prototype.setAlign = function() {
@@ -401,6 +410,7 @@ SilvaImageTool.prototype.setAlign = function() {
     };
     var align = this.alignselect.options[this.alignselect.selectedIndex].value;
     image.setAttribute('alignment', align);
+    this.editor.content_changed = true;
 };
  
 function SilvaTableTool() {
@@ -464,7 +474,9 @@ SilvaTableTool.prototype.createTable = function(rows, cols, makeHeader, tablecla
 
     this._setTableCellHandlers(table);
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Table added');
+    this.editor.updateState();
 };
 
 SilvaTableTool.prototype.addTableRow = function() {
@@ -486,6 +498,7 @@ SilvaTableTool.prototype.addTableRow = function() {
     // should check what to add as well
     this._addRowHelper(doc, tbody, 'td', index, cols);
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Table row added');
 };
 
@@ -501,6 +514,7 @@ SilvaTableTool.prototype.delTableRow = function() {
 
     currtr.parentNode.removeChild(currtr);
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Table row removed');
 };
 
@@ -531,6 +545,7 @@ SilvaTableTool.prototype.addTableColumn = function() {
     table.removeAttribute('silva_column_info');
     this._getColumnInfo();
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Column added');
 };
 
@@ -559,6 +574,7 @@ SilvaTableTool.prototype.delTableColumn = function() {
     table.removeAttribute('silva_column_info');
     this._getColumnInfo();
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Column deleted');
 };
 
@@ -583,6 +599,8 @@ SilvaTableTool.prototype.setColumnWidths = function(widths) {
     };
     this._setColumnInfo(table, silva_column_info);
     this._updateTableFromInfo(table);
+    this.editor.content_changed = true;
+    this.editor.logMessage('table column widths adjusted');
 };
 
 SilvaTableTool.prototype.getColumnWidths = function(table) {
@@ -621,6 +639,7 @@ SilvaTableTool.prototype.setColumnAlign = function(align) {
     var table = this.editor.getNearestParentOfType(currnode, 'table');
     this._setColumnInfo(table, infos);
     this._updateTableFromInfo(table);
+    this.editor.content_changed = true;
 };
 
 SilvaTableTool.prototype._factorWidths = function(widths) {
@@ -948,12 +967,14 @@ SilvaTableTool.prototype._updateTableFromInfo = function(table) {
 };
 
 function SilvaTableToolBox(addtabledivid, edittabledivid, newrowsinputid, 
-                        newcolsinputid, makeheaderinputid, classselectid, alignselectid, widthinputid,
-                        addtablebuttonid, addrowbuttonid, delrowbuttonid, addcolbuttonid, delcolbuttonid, 
-                        fixbuttonid, delbuttonid, toolboxid, plainclass, activeclass) {
+                        newcolsinputid, makeheaderinputid, classselectid, 
+                        alignselectid, widthinputid, addtablebuttonid, 
+                        addrowbuttonid, delrowbuttonid, addcolbuttonid, 
+                        delcolbuttonid, fixbuttonid, delbuttonid, toolboxid, 
+                        plainclass, activeclass) {
     /* Silva specific table functionality
-        overrides most of the table functionality, required because Silva requires
-        a completely different format for tables
+        overrides most of the table functionality, required because Silva 
+        requires a completely different format for tables
     */
 
     this.addtablediv = getFromSelector(addtabledivid);
@@ -1042,22 +1063,26 @@ SilvaTableToolBox.prototype.addTable = function() {
     var classchooser = getFromSelector("kupu-table-classchooser-add");
     var tableclass = this.classselect.options[this.classselect.selectedIndex].value;
     this.tool.createTable(rows, cols, makeHeader, tableclass);
+    this.editor.content_changed = true;
 };
 
 SilvaTableToolBox.prototype.setTableClass = function() {
     var cls = this.classselect.options[this.classselect.selectedIndex].value;
     this.tool.setTableClass(cls);
+    this.editor.content_changed = true;
 };
 
 SilvaTableToolBox.prototype.setColumnWidths = function() {
     var widths = this.widthinput.value;
     this.tool.setColumnWidths(widths);
+    this.editor.content_changed = true;
 };
 
 SilvaTableToolBox.prototype.setColumnAlign = function() {
     var align = this.alignselect.options[
                     this.alignselect.selectedIndex].value;
     this.tool.setColumnAlign(align);
+    this.editor.content_changed = true;
 };
 
 SilvaTableToolBox.prototype.fixTable = function(event) {
@@ -1204,6 +1229,7 @@ SilvaTableToolBox.prototype.fixTable = function(event) {
 
     this.editor.getDocument().getWindow().focus();
 
+    this.editor.content_changed = true;
     this.editor.logMessage('Table cleaned up');
 };
 
@@ -1285,6 +1311,7 @@ SilvaIndexTool.prototype.addIndex = function(event) {
     indexel.setAttribute('name', name);
     var sel = this.editor.getSelection();
     sel.collapse(true);
+    this.editor.content_changed = true;
     this.editor.logMessage('Index added');
 };
 
@@ -1308,6 +1335,7 @@ SilvaIndexTool.prototype.updateIndex = function(event) {
     };
     var text = this.editor.getInnerDocument().createTextNode('[' + name + ']')
     indexel.appendChild(text);
+    this.editor.content_changed = true;
     this.editor.logMessage('Index modified');
 };
 
@@ -1319,6 +1347,7 @@ SilvaIndexTool.prototype.deleteIndex = function() {
         return;
     };
     a.parentNode.removeChild(a);
+    this.editor.content_changed = true;
     this.editor.logMessage('Index element removed');
 };
 
@@ -1340,6 +1369,7 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
             var doc = this.editor.getInnerDocument();
             next = doc.createTextNode('\xa0');
             a.parentNode.appendChild(next);
+            this.editor.content_changed = true;
         };
         var selection = this.editor.getSelection();
         // XXX I fear I'm working around bugs here... because of a bug in 
@@ -1506,6 +1536,7 @@ SilvaTocTool.prototype.addOrUpdateToc = function(event, depth) {
         div.appendChild(text);
         this.editor.insertNodeAtSelection(div);
     };
+    this.editor.content_changed = true;
 };
 
 SilvaTocTool.prototype.createDefaultToc = function() {
@@ -1526,6 +1557,7 @@ SilvaTocTool.prototype.updateToc = function() {
         doc = this.editor.getInnerDocument();
         toc.appendChild(doc.createTextNode(toctext));
     };
+    this.editor.content_changed = true;
 };
 
 SilvaTocTool.prototype.deleteToc = function() {
@@ -1536,6 +1568,7 @@ SilvaTocTool.prototype.deleteToc = function() {
         return;
     };
     toc.parentNode.removeChild(toc);
+    this.editor.content_changed = true;
 };
 
 SilvaTocTool.prototype.getNearestToc = function(selNode) {
@@ -1677,6 +1710,7 @@ SilvaAbbrTool.prototype.addElement = function() {
     this.editor.getDocument().getWindow().focus();
     var selNode = selection.getSelectedNode();
     this.editor.updateState(selNode);
+    this.editor.content_changed = true;
     this.editor.logMessage('Element ' + type + ' added');
 };
 
@@ -1689,6 +1723,7 @@ SilvaAbbrTool.prototype.updateElement = function() {
     };
     var title = this.titleinput.value;
     element.setAttribute('title', title);
+    this.editor.content_changed = true;
     this.editor.logMessage('Updated ' + element.nodeName.toLowerCase() + ' element');
 };
 
@@ -1700,6 +1735,7 @@ SilvaAbbrTool.prototype.deleteElement = function() {
         return;
     };
     element.parentNode.removeChild(element);
+    this.editor.content_changed = true;
     this.editor.logMessage('Deleted ' + element.nodeName.toLowerCase() + ' deleted');
 };
 
@@ -1760,6 +1796,7 @@ SilvaCitationTool.prototype.handleKeyPressOnCitation = function(event) {
         selection.replaceWithNode(br);
         selection.selectNodeContents(br);
         selection.collapse(true);
+        this.editor.content_changed = true;
         event.returnValue = false;
     } else if (keyCode == 9) {
         var next = citation.nextSibling;
@@ -1767,6 +1804,7 @@ SilvaCitationTool.prototype.handleKeyPressOnCitation = function(event) {
             next = doc.createElement('p');
             next.appendChild(doc.createTextNode('\xa0'));
             citation.parentNode.appendChild(next);
+            this.editor.content_changed = true;
         };
         selection.selectNodeContents(next);
         selection.collapse();
@@ -1834,6 +1872,7 @@ SilvaCitationTool.prototype.addCitation = function() {
         div.appendChild(text);
     };
     this.editor.insertNodeAtSelection(div, 1);
+    this.editor.content_changed = true;
     var selection = this.editor.getSelection();
     selection.collapse(placecursoratend);
     this.editor.getDocument().getWindow().focus();
@@ -1850,6 +1889,7 @@ SilvaCitationTool.prototype.updateCitation = function() {
     };
     citation.setAttribute('author', this.authorinput.value);
     citation.setAttribute('source', this.sourceinput.value);
+    this.editor.content_changed = true;
 };
 
 SilvaCitationTool.prototype.deleteCitation = function() {
@@ -1860,6 +1900,7 @@ SilvaCitationTool.prototype.deleteCitation = function() {
         return;
     };
     citation.parentNode.removeChild(citation);
+    this.editor.content_changed = true;
 };
 
 SilvaCitationTool.prototype.getNearestCitation = function(selNode) {
@@ -2000,6 +2041,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
             var selection = this.editor.getSelection();
             selection.selectNodeContents(p);
             selection.collapse();
+            this.editor.content_changed = true;
         };
         this._insideExternalSource = false;
     } else if (keyCode == 8) {
@@ -2013,6 +2055,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
         selection.selectNodeContents(selectnode);
         div.parentNode.removeChild(div);
         selection.collapse();
+        this.editor.content_changed = true;
     };
     if (event.preventDefault) {
         event.preventDefault();
@@ -2195,6 +2238,7 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 selection.selectNodeContents(extsource);
                 selection.collapse(true);
             };
+            this.editor.content_changed = true;
             object.resetTool();
             object.editor.updateState();
         } else if (this.status == '400') {
@@ -2221,6 +2265,7 @@ SilvaExternalSourceTool.prototype.delExternalSource = function() {
         selection.selectNodeContents(nextsibling);
         selection.collapse();
     };
+    this.editor.content_changed = true;
 };
 
 SilvaExternalSourceTool.prototype.resetTool = function() {
@@ -2428,6 +2473,7 @@ SilvaKupuUI.prototype.setTextStyle = function(style) {
         el.setAttribute('silva_type', classname);
     };
     this._cancel_update = true;
+    this.editor.content_changed = true;
     this.editor.updateState();
     this.editor.getDocument().getWindow().focus();
 };
@@ -2784,4 +2830,5 @@ SilvaCharactersTool.prototype.addCharacter = function() {
     this.editor.logMessage('Character ' + c + ' inserted');
     this.editor.getDocument().getWindow().focus();
     select.selectedIndex = 0;
+    this.editor.content_changed = true;
 };
