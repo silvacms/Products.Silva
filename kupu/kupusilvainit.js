@@ -322,7 +322,7 @@ function initSilvaKupu(iframe) {
                 'onfocus', 'ondatasetchanged', 'id', 'onmove', 'onpage',
                 'ondragenter', 'ondragleave', 'oncut', 'onbeforedeactivate',
                 'onhelp', 'onlosecapture', 'onbeforeupdate', 'onmouseover',
-                'onbeforeactivate']);
+                'onbeforeactivate', 'onbeforepaste']);
 
     return kupu;
 };
