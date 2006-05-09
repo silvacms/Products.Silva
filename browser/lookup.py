@@ -64,7 +64,6 @@ class ObjectLookup(BrowserView):
         addables = []
 
         filter = filter or []
-        
         if show_add:
             all_addables = model.get_silva_addables()
 
@@ -111,7 +110,7 @@ class ObjectLookup(BrowserView):
         else:
             # get all objects using filter, then divide them the way they 
             # should be returned
-            if not filter:
+            if not filter or filter == ['']:
                 # return everything
                 default = model.get_default()
                 ordered_publishables = model.get_ordered_publishables()
