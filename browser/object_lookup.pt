@@ -36,12 +36,11 @@
       tal:define="
       objects context/get_tree;
       silva_permissions context/edit/get_silva_permissions;
-      filter request/filter | request/SESSION/filter;
-      filter python: filter or 'Content';  
+      filter request/filter | request/SESSION/filter | nothing;
+      filter python: filter or '';  
       filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
       startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
-      show_add python: request.get('show_add', 
-      request.SESSION.get('show_add', '0'));
+      show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
       dummy python: request.SESSION.set('filter', filter);
       dummy python: request.SESSION.set('show_add', show_add);
       dummy python: request.SESSION.set('startpath', startpath);
