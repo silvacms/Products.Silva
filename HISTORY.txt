@@ -29,6 +29,9 @@ Under development
 
     Bugs fixed:
     
+      - The xslt rendering allowed empty width and height attributes on
+        images, which breaks in IE. These are now caught.
+
       - The zip import of assets (as opposed to the fullmedia zip import)
         did not take into account the 'replace identical ids' option. It 
         does now.

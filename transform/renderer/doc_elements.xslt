@@ -250,11 +250,25 @@
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
                   <div class="{@alignment}">
-                    <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+                    <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                      <xsl:if test="@width">
+                        <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                      </xsl:if>
+                      <xsl:if test="@height">
+                        <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+                      </xsl:if>
+                    </img>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
-                  <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+                  <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                    <xsl:if test="@width">
+                      <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@height">
+                      <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+                    </xsl:if>
+                  </img>
                 </xsl:otherwise>
               </xsl:choose>
             </a>
@@ -264,11 +278,25 @@
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
                   <div class="{@alignment}">
-                    <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+                    <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                      <xsl:if test="@width">
+                        <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                      </xsl:if>
+                      <xsl:if test="@height">
+                        <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+                      </xsl:if>
+                    </img>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
-                  <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+                  <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                    <xsl:if test="@width">
+                      <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@height">
+                      <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+                    </xsl:if>
+                  </img>
                 </xsl:otherwise>
               </xsl:choose>
             </a>
@@ -279,11 +307,25 @@
         <xsl:choose>
           <xsl:when test="starts-with(@alignment, 'image-')">
             <div class="{@alignment}">
-              <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+              <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                <xsl:if test="@width">
+                  <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                </xsl:if>
+                <xsl:if test="@height">
+                  <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+                </xsl:if>
+              </img>
             </div>
           </xsl:when>
           <xsl:otherwise>
-            <img src="{@path}" alt="{@image_title}" width="{@width}" height="{@height}" class="{@alignment}"/>
+            <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+              <xsl:if test="@width">
+                <xsl:attribute name="width"><xsl:value-of select="./@width" /></xsl:attribute>
+              </xsl:if>
+              <xsl:if test="@height">
+                <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
+              </xsl:if>
+            </img>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -359,7 +401,7 @@
 
   <xsl:template match="doc:table">
     <table class="silvatable {@type}" cellspacing="0" cellpadding="3px">
-        <xsl:apply-templates mode="table-contents" />
+      <xsl:apply-templates mode="table-contents" />
     </table>
   </xsl:template>
 
