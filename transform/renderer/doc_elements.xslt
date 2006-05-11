@@ -358,7 +358,7 @@
   </xsl:template>
 
   <xsl:template match="doc:table">
-    <table class="silvatable {@type}" cellspacing="0" cellpadding="3px">
+    <table class="silvatable {@type}" cellspacing="0" cellpadding="3">
         <xsl:apply-templates mode="table-contents" />
     </table>
   </xsl:template>

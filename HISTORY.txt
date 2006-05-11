@@ -13,6 +13,9 @@ Silva changes
       - Changed mangle.Path.fromObject() so it doesn't return '' anymore when
         from and to objects are the same.
 
+      - Fixed illegal value for cellpadding attribute on table in XSLT 
+        renderer.
+
       - Fixed bug in XML export (to_xml()) of Link objects, escaping 
         (entitizing) title and url properly now.
 
