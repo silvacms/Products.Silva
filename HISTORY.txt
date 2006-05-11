@@ -10,6 +10,9 @@ Silva changes
       - The lookup window had a javascript bug, and the content type filtering
         was not working correctly, both are fixed.
 
+      - Fixed illegal attribute value for cellpadding attribute in XSLT 
+        renderer.
+
   1.5.3
    
     Features added
