@@ -102,6 +102,8 @@ Under development
  
       - Fixed illegal attribute value for cellpadding in XSLT renderer.
 
+      - Fixed unicode error in approval.
+
   1.5
   
     Features added
