@@ -40,6 +40,8 @@ Silva changes
       - XSLT renderer renders index items the same way as the widget
         renderer.
 
+      - Fixed unicode error in approval.
+
   1.4.2
 
     Features added
