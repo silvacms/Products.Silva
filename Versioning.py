@@ -819,7 +819,7 @@ class Versioning:
         # message
         text = "Object: %s\n%s/edit/tab_preview\n%s" % (
             self.get_title_editable(),
-            self.absolute_url(), text)
+            self.absolute_url(), unicode(text, 'UTF-8'))
         service_messages.send_message(from_userid, to_userid, subject, text)
 
     def _index_version(self, version):
