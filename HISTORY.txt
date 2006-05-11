@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
   
-  1.5.4
+  1.5.4 (SVN/Unreleased)
 
     Bugs Fixed:
 
@@ -12,6 +12,8 @@ Silva changes
 
       - Fixed illegal attribute value for cellpadding attribute in XSLT 
         renderer.
+
+      - Fixed unicode issue in approval.
 
   1.5.3
    
