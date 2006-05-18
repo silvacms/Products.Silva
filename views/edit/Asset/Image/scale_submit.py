@@ -17,6 +17,8 @@ if model.canScale():
         model.set_web_presentation_properties(
             result['web_format'], result['web_scaling'], result['web_crop'])
     except ValueError, e:
+        if type(e) == 'unicode':
+            e = e.encode('UTF-8', 'replace')
         msg = [str(e)]
         msg_type = 'error'
     
