@@ -311,14 +311,14 @@ class ImageProducer(SilvaBaseProducer):
     """Export an Image object to XML.
     """
     def sax(self):
-        # XXX Find out what else to export. Thumbnail? Size? Resized size,
-        # cropping, etc.?
         path = self.context.getPhysicalPath()
-        self.startElement('image_asset', {'id': self.context.id})
+        self.startElement('image_asset', {
+            'id': self.context.id,
+            'web_format': self.context.getWebFormat(),
+            'web_scale': self.context.getWebScale(),
+            'web_crop': self.context.getWebCrop(),
+            })
         self.metadata()
-        # self.startElement('format')
-        # self.handler.characters(self.context.getFormat())
-        # self.endElement('format')
         self.getInfo().addAssetPath(path)
         self.startElement('asset_id')
         self.handler.characters(self.getInfo().getAssetPathId(path))

@@ -7,8 +7,20 @@ Silva changes
 
     Bugs Fixed:
 
-      - The lookup window had a javascript bug, and the content type filtering
-        was not working correctly, both are fixed.
+      - Full media export/import of images did not take account of format
+        scaling and cropping. 
+
+      - Images in tables were not shown correctly in the xslt rendering.
+
+      - The xslt rendering allowed empty width and height attributes on
+        images, which breaks in IE. These are now caught.
+
+      - XMLexport of SilvaDocument passed a string instead of an integer to
+        get_tree/get_public_tree
+
+      - The lookup window had some problems with incorrect content type
+        filtering, and a strange javascript issue, where 'document' was
+        empty. Both are fixed.
 
       - Fixed illegal attribute value for cellpadding attribute in XSLT 
         renderer.
