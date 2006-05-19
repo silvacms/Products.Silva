@@ -28,13 +28,22 @@ Under development
         'service_kupu_silva', respectively.
 
     Bugs fixed:
+
+      - Full media export/import of images did not take account of format
+        scaling and cropping. 
+
+      - XMLexport of SilvaDocument passed a string instead of an integer to
+        get_tree/get_public_tree, so limiting the depth of a toc while
+        using xslt rendering was ignored.
     
-      - The xslt rendering allowed empty width and height attributes on
-        images, which breaks in IE. These are now caught.
+      - Images in tables were not shown correctly in the xslt rendering.
 
       - The zip import of assets (as opposed to the fullmedia zip import)
         did not take into account the 'replace identical ids' option. It 
         does now.
+
+      - The xslt rendering allowed empty width and height attributes on
+        images, which breaks in IE. These are now caught.
 
       - The lookup window had some problems with incorrect content type
         filtering, and a strange javascript issue, where 'document' was
