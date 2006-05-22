@@ -7,7 +7,7 @@ Meta
 Copyright (c) 2002-2006 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.5.x
+Valid for:  Silva 1.6.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
 CVS:        $Revision: 1.34 $
