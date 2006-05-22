@@ -1,8 +1,0 @@
-Known issues
-============
-
-Known issues with Silva 1.2b1
------------------------------
-
-The image cropping picture does not work correctly.
-

@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.5 (DC)
+Silva 1.6 (DC)
 --------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
@@ -44,8 +44,8 @@ The infrastructure used by Silva to attach views to content objects.
 
 http://www.infrae.com/download/SilvaViews
 
-FileSystemSite 1.4.2 (DCI)
---------------------------
+FileSystemSite 2.0 (DCI)
+------------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
 be used to maintain page templates, python scripts and the like on the
@@ -111,8 +111,8 @@ ship with a version of Five.
 
 http://codespeak.net/z3/five
 
-Kupu 1.3.5 (DI)
----------------
+Kupu 1.4 pre-infrae (DI)
+------------------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
 allows users to use kupu in addition to the forms-based editor to edit
@@ -120,7 +120,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.5 (DE)
+SilvaDocument 1.6 (DE)
 ----------------------
 
 Silva extension for XML-based documents. Contains a through the web

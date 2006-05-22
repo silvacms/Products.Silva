@@ -1,6 +1,6 @@
 Installation problems
 
-  When I start up Silva 1.5, I get:
+  When I start up Silva 1.6, I get:
 
   WARNING OFS.Application Duplicate Product name
   After loading Product 'Five' from '/some/where/Products',

@@ -8,7 +8,7 @@ Meta
 Copyright (c) 2002-2006 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.5.x
+Valid for:  Silva 1.6.x
 Author:     Martijn Faassen, Jan-Wijbrand Kolman
 Email:      faassen@infrae.com, jw@infrae.com
 CVS:        $Revision: 1.61 $
@@ -85,6 +85,11 @@ Steps to take during a major Silva upgrade:
 - When testing Silva, it may be the WYSIWYG editor (Kupu) still
   retrieves files cached by the browser from a previous version of
   Silva. Clearing the browser cache should help.
+
+Upgrading from Silva 1.5 to Silva 1.6
+-------------------------------------
+
+Zope 2.8.6 is required for Silva 1.6, apart from that see notes for 1.5.
 
 Upgrading from Silva 1.4 to Silva 1.5
 -------------------------------------
