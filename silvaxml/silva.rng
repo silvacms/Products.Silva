@@ -138,6 +138,9 @@
   <define name="imageAsset">
     <element name="image_asset">
       <attribute name="id"><text /></attribute>
+      <attribute name="web_format"><text /></attribute>
+      <attribute name="web_scale"><text /></attribute>
+      <attribute name="web_crop"><text /></attribute>
       <ref name="metadata" />
       <element name="asset_id"><text /></element>
     </element>
