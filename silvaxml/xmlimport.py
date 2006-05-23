@@ -410,7 +410,7 @@ class ImageHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'image_asset'):
             self.setData('id', attrs[(None, 'id')])
-            self.setData('web_format', attrs.get(None, 'web_format')))
+            self.setData('web_format', attrs.get((None, 'web_format')))
             self.setData('web_scale', attrs.get((None, 'web_scale')))
             self.setData('web_crop', attrs.get((None, 'web_crop')))
 
