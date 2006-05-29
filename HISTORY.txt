@@ -7,6 +7,8 @@ Silva changes
 
     Bugs Fixed:
 
+      - Clarified descriptions of exporting versions.
+
       - Full media export/import of images did not take account of format
         scaling and cropping. 
 
