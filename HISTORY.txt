@@ -7,6 +7,8 @@ Under development
 
     Features added
     
+      - Clarified descriptions of exporting versions.
+
       - Added the possibility of using silva lookup to filter on multiple 
         meta-types.
     

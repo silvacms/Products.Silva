@@ -24,8 +24,8 @@
       tal:define="
         view here;
         model request/model;
-        icon python:view.render_icon(model);"
-      >
+        icon python:view.render_icon(model);
+       ">
       <form method="POST" name="form" action=".">
         <table class="listing">
           <thead>
