@@ -144,7 +144,7 @@
                 <td class="align-right">
                   <label for="export_last_version"
                     i18n:translate="">
-                    export newest versions?
+                    export only the newest version?
                   </label>
                 </td>
                 <td class="align-center">
@@ -156,7 +156,7 @@
                   />
                 </td>
                 <td i18n:translate="">
-                  If not checked the published version is exported.
+                  If not checked all versions are exported.
                 </td>
               </tr>
             </tbody>
@@ -241,7 +241,7 @@
           <td class="align-right">
             <label for="export_last_version"
               i18n:translate="">
-              export newest versions?
+              export only the newest version?
             </label>
           </td>
           <td class="align-center">
@@ -253,7 +253,7 @@
               />
           </td>
           <td i18n:translate="">
-            If not checked the published version is exported.
+            If not checked all versions are exported.
           </td>
         </tr>
       </tbody>
