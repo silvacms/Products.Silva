@@ -127,7 +127,7 @@
           <td class="align-right">
             <label for="export_last_version"
               i18n:translate="">
-              export newest versions?
+              export only newest versions?
             </label>
           </td>
           <td class="align-center">
@@ -139,8 +139,7 @@
               />
           </td>
           <td i18n:translate="">
-            If checked only the most recent version is exported. If 
-            not checked all versions are exported.
+            If not checked all versions are exported. 
           </td>
         </tr>
       </tbody>
