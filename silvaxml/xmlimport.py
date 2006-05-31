@@ -423,10 +423,14 @@ class ImageHandler(SilvaBaseHandler):
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
             self.parent().manage_addProduct['Silva'].manage_addImage(uid, '', file)
-            self.parent()[uid].set_web_presentation_properties(
-                self.getData('web_format'),
-                self.getData('web_scale'),
-                self.getData('web_crop'))
+            web_format = self.getData('web_format')
+            web_scale = self.getData('web_scale')
+            web_crop = self.getData('web_crop')
+            if web_format or web_scale or web_crop:
+                self.parent()[uid].set_web_presentation_properties(
+                    web_format,
+                    web_scale,
+                    web_crop)
             
 class FileHandler(SilvaBaseHandler):
     def getOverrides(self):
