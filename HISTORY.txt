@@ -31,6 +31,9 @@ Under development
 
     Bugs fixed:
 
+      - If a user names the Silva root 'root', it gets priority in the dtml 
+        namespace, so change the variable in silva.css to 'root_url'
+      
       - Full media export/import of images did not take account of format
         scaling and cropping. 
 
