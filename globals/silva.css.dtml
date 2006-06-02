@@ -1,4 +1,4 @@
-<dtml-let root="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
+<dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
@@ -43,7 +43,7 @@ body {
   padding: 0;
   color: &dtml-mainFontColor;;
   background-color: &dtml-mainBackground;;
-  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-image: url(<dtml-var root_url>/globals/skyrise.gif);
   background-repeat: repeat-x;
   font: &dtml-mainFont;;
 }
@@ -61,7 +61,7 @@ div.pathbar {
   border: none;
   padding: 0em 4px 0.2em 22px;
   color: &dtml-shade36;;
-  background-image: url(<dtml-var root>/globals/skylight.gif);
+  background-image: url(<dtml-var root_url>/globals/skylight.gif);
   background-repeat: repeat-x;
   background-color: &dtml-pathBarBackground;;
   font-size: 90%;
@@ -112,7 +112,7 @@ div.tabs {
   border-width: 1px;
   border-style: none none solid none;
   border-bottom-color: &dtml-shade80;;
-  background-image: url(<dtml-var root>/globals/skyrise.gif);
+  background-image: url(<dtml-var root_url>/globals/skyrise.gif);
   background-repeat: repeat-x;
   background-color: &dtml-mainTabBackdrop;;
 }
@@ -701,13 +701,13 @@ table.listing a.navicon {
 }
 
 table.listing a.left:hover {
-  background-image: url(<dtml-var root>/globals/slideleft.gif);
+  background-image: url(<dtml-var root_url>/globals/slideleft.gif);
   background-color: transparent;
   text-decoration: none;
 }
 
 table.listing a.right:hover {
-  background-image: url(<dtml-var root>/globals/slideright.gif);
+  background-image: url(<dtml-var root_url>/globals/slideright.gif);
   background-color: transparent;
   text-decoration: none;
 }
