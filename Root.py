@@ -182,7 +182,7 @@ class Root(Publication):
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '1.5'
+        return '1.6'
     
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
