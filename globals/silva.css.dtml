@@ -707,7 +707,7 @@ table.listing a.left:hover {
 }
 
 table.listing a.right:hover {
-  background-image: url(<dtml-var root>/globals/slideright.gif);
+  background-image: url(<dtml-var root_url>/globals/slideright.gif);
   background-color: transparent;
   text-decoration: none;
 }

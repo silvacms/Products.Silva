@@ -7,6 +7,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - If a user names the Silva root 'root', it gets priority in the dtml 
+        namespace, so change the variable in silva.css to 'root_url'
+      
       - Clarified descriptions of exporting versions.
 
       - Full media export/import of images did not take account of format
