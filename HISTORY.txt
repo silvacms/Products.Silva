@@ -68,6 +68,9 @@ Under development
 
       - Removed quote (probably typo) from some JS string in lookupwindowfield.
 
+      - There was a bug in the cleanup script listed in MAINTENANCE.txt,
+        fixed.
+
     Ported from 1.5 branch
 
       - Explicitly delete model from request in view_version() to break a

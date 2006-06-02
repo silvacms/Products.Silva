@@ -38,7 +38,7 @@ Silva root, from the ZMI) with the following contents:
   from Products.Silva.adapters.cleanup import getCleanupVersionsAdapter
   root = context.get_root()
   adapter = getCleanupVersionsAdapter(root)
-  adapter.cleanup()
+  result = adapter.cleanup()
 
   return '\n'.join(['%s: %s' % items for items in result.items()])
 
