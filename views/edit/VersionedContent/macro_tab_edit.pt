@@ -102,9 +102,10 @@ h2 {
 <tal:condition condition="python: not model.get_next_version()">
   <div class="fixed-feedback">
     <form action="tab_edit_make_copy" method="POST">
+      <tal:note replace="nothing"> _ do not change the value attribute _ </tal:note>
       <input type="hidden"
         name="came_from_view"
-        tal:attributes="value template/id"
+        value="tab_edit_make_copy"
       />
       <input class="button"
         style="margin-left: 7px; margin-bottom:0.1em;"
