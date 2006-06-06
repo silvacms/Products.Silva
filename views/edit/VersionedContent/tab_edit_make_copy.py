@@ -24,6 +24,9 @@ if model.get_next_version():
 model.sec_update_last_author_info()
 model.create_copy()
 
-request.RESPONSE.redirect('%s/edit?message_type=feedback&message=%s' % 
-    (model.absolute_url(), _("New version created.")))
-return ''
+# if user is in the editor screen and making a new version, return to edit
+if came_from_view == 'tab_edit_make_copy':
+    request.RESPONSE.redirect('%s/edit' % (model.absolute_url()))
+    return ''
+
+return view(message_type="feedback", message=_("New version created."))
