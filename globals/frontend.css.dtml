@@ -3,7 +3,7 @@
 ** _______ Styles modified here will affect the Silva preview  ___________
 **
 **  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
-** <dtml-let root="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
+** <dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
@@ -28,7 +28,7 @@ body {
   margin: 0;
   color: #2d374c;
   /* make an absolute path to the image to prevent duplicate caching */
-  background-image: url(<dtml-var root>/globals/skyfade.gif); 
+  background-image: url(<dtml-var root_url>/globals/skyfade.gif); 
   background-repeat: repeat-x;
   background-color: #dde5ee;
   font: 70% Verdana, Helvetica, Arial, sans-serif;
