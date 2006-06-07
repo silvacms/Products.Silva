@@ -7,6 +7,10 @@ Under development
 
     Features added
     
+      - For the frontend,css that gets placed in the ZMI, import the 
+        frontend.css in globals to stop duplication but still give the end user
+        the option to edit the preview typography.
+      
       - Clarified descriptions of exporting versions.
 
       - Added the possibility of using silva lookup to filter on multiple 
