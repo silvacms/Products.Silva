@@ -7,6 +7,11 @@ Silva changes
 
     Bugs Fixed:
 
+      - Added div with css class to make public preview buttons positionable 
+        in public layouts (they can be behind something if layers are used), 
+        thus added css class for the form too, and moved local style to the css 
+        so the stylesheet can be overridden by user.
+      
       - The previous fix to the public preview buttons broke keeping the user 
         in the same screen when making new versions, i.e. for the metadata 
         screen, where when making a new version the user was returned to the 
