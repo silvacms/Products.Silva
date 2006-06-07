@@ -1,58 +1,69 @@
 <style rel="stylesheet" type="text/css">
 input.transport {
-  font-size: 95%;
-    font-weight: normal;
-  color: #d9f3f1;
-  background: #283365;
-    margin: 0.2em 0.2em 0.1em 0.2em;
-    padding: 0 0.2em;
-  border: 1px solid #8faecf;
-    cursor: pointer;
+font-size: 11px;
+font-weight: normal;
+color: #d9f3f1;
+background: #283365;
+margin: 0.2em 0.2em 0.1em 0.2em;
+padding: 0 0.2em;
+border: 1px solid #8faecf;
+cursor: pointer;
 }
 input.transport[type="submit"]:hover, button[type="button"]:hover { 
-  color : #e5fffe; 
-  background : #74748b; 
-  border-color : #99b4cf;
+color : #e5fffe; 
+background : #74748b; 
+border-color : #99b4cf;
+}
+input.back {
+position:absolute;
+top:0px;
+left: 0px;
 }
 input.executor {
-  font-size: 95%;
-  font-weight: normal;
-  color: #b3fffb;
-  background : #284d5b;
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: 0 0.2em;
-  border: 1px solid #6bb591;
-  cursor: pointer;
+font-size: 11px;
+font-weight: normal;
+color: #b3fffb;
+background : #284d5b;
+margin: 0.2em 0.2em 0.1em 0.2em;
+padding: 0 0.2em;
+border: 1px solid #6bb591;
+cursor: pointer;
 }
 input.executor[type="submit"]:hover { 
-  color : #e5ffec; 
-  background : #4393a3; 
-  border-color : #8dc1a8;
+color : #e5ffec; 
+background : #4393a3; 
+border-color : #8dc1a8;
 }
-div.message span{
-  background-color: #d9f4eb;
-  border-width: 1px;
-  border-style: solid;
-  padding: 3px;
+input.publish {
+position: absolute;
+top: 0px;
+right: 0px;
+}
+div.published {
+position:absolute;
+right:3px;
+top:4px;
+font-size: 11px;
+text-align: right;
+}
+div.published span {
+background-color: #d9f4eb;
+border-width: 1px;
+border-style: solid;
+padding: 1px 3px 2px;
 }
 span.feedback {
-  color: black;
+color: black;
 }
 span.error {
-  color: red;
+color: red;
 }
 </style>
-<div class="message" 
-      tal:condition="options/message" 
-      style="position:absolute; left:0px; top: 5px; 
-              width: 100%; text-align: right">
-  <span tal:attributes="class options/message_type" 
-        tal:content="options/message" />
-</div>
-<form action="." method="POST">
+
+<div class="publisher">
+<form class="publisher" action="." method="POST">
 <tal:block condition="options/back_url">
-<input class="transport"
-  style="position:absolute; top:0px; left:0px;"
+<input class="transport back"
   type="button"
   value="&lt;"
   title="back: alt-b"
@@ -60,8 +71,7 @@ span.error {
   accesskey="b" />
 </tal:block>
 <tal:block condition="not:options/back_url">
-<input class="transport"
-  style="position:absolute; top:0px; left:0px;"
+<input class="transport back"
   type="button"
   value="&lt;"
   title="back: alt-b"
@@ -69,9 +79,8 @@ span.error {
   accesskey="b" />
 </tal:block>
 
-<input class="executor"
+<input class="executor publish"
   tal:condition="options/show_publish_now"
-  style="position:absolute; top:0px; right:0px;"
   name="edit/preview_open_now:method"
   type="submit"
   value="publish now"
@@ -79,3 +88,9 @@ span.error {
   accesskey="p" />
 
 </form>
+<div class="published" 
+  tal:condition="options/message">
+  <span tal:attributes="class options/message_type" 
+    tal:content="options/message" />
+</div>
+</div>

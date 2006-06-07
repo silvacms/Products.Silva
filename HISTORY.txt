@@ -31,8 +31,20 @@ Under development
 
     Bugs fixed:
 
+      - Added div with css class to make public preview buttons positionable 
+        in public layouts (they can be behind something if layers are used), 
+        thus added css class for the form too, and moved local style to the css 
+        so the stylesheet can be overridden by user.
+      
+      - The previous fix to the public preview buttons broke keeping the user 
+        in the same screen when making new versions, i.e. for the metadata 
+        screen, where when making a new version the user was returned to the 
+        editor, while in fact metadata needed to be edited. Removed a classic 
+        very ugly url.
+      
       - If a user names the Silva root 'root', it gets priority in the dtml 
-        namespace, so change the variable in silva.css to 'root_url'
+        namespace, so change the variable in silva.css and frontend.css to 
+        'root_url'
       
       - Full media export/import of images did not take account of format
         scaling and cropping. 
