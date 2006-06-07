@@ -1,7 +1,4 @@
-/* _______ Stylesheet for Silva 1.3 (CVS/UNRELEASED) frontend _____________________
-** _______ Silva users can insert their own frontend styles ______________
-** _______ Styles modified here will affect the Silva preview  ___________
-**
+/* _______ Stylesheet for Silva 1.5.x frontend ___________________________
 **  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
 ** <dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
 ** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
