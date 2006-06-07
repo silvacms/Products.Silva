@@ -15,7 +15,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h3 class="heading"><xsl:apply-templates /></h3>
+        <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

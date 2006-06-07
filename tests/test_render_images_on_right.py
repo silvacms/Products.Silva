@@ -53,8 +53,8 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         obj = self.root.silva_xslt.test_document
 
         images_on_right = ImagesOnRightRenderer()
-        self.assertEquals(images_on_right.render(obj), '<table><tr>\n<td valign="top">unapproved<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n</td>\n<td valign="top">\n<a href="bar.html"><img src="foo"></a><br>\n</td>\n</tr></table>\n')
-        
+        self.assertEquals(images_on_right.render(obj), '<table><tr>\n<td valign="top">unapproved<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n</td>\n<td valign="top">\n<a href="http://nohost/root/silva_xslt/bar.html"><img src="http://nohost/root/silva_xslt/foo"></a><br>\n</td>\n</tr></table>\n')
+                                                       
     def test_error_handling(self):
         
         if not xslt:
