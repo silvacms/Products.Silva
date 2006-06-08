@@ -320,7 +320,7 @@
           <xsl:otherwise>
             <img src="{@path}" alt="{@image_title}" class="{@alignment}">
               <xsl:if test="@width">
-                <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+                <xsl:attribute name="width"><xsl:value-of select="./@width" /></xsl:attribute>
               </xsl:if>
               <xsl:if test="@height">
                 <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
@@ -427,8 +427,20 @@
     <td class="{@class}">
       <!-- IE doesn't like empty table cells, insert a nbsp if there are
       no child elements -->
-      <xsl:if test="count(*) = 0">&#160;</xsl:if>
-      <xsl:apply-templates />
+      <xsl:choose>
+        <xsl:when test="count(*) = 1">
+          <xsl:apply-templates mode="remove-single-p" />
+        </xsl:when>
+        <xsl:when test="count(*) = 0">&#160;</xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
     </td>
   </xsl:template>
+  
+  <xsl:template match="doc:p" mode="remove-single-p">
+    <xsl:apply-templates mode="text-content" />
+  </xsl:template>
+  
 </xsl:stylesheet>
