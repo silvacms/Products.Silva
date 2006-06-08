@@ -35,6 +35,15 @@ Under development
 
     Bugs fixed:
 
+      - Single paragraphs in table cells were rendered by the xslt as 
+        opposed to the widget renderer. They are now removed.
+
+      - XSLT renderers did not take virtual hosting situations into account
+        when rendering images and links in documents.
+
+      - In 'normal' headings index items were not rendered by the XSLT
+        renderers.
+
       - Added div with css class to make public preview buttons positionable 
         in public layouts (they can be behind something if layers are used), 
         thus added css class for the form too, and moved local style to the css 
@@ -50,6 +59,7 @@ Under development
         namespace, so change the variable in silva.css and frontend.css to 
         'root_url'
       
+>>>>>>> .r20040
       - Full media export/import of images did not take account of format
         scaling and cropping. 
 

@@ -15,7 +15,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h3 class="heading"><xsl:apply-templates /></h3>
+        <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -427,8 +427,20 @@
     <td class="{@class}">
       <!-- IE doesn't like empty table cells, insert a nbsp if there are
       no child elements -->
-      <xsl:if test="count(*) = 0">&#160;</xsl:if>
-      <xsl:apply-templates />
+      <xsl:choose>
+        <xsl:when test="count(*) = 1">
+          <xsl:apply-templates mode="remove-single-p" />
+        </xsl:when>
+        <xsl:when test="count(*) = 0">&#160;</xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
     </td>
   </xsl:template>
+  
+  <xsl:template match="doc:p" mode="remove-single-p">
+    <xsl:apply-templates mode="text-content" />
+  </xsl:template>
+  
 </xsl:stylesheet>
