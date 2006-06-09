@@ -56,7 +56,7 @@ span.feedback {
 color: black;
 }
 span.error {
-color: red;
+color: #a00;
 }
 </style>
 
