@@ -1,3 +1,4 @@
+## Script (Python) "preview_open_now.py"
 ##parameters=ids=None
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
@@ -10,7 +11,7 @@ from DateTime import DateTime
 now = DateTime()
 
 obj = model
-message = _('Content is published')
+message = _('Document published')
 message_type = 'feedback'
 publish = True
 if not obj.implements_versioning():
@@ -27,7 +28,7 @@ elif not obj.can_approve():
     publish = False
 if not obj.get_unapproved_version():
     if obj.is_version_published():
-        message = _('version already public')
+        message = _('Document already published')
         message_type = 'error'
         publish = False
     obj.create_copy()

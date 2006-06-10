@@ -19,7 +19,7 @@ for obj in objects:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), _('not a versionable object')))
+        not_approved.append((get_name(obj), _('not applicable')))
         continue
     if obj.is_version_approved():
         not_approved.append((get_name(obj), _('version already approved')))
@@ -37,7 +37,7 @@ for obj in objects:
     #    not_approved.append((get_name(obj), _('no unapproved version available')))
     #    continue
         if obj.is_version_published():
-            not_approved.append((get_name(obj), _('version already public')))
+            not_approved.append((get_name(obj), _('version already published')))
             continue
         obj.create_copy()
     if clear_expiration:
@@ -48,7 +48,7 @@ for obj in objects:
     approved_ids.append(get_name(obj))
 
 if approved_ids:
-    message = _('Approval on: ${ids}')
+    message = _('Published: ${ids}')
     message.set_mapping({'ids': view.quotify_list(approved_ids)})
     msg.append(translate(message))
 
