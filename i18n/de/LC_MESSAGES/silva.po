@@ -2217,6 +2217,10 @@ msgstr "Import beendet: ${msg}"
 
 #: /views/edit/Container/open_now.py:21
 #: /views/edit/Container/tab_edit_close.py:27
+#: /views/edit/VersionedContent/preview_open_now.py:16
+msgid "not applicable"
+msgstr "nicht anwendbar"
+
 #: /views/edit/Container/tab_status_approve.py:49
 #: /views/edit/Container/tab_status_change_settings.py:51
 #: /views/edit/Container/tab_status_close.py:36
@@ -2226,7 +2230,6 @@ msgstr "Import beendet: ${msg}"
 #: /views/edit/Container/tab_status_request_approval_now.py:52
 #: /views/edit/Container/tab_status_revoke.py:36
 #: /views/edit/Container/tab_status_withdraw.py:26
-#: /views/edit/VersionedContent/preview_open_now.py:16
 msgid "not a versionable object"
 msgstr "nicht versionierbares Objekt"
 

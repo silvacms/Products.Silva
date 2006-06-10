@@ -45,7 +45,7 @@
 </title>
 <link href="globals/favicon.ico"
   rel="shortcut icon"
-  tal:attributes="href string:$root_url/globals/favicon.ico"
+  tal:attributes="href string:$root_url/globals/silvacon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />

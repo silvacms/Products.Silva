@@ -1,3 +1,4 @@
+## Script (Python) "tab_edit_close.py"
 ##parameters=ids=None
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
@@ -25,7 +26,7 @@ for id in ids:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_closed.append((get_name(obj), _('not a versionable object')))
+        not_closed.append((get_name(obj), _('not applicable')))
         continue
     if not obj.is_version_published():
         not_closed.append((get_name(obj), _('is not published')))
