@@ -20,6 +20,10 @@
     root_url model/get_root_url;
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
+    
+    content_type      view/set_content_type;
+    set_cache_headers view/set_cache_headers;
+
     silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;    
@@ -30,19 +34,18 @@
     dummy  python: here.recordError(type, message);
     dummy  python: here.REQUEST.set('edit_mode', 1);
     dummy  python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
-    current_member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId());
-    editor python: request.SESSION.get('editor', None) or current_member.editor();
+    editor python: request.SESSION.get('editor', None) or view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getUserName()).editor();
 
 ">
+
 <head>
-  <tal:block replace="structure request/model/@@set_content_type_and_cache" />
 <title>
   <tal:block content="title">title</tal:block> &#8211;
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
 <link href="globals/favicon.ico"
   rel="shortcut icon"
-  tal:attributes="href string:$root_url/globals/favicon.ico"
+  tal:attributes="href string:$root_url/globals/silvacon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
@@ -241,7 +244,7 @@
 <!-- ______________ user tools ______________ -->
 </span>
 <div class="personalbar"
-  tal:define="userid current_member/fullname">
+  tal:define="userid request/AUTHENTICATED_USER/getUserName">
   <div style="float: left;">
     <a href=""
       title="Change your settings: alt-~"
