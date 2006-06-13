@@ -106,7 +106,7 @@
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
-<metal:define-slot define-slot="notice" />
+<metal:slot define-slot="notice">
 <tal:block condition="message">
   <div class="feedback"
     tal:attributes="
@@ -124,7 +124,9 @@
   <div class="fixed-clear" 
     tal:define="
       in_development_mode model/sec_in_development_mode;
-      editing_a_silva_document python: (type == 'Silva Document' and template.id == 'tab_edit')"
+      editing_a_silva_document python: 
+      (type == 'Silva Document' and template.id == 'tab_edit') or
+      (type == 'Silva Document' and template.id == 'tab_edit')"
     tal:omit-tag="python: editor == 'kupu' and editing_a_silva_document">
     <tal:block condition="python: in_development_mode">
       <tal:block condition="python: not editing_a_silva_document">
@@ -162,6 +164,7 @@
     </tal:block>
   </div>
 </tal:block>
+</metal:slot>
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
