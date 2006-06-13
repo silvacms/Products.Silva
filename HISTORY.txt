@@ -5,6 +5,8 @@ Silva changes
 
   1.5.5
 
+      - Changed to a more discreet favicon for the public views
+
       - XSLT renderers did not take virtual hosting situations into account
         when rendering images and links in documents.
 
@@ -14,6 +16,8 @@ Silva changes
   1.5.4
 
     Bugs Fixed:
+
+      - Fix for Firefox html edit problem in kupu
 
       - Added div with css class to make public preview buttons positionable 
         in public layouts (they can be behind something if layers are used), 
