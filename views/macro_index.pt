@@ -21,9 +21,6 @@
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
     
-    content_type      view/set_content_type;
-    set_cache_headers view/set_cache_headers;
-
     silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;    
@@ -40,6 +37,7 @@
 
 <head>
 <title>
+  <tal:block replace="structure request/model/@@set_content_type_and_cache" />
   <tal:block content="title">title</tal:block> &#8211;
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
