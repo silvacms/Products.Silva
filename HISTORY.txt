@@ -7,6 +7,8 @@ Under development
 
     Features added
     
+      - Added a more discreet favicon for the public views.
+
       - For the frontend,css that gets placed in the ZMI, import the 
         frontend.css in globals to stop duplication but still give the end user
         the option to edit the preview typography.
@@ -34,6 +36,8 @@ Under development
         'service_kupu_silva', respectively.
 
     Bugs fixed:
+
+      - Fix for Firefox html edit problem in kupu
 
       - Single paragraphs in table cells were rendered by the xslt as 
         opposed to the widget renderer. They are now removed.
