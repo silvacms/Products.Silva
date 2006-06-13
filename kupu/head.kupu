@@ -59,4 +59,7 @@
   <kupu:part name="meta">
   </kupu:part>
 
+  <kupu:part name="styles">
+  </kupu:part>
+
 </kupu:feature>
