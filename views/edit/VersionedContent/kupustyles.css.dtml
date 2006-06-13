@@ -22,7 +22,6 @@ div.kupu-fulleditor {
   font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0em;
   height: 100%;
-  width: 100%;
 }
 
 div.kupu-fulleditor .kupu-editorframe {
@@ -151,7 +150,6 @@ div.kupu-editorframe {
 
 #kupu-editor {
   height: 580px;
-  width: 100%;
   margin: 0em;
   border: solid 1px #6c797f;
 }
@@ -163,6 +161,10 @@ div.kupu-editorframe {
   margin: 0em;
   border: solid 1px #6c797f;
   display: none;
+}
+/* hack for IE */
+* html #kupu-editor-textarea {
+  width:100%;
 }
 
 .kupu-toolboxes {
@@ -193,7 +195,7 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   background-repeat: no-repeat;
   background-position: center left;
   background-color: #829199;
-  width: 100%;
+  width: inherit;
   max-width: 22em;
   margin-top: 0;
   margin-bottom: 0px;
