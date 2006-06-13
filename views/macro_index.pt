@@ -103,7 +103,7 @@
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
-<metal:define-slot define-slot="notice" />
+<metal:slot define-slot="notice">
 <tal:block condition="message">
   <div class="feedback"
     tal:attributes="
@@ -159,6 +159,7 @@
     </tal:block>
   </div>
 </tal:block>
+</metal:slot>
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
