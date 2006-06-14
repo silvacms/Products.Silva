@@ -67,7 +67,7 @@
           <title>publish now</title>
           <description></description>
           <external_validator></external_validator>
-          <extra>id="publish_now_flag"</extra>
+          <extra>id="publish_now_flag" style="margin-left:0"</extra>
         </values>
         <tales>
         </tales>
