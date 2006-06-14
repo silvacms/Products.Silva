@@ -434,7 +434,7 @@
                         i18n:attributes="title;value"
                         onclick="window.close();return false;"
                       />
-                      <input class="transport"
+                      <input class="executor"
                         type="button"
                         name="place"
                         value="place reference..."
