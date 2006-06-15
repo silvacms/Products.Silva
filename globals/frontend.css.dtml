@@ -457,7 +457,7 @@ div.feedback:first-letter {
 }
 
 span.warning {
- color: #aa0000;
+ color: #a00;
 }
 
 div.backlink {
@@ -472,7 +472,7 @@ input {
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
 
-input.control {
+input.button, input.control {
   margin: 0.1em 0.2em;
   padding: 0 0.2em;
   border: 1px solid #557;
