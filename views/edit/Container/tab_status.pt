@@ -132,7 +132,10 @@
           global rejectables python: test(state == 'pending', 1, rejectables);
           global revokeables python: test(state == 'approved', 1, revokeables);
           global approveables python: test(state == 'draft', 1, approveables);
-          global new_versionables python: test(public_status == 'published' or state == 'closed', 1, new_versionables);
+          global new_versionables python:test(
+            ((public_status == 'published' or public_status == 'closed') 
+            and state != 'draft' and state != 'pending' and state != 'approved'
+            ), 1, new_versionables);
           global republishables python: test(state == 'closed', 1, republishables);"
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
@@ -244,7 +247,6 @@
             <tal:block
               define="
                 global closeables python: 1;
-                global new_versionables python: state != 'pending' and state != 'approved';
                 global expireables python:end_time and 1 or expireables;"
               condition="start_time"
               replace="
@@ -283,7 +285,7 @@
         colspan="6">
         <span tal:condition="
           python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
-          <tal:block i18n:translate="">day / month / year</tal:block> &nbsp;(23:59)
+          <tal:block i18n:translate="">day / month / year &nbsp;(23:59)</tal:block>
         </span>
       </th>
     </tr>
