@@ -226,7 +226,7 @@ _______ manual close section here _______
 <form class="sublisting" action="." enctype="multipart/form-data" method="POST">
 
 <!-- version management -->
-<tal:block define="versions here/get_sorted_model_versions">
+<tal:def define="versions here/get_sorted_model_versions">
   <input type="hidden" 
     name="refs:list"
     tal:attributes="value python: request['model'].create_ref(request['model'])" />
@@ -235,7 +235,7 @@ _______ manual close section here _______
       <tr>
         <td class="top" colspan="7">
            <h2 tal:attributes="title string:id: ${model/id}">
-             <img tal:replace="structure python:view.render_icon(model)" />
+             <img tal:replace="structure icon" />
              <tal:block i18n:translate="">
                manage versions of &#xab;<tal:block 
                content="string:${model/get_title_or_id}"
@@ -351,7 +351,7 @@ _______ manual close section here _______
       </tr>
     </tfoot>
   </table>
-</tal:block>
+</tal:def>
 
 </form>
 
