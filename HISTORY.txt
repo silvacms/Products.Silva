@@ -12,7 +12,11 @@ Silva changes
 
       - In 'normal' headings index items were not rendered by the XSLT
         renderers.
-  
+
+    Bugs Fixed:
+
+      - Fixed Issue1449: Siblings Sidebar should display title or id
+
   1.5.4
 
     Bugs Fixed:
