@@ -40,9 +40,14 @@
     <h2>
       <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />
       <tal:block i18n:translate="">
-        create 
+        <tal:test condition="python:request.meta_type == 'Silva Image' or request.meta_type == 'Silva File'">
+          upload
+        </tal:test>
+        <tal:test condition="python:not (request.meta_type == 'Silva Image' or request.meta_type == 'Silva File')">
+          create
+        </tal:test>
         <tal:block replace="python: request.meta_type == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or request.meta_type" 
-                    i18n:name="TOC_or_meta_type"/>
+          i18n:name="TOC_or_meta_type" />
       </tal:block>
     </h2>
     </td>
@@ -83,6 +88,30 @@
       <tal:block tal:content="structure field/description" i18n:translate="">note</tal:block>&nbsp;
     </td>
   </tr>
+  <tal:comment replace="nothing"> _______ insert subhead for images and files _______ </tal:comment>
+  <tal:test condition="
+    python:(request.meta_type == 'Silva Image' 
+    or request.meta_type == 'Silva File')
+    and field.id == 'file'">
+  <tr class="inter-controls">
+    <td>
+    </td>
+    <td colspan="2">
+      <h3>optional fields</h3>
+    </td>
+  </tr>
+  <tr>
+    <th class="align-right">
+      aspect
+    </th>
+    <th>
+      content
+    </th>
+    <th>
+    notes
+    </th>
+  </tr>
+  </tal:test>
   </tal:define>
   </tal:repeat>
 </tbody>
