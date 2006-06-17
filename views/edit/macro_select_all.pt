@@ -29,7 +29,7 @@
     i18n:attributes="title"
     tal:attributes="for string:all_${aid_postfix};"
     >
-    <span i18n:translate="">select <u>a</u>ll</span>
+    &#10003;
   </label>
   <script type="text/javascript"
     xml:space="preserve">
