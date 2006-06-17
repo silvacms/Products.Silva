@@ -28,7 +28,7 @@
           <default_now type="int">1</default_now>
           <css_class></css_class>
           <title>publish time</title>
-          <description></description>
+          <description>day / month / year &amp;nbsp;(23:59)</description>
           <allow_empty_time type="int">1</allow_empty_time>
         </values>
         <tales>
