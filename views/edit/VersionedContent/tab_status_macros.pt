@@ -14,27 +14,26 @@
 <metal:block define-macro="datetime_info"
   tal:define="
     start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
-    end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr();
-    "
+    end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr()"
   tal:condition="start_time"
   >
 <br />
 <p style="margin-top:0.3em; margin-bottom:0.2em;">
-
-<span class="subhead" tal:condition="not:end_time" i18n:translate="">
+<span class="subhead"
+  tal:condition="not:end_time"
+  i18n:translate="">
 Publication time of public version
 </span>
-<span class="subhead" tal:condition="end_time" i18n:translate="">
+<span class="subhead"
+  tal:condition="end_time"
+  i18n:translate="">
 Publication and expiration time of public version
 </span>
-
 <br />
-<tal:block
-  replace="
-    structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
+<tal:block replace="structure python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))" />
 </p>
 </metal:block>
-  
+
 <span tal:replace="nothing"> _______ messages _______ </span>
 <div tal:omit-tag=""
   tal:condition="python:model.get_approval_request_message()"
@@ -49,12 +48,15 @@ messages
 
 <tr class="even">
 <td class="feedback"
-  colspan="2" i18n:translate="">
+  colspan="2"
+  i18n:translate="">
 <span tal:replace="python:model.get_approval_requester()" i18n:name="author_id">author id</span>
 sent a message on 
-<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>
-<tal:if condition="python:model.get_approval_request_message()" i18n:name="with_comments">
-  <tal:block i18n:translate="">with the following comments:</tal:block>
+<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()"
+  i18n:name="some_date">some date</span>
+<tal:if condition="python:model.get_approval_request_message()"
+  i18n:name="with_comments">
+<tal:inline i18n:translate="">with the following comments:</tal:inline>
 </tal:if>
 </td>
 </tr>
@@ -66,7 +68,7 @@ sent a message on
   style="padding:0">
 <div class="message"
   tal:content="python:model.get_approval_request_message() or 'whatever'">
-message text
+  message text
 </div>
 </td>
 </tr>
@@ -82,12 +84,12 @@ message text
 A previous request for approval has been rejected / withdrawn by 
 <span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on 
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>.
-The last message regarding this issue is:
-</td>
 <tal:comment condition="nothing"> actually the last message may not have been written
   by the person withdrawing the request; if this person for example made an empty reject,
   this is the message of the requester ...
 </tal:comment>
+The last message regarding this issue is:
+</td>
 </tr>
 
 <tr class="even"
@@ -97,14 +99,14 @@ The last message regarding this issue is:
   colspan="2">
 <div class="message"
   tal:content="message">
-message text
+  message text
 </div>
 </td>
 </tr>
 
 <tr class="top-controls">
 <td colspan="2">
-  <h3 i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></h3>
+<h3 i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></h3>
 </td>
 </tr>
 
@@ -120,68 +122,31 @@ notes
 <tr class="odd"
   tal:define="field view/tab_status_form_author/message">
 <td class="align-right">
-  <tal:block 
-    attributes="id field/id" 
-    replace="structure python: field.render(REQUEST=request)"
-  />
+<tal:input
+  replace="structure python: field.render(REQUEST=request)"
+  attributes="id field/id" 
+/>
 </td>
 <td i18n:translate="">
 This message will remain visible in the status screen for other authors and editors.
 </td>
 </tr>
 
-<tr class="inter-controls"
-  tal:define="field view/tab_status_form_author/publish_datetime">
-<td class="align-right"
- style="vertical-align:bottom; white-space: nowrap;'">
- <label 
-   title="access key: alt-m"
-   accesskey="m"
-   tal:attributes="for field/id"
-   i18n:translate=""
-   i18n:attributes="title"
-   >
-   content publish ti<u>m</u>e</label>
-<tal:block 
-  attributes="id field/id" 
-  replace="structure python: field.render(value=model.get_unapproved_version_publication_datetime(), REQUEST=request)"
-/>
-</td>
-<td style="vertical-align:middle;" i18n:translate="">
-day / month / year &nbsp;(23:59)
-</td>
-</tr>
-
-<tr class="inter-controls"
-  tal:define="field view/tab_status_form_change_settings/expiration_datetime">
-<td class="align-right" style="white-space: nowrap;">
-<label 
-  title="access key: alt-i (some platforms)" 
-  accesskey="i"
-  tal:attributes="for field/id"
-  i18n:attributes="title"
-  i18n:translate=""
-  >expiratio<u>n</u> time</label>&nbsp;
-<tal:block 
-  attributes="id field/id" 
-  replace="structure python: field.render(model.get_next_version_expiration_datetime())"
-/>
-</td>
-<td style="vertical-align:middle;" i18n:translate="">
-If this content should expire, set the time.
-</td>
+<tr metal:use-macro="here/tab_status_macros/macros/date_controls">
+  pub/exp/display controls inserted (see below, @ line 229)
 </tr>
 
 <tr class="controls">
-<td colspan="2" class="align-right">
+<td class="align-right" colspan="2">
 <input 
-  type="submit" 
-  value="request approval" 
+  type="submit"
+  value="request approval"
+  class="button"
   name="tab_status_request:method"
-  class="button" 
-  title="access key: alt-r" 
-  accesskey="r" 
-  i18n:attributes="value;title" />
+  title="access key: alt-r"
+  accesskey="r"
+  i18n:attributes="value;title"
+/>
 </td>
 </tr>
 </form>
@@ -209,67 +174,20 @@ notes
 </th>
 </tr>
 
-<tr class="odd"
-  tal:define="field view/tab_status_form_change_settings/publish_datetime">
-<td class="align-right" style="white-space: nowrap;">
-<label 
-  title="access key: alt-m (some platforms)" 
-  accesskey="m"
-  tal:attributes="for field/id"
-  i18n:attributes="title; accesskey access_key_publish_datetime;"
-  i18n:translate=""
-  >publish ti<u>m</u>e:</label>&nbsp;
-<tal:block 
-  attributes="id field/id"
-  replace="structure python: field.render(model.get_next_version_publication_datetime())"
-/>
-</td>
-<td>
-&nbsp;
-</td>
-</tr>
-
-<tr class="even"
-  tal:define="field view/tab_status_form_change_settings/expiration_datetime">
-<td class="align-right" style="white-space: nowrap;">
-<label 
-  title="access key: alt-n (some platforms)" 
-  accesskey="n"
-  tal:attributes="for field/id"
-  i18n:attributes="title"
-  i18n:translate=""
-  >expiratio<u>n</u> time</label>&nbsp;
-<tal:block attributes="id field/id"
-  replace="structure python: field.render(model.get_next_version_expiration_datetime())"
-/>
-</td>
-<td style="vertical-align:middle;" i18n:translate="">
-If this content should expire, set the time.
-</td>
-</tr>
-
-<tr>
-<th class="align-right" colspan="2"
-  tal:define="field view/tab_status_form_change_settings/clear_expiration">
-<label 
-  title="access key: alt-o" 
-  accesskey="o"
-  tal:attributes="for field/id"
-  i18n:attributes="title"
-  i18n:translate=""
-  >clear expiration
-</label>
-<tal:block 
-  attributes="id field/id"
-  replace="structure python: field.render()"
-/>
-</th>
+<tr metal:use-macro="here/tab_status_macros/macros/date_controls">
+  pub/exp/display controls inserted (see below, @ line 229)
 </tr>
 
 <tr class="inter-controls">
 <td class="align-right"
   colspan="2">
-<input type="submit" value="update timing" class="button"  title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
+<input type="submit" 
+  value="update timings"
+  class="button"
+  title="access key: alt-u"
+  accesskey="u"
+  i18n:attributes="value;title"
+/>
 </td>
 </tr>
 </form>
@@ -277,24 +195,23 @@ If this content should expire, set the time.
 <span tal:replace="nothing"> _______ / Editor can change settings _______ </span>
 
 
-
 <span tal:replace="nothing"> ______________ sub tables ______________ </span>
-
 
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
 <form action="tab_status_approve" method="POST">
-<table class="listing">
+<table class="listing sublisting">
 <tr class="top-controls">
 <td colspan="2">
 <h3>
 <span tal:condition="python:not closed or (unapproved and (closed or published))"
   i18n:translate="">
-  publish new version
+publish new version
 </span>
-<span tal:condition="python: closed and not unapproved" i18n:translate="">
-  publish closed version
+<span tal:condition="python: closed and not unapproved"
+  i18n:translate="">
+publish closed version
 </span>
 </h3>
 </td>
@@ -309,43 +226,50 @@ notes
 </th>
 </tr>
 
+<metal:def define-macro="date_controls"> 
 <tr class="even"
+  style="vertical-align:middle"
   tal:define="field view/tab_status_form_editor/publish_datetime">
 <td class="align-right" style="white-space: nowrap;">
 <label title="access key: alt-m"
   accesskey="m"
-  i18n:attributes="title"
-  i18n:translate=""
+  tal:content="field/title"
   tal:attributes="for field/id"
-  >content publish ti<u>m</u>e</label>&nbsp;
-<tal:block 
-  attributes="id field/id"
-  replace="structure python: field.render(REQUEST=request)"
+  i18n:attributes="title"
+  i18n:translate="">
+content publish time
+</label>
+<input tal:replace="structure python: field.render(REQUEST=request)"
+ tal:attributes="id field/id"
 />
 </td>
-<td i18n:translate="">
-day / month / year &nbsp;(23:59)
+<td style="vertical-align:middle"
+  tal:content="structure field/description">
+  description
 </td>
 </tr>
 
 <tr class="odd"
   tal:define="field view/tab_status_form_editor/expiration_datetime">
 <td class="align-right" style="white-space: nowrap;">
-<label 
-  title="access key: alt-i"
-  accesskey="i"
+<label title="access key: alt-o"
+  accesskey="o"
+  tal:content="field/title"
+  tal:attributes="for field/id"
   i18n:attributes="title"
-  i18n:translate=""
-  tal:attributes="for field/id">expiratio<u>n</u> time</label>&nbsp;
-<tal:block 
-  attributes="id field/id"
-  replace="structure python: field.render(REQUEST=request)"
+  i18n:translate="">
+expiration time
+</label>
+<input tal:replace="structure python: field.render(REQUEST=request)"
+  tal:attributes="id field/id"
 />
 </td>
-<td style="vertical-align:middle;" i18n:translate="">
-Empty indicates no expiration.
+<td style="vertical-align:middle"
+  tal:content="structure field/description">
+  description
 </td>
 </tr>
+</metal:def>
 
 <tr class="inter-controls">
 <td class="align-right"
@@ -364,7 +288,7 @@ Empty indicates no expiration.
   accesskey="p"
   i18n:attributes="value;title"
 />
-</td> 
+</td>
 </tr>
 </table>
 </form>
@@ -392,7 +316,7 @@ Empty indicates no expiration.
 <input type="hidden" name="tab_name" value="publish" />
 <th>
 <tal:block i18n:translate="">
-add message on 
+add message on
 </tal:block>
 <tal:block condition="may_approve_content" i18n:translate="">
 rejection
@@ -401,7 +325,8 @@ rejection
 withdrawal
 </tal:block>
 </th>
-<th style="width:40%" i18n:translate="">
+<th style="width:40%"
+  i18n:translate="">
 notes
 </th>
 </tr>
@@ -424,8 +349,7 @@ The message may be viewed by local users.
 <td>
 &nbsp;
 </td>
-<td class="align-right"
-  width="40%">
+<td class="align-right">
 <input 
   type="submit" 
   class="button"  
@@ -441,7 +365,7 @@ The message may be viewed by local users.
   title="access key: alt-r" 
   accesskey="r"
   tal:condition="not: may_approve_content" 
-  value="withdraw approval request" 
+  value="withdraw approval request"
   i18n:attributes="title;value" 
 />
 </td>
@@ -456,7 +380,7 @@ The message may be viewed by local users.
 <div tal:omit-tag=""
   metal:define-macro="revoke_approval">
 <form action="tab_status_revoke" method="POST">
-<table class="listing">
+<table class="listing sublisting">
 <thead>
 <tr class="top-controls">
 <td>
@@ -482,7 +406,7 @@ If further editing is required, first revoke the approval.
   type="submit" 
   value="revoke approval" 
   class="button" 
-  title="access key: alt-v" 
+  title="access key: alt-v"
   accesskey="v" 
   i18n:attributes="value;title" />
 </td>
@@ -501,13 +425,13 @@ If further editing is required, first revoke the approval.
 <table class="listing">
 <tr class="top-controls">
 <td>
-  <h3 i18n:translate="">
-  revert to previous version
+<h3 i18n:translate="">
+revert to previous version
 </h3>
 </td>
 </tr>
 <tr class="even">
-  <td i18n:translate="">
+<td i18n:translate="">
 The current editable version can be replaced with the previous (published)
 version. This can not be undone afterwards and will discard all changes
 made to the current version.
@@ -521,7 +445,7 @@ made to the current version.
   title="access key: alt-p"
   accesskey="p"
   onclick="return confirm('Really revert ?')"
-  i18n:attributes="value;title"
+  i18n:attributes="value;title;onclick"
 />
 </td>
 </tr>
@@ -539,14 +463,14 @@ made to the current version.
 <thead>
 <tr class="top-controls">
 <td>
-  <h3 i18n:translate="">manual close</h3> 
+<h3 i18n:translate="">manual close</h3> 
 </td>
 </tr>
 </thead>
 
 <tbody>
 <tr class="even">
-  <td i18n:translate="">
+<td i18n:translate="">
 If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index.
 </td>
 </tr>
@@ -561,7 +485,7 @@ If necessary, the published version of this content can be manually closed (take
   title="access key: alt-c"
   accesskey="c" 
   i18n:attributes="value;title"
-  />
+/>
 </td>
 </tr>
 </tfoot>
