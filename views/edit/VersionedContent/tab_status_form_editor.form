@@ -51,7 +51,7 @@
           <default_now type="int">0</default_now>
           <css_class></css_class>
           <title>expiration time</title>
-          <description>If this document should expire, set the time.</description>
+          <description>Empty indicates no expiration.</description>
           <allow_empty_time type="int">1</allow_empty_time>
         </values>
         <tales>
