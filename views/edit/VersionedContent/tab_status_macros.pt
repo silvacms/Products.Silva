@@ -214,7 +214,7 @@ notes
   metal:define-macro="approve_new">
 <form action="tab_status_approve" method="POST">
 <table class="listing sublisting">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3>
 <span tal:condition="python:not closed or (unapproved and (closed or published))"
@@ -313,7 +313,7 @@ expiration time
   metal:define-macro="withdraw_request_approval">
 <form action="tab_status_withdraw" method="POST">
 <table class="listing">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3>
 <tal:block condition="may_approve_content" i18n:translate="">reject</tal:block>
@@ -394,7 +394,7 @@ The message may be viewed by local users.
 <form action="tab_status_revoke" method="POST">
 <table class="listing sublisting">
 <thead>
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
 <h3 i18n:translate="">
 revoke approval
@@ -435,7 +435,7 @@ If further editing is required, first revoke the approval.
   metal:define-macro="revert_to_previous">
 <form action="tab_status_revert_to_previous" method="POST">
 <table class="listing">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
 <h3 i18n:translate="">
 revert to previous version
@@ -473,7 +473,7 @@ made to the current version.
 <form action="tab_status_close" method="POST">
 <table class="listing">
 <thead>
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
 <h3 i18n:translate="">manual close</h3> 
 </td>
