@@ -410,18 +410,18 @@ table.listing img {
 
 /* ______________ rows ______________ */
 
+table.listing tr.top-controls {
+  background: &dtml-listingTopControlsBackground;;
+  /* in case it's empty */
+  height: 0.2em;
+}
+
 table.listing tr.controls {
   text-align: right;
   /* in case it's empty */
   height: 0.2em;
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
-}
-
-table.listing tr.top-controls {
-  background: &dtml-listingTopControlsBackground;;
-  /* in case it's empty */
-  height: 0.2em;
 }
 
 table.listing tr.odd {
@@ -435,7 +435,8 @@ td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
 
 table.listing tr.inter-controls td {
   color: #c9dfe2;
-  background: &dtml-listingInterControlsBackground;;
+  background-color : #718191;
+/*  background: &dtml-listingInterControlsBackground;; */
 }
 
 tr.divider, th.divider, td.divider {
@@ -525,7 +526,8 @@ table.listing tr.top-controls h3 {
 
 /* _______ subsubhead cell _______ */
 table.listing tr.inter-controls h3 {
-  margin: 0.1em 0.3em 0.1em;
+  color : #e3e9f4;
+  margin: 0.2em 0.3em 0.1em;
 }
 
 table.listing td.listing-left {
@@ -1043,7 +1045,7 @@ div.info h3 {
 }
 
 div.info p {
-  margin-top: 0.3em;
+  margin-top: 0.6em;
   margin-bottom: 0em;
 }
 
@@ -1598,7 +1600,6 @@ a.closed:hover {
   color: #333767;
   font-weight: bold;
   font-family: verdana, arial, helvetica, sans-serif;
-  line-height: 1.8em;
 } 
 
 .idea {
