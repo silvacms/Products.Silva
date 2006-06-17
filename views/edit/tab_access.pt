@@ -532,7 +532,7 @@
       </tal:block>
       <td class="main"
         style="padding-top:2em;">
-        <form action=".."
+        <form action="."
           method="POST"
           tal:define="
             info model/@@get_viewer_role_info; 
