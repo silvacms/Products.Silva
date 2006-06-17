@@ -516,11 +516,16 @@ table.listing tr.top-controls td {
 
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-  margin: 0.1em 0.2em 0.2em 0.2em;
-  padding: 0em;
+  margin: 0.3em 0.2em 0.2em;
+  padding: 0;
   border: none;
   color: &dtml-listingTopControlsHeadingColor;;
   line-height: 100%;
+}
+
+/* _______ subsubhead cell _______ */
+table.listing tr.inter-controls h3 {
+  margin: 0.1em 0.3em 0.1em;
 }
 
 table.listing td.listing-left {
