@@ -30,24 +30,24 @@
     global republishables nothing;
     global expireables nothing;
   ">
-  <table class="columns columns2">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">
-          _____________________ sidebar _____________________
-        </tal:block>
-        <td class="left">
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
-            </metal:fill-slot>
-          </metal:use-macro>
-        </td>
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
 
-        <tal:block replace="nothing">
-          _____________________ main _____________________
-        </tal:block>
-        <td class="main">
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
 
 <table class="listing">
   <thead>
@@ -454,10 +454,10 @@
   </tfoot>
 </table>
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </form>
 </metal:fill>
 </metal:use>
