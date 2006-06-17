@@ -7,6 +7,8 @@ Under development
 
     Features added
 
+      - Moved document info in the document status screen to an info column like assets have.
+
       - Refactored/cleaned up tab_status_macros to remove code duplication.
 
       - Changed the add screens for Files and Images so the upload (file) field
@@ -42,6 +44,8 @@ Under development
         'service_kupu_silva', respectively.
 
     Bugs fixed:
+
+      - Fixed Issue1449: Siblings Sidebar should display title or id
 
       - Fix for Firefox html edit problem in kupu
 
