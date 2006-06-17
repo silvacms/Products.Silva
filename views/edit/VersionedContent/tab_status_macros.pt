@@ -9,16 +9,28 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   >
+<tal:toc replace="nothing">
+_______ Macros in this file _______
+datetime_info........notice of previous version times
+messages.............author/editor messages
+request_approval.....Author requests approval
+approved_editor......Editor can change settings
+        Subtables
+editor_approves......Editor approves
+withdraw_request_approval Author/Editor withdraws/rejects request for approval
+revoke_approval......Revoke approval
+revert_to_previous...Revert to previous
+manual_close.........Manual close
+</tal:toc>
 
-<span tal:replace="nothing"> _______ notice of previous version times _______ </span>
+<span tal:replace="nothing"> _______ Notice of previous version times _______ </span>
 <metal:block define-macro="datetime_info"
   tal:define="
     start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
     end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr()"
-  tal:condition="start_time"
-  >
+  tal:condition="start_time">
 <br />
-<p style="margin-top:0.3em; margin-bottom:0.2em;">
+<p>
 <span class="subhead"
   tal:condition="not:end_time"
   i18n:translate="">
@@ -34,11 +46,11 @@ Publication and expiration time of public version
 </p>
 </metal:block>
 
-<span tal:replace="nothing"> _______ messages _______ </span>
+<span tal:replace="nothing"> _______ Author/Editor messages _______ </span>
 <div tal:omit-tag=""
   tal:condition="python:model.get_approval_request_message()"
   metal:define-macro="messages">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 messages
@@ -104,7 +116,7 @@ The last message regarding this issue is:
 </td>
 </tr>
 
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></h3>
 </td>
@@ -157,7 +169,7 @@ This message will remain visible in the status screen for other authors and edit
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
 <form action="tab_status_change_settings" method="POST">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 change settings
@@ -182,7 +194,7 @@ notes
 <td class="align-right"
   colspan="2">
 <input type="submit" 
-  value="update timings"
+  value="update timing"
   class="button"
   title="access key: alt-u"
   accesskey="u"
@@ -195,7 +207,7 @@ notes
 <span tal:replace="nothing"> _______ / Editor can change settings _______ </span>
 
 
-<span tal:replace="nothing"> ______________ sub tables ______________ </span>
+<span tal:replace="nothing"> ______________ Subtables ______________ </span>
 
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div tal:omit-tag=""
@@ -276,9 +288,9 @@ expiration time
   colspan="2">
 <input class="button"
   type="submit"
-  value="approve for later"
-  title="access key: alt-l"
-  accesskey="l"
+  value="approve for future"
+  title="access key: alt-f"
+  accesskey="f"
   i18n:attributes="value;title"
 />
 <input class="executor"
