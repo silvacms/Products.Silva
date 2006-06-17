@@ -10,8 +10,8 @@
   tal:define="global vein string:contents;"
   i18n:domain="silva">
 
-<metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<metal:use use-macro="here/macro_index/macros/master">
+<metal:fill fill-slot="main">
 
 <form action="."
   method="post"
@@ -113,9 +113,9 @@
                       tal:condition="may_change_content"
                       i18n:attributes="title;value"
                     />
-                    <span tal:condition="not:may_change_content" tal:omit-tag="">
+                    <tal:if condition="not:may_change_content">
                       &nbsp;
-                    </span>
+                    </tal:if>
                   </div>
                 </td>
               </tr>
@@ -142,7 +142,7 @@
                   author
                 </th>
                 <th class="nosort listing-right">
-                  &nbsp;<span i18n:translate="" tal:omit-tag="">shift</span>&nbsp;
+                  &nbsp;<tal:inline i18n:translate="">shift</tal:inline>&nbsp;
                 </th>
               </tr>
 
@@ -455,21 +455,23 @@
                 ______________ select all row ______________
               </tal:block>
               <tr tal:condition="python:(default_document or publishables or assets)">
-                <th class="controls listing-left"
-                  colspan="4">
-                  <tal:block define="select_id string:ids">
-                    <metal:block use-macro="view/macro_select_all/macros/select_all"/>
-                  </tal:block>
+                <th class="controls listing-left">
+                  <tal:def define="select_id string:ids">
+                    <metal:use use-macro="view/macro_select_all/macros/select_all" />
+                  </tal:def>
+                </th>
+                <th class="controls"
+                  colspan="3">
+                  content actions
                 </th>
                 <th class="controls listing-right" colspan="2">
-                  <span tal:condition="may_change_content"
-                    tal:omit-tag="">
+                  <tal:if condition="may_change_content">
                     <span style="margin-right:0.2em"
                       tal:condition="python:(published or editables or closed)"
                       i18n:translate="">
                       publishing actions
                     </span>
-                  </span>
+                  </tal:if>
                 </th>
               </tr>
               <tal:block replace="nothing">
@@ -477,7 +479,7 @@
               </tal:block>
               <tr class="controls">
                 <td colspan="6">
-                  <tal:block condition="may_change_content">
+                  <tal:if condition="may_change_content">
                     <div style="float: right;">
                       <input class="close" 
                         name="tab_edit_close:method" 
@@ -498,7 +500,7 @@
                         tal:condition="python:editables or closed"
                       />
                     </div>
-                    <tal:block tal:condition="python:(default_document or publishables or assets)">
+                    <tal:if condition="python:(default_document or publishables or assets)">
                       <div style="float: left; margin-left:0.2em; margin-right:0.7em;">
                         <select class="manipulator"
                           name="new_position"
@@ -507,9 +509,9 @@
                           tal:define="length python: len(publishables) - test(default_document, 1, 0)"
                           i18n:attributes="title">
                           <option value="position">
-                            <span i18n:translate="" tal:omit-tag="">position</span>:
+                            <tal:inline i18n:translate="">position</tal:inline>:
                           </option>
-                          <tal:block repeat="item python:range(length)">                            
+                          <tal:loop repeat="item python:range(length)">                            
                             <option value="0"   
                               tal:define="pos repeat/item/number"
                               tal:content="pos"
@@ -517,7 +519,7 @@
                                 value pos;
                                 selected python: str(pos) == position and 'selected' or nothing;
                                 " />
-                          </tal:block>
+                          </tal:loop>
                           <option value="0"
                             tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
                             i18n:translate=""
@@ -556,9 +558,9 @@
                         accesskey="x" 
                         i18n:attributes="value;title"
                       />               
-                    </tal:block>
-                  </tal:block>
-                  <tal:block tal:condition="python:(default_document or publishables or assets)">
+                    </tal:if>
+                  </tal:if>
+                  <tal:if condition="python:(default_document or publishables or assets)">
                       <input class="button"
                         name="tab_edit_copy:method"
                         type="submit"
@@ -567,14 +569,14 @@
                         accesskey="c" 
                         i18n:attributes="value;title"
                       />
-                  </tal:block>
-                  <tal:block condition="may_change_content">                  
+                  </tal:if>
+                  <tal:if condition="may_change_content">                  
                     <tal:block replace="nothing">
                       ______________ paste (to ghost) controls exist even
                       if there's no content (there should be something on 
                       the clipboard though). ______________
                     </tal:block>
-                    <tal:block condition="python:request.has_key('__cp') and request['__cp'] is not None">
+                    <tal:if condition="python:request.has_key('__cp') and request['__cp'] is not None">
                       <input class="button"
                         name="tab_edit_paste:method"
                         type="submit"
@@ -591,8 +593,8 @@
                         accesskey="g" 
                         i18n:attributes="value;title"
                       />
-                    </tal:block>
-                    <tal:block tal:condition="python:(default_document or publishables or assets)">
+                    </tal:if>
+                    <tal:if condition="python:(default_document or publishables or assets)">
                       <input class="warning"
                         name="tab_edit_delete:method"
                         type="submit"
@@ -602,8 +604,8 @@
                         onclick="return confirm('Really delete?')"
                         i18n:attributes="value;title"
                       />
-                    </tal:block>
-                  </tal:block>
+                    </tal:if>
+                  </tal:if>
                 </td>
               </tr>
             </tfoot>
@@ -614,6 +616,6 @@
     </tbody>
   </table>
 </form>
-</metal:block>
-</metal:block>
+</metal:fill>
+</metal:use>
 </html>

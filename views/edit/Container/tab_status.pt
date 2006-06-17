@@ -10,8 +10,8 @@
   vein string:publish;
   "
   i18n:domain="silva">
-<metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="main">
+<metal:use use-macro="here/macro_index/macros/master">
+<metal:fill fill-slot="main">
 
 <form action="."
   method="post"
@@ -39,7 +39,7 @@
         <td class="left">
           <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
+              <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>
@@ -120,7 +120,7 @@
     <tal:block replace="nothing">
       ______________ iteration ______________
     </tal:block>
-    <tal:block repeat="obj objects">
+    <tal:loop repeat="obj objects">
       <tr
         tal:define="
           iterate repeat/obj/odd;
@@ -172,15 +172,15 @@
                   href string:${obj_url}/edit/tab_preview;
                   title python:here.tab_status_get_preview_title(obj['id']);
                   ">
-                <tal:block condition="obj/is_default | nothing">
+                <tal:if condition="obj/is_default | nothing">
                   <em i18n:translate="">index:</em>
-                  <tal:block condition="title" replace="title" />
+                  <tal:plug condition="title" replace="title" />
                   <em tal:condition="not:title" tal:content="obj/id">id</em>
-                </tal:block>
-                <tal:block condition="not:obj/is_default | nothing">
-                  <tal:block condition="title" replace="title" />
+                </tal:if>
+                <tal:if condition="not:obj/is_default | nothing">
+                  <tal:plug condition="title" replace="title" />
                   <em tal:condition="not:title" tal:content="obj/id">id</em>
-                </tal:block>
+                </tal:if>
               </a>
             </div>
           </div>
@@ -196,8 +196,7 @@
               href string:${obj_url}/edit/tab_status;"
               i18n:attributes="title"
               i18n:translate="">
-              <tal:block content="obj/status">
-              </tal:block>
+            <tal:plug replace="obj/status" />
           </a>
           <a class="closed"
             title="publish"
@@ -215,7 +214,7 @@
           <span
             tal:content="structure obj/next_version_publication_datetime | nothing"
             tal:attributes="class obj/status_style | default;"
-	    tal:omit-tag="obj/status_style | default"
+	          tal:omit-tag="obj/status_style | default"
           />
         </td>
         <tal:block replace="nothing">
@@ -244,24 +243,22 @@
             tal:attributes="href obj_url;"
             tal:condition="python: public_status == 'published'"
             i18n:attributes="title">
-            <tal:block
+            <tal:def 
               define="
                 global closeables python: 1;
-                global expireables python:end_time and 1 or expireables;"
+                global expireables python:end_time and 1 or expireables"
               condition="start_time"
-              replace="
-                python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
-            </tal:block>
+              replace="python: '%s%s' % (start_time, test(end_time, ' - %s' % end_time, ''))">
+            </tal:def>
           </a>
-          <tal:block
-            condition="python: public_status == 'closed'">
+          <tal:if condition="python: public_status == 'closed'">
             <span i18n:translate="">
               closed
             </span>
-          </tal:block>
+          </tal:if>
         </td>
       </tr>
-    </tal:block>
+    </tal:loop>
     <tal:block replace="nothing">
       ______________ if empty ______________
     </tal:block>
@@ -278,15 +275,14 @@
       <th class="listing-left"
         colspan="2">
         <tal:define define="select_id string:refs">
-          <metal:block use-macro="view/macro_select_all/macros/select_all" />
+          <metal:use use-macro="view/macro_select_all/macros/select_all" />
         </tal:define>
       </th>
       <th class="align-right"
         colspan="6">
-        <span tal:condition="
-          python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
-          <tal:block i18n:translate="">day / month / year &nbsp;(23:59)</tal:block>
-        </span>
+        <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
+          <tal:inline i18n:translate="">day / month / year &nbsp;(23:59)</tal:inline>
+        </tal:if>
       </th>
     </tr>
     <tr class="controls inter-controls"
@@ -306,32 +302,27 @@
           >
           publish time
         </label>
-        <tal:block
-          condition="redisplay_timing_form"
+        <tal:plug condition="redisplay_timing_form"
           replace="structure python: view.tab_status_form.publish_datetime.render_from_request(request)"
         />
-        <tal:block
-          tal:condition="not: redisplay_timing_form"
-          tal:replace="structure python: view.tab_status_form.publish_datetime.render()"
+        <tal:plug condition="not: redisplay_timing_form"
+          replace="structure python: view.tab_status_form.publish_datetime.render()"
         />
-        <tal:block condition="python: approveables or ((closeables or revokeables or rejectables or new_versionables) and may_approve_content)">
+        <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or new_versionables) and may_approve_content)">
           <label title="access key: alt-x"
             accesskey="x"
             i18n:attributes="title"
             i18n:translate="">
             &nbsp;&nbsp;expiration time
           </label>
-          <tal:block
-            condition="redisplay_timing_form"
+          <tal:plug condition="redisplay_timing_form"
             replace="structure python: view.tab_status_form.expiration_datetime.render_from_request(request)"
           />
-          <tal:block
-            condition="not: redisplay_timing_form"
+          <tal:plug condition="not: redisplay_timing_form"
             replace="structure python: view.tab_status_form.expiration_datetime.render()"
           />
-        </tal:block>
-        <tal:block
-            condition="python: may_approve_content and expireables">
+        </tal:if>
+        <tal:if condition="python: may_approve_content and expireables">
           &nbsp;
           <label for="clear_expiration"
             title="access key: alt-o"
@@ -341,7 +332,7 @@
             clear&nbsp;expiration
           </label>
           <field tal:replace="structure view/tab_status_form/clear_expiration/render" />
-        </tal:block>
+        </tal:if>
       </td>
     </tr>
     <tal:block replace="nothing">
@@ -349,56 +340,49 @@
     </tal:block>
     <tr class="controls"
       tal:condition="may_approve_content">
-      <td colspan="2" 
-        style="border-style:none;">
-        <input class="reject"
-          type="submit"
-          name="tab_status_reject:method"
-          value="reject"
-          title="reject pending request for approval: alt-j"
-          accesskey="j"
-          tal:condition="rejectables"
-          i18n:attributes="value;title"
-        />
-        <input class="revoke"
-          type="submit"
-          name="tab_status_revoke:method"
-          value="revoke"
-          title="withdraw approval of approved versions: alt-v"
-          accesskey="v"
-          tal:condition="revokeables"
-          i18n:attributes="value;title"
-        />
-        <input class="close"
-          type="submit"
-          name="tab_status_close:method"
-          value="close"
-          title="close published items: alt-c"
-          accesskey="c"
-          tal:condition="closeables"
-          i18n:attributes="value;title"
-        />
-        <input class="button"
-          type="submit"
-          name="tab_status_new_version:method"
-          value="new version"
-          title="create new versions of published docs: alt-n"
-          accesskey="n"
-          tal:condition="new_versionables"
-          i18n:attributes="value;title"
-        />
-      </td>
+      <metal:def define-macro="versioning_controls">
+        <td colspan="2" 
+          style="border-style:none;">
+          <input class="reject"
+            type="submit"
+            name="tab_status_reject:method"
+            value="reject"
+            title="reject pending request for approval: alt-j"
+            accesskey="j"
+            tal:condition="rejectables"
+            i18n:attributes="value;title"
+          />
+          <input class="revoke"
+            type="submit"
+            name="tab_status_revoke:method"
+            value="revoke"
+            title="withdraw approval of approved versions: alt-v"
+            accesskey="v"
+            tal:condition="revokeables"
+            i18n:attributes="value;title"
+          />
+          <input class="close"
+            type="submit"
+            name="tab_status_close:method"
+            value="close"
+            title="close published items: alt-c"
+            accesskey="c"
+            tal:condition="python:closeables and may_approve_content"
+            i18n:attributes="value;title"
+          />
+          <input class="button"
+            type="submit"
+            name="tab_status_new_version:method"
+            value="new version"
+            title="create new versions of published docs: alt-n"
+            accesskey="n"
+            tal:condition="new_versionables"
+            i18n:attributes="value;title"
+          />
+        </td>
+      </metal:def>
       <td class="align-right"
         colspan="4"> 
-        <input class="button"
-          name="tab_status_approve:method"
-          type="submit"
-          value="approve for later"
-          title="approve new versions for publication at a later date: alt-l"
-          accesskey="l"
-          tal:condition="python: approveables or rejectables or republishables"
-          i18n:attributes="value;title"
-        />
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
@@ -406,6 +390,15 @@
           title="change publish and expiration times: alt-u"
           accesskey="u"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
+          i18n:attributes="value;title"
+        />
+        <input class="button"
+          name="tab_status_approve:method"
+          type="submit"
+          value="approve for future"
+          title="approve new versions for publication at a later date: alt-f"
+          accesskey="f"
+          tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title"
         />
         <input class="executor"
@@ -424,42 +417,15 @@
       <tal:block replace="nothing">
         ______________ author controls ______________
       </tal:block>
-      <td colspan="2" 
-        style="border-style:none;">
-        <input class="reject"
-          type="submit"
-          name="tab_status_withdraw:method"
-          value="withdraw"
-          title="withdraw pending request for approval: alt-w"
-          accesskey="w"
-          tal:condition="rejectables"
-          i18n:attributes="value;title"
-        />
-        <input class="revoke"
-          accesskey="v"
-          name="tab_status_revoke:method"
-          title="revoke approval of approved versions: alt-v"
-          type="submit"
-          value="revoke"
-          tal:condition="revokeables"
-          i18n:attributes="value;title"
-        />
-        <input class="button"
-          type="submit"
-          name="tab_status_new_version:method"
-          value="new version"
-          title="create new versions of published docs: alt-n"
-          accesskey="n"
-          tal:condition="new_versionables"
-          i18n:attributes="value;title"
-        />
-      </td>
+      <metal:use use-macro="here/tab_status/macros/versioning_controls">
+        insert versioning controls
+      </metal:use>
       <td class="align-right"
         colspan="4">
         <input class="button"
           name="tab_status_change_settings:method"
           type="submit"
-          value="set timing"
+          value="update timing"
           title="change publish and expiration times: alt-s"
           accesskey="s"
           tal:condition="python: approveables"
@@ -493,6 +459,6 @@
     </tbody>
   </table>
 </form>
-</metal:block>
-</metal:block>
+</metal:fill>
+</metal:use>
 </html>
