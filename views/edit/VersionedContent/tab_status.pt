@@ -144,7 +144,8 @@ _______ manual close section here _______
       <td class="right">
 
 <span tal:replace="nothing"> ______________ info about doc ______________ </span>
-<div class="info">
+<div class="info"
+  style="margin-bottom:1.5em">
   <h3 i18n:translate="">
     <img tal:replace="structure icon" /> document info
   </h3>
@@ -153,7 +154,7 @@ _______ manual close section here _______
   <tal:if condition="python:unapproved and not published and not closed">
     <p>
       <span class="subhead" style="color:#a00;" i18n:translate="">
-        Content is a draft and has never been published.
+        Content is a draft and never published
       </span><br />
       <span tal:condition="may_approve_content"
         tal:omit-tag="" i18n:translate="">Publication settings can be changed.</span>
@@ -165,7 +166,7 @@ _______ manual close section here _______
   <tal:if condition="python:may_change_content and approved">
     <p>
       <span class="subhead" style="color:ForestGreen;" i18n:translate="">
-        Content is approved, not published.
+        Content is approved, not published
       </span><br />
       <span tal:condition="may_approve_content"
         tal:omit-tag="" i18n:translate="">
@@ -178,7 +179,7 @@ _______ manual close section here _______
   <span tal:replace="nothing"> _______ status: content is published _______ </span>
   <tal:if condition="python:may_change_content and not next and published">
     <p>
-      <span class="subhead" i18n:translate="">Content is published.</span><br />
+      <span class="subhead" i18n:translate="">Content is published</span><br />
       <tal:block i18n:translate="">
       This content is published (online for the public).<br />
       If you wish you can make an editable copy by going to the <span i18n:name="editor">
@@ -191,7 +192,7 @@ _______ manual close section here _______
   <span tal:replace="nothing"> _______ status: warning of new version of published content _______ </span>
   <tal:if condition="python:may_change_content and unapproved and published">
     <p>
-      <span class="subhead" i18n:translate="">Published version exists.</span><br />
+      <span class="subhead" i18n:translate="">Published version exists</span><br />
       <span class="warning"
         i18n:translate="">
         Note: an older version of this content is online.<br />
@@ -203,7 +204,7 @@ _______ manual close section here _______
   <span tal:replace="nothing"> _______ status: content is closed _______ </span>
   <tal:if condition="python:may_change_content and not next and closed">
     <p>
-      <span class="subhead" i18n:translate="">Content is closed.</span><br />
+      <span class="subhead" i18n:translate="">Content is closed</span><br />
       <tal:block i18n:translate="">  
         This content was once published but is now closed.<br /> 
         If you wish you can make an editable copy in the <a tal:content="string:editor"
