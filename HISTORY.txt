@@ -6,6 +6,12 @@ Silva changes
 Under development
 
     Features added
+
+      - Refactored/cleaned up tab_status_macros to remove code duplication.
+
+      - Changed the add screens for Files and Images so the upload (file) field
+        comes first, followed by a subhead 'optional fields', because Authors
+        were not seeing the tip that they don't have to fill in an id.
     
       - Added a more discreet favicon for the public views.
 
