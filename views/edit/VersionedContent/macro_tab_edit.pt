@@ -187,9 +187,9 @@ h2 {
     tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
 
-<metal:fill fill-slot="kupucheck">
-  <metal:plug define-slot="kupucheck" />
-  <tal:plug define="global kupuloaded kupuloaded | nothing" />
+<metal:fill fill-slot="feedback">
+  <metal:plug define-slot="feedback" />
+  <tal:plug define="global nofeedback kupuloaded | nothing" />
 </metal:fill>
 
 </metal:use-macro>

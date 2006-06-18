@@ -103,25 +103,25 @@
 <div class="workspace">
 <metal:block define-slot="middleground" />
 <metal:plug define-slot="kupucheck" 
-  tal:define="global kupuloaded kupuloaded | nothing" />
+  tal:define="global nofeedback nofeedback | nothing" />
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
-<metal:slot define-slot="notice" />
-  <tal:if condition="message">
-    <div class="feedback"
-      tal:attributes="
-        class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
-      <span tal:replace="structure message">
-        message
-      </span>
-      &nbsp;
-      <tal:block tal:condition="python:message_type == 'feedback'">
-        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-      </tal:block>
-    </div>
-  </tal:if>
-<tal:if condition="python: not message and not kupuloaded">
+<tal:if condition="message">
+  <div class="feedback"
+    tal:attributes="
+      class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+    <span tal:replace="structure message">
+      message
+    </span>
+    &nbsp;
+    <tal:block tal:condition="python:message_type == 'feedback'">
+      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+    </tal:block>
+  </div>
+</tal:if>
+<tal:if condition="python: not (message or nofeedback)"
+  metal:define-slot="feedback">
   <div class="fixed-clear" 
     tal:define="
       in_development_mode model/sec_in_development_mode;
@@ -163,6 +163,7 @@
     </tal:block>
   </div>
 </tal:if>
+<metal:slot define-slot="notice" />
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
