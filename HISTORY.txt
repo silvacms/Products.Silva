@@ -17,6 +17,10 @@ Silva changes
 
       - Fixed Issue1449: Siblings Sidebar should display title or id
 
+      - Fixed issue1516: space above kupu in news items. The previous fix 
+        messed up the display of non-kupu versionedcontent, so this fix is more 
+        robust, allowing other extensions to control the feedback space too. 
+
   1.5.4
 
     Bugs Fixed:
