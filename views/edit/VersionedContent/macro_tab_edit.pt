@@ -187,9 +187,10 @@ h2 {
     tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
 
-<metal:fill fill-slot="feedback">
-  <metal:plug define-slot="feedback" />
-  <tal:plug define="global nofeedback kupuloaded | nothing" />
+<tal:note replace="nothing"> if kupu is live percolate signal upwards</tal:note>
+<metal:fill fill-slot="editorcheck">
+  <metal:plug define-slot="editorcheck" />
+  <tal:plug define="global nofeedback nofeedback | nothing" />
 </metal:fill>
 
 </metal:use-macro>
