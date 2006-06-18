@@ -7,7 +7,8 @@ Under development
 
     Features added
 
-      - Moved document info in the document status screen to an info column like assets have.
+      - Moved document info in the document status screen to an info column 
+        like assets have.
 
       - Refactored/cleaned up tab_status_macros to remove code duplication.
 
@@ -44,6 +45,9 @@ Under development
         'service_kupu_silva', respectively.
 
     Bugs fixed:
+
+      - Fix for issue1516: space above kupu in news items. Other extensions can 
+        control the feedback space too. 
 
       - Fixed Issue1449: Siblings Sidebar should display title or id
 

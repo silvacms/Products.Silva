@@ -98,16 +98,16 @@
 <!-- ___________________________ /end matrix tabs __________________________ -->
 <!-- ___________________________ start workspace __________________________ -->
 <div class="workspace">
-<metal:block define-slot="middleground" />
-
+<metal:plug define-slot="middleground" />
+<metal:plug define-slot="kupucheck" 
+  tal:define="global kupuloaded kupuloaded | nothing" />
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
 <metal:slot define-slot="notice">
   <tal:block condition="message">
     <div class="feedback"
-      tal:attributes="
-        class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+      tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
       <span tal:replace="structure message">
         message
       </span>
@@ -118,7 +118,7 @@
     </div>
   </tal:block>
 </metal:slot>
-<tal:block condition="not: message">
+<tal:if condition="python: not message and not kupuloaded">
   <div class="fixed-clear" 
     tal:define="
       in_development_mode model/sec_in_development_mode;
@@ -159,7 +159,7 @@
       &nbsp;
     </tal:block>
   </div>
-</tal:block>
+</tal:if>
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
