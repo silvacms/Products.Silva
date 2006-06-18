@@ -104,19 +104,20 @@
 <!-- ______________ start feedback ______________ -->
 </span>
 <metal:slot define-slot="notice">
-<tal:block condition="message">
-  <div class="feedback"
-    tal:attributes="
-      class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
-    <span tal:replace="structure message">
-      message
-    </span>
-    &nbsp;
-    <tal:block tal:condition="python:message_type == 'feedback'">
-      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-    </tal:block>
-  </div>
-</tal:block>
+  <tal:block condition="message">
+    <div class="feedback"
+      tal:attributes="
+        class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+      <span tal:replace="structure message">
+        message
+      </span>
+      &nbsp;
+      <tal:block tal:condition="python:message_type == 'feedback'">
+        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+      </tal:block>
+    </div>
+  </tal:block>
+</metal:slot>
 <tal:block condition="not: message">
   <div class="fixed-clear" 
     tal:define="
@@ -159,7 +160,6 @@
     </tal:block>
   </div>
 </tal:block>
-</metal:slot>
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
