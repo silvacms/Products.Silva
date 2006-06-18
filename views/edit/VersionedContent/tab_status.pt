@@ -145,7 +145,7 @@ _______ manual close section here _______
 
 <span tal:replace="nothing"> ______________ info about doc ______________ </span>
 <div class="info"
-  style="margin-bottom:1.5em">
+  style="margin-bottom:1em">
   <h3 i18n:translate="">
     <img tal:replace="structure icon" /> document info
   </h3>
