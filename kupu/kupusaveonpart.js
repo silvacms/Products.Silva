@@ -16,12 +16,14 @@ function saveOnPart(event) {
             _('You have unsaved changes. Are you sure you want to ' +
                 'leave the editor?')
             )) {
-        if (event.preventDefault) {
-            event.preventDefault();
+        kupu.config.reload_src = 0;
+        if (event.stopPropagation) {
+            event.stopPropagation();
         } else {
             event.returnValue = false;
         };
-        return false;
+        event.preventDefault();
+        //return false;
     };
     return true;
 };

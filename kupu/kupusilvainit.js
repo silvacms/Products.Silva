@@ -72,6 +72,7 @@ function initSilvaKupu(iframe) {
         } else {
             e.returnValue = false;
         };
+        e.preventDefault();
         return false;
     };
     // to make firefox not pop up a warning as well...
