@@ -66,6 +66,16 @@ function initSilvaKupu(iframe) {
 
     // make that page unloads can be cancelled (if supported by the browser)
     addEventHandler(window, 'beforeunload', saveOnPart);
+    var cancelEvent = function(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        } else {
+            e.returnValue = false;
+        };
+        return false;
+    };
+    // to make firefox not pop up a warning as well...
+    addEventHandler(window, 'unload', cancelEvent); 
 
     var cm = new ContextMenu();
     kupu.setContextMenu(cm);
