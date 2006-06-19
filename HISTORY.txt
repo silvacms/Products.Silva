@@ -7,6 +7,10 @@ Under development
 
     Features added
 
+      - Added adapters so we now have a simple API to index, unindex
+        and reindex content objects, folders and assets. Adapt to
+        Products.Silva.adapters.ICatalogIndexable.
+
       - Moved document info in the document status screen to an info column 
         like assets have.
 

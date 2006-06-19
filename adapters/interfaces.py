@@ -170,3 +170,18 @@ class IPath(Interface):
 
     def urlToPath(url):
         """convert a HTTP URL to a physical path"""
+
+class ICatalogIndexable(Interface):
+    """Index and reindex an object.
+    """
+    def index():
+        """Index an object.
+        """
+
+    def unindex():
+        """Unindex an object.
+        """
+        
+    def reindex():
+        """Reindex an object.
+        """

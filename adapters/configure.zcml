@@ -56,4 +56,22 @@
     factory=".assetdata.ImageData"
     />
 
+  <adapter
+    for="Products.Silva.interfaces.IPublishable"
+    provides="Products.Silva.adapters.interfaces.ICatalogIndexable"
+    factory=".catalog.SimpleIndexable"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IAsset"
+    provides="Products.Silva.adapters.interfaces.ICatalogIndexable"
+    factory=".catalog.SimpleIndexable"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IVersionedContent"
+    provides="Products.Silva.adapters.interfaces.ICatalogIndexable"
+    factory=".catalog.VersionedContentIndexable"
+    />
+
 </configure>
