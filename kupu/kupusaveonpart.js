@@ -12,7 +12,7 @@
 
 function saveOnPart(event) {
     /* ask the user if (s)he wants to save the document before leaving */
-    if (kupu.content_changed && confirm(
+    if (kupu.content_changed && !confirm(
             _('You have unsaved changes. Are you sure you want to ' +
                 'leave the editor?')
             )) {
