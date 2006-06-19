@@ -38,8 +38,11 @@ Under development
 
       - Switched to Kupu 1.4 (the current 'trunk' (unreleased) version).
 
-      - Moved the 'kupu/silva' directory to 'Silva/kupu' (so to the Silva core)
-        to ease release management.
+      - Moved the 'kupu/silva' directory to 'Silva/kupu' (so to the
+        Silva core) to ease release management. If you develop Silva,
+        see README.txt in Silva/kupu for information on what to do
+        when you change kupu templates, or when Silva needs to be
+        ported to a newer version of kupu.
 
       - Renamed 'kupu' and 'kupu_silva' in the Silva root to 'service_kupu' and
         'service_kupu_silva', respectively.
@@ -76,8 +79,7 @@ Under development
       - If a user names the Silva root 'root', it gets priority in the dtml 
         namespace, so change the variable in silva.css and frontend.css to 
         'root_url'
-      
->>>>>>> .r20040
+
       - Full media export/import of images did not take account of format
         scaling and cropping. 
 
@@ -114,6 +116,8 @@ Under development
 
       - There was a bug in the cleanup script listed in MAINTENANCE.txt,
         fixed.
+
+      - Shut up a security deprecation warning for PROPFIND.
 
     Ported from 1.5 branch
 

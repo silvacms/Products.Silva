@@ -534,8 +534,9 @@ class SilvaObject(Security, ViewCode):
         """WebDAV MKCOL, only supported by certain subclasses"""
         raise MethodNotAllowed, 'method not allowed'
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                                'PROPFIND')
+    # commented out to shut up security declaration.
+    #security.declareProtected(SilvaPermissions.ReadSilvaContent,
+    #                            'PROPFIND')
         
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PROPPATCH')
