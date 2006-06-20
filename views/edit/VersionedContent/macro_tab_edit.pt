@@ -35,7 +35,7 @@ h2 {
 </metal:fill-slot>
 
 <metal:block fill-slot="refresher">
- <metal:block define-slot="editor_refresher" />
+  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
 <metal:block fill-slot="script">
@@ -190,7 +190,7 @@ h2 {
 <tal:note replace="nothing"> if kupu is live percolate signal upwards</tal:note>
 <metal:fill fill-slot="editorcheck">
   <metal:plug define-slot="editorcheck" />
-  <tal:plug define="global nofeedback nofeedback | nothing" />
+  <tal:set define="global nofeedback nofeedback | nothing" />
 </metal:fill>
 
 </metal:use-macro>
