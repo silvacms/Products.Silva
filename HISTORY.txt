@@ -15,6 +15,10 @@ Silva changes
 
     Bugs Fixed:
 
+      - Ghostfolders exported haunted content, which broke asset ids in the
+        zip. Since this content was ignored on import it is no longer 
+        exported.
+
       - Fixed Issue1449: Siblings Sidebar should display title or id
 
       - Fixed issue1516: space above kupu in news items. The previous fix 
