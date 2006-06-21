@@ -125,6 +125,10 @@ Under development
 
     Ported from 1.5 branch
 
+      - Ghostfolders exported haunted content, which broke asset ids in the
+        zip. Since this content was ignored on import it is no longer 
+        exported.
+
       - Explicitly delete model from request in view_version() to break a
         cyclic reference that prevents model from being garbage collected.
 
