@@ -261,25 +261,6 @@ class GhostFolderProducer(SilvaBaseProducer):
         self.startElement('haunted_url')
         self.handler.characters(haunted_url)
         self.endElement('haunted_url')
-        if content is None:
-            return
-        self.startElement('content')
-        default = content.get_default()
-        if default is not None:
-            self.startElement('default')
-            self.subsax(default)
-            self.endElement('default')
-        for object in content.get_ordered_publishables():
-            if (IPublication.providedBy(object) and
-                    not self.getSettings().withSubPublications()):
-                continue
-            self.subsax(object)
-        for object in content.get_assets():
-            self.subsax(object)
-        if self.getSettings().otherContent():
-            for object in content.get_other_content():
-                self.subsax(object)
-        self.endElement('content')
         self.endElement('content')
         self.endElement('ghost_folder')
 
