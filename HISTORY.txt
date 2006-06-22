@@ -125,6 +125,9 @@ Under development
 
     Ported from 1.5 branch
 
+      - Added an extra note on zope.i18n.translate to
+        doc/developer_changes.txt.
+
       - Ghostfolders exported haunted content, which broke asset ids in the
         zip. Since this content was ignored on import it is no longer 
         exported.

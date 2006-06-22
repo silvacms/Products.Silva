@@ -109,6 +109,32 @@ this::
 Zope 3 will likely evolve ways to make the generation of `.mo` files
 more automatic in the future and Silva will follow.
 
+Translating in Python code
+--------------------------
+
+Normally your i18n-ed code will just mark up page templates with
+i18n:translate, or return a message id (_('Something') to the page
+template. The page template will then take care of looking up
+translation and doing any interpolation.
+
+Sometimes you want to explicitly force translation (and interpolation)
+from Python code, for instance when your Python code is generating a
+snippet of HTML. Before Silva 1.5, this was done by calling
+`unicode()` on the message id. This doesn't work anymore, and has
+been replaced by something more explicit. Instead, you do the following::
+
+  from zope.i18n import translate
+
+which is also legal in Python scripts. And then in your code::
+
+  text = translate(msg_id)
+
+This forces translation and interpolation to happen directly,
+returning the translated string. Whenever you see interpolation
+characters such as ${foo} in the Silva UI, you know you probably have
+a missing `translate()` call in there; replace the `unicode()` call
+with a `translate()` call.
+
 Zope 3 adapters
 ---------------
 
