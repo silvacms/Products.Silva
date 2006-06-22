@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  1.5.5
+  1.5.5 (unreleased)
 
       - Changed to a more discreet favicon for the public views
 
@@ -14,6 +14,9 @@ Silva changes
         renderers.
 
     Bugs Fixed:
+
+      - Added a missing note to the doc/developer_changes.txt about
+        i18n changes.
 
       - Ghostfolders exported haunted content, which broke asset ids in the
         zip. Since this content was ignored on import it is no longer 
