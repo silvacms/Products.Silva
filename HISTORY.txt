@@ -53,6 +53,9 @@ Under development
 
     Bugs fixed:
 
+      - TRANSMAP regular expression containing weird characters was
+        not in use anymore in Image.py or File.py, so removed it.
+
       - Fix for issue1516: space above kupu in news items. Other extensions can 
         control the feedback space too. 
 

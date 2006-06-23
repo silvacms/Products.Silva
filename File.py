@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- coding: UTF-8 -*-
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.44 $
@@ -250,10 +250,6 @@ InitializeClass(FileSystemFile)
 
 manage_addFileForm=PageTemplateFile(
     "www/fileAdd", globals(), __name__='manage_addFileForm', Kind='File', kind='file')
-# Copy code from ExtFile, but we don't want a dependency per se:
-bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
-good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
-TRANSMAP = string.maketrans(bad_chars, good_chars)
 
 def manage_addFile(self, id, title, file):
     """Add a File

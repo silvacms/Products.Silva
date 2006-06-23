@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- coding: UTF-8 -*-
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: Image.py,v 1.76 2006/01/25 18:13:30 faassen Exp $
@@ -711,11 +711,6 @@ manage_addImageForm = PageTemplateFile(
 
 # FIXME: Image and File Assets should be refactored - they share quite
 # some functionality which can be generalized.
-#
-# Copy code from ExtFile, but we don't want a dependency per se:
-bad_chars =  r""" ,;()[]{}~`'"!@#$%^&*+=|\/<>?ÄÅÁÀÂÃäåáàâãÇçÉÈÊËÆéèêëæÍÌÎÏíìîïÑñÖÓÒÔÕØöóòôõøŠšßÜÚÙÛüúùûİŸıÿ"""
-good_chars = r"""_____________________________AAAAAAaaaaaaCcEEEEEeeeeeIIIIiiiiNnOOOOOOooooooSssUUUUuuuuYYyyZz"""
-TRANSMAP = string.maketrans(bad_chars, good_chars)
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image."""
