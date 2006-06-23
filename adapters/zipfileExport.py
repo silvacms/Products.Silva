@@ -1,5 +1,4 @@
-
-from StringIO import StringIO
+from tempfile import TemporaryFile
 # Zope
 from zope.interface import implements
 import Globals
@@ -22,8 +21,8 @@ class ZipfileExportAdapter(adapter.Adapter):
     def exportToZip(self, context, settings=None):
         from zipfile import ZipFile, ZIP_DEFLATED
         from Products.Silva.silvaxml import xmlexport
-        inMemZip = StringIO()
-        archive = ZipFile(inMemZip, "wb", ZIP_DEFLATED)
+        tempFile = TemporaryFile()
+        archive = ZipFile(tempFile, "wb", ZIP_DEFLATED)
 
         # export context to xml and add xml to zip
         if settings == None:
@@ -58,7 +57,11 @@ class ZipfileExportAdapter(adapter.Adapter):
                     obid,
                     download=True))
         archive.close()
-        return inMemZip.getvalue()
+        tempFile.seek(0)
+        value = tempFile.read()
+        tempFile.close()
+        return value
+    
         
 Globals.InitializeClass(ZipfileExportAdapter)
 
