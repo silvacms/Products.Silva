@@ -125,6 +125,10 @@ Under development
 
     Ported from 1.5 branch
 
+      - The full media export now uses a tempfile instead of an in memory 
+        stringIO to build the zipfile, hopefully improving memory
+        footprint.
+
       - Added an extra note on zope.i18n.translate to
         doc/developer_changes.txt.
 
