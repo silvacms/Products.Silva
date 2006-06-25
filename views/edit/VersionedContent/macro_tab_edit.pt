@@ -35,7 +35,7 @@ h2 {
 </metal:fill-slot>
 
 <metal:block fill-slot="refresher">
- <metal:block define-slot="editor_refresher" />
+  <metal:block define-slot="editor_refresher" />
 </metal:block>
 
 <metal:block fill-slot="script">
@@ -135,7 +135,7 @@ h2 {
         accesskey="r"
         i18n:attributes="value;title"/>
         <span i18n:translate="">
-          <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
+          <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
         </span>
     </form>
   </div>
@@ -185,6 +185,12 @@ h2 {
 <div tal:condition="not:unapproved_version"
   tal:replace="structure here/edit_info | nothing" />
 </metal:fill-slot>
+
+<tal:note replace="nothing">if feedback is not desired percolate signal upwards</tal:note>
+<metal:fill fill-slot="editorcheck">
+  <metal:plug define-slot="editorcheck" />
+  <tal:set define="global nofeedback nofeedback | nothing" />
+</metal:fill>
 
 </metal:use-macro>
 </metal:define-macro>
