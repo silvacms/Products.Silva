@@ -200,13 +200,13 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             return
         ids = self._ordered_ids
         id = item.id
-        if item.is_active() and id not in ids:
+        if id not in ids:
             if insert_at:
                 ids.insert(insert_at, id)
             else:
                 ids.append(id)
             self._p_changed = 1
-        elif not item.is_active() and id in ids:
+        else:
             ids.remove(id)
             self._p_changed = 1
 
@@ -226,7 +226,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if IContent.providedBy(item) and item.is_default():
             return
         ids = self._ordered_ids
-        if item.is_active() and item.id in ids:
+        if item.id in ids:
             ids.remove(item.id)
             self._ordered_ids = ids
 
@@ -244,8 +244,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                 continue
             if IContent.providedBy(object) and object.is_default():
                 continue
-            if object.is_active():
-                ids.append(object.id)
+            ids.append(object.id)
             if IContainer.providedBy(object):
                 object.refresh_active_publishables()
         self._ordered_ids = ids
@@ -662,17 +661,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                               'get_ordered_publishables')
     def get_ordered_publishables(self):
         return map(self._getOb, self._ordered_ids)
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_nonactive_publishables')
-    def get_nonactive_publishables(self):
-        result = []
-        for object in self.objectValues():
-            if (IPublishable.providedBy(object) and
-                not object.is_active()):
-                result.append(object)
-        result.sort(lambda x, y: cmp(x.getId(), y.getId()))
-        return result
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_asset_types')

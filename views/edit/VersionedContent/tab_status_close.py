@@ -16,6 +16,5 @@ if model.get_public_version() is None:
     return view.tab_status(message_type="error", message=_("There is no public version to close"))
 
 model.close_version()
-#model.deactivate()
 
 return view.tab_status(message_type="feedback", message=_("Closed public version."))

@@ -78,35 +78,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         l = [self.subdoc, self.subfolder]
         self.assertEquals(self.folder4.get_ordered_publishables(),
                           l)
-
-    def test_get_nonactive_publishables(self):
-        self.doc2.deactivate()
-        ordered = [self.doc1, self.doc3, self.folder4, self.publication5]
-        nonactive = [self.doc2]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          ordered)
-        self.assertEquals(self.root.get_nonactive_publishables(),
-                          nonactive)
-        # deactivating something inactive shouldn't do anything
-        self.doc2.deactivate()
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          ordered)
-        self.assertEquals(self.root.get_nonactive_publishables(),
-                          nonactive)
-        self.doc2.activate()
-        ordered = [self.doc1, self.doc3, self.folder4, self.publication5,
-                   self.doc2]
-        nonactive = []
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          ordered)
-        self.assertEquals(self.root.get_nonactive_publishables(),
-                          nonactive)
-        # activating something active shouldn't do anything
-        self.doc2.activate()
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          ordered)
-        self.assertEquals(self.root.get_nonactive_publishables(),
-                          nonactive)
         
     def test_get_assets(self):
         self.assertEquals(self.root.get_assets(), [self.image1, self.image2])
@@ -165,8 +136,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
         self.assert_(r)
-        self.doc1.deactivate()
-        self.assert_(not self.root.move_object_up('doc1'))
 
     def test_move_object_down(self):
         r = self.root.move_object_down('doc2')
@@ -184,8 +153,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
         self.assert_(r)
-        self.doc1.deactivate()
-        self.assert_(not self.root.move_object_down('doc1'))
 
     def test_move_to_single_item_down(self):
         # move of a single item down

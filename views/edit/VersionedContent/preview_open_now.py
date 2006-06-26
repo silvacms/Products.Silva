@@ -22,10 +22,6 @@ elif obj.is_version_approved():
     message = _('version already approved')
     message_type = 'error'
     publish = False
-elif not obj.can_approve():
-    message = _('content object or one of its containers is deactivated')
-    message_type = 'error'
-    publish = False
 if not obj.get_unapproved_version():
     if obj.is_version_published():
         message = _('Document already published')

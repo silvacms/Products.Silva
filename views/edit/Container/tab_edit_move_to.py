@@ -29,7 +29,7 @@ actives = []
 inactives = []
 for id in ids:
     item = model[id]
-    if (item.implements_publishable() and item.is_active()
+    if (item.implements_publishable()
     and not (item.implements_content() and item.is_default())):
         actives.append(item.id)
     else:

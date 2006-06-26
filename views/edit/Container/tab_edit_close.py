@@ -31,7 +31,6 @@ for id in ids:
         not_closed.append((get_name(obj), _('is not published')))
         continue
     obj.close_version()
-    #obj.deactivate()
     closed_ids.append(get_name(obj))
 
 if closed_ids:

@@ -52,9 +52,6 @@ for ref in refs:
     if obj.is_version_approved():
         not_approved.append((get_name(obj), _('version already approved')))
         continue
-    if not obj.can_approve():
-        not_approved.append((get_name(obj), _('content object or one of its containers is deactivated')))
-        continue
     if ((publish_now_flag or publish_datetime) and 
             not obj.get_unapproved_version()):
     # SHORTCUT: To allow approval of closed docs with no new version available,

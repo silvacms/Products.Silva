@@ -138,8 +138,6 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     
     security = ClassSecurityInfo()
 
-    _active_flag = 1
-
     # sync map... (haunted objects interface, ghost objects interface, 
     #   update/create class)
     # order is important, i.e. interfaces are checked in this order

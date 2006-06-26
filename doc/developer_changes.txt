@@ -27,6 +27,49 @@ be called 'kupu' and 'kupu_silva' (residing in the Silva root) are now called
 extensions that implement a custom Kupu edit view. Make sure to update any
 URLs pointing to those objects in your extensions.
 
+removed activation API
+----------------------
+
+Silva contained an old set of APIs dealing with activation and
+deactivation of content. This was not in use anymore in the Silva UI
+for a long time, but the APIs still existed. These have been cleaned
+up. It's possible your code still uses these APIs. Here's a list of
+the methods that disappeared and what to do to adjust your code.
+
+is_active()
+~~~~~~~~~~~
+
+If this is a check in an `if` clause, remove this from the
+expression. If is the the only check in an `if` clause, remove the
+`if` part and let the main block always be executed (dedent it).
+
+can_deactivate()
+~~~~~~~~~~~~~~~~
+
+If you use this in an `if` clause, remove this from the expression. If
+it is the only check in the `if` clause, remove the `if` part and let
+the main block always be executed (dedent it).
+
+can_approve()
+~~~~~~~~~~~~~
+
+If you use this in an `if` clause, remove this from the expression. If
+it is the only check in the `if` clause, remove the `if` part and let
+the main block always be executed (dedent it).
+
+get_nonactive_publishables()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The notion of non-active publishables is gone, so if you were using it
+you probably can remove its use from the codebase entirely (the list
+would always be empty).
+
+activate(), deactivate()
+~~~~~~~~~~~~~~~~~~~~~~~~      
+
+This method disappeared. It wasn't possible to deactive from the user
+interface before, and now it stopped being possible from code.
+
 From 1.4 to 1.5
 ===============
 

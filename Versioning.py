@@ -100,10 +100,6 @@ class Versioning:
         if self._unapproved_version[1] is None:
             raise VersioningError,\
                   _('Cannot approve version without publication datetime.')
-        if IPublishable.providedBy(self):
-            if not self.can_approve():
-                raise VersioningError,\
-                      _('Cannot approve version; not allowed.')
         # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
         if not self._unapproved_version[1].isFuture():

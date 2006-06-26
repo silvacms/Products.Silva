@@ -279,15 +279,6 @@ class ISilvaObject(ISecurity):
 
 class IPublishable(Interface):
     # MANIPULATORS
-    def activate():
-        """Make this publishable item active.
-        """
-        pass
-
-    def deactivate():
-        """Deactivate publishable item.
-        """
-        pass
 
     # ACCESSORS
     def is_published():
@@ -301,20 +292,6 @@ class IPublishable(Interface):
         versioned content that is approved.
         """
         pass
-
-    def is_active():
-        """Returns true if this object is actually active and
-        in the table of contents.
-        PUBLIC
-        """
-        pass
-
-    def can_activate():
-        pass
-
-    def can_deactivate():
-        pass
-
 
 class IContainer(ISilvaObject, IPublishable):
 
@@ -771,11 +748,6 @@ class IVersioning(Interface):
         """Get the date when the currently unapproved version
         did get a request for approval as a DateTime object,
         or None if there is no such version or request.
-        """
-        pass
-
-    def can_approve():
-        """Returns true if approval is allowed.
         """
         pass
 

@@ -48,16 +48,19 @@ Under development
         when you change kupu templates, or when Silva needs to be
         ported to a newer version of kupu.
 
-      - Renamed 'kupu' and 'kupu_silva' in the Silva root to 'service_kupu' and
-        'service_kupu_silva', respectively.
+      - Renamed 'kupu' and 'kupu_silva' in the Silva root to
+        'service_kupu' and 'service_kupu_silva', respectively.
+
+      - Removed old deprecated (de)activation API. For details, see
+        'doc/developer_changes.txt'.
 
     Bugs fixed:
 
       - TRANSMAP regular expression containing weird characters was
         not in use anymore in Image.py or File.py, so removed it.
 
-      - Fix for issue1516: space above kupu in news items. Other extensions can 
-        control the feedback space too. 
+      - Fix for issue1516: space above kupu in news items. Other
+        extensions can control the feedback space too.
 
       - Fixed Issue1449: Siblings Sidebar should display title or id
 
@@ -72,10 +75,11 @@ Under development
       - In 'normal' headings index items were not rendered by the XSLT
         renderers.
 
-      - Added div with css class to make public preview buttons positionable 
-        in public layouts (they can be behind something if layers are used), 
-        thus added css class for the form too, and moved local style to the css 
-        so the stylesheet can be overridden by user.
+      - Added div with css class to make public preview buttons
+        positionable in public layouts (they can be behind something
+        if layers are used), thus added css class for the form too,
+        and moved local style to the css so the stylesheet can be
+        overridden by user.
       
       - The previous fix to the public preview buttons broke keeping the user 
         in the same screen when making new versions, i.e. for the metadata 
