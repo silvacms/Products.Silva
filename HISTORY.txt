@@ -5,6 +5,9 @@ Silva changes
 
   1.5.5 (unreleased)
 
+      - The lookup window respects the reader role again - you can 
+        access folders with the lookup window using the reader role.
+
       - Changed to a more discreet favicon for the public views
 
       - XSLT renderers did not take virtual hosting situations into account
