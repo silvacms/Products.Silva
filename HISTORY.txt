@@ -132,6 +132,10 @@ Under development
 
     Ported from 1.5 branch
 
+      - XML export rewrote the urls of links and images on export, which
+        was a bad thing. They now have extra rewritten_ attributes, which
+        are only used by the xslt rendering.      
+
       - XML export of Silvadocuments with images that have no link attribute
         was broken.
 
