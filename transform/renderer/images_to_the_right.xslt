@@ -88,17 +88,17 @@
   right, the table layouts are messed up, so we keep the images there.
   -->
 
-  <xsl:template match="doc:image[@link]">
+  <xsl:template match="doc:image[@rewritten_link]">
     <xsl:if test="ancestor::doc:table">
-      <a href="{@link}">
-        <img src="{@path}" />
+      <a href="{@rewritten_link}">
+        <img src="{@rewritten_path}" />
       </a>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="doc:image[not(@link)]">
+  <xsl:template match="doc:image[not(@rewritten_link)]">
     <xsl:if test="ancestor::doc:table">
-      <img src="{@path}" />
+      <img src="{@rewritten_path}" />
     </xsl:if>
   </xsl:template>
   
@@ -115,15 +115,15 @@
   </xsl:template>
     
 
-  <xsl:template match="doc:image[@link]" mode="images">
-    <a href="{@link}">
-      <img src="{@path}" />
+  <xsl:template match="doc:image[@rewritten_link]" mode="images">
+    <a href="{@rewritten_link}">
+      <img src="{@rewritten_path}" />
     </a>
     <br />
   </xsl:template>
 
-  <xsl:template match="doc:image[not(@link)]" mode="images">
-    <img src="{@path}" /><br />
+  <xsl:template match="doc:image[not(@rewritten_link)]" mode="images">
+    <img src="{@rewritten_path}" /><br />
   </xsl:template>
 
 <!--

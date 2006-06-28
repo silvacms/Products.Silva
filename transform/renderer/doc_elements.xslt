@@ -222,11 +222,11 @@
   </xsl:template>
 
   <xsl:template match="doc:link[@target]" mode="text-content">
-    <a href="{@url}" target="{@target}"><xsl:apply-templates mode="text-content" /></a>
+    <a href="{@rewritten_url}" target="{@target}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 
   <xsl:template match="doc:link" mode="text-content">
-    <a href="{@url}"><xsl:apply-templates mode="text-content" /></a>
+    <a href="{@rewritten_url}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
   
   <xsl:template match="doc:abbr" mode="text-content">
@@ -241,16 +241,16 @@
     </acronym>
   </xsl:template>
     
-  <xsl:template match="doc:image[@link]">
+  <xsl:template match="doc:image[@rewritten_link]">
     <xsl:choose>
-      <xsl:when test="string-length(@link) &gt; 0">
+      <xsl:when test="string-length(@rewritten_link) &gt; 0">
         <xsl:choose>
           <xsl:when test="@link_to_hires=1">
-            <a href="{@link}" target="{@target}?hires" title="@title">
+            <a href="{@rewritten_link}" target="{@target}?hires" title="@title">
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
                   <div class="{@alignment}">
-                    <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                    <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                       <xsl:if test="@width">
                         <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
                       </xsl:if>
@@ -261,7 +261,7 @@
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
-                  <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                  <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                     <xsl:if test="@width">
                       <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
                     </xsl:if>
@@ -274,11 +274,11 @@
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <a href="{@link}" target="{@target}" title="@title">
+            <a href="{@rewritten_link}" target="{@target}" title="@title">
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
                   <div class="{@alignment}">
-                    <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                    <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                       <xsl:if test="@width">
                         <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
                       </xsl:if>
@@ -289,7 +289,7 @@
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
-                  <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+                  <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                     <xsl:if test="@width">
                       <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
                     </xsl:if>
@@ -307,7 +307,7 @@
         <xsl:choose>
           <xsl:when test="starts-with(@alignment, 'image-')">
             <div class="{@alignment}">
-              <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+              <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                 <xsl:if test="@width">
                   <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
                 </xsl:if>
@@ -318,7 +318,7 @@
             </div>
           </xsl:when>
           <xsl:otherwise>
-            <img src="{@path}" alt="{@image_title}" class="{@alignment}">
+            <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
               <xsl:if test="@width">
                 <xsl:attribute name="width"><xsl:value-of select="./@width" /></xsl:attribute>
               </xsl:if>
