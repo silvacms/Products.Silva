@@ -43,8 +43,8 @@
         <tal:block replace="nothing"> 
           ________________ user roles management ________________ 
         </tal:block>
-        <form action="."
-          method="POST"
+        <form action=".."
+          method="post"
           tal:define="
             members view/get_members;
             global revokeable_roles nothing;
