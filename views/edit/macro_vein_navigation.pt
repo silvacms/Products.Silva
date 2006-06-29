@@ -29,8 +29,8 @@ macro plateau
       <th class="top"
         tal:define="
           model_is_root          python: model.implements_root();
-          model_is_publication   python: model.implements_publication();
           publication            model/get_publication;
+          publication_is_root    python: model.get_publication() == model.get_root();
           containing_publication publication/../get_publication | publication;
           query_string           query_string | nothing;
           global vein_id         template_id | python: template.id + test(query_string, query_string, '');
@@ -55,13 +55,13 @@ macro plateau
           accesskey="["
           i18n:attributes="title"
           tal:condition="not: model_is_root"
-          tal:attributes="href python: model_is_publication and (containing_publication.absolute_url() + edit + vein_id) or (publication.absolute_url() + edit + vein_id)">
+          tal:attributes="href python: publication_is_root and (publication.absolute_url() + edit + vein_id) or (containing_publication.absolute_url() + edit + vein_id)">
           <img width="9"
             height="9"
             border="0"
             alt="up to containing publication: alt-["
             i18n:attributes="alt"
-            tal:attributes="src python: model_is_publication and ('%s/globals/up_publication.gif' % root_url) or ('%s/globals/up_tree.gif' % root_url)" />
+            tal:attributes="src python: publication_is_root and ('%s/globals/up_tree.gif' % root_url) or ('%s/globals/up_publication.gif' % root_url)" />
         </a>
         <a class="normal"
           title="reload screen"
