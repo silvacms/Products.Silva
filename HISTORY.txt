@@ -56,6 +56,9 @@ Under development
 
     Bugs fixed:
 
+      - Fixed bug in sidebar uplinks where you couldn't jump up and out of a 
+        publication.
+
       - TRANSMAP regular expression containing weird characters was
         not in use anymore in Image.py or File.py, so removed it.
 
