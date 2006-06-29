@@ -352,9 +352,9 @@ Empty indicates no expiration.
   colspan="2">
 <input class="button"
   type="submit"
-  value="approve for later"
-  title="access key: alt-l"
-  accesskey="l"
+  value="approve for future"
+  title="access key: alt-f"
+  accesskey="f"
   i18n:attributes="value;title"
 />
 <input class="executor"

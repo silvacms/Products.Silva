@@ -393,9 +393,9 @@
         <input class="button"
           name="tab_status_approve:method"
           type="submit"
-          value="approve for later"
-          title="approve new versions for publication at a later date: alt-l"
-          accesskey="l"
+          value="approve for future"
+          title="approve new versions for publication at a later date: alt-f"
+          accesskey="f"
           tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title"
         />
