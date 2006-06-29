@@ -572,6 +572,7 @@ table#sortable td.listing-right a.icon img {
 table.listing th.top {
   padding: 0;
   border-top: &dtml-listingBorder;;
+  border-bottom: none;
   color: #e3eef0;
   background: &dtml-listingHeaderBackground;;
   text-align: center;
@@ -579,7 +580,7 @@ table.listing th.top {
 
 table.listing th.top img {
   vertical-align: bottom;
-  padding: 0.4em 0 0 0;
+  padding: 0;
 }
 
 table.listing th.top a.normal:link {
@@ -612,9 +613,9 @@ table.listing a.top {
   display: block;
   float: left;
   width: 1.4em;
-  margin: 0em;
+  margin: 0;
+  padding: 0.4em 0.2em 0;
   border-right: &dtml-listingBorder;;
-  padding: 0em 0.2em;
   background: &dtml-listingHeaderBackground;;
 }
 
@@ -622,9 +623,9 @@ table.listing a.up {
   display: block;
   float: right;
   width: 1.4em;
-  margin: 0em;
+  margin: 0;
+  padding: 0.4em 0.2em 0;
   border-left: &dtml-listingBorder;;
-  padding: 0em 0.2em;
   background: &dtml-listingHeaderBackground;;
 }
 
@@ -633,6 +634,7 @@ table.listing a.top:hover {
   color: &dtml-mainTabBackgroundSelected;;
   background: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
+  padding: 0 0.2em 0;
 }
 
 table.listing a.up:hover {
@@ -640,6 +642,7 @@ table.listing a.up:hover {
   color: &dtml-mainTabBackgroundSelected;;
   background: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
+  padding: 0 0.2em 0;
 }
 
 td.selected {
@@ -1235,7 +1238,6 @@ a {
 
 img {
   border: none;
-  vertical-align: middle;
 }
 
 img.icon {
@@ -1416,7 +1418,7 @@ input.min {
 /* ___________________________________________________________ links _______ */
 
 a:link {
-  color: #0000aa;
+  color: #00a;
   text-decoration: none;
 }
 a:visited {
@@ -1425,10 +1427,10 @@ a:visited {
 }
 
 a:active {
-  color: #3399cc;
+  color: #39c;
 }
 a:hover {
-  color: #0000aa;
+  color: #00a;
   text-decoration: underline;
 }
 
