@@ -19,6 +19,8 @@ Silva changes
       - XML export of Silvadocuments with images that have no link attribute
         was broken.
 
+      - Fixed public restriction bug cfr. issue 1588 and 1596
+
   1.5.5
 
       - The lookup window respects the reader role again - you can 
