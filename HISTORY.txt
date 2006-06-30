@@ -56,6 +56,8 @@ Under development
 
     Bugs fixed:
 
+      - Fixed various i18n translations in Versioned content
+
       - Fixed public restriction bug cfr. issue 1588 and 1596
 
       - Fixed bug in sidebar uplinks where you couldn't jump up and out of a 
