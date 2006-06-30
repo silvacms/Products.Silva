@@ -89,7 +89,7 @@ sent a message on
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <div metal:define-macro="request_approval" tal:omit-tag="">
-<form action="." method="POST">
+<form action="." method="post">
 <tr tal:condition="python:model.get_approval_request_message()">
 <td class="feedback"
  colspan="2" i18n:translate="">
