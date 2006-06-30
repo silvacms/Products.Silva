@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Fri Mar 31 17:34:08 2006\n"
+"POT-Creation-Date: Fri Jun 30 15:22:26 2006\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -17,7 +17,7 @@ msgid ""
 "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
 msgstr ""
 
-#: /DocmaService.py:115
+#: /DocmaService.py:116
 msgid "Not connected"
 msgstr ""
 
@@ -45,13 +45,13 @@ msgid ""
 "    "
 msgstr ""
 
-#: /Folder.py:340
-#: /Folder.py:405
+#: /Folder.py:339
+#: /Folder.py:404
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
 
-#: /Folder.py:362
-#: /Folder.py:401
+#: /Folder.py:361
+#: /Folder.py:400
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr ""
 
@@ -187,7 +187,7 @@ msgid "draft"
 msgstr ""
 
 #: /Version.py:210
-#: /views/edit/Container/tab_status.pt:256
+#: /views/edit/Container/tab_status.pt:255
 msgid "closed"
 msgstr ""
 
@@ -195,67 +195,63 @@ msgstr ""
 msgid "Cannot approve version without publication datetime."
 msgstr ""
 
-#: /Versioning.py:106
-msgid "Cannot approve version; not allowed."
-msgstr ""
-
-#: /Versioning.py:163
+#: /Versioning.py:159
 msgid "No approved version to unapprove."
 msgstr ""
 
-#: /Versioning.py:165
+#: /Versioning.py:161
 msgid "Should never happen: unapproved version ${unapproved} found while approved version ${approved} exists at the same time."
 msgstr ""
 
-#: /Versioning.py:192
+#: /Versioning.py:188
 msgid "No public version to close."
 msgstr ""
 
-#: /Versioning.py:244
+#: /Versioning.py:240
 #: /adapters/version_management.py:83
 #: /adapters/version_management.py:91
 msgid "No unapproved version available"
 msgstr ""
 
-#: /Versioning.py:277
-#: /Versioning.py:326
-#: /Versioning.py:356
+#: /Versioning.py:273
+#: /Versioning.py:322
+#: /Versioning.py:352
 msgid "There is no unapproved version to request approval for."
 msgstr ""
 
-#: /Versioning.py:281
+#: /Versioning.py:277
 msgid "The version is already requested for approval."
 msgstr ""
 
-#: /Versioning.py:330
-#: /Versioning.py:360
+#: /Versioning.py:326
+#: /Versioning.py:356
 msgid "The version is not requested for approval."
 msgstr ""
 
-#: /Versioning.py:380
-#: /Versioning.py:393
+#: /Versioning.py:376
+#: /Versioning.py:389
 msgid "No unapproved version."
 msgstr ""
 
-#: /Versioning.py:406
-#: /Versioning.py:427
+#: /Versioning.py:402
+#: /Versioning.py:423
 msgid "No approved version."
 msgstr ""
 
-#: /Versioning.py:409
+#: /Versioning.py:405
 msgid "Must specify publication datetime."
 msgstr ""
 
-#: /Versioning.py:440
+#: /Versioning.py:436
 msgid "No public version."
 msgstr ""
 
-#: /Versioning.py:467
-#: /Versioning.py:486
+#: /Versioning.py:463
+#: /Versioning.py:482
 msgid "No next version."
 msgstr ""
 
-#: /Versioning.py:500
+#: /Versioning.py:496
 msgid "There is no version to add messages for."
 msgstr ""
 
@@ -279,6 +275,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_edit_publish.py:12
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_preview_publish.py:12
+#: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
 msgstr ""
 
@@ -510,8 +507,8 @@ msgstr ""
 #: /globals/accesskeys.pt:19
 #: /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:122
-#: /views/edit/VersionedContent/tab_status_macros.pt:177
-#: /views/edit/VersionedContent/tab_status_macros.pt:438
+#: /views/edit/VersionedContent/tab_status_macros.pt:153
+#: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "access key: alt-r"
 msgstr ""
 
@@ -714,7 +711,7 @@ msgid "Silva site"
 msgstr ""
 
 #: /globals/reference.pt:127
-msgid "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-2005 Infrae. All rights reserved."
+msgid "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-2006 Infrae. All rights reserved."
 msgstr ""
 
 #: /globals/reference.pt:22
@@ -832,8 +829,7 @@ msgstr ""
 msgid "Added ${meta_type} ${id}."
 msgstr ""
 
-#: /views/add/File/form.form:70
-#: /views/add/Image/form.form:69
+#: /views/add/File/form.form:26
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr ""
 
@@ -890,6 +886,14 @@ msgstr ""
 msgid "Empty or invalid file."
 msgstr ""
 
+#: /views/add/Image/form.form:25
+msgid "Tip: you don&#8217;t have to fill in the id."
+msgstr ""
+
+#: /views/add/Image/form.form:69
+msgid "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text\">ALT</abbr> text of the image."
+msgstr ""
+
 #: /views/add/Link/form.form:73
 msgid "Link url."
 msgstr ""
@@ -910,11 +914,11 @@ msgstr ""
 msgid "First item"
 msgstr ""
 
-#: /views/add/add_form.pt:44
-msgid "create ${TOC_or_meta_type}"
+#: /views/add/add_form.pt:49
+msgid "upload create ${TOC_or_meta_type}"
 msgstr ""
 
-#: /views/add/add_form.pt:54
+#: /views/add/add_form.pt:59
 msgid "aspect"
 msgstr ""
 
@@ -1245,9 +1249,9 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:130
-#: /views/edit/VersionedContent/tab_status_macros.pt:558
+#: /views/edit/VersionedContent/tab_status_macros.pt:494
 #: /views/edit/VersionedContent/Link/edit.pt:89
-#: /views/add/add_form.pt:94
+#: /views/add/add_form.pt:123
 #: /views/add/GhostFolder/add_form.pt:113
 #: /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
@@ -1268,7 +1272,7 @@ msgid "dimensions"
 msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:40
-#: /views/add/Image/form.form:68
+#: /views/add/Image/form.form:24
 msgid "image"
 msgstr ""
 
@@ -1432,9 +1436,9 @@ msgstr ""
 #: /views/edit/Content/Indexer/get_tabs.py:19
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:19
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
-#: /views/edit/tab_metadata.pt:56
-#: /views/edit/tab_metadata.pt:77
-#: /views/edit/tab_metadata.pt:95
+#: /views/edit/tab_metadata.pt:61
+#: /views/edit/tab_metadata.pt:82
+#: /views/edit/tab_metadata.pt:100
 #: /views/edit/macro_edit_metadata.pt:40
 #: /views/edit/Container/tab_edit.pt:227
 #: /views/edit/Container/tab_edit.pt:236
@@ -1456,7 +1460,7 @@ msgid "access"
 msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:143
-#: /views/edit/Container/tab_edit_import.pt:354
+#: /views/edit/Container/tab_edit_import.pt:373
 msgid "upload"
 msgstr ""
 
@@ -1465,7 +1469,7 @@ msgid "upload file"
 msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:182
-#: /views/edit/VersionedContent/tab_status_macros.pt:272
+#: /views/edit/VersionedContent/tab_status_macros.pt:196
 #: /views/edit/Content/Indexer/edit.pt:75
 #: /views/public/subscriptor.pt:69
 msgid "access key: alt-u"
@@ -1492,7 +1496,7 @@ msgid "This screen doesn&#8217;t have settings, because it&#8217;s not possible 
 msgstr ""
 
 #: /views/edit/Asset/upload_form.form:25
-#: /views/add/File/form.form:68
+#: /views/add/File/form.form:24
 msgid "file"
 msgstr ""
 
@@ -1524,8 +1528,8 @@ msgstr ""
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/Container/tab_edit.pt:263
 #: /views/edit/Container/tab_edit.pt:272
-#: /views/edit/Container/tab_status.pt:189
-#: /views/edit/Container/tab_status.pt:199
+#: /views/edit/Container/tab_status.pt:192
+#: /views/edit/Container/tab_status.pt:201
 #: /views/edit/Container/GhostFolder/tab_edit.pt:369
 #: /browser/object_lookup.pt:302
 msgid "publish"
@@ -1692,20 +1696,20 @@ msgid "owner"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:231
-#: /views/edit/Container/tab_status_export.pt:483
+#: /views/edit/Container/tab_status_export.pt:477
 msgid "there's no undo: alt-x"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:231
-#: /views/edit/Container/tab_status_export.pt:483
+#: /views/edit/Container/tab_status_export.pt:477
 msgid "remove"
 msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
-#: /views/edit/Container/tab_edit_import.pt:338
-#: /views/edit/Container/tab_status_export.pt:438
+#: /views/edit/Container/tab_edit_import.pt:357
+#: /views/edit/Container/tab_status_export.pt:432
 #: /doc/silva-extra.xml:154
 msgid "description"
 msgstr ""
@@ -1758,13 +1762,13 @@ msgstr ""
 msgid "status"
 msgstr ""
 
-#: /views/edit/Container/download_fullmedia_selected.py:19
+#: /views/edit/Container/download_fullmedia_selected.py:21
 #: /views/edit/Container/download_pdf_selected.py:21
-#: /views/edit/Container/download_xml_selected.py:20
+#: /views/edit/Container/download_xml_selected.py:22
 msgid "No items were selected, so no content will be exported"
 msgstr ""
 
-#: /views/edit/Container/download_fullmedia_selected.py:24
+#: /views/edit/Container/download_fullmedia_selected.py:27
 msgid "Currently, fullmedia export only supports one item at a time."
 msgstr ""
 
@@ -1795,62 +1799,43 @@ msgstr ""
 msgid "Select a file for upload."
 msgstr ""
 
-#: /views/edit/Container/import_archive_file.py:27
+#: /views/edit/Container/import_archive_file.py:29
 msgid "Something bad with the zipfile;"
 msgstr ""
 
-#: /views/edit/Container/import_archive_file.py:33
+#: /views/edit/Container/import_archive_file.py:35
 msgid "added ${succeeded}"
 msgstr ""
 
-#: /views/edit/Container/import_archive_file.py:40
+#: /views/edit/Container/import_archive_file.py:42
 msgid "<span class=\"warning\">could not add: ${failed}</span>"
 msgstr ""
 
-#: /views/edit/Container/import_archive_file.py:45
+#: /views/edit/Container/import_archive_file.py:47
 msgid "Finished importing: ${msg}"
 msgstr ""
 
 #: /views/edit/Container/open_now.py:22
 #: /views/edit/Container/tab_edit_close.py:28
-#: /views/edit/Container/tab_status_approve.py:50
-#: /views/edit/Container/tab_status_change_settings.py:52
-#: /views/edit/Container/tab_status_close.py:37
-#: /views/edit/Container/tab_status_new_version.py:37
-#: /views/edit/Container/tab_status_reject.py:37
-#: /views/edit/Container/tab_status_request_approval.py:51
-#: /views/edit/Container/tab_status_request_approval_now.py:53
-#: /views/edit/Container/tab_status_revoke.py:37
-#: /views/edit/Container/tab_status_withdraw.py:27
-#: /views/edit/VersionedContent/preview_open_now.py:17
-msgid "not a versionable object"
+msgid "not applicable"
 msgstr ""
 
 #: /views/edit/Container/open_now.py:25
 #: /views/edit/Container/tab_status_approve.py:53
-#: /views/edit/VersionedContent/preview_open_now.py:21
+#: /views/edit/VersionedContent/preview_open_now.py:22
 msgid "version already approved"
 msgstr ""
 
-#: /views/edit/Container/open_now.py:29
-#: /views/edit/Container/tab_status_approve.py:56
-#: /views/edit/VersionedContent/preview_open_now.py:25
-msgid "content object or one of its containers is deactivated"
+#: /views/edit/Container/open_now.py:36
+msgid "version already published"
 msgstr ""
 
-#: /views/edit/Container/open_now.py:40
-#: /views/edit/Container/tab_status_approve.py:68
-#: /views/edit/VersionedContent/preview_open_now.py:30
-msgid "version already public"
+#: /views/edit/Container/open_now.py:47
+msgid "Published: ${ids}"
 msgstr ""
 
-#: /views/edit/Container/open_now.py:51
-#: /views/edit/Container/tab_status_approve.py:92
-msgid "Approval on: ${ids}"
-msgstr ""
-
-#: /views/edit/Container/open_now.py:56
-#: /views/edit/Container/tab_status_approve.py:97
+#: /views/edit/Container/open_now.py:52
+#: /views/edit/Container/tab_status_approve.py:94
 msgid "<span class=\"error\">could not approve: ${ids}</span>"
 msgstr ""
 
@@ -1877,9 +1862,9 @@ msgid "save + edit"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:136
-#: /views/edit/Container/tab_status_export.pt:179
+#: /views/edit/Container/tab_status_export.pt:258
 #: /views/edit/VersionedContent/tab_status.pt:62
-#: /views/add/add_form.pt:112
+#: /views/add/add_form.pt:141
 #: /views/add/GhostFolder/add_form.pt:131
 #: /views/add/Ghost/add_form.pt:124
 msgid "access key: alt-e"
@@ -1917,8 +1902,8 @@ msgid "delete selected groups: alt-d"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:249
-#: /views/edit/Container/tab_edit.pt:596
-#: /views/edit/VersionedContent/tab_status.pt:340
+#: /views/edit/Container/tab_edit.pt:598
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "delete"
 msgstr ""
 
@@ -1937,10 +1922,10 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:84
 #: /views/edit/Container/tab_edit_rename.pt:54
 #: /views/add/form.form:28
-#: /views/add/File/form.form:28
+#: /views/add/File/form.form:45
 #: /views/add/Groups/form.form:28
 #: /views/add/GhostFolder/form.form:28
-#: /views/add/Image/form.form:28
+#: /views/add/Image/form.form:45
 #: /views/add/Ghost/form.form:28
 #: /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28
@@ -1952,10 +1937,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:95
 #: /views/add/form.form:30
-#: /views/add/File/form.form:30
+#: /views/add/File/form.form:47
 #: /views/add/Groups/form.form:30
 #: /views/add/GhostFolder/form.form:30
-#: /views/add/Image/form.form:30
+#: /views/add/Image/form.form:47
 #: /views/add/Ghost/form.form:30
 #: /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30
@@ -1990,7 +1975,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:106
 #: /views/edit/Container/tab_status.pt:72
-#: /views/edit/Container/tab_status_export.pt:90
+#: /views/edit/Container/tab_status_export.pt:174
 msgid "import..."
 msgstr ""
 
@@ -2017,7 +2002,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:242
 #: /views/edit/Container/tab_edit.pt:278
-#: /views/edit/Container/tab_status.pt:205
+#: /views/edit/Container/tab_status.pt:207
 #: /views/edit/Container/GhostFolder/tab_edit.pt:337
 #: /views/edit/Container/GhostFolder/tab_edit.pt:373
 #: /browser/object_lookup.pt:287
@@ -2047,7 +2032,7 @@ msgid "move up"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:384
-#: /views/edit/VersionedContent/tab_status.pt:93
+#: /views/edit/VersionedContent/tab_status.pt:186
 # Default: "editor"
 msgid "content-editor"
 msgstr ""
@@ -2058,95 +2043,95 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:467
+#: /views/edit/Container/tab_edit.pt:469
 #: /views/edit/Container/tab_status.pt:93
 #: /views/edit/VersionedContent/tab_status.pt:59
 msgid "publishing actions"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:482
+#: /views/edit/Container/tab_edit.pt:484
 msgid "close published items: alt-l"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:482
-#: /views/edit/Container/tab_status.pt:370
+#: /views/edit/Container/tab_edit.pt:484
+#: /views/edit/Container/tab_status.pt:364
 #: /views/edit/Member/SimpleMember/tab_edit.pt:132
 msgid "close"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:491
-#: /views/edit/Container/tab_status.pt:409
+#: /views/edit/Container/tab_edit.pt:493
+#: /views/edit/Container/tab_status.pt:404
 msgid "publish new versions: alt-p"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:503
+#: /views/edit/Container/tab_edit.pt:505
 msgid "move selected items to"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:510
+#: /views/edit/Container/tab_edit.pt:512
 msgid "position"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:521
+#: /views/edit/Container/tab_edit.pt:523
 msgid "end"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:528
-#: /views/edit/Container/tab_status.pt:334
-#: /views/edit/VersionedContent/tab_status_macros.pt:254
+#: /views/edit/Container/tab_edit.pt:530
+#: /views/edit/Container/tab_status.pt:327
+#: /views/edit/VersionedContent/tab_status_macros.pt:267
 msgid "access key: alt-o"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:534
+#: /views/edit/Container/tab_edit.pt:536
 msgid "move selected items into position: alt-m"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:534
+#: /views/edit/Container/tab_edit.pt:536
 msgid "move"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:543
+#: /views/edit/Container/tab_edit.pt:545
 msgid "rename and retitle items: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:543
+#: /views/edit/Container/tab_edit.pt:545
 msgid "rename..."
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:551
+#: /views/edit/Container/tab_edit.pt:553
 msgid "cut"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:551
+#: /views/edit/Container/tab_edit.pt:553
 msgid "cut items: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:562
+#: /views/edit/Container/tab_edit.pt:564
 msgid "copy"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:562
+#: /views/edit/Container/tab_edit.pt:564
 msgid "copy items: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:578
+#: /views/edit/Container/tab_edit.pt:580
 msgid "paste items: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:578
+#: /views/edit/Container/tab_edit.pt:580
 msgid "paste"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:586
+#: /views/edit/Container/tab_edit.pt:588
 msgid "paste (items on clipboard) as ghost objects: alt-g"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:586
+#: /views/edit/Container/tab_edit.pt:588
 msgid "paste ghost"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:596
-#: /views/edit/VersionedContent/tab_status.pt:340
+#: /views/edit/Container/tab_edit.pt:598
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "there's no undo: alt-d"
 msgstr ""
 
@@ -2170,22 +2155,6 @@ msgstr ""
 msgid "select:"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_activate.py:15
-msgid "Nothing was selected, so nothing is activated."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_activate.py:30
-msgid "Content ${activated} activated, <span class=\"error\">but could not activate ${not_activated}.</span>"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_activate.py:36
-msgid "Content ${activated} activated."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_activate.py:39
-msgid "Could not activate ${not_activated}."
-msgstr ""
-
 #: /views/edit/Container/tab_edit_close.py:15
 #: /views/edit/Container/tab_status_close.py:16
 msgid "Nothing was selected, so nothing was closed."
@@ -2196,13 +2165,13 @@ msgstr ""
 msgid "is not published"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_close.py:39
-#: /views/edit/Container/tab_status_close.py:48
+#: /views/edit/Container/tab_edit_close.py:38
+#: /views/edit/Container/tab_status_close.py:47
 msgid "Closed: ${ids}"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_close.py:44
-#: /views/edit/Container/tab_status_close.py:53
+#: /views/edit/Container/tab_edit_close.py:43
+#: /views/edit/Container/tab_status_close.py:52
 msgid "<span class=\"error\">could not close: ${ids}</span>"
 msgstr ""
 
@@ -2230,22 +2199,6 @@ msgstr ""
 msgid "Could not place ${not_cut_ids} on clipboard for cutting."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_deactivate.py:15
-msgid "Nothing was selected, so nothing is deactivated."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_deactivate.py:30
-msgid "Content ${deactivated} deactivated, <span class=\"error\">but could not deactivate ${not_deactivated}.</span>"
-msgstr ""
-
-#: /views/edit/Container/tab_edit_deactivate.py:36
-msgid "Content ${deactivated} deactivated."
-msgstr ""
-
-#: /views/edit/Container/tab_edit_deactivate.py:39
-msgid "Could not deactivate ${not_deactivated}."
-msgstr ""
-
 #: /views/edit/Container/tab_edit_delete.py:31
 msgid "Deleted ${deleted_ids}, <span class=\"error\">but could not delete ${not_deleted_ids}. Probably there is a published version that must be closed, or an approved version that needs to be revoked. Change the status in the Publish screen (alt-5).</span>"
 msgstr ""
@@ -2256,7 +2209,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:102
 #: /views/edit/Container/tab_edit_import.pt:171
-#: /views/edit/Container/tab_edit_import.pt:310
+#: /views/edit/Container/tab_edit_import.pt:329
 msgid "file to upload"
 msgstr ""
 
@@ -2270,7 +2223,6 @@ msgid "Locate an XML file to import (must be valid Silva XML)."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:120
-#: /views/edit/VersionedContent/tab_status_macros.pt:334
 msgid "access key: alt-i"
 msgstr ""
 
@@ -2302,52 +2254,60 @@ msgstr ""
 msgid "Recreate the subdirectory structure of a zip file with Assets by adding Silva Folders."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:230
+#: /views/edit/Container/tab_edit_import.pt:228
+msgid "replace content"
+msgstr ""
+
+#: /views/edit/Container/tab_edit_import.pt:239
+msgid "Replace Content Objects with the Objects from the import when they have the same ids."
+msgstr ""
+
+#: /views/edit/Container/tab_edit_import.pt:248
 msgid "import zip"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:230
-#: /views/edit/Container/tab_status_export.pt:265
+#: /views/edit/Container/tab_edit_import.pt:248
+#: /views/edit/Container/tab_status_export.pt:151
 msgid "access key: alt-z"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:267
-#: /views/edit/Container/tab_status_export.pt:304
+#: /views/edit/Container/tab_edit_import.pt:286
+#: /views/edit/Container/tab_status_export.pt:298
 msgid "docma icon"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:275
-#: /views/edit/Container/tab_status_export.pt:312
+#: /views/edit/Container/tab_edit_import.pt:294
+#: /views/edit/Container/tab_status_export.pt:306
 msgid "docma facilities"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:287
+#: /views/edit/Container/tab_edit_import.pt:306
 msgid "upload a document in word format (.doc) for conversion"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:315
+#: /views/edit/Container/tab_edit_import.pt:334
 msgid "Locate a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:322
-#: /views/edit/Container/tab_status_export.pt:399
+#: /views/edit/Container/tab_edit_import.pt:341
+#: /views/edit/Container/tab_status_export.pt:393
 #: /views/public/subscriptor.pt:40
 #: /views/public/subscriptor.pt:64
 #: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "email address"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:332
-#: /views/edit/Container/tab_status_export.pt:409
+#: /views/edit/Container/tab_edit_import.pt:351
+#: /views/edit/Container/tab_status_export.pt:403
 msgid "An e-mail will be sent to you when the item is processed."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:346
-#: /views/edit/Container/tab_status_export.pt:447
+#: /views/edit/Container/tab_edit_import.pt:365
+#: /views/edit/Container/tab_status_export.pt:441
 msgid "This description will be shown in the queue and the list of processed items."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:354
+#: /views/edit/Container/tab_edit_import.pt:373
 msgid "upload a word document from your local drive: alt-u"
 msgstr ""
 
@@ -2491,9 +2451,9 @@ msgstr ""
 #: /views/edit/Asset/File/form.form:28
 #: /views/edit/Asset/Image/form.form:29
 #: /views/add/form.form:50
-#: /views/add/File/form.form:51
+#: /views/add/File/form.form:68
 #: /views/add/Groups/form.form:48
-#: /views/add/Image/form.form:51
+#: /views/add/Image/form.form:68
 #: /views/add/SimpleContent/form.form:50
 #: /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50
@@ -2570,25 +2530,25 @@ msgstr ""
 msgid "published"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:239
+#: /views/edit/Container/tab_status.pt:241
 msgid "public version"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:268
+#: /views/edit/Container/tab_status.pt:267
 msgid "There are no publishable items here."
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:286
-msgid "day / month / year"
+#: /views/edit/Container/tab_status.pt:284
+#: /views/edit/VersionedContent/tab_status_form_editor.form:31
+msgid "day / month / year &nbsp;(23:59)"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:299
-#: /views/edit/VersionedContent/tab_status_macros.pt:137
-#: /views/edit/VersionedContent/tab_status_macros.pt:315
+#: /views/edit/Container/tab_status.pt:297
+#: /views/edit/VersionedContent/tab_status_macros.pt:246
 msgid "access key: alt-m"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:299
+#: /views/edit/Container/tab_status.pt:297
 #: /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
@@ -2596,98 +2556,80 @@ msgstr ""
 msgid "publish time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:316
+#: /views/edit/Container/tab_status.pt:312
 msgid "&nbsp;&nbsp;expiration time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:316
+#: /views/edit/Container/tab_status.pt:312
 msgid "access key: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:334
+#: /views/edit/Container/tab_status.pt:327
 msgid "clear&nbsp;expiration"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:352
+#: /views/edit/Container/tab_status.pt:346
 msgid "reject pending request for approval: alt-j"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:352
-#: /views/edit/VersionedContent/tab_status_macros.pt:383
+#: /views/edit/Container/tab_status.pt:346
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
 msgid "reject"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:361
-msgid "withdraw approval of approved versions: alt-v"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:361
-#: /views/edit/Container/tab_status.pt:436
+#: /views/edit/Container/tab_status.pt:355
 msgid "revoke"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:370
+#: /views/edit/Container/tab_status.pt:355
+msgid "withdraw approval of approved versions: alt-v"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:364
 msgid "close published items: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:379
-#: /views/edit/Container/tab_status.pt:445
+#: /views/edit/Container/tab_status.pt:373
 msgid "create new versions of published docs: alt-n"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:391
-msgid "approve new versions for publication at a later date: alt-l"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:391
-#: /views/edit/VersionedContent/tab_status_macros.pt:353
-msgid "approve for later"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:400
+#: /views/edit/Container/tab_status.pt:386
 msgid "change publish and expiration times: alt-u"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:400
-#: /views/edit/VersionedContent/tab_status_macros.pt:272
+#: /views/edit/Container/tab_status.pt:386
+#: /views/edit/Container/tab_status.pt:425
+#: /views/edit/VersionedContent/tab_status_macros.pt:196
 msgid "update timing"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:427
-msgid "withdraw pending request for approval: alt-w"
+#: /views/edit/Container/tab_status.pt:395
+msgid "approve new versions for publication at a later date: alt-f"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:427
-#: /views/edit/VersionedContent/tab_status_macros.pt:384
-msgid "withdraw"
+#: /views/edit/Container/tab_status.pt:395
+#: /views/edit/VersionedContent/tab_status_macros.pt:289
+msgid "approve for future"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:436
-msgid "revoke approval of approved versions: alt-v"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:457
+#: /views/edit/Container/tab_status.pt:425
 msgid "change publish and expiration times: alt-s"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:457
-msgid "set timing"
-msgstr ""
-
-#: /views/edit/Container/tab_status.pt:466
+#: /views/edit/Container/tab_status.pt:434
 msgid "request approval for new versions: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:466
-#: /views/edit/VersionedContent/tab_status_macros.pt:177
+#: /views/edit/Container/tab_status.pt:434
+#: /views/edit/VersionedContent/tab_status_macros.pt:153
 msgid "request approval"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:475
+#: /views/edit/Container/tab_status.pt:443
 msgid "request immediate approval for new versions: alt-q"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:475
+#: /views/edit/Container/tab_status.pt:443
 msgid "request approval now"
 msgstr ""
 
@@ -2700,8 +2642,29 @@ msgstr ""
 msgid "export..."
 msgstr ""
 
-#: /views/edit/Container/tab_status_approve.py:78
+#: /views/edit/Container/tab_status_approve.py:50
+#: /views/edit/Container/tab_status_change_settings.py:52
+#: /views/edit/Container/tab_status_close.py:37
+#: /views/edit/Container/tab_status_new_version.py:37
+#: /views/edit/Container/tab_status_reject.py:37
+#: /views/edit/Container/tab_status_request_approval.py:51
+#: /views/edit/Container/tab_status_request_approval_now.py:53
+#: /views/edit/Container/tab_status_revoke.py:37
+#: /views/edit/Container/tab_status_withdraw.py:27
+#: /views/edit/VersionedContent/preview_open_now.py:18
+msgid "not a versionable object"
+msgstr ""
+
+#: /views/edit/Container/tab_status_approve.py:65
+msgid "version already public"
+msgstr ""
+
+#: /views/edit/Container/tab_status_approve.py:75
 msgid "no publication time was set"
+msgstr ""
+
+#: /views/edit/Container/tab_status_approve.py:89
+msgid "Approval on: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_change_settings.py:104
@@ -2736,81 +2699,81 @@ msgstr ""
 msgid "no unapproved version"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:101
-msgid "export to Silva xml (.xml) ${or_pdf}"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:113
-#: /views/edit/Container/tab_status_export.pt:211
-#: /views/edit/Container/tab_status_export.pt:328
-msgid "options"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:127
-#: /views/edit/Container/tab_status_export.pt:224
-#: /views/edit/Container/tab_status_export.pt:343
+#: /views/edit/Container/tab_status_export.pt:110
+#: /views/edit/Container/tab_status_export.pt:209
+#: /views/edit/Container/tab_status_export.pt:337
 msgid "include sub publications?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:145
-#: /views/edit/Container/tab_status_export.pt:242
-#: /views/edit/Container/tab_status_export.pt:361
-msgid "export newest versions?"
+#: /views/edit/Container/tab_status_export.pt:128
+msgid "export only newest versions?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:158
-#: /views/edit/Container/tab_status_export.pt:255
-#: /views/edit/Container/tab_status_export.pt:373
-msgid "If not checked the published version is exported."
+#: /views/edit/Container/tab_status_export.pt:141
+msgid "If not checked all versions are exported."
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:170
-msgid "export pdf"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:170
-#: /views/edit/VersionedContent/tab_status_macros.pt:360
-#: /views/edit/VersionedContent/tab_status_macros.pt:518
-msgid "access key: alt-p"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:179
-msgid "export xml"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:202
-msgid "full media export (.zip)"
-msgstr ""
-
-#: /views/edit/Container/tab_status_export.pt:265
+#: /views/edit/Container/tab_status_export.pt:151
 msgid "export zip"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:319
+#: /views/edit/Container/tab_status_export.pt:174
+msgid "over to the import screen: alt-i"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:185
+msgid "export to Silva xml (.xml) ${or_pdf}"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:227
+#: /views/edit/Container/tab_status_export.pt:355
+msgid "export newest versions?"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:240
+#: /views/edit/Container/tab_status_export.pt:367
+msgid "If not checked the published version is exported."
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:250
+msgid "export pdf"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:250
+#: /views/edit/VersionedContent/tab_status_macros.pt:296
+#: /views/edit/VersionedContent/tab_status_macros.pt:454
+msgid "access key: alt-p"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:258
+msgid "export xml"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:313
 msgid "export to Docma (.doc)"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:380
+#: /views/edit/Container/tab_status_export.pt:374
 msgid "export closed content?"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:392
+#: /views/edit/Container/tab_status_export.pt:386
 msgid "Check to include closed content in the export."
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:415
+#: /views/edit/Container/tab_status_export.pt:409
 msgid "choose a template"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:422
+#: /views/edit/Container/tab_status_export.pt:416
 msgid "none"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:458
+#: /views/edit/Container/tab_status_export.pt:452
 msgid "export to Docma"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:458
+#: /views/edit/Container/tab_status_export.pt:452
 msgid "export the selection to word: alt-d"
 msgstr ""
 
@@ -2818,12 +2781,18 @@ msgstr ""
 msgid "items to export:"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:84
+#: /views/edit/Container/tab_status_export.pt:82
 msgid "export from &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/Container/tab_status_export.pt:90
-msgid "over to the import screen: alt-i"
+#: /views/edit/Container/tab_status_export.pt:88
+msgid "full media export (.zip)"
+msgstr ""
+
+#: /views/edit/Container/tab_status_export.pt:97
+#: /views/edit/Container/tab_status_export.pt:195
+#: /views/edit/Container/tab_status_export.pt:322
+msgid "options"
 msgstr ""
 
 #: /views/edit/Container/tab_status_get_modify_title.py:12
@@ -2981,7 +2950,7 @@ msgstr ""
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:65
 #: /views/edit/Container/GhostFolder/tab_edit.pt:333
-#: /views/edit/VersionedContent/tab_status_macros.pt:304
+#: /views/edit/VersionedContent/tab_status_macros.pt:233
 #: /browser/object_lookup.pt:282
 msgid "settings"
 msgstr ""
@@ -3099,32 +3068,29 @@ msgstr ""
 msgid "Link changed"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:109
+#: /views/edit/VersionedContent/macro_tab_edit.pt:110
 msgid "work on a new version while the previous one stays online: alt-n"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:118
+#: /views/edit/VersionedContent/macro_tab_edit.pt:119
 msgid "${note} there is already a published or closed version of this content. Changes can only be made in a new version."
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:129
+#: /views/edit/VersionedContent/macro_tab_edit.pt:130
 msgid "'first un-approve' this item in order to edit: alt-r"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:137
-msgid "${note} this version is approved but not yet public. In order to make changes you need to first revoke the approval."
+#: /views/edit/VersionedContent/macro_tab_edit.pt:138
+#: /views/edit/VersionedContent/macro_tab_edit.pt:158
+msgid "${note} this version has an request for approval pending. In order to make changes you need to first withdraw the pending request."
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:147
+#: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid "withdraw request"
 msgstr ""
 
-#: /views/edit/VersionedContent/macro_tab_edit.pt:147
+#: /views/edit/VersionedContent/macro_tab_edit.pt:148
 msgid "withdraw a request for approval in order to edit: alt-w"
-msgstr ""
-
-#: /views/edit/VersionedContent/macro_tab_edit.pt:157
-msgid "${note} this version has an request for approval pending. In order to make changes you need to first withdraw the pending request."
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:85
@@ -3132,9 +3098,9 @@ msgid "${note} This object is already being edited by another user, and is tempo
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:85
-#: /views/edit/VersionedContent/macro_tab_edit.pt:118
-#: /views/edit/VersionedContent/macro_tab_edit.pt:137
-#: /views/edit/VersionedContent/macro_tab_edit.pt:157
+#: /views/edit/VersionedContent/macro_tab_edit.pt:119
+#: /views/edit/VersionedContent/macro_tab_edit.pt:138
+#: /views/edit/VersionedContent/macro_tab_edit.pt:158
 msgid "Note:"
 msgstr ""
 
@@ -3146,9 +3112,12 @@ msgstr ""
 msgid "break lock"
 msgstr ""
 
-#: /views/edit/VersionedContent/preview_open_now.py:13
-#: /views/edit/VersionedContent/tab_status.pt:89
-msgid "Content is published"
+#: /views/edit/VersionedContent/preview_open_now.py:14
+msgid "Document published"
+msgstr ""
+
+#: /views/edit/VersionedContent/preview_open_now.py:27
+msgid "Document already published"
 msgstr ""
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
@@ -3161,7 +3130,7 @@ msgstr ""
 msgid "Lock broken"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_edit_make_copy.py:28
+#: /views/edit/VersionedContent/tab_edit_make_copy.py:32
 msgid "New version created."
 msgstr ""
 
@@ -3201,37 +3170,62 @@ msgstr ""
 msgid "Withdrew request for approval"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:102
+#: /views/edit/VersionedContent/tab_status.pt:150
+msgid "document info"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:156
+msgid "Content is a draft and never published"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:159
+#: /views/edit/VersionedContent/tab_status.pt:171
+msgid "Publication settings can be changed."
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:168
+msgid "Content is approved, not published"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:182
+msgid "Content is published"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:185
+msgid "This content is published (online for the public).<br /> If you wish you can make an editable copy by going to the ${editor}."
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:195
 msgid "Published version exists"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:103
+#: /views/edit/VersionedContent/tab_status.pt:196
 msgid "Note: an older version of this content is online.<br /> Publishing this version will replace the public version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:113
+#: /views/edit/VersionedContent/tab_status.pt:207
 msgid "Content is closed"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:116
+#: /views/edit/VersionedContent/tab_status.pt:210
 msgid "This content was once published but is now closed.<br /> If you wish you can make an editable copy in the ${editor}."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:247
+#: /views/edit/VersionedContent/tab_status.pt:241
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:258
+#: /views/edit/VersionedContent/tab_status.pt:252
 #: /doc/silva-extra.xml:443
 msgid "modification time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:259
+#: /views/edit/VersionedContent/tab_status.pt:253
 #: /doc/silva-extra.xml:502
 msgid "publication time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:260
+#: /views/edit/VersionedContent/tab_status.pt:254
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
@@ -3240,46 +3234,34 @@ msgstr ""
 msgid "expiration time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:261
+#: /views/edit/VersionedContent/tab_status.pt:255
 #: /doc/silva-extra.xml:675
 msgid "last author"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:262
+#: /views/edit/VersionedContent/tab_status.pt:256
 #: /doc/silva-extra.xml:617
 msgid "creator"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:263
+#: /views/edit/VersionedContent/tab_status.pt:257
 msgid "version status"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:332
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "compare..."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:332
+#: /views/edit/VersionedContent/tab_status.pt:326
 msgid "view the selected versions next to each other: alt-="
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:349
+#: /views/edit/VersionedContent/tab_status.pt:343
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:349
+#: /views/edit/VersionedContent/tab_status.pt:343
 msgid "copy for editing"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status.pt:79
-msgid "Content is approved, not published"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status.pt:80
-msgid "Publication settings can be changed."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status.pt:92
-msgid "This content is published (online for the public).<br /> If you wish you can make an editable copy by going to the ${editor}."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
@@ -3294,7 +3276,7 @@ msgstr ""
 msgid "There is no public version to close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_close.py:21
+#: /views/edit/VersionedContent/tab_status_close.py:20
 msgid "Closed public version."
 msgstr ""
 
@@ -3319,191 +3301,152 @@ msgstr ""
 msgid "message"
 msgstr ""
 
+#: /views/edit/VersionedContent/tab_status_form_editor.form:54
+msgid "Empty indicates no expiration."
+msgstr ""
+
 #: /views/edit/VersionedContent/tab_status_get_status_link_title.py:37
 msgid "view \302\253${version_title}\302\273"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:107
+#: /views/edit/VersionedContent/tab_status_macros.pt:121
 msgid "request approval ${for_new_version}"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:107
+#: /views/edit/VersionedContent/tab_status_macros.pt:121
 msgid "for new version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:112
+#: /views/edit/VersionedContent/tab_status_macros.pt:126
 msgid "message to editor"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:115
-#: /views/edit/VersionedContent/tab_status_macros.pt:207
-#: /views/edit/VersionedContent/tab_status_macros.pt:307
-#: /views/edit/VersionedContent/tab_status_macros.pt:404
+#: /views/edit/VersionedContent/tab_status_macros.pt:129
+#: /views/edit/VersionedContent/tab_status_macros.pt:184
+#: /views/edit/VersionedContent/tab_status_macros.pt:236
+#: /views/edit/VersionedContent/tab_status_macros.pt:340
 #: /views/edit/Content/Indexer/edit.pt:55
-#: /views/add/add_form.pt:62
+#: /views/add/add_form.pt:67
 #: /views/add/GhostFolder/add_form.pt:58
 #: /views/add/Ghost/add_form.pt:56
 msgid "notes"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:128
+#: /views/edit/VersionedContent/tab_status_macros.pt:142
 msgid "This message will remain visible in the status screen for other authors and editors."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:137
-#: /views/edit/VersionedContent/tab_status_macros.pt:315
-msgid "content publish ti<u>m</u>e"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:150
-#: /views/edit/VersionedContent/tab_status_macros.pt:326
-msgid "day / month / year &nbsp;(23:59)"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:158
-msgid "access key: alt-i (some platforms)"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:158
-#: /views/edit/VersionedContent/tab_status_macros.pt:235
-#: /views/edit/VersionedContent/tab_status_macros.pt:334
-msgid "expiratio<u>n</u> time"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:170
-#: /views/edit/VersionedContent/tab_status_macros.pt:246
-msgid "If this content should expire, set the time."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:197
+#: /views/edit/VersionedContent/tab_status_macros.pt:174
 msgid "change settings"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:204
+#: /views/edit/VersionedContent/tab_status_macros.pt:181
 msgid "current timings"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:215
-msgid "access key: alt-m (some platforms)"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:215
-# Default: "m"
-msgid "access_key_publish_datetime"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:215
-msgid "publish ti<u>m</u>e:"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:235
-msgid "access key: alt-n (some platforms)"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:24
-msgid "Publication time of public version"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:254
-#: /views/edit/tab_status_form.form:81
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
-msgid "clear expiration"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:27
-msgid "Publication and expiration time of public version"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:292
+#: /views/edit/VersionedContent/tab_status_macros.pt:220
 msgid "publish new version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:296
+#: /views/edit/VersionedContent/tab_status_macros.pt:224
 msgid "publish closed version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:345
-msgid "Empty indicates no expiration."
+#: /views/edit/VersionedContent/tab_status_macros.pt:289
+#: /views/public/search.pt:98
+msgid "access key: alt-f"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:353
-msgid "access key: alt-l"
+#: /views/edit/VersionedContent/tab_status_macros.pt:320
+msgid "withdraw"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:385
+#: /views/edit/VersionedContent/tab_status_macros.pt:321
 msgid "request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:394
+#: /views/edit/VersionedContent/tab_status_macros.pt:330
 msgid "add message on"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:397
+#: /views/edit/VersionedContent/tab_status_macros.pt:333
 msgid "rejection"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:400
+#: /views/edit/VersionedContent/tab_status_macros.pt:336
 msgid "withdrawal"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:418
+#: /views/edit/VersionedContent/tab_status_macros.pt:34
+msgid "Publication time of public version"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:355
 msgid "The message may be viewed by local users."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:429
+#: /views/edit/VersionedContent/tab_status_macros.pt:365
 msgid "reject approval request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:429
+#: /views/edit/VersionedContent/tab_status_macros.pt:365
 msgid "access key: alt-j"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:438
+#: /views/edit/VersionedContent/tab_status_macros.pt:374
 msgid "withdraw approval request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:44
-msgid "messages"
+#: /views/edit/VersionedContent/tab_status_macros.pt:39
+msgid "Publication and expiration time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:472
+#: /views/edit/VersionedContent/tab_status_macros.pt:408
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:481
+#: /views/edit/VersionedContent/tab_status_macros.pt:417
 msgid "access key: alt-v"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:504
+#: /views/edit/VersionedContent/tab_status_macros.pt:440
 msgid "revert to previous version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:510
+#: /views/edit/VersionedContent/tab_status_macros.pt:446
 msgid "The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:518
+#: /views/edit/VersionedContent/tab_status_macros.pt:454
+msgid "return confirm('Really revert ?')"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:454
 msgid "revert to previous"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:542
+#: /views/edit/VersionedContent/tab_status_macros.pt:478
 msgid "manual close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:549
+#: /views/edit/VersionedContent/tab_status_macros.pt:485
 msgid "If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:558
+#: /views/edit/VersionedContent/tab_status_macros.pt:494
 msgid "close published version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:56
+#: /views/edit/VersionedContent/tab_status_macros.pt:55
+msgid "messages"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:69
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:84
-msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. The last message regarding this issue is:"
+#: /views/edit/VersionedContent/tab_status_macros.pt:99
+msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. actually the last message may not have been written by the person withdrawing the request; if this person for example made an empty reject, this is the message of the requester ... The last message regarding this issue is:"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
@@ -3665,7 +3608,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:82
 #: /views/edit/Container/GhostFolder/tab_edit.pt:154
 #: /views/edit/VersionedContent/Ghost/edit.pt:139
-#: /views/add/add_form.pt:103
+#: /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122
 #: /views/add/Ghost/add_form.pt:114
 #: /views/public/subscriptor.pt:45
@@ -3751,7 +3694,7 @@ msgstr ""
 #: /views/edit/Asset/macro_asset_edit.pt:96
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Member/SimpleMember/tab_edit.pt:142
-#: /views/add/add_form.pt:103
+#: /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122
 #: /views/add/Ghost/add_form.pt:114
 msgid "save"
@@ -3775,7 +3718,7 @@ msgstr ""
 #: /views/edit/Asset/Image/edit.pt:139
 #: /views/edit/Container/tab_edit_import.pt:86
 #: /views/edit/Container/tab_edit_import.pt:155
-#: /views/edit/Container/tab_edit_import.pt:294
+#: /views/edit/Container/tab_edit_import.pt:313
 #: /views/edit/Container/Publication/tab_addables.pt:74
 msgid "element"
 msgstr ""
@@ -3789,15 +3732,15 @@ msgstr ""
 #: /views/edit/Asset/Image/edit.pt:144
 #: /views/edit/Container/tab_edit_import.pt:91
 #: /views/edit/Container/tab_edit_import.pt:160
-#: /views/edit/Container/tab_edit_import.pt:299
-#: /views/edit/Container/tab_status_export.pt:332
+#: /views/edit/Container/tab_edit_import.pt:318
+#: /views/edit/Container/tab_status_export.pt:326
 #: /views/edit/Container/GhostFolder/tab_edit.pt:77
 #: /views/edit/Container/Publication/tab_addables.pt:79
 #: /views/edit/VersionedContent/Link/edit.pt:66
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
 #: /views/edit/Member/SimpleMember/tab_edit.pt:68
-#: /views/add/add_form.pt:58
+#: /views/add/add_form.pt:63
 #: /views/add/GhostFolder/add_form.pt:55
 #: /views/add/Ghost/add_form.pt:53
 #: /views/public/search_form.form:28
@@ -3816,10 +3759,10 @@ msgstr ""
 #: /views/edit/Asset/Image/edit.pt:147
 #: /views/edit/Container/tab_edit_import.pt:94
 #: /views/edit/Container/tab_edit_import.pt:163
-#: /views/edit/Container/tab_edit_import.pt:302
-#: /views/edit/Container/tab_status_export.pt:120
-#: /views/edit/Container/tab_status_export.pt:217
-#: /views/edit/Container/tab_status_export.pt:335
+#: /views/edit/Container/tab_edit_import.pt:321
+#: /views/edit/Container/tab_status_export.pt:103
+#: /views/edit/Container/tab_status_export.pt:202
+#: /views/edit/Container/tab_status_export.pt:329
 #: /views/edit/Container/GhostFolder/tab_edit.pt:80
 #: /views/edit/Container/Publication/tab_addables.pt:82
 #: /views/edit/VersionedContent/Ghost/edit.pt:65
@@ -3857,10 +3800,6 @@ msgstr ""
 #: /views/edit/macro_select_all.pt:14
 #: /views/edit/macro_select_all.pt:26
 msgid "select all: alt-a"
-msgstr ""
-
-#: /views/edit/macro_select_all.pt:32
-msgid "select <u>a</u>ll"
 msgstr ""
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
@@ -3901,7 +3840,7 @@ msgid "slide to the contents screen"
 msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:205
-#: /views/edit/Container/tab_status.pt:173
+#: /views/edit/Container/tab_status.pt:176
 msgid "index:"
 msgstr ""
 
@@ -3924,9 +3863,9 @@ msgid "first 'un-approve' this item in order to edit: alt-r"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:146
-#: /views/edit/VersionedContent/tab_status_macros.pt:463
-#: /views/edit/VersionedContent/tab_status_macros.pt:481
-#: /views/edit/VersionedContent/macro_tab_edit.pt:129
+#: /views/edit/VersionedContent/tab_status_macros.pt:399
+#: /views/edit/VersionedContent/tab_status_macros.pt:417
+#: /views/edit/VersionedContent/macro_tab_edit.pt:130
 msgid "revoke approval"
 msgstr ""
 
@@ -3935,9 +3874,8 @@ msgid "create a new version of this content: alt-n"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:166
-#: /views/edit/Container/tab_status.pt:379
-#: /views/edit/Container/tab_status.pt:445
-#: /views/edit/VersionedContent/macro_tab_edit.pt:109
+#: /views/edit/Container/tab_status.pt:373
+#: /views/edit/VersionedContent/macro_tab_edit.pt:110
 msgid "new version"
 msgstr ""
 
@@ -3959,7 +3897,7 @@ msgstr ""
 
 #: /views/edit/promptWindow.pt:35
 #: /views/edit/Container/tab_edit_rename.pt:130
-#: /views/add/add_form.pt:94
+#: /views/add/add_form.pt:123
 #: /views/add/GhostFolder/add_form.pt:113
 #: /views/add/Ghost/add_form.pt:105
 #: /browser/object_lookup.pt:427
@@ -4222,18 +4160,18 @@ msgstr ""
 msgid "The addables settings can only be changed on Silva Publications. A doesn&#8217;t have that capability."
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:58
+#: /views/edit/tab_metadata.pt:103
+#: /views/edit/tab_settings.pt:260
+msgid "for closed version of &#xab;${title}&#xbb;"
+msgstr ""
+
+#: /views/edit/tab_metadata.pt:63
 msgid "${for_approved_version_of_title}"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:80
+#: /views/edit/tab_metadata.pt:85
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:67
 msgid "for public version of &#xab;${title}&#xbb;"
-msgstr ""
-
-#: /views/edit/tab_metadata.pt:98
-#: /views/edit/tab_settings.pt:260
-msgid "for closed version of &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_preview.pt:101
@@ -4343,8 +4281,12 @@ msgstr ""
 #: /views/edit/tab_status_form.form:53
 #: /views/edit/VersionedContent/tab_status_form_author.form:73
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
-#: /views/edit/VersionedContent/tab_status_form_editor.form:54
 msgid "If this document should expire, set the time."
+msgstr ""
+
+#: /views/edit/tab_status_form.form:81
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:67
+msgid "clear expiration"
 msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:114
@@ -4456,90 +4398,90 @@ msgstr ""
 msgid "Next ${n} items &raquo;"
 msgstr ""
 
-#: /views/macro_index.pt:131
+#: /views/macro_index.pt:128
 msgid "jump to zope root: alt-z"
 msgstr ""
 
-#: /views/macro_index.pt:131
+#: /views/macro_index.pt:128
 msgid "zroot..."
 msgstr ""
 
-#: /views/macro_index.pt:140
+#: /views/macro_index.pt:137
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:140
+#: /views/macro_index.pt:137
 msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
-#: /views/macro_index.pt:149
+#: /views/macro_index.pt:146
 msgid "sservices..."
 msgstr ""
 
-#: /views/macro_index.pt:149
+#: /views/macro_index.pt:146
 msgid "jump to silva services: alt-`"
 msgstr ""
 
-#: /views/macro_index.pt:180
-#: /views/macro_index.pt:183
-#: /views/macro_index.pt:193
-#: /views/macro_index.pt:197
+#: /views/macro_index.pt:175
+#: /views/macro_index.pt:178
+#: /views/macro_index.pt:188
+#: /views/macro_index.pt:192
 msgid "jump to top: alt-t"
 msgstr ""
 
-#: /views/macro_index.pt:216
+#: /views/macro_index.pt:211
 msgid "contact:"
 msgstr ""
 
-#: /views/macro_index.pt:224
+#: /views/macro_index.pt:219
 msgid "no name"
 msgstr ""
 
-#: /views/macro_index.pt:231
+#: /views/macro_index.pt:226
 msgid "Leave Silva and view the public page: alt-:"
 msgstr ""
 
-#: /views/macro_index.pt:231
+#: /views/macro_index.pt:226
 msgid "view public version"
 msgstr ""
 
-#: /views/macro_index.pt:249
+#: /views/macro_index.pt:244
 msgid "Change your settings: alt-~"
 msgstr ""
 
-#: /views/macro_index.pt:263
+#: /views/macro_index.pt:258
 msgid "user settings"
 msgstr ""
 
-#: /views/macro_index.pt:267
+#: /views/macro_index.pt:262
 msgid "Logout of Silva: alt-q"
 msgstr ""
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:271
 msgid "logout ${role} ${userid}"
 msgstr ""
 
-#: /views/macro_index.pt:282
+#: /views/macro_index.pt:277
 msgid "Request an additional role in this location: alt-,"
 msgstr ""
 
-#: /views/macro_index.pt:282
+#: /views/macro_index.pt:277
 msgid "request access"
 msgstr ""
 
-#: /views/macro_index.pt:87
+#: /views/macro_index.pt:84
 msgid "Up to Silva top"
 msgstr ""
 
-#: /views/macro_index.pt:90
+#: /views/macro_index.pt:87
 msgid "Up one level"
 msgstr ""
 
-#: /views/macro_index.pt:92
+#: /views/macro_index.pt:89
 msgid "Help with access keys"
 msgstr ""
 
-#: /views/macro_index.pt:93
+#: /views/macro_index.pt:90
 msgid "Silva copyright info"
 msgstr ""
 
@@ -4557,9 +4499,9 @@ msgid "change the addables allowed in this publication: alt-d"
 msgstr ""
 
 #: /views/macro_middleground.pt:76
-#: /views/edit/Container/tab_edit.pt:491
-#: /views/edit/Container/tab_status.pt:409
-#: /views/edit/VersionedContent/tab_status_macros.pt:360
+#: /views/edit/Container/tab_edit.pt:493
+#: /views/edit/Container/tab_status.pt:404
+#: /views/edit/VersionedContent/tab_status_macros.pt:296
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
 msgid "publish now"
@@ -4692,7 +4634,7 @@ msgstr ""
 msgid "No roles were selected."
 msgstr ""
 
-#: /views/public/search.pt:18
+#: /views/public/search.pt:20
 msgid "Search"
 msgstr ""
 
@@ -4718,10 +4660,6 @@ msgstr ""
 
 #: /views/public/search.pt:98
 msgid "Find"
-msgstr ""
-
-#: /views/public/search.pt:98
-msgid "access key: alt-f"
 msgstr ""
 
 #: /views/public/search_form.form:100
@@ -4760,21 +4698,21 @@ msgid ""
 "            "
 msgstr ""
 
-#: /views/public/search_results.pt:18
+#: /views/public/search_results.pt:19
 msgid "Search results"
 msgstr ""
 
-#: /views/public/search_results.pt:41
-#: /views/public/search_results.pt:88
+#: /views/public/search_results.pt:38
+#: /views/public/search_results.pt:85
 msgid "&lt;&lt; Previous"
 msgstr ""
 
-#: /views/public/search_results.pt:50
+#: /views/public/search_results.pt:47
 msgid "Showing results ${batch_start} to ${batch_end}."
 msgstr ""
 
-#: /views/public/search_results.pt:54
-#: /views/public/search_results.pt:97
+#: /views/public/search_results.pt:51
+#: /views/public/search_results.pt:94
 msgid "Next &gt;&gt;"
 msgstr ""
 
