@@ -44,12 +44,12 @@
           <max_lines></max_lines>
           <width type="int">40</width>
           <external_validator></external_validator>
-          <height type="int">2</height>
-          <required type="int">0</required>
+          <height type="int">1</height>
+          <required type="int">1</required>
           <css_class>store</css_class>
           <default></default>
           <title>title</title>
-          <description></description>
+          <description>Fill in a title. It&amp;#8217;ll be used for the &lt;abbr title="Alternative text"&gt;ALT&lt;/abbr&gt; text of the image.</description>
           <extra></extra>
           <unicode>1</unicode>
         </values>
