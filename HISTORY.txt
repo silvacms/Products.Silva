@@ -7,6 +7,9 @@ Under development
 
     Features added
 
+      - Made image titles required, since they provide the alt attribute, as 
+        requested by two customers.
+
       - Added adapters so we now have a simple API to index, unindex
         and reindex content objects, folders and assets. Adapt to
         Products.Silva.adapters.ICatalogIndexable.
