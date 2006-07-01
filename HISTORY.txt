@@ -5,6 +5,9 @@ Silva changes
 
   1.5.6 (Unreleased)
 
+      - Made image titles required, since they provide the alt attribute, as 
+        requested by two customers.
+
     Bugs Fixed:
 
       - Fixed bug in sidebar uplinks where you couldn't jump up and out of a 
