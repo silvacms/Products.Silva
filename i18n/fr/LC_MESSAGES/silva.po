@@ -65,7 +65,7 @@ msgstr ""
 #: /Folder.py:338
 #: /Folder.py:403
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr "Coller «${id}» n'est pas permis dans ce type de conteneur"
+msgstr "Coller &#xab;${id}&#xbb; n'est pas permis dans ce type de conteneur"
 
 #: /Folder.py:360
 #: /Folder.py:399
@@ -110,7 +110,7 @@ msgstr ""
 "symbolique, raccourci). A différence de l'hyperlien qui dirige le Visiteur "
 "vers un autre emplacement, un objet ghost garde le Visiteur dans la "
 "publicaton courante, et présente le contenu de l'item ghosted.\n"
-"L’objet ghost hérite les propriétés de son emplacement (par exemple "
+"L'objet ghost hérite les propriétés de son emplacement (par exemple "
 "affichage et feuille de style).\n"
 "    "
 
@@ -129,11 +129,11 @@ msgid ""
 msgstr ""
 "Les Dossiers Ghost sont similaires aux Ghosts mais ne sont pas seulement\n"
 "        un emplacement pour un document, Ils créent des emplacements \n"
-"       et/ou des copies de tous les contenus  du dossier        ‘original’.\n"
+"       et/ou des copies de tous les contenus  du dossier        'original'.\n"
 "       L'avantage des  Dossiers Ghost réside dans le fait que les contenus \n"
 "       restent synchronisés avec l'original, moyennant une synchronisation\n"
 "       manuelle ou automatique. Quand un dossier est soumis à ghost,\n"
-"       les éléments actifs de contenu  – tels que Images et Fichiers –\n"
+"       les éléments actifs de contenu  &#8211; tels que Images et Fichiers &#8211;\n"
 "         sont copiés (physiquemt dupliqués) en même temps que les documents\n"
 "        sont soumis à ghost."
 
@@ -213,10 +213,10 @@ msgid ""
 "       &#8220;http://....&#8221;, or https, ftp, news, and mailto.\n"
 "    "
 msgstr ""
-"Un lien permet d'inclure des liens à sites externes – \n"
-"       en dehors du site Silva – dans la Table de Contenus. Le contenu du "
+"Un lien permet d'inclure des liens à sites externes &#8211; \n"
+"       en dehors du site Silva &#8211; dans la Table de Contenus. Le contenu du "
 "Lien\n"
-"       est un hyperlien, commençant par “http://....”.\n"
+"       est un hyperlien, commencant par \"http://....\".\n"
 "    "
 
 # binder -classeur de, organisateur de bibliothéque
@@ -626,8 +626,8 @@ msgid ""
 msgstr ""
 "En cas de se retrouver avec deux boutons avec le même nom, la touche d'accès "
 "pour le deuxième est la première lettre du deuxième mot. (par exemple pour "
-"“get image reference” et “get link reference”, les touches d'accès sont ‘g’ "
-"et ‘l’). Il arrive qu'il y ait multiples du même bouton, dans ce cas "
+"\"get image reference\" et \"get link reference\", les touches d'accès sont 'g' "
+"et 'l'). Il arrive qu'il y ait multiples du même bouton, dans ce cas "
 "seulement le premier aura une touche d'accès."
 
 #: /globals/accesskeys.pt:198
@@ -697,7 +697,7 @@ msgstr "Editer Silva"
 
 #: /globals/accesskeys.pt:227
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
-msgstr "Ou, sauvegarder ce lien – ${silva_edit} – comme marque pages."
+msgstr "Ou, sauvegarder ce lien &#8211; ${silva_edit} &#8211; comme marque pages."
 
 #: /globals/accesskeys.pt:232
 msgid ""
@@ -729,8 +729,8 @@ msgid ""
 "feature will make keyboard navigation to hyperlinks &#8211; such as item "
 "names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
 msgstr ""
-"${tip_for_mozilla_users}<br /> Using the “Find As You Type” feature will "
-"make keyboard navigation to hyperlinks – such as item names – remarkably "
+"${tip_for_mozilla_users}<br /> Using the &#8220;Find As You Type&#8221; feature will "
+"make keyboard navigation to hyperlinks &#8211; such as item names &#8211; remarkably "
 "easy. See:<br /> ${typeaheadfind_link}"
 
 #: /globals/accesskeys.pt:247
@@ -1081,7 +1081,7 @@ msgstr "Editeur en Chef"
 #: /views/add/Image/add_submit.py:68
 #: /views/add/add_submit.py:58
 msgid "Added ${meta_type} ${id}."
-msgstr "Ajouté${meta_type} ${id}."
+msgstr "Ajouté ${meta_type} ${id}."
 
 #: /views/add/File/form.form:68
 #: /views/edit/Asset/upload_form.form:25
@@ -2432,7 +2432,7 @@ msgstr "fermer"
 #: /views/edit/Container/tab_edit.pt:493
 #: /views/edit/Container/tab_status.pt:411
 msgid "publish new versions: alt-p"
-msgstr "publier maintenant: alt-p"
+msgstr "publier immédiatement: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:505
 msgid "move selected items to"
@@ -2700,7 +2700,7 @@ msgstr "facilités docma"
 
 #: /views/edit/Container/tab_edit_import.pt:287
 msgid "upload a document in word format (.doc) for conversion"
-msgstr "charger un document au format word (.doc° pour conversion"
+msgstr "charger un document au format word (.doc) pour conversion"
 
 #: /views/edit/Container/tab_edit_import.pt:315
 msgid ""
@@ -3039,8 +3039,8 @@ msgstr "approuve ou publie nouvelles versions: alt-l"
 
 #: /views/edit/Container/tab_status.pt:393
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
-msgid "approve for later"
-msgstr "ouvert au public"
+msgid "approve for future"
+msgstr "approuver pour le futur"
 
 #: /views/edit/Container/tab_status.pt:402
 msgid "change publish and expiration times: alt-u"
@@ -3049,7 +3049,7 @@ msgstr "modifier date de publication et d'expiration: alt-u"
 #: /views/edit/Container/tab_status.pt:402
 #: /views/edit/VersionedContent/tab_status_macros.pt:272
 msgid "update timing"
-msgstr "activer dates"
+msgstr "fixer dates"
 
 #: /views/edit/Container/tab_status.pt:429
 msgid "withdraw pending request for approval: alt-w"
@@ -3079,7 +3079,7 @@ msgstr "demande d'approbation pour nouvelles versions: alt-r"
 #: /views/edit/Container/tab_status.pt:467
 #: /views/edit/VersionedContent/tab_status_macros.pt:177
 msgid "request approval"
-msgstr "Demande d'approbation"
+msgstr "demande d'approbation"
 
 #: /views/edit/Container/tab_status.pt:476
 msgid "request immediate approval for new versions: alt-q"
@@ -3088,7 +3088,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_status.pt:476
 msgid "request approval now"
-msgstr "demander autorisation maintenant"
+msgstr "demander approbation immédiatement"
 
 #: /views/edit/Container/tab_status.pt:87
 msgid "export to xml or convert for export: alt-e"
@@ -3594,7 +3594,7 @@ msgstr "déverrouiller"
 #: /views/edit/VersionedContent/preview_open_now.py:12
 #: /views/edit/VersionedContent/tab_status.pt:89
 msgid "Content is published"
-msgstr "Le contenu est publié"
+msgstr "Le contenu est publié."
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
@@ -3649,8 +3649,8 @@ msgid "Withdrew request for approval"
 msgstr "Retirer demande d'approbation"
 
 #: /views/edit/VersionedContent/tab_status.pt:102
-msgid "Published version exists"
-msgstr "Version publiée existe"
+msgid "Published version exists."
+msgstr "Version publiée existe."
 
 #: /views/edit/VersionedContent/tab_status.pt:103
 msgid ""
@@ -3698,7 +3698,7 @@ msgstr "date d'expiration"
 #: /views/edit/VersionedContent/tab_status.pt:261
 #: /doc/silva-extra.xml:567
 msgid "last author"
-msgstr "Dernier auteur"
+msgstr "dernier auteur"
 
 #: /views/edit/VersionedContent/tab_status.pt:262
 #: /doc/silva-extra.xml:509
@@ -3732,14 +3732,14 @@ msgstr "Contenu approuvé, non publié"
 
 #: /views/edit/VersionedContent/tab_status.pt:80
 msgid "Publication settings can be changed."
-msgstr "Les paramétres de publication sont modifiables"
+msgstr "Les paramétres de publication sont modifiables."
 
 #: /views/edit/VersionedContent/tab_status.pt:92
 msgid ""
 "This content is published (online for the public).<br /> If you wish you can "
 "make an editable copy by going to the ${editor}."
 msgstr ""
-"Ce contenu est publié (en ligne pour le public) <br /> Si vous le souhaitez "
+"Ce contenu est publié (en ligne pour le public). <br /> Si vous le souhaitez "
 "vous pouvez effectuer une copie de l'édition par ${editor}."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
@@ -3752,7 +3752,7 @@ msgstr "Paramétres de publication modifiés"
 
 #: /views/edit/VersionedContent/tab_status_close.py:16
 msgid "There is no public version to close"
-msgstr "Il n' y a pas de version publique à fermer"
+msgstr "Il n' y a pas de version publique à fermer."
 
 #: /views/edit/VersionedContent/tab_status_close.py:21
 msgid "Closed public version."
@@ -3780,8 +3780,8 @@ msgid "message"
 msgstr "message"
 
 #: /views/edit/VersionedContent/tab_status_get_status_link_title.py:37
-msgid "view «${version_title}»"
-msgstr "vue «${version_title}»"
+msgid "view &#xab;${version_title}&#xbb;"
+msgstr "vue &#xab;${version_title}&#xbb;"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:107
 msgid "request approval ${for_new_version}"
@@ -3801,7 +3801,7 @@ msgid ""
 "editors."
 msgstr ""
 "Ce message restera visible sur l'écran d'état pour d'autres auteurs et "
-"éditeurs"
+"éditeurs."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:137
 #: /views/edit/VersionedContent/tab_status_macros.pt:315
@@ -3876,7 +3876,7 @@ msgstr "publier version privée"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:345
 msgid "Empty indicates no expiration."
-msgstr "Vide signifie pas d'expiration"
+msgstr "Vide signifie pas d'expiration."
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
 msgid "access key: alt-l"

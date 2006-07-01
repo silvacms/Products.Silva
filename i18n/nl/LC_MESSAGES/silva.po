@@ -3009,8 +3009,8 @@ msgstr "nieuwe versies goedkeuren voor publicatie in de toekomst: alt-l"
 
 #: /views/edit/Container/tab_status.pt:393
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
-msgid "approve for later"
-msgstr "goedkeuren voor later"
+msgid "approve for future"
+msgstr "goedkeuren voor de toekomst"
 
 #: /views/edit/Container/tab_status.pt:402
 msgid "change publish and expiration times: alt-u"

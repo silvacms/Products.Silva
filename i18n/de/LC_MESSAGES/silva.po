@@ -2217,10 +2217,6 @@ msgstr "Import beendet: ${msg}"
 
 #: /views/edit/Container/open_now.py:21
 #: /views/edit/Container/tab_edit_close.py:27
-#: /views/edit/VersionedContent/preview_open_now.py:16
-msgid "not applicable"
-msgstr "nicht anwendbar"
-
 #: /views/edit/Container/tab_status_approve.py:49
 #: /views/edit/Container/tab_status_change_settings.py:51
 #: /views/edit/Container/tab_status_close.py:36
@@ -2230,6 +2226,7 @@ msgstr "nicht anwendbar"
 #: /views/edit/Container/tab_status_request_approval_now.py:52
 #: /views/edit/Container/tab_status_revoke.py:36
 #: /views/edit/Container/tab_status_withdraw.py:26
+#: /views/edit/VersionedContent/preview_open_now.py:16
 msgid "not a versionable object"
 msgstr "nicht versionierbares Objekt"
 
@@ -3046,8 +3043,8 @@ msgstr "Genehmigen oder Veröffentlichen von neuen Versionen: alt-l"
 
 #: /views/edit/Container/tab_status.pt:393
 #: /views/edit/VersionedContent/tab_status_macros.pt:353
-msgid "approve for later"
-msgstr "Veröffentlichen"
+msgid "approve for future"
+msgstr "Für Zukunft genehmigen"
 
 #: /views/edit/Container/tab_status.pt:402
 msgid "change publish and expiration times: alt-u"
