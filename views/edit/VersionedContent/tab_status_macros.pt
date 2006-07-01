@@ -39,7 +39,7 @@ Publication and expiration time of public version
 <div tal:omit-tag=""
   tal:condition="python:model.get_approval_request_message()"
   metal:define-macro="messages">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 messages
@@ -102,7 +102,7 @@ message text
 </td>
 </tr>
 
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
   <h3 i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></h3>
 </td>
@@ -192,7 +192,7 @@ If this content should expire, set the time.
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
 <form action="tab_status_change_settings" method="POST">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 change settings
@@ -286,7 +286,7 @@ If this content should expire, set the time.
   metal:define-macro="approve_new">
 <form action="tab_status_approve" method="POST">
 <table class="listing">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3>
 <span tal:condition="python:not closed or (unapproved and (closed or published))"
@@ -377,7 +377,7 @@ Empty indicates no expiration.
   metal:define-macro="withdraw_request_approval">
 <form action="tab_status_withdraw" method="POST">
 <table class="listing">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td colspan="2">
 <h3>
 <tal:block condition="may_approve_content" i18n:translate="">reject</tal:block>
@@ -458,7 +458,7 @@ The message may be viewed by local users.
 <form action="tab_status_revoke" method="POST">
 <table class="listing">
 <thead>
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
 <h3 i18n:translate="">
 revoke approval
@@ -499,7 +499,7 @@ If further editing is required, first revoke the approval.
   metal:define-macro="revert_to_previous">
 <form action="tab_status_revert_to_previous" method="POST">
 <table class="listing">
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
   <h3 i18n:translate="">
   revert to previous version
@@ -537,7 +537,7 @@ made to the current version.
 <form action="tab_status_close" method="POST">
 <table class="listing">
 <thead>
-<tr class="top-controls">
+<tr class="inter-controls">
 <td>
   <h3 i18n:translate="">manual close</h3> 
 </td>
