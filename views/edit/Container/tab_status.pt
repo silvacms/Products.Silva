@@ -444,7 +444,7 @@
           type="submit"
           name="tab_status_request_approval_now:method"
           value="request approval now"
-          title="request immediate approval for new versions: alt-q"
+          title="request immediate approval for new versions: alt-p"
           accesskey="r"
           tal:condition="approveables"
           i18n:attributes="value;title"
