@@ -288,12 +288,14 @@ expiration time
   colspan="2">
 <input class="button"
   type="submit"
+  name="tab_status_approve:method"
   value="approve for future"
   title="access key: alt-f"
   accesskey="f"
   i18n:attributes="value;title"
 />
 <input class="executor"
+  name="tab_status_open_now:method"
   type="submit"
   value="publish now"
   title="access key: alt-p"
