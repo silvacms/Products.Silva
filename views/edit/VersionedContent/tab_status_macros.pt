@@ -168,7 +168,7 @@ This message will remain visible in the status screen for other authors and edit
 
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
-<form action="tab_status_change_settings" method="POST">
+<form action="tab_status_change_settings" method="post">
 <tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
@@ -212,7 +212,7 @@ notes
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
-<form action="tab_status_approve" method="POST">
+<form action="tab_status_approve" method="post">
 <table class="listing sublisting">
 <tr class="inter-controls">
 <td colspan="2">
@@ -313,7 +313,7 @@ expiration time
 <span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for approval _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="withdraw_request_approval">
-<form action="tab_status_withdraw" method="POST">
+<form action="tab_status_withdraw" method="post">
 <table class="listing">
 <tr class="inter-controls">
 <td colspan="2">
@@ -393,7 +393,7 @@ The message may be viewed by local users.
 <span tal:replace="nothing"> _______ Revoke approval _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="revoke_approval">
-<form action="tab_status_revoke" method="POST">
+<form action="tab_status_revoke" method="post">
 <table class="listing sublisting">
 <thead>
 <tr class="inter-controls">
@@ -435,7 +435,7 @@ If further editing is required, first revoke the approval.
 <span tal:replace="nothing"> _______ Revert to previous _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="revert_to_previous">
-<form action="tab_status_revert_to_previous" method="POST">
+<form action="tab_status_revert_to_previous" method="post">
 <table class="listing">
 <tr class="inter-controls">
 <td>
@@ -472,7 +472,7 @@ made to the current version.
 <span tal:replace="nothing"> _______ Manual close _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="manual_close">
-<form action="tab_status_close" method="POST">
+<form action="tab_status_close" method="post">
 <table class="listing">
 <thead>
 <tr class="inter-controls">
