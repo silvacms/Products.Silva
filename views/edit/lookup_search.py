@@ -8,7 +8,7 @@ view = context
 
 if not name:
     name = request.form.get('name', ' ')
-name = unicode(name.strip(), 'UTF-8')
+name = name.strip()
 
 if name == '':
     return view.lookup_ui(
