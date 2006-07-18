@@ -143,7 +143,7 @@ class Versioning:
                                   _format_date_helper(expiration_datetime)
             
         editor = getSecurityManager().getUser().getId()
-        text = "\nVersion was approved for publication by %s.\n%s%s" % \
+        text = u"\nVersion was approved for publication by %s.\n%s%s" % \
                 (editor, publication_date_str, expiration_date_str)
         self._send_message(editor, info.requester,
                            "Version approved", text)
@@ -170,7 +170,7 @@ class Versioning:
         # send messages to editor
         # XXX should the last author be informed, too?
         author = getSecurityManager().getUser().getId()
-        text = "\nVersion was unapproved by %s." % author
+        text = u"\nVersion was unapproved by %s." % author
         self._send_message_to_editors(author, 'Unapproved', text)
         if self._request_for_approval_info.requester is not None:
             self._send_message(author,
@@ -298,7 +298,7 @@ class Versioning:
                'The version has a proposed expiration date of %s\n' % \
                _format_date_helper(expiration_datetime)
         # send messages
-        text = "\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
+        text = u"\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
                 (info.requester,
                  publication_date_str, expiration_date_str, message)
         self._send_message_to_editors(info.requester,
@@ -330,7 +330,7 @@ class Versioning:
         info.request_pending=None
         self._set_approval_request_message(message)
         # send messages
-        text = "\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
+        text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
                % (info.requester, message)
         self._send_message_to_editors(info.requester,
                                       'Approval withdrawn by author', text)
@@ -360,7 +360,7 @@ class Versioning:
         info.request_pending=None
         self._set_approval_request_message(message)
         # send message back to requester
-        text = "Request for approval was rejected by %s.\nMessage:\n%s" \
+        text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
                % (info.requester, message)
         self._send_message(info.requester, original_requester,
                            "Approval rejected by editor", text)
@@ -817,7 +817,7 @@ class Versioning:
         # message
         text = "Object: %s\n%s/edit/tab_preview\n%s" % (
             self.get_title_editable(),
-            self.absolute_url(), unicode(text, 'UTF-8'))
+            self.absolute_url(), text)
         service_messages.send_message(from_userid, to_userid, subject, text)
 
     def _index_version(self, version):
