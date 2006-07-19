@@ -1,6 +1,5 @@
 ##parameters=objects,clear_expiration=False
 from Products.Silva.i18n import translate as _
-from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
