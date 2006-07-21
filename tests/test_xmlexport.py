@@ -1,11 +1,8 @@
-#a -*- coding: utf-8 -*-
 # Python
-import os, sys, re
+import os
+import re
 from os.path import join
 from zipfile import ZipFile, BadZipfile
-
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
 from SilvaTestCase import transaction
@@ -258,11 +255,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         f.close()
         os.remove(join(directory, 'test_export.zip'))
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SetTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(SetTestCase))
+    return suite

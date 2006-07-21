@@ -1,7 +1,3 @@
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 from DateTime import DateTime 
 
@@ -147,13 +143,10 @@ class AssetCatalogTestCase(CatalogTestCase):
         self.assertNoPath('/root/test')
         self.assertPath('/root/test2')
         
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(VersionCatalogTestCase))
-        suite.addTest(unittest.makeSuite(ContainerCatalogTestCase))
-        suite.addTest(unittest.makeSuite(AssetCatalogTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(VersionCatalogTestCase))
+    suite.addTest(unittest.makeSuite(ContainerCatalogTestCase))
+    suite.addTest(unittest.makeSuite(AssetCatalogTestCase))
+    return suite

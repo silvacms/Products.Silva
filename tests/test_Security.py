@@ -1,10 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.21 $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 from Testing import ZopeTestCase
 from Products.Silva.tests import SilvaTestCase
 
@@ -114,14 +110,9 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
             roleinfo.ASSIGNABLE_ROLES,
             self.root.sec_get_roles())
         
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SecurityTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(SecurityTestCase))
+    return suite
 

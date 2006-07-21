@@ -1,7 +1,3 @@
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 class PartialUpgradeTestCase(SilvaTestCase.SilvaTestCase):
@@ -27,13 +23,8 @@ class PartialUpgradeTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(self.doc.get_editable()._last_author_info, None)
         self.assertEquals(self.doc.get_editable()._last_author_userid, None)
 
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(PartialUpgradeTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(PartialUpgradeTestCase))
+    return suite

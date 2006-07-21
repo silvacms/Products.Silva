@@ -1,10 +1,6 @@
 
 # See also LICENSE.txt
 # $Revision: 1.8 $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from Products.Silva.adapters import subscribable
@@ -150,6 +146,3 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SubscriptionServiceTestCase))
     return suite
-
-if __name__ == '__main__':
-    framework()

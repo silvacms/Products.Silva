@@ -1,10 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 from datetime import datetime, timedelta    
     
 import SilvaTestCase
@@ -271,12 +267,9 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(self.doc._public_version[0] is not None)
         self.assert_(len(self.doc._previous_versions) == 11)
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(VersionManagementTestCase))
-        return suite
-    
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(VersionManagementTestCase))
+    return suite
+

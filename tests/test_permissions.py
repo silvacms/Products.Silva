@@ -1,9 +1,3 @@
-import os, sys
-
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
-import unittest
 from AccessControl import Unauthorized
 from DateTime import DateTime
 import SilvaTestCase
@@ -70,12 +64,9 @@ class DocumentPublicationTestCase(RestrictedPythonTest):
         doc.approve_version()
         self.login('anon')
         self.check('context.alpha.view()')
-        
+
+import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(DocumentPublicationTestCase))
     return suite
-
-if __name__ == '__main__':
-    framework()
-    

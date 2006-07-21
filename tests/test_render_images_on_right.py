@@ -1,9 +1,4 @@
-#!/usr/bin/python
-
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
+import os
 from zope.interface.verify import verifyClass
 from zope.interface.exceptions import BrokenImplementation, DoesNotImplement,\
      BrokenMethodImplementation
@@ -87,11 +82,8 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         images_on_right = BrokenImagesOnRightRenderer()
         self.assertRaises(RenderError, images_on_right.render, obj)
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(ImagesOnRightRendererTest))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(ImagesOnRightRendererTest))
+    return suite

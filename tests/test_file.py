@@ -1,10 +1,7 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: test_file.py,v 1.7 2006/01/24 16:13:33 faassen Exp $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
+import os
 import SilvaTestCase
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
 from Testing.ZopeTestCase import utils
@@ -69,13 +66,8 @@ class FileTest(SilvaTestCase.SilvaTestCase):
             s = s[s.find('\n\n')+2:]
         return s
    
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(FileTest))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(FileTest))
+    return suite

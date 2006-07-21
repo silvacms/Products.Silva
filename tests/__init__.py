@@ -1,5 +1,3 @@
 """\
-Unit test package for Silva
-
-To run all tests type 'python runalltests.py'
+Unit test package for Silva, see README.txt
 """

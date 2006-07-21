@@ -1,10 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 from DateTime import DateTime
 
@@ -160,14 +156,8 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.assertEquals(expected[indexName],
                 self.indexer.getIndexEntry(indexName))
     
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(IndexerTestCase, 'test'))
-        return suite
- 
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(IndexerTestCase, 'test'))
+    return suite
