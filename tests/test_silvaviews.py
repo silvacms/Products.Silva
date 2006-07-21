@@ -1,7 +1,7 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: test_silvaviews.py,v 1.5 2006/01/24 16:13:33 faassen Exp $
-
+import os
 from Testing.ZopeTestCase import Functional
     
 import SilvaTestCase

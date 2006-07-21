@@ -1,4 +1,5 @@
 # Python
+import os
 import re
 from os.path import join
 from zipfile import ZipFile, BadZipfile

@@ -1,3 +1,4 @@
+import os
 from zope.interface.verify import verifyClass
 from zope.interface.exceptions import BrokenImplementation, DoesNotImplement,\
      BrokenMethodImplementation

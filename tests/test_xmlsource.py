@@ -1,3 +1,4 @@
+import os
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.adapters import xmlsource

@@ -1,3 +1,4 @@
+import os
 import SilvaTestCase
 from zope.interface import implements
 from DateTime import DateTime
