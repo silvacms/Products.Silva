@@ -1,9 +1,3 @@
-#!/usr/bin/python
-
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.adapters import xmlsource
@@ -43,13 +37,8 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(
             expected_xml, xmlsource.XMLSourceAdapter(obj).getXML())
 
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(XMLSourceTest))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(XMLSourceTest))
+    return suite

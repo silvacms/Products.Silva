@@ -1,9 +1,3 @@
-#!/usr/bin/python
-
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 from Products.Silva.transform.interfaces import IRendererRegistry
 from Products.Silva.RendererRegistryService import RendererRegistryService, OLD_STYLE_RENDERER
@@ -143,13 +137,8 @@ class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
             reg.getRenderer('Silva Document', 'Foo bar'))
         
 
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(RendererRegistryTest))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(RendererRegistryTest))
+    return suite

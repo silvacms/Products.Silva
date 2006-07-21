@@ -1,10 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.3 $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from Products.Silva.ContentObjectFactoryRegistry import \
@@ -99,11 +95,8 @@ class ContentObjectFactoryRegistryTestCase(SilvaTestCase.SilvaTestCase):
         obj3 = contentObjectFactoryRegistry.getObjectFor(None, 'someid', 'baz', '')
         self.assert_(isinstance(obj3, Baz))
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(ContentObjectFactoryRegistryTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(ContentObjectFactoryRegistryTestCase))
+    return suite

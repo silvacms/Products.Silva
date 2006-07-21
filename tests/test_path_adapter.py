@@ -1,10 +1,6 @@
 # Copyright (c) 2005-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.3 $
-import os, sys, time
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from Products.Silva.adapters import path
@@ -37,12 +33,8 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(utp('/index'), '/root/foo/index')
         self.assertEquals(utp('http://foo.bar.com:80/index'), 
                                 '/root/foo/index')
-
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(PathAdapterTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(PathAdapterTestCase))
+    return suite

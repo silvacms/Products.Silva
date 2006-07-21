@@ -1,10 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.4 $
-import os, sys, time
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from Products.Silva import assetregistry
@@ -88,11 +84,8 @@ class AssetRegistryTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             factory, assetregistry.getFactoryForMimetype(self.root, mimetype2))
     
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(AssetRegistryTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(AssetRegistryTestCase))
+    return suite

@@ -1,10 +1,6 @@
 # Copyright (c) 2002-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.16 $
-import os, sys, time
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from Products.Silva.interfaces import IContent
@@ -142,11 +138,8 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.assertCatalogEmptyResult()
         
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(CatalogedVersioningTestCase))
+    return suite

@@ -1,10 +1,6 @@
 # Copyright (c) 2003-2006 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 
 from DateTime import DateTime
@@ -332,19 +328,13 @@ class MartijnSecondTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(self.secundus, links['first'])
         self.assertEquals(4, len(links))
 
-if __name__ == '__main__':
-    framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(ContainerTestCase))
-        suite.addTest(unittest.makeSuite(SimpleTestCase))
-        suite.addTest(unittest.makeSuite(SubFolderIndexerTestCase))
-        suite.addTest(unittest.makeSuite(AutoTocTestCase))
-        suite.addTest(unittest.makeSuite(MartijnTestCase))
-        suite.addTest(unittest.makeSuite(MartijnSecondTestCase))
-        return suite
- 
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(ContainerTestCase))
+    suite.addTest(unittest.makeSuite(SimpleTestCase))
+    suite.addTest(unittest.makeSuite(SubFolderIndexerTestCase))
+    suite.addTest(unittest.makeSuite(AutoTocTestCase))
+    suite.addTest(unittest.makeSuite(MartijnTestCase))
+    suite.addTest(unittest.makeSuite(MartijnSecondTestCase))
+    return suite

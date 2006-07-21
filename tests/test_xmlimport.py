@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-import os, sys
+import os
 import xml.sax
 from xml.sax.handler import feature_namespaces
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import SilvaTestCase
 from Products.ParsedXML.ParsedXML import ParsedXML
@@ -277,11 +274,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             autotoc.meta_type)
 
         
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SetTestCase))
-        return suite    
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(SetTestCase))
+    return suite    

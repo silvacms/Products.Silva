@@ -1,9 +1,3 @@
-#!/usr/bin/python
-
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import SilvaTestCase
 from zope.interface import implements
 from DateTime import DateTime
@@ -93,11 +87,8 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(obj.preview(), 'I faked all my renderings.')
         registry.unregisterRenderer('Silva Document', 'Fake Renderer')
         
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(PublicViewRenderingTest))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(PublicViewRenderingTest))
+    return suite
