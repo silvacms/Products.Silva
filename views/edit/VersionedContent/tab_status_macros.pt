@@ -145,7 +145,7 @@ This message will remain visible in the status screen for other authors and edit
 </tr>
 
 <tr metal:use-macro="here/tab_status_macros/macros/date_controls">
-  pub/exp/display controls inserted (see below, @ line 229)
+  pub/exp/display controls inserted (see below, @ line 241)
 </tr>
 
 <tr class="controls">
@@ -187,7 +187,7 @@ notes
 </tr>
 
 <tr metal:use-macro="here/tab_status_macros/macros/date_controls">
-  pub/exp/display controls inserted (see below, @ line 229)
+  pub/exp/display controls inserted (see below, @ line 241)
 </tr>
 
 <tr class="inter-controls">
