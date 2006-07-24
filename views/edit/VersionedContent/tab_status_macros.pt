@@ -290,8 +290,8 @@ expiration time
   type="submit"
   name="tab_status_approve:method"
   value="approve for future"
-  title="access key: alt-f"
-  accesskey="f"
+  title="access key: alt-o"
+  accesskey="o"
   i18n:attributes="value;title"
 />
 <input class="executor"

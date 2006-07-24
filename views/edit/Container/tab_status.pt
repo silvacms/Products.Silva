@@ -396,8 +396,8 @@
           name="tab_status_approve:method"
           type="submit"
           value="approve for future"
-          title="approve new versions for publication at a later date: alt-f"
-          accesskey="f"
+          title="approve new versions for publication at a later date: alt-o"
+          accesskey="o"
           tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title"
         />
