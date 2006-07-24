@@ -118,7 +118,6 @@
 <metal:plug define-slot="notice" />
 <metal:plug define-slot="editorcheck" />
 <tal:set define="global nofeedback nofeedback | nothing" />
-<tal:plug replace="nofeedback | string:not transmitted" />
 <metal:slot define-slot="feedback"
   tal:condition="python:not (message or nofeedback)">
   <div class="fixed-clear" 
