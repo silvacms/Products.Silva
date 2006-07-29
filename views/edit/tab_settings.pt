@@ -114,11 +114,8 @@
                 </tr>
                 
                 <tr tal:condition="iscontainer">
-                  <td 
-                    class="divider" 
-                    colspan="3" 
-                    style="background: rgb(196, 214, 231) none repeat scroll 0%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;"
-                    >
+                  <td class="separator" 
+                    colspan="3">
                   </td>
                 </tr>
                 
