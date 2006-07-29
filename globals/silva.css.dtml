@@ -439,9 +439,14 @@ table.listing tr.inter-controls td {
 /*  background: &dtml-listingInterControlsBackground;; */
 }
 
-tr.divider, th.divider, td.divider {
+tr.divider, td.divider {
   height: 0.5em;
-  background: &dtml-listingDividerBackground;;
+  background: &dtml-listingDividerBackground;; /* dark */
+}
+
+tr.separator, td.separator {
+  height: 0.5em;
+  background-color: #c5d6e6; /* light */
 }
 
 /* ______________ cells ______________ */
