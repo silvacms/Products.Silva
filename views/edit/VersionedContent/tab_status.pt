@@ -290,12 +290,12 @@ _______ manual close section here _______
         <td style="white-space: nowrap" tal:content="python: mangle.DateTime(expirationtime).toStr() or '-'">
           expiration time
         </td>
-        <td style="white-space: nowrap" tal:content="lastauthor">
-          last author
-        </td>
-        <td style="white-space: nowrap" tal:content="creator">
-          creator
-        </td>
+          <td tal:content="lastauthor">
+            last author
+          </td>
+          <td tal:content="creator">
+            creator
+          </td>
         <td>
           <a tal:content="version_status"
             tal:attributes="
