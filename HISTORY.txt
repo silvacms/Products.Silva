@@ -208,6 +208,12 @@ Under development
 
       - Fixed unicode error in approval.
 
+      - GhostFolders (and probably also Ghosts) could mess up
+        SilvaLayout if they referred to a location with a different
+        skin setting than the location in which the GhostFolder is
+        accessed (even when just looking at its title). This has now
+        been fixed.
+
   1.5
   
     Features added
