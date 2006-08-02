@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Fri Jun 30 15:22:26 2006\n"
+"POT-Creation-Date: Wed Aug  2 16:51:08 2006\n"
 "PO-Revision-Date: 2006-01-24 13:54+0000\n"
 "Last-Translator: Nuno Sousa and Daniel Charneca <soulinvader@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -72,7 +72,7 @@ msgid ""
 "    "
 msgstr ""
 
-#: /Ghost.py:215
+#: /Ghost.py:225
 msgid ""
 "Ghosts are special documents that function as a\n"
 "       placeholder for an item in another location (like an alias,\n"
@@ -528,7 +528,7 @@ msgstr ""
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:122
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
-#: /views/edit/VersionedContent/tab_status_macros.pt:374
+#: /views/edit/VersionedContent/tab_status_macros.pt:376
 msgid "access key: alt-r"
 msgstr ""
 
@@ -970,14 +970,14 @@ msgstr ""
 msgid "Empty or invalid file."
 msgstr ""
 
-#: /views/add/Image/form.form:25
-msgid "Tip: you don&#8217;t have to fill in the id."
-msgstr ""
-
-#: /views/add/Image/form.form:69
+#: /views/add/Image/form.form:30
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
+msgstr ""
+
+#: /views/add/Image/form.form:47
+msgid "Tip: you don&#8217;t have to fill in the id."
 msgstr ""
 
 #: /views/add/Link/form.form:73
@@ -1336,7 +1336,7 @@ msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:187
 #: /views/edit/Container/tab_edit_rename.pt:130
-#: /views/edit/VersionedContent/tab_status_macros.pt:494
+#: /views/edit/VersionedContent/tab_status_macros.pt:496
 #: /views/edit/VersionedContent/Link/edit.pt:89 /views/add/add_form.pt:123
 #: /views/add/GhostFolder/add_form.pt:113 /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
@@ -1354,7 +1354,7 @@ msgstr ""
 msgid "dimensions"
 msgstr ""
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:24
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
 msgid "image"
 msgstr ""
 
@@ -2004,7 +2004,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:84
 #: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
-#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:45
+#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:67
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
 #: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
@@ -2013,7 +2013,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:30
 #: /views/add/File/form.form:47 /views/add/Groups/form.form:30
-#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:47
+#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:69
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
 #: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
@@ -2147,6 +2147,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:530
 #: /views/edit/Container/tab_status.pt:327
 #: /views/edit/VersionedContent/tab_status_macros.pt:267
+#: /views/edit/VersionedContent/tab_status_macros.pt:289
 msgid "access key: alt-o"
 msgstr ""
 
@@ -2537,7 +2538,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit_rename.pt:76
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
 #: /views/add/form.form:50 /views/add/File/form.form:68
-#: /views/add/Groups/form.form:48 /views/add/Image/form.form:68
+#: /views/add/Groups/form.form:48 /views/add/Image/form.form:29
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
 #: /views/add/Indexer/form.form:50 /views/public/search_form.form:56
@@ -2654,7 +2655,7 @@ msgid "reject pending request for approval: alt-j"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:346
-#: /views/edit/VersionedContent/tab_status_macros.pt:319
+#: /views/edit/VersionedContent/tab_status_macros.pt:321
 msgid "reject"
 msgstr ""
 
@@ -2685,7 +2686,7 @@ msgid "update timing"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:395
-msgid "approve new versions for publication at a later date: alt-f"
+msgid "approve new versions for publication at a later date: alt-o"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:395
@@ -2707,7 +2708,7 @@ msgid "request approval"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:443
-msgid "request immediate approval for new versions: alt-q"
+msgid "request immediate approval for new versions: alt-p"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:443
@@ -2821,8 +2822,8 @@ msgid "export pdf"
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:250
-#: /views/edit/VersionedContent/tab_status_macros.pt:296
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:297
+#: /views/edit/VersionedContent/tab_status_macros.pt:456
 msgid "access key: alt-p"
 msgstr ""
 
@@ -3425,7 +3426,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:129
 #: /views/edit/VersionedContent/tab_status_macros.pt:184
 #: /views/edit/VersionedContent/tab_status_macros.pt:236
-#: /views/edit/VersionedContent/tab_status_macros.pt:340
+#: /views/edit/VersionedContent/tab_status_macros.pt:342
 #: /views/edit/Content/Indexer/edit.pt:55 /views/add/add_form.pt:67
 #: /views/add/GhostFolder/add_form.pt:58 /views/add/Ghost/add_form.pt:56
 msgid "notes"
@@ -3453,28 +3454,23 @@ msgstr ""
 msgid "publish closed version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:289
-#: /views/public/search.pt:98
-msgid "access key: alt-f"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:320
+#: /views/edit/VersionedContent/tab_status_macros.pt:322
 msgid "withdraw"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:321
+#: /views/edit/VersionedContent/tab_status_macros.pt:323
 msgid "request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:330
+#: /views/edit/VersionedContent/tab_status_macros.pt:332
 msgid "add message on"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:333
+#: /views/edit/VersionedContent/tab_status_macros.pt:335
 msgid "rejection"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:336
+#: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "withdrawal"
 msgstr ""
 
@@ -3482,19 +3478,19 @@ msgstr ""
 msgid "Publication time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:355
+#: /views/edit/VersionedContent/tab_status_macros.pt:357
 msgid "The message may be viewed by local users."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:365
+#: /views/edit/VersionedContent/tab_status_macros.pt:367
 msgid "reject approval request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:365
+#: /views/edit/VersionedContent/tab_status_macros.pt:367
 msgid "access key: alt-j"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:374
+#: /views/edit/VersionedContent/tab_status_macros.pt:376
 msgid "withdraw approval request"
 msgstr ""
 
@@ -3502,44 +3498,44 @@ msgstr ""
 msgid "Publication and expiration time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:408
+#: /views/edit/VersionedContent/tab_status_macros.pt:410
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:417
+#: /views/edit/VersionedContent/tab_status_macros.pt:419
 msgid "access key: alt-v"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:440
+#: /views/edit/VersionedContent/tab_status_macros.pt:442
 msgid "revert to previous version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:446
+#: /views/edit/VersionedContent/tab_status_macros.pt:448
 msgid ""
 "The current editable version can be replaced with the previous (published) "
 "version. This can not be undone afterwards and will discard all changes made "
 "to the current version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:456
 msgid "return confirm('Really revert ?')"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:456
 msgid "revert to previous"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:478
+#: /views/edit/VersionedContent/tab_status_macros.pt:480
 msgid "manual close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:485
+#: /views/edit/VersionedContent/tab_status_macros.pt:487
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:494
+#: /views/edit/VersionedContent/tab_status_macros.pt:496
 msgid "close published version"
 msgstr ""
 
@@ -3822,7 +3818,7 @@ msgstr ""
 msgid "metadata set"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:79 /views/edit/tab_settings.pt:133
+#: /views/edit/macro_edit_metadata.pt:79 /views/edit/tab_settings.pt:130
 #: /views/edit/tab_subscriptions.pt:77 /views/edit/macro_view_metadata.pt:62
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:139
@@ -3833,7 +3829,7 @@ msgstr ""
 msgid "element"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:84 /views/edit/tab_settings.pt:138
+#: /views/edit/macro_edit_metadata.pt:84 /views/edit/tab_settings.pt:135
 #: /views/edit/tab_subscriptions.pt:82 /views/edit/macro_view_metadata.pt:66
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:154
@@ -3857,7 +3853,7 @@ msgstr ""
 msgid "acquired content"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:90 /views/edit/tab_settings.pt:141
+#: /views/edit/macro_edit_metadata.pt:90 /views/edit/tab_settings.pt:138
 #: /views/edit/tab_subscriptions.pt:85 /views/edit/tab_access.pt:574
 #: /views/edit/tab_access.pt:747 /views/edit/Asset/Image/edit.pt:147
 #: /views/edit/Container/tab_edit_import.pt:94
@@ -3961,8 +3957,8 @@ msgid "first 'un-approve' this item in order to edit: alt-r"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:146
-#: /views/edit/VersionedContent/tab_status_macros.pt:399
-#: /views/edit/VersionedContent/tab_status_macros.pt:417
+#: /views/edit/VersionedContent/tab_status_macros.pt:401
+#: /views/edit/VersionedContent/tab_status_macros.pt:419
 #: /views/edit/VersionedContent/macro_tab_edit.pt:130
 msgid "revoke approval"
 msgstr ""
@@ -4260,7 +4256,7 @@ msgid ""
 "doesn&#8217;t have that capability."
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:103 /views/edit/tab_settings.pt:260
+#: /views/edit/tab_metadata.pt:103 /views/edit/tab_settings.pt:257
 msgid "for closed version of &#xab;${title}&#xbb;"
 msgstr ""
 
@@ -4300,40 +4296,40 @@ msgstr ""
 msgid "change container type to a publication: alt-p"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:128 /views/edit/macro_view_metadata.pt:111
+#: /views/edit/tab_settings.pt:125 /views/edit/macro_view_metadata.pt:111
 msgid "content renderer"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:148 /views/edit/macro_view_metadata.pt:120
+#: /views/edit/tab_settings.pt:145 /views/edit/macro_view_metadata.pt:120
 msgid "renderer"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:167
+#: /views/edit/tab_settings.pt:164
 msgid "Select a renderer to render this content."
 msgstr ""
 
-#: /views/edit/tab_settings.pt:174
+#: /views/edit/tab_settings.pt:171
 msgid "change renderer"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:174
+#: /views/edit/tab_settings.pt:171
 msgid "change renderer: alt-c"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:204 /views/edit/tab_settings.pt:275
+#: /views/edit/tab_settings.pt:201 /views/edit/tab_settings.pt:272
 msgid "layout settings for &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:218 /views/edit/tab_settings.pt:237
-#: /views/edit/tab_settings.pt:257
+#: /views/edit/tab_settings.pt:215 /views/edit/tab_settings.pt:234
+#: /views/edit/tab_settings.pt:254
 msgid "layout settings"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:221
+#: /views/edit/tab_settings.pt:218
 msgid "for approved version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:240
+#: /views/edit/tab_settings.pt:237
 msgid "for published version of &#xab;${title}&#xbb;"
 msgstr ""
 
@@ -4501,72 +4497,72 @@ msgstr ""
 msgid "Next ${n} items &raquo;"
 msgstr ""
 
-#: /views/macro_index.pt:128
+#: /views/macro_index.pt:127
 msgid "jump to zope root: alt-z"
 msgstr ""
 
-#: /views/macro_index.pt:128
+#: /views/macro_index.pt:127
 msgid "zroot..."
 msgstr ""
 
-#: /views/macro_index.pt:137
+#: /views/macro_index.pt:136
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:137
+#: /views/macro_index.pt:136
 msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
-#: /views/macro_index.pt:146
+#: /views/macro_index.pt:145
 msgid "sservices..."
 msgstr ""
 
-#: /views/macro_index.pt:146
+#: /views/macro_index.pt:145
 msgid "jump to silva services: alt-`"
 msgstr ""
 
-#: /views/macro_index.pt:175 /views/macro_index.pt:178
-#: /views/macro_index.pt:188 /views/macro_index.pt:192
+#: /views/macro_index.pt:174 /views/macro_index.pt:177
+#: /views/macro_index.pt:187 /views/macro_index.pt:191
 msgid "jump to top: alt-t"
 msgstr ""
 
-#: /views/macro_index.pt:211
+#: /views/macro_index.pt:210
 msgid "contact:"
 msgstr ""
 
-#: /views/macro_index.pt:219
+#: /views/macro_index.pt:218
 msgid "no name"
 msgstr ""
 
-#: /views/macro_index.pt:226
+#: /views/macro_index.pt:225
 msgid "Leave Silva and view the public page: alt-:"
 msgstr ""
 
-#: /views/macro_index.pt:226
+#: /views/macro_index.pt:225
 msgid "view public version"
 msgstr ""
 
-#: /views/macro_index.pt:244
+#: /views/macro_index.pt:243
 msgid "Change your settings: alt-~"
 msgstr ""
 
-#: /views/macro_index.pt:258
+#: /views/macro_index.pt:257
 msgid "user settings"
 msgstr ""
 
-#: /views/macro_index.pt:262
+#: /views/macro_index.pt:261
 msgid "Logout of Silva: alt-q"
 msgstr ""
 
-#: /views/macro_index.pt:271
+#: /views/macro_index.pt:270
 msgid "logout ${role} ${userid}"
 msgstr ""
 
-#: /views/macro_index.pt:277
+#: /views/macro_index.pt:276
 msgid "Request an additional role in this location: alt-,"
 msgstr ""
 
-#: /views/macro_index.pt:277
+#: /views/macro_index.pt:276
 msgid "request access"
 msgstr ""
 
@@ -4601,7 +4597,7 @@ msgstr ""
 
 #: /views/macro_middleground.pt:76 /views/edit/Container/tab_edit.pt:493
 #: /views/edit/Container/tab_status.pt:404
-#: /views/edit/VersionedContent/tab_status_macros.pt:296
+#: /views/edit/VersionedContent/tab_status_macros.pt:297
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
 msgid "publish now"
@@ -4765,6 +4761,10 @@ msgstr ""
 
 #: /views/public/search.pt:98
 msgid "Find"
+msgstr ""
+
+#: /views/public/search.pt:98
+msgid "access key: alt-f"
 msgstr ""
 
 #: /views/public/search_form.form:100
