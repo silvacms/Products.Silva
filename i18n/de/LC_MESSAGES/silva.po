@@ -2157,7 +2157,7 @@ msgstr "Inhaltsobjekt oder einer seiner Container ist deaktiviert."
 
 #: /views/edit/Container/open_now.py:40
 msgid "version already published"
-msgstr ""
+msgstr "Version bereits publiziert"
 
 #: /views/edit/Container/open_now.py:51
 msgid "Published: ${ids}"
@@ -3583,7 +3583,7 @@ msgstr "Dokument publiziert"
 
 #: /views/edit/VersionedContent/preview_open_now.py:31
 msgid "Document already published"
-msgstr "Dokument schon mal publiziert"
+msgstr "Dokument bereits publiziert"
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
