@@ -131,7 +131,7 @@ msgid ""
 "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
 "missing."
 msgstr ""
-"${scale} ist kein gültiger Bezeichner. Vielleicht fehlt ein Prozentzeichen."
+"'${scale}' ist kein gültiger Bezeichner. Vielleicht fehlt ein Prozentzeichen."
 
 #: /Image.py:244
 msgid ""
