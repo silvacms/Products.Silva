@@ -2141,7 +2141,7 @@ msgstr "Import beendet: ${msg}"
 #: /views/edit/Container/open_now.py:22
 #: /views/edit/Container/tab_edit_close.py:29
 msgid "not applicable"
-msgstr ""
+msgstr "nicht anwendbar"
 
 #: /views/edit/Container/open_now.py:25
 #: /views/edit/Container/tab_status_approve.py:53
@@ -2161,7 +2161,7 @@ msgstr ""
 
 #: /views/edit/Container/open_now.py:51
 msgid "Published: ${ids}"
-msgstr ""
+msgstr "Publiziert: ${ids}"
 
 #: /views/edit/Container/open_now.py:56
 #: /views/edit/Container/tab_status_approve.py:97
@@ -3579,11 +3579,11 @@ msgstr "Sperre entfernen"
 
 #: /views/edit/VersionedContent/preview_open_now.py:14
 msgid "Document published"
-msgstr ""
+msgstr "Dokument publiziert"
 
 #: /views/edit/VersionedContent/preview_open_now.py:31
 msgid "Document already published"
-msgstr ""
+msgstr "Dokument schon mal publiziert"
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:14
