@@ -75,7 +75,7 @@ message text
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <div metal:define-macro="request_approval" tal:omit-tag="">
-<form action="." method="POST">
+<form action="." method="post">
 <tr tal:condition="python:model.get_approval_request_message()">
 <td class="feedback"
  colspan="2" i18n:translate="">
@@ -191,7 +191,6 @@ If this content should expire, set the time.
 
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
-<form action="tab_status_change_settings" method="POST">
 <tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
@@ -269,10 +268,9 @@ If this content should expire, set the time.
 <tr class="inter-controls">
 <td class="align-right"
   colspan="2">
-<input type="submit" value="update timing" class="button"  title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
+<input type="submit" value="update timing" class="button" name="tab_status_change_settings:method" title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
 </td>
 </tr>
-</form>
 </div>
 <span tal:replace="nothing"> _______ / Editor can change settings _______ </span>
 

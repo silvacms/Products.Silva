@@ -5,6 +5,7 @@ import DateTime
 model = context.REQUEST.model
 view = context
 
+
 if model.get_approved_version() is None:
     return view.tab_status(
         message_type="error", 
@@ -20,13 +21,10 @@ expiration = result['expiration_datetime']
 clear_expiration_flag = result['clear_expiration']
 if expiration:
     model.set_approved_version_expiration_datetime(expiration)
-elif clear_expiration_flag:
+if clear_expiration_flag:
     model.set_approved_version_expiration_datetime(None)
         
-if result['publish_now_flag']:
-    model.set_approved_version_publication_datetime(DateTime.DateTime())
-else:
-    model.set_approved_version_publication_datetime(result['publish_datetime'])
+model.set_approved_version_publication_datetime(result['publish_datetime'])
 
 return view.tab_status(
     message_type="feedback", message=_("Changed publication settings."))
