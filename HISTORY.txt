@@ -142,6 +142,8 @@ Under development
 
     Ported from 1.5 branch
 
+      - In the tab_status "set timings" caused an error without saving the changes and returned a wrong tab   
+    
       - XML export rewrote the urls of links and images on export, which
         was a bad thing. They now have extra rewritten_ attributes, which
         are only used by the xslt rendering.      
