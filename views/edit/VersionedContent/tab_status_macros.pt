@@ -191,6 +191,7 @@ If this content should expire, set the time.
 
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
+<form action="." method="post">
 <tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
@@ -271,6 +272,7 @@ If this content should expire, set the time.
 <input type="submit" value="update timing" class="button" name="tab_status_change_settings:method" title="access key: alt-u" accesskey="u" i18n:attributes="value;title"/>
 </td>
 </tr>
+</form>
 </div>
 <span tal:replace="nothing"> _______ / Editor can change settings _______ </span>
 
@@ -282,7 +284,7 @@ If this content should expire, set the time.
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
-<form action="tab_status_approve" method="POST">
+<form action="tab_status_approve" method="post">
 <table class="listing">
 <tr class="inter-controls">
 <td colspan="2">
