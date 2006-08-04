@@ -11,6 +11,10 @@ Silva changes
         accessed (even when just looking at its title). This has now
         been fixed.
 
+  Bugs Fixed:
+  
+      - In the tab_status "set timings" caused an error without saving the changes and returned a wrong tab
+        
   1.5.6
 
       - Made image titles required, since they provide the alt attribute, as 
