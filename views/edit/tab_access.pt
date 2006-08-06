@@ -597,8 +597,7 @@
             <tfoot>
               <tr class="controls">
                 <td>
-                  <input
-                    class="cancel"
+                  <input class="cancel"
                     type="submit"
                     name="@@acquire_minimum_role_submit:method"
                     value="acquire restriction"
@@ -608,8 +607,7 @@
                   />
                 </td>
                 <td class="align-right">
-                  <select 
-                    class="manipulator"
+                  <select class="manipulator"
                     name="role"
                     title="select a role to assign" 
                     i18n:attributes="title">
@@ -619,8 +617,7 @@
                           here/macro_role_options/macros/access_restriction_options" />
                     </tal:block>                    
                   </select>
-                  <input 
-                    class="button"
+                  <input class="button"
                     type="submit"
                     name="@@minimum_role_submit:method"
                     value="set restriction"
@@ -632,62 +629,6 @@
             </tfoot>
           </table>
         </form>
-        <tal:block replace="nothing"> 
-          ____________________ utilities ____________________
-          turned off because of ridulously expensive tree walking
-        </tal:block>
-        <table class="listing sublisting" tal:replace="nothing">
-          <thead>
-            <tal:block replace="nothing">
-              ______________ vein + title row _______________
-            </tal:block>
-            <tr>
-              <td class="top">
-                <h2 tal:attributes="title string:id: ${model/id}">
-                  <img tal:replace="structure python:view.render_icon(model)" />
-                  <span i18n:translate="" tal:omit-tag="">utilities</span>
-                </h2>
-              </td>
-            </tr>
-            <tal:block replace="nothing">
-              ______________ top controls row _______________
-            </tal:block>
-            <tr class="top-controls">
-              <td>
-                <h3 i18n:translate="">
-                  list user email addresses
-                </h3>
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="odd">
-              <td i18n:translate="">
-                List email addresses of all users from this level down.
-              </td>
-            </tr>
-          </tbody>
-
-          <tal:block replace="nothing">
-            ___________________ controls ____________________
-          </tal:block>
-          <tfoot>
-            <tr class="controls">
-              <td class="align-right"
-                style="padding-top:0.3em;padding-bottom:0.3em;">
-                <a class="transport"
-                  href="tab_access_authorized_below"
-                  title="retrieve a comma separated list of user email addresses"
-                  accesskey="e"
-                  i18n:attributes="title"
-                  i18n:translate=""
-                  >
-                  &nbsp;list <u>e</u>mail addresses...
-                </a>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
       </td>
       <td class="right">
       </td>
