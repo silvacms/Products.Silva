@@ -14,6 +14,7 @@
 <metal:block fill-slot="main"
   tal:define="
     model_is_container model/implements_container | nothing;
+    groups_enabled model/sec_groups_enabled | nothing;
     group_service view/service_groups | nothing;
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
@@ -186,7 +187,7 @@
         <!-- Pending role request listing -->
         <tal:block condition="allow_authentication_requests">
           <form action="."
-            method="POST"
+            method="post"
             tal:define="requested_roles model/requested_roles"
             tal:condition="requested_roles">
             <table class="listing"
@@ -320,10 +321,10 @@
     <tal:block replace="nothing">
       _______________ group roles management ________________
     </tal:block>
-    <tr tal:condition="python:model.sec_groups_enabled() or group_service">
+    <tr tal:condition="python:groups_enabled or group_service">
       <td class="main"
         style="padding-top:2em;">
-        <tal:block condition="python:model.sec_groups_enabled()">
+        <tal:block condition="groups_enabled">
           <div class="alert"
             style="margin-bottom:1em;"
             tal:condition="not:group_service">
@@ -343,7 +344,7 @@
             <!-- Defined groups listing -->
             <!-- Role assignment table -->
             <form action="."
-              method="POST">
+              method="post">
               <table class="listing"
                 border="0"
                 cellpadding="5"
@@ -687,6 +688,24 @@
             </tr>
           </tfoot>
         </table>
+      </td>
+      <td class="right">
+      </td>
+    </tr>
+    <tal:comment replace="nothing"> _______ 
+      hack to fix a scaling problem for sites having very long sidebars, so the
+      the browser renders heights of the table cells according to their content,
+      causing users to have to scroll to adjust groups or access restrictions;
+      this adds lines in a last table row that compensates for the sidebar;
+      yes, we'll remove this when we switch Silva over to tableless layout
+      _______
+    </tal:comment>
+    <tr tal:define="tree publication/get_container_tree"
+      tal:condition="python:len(tree) > test(group_service, 25, 18)">
+      <td class="main">
+        <tal:series repeat="line tree">
+          <br />
+        </tal:series>
       </td>
       <td class="right">
       </td>
