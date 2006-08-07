@@ -245,7 +245,7 @@
     <xsl:choose>
       <xsl:when test="string-length(@rewritten_link) &gt; 0">
         <xsl:choose>
-          <xsl:when test="@link_to_hires=1">
+          <xsl:when test="@link_to_hires">
             <a href="{@rewritten_link}" target="{@target}?hires" title="@title">
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
