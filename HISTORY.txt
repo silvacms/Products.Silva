@@ -13,8 +13,11 @@ Silva changes
 
   Bugs Fixed:
   
+      - Fixed issue 1608 where tab_edit_revoke_approval caused versioning errors
+
+  
       - In the tab_status "set timings" caused an error without saving the changes and returned a wrong tab
-        
+          
   1.5.6
 
       - Made image titles required, since they provide the alt attribute, as 
