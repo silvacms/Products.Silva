@@ -343,7 +343,7 @@ Under development
 
       - Added support for Kupu 1.3.
 
-      - Added a field to the silva-extra metadata-set: hide_from_toc. 
+      - Added a field to the silva-extra metadata-set: hide_from_tocs. 
         By default set to do not hide, when this is set to hide on a piece
         of content, that content (and what it contains) will not show up in
         tables of content.
