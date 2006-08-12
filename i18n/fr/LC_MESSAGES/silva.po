@@ -4821,7 +4821,7 @@ msgstr "paramétres utilisateur"
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
 #: /views/edit/VersionedContent/tab_status_form_editor.form:54
 msgid "If this document should expire, set the time."
-msgstr "Si ce document doit expirer, fixer la date, le temps"
+msgstr "Si ce document doit expirer, fixer la date, le temps."
 
 #: /views/edit/tab_subscriptions.pt:114
 msgid "save subscription settings"
