@@ -7,6 +7,10 @@ Under development
 
     Features added
 
+      - Much i18n polishing
+
+      - Removed commented out template code for listing all email addresses
+
       - Made image titles required, since they provide the alt attribute, as 
         requested by two customers.
 
