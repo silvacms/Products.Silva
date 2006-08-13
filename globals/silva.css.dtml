@@ -25,13 +25,13 @@
 **   sidebar navigation
 **   focus shapes
 ** form definitions
+**   forms eye candy
 ** info + clipboard
 ** feedback
 ** typography
 ** silva specific styles
 **   align/float
 **   lists
-**   forms eye candy
 ** links
 ** local styles
 */
@@ -798,7 +798,7 @@ td>input.store, td>textarea.store, td>select.store {
 
 select {
   margin: 0.1em;
-  border: 1px solid #344;
+  border: &dtml-inputBorder;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-inputBackground;;
   font: &dtml-inputFont;;
@@ -817,11 +817,15 @@ optgroup {
 }
 
 select.transport {
+  margin-top: 0.2em;
+  border: &dtml-transportBorder;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
 }
 
 select.manipulator {
+  margin-top: 0.2em;
+  border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
 }
@@ -1028,6 +1032,116 @@ table.listing div.transport-border {
 table.listing div.transport-border:hover {
   color: #bfffd3;
   background: #53538b;
+}
+
+/* _____________________________ forms eye candy _______ */
+
+.fixIE6widget {
+  width: 90%;
+}
+
+input:focus, textarea:focus {
+  border-color : #04c78e;
+  background-color: #e8f7ef;
+}
+
+input:hover, textarea:hover {
+  background-color: #e3f0e4;
+}
+
+input:focus:hover, textarea:focus:hover {
+  background-color: #effbf2;
+}
+
+select:focus, select:hover {
+  border-color : #04c78e;
+  color: #333344;
+  background-color: #e8f7ef;
+}
+
+/* cool glow */
+input.transport[type="submit"]:hover, button[type="button"]:hover {
+  border-color: #99b4cf;
+  color: #e5fffe;
+  background: #74748b;
+}
+
+input.transport[type="submit"]:focus {
+  color: #e9f7ff;
+  background: #7a83a6;
+}
+
+/* warm glow */
+input.button[type="submit"]:hover, button[type="button"]:hover {
+  border-color: #8dc1a8;
+  color: #e5ffec;
+  background: #548e72;
+}
+
+input.button[type="submit"]:focus, button[type="button"]:focus {
+  color: #bfffd3;
+  background: #538b58;
+}
+
+/* hot glow */
+input.warning[type="submit"]:hover {
+  border-color: #cdb1a3;
+  color: #fff5f5;
+  background: #a85353;
+}
+
+input.warning[type="submit"]:focus {
+  color: #f0c0c0;
+  background: #53538b;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+  color: #bfffd3;
+  background: #69878c;
+}
+
+input[type="submit"]:focus, input[type="button"]:focus {
+  color: #bfffd3;
+  background: #008a8a;
+}
+
+/* publish screen state coded buttons */
+input.reject[type="submit"]:hover {
+  border-color: #8dc1a8;
+  color: #e5ffec;
+  background: #9b8800;
+}
+input.revoke[type="submit"]:hover {
+  border-color: #8dc1a8;
+  color: #e5ffec;
+  background: #009a62;
+}
+input.close[type="submit"]:hover {
+  border-color: #8dc1a8;
+  color: #e5ffec;
+  background: #4a4aa7;
+}
+
+/* image button */
+input.imagebutton {
+  border: 0;
+  background: transparent;
+}
+
+input[type="checkbox"]:focus, input[type="radio"]:focus {
+  color: #777;
+  background: #dee9eb;
+}
+
+input[type="checkbox"]:hover, input[type="radio"]:hover {
+  color: #777;
+  background: #b9e3e8 none;
+}
+
+/* hide stupid Exporer padding around checkboxes */
+input.min {
+  border: none;
+  background-color: transparent;
 }
 
 
@@ -1310,115 +1424,6 @@ ul.tips-nested {
   margin-left: 0.5em;
   padding-left: 1em;
   line-height: 130%;
-}
-
-/* _____________________________ forms eye candy _______ */
-
-.fixIE6widget {
-  width: 90%;
-}
-
-input:focus, textarea:focus {
-  border-color : #04c78e;
-  background-color: #e8f7ef;
-}
-
-input:hover, textarea:hover {
-  background-color: #e3f0e4;
-}
-
-input:focus:hover, textarea:focus:hover {
-  background-color: #effbf2;
-}
-
-select:focus, select:hover {
-  color: #333344;
-  background-color: #c3d5e7;
-}
-
-/* cool glow */
-input.transport[type="submit"]:hover, button[type="button"]:hover {
-  border-color: #99b4cf;
-  color: #e5fffe;
-  background: #74748b;
-}
-
-input.transport[type="submit"]:focus {
-  color: #e9f7ff;
-  background: #7a83a6;
-}
-
-/* warm glow */
-input.button[type="submit"]:hover, button[type="button"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background: #548e72;
-}
-
-input.button[type="submit"]:focus, button[type="button"]:focus {
-  color: #bfffd3;
-  background: #538b58;
-}
-
-/* hot glow */
-input.warning[type="submit"]:hover {
-  border-color: #cdb1a3;
-  color: #fff5f5;
-  background: #a85353;
-}
-
-input.warning[type="submit"]:focus {
-  color: #f0c0c0;
-  background: #53538b;
-}
-
-input[type="submit"]:hover, input[type="button"]:hover {
-  color: #bfffd3;
-  background: #69878c;
-}
-
-input[type="submit"]:focus, input[type="button"]:focus {
-  color: #bfffd3;
-  background: #008a8a;
-}
-
-/* publish screen state coded buttons */
-input.reject[type="submit"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background: #9b8800;
-}
-input.revoke[type="submit"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background: #009a62;
-}
-input.close[type="submit"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background: #4a4aa7;
-}
-
-/* image button */
-input.imagebutton {
-  border: 0;
-  background: transparent;
-}
-
-input[type="checkbox"]:focus, input[type="radio"]:focus {
-  color: #777;
-  background: #dee9eb;
-}
-
-input[type="checkbox"]:hover, input[type="radio"]:hover {
-  color: #777;
-  background: #b9e3e8 none;
-}
-
-/* hide stupid Exporer padding around checkboxes */
-input.min {
-  border: none;
-  background-color: transparent;
 }
 
 
