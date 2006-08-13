@@ -2446,7 +2446,7 @@ msgstr "nouveau..."
 
 #: /views/edit/Container/tab_edit.pt:73 /browser/object_lookup.pt:104
 msgid "add a new item - alt-n"
-msgstr "ajouter nouvel item: alt-s"
+msgstr "ajouter nouvel item: alt-n"
 
 #: /views/edit/Container/tab_edit.pt:88 /browser/object_lookup.pt:119
 msgid "select a new item: alt-s"
