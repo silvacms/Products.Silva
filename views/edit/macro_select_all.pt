@@ -28,9 +28,13 @@
     title="select all: alt-a"
     i18n:attributes="title"
     tal:attributes="for string:all_${aid_postfix};"
-    >
-    &#10003;
-  </label>
+    ><img alt="select all"
+      border="0"
+      width="8"
+      height="8"
+      tal:attributes="src string:${root_url}/globals/checkselect.gif"
+      i18n:attributes="alt"
+    /></label>
   <script type="text/javascript"
     xml:space="preserve">
     <!--
