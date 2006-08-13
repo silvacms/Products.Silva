@@ -99,7 +99,14 @@
   <tbody>
     <tr tal:condition="objects">
       <th class="listing-left">
-        &nbsp;
+        <input class="min"
+          type="checkbox"
+          name="all_0"
+          id="all_0"
+          title="select all: alt-a"
+          onclick="toggleSelect(this, 'refs');"
+          i18n:attributes="title"
+        />
       </th>
       <th i18n:translate="">
         modify / preview
