@@ -3553,8 +3553,8 @@ msgstr ""
 "er een bewerkbare kopie van worden gemaakt door naar '${editor}' te gaan."
 
 #: /views/edit/VersionedContent/tab_status.pt:195
-msgid "Published version exists"
-msgstr "Er bestaat een gepubliceerde versie"
+msgid "Published version exists."
+msgstr "Er bestaat een gepubliceerde versie."
 
 #: /views/edit/VersionedContent/tab_status.pt:196
 msgid ""

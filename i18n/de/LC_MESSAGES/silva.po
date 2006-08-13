@@ -3603,8 +3603,8 @@ msgstr ""
 "erzeugen, wenn Sie zum ${editor} gehen."
 
 #: /views/edit/VersionedContent/tab_status.pt:195
-msgid "Published version exists"
-msgstr "Veröffentlichte Version existiert"
+msgid "Published version exists."
+msgstr "Veröffentlichte Version existiert."
 
 #: /views/edit/VersionedContent/tab_status.pt:196
 msgid ""
