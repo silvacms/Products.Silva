@@ -17,6 +17,12 @@ class LookupWindowValidator(StringValidator):
         # XXX no real validation at the moment
         return StringValidator.validate(self, field, key, REQUEST)
 
+class ReferenceLookupWindowValidator(StringValidator):
+    def validate(self, field, key, REQUEST):
+        value = StringValidator.validate(self, field, key, REQUEST)
+        obj = field.getContent().restrictedTraverse(value)
+        return obj.getPhysicalPath()
+    
 class LookupWindowWidget(TextWidget):
     
     property_names = TextWidget.property_names  + ['onclick']
