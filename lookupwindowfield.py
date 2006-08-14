@@ -21,7 +21,7 @@ class ReferenceLookupWindowValidator(StringValidator):
     def validate(self, field, key, REQUEST):
         value = StringValidator.validate(self, field, key, REQUEST)
         obj = field.get_silva_object().restrictedTraverse(value)
-        return obj.getPhysicalPath()
+        return '/'.join(obj.getPhysicalPath())
     
 class LookupWindowWidget(TextWidget):
     
