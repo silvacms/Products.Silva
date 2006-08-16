@@ -87,10 +87,40 @@ class LookupWindowWidget(TextWidget):
             'field_id': key}
         return field.get_value('onclick') % interpolate
     
+class ReferenceLookupWindowWidget(LookupWindowWidget):
+    def render(self, field, key, value, request):
+        widget = []
+        widget.append(
+            render_element(
+                'input', 
+                type='button', 
+                name=key + '_button', 
+                css_class='transport',
+                value='get reference...',
+                extra='onclick="%s"' % self._onclick_handler(field, key)))
+        widget.append(
+            render_element(
+                'input', 
+                type='text', 
+                name=key, 
+                css_class=field.get_value('css_class'),
+                value=getPathAdapter(request).pathToUrlPath(value),
+                size=field.get_value('display_width'), 
+                maxlength=field.get_value('display_maxwidth'),
+                extra=field.get_value('extra')))
+        return ' '.join(widget)
+    
 class LookupWindowField(StringField):
    
     meta_type = 'LookupWindowField'
     validator = LookupWindowValidator()
     widget = LookupWindowWidget()
 
+class ReferenceLookupWindowField(StringField):
+
+    meta_type = 'ReferenceLookupWindowField'
+    validator = ReferenceLookupWindowValidator()
+    widget = ReferenceLookupWindowWidget()
+    
 FieldRegistry.registerField(LookupWindowField)
+FieldRegistry.registerField(ReferenceLookupWindowField)
