@@ -104,7 +104,7 @@ class ReferenceLookupWindowWidget(LookupWindowWidget):
                 type='text', 
                 name=key, 
                 css_class=field.get_value('css_class'),
-                value=getPathAdapter(request).pathToUrlPath(value),
+                value=getPathAdapter(field.REQUEST).pathToUrlPath(value),
                 size=field.get_value('display_width'), 
                 maxlength=field.get_value('display_maxwidth'),
                 extra=field.get_value('extra')))
