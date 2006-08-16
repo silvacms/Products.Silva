@@ -10,6 +10,7 @@ from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
 from Products.Formulator.Validator import StringValidator
 from Products.Formulator.Widget import render_element,TextWidget
+from Products.Silva.adapters.path import getPathAdapter
 
 class LookupWindowValidator(StringValidator):
     
@@ -19,9 +20,9 @@ class LookupWindowValidator(StringValidator):
 
 class ReferenceLookupWindowValidator(StringValidator):
     def validate(self, field, key, REQUEST):
+        pad = getPathAdapter(REQUEST)
         value = StringValidator.validate(self, field, key, REQUEST)
-        obj = field.get_silva_object().restrictedTraverse(value)
-        return '/'.join(obj.getPhysicalPath())
+        return pad.urlToPath(value)
     
 class LookupWindowWidget(TextWidget):
     
