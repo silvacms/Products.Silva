@@ -352,6 +352,7 @@ class FilesService(SimpleItem.SimpleItem):
         """converts images and files to be stored like set in files service"""
         from Products.Silva.Image import ImageStorageConverter
         upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(SimpleConverter(), '0.0', upgrade.AnyMetaType)
         upg.registerUpgrader(
             StorageConverterHelper(self.aq_parent), '0.1', upgrade.AnyMetaType)
         upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
@@ -365,6 +366,12 @@ InitializeClass(FilesService)
 
 manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
+
+class SimpleConverter:
+    __implements__ = IUpgrader
+
+    def upgrade(self, context):
+        pass
 
 class FileStorageConverter:
     

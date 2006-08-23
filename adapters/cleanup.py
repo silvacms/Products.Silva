@@ -55,16 +55,35 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
     """ Remove unreachable version objects
     """
     
-    def cleanup(self, statistics=None):
+    def cleanup(self, statistics=None, dt=None):
         if statistics is None:
             statistics = statistics_template.copy()
         
         pvs = self.context._previous_versions        
         if pvs is None:
             return statistics
-                
-        removable_versions = pvs[:-1] # get older versions
-        self._previous_versions = pvs[-1:] # keep the last one
+        getMetadataValue = self.context.service_metadata.getMetadataValue
+        removable_versions = []
+        keep_versions = []
+        for candidate in pvs[:-1]:
+            version = getattr(self.context, candidate[0], None)
+            # shouldn't happen: unknown version still listed as old version
+            if version is None:
+                continue
+            version_dt = getMetadataValue(
+                version, 'silva-extra', 'modificationtime')
+            # can only remove those old versions that are really old
+            # enough
+            if version_dt <= dt:
+                removable_versions.append(candidate)
+            else:
+                keep_versions.append(candidate)
+        # always keep the last closed version
+        if pvs:
+            keep_versions.append(pvs[-1])
+        
+        #removable_versions = pvs[:-1] # get older versions
+        self._previous_versions = keep_versions # pvs[-1:] # keep the last one
         
         contained_ids = self.context.objectIds()            
         
@@ -82,8 +101,16 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
             statistics['total_versions'] += len(removable_version_ids)
             statistics['max_versions'] = max(
                 statistics['max_versions'], len(removable_version_ids))
-            self.context.manage_delObjects(removable_version_ids)                        
-            
+            seen_ids = []
+            for id in removable_version_ids:
+                # skip ids we've already seen
+                if id in seen_ids:
+                    print "Duplicate old verion:", id
+                    continue
+                v = self.context._getOb(id, self.context)
+                self.context._delObject(id)
+                seen_ids.append(id)
+    
         statistics['endtime'] = DateTime()            
         return statistics
 
@@ -109,9 +136,9 @@ class ContainerCleanupAdapter(CleanupAdapter):
     """ Delete all versions from the current location downward
     """
     
-    def cleanup(self, statistics=None, all_old=False):
+    def cleanup(self, statistics=None, dt=None):
         """remove all but last closed versions"""
-        return self._cleanup(statistics)
+        return self._cleanup(statistics, dt=dt)
 
     def cleanup_all_old(self, statistics=None):
         """remove all old versions, if possible
@@ -121,7 +148,7 @@ class ContainerCleanupAdapter(CleanupAdapter):
         """
         return self._cleanup(statistics, 'cleanup_all_old')
     
-    def _cleanup(self, statistics, remove_method='cleanup'):
+    def _cleanup(self, statistics, remove_method='cleanup', dt=None):
         if statistics is None:
             statistics = statistics_template.copy()
         
@@ -133,7 +160,7 @@ class ContainerCleanupAdapter(CleanupAdapter):
                     get_transaction().commit(1)
                     self.context._p_jar.cacheGC()
                     statistics['threshold'] = 0
-                getattr(adapter, remove_method)(statistics)
+                getattr(adapter, remove_method)(statistics, dt=dt)
                 
         statistics['endtime'] = DateTime()
         return statistics

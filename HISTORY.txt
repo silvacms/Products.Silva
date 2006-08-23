@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.2.4 (unreleased)
+
+    Features added
+
+      - Made cleanup old versions code work with option to only clean
+        up versions older than a certain date.
+
   1.2.3
 
     Bugs fixed
