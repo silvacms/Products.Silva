@@ -21,9 +21,8 @@ class Version(SimpleItem):
     object_type = 'versioned_content'
     _title = '[No title yet]'
 
-    def __init__(self, id, title):
+    def __init__(self, id):
         self.id = id
-        self._title = title
         self._v_creation_datetime = DateTime()
         
     def manage_afterAdd(self, item, container):

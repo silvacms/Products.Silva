@@ -7,6 +7,7 @@ import zLOG
 import ContainerPolicy
 # registers fields
 from Products.Silva import emaillinesfield, lookupwindowfield
+from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
 try:
     # some people may have put Sprout in the Products directory
@@ -28,11 +29,6 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
-    from Products.Silva import icon
-
-    # enable Formulator support for FileSystemSite/CMFCore
-    # XXX shouldn't be necessary anymore with CVS Formulator
-    from Products.Formulator import FSForm
     from Products.Silva.silvaxml import xmlexport, xmlimport
     # import FileSystemSite functionality
     # (use CMFCore if FileSystemSite is not installed)
@@ -40,15 +36,15 @@ def initialize(context):
     from Products.Silva.fssite import FSImage
     from Products.Silva.fssite import FSDTMLMethod
     from Products.Silva.fssite import FSPageTemplate
-    from Products.Silva.silvaxml import xmlexport, xmlimport
-    from Products.Silva.transform.renderer import defaultregistration     
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
+    
+    from Products.Silva.silvaxml import xmlexport, xmlimport
+    from Products.Silva.transform.renderer import defaultregistration     
+    
     import Folder, Root
-    import Publication, Ghost, Image, File, SimpleContent, Link
-    import Indexer
+    import Publication, Ghost, File, Link
     import GhostFolder
-    import AutoTOC
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
@@ -58,22 +54,21 @@ def initialize(context):
     import RendererRegistryService
     import SimpleMembership
     import EmailMessageService
+
     import DocmaService
-    import Group
-    import VirtualGroup
-    import IPGroup
     import SidebarCache
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
 
-    extensionRegistry.register(
-        'Silva', 'Silva Core', context, [
-        Folder, Root, Publication, Ghost, Image, File, Link, 
-        Indexer, Group, VirtualGroup, IPGroup,
-        GhostFolder, AutoTOC],
-        install, depends_on=None)
-
+    context.registerClass(
+        Root.Root,
+        constructors = (Root.manage_addRootForm,
+                        Root.manage_addRoot),
+        icon="www/silva.png",
+        )
+    registerTypeForMetadata(Root.Root.meta_type)
+    
     context.registerClass(
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionServiceForm,
@@ -129,6 +124,7 @@ def initialize(context):
                         SidebarService.manage_addSidebarService),
         icon = "www/sidebar_service.png"
         )
+
     context.registerClass(
         ContainerPolicy.ContainerPolicyRegistry,
         constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
@@ -160,8 +156,10 @@ def initialize(context):
     except ImportError:
         pass
     else:
-        registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
-        registerDirectory('%s/kupu' % os.path.dirname(__file__), globals())
+        registerDirectory('%s/common' % os.path.dirname(kupu.__file__),
+                          globals())
+        registerDirectory('%s/kupu' % os.path.dirname(__file__),
+                          globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system

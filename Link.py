@@ -21,8 +21,6 @@ from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
 
-icon = "www/link.png"
-
 # XXX taken from SilvaDocument/mixedcontentsupport.py
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
@@ -69,23 +67,6 @@ class Link(CatalogedVersionedContent):
 
 InitializeClass(Link)
 
-manage_addLinkForm = PageTemplateFile("www/linkAdd", globals(),
-                                       __name__='manage_addLinkForm')
- 
-def manage_addLink(self, id, title, url, link_type='absolute', REQUEST=None):
-    """Add a Link."""
-    if not mangle.Id(self, id).isValid():
-        return
-    object = Link(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    # add first version
-    object.manage_addProduct['Silva'].manage_addLinkVersion(
-        '0', title, url, link_type=link_type)
-    object.create_version('0', None, None)
-    add_and_edit(self, id, REQUEST)
-    return ''
-
 class LinkVersion(CatalogedVersion):
     security = ClassSecurityInfo()
     
@@ -96,8 +77,7 @@ class LinkVersion(CatalogedVersion):
     _link_type = 'absolute'
     
     def __init__(self, id, url, link_type='absolute'):
-        LinkVersion.inheritedAttribute('__init__')(self,
-                                                   id, 'not the real title')
+        LinkVersion.inheritedAttribute('__init__')(self, id)
         self._link_type = link_type
         self.set_url(url)
         
@@ -136,18 +116,6 @@ class LinkVersion(CatalogedVersion):
         self._url = url
 
 InitializeClass(LinkVersion)
-
-manage_addLinkVersionForm = PageTemplateFile(
-    "www/linkversionAdd", globals(),
-    __name__='manage_addLinkVersionForm')
-                                                                                
-def manage_addLinkVersion(self, id, title, url, link_type='absolute', REQUEST=None):
-    """Add a Link version."""
-    object = LinkVersion(id, url, link_type=link_type)
-    self._setObject(id, object)
-    self._getOb(id).set_title(title)
-    add_and_edit(self, id, REQUEST)
-    return ''
 
 def xml_import_handler(object, node):
     id = get_xml_id(node)

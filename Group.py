@@ -21,8 +21,6 @@ except ImportError, ie:
 
 from interfaces import ISilvaObject
 
-icon = "www/group.png"
-
 class Group(SilvaObject, SimpleItem):
     """Silva Group"""
     security = ClassSecurityInfo()
@@ -125,8 +123,6 @@ class Group(SilvaObject, SimpleItem):
 
 InitializeClass(Group)
 
-manage_addGroupForm = PageTemplateFile("www/groupAdd", globals(),
-                                       __name__='manage_addGroupForm')
 def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
     """Add a Group."""
     if not asset_only:

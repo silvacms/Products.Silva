@@ -46,9 +46,6 @@ from interfaces import IContainer, IFolder, IPublication, IRoot
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
 
-icon="www/silvafolder.gif"
-addable_priority = -.5
-
 class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
@@ -921,9 +918,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         return object
                 
 InitializeClass(Folder)
-
-manage_addFolderForm = PageTemplateFile("www/folderAdd", globals(),
-                                        __name__='manage_addFolderForm')
 
 def manage_addFolder(
     context, id, title, create_default=1, policy_name='None', REQUEST=None):

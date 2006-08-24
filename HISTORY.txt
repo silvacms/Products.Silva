@@ -7,12 +7,13 @@ Under development
 
     Features added
 
-      - Much i18n polishing
+      - Silva now uses ZCML for registration of Silva extensions and
+        the content types they define. See doc/extension.txt for more
+        information. See also doc/developer_changes.txt.
 
-      - Removed commented out template code for listing all email addresses
+      - Much i18n polishing.
 
-      - Made image titles required, since they provide the alt attribute, as 
-        requested by two customers.
+      - Made image titles required, since they provide the alt attribute.
 
       - Added adapters so we now have a simple API to index, unindex
         and reindex content objects, folders and assets. Adapt to
@@ -62,6 +63,9 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
+
+      - Removed commented out template code for listing all email
+        addresses.
 
       - Fixed various i18n translations in Versioned content
 

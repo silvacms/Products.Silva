@@ -7,7 +7,6 @@ from zope.interface import implements
 # Zope
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Persistence import Persistent
 from OFS.SimpleItem import SimpleItem
 
@@ -17,13 +16,8 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
-from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
-from Products.Silva.helpers import add_and_edit
-
-icon = "www/autotoc.png"
-addable_priority = 2
 
 class AutoTOC(Content, SimpleItem):
     __doc__ = _("""This is a special document that automagically displays a
@@ -60,20 +54,6 @@ class AutoTOC(Content, SimpleItem):
         return 1
     
 InitializeClass(AutoTOC)
-
-manage_addAutoTOCForm = PageTemplateFile("www/autoTOCAdd", globals(),
-    __name__='manage_addAutoTOCForm')
-
-def manage_addAutoTOC(self, id, title, REQUEST=None):
-    """Add a autotoc."""
-    if not mangle.Id(self, id).isValid():
-        return
-    object = AutoTOC(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    add_and_edit(self, id, REQUEST)
-    return ''
 
 class AutoTOCPolicy(Persistent):
 

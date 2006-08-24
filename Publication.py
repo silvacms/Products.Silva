@@ -22,9 +22,6 @@ from Products.Silva.i18n import translate as _
 
 from interfaces import IPublication
 
-icon="www/silvapublication.gif"
-addable_priority = -0.5
-
 class Publication(Folder.Folder):
     __doc__ = _("""Publications are special folders. They function as the 
        major organizing blocks of a Silva site. They are comparable to 
@@ -163,9 +160,6 @@ class Publication(Folder.Folder):
         return result
 
 InitializeClass(Publication)
-
-manage_addPublicationForm = PageTemplateFile("www/publicationAdd", globals(),
-                                             __name__='manage_addPublicationForm')
 
 def manage_addPublication(
     self, id, title, create_default=1, policy_name='None', REQUEST=None):

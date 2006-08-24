@@ -5,6 +5,39 @@ Developer level changes in Silva
 From 1.5 to 1.6
 ===============
 
+ZCML for extension registration
+-------------------------------
+
+Silva extensions and content types are now registered through ZCML
+instead of in __init__.py. For the time being, __init__.py based
+registration will continue to work, but the ZCML approach makes things
+much easier.  For details read doc/extension.txt.
+
+The ZCML directives normally work without you having to specify your
+own "manage_add" factory anymore - this is automatically
+generated. Some facilities exist however to support this for backwards
+compatibility.
+
+For details on the options available for the ZCML directives, read
+zcml/interfaces.py. These schemas describe the options to the
+directives.
+
+The Silva core as well as Silva Document now use ZCML to register
+themselves and their content type. You can read the configure.zcml
+file in these products for example code.
+
+no more 'title' argument for versions
+-------------------------------------
+
+The base classes in Version, namely Version and CatalogedVersion, have
+been changed so they do not expect a 'title' argument anymore; the
+only argument needed is an 'id'. This means that if you subclass from
+Version or CatalogedVersion you will probably need to change your
+constructor so it doesn't pass a title anymore to the superclass.
+
+This change has been made because the 'title' argument to the version
+has not been in use for a long time.
+
 Kupu
 ----
 

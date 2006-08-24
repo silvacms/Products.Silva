@@ -66,54 +66,9 @@ def ghostfolder_access_handler(tool, content_type, content):
 ### registration
 
 def initialize_metadata():
-    register_core_types()
     register_import_initializers()
     register_access_handlers()
     register_initialize_handlers()
-
-def register_core_types():
-    """
-    register the silva core content types with the metadata system
-    """
-    from Products.Silva.File import File
-    from Products.Silva.Folder import Folder
-    from Products.Silva.Ghost import GhostVersion
-    from Products.Silva.GhostFolder import GhostFolder
-    from Products.Silva.Link import LinkVersion
-    from Products.Silva.Image import Image
-    from Products.Silva.Indexer import Indexer
-    from Products.Silva.Publication import Publication
-    from Products.Silva.Root import Root
-    from Products.Silva.SimpleContent import SimpleContent
-    from Products.Silva.AutoTOC import AutoTOC
-    from Products.Silva.Group import Group
-    from Products.Silva.VirtualGroup import VirtualGroup
-    from Products.Silva.IPGroup import IPGroup
-    
-    registerTypeForMetadata(GhostVersion.meta_type)
-    registerTypeForMetadata(LinkVersion.meta_type)
-    registerTypeForMetadata(Folder.meta_type)
-    registerTypeForMetadata(GhostFolder.meta_type)
-    registerTypeForMetadata(File.meta_type)
-    registerTypeForMetadata(Image.meta_type)
-    registerTypeForMetadata(Indexer.meta_type)
-    registerTypeForMetadata(Publication.meta_type)
-    registerTypeForMetadata(Root.meta_type)
-    registerTypeForMetadata(SimpleContent.meta_type)
-    registerTypeForMetadata(AutoTOC.meta_type)
-    registerTypeForMetadata(Group.meta_type)
-    registerTypeForMetadata(VirtualGroup.meta_type)
-    registerTypeForMetadata(IPGroup.meta_type)
-    
-    #################################
-    ## Metadata can be applied to these, but there is no smi interface,
-    ## and its not appropriate for systems getting properties from ldap
-    ## from Group import Group
-    ## registerTypeForMetadata(Group.meta_type)
-    ## from SimpleMembership import SimpleMember
-    ## registerTypeForMetadata(SimpleMember.meta_type)
-    ## from VirtualGroup import VirtualGroup
-    ## registerTypeForMetadata(VirtualGroup.meta_type)
 
 def register_import_initializers():
     """

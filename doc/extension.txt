@@ -1,0 +1,102 @@
+Writing a Silva Extension
+=========================
+
+Introduction
+------------
+
+This document descibes how to write a Silva extension using ZCML
+directives in configure.zcml.
+
+Creating a Zope product
+-----------------------
+
+A Silva extension needs to be a Zope product. We'll first describe
+a minimal Zope product:
+
+* It's a directory (with optional subdirectories and files).
+
+* It needs to have a file called `__init__.py`. This file can be
+  empty, but the advice is to put at least a Python comment line in it
+  (`#`), as some systems do not like completely empty files.
+
+* It needs to be installed one of the places Zope looks for Products,
+  such as your Zope instance's `Products` directory.
+
+Turning the product into a Silva extension
+------------------------------------------
+
+Next, we'll turn this Zope product into a Silva extension. In the
+extension directory, create a file called `configure.zcml`. The
+contents of this file should be::
+
+  <configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:silva="http://infrae.com/ns/silvaconf">
+
+    <silva:extension
+      name="MySilvaExtension"
+      title="My Silva Extension"
+      />
+
+  </configure>
+
+This is a ZMCL file (a form of XML). In it, you use the special
+`silva:extension` directive to specify the extension name. The
+extension name should be identical to the name of the directory. You
+also give an extension title, which is a brief description describing
+what the extension is about.
+
+Installation into the Silva Root
+--------------------------------
+
+First, create a directory called `views` in the extension
+directory. This will later contain extension-specific views for Silva
+objects.
+
+We also need a module called `install.py`. This module takes care of
+installing Silva-specific configuration into a Silva root. This is
+different from global configuration, which we do with ZCML.
+
+This file should contain the following code::
+
+  from Products.Silva.install import add_fss_directory_view
+
+  def install(root):
+     add_fss_directory_view(root.service_views,
+                            'MySilvaExtension', __file__, 'views')
+
+  def uninstall(root):
+     root.service_views.manage_delObjectS(['MySilvaExtension'])
+
+  def is_installed(root):
+     return hasattr(root.service_views, 'MySilvaExtension')
+
+The `install` function is intended to install configuration into a
+Silva Root. It gets executed when you install the extension using the
+`service_extensions` user interface. Right now it only create a
+FileSystemSite directory view installing the `views` directory of your
+extension.
+
+`uninstall` should clean up the extension when it is uninstalled using
+`service_extensions`. In this example, it cleans up the directory view
+again.
+
+Finally, `is_installed` is used to check whether a particular
+extension is installed into Silva. It does this by testing for the
+presence of the directory view.
+
+Resting point
+-------------
+
+At this point you should have a working Silva extension. Of course it
+doesn't do much at all, but you can already install it and uninstall
+it using `service_extensions` in the Silva root.
+
+Creating content objects
+------------------------
+
+Create a module called `content.py` in your product. This module will contain
+a new content object for Silva:
+
+[TDB explain silva:content vs silva:versionedcontent. Explain how to use
+ zope:content directive for security declarations]

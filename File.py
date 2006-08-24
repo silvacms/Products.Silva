@@ -40,9 +40,6 @@ except:                                          # available for import
 from Products.Silva.adapters.interfaces import IAssetData
 from interfaces import IFile, IAsset, IUpgrader
 
-icon="www/silvafile.png"
-addable_priority = -0.3
-
 class File(Asset):
     __doc__ = _("""Any digital file can be uploaded as Silva content. 
        For instance large files such as pdf docs or mpegs can be placed in a
@@ -246,10 +243,6 @@ class FileSystemFile(File):
         self._file.manage_afterAdd(item, container)
 
 InitializeClass(FileSystemFile)
-
-
-manage_addFileForm=PageTemplateFile(
-    "www/fileAdd", globals(), __name__='manage_addFileForm', Kind='File', kind='file')
 
 def manage_addFile(self, id, title, file):
     """Add a File

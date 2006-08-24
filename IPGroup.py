@@ -16,8 +16,6 @@ from helpers import add_and_edit
 
 from interfaces import ISilvaObject
 
-icon = "www/ip_group.png"
-
 class IPGroup(SilvaObject, SimpleItem):
     """Silva IP Group"""
     security = ClassSecurityInfo()
@@ -104,10 +102,6 @@ class IPGroup(SilvaObject, SimpleItem):
         return result
 
 InitializeClass(IPGroup)
-
-manage_addIPGroupForm = PageTemplateFile(
-    "www/IPGroupAdd", globals(),
-    __name__='manage_addIPlGroupForm')
 
 def manage_addIPGroup(self, id, title, group_name, asset_only=0,
         REQUEST=None):

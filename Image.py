@@ -47,9 +47,6 @@ except ImportError:
 
 from interfaces import IImage, IUpgrader
 
-icon = "www/silvaimage.gif"
-addable_priority = -0.4
-
 class Image(Asset):
     __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in 
        documents, or used as viewable assets.
@@ -705,9 +702,6 @@ class Image(Asset):
 
 
 InitializeClass(Image)
-    
-manage_addImageForm = PageTemplateFile(
-    "www/imageAdd", globals(), __name__='manage_addImageForm')
 
 # FIXME: Image and File Assets should be refactored - they share quite
 # some functionality which can be generalized.

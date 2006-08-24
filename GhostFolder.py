@@ -26,8 +26,6 @@ from Products.Silva.interfaces import \
     IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IIcon, IGhostContent
     
-icon = 'www/silvaghostfolder.gif'
-
 class Sync:
 
     def __init__(self, gf, h_container, h_ob, g_container, g_ob):
@@ -383,11 +381,6 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             content_url)
        
 InitializeClass(GhostFolder)
-
-    
-manage_addGhostFolderForm = PageTemplateFile("www/ghostFolderAdd", globals(),
-    __name__='manage_addGhostFolderForm')
-
 
 def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     """Add a GhostFolder"""

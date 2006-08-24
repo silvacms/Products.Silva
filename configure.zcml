@@ -2,6 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:five="http://namespaces.zope.org/five"
+    xmlns:silva="http://infrae.com/ns/silvaconf"
     i18n_domain="silva"
     >
 
@@ -38,5 +39,103 @@
 
   <include package=".adapters" /> 
   <include package=".browser" />
+
+  <!-- define Silva core as the root 'extension' -->
+  <silva:extension
+    name="Silva"
+    title="Silva Core"
+    depends=""
+    />
+
+  <!-- register content types -->
+
+  <silva:content
+    content=".Folder.Folder"
+    extension_name="Silva"
+    icon="www/silvafolder.gif"
+    priority="-5"
+    content_factory=".Folder.manage_addFolder"
+    />
+
+  <silva:content
+    content=".Publication.Publication"
+    extension_name="Silva"
+    icon="www/silvapublication.gif"
+    priority="-5"
+    content_factory=".Publication.manage_addPublication"
+    />
+
+  <silva:content
+    content=".GhostFolder.GhostFolder"
+    extension_name="Silva"
+    icon="www/silvaghostfolder.gif"
+    content_factory=".GhostFolder.manage_addGhostFolder"
+    />
+
+  <silva:content
+    content=".Image.Image"
+    extension_name="Silva"
+    icon="www/silvaimage.gif"
+    priority="-4"
+    content_factory=".Image.manage_addImage"
+    />
+
+  <silva:content
+    content=".File.File"
+    extension_name="Silva"
+    icon="www/silvafile.png"
+    priority="-3"
+    content_factory=".File.manage_addFile"
+    />
+
+  <silva:content
+    content=".Group.Group"
+    extension_name="Silva"
+    icon="www/group.png"
+    content_factory=".Group.manage_addGroup"
+    />
+
+  <silva:content
+    content=".VirtualGroup.VirtualGroup"
+    extension_name="Silva"
+    icon="www/virtual_group.png"
+    content_factory=".VirtualGroup.manage_addVirtualGroup"
+    />
+
+  <silva:content
+    content=".IPGroup.IPGroup"
+    extension_name="Silva"
+    icon="www/ip_group.png"
+    content_factory=".IPGroup.manage_addIPGroup"
+    />
+
+  <silva:content
+    content=".AutoTOC.AutoTOC"
+    extension_name="Silva"
+    icon="www/autotoc.png"
+    priority="2"
+    />
+
+  <silva:content
+    content=".Indexer.Indexer"
+    extension_name="Silva"
+    icon="www/silvaindexer.png"
+    />
+
+  <silva:versionedcontent
+    content=".Link.Link"
+    version=".Link.LinkVersion"
+    extension_name="Silva"
+    icon="www/link.png"
+    />
+  
+  <silva:versionedcontent
+    content=".Ghost.Ghost"
+    version=".Ghost.GhostVersion"
+    extension_name="Silva"
+    icon="www/silvaghost.gif"
+    content_factory=".Ghost.manage_addGhost"
+    version_factory=".Ghost.manage_addGhostVersion"
+    />
 
 </configure>

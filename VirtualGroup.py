@@ -16,8 +16,6 @@ from helpers import add_and_edit
 
 from interfaces import ISilvaObject
 
-icon = "www/virtual_group.png"
-
 class VirtualGroup(SilvaObject, SimpleItem):
     """Silva Virtual Group"""
     security = ClassSecurityInfo()
@@ -107,10 +105,6 @@ class VirtualGroup(SilvaObject, SimpleItem):
         return result
 
 InitializeClass(VirtualGroup)
-
-manage_addVirtualGroupForm = PageTemplateFile(
-    "www/virtualGroupAdd", globals(),
-    __name__='manage_addVirtualGroupForm')
 
 def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
         REQUEST=None):

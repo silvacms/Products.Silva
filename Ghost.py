@@ -25,8 +25,6 @@ import urlparse
 from interfaces import \
     IVersionedContent, IContainer, IVersion, IContent, IGhost, \
     IGhostContent, IIcon
-    
-icon = "www/silvaghost.gif"
 
 class GhostBase:
     """baseclas for Ghosts (or Ghost versions if it's versioned)
@@ -319,7 +317,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
 
     def __init__(self, id):
         GhostVersion.inheritedAttribute('__init__')(
-            self, id, '[Ghost title bug]')
+            self, id)
         self._content_path = None
 
     security.declareProtected(
@@ -351,9 +349,6 @@ class GhostVersion(GhostBase, CatalogedVersion):
             return self.LINK_GHOST
         return self.LINK_OK
         
-manage_addGhostForm = PageTemplateFile("www/ghostAdd", globals(),
-                                       __name__='manage_addGhostForm')
-
 def manage_addGhost(self, id, content_url, REQUEST=None):
     """Add a Ghost."""
     if not mangle.Id(self, id).isValid():
@@ -370,10 +365,8 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-manage_addGhostVersionForm = PageTemplateFile("www/ghostversionAdd", globals(),
-                                              __name__='manage_addGhostVersionForm')
-
-def manage_addGhostVersion(self, id,REQUEST=None):
+# XXX this is never called by manage_addGhost, and it's actually broken!
+def manage_addGhostVersion(self, id, REQUEST=None):
     """Add a Ghost version."""
     object = GhostVersion(id)
     self._setObject(id, object)
