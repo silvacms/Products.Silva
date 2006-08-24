@@ -11,6 +11,12 @@ Under development
         the content types they define. See doc/extension.txt for more
         information. See also doc/developer_changes.txt.
 
+      - The Version/CatalogedVersion base class does not expect a
+        title argument anymore. This title argument had been unused
+        for a long time. This requires minor adjustments in some subclasses
+        of Version and CatalogedVersion. For more information see
+        doc/developer_changes.txt.
+
       - Much i18n polishing.
 
       - Made image titles required, since they provide the alt attribute.
