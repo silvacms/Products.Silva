@@ -58,7 +58,7 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
     def cleanup(self, statistics=None, dt=None):
         if statistics is None:
             statistics = statistics_template.copy()
-        
+
         pvs = self.context._previous_versions        
         if pvs is None:
             return statistics
@@ -74,7 +74,7 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
                 version, 'silva-extra', 'modificationtime')
             # can only remove those old versions that are really old
             # enough
-            if version_dt <= dt:
+            if dt is None or version_dt <= dt:
                 removable_versions.append(candidate)
             else:
                 keep_versions.append(candidate)
