@@ -7,6 +7,10 @@ Under development
 
     Features added
 
+      - Old version cleanup code was made more robust and can now be
+        used to delete all old versions older than a certain date, 
+        instead of just all old versions. 
+
       - Silva now uses ZCML for registration of Silva extensions and
         the content types they define. See doc/extension.txt for more
         information. See also doc/developer_changes.txt.
