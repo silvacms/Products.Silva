@@ -7,6 +7,9 @@ Under development
 
     Features added
 
+      - Assets now have a version_status method that always returns 'public'
+        which means they can be found by SilvaFind.
+
       - Old version cleanup code was made more robust and can now be
         used to delete all old versions older than a certain date, 
         instead of just all old versions. 

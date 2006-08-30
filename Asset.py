@@ -50,5 +50,10 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         This can be used by Mozilla in the accessibility toolbar.
         """
         return {}
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'version_status')
+    def version_status(self):
+        return 'public'
+         
 InitializeClass(Asset)
