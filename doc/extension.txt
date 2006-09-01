@@ -66,7 +66,7 @@ This file should contain the following code::
                             'MySilvaExtension', __file__, 'views')
 
   def uninstall(root):
-     root.service_views.manage_delObjectS(['MySilvaExtension'])
+     root.service_views.manage_delObjects(['MySilvaExtension'])
 
   def is_installed(root):
      return hasattr(root.service_views, 'MySilvaExtension')
@@ -95,8 +95,50 @@ it using `service_extensions` in the Silva root.
 Creating content objects
 ------------------------
 
-Create a module called `content.py` in your product. This module will contain
-a new content object for Silva:
+Create a module called `content.py` in your product. This module will
+contain a new content object for Silva::
 
-[TDB explain silva:content vs silva:versionedcontent. Explain how to use
- zope:content directive for security declarations]
+  from Products.Silva.VersionedContent import CatalogedVersionedContent
+  from Products.Silva.Version import CatalogedVersion
+
+  class MyType(CatalogedVersionedContent):
+      meta_type = 'My Type'
+
+  class MyTypeVersion(CatalogedVersion):
+      meta_type = 'My Type Version'
+
+We assume here that you want to create a versioned content object.
+Versioned content types consist of a versioned object (`MyType` in
+this example) and associated version objects (`MyTypeVersion`).
+
+In your `configure.zcml` add this to register your content type::
+
+  <silva:versionedcontent
+    extension_name="MySilvaExtension"
+    content=".content.MyType"
+    version=".content.MyTypeVersion"
+    icon="icon.png"
+    />
+
+The `icon` attribute may be left out.
+
+If you don't want your objects to support versioning, your
+`content.py` module will look something like this::
+
+  from SilvaObject import SilvaObject
+
+  class MyType(SilvaObject):
+      meta_type = 'My Type'
+
+The corresponding zcml::
+
+  <silva:content
+    extension_name="MySilvaExtension"
+    content=".contant.MyType"
+    icon="icon.png"
+    />
+
+Again, `icon` is optional.
+
+
+[TDB Explain how to use zope:content directive for security declarations]
