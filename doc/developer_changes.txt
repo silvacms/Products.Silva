@@ -23,7 +23,7 @@ zcml/interfaces.py. These schemas describe the options to the
 directives.
 
 The Silva core as well as Silva Document now use ZCML to register
-themselves and their content type. You can read the configure.zcml
+themselves and their content types. You can read the configure.zcml
 file in these products for example code.
 
 no more 'title' argument for versions
