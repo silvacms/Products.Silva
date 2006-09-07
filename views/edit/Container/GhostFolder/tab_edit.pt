@@ -177,7 +177,7 @@
 <table class="listing"
   id="sortable"
   tal:define="
-    default_document view/get_default;
+    default_document model/get_default;
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
     assets model/get_assets;

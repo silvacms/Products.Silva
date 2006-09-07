@@ -13,8 +13,8 @@ def registerTocFilter(filter):
         
 def hideFromTOC(context):
     viewable = context.get_viewable()
-    return context.service_metadata.getMetadataValue(
-        viewable, 'silva-extra', 'hide_from_tocs') == 'hide'
+    binding = context.service_metadata.getMetadata(viewable)
+    return binding.get('silva-extra', 'hide_from_tocs') == 'hide'
 
 _filters.append(hideFromTOC)
         

@@ -642,6 +642,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         # Returns None if there's no default, or the default has no
         # viewable version.
+        print repr(self)
         default = self.get_default()
         if default is None:
             return None

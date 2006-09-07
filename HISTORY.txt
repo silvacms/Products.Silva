@@ -162,6 +162,9 @@ Under development
       - Shut up a security deprecation warning for PROPFIND.
 
     Ported from 1.5 branch
+
+      - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts.
+        Also removed some unused cruft from previous filtering implementations.
     
       - Added a ReferenceLookupWindowField, to store references to zope
         objects instead of urls.
