@@ -20,9 +20,7 @@
           indent python:obj[0]; 
           item python:obj[1];
           title python:getattr(obj[1], title_method)();
-          url string:${item/absolute_url}/${append_to_url}"
-        tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.hide_from_tocs)"
-        >
+          url string:${item/absolute_url}/${append_to_url}">
         <img 
           width="12" 
           height="14"
