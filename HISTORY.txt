@@ -76,8 +76,6 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
-      - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
-
       - Removed commented out template code for listing all email
         addresses.
 
@@ -163,6 +161,7 @@ Under development
       - Shut up a security deprecation warning for PROPFIND.
 
     Ported from 1.5 branch
+      - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
 
       - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts.
         Also removed some unused cruft from previous filtering implementations.
