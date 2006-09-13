@@ -113,7 +113,6 @@
     <span tal:replace="structure message">
       message
     </span>
-    &nbsp;
     <tal:block tal:condition="python:message_type == 'feedback'">
       &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
     </tal:block>

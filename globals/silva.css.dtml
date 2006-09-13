@@ -1223,9 +1223,10 @@ div.fixed-feedback {
   border-collapse: collapse;
 }
 div.fixed-alert {
+  height: 1%; /*hack for ie */
   margin: 0;
   border-bottom: &dtml-listingBorder;;
-  padding: 0em 9px 0.1em 9px;
+  padding: 0 9px 1px 9px;
   color: #3c2d50;
   background: #f7d1d1;
   border-collapse: collapse;
