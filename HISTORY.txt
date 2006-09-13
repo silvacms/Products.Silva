@@ -76,6 +76,7 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
+      - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
 
       - Removed commented out template code for listing all email
         addresses.
