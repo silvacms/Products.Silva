@@ -19,6 +19,7 @@ Silva changes
         been fixed.
 
   Bugs Fixed:
+      - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
   
       - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts. 
         Also removed some unused cruft from previous filtering implementations.
