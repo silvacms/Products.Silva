@@ -23,7 +23,7 @@ for error in validation_error.errors:
     result.append('<li class="error">%s: %s</li>\n' % 
                     (title, error_text))
 
-return ("""<dl style="margin:0; padding:0.3em 0 0.2em 0;"><dt>""" + 
+return ("""<dl style="margin:0;"><dt>""" + 
 translate(_("Sorry, there are problems with these form fields:"),
             context=request) + 
 """</dt><dd><ul class="tips">""" + ' '.join(result) + "</ul></dd></dl>")
