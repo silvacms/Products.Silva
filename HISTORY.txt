@@ -161,6 +161,8 @@ Under development
       - Shut up a security deprecation warning for PROPFIND.
 
     Ported from 1.5 branch
+      - Fixed problem in SilvaDocument that used kupu where it whasn't needed and caused js exceptions
+    
       - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
 
       - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts.
