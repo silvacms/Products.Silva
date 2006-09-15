@@ -478,7 +478,8 @@
         </tal:def>
       </th>
       <th class="controls"
-        colspan="3">
+        colspan="3"
+        i18n:translate="">
         content actions
       </th>
       <th class="controls listing-right" colspan="2">
