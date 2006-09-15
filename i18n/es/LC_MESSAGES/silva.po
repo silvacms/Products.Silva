@@ -1,7 +1,7 @@
-# Italian translation for silva
-# Copyright (c) (c) 2005 Canonical Ltd, and Rosetta Contributors 2005
+# Spanish translation for silva
+# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the silva package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2005.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
 #, fuzzy
 msgid ""
@@ -9,13 +9,12 @@ msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
-"PO-Revision-Date: 2006-06-30 13:57+0000\n"
-"Last-Translator: thisfred <eric@infrae.com>\n"
-"Language-Team: Italian <it@li.org>\n"
+"PO-Revision-Date: 2006-08-12 01:19+0000\n"
+"Last-Translator: AlejandroLeon <alejandroleonvega@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Version: 0.1\n"
 
 #: /AutoTOC.py:23
 msgid ""
@@ -24,23 +23,29 @@ msgid ""
 "       document. In that case the parent folder shows a table of contents\n"
 "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
 msgstr ""
+"Este es un documento especial que automáticamente muestra una\n"
+"       tabla de contenidos. Usualmente esto&#8217;es usado como un&#8216;"
+"documento índice&#8217;\n"
+"       . En ese caso el directorio contenedor muestra una tabla de "
+"contenidos \n"
+"       Cuando accese (e.g. http://www.x.yz/silva/myFolder/).vv"
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr ""
+msgstr "Sin conexión"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr ""
+msgstr "Error(es) de validación"
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr ""
+msgstr "Ajustes cambiados."
 
 #: /File.py:134 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
-msgstr ""
+msgstr "Descarga"
 
 #: /File.py:44
 msgid ""
@@ -55,11 +60,11 @@ msgstr ""
 
 #: /Folder.py:336 /Folder.py:401
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr ""
+msgstr "pegar &#xab;${id}&#xbb; no está permitido en este tipo de contenedor"
 
 #: /Folder.py:358 /Folder.py:397
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr ""
+msgstr "pegado &#xab;${id}&#xbb;"
 
 #: /Folder.py:50
 msgid ""
@@ -120,11 +125,12 @@ msgstr ""
 
 #: /Image.py:438
 msgid "square"
-msgstr ""
+msgstr "cuadrado"
 
 #: /Image.py:440
+#, fuzzy
 msgid "landscape"
-msgstr ""
+msgstr "paisaje"
 
 #: /Image.py:441
 msgid "portrait"
@@ -177,11 +183,11 @@ msgstr ""
 
 #: /Version.py:208
 msgid "unapproved"
-msgstr ""
+msgstr "desaprobado"
 
 #: /Version.py:208
 msgid "approved"
-msgstr ""
+msgstr "aprovado"
 
 #: /Version.py:208
 msgid "last_closed"
@@ -197,15 +203,16 @@ msgstr ""
 
 #: /Version.py:209
 msgid "draft"
-msgstr ""
+msgstr "borrador"
 
 #: /Version.py:209 /views/edit/Container/tab_status.pt:262
 msgid "closed"
-msgstr ""
+msgstr "cerrado"
 
 #: /Versioning.py:102
+#, fuzzy
 msgid "Cannot approve version without publication datetime."
-msgstr ""
+msgstr "No se puede aprovar la versión sin la fecha de publicación."
 
 #: /Versioning.py:159
 msgid "No approved version to unapprove."
@@ -244,7 +251,7 @@ msgstr ""
 
 #: /Versioning.py:402 /Versioning.py:423
 msgid "No approved version."
-msgstr ""
+msgstr "Ninguna versión aprobada."
 
 #: /Versioning.py:405
 msgid "Must specify publication datetime."
@@ -295,7 +302,7 @@ msgstr ""
 
 #: /adapters/version_management.py:115
 msgid "Can not delete all versions"
-msgstr ""
+msgstr "No se puede borrar todas las versiones."
 
 #: /adapters/version_management.py:290
 msgid "no such version ${version}"
@@ -339,7 +346,7 @@ msgstr ""
 
 #: /doc/silva-content.xml:31
 msgid "Title of content."
-msgstr ""
+msgstr "Título de contenido."
 
 #: /doc/silva-content.xml:89
 msgid "a.k.a. &#8216;navigation title&#8217;."
@@ -363,7 +370,7 @@ msgstr ""
 
 #: /doc/silva-extra.xml:322
 msgid "comment"
-msgstr ""
+msgstr "comentario"
 
 #: /doc/silva-extra.xml:323
 msgid "Internal comments."
@@ -399,7 +406,7 @@ msgstr ""
 
 #: /doc/silva-extra.xml:790
 msgid "contact name"
-msgstr ""
+msgstr "nombre de contacto"
 
 #: /doc/silva-extra.xml:845
 msgid "Email address of contact person."
@@ -407,7 +414,7 @@ msgstr ""
 
 #: /doc/silva-extra.xml:848
 msgid "contact email"
-msgstr ""
+msgstr "email de contacto"
 
 #: /doc/silva-extra.xml:895
 msgid ""
@@ -486,8 +493,9 @@ msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
 msgstr ""
 
 #: /globals/accesskeys.pt:155
+#, fuzzy
 msgid "Editor screen"
-msgstr ""
+msgstr "Pantalla de edición"
 
 #: /globals/accesskeys.pt:157
 msgid ""
@@ -4664,7 +4672,7 @@ msgstr ""
 #: /views/public/cancellation_request.py:22
 #: /views/public/subscription_request.py:23
 msgid "emailaddress not valid"
-msgstr ""
+msgstr "dirección de e-mail inválida"
 
 #: /views/public/cancellation_request.py:30
 msgid ""
@@ -4692,8 +4700,9 @@ msgid ""
 msgstr ""
 
 #: /views/public/request_roles.pt:12 /views/public/request_roles.pt:20
+#, fuzzy
 msgid "membership"
-msgstr ""
+msgstr "socios"
 
 #: /views/public/request_roles.pt:31
 msgid "Request roles at this location"
@@ -4748,7 +4757,7 @@ msgstr ""
 
 #: /views/public/search.pt:20
 msgid "Search"
-msgstr ""
+msgstr "Búsqueda"
 
 #: /views/public/search.pt:43
 msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
@@ -4772,7 +4781,7 @@ msgstr ""
 
 #: /views/public/search.pt:98
 msgid "Find"
-msgstr ""
+msgstr "Encontrar"
 
 #: /views/public/search.pt:98
 msgid "access key: alt-f"
@@ -4780,7 +4789,7 @@ msgstr ""
 
 #: /views/public/search_form.form:100
 msgid "content type"
-msgstr ""
+msgstr "tipo de contenido"
 
 #: /views/public/search_form.form:104
 msgid ""
@@ -4803,8 +4812,6 @@ msgid ""
 "\n"
 "            "
 msgstr ""
-"\n"
-"            "
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
@@ -4873,3 +4880,6 @@ msgstr ""
 #: /views/render_form_errors.py:27
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "Cannot approve version; not allowed."
+#~ msgstr "No puede aprobar la versión; no está permitido."

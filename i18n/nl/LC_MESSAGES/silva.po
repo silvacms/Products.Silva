@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Fri Sep 15 16:55:46 2006\n"
+"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
 "PO-Revision-Date: 2005-10-14 12:50+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -3558,7 +3558,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:195
 msgid "Published version exists"
-msgstr ""
+msgstr "Er bestaat een gepubliceerde versie"
 
 #: /views/edit/VersionedContent/tab_status.pt:196
 msgid ""
@@ -5221,12 +5221,6 @@ msgstr "Terug naar &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
 
-#~ msgid "Published version exists."
-#~ msgstr "Er bestaat een gepubliceerde versie."
-
-#~ msgid "request immediate approval for new versions: alt-q"
-#~ msgstr "direct goedkeuring vragen voor nieuwe versies: alt-q"
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Kan versie niet goedkeuren; geen toestemming."
 
@@ -5310,6 +5304,9 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 
 #~ msgid "set timing"
 #~ msgstr "timing instellen"
+
+#~ msgid "request immediate approval for new versions: alt-q"
+#~ msgstr "direct goedkeuring vragen voor nieuwe versies: alt-q"
 
 #~ msgid ""
 #~ "${note} this version is approved but not yet public. In order to make "

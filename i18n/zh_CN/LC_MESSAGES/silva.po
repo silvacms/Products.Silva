@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-zh-cn\n"
-"POT-Creation-Date: Fri Sep 15 16:55:46 2006\n"
+"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
 "PO-Revision-Date: 2005-10-10 14:55+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: marco.sens\n"

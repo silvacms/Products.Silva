@@ -1,7 +1,7 @@
-# Italian translation for silva
-# Copyright (c) (c) 2005 Canonical Ltd, and Rosetta Contributors 2005
+# Japanese translation for silva
+# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the silva package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2005.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
 #, fuzzy
 msgid ""
@@ -9,13 +9,12 @@ msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
-"PO-Revision-Date: 2006-06-30 13:57+0000\n"
-"Last-Translator: thisfred <eric@infrae.com>\n"
-"Language-Team: Italian <it@li.org>\n"
+"PO-Revision-Date: 2006-09-09 07:15+0000\n"
+"Last-Translator: palace <miyazawa.satoshi@gmail.com>\n"
+"Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Version: 0.1\n"
 
 #: /AutoTOC.py:23
 msgid ""
@@ -27,20 +26,20 @@ msgstr ""
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr ""
+msgstr "接続なし"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr ""
+msgstr "検証エラー"
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr ""
+msgstr "設定変更しました."
 
 #: /File.py:134 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
-msgstr ""
+msgstr "ダウンロード"
 
 #: /File.py:44
 msgid ""
@@ -55,11 +54,11 @@ msgstr ""
 
 #: /Folder.py:336 /Folder.py:401
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr ""
+msgstr "このタイプのコンテナに &#xab;${id}&#xbb; を貼り付けることはできません."
 
 #: /Folder.py:358 /Folder.py:397
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr ""
+msgstr "&#xab;${id}&#xbb; を貼り付けました."
 
 #: /Folder.py:50
 msgid ""
@@ -84,6 +83,16 @@ msgid ""
 "       and stylesheets).\n"
 "    "
 msgstr ""
+"ゴーストは他の場所(エイリアス、シンボリックリンク、ショートカットなど)にある"
+"↵\n"
+"       アイテムのプレースフォルダとして使うことができる特殊なフォルダです。"
+"↵\n"
+"       訪問者を別の場所に連れて行くようなハイパーリンクとは違って、↵\n"
+"       ゴーストオブジェクトは今いる公開内容に訪問者を留めたまま↵\n"
+"       ゴースト化されたアイテムの内容を提供します。↵\n"
+"       ゴーストはその場所のプロパティを引き継ぎます(例えばレイアウトや↵\n"
+"       スタイルシートなど)。↵\n"
+"    "
 
 #: /GhostFolder.py:125
 msgid ""
@@ -120,15 +129,17 @@ msgstr ""
 
 #: /Image.py:438
 msgid "square"
-msgstr ""
+msgstr "四角"
 
 #: /Image.py:440
+#, fuzzy
 msgid "landscape"
-msgstr ""
+msgstr "横"
 
 #: /Image.py:441
+#, fuzzy
 msgid "portrait"
-msgstr ""
+msgstr "縦"
 
 #: /Image.py:51
 msgid ""
@@ -189,7 +200,7 @@ msgstr ""
 
 #: /Version.py:209
 msgid "public"
-msgstr ""
+msgstr "公開"
 
 #: /Version.py:209
 msgid "pending"
@@ -197,7 +208,7 @@ msgstr ""
 
 #: /Version.py:209
 msgid "draft"
-msgstr ""
+msgstr "草稿"
 
 #: /Version.py:209 /views/edit/Container/tab_status.pt:262
 msgid "closed"
@@ -339,7 +350,7 @@ msgstr ""
 
 #: /doc/silva-content.xml:31
 msgid "Title of content."
-msgstr ""
+msgstr "内容の題名"
 
 #: /doc/silva-content.xml:89
 msgid "a.k.a. &#8216;navigation title&#8217;."
@@ -347,7 +358,7 @@ msgstr ""
 
 #: /doc/silva-content.xml:92
 msgid "short title"
-msgstr ""
+msgstr "短い題名"
 
 #: /doc/silva-extra.xml:155
 msgid "Description of content in this area."
@@ -363,15 +374,15 @@ msgstr ""
 
 #: /doc/silva-extra.xml:322
 msgid "comment"
-msgstr ""
+msgstr "コメント"
 
 #: /doc/silva-extra.xml:323
 msgid "Internal comments."
-msgstr ""
+msgstr "内部コメント"
 
 #: /doc/silva-extra.xml:34
 msgid "subject"
-msgstr ""
+msgstr "主題"
 
 #: /doc/silva-extra.xml:35
 msgid "Subject of content in this area."
@@ -379,35 +390,35 @@ msgstr ""
 
 #: /doc/silva-extra.xml:384
 msgid "creation time"
-msgstr ""
+msgstr "作成時刻"
 
 #: /doc/silva-extra.xml:385 /doc/silva-extra.xml:444 /doc/silva-extra.xml:619
 msgid "Automatically set."
-msgstr ""
+msgstr "自動設定"
 
 #: /doc/silva-extra.xml:677
 msgid "User who last edited this content."
-msgstr ""
+msgstr "このコンテンツを最後に編集したユーザ"
 
 #: /doc/silva-extra.xml:736
 msgid "Resource location of this content."
-msgstr ""
+msgstr "このコンテンツのリソースの場所"
 
 #: /doc/silva-extra.xml:787
 msgid "Name of contact person."
-msgstr ""
+msgstr "連絡先の名前"
 
 #: /doc/silva-extra.xml:790
 msgid "contact name"
-msgstr ""
+msgstr "連絡先名"
 
 #: /doc/silva-extra.xml:845
 msgid "Email address of contact person."
-msgstr ""
+msgstr "連絡先のEメールアドレス"
 
 #: /doc/silva-extra.xml:848
 msgid "contact email"
-msgstr ""
+msgstr "連絡先Eメール"
 
 #: /doc/silva-extra.xml:895
 msgid ""
@@ -421,7 +432,7 @@ msgstr ""
 
 #: /doc/silva-extra.xml:94
 msgid "keywords"
-msgstr ""
+msgstr "キーワード"
 
 #: /doc/silva-extra.xml:95
 msgid "Keywords relating to content."
@@ -429,7 +440,7 @@ msgstr ""
 
 #: /doc/silva-publication.xml:21
 msgid "Default Document Policy"
-msgstr ""
+msgstr "デフォルト文書ポリシー"
 
 #: /globals/accesskeys.pt:103
 msgid ""
@@ -454,19 +465,20 @@ msgstr ""
 
 #: /globals/accesskeys.pt:120
 msgid "Preview screen"
-msgstr ""
+msgstr "プレビュー画面"
 
 #: /globals/accesskeys.pt:122
 msgid "; &nbsp; See public preview<br />"
-msgstr ""
+msgstr "; &nbsp; 公開プレビューの参照<br />"
 
 #: /globals/accesskeys.pt:126
 msgid "Publish screen (folder)"
-msgstr ""
+msgstr "公開画面(フォルダ)"
 
 #: /globals/accesskeys.pt:129
 msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
 msgstr ""
+"${listing_header}<br /> i &nbsp; インポート<br /> e &nbsp; エクスポート"
 
 #: /globals/accesskeys.pt:135
 msgid ""
@@ -479,21 +491,24 @@ msgstr ""
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
-msgstr ""
+msgstr "画面追加"
 
 #: /globals/accesskeys.pt:149
+#, fuzzy
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
-msgstr ""
+msgstr "c &nbsp; 取り消し<br /> a &nbsp; 追加<br /> e &nbsp; 追加＋削除/enter"
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
-msgstr ""
+msgstr "編集画面"
 
 #: /globals/accesskeys.pt:157
 msgid ""
 "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
 "preview<br /> p &nbsp; publish now<br />"
 msgstr ""
+"( &nbsp; forms エディタ<br /> ) &nbsp; Kupu エディタ<br /> ; &nbsp; 公開プレ"
+"ビュー<br /> p &nbsp; 公開する<br />"
 
 #: /globals/accesskeys.pt:165
 msgid ""
@@ -502,10 +517,14 @@ msgid ""
 "numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
 "list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
 msgstr ""
+"${kupu_editor}<br /> b &nbsp; 太字<br /> i &nbsp; 斜体<br /> u &nbsp; 下線"
+"<br /> - &nbsp; 下付き<br /> + &nbsp; 上付き<br /> # &nbsp; 番号付きリスト"
+"<br /> * &nbsp; 番号なしリスト<br /> = &nbsp; 定義リスト<br /> z &nbsp; アン"
+"ドゥ<br /> y &nbsp; リドゥ<br /> h &nbsp; html ソース<br />"
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
-msgstr ""
+msgstr "Kupu エディタ"
 
 #: /globals/accesskeys.pt:181
 msgid ""
@@ -513,25 +532,28 @@ msgid ""
 "&nbsp; save and insert<br /> tab Use your tab key to edit without using the "
 "mouse. Shift-tab goes backwards."
 msgstr ""
+"${forms_editor}<br /> s &nbsp; 保存<br /> e &nbsp; 保存＋出る<br /> i &nbsp; "
+"保存＋挿入<br /> tab マウスを使わずに編集するにはタブキーを使います.Shift-"
+"tab で戻ります."
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
-msgstr ""
+msgstr "Forms編集"
 
 #: /globals/accesskeys.pt:189
 msgid "Other screens"
-msgstr ""
+msgstr "他の画面"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 msgid "return"
-msgstr ""
+msgstr "戻る"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:122
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 #: /views/edit/VersionedContent/tab_status_macros.pt:377
 msgid "access key: alt-r"
-msgstr ""
+msgstr "アクセスキー: alt-r"
 
 #: /globals/accesskeys.pt:191
 msgid ""
@@ -552,7 +574,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:198
 msgid "Notes"
-msgstr ""
+msgstr "ノート"
 
 #: /globals/accesskeys.pt:202
 msgid ""
@@ -596,7 +618,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:227
 msgid "Silva edit"
-msgstr ""
+msgstr "Ｓｉｌｖａ 編集"
 
 #: /globals/accesskeys.pt:227
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
@@ -628,13 +650,15 @@ msgstr ""
 
 #: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:79
 msgid "Silva documentation"
-msgstr ""
+msgstr "Silva 文書"
 
 #: /globals/accesskeys.pt:251
 msgid ""
 "The most up to date documentation can be found at:<br /> "
 "${silva_documentation_link}"
 msgstr ""
+"最新の文書のほとんどは以下で見つけることができます:<br /> "
+"${silva_documentation_link}"
 
 #: /globals/accesskeys.pt:253
 msgid ""
@@ -645,11 +669,11 @@ msgstr ""
 
 #: /globals/accesskeys.pt:260
 msgid "Contact"
-msgstr ""
+msgstr "連絡"
 
 #: /globals/accesskeys.pt:261
 msgid "Feedback"
-msgstr ""
+msgstr "フィードバック"
 
 #: /globals/accesskeys.pt:261
 msgid "<br /> ${contact}<br /> ${feedback} is welcome."
@@ -680,13 +704,15 @@ msgstr ""
 
 #: /globals/accesskeys.pt:49
 msgid "see below"
-msgstr ""
+msgstr "以下参照"
 
 #: /globals/accesskeys.pt:49
 msgid ""
 "The most useful access keys are for screen navigation, <a title=\"x\" href="
 "\"#nav\">x</a>."
 msgstr ""
+"画面を操作するのにもっとも便利なアクセスキーは,<a title=\"x\" href=\"#nav"
+"\">x</a>です."
 
 #: /globals/accesskeys.pt:56
 msgid "Global keys that are always available"
@@ -705,11 +731,11 @@ msgstr ""
 
 #: /globals/accesskeys.pt:63
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: /globals/accesskeys.pt:69
 msgid "Changing screens with the tabs"
-msgstr ""
+msgstr "タブで画面を変更"
 
 #: /globals/accesskeys.pt:69
 msgid ""
@@ -740,7 +766,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:80
 msgid "${footer_page_info_row}<br /> : &nbsp; See public page<br />"
-msgstr ""
+msgstr "${footer_page_info_row}<br /> : &nbsp; こう改ページを参照<br />"
 
 #: /globals/accesskeys.pt:81
 msgid "Footer page info row"
@@ -758,7 +784,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:9
 msgid "Silva help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: /globals/accesskeys.pt:92
 msgid "Contents screen (folder)"
@@ -776,7 +802,7 @@ msgstr ""
 
 #: /globals/reference.pt:10
 msgid "Silva Reference"
-msgstr ""
+msgstr "リファレンス"
 
 #: /globals/reference.pt:101
 msgid ""
@@ -807,16 +833,16 @@ msgstr ""
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
 msgid "access key: alt-b"
-msgstr ""
+msgstr "アクセスキー: alt-b"
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
 #: /views/edit/VersionedContent/tab_status_view_version.pt:52
 msgid "back"
-msgstr ""
+msgstr "戻る"
 
 #: /globals/reference.pt:33 /globals/copyright.pt:28
 msgid "Silva info: alt-s"
-msgstr ""
+msgstr "情報: alt-s"
 
 #: /globals/reference.pt:39
 msgid "${Silva} &#8211; independent content management"
@@ -872,43 +898,43 @@ msgstr ""
 
 #: /roleinfo.py:21
 msgid "Anonymous"
-msgstr ""
+msgstr "匿名"
 
 #: /roleinfo.py:22
 msgid "Authenticated"
-msgstr ""
+msgstr "認証済み"
 
 #: /roleinfo.py:23
 msgid "Manager"
-msgstr ""
+msgstr "管理者"
 
 #: /roleinfo.py:24
 msgid "Viewer"
-msgstr ""
+msgstr "参照者"
 
 #: /roleinfo.py:25
 msgid "Viewer +"
-msgstr ""
+msgstr "参照者+"
 
 #: /roleinfo.py:26
 msgid "Viewer ++"
-msgstr ""
+msgstr "参照者++"
 
 #: /roleinfo.py:27
 msgid "Reader"
-msgstr ""
+msgstr "読者"
 
 #: /roleinfo.py:28
 msgid "Author"
-msgstr ""
+msgstr "著者"
 
 #: /roleinfo.py:29
 msgid "Editor"
-msgstr ""
+msgstr "編集者"
 
 #: /roleinfo.py:30
 msgid "ChiefEditor"
-msgstr ""
+msgstr "編集長"
 
 #: /views/add/File/add_submit.py:78 /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:78 /views/add/add_submit.py:69
@@ -933,7 +959,7 @@ msgstr ""
 
 #: /views/add/Ghost/form.form:50
 msgid "Location of originating document."
-msgstr ""
+msgstr "オリジナル文書の場所"
 
 #: /views/add/GhostFolder/add_form.pt:42 /views/add/Ghost/add_form.pt:42
 msgid "create ${meta_type}"
@@ -956,7 +982,7 @@ msgstr ""
 
 #: /views/add/GhostFolder/form.form:50
 msgid "Location of originating folder."
-msgstr ""
+msgstr "オリジナルのフォルダの場所"
 
 #: /views/add/Groups/add_submit.py:39
 msgid ""
@@ -969,7 +995,7 @@ msgstr ""
 #: /views/edit/Asset/File/upload_submit.py:26
 #: /views/edit/Container/tab_edit_import_xml.py:20
 msgid "Empty or invalid file."
-msgstr ""
+msgstr "ファイルが空か不正です."
 
 #: /views/add/Image/form.form:30
 msgid ""
@@ -983,7 +1009,7 @@ msgstr ""
 
 #: /views/add/Link/form.form:73
 msgid "Link url."
-msgstr ""
+msgstr "url にリンク."
 
 #: /views/add/Link/form.form:85
 msgid ""
@@ -994,7 +1020,7 @@ msgstr ""
 
 #: /views/add/Link/form.form:94
 msgid "link type"
-msgstr ""
+msgstr "リンクタイプ"
 
 #: /views/add/Publication/form.form:62
 msgid "What type of object should be added after creating the folder."
@@ -1067,19 +1093,19 @@ msgstr ""
 
 #: /views/edit/Asset/File/edit.pt:18
 msgid "file info"
-msgstr ""
+msgstr "ファイル情報"
 
 #: /views/edit/Asset/File/edit.pt:21 /views/edit/Asset/Image/edit.pt:95
 msgid "file size"
-msgstr ""
+msgstr "ファイルサイズ"
 
 #: /views/edit/Asset/File/edit.pt:30 /views/edit/Asset/Image/edit.pt:111
 msgid "file system path"
-msgstr ""
+msgstr "ファイルシステムパス"
 
 #: /views/edit/Asset/File/edit.pt:35
 msgid "file mime type"
-msgstr ""
+msgstr "mimeタイプ"
 
 #: /views/edit/Asset/File/form.form:30 /views/edit/Asset/Image/form.form:31
 msgid "Optional, but useful."
@@ -1091,11 +1117,11 @@ msgstr ""
 
 #: /views/edit/Asset/File/submit.py:29
 msgid "Properties changed: ${changed}"
-msgstr ""
+msgstr "属性を変更: ${changed}"
 
 #: /views/edit/Asset/File/upload_submit.py:34
 msgid "File uploaded."
-msgstr ""
+msgstr "ファイルをアップロードしました."
 
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:13
 msgid "No group(s) selected, so nothing to use to add users."
@@ -1104,7 +1130,7 @@ msgstr ""
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:17
 #: /views/edit/Asset/Groups/Group/add_users_to_group.py:22
 msgid "User(s) ${added} added to group."
-msgstr ""
+msgstr "ユーザ ${added} をグループに追加しました。"
 
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:20
 #: /views/edit/Asset/Groups/Group/add_users_to_group.py:25
@@ -1113,83 +1139,83 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/Group/add_users_to_group.py:11
 msgid "No users selected, so none added."
-msgstr ""
+msgstr "ユーザが選択されていないので、何も追加しません."
 
 #: /views/edit/Asset/Groups/Group/edit.pt:105
 msgid "remove selected user(s) from this group: alt-r"
-msgstr ""
+msgstr "グループから選択したユーザを削除: alt-r"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:105
 msgid "remove users"
-msgstr ""
+msgstr "ユーザ削除"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:137
 msgid "add selected users to this group"
-msgstr ""
+msgstr "選択したユーザをグループに追加"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:157
 msgid "copy users from group(s)"
-msgstr ""
+msgstr "グループからユーザをコピー"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:157
 msgid "transfer members from selected groups"
-msgstr ""
+msgstr "選択したグループからメンバーを移動"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:52
 msgid "group members"
-msgstr ""
+msgstr "グループのメンバー"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:65
 msgid "Username"
-msgstr ""
+msgstr "ユーザ名"
 
 #: /views/edit/Asset/Groups/Group/edit.pt:98
 msgid "This group does not have any members."
-msgstr ""
+msgstr "グループにメンバーがいません."
 
 #: /views/edit/Asset/Groups/Group/remove_users_from_group.py:11
 msgid "No users selected, so none removed."
-msgstr ""
+msgstr "ユーザが選択されていないので、削除しません."
 
 #: /views/edit/Asset/Groups/Group/remove_users_from_group.py:19
 msgid "User(s) ${removed} removed from group."
-msgstr ""
+msgstr "ユーザ ${removed} をグループから削除しました."
 
 #: /views/edit/Asset/Groups/IPGroup/add_iprange_to_ipgroup.py:11
 msgid "No ip range was provided, so nothing was added."
-msgstr ""
+msgstr "IP アドレスの範囲が与えられていないので、何も追加しません."
 
 #: /views/edit/Asset/Groups/IPGroup/add_iprange_to_ipgroup.py:20
 msgid "Range ${iprange} added to the IP Group"
-msgstr ""
+msgstr "範囲 ${iprange} をIPアドレスグループに追加しました."
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:11
 msgid "No group selected, so nothing copied."
-msgstr ""
+msgstr "グループが選択されていないので、何もコピーしません."
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:15
 msgid "Range(s) ${copied} added."
-msgstr ""
+msgstr "範囲 ${copied} を追加しました."
 
 #: /views/edit/Asset/Groups/IPGroup/copy_ipranges_from_ipgroups.py:19
 msgid "Nothing copied."
-msgstr ""
+msgstr "何もコピーしません."
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:100
 msgid "remove range(s) from this ip group: alt-r"
-msgstr ""
+msgstr "IPアドレスグループから範囲を削除: alt-r"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:100
 msgid "remove ranges"
-msgstr ""
+msgstr "範囲を削除"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:126
 msgid "add an IP address"
-msgstr ""
+msgstr "IPアドレスを追加"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:134
 msgid "ip range<span class=\"warning\">*</span>"
-msgstr ""
+msgstr "IPアドレスの範囲<span class=\"warning\">*</span>"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:144
 msgid ""
@@ -1200,31 +1226,31 @@ msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:156
 msgid "add an ip or an ip range"
-msgstr ""
+msgstr "IPアドレスかIPアドレスの範囲を追加"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:156
 msgid "add ip range"
-msgstr ""
+msgstr "IPアドレスの範囲を追加"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:189
 msgid "copy ips to ip group"
-msgstr ""
+msgstr "IPアドレスをIPアドレスグループにコピー"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:189
 msgid "transfer ip(s) to this ip group"
-msgstr ""
+msgstr "IPアドレスをIPアドレスグループに移動"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:52
 msgid "IPs and IP ranges"
-msgstr ""
+msgstr "IPアドレスとIPアドレスの範囲"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:93
 msgid "This IP Group does not contain any IPs."
-msgstr ""
+msgstr "IPアドレスグループにIPアドレスがひとつも含まれていません."
 
 #: /views/edit/Asset/Groups/IPGroup/remove_iprange_from_ipgroup.py:11
 msgid "No ip ranges were selected, so nothing was removed."
-msgstr ""
+msgstr "IPアドレスの範囲が選択されてい無いので, 何も削除しません."
 
 #: /views/edit/Asset/Groups/IPGroup/remove_iprange_from_ipgroup.py:17
 msgid "Range(s) ${removed} removed from the group."
@@ -1269,7 +1295,7 @@ msgstr ""
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:139
 #: /views/edit/Asset/Groups/Group/edit.pt:137
 msgid "add to group"
-msgstr ""
+msgstr "グループに追加"
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:159
 msgid "transfer groups defined in other virtual groups"
@@ -1341,7 +1367,7 @@ msgstr ""
 #: /views/edit/VersionedContent/Link/edit.pt:89 /views/add/add_form.pt:123
 #: /views/add/GhostFolder/add_form.pt:113 /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
-msgstr ""
+msgstr "アクセスキー: alt-c"
 
 #: /views/edit/Asset/Image/edit.pt:20
 msgid "image info"
@@ -1550,13 +1576,13 @@ msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:182
 msgid "upload file"
-msgstr ""
+msgstr "アップロードファイル"
 
 #: /views/edit/Asset/macro_asset_edit.pt:182
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 #: /views/edit/Content/Indexer/edit.pt:75 /views/public/subscriptor.pt:69
 msgid "access key: alt-u"
-msgstr ""
+msgstr "アクセスキー: alt-u"
 
 #: /views/edit/Asset/macro_asset_edit.pt:53
 msgid "characterization"
@@ -1566,7 +1592,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status.pt:53
 #: /views/edit/Content/tab_status.pt:26
 msgid "status of &#xab;${title}&#xbb;"
-msgstr ""
+msgstr "&#xab;${title}&#xbb;のステータス"
 
 #: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
 msgid "A automatically has a published state."
@@ -1582,7 +1608,7 @@ msgstr ""
 
 #: /views/edit/Asset/upload_form.form:25 /views/add/File/form.form:24
 msgid "file"
-msgstr ""
+msgstr "ファイル"
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
@@ -1643,7 +1669,7 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/edit.pt:105
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
 msgid "link"
-msgstr ""
+msgstr "リンク"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:130
 msgid "Link to contents screen of original."
@@ -1653,12 +1679,12 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/edit.pt:122
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:81
 msgid "problem"
-msgstr ""
+msgstr "問題"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:154
 #: /views/edit/VersionedContent/Ghost/edit.pt:139
 msgid "save reference"
-msgstr ""
+msgstr "参照を保存"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:194
 msgid "ghost folder contents"
@@ -1687,7 +1713,7 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
 #: /views/add/GhostFolder/add_form.pt:50 /views/add/Ghost/add_form.pt:50
 msgid "attributes"
-msgstr ""
+msgstr "属性"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:87
 #: /views/edit/VersionedContent/Ghost/edit.pt:72
@@ -1698,7 +1724,7 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/edit.pt:72
 #: /views/add/GhostFolder/add_form.pt:72 /views/add/Ghost/add_form.pt:70
 msgid "reference..."
-msgstr ""
+msgstr "参照..."
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 msgid "miscellaneous settings: alt-e"
@@ -1951,7 +1977,7 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status.pt:62 /views/add/add_form.pt:141
 #: /views/add/GhostFolder/add_form.pt:131 /views/add/Ghost/add_form.pt:124
 msgid "access key: alt-e"
-msgstr ""
+msgstr "アクセスキー: alt-e"
 
 #: /views/edit/Container/tab_access_groups.pt:159
 msgid "groups located in this folder"
@@ -3435,7 +3461,7 @@ msgstr ""
 #: /views/edit/Content/Indexer/edit.pt:55 /views/add/add_form.pt:67
 #: /views/add/GhostFolder/add_form.pt:58 /views/add/Ghost/add_form.pt:56
 msgid "notes"
-msgstr ""
+msgstr "ノート"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:142
 msgid ""
@@ -3813,7 +3839,7 @@ msgstr ""
 #: /views/edit/Member/SimpleMember/tab_edit.pt:142 /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
 msgid "save"
-msgstr ""
+msgstr "保存"
 
 #: /views/edit/macro_edit_metadata.pt:43 /views/edit/macro_edit_metadata.pt:48
 msgid "of &#xab;${title}&#xbb;"
@@ -3852,7 +3878,7 @@ msgstr ""
 #: /views/add/GhostFolder/add_form.pt:55 /views/add/Ghost/add_form.pt:53
 #: /views/public/search_form.form:28
 msgid "content"
-msgstr ""
+msgstr "内容"
 
 #: /views/edit/macro_edit_metadata.pt:87
 msgid "acquired content"
@@ -4706,11 +4732,11 @@ msgstr ""
 #: /views/public/request_roles.pt:48
 #: /views/edit/Member/SimpleMember/memberform.form:28
 msgid "full name"
-msgstr ""
+msgstr "氏名"
 
 #: /views/public/request_roles.pt:51
 msgid "e-mail address"
-msgstr ""
+msgstr "メールアドレス"
 
 #: /views/public/request_roles.pt:58
 msgid "Choose role(s) to request"
@@ -4718,7 +4744,7 @@ msgstr ""
 
 #: /views/public/request_roles.pt:73
 msgid " Send request "
-msgstr ""
+msgstr " 送信 "
 
 #: /views/public/request_roles.pt:73
 msgid "Send request for role: alt-s"
@@ -4734,7 +4760,7 @@ msgstr ""
 
 #: /views/public/request_roles_submit.py:22
 msgid "Error: ${error}"
-msgstr ""
+msgstr "エラー: ${error}"
 
 #: /views/public/request_roles_submit.py:26
 msgid ""
@@ -4803,12 +4829,10 @@ msgid ""
 "\n"
 "            "
 msgstr ""
-"\n"
-"            "
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
-msgstr ""
+msgstr "サブツリーのみ"
 
 #: /views/public/search_form.form:80
 msgid ""
@@ -4819,11 +4843,11 @@ msgstr ""
 
 #: /views/public/search_results.pt:19
 msgid "Search results"
-msgstr ""
+msgstr "検索結果"
 
 #: /views/public/search_results.pt:38 /views/public/search_results.pt:85
 msgid "&lt;&lt; Previous"
-msgstr ""
+msgstr "&lt;&lt; 前"
 
 #: /views/public/search_results.pt:47
 msgid "Showing results ${batch_start} to ${batch_end}."
@@ -4831,7 +4855,7 @@ msgstr ""
 
 #: /views/public/search_results.pt:51 /views/public/search_results.pt:94
 msgid "Next &gt;&gt;"
-msgstr ""
+msgstr "次 &gt;&gt;"
 
 #: /views/public/subscription_request.py:30
 msgid ""
@@ -4840,7 +4864,7 @@ msgstr ""
 
 #: /views/public/subscriptor.pt:33
 msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "&#xab;${title_or_id}&#xbb; に登録する"
 
 #: /views/public/subscriptor.pt:35
 msgid ""
@@ -4850,7 +4874,7 @@ msgstr ""
 
 #: /views/public/subscriptor.pt:45
 msgid "subscribe"
-msgstr ""
+msgstr "登録"
 
 #: /views/public/subscriptor.pt:58
 msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
@@ -4864,11 +4888,11 @@ msgstr ""
 
 #: /views/public/subscriptor.pt:69
 msgid "unsubscribe"
-msgstr ""
+msgstr "登録解除"
 
 #: /views/public/subscriptor.pt:82
 msgid "Return to &#xab;${title_or_id}&#xbb;"
-msgstr ""
+msgstr "&#xab;${title_or_id}&#xbb; に戻る"
 
 #: /views/render_form_errors.py:27
 msgid "Sorry, there are problems with these form fields:"

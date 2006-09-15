@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Fri Sep 15 16:55:46 2006\n"
+"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
 "PO-Revision-Date: 2005-12-03 17:43+0000\n"
 "Last-Translator: kitblake <kitblake@infrae.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
@@ -2444,7 +2444,7 @@ msgstr "nouveau..."
 
 #: /views/edit/Container/tab_edit.pt:73 /browser/object_lookup.pt:104
 msgid "add a new item - alt-n"
-msgstr "ajouter nouvel item: alt-n"
+msgstr "ajouter nouvel item: alt-s"
 
 #: /views/edit/Container/tab_edit.pt:88 /browser/object_lookup.pt:119
 msgid "select a new item: alt-s"
@@ -5255,11 +5255,6 @@ msgstr "Retourner vers &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
-#~ msgid "request immediate approval for new versions: alt-q"
-#~ msgstr ""
-#~ "demande autorisation immédiate de publication pour nouvelles versions: "
-#~ "alt-q"
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Ne peut pas approuver version, non autorisé."
 
@@ -5343,6 +5338,11 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
 #~ msgid "set timing"
 #~ msgstr "fixer dates"
+
+#~ msgid "request immediate approval for new versions: alt-q"
+#~ msgstr ""
+#~ "demande autorisation immédiate de publication pour nouvelles versions: "
+#~ "alt-q"
 
 #~ msgid ""
 #~ "${note} this version is approved but not yet public. In order to make "

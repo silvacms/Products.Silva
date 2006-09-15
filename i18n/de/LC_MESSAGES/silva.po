@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Sep 15 16:55:46 2006\n"
+"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
 "PO-Revision-Date: 2006-05-02 14:34+0000\n"
 "Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -3608,7 +3608,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:195
 msgid "Published version exists"
-msgstr ""
+msgstr "Veröffentlichte Version existiert"
 
 #: /views/edit/VersionedContent/tab_status.pt:196
 msgid ""
@@ -5268,12 +5268,6 @@ msgstr "zurück zu &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
-#~ msgid "Published version exists."
-#~ msgstr "Veröffentlichte Version existiert."
-
-#~ msgid "request immediate approval for new versions: alt-q"
-#~ msgstr "Anfrage für eine sofortige Bestätigung einer neuen Version: alt-q"
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Version kann nicht bewilligt werden; nicht gestattet."
 
@@ -5357,6 +5351,9 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "set timing"
 #~ msgstr "Zeitvorgaben speichern"
+
+#~ msgid "request immediate approval for new versions: alt-q"
+#~ msgstr "Anfrage für eine sofortige Bestätigung einer neuen Version: alt-q"
 
 #~ msgid ""
 #~ "${note} this version is approved but not yet public. In order to make "

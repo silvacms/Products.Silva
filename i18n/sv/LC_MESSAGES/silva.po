@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Fri Sep 15 16:55:46 2006\n"
-"PO-Revision-Date: 2005-10-24 17:08+0000\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
+"PO-Revision-Date: 2006-08-12 08:07+0000\n"
+"Last-Translator: Robert Renling Berencreuz <berencreuz@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,11 +31,11 @@ msgstr "Inte ansluten"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr ""
+msgstr "Valideringsfel"
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr ""
+msgstr "Ändrade inställningar."
 
 #: /File.py:134 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
@@ -128,7 +128,7 @@ msgstr ""
 
 #: /Image.py:441
 msgid "portrait"
-msgstr ""
+msgstr "Porträtt"
 
 #: /Image.py:51
 msgid ""
@@ -177,11 +177,11 @@ msgstr ""
 
 #: /Version.py:208
 msgid "unapproved"
-msgstr ""
+msgstr "Inte godkänd"
 
 #: /Version.py:208
 msgid "approved"
-msgstr ""
+msgstr "Godkänd"
 
 #: /Version.py:208
 msgid "last_closed"
@@ -197,19 +197,19 @@ msgstr ""
 
 #: /Version.py:209
 msgid "draft"
-msgstr ""
+msgstr "utkast"
 
 #: /Version.py:209 /views/edit/Container/tab_status.pt:262
 msgid "closed"
-msgstr ""
+msgstr "stängt"
 
 #: /Versioning.py:102
 msgid "Cannot approve version without publication datetime."
-msgstr ""
+msgstr "Kan inte godkänna version utan tid och datum för publicering"
 
 #: /Versioning.py:159
 msgid "No approved version to unapprove."
-msgstr ""
+msgstr "Ingen godkänd version att ta tillbaka."
 
 #: /Versioning.py:161
 msgid ""
@@ -219,20 +219,20 @@ msgstr ""
 
 #: /Versioning.py:188
 msgid "No public version to close."
-msgstr ""
+msgstr "Ingen publik version att stänga."
 
 #: /Versioning.py:240 /adapters/version_management.py:83
 #: /adapters/version_management.py:91
 msgid "No unapproved version available"
-msgstr ""
+msgstr "Ingen icke-godkänd version tillgänglig"
 
 #: /Versioning.py:273 /Versioning.py:322 /Versioning.py:352
 msgid "There is no unapproved version to request approval for."
-msgstr ""
+msgstr "Det fins ingen icke-godkänd version att efterfråga godkännande för."
 
 #: /Versioning.py:277
 msgid "The version is already requested for approval."
-msgstr ""
+msgstr "Denna version har redan begärts till godkännande"
 
 #: /Versioning.py:326 /Versioning.py:356
 msgid "The version is not requested for approval."
@@ -4803,6 +4803,8 @@ msgid ""
 "\n"
 "            "
 msgstr ""
+"\n"
+"            "
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
@@ -4871,3 +4873,6 @@ msgstr ""
 #: /views/render_form_errors.py:27
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
+
+#~ msgid "Cannot approve version; not allowed."
+#~ msgstr "Kan inte godkänna versionen; saknar behörighet."
