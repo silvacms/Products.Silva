@@ -29,7 +29,17 @@ class LanguageProvider(adapter.Adapter):
         silva_domain = zapi.getUtility(ITranslationDomain, 'silva')
         # XXX awful hack, but we don't have access to any
         # 'getAvailableLanguages' functionality apparently..
-        return ['none'] + silva_domain._catalogs.keys()
+        result = ['none']
+        for key in silva_domain._catalogs.keys():
+            # make sure that language ids like zh_TW are translated into
+            # browser-format, namely zh-tw
+            if '_' in key:
+                language_id, language_variant = key.split('_')
+                result.append('%s-%s' % (language_id,
+                                         language_variant.lower()))
+            else:
+                result.append(key)
+        return result
 
     security.declarePublic('getLanguageName')
     def getLanguageName(self, language_id):
@@ -38,11 +48,22 @@ class LanguageProvider(adapter.Adapter):
         if language_id == 'none':
             return _(u'Use browser language setting')
         self._setupLocale()
+        # deal with languages that are not in the language types listing
+        # in Zope 3. Namely everything with a dash in the middle.
+        # It's possible that in later Zope 3 versions the database is
+        # more extensive and does provide language names for these
+        # languages - the maintainer reading this code could check.
+        if '-' in language_id:
+            language_id, language_variant = language_id.split('-')
+        else:
+            language_variant = None
         name = self.context.REQUEST.locale.displayNames.languages.get(
             language_id)
         if name is None:
             # if for some reason the language name is unknown, show id
             name = language_id
+        if language_variant is not None:
+            name = name + ' (%s)' % language_variant
         return name
     
     def _setupLocale(self):

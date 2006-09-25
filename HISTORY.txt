@@ -76,7 +76,17 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
- 
+
+      - Browser language settings was ignoring English language,
+        meaning it would fall back on the first language that was
+        non-English in the settings. Now made English is a language
+        explicitly known by Silva. This also means English can be
+        explicitly selected in the user settings view. (issue 1572)
+
+      - The user settings view was not dealing with language variants
+        (such as zh_TW) correctly. It now displays these and responds
+        to these properly.
+
       - User settings view works again. This was broken as Five views
         were in use for header settings. Made header settings view
         registration wider (for everything), and made Member object
