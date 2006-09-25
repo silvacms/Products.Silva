@@ -1,5 +1,6 @@
 from zope.interface import implements
-
+from Products.SilvaViews.ViewRegistry import ViewAttribute
+    
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 import Globals
@@ -13,7 +14,10 @@ class Member(Persistent, Acquisition.Implicit):
     implements(IMember)
     
     security = ClassSecurityInfo()
-    
+
+    # allow edit view on this object
+    edit = ViewAttribute('edit', 'tab_edit')
+
     def __init__(self, userid, fullname, email, is_approved):
         self.id = userid
         self._fullname = fullname

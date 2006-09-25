@@ -76,7 +76,7 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
-
+ 
       - User settings view works again. This was broken as Five views
         were in use for header settings. Made header settings view
         registration wider (for everything), and made Member object
@@ -167,19 +167,28 @@ Under development
       - Shut up a security deprecation warning for PROPFIND.
 
     Ported from 1.5 branch
-      - Fixed problem in SilvaDocument that used kupu where it whasn't needed and caused js exceptions
-    
-      - Fix for issue 1618 where messagebox didn't appear in ie also removed nbsp in macro_index
 
-      - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts.
-        Also removed some unused cruft from previous filtering implementations.
+      - User settings screen did not work when user did not have
+        sufficient rights in the Silva Root. This is now fixed.
+
+      - Fixed problem in SilvaDocument that used kupu where it whasn't
+        needed and caused js exceptions
+    
+      - Fix for issue 1618 where messagebox didn't appear in ie also
+        removed nbsp in macro_index
+
+      - Fixed issues where hide_from_toc filters wouldn't work in
+        ghost contexts.  Also removed some unused cruft from previous
+        filtering implementations.
     
       - Added a ReferenceLookupWindowField, to store references to zope
         objects instead of urls.
     
-      - Fixed issue 1608 where tab_edit_revoke_approval caused versioning errors
+      - Fixed issue 1608 where tab_edit_revoke_approval caused
+        versioning errors
 
-      - In the tab_status "set timings" caused an error without saving the changes and returned a wrong tab   
+      - In the tab_status "set timings" caused an error without saving
+        the changes and returned a wrong tab
     
       - XML export rewrote the urls of links and images on export, which
         was a bad thing. They now have extra rewritten_ attributes, which
