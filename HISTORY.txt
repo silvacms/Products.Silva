@@ -76,6 +76,12 @@ Under development
         'doc/developer_changes.txt'.
 
     Bugs fixed:
+
+      - User settings view works again. This was broken as Five views
+        were in use for header settings. Made header settings view
+        registration wider (for everything), and made Member object
+        five:traversable.
+
       - Removed commented out template code for listing all email
         addresses.
 
