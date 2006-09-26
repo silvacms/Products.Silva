@@ -242,7 +242,7 @@ class EmailMessageService(SimpleItem.SimpleItem):
             header['From'] = self._fromaddr
         if not header.has_key('Sender'):
             header['Sender'] = self._fromaddr
-        header['Content-Type'] = 'text/plain, charset=UTF-8'
+        header['Content-Type'] = 'text/plain; charset=UTF-8'
 
         msg_lines = [ '%s: %s' % (k, v) for k, v in header.items() ]
         msg_lines.append('')
