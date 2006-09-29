@@ -11,7 +11,7 @@ Silva changes
         sufficient rights in the Silva Root. This is now fixed.
 
       - The forms editor should now not through out URL fragment
-        information (#foo).
+        information (#foo). This should fix issue 1592.
 
   1.5.7
 
