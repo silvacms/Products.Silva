@@ -10,6 +10,9 @@ Silva changes
       - User settings screen did not work when user did not have
         sufficient rights in the Silva Root. This is now fixed.
 
+      - The forms editor should now not through out URL fragment
+        information (#foo).
+
   1.5.7
 
     Features added

@@ -38,10 +38,17 @@ class PathAdapter(adapter.Adapter):
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
         if not path.startswith('/'):
+            # try to retain fragment information...
+            if fragment:
+                path += '#' + fragment
             return path
         request = self.request
-        return '/'.join(request.physicalPathFromURL(path))
-
+        result = '/'.join(request.physicalPathFromURL(path))
+        # try to retain fragment information..
+        if fragment:
+            result += '#' + fragment
+        return result
+    
     def pathToUrlPath(self, path):
         """convert a Zope physical path to a URL
 
@@ -52,10 +59,15 @@ class PathAdapter(adapter.Adapter):
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
         if not path.startswith('/'):
+            # fragment information is in path so will automatically be
+            # passed along
             return path
         request = self.request
         url = request.physicalPathToURL(path.split('/'))
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
+        # try to retain fragment information
+        if fragment:
+            path += '#' + fragment
         return path
 
 InitializeClass(PathAdapter)
