@@ -178,6 +178,9 @@ Under development
 
     Ported from 1.5 branch
 
+      - Retain fragment information (#foo) on URLs when converting
+        from URL to Zope path and back. This fixes issue 1592. 
+
       - User settings screen did not work when user did not have
         sufficient rights in the Silva Root. This is now fixed.
 
