@@ -55,7 +55,7 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.11.1 (DCI)
+Formulator 1.11.2 (DCI)
 -----------------------
 
 Formulator is a Zope extension for the easy construction, display and
@@ -64,7 +64,7 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 0.10 (DCI)
+SilvaMetadata 0.11 (DCI)
 ------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
@@ -111,8 +111,8 @@ ship with a version of Five.
 
 http://codespeak.net/z3/five
 
-Kupu 1.4 pre-infrae (DI)
-------------------------
+Kupu 1.4b1 (DI)
+---------------
 
 Kupu is a client-side WYSIWYG editor. If kupu is installed, Silva
 allows users to use kupu in addition to the forms-based editor to edit
@@ -177,10 +177,8 @@ separation you need a Zope version higher than 2.7.0.
 
 http://www.dataflake.org/software/ldapuserfolder/
 
-ExtFile 1.4.2 (IX)
+ExtFile 1.5.2 (IX)
 ------------------
-
-Note: Silva 1.5 is not compatible yet with ExtFile.
 
 If you plan to manage large upload files with Silva, you may want to
 avoid storing them in the ZODB, instead putting them in the filesystem

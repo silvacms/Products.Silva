@@ -29,8 +29,7 @@ Checklist for Zope administrators
 
 Here is a quick checklist what to do to install Silva:
 
-* You need a recent Zope (2.8.6 is recommended, other versions are not
-  properly tested) with Python 2.3.
+* You need a recent Zope 2.8.x (2.8.7 or later) with Python 2.3.
 
 * Download an appropriate Silva ``-all.tgz`` for the version you want
   from `the Silva download area`_ and unpack it into your
@@ -130,7 +129,7 @@ case. More information is available in ``docs/FileObject.stx``.
 
 http://www.zope.org/Members/shh/ExtFile
 
-Note that version 1.4.2 or later of ExtFile is required.
+Note that version 1.5.2 or later of ExtFile is required.
 
 Installing Silva with LDAP support
 ----------------------------------
