@@ -16,8 +16,9 @@ Silva changes
       - Browser language settings was ignoring English language,
         meaning it would fall back on the first language that was
         non-English in the settings. Now made English is a language
-        explicitly known by Silva. This also means English can be
-        explicitly selected in the user settings view. (issue 1572)
+        explicitly known by Silva and SilvaDocument. This also means
+        English can be explicitly selected in the user settings
+        view. (issue 1572)
 
   1.5.7
 
