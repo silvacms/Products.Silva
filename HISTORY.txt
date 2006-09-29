@@ -13,6 +13,12 @@ Silva changes
       - The forms editor should now not through out URL fragment
         information (#foo). This should fix issue 1592.
 
+      - Browser language settings was ignoring English language,
+        meaning it would fall back on the first language that was
+        non-English in the settings. Now made English is a language
+        explicitly known by Silva. This also means English can be
+        explicitly selected in the user settings view. (issue 1572)
+
   1.5.7
 
     Features added
