@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+Silva 1.6b4
+
+    Bugs fixed:
+
+      - New version of SilvaMetadata (0.12) released which fixes a bug
+        where storing of empty metadata fields/deleting metadata values was
+        impossible.
+
 Silva 1.6b3 (first public beta)
 
     Features added
