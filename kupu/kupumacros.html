@@ -474,8 +474,8 @@
         </div>
            
         <form name="kupu_extsource_form" onsubmit="return false">
-          <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
-            <tal:block repeat="extsource sorted_objects">
+          <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" tal:define="sources here/get_available_sources;">
+            <tal:block repeat="extsource sources">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="value id" tal:content="python:object.get_title() or id"/>
               </tal:block>
