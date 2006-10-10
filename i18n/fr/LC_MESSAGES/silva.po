@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
+"POT-Creation-Date: Tue Oct 10 19:06:46 2006\n"
 "PO-Revision-Date: 2005-12-03 17:43+0000\n"
 "Last-Translator: kitblake <kitblake@infrae.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
@@ -364,7 +364,7 @@ msgstr "Il n'y a pas de version non approuvée à approuver"
 msgid "There already is an approved version."
 msgstr "Il y a déjà une version approuvée"
 
-#: /adapters/languageprovider.py:39
+#: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
 msgstr ""
 
@@ -1011,6 +1011,140 @@ msgstr "Developpeurs Externes"
 msgid "Thanks to...."
 msgstr "Merci à"
 
+#: /kupu/kupumacros.html:210
+msgid "Kupu 1.4"
+msgstr ""
+
+#: /kupu/kupumacros.html:231
+msgid "save: alt-s"
+msgstr ""
+
+#: /kupu/kupumacros.html:235
+msgid "Bold: Access key (Alt or Ctrl) + B"
+msgstr ""
+
+#: /kupu/kupumacros.html:236
+msgid "Italic: Access key (Alt or Ctrl) + I"
+msgstr ""
+
+#: /kupu/kupumacros.html:237
+msgid "Underline: Access key (Alt or Ctrl) + U"
+msgstr ""
+
+#: /kupu/kupumacros.html:241
+msgid "Subscript: Access key (Alt or Ctrl) + -"
+msgstr ""
+
+#: /kupu/kupumacros.html:242
+msgid "Superscript: Access key (Alt or Ctrl) + +"
+msgstr ""
+
+#: /kupu/kupumacros.html:247
+msgid "Numbered list: Access key (Alt or Ctrl) + #"
+msgstr ""
+
+#: /kupu/kupumacros.html:248
+msgid "Unordered list: Access key (Alt or Ctrl) + *"
+msgstr ""
+
+#: /kupu/kupumacros.html:253
+msgid "Definition list: Access key (Alt or Ctrl) + ="
+msgstr ""
+
+#: /kupu/kupumacros.html:257
+msgid "Undo: Access key (Alt or Ctrl) + Z"
+msgstr ""
+
+#: /kupu/kupumacros.html:258
+msgid "Redo: Access key (Alt or Ctrl) + Y"
+msgstr ""
+
+# Default: "Switch between visual editor and HTML view"
+#: /kupu/kupumacros.html:262
+msgid "toggle_source_view"
+msgstr ""
+
+# Default: "&#9679;"
+#: /kupu/kupumacros.html:268
+msgid "list-disc"
+msgstr ""
+
+# Default: "&#9632;"
+#: /kupu/kupumacros.html:269
+msgid "list-square"
+msgstr ""
+
+# Default: "&#9675;"
+#: /kupu/kupumacros.html:270
+msgid "list-circle"
+msgstr ""
+
+# Default: "no bullet"
+#: /kupu/kupumacros.html:271
+msgid "list-nobullet"
+msgstr ""
+
+# Default: "1"
+#: /kupu/kupumacros.html:274
+msgid "list-decimal"
+msgstr ""
+
+# Default: "I"
+#: /kupu/kupumacros.html:275
+msgid "list-upperroman"
+msgstr ""
+
+# Default: "i"
+#: /kupu/kupumacros.html:276
+msgid "list-lowerroman"
+msgstr ""
+
+# Default: "A"
+#: /kupu/kupumacros.html:277
+msgid "list-upperalpha"
+msgstr ""
+
+# Default: "a"
+#: /kupu/kupumacros.html:278
+msgid "list-loweralpha"
+msgstr ""
+
+#: /kupu/kupumacros.html:350
+msgid "index item"
+msgstr ""
+
+#: /kupu/kupumacros.html:416
+msgid "abbreviations and acronyms"
+msgstr ""
+
+#: /kupu/kupumacros.html:459
+msgid "cleanup"
+msgstr ""
+
+#: /kupu/kupumacros.html:469
+msgid "external source"
+msgstr ""
+
+#: /kupu/kupumacros.html:498
+msgid "citation"
+msgstr ""
+
+#: /kupu/kupumacros.html:539
+msgid "table"
+msgstr ""
+
+#: /kupu/kupumacros.html:640
+msgid "table of contents"
+msgstr ""
+
+#: /kupu/kupumacros.html:668
+msgid "typographical characters"
+msgstr ""
+
+#: /layout/layout_macro.html:77
+msgid "Silva info on the Infrae site: alt-i"
+msgstr "Info Silva dans le site Infrae: alt-i"
+
 #: /resources/request_processed.pt:18
 msgid "Request processed"
 msgstr "Demande traitée"
@@ -1556,7 +1690,8 @@ msgstr "format"
 msgid "dimensions"
 msgstr "dimensions"
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /kupu/kupumacros.html:372
+#: /views/add/Image/form.form:46
 msgid "image"
 msgstr "image"
 
@@ -1742,6 +1877,7 @@ msgstr "apperçu"
 #: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:253
 #: /views/edit/Container/tab_edit.pt:432 /views/edit/Container/tab_edit.pt:441
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
+#: /kupu/kupumacros.html:302
 msgid "properties"
 msgstr "propriétés"
 
@@ -1757,7 +1893,7 @@ msgid "access"
 msgstr "accès"
 
 #: /views/edit/Asset/macro_asset_edit.pt:143
-#: /views/edit/Container/tab_edit_import.pt:373
+#: /views/edit/Container/tab_edit_import.pt:372
 msgid "upload"
 msgstr "télécharger"
 
@@ -1862,6 +1998,7 @@ msgstr "Chemin vers l'original (begins with &#8216;/&#8217;)."
 #: /views/edit/Container/GhostFolder/tab_edit.pt:120
 #: /views/edit/VersionedContent/Ghost/edit.pt:105
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
+#: /kupu/kupumacros.html:324
 msgid "link"
 msgstr "lien"
 
@@ -2019,7 +2156,7 @@ msgstr "enlever"
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
-#: /views/edit/Container/tab_edit_import.pt:357
+#: /views/edit/Container/tab_edit_import.pt:356
 #: /views/edit/Container/tab_status_export.pt:432 /doc/silva-extra.xml:154
 msgid "description"
 msgstr "description"
@@ -2530,7 +2667,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:102
 #: /views/edit/Container/tab_edit_import.pt:171
-#: /views/edit/Container/tab_edit_import.pt:329
+#: /views/edit/Container/tab_edit_import.pt:328
 msgid "file to upload"
 msgstr "fichier à télécharger"
 
@@ -2594,33 +2731,33 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:239
 msgid ""
 "Replace Content Objects with the Objects from the import when they have the "
-"same ids."
+"same ids (Note: they will be replaced *even* when published)."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:248
+#: /views/edit/Container/tab_edit_import.pt:247
 msgid "import zip"
 msgstr "importer zip"
 
-#: /views/edit/Container/tab_edit_import.pt:248
+#: /views/edit/Container/tab_edit_import.pt:247
 #: /views/edit/Container/tab_status_export.pt:151
 msgid "access key: alt-z"
 msgstr "touche d'accès: alt-z"
 
-#: /views/edit/Container/tab_edit_import.pt:286
+#: /views/edit/Container/tab_edit_import.pt:285
 #: /views/edit/Container/tab_status_export.pt:298
 msgid "docma icon"
 msgstr "icon docma"
 
-#: /views/edit/Container/tab_edit_import.pt:294
+#: /views/edit/Container/tab_edit_import.pt:293
 #: /views/edit/Container/tab_status_export.pt:306
 msgid "docma facilities"
 msgstr "facilités docma"
 
-#: /views/edit/Container/tab_edit_import.pt:306
+#: /views/edit/Container/tab_edit_import.pt:305
 msgid "upload a document in word format (.doc) for conversion"
 msgstr "charger un document au format word (.doc° pour conversion"
 
-#: /views/edit/Container/tab_edit_import.pt:334
+#: /views/edit/Container/tab_edit_import.pt:333
 msgid ""
 "Locate a Word file to upload. It'll be converted and appear in the list of "
 "processed items below. It can be imported anywhere in Silva."
@@ -2629,19 +2766,19 @@ msgstr ""
 "la liste des items traités. Il peut être importé à n'importe quel "
 "emplacement dans Silva"
 
-#: /views/edit/Container/tab_edit_import.pt:341
+#: /views/edit/Container/tab_edit_import.pt:340
 #: /views/edit/Container/tab_status_export.pt:393
 #: /views/public/subscriptor.pt:40 /views/public/subscriptor.pt:64
 #: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "email address"
 msgstr "adresse email"
 
-#: /views/edit/Container/tab_edit_import.pt:351
+#: /views/edit/Container/tab_edit_import.pt:350
 #: /views/edit/Container/tab_status_export.pt:403
 msgid "An e-mail will be sent to you when the item is processed."
 msgstr "Un email vous sera adressé quand l'item sera traité"
 
-#: /views/edit/Container/tab_edit_import.pt:365
+#: /views/edit/Container/tab_edit_import.pt:364
 #: /views/edit/Container/tab_status_export.pt:441
 msgid ""
 "This description will be shown in the queue and the list of processed items."
@@ -2649,7 +2786,7 @@ msgstr ""
 "Cette description sera présenté dans la file d'attente et dans la liste des "
 "items traités"
 
-#: /views/edit/Container/tab_edit_import.pt:373
+#: /views/edit/Container/tab_edit_import.pt:372
 msgid "upload a word document from your local drive: alt-u"
 msgstr "charger un document word de votre disque local: alt-u"
 
@@ -4125,6 +4262,7 @@ msgstr "&#134; disponible"
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Member/SimpleMember/tab_edit.pt:142 /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
+#: /kupu/kupumacros.html:678
 msgid "save"
 msgstr "sauvegarder"
 
@@ -4142,7 +4280,7 @@ msgstr "metadata set"
 #: /views/edit/Asset/Image/edit.pt:139
 #: /views/edit/Container/tab_edit_import.pt:86
 #: /views/edit/Container/tab_edit_import.pt:155
-#: /views/edit/Container/tab_edit_import.pt:313
+#: /views/edit/Container/tab_edit_import.pt:312
 #: /views/edit/Container/Publication/tab_addables.pt:74
 msgid "element"
 msgstr "élément"
@@ -4154,7 +4292,7 @@ msgstr "élément"
 #: /views/edit/Asset/Image/edit.pt:144
 #: /views/edit/Container/tab_edit_import.pt:91
 #: /views/edit/Container/tab_edit_import.pt:160
-#: /views/edit/Container/tab_edit_import.pt:318
+#: /views/edit/Container/tab_edit_import.pt:317
 #: /views/edit/Container/tab_status_export.pt:326
 #: /views/edit/Container/GhostFolder/tab_edit.pt:77
 #: /views/edit/Container/Publication/tab_addables.pt:79
@@ -4176,7 +4314,7 @@ msgstr "contenu acquis"
 #: /views/edit/tab_access.pt:707 /views/edit/Asset/Image/edit.pt:147
 #: /views/edit/Container/tab_edit_import.pt:94
 #: /views/edit/Container/tab_edit_import.pt:163
-#: /views/edit/Container/tab_edit_import.pt:321
+#: /views/edit/Container/tab_edit_import.pt:320
 #: /views/edit/Container/tab_status_export.pt:103
 #: /views/edit/Container/tab_status_export.pt:202
 #: /views/edit/Container/tab_status_export.pt:329
@@ -4862,72 +5000,72 @@ msgstr "&laquo; Précedents ${n} items"
 msgid "Next ${n} items &raquo;"
 msgstr "Suivant ${n} items &raquo;"
 
-#: /views/macro_index.pt:127
+#: /views/macro_index.pt:126
 msgid "jump to zope root: alt-z"
 msgstr "aller à la racine zope: alt-z"
 
-#: /views/macro_index.pt:127
+#: /views/macro_index.pt:126
 msgid "zroot..."
 msgstr "zracine..."
 
-#: /views/macro_index.pt:136
+#: /views/macro_index.pt:135
 msgid "sroot..."
 msgstr "sracine..."
 
-#: /views/macro_index.pt:136
+#: /views/macro_index.pt:135
 msgid "jump to silva root in zodb: alt-'"
 msgstr "aller à la racine silva dans zodb: alt-'"
 
-#: /views/macro_index.pt:145
+#: /views/macro_index.pt:144
 msgid "sservices..."
 msgstr "sservices..."
 
-#: /views/macro_index.pt:145
+#: /views/macro_index.pt:144
 msgid "jump to silva services: alt-`"
 msgstr "aller à services silva: alt-`"
 
-#: /views/macro_index.pt:174 /views/macro_index.pt:177
-#: /views/macro_index.pt:187 /views/macro_index.pt:191
+#: /views/macro_index.pt:173 /views/macro_index.pt:176
+#: /views/macro_index.pt:186 /views/macro_index.pt:190
 msgid "jump to top: alt-t"
 msgstr "aller vers le haut: alt-t"
 
-#: /views/macro_index.pt:210
+#: /views/macro_index.pt:209
 msgid "contact:"
 msgstr "contact:"
 
-#: /views/macro_index.pt:218
+#: /views/macro_index.pt:217
 msgid "no name"
 msgstr "sans nom"
 
-#: /views/macro_index.pt:225
+#: /views/macro_index.pt:224
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Quitter Silva et aller à la page publique: alt-:"
 
-#: /views/macro_index.pt:225
+#: /views/macro_index.pt:224
 msgid "view public version"
 msgstr "apperçu version publique"
 
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:242
 msgid "Change your settings: alt-~"
 msgstr "Modifier vos paramétres: alt-~"
 
-#: /views/macro_index.pt:257
+#: /views/macro_index.pt:256
 msgid "user settings"
 msgstr "paramétres utilisateur"
 
-#: /views/macro_index.pt:261
+#: /views/macro_index.pt:260
 msgid "Logout of Silva: alt-q"
 msgstr "Se déconnecter de Silva: alt-q"
 
-#: /views/macro_index.pt:270
+#: /views/macro_index.pt:269
 msgid "logout ${role} ${userid}"
 msgstr "déconnecter ${role} ${userid}"
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:275
 msgid "Request an additional role in this location: alt-,"
 msgstr "Demander un rôle supplémentaire dans cet endroit: alt-,"
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:275
 msgid "request access"
 msgstr "Demande d'accès"
 
@@ -5257,9 +5395,6 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Ne peut pas approuver version, non autorisé."
-
-#~ msgid "Silva info on the Infrae site: alt-i"
-#~ msgstr "Info Silva dans le site Infrae: alt-i"
 
 #~ msgid ""
 #~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"

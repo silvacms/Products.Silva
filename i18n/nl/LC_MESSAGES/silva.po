@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Fri Sep 15 17:12:14 2006\n"
+"POT-Creation-Date: Tue Oct 10 19:06:46 2006\n"
 "PO-Revision-Date: 2005-10-14 12:50+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -322,7 +322,7 @@ msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
 msgid "There already is an approved version."
 msgstr "Er is al een goedgekeurde versie."
 
-#: /adapters/languageprovider.py:39
+#: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
 msgstr ""
 
@@ -970,6 +970,140 @@ msgstr "Externe ontwikkelaars"
 msgid "Thanks to...."
 msgstr "Met dank aan...."
 
+#: /kupu/kupumacros.html:210
+msgid "Kupu 1.4"
+msgstr ""
+
+#: /kupu/kupumacros.html:231
+msgid "save: alt-s"
+msgstr "opslaan: alt-s"
+
+#: /kupu/kupumacros.html:235
+msgid "Bold: Access key (Alt or Ctrl) + B"
+msgstr ""
+
+#: /kupu/kupumacros.html:236
+msgid "Italic: Access key (Alt or Ctrl) + I"
+msgstr ""
+
+#: /kupu/kupumacros.html:237
+msgid "Underline: Access key (Alt or Ctrl) + U"
+msgstr ""
+
+#: /kupu/kupumacros.html:241
+msgid "Subscript: Access key (Alt or Ctrl) + -"
+msgstr ""
+
+#: /kupu/kupumacros.html:242
+msgid "Superscript: Access key (Alt or Ctrl) + +"
+msgstr ""
+
+#: /kupu/kupumacros.html:247
+msgid "Numbered list: Access key (Alt or Ctrl) + #"
+msgstr ""
+
+#: /kupu/kupumacros.html:248
+msgid "Unordered list: Access key (Alt or Ctrl) + *"
+msgstr ""
+
+#: /kupu/kupumacros.html:253
+msgid "Definition list: Access key (Alt or Ctrl) + ="
+msgstr ""
+
+#: /kupu/kupumacros.html:257
+msgid "Undo: Access key (Alt or Ctrl) + Z"
+msgstr ""
+
+#: /kupu/kupumacros.html:258
+msgid "Redo: Access key (Alt or Ctrl) + Y"
+msgstr ""
+
+# Default: "Switch between visual editor and HTML view"
+#: /kupu/kupumacros.html:262
+msgid "toggle_source_view"
+msgstr ""
+
+# Default: "&#9679;"
+#: /kupu/kupumacros.html:268
+msgid "list-disc"
+msgstr ""
+
+# Default: "&#9632;"
+#: /kupu/kupumacros.html:269
+msgid "list-square"
+msgstr ""
+
+# Default: "&#9675;"
+#: /kupu/kupumacros.html:270
+msgid "list-circle"
+msgstr ""
+
+# Default: "no bullet"
+#: /kupu/kupumacros.html:271
+msgid "list-nobullet"
+msgstr ""
+
+# Default: "1"
+#: /kupu/kupumacros.html:274
+msgid "list-decimal"
+msgstr ""
+
+# Default: "I"
+#: /kupu/kupumacros.html:275
+msgid "list-upperroman"
+msgstr ""
+
+# Default: "i"
+#: /kupu/kupumacros.html:276
+msgid "list-lowerroman"
+msgstr ""
+
+# Default: "A"
+#: /kupu/kupumacros.html:277
+msgid "list-upperalpha"
+msgstr ""
+
+# Default: "a"
+#: /kupu/kupumacros.html:278
+msgid "list-loweralpha"
+msgstr ""
+
+#: /kupu/kupumacros.html:350
+msgid "index item"
+msgstr ""
+
+#: /kupu/kupumacros.html:416
+msgid "abbreviations and acronyms"
+msgstr ""
+
+#: /kupu/kupumacros.html:459
+msgid "cleanup"
+msgstr ""
+
+#: /kupu/kupumacros.html:469
+msgid "external source"
+msgstr ""
+
+#: /kupu/kupumacros.html:498
+msgid "citation"
+msgstr ""
+
+#: /kupu/kupumacros.html:539
+msgid "table"
+msgstr ""
+
+#: /kupu/kupumacros.html:640
+msgid "table of contents"
+msgstr ""
+
+#: /kupu/kupumacros.html:668
+msgid "typographical characters"
+msgstr "typografische tekens"
+
+#: /layout/layout_macro.html:77
+msgid "Silva info on the Infrae site: alt-i"
+msgstr "Informatie over Silva op de Infrae site: alt-i"
+
 #: /resources/request_processed.pt:18
 msgid "Request processed"
 msgstr "Verzoek verwerkt"
@@ -1523,7 +1657,8 @@ msgstr "formaat"
 msgid "dimensions"
 msgstr "afmetingen"
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /kupu/kupumacros.html:372
+#: /views/add/Image/form.form:46
 msgid "image"
 msgstr "afbeelding"
 
@@ -1710,6 +1845,7 @@ msgstr "voorbeeld"
 #: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:253
 #: /views/edit/Container/tab_edit.pt:432 /views/edit/Container/tab_edit.pt:441
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
+#: /kupu/kupumacros.html:302
 msgid "properties"
 msgstr "eigenschappen"
 
@@ -1725,7 +1861,7 @@ msgid "access"
 msgstr "toegang"
 
 #: /views/edit/Asset/macro_asset_edit.pt:143
-#: /views/edit/Container/tab_edit_import.pt:373
+#: /views/edit/Container/tab_edit_import.pt:372
 msgid "upload"
 msgstr "uploaden"
 
@@ -1829,6 +1965,7 @@ msgstr "Pad naar origineel (begint met &#8216;/&#8217;)."
 #: /views/edit/Container/GhostFolder/tab_edit.pt:120
 #: /views/edit/VersionedContent/Ghost/edit.pt:105
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
+#: /kupu/kupumacros.html:324
 msgid "link"
 msgstr "link"
 
@@ -1986,7 +2123,7 @@ msgstr "verwijderen"
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
-#: /views/edit/Container/tab_edit_import.pt:357
+#: /views/edit/Container/tab_edit_import.pt:356
 #: /views/edit/Container/tab_status_export.pt:432 /doc/silva-extra.xml:154
 msgid "description"
 msgstr "omschrijving"
@@ -2497,7 +2634,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:102
 #: /views/edit/Container/tab_edit_import.pt:171
-#: /views/edit/Container/tab_edit_import.pt:329
+#: /views/edit/Container/tab_edit_import.pt:328
 msgid "file to upload"
 msgstr "bestand om te uploaden"
 
@@ -2562,33 +2699,33 @@ msgstr ""
 #: /views/edit/Container/tab_edit_import.pt:239
 msgid ""
 "Replace Content Objects with the Objects from the import when they have the "
-"same ids."
+"same ids (Note: they will be replaced *even* when published)."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_import.pt:248
+#: /views/edit/Container/tab_edit_import.pt:247
 msgid "import zip"
 msgstr "zipbestand importeren"
 
-#: /views/edit/Container/tab_edit_import.pt:248
+#: /views/edit/Container/tab_edit_import.pt:247
 #: /views/edit/Container/tab_status_export.pt:151
 msgid "access key: alt-z"
 msgstr "sneltoets: alt-z"
 
-#: /views/edit/Container/tab_edit_import.pt:286
+#: /views/edit/Container/tab_edit_import.pt:285
 #: /views/edit/Container/tab_status_export.pt:298
 msgid "docma icon"
 msgstr "docma icoon"
 
-#: /views/edit/Container/tab_edit_import.pt:294
+#: /views/edit/Container/tab_edit_import.pt:293
 #: /views/edit/Container/tab_status_export.pt:306
 msgid "docma facilities"
 msgstr "docma faciliteiten"
 
-#: /views/edit/Container/tab_edit_import.pt:306
+#: /views/edit/Container/tab_edit_import.pt:305
 msgid "upload a document in word format (.doc) for conversion"
 msgstr "document in word-formaat (.doc) uploaden voor conversie"
 
-#: /views/edit/Container/tab_edit_import.pt:334
+#: /views/edit/Container/tab_edit_import.pt:333
 msgid ""
 "Locate a Word file to upload. It'll be converted and appear in the list of "
 "processed items below. It can be imported anywhere in Silva."
@@ -2597,19 +2734,19 @@ msgstr ""
 "lijst met verwerkte items terecht komen die hier onder staat. Het kan overal "
 "in Silva worden geïmporteerd."
 
-#: /views/edit/Container/tab_edit_import.pt:341
+#: /views/edit/Container/tab_edit_import.pt:340
 #: /views/edit/Container/tab_status_export.pt:393
 #: /views/public/subscriptor.pt:40 /views/public/subscriptor.pt:64
 #: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "email address"
 msgstr "e-mail adres"
 
-#: /views/edit/Container/tab_edit_import.pt:351
+#: /views/edit/Container/tab_edit_import.pt:350
 #: /views/edit/Container/tab_status_export.pt:403
 msgid "An e-mail will be sent to you when the item is processed."
 msgstr "Er wordt een email gestuurd wanneer het item is verwerkt."
 
-#: /views/edit/Container/tab_edit_import.pt:365
+#: /views/edit/Container/tab_edit_import.pt:364
 #: /views/edit/Container/tab_status_export.pt:441
 msgid ""
 "This description will be shown in the queue and the list of processed items."
@@ -2617,7 +2754,7 @@ msgstr ""
 "Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items "
 "getoond."
 
-#: /views/edit/Container/tab_edit_import.pt:373
+#: /views/edit/Container/tab_edit_import.pt:372
 msgid "upload a word document from your local drive: alt-u"
 msgstr "een word-document uploaden van uw lokale schijf: alt-u"
 
@@ -4092,6 +4229,7 @@ msgstr "&#134; overerfbaar"
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Member/SimpleMember/tab_edit.pt:142 /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
+#: /kupu/kupumacros.html:678
 msgid "save"
 msgstr "opslaan"
 
@@ -4109,7 +4247,7 @@ msgstr "metadata-set"
 #: /views/edit/Asset/Image/edit.pt:139
 #: /views/edit/Container/tab_edit_import.pt:86
 #: /views/edit/Container/tab_edit_import.pt:155
-#: /views/edit/Container/tab_edit_import.pt:313
+#: /views/edit/Container/tab_edit_import.pt:312
 #: /views/edit/Container/Publication/tab_addables.pt:74
 msgid "element"
 msgstr "element"
@@ -4121,7 +4259,7 @@ msgstr "element"
 #: /views/edit/Asset/Image/edit.pt:144
 #: /views/edit/Container/tab_edit_import.pt:91
 #: /views/edit/Container/tab_edit_import.pt:160
-#: /views/edit/Container/tab_edit_import.pt:318
+#: /views/edit/Container/tab_edit_import.pt:317
 #: /views/edit/Container/tab_status_export.pt:326
 #: /views/edit/Container/GhostFolder/tab_edit.pt:77
 #: /views/edit/Container/Publication/tab_addables.pt:79
@@ -4143,7 +4281,7 @@ msgstr "overgeërfde inhoud"
 #: /views/edit/tab_access.pt:707 /views/edit/Asset/Image/edit.pt:147
 #: /views/edit/Container/tab_edit_import.pt:94
 #: /views/edit/Container/tab_edit_import.pt:163
-#: /views/edit/Container/tab_edit_import.pt:321
+#: /views/edit/Container/tab_edit_import.pt:320
 #: /views/edit/Container/tab_status_export.pt:103
 #: /views/edit/Container/tab_status_export.pt:202
 #: /views/edit/Container/tab_status_export.pt:329
@@ -4831,72 +4969,72 @@ msgstr "&laquo; Vorige ${n} items"
 msgid "Next ${n} items &raquo;"
 msgstr "Volgende ${n} items &raquo;"
 
-#: /views/macro_index.pt:127
+#: /views/macro_index.pt:126
 msgid "jump to zope root: alt-z"
 msgstr "naar zope root: alt-z"
 
-#: /views/macro_index.pt:127
+#: /views/macro_index.pt:126
 msgid "zroot..."
 msgstr "zroot..."
 
-#: /views/macro_index.pt:136
+#: /views/macro_index.pt:135
 msgid "sroot..."
 msgstr "sroot..."
 
-#: /views/macro_index.pt:136
+#: /views/macro_index.pt:135
 msgid "jump to silva root in zodb: alt-'"
 msgstr "naar silva root: alt-'"
 
-#: /views/macro_index.pt:145
+#: /views/macro_index.pt:144
 msgid "sservices..."
 msgstr "sservices..."
 
-#: /views/macro_index.pt:145
+#: /views/macro_index.pt:144
 msgid "jump to silva services: alt-`"
 msgstr "naar silva services: alt-`"
 
-#: /views/macro_index.pt:174 /views/macro_index.pt:177
-#: /views/macro_index.pt:187 /views/macro_index.pt:191
+#: /views/macro_index.pt:173 /views/macro_index.pt:176
+#: /views/macro_index.pt:186 /views/macro_index.pt:190
 msgid "jump to top: alt-t"
 msgstr "naar bovenste niveau: alt-t"
 
-#: /views/macro_index.pt:210
+#: /views/macro_index.pt:209
 msgid "contact:"
 msgstr "contact:"
 
-#: /views/macro_index.pt:218
+#: /views/macro_index.pt:217
 msgid "no name"
 msgstr "geen naam"
 
-#: /views/macro_index.pt:225
+#: /views/macro_index.pt:224
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlaten en publieke pagina bekijken: alt-:"
 
-#: /views/macro_index.pt:225
+#: /views/macro_index.pt:224
 msgid "view public version"
 msgstr "publieke versie bekijken"
 
-#: /views/macro_index.pt:243
+#: /views/macro_index.pt:242
 msgid "Change your settings: alt-~"
 msgstr "Je instellingen veranderen: alt-~"
 
-#: /views/macro_index.pt:257
+#: /views/macro_index.pt:256
 msgid "user settings"
 msgstr "gebruikersinstellingen"
 
-#: /views/macro_index.pt:261
+#: /views/macro_index.pt:260
 msgid "Logout of Silva: alt-q"
 msgstr "Uit Silva uitloggen: alt-q"
 
-#: /views/macro_index.pt:270
+#: /views/macro_index.pt:269
 msgid "logout ${role} ${userid}"
 msgstr "${role} ${userid} uitloggen"
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:275
 msgid "Request an additional role in this location: alt-,"
 msgstr "Een extra rol aanvragen voor deze locatie: alt-,"
 
-#: /views/macro_index.pt:276
+#: /views/macro_index.pt:275
 msgid "request access"
 msgstr "toegang aanvragen"
 
@@ -5223,9 +5361,6 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Kan versie niet goedkeuren; geen toestemming."
-
-#~ msgid "Silva info on the Infrae site: alt-i"
-#~ msgstr "Informatie over Silva op de Infrae site: alt-i"
 
 #~ msgid ""
 #~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
