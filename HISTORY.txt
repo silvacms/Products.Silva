@@ -3,6 +3,11 @@ See also LICENSE.txt
 
 Silva changes
 
+    Ported from 1.5 branch
+
+      - Anchors around divs break in explorer, so they were put inside in 
+        the xslt renderer.
+
 Silva 1.6b4
 
     Bugs fixed:
