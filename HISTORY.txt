@@ -5,6 +5,10 @@ Silva changes
 
     Ported from 1.5 branch
 
+      - Incorrect links entered by hand or imported broke the path adapter.
+        Since this made editing the document impossible, I added some 
+        defensive code.
+
       - Anchors around divs break in explorer, so they were put inside in 
         the xslt renderer.
 
