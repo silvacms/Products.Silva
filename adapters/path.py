@@ -43,7 +43,14 @@ class PathAdapter(adapter.Adapter):
                 path += '#' + fragment
             return path
         request = self.request
-        result = '/'.join(request.physicalPathFromURL(path))
+        
+        # physicalPathFromURL breaks in complex virtual hosting situations
+        # where incorrect urls are entered by hand, or imported
+        try:
+            result = '/'.join(request.physicalPathFromURL(path))
+        except ValueError:
+            result = path
+            
         # try to retain fragment information..
         if fragment:
             result += '#' + fragment
