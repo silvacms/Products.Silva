@@ -315,4 +315,38 @@ div#kupu-fgcolorchooser div:hover {
   width: 14em;
 }
 
+#kupu-toolbox-extsource a {
+  color: #187374;
+  text-decoration: none;
+}
+
+#kupu-toolbox-extsource a.rollover span {
+  display: none;
+}
+
+#kupu-toolbox-extsource a.rollover:hover {  
+  text-decoration: none;
+}
+
+#kupu-toolbox-extsource span.tooltip {
+  color: #444;
+  background: #e3f1da;
+  margin: 0.8em 0.4em 0 0;
+  padding: 0.1em 0.2em 0.2em;
+  border: 1px solid #797f7f;
+  text-align:left;
+  font-style: normal;
+  display: none
+}
+
+#kupu-toolbox-extsource a.rollover:hover span {
+  display:block;
+  position:absolute;
+  width:21em;
+}
+
+#kupu-toolbox-extsource a.requiredfield {
+ border-bottom: 1px solid #cc0000;
+}
+
 </dtml-let>
