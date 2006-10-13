@@ -278,8 +278,35 @@ div#kupu-fgcolorchooser div:hover {
 
 }
 
-.kupu-properties-checkbox-outerdiv {
+div.kupu-properties-checkbox-outerdiv h2{
+  font-size: 1.1em;
+  font-weight: normal;
+  color: #eCFFF3;
+  background-color: #9AACB6;
+  width: inherit;
+  max-width: 22em;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left:-0.6em;
+  margin-right:-1.2em;
+  padding: 0px;
+  padding-left: 0.8em;
+  border: solid 1px #6c797f;
+  border-style: solid none none none;
+  text-align: left;
   cursor: default;
+}
+
+#kupu-toolbox-properties h1.kupu-toolbox-heading-opened {
+  margin-bottom:-0.3em;
+}
+
+div.kupu-properties-checkbox-outerdiv{
+  margin-top: -0.4em;
+}
+
+div.kupu-properties-checkbox-innerdiv {
+  margin-bottom: 2.2em;
 }
 
 .kupu-properties-checkbox-line {
@@ -292,7 +319,6 @@ div#kupu-fgcolorchooser div:hover {
 
 .kupu-properties-checkbox-item-title {
   float: left;
-  width: 14em;
 }
 
 #kupu-toolbox-debug {
