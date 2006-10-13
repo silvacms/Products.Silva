@@ -6,6 +6,9 @@ Silva changes
   1.5.8 (unreleased)
 
     Bugs fixed
+      
+      - Non Ascii characters in names or values of codesource paramaters
+	no longer result in errors.
 
       - Incorrect links entered by hand or imported broke the path adapter.
         Since this made editing the document impossible, I added some 
