@@ -617,7 +617,7 @@
                         title="there's no undo: alt-d"
                         accesskey="d"
                         onclick="return confirm('Really delete?')"
-                        i18n:attributes="value;title"
+                        i18n:attributes="value;title;onclick"
                       />
                     </tal:block>
                   </tal:block>
