@@ -460,7 +460,7 @@ made to the current version.
   title="access key: alt-p"
   accesskey="p"
   onclick="return confirm('Really revert ?')"
-  i18n:attributes="value;title;onclick"
+  i18n:attributes="value;title"
 />
 </td>
 </tr>
