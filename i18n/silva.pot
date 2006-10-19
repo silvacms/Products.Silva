@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Oct 16 18:04:56 2006\n"
+"POT-Creation-Date: Tue Oct 17 11:33:11 2006\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -2138,10 +2138,6 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:603
 msgid "paste ghost"
-msgstr ""
-
-#: /views/edit/Container/tab_edit.pt:613
-msgid "return confirm('Really delete?')"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:613
