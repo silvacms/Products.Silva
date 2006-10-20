@@ -1,9 +1,10 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Oct 10 19:27:44 2006\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Silva i18n team <walco@infrae.com>\n"
+"Project-Id-Version: Silva trunk"
+"POT-Creation-Date: Tue Oct 17 12:52:56 2006\n"
+"PO-Revision-Date:  Tue Oct 17 12:52:56 2006\n"
+"Last-Translator: eric casteleijn <eric+i18n@infrae.com>\n"
+"Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3552,10 +3553,6 @@ msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:449
 msgid "The current editable version can be replaced with the previous (published) version. This can not be undone afterwards and will discard all changes made to the current version."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:457
-msgid "return confirm('Really revert ?')"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:457

@@ -278,8 +278,8 @@
           <xsl:otherwise>
               <xsl:choose>
                 <xsl:when test="starts-with(@alignment, 'image-')">
+                  <div class="{@alignment}">
                   <a href="{@rewritten_link}" target="{@target}" title="{@title}">
-                    <div class="{@alignment}">
                       <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
                         <xsl:if test="@width">
                           <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
@@ -288,8 +288,8 @@
                           <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
                         </xsl:if>
                       </img>
-                    </div>
                   </a>
+                  </div>
                 </xsl:when>
                 <xsl:otherwise>
                   <a href="{@rewritten_link}" target="{@target}" title="{@title}">
