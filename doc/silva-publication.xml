@@ -1,7 +1,8 @@
 <metadata_set id="silva-publication" ns_uri="http://infrae.com/namespaces/metadata/silva-publication" ns_prefix="silva-publication">
 <title></title>
 <description></description>
-  <metadata_element id="defaultdocument_policy">
+<i18n_domain>silva</i18n_domain>
+<metadata_element id="defaultdocument_policy">
    <index_type>KeywordIndex</index_type>
    <index_p>0</index_p>
    <field_type>ListField</field_type>
