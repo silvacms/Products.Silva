@@ -2352,6 +2352,10 @@ msgstr "editeur de contenus"
 msgid "unknown"
 msgstr "inconnu"
 
+#: /views/edit/Container/tab_edit.pt:480
+msgid "content actions"
+msgstr "actions de contenu"
+
 #: /views/edit/Container/tab_edit.pt:484
 #: /views/edit/Container/tab_status.pt:93
 #: /views/edit/VersionedContent/tab_status.pt:59
