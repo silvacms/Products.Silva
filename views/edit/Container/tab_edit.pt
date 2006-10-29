@@ -477,11 +477,11 @@
                   <metal:block use-macro="view/macro_select_all/macros/select_all"/>
                 </th>
                 <th class="controls"
-                  colspan="3"
+                  colspan="2"
                   i18n:translate="">
                   content actions
                 </th>
-                <th class="listing-right" colspan="2">
+                <th class="listing-right" colspan="3">
                   <span tal:condition="may_change_content"
                     tal:omit-tag="">
                     <span style="margin-right:0.2em"
