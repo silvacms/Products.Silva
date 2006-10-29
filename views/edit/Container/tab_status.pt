@@ -221,7 +221,7 @@
           <span
             tal:content="structure obj/next_version_publication_datetime | nothing"
             tal:attributes="class obj/status_style | default;"
-	          tal:omit-tag="obj/status_style | default"
+            tal:omit-tag="obj/status_style | default"
           />
         </td>
         <tal:block replace="nothing">
@@ -234,7 +234,7 @@
               global expireables python:expire_time and 1 or expireables;"
             tal:content="structure expire_time"
             tal:attributes="class obj/status_style | default;"
-	    tal:omit-tag="obj/status_style | default"
+            tal:omit-tag="obj/status_style | default"
           />
         </td>
         <tal:block replace="nothing">
