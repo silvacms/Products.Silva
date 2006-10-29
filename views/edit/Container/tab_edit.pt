@@ -478,11 +478,11 @@
         </tal:def>
       </th>
       <th class="controls"
-        colspan="3"
+        colspan="2"
         i18n:translate="">
         content actions
       </th>
-      <th class="controls listing-right" colspan="2">
+      <th class="controls listing-right" colspan="3">
         <tal:if condition="may_change_content">
           <span style="margin-right:0.2em"
             tal:condition="python:(published or editables or closed)"
