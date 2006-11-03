@@ -66,7 +66,7 @@
           <css_class>store</css_class>
           <default></default>
           <title>image</title>
-          <description>&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and title.</description>
+          <description>&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id.</description>
           <external_validator></external_validator>
           <required type="int">1</required>
           <extra></extra>
