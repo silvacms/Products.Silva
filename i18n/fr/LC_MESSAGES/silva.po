@@ -1093,9 +1093,13 @@ msgstr "Editeur en Chef"
 msgid "Added ${meta_type} ${id}."
 msgstr "Ajouté ${meta_type} ${id}."
 
-#: /views/add/File/form.form:70 /views/add/Image/form.form:69
+#: /views/add/File/form.form:70 
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr "<b>Tip:</b> Vous n'avez pas à remplir le titre et la id."
+
+#: /views/add/File/form.form:70
+msgid "<b>Tip:</b> You don't have to fill in the id."
+msgstr "<b>Tip:</b> Vous n'avez pas à remplir la id."
 
 #: /views/add/Folder/form.form:62
 msgid "Choose an item to be created within the folder."

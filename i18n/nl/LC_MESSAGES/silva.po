@@ -1050,9 +1050,13 @@ msgstr "Hoofdredacteur"
 msgid "Added ${meta_type} ${id}."
 msgstr "${meta_type} ${id} toegevoegd."
 
-#: /views/add/File/form.form:70 /views/add/Image/form.form:69
+#: /views/add/File/form.form:70
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr "<b>Tip:</b> Id en titel hoeven niet te worden ingevuld."
+
+#: /views/add/Image/form.form:69
+msgid "<b>Tip:</b> You don't have to fill in the id."
+msgstr "<b>Tip:</b> De id hoeft niet te worden ingevuld."
 
 #: /views/add/Folder/form.form:62
 msgid "Choose an item to be created within the folder."
