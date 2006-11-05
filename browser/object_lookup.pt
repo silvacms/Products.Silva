@@ -101,45 +101,36 @@
                       <div style="float: left;"
                         tal:condition="python: may_change_content and addable_types">
                         <form>
-                        <input class="transport"
-                          name="add_object:method"
-                          type="submit"
-                          value="new..."
-                          title="add a new item - alt-n"
-                          accesskey="n"
-                          tal:attributes="onclick string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value+'&lookup_mode:int=1'" 
-                          i18n:attributes="value;title"
-                        />
-                        <label for="meta_type" 
-                          title="access key: alt-s" 
-                          accesskey="s"
-                          i18n:attributes="title"
-                          >
-                        </label>
-                        <select class="transport"
-                          name="meta_type"
-                          id="meta_type"
-                          title="select a new item: alt-s"
-                          tal:attributes="onChange string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
-                          i18n:attributes="title"
-                          >
-                          <option value="None" i18n:translate="">
-                            select:
-                          </option>
-                          <tal:block tal:repeat="addable context/get_silva_addables">
-                            <option tal:condition="python:context.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
-                              tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
-                              tal:attributes="value addable/name" />
-                          </tal:block>
-                        </select>
-                        <input type="hidden"
-                          name="lookup_mode:int"
-                          value="1"
-                        />
-                        <input type="hidden"
-                          name="return_url"
-                          tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
-                        />
+                          <label for="meta_type" 
+                            title="access key: alt-s" 
+                            accesskey="s"
+                            i18n:attributes="title"
+                            >
+                          </label>
+                          <select class="transport"
+                            name="meta_type"
+                            id="meta_type"
+                            title="select a new item: alt-s"
+                            tal:attributes="onChange string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
+                            i18n:attributes="title"
+                            >
+                            <option value="None" i18n:translate="">
+                              select:
+                            </option>
+                            <tal:block tal:repeat="addable context/get_silva_addables">
+                              <option tal:condition="python:context.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
+                                tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                                tal:attributes="value addable/name" />
+                            </tal:block>
+                          </select>
+                          <input type="hidden"
+                            name="lookup_mode:int"
+                            value="1"
+                          />
+                          <input type="hidden"
+                            name="return_url"
+                            tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
+                          />
                         </form>
                       </div>
                     </td>
