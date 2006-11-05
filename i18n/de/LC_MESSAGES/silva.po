@@ -1160,7 +1160,8 @@ msgstr "Leere oder ungültige Datei."
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
-msgstr ""
+msgstr "Einen Titel ausfüllen. Er wird für den "
+"<abbr title=\"Alternative text\">ALT</abbr> Text des Bildes verwendet."
 
 #: /views/add/Link/form.form:73
 msgid "Link url."
@@ -2369,11 +2370,15 @@ msgstr "Editor"
 msgid "unknown"
 msgstr "Unbekannt"
 
+#: /views/edit/Container/tab_edit.pt:480
+msgid "content actions"
+msgstr "Inhaltstätigkeiten"
+
 #: /views/edit/Container/tab_edit.pt:484
 #: /views/edit/Container/tab_status.pt:93
 #: /views/edit/VersionedContent/tab_status.pt:59
 msgid "publishing actions"
-msgstr "Veröffentlichungseinstellungen"
+msgstr "Veröffentlichungstätigkeiten"
 
 #: /views/edit/Container/tab_edit.pt:499
 msgid "close published items: alt-l"

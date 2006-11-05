@@ -1163,6 +1163,8 @@ msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
 msgstr ""
+"Compléter un titre. Il sera employé pour le texte d'"
+"<abbr title=\"Alternative text\">ALT</abbr> de l'image."
 
 #: /views/add/Link/form.form:73
 msgid "Link url."

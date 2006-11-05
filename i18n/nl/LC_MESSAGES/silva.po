@@ -1119,7 +1119,9 @@ msgstr "Leeg of incorrect bestand."
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
-msgstr ""
+msgstr "Vul een titel in. Het zal voor de "
+"<abbr title=\"Alternative text\">ALT</abbr> tekst van het beeld worden" 
+" gebruikt."
 
 #: /views/add/Link/form.form:73
 msgid "Link url."
@@ -2321,6 +2323,10 @@ msgstr "inhoud editor"
 #: /browser/object_lookup.pt:400
 msgid "unknown"
 msgstr "onbekend"
+
+#: /views/edit/Container/tab_edit.pt:480
+msgid "content actions"
+msgstr "inhoud-acties"
 
 #: /views/edit/Container/tab_edit.pt:484
 #: /views/edit/Container/tab_status.pt:93
