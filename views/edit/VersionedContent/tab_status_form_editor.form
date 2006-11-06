@@ -34,7 +34,7 @@
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
           <date_separator>python:form.get_date_punctuation()</date_separator>
-          <default>python:field.REQUEST.model.get_next_version_publication_datetime()</default> 
+          <default>python:field.REQUEST.model.get_public_version_expiration_datetime()</default> 
         </tales>
       </field>
       <field><id>expiration_datetime</id> <type>DateTimeField</type>
