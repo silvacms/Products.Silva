@@ -241,9 +241,9 @@
     </acronym>
   </xsl:template>
     
-  <xsl:template match="doc:image[@rewritten_link]">
+  <xsl:template match="doc:image">
     <xsl:choose>
-      <xsl:when test="string-length(@rewritten_link) &gt; 0">
+      <xsl:when test="@rewritten_link">
         <xsl:choose>
           <xsl:when test="starts-with(@alignment, 'image-')">
             <div class="{@alignment}">
