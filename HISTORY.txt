@@ -30,6 +30,10 @@ Silva changes
         English can be explicitly selected in the user settings
         view. (issue 1572)
 
+    Features added
+
+      - Removed the 'new' button in the lookup window (issue 1640)
+
   1.5.7
 
     Features added
