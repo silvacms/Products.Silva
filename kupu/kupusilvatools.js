@@ -1242,9 +1242,10 @@ SilvaTableToolBox.prototype._fixAllTables = function() {
     };
 };
 
-function SilvaIndexTool(inputid, addbuttonid, updatebuttonid, deletebuttonid, toolboxid, plainclass, activeclass) {
+function SilvaIndexTool(titleinputid, nameinputid, addbuttonid, updatebuttonid, deletebuttonid, toolboxid, plainclass, activeclass) {
     /* a tool to manage index items (named anchors) for Silva */
-    this.input = getFromSelector(inputid);
+    this.nameinput = getFromSelector(nameinputid);
+    this.titleinput = getFromSelector(titleinputid);
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
     this.deletebutton = getFromSelector(deletebuttonid);
@@ -1258,7 +1259,6 @@ SilvaIndexTool.prototype = new KupuTool;
 SilvaIndexTool.prototype.initialize = function(editor) {
     /* attach the event handlers */
     this.editor = editor;
-    addEventHandler(this.input, 'blur', this.updateIndex, this);
     addEventHandler(this.addbutton, 'click', this.addIndex, this);
     addEventHandler(this.updatebutton, 'click', this.updateIndex, this);
     addEventHandler(this.deletebutton, 'click', this.deleteIndex, this);
@@ -1272,9 +1272,10 @@ SilvaIndexTool.prototype.initialize = function(editor) {
     this.deletebutton.style.display = 'none';
 };
 
-SilvaIndexTool.prototype.addIndex = function(event) {
+SilvaIndexTool.prototype.addIndex = function() {
     /* create an index */
-    var name = this.input.value;
+    var name = this.nameinput.value;
+    var title = this.titleinput.value;
     var currnode = this.editor.getSelectedNode();
     var indexel = this.editor.getNearestParentOfType(currnode, 'A');
     
@@ -1285,37 +1286,22 @@ SilvaIndexTool.prototype.addIndex = function(event) {
     
     if (!indexel) {
         var doc = this.editor.getDocument();
-        if (!name) {
-            var selection = this.editor.getSelection();
-            var cloned = selection.cloneContents();
-            var iterator = new NodeIterator(cloned);
-            var name = '';
-            var currnode = null;
-            while (currnode = iterator.next()) {
-                if (currnode.nodeValue) {
-                    name += currnode.nodeValue;
-                };
-            };
-            if (name) {
-                this.input.value = name;
-            };
-        };
         var docel = doc.getDocument();
         indexel = docel.createElement('a');
-        var text = docel.createTextNode('[' + name + ']');
+        var text = docel.createTextNode('[' + name + ': ' + title + ']');
         indexel.appendChild(text);
         indexel = this.editor.insertNodeAtSelection(indexel, true);
         indexel.className = 'index';
     };
-    
     indexel.setAttribute('name', name);
+    indexel.setAttribute('title', title);
     var sel = this.editor.getSelection();
     sel.collapse(true);
     this.editor.content_changed = true;
     this.editor.logMessage('Index added');
 };
 
-SilvaIndexTool.prototype.updateIndex = function(event) {
+SilvaIndexTool.prototype.updateIndex = function() {
     /* update an existing index */
     var currnode = this.editor.getSelectedNode();
     var indexel = this.editor.getNearestParentOfType(currnode, 'A');
@@ -1328,12 +1314,14 @@ SilvaIndexTool.prototype.updateIndex = function(event) {
         return;
     };
 
-    var name = this.input.value;
+    var name = this.nameinput.value;
+    var title = this.titleinput.value;
     indexel.setAttribute('name', name);
+    indexel.setAttribute('title', title);
     while (indexel.hasChildNodes()) {
         indexel.removeChild(indexel.firstChild);
     };
-    var text = this.editor.getInnerDocument().createTextNode('[' + name + ']')
+    var text = this.editor.getInnerDocument().createTextNode('[' + name + ': ' + title + ']')
     indexel.appendChild(text);
     this.editor.content_changed = true;
     this.editor.logMessage('Index modified');
@@ -1395,7 +1383,7 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
     return false;
 };
 
-SilvaIndexTool.prototype.updateState = function(selNode) {
+SilvaIndexTool.prototype.updateState = function(selNode, event) {
     var indexel = this.editor.getNearestParentOfType(selNode, 'A');
     if (indexel && !indexel.getAttribute('href')) {
         if (this.toolboxel) {
@@ -1404,7 +1392,8 @@ SilvaIndexTool.prototype.updateState = function(selNode) {
             };
             this.toolboxel.className = this.activeclass;
         };
-        this.input.value = indexel.getAttribute('name');
+        this.nameinput.value = indexel.getAttribute('name');
+        this.titleinput.value = indexel.getAttribute('title');
         this.addbutton.style.display = 'none';
         this.updatebutton.style.display = 'inline';
         this.deletebutton.style.display = 'inline';
@@ -1412,7 +1401,8 @@ SilvaIndexTool.prototype.updateState = function(selNode) {
         if (this.toolboxel) {
             this.toolboxel.className = this.plainclass;
         };
-        this.input.value = '';
+        this.nameinput.value = '';
+        this.titleinput.value = '';
         this.updatebutton.style.display = 'none';
         this.deletebutton.style.display = 'none';
         this.addbutton.style.display = 'inline';
@@ -1613,7 +1603,7 @@ SilvaTocTool.prototype.getTocText = function(depth) {
 function SilvaAbbrTool(abbrradioid, acronymradioid, radiocontainerid, titleinputid,
                             addbuttonid, updatebuttonid, delbuttonid,
                             toolboxid, plainclass, activeclass) {
-    /* tool to manage citation elements */
+    /* tool to manage Abbreviation elements */
     this.abbrradio = getFromSelector(abbrradioid);
     this.acronymradio = getFromSelector(acronymradioid);
     this.radiocontainer = getFromSelector(radiocontainerid);

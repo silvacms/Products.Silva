@@ -65,18 +65,18 @@
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
 
         <form name="kupu_link_form" onsubmit="return false;">
-          <input type="button" class="transport" style="margin-bottom:0.2em;" onclick="getLink(); return false;" value="get link reference..." />
+          <input type="button" class="transport" style="margin-bottom:0.2em;" onclick="getLink(); return false;" value="get link reference..." i18n:attributes="value"/>
           <input class="store" type="text" id="kupu-link-input" name="kupu_link_href" style="margin-left:0.2em; width:96%" /><br />
-          &#160;link target 
+          &#160;<span  i18n:translate="">link target</span>
           <select id="kupu-linktarget-select">
-            <option value="_self">same window</option>
-            <option value="_blank">new window</option>
-            <option value="input">custom target</option>
+            <option value="_self" i18n:translate="">same window</option>
+            <option value="_blank" i18n:translate="">new window</option>
+            <option value="input" i18n:translate="">custom target</option>
           </select><br />
           <input class="store" type="text" id="kupu-linktarget-input" name="kupu_link_target" style="margin-left: 0.2em; width: 96%" />
-          <input type="button" class="button" value="add link" id="kupu-link-addbutton" />
-          <input type="button" class="button" value="update link" id="kupu-link-updatebutton" />
-          <input type="button" class="warning" value="remove" id="kupu-link-delbutton" />
+          <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value" />
+          <input type="button" class="button" value="update link" id="kupu-link-updatebutton" i18n:attributes="value" />
+          <input type="button" class="warning" value="remove" id="kupu-link-delbutton" i18n:attributes="value" />
         </form>
 
       </div>
@@ -89,16 +89,34 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">index item</h1>
 
       <div class="kupu-tooltray">
-
         <form name="kupu_index_form" onsubmit="return false;">
-          <input class="store" type="text" id="kupu-index-input" name="kupu_index_href" style="margin-left:0.2em; width:96%" />
-          <input type="button" class="button" value="add index" id="kupu-index-addbutton" />
-          <input type="button" class="button" value="update index" id="kupu-index-updatebutton" />
-          <input type="button" class="warning" value="remove" id="kupu-index-deletebutton" />
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td>
+                  <table width="100%" style="color: #333;" border="0">
+                    <tr>
+                      <td width="30%" i18n:translate="">title</td>
+                      <td><input class="store" type="text" id="kupu-index-title" /></td>
+                    </tr>
+                    <tr>
+                      <td i18n:translate="">id</td>
+                      <td><input class="store" type="text" id="kupu-index-name" /></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="button" class="button" value="add index" id="kupu-index-addbutton" i18n:attributes="value" />
+                  <input type="button" class="button" value="update index" id="kupu-index-updatebutton" i18n:attributes="value" />
+                  <input type="button" class="warning" value="remove" id="kupu-index-deletebutton" i18n:attributes="value" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </form>
-
       </div>
-
     </div>
 
   </kupu:part>
