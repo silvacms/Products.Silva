@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+    Features added:
+
+      - index items now have a title attribute in addition to a name 
+        attribute. The title is used for displaying in an indexer. The
+        name is used for the anchor, and thus should be a valid anchor name.
+
     Ported from 1.5 branch
 
       - Non Ascii characters in names or values of codesource paramaters
