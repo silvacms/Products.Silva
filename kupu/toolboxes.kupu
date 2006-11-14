@@ -86,7 +86,7 @@
   <kupu:part name="indexes">
     <div class="kupu-toolbox" id="kupu-toolbox-indexes">
 
-      <h1 class="kupu-toolbox-heading" i18n:translate="">index item</h1>
+      <h1 class="kupu-toolbox-heading" i18n:translate="">anchor/index item</h1>
 
       <div class="kupu-tooltray">
         <form name="kupu_index_form" onsubmit="return false;">
@@ -96,12 +96,12 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0">
                     <tr>
-                      <td width="30%" i18n:translate="">title</td>
-                      <td><input class="store" type="text" id="kupu-index-title" /></td>
+                      <td i18n:translate="">anchor name</td>
+                      <td><input class="store" type="text" id="kupu-index-name" /></td>
                     </tr>
                     <tr>
-                      <td i18n:translate="">id</td>
-                      <td><input class="store" type="text" id="kupu-index-name" /></td>
+                      <td width="30%" i18n:translate="">index title</td>
+                      <td><input class="store" type="text" id="kupu-index-title" /></td>
                     </tr>
                   </table>
                 </td>
