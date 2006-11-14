@@ -4,7 +4,8 @@ from zope.interface import implements
 from Products.Silva import mangle
 from Products.Silva.interfaces import IUpgrader
 from Products.Silva.adapters.interfaces import IIndexable
-from Products.Silva.interfaces import IVersionedContent
+from Products.Silva.interfaces import IVersionedContent, IRoot, ISilvaObject
+from Products.Silva.interfaces import IVersion
 from Products.Silva.adapters import version_management
 
 from Products.Silva import upgrade
@@ -14,7 +15,9 @@ def initialize():
         IndexerUpgrader(), '1.6', 'Silva Indexer')
     upgrade.registry.registerUpgrader(
         IndexItemUpgrader(), '1.6', upgrade.AnyMetaType)
-
+    upgrade.registry.registerUpgrader(
+        CatalogRefresher(), '1.6', upgrade.AnyMetaType)
+    
 class IndexItemUpgrader:
 
     implements(IUpgrader)
@@ -58,3 +61,21 @@ class IndexerUpgrader:
             'Upgrading Indexer: %s' % indexer.get_title_or_id())
         indexer.update()
         return indexer
+
+class CatalogRefresher:
+    """Refreshes the whole Silva catalog"""
+    implements(IUpgrader)
+
+    def upgrade(self, obj):
+        if IRoot.providedBy(obj):
+            # Clear the Silva catalog
+            zLOG.LOG('Silva', zLOG.INFO, 'Catalog Refresh: clearing catalog')
+            obj.service_catalog.manage_catalogClear()
+        elif ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
+            obj.index_object()
+        elif IVersion.providedBy(obj) and getattr(obj, 'index_object', None):
+            if obj.version_status() != 'last_closed' and \
+               obj.version_status() != 'closed' :
+                obj.index_object()
+        return obj
+    
