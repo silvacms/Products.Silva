@@ -5,9 +5,13 @@ Silva changes
 
     Features added:
 
-      - index items now have a title attribute in addition to a name 
-        attribute. The title is used for displaying in an indexer. The
-        name is used for the anchor, and thus should be a valid anchor name.
+      - index items now have an 'index title' attribute in addition to an 
+        'anchor name' attribute. The title is used for displaying in an 
+        indexer. The name is used for the anchor, and thus should be a valid
+        anchor name.
+        
+        If no title is given, the index is considered a 'pure' anchor, and
+        will not be found by Indexers.
 
     Ported from 1.5 branch
 
