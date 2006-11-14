@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Oct 10 19:06:46 2006\n"
+"POT-Creation-Date: Tue Nov 14 19:24:59 2006\n"
 "PO-Revision-Date: 2006-06-30 13:57+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -301,27 +301,27 @@ msgstr ""
 msgid "no such version ${version}"
 msgstr ""
 
-#: /browser/object_lookup.pt:159
+#: /browser/object_lookup.pt:150
 msgid "select"
 msgstr ""
 
-#: /browser/object_lookup.pt:162 /browser/object_lookup.pt:258
+#: /browser/object_lookup.pt:153 /browser/object_lookup.pt:249
 msgid "view"
 msgstr ""
 
-#: /browser/object_lookup.pt:353
+#: /browser/object_lookup.pt:344
 msgid "&#8211;"
 msgstr ""
 
-#: /browser/object_lookup.pt:427
+#: /browser/object_lookup.pt:418
 msgid "cancel operation: alt-c"
 msgstr ""
 
-#: /browser/object_lookup.pt:437
+#: /browser/object_lookup.pt:428
 msgid "insert a reference to this asset: alt-p"
 msgstr ""
 
-#: /browser/object_lookup.pt:437
+#: /browser/object_lookup.pt:428
 msgid "place reference..."
 msgstr ""
 
@@ -337,97 +337,97 @@ msgstr ""
 msgid "Minimum role to access is now acquired"
 msgstr ""
 
-#: /doc/silva-content.xml:31
+#: /doc/silva-content.xml:32
 msgid "Title of content."
 msgstr ""
 
-#: /doc/silva-content.xml:89
+#: /doc/silva-content.xml:90
 msgid "a.k.a. &#8216;navigation title&#8217;."
 msgstr ""
 
-#: /doc/silva-content.xml:92
+#: /doc/silva-content.xml:93
 msgid "short title"
 msgstr ""
 
-#: /doc/silva-extra.xml:155
+#: /doc/silva-extra.xml:156
 msgid "Description of content in this area."
 msgstr ""
 
-#: /doc/silva-extra.xml:214
+#: /doc/silva-extra.xml:215
 msgid "language"
 msgstr ""
 
-#: /doc/silva-extra.xml:261
+#: /doc/silva-extra.xml:262
 msgid "Language of content in this area."
 msgstr ""
 
-#: /doc/silva-extra.xml:322
+#: /doc/silva-extra.xml:323
 msgid "comment"
 msgstr ""
 
-#: /doc/silva-extra.xml:323
+#: /doc/silva-extra.xml:324
 msgid "Internal comments."
 msgstr ""
 
-#: /doc/silva-extra.xml:34
+#: /doc/silva-extra.xml:35
 msgid "subject"
 msgstr ""
 
-#: /doc/silva-extra.xml:35
+#: /doc/silva-extra.xml:36
 msgid "Subject of content in this area."
 msgstr ""
 
-#: /doc/silva-extra.xml:384
+#: /doc/silva-extra.xml:385
 msgid "creation time"
 msgstr ""
 
-#: /doc/silva-extra.xml:385 /doc/silva-extra.xml:444 /doc/silva-extra.xml:619
+#: /doc/silva-extra.xml:386 /doc/silva-extra.xml:445 /doc/silva-extra.xml:620
 msgid "Automatically set."
 msgstr ""
 
-#: /doc/silva-extra.xml:677
+#: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
 msgstr ""
 
-#: /doc/silva-extra.xml:736
+#: /doc/silva-extra.xml:737
 msgid "Resource location of this content."
 msgstr ""
 
-#: /doc/silva-extra.xml:787
+#: /doc/silva-extra.xml:788
 msgid "Name of contact person."
 msgstr ""
 
-#: /doc/silva-extra.xml:790
+#: /doc/silva-extra.xml:791
 msgid "contact name"
 msgstr ""
 
-#: /doc/silva-extra.xml:845
+#: /doc/silva-extra.xml:846
 msgid "Email address of contact person."
 msgstr ""
 
-#: /doc/silva-extra.xml:848
+#: /doc/silva-extra.xml:849
 msgid "contact email"
 msgstr ""
 
-#: /doc/silva-extra.xml:895
+#: /doc/silva-extra.xml:896
 msgid ""
 "If this is enabled, this content (and anything it contains!) will not show "
 "up in tables of content."
 msgstr ""
 
-#: /doc/silva-extra.xml:897
+#: /doc/silva-extra.xml:898
 msgid "hide from tables of content"
 msgstr ""
 
-#: /doc/silva-extra.xml:94
+#: /doc/silva-extra.xml:95
 msgid "keywords"
 msgstr ""
 
-#: /doc/silva-extra.xml:95
+#: /doc/silva-extra.xml:96
 msgid "Keywords relating to content."
 msgstr ""
 
-#: /doc/silva-publication.xml:21
+#: /doc/silva-publication.xml:22
 msgid "Default Document Policy"
 msgstr ""
 
@@ -842,136 +842,6 @@ msgstr ""
 msgid "Thanks to...."
 msgstr ""
 
-#: /kupu/kupumacros.html:210
-msgid "Kupu 1.4"
-msgstr ""
-
-#: /kupu/kupumacros.html:231
-msgid "save: alt-s"
-msgstr ""
-
-#: /kupu/kupumacros.html:235
-msgid "Bold: Access key (Alt or Ctrl) + B"
-msgstr ""
-
-#: /kupu/kupumacros.html:236
-msgid "Italic: Access key (Alt or Ctrl) + I"
-msgstr ""
-
-#: /kupu/kupumacros.html:237
-msgid "Underline: Access key (Alt or Ctrl) + U"
-msgstr ""
-
-#: /kupu/kupumacros.html:241
-msgid "Subscript: Access key (Alt or Ctrl) + -"
-msgstr ""
-
-#: /kupu/kupumacros.html:242
-msgid "Superscript: Access key (Alt or Ctrl) + +"
-msgstr ""
-
-#: /kupu/kupumacros.html:247
-msgid "Numbered list: Access key (Alt or Ctrl) + #"
-msgstr ""
-
-#: /kupu/kupumacros.html:248
-msgid "Unordered list: Access key (Alt or Ctrl) + *"
-msgstr ""
-
-#: /kupu/kupumacros.html:253
-msgid "Definition list: Access key (Alt or Ctrl) + ="
-msgstr ""
-
-#: /kupu/kupumacros.html:257
-msgid "Undo: Access key (Alt or Ctrl) + Z"
-msgstr ""
-
-#: /kupu/kupumacros.html:258
-msgid "Redo: Access key (Alt or Ctrl) + Y"
-msgstr ""
-
-# Default: "Switch between visual editor and HTML view"
-#: /kupu/kupumacros.html:262
-msgid "toggle_source_view"
-msgstr ""
-
-# Default: "&#9679;"
-#: /kupu/kupumacros.html:268
-msgid "list-disc"
-msgstr ""
-
-# Default: "&#9632;"
-#: /kupu/kupumacros.html:269
-msgid "list-square"
-msgstr ""
-
-# Default: "&#9675;"
-#: /kupu/kupumacros.html:270
-msgid "list-circle"
-msgstr ""
-
-# Default: "no bullet"
-#: /kupu/kupumacros.html:271
-msgid "list-nobullet"
-msgstr ""
-
-# Default: "1"
-#: /kupu/kupumacros.html:274
-msgid "list-decimal"
-msgstr ""
-
-# Default: "I"
-#: /kupu/kupumacros.html:275
-msgid "list-upperroman"
-msgstr ""
-
-# Default: "i"
-#: /kupu/kupumacros.html:276
-msgid "list-lowerroman"
-msgstr ""
-
-# Default: "A"
-#: /kupu/kupumacros.html:277
-msgid "list-upperalpha"
-msgstr ""
-
-# Default: "a"
-#: /kupu/kupumacros.html:278
-msgid "list-loweralpha"
-msgstr ""
-
-#: /kupu/kupumacros.html:350
-msgid "index item"
-msgstr ""
-
-#: /kupu/kupumacros.html:416
-msgid "abbreviations and acronyms"
-msgstr ""
-
-#: /kupu/kupumacros.html:459
-msgid "cleanup"
-msgstr ""
-
-#: /kupu/kupumacros.html:469
-msgid "external source"
-msgstr ""
-
-#: /kupu/kupumacros.html:498
-msgid "citation"
-msgstr ""
-
-#: /kupu/kupumacros.html:539
-msgid "table"
-msgstr ""
-
-#: /kupu/kupumacros.html:640
-msgid "table of contents"
-msgstr ""
-
-#: /kupu/kupumacros.html:668
-msgid "typographical characters"
-msgstr ""
-
 #: /layout/layout_macro.html:77
 msgid "Silva info on the Infrae site: alt-i"
 msgstr ""
@@ -1084,7 +954,7 @@ msgid ""
 msgstr ""
 
 #: /views/add/GhostFolder/form.form:48 /views/add/Ghost/form.form:48
-#: /views/add/Link/form.form:71 /doc/silva-extra.xml:734
+#: /views/add/Link/form.form:71 /doc/silva-extra.xml:735
 msgid "url"
 msgstr ""
 
@@ -1489,8 +1359,7 @@ msgstr ""
 msgid "dimensions"
 msgstr ""
 
-#: /views/edit/Asset/Image/edit.pt:40 /kupu/kupumacros.html:372
-#: /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
 msgid "image"
 msgstr ""
 
@@ -1648,7 +1517,7 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:234
 #: /views/edit/Container/GhostFolder/tab_edit.pt:310
 #: /views/edit/Container/GhostFolder/tab_edit.pt:445
-#: /browser/object_lookup.pt:379
+#: /browser/object_lookup.pt:370
 msgid "preview"
 msgstr ""
 
@@ -1664,7 +1533,6 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:244 /views/edit/Container/tab_edit.pt:253
 #: /views/edit/Container/tab_edit.pt:432 /views/edit/Container/tab_edit.pt:441
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
-#: /kupu/kupumacros.html:302
 msgid "properties"
 msgstr ""
 
@@ -1749,7 +1617,7 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:199
 #: /views/edit/Container/tab_status.pt:208
 #: /views/edit/Container/GhostFolder/tab_edit.pt:369
-#: /browser/object_lookup.pt:302
+#: /browser/object_lookup.pt:293
 msgid "publish"
 msgstr ""
 
@@ -1778,7 +1646,6 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:120
 #: /views/edit/VersionedContent/Ghost/edit.pt:105
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
-#: /kupu/kupumacros.html:324
 msgid "link"
 msgstr ""
 
@@ -1810,7 +1677,7 @@ msgid "resync ghost folder"
 msgstr ""
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:460
-#: /browser/object_lookup.pt:274
+#: /browser/object_lookup.pt:265
 msgid "metadata"
 msgstr ""
 
@@ -1932,7 +1799,7 @@ msgstr ""
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:164
 #: /views/edit/Container/tab_edit_import.pt:356
-#: /views/edit/Container/tab_status_export.pt:432 /doc/silva-extra.xml:154
+#: /views/edit/Container/tab_status_export.pt:432 /doc/silva-extra.xml:155
 msgid "description"
 msgstr ""
 
@@ -1980,7 +1847,7 @@ msgstr ""
 
 #: /views/edit/Container/docma_queue.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:362
-#: /browser/object_lookup.pt:294
+#: /browser/object_lookup.pt:285
 msgid "status"
 msgstr ""
 
@@ -2101,7 +1968,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:179
 #: /views/edit/Container/tab_edit.pt:155
 #: /views/edit/Container/GhostFolder/tab_edit.pt:237
-#: /browser/object_lookup.pt:165
+#: /browser/object_lookup.pt:156
 msgid "modified"
 msgstr ""
 
@@ -2123,7 +1990,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:249
 #: /views/edit/Container/tab_edit.pt:616
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:348
 msgid "delete"
 msgstr ""
 
@@ -2197,7 +2064,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:158
 #: /views/edit/Container/GhostFolder/tab_edit.pt:240
-#: /browser/object_lookup.pt:168
+#: /browser/object_lookup.pt:159
 msgid "author"
 msgstr ""
 
@@ -2207,7 +2074,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:171
 #: /views/edit/Container/GhostFolder/tab_edit.pt:250
-#: /browser/object_lookup.pt:178
+#: /browser/object_lookup.pt:169
 msgid "There is no content here."
 msgstr ""
 
@@ -2215,7 +2082,7 @@ msgstr ""
 #: /views/edit/Container/tab_status.pt:214
 #: /views/edit/Container/GhostFolder/tab_edit.pt:337
 #: /views/edit/Container/GhostFolder/tab_edit.pt:373
-#: /browser/object_lookup.pt:287 /browser/object_lookup.pt:307
+#: /browser/object_lookup.pt:278 /browser/object_lookup.pt:298
 msgid "n/a"
 msgstr ""
 
@@ -2226,7 +2093,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:272
 #: /views/edit/Container/GhostFolder/tab_edit.pt:354
-#: /browser/object_lookup.pt:241
+#: /browser/object_lookup.pt:232
 msgid "content approved or published"
 msgstr ""
 
@@ -2245,7 +2112,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:447
 #: /views/edit/Container/GhostFolder/tab_edit.pt:469
-#: /browser/object_lookup.pt:400
+#: /browser/object_lookup.pt:391
 msgid "unknown"
 msgstr ""
 
@@ -2342,23 +2209,23 @@ msgid "paste ghost"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:616
-#: /views/edit/VersionedContent/tab_status.pt:334
+#: /views/edit/VersionedContent/tab_status.pt:348
 msgid "there's no undo: alt-d"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:73 /browser/object_lookup.pt:104
+#: /views/edit/Container/tab_edit.pt:73
 msgid "new..."
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:73 /browser/object_lookup.pt:104
+#: /views/edit/Container/tab_edit.pt:73
 msgid "add a new item - alt-n"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:88 /browser/object_lookup.pt:119
+#: /views/edit/Container/tab_edit.pt:88 /browser/object_lookup.pt:110
 msgid "select a new item: alt-s"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:95 /browser/object_lookup.pt:126
+#: /views/edit/Container/tab_edit.pt:95 /browser/object_lookup.pt:117
 msgid "select:"
 msgstr ""
 
@@ -2684,7 +2551,7 @@ msgstr ""
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
 #: /views/add/Indexer/form.form:50 /views/public/search_form.form:56
-#: /doc/silva-content.xml:34
+#: /doc/silva-content.xml:35
 msgid "title"
 msgstr ""
 
@@ -3181,7 +3048,7 @@ msgstr ""
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:65
 #: /views/edit/Container/GhostFolder/tab_edit.pt:333
 #: /views/edit/VersionedContent/tab_status_macros.pt:234
-#: /browser/object_lookup.pt:282
+#: /browser/object_lookup.pt:273
 msgid "settings"
 msgstr ""
 
@@ -3463,48 +3330,52 @@ msgstr ""
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:252 /doc/silva-extra.xml:443
+#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:444
 msgid "modification time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:253 /doc/silva-extra.xml:502
+#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:503
 msgid "publication time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:254
+#: /views/edit/VersionedContent/tab_status.pt:257
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
 #: /views/edit/VersionedContent/tab_status_form_editor.form:53
-#: /doc/silva-extra.xml:561
+#: /doc/silva-extra.xml:562
 msgid "expiration time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:675
+#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:676
 msgid "last author"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:617
+#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:618
 msgid "creator"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:257
+#: /views/edit/VersionedContent/tab_status.pt:260
 msgid "version status"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:326
+#: /views/edit/VersionedContent/tab_status.pt:330
+msgid "version actions"
+msgstr ""
+
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "compare..."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:326
+#: /views/edit/VersionedContent/tab_status.pt:340
 msgid "view the selected versions next to each other: alt-="
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:343
+#: /views/edit/VersionedContent/tab_status.pt:358
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:343
+#: /views/edit/VersionedContent/tab_status.pt:358
 msgid "copy for editing"
 msgstr ""
 
@@ -3657,10 +3528,6 @@ msgid ""
 "The current editable version can be replaced with the previous (published) "
 "version. This can not be undone afterwards and will discard all changes made "
 "to the current version."
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:457
-msgid "return confirm('Really revert ?')"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:457
@@ -3868,7 +3735,7 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:154
 #: /views/edit/VersionedContent/Ghost/edit.pt:139 /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
-#: /views/public/subscriptor.pt:45 /browser/object_lookup.pt:113
+#: /views/public/subscriptor.pt:45 /browser/object_lookup.pt:104
 msgid "access key: alt-s"
 msgstr ""
 
@@ -3949,7 +3816,6 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Member/SimpleMember/tab_edit.pt:142 /views/add/add_form.pt:132
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
-#: /kupu/kupumacros.html:678
 msgid "save"
 msgstr ""
 
@@ -4144,7 +4010,7 @@ msgstr ""
 
 #: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
 #: /views/add/add_form.pt:123 /views/add/GhostFolder/add_form.pt:113
-#: /views/add/Ghost/add_form.pt:105 /browser/object_lookup.pt:427
+#: /views/add/Ghost/add_form.pt:105 /browser/object_lookup.pt:418
 msgid "cancel"
 msgstr ""
 
