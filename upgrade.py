@@ -65,7 +65,7 @@ class UpgradeRegistry:
         assert IUpgrader.providedBy(upgrader)
         self.__registry.setdefault(version, {}).setdefault(meta_type, []).\
             append(upgrader)
-
+        
     def registerSetUp(self, function, version):
         self._setUp.setdefault(version, []).append(function)
 

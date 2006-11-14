@@ -509,6 +509,12 @@ def generateAnchorName(s):
     # use this code path at all..)
     if isinstance(s, unicode):
         s = s.encode('UTF-8')
-    return s
+    new = ''
+    for c in s:
+        if c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_:.':
+            new += c
+        else:
+            new += '_'
+    return new
 
 module_security.declarePublic('generateAnchorName')

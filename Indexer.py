@@ -51,15 +51,15 @@ class Indexer(Content, SimpleItem):
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'getIndexEntry')
-    def getIndexEntry(self, name):
+    def getIndexEntry(self, indexTitle):
         """Returns a list of (title, path) tuples for an entry name in the
         index, sorted alphabetically on title
         """
         result = []
-        for path, title in self._index[name].items():
-            result.append((title.lower(), title, path,))
+        for path, (name, title) in self._index[indexTitle].items():
+            result.append((title.lower(), title, path, name,))
         result.sort()
-        result = [(title, path) for title_lowercase, title, path in result]
+        result = [(title, path, name) for title_lowercase, title, path, name in result]
         return result
     
     def _getIndexables(self):
@@ -84,8 +84,8 @@ class Indexer(Content, SimpleItem):
 
             title = indexable.getTitle()
             path = indexable.getPath()
-            for indexName in indexes:
-                result.setdefault(indexName, {})[path] = title
+            for indexName, indexTitle in indexes:
+                result.setdefault(indexTitle, {})[path] = (indexName, title)
         self._index = result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
