@@ -69,7 +69,7 @@ class CatalogRefresher:
     def upgrade(self, obj):
         if IRoot.providedBy(obj):
             # Clear the Silva catalog
-            zLOG.LOG('Silva', zLOG.INFO, 'Catalog Refresh: clearing catalog')
+            zLOG.LOG('Silva', zLOG.INFO, 'Catalog Refresh: clearing catalog and reindexing all content. This may take a long time.')
             obj.service_catalog.manage_catalogClear()
         elif ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
             obj.index_object()

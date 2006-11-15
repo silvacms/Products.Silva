@@ -32,14 +32,14 @@
     name="object_lookup"
     class=".lookup.ObjectLookup"
     template="object_lookup.pt"
-    permission="silva.ChangeSilvaContent" 
+    permission="silva.ReadSilvaContent" 
   />
 
   <browser:page
     for="Products.Silva.interfaces.ISilvaObject"
     name="sidebar"
     class=".lookup.SidebarView"
-    permission="silva.ChangeSilvaContent"
+    permission="silva.ReadSilvaContent"
   />
 
   <browser:page
