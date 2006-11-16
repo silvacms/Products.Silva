@@ -290,7 +290,7 @@
           <xsl:otherwise>
             <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
               <xsl:if test="@width">
-                <xsl:attribute name="width"><xsl:value-of select="./@width" /></xsl:attribute>
+                <xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
               </xsl:if>
               <xsl:if test="@height">
                 <xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute>
