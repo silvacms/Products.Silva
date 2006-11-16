@@ -398,7 +398,7 @@
       <!-- IE doesn't like empty table cells, insert a nbsp if there are
       no child elements -->
       <xsl:choose>
-        <xsl:when test="count(*) = 1 and count(p) = 1">
+        <xsl:when test="count(*) = 1 and count(doc:p) = 1">
           <xsl:apply-templates mode="remove-single-p" />
         </xsl:when>
         <xsl:when test="count(*) = 0">&#160;</xsl:when>
