@@ -28,8 +28,9 @@ class IndexItemUpgrader:
         if IVersionedContent.providedBy(obj):
             vm = version_management.getVersionManagementAdapter(obj)
             for version in vm.getVersions():
-                dom = version.content
-                self._upgrade_helper(dom.documentElement)
+                if hasattr(version, 'content'):
+                    dom = version.content
+                    self._upgrade_helper(dom.documentElement)
         else:
             try:
                 indexable = IIndexable(obj)
