@@ -108,8 +108,8 @@
               </tr>
               <tr>
                 <td>
-                  <input type="button" class="button" value="add index" id="kupu-index-addbutton" i18n:attributes="value" />
-                  <input type="button" class="button" value="update index" id="kupu-index-updatebutton" i18n:attributes="value" />
+                  <input type="button" class="button" value="add" id="kupu-index-addbutton" i18n:attributes="value" />
+                  <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value" />
                   <input type="button" class="warning" value="remove" id="kupu-index-deletebutton" i18n:attributes="value" />
                 </td>
               </tr>
