@@ -46,7 +46,11 @@ class IndexItemUpgrader:
     def _upgrade_helper(self, node):
         if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
             old_name = node.attributes['name'].value
-            node.setAttribute('title', old_name)
+            title = node.attributes.get('title', None)
+            if not title:
+                node.setAttribute('title', old_name)
+            elif not title.value:
+                node.setAttribute('title', old_name)
             node.setAttribute('name', mangle.generateAnchorName(old_name))
         else:
             for child in node.childNodes:
