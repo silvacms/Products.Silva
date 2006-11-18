@@ -5,6 +5,12 @@ Silva changes
 
     Features added:
 
+      - Removed get_layout_macro(.py) from the layout installation code and
+        thus it won't be present in the ZODB in future new installs. This is
+        legacy code from the doomed layout service development that has now
+        been superceded by SilvaLayout. Existing get_layout_macro python 
+        scripts can be deleted.
+
       - Updated standard_error_message with direct call of layout_macro.html,
         404 in title, adjusted informative text.
 

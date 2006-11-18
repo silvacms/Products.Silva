@@ -329,7 +329,7 @@ def configureLayout(root, default_if_existent=0):
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py', 
-               'get_metadata_element.py', 'get_layout_macro.py', ]:
+               'get_metadata_element.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
         
     add_helper(root, 'frontend.css', globals(),
