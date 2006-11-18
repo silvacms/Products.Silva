@@ -90,9 +90,9 @@
   </tr>
   <tal:comment replace="nothing"> _______ insert subhead for images and files _______ </tal:comment>
   <tal:test condition="
-    python:(request.meta_type == 'Silva Image' 
-    or request.meta_type == 'Silva File')
-    and field.id == 'file'">
+    python:(request.meta_type == 'Silva Image' and field.id == 'object_title')
+    or (request.meta_type == 'Silva File' and field.id == 'file')
+    ">
   <tr class="inter-controls">
     <td>
     </td>
