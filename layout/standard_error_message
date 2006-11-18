@@ -125,18 +125,16 @@
 
 <tal:block tal:condition="python: error_type == 'NotFound'">
 <!-- _____________________ 404 error message  _____________________ -->
-<!-- _____________________ Silva version 0.9.3.0 __________________ -->
-<html metal:use-macro="here/get_layout_macro">
+<!-- _____________________ {__silva_version__} __________________ -->
+<html metal:use-macro="here/layout_macro.html/macros/layout">
 <head>
-<title metal:fill-slot="title" 
-  tal:content="here/get_title_or_id">
-  Local or custom title (in content.html)
+<title metal:fill-slot="title">
+  404 &ndash; Resource not found
 </title>
-
-<!-- define custom stylesheet -->
+<!-- default stylesheet, remove if custom layout exists -->
 <metal:block fill-slot="style">
   <!-- Start style slot -->
-  <link rel="stylesheet" href="frontend.css" type="text/css"
+  <link rel="stylesheet" type="text/css"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <!-- End style slot -->
 </metal:block>
@@ -145,16 +143,16 @@
 <body>
 <!-- _____________________ main slot  _____________________ -->
 <div metal:fill-slot="main">
-  <h2>404 &#8211; document not found</h2>
+  <h2>404 &ndash; Resource not found</h2>
   <p>
-    The document you are looking for is not or no longer available.<br />
+    <acronym title="Uniform Resource Locator">URL</acronym>:
+    <span tal:replace="request/URL0|string:unknown">url</span>
+  </p>
+  <p>
+    The resource you are looking for is not or no longer available.<br />
     Please check your request for typing errors and retry. 
   </p>
-  <p tal:content="request/URL0|string:unknown">
-    url
-  </p>
 </div>
-
 </body>
 </html>
 </tal:block>
