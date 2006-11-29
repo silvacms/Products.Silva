@@ -49,44 +49,44 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
 
         getattr(subfolder.index, '0').content.manage_edit(
             '<doc>'
-            '<p><index name="subfolder" /></p>'
+            '<p><index name="subfolder" title="subfolder" /></p>'
             '</doc>')
         getattr(toghost, '0').content.manage_edit(
             '<doc>'
-            '<p><index name="ghost" /></p>'
+            '<p><index name="ghost" title="ghost" /></p>'
             '</doc>')
         getattr(gamma, '0').content.manage_edit(
             '<doc>'
-            '<p>Foo bar <index name="a" /></p>'
+            '<p>Foo bar <index name="a" title="a" /></p>'
             '<p>Baz <index name="b" /></p>'
             '</doc>')
         getattr(alpha, '0').content.manage_edit(
             '<doc>'
-            '<p>Hey <index name="a" /></p>'
+            '<p>Hey <index name="a" title="a" /></p>'
             '</doc>')
         getattr(Alpha, '0').content.manage_edit(
             '<doc>'
-            '<p>Hey <index name="A" /></p>'
+            '<p>Hey <index name="A" title="A" /></p>'
             '</doc>')
         getattr(beta, '0').content.manage_edit(
             '<doc>'
-            '<p>Hello <index name="b" /></p>'
+            '<p>Hello <index name="b" title="b" /></p>'
             '</doc>')
         getattr(Beta, '0').content.manage_edit(
             '<doc>'
-            '<p>Hello <index name="b" /></p>'
+            '<p>Hello <index name="b" title="b" /></p>'
             '</doc>')
         getattr(kappa, '0').content.manage_edit(
             '<doc>'
-            '<p>Dag <index name="c" /></p>'
+            '<p>Dag <index name="c" title="c" /></p>'
             '</doc>')
         getattr(foo, '0').content.manage_edit(
             '<doc>'
-            '<p>Dag <index name="f" /></p>'
+            '<p>Dag <index name="f" title="f" /></p>'
             '</doc>')
         getattr(bar, '0').content.manage_edit(
             '<doc>'
-            '<p>Dag <index name="g" /></p>'
+            '<p>Dag <index name="g" title="g" /></p>'
             '</doc>')
         getattr(baz, '0').content.manage_edit(
             '<doc>'
@@ -124,31 +124,30 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         
     def test_getIndexNames(self):
         self.assertEquals(
-            ['A', 'a', 'b', 'c', 'f', 'g', 'ghost', 'h', 'subfolder'], 
+            ['A', 'a', 'b', 'c', 'f', 'g', 'ghost', 'subfolder'],
             self.indexer.getIndexNames())
 
     def test_getIndexEntry(self):
-        expected = [('Alpha', ('', 'root', 'pub', 'alpha',)),
-                    ('Gamma', ('', 'root', 'pub', 'gamma',)),]
+        expected = [
+            (u'Alpha', ('', 'root', 'pub', 'alpha'), u'a'), 
+            (u'Gamma', ('', 'root', 'pub', 'gamma'), u'a')]
         self.assertEquals(expected, self.indexer.getIndexEntry('a'))
     
     def test_getAllIndexEntries(self):
         expected = {}
-        expected['a'] = [('Alpha', ('', 'root', 'pub', 'alpha',)),
-                        ('Gamma', ('', 'root', 'pub', 'gamma',)),]
-        expected['A'] = [(u'Alpha Capital A', ('', 'root', 'pub', 'Alpha')),]
-        expected['b'] = [(u'Beta', ('', 'root', 'pub', 'beta')), 
-                        (u'Gamma', ('', 'root', 'pub', 'gamma'))]
-        expected['c'] = [(u'Kappa', ('', 'root', 'pub', 'kappa')),]
-        expected['f'] = [(u'Folder to Ghost', ('', 'root', 'pub', 'ghostfolder')),]
-        expected['g'] = [(u'Barrr', ('', 'root', 'pub', 'ghostfolder', 'bar')),]
+        expected['a'] = [('Alpha', ('', 'root', 'pub', 'alpha'), u'a'),
+                        ('Gamma', ('', 'root', 'pub', 'gamma'), u'a')]
+        expected['A'] = [(u'Alpha Capital A', ('', 'root', 'pub', 'Alpha'), u'A')]
+        expected['b'] = [(u'Beta', ('', 'root', 'pub', 'beta'), u'b')]
+        expected['c'] = [(u'Kappa', ('', 'root', 'pub', 'kappa'), u'c')]
+        expected['f'] = [(u'Folder to Ghost', ('', 'root', 'pub', 'ghostfolder'), u'f')]
+        expected['g'] = [(u'Barrr', ('', 'root', 'pub', 'ghostfolder', 'bar'), u'g')]
         
-        expected['ghost'] = [(u'To be Haunted', ('', 'root', 'pub', 'ghost')),]
+        expected['ghost'] = [(u'To be Haunted', ('', 'root', 'pub', 'ghost'), u'ghost')]
         
-        expected['h'] = [(u'Bazzz', ('', 'root', 'pub', 'ghostfolder', 'baz')),]
 
         expected['subfolder'] = [(u'Folder with indexable index document', 
-                                 ('', 'root', 'pub', 'folder_with_index_doc')),]
+                                 ('', 'root', 'pub', 'folder_with_index_doc'), u'subfolder')]
  
         result =  self.indexer.getIndexNames()
         self.assertEquals(len(expected), len(result))

@@ -7,13 +7,13 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 xslt = True
 try: 	 
-    from Products.Silva.transform.renderer.imagesonrightrenderer import\
-         ImagesOnRightRenderer
+    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
     from Products.Silva.transform.renderer.xsltrendererbase import RenderError
 except ImportError: 	
     xslt = False
 
 directory = os.path.dirname(__file__)
+expected_html = '<table>\n  <tr>\n    <td valign="top" rowspan="1" colspan="1">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top" rowspan="1" colspan="1">\n      <a href="http://nohost/root/silva_xslt/bar.html" shape="rect">\n        <img src="http://nohost/root/silva_xslt/foo"/>\n      </a>\n      <br clear="none"/>\n    </td>\n  </tr>\n</table>\n'
 
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
@@ -48,7 +48,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         obj = self.root.silva_xslt.test_document
 
         images_on_right = ImagesOnRightRenderer()
-        self.assertEquals(images_on_right.render(obj), '<table><tr>\n<td valign="top">unapproved<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n</td>\n<td valign="top">\n<a href="http://nohost/root/silva_xslt/bar.html"><img src="http://nohost/root/silva_xslt/foo"></a><br>\n</td>\n</tr></table>\n')
+        self.assertEquals(images_on_right.render(obj), expected_html)
                                                        
     def test_error_handling(self):
         
