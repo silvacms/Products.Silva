@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,7 +27,7 @@
 
   <xsl:import href="%(url)s/doc_elements.xslt"/>
 
-  <xsl:output method="html" indent="yes"/>
+  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
   
 <!-- 
   In this example we want to render all content in in two table cells.
@@ -57,9 +58,6 @@
     <xsl:apply-templates />
   </xsl:template>
 
-  <xsl:template match="silva:content">
-    <xsl:apply-templates />
-  </xsl:template>
 
 <!--
   The real content of the document begins here.
@@ -80,6 +78,8 @@
     </h2>
   </xsl:template>
 
+  <xsl:template match="silva:workflow" />
+  
 <!--
   In the 'normal' mode i.e. no mode specified, used in the left table
   cell, all images are ignored.
