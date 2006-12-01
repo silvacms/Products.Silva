@@ -307,7 +307,7 @@
   </xsl:template>
 
   <xsl:template match="doc:index" mode="text-content">
-    <a class="index-element" name="{@name}" />
+    <a class="index-element" id="{@name}" />
   </xsl:template>
 
   <xsl:template match="doc:toc">
