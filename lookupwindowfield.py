@@ -51,6 +51,7 @@ class LookupWindowWidget(TextWidget):
                 type='button', 
                 name=key + '_button', 
                 css_class='transport',
+                style='margin-left:0',
                 value='get reference...',
                 extra='onclick="%s"' % self._onclick_handler(field, key)))
         widget.append(
