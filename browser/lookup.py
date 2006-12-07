@@ -64,6 +64,7 @@ class ObjectLookup(BrowserView):
         addables = []
 
         filter = filter or []
+        
         if show_add:
             all_addables = model.get_silva_addables()
 

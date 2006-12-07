@@ -24,6 +24,9 @@ Silva changes
 
     Ported from 1.5 branch
 
+      - Changed calls from getMetdata to getMetadataValue where possible,
+        resulting in a significant performance gain.
+
       - Non Ascii characters in names or values of codesource paramaters
         no longer result in errors.
 

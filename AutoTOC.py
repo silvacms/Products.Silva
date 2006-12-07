@@ -24,7 +24,6 @@ class AutoTOC(Content, SimpleItem):
        table of contents. Usually it&#8217;s used as an &#8216;index&#8217;
        document. In that case the parent folder shows a table of contents
        when accessed (e.g. http://www.x.yz/silva/myFolder/).""")
-
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
