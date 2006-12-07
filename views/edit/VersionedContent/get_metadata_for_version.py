@@ -7,6 +7,10 @@
 ##parameters=versionid
 ##title=Revoke approval of approved content
 ##
+
+# XXX: SHOULD NEVER BE CALLED FROM PUBLIC VIEW CODE, USES
+# THE OLD INEFFICIENT METADATA CALL
+
 view = context
 request = view.REQUEST
 model = request.model

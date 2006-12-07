@@ -10,5 +10,5 @@ content = context.get_viewable()
 if content is None:
     return None
 
-binding = context.service_metadata.getMetadata(content)
-return binding.get(set_name, element_id=element_name)
+return context.service_metadata.getMetadataValue(
+    content, set_name, element_name)

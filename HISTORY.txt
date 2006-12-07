@@ -5,6 +5,11 @@ Silva changes
 
   1.5.9
 
+    Features added
+
+      - Changed calls from getMetdata to getMetadataValue where possible,
+        resulting in a significant performance gain.
+
     Bugs fixed
 
       - Added a check to tocfilter to see if a metadata binding is found,
@@ -12,6 +17,10 @@ Silva changes
         autotocs, and possibly other navigation.
 
   1.5.8
+
+    Features added
+
+      - Removed the 'new' button in the lookup window (issue 1640)
 
     Bugs fixed
       
@@ -37,10 +46,6 @@ Silva changes
         explicitly known by Silva and SilvaDocument. This also means
         English can be explicitly selected in the user settings
         view. (issue 1572)
-
-    Features added
-
-      - Removed the 'new' button in the lookup window (issue 1640)
 
   1.5.7
 
