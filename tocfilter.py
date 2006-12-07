@@ -13,13 +13,8 @@ def registerTocFilter(filter):
         
 def hideFromTOC(context):
     viewable = context.get_viewable()
-    binding = context.service_metadata.getMetadata(viewable)
-    # XXX If there is no binding, something is wrong, for instance a broken
-    # ghost or ghost folder. We could hide those, but showing them makes it
-    # likelier that they get fixed.
-    if not binding:
-        return None
-    return binding.get('silva-extra', 'hide_from_tocs') == 'hide'
+    return context.service_metadata.getMetadataValue(
+        viewable, 'silva-extra', 'hide_from_tocs') == 'hide'
 
 _filters.append(hideFromTOC)
         

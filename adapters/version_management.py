@@ -192,10 +192,8 @@ class VersionManagementAdapter(adapter.Adapter):
                                 'getVersionModificationTime')
     def getVersionModificationTime(self, versionid):
         version = getattr(self.context, versionid)
-        binding = self.context.service_metadata.getMetadata(version)
-        if binding is None:
-            return None
-        return binding['silva-extra']['modificationtime']
+        return self.context.service_metadata.getMetadataValue(
+            version, 'silva-extra', 'modificationtime')
 
     # XXX currently the following 2 methods have a very non-optimal 
     # implementation, hopefully in the future we can change the underlying

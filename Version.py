@@ -71,9 +71,8 @@ class Version(SimpleItem):
     def get_short_title(self):
         """Get the title of the version.
         """
-        binding = self.service_metadata.getMetadata(self)
-        short_title = binding.get(
-            'silva-content', element_id='shorttitle')
+        short_title = self.service_metadata.getMetadataValue(
+            self, 'silva-content', 'shorttitle')
         if not short_title:
             return self.get_title()
         return short_title
