@@ -1,6 +1,5 @@
 ##parameters=set_name,element_name
 
-# XXX
 # This is a copy of views/public/get_metadata_element used in the SMI.
 #
 # Get the data for a particular element of a particular set for
