@@ -12,5 +12,5 @@ for title, path in links:
         url = '#'
     result.append(
         '<a class="indexer" href="%s#%s">%s</a>' % (
-        url, generateAnchorName(name), title))
+        url, name, title))
 return '<br />'.join(result)
