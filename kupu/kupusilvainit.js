@@ -78,8 +78,9 @@ function initSilvaKupu(iframe) {
     // to make firefox not pop up a warning as well...
     addEventHandler(window, 'unload', cancelEvent); 
 
-    var cm = new ContextMenu();
-    kupu.setContextMenu(cm);
+    // jasper@infrae.com: 2006-12-08,  Disabled context menu
+    // var cm = new ContextMenu();
+    // kupu.setContextMenu(cm);
 
     // now we can create a UI object which we can use from the UI
     var ui = new SilvaKupuUI('kupu-tb-styles');
