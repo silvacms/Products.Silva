@@ -5,6 +5,31 @@ Developer level changes in Silva
 From 1.5 to 1.6
 ===============
 
+More efficient method to get metadata values
+--------------------------------------------
+
+There is a new method on the metadata service to get values from the
+metdata system in a vastly more efficient way.
+
+Where you used to get a binding for the object, and then ask the binding
+for a metadata value in a particular metadata set, like so:
+
+  binding = self.service_metadata.getMetadata(object)
+  value = binding.get('set_id', 'element_id')
+
+we've now implemented a method that can by-pass the binding, and that seems
+to give a nice performance boost:
+
+  value = self.service_metadata.getMetadataValue(
+      object, 'set_id', 'element_id')
+
+This should be used everywhere it's possible to do so, at least in the
+public views. Notable exceptions are: If you are doing something more than
+just getting a value from the metadata system, for instance setting
+metadata, you might just as well get the binding.
+
+(This was actually in 1.5 already, but never advertised before.)
+
 ZCML for extension registration
 -------------------------------
 
