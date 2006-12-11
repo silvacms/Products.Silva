@@ -7,9 +7,9 @@ Meta
 Copyright (c) 2002-2006 Infrae. All rights reserved.  See also
 LICENSE.txt
 
-Valid for:  Silva 1.5.4
-Author:     Martijn Faassen, Jan-Wijbrand Kolman
-Email:      faassen@infrae.com, jw@infrae.com
+Valid for:  Silva 1.5.9
+Author:     Eric Casteleijn, Martijn Faassen, Jan-Wijbrand Kolman
+Email:      eric@infrae.com
 CVS:        $Revision: 1.32 $
 
 Introduction
@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.5.4 (DC)
+Silva 1.5.9 (DC)
 ----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
@@ -44,7 +44,7 @@ The infrastructure used by Silva to attach views to content objects.
 
 http://www.infrae.com/download/SilvaViews
 
-FileSystemSite 1.4.2 (DCI)
+FileSystemSite 2.0 (DCI)
 --------------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
@@ -55,7 +55,7 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.11.1 (DCI)
+Formulator 1.11.2 (DCI)
 -----------------------
 
 Formulator is a Zope extension for the easy construction, display and
@@ -64,7 +64,7 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 0.10 (DCI)
+SilvaMetadata 0.14 (DCI)
 ------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
@@ -120,7 +120,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.5.4 (DE)
+SilvaDocument 1.5.9 (DE)
 ------------------------
 
 Silva extension for XML-based documents. Contains a through the web
@@ -177,10 +177,8 @@ separation you need a Zope version higher than 2.7.0.
 
 http://www.dataflake.org/software/ldapuserfolder/
 
-ExtFile 1.4.2 (IX)
+ExtFile 1.5.2 (IX)
 ------------------
-
-Note: Silva 1.5 is not compatible yet with ExtFile.
 
 If you plan to manage large upload files with Silva, you may want to
 avoid storing them in the ZODB, instead putting them in the filesystem
@@ -199,7 +197,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 0.13 (EX)
+SilvaExternalSources 1.1 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
@@ -218,8 +216,8 @@ for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaLayout 0.5
----------------
+SilvaLayout 0.5.5
+-----------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
