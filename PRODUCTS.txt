@@ -197,7 +197,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 0.12 (EX)
+SilvaExternalSources 1.1 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
@@ -216,8 +216,8 @@ for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaLayout 0.5
----------------
+SilvaLayout 0.5.5
+-----------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
