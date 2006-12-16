@@ -18,7 +18,7 @@ body
   main: in use
   footer
 
-Some slots are not active. Activate by removing the 'no' from 'nometal'.
+Slots are not active. Activate by removing the 'no' from 'nometal'.
 
 <!-- only comments starting with a capital letter will appear in the rendered HTML source -->
 
@@ -30,14 +30,14 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 </title>
 
 <!-- add custom meta tags -->
-<nometal:block fill-slot="meta">
+<nometal:slot fill-slot="meta">
   <!-- Meta slot (empty) -->
-</nometal:block>
+</nometal:slot>
 
 <!-- define custom stylesheet -->
-<nometal:block fill-slot="style">
+<nometal:slot fill-slot="style">
   <!-- Style slot (empty) -->
-</nometal:block>
+</nometal:slot>
 
 <!-- add custom scripts -->
 <script nometal:fill-slot="script" type="text/javascript">
@@ -46,6 +46,7 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 </head>
 
 <body nometal:fill-slot="body" tal:omit-tag="">
+
 <div nometal:fill-slot="header" tal:omit-tag="">
   <!-- begin header slot -->
   <div nometal:fill-slot="top_navigation" tal:omit-tag="">
@@ -70,5 +71,6 @@ Some slots are not active. Activate by removing the 'no' from 'nometal'.
 <div nometal:fill-slot="footer" tal:omit-tag="">
   <!-- Page footer slot -->
 </div>
+
 </body>
 </html>
