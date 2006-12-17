@@ -35,8 +35,6 @@ such as Folders, Publications, and Ghosts.
 
 http://www.infrae.com/download/Silva
 
-http://www.infrae.com/download/SilvaWindowsInstaller
-
 SilvaViews 0.11 (DCI)
 ---------------------
 
@@ -216,8 +214,18 @@ for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaLayout 0.5.5
------------------
+SilvaFind 0.1.2 (EX)
+
+A highly customizable search solution for use with Silva. It allows
+defining searches in both the Silva Management Interface and on a public
+site. For developers of Silva Extensions, it is easy to define new
+search schemas so that custom metadata sets or other properties of their
+content can be made searchable.
+
+http://www.infrae.com/products/silva/extensions/silva_find
+
+SilvaLayout 0.5.5 (EX)
+----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
