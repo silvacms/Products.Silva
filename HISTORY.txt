@@ -1,7 +1,17 @@
 Copyright (c) 2002-2006 Infrae. All rights reserved.
 See also LICENSE.txt
 
+
 Silva changes
+
+  1.5.10
+
+    Features added
+
+      - Tocs display links with a trailing slash because there may be 
+        'edit/tab_preview' appended to it, but this conflicts with links made 
+        in the editor that are rendered without the slash. Moved the slash 
+        into the appendage.
 
   1.5.9
 
