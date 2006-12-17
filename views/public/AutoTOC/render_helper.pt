@@ -1,42 +1,30 @@
-<tal:block
+<tal:def
   define="
     model request/ghost_model | request/model;
     toc_depth python: -1;
     public options/public | nothing;
     title_method python: test(public, 'get_title', 'get_title_editable');
     tree python: here.get_tree(model=model, toc_depth=toc_depth, public=public);
-    append_to_url options/append_to_url | string:edit/tab_edit;
-    " >
+    append_to_url options/append_to_url | string:/edit/tab_edit;
+">
+<h2 class="heading"
+  tal:content="model/get_title">
+    Title
+</h2>
 
-    <h2 class="heading"
-      tal:content="model/get_title">
-        Title
-    </h2>
-    
-  <p class="toc">
-    <tal:block repeat="obj tree">
-      <tal:block
-        tal:define="
-          indent python:obj[0]; 
-          item python:obj[1];
-          title python:getattr(obj[1], title_method)();
-          url string:${item/absolute_url}/${append_to_url}">
-        <img 
-          width="12" 
-          height="14"
-          alt=""
-          tal:condition="python:indent > 0"
-          tal:attributes="
-            width python:indent * 24;
-            src string:${here/silva_root}/globals/pixel.gif" />
-          <a class="toc-link"
-            href="edit"
-            tal:attributes="href url"
-            tal:content="title">
-            title
-          </a>
-          <br />
-      </tal:block>
-    </tal:block>
-  </p>
-</tal:block>
+<tal:loop 
+  repeat="obj tree"><tal:def 
+    define="
+      indent python:obj[0]; 
+      item python:obj[1];
+      title python:getattr(obj[1], title_method)();
+      url string:${item/absolute_url}${append_to_url}"
+  tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.hide_from_tocs)"
+><p tal:attributes="class string:toc level-$indent">
+<a class="toc-link"
+  tal:attributes="href url"
+  tal:content="python:title and title or item.id">
+  title
+</a>
+</p></tal:def></tal:loop>
+</tal:def>

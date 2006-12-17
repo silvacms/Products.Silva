@@ -8,6 +8,15 @@ Silva changes
 
     Features added
 
+      - Fix for TOCs and AutoTOCS where docs that didn't have a title
+        didn't appear because the link was empty (it was there). Now the
+        id shows up so visitors can at least click it.
+
+      - Renevated the TOC/AutoToc rendering, replacing the ancient,
+        legacy, Netscape4 compatible image-based indent, where long titles
+        break onto the next, non-indented line. Updated frontend.css with
+        new selectors for the TOC levels.
+
       - Tocs display links with a trailing slash because there may be 
         'edit/tab_preview' appended to it, but this conflicts with links made 
         in the editor that are rendered without the slash. Moved the slash 
