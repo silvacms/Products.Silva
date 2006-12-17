@@ -5,6 +5,11 @@ Silva changes
 
     Features added:
 
+      - Tocs display links with a trailing slash because there may be 
+        'edit/tab_preview' appended to it, but this conflicts with links made 
+        in the editor that are rendered without the slash. Moved the slash 
+        into the appendage.
+
       - Removed get_layout_macro(.py) from the layout installation code and
         thus it won't be present in the ZODB in future new installs. This is
         legacy code from the doomed layout service development that has now
