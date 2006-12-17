@@ -21,8 +21,7 @@
       url string:${item/absolute_url}${append_to_url}"
   tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.hide_from_tocs)"
 ><p tal:attributes="class string:toc level-$indent">
-<a class="toc-link"
-  tal:attributes="href url"
+<a tal:attributes="href url"
   tal:content="python:title and title or item.id">
   title
 </a>
