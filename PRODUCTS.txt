@@ -62,7 +62,7 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 0.14 (DCI)
+SilvaMetadata 0.15 (DCI)
 ------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
