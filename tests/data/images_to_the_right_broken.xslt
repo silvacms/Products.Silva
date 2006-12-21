@@ -9,7 +9,6 @@
   <xsl:import href="%(url)s/doc_elements.xslt"/>
 
   <xsl:template match="/">
-    <table>
       <tr>
         <td valign="top">
           <xsl:apply-templates/>
