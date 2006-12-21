@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -8,7 +7,12 @@
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
   <xsl:import href="%(url)s/doc_elements.xslt"/>
-  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
+  <xsl:output 
+    method="xml" 
+    omit-xml-declaration="yes" 
+    indent="yes" 
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
+    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
   <xsl:template match="/">
     <xsl:apply-templates />
@@ -23,7 +27,6 @@
   </xsl:template>
 
   <xsl:template match="silva:metadata" />
-
   
   <xsl:template match="silva:workflow" />
   

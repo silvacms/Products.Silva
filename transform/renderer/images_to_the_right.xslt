@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,8 +26,12 @@
 
   <xsl:import href="%(url)s/doc_elements.xslt"/>
 
-  <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
-  
+  <xsl:output 
+    method="xml" 
+    omit-xml-declaration="yes" 
+    indent="yes" 
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
+    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 <!-- 
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing

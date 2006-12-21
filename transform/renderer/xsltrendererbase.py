@@ -85,7 +85,10 @@ class XSLTRendererBase(Acquisition.Implicit):
         if not result:
             raise RenderError(self._error_handler.getErrorText())
         try:
+            doctypestring = '<!DOCTYPE div PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
             result_string = style.saveResultToString(result)
+            if result_string.startswith(doctypestring):
+                result_string = result_string[len(doctypestring):]
         except libxml2.parserError:
             raise RenderError(self._error_handler.getErrorText())
 
