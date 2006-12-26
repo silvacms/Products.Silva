@@ -5,6 +5,9 @@ Silva changes
 
     Features added:
 
+      - Changed css styling of the preview publisher buttons, making easier 
+        for users to integrate the publisher into their own layout.
+
       - Fix for TOCs and AutoTOCS where docs that didn't have a title
         didn't appear because the link was empty (it was there). Now the
         id shows up so visitors can at least click it.

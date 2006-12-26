@@ -70,7 +70,7 @@ div.preview>div.public {
 }
 
 
-/* _______________________________________________________ alignments _____ */
+/* ________________________________________________________ alignments _____ */
 
 .image-left {
   text-align: left;
@@ -179,7 +179,7 @@ pre {
 }
 
 
-/* ________________________________________ silva specific typography _____ */
+/* __________________________________________ silva specific typography _____ */
 
 p.lead {
   font-weight: bold;
@@ -277,7 +277,7 @@ ol.lower-alpha {
 }
 
 
-/* ____________________________________________________________ links _____ */
+/* ______________________________________________________________ links _____ */
 
 span.breadcrumb a {
   text-decoration: none;
@@ -391,7 +391,7 @@ td.even table td {
 }
 
 
-/*___________________________________________ various table layouts _____ */ 
+/* ____________________________ various table layouts _____ */ 
 
 table.black_border td,
 table.black1 td,
@@ -459,7 +459,27 @@ div.listingBar .previous {
 }
 
 
-/* ___________________________________________ subscription forms _______ */
+/* ____________________________________________________ form controls _______ */
+
+input {
+  padding: 0.1em;
+  border: 1px solid #03956a;
+  color: #333767;
+  background-color: #e8f7ef;
+  font: normal 100% verdana, helvetica, arial, sans-serif;
+}
+
+/* ____________________________ preview publisher _______ */
+
+div.publisher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+
+/* ____________________________ subscription forms _______ */
 
 div.subscriptionform, div.cancellationform {
   margin: 1.2em 0;
@@ -487,20 +507,12 @@ div.backlink {
   margin-top: 1.5em;
 }
 
-input {
-  padding: 0.1em;
-  border: 1px solid #03956a;
-  color: #333767;
-  background: #e8f7ef;
-  font: normal 100% verdana, helvetica, arial, sans-serif;
-}
-
-input.control {
+input.button, input.control { /* used in SNN */
   margin: 0.1em 0.2em;
   padding: 0 0.2em;
   border: 1px solid #557;
   color: #d9f3f1;
-  background: #283365;
+  background-color: #283365;
   font-size: 95%;
   font-weight: normal;
   cursor: pointer;
