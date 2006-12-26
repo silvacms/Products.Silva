@@ -9,15 +9,13 @@ padding: 0 0.2em;
 border: 1px solid #8faecf;
 cursor: pointer;
 }
-input.transport[type="submit"]:hover, button[type="button"]:hover { 
+input.transport[type="submit"]:hover, input.transport[type="button"]:hover { 
 color : #e5fffe; 
 background : #74748b; 
 border-color : #99b4cf;
 }
 input.back {
-position:absolute;
-top:0px;
-left: 0px;
+float: left;
 }
 input.executor {
 font-size: 11px;
@@ -35,16 +33,12 @@ background : #4393a3;
 border-color : #8dc1a8;
 }
 input.publish {
-position: absolute;
-top: 0px;
-right: 0px;
+float: right;
 }
 div.published {
-position:absolute;
-right:3px;
-top:4px;
+float: right;
+margin: 0.2em 0.2em 0.1em 0.2em;
 font-size: 11px;
-text-align: right;
 }
 div.published span {
 background-color: #d9f4eb;
