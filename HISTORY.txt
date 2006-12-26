@@ -54,7 +54,7 @@ Silva changes
       - Anchors around divs break in explorer, so they were put inside in 
         the xslt renderer.
 
-Silva 1.6b4
+  Silva 1.6b4
 
     Bugs fixed:
 
@@ -62,7 +62,7 @@ Silva 1.6b4
         where storing of empty metadata fields/deleting metadata values was
         impossible.
 
-Silva 1.6b3 (first public beta)
+  Silva 1.6b3 (first public beta)
 
     Features added
 
