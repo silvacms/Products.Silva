@@ -1,36 +1,34 @@
 <style rel="stylesheet" type="text/css">
 input.transport {
-font-size: 11px;
-font-weight: normal;
-color: #d9f3f1;
-background: #283365;
 margin: 0.2em 0.2em 0.1em 0.2em;
 padding: 0 0.2em;
 border: 1px solid #8faecf;
+color: #d9f3f1;
+background: #283365;
+font-size: 11px;
 cursor: pointer;
 }
 input.transport[type="submit"]:hover, input.transport[type="button"]:hover { 
-color : #e5fffe; 
-background : #74748b; 
-border-color : #99b4cf;
+color: #e5fffe; 
+background-color: #74748b; 
+border-color: #99b4cf;
 }
 input.back {
 float: left;
 }
 input.executor {
-font-size: 11px;
-font-weight: normal;
-color: #b3fffb;
-background : #284d5b;
 margin: 0.2em 0.2em 0.1em 0.2em;
 padding: 0 0.2em;
 border: 1px solid #6bb591;
+color: #b3fffb;
+background-color: #284d5b;
+font-size: 11px;
 cursor: pointer;
 }
 input.executor[type="submit"]:hover { 
-color : #e5ffec; 
-background : #4393a3; 
-border-color : #8dc1a8;
+color: #e5ffec; 
+background-color: #4393a3; 
+border-color: #8dc1a8;
 }
 input.publish {
 float: right;
@@ -38,13 +36,12 @@ float: right;
 div.published {
 float: right;
 margin: 0.2em 0.2em 0.1em 0.2em;
-font-size: 11px;
 }
 div.published span {
-background-color: #d9f4eb;
-border-width: 1px;
-border-style: solid;
 padding: 1px 3px 2px;
+border: 1px solid black;
+background-color: #d9f4eb;
+font-size: 11px;
 }
 span.feedback {
 color: black;
@@ -56,23 +53,22 @@ color: #a00;
 
 <div class="publisher">
 <form class="publisher" action="." method="POST">
-<tal:block condition="options/back_url">
+<tal:if condition="options/back_url">
 <input class="transport back"
   type="button"
   value="&lt;"
   title="back: alt-b"
   tal:attributes="onclick python:'window.location = \'%s\'' % options['back_url']"
   accesskey="b" />
-</tal:block>
-<tal:block condition="not:options/back_url">
+</tal:if>
+<tal:if condition="not:options/back_url">
 <input class="transport back"
   type="button"
   value="&lt;"
   title="back: alt-b"
   onclick="history.back()"
   accesskey="b" />
-</tal:block>
-
+</tal:if>
 <input class="executor publish"
   tal:condition="options/show_publish_now"
   name="edit/preview_open_now:method"
@@ -80,7 +76,6 @@ color: #a00;
   value="publish now"
   title="publish this document immediately: alt-p"
   accesskey="p" />
-
 </form>
 <div class="published" 
   tal:condition="options/message">
