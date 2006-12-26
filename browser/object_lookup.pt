@@ -34,19 +34,18 @@
     </metal:block>
     <metal:block fill-slot="main"
       tal:define="
-        objects context/get_tree;
-        silva_permissions context/edit/get_silva_permissions;
-        filter request/filter | request/SESSION/filter | nothing;
-        filter python: filter or '';  
-        filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
-        startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
-        show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
-        dummy python: request.SESSION.set('filter', filter);
-        dummy python: request.SESSION.set('show_add', show_add);
-        dummy python: request.SESSION.set('startpath', startpath);
-        pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
-        filter_string python: '|'.join(filter);
-      ">
+      objects context/get_tree;
+      silva_permissions context/edit/get_silva_permissions;
+      filter request/filter | request/SESSION/filter | nothing;
+      filter python: filter or '';  
+      filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
+      startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
+      show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
+      dummy python: request.SESSION.set('filter', filter);
+      dummy python: request.SESSION.set('show_add', show_add);
+      dummy python: request.SESSION.set('startpath', startpath);
+      pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
+      filter_string python: '|'.join(filter)">
       <table class="columns columns2">
         <tbody>
           <tr>
@@ -73,12 +72,12 @@
                 style="margin:0;"
                 id="sortable"
                 tal:define="
-                  ret python:view.objectLookupGetObjects(filter, int(show_add));
-                  default_document python: ret[0];
-                  publishables python: ret[1];
-                  assets python: ret[2];
-                  addable_types python: ret[3];
-                  global first_checked python:False;
+                ret python:view.objectLookupGetObjects(filter, int(show_add));
+                default_document python: ret[0];
+                publishables python: ret[1];
+                assets python: ret[2];
+                addable_types python: ret[3];
+                global first_checked python:False;
                 ">
                 <thead>
                   <tal:block replace="nothing">
@@ -102,52 +101,28 @@
                       <div style="float: left;"
                         tal:condition="python: may_change_content and addable_types">
                         <form>
-
-
-                          <tal:comment replace="nothing">
-                            _______ if only one addable display button _______
-                          </tal:comment>
-                          <tal:if condition="python:len(addable_types) == 1">
-                            <input class="transport"
-                              type="submit"
-                              accesskey="n"
-                              tal:attributes="
-                                onClick string:location.href='${url}/edit/add_object?meta_type=${filter_string}&return_url='+this.form.return_url.value+'&lookup_mode:int=1';
-                                title string:create a ${filter_string};
-                                value string:add ${filter_string}..."
-                              i18n:attributes="title"
-                            />
-                          </tal:if>
-
-
-                          <tal:comment replace="nothing">
-                            _______ if more than one addable display select list _______
-                          </tal:comment>
-                          <tal:if condition="python:len(addable_types) != 1">
-                            <label for="meta_type" 
-                              title="access key: alt-s" 
-                              accesskey="s"
-                              i18n:attributes="title"
-                              >
-                            </label>
-                            <select class="transport"
-                              name="meta_type"
-                              id="meta_type"
-                              title="select a new item: alt-s"
-                              tal:attributes="onChange string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
-                              i18n:attributes="title"
-                              >
-                              <option value="None" i18n:translate="">
-                                select:
-                              </option>
-                              <tal:block tal:repeat="addable context/get_silva_addables">
-                                <option tal:content="python:len(addable_types)" />
-                                <option tal:condition="python:context.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
-                                  tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
-                                  tal:attributes="value addable/name" />
-                              </tal:block>
-                            </select>
-                          </tal:if>
+                          <label for="meta_type" 
+                            title="access key: alt-s" 
+                            accesskey="s"
+                            i18n:attributes="title"
+                            >
+                          </label>
+                          <select class="transport"
+                            name="meta_type"
+                            id="meta_type"
+                            title="select a new item: alt-s"
+                            tal:attributes="onChange string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
+                            i18n:attributes="title"
+                            >
+                            <option value="None" i18n:translate="">
+                              select:
+                            </option>
+                            <tal:block tal:repeat="addable context/get_silva_addables">
+                              <option tal:condition="python:context.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
+                                tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                                tal:attributes="value addable/name" />
+                            </tal:block>
+                          </select>
                           <input type="hidden"
                             name="lookup_mode:int"
                             value="1"
