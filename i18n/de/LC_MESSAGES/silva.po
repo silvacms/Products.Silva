@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Nov 14 19:24:59 2006\n"
+"POT-Creation-Date: Thu Dec 21 19:49:58 2006\n"
 "PO-Revision-Date: 2006-05-02 14:34+0000\n"
 "Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -228,31 +228,31 @@ msgid "Sorry, this ${meta_type} is not viewable."
 msgstr ""
 "Dieser Inhalt wird gerade überarbeitet und kann daher nicht angezeigt werden."
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "unapproved"
 msgstr "nicht genehmigt"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "approved"
 msgstr "genehmigt"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "last_closed"
 msgstr "letzte geschlossene"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "public"
 msgstr "öffentlich"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "pending"
 msgstr "pendent"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "draft"
 msgstr "Entwurf"
 
-#: /Version.py:209 /views/edit/Container/tab_status.pt:262
+#: /Version.py:208 /views/edit/Container/tab_status.pt:262
 msgid "closed"
 msgstr "geschlossen"
 
@@ -354,7 +354,7 @@ msgstr ""
 msgid "Can not delete all versions"
 msgstr "Es können nicht alle Versionen gelöscht werden."
 
-#: /adapters/version_management.py:290
+#: /adapters/version_management.py:288
 msgid "no such version ${version}"
 msgstr "Keine Version ${version}"
 
@@ -1008,7 +1008,7 @@ msgstr "Externe Entwickler"
 msgid "Thanks to...."
 msgstr "Vielen Dank an ..."
 
-#: /layout/layout_macro.html:77
+#: /layout/layout_macro.html:76
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Silvainfo auf der Infrae-Site: alt-i"
 
@@ -1085,7 +1085,7 @@ msgstr "Chefredakteur"
 msgid "Added ${meta_type} ${id}."
 msgstr "Hinzugefügt: ${meta_type} ${id}."
 
-#: /views/add/File/form.form:26
+#: /views/add/File/form.form:68
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr "<b>Tipp:</b> Id und Titel brauchen nicht ausgefüllt zu werden."
 
@@ -1148,14 +1148,10 @@ msgstr ""
 msgid "Empty or invalid file."
 msgstr "Leere oder ungültige Datei."
 
-#: /views/add/Image/form.form:30
+#: /views/add/Image/form.form:47
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
-msgstr ""
-
-#: /views/add/Image/form.form:47
-msgid "Tip: you don&#8217;t have to fill in the id."
 msgstr ""
 
 #: /views/add/Link/form.form:73
@@ -1563,7 +1559,7 @@ msgstr "Format"
 msgid "dimensions"
 msgstr "Dimensionen"
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:24
 msgid "image"
 msgstr "Bilder"
 
@@ -2245,7 +2241,7 @@ msgstr "Gruppe anlegen"
 #: /views/edit/Container/tab_access_groups.pt:84
 #: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
-#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:67
+#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
 #: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
@@ -2254,7 +2250,7 @@ msgstr "Id"
 
 #: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:30
 #: /views/add/File/form.form:47 /views/add/Groups/form.form:30
-#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:69
+#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
 #: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
@@ -2816,8 +2812,8 @@ msgstr "neu"
 
 #: /views/edit/Container/tab_edit_rename.pt:76
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
-#: /views/add/form.form:50 /views/add/File/form.form:68
-#: /views/add/Groups/form.form:48 /views/add/Image/form.form:29
+#: /views/add/form.form:50 /views/add/File/form.form:66
+#: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
 #: /views/add/Indexer/form.form:50 /views/public/search_form.form:56

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Nov 14 19:24:59 2006\n"
+"POT-Creation-Date: Thu Dec 21 19:49:58 2006\n"
 "PO-Revision-Date: 2006-08-02 07:23+0000\n"
 "Last-Translator: Formichelle <for1018@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
@@ -221,31 +221,31 @@ msgstr ""
 msgid "Sorry, this ${meta_type} is not viewable."
 msgstr "抱歉，這個 ${meta_type} 是無法預覽的。"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "unapproved"
 msgstr "未驗證"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "approved"
 msgstr "已驗證"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "last_closed"
 msgstr "最近關閉的"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "public"
 msgstr "公開的"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "pending"
 msgstr "懸置中"
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "draft"
 msgstr "草稿"
 
-#: /Version.py:209 /views/edit/Container/tab_status.pt:262
+#: /Version.py:208 /views/edit/Container/tab_status.pt:262
 msgid "closed"
 msgstr "已關閉"
 
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Can not delete all versions"
 msgstr "不能刪除所有版本"
 
-#: /adapters/version_management.py:290
+#: /adapters/version_management.py:288
 msgid "no such version ${version}"
 msgstr "沒有這個版本 ${version}"
 
@@ -955,7 +955,7 @@ msgstr "外部的開發者"
 msgid "Thanks to...."
 msgstr "感謝 ...感謝..."
 
-#: /layout/layout_macro.html:77
+#: /layout/layout_macro.html:76
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Infrae 網站的 Silva 資訊: alt-i"
 
@@ -1032,7 +1032,7 @@ msgstr "總編輯"
 msgid "Added ${meta_type} ${id}."
 msgstr "增加 ${meta_type} ${id}"
 
-#: /views/add/File/form.form:26
+#: /views/add/File/form.form:68
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr "<b>要訣:</b> 不用填寫 id 及 title"
 
@@ -1093,14 +1093,10 @@ msgstr ""
 msgid "Empty or invalid file."
 msgstr "空白或是不正確的檔案。"
 
-#: /views/add/Image/form.form:30
+#: /views/add/Image/form.form:47
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
-msgstr ""
-
-#: /views/add/Image/form.form:47
-msgid "Tip: you don&#8217;t have to fill in the id."
 msgstr ""
 
 #: /views/add/Link/form.form:73
@@ -1501,7 +1497,7 @@ msgstr "格式"
 msgid "dimensions"
 msgstr "尺寸"
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:24
 msgid "image"
 msgstr "圖片"
 
@@ -2165,7 +2161,7 @@ msgstr "增加一個群組"
 #: /views/edit/Container/tab_access_groups.pt:84
 #: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
-#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:67
+#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
 #: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
@@ -2174,7 +2170,7 @@ msgstr "id帳號"
 
 #: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:30
 #: /views/add/File/form.form:47 /views/add/Groups/form.form:30
-#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:69
+#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
 #: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
@@ -2716,8 +2712,8 @@ msgstr "新"
 
 #: /views/edit/Container/tab_edit_rename.pt:76
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
-#: /views/add/form.form:50 /views/add/File/form.form:68
-#: /views/add/Groups/form.form:48 /views/add/Image/form.form:29
+#: /views/add/form.form:50 /views/add/File/form.form:66
+#: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
 #: /views/add/Indexer/form.form:50 /views/public/search_form.form:56

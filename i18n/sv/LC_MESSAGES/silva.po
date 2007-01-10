@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Nov 14 19:24:59 2006\n"
+"POT-Creation-Date: Thu Dec 21 19:49:58 2006\n"
 "PO-Revision-Date: 2006-08-12 08:07+0000\n"
 "Last-Translator: Robert Renling Berencreuz <berencreuz@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -175,31 +175,31 @@ msgstr ""
 msgid "Sorry, this ${meta_type} is not viewable."
 msgstr ""
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "unapproved"
 msgstr "Inte godkänd"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "approved"
 msgstr "Godkänd"
 
-#: /Version.py:208
+#: /Version.py:207
 msgid "last_closed"
 msgstr ""
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "public"
 msgstr ""
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "pending"
 msgstr ""
 
-#: /Version.py:209
+#: /Version.py:208
 msgid "draft"
 msgstr "utkast"
 
-#: /Version.py:209 /views/edit/Container/tab_status.pt:262
+#: /Version.py:208 /views/edit/Container/tab_status.pt:262
 msgid "closed"
 msgstr "stängt"
 
@@ -297,7 +297,7 @@ msgstr ""
 msgid "Can not delete all versions"
 msgstr ""
 
-#: /adapters/version_management.py:290
+#: /adapters/version_management.py:288
 msgid "no such version ${version}"
 msgstr ""
 
@@ -842,7 +842,7 @@ msgstr ""
 msgid "Thanks to...."
 msgstr ""
 
-#: /layout/layout_macro.html:77
+#: /layout/layout_macro.html:76
 msgid "Silva info on the Infrae site: alt-i"
 msgstr ""
 
@@ -919,7 +919,7 @@ msgstr ""
 msgid "Added ${meta_type} ${id}."
 msgstr ""
 
-#: /views/add/File/form.form:26
+#: /views/add/File/form.form:68
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr ""
 
@@ -975,14 +975,10 @@ msgstr ""
 msgid "Empty or invalid file."
 msgstr ""
 
-#: /views/add/Image/form.form:30
+#: /views/add/Image/form.form:47
 msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
-msgstr ""
-
-#: /views/add/Image/form.form:47
-msgid "Tip: you don&#8217;t have to fill in the id."
 msgstr ""
 
 #: /views/add/Link/form.form:73
@@ -1359,7 +1355,7 @@ msgstr ""
 msgid "dimensions"
 msgstr ""
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:46
+#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:24
 msgid "image"
 msgstr ""
 
@@ -2009,7 +2005,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:84
 #: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
-#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:67
+#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
 #: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
@@ -2018,7 +2014,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:30
 #: /views/add/File/form.form:47 /views/add/Groups/form.form:30
-#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:69
+#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
 #: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
@@ -2546,8 +2542,8 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename.pt:76
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
-#: /views/add/form.form:50 /views/add/File/form.form:68
-#: /views/add/Groups/form.form:48 /views/add/Image/form.form:29
+#: /views/add/form.form:50 /views/add/File/form.form:66
+#: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
 #: /views/add/Indexer/form.form:50 /views/public/search_form.form:56
