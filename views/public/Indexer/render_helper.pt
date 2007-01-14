@@ -1,33 +1,54 @@
-<tal:block 
-  tal:define="model request/model; view here;">
-  <h2
-    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    tal:content="model/get_title"
-    i18n:domain="silva"
-    i18n:translate="">Index</h2>
+<tal:def 
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  define="
+    model request/model;
+    view here;
+    title model/get_title;
+">
+<h2 tal:content="python:title or default"
+  i18n:translate="">
+  Index
+</h2>
 
-  <table class="silvatable indexer"
-    tal:define="model request/model; view here;
-                indexTitles model/getIndexNames">
-    <tr tal:condition="python: indexTitles != None">
-      <th>
+<table class="silvatable indexer"
+  tal:define="indexTitles model/getIndexNames">
+  <thead>
+    <tr>
+      <th class="align-left"
+        i18n:translate="">
         Terms
       </th>
-      <th i18n:translate="">
+      <th class="align-left"
+        i18n:translate="">
         Links
       </th>
     </tr>
-    <tr tal:repeat="indexTitle indexTitles">
-      <tal:block tal:define="indexEntry python: model.getIndexEntry(indexTitle)">
-        <td tal:content="indexTitle"/>
-        <td 
-          tal:content="structure python:view.render_links(indexTitle, indexEntry)"/>
-      </tal:block>
-    </tr>
-    <tr tal:condition="python: indexTitles == None">
-      <td colspan="2" i18n:translate="">
-        No index items listed or found. Perhaps go to the edit tab and run the indexer.
+  </thead>
+  <tbody tal:condition="python: len(indexTitles) > 0">
+  <tal:loop repeat="indexTitle indexTitles">
+  <tal:def define="
+    iterate repeat/indexTitle/odd;
+    indexEntry python: model.getIndexEntry(indexTitle);
+  ">
+    <tr tal:attributes="class python: iterate and 'even' or 'odd'">
+      <td tal:content="indexTitle">
+        Term
+      </td>
+      <td tal:content="structure python:view.render_links(indexTitle, indexEntry)">
+        Link
       </td>
     </tr>
-  </table>
-</tal:block>
+  </tal:def>
+  </tal:loop>
+  </tbody>
+  <tbody tal:condition="python: len(indexTitles) == 0">
+    <tr>
+      <td colspan="2"
+        i18n:translate="">
+        No index items listed or found. 
+      </td>
+    </tr>
+  </tbody>
+</table>
+</tal:def>
