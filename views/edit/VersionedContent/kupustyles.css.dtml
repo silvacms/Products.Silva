@@ -299,22 +299,6 @@ div#kupu-fgcolorchooser div:hover {
   display: none;
 }
 
-#kupu-toolbox-extsource #extsourceform input[type="text"] {
-  width: 14em;
-}
-
-#kupu-toolbox-extsource #extsourceform input[type="password"] {
-  width: 14em;
-}
-
-#kupu-toolbox-extsource #extsourceform select {
-  width: 14em;
-}
-
-#kupu-toolbox-extsource #extsourceform textarea {
-  width: 14em;
-}
-
 #kupu-toolbox-extsource a {
   color: #187374;
   text-decoration: none;
