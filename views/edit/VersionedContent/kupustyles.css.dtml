@@ -325,20 +325,20 @@ div.kupu-properties-checkbox-innerdiv {
   display: none;
 }
 
-#kupu-toolbox-extsource a {
+.kupu-tooltray a {
   color: #187374;
   text-decoration: none;
 }
 
-#kupu-toolbox-extsource a.rollover span {
+.kupu-tooltray a.rollover span {
   display: none;
 }
 
-#kupu-toolbox-extsource a.rollover:hover {  
+.kupu-tooltray a.rollover:hover {  
   text-decoration: none;
 }
 
-#kupu-toolbox-extsource span.tooltip {
+.kupu-tooltray span.tooltip {
   color: #444;
   background: #e3f1da;
   margin: 0.8em 0.4em 0 0;
@@ -349,13 +349,13 @@ div.kupu-properties-checkbox-innerdiv {
   display: none
 }
 
-#kupu-toolbox-extsource a.rollover:hover span {
+.kupu-tooltray a.rollover:hover span {
   display:block;
   position:absolute;
   width:21em;
 }
 
-#kupu-toolbox-extsource a.requiredfield {
+.kupu-tooltray a.requiredfield {
  border-bottom: 1px solid #cc0000;
 }
 

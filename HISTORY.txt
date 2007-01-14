@@ -5,6 +5,18 @@ Silva changes
 
     Features added:
 
+      - Moved the css selectors for rollover tooltips in Kupu toolboxes higher
+        in the cascade so they apply to all toolboxes. Added tooltips for the 
+        new anchor/index item toolbox and the abbr/acronym toolbox.
+
+      - Fixed up the Indexer:
+          Add tbody since Zope puts it in anyway
+          Add odd/even cycling for table rows
+          Remove double defines
+          Fix title for cases where there isn't one
+          Fix display for empty indexer
+          Reduce arbitrary indenting
+
       - Changed css styling of the preview publisher buttons, making easier 
         for users to integrate the publisher into their own layout.
 
