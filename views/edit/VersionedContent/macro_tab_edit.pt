@@ -56,9 +56,9 @@ h2 {
     <tal:block define="
       permissions view/get_silva_permissions;
       have_approve_permission permissions/ApproveSilvaContent | nothing">
-      <a title="publish this document: alt-p"
-        accesskey="p"
-        class="executor"
+      <a class="executor"
+        style="float:right"
+        title="publish this document: alt-p"
         tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
         i18n:translate=""
         i18n:attributes="title"

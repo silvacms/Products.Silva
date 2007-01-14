@@ -51,9 +51,10 @@ h2 {
       unapproved_version      model/get_unapproved_version | nothing;
       have_approve_permission permissions/ApproveSilvaContent | nothing;
     ">
-      <a title="publish this document: alt-p"
+      <a class="executor"
+        style="float:right"
+        title="publish this document: alt-p"
         accesskey="p"
-        class="executor"
         tal:attributes="href string:${model/absolute_url}/edit/tab_preview_publish"
         i18n:translate=""
         i18n:attributes="title"
