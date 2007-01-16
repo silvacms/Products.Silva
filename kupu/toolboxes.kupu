@@ -243,18 +243,14 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0">
                     <tr>
-                      <td><a class="rollover" href="#"><span tal:omit-tag="" i18n:translate="">titles</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
+                      <td><a class="rollover" href="#"><span tal:omit-tag="" i18n:translate="">title</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
                       <td><input class="store" type="text" id="kupu-abbr-title" /></td>
                     </tr>
                     <tr id="kupu-abbr-radiorow">
                       <td><a class="rollover" href="#"><span tal:omit-tag="" i18n:translate="">type</span><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym).</span></a></td>
                       <td>
-                        <input type="radio" id="kupu-abbr-type-abbr" 
-                              name="kupu-abbr-type" value="abbr" checked="checked" /> 
-                        abbreviation
-                        <input type="radio" id="kupu-abbr-type-acronym" 
-                              name="kupu-abbr-type" value="acronym" /> 
-                        acronym
+                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" />abbreviation</label>
+                        <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym"/>acronym</label>
                       </td>
                     </tr>
                   </table>
