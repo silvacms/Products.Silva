@@ -57,7 +57,8 @@
               condition="model/get_approved_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure python:view.render_icon(model)" />
+                  <img tal:replace="structure python:view.render_icon(model)"
+                    tal:attributes="title model/meta_type" />
                   <tal:block i18n:translate="">properties</tal:block>
                   <tal:block i18n:translate="">
                   <tal:block condition="not: model/implements_container" i18n:name="for_approved_version_of_title">
@@ -78,7 +79,8 @@
               condition="model/get_public_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure python:view.render_icon(model)" />
+                  <img tal:replace="structure python:view.render_icon(model)" 
+                    tal:attributes="title model/meta_type" />
                   <tal:block i18n:translate="">properties</tal:block>
                   <span tal:condition="not: model/implements_container" i18n:translate="">
                     for public version of
@@ -96,8 +98,9 @@
               condition="python: not model.get_next_version() and not model.get_public_version()">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
                 <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure python:view.render_icon(model)" />
-                  <tal:block i18n:translate="">properties</tal:block>
+                  <img tal:replace="structure python:view.render_icon(model)" 
+                    tal:attributes="title model/meta_type" />
+                 <tal:block i18n:translate="">properties</tal:block>
                   <span tal:condition="not: model/implements_container" i18n:translate="">
                     for closed version of
                     &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;

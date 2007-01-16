@@ -17,7 +17,9 @@
   </script>
   <div class="info">
     <h3 i18n:translate="">
-      <img tal:replace="structure icon" /> image info
+      <img tal:replace="structure icon" 
+        tal:attributes="title model/meta_type" />
+      image info
     </h3>
     <tal:block tal:condition="model/canScale">
       <p tal:condition="not: model/hires_image">

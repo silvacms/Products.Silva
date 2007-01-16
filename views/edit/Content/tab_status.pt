@@ -22,7 +22,8 @@
 <metal:use-macro use-macro="here/macro_nonscreen/macros/shell">
 
   <h2 metal:fill-slot="table_title">
-    <img tal:replace="structure python:view.render_icon(model)" />
+    <img tal:replace="structure python:view.render_icon(model)" 
+      tal:attributes="title model/meta_type" />
     <tal:block i18n:translate="">status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
   </h2>
 

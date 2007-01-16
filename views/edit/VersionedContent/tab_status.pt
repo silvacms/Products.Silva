@@ -13,7 +13,8 @@
 <metal:block fill-slot="main"
   tal:define="
     view here;
-    icon nocall:python:view.render_icon(model);
+    icon python:view.render_icon(model);
+    icon_title model/meta_type;
     unapproved python:model.get_unapproved_version() is not None;
     request_pending python:unapproved and model.is_version_approval_requested();
     approved python:model.get_approved_version() is not None;
@@ -49,7 +50,8 @@
   <tr>
     <td class="top" colspan="3">
     <h2>
-      <img tal:replace="structure icon" />
+      <img tal:replace="structure icon" 
+        tal:attributes="title icon_title" />
       <tal:block i18n:translate="">status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
     </h2>
     </td>
@@ -147,7 +149,9 @@ _______ manual close section here _______
 <div class="info"
   style="margin-bottom:1em">
   <h3 i18n:translate="">
-    <img tal:replace="structure icon" /> document info
+    <img tal:replace="structure icon" 
+      tal:attributes="title icon_title" />
+    document info
   </h3>
 
   <span tal:replace="nothing"> _______ status: content is a draft, never published _______ </span>
@@ -235,13 +239,14 @@ _______ manual close section here _______
   <thead>
     <tr>
       <td class="top" colspan="7">
-         <h2 tal:attributes="title string:id: ${model/id}">
-           <img tal:replace="structure icon" />
-           <tal:block i18n:translate="">
-             manage versions of &#xab;<tal:block 
-             content="string:${model/get_title_or_id}"
-             i18n:name="export_id">id</tal:block>&#xbb;
-           </tal:block>
+        <h2 tal:attributes="title string:id: ${model/id}">
+          <img tal:replace="structure icon" 
+            tal:attributes="title icon_title" />
+          <tal:block i18n:translate="">
+            manage versions of &#xab;<tal:block 
+            content="string:${model/get_title_or_id}"
+            i18n:name="export_id">id</tal:block>&#xbb;
+          </tal:block>
          </h2>
       </td>
     </tr>

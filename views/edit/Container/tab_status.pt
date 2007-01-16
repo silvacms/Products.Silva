@@ -58,7 +58,8 @@
       <td class="top"
         colspan="6">
         <h2 tal:attributes="title string:id: ${model/id}">
-          <img tal:replace="structure python:view.render_icon(model)" />
+          <img tal:replace="structure python:view.render_icon(model)" 
+            tal:attributes="title model/meta_type" />
           &#xab;<span tal:replace="title">title</span>&#xbb;
         </h2>
       </td>

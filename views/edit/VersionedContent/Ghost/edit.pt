@@ -45,7 +45,8 @@
         <td class="top"
           colspan="3">
           <h2>
-            <img tal:replace="structure python:view.render_icon(model)" />
+            <img tal:replace="structure python:view.render_icon(model)" 
+              tal:attributes="title model/meta_type" />
             <tal:block i18n:translate="">ghost of &#xab;<tal:block i18n:name="name" content="title" />&#xbb;</tal:block>
           </h2>
         </td>

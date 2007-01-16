@@ -14,19 +14,25 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+
 <metal:block fill-slot="script">
   <script type="text/javascript" 
-            tal:attributes="src here/reference.js/absolute_url">
+    tal:attributes="src here/reference.js/absolute_url">
   </script>
 </metal:block>
-<metal:block fill-slot="main">
+
+<metal:block fill-slot="main"
+  tal:define="
+    icon python:view.render_icon(model);
+    icon_title model/meta_type;
+">
 
 <table class="columns columns2"
   tal:define="
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
-    ct python: mangle.String.centeredTruncate;
+    ct  python: mangle.String.centeredTruncate;
 ">
   <tbody>
     <tr>
@@ -55,7 +61,8 @@
          <td class="top"
             colspan="3">
             <h2>
-               <img tal:replace="structure python:view.render_icon(model)" />
+               <img tal:replace="structure icon" 
+                 tal:attributes="title icon_title" />
                <tal:block i18n:translate="">
                ghost folder of &#xab;<tal:block 
                content="title" i18n:name="title" />&#xbb;
@@ -169,9 +176,8 @@
   ____________________________ contents listing ____________________________
 </tal:block>
 <tal:block replace="nothing">
-  ______________ Fixme: this listing duplicates code of the Contents screen,
-  but it's so adjusted it may not make sense to macro it. Once this is final
-  the replace="nothing"s should be removed ______________
+  ______________ This listing duplicates code of the Contents screen,
+  but it's so adjusted it may not make sense to macro it.  ______________
 </tal:block>
 
 <table class="listing"
@@ -190,7 +196,8 @@
       <td class="top"
         colspan="5">
         <h2 tal:attributes="title string:id: ${model/id}">
-          <img tal:replace="structure python:view.render_icon(model)" />
+        <img tal:replace="structure icon" 
+          tal:attributes="title icon_title" />
           <span i18n:translate="">ghost folder contents</span>
         </h2>
       </td>
@@ -288,7 +295,7 @@
             <a class="icon"
               tal:attributes="
                 href python:here.get_editor_link(item);
-                title item/meta_type;">
+                title item/meta_type">
               <img tal:replace="structure python:view.render_icon(item)" />
             </a>
             <a class="blacklink"

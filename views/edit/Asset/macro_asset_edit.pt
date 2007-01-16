@@ -37,7 +37,8 @@
         <td class="top"
           colspan="2">
           <h2>
-            <img tal:replace="structure icon" />
+            <img tal:replace="structure icon" 
+              tal:attributes="title model/meta_type" />
             <span style="text-transform:lowercase;"
               tal:content="meta_type">meta type</span> 
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;

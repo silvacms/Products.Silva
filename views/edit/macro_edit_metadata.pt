@@ -36,7 +36,8 @@
         <tr>
           <td class="top" colspan="4">
             <h2 metal:define-slot="table_title">
-              <img tal:replace="structure python:view.render_icon(model)" />
+              <img tal:replace="structure python:view.render_icon(model)" 
+                tal:attributes="title model/meta_type" />
               <tal:block i18n:translate="">properties</tal:block>
               <tal:block condition="model/implements_container"
                 i18n:translate="">
