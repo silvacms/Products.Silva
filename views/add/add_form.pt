@@ -65,7 +65,7 @@
       content
     </th>
     <th i18n:translate="">
-    notes
+      notes
     </th>
   </tr>
   <tal:repeat repeat="field here/form/get_fields">
@@ -101,14 +101,16 @@
     </td>
   </tr>
   <tr>
-    <th class="align-right">
+    <th class="align-right"
+      i18n:translate="">
       aspect
     </th>
-    <th>
+    <th style="width:50%;"
+      i18n:translate="">
       content
     </th>
-    <th>
-    notes
+    <th i18n:translate="">
+      notes
     </th>
   </tr>
   </tal:test>
