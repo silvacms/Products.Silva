@@ -168,7 +168,8 @@
               <a class="icon"
                 tal:attributes="href string:${obj_url}/edit/tab_edit;
                 title python: here.tab_status_get_modify_title(obj['meta_type']);
-                ">
+                "
+                i18n:attributes="title">
                 <img tal:replace="structure obj/icon" />
               </a>
             </div>
@@ -179,8 +180,9 @@
                   class obj/status_style | default;
                   href string:${obj_url}/edit/tab_preview;
                   title python:here.tab_status_get_preview_title(obj['id']);
-                  ">
-                <tal:if condition="obj/is_default | nothing">
+                  "
+                  i18n:attributes="title">
+                <tal:block condition="obj/is_default | nothing">
                   <em i18n:translate="">index:</em>
                   <tal:plug condition="title" replace="title" />
                   <em tal:condition="not:title" tal:content="obj/id">id</em>
