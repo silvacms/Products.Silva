@@ -16,16 +16,19 @@
   i18n:domain="silva">
 
 <metal:block metal:use-macro="use_macro/macros/master">
-<metal:block fill-slot="main">
+<metal:block fill-slot="main"
+  tal:define="metatype request/meta_type">
 <script type="text/javascript" 
-  tal:content="structure python:here.focus_editor('field_object_id')" />
+  tal:define="focusfield python:metatype == 'Silva Image' and 'field_object_title' or 'field_object_id'"
+  tal:content="structure python:here.focus_editor(focusfield)" />
 
 <div class="focus-rectangle">
 <form method="POST"
   action="add_object_submit"
   name="focusbox"
   enctype="multipart/form-data">
-<input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
+<input type="hidden" name="meta_type"
+  tal:attributes="value metatype" />
 <input type="hidden" name="lookup_mode:int" value="0"
   tal:attributes="value lookup_mode" />
 <input type="hidden"
@@ -38,15 +41,15 @@
     <td class="top"
       colspan="3">
     <h2>
-      <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />
+      <img tal:replace="structure python:context.render_icon_by_meta_type(metatype)" />
       <tal:block i18n:translate="">
-        <tal:test condition="python:request.meta_type == 'Silva Image' or request.meta_type == 'Silva File'">
+        <tal:test condition="python:metatype == 'Silva Image' or metatype == 'Silva File'">
           upload
         </tal:test>
-        <tal:test condition="python:not (request.meta_type == 'Silva Image' or request.meta_type == 'Silva File')">
+        <tal:test condition="python:not (metatype == 'Silva Image' or metatype == 'Silva File')">
           create
         </tal:test>
-        <tal:block replace="python: request.meta_type == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or request.meta_type" 
+        <tal:block replace="python: metatype == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or metatype" 
           i18n:name="TOC_or_meta_type" />
       </tal:block>
     </h2>
@@ -90,8 +93,8 @@
   </tr>
   <tal:comment replace="nothing"> _______ insert subhead for images and files _______ </tal:comment>
   <tal:test condition="
-    python:(request.meta_type == 'Silva Image' and field.id == 'object_title')
-    or (request.meta_type == 'Silva File' and field.id == 'file')
+    python:(metatype == 'Silva Image' and field.id == 'object_title')
+    or (metatype == 'Silva File' and field.id == 'file')
     ">
   <tr class="inter-controls">
     <td>
