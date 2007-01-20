@@ -49,17 +49,16 @@
         </tr>
 
         <tal:repeat repeat="objectid objects">
-        <tal:define define="object python:getattr(model, objectid)">
+        <tal:define define="
+          object python:getattr(model, objectid);
+          objId object/getId;
+        ">
         <tr class="odd" valign="top">
           <td class="align-right" i18n:translate="">
             id
           </td>
           <td>
-            <span 
-              tal:define="
-                objId object/getId"
-              tal:replace="
-                python: mangle.String.centeredTruncate(objId, 30)" />
+            <tal:plug replace="python: mangle.String.centeredTruncate(objId, 30)" />
               &nbsp;
           </td>
           <td>
@@ -68,13 +67,13 @@
               name="name"
               value="value"
               tal:attributes="
-                name string:id_${object/getId};
-                value object/getId;
+                name string:id_$objId;
+                value objId;
             " />
 <script type="text/javascript" 
-  tal:define="focus string:id_${object/getId}"
+  tal:define="focusfield string:id_$objId"
   tal:condition="repeat/objectid/start"
-  tal:content="structure python:here.focus_editor(focus)" />
+  tal:content="structure python:here.focus_editor(focusfield)" />
           </td>
           </tr>
 
@@ -82,15 +81,11 @@
           <td class="align-right" i18n:translate="">
             title
           </td>
-          <td tal:define="
-                title python: object.get_title_editable()" >
+          <td tal:define="title python: object.get_title_editable()" >
             <em tal:condition="not: title" i18n:translate="">no title</em> 
-            <span 
-              tal:condition="title"
-              tal:content="
-                python: mangle.String.centeredTruncate(title, 30)"
-              tal:attributes="
-                title title"
+            <tal:plug condition="title"
+              content="python: mangle.String.centeredTruncate(title, 30)"
+              attributes="title title"
             />
           </td>
           <td tal:define="
@@ -103,12 +98,10 @@
               value="value"
               tal:condition="is_title_editable"
               tal:attributes="
-                name string:title_${object/getId}; 
+                name string:title_$objId; 
                 value title;
-                " 
-            />
-              <tal:block 
-                content="title"
+            " />
+              <tal:plug content="title"
                 condition="not: is_title_editable" 
               />
           </td>
