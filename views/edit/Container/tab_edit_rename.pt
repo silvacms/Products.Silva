@@ -16,7 +16,7 @@
 <metal:block fill-slot="main"
   tal:define="objects view/REQUEST/ids">
 
-<tal:condition condition="python:view.REQUEST.has_key('ids')">
+<tal:if condition="python:view.REQUEST.has_key('ids')">
 <div class="focus-rectangle"
   style="padding-top:1px;">
   <form action="tab_edit_rename_submit" method="POST">
@@ -28,7 +28,7 @@
             <h2 i18n:translate="">
               <img tal:replace="structure python:view.render_icon(model)" />
               rename objects in       
-              &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
+              &#xab;<tal:plug content="title" i18n:name="title" />&#xbb;
             </h2>
           </td>
         </tr>
@@ -58,8 +58,7 @@
             id
           </td>
           <td>
-            <tal:plug replace="python: mangle.String.centeredTruncate(objId, 30)" />
-              &nbsp;
+            <tal:plug replace="python: mangle.String.centeredTruncate(objId, 30)" />&nbsp;
           </td>
           <td>
             <input class="store"
@@ -89,8 +88,8 @@
             />
           </td>
           <td tal:define="
-                title object/get_title_editable | object/get_title;
-                is_title_editable object/can_set_title;
+            title object/get_title_editable | object/get_title;
+            is_title_editable object/can_set_title;
           ">
             <input class="store"
               type="text"
@@ -101,13 +100,13 @@
                 name string:title_$objId; 
                 value title;
             " />
-              <tal:plug content="title"
-                condition="not: is_title_editable" 
+              <tal:plug condition="not: is_title_editable"
+                content="title" 
               />
           </td>
         </tr>
         <tr class="divider"
-          tal:condition="not: repeat/objectid/end">
+          tal:condition="not:repeat/objectid/end">
           <td colspan="5">
           </td>
         </tr>
@@ -119,7 +118,7 @@
         <tr class="controls">
           <td colspan="3">
             <input class="button"
-              style="float:right;"
+              style="float:right"
               type="submit"
               value="rename"
               title="access key: alt-r"
@@ -141,7 +140,7 @@
     </table>
   </form>
 </div>
-</tal:condition>
+</tal:if>
 
 </metal:block>
 </metal:block>
