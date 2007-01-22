@@ -16,6 +16,8 @@ view = context.tab_status
 is_rejection = request['rejection_status'] == 'true'
 
 message = request.form.get('message')
+if not message is None:
+    message = unicode(message, 'UTF-8')
 if not message:
     if is_rejection:
         message = ("Approval was rejected via the status screen "
