@@ -14,6 +14,8 @@ def initialize():
     upgrade.registry.registerUpgrader(
         IndexerUpgrader(), '1.6', 'Silva Indexer')
     upgrade.registry.registerUpgrader(
+        AutoTOCUpgrader(), '1.6', 'Silva AutoTOC')
+    upgrade.registry.registerUpgrader(
         IndexItemUpgrader(), '1.6', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(
         CatalogRefresher(), '1.6', upgrade.AnyMetaType)
@@ -68,6 +70,18 @@ class IndexerUpgrader:
         indexer.update()
         return indexer
 
+class AutoTOCUpgrader:
+
+    implements(IUpgrader)
+    
+    def upgrade(self, autotoc):
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            'Upgrading AutoTOC: %s' % autotoc.get_title_or_id())
+        if not hasattr(autotoc, '_toc_depth'):
+            autotoc._toc_depth = -1
+        return indexer
+    
 class CatalogRefresher:
     """Refreshes the whole Silva catalog"""
     implements(IUpgrader)
