@@ -19,7 +19,7 @@
       item python:obj[1];
       title python:getattr(obj[1], title_method)();
       url string:${item/absolute_url}${append_to_url}"
-  tal:condition="python:not (hasattr(item, 'hide_from_tocs') and getattr(item, 'hide_from_tocs', 'do_not_hide') == 'hide')"
+  tal:condition="python:not (hasattr(item, 'hide_from_tocs') and item.getMetadataElement('silva-extra', 'hide_from_tocs') == 'hide')"
 ><p tal:attributes="class string:toc level-$indent">
 <a tal:attributes="href url"
   tal:content="python:title and title or item.id">
