@@ -38,9 +38,9 @@ class AutoTOC(Content, SimpleItem):
     implements(IAutoTOC)
 
     def __init__(self, id):
-        AutoTOC.inheritedAttribute('__init__')(self, id,
-            '[Title is stored in metadata. This is a bug.]')
-
+        AutoTOC.inheritedAttribute('__init__')(self, id, 'Dummy Title')
+        self._toc_depth = -1
+        
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
@@ -58,13 +58,20 @@ class AutoTOC(Content, SimpleItem):
         """always settable"""
         # XXX: we badly need Publishable type objects to behave right.
         return 1
+
+    def set_toc_depth(self, depth):
+        self._toc_depth = depth
+        
+    def toc_depth(self):
+        """get the depth to which the toc will be rendered"""
+        return self._toc_depth
     
 InitializeClass(AutoTOC)
 
 manage_addAutoTOCForm = PageTemplateFile("www/autoTOCAdd", globals(),
     __name__='manage_addAutoTOCForm')
 
-def manage_addAutoTOC(self, id, title, REQUEST=None):
+def manage_addAutoTOC(self, id, title, depth=-1, REQUEST=None):
     """Add a autotoc."""
     if not mangle.Id(self, id).isValid():
         return
@@ -72,6 +79,7 @@ def manage_addAutoTOC(self, id, title, REQUEST=None):
     self._setObject(id, object)
     object = getattr(self, id)
     object.set_title(title)
+    object.set_toc_depth(depth)
     add_and_edit(self, id, REQUEST)
     return ''
 

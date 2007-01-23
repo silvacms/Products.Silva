@@ -36,6 +36,17 @@ Add Silva Auto TOC.
   </tr>
   <tr>
     <td align="left" valign="top">
+      <div i18n:translate="" class="form-label">
+        depth
+      </div>
+    </td>
+    <td align="left" valign="top">
+      <input type="text" name="depth" size="3" />
+    </td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
     </td>
     <td align="left" valign="top">
     <div class="form-element">
