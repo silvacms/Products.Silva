@@ -1,7 +1,7 @@
 <tal:def
   define="
     model request/ghost_model | request/model;
-    toc_depth python: -1;
+    toc_depth model/toc_depth;
     public options/public | nothing;
     title_method python: test(public, 'get_title', 'get_title_editable');
     tree python: here.get_tree(model=model, toc_depth=toc_depth, public=public);
@@ -19,7 +19,7 @@
       item python:obj[1];
       title python:getattr(obj[1], title_method)();
       url string:${item/absolute_url}${append_to_url}"
-  tal:condition="python: not (hasattr(item, 'hide_from_tocs') and item.getMetadataElement('silva-extra', 'hide_from_tocs') == 'hide')"
+  tal:condition="python:not item.getMetadataElement('silva-extra', 'hide_from_tocs') == 'hide'"
 ><p tal:attributes="class string:toc level-$indent">
 <a tal:attributes="href url"
   tal:content="python:title and title or item.id">

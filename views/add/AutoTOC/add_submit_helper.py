@@ -7,6 +7,7 @@
 ##parameters=model, id, title, result
 ##title=
 ##
-model.manage_addProduct['Silva'].manage_addAutoTOC(id, title)
+depth = result['depth']
+model.manage_addProduct['Silva'].manage_addAutoTOC(id, title, depth)
 toc = getattr(model, id)
 return toc
