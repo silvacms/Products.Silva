@@ -64,6 +64,9 @@ class AutoTOC(Content, SimpleItem):
         
     def toc_depth(self):
         """get the depth to which the toc will be rendered"""
+        #XXX in lieu of upgrade code for now
+        if not hasattr(self, '_toc_depth'):
+            self._toc_depth = -1
         return self._toc_depth
     
 InitializeClass(AutoTOC)
