@@ -185,3 +185,18 @@ class ICatalogIndexable(Interface):
     def reindex():
         """Reindex an object.
         """
+class IFeed(Interface):
+    """
+    Atom or RSS2 feed
+    """
+    def getFeed(format='atom'):
+        """Get the atom or rss2 feed for a container like Silva object. 
+        """
+        
+class IFeedItem(Interface):
+    """
+    Atom or RSS2 feed item
+    """
+    def getFeedItem(format='atom'):
+        """Get the atom or rss2 feed item representation for a Silva object. 
+        """

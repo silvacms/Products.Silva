@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Copyright (c) 2002-2006 Infrae. All rights reserved.
+# Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: Image.py,v 1.76 2006/01/25 18:13:30 faassen Exp $
 # Python

@@ -1,4 +1,4 @@
-# Copyright (c) 2005-2006 Infrae. All rights reserved.
+# Copyright (c) 2005-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.3 $
 import SilvaTestCase
