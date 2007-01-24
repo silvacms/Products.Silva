@@ -8,9 +8,14 @@ Silva changes
 
     Features added
 
-      - Changed css styling of the preview publisher buttons, making easier for 
-        users to integrate the publisher into their own layout. This should be 
-        noted in the release communication.
+      - 2007-01-24: added an explicit base tag to the layout template, so 
+        that it no longer includes a trailing slash which zope adds for 
+        all containerlike objects, which Silva Documents are. This means
+        that linking to anchors now works like you would expect it to.
+
+      - Changed css styling of the preview publisher buttons, making easier
+        for users to integrate the publisher into their own layout. This
+        should be noted in the release communication.
 
       - Fix for TOCs and AutoTOCS where docs that didn't have a title
         didn't appear because the link was empty (it was there). Now the
@@ -21,10 +26,10 @@ Silva changes
         break onto the next, non-indented line. Updated frontend.css with
         new selectors for the TOC levels.
 
-      - Tocs display links with a trailing slash because there may be 
-        'edit/tab_preview' appended to it, but this conflicts with links made 
-        in the editor that are rendered without the slash. Moved the slash 
-        into the appendage.
+      - Tocs display links with a trailing slash because there may be
+        'edit/tab_preview' appended to it, but this conflicts with links 
+        made in the editor that are rendered without the slash. Moved the
+        slash into the appendage.
 
   1.5.9
 
