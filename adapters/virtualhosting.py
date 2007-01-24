@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2006 Infrae. All rights reserved.
+# Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: virtualhosting.py,v 1.8 2006/01/24 16:12:01 faassen Exp $
 #
