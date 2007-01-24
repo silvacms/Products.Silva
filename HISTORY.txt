@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
  
-  Silva 1.6b5 (SVN/UNRELEASED)
+  Silva 1.6 (SVN/UNRELEASED)
 
     Features added:
 
@@ -54,6 +54,11 @@ Silva changes
         will not be found by Indexers.
 
     Ported from 1.5 branch
+
+      - 2007-01-24: added an explicit base tag to the layout template, so 
+        that it no longer includes a trailing slash which zope adds for 
+        all containerlike objects, which Silva Documents are. This means
+        that linking to anchors now works like you would expect it to.
 
       - Changed calls from getMetdata to getMetadataValue where possible,
         resulting in a significant performance gain.
