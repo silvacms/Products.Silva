@@ -71,13 +71,21 @@
 
 <p style="line-height:1.5em;">
   Kit Blake<br />
+  Eric Casteleijn<br />
+  Torvald de Boskat<br />
+  Wim Boucquaert<br />
+  Daniel Nouri<br />
+  Jasper Op de Coul<br />
+</p>
+
+<h4 i18n:translate="">Silva alumni</h4>
+
+<p style="line-height:1.5em;">
   Martijn Faassen<br />
   Jan-Wijbrand Kolman<br />
   Guido Wesdorp<br />
   Guido Goldstein<br />
-  Eric Casteleijn<br />
   Walco van Loon<br />
-  Torvald de Boskat<br />
 </p>
 
 <h4 i18n:translate="">External developers</h4>
@@ -93,12 +101,16 @@
   Philipp von Weitershausen<br />
   Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a><br />
   Roman Joost<br />
+  Ofer Weisglass<br />
+  Benno Luthiger from <a href="http://www.ethz.ch/">ETH Zurich</a><br />
+  Marc Petitmermet from <a href="http://www.mat.ethz.ch/">ETH Zurich Department of Materials</a><br />
+  Andy Altepeter from <a href="http://www.bethel.edu/">Bethel University</a><br />
 </p>
   
 <h4 i18n:translate="">Thanks to....</h4>
 
 <p i18n:translate="">
-  The people at <span i18n:name="eth_zuerich"><a href="http://www.ethz.ch/">ETH Z&uuml;rich</a></span> for their feedback, contributions, and innovation.
+  The people at <span i18n:name="eth_zuerich"><a href="http://www.ethz.ch/">ETH Zurich</a></span> for their feedback, contributions, and innovation.
 </p>
 <p i18n:translate="">
   Jan Smith at <span i18n:name="ozzope"><a href="http://ozzope.org">ozzope.org</a></span> for advice, hosting the documentation wiki, and her tutorials.
