@@ -127,12 +127,9 @@
 <!-- _____________________ 404 error message  _____________________ -->
 <!-- _____________________ Silva version 0.9.3.0 __________________ -->
 <html metal:use-macro="here/get_layout_macro">
-<head>
-<title metal:fill-slot="title" 
-  tal:content="here/get_title_or_id">
-  Local or custom title (in content.html)
+<title metal:fill-slot="title">
+  404 &#8211; Resource not found
 </title>
-
 <!-- define custom stylesheet -->
 <metal:block fill-slot="style">
   <!-- Start style slot -->
@@ -140,12 +137,9 @@
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <!-- End style slot -->
 </metal:block>
-</head>
-
-<body>
 <!-- _____________________ main slot  _____________________ -->
 <div metal:fill-slot="main">
-  <h2>404 &#8211; document not found</h2>
+  <h2>404 &#8211; Resource not found</h2>
   <p>
     The document you are looking for is not or no longer available.<br />
     Please check your request for typing errors and retry. 
@@ -154,8 +148,7 @@
     url
   </p>
 </div>
-
-</body>
 </html>
+
 </tal:block>
 </tal:block>
