@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
  
-  Silva 1.6 (SVN/UNRELEASED)
+  Silva 1.6.x (SVN/UNRELEASED)
 
     Features added:
 
@@ -59,6 +59,10 @@ Silva changes
         will not be found by Indexers.
 
     Ported from 1.5 branch
+
+      - Default installations will have the html meta tags and accessibility
+        links skipped in the layout macro to have better out of the box
+        performance. Site managers can turn them on as needed.
 
       - 2007-01-24: added an explicit base tag to the layout template, so 
         that it no longer includes a trailing slash which zope adds for 
