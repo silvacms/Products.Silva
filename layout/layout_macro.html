@@ -41,14 +41,14 @@
     tal:attributes="content email" />
 </tal:skip>
   <meta metal:define-slot="meta" tal:omit-tag="" />
-  <!-- /End metatags -->
+  <!-- End metatags -->
   <!-- Begin stylesheets -->
   <link rel="stylesheet" type="text/css" media="all"
     tal:attributes="href here/frontend.css/absolute_url | nothing" />
   <link rel="stylesheet" type="text/css" media="print"
     tal:attributes="href here/print.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
-  <!-- /End stylesheets -->
+  <!-- End stylesheets -->
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
@@ -69,11 +69,11 @@
     </tal:loop>
     <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href surround/up" />
   </tal:block>
-  <!-- /End access navigation links -->
+  <!-- End access navigation links -->
   <link rel="copyright" title="Copyright"
     tal:attributes="href here/copyright/absolute_url | nothing" />
 </tal:skip>
-  <!-- /End related links -->
+  <!-- End related links -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
     <!-- script slot -->
@@ -109,19 +109,24 @@
 <!-- End header slot -->
 </metal:slot>
 
-<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
 <metal:slot define-slot="table_of_contents">
-  <!-- Table of contents slot -->
+<!-- Table of contents slot -->
 </metal:slot>
+
 <div class="public">
-  <metal:slot define-slot="main">
-    <!-- main slot -->
-  </metal:slot>
+<span tal:replace="nothing"> _______ content area, here the XML is rendered to HTML _______ </span>
+<metal:slot define-slot="main">
+<!-- Start Silva content -->
+<tal:insert define="view_method options/view_method"
+  content="structure python:getattr(here, view_method)()">
+  <!-- this comment gets replaced by the Silva document content -->
+</tal:insert>
+<!-- End Silva content -->
+</metal:slot>
 </div>
-<br />
 
 <metal:slot define-slot="footer">
-  <!-- Footer slot -->
+<!-- Footer slot -->
 </metal:slot>
 
 </body>
