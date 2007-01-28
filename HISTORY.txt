@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - Changed the lang attribute of the layout macro html tag to get the lang
+        from metadata, as in: https://infrae.com/issue/silva/issue1566
+        Lower cased the language codes in the metadata set, as in:
+        https://infrae.com/issue/silva/issue1668
+
       - Moved the css selectors for rollover tooltips in Kupu toolboxes higher
         in the cascade so they apply to all toolboxes. Added tooltips for the 
         new anchor/index item toolbox and the abbr/acronym toolbox.
