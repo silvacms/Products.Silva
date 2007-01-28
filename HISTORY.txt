@@ -8,6 +8,13 @@ Silva changes
 
     Features added
 
+      - Simplified the content.html layout file to make it easier to understand. 
+        Moved the content call into the layout macro. Reformatted the comments.
+
+      - Default installations will have the html meta tags and accessibility
+        links skipped in the layout macro to have better out of the box
+        performance. Site managers can turn them on as needed.
+
       - 2007-01-24: added an explicit base tag to the layout template, so 
         that it no longer includes a trailing slash which zope adds for 
         all containerlike objects, which Silva Documents are. This means
