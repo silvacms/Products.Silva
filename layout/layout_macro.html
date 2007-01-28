@@ -17,6 +17,8 @@
     tal:content="here/get_title_or_id">doc title</title>
   <!-- Begin metatags -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<tal:skip replace="nothing">
+<!-- Turn these on as needed by moving them out of the tal:skip -->
   <meta name="subject"
     tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
     tal:condition="subject"
@@ -37,6 +39,7 @@
     tal:define="email python: here.get_metadata_element('silva-extra', 'contactemail') or nothing"
     tal:condition="email"
     tal:attributes="content email" />
+</tal:skip>
   <meta metal:define-slot="meta" tal:omit-tag="" />
   <!-- /End metatags -->
   <!-- Begin stylesheets -->
@@ -51,6 +54,8 @@
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
   <link rel="shortcut icon"
     tal:attributes="href here/globals/frontend.png/absolute_url | nothing" />
+<tal:skip replace="nothing">
+<!-- Turn these on as needed by moving them out of the tal:skip -->
   <!-- Access navigation links -->
   <tal:block define="surround here/get_document_navigation_links | nothing">
     <tal:loop repeat="link surround/keys">
@@ -67,6 +72,7 @@
   <!-- /End access navigation links -->
   <link rel="copyright" title="Copyright"
     tal:attributes="href here/copyright/absolute_url | nothing" />
+</tal:skip>
   <!-- /End related links -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
