@@ -9,12 +9,23 @@
   tal:attributes="href here/frontend.css/absolute_url" />
 </head>
 <body>
-  <h2>This is a local override.</h2>
-  <h3>This template is not acquired by subcontent.</h3>
-  <div comment="Example how to use Silva content in this override"
-    tal-example:define="view_method options/view_method"
-    tal-example:content="structure python:getattr(here, view_method)()">
+  <div class="public">
+    <h2>This is a local override.</h2>
+    <h3>This template is not acquired by subcontent.</h3>
+    <p>
+      You can copy the code from content.html into this file if you wish to
+      override only certain aspects in this location. 
+    </p>
+    <p>
+      If you wish to override all aspects, copy the code from content.html into 
+      this file, check the "Expand macros when editing" checkbox, and save. 
+      Then you can strip out the metal and create a custom 'sub-home page'.
+    </p>
+    <div comment="Example how to use Silva content in this override"
+      tal-example:define="view_method options/view_method"
+      tal-example:content="structure python:getattr(here, view_method)()">
       Local content appears here...
+    </div>
   </div>
 </body>
 </html>
