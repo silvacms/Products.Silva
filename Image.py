@@ -526,22 +526,15 @@ class Image(Asset):
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
-        if (self.web_scale == '100%' and image.format == self.web_format and
-                not self.web_crop):
-            # there image is neither scaled nor changed in format, just use
-            # the same one
-            if self.image is not None and not self._image_is_hires():
-                self._remove_image('image')
-            self.image = self.hires_image
-            return
-        else:
-            if self.image is not None and self._image_is_hires():
-                self.image = None
+        if self.image is not None and self._image_is_hires():
+            self.image = None
         web_image_data = StringIO()
         if cropbox:
             image = image.crop(cropbox)
-        if self.web_scale != '100%':
-            image = image.resize((width, height), PIL.Image.ANTIALIAS)
+        # always resize image, even if scaling is 100%,
+        # this is needed because the modification time needs to be updated
+        # so we get correct caching with http headers
+        image = image.resize((width, height), PIL.Image.ANTIALIAS)
         image = self._prepareWebFormat(image)
         image.save(web_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
