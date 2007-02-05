@@ -60,6 +60,9 @@ Silva changes
 
     Ported from 1.5 branch
 
+      - alt attribute for meta_type icons now have the name of the meta_type
+        instead of 'Unknown Metatype' (Issue 1654)
+
       - Simplified the content.html layout file to make it easier to understand. 
         Moved the content call into the layout macro. Reformatted the comments.
 
