@@ -40,6 +40,9 @@ Silva changes
 
     Bugs fixed
 
+      - alt attribute for meta_type icons now have the name of the meta_type
+        instead of 'Unknown Metatype' (Issue 1654)
+
       - i18n problem in views/edit/Asset/File/submit.py (Thanks Benno!)
 
       - Solved problem with trailing slashes in relative Links. (Thanks

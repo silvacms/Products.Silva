@@ -35,13 +35,14 @@ class ViewCode:
         """Gets the icon for the object and wraps that in an image tag
         """
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
-               'alt="%(alt)s" />')
+               'alt="%(alt)s" title="%(alt)s" />')
         if obj is None:
             icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
             return tag % {'icon_path': icon_path, 'alt': meta_type}
         try:
             icon_path = '%s/%s' % (self.REQUEST['BASE1'],
                 icon.registry.getIcon(obj))
+            meta_type = obj.meta_type
         except icon.RegistryError:
             icon_path = getattr(aq_base(obj), 'icon', None)
             if icon_path is None:
