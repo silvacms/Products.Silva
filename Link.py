@@ -109,7 +109,6 @@ class LinkVersion(CatalogedVersion):
     def redirect(self, view_type='public'):
         request = self.REQUEST
         response = request.RESPONSE
-
         url = self._url
         if self._link_type == 'relative' and not request.get('ACTUAL_URL').endswith('/'):
             url = '%s/%s' %(request.get('ACTUAL_URL'), url)

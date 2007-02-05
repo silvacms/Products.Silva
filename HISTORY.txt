@@ -38,6 +38,14 @@ Silva changes
         made in the editor that are rendered without the slash. Moved the
         slash into the appendage.
 
+    Bugs fixed
+
+      - i18n problem in views/edit/Asset/File/submit.py (Thanks Benno!)
+
+      - Solved problem with trailing slashes in relative Links. (Thanks
+        Benno!)
+        
+
   1.5.9
 
     Features added
