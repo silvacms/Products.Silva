@@ -85,6 +85,11 @@ Silva changes
       - Anchors around divs break in explorer, so they were put inside in 
         the xslt renderer.
 
+      - i18n problem in views/edit/Asset/File/submit.py (Thanks Benno!)
+
+      - Solved problem with trailing slashes in relative Links. (Thanks
+        Benno!)
+
   Silva 1.6b4
 
     Bugs fixed:

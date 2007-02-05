@@ -1,6 +1,7 @@
 from Products.Silva import mangle
 from Products.Formulator.Errors import ValidationError, FormValidationError
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 model = context.REQUEST.model
 view = context
@@ -22,7 +23,7 @@ message.set_mapping({
     'old_title': old_title,
     'new_title': mangle.entities(model.get_title())
     })
-changed.append(('title', message))
+changed.append(('title', translate(message)))
 
 # FIXME: should put in message
 # XXX: I don't understand the FIXME message.
