@@ -47,7 +47,11 @@ class IndexItemUpgrader:
 
     def _upgrade_helper(self, node):
         if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
-            old_name = node.attributes['name'].value
+            old_name_node = node.attributes.get('name', None)
+            if old_name_node is not None:
+                old_name = node.attributes['name'].value
+            else:
+                old_name = ''
             title = node.attributes.get('title', None)
             if not title:
                 node.setAttribute('title', old_name)
