@@ -518,7 +518,7 @@ SilvaTableTool.prototype.delTableRow = function() {
     this.editor.logMessage('Table row removed');
 };
 
-SilvaTableTool.prototype.addTableColumn = function() {
+SilvaTableTool.prototype.addTableColumn = function(widthinput) {
     /* add a table column */
     var currnode = this.editor.getSelectedNode();
     var doc = this.editor.getInnerDocument();
@@ -545,11 +545,12 @@ SilvaTableTool.prototype.addTableColumn = function() {
     table.removeAttribute('silva_column_info');
     this._getColumnInfo();
 
+    widthinput.value = this.getColumnWidths(table);
     this.editor.content_changed = true;
     this.editor.logMessage('Column added');
 };
 
-SilvaTableTool.prototype.delTableColumn = function() {
+SilvaTableTool.prototype.delTableColumn = function(widthinput) {
     /* delete a column */
     var currnode = this.editor.getSelectedNode();
     var table = this.editor.getNearestParentOfType(currnode, 'table');
@@ -574,6 +575,7 @@ SilvaTableTool.prototype.delTableColumn = function() {
     table.removeAttribute('silva_column_info');
     this._getColumnInfo();
 
+    widthinput.value = this.getColumnWidths(table);
     this.editor.content_changed = true;
     this.editor.logMessage('Column deleted');
 };
@@ -1006,8 +1008,8 @@ SilvaTableToolBox.prototype.initialize = function(tool, editor) {
     addEventHandler(this.addtablebutton, "click", this.addTable, this);
     addEventHandler(this.addrowbutton, "click", this.tool.addTableRow, this.tool);
     addEventHandler(this.delrowbutton, "click", this.tool.delTableRow, this.tool);
-    addEventHandler(this.addcolbutton, "click", this.tool.addTableColumn, this.tool);
-    addEventHandler(this.delcolbutton, "click", this.tool.delTableColumn, this.tool);
+    addEventHandler(this.addcolbutton, "click", this.addTableColumn, this);
+    addEventHandler(this.delcolbutton, "click", this.delTableColumn, this);
     addEventHandler(this.fixbutton, "click", this.fixTable, this);
     addEventHandler(this.delbutton, "click", this.tool.delTable, this);
     addEventHandler(this.alignselect, "change", this.setColumnAlign, this);
@@ -1070,6 +1072,14 @@ SilvaTableToolBox.prototype.setTableClass = function() {
     var cls = this.classselect.options[this.classselect.selectedIndex].value;
     this.tool.setTableClass(cls);
     this.editor.content_changed = true;
+};
+
+SilvaTableToolBox.prototype.delTableColumn = function() {
+    this.tool.delTableColumn(this.widthinput);
+};
+
+SilvaTableToolBox.prototype.addTableColumn = function() {
+    this.tool.addTableColumn(this.widthinput);
 };
 
 SilvaTableToolBox.prototype.setColumnWidths = function() {
