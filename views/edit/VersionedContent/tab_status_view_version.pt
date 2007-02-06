@@ -9,6 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:status;
+    dummy python:context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;; charset=UTF-8');
     " 
   i18n:domain="silva">
 <metal:block use-macro="here/layout_macro.html/macros/layout">
