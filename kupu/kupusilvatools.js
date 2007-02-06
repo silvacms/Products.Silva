@@ -2092,6 +2092,20 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 };
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
+    // you should not be allowed to add external sources inside 
+    // headers or table cells
+    var selNode = this.editor.getSelectedNode();
+    var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+    for (i=0; i < not_allowed_parent_tags.length; i++){
+        if (selNode.tagName == not_allowed_parent_tags[i]){
+            alert('Code source is not allowed inside a header.')
+            return
+        }
+    }
+    if (selNode.tagName == 'TD'){
+        alert('Code source is not allowed inside a table cell.')
+        return
+    }
     // get the appropriate form and display it
     if (!this._editing) {
         var id = this.idselect.options[this.idselect.selectedIndex].value;
@@ -2238,7 +2252,7 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 selection.selectNodeContents(extsource);
                 selection.collapse(true);
             };
-            this.editor.content_changed = true;
+            object.editor.content_changed = true;
             object.resetTool();
             object.editor.updateState();
         } else if (this.status == '400') {

@@ -6,6 +6,9 @@ Silva changes
   Silva 1.6.x (SVN/UNRELEASED)
 
     Features added:
+      - External sources inside headers or table cells, are not allowed. An
+        alert box is shown now, to make this clearer. (issue 1578)
+      
       - Fixed minor bugs in kupu table toolbox where the column widths field did
         not get updated (issue 1577)
         
