@@ -80,7 +80,7 @@ class AutoTOCUpgrader:
             'Upgrading AutoTOC: %s' % autotoc.get_title_or_id())
         if not hasattr(autotoc, '_toc_depth'):
             autotoc._toc_depth = -1
-        return indexer
+        return autotoc
     
 class CatalogRefresher:
     """Refreshes the whole Silva catalog"""
