@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
+"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
 "PO-Revision-Date: 2006-05-02 14:34+0000\n"
 "Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-01-17 10:38+0000\n"
+"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
 
 #: /AutoTOC.py:23
 msgid ""

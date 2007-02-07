@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
-"PO-Revision-Date: 2007-01-16 12:15+0000\n"
+"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
+"PO-Revision-Date: 2007-01-17 16:19+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Is-Fallback-For: nl-be\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-01-17 10:38+0000\n"
+"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
 
 #: /AutoTOC.py:23
 msgid ""
@@ -5006,15 +5006,15 @@ msgstr ""
 
 #: /views/public/Indexer/render_helper.pt:18
 msgid "Terms"
-msgstr ""
+msgstr "Termen"
 
 #: /views/public/Indexer/render_helper.pt:22
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
 #: /views/public/Indexer/render_helper.pt:47
 msgid "No index items listed or found."
-msgstr ""
+msgstr "Geen index items opgegeven of gevonden."
 
 #: /views/public/cancellation_request.py:11
 #: /views/public/subscription_request.py:11

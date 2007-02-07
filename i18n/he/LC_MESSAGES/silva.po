@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
+"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
 "PO-Revision-Date: 2005-10-14 12:36+0000\n"
 "Last-Translator: Ofer Weisglass <ow@weisglass.net>\n"
 "Language-Team: Ofer Weisglass <ofer@plone.org.il>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Generated-By: zope/app/translation_files/extract.py\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-01-17 10:38+0000\n"
+"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
 
 #: /AutoTOC.py:23
 msgid ""

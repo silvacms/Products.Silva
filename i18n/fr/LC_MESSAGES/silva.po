@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
+"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
 "PO-Revision-Date: 2005-12-03 17:43+0000\n"
 "Last-Translator: kitblake <kitblake@infrae.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Domain: silva\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
-"X-Rosetta-Export-Date: 2007-01-17 10:38+0000\n"
+"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
 
 #: /AutoTOC.py:23
 msgid ""
