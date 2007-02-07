@@ -29,8 +29,8 @@ Checklist for Zope administrators
 
 Here is a quick checklist what to do to install Silva:
 
-* You need a recent Zope (2.8.5 is recommended, other versions are not
-  properly tested) with Python 2.3.
+* You need Zope 2.8.8 (other versions are not properly tested) with 
+  Python 2.3.
 
 * Download an appropriate Silva ``-all.tgz`` for the version you want
   from `the Silva download area`_ and unpack it into your
