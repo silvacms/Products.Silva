@@ -42,13 +42,13 @@
       colspan="3">
     <h2>
       <img tal:replace="structure python:context.render_icon_by_meta_type(metatype)" />
-      <tal:block i18n:translate="">
-        <tal:test condition="python:metatype == 'Silva Image' or metatype == 'Silva File'">
-          upload
-        </tal:test>
-        <tal:test condition="python:not (metatype == 'Silva Image' or metatype == 'Silva File')">
-          create
-        </tal:test>
+      <tal:block condition="python:metatype == 'Silva Image' or metatype == 'Silva File'" i18n:translate="">
+        upload
+        <tal:block replace="metatype" 
+          i18n:name="meta_type" />
+      </tal:block>
+      <tal:block condition="python:not (metatype == 'Silva Image' or metatype == 'Silva File')" i18n:translate="">
+        create
         <tal:block replace="python: metatype == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or metatype" 
           i18n:name="TOC_or_meta_type" />
       </tal:block>
