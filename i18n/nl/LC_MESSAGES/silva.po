@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Jan 17 12:03:37 2007\n"
+"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
 "PO-Revision-Date: 2007-01-16 12:15+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -229,7 +229,7 @@ msgstr "uitstaande"
 msgid "draft"
 msgstr "klad"
 
-#: /Version.py:208 /views/edit/Container/tab_status.pt:263
+#: /Version.py:208 /views/edit/Container/tab_status.pt:265
 msgid "closed"
 msgstr "gesloten"
 
@@ -585,7 +585,7 @@ msgid "return"
 msgstr "terug"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
-#: /views/edit/Container/tab_edit_rename.pt:122
+#: /views/edit/Container/tab_edit_rename.pt:120
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 #: /views/edit/VersionedContent/tab_status_macros.pt:377
 msgid "access key: alt-r"
@@ -903,13 +903,17 @@ msgstr "Lijst-kop"
 msgid "Silva Reference"
 msgstr "Silva Referentie"
 
-#: /globals/reference.pt:101
+#: /globals/reference.pt:110
+msgid "Thanks to...."
+msgstr "Met dank aan...."
+
+#: /globals/reference.pt:113
 msgid ""
 "The people at ${eth_zuerich} for their feedback, contributions, and "
 "innovation."
 msgstr "De mensen van ${eth_zuerich} voor feedback, bijdragen en innovatie."
 
-#: /globals/reference.pt:104
+#: /globals/reference.pt:116
 msgid ""
 "Jan Smith at ${ozzope} for advice, hosting the documentation wiki, and her "
 "tutorials."
@@ -917,30 +921,28 @@ msgstr ""
 "Jan Smith van ${ozzope} voor advies, het hosten van de documentatie-wiki, en "
 "haar tutorials."
 
-#: /globals/reference.pt:107
+#: /globals/reference.pt:119
 msgid ""
 "Many thanks go to Hans Verster at the ${eur} for his vision and support."
 msgstr ""
 "Veel dank gaat uit naar Hans Verster van de ${eur} voor zijn visie en steun."
 
-#: /globals/reference.pt:118
+#: /globals/reference.pt:130
 msgid "Silva site"
 msgstr "Silva site"
 
-#: /globals/reference.pt:127
+#: /globals/reference.pt:139
 msgid ""
 "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
-"2006 Infrae. All rights reserved."
+"2007 Infrae. All rights reserved."
 msgstr ""
-"<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
-"2006 Infrae. Alle rechten voorbehouden."
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
 msgid "access key: alt-b"
 msgstr "sneltoets: alt-b"
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
-#: /views/edit/VersionedContent/tab_status_view_version.pt:52
+#: /views/edit/VersionedContent/tab_status_view_version.pt:53
 msgid "back"
 msgstr "terug"
 
@@ -964,15 +966,15 @@ msgstr "Silva wordt ontwikkeld door ${infrae} en vele anderen. <br />"
 msgid "Infrae Silva crew"
 msgstr "Infrae Silva crew"
 
-#: /globals/reference.pt:83
+#: /globals/reference.pt:81
+msgid "Silva alumni"
+msgstr ""
+
+#: /globals/reference.pt:91
 msgid "External developers"
 msgstr "Externe ontwikkelaars"
 
-#: /globals/reference.pt:98
-msgid "Thanks to...."
-msgstr "Met dank aan...."
-
-#: /layout/layout_macro.html:76
+#: /layout/layout_macro.html:88
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Informatie over Silva op de Infrae site: alt-i"
 
@@ -1043,6 +1045,16 @@ msgstr "Redacteur"
 #: /roleinfo.py:30
 msgid "ChiefEditor"
 msgstr "Hoofdredacteur"
+
+#: /views/add/AutoTOC/form.form:71
+msgid "depth"
+msgstr ""
+
+#: /views/add/AutoTOC/form.form:73
+msgid ""
+"The depth to which the Table of Contents will be rendered (-1 means "
+"unlimited depth.)"
+msgstr ""
 
 #: /views/add/File/add_submit.py:78 /views/add/Groups/add_submit.py:60
 #: /views/add/Image/add_submit.py:78 /views/add/add_submit.py:69
@@ -1145,17 +1157,22 @@ msgstr ""
 msgid "First item"
 msgstr "Eerste item"
 
-#: /views/add/add_form.pt:49
-msgid "upload create ${TOC_or_meta_type}"
-msgstr "uploaden aanmaken ${TOC_or_meta_type}"
+#: /views/add/add_form.pt:47
+msgid "upload ${meta_type}"
+msgstr ""
 
-#: /views/add/add_form.pt:59 /views/add/add_form.pt:104
+#: /views/add/add_form.pt:52
+msgid "create ${TOC_or_meta_type}"
+msgstr "${TOC_or_meta_type} aanmaken"
+
+#: /views/add/add_form.pt:62 /views/add/add_form.pt:107
 msgid "aspect"
 msgstr "aspect"
 
 #: /views/add/form.form:51 /views/add/SimpleContent/form.form:51
 #: /views/add/Publication/form.form:51 /views/add/Folder/form.form:51
-#: /views/add/Link/form.form:52 /views/add/Indexer/form.form:51
+#: /views/add/Link/form.form:52 /views/add/AutoTOC/form.form:52
+#: /views/add/Indexer/form.form:51
 msgid ""
 "The title will be publicly visible, and is used for the link in indexes."
 msgstr ""
@@ -1247,11 +1264,11 @@ msgstr "'mime type' van bestand"
 msgid "Optional, but useful."
 msgstr "Optioneel, maar nuttig."
 
-#: /views/edit/Asset/File/submit.py:20
+#: /views/edit/Asset/File/submit.py:21
 msgid "${old_title} to ${new_title}"
 msgstr "${old_title} naar ${new_title}"
 
-#: /views/edit/Asset/File/submit.py:29
+#: /views/edit/Asset/File/submit.py:30
 msgid "Properties changed: ${changed}"
 msgstr "Eigenschappen veranderd: ${changed}"
 
@@ -1507,9 +1524,9 @@ msgid "change"
 msgstr "veranderen"
 
 #: /views/edit/Asset/Image/edit.pt:189
-#: /views/edit/Container/tab_edit_rename.pt:130
+#: /views/edit/Container/tab_edit_rename.pt:128
 #: /views/edit/VersionedContent/tab_status_macros.pt:497
-#: /views/edit/VersionedContent/Link/edit.pt:90 /views/add/add_form.pt:125
+#: /views/edit/VersionedContent/Link/edit.pt:90 /views/add/add_form.pt:128
 #: /views/add/GhostFolder/add_form.pt:113 /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
 msgstr "sneltoets: alt-c"
@@ -1797,8 +1814,8 @@ msgstr "inhoud"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/Container/tab_edit.pt:281 /views/edit/Container/tab_edit.pt:290
-#: /views/edit/Container/tab_status.pt:200
-#: /views/edit/Container/tab_status.pt:209
+#: /views/edit/Container/tab_status.pt:202
+#: /views/edit/Container/tab_status.pt:211
 #: /views/edit/Container/GhostFolder/tab_edit.pt:376
 #: /browser/object_lookup.pt:293
 msgid "publish"
@@ -2144,7 +2161,7 @@ msgstr "opslaan + bewerken"
 
 #: /views/edit/Container/tab_access_groups.pt:136
 #: /views/edit/Container/tab_status_export.pt:258
-#: /views/edit/VersionedContent/tab_status.pt:64 /views/add/add_form.pt:143
+#: /views/edit/VersionedContent/tab_status.pt:64 /views/add/add_form.pt:146
 #: /views/add/GhostFolder/add_form.pt:131 /views/add/Ghost/add_form.pt:124
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
@@ -2199,12 +2216,13 @@ msgid "create a group"
 msgstr "een groep aanmaken"
 
 #: /views/edit/Container/tab_access_groups.pt:84
-#: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
+#: /views/edit/Container/tab_edit_rename.pt:57 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
 #: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
-#: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
+#: /views/add/Link/form.form:28 /views/add/AutoTOC/form.form:28
+#: /views/add/Indexer/form.form:28
 msgid "id"
 msgstr "id"
 
@@ -2213,7 +2231,8 @@ msgstr "id"
 #: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
-#: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
+#: /views/add/Link/form.form:30 /views/add/AutoTOC/form.form:30
+#: /views/add/Indexer/form.form:30
 msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
 "or &#8216;.&#8217;"
@@ -2275,7 +2294,7 @@ msgid "There is no content here."
 msgstr "Er bevindt zich hier geen inhoud."
 
 #: /views/edit/Container/tab_edit.pt:260 /views/edit/Container/tab_edit.pt:296
-#: /views/edit/Container/tab_status.pt:215
+#: /views/edit/Container/tab_status.pt:217
 #: /views/edit/Container/GhostFolder/tab_edit.pt:344
 #: /views/edit/Container/GhostFolder/tab_edit.pt:380
 #: /browser/object_lookup.pt:278 /browser/object_lookup.pt:298
@@ -2327,18 +2346,18 @@ msgid "close published items: alt-l"
 msgstr "gepubliceerde items sluiten: alt-l"
 
 #: /views/edit/Container/tab_edit.pt:503
-#: /views/edit/Container/tab_status.pt:372
+#: /views/edit/Container/tab_status.pt:374
 #: /views/edit/Member/SimpleMember/tab_edit.pt:133
 msgid "close"
 msgstr "sluiten"
 
 #: /views/edit/Container/tab_edit.pt:512
-#: /views/edit/Container/tab_status.pt:412
+#: /views/edit/Container/tab_status.pt:414
 msgid "publish new versions: alt-p"
 msgstr "nieuwe versies publiceren: alt-p"
 
 #: /views/edit/Container/tab_edit.pt:512
-#: /views/edit/Container/tab_status.pt:412
+#: /views/edit/Container/tab_status.pt:414
 #: /views/edit/VersionedContent/tab_status_macros.pt:298
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
@@ -2358,7 +2377,7 @@ msgid "end"
 msgstr "einde"
 
 #: /views/edit/Container/tab_edit.pt:550
-#: /views/edit/Container/tab_status.pt:335
+#: /views/edit/Container/tab_status.pt:337
 #: /views/edit/VersionedContent/tab_status_macros.pt:268
 #: /views/edit/VersionedContent/tab_status_macros.pt:290
 msgid "access key: alt-o"
@@ -2756,7 +2775,7 @@ msgstr "Er is niets geselecteerd, en dus niets goedgekeurd."
 msgid "No content available to paste."
 msgstr "Geen inhoud beschikbaar om te plakken."
 
-#: /views/edit/Container/tab_edit_rename.pt:122
+#: /views/edit/Container/tab_edit_rename.pt:120
 msgid "rename"
 msgstr "hernoemen"
 
@@ -2776,18 +2795,18 @@ msgstr "oud"
 msgid "new"
 msgstr "nieuw"
 
-#: /views/edit/Container/tab_edit_rename.pt:76
+#: /views/edit/Container/tab_edit_rename.pt:80
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
 #: /views/add/form.form:50 /views/add/File/form.form:66
 #: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
-#: /views/add/Indexer/form.form:50 /views/public/search_form.form:56
-#: /doc/silva-content.xml:35
+#: /views/add/AutoTOC/form.form:51 /views/add/Indexer/form.form:50
+#: /views/public/search_form.form:56 /doc/silva-content.xml:35
 msgid "title"
 msgstr "titel"
 
-#: /views/edit/Container/tab_edit_rename.pt:81
+#: /views/edit/Container/tab_edit_rename.pt:84
 msgid "no title"
 msgstr "geen titel"
 
@@ -2857,105 +2876,105 @@ msgstr "verloopt op"
 msgid "published"
 msgstr "gepubliceerd"
 
-#: /views/edit/Container/tab_status.pt:249
+#: /views/edit/Container/tab_status.pt:251
 msgid "public version"
 msgstr "publieke versie"
 
-#: /views/edit/Container/tab_status.pt:275
+#: /views/edit/Container/tab_status.pt:277
 msgid "There are no publishable items here."
 msgstr "Er zijn hier geen items die gepubliceerd kunnen worden."
 
-#: /views/edit/Container/tab_status.pt:292
+#: /views/edit/Container/tab_status.pt:294
 #: /views/edit/VersionedContent/tab_status_form_editor.form:31
 msgid "day / month / year &nbsp;(23:59)"
 msgstr "dag / maand / jaar &nbsp;(23:59)"
 
-#: /views/edit/Container/tab_status.pt:305
+#: /views/edit/Container/tab_status.pt:307
 #: /views/edit/VersionedContent/tab_status_macros.pt:247
 msgid "access key: alt-m"
 msgstr "sneltoets: alt-m"
 
-#: /views/edit/Container/tab_status.pt:305 /views/edit/tab_status_form.form:30
+#: /views/edit/Container/tab_status.pt:307 /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
 msgid "publish time"
 msgstr "publicatie-tijd"
 
-#: /views/edit/Container/tab_status.pt:320
+#: /views/edit/Container/tab_status.pt:322
 msgid "&nbsp;&nbsp;expiration time"
 msgstr "&nbsp;&nbsp;verlooptijdstip"
 
-#: /views/edit/Container/tab_status.pt:320
+#: /views/edit/Container/tab_status.pt:322
 msgid "access key: alt-x"
 msgstr "sneltoets: alt-x"
 
-#: /views/edit/Container/tab_status.pt:335
+#: /views/edit/Container/tab_status.pt:337
 msgid "clear&nbsp;expiration"
 msgstr "verlooptijdstip&nbsp;wissen"
 
-#: /views/edit/Container/tab_status.pt:354
+#: /views/edit/Container/tab_status.pt:356
 msgid "reject pending request for approval: alt-j"
 msgstr "uitstaande aanvraag voor goedkeuring afwijzen: alt-j"
 
-#: /views/edit/Container/tab_status.pt:354
+#: /views/edit/Container/tab_status.pt:356
 #: /views/edit/VersionedContent/tab_status_macros.pt:322
 msgid "reject"
 msgstr "afwijzen"
 
-#: /views/edit/Container/tab_status.pt:363
+#: /views/edit/Container/tab_status.pt:365
 msgid "revoke"
 msgstr "intrekken"
 
-#: /views/edit/Container/tab_status.pt:363
+#: /views/edit/Container/tab_status.pt:365
 msgid "withdraw approval of approved versions: alt-v"
 msgstr "goedkeuring van goedgekeurde versies intrekken: alt-v"
 
-#: /views/edit/Container/tab_status.pt:372
+#: /views/edit/Container/tab_status.pt:374
 msgid "close published items: alt-c"
 msgstr "gepubliceerde items sluiten: alt-c"
 
-#: /views/edit/Container/tab_status.pt:381
+#: /views/edit/Container/tab_status.pt:383
 msgid "create new versions of published docs: alt-n"
 msgstr "nieuwe versies van gepubliceerde documenten aanmaken: alt-n"
 
-#: /views/edit/Container/tab_status.pt:394
+#: /views/edit/Container/tab_status.pt:396
 msgid "change publish and expiration times: alt-u"
 msgstr "publicatie- en verlooptijdstip veranderen: alt-u"
 
-#: /views/edit/Container/tab_status.pt:394
-#: /views/edit/Container/tab_status.pt:433
+#: /views/edit/Container/tab_status.pt:396
+#: /views/edit/Container/tab_status.pt:435
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 msgid "update timing"
 msgstr "tijdstippen instellen"
 
-#: /views/edit/Container/tab_status.pt:403
+#: /views/edit/Container/tab_status.pt:405
 msgid "approve new versions for publication at a later date: alt-o"
 msgstr "nieuwe versies goedkeuren voor publicatie op een later tijdstip: alt-o"
 
-#: /views/edit/Container/tab_status.pt:403
+#: /views/edit/Container/tab_status.pt:405
 #: /views/edit/VersionedContent/tab_status_macros.pt:290
 msgid "approve for future"
 msgstr "goedkeuren voor de toekomst"
 
-#: /views/edit/Container/tab_status.pt:433
+#: /views/edit/Container/tab_status.pt:435
 msgid "change publish and expiration times: alt-s"
 msgstr "publicatie- en en verlooptijden instellen: alt-s"
 
-#: /views/edit/Container/tab_status.pt:442
+#: /views/edit/Container/tab_status.pt:444
 msgid "request approval for new versions: alt-r"
 msgstr "goedkeuring van nieuwe versies aanvragen: alt-r"
 
-#: /views/edit/Container/tab_status.pt:442
+#: /views/edit/Container/tab_status.pt:444
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 msgid "request approval"
 msgstr "goedkeuring aanvragen"
 
-#: /views/edit/Container/tab_status.pt:451
+#: /views/edit/Container/tab_status.pt:453
 msgid "request immediate approval for new versions: alt-p"
 msgstr "onmiddelijke goedkeuring aanvragen voor nieuwe versies: alt-p"
 
-#: /views/edit/Container/tab_status.pt:451
+#: /views/edit/Container/tab_status.pt:453
 msgid "request approval now"
 msgstr "nu goedkeuring vragen"
 
@@ -3247,12 +3266,11 @@ msgstr "Nog niet"
 msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
 msgstr "Automatische inhoudstabel &#xab;${title_or_id}&#xbb;"
 
-#: /views/edit/Content/AutoTOC/edit.pt:48
+#: /views/edit/Content/AutoTOC/edit.pt:49
 msgid ""
-"An automatic table of contents is generated from the items in its location."
+"An automatic table of contents is generated from the items in its location "
+"(depth: ${depth}.)"
 msgstr ""
-"Een automatische inhoudstabel wordt gegenereerd aan de hand van de items op "
-"zijn locatie."
 
 #: /views/edit/Content/Indexer/edit.pt:64
 msgid "preview screen"
@@ -3509,34 +3527,34 @@ msgid "Version approved."
 msgstr "Versie goedgekeurd."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:30
-#: /views/edit/VersionedContent/tab_status_withdraw.py:31
+#: /views/edit/VersionedContent/tab_status_withdraw.py:33
 msgid ""
 "This content is already public. You can close the current public version."
 msgstr ""
 "Deze inhoud is al publiek. De huidige publieke versie kan worden gesloten."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:34
-#: /views/edit/VersionedContent/tab_status_withdraw.py:33
+#: /views/edit/VersionedContent/tab_status_withdraw.py:35
 msgid "This content is already public."
 msgstr "Deze inhoud is al publiek."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:37
-#: /views/edit/VersionedContent/tab_status_withdraw.py:35
+#: /views/edit/VersionedContent/tab_status_withdraw.py:37
 msgid "This content is already approved. You can revoke the approval."
 msgstr "Deze inhoud is al goedgekeurd. De goedkeuring kan worden ingetrokken."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:42
-#: /views/edit/VersionedContent/tab_status_withdraw.py:38
+#: /views/edit/VersionedContent/tab_status_withdraw.py:40
 msgid "No request for approval is pending for this content."
 msgstr "Er staat geen aanvraag voor goedkeuring uit voor deze inhoud."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:54
-#: /views/edit/VersionedContent/tab_status_withdraw.py:50
+#: /views/edit/VersionedContent/tab_status_withdraw.py:52
 msgid "Rejected request for approval"
 msgstr "Aanvraag voor goedkeuring geweigerd"
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:56
-#: /views/edit/VersionedContent/tab_status_withdraw.py:52
+#: /views/edit/VersionedContent/tab_status_withdraw.py:54
 msgid "Withdrew request for approval"
 msgstr "Aanvraag voor goedkeuring ingetrokken"
 
@@ -3707,8 +3725,8 @@ msgstr "boodschap aan redacteur"
 #: /views/edit/VersionedContent/tab_status_macros.pt:184
 #: /views/edit/VersionedContent/tab_status_macros.pt:237
 #: /views/edit/VersionedContent/tab_status_macros.pt:343
-#: /views/edit/Content/Indexer/edit.pt:56 /views/add/add_form.pt:67
-#: /views/add/add_form.pt:112 /views/add/GhostFolder/add_form.pt:58
+#: /views/edit/Content/Indexer/edit.pt:56 /views/add/add_form.pt:70
+#: /views/add/add_form.pt:115 /views/add/GhostFolder/add_form.pt:58
 #: /views/add/Ghost/add_form.pt:56
 msgid "notes"
 msgstr "notities"
@@ -4028,7 +4046,7 @@ msgstr "zoeken"
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Container/tab_edit.pt:83
 #: /views/edit/Container/GhostFolder/tab_edit.pt:161
-#: /views/edit/VersionedContent/Ghost/edit.pt:140 /views/add/add_form.pt:134
+#: /views/edit/VersionedContent/Ghost/edit.pt:140 /views/add/add_form.pt:137
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
 #: /views/public/subscriptor.pt:45 /browser/object_lookup.pt:104
 msgid "access key: alt-s"
@@ -4109,7 +4127,7 @@ msgstr "&#134; overerfbaar"
 #: /views/edit/macro_edit_metadata.pt:189
 #: /views/edit/Asset/macro_asset_edit.pt:97
 #: /views/edit/Container/tab_access_groups.pt:128
-#: /views/edit/Member/SimpleMember/tab_edit.pt:143 /views/add/add_form.pt:134
+#: /views/edit/Member/SimpleMember/tab_edit.pt:143 /views/add/add_form.pt:137
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
 msgid "save"
 msgstr "opslaan"
@@ -4147,8 +4165,8 @@ msgstr "element"
 #: /views/edit/VersionedContent/Link/edit.pt:67
 #: /views/edit/VersionedContent/Ghost/edit.pt:63
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
-#: /views/edit/Member/SimpleMember/tab_edit.pt:69 /views/add/add_form.pt:63
-#: /views/add/add_form.pt:108 /views/add/GhostFolder/add_form.pt:55
+#: /views/edit/Member/SimpleMember/tab_edit.pt:69 /views/add/add_form.pt:66
+#: /views/add/add_form.pt:111 /views/add/GhostFolder/add_form.pt:55
 #: /views/add/Ghost/add_form.pt:53 /views/public/search_form.form:28
 msgid "content"
 msgstr "inhoud"
@@ -4244,7 +4262,7 @@ msgid "slide to the contents screen"
 msgstr "naar het scherm 'inhoud'"
 
 #: /views/edit/macro_vein_navigation.pt:205
-#: /views/edit/Container/tab_status.pt:184
+#: /views/edit/Container/tab_status.pt:186
 msgid "index:"
 msgstr "index:"
 
@@ -4280,7 +4298,7 @@ msgid "create a new version of this content: alt-n"
 msgstr "een nieuwe versie van deze inhoud aanmaken: alt-n"
 
 #: /views/edit/macro_view_metadata.pt:167
-#: /views/edit/Container/tab_status.pt:381
+#: /views/edit/Container/tab_status.pt:383
 #: /views/edit/VersionedContent/macro_tab_edit.pt:110
 msgid "new version"
 msgstr "nieuwe versie"
@@ -4310,8 +4328,8 @@ msgstr ""
 msgid "cancel the automatic save action: alt-c"
 msgstr "opslag-actie annuleren: alt-c"
 
-#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
-#: /views/add/add_form.pt:125 /views/add/GhostFolder/add_form.pt:113
+#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:128
+#: /views/add/add_form.pt:128 /views/add/GhostFolder/add_form.pt:113
 #: /views/add/Ghost/add_form.pt:105 /browser/object_lookup.pt:418
 msgid "cancel"
 msgstr "afbreken"
@@ -5240,9 +5258,26 @@ msgstr "email-notificaties deactiveren"
 msgid "Return to &#xab;${title_or_id}&#xbb;"
 msgstr "Terug naar &#xab;${title_or_id}&#xbb;"
 
-#: /views/render_form_errors.py:27
+#: /views/render_form_errors.py:42
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+#~ "2006 Infrae. All rights reserved."
+#~ msgstr ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+#~ "2006 Infrae. Alle rechten voorbehouden."
+
+#~ msgid "upload create ${TOC_or_meta_type}"
+#~ msgstr "uploaden aanmaken ${TOC_or_meta_type}"
+
+#~ msgid ""
+#~ "An automatic table of contents is generated from the items in its "
+#~ "location."
+#~ msgstr ""
+#~ "Een automatische inhoudstabel wordt gegenereerd aan de hand van de items "
+#~ "op zijn locatie."
 
 #~ msgid "save: alt-s"
 #~ msgstr "opslaan: alt-s"
@@ -5262,9 +5297,6 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ msgstr ""
 #~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
 #~ "2005 Infrae. Alle rechten voorbehouden."
-
-#~ msgid "create ${TOC_or_meta_type}"
-#~ msgstr "${TOC_or_meta_type} aanmaken"
 
 #~ msgid "Layout copied"
 #~ msgstr "Vormgeving gekopieerd"

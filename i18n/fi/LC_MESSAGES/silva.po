@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Jan 17 12:03:37 2007\n"
+"POT-Creation-Date: Wed Feb  7 17:16:43 2007\n"
 "PO-Revision-Date: 2006-11-06 23:23+0000\n"
 "Last-Translator: Tuomas Tonteri <tuomas.tonteri@kansanmedia.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -210,7 +210,7 @@ msgstr "odottaa hyväksymistä"
 msgid "draft"
 msgstr "luonnos"
 
-#: /Version.py:208 /views/edit/Container/tab_status.pt:263
+#: /Version.py:208 /views/edit/Container/tab_status.pt:265
 msgid "closed"
 msgstr "suljettu"
 
@@ -545,7 +545,7 @@ msgid "return"
 msgstr "palaa"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
-#: /views/edit/Container/tab_edit_rename.pt:122
+#: /views/edit/Container/tab_edit_rename.pt:120
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 #: /views/edit/VersionedContent/tab_status_macros.pt:377
 msgid "access key: alt-r"
@@ -796,31 +796,35 @@ msgstr ""
 msgid "Silva Reference"
 msgstr ""
 
-#: /globals/reference.pt:101
+#: /globals/reference.pt:110
+msgid "Thanks to...."
+msgstr ""
+
+#: /globals/reference.pt:113
 msgid ""
 "The people at ${eth_zuerich} for their feedback, contributions, and "
 "innovation."
 msgstr ""
 
-#: /globals/reference.pt:104
+#: /globals/reference.pt:116
 msgid ""
 "Jan Smith at ${ozzope} for advice, hosting the documentation wiki, and her "
 "tutorials."
 msgstr ""
 
-#: /globals/reference.pt:107
+#: /globals/reference.pt:119
 msgid ""
 "Many thanks go to Hans Verster at the ${eur} for his vision and support."
 msgstr ""
 
-#: /globals/reference.pt:118
+#: /globals/reference.pt:130
 msgid "Silva site"
 msgstr ""
 
-#: /globals/reference.pt:127
+#: /globals/reference.pt:139
 msgid ""
 "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
-"2006 Infrae. All rights reserved."
+"2007 Infrae. All rights reserved."
 msgstr ""
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
@@ -828,7 +832,7 @@ msgid "access key: alt-b"
 msgstr ""
 
 #: /globals/reference.pt:22 /globals/copyright.pt:17
-#: /views/edit/VersionedContent/tab_status_view_version.pt:52
+#: /views/edit/VersionedContent/tab_status_view_version.pt:53
 msgid "back"
 msgstr ""
 
@@ -852,15 +856,15 @@ msgstr ""
 msgid "Infrae Silva crew"
 msgstr ""
 
-#: /globals/reference.pt:83
+#: /globals/reference.pt:81
+msgid "Silva alumni"
+msgstr ""
+
+#: /globals/reference.pt:91
 msgid "External developers"
 msgstr ""
 
-#: /globals/reference.pt:98
-msgid "Thanks to...."
-msgstr ""
-
-#: /layout/layout_macro.html:76
+#: /layout/layout_macro.html:88
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Tietoa Silvasta Infraen sivulla: alt-i"
 
@@ -930,6 +934,16 @@ msgstr ""
 
 #: /roleinfo.py:30
 msgid "ChiefEditor"
+msgstr ""
+
+#: /views/add/AutoTOC/form.form:71
+msgid "depth"
+msgstr ""
+
+#: /views/add/AutoTOC/form.form:73
+msgid ""
+"The depth to which the Table of Contents will be rendered (-1 means "
+"unlimited depth.)"
 msgstr ""
 
 #: /views/add/File/add_submit.py:78 /views/add/Groups/add_submit.py:60
@@ -1022,17 +1036,22 @@ msgstr ""
 msgid "First item"
 msgstr ""
 
-#: /views/add/add_form.pt:49
-msgid "upload create ${TOC_or_meta_type}"
+#: /views/add/add_form.pt:47
+msgid "upload ${meta_type}"
 msgstr ""
 
-#: /views/add/add_form.pt:59 /views/add/add_form.pt:104
+#: /views/add/add_form.pt:52
+msgid "create ${TOC_or_meta_type}"
+msgstr ""
+
+#: /views/add/add_form.pt:62 /views/add/add_form.pt:107
 msgid "aspect"
 msgstr ""
 
 #: /views/add/form.form:51 /views/add/SimpleContent/form.form:51
 #: /views/add/Publication/form.form:51 /views/add/Folder/form.form:51
-#: /views/add/Link/form.form:52 /views/add/Indexer/form.form:51
+#: /views/add/Link/form.form:52 /views/add/AutoTOC/form.form:52
+#: /views/add/Indexer/form.form:51
 msgid ""
 "The title will be publicly visible, and is used for the link in indexes."
 msgstr ""
@@ -1103,11 +1122,11 @@ msgstr ""
 msgid "Optional, but useful."
 msgstr ""
 
-#: /views/edit/Asset/File/submit.py:20
+#: /views/edit/Asset/File/submit.py:21
 msgid "${old_title} to ${new_title}"
 msgstr ""
 
-#: /views/edit/Asset/File/submit.py:29
+#: /views/edit/Asset/File/submit.py:30
 msgid "Properties changed: ${changed}"
 msgstr ""
 
@@ -1354,9 +1373,9 @@ msgid "change"
 msgstr ""
 
 #: /views/edit/Asset/Image/edit.pt:189
-#: /views/edit/Container/tab_edit_rename.pt:130
+#: /views/edit/Container/tab_edit_rename.pt:128
 #: /views/edit/VersionedContent/tab_status_macros.pt:497
-#: /views/edit/VersionedContent/Link/edit.pt:90 /views/add/add_form.pt:125
+#: /views/edit/VersionedContent/Link/edit.pt:90 /views/add/add_form.pt:128
 #: /views/add/GhostFolder/add_form.pt:113 /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
 msgstr ""
@@ -1628,8 +1647,8 @@ msgstr ""
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
 #: /views/edit/Container/tab_edit.pt:281 /views/edit/Container/tab_edit.pt:290
-#: /views/edit/Container/tab_status.pt:200
-#: /views/edit/Container/tab_status.pt:209
+#: /views/edit/Container/tab_status.pt:202
+#: /views/edit/Container/tab_status.pt:211
 #: /views/edit/Container/GhostFolder/tab_edit.pt:376
 #: /browser/object_lookup.pt:293
 msgid "publish"
@@ -1966,7 +1985,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:136
 #: /views/edit/Container/tab_status_export.pt:258
-#: /views/edit/VersionedContent/tab_status.pt:64 /views/add/add_form.pt:143
+#: /views/edit/VersionedContent/tab_status.pt:64 /views/add/add_form.pt:146
 #: /views/add/GhostFolder/add_form.pt:131 /views/add/Ghost/add_form.pt:124
 msgid "access key: alt-e"
 msgstr ""
@@ -2021,12 +2040,13 @@ msgid "create a group"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:84
-#: /views/edit/Container/tab_edit_rename.pt:54 /views/add/form.form:28
+#: /views/edit/Container/tab_edit_rename.pt:57 /views/add/form.form:28
 #: /views/add/File/form.form:45 /views/add/Groups/form.form:28
 #: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
 #: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
 #: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
-#: /views/add/Link/form.form:28 /views/add/Indexer/form.form:28
+#: /views/add/Link/form.form:28 /views/add/AutoTOC/form.form:28
+#: /views/add/Indexer/form.form:28
 msgid "id"
 msgstr ""
 
@@ -2035,7 +2055,8 @@ msgstr ""
 #: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
 #: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
 #: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
-#: /views/add/Link/form.form:30 /views/add/Indexer/form.form:30
+#: /views/add/Link/form.form:30 /views/add/AutoTOC/form.form:30
+#: /views/add/Indexer/form.form:30
 msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
 "or &#8216;.&#8217;"
@@ -2093,7 +2114,7 @@ msgid "There is no content here."
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:260 /views/edit/Container/tab_edit.pt:296
-#: /views/edit/Container/tab_status.pt:215
+#: /views/edit/Container/tab_status.pt:217
 #: /views/edit/Container/GhostFolder/tab_edit.pt:344
 #: /views/edit/Container/GhostFolder/tab_edit.pt:380
 #: /browser/object_lookup.pt:278 /browser/object_lookup.pt:298
@@ -2145,18 +2166,18 @@ msgid "close published items: alt-l"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:503
-#: /views/edit/Container/tab_status.pt:372
+#: /views/edit/Container/tab_status.pt:374
 #: /views/edit/Member/SimpleMember/tab_edit.pt:133
 msgid "close"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:512
-#: /views/edit/Container/tab_status.pt:412
+#: /views/edit/Container/tab_status.pt:414
 msgid "publish new versions: alt-p"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:512
-#: /views/edit/Container/tab_status.pt:412
+#: /views/edit/Container/tab_status.pt:414
 #: /views/edit/VersionedContent/tab_status_macros.pt:298
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:69
@@ -2176,7 +2197,7 @@ msgid "end"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:550
-#: /views/edit/Container/tab_status.pt:335
+#: /views/edit/Container/tab_status.pt:337
 #: /views/edit/VersionedContent/tab_status_macros.pt:268
 #: /views/edit/VersionedContent/tab_status_macros.pt:290
 msgid "access key: alt-o"
@@ -2546,7 +2567,7 @@ msgstr ""
 msgid "No content available to paste."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_rename.pt:122
+#: /views/edit/Container/tab_edit_rename.pt:120
 msgid "rename"
 msgstr ""
 
@@ -2566,18 +2587,18 @@ msgstr ""
 msgid "new"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_rename.pt:76
+#: /views/edit/Container/tab_edit_rename.pt:80
 #: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
 #: /views/add/form.form:50 /views/add/File/form.form:66
 #: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
 #: /views/add/SimpleContent/form.form:50 /views/add/Publication/form.form:50
 #: /views/add/Folder/form.form:50 /views/add/Link/form.form:51
-#: /views/add/Indexer/form.form:50 /views/public/search_form.form:56
-#: /doc/silva-content.xml:35
+#: /views/add/AutoTOC/form.form:51 /views/add/Indexer/form.form:50
+#: /views/public/search_form.form:56 /doc/silva-content.xml:35
 msgid "title"
 msgstr ""
 
-#: /views/edit/Container/tab_edit_rename.pt:81
+#: /views/edit/Container/tab_edit_rename.pt:84
 msgid "no title"
 msgstr ""
 
@@ -2644,105 +2665,105 @@ msgstr ""
 msgid "published"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:249
+#: /views/edit/Container/tab_status.pt:251
 msgid "public version"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:275
+#: /views/edit/Container/tab_status.pt:277
 msgid "There are no publishable items here."
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:292
+#: /views/edit/Container/tab_status.pt:294
 #: /views/edit/VersionedContent/tab_status_form_editor.form:31
 msgid "day / month / year &nbsp;(23:59)"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:305
+#: /views/edit/Container/tab_status.pt:307
 #: /views/edit/VersionedContent/tab_status_macros.pt:247
 msgid "access key: alt-m"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:305 /views/edit/tab_status_form.form:30
+#: /views/edit/Container/tab_status.pt:307 /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
 msgid "publish time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:320
+#: /views/edit/Container/tab_status.pt:322
 msgid "&nbsp;&nbsp;expiration time"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:320
+#: /views/edit/Container/tab_status.pt:322
 msgid "access key: alt-x"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:335
+#: /views/edit/Container/tab_status.pt:337
 msgid "clear&nbsp;expiration"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:354
+#: /views/edit/Container/tab_status.pt:356
 msgid "reject pending request for approval: alt-j"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:354
+#: /views/edit/Container/tab_status.pt:356
 #: /views/edit/VersionedContent/tab_status_macros.pt:322
 msgid "reject"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:363
+#: /views/edit/Container/tab_status.pt:365
 msgid "revoke"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:363
+#: /views/edit/Container/tab_status.pt:365
 msgid "withdraw approval of approved versions: alt-v"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:372
+#: /views/edit/Container/tab_status.pt:374
 msgid "close published items: alt-c"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:381
+#: /views/edit/Container/tab_status.pt:383
 msgid "create new versions of published docs: alt-n"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:394
+#: /views/edit/Container/tab_status.pt:396
 msgid "change publish and expiration times: alt-u"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:394
-#: /views/edit/Container/tab_status.pt:433
+#: /views/edit/Container/tab_status.pt:396
+#: /views/edit/Container/tab_status.pt:435
 #: /views/edit/VersionedContent/tab_status_macros.pt:196
 msgid "update timing"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:403
+#: /views/edit/Container/tab_status.pt:405
 msgid "approve new versions for publication at a later date: alt-o"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:403
+#: /views/edit/Container/tab_status.pt:405
 #: /views/edit/VersionedContent/tab_status_macros.pt:290
 msgid "approve for future"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:433
+#: /views/edit/Container/tab_status.pt:435
 msgid "change publish and expiration times: alt-s"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:442
+#: /views/edit/Container/tab_status.pt:444
 msgid "request approval for new versions: alt-r"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:442
+#: /views/edit/Container/tab_status.pt:444
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 msgid "request approval"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:451
+#: /views/edit/Container/tab_status.pt:453
 msgid "request immediate approval for new versions: alt-p"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:451
+#: /views/edit/Container/tab_status.pt:453
 msgid "request approval now"
 msgstr ""
 
@@ -3032,9 +3053,10 @@ msgstr ""
 msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/Content/AutoTOC/edit.pt:48
+#: /views/edit/Content/AutoTOC/edit.pt:49
 msgid ""
-"An automatic table of contents is generated from the items in its location."
+"An automatic table of contents is generated from the items in its location "
+"(depth: ${depth}.)"
 msgstr ""
 
 #: /views/edit/Content/Indexer/edit.pt:64
@@ -3271,33 +3293,33 @@ msgid "Version approved."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:30
-#: /views/edit/VersionedContent/tab_status_withdraw.py:31
+#: /views/edit/VersionedContent/tab_status_withdraw.py:33
 msgid ""
 "This content is already public. You can close the current public version."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:34
-#: /views/edit/VersionedContent/tab_status_withdraw.py:33
+#: /views/edit/VersionedContent/tab_status_withdraw.py:35
 msgid "This content is already public."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:37
-#: /views/edit/VersionedContent/tab_status_withdraw.py:35
+#: /views/edit/VersionedContent/tab_status_withdraw.py:37
 msgid "This content is already approved. You can revoke the approval."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:42
-#: /views/edit/VersionedContent/tab_status_withdraw.py:38
+#: /views/edit/VersionedContent/tab_status_withdraw.py:40
 msgid "No request for approval is pending for this content."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:54
-#: /views/edit/VersionedContent/tab_status_withdraw.py:50
+#: /views/edit/VersionedContent/tab_status_withdraw.py:52
 msgid "Rejected request for approval"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:56
-#: /views/edit/VersionedContent/tab_status_withdraw.py:52
+#: /views/edit/VersionedContent/tab_status_withdraw.py:54
 msgid "Withdrew request for approval"
 msgstr ""
 
@@ -3462,8 +3484,8 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status_macros.pt:184
 #: /views/edit/VersionedContent/tab_status_macros.pt:237
 #: /views/edit/VersionedContent/tab_status_macros.pt:343
-#: /views/edit/Content/Indexer/edit.pt:56 /views/add/add_form.pt:67
-#: /views/add/add_form.pt:112 /views/add/GhostFolder/add_form.pt:58
+#: /views/edit/Content/Indexer/edit.pt:56 /views/add/add_form.pt:70
+#: /views/add/add_form.pt:115 /views/add/GhostFolder/add_form.pt:58
 #: /views/add/Ghost/add_form.pt:56
 msgid "notes"
 msgstr ""
@@ -3756,7 +3778,7 @@ msgstr ""
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Container/tab_edit.pt:83
 #: /views/edit/Container/GhostFolder/tab_edit.pt:161
-#: /views/edit/VersionedContent/Ghost/edit.pt:140 /views/add/add_form.pt:134
+#: /views/edit/VersionedContent/Ghost/edit.pt:140 /views/add/add_form.pt:137
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
 #: /views/public/subscriptor.pt:45 /browser/object_lookup.pt:104
 msgid "access key: alt-s"
@@ -3837,7 +3859,7 @@ msgstr ""
 #: /views/edit/macro_edit_metadata.pt:189
 #: /views/edit/Asset/macro_asset_edit.pt:97
 #: /views/edit/Container/tab_access_groups.pt:128
-#: /views/edit/Member/SimpleMember/tab_edit.pt:143 /views/add/add_form.pt:134
+#: /views/edit/Member/SimpleMember/tab_edit.pt:143 /views/add/add_form.pt:137
 #: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
 msgid "save"
 msgstr ""
@@ -3875,8 +3897,8 @@ msgstr ""
 #: /views/edit/VersionedContent/Link/edit.pt:67
 #: /views/edit/VersionedContent/Ghost/edit.pt:63
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
-#: /views/edit/Member/SimpleMember/tab_edit.pt:69 /views/add/add_form.pt:63
-#: /views/add/add_form.pt:108 /views/add/GhostFolder/add_form.pt:55
+#: /views/edit/Member/SimpleMember/tab_edit.pt:69 /views/add/add_form.pt:66
+#: /views/add/add_form.pt:111 /views/add/GhostFolder/add_form.pt:55
 #: /views/add/Ghost/add_form.pt:53 /views/public/search_form.form:28
 msgid "content"
 msgstr ""
@@ -3972,7 +3994,7 @@ msgid "slide to the contents screen"
 msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:205
-#: /views/edit/Container/tab_status.pt:184
+#: /views/edit/Container/tab_status.pt:186
 msgid "index:"
 msgstr ""
 
@@ -4006,7 +4028,7 @@ msgid "create a new version of this content: alt-n"
 msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:167
-#: /views/edit/Container/tab_status.pt:381
+#: /views/edit/Container/tab_status.pt:383
 #: /views/edit/VersionedContent/macro_tab_edit.pt:110
 msgid "new version"
 msgstr ""
@@ -4031,8 +4053,8 @@ msgstr ""
 msgid "cancel the automatic save action: alt-c"
 msgstr ""
 
-#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:130
-#: /views/add/add_form.pt:125 /views/add/GhostFolder/add_form.pt:113
+#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:128
+#: /views/add/add_form.pt:128 /views/add/GhostFolder/add_form.pt:113
 #: /views/add/Ghost/add_form.pt:105 /browser/object_lookup.pt:418
 msgid "cancel"
 msgstr ""
@@ -4901,7 +4923,7 @@ msgstr ""
 msgid "Return to &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
-#: /views/render_form_errors.py:27
+#: /views/render_form_errors.py:42
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
 
