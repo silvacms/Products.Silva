@@ -1,11 +1,16 @@
 <!-- _______ {__silva_version__} _______ -->
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   metal:define-macro="layout"
-  >
+  tal:define="lang python: here.get_metadata_element('silva-extra', 'language') or nothing"
+  tal:attributes="
+    lang lang;
+    xml:lang lang;
+">
+
 <head metal:define-slot="head">
   <base tal:attributes="href here/absolute_url" />
   <title metal:define-slot="title"
