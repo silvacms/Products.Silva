@@ -5,10 +5,10 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   metal:define-macro="layout"
-  tal:define="lang python: here.get_metadata_element('silva-extra', 'language') or ''"
+  tal:define="lang python: here.get_metadata_element('silva-extra', 'language') or nothing"
   tal:attributes="
-    lang python: lang and lang or None;
-    xml:lang python: lang and lang or None;
+    lang lang;
+    xml:lang lang;
 ">
 
 <head metal:define-slot="head">
@@ -58,16 +58,16 @@
 <!-- Turn these on as needed by moving them out of the tal:skip -->
   <!-- Access navigation links -->
   <tal:block define="surround here/get_document_navigation_links | nothing">
-    <tal:loop repeat="link surround/keys">
-     <tal:if condition="python:surround[link] != '..'">
-      <link tal:condition="python:surround[link] or None"
-        tal:attributes="
-        rel link; 
-        href python:surround[link].absolute_url() + (surround[link].get_container() == surround[link] and '/' or '')"
-        />
-      </tal:if>
-    </tal:loop>
-    <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href surround/up" />
+  <tal:loop repeat="link surround/keys">
+  <tal:if condition="python:surround[link] != '..'">
+  <link tal:condition="python:surround[link] or None"
+    tal:attributes="
+    rel link; 
+    href python:surround[link].absolute_url() + (surround[link].get_container() == surround[link] and '/' or '')"
+    />
+  </tal:if>
+  </tal:loop>
+  <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href surround/up" />
   </tal:block>
   <!-- End access navigation links -->
   <link rel="copyright" title="Copyright"
