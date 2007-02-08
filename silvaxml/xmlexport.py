@@ -73,7 +73,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
             for key, value in items:
                 field = binding.getElement(set_id, key).field
                 self.startElementNS(namespace, key)
-                field.validator.serializeValue(field, value, self)
+                if not value is None:
+                    field.validator.serializeValue(field, value, self)
                 self.endElementNS(namespace, key)
             self.endElement('set')
         self.endElement('metadata')
