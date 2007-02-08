@@ -3,7 +3,7 @@ from zope.interface import implements
 
 # Zope
 import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 # Silva
 from Products.Silva import interfaces as silva_interfaces
 # Silva Adapters
@@ -67,6 +67,10 @@ class ZipfileImportAdapter(adapter.Adapter):
         return succeeded, failed
         
 Globals.InitializeClass(ZipfileImportAdapter)
+
+allow_module('Products.Silva.adapters.zipfileimport')
+
+__allow_access_to_unprotected_subobjects__ = True
 
 def getZipfileImportAdapter(context):
     if not silva_interfaces.IContainer.providedBy(context):
