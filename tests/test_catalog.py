@@ -142,11 +142,38 @@ class AssetCatalogTestCase(CatalogTestCase):
         self.silva.manage_renameObject('test', 'test2')
         self.assertNoPath('/root/test')
         self.assertPath('/root/test2')
+
+class FulltextIndexTestCase(CatalogTestCase):
+    def afterSetUp(self):
+        self.add_document(self.silva, 'mydoc', 'My Document')
+        self.document = self.silva.mydoc
+        self.editable = self.document.get_editable()
+
+    def test_markup_not_in_fulltext_index(self):
+        # For https://infrae.com/issue/silva/issue1642
         
+        document = self.document
+        editable = self.editable
+        editable.content.manage_edit("<foo> Hello world! </foo>")
+        # We need to do this so that document.fulltext() actually
+        # returns content:
+        document._unapproved_version = ('0', DateTime(), None)
+        document.approve_version()
+
+        # 'Hello world!' should be found using the fulltext search
+        res = self.catalog(fulltext='Hello world!')
+        self.assertEquals(len(res), 1)
+        self.assertEquals(res[0].getPath(), '/root/mydoc/0')
+
+        # But not <foo>, which isn't really content
+        self.assertEquals(len(self.catalog(fulltext='foo')), 0)
+
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(VersionCatalogTestCase))
     suite.addTest(unittest.makeSuite(ContainerCatalogTestCase))
     suite.addTest(unittest.makeSuite(AssetCatalogTestCase))
+    suite.addTest(unittest.makeSuite(FulltextIndexTestCase))
     return suite
