@@ -105,6 +105,11 @@ Silva changes
       - Solved problem with trailing slashes in relative Links. (Thanks
         Benno!)
 
+    Bugs fixed:
+
+      - Fix https://infrae.com/issue/silva/issue1642, where the
+        catalog was indexing XML tags.
+
   Silva 1.6b4
 
     Bugs fixed:
