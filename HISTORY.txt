@@ -6,6 +6,9 @@ Silva changes
   Silva 1.6.x (SVN/UNRELEASED)
 
     Features added:
+      - Fixed behavior in Internet Explorer where it's impossible to change the
+        "link to" field in the image toolbox in kupu, by removing the
+        onkeypress event.
       - External sources inside headers or table cells, are not allowed. An
         alert box is shown now, to make this clearer. (issue 1578)
       

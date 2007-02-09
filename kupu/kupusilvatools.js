@@ -213,7 +213,6 @@ SilvaImageTool.prototype.initialize = function(editor) {
     addEventHandler(this.targetinput, 'change', this.setTarget, this);
     addEventHandler(this.urlinput, 'change', this.setSrc, this);
     addEventHandler(this.hireslinkcheckbox, 'change', this.setHires, this);
-    addEventHandler(this.linkinput, 'keypress', this.setLink, this);
     addEventHandler(this.linkinput, 'change', this.setLink, this);
     addEventHandler(this.alignselect, 'change', this.setAlign, this);
     addEventHandler(this.titleinput, 'change', this.setTitle, this);
