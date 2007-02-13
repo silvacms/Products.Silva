@@ -113,6 +113,9 @@ Silva changes
       - Fix https://infrae.com/issue/silva/issue1642, where the
         catalog was indexing XML tags.
 
+      - Fix id mangling (https://infrae.com/issue/silva/issue1686), spaces
+        are no longer allowed in new Ids.
+
   Silva 1.6b4
 
     Bugs fixed:

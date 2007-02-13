@@ -52,7 +52,7 @@ class Id:
     
     
     # does only match strings containig valid chars
-    _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.\- ]*$')
+    _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.\-]*$')
     # finds postfixing number
     _number_postfix = re.compile(r'^(.*?)([0-9]+)$')
     
