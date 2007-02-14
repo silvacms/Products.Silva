@@ -10,9 +10,6 @@ from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 from OFS.SimpleItem import SimpleItem
 
-#XXX log
-from zLOG import LOG,INFO
-
 # products
 from Products.ParsedXML.ParsedXML import ParsedXML
 
@@ -60,7 +57,6 @@ class AutoTOC(Content, SimpleItem):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_toc_depth')
     def set_toc_depth(self, depth):
-        LOG('setting',INFO,'depth: ' + str(depth))
         self._toc_depth = depth
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -80,8 +76,6 @@ InitializeClass(AutoTOC)
 
 def manage_addAutoTOC(self, id, title, depth=-1, REQUEST=None):
     """Add a autotoc."""
-    LOG('add',INFO,'depth: ' + str(depth))
-    aaa
     if not mangle.Id(self, id).isValid():
         return
     object = AutoTOC(id)
@@ -89,7 +83,6 @@ def manage_addAutoTOC(self, id, title, depth=-1, REQUEST=None):
     object = getattr(self, id)
     object.set_title(title)
     object.set_toc_depth(depth)
-    LOG('afteradd',INFO,'depth: ' + str(object.toc_depth))
     add_and_edit(self, id, REQUEST)
     return ''
 
