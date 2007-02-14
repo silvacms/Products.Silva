@@ -9,5 +9,5 @@
 model = context.REQUEST.model
 view = context
 
-return view.render_helper(public=1, append_to_url='')
+return view.render_helper(public=1, append_to_url=None)
 

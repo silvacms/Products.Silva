@@ -48,13 +48,18 @@ Silva changes
 
       - Renevated the TOC/AutoToc rendering, replacing the ancient,
         legacy, Netscape4 compatible image-based indent, where long titles
-        break onto the next, non-indented line. Updated frontend.css with
-        new selectors for the TOC levels.
+        break onto the next, non-indented line. The new rendering uses nested
+        lists, which make the rendering easier to style, and more accessible
+        to boot.  The lists have the class 'toc-list', and the links have
+        the 'toc-link' class.  Added an adapter to perform the new-style rendering.
 
       - Tocs display links with a trailing slash because there may be 
         'edit/tab_preview' appended to it, but this conflicts with links made 
         in the editor that are rendered without the slash. Moved the slash 
         into the appendage.
+
+      - The new AutoTOC adapter is now used in SilvaDocument TOC rendering,
+        for both the widgets- and xslt-based renderers.
 
       - Removed get_layout_macro(.py) from the layout installation code and
         thus it won't be present in the ZODB in future new installs. This is

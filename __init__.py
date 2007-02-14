@@ -9,6 +9,8 @@ import ContainerPolicy
 from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
+from AutoTOC import manage_addAutoTOC
+
 try:
     # some people may have put Sprout in the Products directory
     # rather then somewhere in the PYTHONPATH, this makes Silva
