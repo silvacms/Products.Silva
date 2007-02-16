@@ -63,8 +63,7 @@
       </h3>
       <input class="transport"
         type="submit"
-        tal:attributes="name python: ('%s/edit/tab_status_export:method' % 
-                        '/'.join(request['model'].get_container().getPhysicalPath()))"
+        name="../../edit/tab_status_export:method"
         value="export..."
         title="access key: alt-e"
         accesskey="e"
