@@ -1,7 +1,7 @@
-# Finnish translation for silva
-# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# Danish translation for silva
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
 # This file is distributed under the same license as the silva package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
 #, fuzzy
 msgid ""
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Fri Feb 16 17:11:06 2007\n"
-"PO-Revision-Date: 2006-11-06 23:18+0000\n"
-"Last-Translator: Tuomas Tonteri <tuomas.tonteri@kansanmedia.fi>\n"
-"Language-Team: Finnish <fi@li.org>\n"
+"PO-Revision-Date: 2007-02-16 15:05+0000\n"
+"Last-Translator: Jørgen Kjærsgaard <jfk@froejk.com>\n"
+"Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,20 +27,20 @@ msgstr ""
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr "Ei yhdistettynä"
+msgstr "Ikke tilsluttet"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr "Luotettavuuden toteamisessa virhe tai virheitä."
+msgstr "Valideringsfejl"
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr "Asetukset muutettu."
+msgstr "Indstillingerne er ændret."
 
 #: /File.py:134 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
-msgstr "lataus sisään"
+msgstr "Hent ned"
 
 #: /File.py:44
 msgid ""
@@ -52,19 +52,14 @@ msgid ""
 "       methods in the concrete subclasses. (sorry) -->\n"
 "    "
 msgstr ""
-"Mikä tahansa digitaalinen tiedosto voidaan lisätä Silvan sisällöksi. \n"
-"       Esimerkiksi suuret tiedostot, kuten pdf tai videotiedostot voidaan "
-"lisätä\n"
-"       sivulle. Silva objekteilla on myös metatietoa.\n"
-"    "
 
 #: /Folder.py:336 /Folder.py:401
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
-msgstr "&#xab;${id}&#xbb; liittäminen tähän säilyttimeen ei ole sallittua."
+msgstr "indsættelse af &#xab;${id}&#xbb; er ikke tilladt i denne type element."
 
 #: /Folder.py:358 /Folder.py:397
 msgid "pasted &#xab;${id}&#xbb;"
-msgstr "liitetty &#xab;${id}&#xbb;"
+msgstr "indsat &#xab;${id}&#xbb;"
 
 #: /Folder.py:50
 msgid ""
@@ -109,44 +104,38 @@ msgid ""
 "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
 "missing."
 msgstr ""
-"'${scale}' ei ole kelpaava skaalauksen kuvaaja. Luultavasti prosentti "
-"symbooli puuttuu."
 
 #: /Image.py:241
 msgid ""
 "'${scale} is not a valid scale identifier. At least one number is required."
-msgstr "'${scale} ei ole kelpaava kuvaaja. Ainakin yksi numero on pakollinen."
+msgstr ""
 
 #: /Image.py:267
 msgid "'${crop} is not a valid crop identifier"
-msgstr "'${crop} ei ole kelpaava rajauksen kuvaaja."
+msgstr ""
 
 #: /Image.py:294
 msgid "'${crop}' defines an impossible cropping"
-msgstr "'${crop} kuvaa mahdottoman rajauksen."
+msgstr ""
 
 #: /Image.py:438
 msgid "square"
-msgstr "neliö"
+msgstr ""
 
 #: /Image.py:440
 msgid "landscape"
-msgstr "vaaka"
+msgstr ""
 
 #: /Image.py:441
 msgid "portrait"
-msgstr "pysty"
+msgstr ""
 
 #: /Image.py:51
-#, fuzzy
 msgid ""
 "Web graphics (gif, jpg, png) can be uploaded and inserted in \n"
 "       documents, or used as viewable assets.\n"
 "    "
 msgstr ""
-"Web grafiikkaa (gif, jpg, png) voi ladata serverille ja asettaa\n"
-"       dokumentteihin, tai käyttää näytettävinä lisinä.\n"
-"    "
 
 #: /Indexer.py:21
 msgid ""
@@ -184,125 +173,121 @@ msgstr ""
 
 #: /SilvaObject.py:333
 msgid "Sorry, this ${meta_type} is not viewable."
-msgstr "Tämä ${meta_type} ei ole katseltava."
+msgstr ""
 
 #: /Version.py:207
 msgid "unapproved"
-msgstr "hyväksymätön"
+msgstr ""
 
 #: /Version.py:207
 msgid "approved"
-msgstr "hyväksytty"
+msgstr ""
 
 #: /Version.py:207
 msgid "last_closed"
-msgstr "viimeksi_suljettu"
+msgstr ""
 
 #: /Version.py:208
 msgid "public"
-msgstr "julkinen"
+msgstr ""
 
 #: /Version.py:208
 msgid "pending"
-msgstr "odottaa hyväksymistä"
+msgstr ""
 
 #: /Version.py:208
 msgid "draft"
-msgstr "luonnos"
+msgstr ""
 
 #: /Version.py:208 /views/edit/Container/tab_status.pt:265
 msgid "closed"
-msgstr "suljettu"
+msgstr ""
 
 #: /Versioning.py:102
 msgid "Cannot approve version without publication datetime."
-msgstr "Ei voida hyväksyä muunnelmaa ilman julkaisuajankohtaa."
+msgstr ""
 
 #: /Versioning.py:159
-#, fuzzy
 msgid "No approved version to unapprove."
-msgstr "Ei hyväksyttyä muunnelmaa, jonka voisi asettaa hyväksymättömäksi."
+msgstr ""
 
 #: /Versioning.py:161
 msgid ""
 "Should never happen: unapproved version ${unapproved} found while approved "
 "version ${approved} exists at the same time."
 msgstr ""
-"Tätä ei pitäisi ikinä tapahtua: hyväksymätön muunnelma ${unapproved} "
-"löydettiin samalla kun hyväksytty versio ${approved} on jo olemassa."
 
 #: /Versioning.py:188
 msgid "No public version to close."
-msgstr "Ei julkista muunnelmaa suljettavaksi."
+msgstr ""
 
 #: /Versioning.py:240 /adapters/version_management.py:83
 #: /adapters/version_management.py:91
 msgid "No unapproved version available"
-msgstr "Ei hyväksymätöntä muunnelmaa saatavilla"
+msgstr ""
 
 #: /Versioning.py:273 /Versioning.py:322 /Versioning.py:352
 msgid "There is no unapproved version to request approval for."
-msgstr "Ei ole hyväksymätöntä muunnelmaa, johon pyytää hyväksyntää."
+msgstr ""
 
 #: /Versioning.py:277
 msgid "The version is already requested for approval."
-msgstr "Tämä muunnelma on jo pyydetty hyväksyttäväksi."
+msgstr ""
 
 #: /Versioning.py:326 /Versioning.py:356
 msgid "The version is not requested for approval."
-msgstr "Tätä muunnelmaa ei ole pyydetty hyväksyttäväksi."
+msgstr ""
 
 #: /Versioning.py:376 /Versioning.py:389
 msgid "No unapproved version."
-msgstr "Ei hyväksymätöntä muunnelmaa."
+msgstr ""
 
 #: /Versioning.py:402 /Versioning.py:423
 msgid "No approved version."
-msgstr "Ei hyväksyttyä muunnelmaa."
+msgstr ""
 
 #: /Versioning.py:405
 msgid "Must specify publication datetime."
-msgstr "Täytyy määrittää julkaisuajankohta."
+msgstr ""
 
 #: /Versioning.py:436
 msgid "No public version."
-msgstr "Ei julkista muunnelmaa."
+msgstr ""
 
 #: /Versioning.py:463 /Versioning.py:482
 msgid "No next version."
-msgstr "Ei seuraavaa muunnelmaa."
+msgstr ""
 
 #: /Versioning.py:496
-#, fuzzy
 msgid "There is no version to add messages for."
-msgstr "Ei ole muunnelmaa, johon lisätä viestejä."
+msgstr ""
 
 #: /Versioning.py:61
 msgid "There is an approved version already; unapprove it. (${id})"
-msgstr "On jo olemassa hyväksytty muunnelma; tee se hyväksymättömäksi.(${id})"
+msgstr ""
 
 #: /Versioning.py:65
 msgid "There already is an unapproved version (${id})."
-msgstr "On jo olemassa hyväksymätön muunnelma (${id})."
+msgstr ""
 
 #: /Versioning.py:71
 msgid "The public version has that id already (${id})."
-msgstr "Julkisella muunnelmalla on jo tämä tunnus (${id})."
+msgstr ""
 
 #: /Versioning.py:77
 msgid "A previous version has that id already (${id})."
-msgstr "Aikaisemmalla muunnelmalla on jo tämä tunnus (${id})."
+msgstr ""
 
 #: /Versioning.py:96 /views/edit/VersionedContent/tab_edit_publish.py:12
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_preview_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
-msgstr "Ei ole hyväksymätöntä muunnelmaa hyväksyttäväksi."
+msgstr ""
 
 #: /Versioning.py:99
 msgid "There already is an approved version."
-msgstr "On jo olemassa hyväksytty muunnelma."
+msgstr ""
 
 #: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
@@ -310,11 +295,11 @@ msgstr ""
 
 #: /adapters/version_management.py:115
 msgid "Can not delete all versions"
-msgstr "Ei voida tuhota kaikkia muunnelmia"
+msgstr ""
 
 #: /adapters/version_management.py:288
 msgid "no such version ${version}"
-msgstr "ei sellaista muunnelmaa ${version}"
+msgstr ""
 
 #: /browser/object_lookup.pt:150
 msgid "select"
@@ -354,19 +339,19 @@ msgstr ""
 
 #: /doc/silva-content.xml:32
 msgid "Title of content."
-msgstr "Sisällön otsikko."
+msgstr ""
 
 #: /doc/silva-content.xml:90
 msgid "a.k.a. &#8216;navigation title&#8217;."
-msgstr "tunnettu myös &#8216;selaus-otsikkona&#8217;."
+msgstr ""
 
 #: /doc/silva-content.xml:93
 msgid "short title"
-msgstr "lyhyt otsikko"
+msgstr ""
 
 #: /doc/silva-extra.xml:156
 msgid "Description of content in this area."
-msgstr "Tämän alueen sisällön kuvaus."
+msgstr ""
 
 #: /doc/silva-extra.xml:215
 msgid "language"
@@ -378,76 +363,73 @@ msgstr ""
 
 #: /doc/silva-extra.xml:323
 msgid "comment"
-msgstr "kommentti"
+msgstr ""
 
 #: /doc/silva-extra.xml:324
 msgid "Internal comments."
-msgstr "Sisäisiä kommentteja."
+msgstr ""
 
 #: /doc/silva-extra.xml:35
 msgid "subject"
-msgstr "aihe"
+msgstr ""
 
 #: /doc/silva-extra.xml:36
 msgid "Subject of content in this area."
-msgstr "Tämän alueen sisällön aihe"
+msgstr ""
 
 #: /doc/silva-extra.xml:385
 msgid "creation time"
-msgstr "luonti aika"
+msgstr ""
 
 #: /doc/silva-extra.xml:386 /doc/silva-extra.xml:445 /doc/silva-extra.xml:620
 msgid "Automatically set."
-msgstr "Automaattisesti asetettu."
+msgstr ""
 
 #: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
-msgstr "Käyttäjä, joka viimeksi muokkasi tätä materiaalia."
+msgstr ""
 
 #: /doc/silva-extra.xml:737
 msgid "Resource location of this content."
-msgstr "Resurssien sijainti tässä sisällössä."
+msgstr ""
 
 #: /doc/silva-extra.xml:788
 msgid "Name of contact person."
-msgstr "Yhteyshenkilön nimi."
+msgstr ""
 
 #: /doc/silva-extra.xml:791
 msgid "contact name"
-msgstr "yhteyshenkilön nimi"
+msgstr ""
 
 #: /doc/silva-extra.xml:846
 msgid "Email address of contact person."
-msgstr "Yhteyshenkilön sähköpostiosoite."
+msgstr ""
 
 #: /doc/silva-extra.xml:849
 msgid "contact email"
-msgstr "kontaktin sähköpostiosoite"
+msgstr ""
 
 #: /doc/silva-extra.xml:896
 msgid ""
 "If this is enabled, this content (and anything it contains!) will not show "
 "up in tables of content."
 msgstr ""
-"Jos tämä on asetettu, tämä sisältö (ja kaikki mitä sen sisällä on!) ei näy "
-"sisällysluettelossa."
 
 #: /doc/silva-extra.xml:898
 msgid "hide from tables of content"
-msgstr "piilota sisällysluetteloilta"
+msgstr ""
 
 #: /doc/silva-extra.xml:95
 msgid "keywords"
-msgstr "avainsanat"
+msgstr ""
 
 #: /doc/silva-extra.xml:96
 msgid "Keywords relating to content."
-msgstr "Avainsanat, jotka liittyvät sisältöön."
+msgstr ""
 
 #: /doc/silva-publication.xml:22
-#, fuzzy
 msgid "Default Document Policy"
-msgstr "Oletusarvoinen menettelytapa"
+msgstr ""
 
 #: /globals/accesskeys.pt:103
 msgid ""
@@ -472,15 +454,15 @@ msgstr ""
 
 #: /globals/accesskeys.pt:120
 msgid "Preview screen"
-msgstr "Esikatselu ruutu"
+msgstr ""
 
 #: /globals/accesskeys.pt:122
 msgid "; &nbsp; See public preview<br />"
-msgstr "; &nbsp; Katso julkinen esikatselu<br />"
+msgstr ""
 
 #: /globals/accesskeys.pt:126
 msgid "Publish screen (folder)"
-msgstr "Julkaisu-ruutu (hakemisto)"
+msgstr ""
 
 #: /globals/accesskeys.pt:129
 msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
@@ -497,7 +479,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
-msgstr "Lisäys-ruutu"
+msgstr ""
 
 #: /globals/accesskeys.pt:149
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
@@ -505,7 +487,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
-msgstr "Muokkaus-ruutu"
+msgstr ""
 
 #: /globals/accesskeys.pt:157
 msgid ""
@@ -523,7 +505,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
-msgstr "Kupu muokkaaja"
+msgstr ""
 
 #: /globals/accesskeys.pt:181
 msgid ""
@@ -534,22 +516,22 @@ msgstr ""
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
-msgstr "Forms muokkaaja"
+msgstr ""
 
 #: /globals/accesskeys.pt:189
 msgid "Other screens"
-msgstr "Muut ruudut"
+msgstr ""
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 msgid "return"
-msgstr "palaa"
+msgstr ""
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:120
 #: /views/edit/VersionedContent/tab_status_macros.pt:153
 #: /views/edit/VersionedContent/tab_status_macros.pt:377
 msgid "access key: alt-r"
-msgstr "pikanäppäin: alt-r"
+msgstr ""
 
 #: /globals/accesskeys.pt:191
 msgid ""
@@ -570,7 +552,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:198
 msgid "Notes"
-msgstr "Merkintöjä"
+msgstr ""
 
 #: /globals/accesskeys.pt:202
 msgid ""
@@ -866,7 +848,7 @@ msgstr ""
 
 #: /layout/layout_macro.html:88
 msgid "Silva info on the Infrae site: alt-i"
-msgstr "Tietoa Silvasta Infraen sivulla: alt-i"
+msgstr ""
 
 #: /resources/request_processed.pt:18
 msgid "Request processed"
@@ -4856,8 +4838,6 @@ msgid ""
 "\n"
 "            "
 msgstr ""
-"\n"
-"            "
 
 #: /views/public/search_form.form:77
 msgid "subtree only"
@@ -4926,6 +4906,3 @@ msgstr ""
 #: /views/render_form_errors.py:42
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-
-#~ msgid "Cannot approve version; not allowed."
-#~ msgstr "Ei voida hyväksyä muunnelmaa; ei sallittu."

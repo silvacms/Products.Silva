@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
+"POT-Creation-Date: Fri Feb 16 17:11:06 2007\n"
 "PO-Revision-Date: 2006-06-30 13:58+0000\n"
 "Last-Translator: bamuhrez <bamuhrez@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
+"X-Rosetta-Export-Date: 2007-02-16 15:18+0000\n"
 
-#: /AutoTOC.py:23
+#: /AutoTOC.py:24
 msgid ""
 "This is a special document that automagically displays a\n"
 "       table of contents. Usually it&#8217;s used as an &#8216;index&#8217;\n"
@@ -2006,7 +2006,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:249
 #: /views/edit/Container/tab_edit.pt:617
-#: /views/edit/VersionedContent/tab_status.pt:353
+#: /views/edit/VersionedContent/tab_status.pt:352
 msgid "delete"
 msgstr ""
 
@@ -2124,7 +2124,7 @@ msgid "move up"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:402
-#: /views/edit/VersionedContent/tab_status.pt:190
+#: /views/edit/VersionedContent/tab_status.pt:189
 msgid "content-editor"
 msgstr ""
 
@@ -2235,7 +2235,7 @@ msgid "paste ghost"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:617
-#: /views/edit/VersionedContent/tab_status.pt:353
+#: /views/edit/VersionedContent/tab_status.pt:352
 msgid "there's no undo: alt-d"
 msgstr ""
 
@@ -3306,66 +3306,66 @@ msgstr ""
 msgid "Withdrew request for approval"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:152
+#: /views/edit/VersionedContent/tab_status.pt:151
 msgid "document info"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:160
+#: /views/edit/VersionedContent/tab_status.pt:159
 msgid "Content is a draft and never published"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:163
-#: /views/edit/VersionedContent/tab_status.pt:175
+#: /views/edit/VersionedContent/tab_status.pt:162
+#: /views/edit/VersionedContent/tab_status.pt:174
 msgid "Publication settings can be changed."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:172
+#: /views/edit/VersionedContent/tab_status.pt:171
 msgid "Content is approved, not published"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:186
+#: /views/edit/VersionedContent/tab_status.pt:185
 msgid "Content is published"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:189
+#: /views/edit/VersionedContent/tab_status.pt:188
 msgid ""
 "This content is published (online for the public).<br /> If you wish you can "
 "make an editable copy by going to the ${editor}."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:199
+#: /views/edit/VersionedContent/tab_status.pt:198
 msgid "Published version exists"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:200
+#: /views/edit/VersionedContent/tab_status.pt:199
 msgid ""
 "Note: an older version of this content is online.<br /> Publishing this "
 "version will replace the public version."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:211
+#: /views/edit/VersionedContent/tab_status.pt:210
 msgid "Content is closed"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:214
+#: /views/edit/VersionedContent/tab_status.pt:213
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:246
+#: /views/edit/VersionedContent/tab_status.pt:245
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:260 /doc/silva-extra.xml:444
+#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:444
 msgid "modification time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:261 /doc/silva-extra.xml:503
+#: /views/edit/VersionedContent/tab_status.pt:260 /doc/silva-extra.xml:503
 msgid "publication time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:262
+#: /views/edit/VersionedContent/tab_status.pt:261
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
@@ -3374,35 +3374,35 @@ msgstr ""
 msgid "expiration time"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:263 /doc/silva-extra.xml:676
+#: /views/edit/VersionedContent/tab_status.pt:262 /doc/silva-extra.xml:676
 msgid "last author"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:264 /doc/silva-extra.xml:618
+#: /views/edit/VersionedContent/tab_status.pt:263 /doc/silva-extra.xml:618
 msgid "creator"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:265
+#: /views/edit/VersionedContent/tab_status.pt:264
 msgid "version status"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:335
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "version actions"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:345
+#: /views/edit/VersionedContent/tab_status.pt:344
 msgid "compare..."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:345
+#: /views/edit/VersionedContent/tab_status.pt:344
 msgid "view the selected versions next to each other: alt-="
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:363
+#: /views/edit/VersionedContent/tab_status.pt:362
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:363
+#: /views/edit/VersionedContent/tab_status.pt:362
 msgid "copy for editing"
 msgstr ""
 

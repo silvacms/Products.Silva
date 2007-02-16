@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Wed Feb  7 19:13:22 2007\n"
+"POT-Creation-Date: Fri Feb 16 17:11:06 2007\n"
 "PO-Revision-Date: 2006-05-02 14:34+0000\n"
 "Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -15,9 +15,9 @@ msgstr ""
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-02-07 18:08+0000\n"
+"X-Rosetta-Export-Date: 2007-02-16 15:18+0000\n"
 
-#: /AutoTOC.py:23
+#: /AutoTOC.py:24
 msgid ""
 "This is a special document that automagically displays a\n"
 "       table of contents. Usually it&#8217;s used as an &#8216;index&#8217;\n"
@@ -349,7 +349,7 @@ msgstr "Bewilligte Version bereits vorhanden."
 
 #: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
-msgstr ""
+msgstr "Spracheinstellung des Browsers verwenden"
 
 #: /adapters/version_management.py:115
 msgid "Can not delete all versions"
@@ -413,11 +413,11 @@ msgstr "Beschreibung des Inhaltes."
 
 #: /doc/silva-extra.xml:215
 msgid "language"
-msgstr ""
+msgstr "Sprache"
 
 #: /doc/silva-extra.xml:262
 msgid "Language of content in this area."
-msgstr ""
+msgstr "Sprache der Inhalte in diesem Bereich."
 
 #: /doc/silva-extra.xml:323
 msgid "comment"
@@ -1168,6 +1168,8 @@ msgid ""
 "Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
 "\">ALT</abbr> text of the image."
 msgstr ""
+"Geben Sie einen Titel ein. Dieser wird für den <abbr title=\"Alternativer "
+"Text\">ALT</abbr>-Text zum Bild verwendet."
 
 #: /views/add/Link/form.form:73
 msgid "Link url."
@@ -2159,7 +2161,7 @@ msgstr "Import beendet: ${msg}"
 #: /views/edit/Container/open_now.py:22
 #: /views/edit/Container/tab_edit_close.py:28
 msgid "not applicable"
-msgstr ""
+msgstr "nicht anwendbar"
 
 #: /views/edit/Container/open_now.py:25
 #: /views/edit/Container/tab_status_approve.py:53
@@ -2169,11 +2171,11 @@ msgstr "Version bereits genehmigt"
 
 #: /views/edit/Container/open_now.py:36
 msgid "version already published"
-msgstr ""
+msgstr "Version schon veröffentlicht"
 
 #: /views/edit/Container/open_now.py:47
 msgid "Published: ${ids}"
-msgstr ""
+msgstr "Veröffentlicht: ${ids}"
 
 #: /views/edit/Container/open_now.py:52
 #: /views/edit/Container/tab_status_approve.py:94
@@ -2242,7 +2244,7 @@ msgstr "Ausgewählte Gruppen löschen: alt-d"
 
 #: /views/edit/Container/tab_access_groups.pt:249
 #: /views/edit/Container/tab_edit.pt:617
-#: /views/edit/VersionedContent/tab_status.pt:353
+#: /views/edit/VersionedContent/tab_status.pt:352
 msgid "delete"
 msgstr "Löschen"
 
@@ -2364,7 +2366,7 @@ msgid "move up"
 msgstr "nach oben"
 
 #: /views/edit/Container/tab_edit.pt:402
-#: /views/edit/VersionedContent/tab_status.pt:190
+#: /views/edit/VersionedContent/tab_status.pt:189
 msgid "content-editor"
 msgstr "Editor"
 
@@ -2376,7 +2378,7 @@ msgstr "Unbekannt"
 
 #: /views/edit/Container/tab_edit.pt:481
 msgid "content actions"
-msgstr ""
+msgstr "Inhaltsoperationen"
 
 #: /views/edit/Container/tab_edit.pt:488
 #: /views/edit/Container/tab_status.pt:94
@@ -2475,7 +2477,7 @@ msgid "paste ghost"
 msgstr "Ghost-Objekt einfügen"
 
 #: /views/edit/Container/tab_edit.pt:617
-#: /views/edit/VersionedContent/tab_status.pt:353
+#: /views/edit/VersionedContent/tab_status.pt:352
 msgid "there's no undo: alt-d"
 msgstr "es gibt kein Undo: alt-d"
 
@@ -2633,13 +2635,16 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:228
 msgid "replace content"
-msgstr ""
+msgstr "Inhalte ersetzen"
 
 #: /views/edit/Container/tab_edit_import.pt:239
 msgid ""
 "Replace Content Objects with the Objects from the import when they have the "
 "same ids (Note: they will be replaced *even* when published)."
 msgstr ""
+"Inhaltsobjekte mit den importierten Objekten ersetzen falls diese die "
+"gleiche Id haben (Hinweis: selbst publizierte Inhaltsobjekte werden "
+"überschrieben)."
 
 #: /views/edit/Container/tab_edit_import.pt:247
 msgid "import zip"
@@ -3547,11 +3552,11 @@ msgstr "Sperre entfernen"
 
 #: /views/edit/VersionedContent/preview_open_now.py:14
 msgid "Document published"
-msgstr ""
+msgstr "Dokument veröffentlicht"
 
 #: /views/edit/VersionedContent/preview_open_now.py:27
 msgid "Document already published"
-msgstr ""
+msgstr "Dokument bereits veröffentlicht"
 
 #: /views/edit/VersionedContent/properties_revoke_approval.py:15
 #: /views/edit/VersionedContent/tab_edit_revoke_approval.py:25
@@ -3607,28 +3612,28 @@ msgstr "Anfrage auf Bewilligung ablehnen"
 msgid "Withdrew request for approval"
 msgstr "Bewilligungsanfrage wurde zurückgenommen."
 
-#: /views/edit/VersionedContent/tab_status.pt:152
+#: /views/edit/VersionedContent/tab_status.pt:151
 msgid "document info"
-msgstr ""
+msgstr "Dokumentinformationen"
 
-#: /views/edit/VersionedContent/tab_status.pt:160
+#: /views/edit/VersionedContent/tab_status.pt:159
 msgid "Content is a draft and never published"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:163
-#: /views/edit/VersionedContent/tab_status.pt:175
+#: /views/edit/VersionedContent/tab_status.pt:162
+#: /views/edit/VersionedContent/tab_status.pt:174
 msgid "Publication settings can be changed."
 msgstr "Publikationseinstellungen können geändert werden."
 
-#: /views/edit/VersionedContent/tab_status.pt:172
+#: /views/edit/VersionedContent/tab_status.pt:171
 msgid "Content is approved, not published"
 msgstr "Inhalt ist genehmigt, nicht veröffentlicht."
 
-#: /views/edit/VersionedContent/tab_status.pt:186
+#: /views/edit/VersionedContent/tab_status.pt:185
 msgid "Content is published"
 msgstr "Inhalt ist veröffentlicht"
 
-#: /views/edit/VersionedContent/tab_status.pt:189
+#: /views/edit/VersionedContent/tab_status.pt:188
 msgid ""
 "This content is published (online for the public).<br /> If you wish you can "
 "make an editable copy by going to the ${editor}."
@@ -3636,11 +3641,11 @@ msgstr ""
 "Dieser Inhalt ist publiziert. <br /> Sie können eine bearbeitbare Kopie "
 "erzeugen, wenn Sie zum ${editor} gehen."
 
-#: /views/edit/VersionedContent/tab_status.pt:199
+#: /views/edit/VersionedContent/tab_status.pt:198
 msgid "Published version exists"
 msgstr "Veröffentlichte Version existiert"
 
-#: /views/edit/VersionedContent/tab_status.pt:200
+#: /views/edit/VersionedContent/tab_status.pt:199
 msgid ""
 "Note: an older version of this content is online.<br /> Publishing this "
 "version will replace the public version."
@@ -3648,11 +3653,11 @@ msgstr ""
 "Anmerkung: eine ältere Version dieses Inhaltes ist online. <br /> "
 "Publizieren dieser Version wird die öffentliche Version ersetzen."
 
-#: /views/edit/VersionedContent/tab_status.pt:211
+#: /views/edit/VersionedContent/tab_status.pt:210
 msgid "Content is closed"
 msgstr "Inhalt wurde geschlossen."
 
-#: /views/edit/VersionedContent/tab_status.pt:214
+#: /views/edit/VersionedContent/tab_status.pt:213
 msgid ""
 "This content was once published but is now closed.<br /> If you wish you can "
 "make an editable copy in the ${editor}."
@@ -3660,19 +3665,19 @@ msgstr ""
 "Dieser Inhalt war einmal veröfentlicht ist aber jetzt geschlossen. <br /> "
 "Wenn Sie wünschen, können Sie eine bearbeitbare Kopie im ${editor} erzeugen."
 
-#: /views/edit/VersionedContent/tab_status.pt:246
+#: /views/edit/VersionedContent/tab_status.pt:245
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "Versionen verwalten für &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:260 /doc/silva-extra.xml:444
+#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:444
 msgid "modification time"
 msgstr "Änderungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:261 /doc/silva-extra.xml:503
+#: /views/edit/VersionedContent/tab_status.pt:260 /doc/silva-extra.xml:503
 msgid "publication time"
 msgstr "Veröffentlichungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:262
+#: /views/edit/VersionedContent/tab_status.pt:261
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
@@ -3681,35 +3686,35 @@ msgstr "Veröffentlichungsdatum"
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:263 /doc/silva-extra.xml:676
+#: /views/edit/VersionedContent/tab_status.pt:262 /doc/silva-extra.xml:676
 msgid "last author"
 msgstr "letzter Autor"
 
-#: /views/edit/VersionedContent/tab_status.pt:264 /doc/silva-extra.xml:618
+#: /views/edit/VersionedContent/tab_status.pt:263 /doc/silva-extra.xml:618
 msgid "creator"
 msgstr "Urheber"
 
-#: /views/edit/VersionedContent/tab_status.pt:265
+#: /views/edit/VersionedContent/tab_status.pt:264
 msgid "version status"
 msgstr "Versionsstatus"
 
-#: /views/edit/VersionedContent/tab_status.pt:335
+#: /views/edit/VersionedContent/tab_status.pt:334
 msgid "version actions"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:345
+#: /views/edit/VersionedContent/tab_status.pt:344
 msgid "compare..."
 msgstr "Vergleichen..."
 
-#: /views/edit/VersionedContent/tab_status.pt:345
+#: /views/edit/VersionedContent/tab_status.pt:344
 msgid "view the selected versions next to each other: alt-="
 msgstr "Die ausgewählten Versionen nebeneinander darstellen: alt-="
 
-#: /views/edit/VersionedContent/tab_status.pt:363
+#: /views/edit/VersionedContent/tab_status.pt:362
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr "Überschreibt die aktuellen Arbeitsversion: alt-w"
 
-#: /views/edit/VersionedContent/tab_status.pt:363
+#: /views/edit/VersionedContent/tab_status.pt:362
 msgid "copy for editing"
 msgstr "Wiederherstellen als Arbeitsversion"
 
@@ -4264,7 +4269,7 @@ msgstr "alles auswählen: alt-a"
 
 #: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:142
 msgid "select all"
-msgstr ""
+msgstr "alles auswählen"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
@@ -5046,7 +5051,7 @@ msgstr ""
 
 #: /views/public/Indexer/render_helper.pt:18
 msgid "Terms"
-msgstr ""
+msgstr "Begriffe"
 
 #: /views/public/Indexer/render_helper.pt:22
 msgid "Links"
