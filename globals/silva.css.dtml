@@ -1408,23 +1408,13 @@ dd {
 }
 
 ul {
-  list-style-type: circle;
-  list-style-image: none
+  margin-top: 0.2em;
+  padding-left: 1.4em;
+  line-height: 130%;
 }
 
 ul.tips {
   list-style-type: square;
-  margin-left: 0.1em;
-  margin-top: 0.2em;
-  padding-left: 1em;
-  line-height: 130%;
-}
-
-ul.tips-nested {
-  list-style-type: circle;
-  margin-left: 0.5em;
-  padding-left: 1em;
-  line-height: 130%;
 }
 
 

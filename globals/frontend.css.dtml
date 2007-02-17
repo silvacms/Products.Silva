@@ -250,6 +250,11 @@ ol.lower-alpha {
   list-style-type: lower-alpha;
 }
 
+ul.toc-list {
+  margin:0;
+  line-height:130%;
+}
+
 
 /* ______________________________________________________________ links _____ */
 
