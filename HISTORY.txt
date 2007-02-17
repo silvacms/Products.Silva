@@ -28,17 +28,14 @@ Silva changes
         didn't appear because the link was empty (it was there). Now the
         id shows up so visitors can at least click it.
 
-      - Renevated the TOC/AutoToc rendering, replacing the ancient,
-        legacy, Netscape4 compatible image-based indent, where long titles
-        break onto the next, non-indented line. Updated frontend.css with
-        new selectors for the TOC levels.
-
       - Tocs display links with a trailing slash because there may be
         'edit/tab_preview' appended to it, but this conflicts with links 
         made in the editor that are rendered without the slash. Moved the
         slash into the appendage.
 
     Bugs fixed
+
+      - the spacer images used in tocs now have an alt attribute
 
       - alt attribute for meta_type icons now have the name of the meta_type
         instead of 'Unknown Metatype' (Issue 1654)

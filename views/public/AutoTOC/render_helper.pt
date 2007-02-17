@@ -12,17 +12,30 @@
     Title
 </h2>
 
-<tal:loop 
-  repeat="obj tree"><tal:def 
-    define="
-      indent python:obj[0]; 
-      item python:obj[1];
-      title python:getattr(obj[1], title_method)();
-      url string:${item/absolute_url}${append_to_url}"
-><p tal:attributes="class string:toc level-$indent">
-<a tal:attributes="href url"
-  tal:content="python:title and title or item.id">
-  title
-</a>
-</p></tal:def></tal:loop>
+<p class="toc">
+  <tal:block repeat="obj tree">
+    <tal:block
+      tal:define="
+        indent python:obj[0]; 
+        item python:obj[1];
+        title python:getattr(obj[1], title_method)();
+        url string:${item/absolute_url}/${append_to_url}">
+      <img 
+        width="12" 
+        height="14"
+        alt="spacer"
+        tal:condition="python:indent > 0"
+        tal:attributes="
+          width python:indent * 24;
+          src string:${here/silva_root}/globals/pixel.gif" />
+        <a class="toc-link"
+          href="edit"
+          tal:attributes="href url"
+          tal:content="python:title and title or item.id">
+          title
+        </a>
+        <br />
+    </tal:block>
+  </tal:block>
+</p>
 </tal:def>
