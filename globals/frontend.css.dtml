@@ -493,7 +493,7 @@ input.button, input.control { /* used in SNN */
 }
 
 
-/*__________________________________________________ CSS2 selectors _____ */ 
+/* _____________________________________________________ CSS2 selectors _____ */ 
 
 acronym[title], abbr[title] {
   cursor:help;

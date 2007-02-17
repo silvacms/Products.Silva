@@ -35,7 +35,7 @@ Silva changes
 
     Bugs fixed
 
-      - the spacer images used in tocs now have an alt attribute
+      - The spacer images used to indent tocs now have an alt attribute
 
       - alt attribute for meta_type icons now have the name of the meta_type
         instead of 'Unknown Metatype' (Issue 1654)
