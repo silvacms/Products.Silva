@@ -1,62 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>   
-     
- <form>    
-   <title></title>   
-   <name>add_form</name>   
-   <action></action>   
-   <enctype>None</enctype>   
-   <method>POST</method>
-   <i18n_domain>silva</i18n_domain>
-   <i18n>default_form_add</i18n>
-     
-   <groups multiple="true">    
-     <group>   
-       <title>default</title>    
-       <fields multiple="true">    
-     
-       <field><id>object_id</id> <type>StringField</type>    
-         <values>    
-           <alternate_name></alternate_name>   
-           <hidden type="int">0</hidden>   
-           <max_length></max_length>   
-           <external_validator></external_validator>   
-           <display_maxwidth></display_maxwidth>   
-           <display_width type="int">20</display_width>    
-           <required type="int">1</required>   
-           <css_class></css_class>   
-           <default></default>   
-           <title>id</title>   
-           <truncate type="int">0</truncate>   
-           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>    
-           <extra>class="store"</extra>   
-           <unicode>1</unicode>    
-         </values>   
-         <tales>   
-         </tales>    
-       </field>    
-       <field><id>object_title</id> <type>TextAreaField</type>   
-         <values>    
-           <alternate_name></alternate_name>   
-           <hidden type="int">0</hidden>   
-           <max_linelength></max_linelength>   
-           <max_length></max_length>   
-           <max_lines></max_lines>   
-           <width type="int">40</width>    
-           <external_validator></external_validator>   
-           <height type="int">2</height>   
-           <required type="int">1</required>   
-           <css_class></css_class>   
-           <default></default>   
-           <title>title</title>    
-           <description>The title will be publicly visible, and is used for the link in indexes.</description>   
-           <extra>class="store"</extra>   
-           <unicode>1</unicode>    
-         </values>   
-         <tales>   
-         </tales>    
-       </field>    
-       </fields>   
-     </group>    
-   </groups>   
- </form>
-
+<?xml version="1.0" encoding="UTF-8"?>       
+<form>    
+  <title></title>   
+  <name>add_form</name>   
+  <action></action>   
+  <enctype>None</enctype>   
+  <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>default_form_add</i18n>
+  <groups multiple="true">    
+    <group>   
+      <title>default</title>    
+      <fields multiple="true">    
+      <field><id>object_id</id> <type>StringField</type>    
+        <values>    
+          <alternate_name></alternate_name>   
+          <hidden type="int">0</hidden>   
+          <max_length></max_length>   
+          <external_validator></external_validator>   
+          <display_maxwidth></display_maxwidth>   
+          <display_width type="int">20</display_width>    
+          <required type="int">1</required>   
+          <css_class>store</css_class>   
+          <default></default>   
+          <title>id</title>   
+          <truncate type="int">0</truncate>   
+          <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>    
+          <extra></extra>   
+          <unicode>1</unicode>    
+        </values>   
+        <tales>   
+        </tales>    
+      </field>
+      <field><id>object_title</id> <type>StringField</type>   
+        <values>    
+          <alternate_name></alternate_name>   
+          <hidden type="int">0</hidden>   
+          <max_length></max_length>   
+          <external_validator></external_validator>   
+          <display_maxwidth></display_maxwidth>   
+          <display_width type="int">20</display_width>    
+          <required type="int">1</required>   
+          <css_class>store</css_class>   
+          <default></default>   
+          <title>title</title>    
+          <truncate type="int">0</truncate>   
+          <description>The title will be publicly visible, and is used for the link in indexes.</description>   
+          <extra></extra>   
+          <unicode>1</unicode>    
+        </values>   
+        <tales>   
+        </tales>    
+      </field>    
+      </fields>   
+    </group>    
+  </groups>   
+</form>

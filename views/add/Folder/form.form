@@ -34,16 +34,14 @@
         <tales>
         </tales>
       </field>
-      <field><id>object_title</id> <type>TextAreaField</type>
+      <field><id>object_title</id> <type>StringField</type>
         <values>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <max_linelength></max_linelength>
           <max_length></max_length>
-          <max_lines></max_lines>
-          <width type="int">40</width>
           <external_validator></external_validator>
-          <height type="int">2</height>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
           <required type="int">1</required>
           <css_class>store</css_class>
           <default></default>
@@ -58,7 +56,6 @@
       <field><id>policy_name</id> <type>ListField</type>
         <values>
           <alternate_name></alternate_name>
-          <css_class>store</css_class>
           <description>Choose an item to be created within the folder.</description>
           <external_validator></external_validator>
           <extra></extra>
@@ -66,6 +63,7 @@
           <hidden type="int">0</hidden>
           <items type="list">[('Silva Document', 'Silva Document'), ('Automatic Table of Contents', 'Auto TOC'), ('None', 'None')]</items>
           <required type="int">1</required>
+          <css_class>store</css_class>
           <size type="int">5</size>
           <title>first item</title>
           <unicode type="int">0</unicode>

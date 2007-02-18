@@ -7,6 +7,8 @@ Silva changes
 
     Features added:
 
+      - Changed title fields to string fields, for easy FF fill-in
+
       - External sources inside headers or table cells, are not allowed. An
         alert box is shown now, to make this clearer. (issue 1578)
       

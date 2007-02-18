@@ -35,16 +35,14 @@
         </tales>
       </field>
 
-      <field><id>object_title</id> <type>TextAreaField</type>
+      <field><id>object_title</id> <type>StringField</type>
         <values>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <max_linelength></max_linelength>
           <max_length></max_length>
-          <max_lines></max_lines>
-          <width type="int">40</width>
           <external_validator></external_validator>
-          <height type="int">2</height>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
           <required type="int">1</required>
           <css_class>store</css_class>
           <default></default>
