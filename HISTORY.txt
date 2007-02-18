@@ -6,9 +6,11 @@ Silva changes
   Silva 1.6.x (SVN/UNRELEASED)
 
     Features added:
+
       - Fixed behavior in Internet Explorer where it's impossible to change the
         "link to" field in the image toolbox in kupu, by removing the
         onkeypress event.
+
       - External sources inside headers or table cells, are not allowed. An
         alert box is shown now, to make this clearer. (issue 1578)
       
@@ -50,8 +52,9 @@ Silva changes
         legacy, Netscape4 compatible image-based indent, where long titles
         break onto the next, non-indented line. The new rendering uses nested
         lists, which make the rendering easier to style, and more accessible
-        to boot.  The lists have the class 'toc-list', and the links have
-        the 'toc-link' class.  Added an adapter to perform the new-style rendering.
+        to boot. The lists have the class 'toc-list', and the links have
+        the 'toc-link' class.  Added an adapter to perform the new-style 
+        rendering.
 
       - Tocs display links with a trailing slash because there may be 
         'edit/tab_preview' appended to it, but this conflicts with links made 
@@ -79,6 +82,12 @@ Silva changes
         will not be found by Indexers.
 
     Ported from 1.5 branch
+
+      - When there's a base tag in the layout_macro the forms in /public, such 
+        as the subscription form, return a 404. If the form action is 
+        constructed using absolute_url, it works. This should also be backwards 
+        compatible, working for sites that don't include a base tag. Tweaked
+        formatting of the search form while at it.
 
       - alt attribute for meta_type icons now have the name of the meta_type
         instead of 'Unknown Metatype' (Issue 1654)

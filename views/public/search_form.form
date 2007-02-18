@@ -25,7 +25,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default></default>
-            <title>content</title>
+            <title>Content</title>
             <truncate type="int">0</truncate>
             <description>
               Use an asterix ('*') for wildcard.
@@ -53,7 +53,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default></default>
-            <title>title</title>
+            <title>Title</title>
             <truncate type="int">0</truncate>
             <description>
             </description>
@@ -74,7 +74,7 @@
             <hidden type="int">0</hidden>
             <css_class></css_class>
             <default type="int">1</default>
-            <title>subtree only</title>
+            <title>Subtree only</title>
             <description>
               Check to restrict search to this content's subtree.
             </description>
@@ -97,7 +97,7 @@
             <required type="int">0</required>
             <css_class></css_class>
             <default type="list">[]</default>
-            <title>content type</title>
+            <title>Content type</title>
             <description>
               Select (multiple using ctrl-key) object type(s) to search in. 
               If none is selected, all types are searched.
