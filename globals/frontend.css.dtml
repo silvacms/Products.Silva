@@ -467,7 +467,7 @@ div.feedback {
   padding: 0.2em 0.4em;
   border: 1px solid #788;
   color: #3c2d50;
-  background-color: #ebf797;
+  background-color: #f2f0a7;
 }
 div.feedback:first-letter {
   text-transform: capitalize;
