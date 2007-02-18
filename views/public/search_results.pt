@@ -1,46 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html metal:use-macro="here/layout_macro.html/macros/layout"
-  lang="en"
-  xml:lang="en"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:notal="http://www.infrae.com/silva/notal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva"
-  >
+<tal:block define="here request/model;">
+<metal:block use-macro="request/model/layout_macro.html/macros/layout">
   <head>
-    <style media="all"
-      type="text/css"
-      metal:fill-slot="style">
-      @import url(globals/silva.css);
-    </style>
-    <title i18n:translate="">Search results</title>
+    <title metal:fill-slot="title" i18n:translate="">Search results</title>
   </head>
   <body>
     <metal:block fill-slot="main"
       tal:define="
-        view here;
-        content_type here/set_content_type;
-
-        model request/model;
-        icon python:view.render_icon(model);          
-
-        results view/perform_search;
-        batch python:view.getBatch(results);"
-      >
-      <tal:block define="dummy here/set_content_type" />
-      <form method="POST" name="form" action=".">
-
+        results context/perform_search;
+        batch python:context.getBatch(results);
+        mangle modules/Products/Silva/mangle;
+      ">
       <tal:block tal:condition="results">    
-        <table class="listing" cellspacing="0" cellpadding="3" border="0" width="100%">
+        <table class="silvatable" cellspacing="0" cellpadding="3">
           <thead>
             <tr class="controls">
               <td class="rowhead" align="left">
                 <tal:block condition="request/previous_batch_url | nothing">
-                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
+                  <a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
                   &lt;&lt; Previous
-                  </a>]
+                  </a>
                 </tal:block>
               </td>
               <td class="rowhead" nowrap="1" i18n:translate="">
@@ -51,31 +30,31 @@
               </td>
               <td class="rowhead" align="right">
                 <tal:block condition="request/next_batch_url | nothing">
-                  [<a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
+                  <a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
                   Next &gt;&gt;
-                  </a>]
+                  </a>
                 </tal:block>
               </td>
             </tr>
           </thead>
           <tbody>
             <tal:block repeat="item batch">
-              <tal:block
-                tal:define="iterate repeat/item/even;">
-                <tr valign="top"
-                  tal:attributes="class python: iterate and 'even' or 'odd'">
-                  <td>
+              <tal:block tal:define="
+                iterate repeat/item/even;
+                obj item/getObject;
+                url obj/silva_object_url | string:#;
+                mdt python:mangle.DateTime(obj.get_modification_datetime()).toStrOptionalTime() or nothing;
+                ">
+                <tr tal:attributes="class python: iterate and 'even' or 'odd'">
+                  <td class="align-right"
+                    tal:define="metatype obj/meta_type">
+                    <img tal:replace="structure python: here.render_icon_by_meta_type(metatype)" />
                   </td>
-                  <td
-                    tal:define="
-                      doc item/getObject;
-                      url doc/silva_object_url | string:#;
-                      ">
-                    <a href="#"
-                      tal:content="string:${doc/get_title_or_id}"
+                  <td>
+                    <a tal:content="string:${obj/get_title_or_id}"
                       tal:attributes="href url" />
                   </td>
-                  <td>
+                  <td tal:content="mdt">
                   </td>
                 </tr>
               </tal:block>
@@ -85,18 +64,18 @@
             <tr class="controls">
               <td class="rowhead" align="left">
                 <tal:block condition="request/previous_batch_url | nothing">
-                  [<a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
+                  <a href="previousbatch" tal:attributes="href request/previous_batch_url" i18n:translate="">
                   &lt;&lt; Previous
-                  </a>]
+                  </a>
                 </tal:block>
               </td>
               <td class="rowhead" nowrap="1">
               </td>
               <td class="rowhead" align="right">
                 <tal:block condition="request/next_batch_url | nothing">
-                  [<a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
+                  <a href="nextbatch" tal:attributes="href request/next_batch_url" i18n:translate="">
                   Next &gt;&gt;
-                  </a>]
+                  </a>
                 </tal:block>
               </td>
             </tr>
@@ -104,6 +83,17 @@
         </table>
       </tal:block>
 
+      <tal:block tal:condition="not: results">
+        <metal:block use-macro="here/public/search/macros/search">
+          <metal:block fill-slot="feedback">
+            <div class="feedback">
+              <span class="alert">No documents matched your search.</span>
+            </div><br />
+          </metal:block>
+        </metal:block>
+      </tal:block>
+
     </metal:block>
   </body>
-</html>
+</metal:block>
+</tal:block>

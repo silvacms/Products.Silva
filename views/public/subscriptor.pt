@@ -27,7 +27,8 @@
   </div>
   <tal:block condition="show_form">
     <div class="subscriptionform">
-      <form method="POST" name="form" action="subscription_request" enctype="multipart/form-data">
+      <form method="POST" name="form" enctype="multipart/form-data"
+        tal:attributes="action string:${here/absolute_url}/public/subscription_request">
         <h3 class="heading" i18n:translate="">
           Subscribe to 
           &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
@@ -52,7 +53,8 @@
       </form>
     </div>
     <div class="cancellationform">
-      <form method="POST" name="form" action="cancellation_request" enctype="multipart/form-data">
+      <form method="POST" name="form" enctype="multipart/form-data"
+        tal:attributes="action string:${here/absolute_url}/public/cancellation_request">
         <h3 class="heading" i18n:translate="">
           Unsubscribe from
           &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;

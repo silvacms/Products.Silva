@@ -35,6 +35,12 @@ Silva changes
 
     Bugs fixed
 
+      - When there's a base tag in the layout_macro the forms in /public, such 
+        as the subscription form, return a 404. If the form action is 
+        constructed using absolute_url, it works. This should also be backwards 
+        compatible, working for sites that don't include a base tag. Tweaked
+        formatting of the search form while at it.
+
       - The spacer images used to indent tocs now have an alt attribute
 
       - alt attribute for meta_type icons now have the name of the meta_type
