@@ -7,19 +7,8 @@ Silva changes
 
     Features added:
 
-      - Fixed behavior in Internet Explorer where it's impossible to change the
-        "link to" field in the image toolbox in kupu, by removing the
-        onkeypress event.
-
       - External sources inside headers or table cells, are not allowed. An
         alert box is shown now, to make this clearer. (issue 1578)
-      
-      - Fixed minor bugs in kupu table toolbox where the column widths field did
-        not get updated (issue 1577)
-        
-      - Fixed bug in scaling of images, where images with a scaling of 100%
-        would return the modification date of the original hires image, creating
-        problems with caching (issue 1557)
       
       - Disabled custom kupu context menu, so that the original browser context
         menu is shown. This allows firefox users to use the firefox spellchecker
@@ -124,6 +113,17 @@ Silva changes
 
     Bugs fixed:
 
+      - Fixed behavior in Internet Explorer where it's impossible to change the
+        "link to" field in the image toolbox in kupu, by removing the
+        onkeypress event.
+
+      - Fixed minor bugs in kupu table toolbox where the column widths field did
+        not get updated (issue 1577)
+        
+      - Fixed bug in scaling of images, where images with a scaling of 100%
+        would return the modification date of the original hires image, creating
+        problems with caching (issue 1557)
+      
       - Fix https://infrae.com/issue/silva/issue1642, where the
         catalog was indexing XML tags.
 
