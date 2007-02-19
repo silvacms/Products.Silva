@@ -19,7 +19,7 @@
         indent python:obj[0]; 
         item python:obj[1];
         title python:getattr(obj[1], title_method)();
-        url string:${item/absolute_url}/${append_to_url}">
+        url string:${item/absolute_url}${append_to_url}">
       <img 
         width="12" 
         height="14"
