@@ -6,7 +6,7 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
-expected_html = u'<!DOCTYPE table PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top"></td>\n  </tr>\n</table>\n'
+expected_html = u'\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top"></td>\n  </tr>\n</table>\n'
 expected_html2 = '<h2 class="heading">This is a rendering test</h2>\n\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n\n\n               \n\n'
 
 class FakeRenderer:

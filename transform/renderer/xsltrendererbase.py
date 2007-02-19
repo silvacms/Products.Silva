@@ -88,7 +88,7 @@ class XSLTRendererBase(Acquisition.Implicit):
             doctypestring = '<!DOCTYPE'
             result_string = style.saveResultToString(result)
             if result_string.startswith(doctypestring):
-                result_string = result_string[result_string.find('>'):]
+                result_string = result_string[result_string.find('>')+1:]
         except libxml2.parserError:
             raise RenderError(self._error_handler.getErrorText())
 
