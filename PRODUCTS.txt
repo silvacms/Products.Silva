@@ -73,7 +73,7 @@ Uses Formulator, Annotation and ProxyIndex.
 
 http://www.infrae.com/download/SilvaMetadata
 
-Annotations 0.4.3 (DCI)
+Annotations 0.4.4 (DCI)
 -----------------------
 
 A system for attaching information to Zope objects without changing
@@ -118,7 +118,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.5.9 (DE)
+SilvaDocument 1.5.10 (DE)
 ------------------------
 
 Silva extension for XML-based documents. Contains a through the web
@@ -204,7 +204,7 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNewsNetwork 2.1 (EX)
+SilvaNewsNetwork 2.3.2 (EX)
 -------------------------
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
@@ -224,7 +224,7 @@ content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
-SilvaLayout 0.5.5 (EX)
+SilvaLayout 0.5.6 (EX)
 ----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
@@ -232,14 +232,3 @@ install this, the default Silva layout system won't work anymore, so
 only install this when you want to try using the new system.
 
 http://www.infrae.com/download/SilvaLayout
-
-Docma Server 0.8
-----------------
-
-A separate system that can sit on a Windows machine and translate
-Silva XML to MS Word documents, and back. This can be integrated into
-the Silva UI by enabling service_docma.
-
-http://www.infrae.com/download/DocmaServer
-
-http://www.infrae.com/download/DocmaWindowsInstaller
