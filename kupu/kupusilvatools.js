@@ -1284,6 +1284,7 @@ SilvaIndexTool.prototype.initialize = function(editor) {
 SilvaIndexTool.prototype.addIndex = function() {
     /* create an index */
     var name = this.nameinput.value;
+    name = name.replace(/[^a-zA-Z0-9_:\-\.]/g, "_");
     var title = this.titleinput.value;
     var currnode = this.editor.getSelectedNode();
     var indexel = this.editor.getNearestParentOfType(currnode, 'A');
