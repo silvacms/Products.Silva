@@ -207,7 +207,7 @@
     <span id="kupu-tb-buttons" class="kupu-tb-buttons">
       
     <span class="kupu-tb-buttongroup kupu-logo" style="float: right" id="kupu-logo">
-      <button type="button" class="kupu-logo" title="Kupu 1.4" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
+      <button type="button" class="kupu-logo" title="Kupu 1.3.5" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
     </span>
   
     <select id="kupu-tb-styles" onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
@@ -232,34 +232,34 @@
     </span>
   
     <span class="kupu-tb-buttongroup" id="kupu-bg-basicmarkup">
-      <button type="button" class="kupu-bold" id="kupu-bold-button" title="Bold: Access key (Alt or Ctrl) + B" i18n:attributes="title" accesskey="b">&#160;</button>
-      <button type="button" class="kupu-italic" id="kupu-italic-button" title="Italic: Access key (Alt or Ctrl) + I" i18n:attributes="title" accesskey="i">&#160;</button>
-      <button type="button" class="kupu-underline" id="kupu-underline-button" title="Underline: Access key (Alt or Ctrl) + U" i18n:attributes="title" accesskey="u">&#160;</button>
+      <button type="button" class="kupu-bold" id="kupu-bold-button" title="bold: alt-b" i18n:attributes="title" accesskey="b">&#160;</button>
+      <button type="button" class="kupu-italic" id="kupu-italic-button" title="italic: alt-i" i18n:attributes="title" accesskey="i">&#160;</button>
+      <button type="button" class="kupu-underline" id="kupu-underline-button" title="underline: alt-u" i18n:attributes="title" accesskey="u">&#160;</button>
     </span>
   
     <span class="kupu-tb-buttongroup" id="kupu-bg-subsuper">
-      <button type="button" class="kupu-subscript" id="kupu-subscript-button" title="Subscript: Access key (Alt or Ctrl) + -" i18n:attributes="title" accesskey="-">&#160;</button>
-      <button type="button" class="kupu-superscript" id="kupu-superscript-button" title="Superscript: Access key (Alt or Ctrl) + +" i18n:attributes="title" accesskey="+">&#160;</button>
+      <button type="button" class="kupu-subscript" id="kupu-subscript-button" title="subscript: alt--" i18n:attributes="title" accesskey="-">&#160;</button>
+      <button type="button" class="kupu-superscript" id="kupu-superscript-button" title="superscript: alt-+" i18n:attributes="title" accesskey="+">&#160;</button>
     </span>
   
               <span class="kupu-tb-buttongroup" id="kupu-bg-list">
       
-      <button type="button" class="kupu-insertorderedlist" title="Numbered list: Access key (Alt or Ctrl) + #" id="kupu-list-ol-addbutton" i18n:attributes="title" accesskey="#">&#160;</button>
-      <button type="button" class="kupu-insertunorderedlist" title="Unordered list: Access key (Alt or Ctrl) + *" id="kupu-list-ul-addbutton" i18n:attributes="title" accesskey="*">&#160;</button>
+      <button type="button" class="kupu-insertorderedlist" title="numbered list: alt-#" id="kupu-list-ol-addbutton" i18n:attributes="title" accesskey="#">&#160;</button>
+      <button type="button" class="kupu-insertunorderedlist" title="unordered list: alt-*" id="kupu-list-ul-addbutton" i18n:attributes="title" accesskey="*">&#160;</button>
               </span>
   
     <span class="kupu-tb-buttongroup" id="kupu-bg-definitionlist">
       
-      <button type="button" class="kupu-insertdefinitionlist" title="Definition list: Access key (Alt or Ctrl) + =" id="kupu-list-dl-addbutton" i18n:attributes="title" accesskey="=">&#160;</button>
+      <button type="button" class="kupu-insertdefinitionlist" title="definition list: alt-=" id="kupu-list-dl-addbutton" i18n:attributes="title" accesskey="=">&#160;</button>
     </span>
   
     <span class="kupu-tb-buttongroup" id="kupu-bg-undo">
-      <button type="button" class="kupu-undo" id="kupu-undo-button" title="Undo: Access key (Alt or Ctrl) + Z" i18n:attributes="title" accesskey="z">&#160;</button>
-      <button type="button" class="kupu-redo" id="kupu-redo-button" title="Redo: Access key (Alt or Ctrl) + Y" i18n:attributes="title" accesskey="y">&#160;</button>
+      <button type="button" class="kupu-undo" id="kupu-undo-button" title="undo: alt-z" i18n:attributes="title" accesskey="z">&#160;</button>
+      <button type="button" class="kupu-redo" id="kupu-redo-button" title="redo: alt-y" i18n:attributes="title" accesskey="y">&#160;</button>
     </span>
   
     <span class="kupu-tb-buttongroup kupu-source-span" id="kupu-source">
-      <button type="button" class="kupu-source" id="kupu-source-button" title="Switch between visual editor and HTML view" i18n:attributes="title toggle_source_view;" accesskey="h">&#160;</button>
+      <button type="button" class="kupu-source" id="kupu-source-button" title="edit HTML code" i18n:attributes="title" accesskey="h">&#160;</button>
     </span>
   
     </span>
@@ -357,11 +357,11 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0">
                     <tr>
-                      <td><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">anchor name</span><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore.</span></a></td>
+                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore.</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name"/></td>
                     </tr>
                     <tr>
-                      <td><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">index title</span><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer.</span></a></td>
+                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer.</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-title"/></td>
                     </tr>
                   </table>
@@ -442,13 +442,13 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0">
                     <tr>
-                      <td><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">title</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
+                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
                       <td><input class="store" type="text" id="kupu-abbr-title"/></td>
                     </tr>
                     <tr id="kupu-abbr-radiorow">
-                      <td><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">type</span><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym).</span></a></td>
+                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym).</span></a></td>
                       <td>
-                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" />abbreviation</label>
+                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked"/>abbreviation</label>
                         <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym"/>acronym</label>
                       </td>
                     </tr>
