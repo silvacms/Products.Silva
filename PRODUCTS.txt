@@ -43,7 +43,7 @@ The infrastructure used by Silva to attach views to content objects.
 http://www.infrae.com/download/SilvaViews
 
 FileSystemSite 2.0 (DCI)
---------------------------
+------------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
 be used to maintain page templates, python scripts and the like on the
