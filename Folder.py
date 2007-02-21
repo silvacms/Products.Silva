@@ -576,11 +576,15 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
     def is_published(self):
-        # NOTE: this is inefficient if there's a big unpublished hierarchy..
-        # Folder is published if anything inside is published
+        # Folder is published if its default document is published, or,
+        # when no default document exists, if any of the objects it contains
+        # are published.
         default = self.get_default()
-        if default and default.aq_explicit.is_published():
-            return 1
+        if default:
+            if default.aq_explicit.is_published():
+                return 1
+            else:
+                return 0
         for object in self.get_ordered_publishables():        
             if object.is_published():
                 return 1

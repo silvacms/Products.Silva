@@ -3,9 +3,21 @@ See also LICENSE.txt
 
 Silva changes
  
-  Silva 1.6.x (SVN/UNRELEASED)
+  Silva 1.6 (SVN/UNRELEASED)
 
     Features added:
+
+      - The published status of containers changed: A folder is published
+        when its default document is published, not published when its 
+        default document isn't published, and if no default document is 
+        present, it is considered published if any of its contents are 
+        published. This cuts down on some unnecessary recursion, as well as
+        giving editors a nice way to temporarily exclude trees from 
+        navigation, so that they can be worked on.
+
+      - Fixed behavior in Internet Explorer where it's impossible to change the
+        "link to" field in the image toolbox in kupu, by removing the
+        onkeypress event.
 
       - Changed title fields to string fields, for easy FF fill-in
 
