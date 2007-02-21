@@ -63,14 +63,14 @@ class TOCRenderingAdapter(adapter.Adapter):
 
         func = public and self._get_public_tree_iterator or self._get_tree_iterator
         html = []
-        a_templ = '<a class="toc-link" href="%s%s">%s</a>'
+        a_templ = '<a href="%s%s">%s</a>'
 
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
         for (depth,item) in func(container=self.context,toc_depth=toc_depth):
             pd = prev_depth[-1]
             if pd < depth: #down one level
-                html.append('<ul class="toc-list">')
+                html.append('<ul>')
                 prev_depth.append(depth)
             elif pd > depth: #up one level
                 for i in range(pd-depth):

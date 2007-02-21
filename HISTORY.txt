@@ -47,13 +47,13 @@ Silva changes
         the 'toc-link' class.  Added an adapter to perform the new-style 
         rendering.
 
+      - The new AutoTOC adapter is now used in SilvaDocument TOC rendering,
+        for both the widgets- and xslt-based renderers.
+
       - Tocs display links with a trailing slash because there may be 
         'edit/tab_preview' appended to it, but this conflicts with links made 
         in the editor that are rendered without the slash. Moved the slash 
         into the appendage.
-
-      - The new AutoTOC adapter is now used in SilvaDocument TOC rendering,
-        for both the widgets- and xslt-based renderers.
 
       - Removed get_layout_macro(.py) from the layout installation code and
         thus it won't be present in the ZODB in future new installs. This is
