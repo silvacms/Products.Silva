@@ -153,21 +153,6 @@ class ISilvaObject(ISecurity):
         """
         pass
 
-    # MANIPULATORS
-    def manage_afterAdd(item, container):
-        """Hook called by Zope just after the item was added to
-        container. Adds item id to an ordered list, if item is
-        a publishable object.
-        """
-        pass
-
-    def manage_beforeDelete(item, container):
-        """Hook called by Zope just before the item is deleted from
-        container. Removes item id to from ordered list (item is
-        a publishable object).
-        """
-        pass
-
     # ACCESSORS
     def get_title():
         """The title of the content object.
@@ -1103,3 +1088,20 @@ class IHaunted(Interface):
 class IAutoTOC(IContent):
     pass
 
+class IFeed(Interface):
+    """Atom/RSS Feed Interface."""
+
+    def getFeed(format='atom', items=0):
+        """Return a feed representation of the object in format 'format'
+        with a maximum of 'items' items, with 0 meaning unlimited.
+        """
+        pass
+
+class IFeedItem(Interface):
+    """Atom/Rss Feed Item Interface."""
+
+    def getFeedItem(format='atom'):
+        """Return a feed item representation of the object in format 
+        'format'.
+        """
+        pass
