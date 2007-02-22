@@ -264,7 +264,49 @@ class AutoTocTestCase(SilvaTestCase.SilvaTestCase):
     def test_get_document_navigation_links_2(self):
         links = self.root.index.get_document_navigation_links()
         self.assertEquals({}, links)
-        
+
+class AutoTocDepthTestCase(SilvaTestCase.SilvaTestCase):
+    
+    def afterSetUp(self):
+        # This is the autotoc that we test against:
+        self.root.manage_addProduct['Silva'].manage_addAutoTOC(
+            'autotoc', 'Title')
+
+        self.levels = (1,2,3)
+        # Let's create a couple of nested folders to check the depth
+        # feature:
+        parent = self.root
+        for level in self.levels + (4,5):
+            folder = self.add_folder(
+                parent,
+                'folder%s' % level,
+                'Folder %s' % level)
+            setattr(self, 'folder%s' % level, folder)
+            doc = self.add_document(folder, 'index', 'Index Document')
+            doc.set_unapproved_version_publication_datetime(DateTime() - 1)
+            doc.approve_version()
+            parent = folder
+
+    def get_anchor_for(self, name):
+        obj = getattr(self, name)
+        return '<a href="%s">' % obj.absolute_url()
+
+    def test_autotoc_infinite_depth(self):
+        # Without any restrictions, the toc should give us all levels:
+        html = self.root.autotoc.render_tree()
+        for level in self.levels:
+            self.assert_(self.get_anchor_for('folder%s' % level) in html)
+
+    def test_autotoc_all_depths(self):
+        for level in self.levels:
+            self.root.autotoc.set_toc_depth(level)
+            html = self.root.autotoc.render_tree()
+            # Check that all levels that should be there, are there
+            for l in range(1, level+2):
+                self.assert_(self.get_anchor_for('folder%s' % level) in html)
+
+            # and that the next level is *not* in there
+            self.assert_(self.get_anchor_for('folder%s' % (l+1)) not in html)
 
 class MartijnTestCase(SilvaTestCase.SilvaTestCase):
                                                                                 
@@ -335,6 +377,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(SimpleTestCase))
     suite.addTest(unittest.makeSuite(SubFolderIndexerTestCase))
     suite.addTest(unittest.makeSuite(AutoTocTestCase))
+    suite.addTest(unittest.makeSuite(AutoTocDepthTestCase))
     suite.addTest(unittest.makeSuite(MartijnTestCase))
     suite.addTest(unittest.makeSuite(MartijnSecondTestCase))
     return suite

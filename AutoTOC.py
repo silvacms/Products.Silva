@@ -70,7 +70,9 @@ class AutoTOC(Content, SimpleItem):
     def render_tree(self, public=1,append_to_url=None):
         """Get adapter to render this autotoc's tree"""
         adapter = tocrendering.getTOCRenderingAdapter(self)
-        return adapter.render_tree(public,append_to_url)
+        return adapter.render_tree(public,
+                                   append_to_url,
+                                   toc_depth=self.toc_depth())
 
 InitializeClass(AutoTOC)
 
