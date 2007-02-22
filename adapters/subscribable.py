@@ -218,7 +218,7 @@ Globals.InitializeClass(SubscribableRoot)
 
 allow_module('Products.Silva.adapters.subscribable')
 
-__allow_access_to_unprotected_subobjects__ = True
+__allow_access_to_unprotected_subobjects__ = 1
     
 module_security = ModuleSecurityInfo('Products.Silva.adapters.subscribable')
     
