@@ -1,40 +1,19 @@
 import Globals
 from zope.interface import implements
-from Products.Silva.adapters import adapter
-from Products.Silva.interfaces import IFeed, IFeedItem, IContainer, IDocument
+from Products.Silva.interfaces import IContainer, IDocument
+from AccessControl import getSecurityManager
+from Products.Five import BrowserView
 
-class ContainerFeedAdapter(adapter.Adapter):
-    """Adapter for Silva container like objects to get their RSS or Atom feed 
-    representation."""
+class AtomView(BrowserView):
+    """View on Silva containers to get their atom feed representation."""
 
-    implements(IFeed)
+    def render(self, items=0):
+        return None
 
-    def atom(self, items=0):
+
+class RssView(BrowserView):
+    """View on Silva containers to get their rss feed representation."""
+
+    def render(self, items=0):
         return None
     
-    def rss(self, items=0):
-        return None
-
-def getFeedAdapter(context):
-    if IContainer.implementedBy(context):
-        return ContainerFeedAdapter(context).__of__(context)
-    return None
-    
-class DocumentFeedItemAdapter(adapter.Adapter):
-    """Adapter for Silva objects to get their RSS or Atom feed Item 
-    representation."""
-
-    implements(IFeedItem)
-
-    def atomFeedItem(self):
-        return None
-
-    def rssFeedItem(self):
-        return None
-    
-Globals.InitializeClass(FeedItemAdapter)
-
-def getFeedItemAdapter(context):
-    if IDocument.implementedBy(context):
-        return DocumentFeedItemAdapter(context).__of__(context)
-    return None
