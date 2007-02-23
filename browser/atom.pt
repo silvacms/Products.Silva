@@ -1,0 +1,27 @@
+<tal:block tal:define="dummy python: context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/xml;;charset=UTF-8')" /><?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" tal:define="data view/get_data">
+  <id tal:content="data/id" />
+  <title type="text" tal:content="data/title"/>
+  <subtitle tal:content="data/description" />
+  <link rel="self" tal:attributes="href string:${data/url}/atom" />
+  <author tal:repeat="author data/authors">
+    <name tal:content="author"/>
+  </author>
+  <updated tal:content="data/date_updated" />
+  <entry tal:repeat="item data/entries">
+    <title tal:content="item/title"/>
+    <link rel="alternate" type="text/html" tal:attributes="href item/url" />
+    <id tal:content="item/id"/>
+    <published tal:content="item/date_published"/>
+    <updated tal:content="item/date_updated"/>
+    <author tal:repeat="author item/authors">
+      <name tal:content="author"/>
+    </author>
+    <category 
+      tal:repeat="keyword item/keywords"
+      tal:attributes="term keyword" />
+    <summary type="xhtml">
+      <div tal:content="structure item/description" />
+    </summary>
+  </entry>
+</feed>
