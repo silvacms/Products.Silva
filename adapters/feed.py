@@ -9,15 +9,10 @@ class ContainerFeedAdapter(adapter.Adapter):
 
     implements(IFeed)
 
-    def getFeed(self, format='atom', items=0):
-        if format == 'atom':
-            return self.getAtomFeed(items)
-        return self.getRSSFeed(items)
-    
-    def getAtomFeed(self, items=0):
+    def atom(self, items=0):
         return None
     
-    def getRSSFeed(self, items=0):
+    def rss(self, items=0):
         return None
 
 def getFeedAdapter(context):
@@ -31,15 +26,10 @@ class DocumentFeedItemAdapter(adapter.Adapter):
 
     implements(IFeedItem)
 
-    def getFeedItem(self, format='atom'):
-        if format == 'atom':
-            return self.getAtomFeedItem()
-        return self.getRSSFeedItem()
-
-    def getAtomFeedItem(self):
+    def atomFeedItem(self):
         return None
 
-    def getRSSFeedItem(self):
+    def rssFeedItem(self):
         return None
     
 Globals.InitializeClass(FeedItemAdapter)
