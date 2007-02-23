@@ -1087,21 +1087,4 @@ class IHaunted(Interface):
 
 class IAutoTOC(IContent):
     pass
-
-class IFeed(Interface):
-    """Atom/RSS Feed Interface."""
-
-    def getFeed(format='atom', items=0):
-        """Return a feed representation of the object in format 'format'
-        with a maximum of 'items' items, with 0 meaning unlimited.
-        """
-        pass
-
-class IFeedItem(Interface):
-    """Atom/Rss Feed Item Interface."""
-
-    def getFeedItem(format='atom'):
-        """Return a feed item representation of the object in format 
-        'format'.
-        """
-        pass
+    
