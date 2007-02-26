@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - Ghosts now override `get_modification_datetime` to get their
+        modification date from the haunted object, allowing the
+        `Last-Modified` header to be set in a convenient way.
+        (issue 1645)
+
       - Services may now implement
         `Products.Silva.interfaces.IInvisibleService`, which means
         that they want to be excluded from the services listing.

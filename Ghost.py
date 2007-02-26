@@ -301,6 +301,17 @@ class Ghost(CatalogedVersionedContent):
             return False
         return haunted.is_published()
 
+    def get_modification_datetime(self, update_status=1):
+        """Return modification datetime."""
+        super_method = Ghost.inheritedAttribute(
+            'get_modification_datetime')
+        content = self.getLastVersion().get_haunted_unrestricted()
+        
+        if content is not None:
+            return content.get_modification_datetime(update_status)
+        else:
+            return super_method(self, update_status)
+
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhost(id,
             content_url)
@@ -348,7 +359,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
         if IGhost.providedBy(content):
             return self.LINK_GHOST
         return self.LINK_OK
-        
+
 def manage_addGhost(self, id, content_url, REQUEST=None):
     """Add a Ghost."""
     if not mangle.Id(self, id).isValid():

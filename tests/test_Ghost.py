@@ -337,7 +337,19 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         #self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
         #self.assertEquals(None, ghost.get_editable().get_link_status())
+
+    def test_modification_time(self):
+        # https://infrae.com/issue/silva/issue1645
+        self.add_ghost(self.root, 'ghost1', '/root/doc1')
+        ghost = self.root.ghost1
+        self.assertEqual(ghost.get_modification_datetime(),
+                         self.doc1.get_modification_datetime())
         
+        # Let's delete the haunted object;
+        # `get_modification_datetime` should still work
+        self.root.manage_delObjects(['doc1'])
+        self.assertEqual(ghost.get_modification_datetime(), None)
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
