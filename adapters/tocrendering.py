@@ -14,7 +14,7 @@ module_security = AccessControl.ModuleSecurityInfo('Products.Silva.adapters.tocr
 class TOCRenderingAdapter(adapter.Adapter):
     """ Adapter for TOCs (autotoc, document toc) to render"""
 
-    __allow_access_to_unprotected_subobjects__ = True
+    __allow_access_to_unprotected_subobjects__ = 1
 
     #Special "fastie quickie" autotoc rendering code...
     #NOTE: get_tree_iterator and get_public_tree_iterator are just
