@@ -129,6 +129,11 @@ Silva changes
 
     Bugs fixed:
 
+      - Fix Error in access screen (issue 1588).  For this, we allow
+        callers of page templates that derive from `macro_index` to
+        set the base tag's href attribute, by providing the
+        `base_href` option.
+
       - Fixed AutoTOC depth feature (issue 1693)
 
       - Fixed behavior in Internet Explorer where it's impossible to change
