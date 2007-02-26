@@ -1,8 +1,8 @@
 # silva imports
 import zLOG
-from zope.interface import implements
+from zope import interface
 from Products.Silva import mangle
-from Products.Silva.interfaces import IUpgrader
+from Products.Silva.interfaces import IUpgrader, IInvisibleService
 from Products.Silva.adapters.interfaces import IIndexable
 from Products.Silva.interfaces import IVersionedContent, IRoot, ISilvaObject
 from Products.Silva.interfaces import IVersion
@@ -19,10 +19,12 @@ def initialize():
         IndexItemUpgrader(), '1.6', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(
         CatalogRefresher(), '1.6', upgrade.AnyMetaType)
+    upgrade.registry.registerUpgrader(
+        InvisibleMan(), '1.6', upgrade.AnyMetaType)
     
 class IndexItemUpgrader:
 
-    implements(IUpgrader)
+    interface.implements(IUpgrader)
 
     def upgrade(self, obj):
         # <index name="foo" /> to
@@ -65,7 +67,7 @@ class IndexItemUpgrader:
     
 class IndexerUpgrader:
 
-    implements(IUpgrader)
+    interface.implements(IUpgrader)
     
     def upgrade(self, indexer):
         zLOG.LOG(
@@ -76,7 +78,7 @@ class IndexerUpgrader:
 
 class AutoTOCUpgrader:
 
-    implements(IUpgrader)
+    interface.implements(IUpgrader)
     
     def upgrade(self, autotoc):
         zLOG.LOG(
@@ -88,7 +90,7 @@ class AutoTOCUpgrader:
     
 class CatalogRefresher:
     """Refreshes the whole Silva catalog"""
-    implements(IUpgrader)
+    interface.implements(IUpgrader)
 
     def upgrade(self, obj):
         if IRoot.providedBy(obj):
@@ -102,4 +104,28 @@ class CatalogRefresher:
                obj.version_status() != 'closed' :
                 obj.index_object()
         return obj
+
+class InvisibleMan:
+    """Makes Widget Registry services invisible by putting a marker
+    interface on them."""
+    interface.implements(IUpgrader)
     
+    names = ['service_doc_editor', 'service_doc_previewer',
+             'service_doc_viewer',
+             'service_field_editor', 'service_field_viewer',
+             'service_nlist_editor', 'service_nlist_previewer',
+             'service_nlist_viewer',
+             'service_sub_editor', 'service_sub_previewer',
+             'service_sub_viewer',
+             'service_table_editor', 'service_table_viewer',
+
+             'service_annotations']
+
+    def upgrade(self, obj):
+        if IRoot.providedBy(obj):
+            for name in self.names:
+                interface.directlyProvides(
+                    obj[name],
+                    IInvisibleService,
+                    interface.directlyProvidedBy(obj[name]))
+        return obj

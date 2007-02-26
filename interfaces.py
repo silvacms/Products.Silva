@@ -1087,4 +1087,7 @@ class IHaunted(Interface):
 
 class IAutoTOC(IContent):
     pass
-    
+
+class IInvisibleService(Interface):
+    """Marker interface for services that want to be not visible in
+    the ZMI."""

@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 
 from OFS.SimpleItem import SimpleItem
+from zope import interface
+
+from Products.Silva.interfaces import IInvisibleService
 
 _filters = []
 
@@ -19,7 +22,7 @@ def hideFromTOC(context):
 _filters.append(hideFromTOC)
         
 class TOCFilterService(SimpleItem):
-    
+    interface.implements(IInvisibleService)
     meta_type = 'Silva TOC Filter Service'
 
     def __init__(self):

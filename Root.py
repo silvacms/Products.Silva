@@ -20,7 +20,7 @@ import os
 
 from Products.Silva.Metadata import export_metadata
 
-from interfaces import IRoot, IVersionedContent, IContainer
+from interfaces import IRoot, IVersionedContent, IContainer, IInvisibleService
 
 icon="www/silva.png"
 
@@ -114,7 +114,8 @@ class Root(Publication):
         """Display services separately.
         """
         return [item for item in Root.inheritedAttribute('objectItems')(self)
-                if item[0].startswith('service_')]
+                if item[0].startswith('service_')
+                and not IInvisibleService.providedBy(item[1])]
  
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_root')

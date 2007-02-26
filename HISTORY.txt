@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - Services may now implement
+        `Products.Silva.interfaces.IInvisibleService`, which means
+        that they want to be excluded from the services listing.
+        (issue 1700)
+
       - The published status of containers changed: A folder is published
         when its default document is published, not published when its 
         default document isn't published, and if no default document is 

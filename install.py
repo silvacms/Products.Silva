@@ -14,8 +14,10 @@ from OFS.Uninstalled import BrokenClass
 from DateTime import DateTime
 from OFS import Image
 from Products.ProxyIndex.ProxyIndex import RecordStyle
+from zope import interface
 
 # sibling
+from Products.Silva.interfaces import IInvisibleService
 from Products.Silva.fssite import manage_addDirectoryView
 from Products.Silva.fssite import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
@@ -154,6 +156,10 @@ def configureMetadata(root):
     # install annotations
     if not 'service_annotations' in root.objectIds():
         install_annotations(root)
+        interface.directlyProvides(
+            root['service_annotations'],
+            IInvisibleService,
+            interface.directlyProvidedBy(root['service_annotations']))
     
     # install metadata
     if not 'service_metadata' in root.objectIds():    
