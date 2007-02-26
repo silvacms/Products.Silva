@@ -28,6 +28,7 @@ class ViewerRole(BrowserView):
     def submitMinimumRole(self):
         self.request.response.setHeader('Content-Type',
                                         "text/html; charset='UTF-8'")
+        base = self.context.absolute_url() + '/edit'
 
         context = self.context.aq_inner
         
@@ -40,7 +41,8 @@ class ViewerRole(BrowserView):
         if old_role == role and not viewer_security.isAcquired():
             return context.edit['tab_access'](
                 message_type='feedback',
-                message=_("Minimum role to access has not changed"))
+                message=_("Minimum role to access has not changed"),
+                base_href=base)
         
         viewer_security.setMinimumRole(role)
 
@@ -48,7 +50,8 @@ class ViewerRole(BrowserView):
         msg.set_mapping({'role': role})
         return context.edit['tab_access'](
             message_type='feedback',
-            message= msg)
+            message= msg,
+            base_href=base)
 
     def submitAcquiredMinimumRole(self):
         self.request.response.setHeader('Content-Type',

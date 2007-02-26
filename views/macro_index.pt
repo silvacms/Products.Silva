@@ -43,8 +43,16 @@
   <tal:block content="title">title</tal:block> &#8211;
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
-<link href="globals/favicon.ico"
-  rel="shortcut icon"
+
+<tal:block replace="nothing"> _______ Allow callers to set base _______ </tal:block>
+<metal:block define-slot="base_href">
+  <base href=""
+        tal:condition="options/base_href | nothing"
+        tal:attributes="href options/base_href" />
+</metal:block>
+
+<link rel="shortcut icon"
+  href="globals/favicon.ico"
   tal:attributes="href string:$root_url/globals/silvacon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
