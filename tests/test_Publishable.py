@@ -30,11 +30,12 @@ class PublishableTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(self.folder.is_published())
         
     def test_is_published2(self):
-        # folder is published if any of its contents if published
+        # folder is *not* published if any of its contents is published;
+        # this has changed with Silva 1.6
         self.assert_(not self.folder.is_published())
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.subdoc.approve_version()
-        self.assert_(self.folder.is_published())
+        self.assert_(not self.folder.is_published())
 
     def test_is_published3(self):
         # first publish default

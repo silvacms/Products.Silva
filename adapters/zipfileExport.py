@@ -30,7 +30,7 @@ class ZipfileExportAdapter(adapter.Adapter):
         exporter = xmlexport.theXMLExporter
         info = xmlexport.ExportInfo()
         exportRoot = xmlexport.SilvaExportRoot(context)
-        # XXX this way of using writestr depends on python 2.3.x!!!
+
         archive.writestr(
             'silva.xml', 
             exporter.exportToString(exportRoot, settings, info)

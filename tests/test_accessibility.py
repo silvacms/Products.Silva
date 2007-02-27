@@ -716,7 +716,15 @@ class DocumentLinksTestCase(SilvaTestCase.SilvaTestCase):
             doc.set_unapproved_version_publication_datetime(DateTime() - 1)
             # should now be published
             doc.approve_version()
-            
+
+        # Also publish index items:
+        for folder in (self.folder, self.subfolder1, self.subfolder2,
+                       self.ssfolder1, self.ssfolder2, self.ssfolder3,
+                       self.sssfolder1, self.sssfolder2, self.sssfolder3):
+            index = folder['index']
+            index.set_unapproved_version_publication_datetime(DateTime() - 1)
+            # should now be published
+            index.approve_version()
 
     def test_document_links(self):
         r = self.root.get_document_chapter_links()
@@ -793,6 +801,15 @@ class DocumentLinksTestCase2(SilvaTestCase.SilvaTestCase):
             doc.set_unapproved_version_publication_datetime(DateTime() - 1)
             # should now be published
             doc.approve_version()
+
+        # Also publish index items:
+        for folder in (self.folder, self.subfolder1, self.subfolder2,
+                       self.ssfolder1, self.ssfolder2, self.ssfolder3,
+                       self.sssfolder1, self.sssfolder2):
+            index = folder['index']
+            index.set_unapproved_version_publication_datetime(DateTime() - 1)
+            # should now be published
+            index.approve_version()
             
     def test_document_links(self):
         r = self.root.get_document_chapter_links(depth=3)
@@ -916,6 +933,15 @@ class DocumentLinksTestCaseDepth(SilvaTestCase.SilvaTestCase):
             doc.set_unapproved_version_publication_datetime(DateTime() - 1)
             # should now be published
             doc.approve_version()
+
+        # Also publish index items:
+        for folder in (self.folder, self.subfolder1, self.subfolder2,
+                       self.ssfolder1, self.ssfolder2, self.ssfolder3,
+                       self.sssfolder1, self.sssfolder2, self.sssfolder3):
+            index = folder['index']
+            index.set_unapproved_version_publication_datetime(DateTime() - 1)
+            # should now be published
+            index.approve_version()
 
     def test_document_links(self):
         r = self.root.get_document_chapter_links(depth=1)
