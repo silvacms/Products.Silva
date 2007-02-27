@@ -129,5 +129,5 @@ class InvisibleMan:
                     interface.directlyProvides(
                         service,
                         IInvisibleService,
-                        interface.directlyProvidedBy(obj[name]))
+                        interface.directlyProvidedBy(service))
         return obj
