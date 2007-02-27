@@ -127,7 +127,7 @@ class InvisibleMan:
                 service = getattr(obj.aq_explicit, name, None)
                 if service is not None:
                     interface.directlyProvides(
-                        obj[name],
+                        service,
                         IInvisibleService,
                         interface.directlyProvidedBy(obj[name]))
         return obj
