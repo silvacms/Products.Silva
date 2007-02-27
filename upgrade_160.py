@@ -124,8 +124,10 @@ class InvisibleMan:
     def upgrade(self, obj):
         if IRoot.providedBy(obj):
             for name in self.names:
-                interface.directlyProvides(
-                    obj[name],
-                    IInvisibleService,
-                    interface.directlyProvidedBy(obj[name]))
+                service = getattr(obj.aq_explicit, name, None)
+                if service is not None:
+                    interface.directlyProvides(
+                        obj[name],
+                        IInvisibleService,
+                        interface.directlyProvidedBy(obj[name]))
         return obj
