@@ -66,7 +66,7 @@
           </table>
         </div>
 
-    <form tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
+    <form tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model) and len(refs) == 1"
       action="." enctype="multipart/form-data" method="POST">
       <input type="hidden" 
         name="refs"
@@ -161,6 +161,11 @@
       </tfoot>
       </table>
       </form>
+      <div tal:condition="python:len(refs) > 1">
+        Sorry, full media export is currently not supported for more
+        than one item.  Please select one item or no item to export
+        the whole folder.
+      </div>
       
       <form action="." enctype="multipart/form-data" method="POST"
         tal:condition="view/service_docmapdf | nothing">
