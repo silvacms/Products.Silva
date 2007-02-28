@@ -3,6 +3,24 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five">
 
+  <!-- default views should be index.html -->
+  <browser:defaultView
+    for="Products.Silva.interfaces.IContent"
+    name="index.html"
+  />
+
+  <browser:defaultView
+    for="Products.Silva.interfaces.IContainer"
+    name="index.html"
+  />
+
+  <browser:page
+      for="Products.Silva.interfaces.ISilvaObject"
+      name="index.html"
+      class=".defaultview.Legacy"
+      permission="silva.ReadSilvaContent"
+      />
+
   <browser:page
     for="Products.Silva.interfaces.ISilvaObject"
     name="get_viewer_role_info"
