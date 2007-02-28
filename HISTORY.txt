@@ -12,12 +12,6 @@ Silva changes
         `Last-Modified` header to be set in a convenient way.
         (issue 1645)
 
-      - Enable Zope 3 views for all content types.  This way, writing
-        views for your own or one of Silva's content types is made a
-        lot easier.  If there is no specialized view registered, we
-        fall back to the legacy 'index_html' script.  I also made sure
-        that this will work with SilvaLayout.
-
       - Services may now implement
         `Products.Silva.interfaces.IInvisibleService`, which means
         that they want to be excluded from the services listing.
