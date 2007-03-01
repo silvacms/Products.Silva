@@ -65,9 +65,9 @@
 
   <browser:page
     for="*"
-    name="set_content_type_and_cache"
+    name="set_content_type_and_nocache"
     class="Products.Silva.browser.headers.Headers"
-    attribute="set_content_type_and_cache"
+    attribute="set_content_type_and_nocache"
     permission="zope2.View"
   />
 
@@ -81,9 +81,9 @@
   
   <browser:page
     for="*"
-    name="set_cache"
+    name="set_nocache"
     class="Products.Silva.browser.headers.Headers"
-    attribute="set_cache"
+    attribute="set_nocache"
     permission="zope2.View"
   />
   

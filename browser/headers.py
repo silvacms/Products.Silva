@@ -7,11 +7,11 @@ from Products.Five import BrowserView
 class Headers(BrowserView):
     """docstring
     """
-    def set_content_type_and_cache(self):
+    def set_content_type_and_nocache(self):
         """docstring
         """
         content_tags = self.set_content_type()
-        cache_tags = self.set_cache()
+        cache_tags = self.set_nocache()
         return content_tags + '\n' + cache_tags
         
     def set_content_type(self):
@@ -19,7 +19,7 @@ class Headers(BrowserView):
         """
         return self.set_headers([('Content-Type', 'text/html; charset=UTF-8')])
     
-    def set_cache(self):
+    def set_nocache(self):
         """docstring
         """
         headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
