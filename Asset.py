@@ -24,6 +24,18 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
 
     object_type = 'asset'
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_title')
+    def set_title(self, title):
+        """Set the title of the silva object.
+        """
+        # FIXME: Ugh. I get unicode from formulator but this will not validate
+        # when using the metadata system. So first make it into utf-8 again..
+        title = title.encode('utf-8')
+        binding = self.service_metadata.getMetadata(self)
+        binding.setValues(
+            'silva-content', {'maintitle': title}, reindex=1)
+
     def manage_afterAdd(self, item, container):
         self._afterAdd_helper(item, container)
         self._set_creation_datetime()

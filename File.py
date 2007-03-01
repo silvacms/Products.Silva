@@ -19,6 +19,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from mimetypes import guess_extension
 from helpers import add_and_edit, fix_content_type_header
+from converters import get_converter_for_mimetype
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 # Silva
@@ -98,6 +99,25 @@ class File(Asset):
             '<file id="%s" url=%s>%s</file>' % (
             self.id, self.get_download_url(), self._title))
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                            'fulltext')
+    def fulltext(self):
+        """Return the content of this object without any markup"""
+
+        mimetype = self.get_mime_type()   
+        converter = get_converter_for_mimetype(mimetype)
+        if converter is None:
+            return None
+
+        # sometimes, data is a str, sometimes
+        # it is a OFS.Image.Pdata object.
+        # the line below makes sure we're
+        # dealing with strings.
+        file_data = str(self._file.data)
+
+        fulltext = converter.convert(file_data)
+        return [self.get_title(), fulltext]
+
     security.declareProtected(SilvaPermissions.View, 'index_html')
     def index_html(self, view_method=None):
         """ view (download) file data
@@ -158,6 +178,7 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)        
+        self.reindex_object()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
@@ -258,7 +279,7 @@ def manage_addFile(self, id, title, file):
     self._setObject(id, object)
     object = getattr(self, id)
     object.set_title(title)
-    object._set_file_data_helper(file)
+    object.set_file_data(file)
     return object
 
 def file_factory(self, id, content_type, file):

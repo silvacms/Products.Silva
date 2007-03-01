@@ -85,6 +85,7 @@ def installFromScratch(root):
     # now do the uinstallable stuff (views)
     install(root)
     installSilvaDocument(root)
+    installSilvaFind(root)
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -331,7 +332,7 @@ def configureLayout(root, default_if_existent=0):
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
                'standard_error_message', 'standard_unauthorized_message',
-               'copyright',]:
+               'copyright','head_inject']:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py', 
@@ -619,6 +620,20 @@ def installSilvaDocument(root):
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
     
+def installSilvaFind(root):
+    # installs Silva Find if available
+    from Products.Silva.ExtensionRegistry import extensionRegistry
+    if 'SilvaFind' not in extensionRegistry.get_names():
+        return 
+    root.service_extensions.install('SilvaFind')
+    # create the demo content:
+    root.sec_update_last_author_info()
+    root.manage_addProduct['SilvaFind'].manage_addSilvaFind('search',
+        'Search this site')
+    doc = root.search
+    doc.sec_update_last_author_info()
+    
+
 def installSubscriptions(root):
     # Setup infrastructure for subscriptions feature.
     if not 'service_subscriptions' in root.objectIds():

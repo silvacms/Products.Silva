@@ -1,0 +1,12 @@
+<!-- define a model variable that works in public/smi and preview skins -->
+<tal:block tal:define="model request/model|here">
+
+
+<!-- load custom styles for search form and search results 
+     if we're viewing a Silva Find instance.
+-->
+<tal:block tal:condition="python:model.meta_type == 'Silva Find'"
+           tal:replace="structure here/service_resources/SilvaFind/search.css"/>
+
+
+</tal:block>

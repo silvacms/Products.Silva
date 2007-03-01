@@ -42,13 +42,6 @@
 </tal:skip>
   <meta metal:define-slot="meta" tal:omit-tag="" />
   <!-- End metatags -->
-  <!-- Begin stylesheets -->
-  <link rel="stylesheet" type="text/css" media="all"
-    tal:attributes="href here/frontend.css/absolute_url | nothing" />
-  <link rel="stylesheet" type="text/css" media="print"
-    tal:attributes="href here/print.css/absolute_url | nothing" />
-  <link metal:define-slot="style" tal:omit-tag="" />
-  <!-- End stylesheets -->
   <!-- Start related links -->
   <link rel="shortcut icon"
     tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
@@ -74,10 +67,21 @@
     tal:attributes="href here/copyright/absolute_url | nothing" />
 </tal:skip>
   <!-- End related links -->
+  <!-- Begin stylesheets -->
+  <link rel="stylesheet" type="text/css" media="all"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <link rel="stylesheet" type="text/css" media="print"
+    tal:attributes="href here/print.css/absolute_url | nothing" />
+  <link metal:define-slot="style" tal:omit-tag="" />
+  <!-- End stylesheets -->
+  <!-- override for specific css/js inclusion in the head -->
+  <link tal:replace="structure here/head_inject|nothing"/>
+  <!-- Start Javascript -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
     <!-- script slot -->
   </script>
+  <!-- End Javascript -->
 </head>
 
 <body metal:define-slot="body">
