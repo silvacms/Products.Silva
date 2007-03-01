@@ -6,7 +6,16 @@ Silva changes
   Silva 1.6 (SVN/UNRELEASED)
 
     Features added:
-
+      - Integration of SilvaFind in core. When adding a new silvaroot,
+        a SilvaFind instance named "search" will be placed in the root of the
+        site. SilvaFind has many improvements over the SilvaSearch
+        functionality, which is still available if you remove or rename the
+        SilvaFind instance. For more information on SilvaFind, have a look 
+        at the SilvaFind README file.
+      
+      - Automatic fulltext cataloging of pdf files, when the pdftotext
+        command-line application is found on the path.
+      
       - Ghosts now override `get_modification_datetime` to get their
         modification date from the haunted object, allowing the
         `Last-Modified` header to be set in a convenient way.
