@@ -1,5 +1,4 @@
-<dtml-let last_modified="_.DateTime()-14"
-      expires="_.DateTime()+7" >
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" >
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
@@ -10,7 +9,7 @@
 
 <dtml-with stylesheet_properties>
 
-/* _______________________________________________________ matrix nav _____ */
+/* _________________________________________________________ matrix nav _____ */
 
 div.tabs a {
   background: &dtml-contentTabBackground;;
@@ -62,14 +61,14 @@ div.tabs a.normal:visited {
 }
 
 
-/* _________________________________________________________ flow bar _____ */
+/* ___________________________________________________________ flow bar _____ */
 
 div.flowbar {
   border-top: 3px solid &dtml-contentTabBackgroundSelected;;
 }
 
 
-/* _____________________________________________________ middleground _____ */
+/* _______________________________________________________ middleground _____ */
 
 div.middleground {
   background-color: #628f79;
@@ -103,7 +102,7 @@ div.middleground a.normal:hover {
 }
 */
 
-/* ____________________________________________________ sidebar stack _____ */
+/* ______________________________________________________ sidebar stack _____ */
 
 td.selected {
   background: #ddece6;
@@ -120,7 +119,7 @@ td.unselected:hover {
 } 
 
 
-/* ____________________________________________ content listing table _____ */
+/* ______________________________________________ content listing table _____ */
 
 table.listing td.top {
   background: &dtml-listingTopBackgroundContent;;
@@ -135,10 +134,17 @@ table.listing tr.top-controls h3 {
 }
 
 
-/* ___________________________________________________________ footer _____ */
+/* _____________________________________________________________ footer _____ */
 
 div.footer {
   background: &dtml-listingTopBackgroundContent;;
+}
+
+
+/* _______________________________________________________________ misc _____ */
+
+a.index-element {
+  background-color:#efe4ad ! important;
 }
 
 
