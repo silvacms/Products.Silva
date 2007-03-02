@@ -4,6 +4,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.5.11  (SVN/UNRELEASED)
+
+    Bugs fixed
+
+      - With a base tag in the layout template the publisher form in public 
+        preview 404's. The form now has a constructed action instead of a point.
+        This will work for sites that don't define a base tag too (issue1705).
+
   1.5.10
 
     Features added
@@ -35,7 +43,7 @@ Silva changes
 
     Bugs fixed
 
-      - When there's a base tag in the layout_macro the forms in /public, such 
+      - When there's a base tag in the layout_macro the forms in ./public, such 
         as the subscription form, return a 404. If the form action is 
         constructed using absolute_url, it works. This should also be backwards 
         compatible, working for sites that don't include a base tag. Tweaked
@@ -44,7 +52,7 @@ Silva changes
       - The spacer images used to indent tocs now have an alt attribute
 
       - alt attribute for meta_type icons now have the name of the meta_type
-        instead of 'Unknown Metatype' (Issue 1654)
+        instead of 'Unknown' (Issue 1654)
 
       - i18n problem in views/edit/Asset/File/submit.py (Thanks Benno!)
 
