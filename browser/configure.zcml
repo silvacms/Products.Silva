@@ -98,7 +98,7 @@
   <browser:page
     name="atom"
     for="Products.Silva.interfaces.IContainer"
-    class="Products.Silva.browser.feed.FeedView"
+    class="Products.Silva.browser.feed.ContainerFeedView"
     template="atom.pt"
     permission="zope2.View"
   />

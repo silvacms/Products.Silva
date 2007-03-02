@@ -193,10 +193,32 @@ class IFeed(Interface):
         """Get the atom or rss2 feed for a container like Silva object. 
         """
         
-class IFeedItem(Interface):
+class IFeedEntry(Interface):
+    """Interface for objects that can act like an item in a atom or rss 
+    feed.
     """
-    Atom or RSS2 feed item
-    """
-    def getFeedItem(format='atom'):
-        """Get the atom or rss2 feed item representation for a Silva object. 
-        """
+
+    def id():
+        pass
+    
+    def title():
+        pass
+    
+    def description():
+        pass
+    
+    def url():
+        pass
+    
+    def authors():
+        pass
+    
+    def date_updated():
+        pass
+    
+    def date_published():
+        pass
+    
+    def keywords():
+        pass
+        
