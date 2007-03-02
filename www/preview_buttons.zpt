@@ -52,7 +52,8 @@ color: #a00;
 </style>
 
 <div class="publisher">
-<form class="publisher" action="." method="POST">
+<form class="publisher" method="POST"
+  tal:attributes="action string:${here/absolute_url}/edit/preview_open_now">
 <tal:if condition="options/back_url">
 <input class="transport back"
   type="button"
@@ -67,15 +68,19 @@ color: #a00;
   value="&lt;"
   title="back: alt-b"
   onclick="history.back()"
-  accesskey="b" />
+  accesskey="b"
+  i18n:attributes="title"
+/>
 </tal:if>
 <input class="executor publish"
   tal:condition="options/show_publish_now"
-  name="edit/preview_open_now:method"
   type="submit"
-  value="publish now"
-  title="publish this document immediately: alt-p"
-  accesskey="p" />
+  value="publish&nbsp;now"
+  title="publish this document: alt-p"
+  accesskey="p"
+  i18n:translate=""
+  i18n:attributes="title"
+/>
 </form>
 <div class="published" 
   tal:condition="options/message">
