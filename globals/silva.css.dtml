@@ -878,10 +878,10 @@ input.cancel {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-cancelBorder;;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   color: &dtml-cancelFontColor;;
   background: &dtml-cancelBackground;;
+  font-size: &dtml-buttonFontSize;;
+  font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
 }
 
@@ -952,22 +952,22 @@ th label {
 /* _______ pseudo form button selectors, matches button style _______ */
 
 table.listing a.button:link {
+  margin: &dtml-pseudoButtonMargin;;
+  padding: &dtml-pseudoButtonPadding;;
   border: &dtml-manipulatorBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
-  font-size: 100%;
+  font-size: &dtml-pseudoButtonFontSize;;
   font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
 table.listing a.button:visited {
+  margin: &dtml-pseudoButtonMargin;;
+  padding: &dtml-pseudoButtonPadding;;
   border: &dtml-manipulatorBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
-  font-size: 100%;
+  font-size: &dtml-pseudoButtonFontSize;;
   font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
@@ -980,22 +980,22 @@ table.listing a.button:hover {
 /* _______ transport between screens _______ */
 
 table.listing a.transport:link {
+  margin: &dtml-pseudoButtonMargin;;
+  padding: &dtml-pseudoButtonPadding;;
   border: &dtml-transportBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 0.8em 0.1em 1em;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
-  font-size: 95%;
+  font-size: &dtml-pseudoButtonFontSize;;
   font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
 table.listing a.transport:visited {
+  margin: &dtml-pseudoButtonMargin;;
+  padding: &dtml-pseudoButtonPadding;;
   border: &dtml-transportBorder;;
-  margin: 0.1em 0.2em;
-  padding: 0em 1em 0.1em 1em;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
-  font-size: 95%;
+  font-size: &dtml-pseudoButtonFontSize;;
   font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }

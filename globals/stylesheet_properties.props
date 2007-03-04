@@ -93,30 +93,31 @@ inputFontColor:string=#337
 inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #599
 
-buttonWeight:string=normal
-buttonFontSize:string=95%
 buttonMargin:string=0.2em 0.4em 0.1em 0
 buttonPadding:string=0 0.2em
+buttonFontSize:string=95%
+buttonWeight:string=normal
 bottonCursor:string=pointer
 
-transportBackground:string=#283365
-transportPadding:string=0 0.2em
 transportBorder:string=1px solid #8faecf
 transportFontColor:string=#d9f3f1
+transportBackground:string=#283365
 
-manipulatorBackground:string=#064C29
 manipulatorBorder:string=1px solid #6bb591
 manipulatorFontColor:string=#d9f3da
+manipulatorBackground:string=#064C29
 
-destructiveBackground:string=#752e2f
-destructivePadding:string=0 0.2em
 destructiveBorder:string=1px solid #b48f8f
 destructiveFontColor:string=#fdeaea
+destructiveBackground:string=#752e2f
 
-cancelBackground:string=#444446
-cancelPadding:string=0 0.2em
 cancelBorder:string=1px solid #b9c2c1
 cancelFontColor:string=#ccd7d6
+cancelBackground:string=#444446
+
+pseudoButtonMargin:string=0.1em 0.2em
+pseudoButtonPadding:string=0em 1em 0.1em 1em
+pseudoButtonFontSize:string=100%
 
 textTransform:string=lowercase
 
