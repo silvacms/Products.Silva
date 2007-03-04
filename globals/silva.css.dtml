@@ -547,7 +547,7 @@ table.listing td.listing-right {
 }
 
 table.listing tr.controls td, tr.inter-controls td {
-  padding: 0em 0.4em;
+  padding: 0 0.2em 0 0.4em;
 }
 
 table.listing td.field-title {
@@ -831,69 +831,69 @@ select.manipulator {
 }
 
 input.button {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 button.button {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 input.transport {
   margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-transportBorder;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 input.warning {
   margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-destructiveBorder;;
   color: &dtml-destructiveFontColor;;
   background: &dtml-destructiveBackground;;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 input.cancel {
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-cancelBorder;;
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   color: &dtml-cancelFontColor;;
   background: &dtml-cancelBackground;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 input.executor {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: 0 0.2em;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: 1px solid #6bb591;
   color: #b3fffb;
   background: #21565b;
-  font-size: 95%;
-  font-weight: normal;
-  cursor: pointer;
+  font-size: &dtml-buttonFontSize;;
+  font-weight: &dtml-buttonWeight;;
+  cursor: &dtml-bottonCursor;;
 }
 input.executor[type="submit"]:hover {
   border-color: #8dc1a8;
@@ -903,34 +903,34 @@ input.executor[type="submit"]:hover {
 
 /* publish screen state coded buttons */
 input.reject {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: #8f7f01;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 input.revoke {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: #008c55;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 input.close {
-  margin: 0.2em 0.2em 0.1em 0.2em;
-  padding: &dtml-manipulatorPadding;;
+  margin: &dtml-buttonMargin;;
+  padding: &dtml-buttonPadding;;
   border: &dtml-manipulatorBorder;;
   color: &dtml-manipulatorFontColor;;
   background: #202080;
-  font-size: 95%;
+  font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: pointer;
+  cursor: &dtml-bottonCursor;;
 }
 
 

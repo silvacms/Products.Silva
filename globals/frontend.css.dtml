@@ -486,8 +486,8 @@ div.backlink {
   margin-top: 1.5em;
 }
 
-input.button, input.control { /* used in SNN */
-  margin: 0.1em 0.2em;
+input.button, input.control { /* used in SNN, public forms */
+  margin: 0.1em 0.4em 0.1em 0;
   padding: 0 0.2em;
   border: 1px solid #557;
   color: #d9f3f1;
