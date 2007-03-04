@@ -789,11 +789,11 @@ input.store, select.store, textarea.store {
 
 /* 
 * this selector works only for standard compatible browsers like mozilla, so
-* IE ignores this definition below
+* IE ignores this definition below. Now it's IE7 time, so removing:
+* td>input.store, td>textarea.store, td>select.store
 */
-td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
-td>input.store, td>textarea.store, td>select.store {
-  width: 99%;
+td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget,  {
+  width: 96%;
 }
 
 select {
