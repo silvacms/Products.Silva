@@ -11,9 +11,9 @@ Silva changes
         the earliest date any version of the content was ever published.
         Useful for RSS/Atom output.
 
-      - Integration of SilvaFind in core. When adding a new silvaroot,
-        a SilvaFind instance named "search" will be placed in the root of the
-        site. SilvaFind has many improvements over the SilvaSearch
+      - Silva Find features: When adding a new silvaroot a SilvaFind 
+        instance named "search" will be placed in the root of the site. 
+        SilvaFind has many improvements over the SilvaSearch
         functionality, which is still available if you remove or rename the
         SilvaFind instance. For more information on SilvaFind, have a look 
         at the SilvaFind README file.
