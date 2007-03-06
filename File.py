@@ -114,10 +114,13 @@ class File(Asset):
         # the line below makes sure we're
         # dealing with strings.
         file_data = str(self._file.data)
+        if not file_data:
+            return
 
         fulltext = converter.convert(file_data, self.REQUEST)
+
         if fulltext is None:
-            return None
+            return 
         return [self.get_title(), fulltext]
 
     security.declareProtected(SilvaPermissions.View, 'index_html')
@@ -180,6 +183,8 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)        
+        if str(self._file.data)[:5] == '%PDF-':
+            self._file.content_type = 'application/pdf'
         self.reindex_object()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
