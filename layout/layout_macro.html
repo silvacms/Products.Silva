@@ -74,14 +74,14 @@
     tal:attributes="href here/print.css/absolute_url | nothing" />
   <link metal:define-slot="style" tal:omit-tag="" />
   <!-- End stylesheets -->
-  <!-- override for specific css/js inclusion in the head -->
-  <link tal:replace="structure here/head_inject|nothing"/>
-  <!-- Start Javascript -->
+  <!-- Injector for content-specific css/js inclusion -->
+  <link tal:replace="structure here/head_inject | nothing" />
+  <!-- Start javascript -->
   <script metal:define-slot="script" type="text/javascript"
     tal:replace="nothing">
     <!-- script slot -->
   </script>
-  <!-- End Javascript -->
+  <!-- End javascript -->
 </head>
 
 <body metal:define-slot="body">
