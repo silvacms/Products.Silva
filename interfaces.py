@@ -677,6 +677,11 @@ class IVersioning(Interface):
         """
         pass
 
+    def get_first_publication_date(self):
+        """Get the earliest publication date of any version of this Content.
+        Needed for rss/atom feeds.
+        """
+    
     def get_public_version_publication_datetime():
         """Get the publication datetime of the public version.
         PUBLIC

@@ -47,6 +47,7 @@ class Versioning:
     _public_version = empty_version
     _previous_versions = None
     _request_for_approval_info = empty_request_for_approval_info
+    _first_publication_date = None
     
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -110,7 +111,6 @@ class Versioning:
         else:
             publish_now = 0
         publication_datetime = self._unapproved_version[1]
-        
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
         if self._request_for_approval_info != empty_request_for_approval_info:
@@ -502,6 +502,8 @@ class Versioning:
         now = DateTime()
         # get publication datetime of approved version
         publication_datetime = self._approved_version[1]
+        if self._first_publication_date is None:
+            self._first_publication_date = publication_datetime
         # if it is time make approved version public
         if publication_datetime and now >= publication_datetime:
             if self._public_version != empty_version:
@@ -699,7 +701,15 @@ class Versioning:
         if update_status:
             self._update_publication_status()
         return self._public_version
-    
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_first_publication_date')
+    def get_first_publication_date(self):
+        """Get the earliest publication date of any version of this Content.
+        Needed for rss/atom feeds.
+        """
+        return self._first_publication_date
+        
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_publication_datetime')
     def get_public_version_publication_datetime(self, update_status=1):

@@ -6,6 +6,11 @@ Silva changes
   Silva 1.6 (SVN/UNRELEASED)
 
     Features added:
+
+      - IVersioning has a method get_first_publication_date, which returns
+        the earliest date any version of the content was ever published.
+        Useful for RSS/Atom output.
+
       - Integration of SilvaFind in core. When adding a new silvaroot,
         a SilvaFind instance named "search" will be placed in the root of the
         site. SilvaFind has many improvements over the SilvaSearch
