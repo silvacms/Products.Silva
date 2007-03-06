@@ -1,6 +1,5 @@
 <tal:comment replace="nothing"> define a model variable that works in public and smi preview skins </tal:comment>
 <tal:block tal:define="model request/model|here">
-
 <tal:block tal:condition="python:model.meta_type == 'Silva Find'">
   <tal:comment replace="nothing"> 
     load custom styles for search form and search results
@@ -13,6 +12,5 @@
   <tal:comment replace="nothing">
     Make sure search results are never cached.
   </tal:comment>    
-    <tal:block replace="structure model/@@set_nocache" />
-</tal:block>
-</tal:block>
+  <tal:block replace="structure model/@@set_nocache" />
+</tal:block></tal:block>
