@@ -204,6 +204,9 @@ class IFeedEntry(Interface):
     def title():
         pass
     
+    def html_description():
+        pass
+
     def description():
         pass
     

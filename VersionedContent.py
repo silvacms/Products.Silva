@@ -264,8 +264,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         
         adapter = getVirtualHostingAdapter(self)
         cache_key = ('public', adapter.getVirtualHostKey())
-        
         data = self._get_cached_data(cache_key)
+        print repr(data)
         if data is not None:
             return data
                         

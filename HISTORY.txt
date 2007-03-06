@@ -7,6 +7,14 @@ Silva changes
 
     Features added:
 
+      - Added Atom/Rss feed capabilities to arbitrary containers. To use
+        this go to the 'settings' in the properties tab of a container, and
+        enable the checkbox marked 'allow feeds'. After that, adding /rss or
+        /atom after that container's url just works. The feeds are feeds of
+        published Silva Documents in that container, but adding support for
+        other content types is almost trivial: write the adapter, and it
+        will work.
+
       - IVersioning has a method get_first_publication_date, which returns
         the earliest date any version of the content was ever published.
         Useful for RSS/Atom output.

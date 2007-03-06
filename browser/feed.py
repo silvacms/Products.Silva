@@ -1,52 +1,44 @@
-import Globals
-from zope import component
-from zope.interface import implements
-from Products.Silva.interfaces import IContainer
 from Products.Silva.adapters.interfaces import IFeedEntry
-from AccessControl import getSecurityManager
 from Products.Five import BrowserView
-
-class Data:
-    def __init__(self, id, url):
-        self.id = id
-        self.title = ''
-        self.description = ''
-        self.url = url
-        self.authors = []
-        self.date_updated = None
-        self.entries = []
-        
-class Entry:
-    def __init__(self, id, url):
-        self.id = id
-        self.title = ''
-        self.description = ''
-        self.url = url
-        self.authors = []
-        self.date_updated = None
-        self.date_published = None
-        self.keywords = []
 
 class ContainerFeedView(BrowserView):
     """Base class for feed representation."""
-
+    def __call__(self):
+        if not self.context.allow_feeds():
+            self.context.REQUEST.RESPONSE.setStatus(404)
+            return None
+        self.context.REQUEST.RESPONSE.setHeader(
+            'Content-Type', 'text/xml;charset=UTF-8')
+        return super(ContainerFeedView, self).__call__(self)
+        
     def get_data(self):
         """ prepare the data needed by a feed
         """
-        feed = []
+        entries = []
         context = self.context
+        ms = context.service_metadata
+        date_updated = ms.getMetadataValue(
+            self.context, 'silva-extra', 'creationtime')
         for item in context.get_ordered_publishables():
-            
+            if not item.is_published():
+                continue
             entry = IFeedEntry(item, None)
             if not entry is None:
-                feed.append(entry)
-        
+                entry_updated = entry.date_updated()
+                entries.append((entry_updated, entry))
+                if entry_updated > date_updated:
+                    date_updated = entry_updated
+        entries.sort()
+        feed = [entry[1] for entry in entries]
+        url = context.absolute_url()
         return {
-            'id': 'id',
-            'title': 'title',
-            'description': 'description',
-            'url': 'url',
-            'authors': ['author1', 'author2'],
-            'date_updated': '2007-02-23T19:12:12ZCET',
+            'id': url,
+            'title': context.get_title(),
+            'description': ms.getMetadataValue(
+                self.context, 'silva-extra', 'content_description'),
+            'url': url,
+            'authors': [ms.getMetadataValue(
+                self.context, 'silva-extra', 'creator')],
+            'date_updated': date_updated,
             'entries': feed 
             }

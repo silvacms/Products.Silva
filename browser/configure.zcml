@@ -99,10 +99,18 @@
     name="atom"
     for="Products.Silva.interfaces.IContainer"
     class="Products.Silva.browser.feed.ContainerFeedView"
-    template="atom.pt"
     permission="zope2.View"
+    template="atom.pt"
   />
 
+  <browser:page
+    name="rss"
+    for="Products.Silva.interfaces.IContainer"
+    class="Products.Silva.browser.feed.ContainerFeedView"
+    permission="zope2.View"
+    template="rss.pt"
+  />
+  
   <browser:resourceDirectory
     name="silva_scripts"
     directory="scripts"

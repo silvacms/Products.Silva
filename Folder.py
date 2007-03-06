@@ -71,6 +71,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         inherited_manage_options[1:]
         )
 
+    _allow_feeds = False
+    
     implements(IFolder)
         
     def __init__(self, id):
@@ -419,6 +421,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             item._setId(paste_id)
             self._setObject(paste_id, item)
 
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_allow_feeds')
+    def set_allow_feeds(self, allow):
+        """change the flag that indicates whether rss/atom feeds are allowed
+        on this container"""
+        self._allow_feeds = allow
+        
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_publication')
     def to_publication(self):
@@ -568,6 +578,13 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         """
         return self.absolute_url()
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'allow_feeds')
+    def allow_feeds(self):
+        """return the flag that indicates whether rss/atom feeds are allowed
+        on this container"""
+        return self._allow_feeds
+    
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_transparent')
     def is_transparent(self):
