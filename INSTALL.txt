@@ -102,6 +102,16 @@ here:
 
 http://users.skynet.be/sbi/libxml-python/
 
+PDF Fulltext extraction
+-----------------------
+
+Silva can extract the full text from pdf documents, so it becomes 
+available in catalog searches. When the zope server is started
+Silva will check the path for a cmdline application called "pdftotext".
+If this is found, the fulltext extraction is enabled automaticly.
+The pdftotext utility is part of the xpdf codebase, which can be 
+downloaded here: http://www.foolabs.com/xpdf/download.html
+
 Groups
 ------
 
