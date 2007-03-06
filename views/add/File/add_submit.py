@@ -79,6 +79,9 @@ else:
     message.set_mapping({
         'meta_type': object.meta_type,
         'id': view.quotify(id)})
+    if REQUEST.form.has_key('message'):
+        message = _(REQUEST.form['message'])
+    message_type=REQUEST.form.get('message_type', 'feedback')
     return view.tab_edit(
-        message_type="feedback",
+        message_type=message_type,
         message=message)

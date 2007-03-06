@@ -28,7 +28,7 @@ def get_converter_for_mimetype(mimetype):
 
 class PDFConverter(object):
 
-    def convert(self, data):
+    def convert(self, data, request):
         if not PDF_TO_TEXT_AVAILABLE:
             return
 
@@ -40,9 +40,13 @@ class PDFConverter(object):
         converted = execute('pdftotext -enc UTF-8 "%s" -' % fname)    
 
         os.unlink(fname)
+        if 'PDF file is damaged' in converted:
+            request.form['message_type']='error'
+            request.form['message'] = 'Warning: The uploaded file does not appear to be a valid PDF file.'
+            return None
         return unicode(converted, 'utf8')
 
 class TextConverter(object):
-    def convert(self, data):
+    def convert(self, data, request):
         return data
 

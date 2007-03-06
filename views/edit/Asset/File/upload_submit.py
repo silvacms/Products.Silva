@@ -12,6 +12,7 @@ from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
 view = context
+REQUEST = context.REQUEST
 
 try:
     result = view.upload_form.validate_all(context.REQUEST)
@@ -29,7 +30,12 @@ if not file or not getattr(file,'filename',None):
 model.sec_update_last_author_info()
 model.set_file_data(file)
 
+message_type=REQUEST.form.get('message_type', 'feedback')
+message=_("File uploaded.")
+if REQUEST.form.has_key('message'):
+    message = _(REQUEST.form['message'])
+
 return container.tab_edit(
-    message_type="feedback",
-    message=_("File uploaded.")
+    message_type=message_type,
+    message=message
     )

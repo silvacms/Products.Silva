@@ -115,7 +115,9 @@ class File(Asset):
         # dealing with strings.
         file_data = str(self._file.data)
 
-        fulltext = converter.convert(file_data)
+        fulltext = converter.convert(file_data, self.REQUEST)
+        if fulltext is None:
+            return None
         return [self.get_title(), fulltext]
 
     security.declareProtected(SilvaPermissions.View, 'index_html')
