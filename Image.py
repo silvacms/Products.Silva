@@ -537,6 +537,15 @@ class Image(Asset):
         # always resize image, even if scaling is 100%,
         # this is needed because the modification time needs to be updated
         # so we get correct caching with http headers
+        if self.web_scale == '100%' and image.info.get('duration', 0):
+            # we're dealing with an animated gif here on 100% scale,
+            # this should not be resized, otherwise the animation is lost
+            # in this case modification time is not updated, which could
+            # result in (client side) caching problems
+            if self.image is not None and not self._image_is_hires():
+                self._remove_image('image')
+            self.image = self.hires_image
+            return
         image = image.resize((width, height), PIL.Image.ANTIALIAS)
         image = self._prepareWebFormat(image)
         image.save(web_image_data, self.web_format)
