@@ -251,9 +251,10 @@
             value="delete"
             title="delete selected groups: alt-d"
             accesskey="d"
-            onclick="return confirm('Really delete?')"
+            alt="Really delete?"
+            onclick="return confirm(this.alt)"
             tal:condition="groups"
-            i18n:attributes="title;value"
+            i18n:attributes="title;value;alt"
           />
         </td>
       </tr>
