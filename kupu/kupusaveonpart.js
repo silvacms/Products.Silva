@@ -22,7 +22,10 @@ function saveOnPart(event) {
         } else {
             event.returnValue = false;
         };
-        event.preventDefault();
+
+        if(event.preventDefault){
+            event.preventDefault();
+        }
         //return false;
     };
     return true;
