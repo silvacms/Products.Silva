@@ -41,8 +41,9 @@ class PDFConverter(object):
 
         os.unlink(fname)
         if 'PDF file is damaged' in converted:
-            request.form['message_type']='error'
-            request.form['message'] = 'Warning: The uploaded file does not appear to be a valid PDF file.'
+            request.form['message_type']='feedback'
+            request.form['message'] = """File uploaded succesfully. 
+            <span class="error">The uploaded file does not appear to be a valid PDF file.</span>"""
             return None
         return unicode(converted, 'utf8')
 
