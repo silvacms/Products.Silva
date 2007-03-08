@@ -543,7 +543,10 @@
             info model/@@get_viewer_role_info; 
             acquired info/acquired;
             selected_role info/selected_role;
+            base_href options/base_href | nothing;
+            action python:base_href and base_href + '/..' or '..'
             "
+          tal:attributes="action action"
           >
           <table class="listing sublisting">
             <thead>
