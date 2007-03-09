@@ -26,12 +26,11 @@ Version of this file: $Revision: 1.16 $
    Content - <span tal:replace="python:here.get_root().get_silva_content_version()">version</span>)</span>
 </form>
 </div>
-
 <div tal:repeat="module_name here/get_names"
   tal:attributes="
     style python:'width:70%%;; border:solid 1px;; padding:1em;; margin:1em;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
   <h3 tal:content="python:here.get_description(module_name)" />
-  <p tal:content="string:Module name: ${module_name}" />
+  <p tal:content="python:getattr(here.Control_Panel.Products,module_name).version" />
   <form action="." method="POST" tal:condition="python:module_name != 'Silva'">
     <input type="hidden" name="name" value="value"
       tal:attributes="value module_name" />
