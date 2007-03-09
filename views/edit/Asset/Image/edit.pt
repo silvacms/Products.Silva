@@ -19,74 +19,67 @@
     <h3 i18n:translate="">
       <img tal:replace="structure icon" /> image info
     </h3>
-    <tal:block tal:condition="model/canScale">
-      <p tal:condition="not: model/hires_image">
-        <span class="subhead" i18n:translate="">format</span><br />
-        <span tal:replace="python: model.web_format.lower()" /> image
-        <br />
-        <span class="subhead" i18n:translate="">dimensions</span><br />
-        <span tal:define="
-          img_width python: model.getDimensions()[0];
-          img_height python: model.getDimensions()[1];
-          "
-          tal:on-error="string: unknown"
-          tal:replace="string:${img_width}x${img_height} pixels"
-        />
-      </p>
-
-      <p tal:condition="model/hires_image">
+    <p tal:condition="not: model/hires_image">
       <span class="subhead" i18n:translate="">format</span><br />
-      <span tal:replace="python: model.web_format.lower()">format</span>
-      <span i18n:translate="">image</span>
-      </p>
-      <p tal:define="
-        image_width python: model.getDimensions()[0];
-        image_height python: model.getDimensions()[1];
-        scale_width python: model.getCanonicalWebScale()[0];
-        scale_height python: model.getCanonicalWebScale()[1];
-        ">
-        <span class="subhead" i18n:translate="">dimensions</span><br />
-        <span tal:on-error="string: unknown"
-          tal:replace="string:${image_width}x${image_height} pixels"
+      <span tal:replace="python: model.web_format.lower()" /> image
+      <br />
+      <span class="subhead" i18n:translate="">dimensions</span><br />
+      <span tal:define="
+        img_width python: model.getDimensions()[0];
+        img_height python: model.getDimensions()[1];
+        "
+        tal:on-error="string: unknown"
+        tal:replace="string:${img_width}x${img_height} pixels"
+      />
+    </p>
+
+    <p tal:condition="model/hires_image">
+    <span class="subhead" i18n:translate="">format</span><br />
+    <span tal:replace="python: model.web_format.lower()">format</span>
+    <span i18n:translate="">image</span>
+    </p>
+    <p tal:define="
+      image_width python: model.getDimensions()[0];
+      image_height python: model.getDimensions()[1];
+      scale_width python: model.getCanonicalWebScale()[0];
+      scale_height python: model.getCanonicalWebScale()[1];
+      ">
+      <span class="subhead" i18n:translate="">dimensions</span><br />
+      <span tal:on-error="string: unknown"
+        tal:replace="string:${image_width}x${image_height} pixels"
+      />
+      <tal:condition condition="python:
+        image_width != scale_width or
+        image_height != scale_height"
+        i18n:translate=""><br />
+        scaled to
+        <span
+          tal:on-error="string: unknown"
+          tal:replace="string:${scale_width}x${scale_height}"
+          i18n:name="WxH"
         />
-        <tal:condition condition="python:
-          image_width != scale_width or
-          image_height != scale_height"
-          i18n:translate=""><br />
-          scaled to
-          <span
-            tal:on-error="string: unknown"
-            tal:replace="string:${scale_width}x${scale_height}"
-            i18n:name="WxH"
-          />
-          pixels
+        pixels
+      </tal:condition>
+    </p>
+    <p tal:condition="model/canScale">
+    <span class="subhead" i18n:translate="">original</span><br />
+      <a href="" class="underline"
+        title="view the original image: alt-v"
+        accesskey="v"
+        tal:attributes="href python:model.url(hires=1)"
+        i18n:attributes="title">
+        <tal:condition condition="model/thumbnail_image">
+          <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
         </tal:condition>
-      </p>
-      <p>
-      <span class="subhead" i18n:translate="">original</span><br />
-        <a href="" class="underline"
-          title="view the original image: alt-v"
-          accesskey="v"
-          tal:attributes="href python:model.url(hires=1)"
-          i18n:attributes="title">
-          <tal:condition condition="model/thumbnail_image">
-            <img tal:replace="structure python:model.tag(thumbnail=1)" /><br />
-          </tal:condition>
-          <tal:block i18n:translate="">view unscaled image</tal:block>
-        </a>
-      </p>
-      <p tal:condition="model/hires_image" 
-        tal:define="orientation model/getOrientation; klass model/getOrientationClass">
-        <span class="subhead" i18n:translate="">orientation</span><br />
-        <span tal:content="orientation"
-          tal:attributes="class string:${klass} orientation"
-          >Square</span>
-      </p>
-    </tal:block>
-    <p tal:condition="not: model/canScale">
-      <tal:block i18n:translate="">Note: Silva can provide image scaling and conversion with the help of PIL</tal:block>
-      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
-      <tal:block i18n:translate="">PIL doesn't seem to be installed.</tal:block>
+        <tal:block i18n:translate="">view unscaled image</tal:block>
+      </a>
+    </p>
+    <p tal:condition="model/hires_image" 
+      tal:define="orientation model/getOrientation; klass model/getOrientationClass">
+      <span class="subhead" i18n:translate="">orientation</span><br />
+      <span tal:content="orientation"
+        tal:attributes="class string:${klass} orientation"
+        >Square</span>
     </p>
     <p tal:define="
         size model/get_file_size;
@@ -105,13 +98,18 @@
           </tal:condition>
       </tal:block>
     </p>
-    <tal:block tal:condition="python:user.has_role(['Manager'], model)">
+    <p tal:condition="not: model/canScale">
+      <tal:block i18n:translate="">Note: Silva can provide image scaling and conversion with the help of PIL</tal:block>
+      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
+      <tal:block i18n:translate="">PIL doesn't seem to be installed.</tal:block>
+    </p>
+    <tal:if tal:condition="python:user.has_role(['Manager'], model)">
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path">
         <span class="subhead"><strong i18n:translate="">file system path</strong><br /></span>
         <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
       </p>
-      </tal:block>
+    </tal:if>
   </div>
 </metal:fill-slot>
 
