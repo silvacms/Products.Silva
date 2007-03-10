@@ -543,11 +543,7 @@
             info model/@@get_viewer_role_info; 
             acquired info/acquired;
             selected_role info/selected_role;
-            base_href options/base_href | nothing;
-            action python:base_href and base_href + '/..' or '..'
-            "
-          tal:attributes="action action"
-          >
+            ">
           <table class="listing sublisting">
             <thead>
               <tal:block replace="nothing"> 
@@ -646,7 +642,7 @@
       the browser renders heights of the table cells according to their content,
       causing users to have to scroll to adjust groups or access restrictions;
       this adds lines in a last table row that compensates for the sidebar;
-      yes, we'll remove this when we switch Silva over to tableless layout
+      we'll remove this when we switch Silva over to tableless layout
       _______
     </tal:comment>
     <tr tal:define="tree publication/get_container_tree"
