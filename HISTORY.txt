@@ -165,6 +165,9 @@ Silva changes
 
     Bugs fixed:
 
+      - Added a base tag so all Silva screens are based in API space, 
+        a.k.a. */edit/ (see issue: https://infrae.com/issue/silva/issue1588)
+
       - Fix Error in access screen (issue 1588).  For this, we allow
         callers of page templates that derive from `macro_index` to
         set the base tag's href attribute, by providing the
