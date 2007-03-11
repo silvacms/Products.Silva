@@ -34,18 +34,19 @@
     </metal:block>
     <metal:block fill-slot="main"
       tal:define="
-      objects context/get_tree;
-      silva_permissions context/edit/get_silva_permissions;
-      filter request/filter | request/SESSION/filter | nothing;
-      filter python: filter or '';  
-      filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
-      startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
-      show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
-      dummy python: request.SESSION.set('filter', filter);
-      dummy python: request.SESSION.set('show_add', show_add);
-      dummy python: request.SESSION.set('startpath', startpath);
-      pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
-      filter_string python: '|'.join(filter)">
+        objects context/get_tree;
+        silva_permissions context/edit/get_silva_permissions;
+        filter request/filter | request/SESSION/filter | nothing;
+        filter python: filter or '';  
+        filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
+        startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
+        show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
+        dummy python: request.SESSION.set('filter', filter);
+        dummy python: request.SESSION.set('show_add', show_add);
+        dummy python: request.SESSION.set('startpath', startpath);
+        pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
+        filter_string python: '|'.join(filter);
+      ">
       <table class="columns columns2">
         <tbody>
           <tr>
@@ -72,12 +73,12 @@
               <table class="listing"
                 style="margin:0;"
                 tal:define="
-                ret python:view.objectLookupGetObjects(filter, int(show_add));
-                default_document python: ret[0];
-                publishables python: ret[1];
-                assets python: ret[2];
-                addable_types python: ret[3];
-                global first_checked python:False;
+                  ret python:view.objectLookupGetObjects(filter, int(show_add));
+                  default_document python: ret[0];
+                  publishables python: ret[1];
+                  assets python: ret[2];
+                  addable_types python: ret[3];
+                  global first_checked python:False;
                 ">
                 <thead>
                   <tal:block replace="nothing">
@@ -137,8 +138,7 @@
                   </tr>
                 </thead>
           
-                <form name="objectform" id="objectform" action="." method="POST"
-                  onsubmit="return false">
+                <form name="objectform" id="objectform" action="." method="POST" onsubmit="return false">
                   <tbody>
                     <tal:block replace="nothing">
                       ______________ listing header ______________
@@ -196,13 +196,12 @@
                             <input type="radio"
                               name="object"
                               tal:attributes="
-                              value path;
-                              id id;
-                              lookup:id id;
-                              lookup:title title;
-                              checked checked;
-                              "
-                            />
+                                value path;
+                                id id;
+                                lookup:id id;
+                                lookup:title title;
+                                checked checked;
+                              "/>
                             <label 
                               tal:condition="is_default"
                               tal:content="repeat/item/index"
@@ -222,8 +221,8 @@
                           <td>
                             <label tal:condition="not:item/implements_container"
                               tal:attributes="
-                              for id;
-                              title string:choose this ${item/meta_type};
+                                for id;
+                                title string:choose this ${item/meta_type};
                               ">
                               <img tal:replace="structure python:view.renderIcon(item)" />
                               <tal:block tal:replace="python: mangle.String.centeredTruncate(item.id, 30)">
@@ -256,10 +255,9 @@
                           <td>
                             <a title="view"
                               tal:attributes="
-                              href item_url;
-                              class status_style;"
-                              tal:define="title python: mangle.String.centeredTruncate(item.get_title_editable(), 30)
-                              or default"
+                                href item_url;
+                                class status_style;"
+                              tal:define="title python: mangle.String.centeredTruncate(item.get_title_editable(), 30) or default"
                               tal:content="title">
                               <i i18n:translate="">no title</i>
                             </a>
@@ -348,12 +346,12 @@
                             <input type="radio"
                               name="object"
                               tal:attributes="
-                              id id;
-                              lookup:id id;
-                              lookup:title title;
-                              value path;
-                              checked checked;
-                            " />
+                                id id;
+                                lookup:id id;
+                                lookup:title title;
+                                value path;
+                                checked checked;
+                            "/>
                             <label 
                               tal:condition="default_document"
                               tal:attributes="for id">
@@ -364,8 +362,7 @@
                             _______ icon + id cell _______
                           </tal:block>
                           <td>
-                            <label
-                              tal:attributes="
+                            <label tal:attributes="
                               for id;
                               title string:choose this ${asset/meta_type};
                               ">
@@ -380,11 +377,10 @@
                           </tal:block>
                           <td>
                             <a title="preview"
-                              tal:content="python: mangle.String.centeredTruncate(asset.get_title_editable(), 30) 
-                              or default"
+                              tal:content="python: mangle.String.centeredTruncate(asset.get_title_editable(), 30) or default"
                               tal:attributes="
-                              href asset_url;
-                              class python: asset.get_title() == '' and 'closed' or 'blacklink'"
+                                href asset_url;
+                                class python: asset.get_title() == '' and 'closed' or 'blacklink'"
                               i18n:attributes="title"
                               >
                               <i i18n:translate="">view</i>
