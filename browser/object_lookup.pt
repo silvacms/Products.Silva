@@ -1,6 +1,6 @@
 <tal:block condition="nothing">
   <!--
-  Copyright (c) 2002-2005 Infrae. All rights reserved.
+  Copyright (c) 2002-2007 Infrae. All rights reserved.
   See also LICENSE.txt
   -->
 </tal:block>
@@ -56,7 +56,8 @@
               <tal:block define="template_id string:@@object_lookup">
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
-                    <tal:block define="sb context/@@sidebar" replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
+                    <tal:block define="sb context/@@sidebar" 
+                      replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
@@ -70,7 +71,6 @@
 
               <table class="listing"
                 style="margin:0;"
-                id="sortable"
                 tal:define="
                 ret python:view.objectLookupGetObjects(filter, int(show_add));
                 default_document python: ret[0];
@@ -166,7 +166,8 @@
                     </tal:block>
                     <tr class="odd"
                       tal:condition="python: not(publishables or assets)">
-                      <td colspan="5" i18n:translate="">
+                      <td colspan="5" 
+                        i18n:translate="">
                         There is no content here.
                       </td>
                     </tr>
@@ -203,13 +204,13 @@
                               "
                             />
                             <label 
-                              tal:condition="default_document"
+                              tal:condition="is_default"
                               tal:content="repeat/item/index"
                               tal:attributes="for id">
                               # with default doc, starts at 0
                             </label>
                             <label 
-                              tal:condition="not: default_document"
+                              tal:condition="not: is_default"
                               tal:content="repeat/item/number"
                               tal:attributes="for id">
                               # without default doc, starts at 1
@@ -219,7 +220,7 @@
                             _______ id cell _______
                           </tal:block>
                           <td>
-                            <label style="text-transform:none;"
+                            <label tal:condition="not:item/implements_container"
                               tal:attributes="
                               for id;
                               title string:choose this ${item/meta_type};
@@ -229,73 +230,87 @@
                                 id
                               </tal:block>
                             </label>
-                            <img alt="content approved or published"
-                              border="0"
-                              height="10"
-                              width="10"
-                              title="content is approved or published"
-                              tal:define="
-                              is_published item/is_version_published | nothing;
-                              is_approved item/is_version_approved | nothing"
-                              tal:condition="python:is_published or is_approved"
-                              tal:attributes="src string:${root_url}/globals/checkmark.gif" 
-                              i18n:attributes="alt"
-                            />
+                            <tal:block condition="item/implements_container">
+                              <tal:block define="lookuplink python:id + '/@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add)">
+                                <a class="icon"
+                                  tal:attributes="
+                                    href lookuplink;
+                                    title item/meta_type;
+                                ">
+                                  <img tal:replace="structure python:view.renderIcon(item)" />
+                                </a>
+                                <a style="color:blueviolet"
+                                  title="enter"
+                                  tal:content="python: mangle.String.centeredTruncate(item.id, 30)"
+                                  tal:attributes="href lookuplink"
+                                  i18n:attributes="title">
+                                  id
+                                </a>
+                              </tal:block>
+                            </tal:block>
+
                           </td>
                           <tal:block replace="nothing">
                             _______ title cell _______
                           </tal:block>
                           <td>
-                            <a class="blacklink"
-                              title="view"
+                            <a title="view"
                               tal:attributes="
                               href item_url;
                               class status_style;"
                               tal:define="title python: mangle.String.centeredTruncate(item.get_title_editable(), 30)
                               or default"
-                              tal:content="title"
-                              i18n:attributes="title">
+                              tal:content="title">
                               <i i18n:translate="">no title</i>
                             </a>
                           </td>
                           <tal:block replace="nothing">
-                            _______ modified date/metadata downlink cell _______
+                            _______ modified date cell _______
                           </tal:block>
                           <td tal:define="modification_time item/get_modification_datetime | nothing">
-                            <span class="blacklink" title="metadata"
+                            <span tal:omit-tag=""
                               tal:condition="modification_time"
                               tal:attributes="href string:${item_url}/edit/tab_metadata"
                               tal:content="structure python:mangle.DateTime(modification_time).toShortStr()"
-                              i18n:attributes="title"
+                              i18n:translate=""
                               >
-                              date
+                                date
                             </span>
-                            <span class="closed" title="settings"
+                            <span tal:omit-tag=""
                               tal:condition="not:modification_time"
                               tal:attributes="href string:${item_url}/edit/tab_metadata"
-                              i18n:attributes="title"
                               >
-                              <i i18n:translate="">n/a</i>
+                                <i i18n:translate="">n/a</i>
                             </span>
                           </td>
                           <tal:block replace="nothing">
-                            _______ author/status downlink cell _______
+                            _______ author cell _______
                           </tal:block>
                           <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
-                            <span class="blacklink" title="status"
+                            <img style="float:right"
+                              alt="content is published"
+                              border="0"
+                              height="10"
+                              width="10"
+                              title="content is published"
+                              tal:define="is_published item/is_version_published | nothing"
+                              tal:condition="is_published"
+                              tal:attributes="src string:${root_url}/globals/checkmark.gif" 
+                              i18n:attributes="alt"
+                            />
+                            <span tal:omit-tag=""
                               tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
                               tal:attributes="href string:${item_url}/edit/tab_status"
                               tal:content="structure last_author"
-                              i18n:attributes="title"
+                              i18n:translate=""
                               >
-                              authorname
+                                authorname
                             </span>
-                            <span class="closed" title="publish"
+                            <span tal:omit-tag=""
                               tal:condition="python:item.implements_container()"
                               tal:attributes="href string:${item_url}/edit/tab_status"
-                              i18n:attributes="title"
                               >
-                              <i i18n:translate="">n/a</i>
+                                <i i18n:translate="">n/a</i>
                             </span>
                             <span 
                               tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
@@ -313,7 +328,6 @@
                     <tal:block 
                       condition="python:len(assets)"
                       repeat="asset assets">
-
                       <tal:block define="
                         asset_url asset/absolute_url;
                         oddrow repeat/asset/odd;
@@ -339,12 +353,10 @@
                               lookup:title title;
                               value path;
                               checked checked;
-                              "
-                            />
+                            " />
                             <label 
                               tal:condition="default_document"
-                              tal:attributes="for id"
-                              i18n:translate="">
+                              tal:attributes="for id">
                               &#8211;
                             </label>
                           </td>
@@ -352,7 +364,7 @@
                             _______ icon + id cell _______
                           </tal:block>
                           <td>
-                            <label style="text-transform:none;"
+                            <label
                               tal:attributes="
                               for id;
                               title string:choose this ${asset/meta_type};
@@ -367,8 +379,7 @@
                             _______ title cell _______
                           </tal:block>
                           <td>
-                            <a class="blacklink"
-                              title="preview"
+                            <a title="preview"
                               tal:content="python: mangle.String.centeredTruncate(asset.get_title_editable(), 30) 
                               or default"
                               tal:attributes="
@@ -440,9 +451,6 @@
                     </td>
                   </tr>
                 </tfoot>
-
-
-
               </table>
 
             </td>
