@@ -2233,6 +2233,10 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                     if (child.getAttribute('type') == 'list') {
                         displayvalue = eval(value).join(', ');
                         attrkey = key + '__type__list';
+                    }
+                    else if (child.getAttribute('type') == 'bool') {
+                    	value = (value == "True" ? 1 : 0);
+                    	attrkey = key + '__type__boolean';
                     };
                     extsource.setAttribute(attrkey, value);
                     key = key.replace(/_/g, ' ');
