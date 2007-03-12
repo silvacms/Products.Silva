@@ -12,6 +12,7 @@ from DateTime import DateTime
 from helpers import add_and_edit
 import SilvaPermissions
 from ExtensionRegistry import extensionRegistry
+from Products.Silva.interfaces import ISilvaObject, IVersion
 import install
 
 class ExtensionService(SimpleItem.SimpleItem):
@@ -128,7 +129,30 @@ class ExtensionService(SimpleItem.SimpleItem):
         install.configureLayout(root, 1)
         return self.manage_main(manage_tabs_message = 	 
                                 'Default layout code installed')
-    
+
+    security.declareProtected('View management screens',
+                              'refresh_catalog')
+    def refresh_catalog(self):
+        """Refresh the silva catalog.
+        """
+        root = self.aq_inner.aq_parent
+        root.service_catalog.manage_catalogClear()
+        self._reindex(root)
+        return self.manage_main(manage_tabs_message = 	 
+                                'Catalog refreshed.')
+
+    def _reindex(self, obj):
+        """Reindex a silva object or version.
+        """
+        if ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
+            obj.index_object()
+        elif IVersion.providedBy(obj) and getattr(obj, 'index_object', None):
+            if obj.version_status() != 'last_closed' and obj.version_status(
+                ) != 'closed' :
+                obj.index_object()
+        for child in obj.objectValues():
+            self._reindex(child)
+        
     # ACCESSORS
 
     security.declareProtected('View management screens', 'get_names')
