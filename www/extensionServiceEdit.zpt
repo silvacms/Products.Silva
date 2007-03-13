@@ -21,7 +21,7 @@ Version of this file: $Revision: 1.16 $
   <tal:block condition="python: hasattr(modules['Products'], 'SilvaDocument') and 'SilvaDocument' in here.get_names() and here.is_installed('SilvaDocument') and not hasattr(here, 'silva_docs')">
     <input type="submit" name="manage_installDocumentation:method" value="install documentation" i18n:attributes="value"/>
   </tal:block>
-  <input type="submit" name="refresh_catalog:method" value="refresh catalog" i18n:attributes="value"/>
+  <input type="submit" name="refresh_catalog:method" value="rebuild catalog" i18n:attributes="value"/>
   <input type="submit" name="upgrade_all:method" value="upgrade content" onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;" />
   <span class="std-text">(Software - <span tal:replace="python:here.get_root().get_silva_software_version()">version</span> /
    Content - <span tal:replace="python:here.get_root().get_silva_content_version()">version</span>)</span>
