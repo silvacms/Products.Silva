@@ -44,6 +44,13 @@
         <span tal:replace="nothing">
           ______________ export feedback ______________
         </span>
+        <div class="alert"
+          style="margin-bottom:1em;"
+          tal:condition="python:len(refs) > 1">
+          Sorry, full media export is currently not supported for more
+          than one item.  Please select one item, or select no items to export
+          the whole folder.
+        </div>
         <div class="feedback"
           style="margin-bottom:1em;">
           <span class="subhead"
@@ -161,11 +168,6 @@
       </tfoot>
       </table>
       </form>
-      <div tal:condition="python:len(refs) > 1">
-        Sorry, full media export is currently not supported for more
-        than one item.  Please select one item or no item to export
-        the whole folder.
-      </div>
       
       <form action="." enctype="multipart/form-data" method="POST"
         tal:condition="view/service_docmapdf | nothing">
