@@ -31,9 +31,10 @@ class AutoTOC(Content, SimpleItem):
 
     implements(IAutoTOC)
 
+    _toc_depth = -1
+
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id, 'Dummy Title')
-        self._toc_depth = -1
         
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
