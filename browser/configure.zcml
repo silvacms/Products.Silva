@@ -96,7 +96,7 @@
   />
 
   <browser:page
-    name="atom"
+    name="atom.xml"
     for="Products.Silva.interfaces.IContainer"
     class="Products.Silva.browser.feed.ContainerFeedView"
     permission="zope2.View"
@@ -104,7 +104,7 @@
   />
 
   <browser:page
-    name="rss"
+    name="rss.xml"
     for="Products.Silva.interfaces.IContainer"
     class="Products.Silva.browser.feed.ContainerFeedView"
     permission="zope2.View"

@@ -1,3 +1,4 @@
+from zExceptions import NotFound
 from Products.Silva.adapters.interfaces import IFeedEntry
 from Products.Five import BrowserView
 
@@ -5,9 +6,8 @@ class ContainerFeedView(BrowserView):
     """Base class for feed representation."""
     def __call__(self):
         if not self.context.allow_feeds():
-            self.context.REQUEST.RESPONSE.setStatus(404)
-            return None
-        self.context.REQUEST.RESPONSE.setHeader(
+            raise NotFound()            
+        self.request.RESPONSE.setHeader(
             'Content-Type', 'text/xml;charset=UTF-8')
         return super(ContainerFeedView, self).__call__(self)
         
