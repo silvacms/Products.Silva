@@ -31,7 +31,7 @@ Version of this file: $Revision: 1.16 $
   tal:attributes="
     style python:'width:70%%;; border:solid 1px;; padding:1em;; margin:1em;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
   <h3 tal:content="python:here.get_description(module_name)" />
-  <p tal:content="python:getattr(here.Control_Panel.Products,module_name).version" />
+  <p tal:content="python:here.get_version_info(module_name)"/>
   <form action="." method="POST" tal:condition="python:module_name != 'Silva'">
     <input type="hidden" name="name" value="value"
       tal:attributes="value module_name" />

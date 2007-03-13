@@ -129,6 +129,12 @@ class ExtensionRegistry:
     def get_description(self, name):
         return self._extensions[name][0]
 
+    def get_product_module_name(self, name):
+        install_module = self._extensions[name][1]
+        module_name = install_module.__name__
+        # module_name is something like Products.Silva.install
+        return module_name.split('.')[1]
+    
     def is_installed(self, name, root):
         if not self._extensions.has_key(name):
             return 0
