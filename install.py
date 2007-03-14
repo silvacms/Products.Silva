@@ -86,6 +86,7 @@ def installFromScratch(root):
     install(root)
     installSilvaDocument(root)
     installSilvaFind(root)
+    installSilvaLayout(root)
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
@@ -620,6 +621,13 @@ def installSilvaDocument(root):
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
     
+def installSilvaLayout(root):
+    # installs SilvaLayout if available
+    from Products.Silva.ExtensionRegistry import extensionRegistry
+    if 'SilvaLayout' not in extensionRegistry.get_names():
+        return 
+    root.service_extensions.install('SilvaLayout')
+
 def installSilvaFind(root):
     # installs Silva Find if available
     from Products.Silva.ExtensionRegistry import extensionRegistry

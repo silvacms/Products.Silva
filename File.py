@@ -79,7 +79,8 @@ class File(Asset):
     def get_mime_type(self):
         """
         """
-        return self._file.content_type
+        # possibly strip out charset encoding
+        return self._file.content_type.split(';')[0].strip()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_download_url')
@@ -109,11 +110,24 @@ class File(Asset):
         if converter is None:
             return None
 
-        # sometimes, data is a str, sometimes
-        # it is a OFS.Image.Pdata object.
-        # the line below makes sure we're
-        # dealing with strings.
-        file_data = str(self._file.data)
+        file_data = ''
+        if hasattr(self._file, 'data'):
+            # sometimes, data is a str, sometimes
+            # it is a OFS.Image.Pdata object.
+            # the line below makes sure we're
+            # dealing with strings.
+            file_data = str(self._file.data)
+        else:
+            # this is an extfile
+            path = self.getFileSystemPath()
+            if not os.path.isfile(path):
+                path = self.getFileSystemPath()+ '.tmp'
+            fp = open(path, 'rb')
+            try:
+                file_data = fp.read()
+            finally:
+                fp.close()
+
         if not file_data:
             return
 
@@ -183,8 +197,13 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)        
-        if str(self._file.data)[:5] == '%PDF-':
+        
+        if hasattr(self._file, 'data') and str(self._file.data)[:5] == '%PDF-':
+            # force pdf content type if header is correct pdf file
+            # Extfile does this in its _get_content_type method..
             self._file.content_type = 'application/pdf'
+        if self._file.content_type == 'text/plain':
+            self._file.content_type = 'text/plain; charset=utf-8'
         self.reindex_object()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -238,7 +257,6 @@ class ZODBFile(File):
         return self._file.index_html(REQUEST, REQUEST.RESPONSE) # parameters needed for OFS.File
 
 InitializeClass(ZODBFile)
-
 
 class FileSystemFile(File):
     """Silva File object, storage in ZODB. Contains the ExtFile object
