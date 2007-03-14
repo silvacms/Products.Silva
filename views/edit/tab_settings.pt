@@ -221,7 +221,7 @@
                   </td>
                   <td>
                     <tal:block i18n:translate="">
-                      Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
+                      Check to allow an Atom/<acronym title="Really Simple Syndication">RSS</acronym> feed of this container (atom.xml or rss.xml).
                     </tal:block>
                   </td>
                 </tr>
