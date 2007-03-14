@@ -419,8 +419,12 @@ class ExportInfo:
         return self._asset_paths.items()
     
     def _makeUniqueAssetId(self, path):
+        ext = ''
+        if len(path) > 4:
+            if path[-4] == '.':
+                ext = path[-4:]
         self._last_asset_id += 1
-        return str(self._last_asset_id)
+        return str(self._last_asset_id) + ext
     
     def addZexpPath(self, path):
         self._zexp_paths[path] = self._makeUniqueZexpId(path)
