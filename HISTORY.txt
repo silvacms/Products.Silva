@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - If a file or image asset has an extension in its id, this is
+        preserved in the fullmedia export, so that if that is unzipped
+        by hand, the file types of the assets are obvious in those
+        cases.
+      
       - If present, SilvaLayout will automaticly be registered in
         service_extensions if a new SilvaRoot is created.
         
