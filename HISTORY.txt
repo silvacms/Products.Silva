@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - If present, SilvaLayout will automaticly be registered in
+        service_extensions if a new SilvaRoot is created.
+        
       - The Extension Service page now has a button 'rebuild catalog' which
         will empty the silva catalog and reindex all silva content.
 
@@ -31,7 +34,13 @@ Silva changes
       
       - Automatic fulltext cataloging of pdf files, when the pdftotext
         command-line application is found on the path.
-      
+        
+      - Automatic fulltext cataloging of word files, when the antiword
+        command-line application is found on the path.
+        
+      - Automatic fulltext cataloging of textfiles using utf8 encoding, 
+        also the content-type header of textfiles now set the charset to utf8.
+        
       - Ghosts now override `get_modification_datetime` to get their
         modification date from the haunted object, allowing the
         `Last-Modified` header to be set in a convenient way.
