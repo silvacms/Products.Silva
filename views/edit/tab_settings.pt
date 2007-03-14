@@ -187,58 +187,58 @@
                 
                 <tal:block condition="iscontainer"
                   tal:define="allow_feeds model/allow_feeds">
-                <tr class="top-controls">
-                  <td colspan="3">
-                    <h3>
-                      <span i18n:translate="">atom/rss feeds</span>
-                    </h3>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="align-right"
-                    width="12%"
-                    i18n:translate="">
-                    element
-                  </th>
-                  <th i18n:translate="">
-                    content
-                  </th>
-                  <th width="25%"
-                    i18n:translate="">
-                    note
-                  </th>
-                </tr>
-                <tr class="odd">
-                  <td class="align-right">
-                    <tal:block i18n:translate="">
-                      allow feeds
-                    </tal:block>
-                  </td>
-                  <td>
-                    <input 
-                      type="checkbox" 
-                      name="allow_feeds"
-                      tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
-                  </td>
-                  <td>
-                    <tal:block i18n:translate="">
-                      Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
-                    </tal:block>
-                  </td>
-                </tr>
-                
-                <tr class="controls">
-                  <td class="align-right" colspan="3">
-                    <input class="button" 
-                      value="change feed settings"
-                      name="tab_settings_save_feeds:method"
-                      type="submit"
-                      title="change feed settings: alt-f"
-                      accesskey="f"
-                      i18n:attributes="value;title"
-                    />
-                  </td>
-                </tr>
+                  <tr class="top-controls">
+                    <td colspan="3">
+                      <h3>
+                        <span i18n:translate="">atom/rss feeds</span>
+                      </h3>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="align-right"
+                      width="12%"
+                      i18n:translate="">
+                      element
+                    </th>
+                    <th i18n:translate="">
+                      content
+                    </th>
+                    <th width="25%"
+                      i18n:translate="">
+                      note
+                    </th>
+                  </tr>
+                  <tr class="odd">
+                    <td class="align-right">
+                      <tal:block i18n:translate="">
+                        allow feeds
+                      </tal:block>
+                    </td>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        name="allow_feeds"
+                        tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
+                    </td>
+                    <td>
+                      <tal:block i18n:translate="">
+                        Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
+                      </tal:block>
+                    </td>
+                  </tr>
+                  
+                  <tr class="controls">
+                    <td class="align-right" colspan="3">
+                      <input class="button" 
+                        value="change feed settings"
+                        name="tab_settings_save_feeds:method"
+                        type="submit"
+                        title="change feed settings: alt-f"
+                        accesskey="f"
+                        i18n:attributes="value;title"
+                      />
+                    </td>
+                  </tr>
                 </tal:block>
               </tbody>
             </table>
