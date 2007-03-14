@@ -7,7 +7,7 @@ Silva changes
 
     Features added:
 
-      - The Extension Service page now has a button 'refresh catalog' which
+      - The Extension Service page now has a button 'rebuild catalog' which
         will empty the silva catalog and reindex all silva content.
 
       - Added Atom/Rss feed capabilities to arbitrary containers. To use
