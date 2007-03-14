@@ -1,7 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
-  lang="en"
-  xml:lang="en"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:notal="http://www.infrae.com/silva/notal"
@@ -14,114 +12,183 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
-  
+
 <metal:block metal:fill-slot="middleground">
   <metal:block use-macro="here/macro_middleground/macros/properties" />
 </metal:block>
+
 <metal:block fill-slot="main"
   tal:define="
     icon python:view.render_icon(model);
     icon_title model/meta_type;
-  ">
-  <table class="columns columns2">
-    <tbody>
-      <tr>
-        <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
-        <td class="left" rowspan="99">
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_settings', vein)" />
-            </metal:fill-slot>
-          </metal:block>
-        </td>
-        <tal:block replace="nothing">_____________________ main _____________________</tal:block>
-        <td class="main">
-          
-          <form action="." method="POST">
-            <table class="listing"
-              tal:define="
-                editable model/get_editable;
-                iscontainer model/implements_container;
-                isfolder python: type == 'Silva Folder';
-                ispublication python: type == 'Silva Publication' or type == 'Silva Root';
-                isghostfolder python: type == 'Silva Ghost Folder';
-                rendererservice context/service_renderer_registry;
-                renderers python: rendererservice.getFormRenderersList(type);"
-              tal:condition="python: editable">
-            <thead>
-              <tr>
-                <td class="top" colspan="3">
-                  <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure icon" 
-                      tal:attributes="title icon_title" />
-                    <span i18n:translate="">settings for &#xab;<tal:block 
-                      content="title"
-                      i18n:name="title" />&#xbb;</span>
-                  </h2>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="top-controls"
-                tal:condition="iscontainer">
-                <td colspan="3">
-                  <h3>
-                    <span i18n:translate="">container type</span>
-                  </h3>
-                </td>
-              </tr>
-              <tr class="odd">
-                <td colspan="3">
-                  <tal:block condition="isghostfolder"
-                     i18n:translate="">
-                    This Ghost Folder can be converted to a normal 
-                    Publication or Folder. All ghosted content will be 
-                    duplicated and can then be edited.
+">
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
+      <td class="left" rowspan="99">
+        <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_settings', vein)" />
+          </metal:fill-slot>
+        </metal:block>
+      </td>
+      <tal:block replace="nothing">_____________________ main _____________________</tal:block>
+      <td class="main">
+        
+        <form action="." method="POST">
+          <table class="listing"
+            tal:define="
+              editable model/get_editable;
+              iscontainer model/implements_container;
+              isfolder python: type == 'Silva Folder';
+              ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+              isghostfolder python: type == 'Silva Ghost Folder';
+              rendererservice context/service_renderer_registry;
+              renderers python: rendererservice.getFormRenderersList(type);"
+            tal:condition="python: editable">
+          <thead>
+            <tr>
+              <td class="top" colspan="3">
+                <h2 tal:attributes="title string:id: ${model/id}">
+                  <img tal:replace="structure icon" 
+                    tal:attributes="title icon_title" />
+                  <span i18n:translate="">settings for &#xab;<tal:block 
+                    content="title"
+                    i18n:name="title" />&#xbb;</span>
+                </h2>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="top-controls"
+              tal:condition="iscontainer">
+              <td colspan="3">
+                <h3>
+                  <span i18n:translate="">container type</span>
+                </h3>
+              </td>
+            </tr>
+            <tr class="odd">
+              <td colspan="3">
+                <tal:block condition="isghostfolder"
+                   i18n:translate="">
+                  This Ghost Folder can be converted to a normal 
+                  Publication or Folder. All ghosted content will be 
+                  duplicated and can then be edited.
+                </tal:block>
+                <tal:block condition="isfolder"
+                   i18n:translate="">
+                  This Silva Folder can be converted to a Publication
+                  (may take awhile if it&#8217;s large).
+                </tal:block>
+                <tal:block condition="ispublication"
+                  i18n:translate="">
+                  This Silva Publication can be converted to a Silva Folder
+                  (may take awhile if it&#8217;s large).
+                </tal:block>
+              </td>
+            </tr>
+            <tr class="controls"
+              tal:condition="iscontainer">
+              <td class="align-right" colspan="3">
+                <input class="button" type="submit"
+                  value="convert to folder"
+                  name="tab_edit_to_folder:method"
+                  title="change container type to a folder: alt-f"
+                  accesskey="f" 
+                  i18n:attributes="value;title"
+                  tal:condition="python: ispublication or isghostfolder"
+                />
+                <input class="button" type="submit"
+                  value="convert to publication"
+                  name="tab_edit_to_publication:method"
+                  title="change container type to a publication: alt-p"
+                  accesskey="p"
+                  i18n:attributes="value;title"
+                  tal:condition="python: isfolder or isghostfolder"
+                />
+              </td>
+            </tr>
+            
+            <tr tal:condition="iscontainer">
+              <td class="separator" 
+                colspan="3">
+              </td>
+            </tr>
+            
+            <tr class="top-controls">
+              <td colspan="3">
+                <h3>
+                  <span i18n:translate="">content renderer</span>
+                </h3>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-right"
+                width="12%"
+                i18n:translate="">
+                element
+              </th>
+              <th i18n:translate="">
+                content
+              </th>
+              <th width="25%"
+                i18n:translate="">
+                note
+              </th>
+            </tr>
+            <tr class="odd">
+              <td class="align-right">
+                <tal:block i18n:translate="">
+                  renderer
+                </tal:block>
+              </td>
+              <td>
+                <select class="store" name="renderer_name_select">
+                  <tal:block 
+                    define="selected_renderer_name python: editable.get_renderer_name()" 
+                    repeat="renderer_name renderers">
+                    <option
+                      tal:content="renderer_name" 
+                      tal:attributes="
+                        value python:renderer_name;
+                        selected python: selected_renderer_name == renderer_name and 'selected' or None;">
+                    </option>
                   </tal:block>
-                  <tal:block condition="isfolder"
-                     i18n:translate="">
-                    This Silva Folder can be converted to a Publication
-                    (may take awhile if it&#8217;s large).
-                  </tal:block>
-                  <tal:block condition="ispublication"
-                    i18n:translate="">
-                    This Silva Publication can be converted to a Silva Folder
-                    (may take awhile if it&#8217;s large).
-                  </tal:block>
-                </td>
-              </tr>
-              <tr class="controls"
-                tal:condition="iscontainer">
-                <td class="align-right" colspan="3">
-                  <input class="button" type="submit"
-                    value="convert to folder"
-                    name="tab_edit_to_folder:method"
-                    title="change container type to a folder: alt-f"
-                    accesskey="f" 
-                    i18n:attributes="value;title"
-                    tal:condition="python: ispublication or isghostfolder"
-                  />
-                  <input class="button" type="submit"
-                    value="convert to publication"
-                    name="tab_edit_to_publication:method"
-                    title="change container type to a publication: alt-p"
-                    accesskey="p"
-                    i18n:attributes="value;title"
-                    tal:condition="python: isfolder or isghostfolder"
-                  />
-                </td>
-              </tr>
-              
-              <tr tal:condition="iscontainer">
-                <td class="separator" 
-                  colspan="3">
-                </td>
-              </tr>
-              
+                </select>
+              </td>
+              <td>
+                <tal:block i18n:translate="">
+                  Select a renderer to render this content.
+                </tal:block>
+              </td>
+            </tr>
+            <tr class="controls">
+              <td class="align-right" colspan="3">
+                <input class="button" 
+                  value="change renderer"
+                  name="tab_settings_save_renderer:method"
+                  type="submit"
+                  title="change renderer: alt-c"
+                  accesskey="c"
+                  i18n:attributes="value;title"
+                />
+              </td>
+            </tr>
+
+            <tr tal:condition="iscontainer">
+              <td class="separator" 
+                colspan="3">
+              </td>
+            </tr>
+            
+            <tal:block condition="iscontainer"
+              tal:define="allow_feeds model/allow_feeds">
               <tr class="top-controls">
                 <td colspan="3">
                   <h3>
-                    <span i18n:translate="">content renderer</span>
+                    <span i18n:translate="">atom/rss feeds</span>
                   </h3>
                 </td>
               </tr>
@@ -142,211 +209,143 @@
               <tr class="odd">
                 <td class="align-right">
                   <tal:block i18n:translate="">
-                    renderer
+                    allow feeds
                   </tal:block>
                 </td>
                 <td>
-                  <select class="store" name="renderer_name_select">
-                    <tal:block 
-                      define="selected_renderer_name python: editable.get_renderer_name()" 
-                      repeat="renderer_name renderers">
-                      <option
-                        tal:content="renderer_name" 
-                        tal:attributes="
-                          value python:renderer_name;
-                          selected python: selected_renderer_name == renderer_name and 'selected' or None;">
-                      </option>
-                    </tal:block>
-                  </select>
+                  <input 
+                    type="checkbox" 
+                    name="allow_feeds"
+                    tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
                 </td>
                 <td>
                   <tal:block i18n:translate="">
-                    Select a renderer to render this content.
+                    Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
                   </tal:block>
                 </td>
               </tr>
+              
               <tr class="controls">
                 <td class="align-right" colspan="3">
                   <input class="button" 
-                    value="change renderer"
-                    name="tab_settings_save_renderer:method"
+                    value="change feed settings"
+                    name="tab_settings_save_feeds:method"
                     type="submit"
-                    title="change renderer: alt-c"
-                    accesskey="c"
+                    title="change feed settings: alt-f"
+                    accesskey="f"
                     i18n:attributes="value;title"
                   />
                 </td>
               </tr>
+            </tal:block>
+          </tbody>
+        </table>
+      </form>
+    </td>            
+  </tr>
 
-              <tr tal:condition="iscontainer">
-                <td class="separator" 
-                  colspan="3">
-                </td>
-              </tr>
-              
-              <tal:block condition="iscontainer"
-                tal:define="allow_feeds model/allow_feeds">
-                <tr class="top-controls">
-                  <td colspan="3">
-                    <h3>
-                      <span i18n:translate="">atom/rss feeds</span>
-                    </h3>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="align-right"
-                    width="12%"
-                    i18n:translate="">
-                    element
-                  </th>
-                  <th i18n:translate="">
-                    content
-                  </th>
-                  <th width="25%"
-                    i18n:translate="">
-                    note
-                  </th>
-                </tr>
-                <tr class="odd">
-                  <td class="align-right">
-                    <tal:block i18n:translate="">
-                      allow feeds
-                    </tal:block>
-                  </td>
-                  <td>
-                    <input 
-                      type="checkbox" 
-                      name="allow_feeds"
-                      tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
-                  </td>
-                  <td>
-                    <tal:block i18n:translate="">
-                      Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
-                    </tal:block>
-                  </td>
-                </tr>
-                
-                <tr class="controls">
-                  <td class="align-right" colspan="3">
-                    <input class="button" 
-                      value="change feed settings"
-                      name="tab_settings_save_feeds:method"
-                      type="submit"
-                      title="change feed settings: alt-f"
-                      accesskey="f"
-                      i18n:attributes="value;title"
-                    />
-                  </td>
-                </tr>
-              </tal:block>
-            </tbody>
-          </table>
-        </form>
-      </td>            
-    </tr>
-
-    <tal:block replace="nothing">layout settings</tal:block>
-      <tr>
-        <td class="main">
+  <tal:block replace="nothing">layout settings</tal:block>
+    <tr>
+      <td class="main">
+        <tal:block 
+          define="category python: 'layout';"
+          condition="model/implements_versioning">
+          <tal:block replace="nothing">edit editable version metadata</tal:block>
           <tal:block 
-            define="category python: 'layout';"
-            condition="model/implements_versioning">
-            <tal:block replace="nothing">edit editable version metadata</tal:block>
-            <tal:block 
-              define="content model/get_editable | nothing;"
-              condition="model/get_unapproved_version">
-              <!-- editable version metadata table, thus editable -->
-              <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
-                <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure icon" 
-                    tal:attributes="title icon_title" />
-                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
-                    content="title"
-                    i18n:name="title" />&#xbb;</span>
-                </h2>
-              </metal:block>
-            </tal:block>
-            
-            <tal:block replace="nothing">view previewable version metadata</tal:block>
-            <tal:block 
-              define="content model/get_previewable | nothing;"
-              condition="model/get_approved_version">
-              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
-                <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure icon" 
-                    tal:attributes="title icon_title" />
-                  <tal:block i18n:translate="">layout settings</tal:block>
-                  <span i18n:translate="">
-                    for approved version of
-                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
-                  </span>
-                </h2>
-              </metal:block>
-            </tal:block>
-            
-            <tal:block replace="nothing">view public version metadata</tal:block>
-            <tal:block 
-              define="
-                content model/get_viewable | nothing;
-                display_flag python:0"
-              condition="model/get_public_version"
-              >
-              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
-                <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure icon" 
-                    tal:attributes="title icon_title" />
-                  <tal:block i18n:translate="">layout settings</tal:block>
-                  <span i18n:translate="">
-                    for published version of
-                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
-                  </span>
-                </h2>
-              </metal:block>
-            </tal:block>
-            
-            <tal:block replace="nothing">view closed version metadata</tal:block>
-            <tal:block 
-              define="
-                content model/get_last_closed | nothing;
-                display_flag python:0"
-              condition="
-                python: not model.get_next_version() and not model.get_public_version()"
-              >
-              <metal:block use-macro="here/macro_view_metadata/macros/metadata">
-                <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure icon" 
-                    tal:attributes="title icon_title" />
-                  <tal:block i18n:translate="">layout settings</tal:block>
-                  <span i18n:translate="">
-                    for closed version of
-                    &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
-                  </span>
-                </h2>
-              </metal:block>
-            </tal:block>
+            define="content model/get_editable | nothing;"
+            condition="model/get_unapproved_version">
+            <!-- editable version metadata table, thus editable -->
+            <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure icon" 
+                  tal:attributes="title icon_title" />
+                <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                  content="title"
+                  i18n:name="title" />&#xbb;</span>
+              </h2>
+            </metal:block>
           </tal:block>
           
-          <tal:block replace="nothing">edit single version metadata</tal:block>
+          <tal:block replace="nothing">view previewable version metadata</tal:block>
           <tal:block 
-            define="category python: 'layout';"
-            condition="not: model/implements_versioning">
-            <tal:block define="content model">
-              <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
-                <h2 metal:fill-slot="table_title">
-                  <img tal:replace="structure icon" 
-                    tal:attributes="title icon_title" />
-                  <span i18n:translate=""> layout settings for &#xab;<tal:block 
-                    content="title"
-                    i18n:name="title" />&#xbb;</span>
-                </h2>
-              </metal:block>
-            </tal:block>
+            define="content model/get_previewable | nothing;"
+            condition="model/get_approved_version">
+            <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure icon" 
+                  tal:attributes="title icon_title" />
+                <tal:block i18n:translate="">layout settings</tal:block>
+                <span i18n:translate="">
+                  for approved version of
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
           </tal:block>
-        </td>            
-      </tr>
-      
-    </tbody>
-  </table>
+          
+          <tal:block replace="nothing">view public version metadata</tal:block>
+          <tal:block 
+            define="
+              content model/get_viewable | nothing;
+              display_flag python:0"
+            condition="model/get_public_version"
+            >
+            <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure icon" 
+                  tal:attributes="title icon_title" />
+                <tal:block i18n:translate="">layout settings</tal:block>
+                <span i18n:translate="">
+                  for published version of
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+          
+          <tal:block replace="nothing">view closed version metadata</tal:block>
+          <tal:block 
+            define="
+              content model/get_last_closed | nothing;
+              display_flag python:0"
+            condition="
+              python: not model.get_next_version() and not model.get_public_version()"
+            >
+            <metal:block use-macro="here/macro_view_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure icon" 
+                  tal:attributes="title icon_title" />
+                <tal:block i18n:translate="">layout settings</tal:block>
+                <span i18n:translate="">
+                  for closed version of
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
+                </span>
+              </h2>
+            </metal:block>
+          </tal:block>
+        </tal:block>
+        
+        <tal:block replace="nothing">edit single version metadata</tal:block>
+        <tal:block 
+          define="category python: 'layout';"
+          condition="not: model/implements_versioning">
+          <tal:block define="content model">
+            <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
+              <h2 metal:fill-slot="table_title">
+                <img tal:replace="structure icon" 
+                  tal:attributes="title icon_title" />
+                <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                  content="title"
+                  i18n:name="title" />&#xbb;</span>
+              </h2>
+            </metal:block>
+          </tal:block>
+        </tal:block>
+      </td>            
+    </tr>
+    
+  </tbody>
+</table>
 </metal:block>
 </metal:block>
 
