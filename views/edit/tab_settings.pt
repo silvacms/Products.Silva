@@ -222,7 +222,7 @@
                   </td>
                   <td>
                     <tal:block i18n:translate="">
-                      Check to allow an atom/rss feed of this folder.
+                      Check to allow an atom/rss feed of this container (rss.xml or atom.xml).
                     </tal:block>
                   </td>
                 </tr>
