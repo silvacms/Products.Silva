@@ -59,6 +59,7 @@ h2 {
       <a class="executor"
         style="float:right"
         title="publish this document: alt-p"
+        accesskey="p"
         tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
         i18n:translate=""
         i18n:attributes="title"
