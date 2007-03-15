@@ -12,6 +12,10 @@ Silva changes
         preview 404's. The form now has a constructed action instead of a point.
         This will work for sites that don't define a base tag too (issue1705).
 
+     - 2007-03-15: Ghost and GhostFolder Metadata Access Handlers
+        return read only metadata bindings, so that the metadata of
+        the haunted original can not be accidentally written to.
+
   1.5.10
 
     Features added
