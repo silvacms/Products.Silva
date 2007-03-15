@@ -20,13 +20,12 @@ Silva changes
       - The Extension Service page now has a button 'rebuild catalog' which
         will empty the silva catalog and reindex all silva content.
 
-      - Added Atom/Rss feed capabilities to arbitrary containers. To use
-        this go to the 'settings' in the properties tab of a container, and
-        enable the checkbox marked 'allow feeds'. Adding /rss.xml or
-        /atom.xml after that container's url just works. The feeds are
-        of published Silva Documents in that container, but adding support
-        for other content types is almost trivial: write the adapter, and it
-        will work.
+      - Added Atom/Rss feed capabilities to arbitrary containers. To
+        use this go to the 'settings' in the properties tab of a
+        container, and enable the checkbox marked 'allow feeds'. After
+        that, adding /rss.xml or /atom.xml after that container's url
+        just works. The feeds, for now, are feeds of only the
+        published Silva Documents in that container.
 
       - IVersioning has a method get_first_publication_date, which returns
         the earliest date any version of the content was ever published.
