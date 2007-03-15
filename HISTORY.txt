@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - 2007-03-15: Containers show their modification datetime in the
+        'modified' column of the contents table in edit mode.
+
       - If a file or image asset has an extension in its id, this is
         preserved in the fullmedia export, so if the zip file is unzipped
         by hand, the file types of the assets are obvious in those cases,
