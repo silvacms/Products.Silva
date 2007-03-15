@@ -181,6 +181,10 @@ Silva changes
 
     Bugs fixed:
 
+      - 2007-03-15: Ghost and GhostFolder Metadata Access Handlers
+        return read only metadata bindings, so that the metadata of
+        the haunted original can not be accidentally written to.
+
       - Added a base tag so all Silva screens are based in API space, 
         a.k.a. */edit/ (see issue: https://infrae.com/issue/silva/issue1588)
 
