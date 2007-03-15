@@ -673,7 +673,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def get_modification_datetime(self, update_status=1):
         """Folders don't really have a modification datetime.
         """
-        return None
+        return self.service_metadata.getMetadataValue(
+            self, 'silva-extra', 'modificationtime')
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')
