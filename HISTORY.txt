@@ -8,23 +8,25 @@ Silva changes
     Features added:
 
       - If a file or image asset has an extension in its id, this is
-        preserved in the fullmedia export, so that if that is unzipped
-        by hand, the file types of the assets are obvious in those
-        cases.
-      
+        preserved in the fullmedia export, so if the zip file is unzipped
+        by hand, the file types of the assets are obvious in those cases,
+        and will preview properly in operating systems that support it.
+
       - If present, SilvaLayout will automaticly be registered in
-        service_extensions if a new SilvaRoot is created.
+        service_extensions if a new SilvaRoot is created. Note that just
+        having the SilvaLayout product on the file system will break the
+        ZODB based layout.
         
       - The Extension Service page now has a button 'rebuild catalog' which
         will empty the silva catalog and reindex all silva content.
 
       - Added Atom/Rss feed capabilities to arbitrary containers. To use
         this go to the 'settings' in the properties tab of a container, and
-        enable the checkbox marked 'allow feeds'. After that, adding /rss
-        or /atom after that container's url just works. The feeds are feeds
+        enable the checkbox marked 'allow feeds'. Adding /rss.xml or
+        /atom.xml after that container's url just works. The feeds are
         of published Silva Documents in that container, but adding support
-        for other content types is almost trivial: write the adapter, and
-        it will work.
+        for other content types is almost trivial: write the adapter, and it
+        will work.
 
       - IVersioning has a method get_first_publication_date, which returns
         the earliest date any version of the content was ever published.
@@ -70,7 +72,7 @@ Silva changes
 
       - Changed title fields to string fields, for easy FF fill-in
 
-      - External sources inside headers or table cells, are not allowed. An
+      - External sources inside headers or table cells were never allowed. An
         alert box is shown now, to make this clearer. (issue 1578)
       
       - Disabled custom kupu context menu, so that the original browser
@@ -87,14 +89,14 @@ Silva changes
         for the new anchor/index item toolbox and the abbr/acronym toolbox.
 
       - Fixed up the Indexer:
-          Add tbody since Zope puts it in anyway
+          Add tbody 
           Add odd/even cycling for table rows
           Remove double defines
           Fix title for cases where there isn't one
           Fix display for empty indexer
           Reduce arbitrary indenting
 
-      - Changed css styling of the preview publisher buttons, making easier 
+      - Changed css styling of the preview publisher buttons, making it easier 
         for users to integrate the publisher into their own layout.
 
       - Fix for TOCs and AutoTOCS where docs that didn't have a title
@@ -129,10 +131,8 @@ Silva changes
       - index items now have an 'index title' attribute in addition to an 
         'anchor name' attribute. The title is used for displaying in an 
         indexer. The name is used for the anchor, and thus should be a valid
-        anchor name.
-        
-        If no title is given, the index is considered a 'pure' anchor, and
-        will not be found by Indexers.
+        anchor name. If no title is given, the index is considered a 'simple' 
+        anchor, and will not be found by Indexers.
 
     Ported from 1.5 branch
 
@@ -147,7 +147,7 @@ Silva changes
         tag. Tweaked formatting of the search form while at it.
 
       - alt attribute for meta_type icons now have the name of the meta_type
-        instead of 'Unknown Metatype' (Issue 1654)
+        instead of 'Unknown' (Issue 1654)
 
       - Simplified the content.html layout file to make it easier to
         understand. Moved the content call into the layout macro. 
@@ -169,7 +169,7 @@ Silva changes
         no longer result in errors.
 
       - Incorrect links entered by hand or imported broke the path adapter.
-        Since this made editing the document impossible, I added some 
+        Since this made editing the document impossible, we added some 
         defensive code.
 
       - Anchors around divs break in explorer, so they were put inside in 
@@ -185,10 +185,8 @@ Silva changes
       - Added a base tag so all Silva screens are based in API space, 
         a.k.a. */edit/ (see issue: https://infrae.com/issue/silva/issue1588)
 
-      - Fix Error in access screen (issue 1588).  For this, we allow
-        callers of page templates that derive from `macro_index` to
-        set the base tag's href attribute, by providing the
-        `base_href` option.
+      - Having a base tag fixes the potential 404 in the access screen 
+        (issue 1588).  
 
       - Fixed AutoTOC depth feature (issue 1693)
 
@@ -206,7 +204,7 @@ Silva changes
       - Fix https://infrae.com/issue/silva/issue1642, where the
         catalog was indexing XML tags.
 
-      - Fix id mangling (https://infrae.com/issue/silva/issue1686), spaces
+      - Fixed id mangling (https://infrae.com/issue/silva/issue1686), spaces
         are no longer allowed in new Ids.
 
   Silva 1.6b4
