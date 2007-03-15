@@ -25,11 +25,11 @@
     <rss:item tal:attributes="rdf:about item/url">
       <rss:title type="text" tal:content="item/title"/>
       <rss:link tal:content="item/url" />
-      <rss:description tal:content="item/description" />
+      <rss:description tal:content="string:${item/description}      " />
       <dc:subject tal:content="item/subject" />
       <dc:creator tal:repeat="author item/authors" tal:content="author" />
       <tal:block condition="item/date_published">
-        <dc:date tal:content="python: item.date_published().HTML4()"/>
+      <dc:date tal:content="python: item.date_published().HTML4()"/>
       </tal:block>
     </rss:item>
   </tal:block>
