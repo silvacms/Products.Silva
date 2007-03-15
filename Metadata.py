@@ -19,6 +19,7 @@ from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
 from Products.SilvaMetadata.Import import import_metadata
 from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHandler
+from Products.SilvaMetadata.Access import default_accessor
 from Products.SilvaMetadata.Initialize import registerInitHandler
 from Products.SilvaMetadata import Binding
 from Products.Silva.Versioning import Versioning
@@ -50,17 +51,20 @@ def import_metadata_handler(container, content, node):
 def ghost_access_handler(tool, content_type, content):
     target_content = content.get_haunted_unrestricted()
     if target_content is None:
-        return
+        return None
     target_content = target_content.get_viewable()
     if target_content is None:
         return None
-    return invokeAccessHandler(tool, target_content)
+    ct = getContentType(target_content)
+    return default_accessor(tool, ct, target_content, read_only=True)
         
 def ghostfolder_access_handler(tool, content_type, content):
     haunted_folder = content.get_haunted_unrestricted()
     if haunted_folder is None:
         return None
-    return invokeAccessHandler(tool, haunted_folder)
+    ct = getContentType(haunted_folder)
+    return default_accessor(tool, ct, haunted_folder, read_only=True)
+    
 
 #################################
 ### registration
