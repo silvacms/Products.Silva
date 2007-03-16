@@ -189,26 +189,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         self._ordered_ids = ids
         return 1
 
-    def _refresh_ordered_ids(self, item, insert_at=None):
-        """Make sure item is in ordered_ids when it should be after
-        active status changed.
-        """
-        if not IPublishable.providedBy(item):
-            return
-        if IContent.providedBy(item) and item.is_default():
-            return
-        ids = self._ordered_ids
-        id = item.id
-        if id not in ids:
-            if insert_at:
-                ids.insert(insert_at, id)
-            else:
-                ids.append(id)
-            self._p_changed = 1
-        else:
-            ids.remove(id)
-            self._p_changed = 1
-
     def _add_ordered_id(self, item):
         """Add item to the end of the list of ordered ids.
         """
@@ -217,7 +197,15 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         # (they're added to the list of ordered ids)
         # and also for inactive objects
         # (they're not added to the list; nothing happens)
-        self._refresh_ordered_ids(item)
+        if not IPublishable.providedBy(item):
+            return
+        if IContent.providedBy(item) and item.is_default():
+            return
+        ids = self._ordered_ids
+        id = item.id
+        if id not in ids:
+            ids.append(id)
+            self._p_changed = 1
         
     def _remove_ordered_id(self, item):
         if not IPublishable.providedBy(item):
