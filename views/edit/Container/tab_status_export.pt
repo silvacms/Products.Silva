@@ -46,7 +46,8 @@
         </span>
         <div class="alert"
           style="margin-bottom:1em;"
-          tal:condition="python:len(refs) > 1">
+          tal:condition="python:len(refs) > 1"
+          i18n:translate="">
           Sorry, full media export is currently not supported for more
           than one item.  Please select one item, or select no items to export
           the whole folder.
