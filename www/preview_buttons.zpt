@@ -84,7 +84,7 @@ color: #a00;
   <span tal:define="css_class options/message_type"
     tal:attributes="class python:css_class == 'error' and 'error' or nothing">
     <a style="text-decoration:none"
-      title="Go to public version: acc-g"
+      title="Go to the public version: acc-g"
       accesskey="g"
       tal:attributes="href context/absolute_url"
       tal:omit-tag="python:css_class == 'error'">
