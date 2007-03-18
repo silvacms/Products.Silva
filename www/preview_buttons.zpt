@@ -43,9 +43,6 @@ border: 1px solid black;
 background-color: #d9f4eb;
 font-size: 11px;
 }
-span.feedback {
-color: black;
-}
 span.error {
 color: #a00;
 }
@@ -84,7 +81,15 @@ color: #a00;
 </form>
 <div class="published" 
   tal:condition="options/message">
-  <span tal:attributes="class options/message_type" 
-    tal:content="options/message" />
+  <span tal:define="css_class options/message_type"
+    tal:attributes="class python:css_class == 'error' and 'error' or nothing">
+    <a style="text-decoration:none"
+      title="Go to public version: acc-g"
+      accesskey="g"
+      tal:attributes="href context/absolute_url"
+      tal:omit-tag="python:css_class == 'error'">
+      <tal:plug content="options/message" />
+    </a>
+  </span>
 </div>
 </div>

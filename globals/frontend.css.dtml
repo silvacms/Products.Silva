@@ -76,11 +76,11 @@ div.preview>div.public {
   text-align: left;
 }
 
-.image-center {
+.align-center, .image-center {
   text-align: center;
 }
 
-.image-right {
+.align-right, .image-right {
   text-align: right;
 }
 
@@ -145,7 +145,6 @@ h6.minor {
 
 p {
   margin: 0.5em 0em;
-  text-align: left;
 }
 
 ul {
