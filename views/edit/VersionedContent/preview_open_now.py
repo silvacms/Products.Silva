@@ -19,16 +19,15 @@ if not obj.implements_versioning():
     message_type = 'error'
     publish = False
 elif obj.is_version_approved():
-    message = _('version already approved')
+    message = _('Version already approved')
     message_type = 'error'
     publish = False
-if not obj.get_unapproved_version():
+if not obj.get_unapproved_version() and not obj.is_version_approved():
     if obj.is_version_published():
         message = _('Document already published')
         message_type = 'error'
         publish = False
-    obj.create_copy()
-    
+
 if publish:
     # publish
     obj.set_unapproved_version_publication_datetime(now)
