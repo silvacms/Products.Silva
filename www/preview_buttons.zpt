@@ -1,4 +1,18 @@
 <style rel="stylesheet" type="text/css">
+div.published {
+float: right;
+margin: 0.2em 0.2em 0.1em 0.2em;
+}
+div.published span {
+margin: 0.2em 0.2em;
+padding: 1px 3px 2px;
+border: 1px solid black;
+background-color: #d9f4eb;
+font-size: 11px;
+}
+span.error {
+color: #a00;
+}
 input.transport {
 margin: 0.2em 0.2em 0.1em 0.2em;
 padding: 0 0.2em;
@@ -32,19 +46,6 @@ border-color: #8dc1a8;
 }
 input.publish {
 float: right;
-}
-div.published {
-float: right;
-margin: 0.2em 0.2em 0.1em 0.2em;
-}
-div.published span {
-padding: 1px 3px 2px;
-border: 1px solid black;
-background-color: #d9f4eb;
-font-size: 11px;
-}
-span.error {
-color: #a00;
 }
 </style>
 
