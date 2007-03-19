@@ -397,10 +397,9 @@ table.columns1 td.main {
 
 table.listing {
   width: 100%;
-  margin: 0em 0em 1em 0em;
+  margin: 0 0 1em 0;
   border-left: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
-  border-collapse: collapse;
   color: #444;
 }
 
@@ -435,8 +434,7 @@ td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
 
 table.listing tr.inter-controls td {
   color: #c9dfe2;
-  background-color : #718191;
-/*  background: &dtml-listingInterControlsBackground;; */
+  background-color : &dtml-listingInterControlsBackground;;
 }
 
 tr.divider, td.divider {
