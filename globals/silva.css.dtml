@@ -400,6 +400,7 @@ table.listing {
   margin: 0 0 1em 0;
   border-left: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
+  border-collapse: collapse;
   color: #444;
 }
 
