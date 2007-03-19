@@ -70,7 +70,7 @@ class TOCRenderingAdapter(adapter.Adapter):
         for (depth,item) in func(container=self.context,toc_depth=toc_depth):
             pd = prev_depth[-1]
             if pd < depth: #down one level
-                html.append('<ul>')
+                html.append('<ul class="toc">')
                 prev_depth.append(depth)
             elif pd > depth: #up one level
                 for i in range(pd-depth):
