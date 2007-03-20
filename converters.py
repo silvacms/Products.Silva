@@ -42,7 +42,7 @@ class WordConverter(object):
         converted = execute('antiword -f -m UTF-8 "%s" -' % fname)
 
         os.unlink(fname)
-        if 'PDF file is damaged' in converted:
+        if 'is not a Word Document' in converted or converted.startswith("I'm afraid"):
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully.
             <span class="error">The uploaded file does not appear to be a valid Word file.</span>"""

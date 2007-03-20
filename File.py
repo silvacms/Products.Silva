@@ -135,7 +135,7 @@ class File(Asset):
 
         if fulltext is None:
             return 
-        return [self.get_title(), fulltext]
+        return [self.id ,self.get_title(), fulltext]
 
     security.declareProtected(SilvaPermissions.View, 'index_html')
     def index_html(self, view_method=None):
