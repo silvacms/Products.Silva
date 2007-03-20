@@ -1,6 +1,6 @@
 <tal:def
   define="
-    model request/ghost_model | request/model;
+    model request/model;
     public options/public | nothing;
     append_to_url options/append_to_url | string:/edit/tab_edit;
 ">
