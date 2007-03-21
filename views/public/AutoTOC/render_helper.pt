@@ -1,6 +1,7 @@
 <tal:def
   define="
     model request/model;
+    toc_depth model/toc_depth;
     public options/public | nothing;
     append_to_url options/append_to_url | string:/edit/tab_edit;
 ">
