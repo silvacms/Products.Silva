@@ -1,7 +1,6 @@
 <tal:def
   define="
-    model request/ghost_model | request/model;
-    toc_depth model/toc_depth;
+    model request/model;
     public options/public | nothing;
     title_method python: test(public, 'get_title', 'get_title_editable');
     tree python: here.get_tree(model=model, toc_depth=toc_depth, public=public);
