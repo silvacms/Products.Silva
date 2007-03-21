@@ -15,7 +15,7 @@ def execute(cmd):
     return data       
 
 PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -').startswith('pdftotext')
-WORD_TO_TEXT_AVAILABLE = execute('antiword -v -').startswith('antiword') 
+WORD_TO_TEXT_AVAILABLE = execute('antiword -v').startswith('antiword') 
 
 def get_converter_for_mimetype(mimetype):
     converter = {
@@ -39,13 +39,16 @@ class WordConverter(object):
         fp.write(data)
         fp.close()
 
-        converted = execute('antiword -f -m UTF-8 "%s" -' % fname)
+        #converted = execute('antiword -f -m UTF-8 "%s" -' % fname)
+        converted = execute('antiword "%s"' % fname)
 
         os.unlink(fname)
-        if 'is not a Word Document' in converted or converted.startswith("I'm afraid"):
+        if converted.endswith('is not a Word Document.') or converted.startswith("I'm afraid"):
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully.
-            <span class="error">The uploaded file does not appear to be a valid Word file.</span>"""
+            <span class="error">
+                The uploaded file does not appear to be a valid Word file.
+            </span>"""
             return None
         return unicode(converted, 'utf8') 
 
@@ -66,7 +69,9 @@ class PDFConverter(object):
         if 'PDF file is damaged' in converted:
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully. 
-            <span class="error">The uploaded file does not appear to be a valid PDF file.</span>"""
+            <span class="error">
+                The uploaded file does not appear to be a valid PDF file.
+            </span>"""
             return None
         return unicode(converted, 'utf8')
 
