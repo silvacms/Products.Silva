@@ -502,8 +502,6 @@ class Versioning:
         now = DateTime()
         # get publication datetime of approved version
         publication_datetime = self._approved_version[1]
-        if self._first_publication_date is None:
-            self._first_publication_date = publication_datetime
         # if it is time make approved version public
         if publication_datetime and now >= publication_datetime:
             if self._public_version != empty_version:
@@ -513,6 +511,8 @@ class Versioning:
                 # unindex version (now last closed)
                 self._unindex_version(self._public_version[0])
             self._public_version = self._approved_version
+            if self._first_publication_date is None:
+                self._first_publication_date = publication_datetime
             # unindex previously approved version
             self._unindex_version(self._approved_version[0])
             self._approved_version = empty_version
