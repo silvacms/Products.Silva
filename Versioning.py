@@ -710,10 +710,7 @@ class Versioning:
         """
         if not self._first_publication_date is None:
             return self._first_publication_date
-        publication_datetime = self.get_public_version_publication_datetime()
-        if publication_datetime:
-            self._first_publication_date = publication_datetime
-        return self._first_publication_date
+        return self.get_public_version_publication_datetime()
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_publication_datetime')
