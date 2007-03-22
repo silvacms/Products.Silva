@@ -71,4 +71,3 @@ def fix_content_type_header(uploaded_file):
     if hasattr(uploaded_file, 'headers'):
         if uploaded_file.headers.has_key('content-type'):            
             del uploaded_file.headers['content-type']
-            

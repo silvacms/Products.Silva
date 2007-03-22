@@ -6,8 +6,8 @@ from Products.Silva.interfaces import IVersion
 class CatalogTestCase(SilvaTestCase.SilvaTestCase):
 
     def assertStatus(self, path, statuses):
-        results = self.catalog.searchResults(version_status=statuses,
-                                             path=path)
+        results = self.catalog.searchResults(
+            version_status=statuses, path=path)
         # should get as many entries as statuses
         self.assertEquals(len(statuses), len(results))
 
@@ -46,7 +46,7 @@ class VersionCatalogTestCase(CatalogTestCase):
         self.add_document(self.silva, 'alpha', 'Alpha')
         self.alpha = self.silva.alpha
         
-    def test_pristine(self): 
+    def test_pristine(self):
         self.silva.manage_delObjects(['alpha'])
         self.assertPristineCatalog()
 

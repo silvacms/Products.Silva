@@ -26,13 +26,13 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         app = app.aq_base
         request_out = self.request_out = StringIO()
         return utils.makerequest(app, request_out)
-   
+
     def test_imageformat(self):
         image_file = StringIO('invalid-image-format')
-        
+
         self.assertRaises(ValueError, self.root.manage_addProduct['Silva'].\
             manage_addImage, 'testimage', 'Test Image', image_file)
-    
+
     def _getimage_test(self):
         image_file = open('test_image_data/photo.tif', 'rb')
         image_data = image_file.read()
@@ -42,7 +42,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         image_file.close()
         image = self.root.testimage
         image.set_web_presentation_properties('JPEG', '100x100', '')
-        
+
         self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
 
         if not havePIL:
@@ -55,17 +55,16 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
 
         it = image.getImage(hires=1, webformat=0)
         self.assertEquals(image_data, it)
-        
+
         it = image.getImage(hires=1, webformat=1)
         pil_image = PIL.Image.open(StringIO(it))
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
-        
-    
+
     def test_getImage_zodb(self):
         self.root.service_files.manage_filesServiceEdit('', 0, '')
         self._getimage_test()
-    
+
     def test_getImage_extfile(self):
         self.root.service_files.manage_filesServiceEdit('', 1, '')
         self._getimage_test()
@@ -89,7 +88,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         pil_image = PIL.Image.open(StringIO(it))
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
-        
+
         request.QUERY_STRING = 'hires'
         data = image.index_html(request)
         it = self._get_req_data(data)
@@ -97,7 +96,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('TIFF', pil_image.format)
         self.assertEquals(image_data, it)
-        
+
         request.QUERY_STRING = 'thumbnail'
         data = image.index_html(request)
         it = self._get_req_data(data)
@@ -113,7 +112,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
     def test_index_html_zodb(self):
         self.root.service_files.manage_filesServiceEdit('', 0, '')
         self._test_index_html()
-        
+
     def _get_req_data(self, data):
         if data:
             s = data

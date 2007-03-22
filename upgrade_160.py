@@ -87,7 +87,7 @@ class AutoTOCUpgrader:
         if not hasattr(autotoc, '_toc_depth'):
             autotoc._toc_depth = -1
         return autotoc
-    
+
 class CatalogRefresher:
     """Refreshes the whole Silva catalog"""
     interface.implements(IUpgrader)
@@ -118,7 +118,6 @@ class InvisibleMan:
              'service_sub_editor', 'service_sub_previewer',
              'service_sub_viewer',
              'service_table_editor', 'service_table_viewer',
-
              'service_annotations']
 
     def upgrade(self, obj):

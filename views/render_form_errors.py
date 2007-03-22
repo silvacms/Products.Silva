@@ -21,7 +21,7 @@ if len(validation_error.errors) == 1:
 
     # translate error_text and title first
     error_text = translate(error_text, context=request)
-    title = translate(title, context=request)    
+    title = translate(title, context=request)
 
     result.append('%s: %s' % (title, error_text))
     return (''.join(result))

@@ -90,8 +90,6 @@ class IndexUpgrader:
                 'Silva', zLOG.INFO,
                 'Skipping already upgraded index %s' % obj.id)
             return obj
-        if not hasattr(obj, '_unindex'):
-            print repr(obj)
         zLOG.LOG(
             'Silva', zLOG.INFO, 'Upgrading index %s' % obj.id)
         obj._length = Length(len(obj._unindex))

@@ -223,7 +223,6 @@ class TreeWithPublicationsTestCase(SilvaTestCase.SilvaTestCase):
             doc.approve_version()
 
     def testget_navigation_next(self):
-        #import pdb; pdb.set_trace()
         next = self.i.get_navigation_next()
         self.assertEquals('m', next.id)
     

@@ -32,7 +32,7 @@
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
-    ct  python: mangle.String.centeredTruncate;
+    ct python: mangle.String.centeredTruncate;
 ">
   <tbody>
     <tr>
@@ -295,7 +295,7 @@
             <a class="icon"
               tal:attributes="
                 href python:here.get_editor_link(item);
-                title item/meta_type">
+                title item/meta_type;">
               <img tal:replace="structure python:view.render_icon(item)" />
             </a>
             <a class="blacklink"

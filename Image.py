@@ -42,7 +42,7 @@ except ImportError:
 
 try:
     from Products.ExtFile.ExtImage import ExtImage
-except ImportError:  
+except ImportError:
     pass
 
 from interfaces import IImage, IUpgrader
@@ -57,11 +57,11 @@ class Image(Asset):
 
     __implements__ = (WriteLockInterface,)
     implements(IImage)
-    
+
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
     re_box = re.compile(r'^([0-9]+)[Xx]([0-9]+)-([0-9]+)[Xx]([0-9]+)')
-    
+
     thumbnail_size = 120
 
     hires_image = None
@@ -79,17 +79,17 @@ class Image(Asset):
 
     def __init__(self, id, title):
         Image.inheritedAttribute('__init__')(self, id, title)
-        self.image = None # should create default 
-     
-    # commented this out to shut up a security warning. assuming this is safe 
-    # as image is a full-blown zope object with its own security checks   
+        self.image = None # should create default
+
+    # commented this out to shut up a security warning. assuming this is safe
+    # as image is a full-blown zope object with its own security checks
     #security.declareProtected(SilvaPermissions.AccessContentsInformation,
     #                          'image')
 
     security.declareProtected(SilvaPermissions.View, 'index_html')
     def index_html(self, view_method=None, REQUEST=None):
         """view image data
-        
+
         view_method: parameter is set by preview_html (for instance) but
             ignored here.
         """
@@ -141,7 +141,7 @@ class Image(Asset):
                               'set_title')
     def set_title(self, title):
         """Set the title of the silva object.
-        Overrides SilvaObject set_title() to accomodate the OFS.Image.Image 
+        Overrides SilvaObject set_title() to accomodate the OFS.Image.Image
         title attribute - which in turn is used in the tag() method.
         """
         self._title = title # legacy I guess
@@ -152,7 +152,7 @@ class Image(Asset):
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """sets format and scaling for web presentation
 
-            web_format (str): either JPEG or PNG (or whatever other format 
+            web_format (str): either JPEG or PNG (or whatever other format
                 makes sense, must be recognised by PIL)
             web_scale (str): WidthXHeight or nn.n%
             web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping
@@ -160,7 +160,7 @@ class Image(Asset):
             raises ValueError if web_scale cannot be parsed.
 
             automaticaly updates cached web presentation image
-            
+
         """
         update_cache = 0
         if self.hires_image is None:
@@ -182,7 +182,7 @@ class Image(Asset):
             self.web_crop = web_crop
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
-   
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_image')
     def set_image(self, file):
@@ -300,11 +300,11 @@ class Image(Asset):
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
         """returns width, heigt of (hi res) image
-        
+
             raises ValueError if there is no way of determining the dimenstions
             return 0, 0 if there is no image
             returns width, height otherwise
-        
+
         """
         if img is None:
             img = self.hires_image
@@ -360,11 +360,11 @@ class Image(Asset):
             return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
         else:
             return self._get_image_data(image).read()
-        
+
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
         """ return xhtml tag
-        
+
         Since 'class' is a Python reserved word, it cannot be passed in
         directly in keyword arguments which is a problem if you are
         trying to use 'tag()' to include a CSS class. The tag() method
@@ -375,17 +375,17 @@ class Image(Asset):
         title = self.get_title_or_id()
         width, height = self.getDimensions(image)
         named = []
-        
+
         if kw.has_key('css_class'):
             kw['class'] = kw['css_class']
             del kw['css_class']
-            
+
         for name, value in kw.items():
             named.append('%s="%s"' % (escape(name), escape(value)))
         named = ' '.join(named)
         return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
             img_src, width, height, escape(title), named)
-            
+
     security.declareProtected(SilvaPermissions.View, 'tag')
     def url(self, hires=0, thumbnail=0):
         "return url of image"
@@ -418,7 +418,7 @@ class Image(Asset):
     def canScale(self):
         """returns if scaling/converting is possible"""
         return havePIL
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
     def getFileSystemPath(self):
@@ -442,8 +442,8 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
     def getOrientationClass(self):
-        """ returns Image orientation 
-          
+        """ returns Image orientation
+
             untranslated string that can be used as class name
         """
         width, height = self.getDimensions()
@@ -488,7 +488,7 @@ class Image(Asset):
 
     def get_file_size(self):
         return self.hires_image.get_size()
-    
+
     security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
     def get_scaled_file_size(self):
         return self.image.get_size()
@@ -619,7 +619,7 @@ class Image(Asset):
         if created:
             image.manage_afterAdd(image, self)
         return image
-    
+
     def _useFSStorage(self):
         """return true if we should store images on the filesystem"""
         service_files = getattr(self, 'service_files', None)
@@ -739,7 +739,7 @@ class ImageStorageConverter:
         self._restore_image(asset, 'hires_image')
         asset._createDerivedImages()
         zLOG.LOG(
-            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(asset.getPhysicalPath())) 
+            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(asset.getPhysicalPath()))
         return asset
 
     def _restore_image(self, asset, id):
@@ -773,7 +773,7 @@ def image_factory(self, id, content_type, body):
     id = str(id)
     img = Image(id, id).__of__(self)
     return img
-    
+
 def _should_create_image(id, content_type, body):
     return content_type.startswith('image/')
 

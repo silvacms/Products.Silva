@@ -72,7 +72,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         )
 
     _allow_feeds = False
-    
+
     implements(IFolder)
         
     def __init__(self, id):
@@ -205,6 +205,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         id = item.id
         if id not in ids:
             ids.append(id)
+            self._ordered_ids = ids
             self._p_changed = 1
         
     def _remove_ordered_id(self, item):
@@ -216,6 +217,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         if item.id in ids:
             ids.remove(item.id)
             self._ordered_ids = ids
+            self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent, 
                               'refresh_active_publishables')
@@ -408,7 +410,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             item = item._getCopy(self)
             item._setId(paste_id)
             self._setObject(paste_id, item)
-
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_allow_feeds')
