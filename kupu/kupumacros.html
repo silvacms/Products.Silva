@@ -1,10 +1,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="kupu">
 
-  
+
     <head>
       <metal:block xmlns:metal="http://xml.zope.org/namespaces/metal" define-macro="jsincludes">
-      
+
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="sarissa.js" tal:attributes="src string:${root_url}/service_kupu/sarissa.js"> </script>
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupuhelpers.js" tal:attributes="src string:${root_url}/service_kupu/kupuhelpers.js"> </script>
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupunoi18n.js" tal:attributes="src string:${root_url}/service_kupu/kupunoi18n.js"> </script>
@@ -15,41 +15,41 @@
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupucontentfilters.js" tal:attributes="src string:${root_url}/service_kupu/kupucontentfilters.js"> </script>
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusourceedit.js" tal:attributes="src string:${root_url}/service_kupu/kupusourceedit.js"> </script>
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupucleanupexpressions.js" tal:attributes="src string:${root_url}/service_kupu/kupucleanupexpressions.js"> </script>
-    
+
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kuputoolcollapser.js" tal:attributes="src string:${root_url}/service_kupu/kuputoolcollapser.js"> </script>
 
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusilvatools.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvatools.js"> </script>
-  
-      
-  
-      
-  
-      
-      
+
+
+
+
+
+
+
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusilvainit.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvainit.js"> </script>
     <script type="text/javascript">
 	var kupu = null;
 	var kupuui = null;
 	function startKupu() {
-	    var frame = getFromSelector('kupu-editor'); 
-	    kupu = initSilvaKupu(frame); 
-	    kupuui = kupu.getTool('ui'); 
+	    var frame = getFromSelector('kupu-editor');
+	    kupu = initSilvaKupu(frame);
+	    kupuui = kupu.getTool('ui');
 	    kupu.initialize();
 	};
         // register the function to the unload registry
         window.onload_registry.register(startKupu);
     </script>
-  
+
     </metal:block>
     </head>
-  
+
     <body>
       <metal:macro xmlns:metal="http://xml.zope.org/namespaces/metal" define-macro="body">
-        
+
     <div style="display: none;">
       <xml id="kupuconfig" class="kupuconfig">
         <kupuconfig>
-          
+
     <dst>..</dst>
     <use_css>0</use_css>
     <reload_after_save>1</reload_after_save>
@@ -186,30 +186,30 @@
       </set>
     </cleanup_expressions>
 
-  
+
         </kupuconfig>
       </xml>
     </div>
-  
+
     <div class="kupu-fulleditor">
-      
+
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusaveonpart.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusaveonpart.js"> </script>
-  
+
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupucontextmenu.js" tal:attributes="src string:${root_url}/service_kupu/kupucontextmenu.js"> </script>
-  
+
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    
+
         <tr>
           <td colspan="2">
-            
+
     <div class="kupu-tb" id="toolbar">
-      
+
     <span id="kupu-tb-buttons" class="kupu-tb-buttons">
-      
+
     <span class="kupu-tb-buttongroup kupu-logo" style="float: right" id="kupu-logo">
       <button type="button" class="kupu-logo" title="Kupu 1.3.5" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
     </span>
-  
+
     <select id="kupu-tb-styles" onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
       <optgroup label="paragraph">
         <option value="P|normal">plain</option>
@@ -226,44 +226,44 @@
       </optgroup>
       <option value="PRE">preformatted</option>
     </select>
-  
+
     <span class="kupu-tb-buttongroup">
       <button type="button" class="kupu-save" id="kupu-save-button" title="save: alt-s" i18n:attributes="title" accesskey="s">&#160;</button>
     </span>
-  
+
     <span class="kupu-tb-buttongroup" id="kupu-bg-basicmarkup">
       <button type="button" class="kupu-bold" id="kupu-bold-button" title="bold: alt-b" i18n:attributes="title" accesskey="b">&#160;</button>
       <button type="button" class="kupu-italic" id="kupu-italic-button" title="italic: alt-i" i18n:attributes="title" accesskey="i">&#160;</button>
       <button type="button" class="kupu-underline" id="kupu-underline-button" title="underline: alt-u" i18n:attributes="title" accesskey="u">&#160;</button>
     </span>
-  
+
     <span class="kupu-tb-buttongroup" id="kupu-bg-subsuper">
       <button type="button" class="kupu-subscript" id="kupu-subscript-button" title="subscript: alt--" i18n:attributes="title" accesskey="-">&#160;</button>
       <button type="button" class="kupu-superscript" id="kupu-superscript-button" title="superscript: alt-+" i18n:attributes="title" accesskey="+">&#160;</button>
     </span>
-  
+
               <span class="kupu-tb-buttongroup" id="kupu-bg-list">
-      
+
       <button type="button" class="kupu-insertorderedlist" title="numbered list: alt-#" id="kupu-list-ol-addbutton" i18n:attributes="title" accesskey="#">&#160;</button>
       <button type="button" class="kupu-insertunorderedlist" title="unordered list: alt-*" id="kupu-list-ul-addbutton" i18n:attributes="title" accesskey="*">&#160;</button>
               </span>
-  
+
     <span class="kupu-tb-buttongroup" id="kupu-bg-definitionlist">
-      
+
       <button type="button" class="kupu-insertdefinitionlist" title="definition list: alt-=" id="kupu-list-dl-addbutton" i18n:attributes="title" accesskey="=">&#160;</button>
     </span>
-  
+
     <span class="kupu-tb-buttongroup" id="kupu-bg-undo">
       <button type="button" class="kupu-undo" id="kupu-undo-button" title="undo: alt-z" i18n:attributes="title" accesskey="z">&#160;</button>
       <button type="button" class="kupu-redo" id="kupu-redo-button" title="redo: alt-y" i18n:attributes="title" accesskey="y">&#160;</button>
     </span>
-  
+
     <span class="kupu-tb-buttongroup kupu-source-span" id="kupu-source">
       <button type="button" class="kupu-source" id="kupu-source-button" title="edit HTML code" i18n:attributes="title" accesskey="h">&#160;</button>
     </span>
-  
+
     </span>
-  
+
     <select id="kupu-ulstyles" class="kupu-ulstyles">
       <option value="disc" i18n:translate="list-disc">&#9679;</option>
       <option value="square" i18n:translate="list-square">&#9632;</option>
@@ -277,27 +277,27 @@
       <option value="upper-alpha" i18n:translate="list-upperalpha">A</option>
       <option value="lower-alpha" i18n:translate="list-loweralpha">a</option>
     </select>
-  
+
     </div>
-  
+
           </td>
         </tr>
 
         <tr>
           <td valign="top">
-            
+
     <div class="kupu-editorframe">
       <iframe id="kupu-editor" class="kupu-editor-iframe" width="99%" frameborder="0" src="kupu_content" scrolling="auto" charset="UTF-8">
       </iframe>
     </div>
     <textarea class="kupu-editor-textarea" id="kupu-editor-textarea"> </textarea>
-  
+
           </td>
-    
+
           <td style="width: 23em;" valign="top">
-            
+
     <div class="kupu-toolboxes" id="kupu-toolboxes">
-      
+
     <div class="kupu-toolbox" id="kupu-toolbox-properties">
       <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>
 
@@ -317,7 +317,7 @@
       </div>
 
     </div>
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-links">
       <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: '/'.join(container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path);             }, '${container/absolute_url}',             '', true);;         }       "/>
 
@@ -344,7 +344,7 @@
 
       </div>
     </div>
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-indexes">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">anchor/index item</h1>
@@ -380,7 +380,7 @@
       </div>
     </div>
 
-  
+
 
     <div class="kupu-toolbox" id="kupu-toolbox-images">
 
@@ -394,7 +394,7 @@
       <form xmlns:tal="http://xml.zope.org/namespaces/tal" name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
 
         <input type="button" class="transport" onclick="getImage()" value="get image reference..."/>
-              
+
         <div id="kupu-toolbox-image-edit" style="color: black; display: none">
           <input type="button" class="transport" value="edit image..." tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')"/>
           <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%"/>
@@ -420,14 +420,14 @@
           &#160;tooltip:<br/>
           <input type="text" id="kupu-toolbox-image-alt" style="margin-left:0.2em; width: 96%"/><br/>
           <input type="button" class="button" value="update image"/>
-        
+
         </div>
       </form>
 
     </div>
 
     </div>
-  
+
 
     <div class="kupu-toolbox" id="kupu-toolbox-abbr">
 
@@ -467,10 +467,10 @@
         </form>
 
       </div>
-    
+
     </div>
 
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-cleanupexpressions">
       <h1 class="kupu-toolbox-heading" i18n:translate="">cleanup</h1>
       <div class="kupu-tooltray">
@@ -479,16 +479,16 @@
         <input class="button" type="button" id="kupucleanupexpressionbutton" value="perform"/>
       </div>
     </div>
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-extsource">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">external source</h1>
 
       <div class="kupu-tooltray">
-        
+
         <div id="kupu-extsource-formcontainer">
         </div>
-           
+
         <form name="kupu_extsource_form" onsubmit="return false">
           <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
             <tal:block repeat="extsource sorted_objects">
@@ -497,17 +497,17 @@
               </tal:block>
             </tal:block>
           </select>
-          
+
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton"/>
           <input class="cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
           <input class="button" type="button" value="update source" id="kupu-extsource-updatebutton"/>
           <input class="warning" type="button" value="remove" id="kupu-extsource-delbutton"/>
         </form>
-      
+
       </div>
-    
+
     </div>
-  
+
 
     <div class="kupu-toolbox" id="kupu-toolbox-citation">
 
@@ -544,14 +544,14 @@
         </form>
 
       </div>
-    
+
     </div>
 
-  
+
 
     <div class="kupu-toolbox" id="kupu-toolbox-tables">
-    
-    
+
+
     <h1 class="kupu-toolbox-heading" i18n:translate="">table</h1>
 
     <div class="kupu-tooltray">
@@ -644,13 +644,13 @@
           </tr>
         </tbody>
       </table>
-    
+
     </div>
 
-    
+
       </div>
 
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-toc">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">table of contents</h1>
@@ -673,44 +673,44 @@
           <input class="button" type="button" value="add toc" id="kupu-toc-add-button"/>
           <input class="warning" type="button" value="remove" id="kupu-toc-del-button"/>
         </form>
-        
+
       </div>
 
     </div>
 
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">
-    
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
       <div class="kupu-tooltray">
-        
+
         &#8364; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183;
       </div>
 
     </div>
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-save">
-    
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">save</h1>
       <div class="kupu-tooltray">
-        <form action="." method="POST" onsubmit="return false">
+        <form action="." method="post" onsubmit="return false">
           <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()"/>
         </form>
       </div>
 
     </div>
-  
+
     </div>
-  
+
           </td>
         </tr>
 
       </table>
     </div>
-  
+
       </metal:macro>
     </body>
-  
+
 
 </html>
-  
+

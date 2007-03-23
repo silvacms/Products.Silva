@@ -26,16 +26,16 @@
       </tal:block>
       <td class="main">
 
-<form method="POST" 
-  name="form" 
+<form method="post"
+  name="form"
   action="submit"
-  tal:condition="model/get_unapproved_version" 
+  tal:condition="model/get_unapproved_version"
   tal:define="
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
 ">
- 
+
   <table class="listing">
     <thead>
       <tal:block replace="nothing">
@@ -45,7 +45,7 @@
         <td class="top"
           colspan="3">
           <h2>
-            <img tal:replace="structure python:view.render_icon(model)" 
+            <img tal:replace="structure python:view.render_icon(model)"
               tal:attributes="title model/meta_type" />
             <tal:block i18n:translate="">ghost of &#xab;<tal:block i18n:name="name" content="title" />&#xbb;</tal:block>
           </h2>
@@ -70,8 +70,8 @@
 
       <tr class="even">
         <td class="align-right">
-          <input class="transport" 
-            type="button" 
+          <input class="transport"
+            type="button"
             value="reference..."
             title="Locate item to refer to: alt-r"
             accesskey="r"
@@ -91,8 +91,8 @@
           <input style="width:100%;"
             type="text"
             name="content_url"
-            size="60" 
-            value="" 
+            size="60"
+            value=""
             tal:attributes="value content_url"
           />
         </td>
@@ -135,7 +135,7 @@
 
     <tfoot>
       <tr class="controls">
-        <td class="align-right" 
+        <td class="align-right"
           colspan="3">
           <input class="button"
             type="submit"
@@ -150,16 +150,16 @@
     </tfoot>
   </table>
 </form>
-        
+
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         &nbsp;
       </td>
     </tr>
   </tbody>
 </table>
-        
+
 </html>

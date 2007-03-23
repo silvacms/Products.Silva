@@ -21,7 +21,7 @@ Version of this file: $Revision: 1.8 $
 <h4><a href="../manage_services">Silva Services</a></h4>
 
 <div class="form-title">Docma service settings</div><br />
-<form method="POST" action="." enctype="multipart/form-data">
+<form method="post" action="." enctype="multipart/form-data">
 <div class="form-text">DocmaServer host name or IP address:</div>
 <input type="text" class="form-element" name="host" tal:attributes="value view/host" /><br /><br />
 <div class="form-text">Port:</div>

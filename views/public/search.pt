@@ -7,7 +7,7 @@
   <body>
     <metal:block fill-slot="main">
     <metal:block define-macro="search">
-      <form method="POST" name="form"
+      <form method="post" name="form"
         tal:define="
           icon python:here.render_icon(here)"
         tal:attributes="action string:${here/absolute_url}/public/search_results">

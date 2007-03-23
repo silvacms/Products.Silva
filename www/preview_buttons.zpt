@@ -22,9 +22,9 @@ background: #283365;
 font-size: 11px;
 cursor: pointer;
 }
-input.transport[type="submit"]:hover, input.transport[type="button"]:hover { 
-color: #e5fffe; 
-background-color: #74748b; 
+input.transport[type="submit"]:hover, input.transport[type="button"]:hover {
+color: #e5fffe;
+background-color: #74748b;
 border-color: #99b4cf;
 }
 input.back {
@@ -39,9 +39,9 @@ background-color: #284d5b;
 font-size: 11px;
 cursor: pointer;
 }
-input.executor[type="submit"]:hover { 
-color: #e5ffec; 
-background-color: #4393a3; 
+input.executor[type="submit"]:hover {
+color: #e5ffec;
+background-color: #4393a3;
 border-color: #8dc1a8;
 }
 input.publish {
@@ -50,7 +50,7 @@ float: right;
 </style>
 
 <div class="publisher">
-<form class="publisher" method="POST"
+<form class="publisher" method="post"
   tal:attributes="action string:${here/absolute_url}/edit/preview_open_now">
 <tal:if condition="options/back_url">
 <input class="transport back"
@@ -80,7 +80,7 @@ float: right;
   i18n:attributes="title"
 />
 </form>
-<div class="published" 
+<div class="published"
   tal:condition="options/message">
   <span tal:define="css_class options/message_type"
     tal:attributes="class python:css_class == 'error' and 'error' or nothing">

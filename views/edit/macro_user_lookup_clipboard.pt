@@ -14,10 +14,10 @@
     style="padding-bottom:0;">
     <metal:block define-macro="clipboard_no_style">
       <form action="."
-        method="POST"
+        method="post"
         tal:define="
           clipboard_members python: view.lookup_get_selection().keys();
-          dummy python: clipboard_members.sort()"        
+          dummy python: clipboard_members.sort()"
         >
         <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
@@ -29,9 +29,9 @@
             <tr class="top-controls">
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
-                  <a class="transport" 
-                    style="float:right;"                    
-                    title="lookup users: alt-l" 
+                  <a class="transport"
+                    style="float:right;"
+                    title="lookup users: alt-l"
                     accesskey="l"
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate=""

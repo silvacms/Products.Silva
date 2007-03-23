@@ -48,7 +48,7 @@
     </tal:block>
     <td class="main">
 
-<form action="." enctype="multipart/form-data" method="POST">
+<form action="." enctype="multipart/form-data" method="post">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
@@ -123,7 +123,7 @@
             name="tab_edit_import_xml:method"
             title="access key: alt-i"
             accesskey="i"
-            i18n:attributes="value;title"  
+            i18n:attributes="value;title"
           />
         </td>
       </tr>
@@ -135,7 +135,7 @@
   ____________________________ upload zip file____________________________
 </tal:block>
 
-<form action="." enctype="multipart/form-data" method="POST">
+<form action="." enctype="multipart/form-data" method="post">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
@@ -220,7 +220,7 @@
         </td>
         <td i18n:translate="">
           Recreate the subdirectory structure of a zip file with Assets by
-          adding Silva Folders. 
+          adding Silva Folders.
         </td>
       </tr>
       <tr class="even">
@@ -250,7 +250,7 @@
             name="import_archive_file:method"
             title="access key: alt-z"
             accesskey="z"
-            i18n:attributes="value;title"  
+            i18n:attributes="value;title"
           />
         </td>
       </tr>
@@ -272,7 +272,7 @@
   global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
 
-<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
+<form class="sublisting" action="." enctype="multipart/form-data" method="post">
   <table class="listing">
     <thead>
       <tr tal:replace="nothing">
@@ -286,7 +286,7 @@
               border="0"
               width="16"
               height="16"
-              alt="docma icon" 
+              alt="docma icon"
               tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
@@ -369,11 +369,11 @@
       <tr class="inter-controls">
         <td class="align-right"
           colspan="3">
-          <input class="button" 
-            type="submit" 
-            value="upload" 
-            name="tab_edit_import_docma:method" 
-            title="upload a word document from your local drive: alt-u" 
+          <input class="button"
+            type="submit"
+            value="upload"
+            name="tab_edit_import_docma:method"
+            title="upload a word document from your local drive: alt-u"
             accesskey="u"
             i18n:attributes="value;title"
           />

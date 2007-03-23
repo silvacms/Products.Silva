@@ -20,7 +20,7 @@
 <h2 i18n:translate="">membership</h2>
 
 <form action="request_roles_submit"
-  method="POST"
+  method="post"
   tal:define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())">
 <input type="hidden"
   name="last_url"
@@ -59,7 +59,7 @@
     <tal:repeat repeat="role view/get_available_roles">
     <input class="min"
       type="checkbox"
-      name="roles:list" 
+      name="roles:list"
       tal:attributes="
         value role;
         id role;
@@ -73,7 +73,7 @@
   <input class="button"
     style="float:right;"
     type="submit"
-    value=" Send request " 
+    value=" Send request "
     title="Send request for role: alt-s"
     accesskey="s"
     i18n:attributes="value;title"

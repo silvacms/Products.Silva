@@ -26,7 +26,7 @@
       </tal:block>
       <td class="main">
 
-<form method="POST" name="form" action=".">
+<form method="post" name="form" action=".">
   <table class="listing">
     <thead
       tal:define="meta_type model/meta_type">
@@ -37,10 +37,10 @@
         <td class="top"
           colspan="2">
           <h2>
-            <img tal:replace="structure icon" 
+            <img tal:replace="structure icon"
               tal:attributes="title model/meta_type" />
             <span style="text-transform:lowercase;"
-              tal:content="meta_type">meta type</span> 
+              tal:content="meta_type">meta type</span>
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
           </h2>
         </td>
@@ -113,9 +113,9 @@
 
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         <metal:block define-slot="info" />
       </td>
     </tr>
@@ -130,7 +130,7 @@
   ______________ for File and Image ______________
 </tal:block>
 <metal:define-macro define-macro="uploader">
-<form method="POST"
+<form method="post"
   action="."
   name="form"
   enctype="multipart/form-data">

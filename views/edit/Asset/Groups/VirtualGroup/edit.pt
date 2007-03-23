@@ -11,7 +11,7 @@
     has_access here/has_change_access_permission;"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
-  
+
 <table class="columns columns3">
   <tbody>
     <tr>
@@ -40,10 +40,10 @@
       <td class="top"
         colspan="3">
         <h2>
-          <img tal:replace="structure python:view.render_icon(model)" 
+          <img tal:replace="structure python:view.render_icon(model)"
             tal:attributes="title model/meta_type" />
           <span style="text-transform:lowercase;"
-            tal:content="model/meta_type">Meta type</span> 
+            tal:content="model/meta_type">Meta type</span>
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
         </h2>
       </td>
@@ -59,7 +59,7 @@
 
   <tbody tal:condition="has_access">
     <form action="."
-      method="POST"
+      method="post"
       tal:define="groupids model/listGroups"
       tal:condition="model/isValid | nothing">
       <tr>
@@ -111,7 +111,7 @@
             tal:condition="groupids"
             i18n:attributes="title;value"
           />
-        </td> 
+        </td>
       </tr>
     </form>
   </tbody>
@@ -124,7 +124,7 @@
       </td>
 
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
       <td class="right">
         <tal:block condition="has_access">
@@ -141,7 +141,7 @@
                   name="add_groups_to_virtualgroup:method"
                   title="add group(s) to this virtual group."
                   type="submit"
-                  value="add to group" 
+                  value="add to group"
                   i18n:attributes="title;value"
                 />
               </metal:block>
@@ -159,7 +159,7 @@
               <metal:block fill-slot="listing_actions">
                 <input class="button"
                   type="submit"
-                  value="copy from virtual group(s)" 
+                  value="copy from virtual group(s)"
                   name="add_groups_from_virtualgroup_to_virtualgroup:method"
                   title="transfer groups defined in other virtual groups"
                   i18n:attributes="title;value"

@@ -27,9 +27,9 @@
     type  model/meta_type;
     path  model/getPhysicalPath;
     url   model/absolute_url;
-    
+
     title python: model.get_title_editable() or model.id;
-    
+
     subscribable request/subscribable;
     "
   tal:condition="may_approve_content"
@@ -53,7 +53,7 @@
       <td class="main">
         <tal:block>
           <tal:block condition="subscribable">
-            <form method="POST" name="form" action="." enctype="multipart/form-data"
+            <form method="post" name="form" action="." enctype="multipart/form-data"
               tal:define="form context/tab_subscriptions_form"
               >
               <table class="listing">
@@ -65,7 +65,7 @@
                     <td class="top"
                       colspan="3">
                       <h2 i18n:translate="">
-                        <img tal:replace="structure python:view.render_icon(model)" 
+                        <img tal:replace="structure python:view.render_icon(model)"
                           tal:attributes="title model/meta_type" />
                         manage subscriptions for
                         &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
@@ -126,7 +126,7 @@
               </table>
             </form>
           </tal:block>
-          <tal:block 
+          <tal:block
             condition="not:subscribable"
             i18n:translate=""
             >
@@ -135,9 +135,9 @@
         </tal:block>
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         <div class="info"
           tal:define="
             subscribable request/subscribable;
@@ -148,7 +148,7 @@
               style="margin-top:-1px;"
               width="13"
               height="9"
-              alt="subscriptions icon" 
+              alt="subscriptions icon"
               tal:attributes="src string:${root_url}/globals/subscribe.gif"
               i18n:attributes="alt"
             />
@@ -188,7 +188,7 @@
             <tal:block i18n:translate=""
               condition="not: numberofsubscriptions">
               No other subscriptions for this object.
-            </tal:block>            
+            </tal:block>
           </p>
         </div>
       </td>

@@ -75,8 +75,8 @@
         </div>
 
     <form tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model) and len(refs) == 1"
-      action="." enctype="multipart/form-data" method="POST">
-      <input type="hidden" 
+      action="." enctype="multipart/form-data" method="post">
+      <input type="hidden"
         name="refs"
         tal:attributes="value python: '||'.join(refs)" />
       <table class="listing">
@@ -147,7 +147,7 @@
               />
           </td>
           <td i18n:translate="">
-            If not checked all versions are exported. 
+            If not checked all versions are exported.
           </td>
         </tr>
       </tbody>
@@ -169,10 +169,10 @@
       </tfoot>
       </table>
       </form>
-      
-      <form action="." enctype="multipart/form-data" method="POST"
+
+      <form action="." enctype="multipart/form-data" method="post"
         tal:condition="view/service_docmapdf | nothing">
-        <input type="hidden" 
+        <input type="hidden"
           name="refs"
           tal:attributes="value python: '||'.join(refs)" />
         <table class="listing">
@@ -290,8 +290,8 @@
   global qls python:len(queue) != 0;
   global processingident view/service_docma/get_processing_ident;" />
 
-<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
-  <input type="hidden" 
+<form class="sublisting" action="." enctype="multipart/form-data" method="post">
+  <input type="hidden"
     name="refs"
     tal:attributes="value python: '||'.join(refs)" />
   <table class="listing">
@@ -307,7 +307,7 @@
               border="0"
               width="16"
               height="16"
-              alt="docma icon" 
+              alt="docma icon"
               tal:attributes="src string:${root_url}/globals/docma.png"
               i18n:attributes="alt"
             />
@@ -488,7 +488,7 @@
     onclick="return confirm('Really remove?')"
     title="there's no undo: alt-x"
     type="submit"
-    value="remove" 
+    value="remove"
     i18n:attributes="value;title"
   />
 </metal:fill-slot>

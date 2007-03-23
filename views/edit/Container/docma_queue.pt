@@ -31,7 +31,7 @@
   _____________________ processing table  _____________________
 </span>
 <a href="queue" />
-<form action="." enctype="multipart/form-data" method="POST"
+<form action="." enctype="multipart/form-data" method="post"
   tal:condition="docma_running">
   <table class="listing">
     <thead>
@@ -132,7 +132,7 @@
 </span>
 
 <form action="."
-  method="POST"
+  method="post"
   name="finishedJobQueue">
 
   <table class="listing"
@@ -153,7 +153,7 @@
     <tbody>
       <tr tal:condition="ls">
         <th class="align-right"
-          width="4%" 
+          width="4%"
           i18n:translate="">
           job id
         </th>
@@ -164,8 +164,8 @@
         <th i18n:translate="">
           description
         </th>
-        <th class="align-right" 
-          width="10%" 
+        <th class="align-right"
+          width="10%"
           i18n:translate="">
           download
         </th>
@@ -234,15 +234,15 @@
                 onclick="return confirm('Really remove?')"
                 title="there's no undo: alt-x"
                 type="submit"
-                value="remove" 
-                i18n:attributes="value;title" 
+                value="remove"
+                i18n:attributes="value;title"
               />
               <input class="button"
                 accesskey="m"
                 name="tab_edit_import_import_and_delete:method"
                 title="import to the current location and remove from the list: alt-m"
                 type="submit"
-                value="import and remove" 
+                value="import and remove"
                 i18n:attributes="value;title" />
               <input class="button"
                 accesskey="p"

@@ -46,14 +46,14 @@
     </tr>
   </thead>
 
-<form action="." method="POST"
+<form action="." method="post"
   tal:condition="python:user.has_permission('Change Silva access', model)">
   <!-- this form deliberately has no submit button -->
   <tbody>
     <tr class="top-controls">
       <td>
         <h3 i18n:translate="">
-          listing of all authorized users below this level 
+          listing of all authorized users below this level
         </h3>
       </td>
     </tr>
@@ -63,12 +63,12 @@
         <tal:block i18n:translate="">Addresses are formatted for copying and
           pasting in the &#8216;To:&#8217; field of an email message.</tal:block>
         <br />
-        <textarea 
+        <textarea
           class="store"
           name="data"
           cols="60"
           rows="5"
-          wrap="soft" 
+          wrap="soft"
           tal:content="view/tab_access_get_emails" />
       </td>
     </tr>

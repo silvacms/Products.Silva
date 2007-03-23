@@ -7,7 +7,7 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     xmlns:tal="http://xml.zope.org/namespaces/tal"
     >
-    
+
   <kupu:part name="properties">
     <div class="kupu-toolbox" id="kupu-toolbox-properties">
       <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>
@@ -150,7 +150,7 @@
       <form name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
 
         <input type="button" class="transport" onclick="getImage()" value="get image reference..." />
-              
+
         <div id="kupu-toolbox-image-edit" style="color: black; display: none">
           <input type="button" class="transport" value="edit image..."
                   tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')" />
@@ -177,7 +177,7 @@
           &#160;tooltip:<br />
           <input type="text" id="kupu-toolbox-image-alt" style="margin-left:0.2em; width: 96%" /><br />
           <input type="button" class="button" value="update image" />
-        
+
         </div>
       </form>
 
@@ -223,7 +223,7 @@
         </form>
 
       </div>
-    
+
     </div>
 
   </kupu:part>
@@ -268,7 +268,7 @@
         </form>
 
       </div>
-    
+
     </div>
 
   </kupu:part>
@@ -277,7 +277,7 @@
 
     <div class="kupu-toolbox" id="kupu-toolbox-tables">
     <!-- start kupu toolbox tables -->
-    
+
     <h1 class="kupu-toolbox-heading" i18n:translate="">table</h1>
 
     <div class="kupu-tooltray">
@@ -370,7 +370,7 @@
           </tr>
         </tbody>
       </table>
-    
+
     </div>
 
     <!-- end kupu toolbox tables -->
@@ -402,7 +402,7 @@
           <input class="button" type="button" value="add toc" id="kupu-toc-add-button" />
           <input class="warning" type="button" value="remove" id="kupu-toc-del-button" />
         </form>
-        
+
       </div>
 
     </div>
@@ -415,10 +415,10 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">external source</h1>
 
       <div class="kupu-tooltray">
-        
+
         <div id="kupu-extsource-formcontainer">
         </div>
-           
+
         <form name="kupu_extsource_form" onsubmit="return false">
           <select id="kupu-toolbox-extsource-id"
             tal:define="sources here/get_available_sources;
@@ -429,21 +429,21 @@
               </tal:block>
             </tal:block>
           </select>
-          
+
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton" />
           <input class="cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton" />
           <input class="button" type="button" value="update source" id="kupu-extsource-updatebutton" />
           <input class="warning" type="button" value="remove" id="kupu-extsource-delbutton" />
         </form>
-      
+
       </div>
-    
+
     </div>
   </kupu:part>
-  
+
   <kupu:part name="typochars">
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">
-    
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
       <div class="kupu-tooltray">
         <!-- euro , ` ' ,, `` '' << >> - - -->
@@ -455,10 +455,10 @@
 
   <kupu:part name="save">
     <div class="kupu-toolbox" id="kupu-toolbox-save">
-    
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">save</h1>
       <div class="kupu-tooltray">
-        <form action="." method="POST" onsubmit="return false">
+        <form action="." method="post" onsubmit="return false">
           <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()" />
         </form>
       </div>

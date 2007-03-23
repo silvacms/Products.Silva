@@ -16,7 +16,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
 
 <metal:block fill-slot="script">
-  <script type="text/javascript" 
+  <script type="text/javascript"
     tal:attributes="src here/reference.js/absolute_url">
   </script>
 </metal:block>
@@ -61,10 +61,10 @@
          <td class="top"
             colspan="3">
             <h2>
-               <img tal:replace="structure icon" 
+               <img tal:replace="structure icon"
                  tal:attributes="title icon_title" />
                <tal:block i18n:translate="">
-               ghost folder of &#xab;<tal:block 
+               ghost folder of &#xab;<tal:block
                content="title" i18n:name="title" />&#xbb;
                </tal:block>
             </h2>
@@ -72,8 +72,8 @@
       </tr>
    </thead>
 
-  <form method="POST" 
-     name="form" 
+  <form method="post"
+     name="form"
      action=".">
      <tbody>
         <tr>
@@ -91,8 +91,8 @@
 
         <tr class="even">
            <td class="field-title">
-              <input class="transport" 
-                type="button" 
+              <input class="transport"
+                type="button"
                 value="reference..."
                 title="Locate item to refer to: alt-r"
                 accesskey="r"
@@ -112,8 +112,8 @@
               <input style="width:100%;"
                  type="text"
                  name="content_url"
-                 size="60" 
-                 value="" 
+                 size="60"
+                 value=""
                  tal:attributes="value content_url"
               />
            </td>
@@ -156,7 +156,7 @@
 
      <tfoot>
         <tr class="controls">
-           <td class="align-right" 
+           <td class="align-right"
               colspan="3">
               <input class="button"
                  type="submit"
@@ -171,7 +171,7 @@
      </tfoot>
   </form>
 </table>
-       
+
 <tal:block replace="nothing">
   ____________________________ contents listing ____________________________
 </tal:block>
@@ -196,7 +196,7 @@
       <td class="top"
         colspan="5">
         <h2 tal:attributes="title string:id: ${model/id}">
-        <img tal:replace="structure icon" 
+        <img tal:replace="structure icon"
           tal:attributes="title icon_title" />
           <span i18n:translate="">ghost folder contents</span>
         </h2>
@@ -209,8 +209,8 @@
     <tr class="top-controls">
       <td colspan="5">
          <div style="float: left;">
-            <form method="POST" 
-              name="resync_form" 
+            <form method="post"
+              name="resync_form"
               action=".">
               <input class="button"
                 type="submit"
@@ -254,7 +254,7 @@
     </tal:block>
     <tr class="odd"
       tal:condition="python: not(default_document or publishables or assets)">
-      <td colspan="5" 
+      <td colspan="5"
         i18n:translate="">
         There is no content here.
       </td>
@@ -275,13 +275,13 @@
             _______ checkbox + position cell _______
           </tal:block>
           <td class="align-right">
-            <span 
+            <span
               tal:condition="default_document"
               tal:content="repeat/item/index"
               tal:attributes="for item/id">
               # with default doc, starts at 0
             </span>
-            <span 
+            <span
               tal:condition="not: default_document"
               tal:content="repeat/item/number"
               tal:attributes="for item/id">
@@ -379,7 +379,7 @@
               i18n:attributes="title">
               <em i18n:translate="">n/a</em>
             </a>
-            <span 
+            <span
               tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
               tal:replace="last_author">
               authorname
@@ -398,7 +398,7 @@
     <tal:block replace="nothing">
       ______________ assets ______________
     </tal:block>
-    <tal:block 
+    <tal:block
       condition="python:len(assets)"
       repeat="asset assets">
 
@@ -407,7 +407,7 @@
         odd_even python: iterate == 'odd' and 'odd' or 'even';
         iterate repeat/asset/?odd_even;
         ">
-        <tr 
+        <tr
           tal:define="
             title python:(asset.get_title());
             show_top_border repeat/asset/start;"
@@ -502,8 +502,7 @@
     </tr>
   </tbody>
 </table>
-        
+
 </metal:block>
 </metal:block>
 </html>
-

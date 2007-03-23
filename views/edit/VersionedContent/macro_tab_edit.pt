@@ -80,19 +80,19 @@ h2 {
 <span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
 <tal:condition condition="python:unapproved_version and is_locked">
   <div class="fixed-feedback">
-    <form action="tab_edit_break_lock" method="POST">
+    <form action="tab_edit_break_lock" method="post">
       <span class="warning">
         <tal:block i18n:translate="">
           <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
           and is temporarily locked.
         </tal:block>
       </span><br />
-      <input 
+      <input
         class="warning"
         style="margin-left: 7px; margin-bottom:0.1em;"
-        type="submit" 
-        value="break lock" 
-        title="Somebody else just edited this item, unlock it: alt-u" 
+        type="submit"
+        value="break lock"
+        title="Somebody else just edited this item, unlock it: alt-u"
         accesskey="u"
         i18n:attributes="value;title"/>
     </form>
@@ -102,7 +102,7 @@ h2 {
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
 <tal:condition condition="python: not model.get_next_version()">
   <div class="fixed-feedback">
-    <form action="tab_edit_make_copy" method="POST">
+    <form action="tab_edit_make_copy" method="post">
       <tal:note replace="nothing"> _ do not change the value attribute _ </tal:note>
       <input type="hidden"
         name="came_from_view"
@@ -127,12 +127,12 @@ h2 {
 <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
 <tal:condition condition="python: model.get_approved_version()">
   <div class="fixed-feedback">
-    <form action="tab_edit_revoke_approval" method="POST">
-      <input class="button" 
+    <form action="tab_edit_revoke_approval" method="post">
+      <input class="button"
         style="margin-left: 7px; margin-bottom:0.1em;"
-        type="submit" 
-        value="revoke approval" 
-        title="'first un-approve' this item in order to edit: alt-r" 
+        type="submit"
+        value="revoke approval"
+        title="'first un-approve' this item in order to edit: alt-r"
         accesskey="r"
         i18n:attributes="value;title"/>
         <span i18n:translate="">
@@ -145,12 +145,12 @@ h2 {
 <span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
 <tal:condition condition="python:model.is_version_approval_requested()">
   <div class="fixed-feedback">
-    <form action="tab_edit_withdraw" method="POST">
+    <form action="tab_edit_withdraw" method="post">
       <input class="button"
         style="margin-left: 7px; margin-bottom:0.1em;"
-        type="submit" 
-        value="withdraw request" 
-        title="withdraw a request for approval in order to edit: alt-w" 
+        type="submit"
+        value="withdraw request"
+        title="withdraw a request for approval in order to edit: alt-w"
         accesskey="w"
         i18n:attributes="value;title"/>
       <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />

@@ -25,7 +25,7 @@
     has_access here/has_change_access_permission;"
   tal:condition="has_access">
 
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:content="structure python:here.focus_editor('name')">
   focus cursor
 </script>
@@ -63,7 +63,7 @@
       </tal:block>
       <td class="main">
         <form action="lookup_search"
-          method="POST">
+          method="post">
           <table class="listing">
             <thead>
               <tr tal:replace="nothing">
@@ -110,7 +110,7 @@
                   <input class="button"
                     type="submit"
                     value="search"
-                    accesskey="s"                      
+                    accesskey="s"
                     title="access key: alt-s"
                     i18n:attributes="value;title"
                   />
@@ -122,7 +122,7 @@
 
       <!-- __________________________ search results ______________________________ -->
       <tal:define define="global lookup_result options/results | nothing" />
-        <form action="lookup_add_to_selection" method="POST">
+        <form action="lookup_add_to_selection" method="post">
           <table class="listing" tal:define="extra_names model/service_members/get_extra_names; lookup_colspan python:2 + len(extra_names)">
             <thead>
               <tr class="top-controls">
@@ -132,7 +132,7 @@
                     type="submit"
                     value="add to clipboard"
                     title="add checked users to clipboard: alt-a"
-                    accesskey="a"                      
+                    accesskey="a"
                     tal:condition="python:lookup_result and len(lookup_result) > 3"
                     i18n:attributes="value;title" />
                   <h3 i18n:translate="">
@@ -168,7 +168,7 @@
                         value member/userid;
                         id member/userid" />
                     <label style="text-transform:none"
-                      tal:content="member/fullname" 
+                      tal:content="member/fullname"
                       tal:attributes="for member/userid">
                       username
                     </label>
@@ -215,7 +215,7 @@
         <!-- Clipboard -->
         <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
           <metal:block fill-slot="clipboard_lookup_action">
-            <a class="transport" 
+            <a class="transport"
               style="float: right;"
               accesskey="u"
               title="return to the access screen with this clipboard: alt-u"

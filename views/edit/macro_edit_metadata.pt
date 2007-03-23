@@ -14,7 +14,7 @@
   ct python: mangle.String.centeredTruncate;
   truncatable python:['location'];
   ">
-  <form method="POST"
+  <form method="post"
     action="."
     name="form"
     tal:define="
@@ -25,7 +25,7 @@
       form_errors options/form_errors | nothing;"
     tal:condition="python: content and setnames"
     >
-    <input type="hidden" name="returntotab" tal:attributes="value template/id"/>    
+    <input type="hidden" name="returntotab" tal:attributes="value template/id"/>
     <table class="listing"
       tal:condition="binding"
       tal:attributes="style python:test(is_container, nothing, 'margin-bottom:2em')">
@@ -36,7 +36,7 @@
         <tr>
           <td class="top" colspan="4">
             <h2 metal:define-slot="table_title">
-              <img tal:replace="structure python:view.render_icon(model)" 
+              <img tal:replace="structure python:view.render_icon(model)"
                 tal:attributes="title model/meta_type" />
               <tal:block i18n:translate="">properties</tal:block>
               <tal:block condition="model/implements_container"
@@ -62,7 +62,7 @@
                 colspan="4"
                 tal:attributes="style python:model.implements_container() and 'background:#c4d6e7' or 'background:#c5d4ca'">
               </td>
-            </tr> 
+            </tr>
             <tr tal:replace="nothing">
               ______________ top controls row ______________
             </tr>
@@ -94,17 +94,17 @@
               </th>
             </tr>
             <tal:block repeat="element_name binding/?set_name/elementNames">
-              <tal:block 
+              <tal:block
                 define="
                   element binding/?set_name/?element_name;
                   element_error form_errors/?set_name/?element_name | nothing;
                   iterate repeat/element_name/odd;"
                 >
-                <tal:block 
+                <tal:block
                   condition="element/hidden"
                   replace="structure element/render"
                 />
-                <tr                
+                <tr
                   tal:condition="not: element/hidden"
                   tal:attributes="
                     class python:element_error and 'alert' or iterate and 'odd' or 'even';"
@@ -113,8 +113,8 @@
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <label 
-                      tal:content="element/title" 
+                    <label
+                      tal:content="element/title"
                       tal:attributes="for element_name"
                       tal:omit-tag="not:element/isEditable"
                       i18n:translate="">
@@ -128,7 +128,7 @@
                   <tal:block replace="nothing">
                     ___ element widget column ___
                   </tal:block>
-                  <td tal:define="                        
+                  <td tal:define="
                     data python: element['render'] or element['view'];
                     data python: element_name in truncatable and ct(data, 50) or data;
                     "
@@ -142,7 +142,7 @@
                     ___ element acquired value column ___
                   </tal:block>
                   <td>
-                    <tal:block 
+                    <tal:block
                       define="
                         data element/view;
                         data python: element_name in truncatable and ct(data, 50) or data;"
@@ -176,7 +176,7 @@
             <th class="align-right">
             </th>
             <th i18n:translate="">
-              date format: day / month / year &nbsp;23:59 
+              date format: day / month / year &nbsp;23:59
             </th>
             <th i18n:translate="">
               &#134; acquireable
@@ -186,7 +186,7 @@
           </tr>
           <tr class="controls">
             <td class="align-right" colspan="4">
-              <input class="button" 
+              <input class="button"
                 type="submit"
                 name="save_metadata:method"
                 value="save"

@@ -12,7 +12,7 @@ $Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.7 2006/01/24 16:14:13 f
 
 <h3>Manage Default Renderers</h3>
 
-<form action="manage_editDefaultRenderers" method="POST">
+<form action="manage_editDefaultRenderers" method="post">
   <table>
     <tr tal:repeat="meta_type here/getRegisteredMetaTypes">
       <td><b tal:content="meta_type">Content Type</b></td>

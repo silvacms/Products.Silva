@@ -16,16 +16,16 @@
   i18n:domain="silva">
 <metal:block metal:use-macro="use_macro/macros/master">
 <metal:block fill-slot="script">
-  <script type="text/javascript" 
+  <script type="text/javascript"
             tal:attributes="src here/reference.js/absolute_url">
   </script>
 </metal:block>
 <metal:block fill-slot="main">
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:content="structure python:here.focus_editor('field_object_id')" />
 
 <div class="focus-rectangle">
-<form name="focusbox" action="add_object_submit" method="POST" enctype="multipart/form-data">
+<form name="focusbox" action="add_object_submit" method="post" enctype="multipart/form-data">
 <input type="hidden" name="meta_type" tal:attributes="value request/meta_type" />
 <input type="hidden" name="lookup_mode:int" value="0"
   tal:attributes="value lookup_mode" />
@@ -135,7 +135,7 @@
         title="access key: alt-e"
         accesskey="e"
         tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title" 
+        i18n:attributes="value;title"
         />
       </tal:condition>
     </td>

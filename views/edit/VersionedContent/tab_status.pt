@@ -39,8 +39,8 @@
           _____________________ main subtable _____________________
         </tal:block>
 
-<form action="." enctype="multipart/form-data" method="POST">
-  <input type="hidden" 
+<form action="." enctype="multipart/form-data" method="post">
+  <input type="hidden"
     name="refs:list"
     tal:attributes="value python: request['model'].create_ref(request['model'])" />
 
@@ -50,7 +50,7 @@
   <tr>
     <td class="top" colspan="3">
     <h2>
-      <img tal:replace="structure icon" 
+      <img tal:replace="structure icon"
         tal:attributes="title icon_title" />
       <tal:block i18n:translate="">status of &#xab;<tal:block content="title" i18n:name="title"/>&#xbb;</tal:block>
     </h2>
@@ -140,7 +140,7 @@ _______ manual close section here _______
 
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
       <td class="right">
 
@@ -148,7 +148,7 @@ _______ manual close section here _______
 <div class="info"
   style="margin-bottom:1em">
   <h3 i18n:translate="">
-    <img tal:replace="structure icon" 
+    <img tal:replace="structure icon"
       tal:attributes="title icon_title" />
     document info
   </h3>
@@ -208,8 +208,8 @@ _______ manual close section here _______
   <tal:if condition="python:may_change_content and not next and closed">
     <p>
       <span class="subhead" i18n:translate="">Content is closed</span><br />
-      <tal:block i18n:translate="">  
-        This content was once published but is now closed.<br /> 
+      <tal:block i18n:translate="">
+        This content was once published but is now closed.<br />
         If you wish you can make an editable copy in the <a tal:content="string:editor"
         href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
       </tal:block>
@@ -227,11 +227,11 @@ _______ manual close section here _______
 <span tal:replace="nothing">
   _____________________ versioning focus box _____________________
 </span>
-<form class="sublisting" action="." enctype="multipart/form-data" method="POST">
+<form class="sublisting" action="." enctype="multipart/form-data" method="post">
 
 <!-- version management -->
 <tal:def define="versions here/get_sorted_model_versions">
-<input type="hidden" 
+<input type="hidden"
   name="refs:list"
   tal:attributes="value python: request['model'].create_ref(request['model'])" />
 <table class="listing" id="sortable" tal:condition="may_change_content">
@@ -239,10 +239,10 @@ _______ manual close section here _______
     <tr>
       <td class="top" colspan="7">
         <h2 tal:attributes="title string:id: ${model/id}">
-          <img tal:replace="structure icon" 
+          <img tal:replace="structure icon"
             tal:attributes="title icon_title" />
           <tal:block i18n:translate="">
-            manage versions of &#xab;<tal:block 
+            manage versions of &#xab;<tal:block
             content="string:${model/get_title_or_id}"
             i18n:name="export_id">id</tal:block>&#xbb;
           </tal:block>
@@ -273,14 +273,14 @@ _______ manual close section here _______
         lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
         creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
         version_status python: vmadapter.getVersionStatus(versionid);
-        style python: ((version_status == 'unapproved' and 'draft') or 
+        style python: ((version_status == 'unapproved' and 'draft') or
                         (version_status == 'last_closed' and 'closed') or
                         version_status);
       ">
         <td class="listing-left">
           <input class="min"
-            type="checkbox" 
-            name="versions:list" 
+            type="checkbox"
+            name="versions:list"
             tal:attributes="value version/id; id string:version_${version/id}" />
           <label tal:attributes="for string:version_${version/id}"
             tal:content="version/id">

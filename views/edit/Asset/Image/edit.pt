@@ -1,7 +1,7 @@
 <html tal:omit-tag=""
   tal:define="
     view here;
-    model request/model;    
+    model request/model;
     mangle modules/Products/Silva/mangle;
     root_url model/get_root_url;
     title model/get_title_editable;
@@ -17,7 +17,7 @@
   </script>
   <div class="info">
     <h3 i18n:translate="">
-      <img tal:replace="structure icon" 
+      <img tal:replace="structure icon"
         tal:attributes="title model/meta_type" />
       image info
     </h3>
@@ -76,7 +76,7 @@
         <tal:block i18n:translate="">view unscaled image</tal:block>
       </a>
     </p>
-    <p tal:condition="model/hires_image" 
+    <p tal:condition="model/hires_image"
       tal:define="orientation model/getOrientation; klass model/getOrientationClass">
       <span class="subhead" i18n:translate="">orientation</span><br />
       <span tal:content="orientation"
@@ -93,9 +93,9 @@
       <tal:block tal:condition="model/canScale">
          <br />
          <tal:condition condition="python: size != scaled_size">
-          <span 
+          <span
             tal:attributes="title string: ${scaled_size}"
-            tal:content="python:mangle.Bytes(scaled_size)" /> 
+            tal:content="python:mangle.Bytes(scaled_size)" />
             <span i18n:translate="">scaled</span>
           </tal:condition>
       </tal:block>
@@ -116,7 +116,7 @@
 </metal:fill-slot>
 
 <metal:fill-slot fill-slot="additional_tools">
-  <form method="POST"
+  <form method="post"
     name="form"
     action="."
     enctype="multipart/form-data"

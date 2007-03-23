@@ -11,7 +11,7 @@
     has_access here/has_change_access_permission;"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
-  
+
 <table class="columns columns3">
   <tbody>
     <tr>
@@ -40,10 +40,10 @@
       <td class="top"
         colspan="3">
         <h2>
-          <img tal:replace="structure python:view.render_icon(model)" 
+          <img tal:replace="structure python:view.render_icon(model)"
             tal:attributes="title model/meta_type" />
           <span style="text-transform:lowercase;"
-            tal:content="model/meta_type">Meta type</span> 
+            tal:content="model/meta_type">Meta type</span>
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
         </h2>
       </td>
@@ -59,7 +59,7 @@
 
   <tbody tal:condition="has_access">
     <form action="."
-      method="POST"
+      method="post"
       tal:define="ipranges model/listIPRanges"
       tal:condition="model/isValid | nothing">
       <tr>
@@ -108,7 +108,7 @@
             tal:condition="ipranges"
             i18n:attributes="title;value"
           />
-        </td> 
+        </td>
       </tr>
     </form>
   </tbody>
@@ -117,8 +117,8 @@
 <tal:block replace="nothing">
   _____________________ add ip _____________________
 </tal:block>
-<form method="POST" 
-  action="." 
+<form method="post"
+  action="."
   enctype="multipart/form-data">
   <table class="listing">
     <thead>
@@ -138,7 +138,7 @@
         </td>
         <td style="width: 20em;">
           <input style="width: 100%;"
-            type="text" 
+            type="text"
             name="iprange"
           />
         </td>
@@ -174,7 +174,7 @@
       </td>
 
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
       <td class="right">
         <tal:block condition="has_access">
@@ -191,7 +191,7 @@
                   name="copy_ipranges_from_ipgroups:method"
                   title="transfer ip(s) to this ip group"
                   type="submit"
-                  value="copy ips to ip group" 
+                  value="copy ips to ip group"
                   i18n:attributes="title;value"
                 />
               </metal:block>

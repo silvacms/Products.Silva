@@ -30,7 +30,7 @@
       </tal:block>
       <td class="main">
 
-<form action="tab_edit_update_index" method="POST">
+<form action="tab_edit_update_index" method="post">
   <table class="listing">
     <thead>
       <tal:block replace="nothing">
@@ -43,7 +43,7 @@
             <img tal:replace="structure python:view.render_icon(model)"
               tal:attributes="title model/meta_type" />
             <span style="text-transform:lowercase;"
-              tal:content="model/meta_type">Meta type</span> 
+              tal:content="model/meta_type">Meta type</span>
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
           </h2>
         </td>
@@ -61,7 +61,7 @@
       <tr class="even">
       <td colspan="3">
         <ol style="margin:0.3em 0 0.5em 0;padding-left:2.2em;">
-          <li i18n:translate="">An index is not editable.  To view the index go to the <a class="underline" tal:attributes="href string:tab_preview" i18n:name="preview_screen"><tal:block i18n:translate="">preview screen</tal:block></a>.</li> 
+          <li i18n:translate="">An index is not editable.  To view the index go to the <a class="underline" tal:attributes="href string:tab_preview" i18n:name="preview_screen"><tal:block i18n:translate="">preview screen</tal:block></a>.</li>
           <li i18n:translate="">Note that <span class="warning">the index only displays links to published content</span>, so the list may be empty if nothing is published.</li>
           <li i18n:translate="">If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while).</li>
         </ol>
@@ -88,9 +88,9 @@
 
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         &nbsp;
       </td>
     </tr>

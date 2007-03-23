@@ -14,7 +14,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global vein string:contents; 
+  tal:define="global vein string:contents;
     here python: context.edit;"
   i18n:domain="silva">
 
@@ -29,7 +29,7 @@
         document.title = title;
         }
         );
-  
+
       </script>
     </metal:block>
     <metal:block fill-slot="main"
@@ -37,7 +37,7 @@
         objects context/get_tree;
         silva_permissions context/edit/get_silva_permissions;
         filter request/filter | request/SESSION/filter | nothing;
-        filter python: filter or '';  
+        filter python: filter or '';
         filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
         startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
         show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
@@ -57,7 +57,7 @@
               <tal:block define="template_id string:@@object_lookup">
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
-                    <tal:block define="sb context/@@sidebar" 
+                    <tal:block define="sb context/@@sidebar"
                       replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
@@ -102,8 +102,8 @@
                       <div style="float: left;"
                         tal:condition="python: may_change_content and addable_types">
                         <form>
-                          <label for="meta_type" 
-                            title="access key: alt-s" 
+                          <label for="meta_type"
+                            title="access key: alt-s"
                             accesskey="s"
                             i18n:attributes="title"
                             >
@@ -137,8 +137,8 @@
                     </td>
                   </tr>
                 </thead>
-          
-                <form name="objectform" id="objectform" action="." method="POST" onsubmit="return false">
+
+                <form name="objectform" id="objectform" action="." method="post" onsubmit="return false">
                   <tbody>
                     <tal:block replace="nothing">
                       ______________ listing header ______________
@@ -166,7 +166,7 @@
                     </tal:block>
                     <tr class="odd"
                       tal:condition="python: not(publishables or assets)">
-                      <td colspan="5" 
+                      <td colspan="5"
                         i18n:translate="">
                         There is no content here.
                       </td>
@@ -202,13 +202,13 @@
                                 lookup:title title;
                                 checked checked;
                               "/>
-                            <label 
+                            <label
                               tal:condition="is_default"
                               tal:content="repeat/item/index"
                               tal:attributes="for id">
                               # with default doc, starts at 0
                             </label>
-                            <label 
+                            <label
                               tal:condition="not: is_default"
                               tal:content="repeat/item/number"
                               tal:attributes="for id">
@@ -293,7 +293,7 @@
                               title="content is published"
                               tal:define="is_published item/is_version_published | nothing"
                               tal:condition="is_published"
-                              tal:attributes="src string:${root_url}/globals/checkmark.gif" 
+                              tal:attributes="src string:${root_url}/globals/checkmark.gif"
                               i18n:attributes="alt"
                             />
                             <span tal:omit-tag=""
@@ -310,7 +310,7 @@
                               >
                                 <i i18n:translate="">n/a</i>
                             </span>
-                            <span 
+                            <span
                               tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
                               tal:replace="last_author">
                               authorname
@@ -323,7 +323,7 @@
                     <tal:block replace="nothing">
                       ______________ assets ______________
                     </tal:block>
-                    <tal:block 
+                    <tal:block
                       condition="python:len(assets)"
                       repeat="asset assets">
                       <tal:block define="
@@ -335,7 +335,7 @@
                         checked not: first_checked;
                         global first_checked python: True;
                         ">
-                        <tr 
+                        <tr
                           tal:define="show_top_border repeat/asset/start;"
                           tal:attributes="class python:oddrow and 'odd' or 'even';
                           style python:show_top_border and 'border-top: 1px solid #77858c' or nothing">
@@ -352,7 +352,7 @@
                                 value path;
                                 checked checked;
                             "/>
-                            <label 
+                            <label
                               tal:condition="default_document"
                               tal:attributes="for id">
                               &#8211;
@@ -439,8 +439,8 @@
                         title="insert a reference to this asset: alt-p"
                         accesskey="p"
                         onclick="window.reference.setReference(
-                        window.document.getElementById('objectform'), 
-                        'object'); return false;" 
+                        window.document.getElementById('objectform'),
+                        'object'); return false;"
                         tal:condition="python: publishables or assets or default"
                         i18n:attributes="title;value"
                       />
@@ -453,7 +453,7 @@
           </tr>
         </tbody>
       </table>
-      
+
     </metal:block>
   </metal:block>
 </html>

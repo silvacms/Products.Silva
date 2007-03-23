@@ -7,20 +7,20 @@ Version of this file: $Revision: 1.8 $
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
   tal:replace="structure here/manage_tabs">Tabs</h2>
 
-<h4 tal:define="root here/get_root | nothing" 
+<h4 tal:define="root here/get_root | nothing"
     tal:condition="python:root==here.aq_parent"><a href="../manage_services">Silva Services</a></h4>
-  
+
 <h2 tal:define="
   form_title string:Edit Files Service"
   tal:replace="structure here/manage_form_title">Form Title</h2>
   <p class="form-help">
-    Edit Files Service  
+    Edit Files Service
   </p>
   <div style="background-color: #FFEEDD; width:60%;"
     tal:condition="not:here/is_filesystem_storage_available">
     <span class="form-label">Filesystem storage is not available. You need to
     install ExtFile. </span>
-    <br /> The following settings do not have any effect. 
+    <br /> The following settings do not have any effect.
   </div>
   <br />
   <form action="manage_filesServiceEdit" method="post">
@@ -43,7 +43,7 @@ Version of this file: $Revision: 1.8 $
           </div>
         </td>
         <td align="left" valign="top">
-          <input type="text" name="title" size="40" 
+          <input type="text" name="title" size="40"
           tal:attributes="value here/title" />
         </td>
       </tr>
@@ -78,8 +78,8 @@ Version of this file: $Revision: 1.8 $
         </td>
         <td align="left" valign="top">
           <div class="form-element">
-            <input class="form-element" type="submit" name="submit_edit" 
-              value=" Edit " /> 
+            <input class="form-element" type="submit" name="submit_edit"
+              value=" Edit " />
           </div>
         </td>
       </tr>
@@ -92,7 +92,7 @@ Version of this file: $Revision: 1.8 $
     Form Title
 </h2>
 
-<form action="." method="POST">
+<form action="." method="post">
   <table>
     <tr>
       <td align="left" valign="top">
@@ -104,13 +104,13 @@ Version of this file: $Revision: 1.8 $
         </div>
       </td>
       <td align="left" valign="top">
-        <input  
+        <input
           type="submit"
-          name="manage_convertStorage:method" 
+          name="manage_convertStorage:method"
           value="Convert" />
       </td>
     </tr>
   </table>
-</form> 
-  
+</form>
+
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

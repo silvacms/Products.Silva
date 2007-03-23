@@ -16,7 +16,7 @@
 
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="script">
-  <script type="text/javascript" 
+  <script type="text/javascript"
     tal:content="structure python:here.focus_editor('field_object_id')" />
 </metal:block>
 <metal:block fill-slot="main"
@@ -47,10 +47,10 @@
 <tal:block replace="nothing">
   _____________________ add group _____________________
 </tal:block>
-<form 
-  method="POST" 
-  action="add_object_submit" 
-  name="focusbox" 
+<form
+  method="post"
+  action="add_object_submit"
+  name="focusbox"
   enctype="multipart/form-data">
   <table class="listing">
     <thead>
@@ -86,10 +86,10 @@
         </td>
         <td style="width: 50%;">
           <input class="store"
-            type="text" 
-            value="" 
-            name="field_object_id" 
-            size="20" 
+            type="text"
+            value=""
+            name="field_object_id"
+            size="20"
           />
         </td>
         <td i18n:translate="">
@@ -125,12 +125,12 @@
       <tr class="controls">
         <td class="align-right"
           colspan="3">
-          <input class="button" 
-            type="submit" 
-            name="add_submit" 
-            value="save" 
-            title="access key: alt-s" 
-            accesskey="s" 
+          <input class="button"
+            type="submit"
+            name="add_submit"
+            value="save"
+            title="access key: alt-s"
+            accesskey="s"
             i18n:attributes="title;value"
           />
           <input class="button"
@@ -217,7 +217,7 @@
                 i18n:attributes="title">
                 <tal:block replace="group/get_title">
                   title
-                </tal:block>                    
+                </tal:block>
               </a>
             </td>
             <td tal:content="structure group/meta_type">

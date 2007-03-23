@@ -19,7 +19,7 @@
 <tal:if condition="python:view.REQUEST.has_key('ids')">
 <div class="focus-rectangle"
   style="padding-top:1px;">
-  <form action="tab_edit_rename_submit" method="POST">
+  <form action="tab_edit_rename_submit" method="post">
     <table class="listing">
       <thead>
         <tr>
@@ -27,7 +27,7 @@
             colspan="3">
             <h2 i18n:translate="">
               <img tal:replace="structure python:view.render_icon(model)" />
-              rename objects in       
+              rename objects in
               &#xab;<tal:plug content="title" i18n:name="title" />&#xbb;
             </h2>
           </td>
@@ -69,7 +69,7 @@
                 name string:id_$objId;
                 value objId;
             " />
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:define="focusfield string:id_$objId"
   tal:condition="repeat/objectid/start"
   tal:content="structure python:here.focus_editor(focusfield)" />
@@ -81,7 +81,7 @@
             title
           </td>
           <td tal:define="title python: object.get_title_editable()" >
-            <em tal:condition="not: title" i18n:translate="">no title</em> 
+            <em tal:condition="not: title" i18n:translate="">no title</em>
             <tal:plug condition="title"
               content="python: mangle.String.centeredTruncate(title, 30)"
               attributes="title title"
@@ -97,11 +97,11 @@
               value="value"
               tal:condition="is_title_editable"
               tal:attributes="
-                name string:title_$objId; 
+                name string:title_$objId;
                 value title;
             " />
               <tal:plug condition="not: is_title_editable"
-                content="title" 
+                content="title"
               />
           </td>
         </tr>
@@ -129,8 +129,8 @@
               type="button"
               name="edit_cancel"
               value="cancel"
-              onclick="history.back()" 
-              title="access key: alt-c" 
+              onclick="history.back()"
+              title="access key: alt-c"
               accesskey="c"
               i18n:attributes="value;title"
             />

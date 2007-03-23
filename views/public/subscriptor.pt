@@ -11,8 +11,8 @@
     feedback options/message | nothing;
     message_type options/message_type | nothing;
     warning python:message_type == 'warning' and message_type or nothing;
-    subscr_emailaddress options/subscr_emailaddress | nothing; 
-    cancel_emailaddress options/cancel_emailaddress | nothing; 
+    subscr_emailaddress options/subscr_emailaddress | nothing;
+    cancel_emailaddress options/cancel_emailaddress | nothing;
     path python: '/'.join(model.getPhysicalPath());"
   i18n:domain="silva"
   >
@@ -27,10 +27,10 @@
   </div>
   <tal:block condition="show_form">
     <div class="subscriptionform">
-      <form method="POST" name="form" enctype="multipart/form-data"
+      <form method="post" name="form" enctype="multipart/form-data"
         tal:attributes="action string:${here/absolute_url}/public/subscription_request">
         <h3 class="heading" i18n:translate="">
-          Subscribe to 
+          Subscribe to
           &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
         </h3>
         <p class="p" i18n:translate="">
@@ -53,7 +53,7 @@
       </form>
     </div>
     <div class="cancellationform">
-      <form method="POST" name="form" enctype="multipart/form-data"
+      <form method="post" name="form" enctype="multipart/form-data"
         tal:attributes="action string:${here/absolute_url}/public/cancellation_request">
         <h3 class="heading" i18n:translate="">
           Unsubscribe from
@@ -80,7 +80,7 @@
   </tal:block>
   <div class="backlink">
     <a tal:attributes="href model/absolute_url" i18n:translate="">
-      Return to 
+      Return to
       &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
     </a>
   </div>

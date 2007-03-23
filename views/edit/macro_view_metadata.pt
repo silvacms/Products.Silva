@@ -14,7 +14,7 @@
     ct python: mangle.String.centeredTruncate;
     truncatable python:['location'];
   ">
-  <tal:block 
+  <tal:block
     define="
       metadata_category category | string:;
       binding python: view.get_metadata(content, category=metadata_category) or nothing;
@@ -69,9 +69,9 @@
             </th>
           </tr>
           <tal:block repeat="element_name binding/?set_name/elementNames">
-            <tr 
+            <tr
               tal:define="
-                element binding/?set_name/?element_name;                  
+                element binding/?set_name/?element_name;
                 iterate repeat/element_name/odd;
                 show_bottom_border repeat/element_name/end;"
               tal:condition="not: element/hidden"
@@ -89,7 +89,7 @@
               <tal:block replace="nothing">
                 ___ element widget column ___
               </tal:block>
-              <td 
+              <td
                 tal:define="
                   data python: element['view'];
                   "
@@ -101,7 +101,7 @@
           </tal:block>
         </tal:block>
         <tal:block>
-          <tal:block define="renderer_name content/get_renderer_name" 
+          <tal:block define="renderer_name content/get_renderer_name"
             condition="python: request.model.service_renderer_registry.doesRendererExistForMetaType(request.model.meta_type, renderer_name)">
             <tr tal:replace="nothing">
               ______________ top controls row ______________
@@ -126,7 +126,7 @@
                 ___ element widget column ___
               </tal:block>
               <td tal:content="renderer_name">
-                  
+
               </td>
             </tr>
           </tal:block>
@@ -138,28 +138,28 @@
             colspan="2">
             <tal:block condition="not: is_ghosty">
               <span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
-              <tal:block 
+              <tal:block
                 condition="
                   python: is_versioned and model.get_approved_version() and display_flag == 1"
                 >
                 <form action="properties_revoke_approval"
-                  method="POST">
-                  <input 
-                    class="button" 
-                    type="submit" 
-                    value="revoke approval" 
-                    title="first 'un-approve' this item in order to edit: alt-r" 
+                  method="post">
+                  <input
+                    class="button"
+                    type="submit"
+                    value="revoke approval"
+                    title="first 'un-approve' this item in order to edit: alt-r"
                     accesskey="r"
                     i18n:attributes="value;title"
                   />
                 </form>
               </tal:block>
               <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
-              <tal:block 
+              <tal:block
                 condition="
                   python: is_versioned and not model.get_next_version()"
                 >
-                <form action="tab_edit_make_copy" method="POST">
+                <form action="tab_edit_make_copy" method="post">
                   <input type="hidden"
                     name="came_from_view"
                     tal:attributes="value template/id"

@@ -35,8 +35,8 @@
       </td>
       <tal:block replace="nothing">_____________________ main _____________________</tal:block>
       <td class="main">
-        
-        <form action="." method="POST">
+
+        <form action="." method="post">
           <table class="listing"
             tal:define="
               editable model/get_editable;
@@ -51,9 +51,9 @@
             <tr>
               <td class="top" colspan="3">
                 <h2 tal:attributes="title string:id: ${model/id}">
-                  <img tal:replace="structure icon" 
+                  <img tal:replace="structure icon"
                     tal:attributes="title icon_title" />
-                  <span i18n:translate="">settings for &#xab;<tal:block 
+                  <span i18n:translate="">settings for &#xab;<tal:block
                     content="title"
                     i18n:name="title" />&#xbb;</span>
                 </h2>
@@ -73,8 +73,8 @@
               <td colspan="3">
                 <tal:block condition="isghostfolder"
                    i18n:translate="">
-                  This Ghost Folder can be converted to a normal 
-                  Publication or Folder. All ghosted content will be 
+                  This Ghost Folder can be converted to a normal
+                  Publication or Folder. All ghosted content will be
                   duplicated and can then be edited.
                 </tal:block>
                 <tal:block condition="isfolder"
@@ -96,7 +96,7 @@
                   value="convert to folder"
                   name="tab_edit_to_folder:method"
                   title="change container type to a folder: alt-f"
-                  accesskey="f" 
+                  accesskey="f"
                   i18n:attributes="value;title"
                   tal:condition="python: ispublication or isghostfolder"
                 />
@@ -110,13 +110,13 @@
                 />
               </td>
             </tr>
-            
+
             <tr tal:condition="iscontainer">
-              <td class="separator" 
+              <td class="separator"
                 colspan="3">
               </td>
             </tr>
-            
+
             <tr class="top-controls">
               <td colspan="3">
                 <h3>
@@ -146,11 +146,11 @@
               </td>
               <td>
                 <select class="store" name="renderer_name_select">
-                  <tal:block 
-                    define="selected_renderer_name python: editable.get_renderer_name()" 
+                  <tal:block
+                    define="selected_renderer_name python: editable.get_renderer_name()"
                     repeat="renderer_name renderers">
                     <option
-                      tal:content="renderer_name" 
+                      tal:content="renderer_name"
                       tal:attributes="
                         value python:renderer_name;
                         selected python: selected_renderer_name == renderer_name and 'selected' or None;">
@@ -166,7 +166,7 @@
             </tr>
             <tr class="controls">
               <td class="align-right" colspan="3">
-                <input class="button" 
+                <input class="button"
                   value="change renderer"
                   name="tab_settings_save_renderer:method"
                   type="submit"
@@ -179,11 +179,11 @@
 
             <tal:block condition="may_approve_content">
               <tr tal:condition="iscontainer">
-                <td class="separator" 
+                <td class="separator"
                   colspan="3">
                 </td>
               </tr>
-              
+
               <tal:block condition="iscontainer"
                 tal:define="allow_feeds model/allow_feeds">
                 <tr class="top-controls">
@@ -214,8 +214,8 @@
                     </tal:block>
                   </td>
                   <td>
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       name="allow_feeds"
                       tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
                   </td>
@@ -225,10 +225,10 @@
                     </tal:block>
                   </td>
                 </tr>
-                
+
                 <tr class="controls">
                   <td class="align-right" colspan="3">
-                    <input class="button" 
+                    <input class="button"
                       value="change feed settings"
                       name="tab_settings_save_feeds:method"
                       type="submit"
@@ -244,38 +244,38 @@
           </tbody>
         </table>
       </form>
-    </td>            
+    </td>
   </tr>
 
   <tal:block replace="nothing">layout settings</tal:block>
     <tr>
       <td class="main">
-        <tal:block 
+        <tal:block
           define="category python: 'layout';"
           condition="model/implements_versioning">
           <tal:block replace="nothing">edit editable version metadata</tal:block>
-          <tal:block 
+          <tal:block
             define="content model/get_editable | nothing;"
             condition="model/get_unapproved_version">
             <!-- editable version metadata table, thus editable -->
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon" 
+                <img tal:replace="structure icon"
                   tal:attributes="title icon_title" />
-                <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                <span i18n:translate=""> layout settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
               </h2>
             </metal:block>
           </tal:block>
-          
+
           <tal:block replace="nothing">view previewable version metadata</tal:block>
-          <tal:block 
+          <tal:block
             define="content model/get_previewable | nothing;"
             condition="model/get_approved_version">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon" 
+                <img tal:replace="structure icon"
                   tal:attributes="title icon_title" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
@@ -285,9 +285,9 @@
               </h2>
             </metal:block>
           </tal:block>
-          
+
           <tal:block replace="nothing">view public version metadata</tal:block>
-          <tal:block 
+          <tal:block
             define="
               content model/get_viewable | nothing;
               display_flag python:0"
@@ -295,7 +295,7 @@
             >
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon" 
+                <img tal:replace="structure icon"
                   tal:attributes="title icon_title" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
@@ -305,9 +305,9 @@
               </h2>
             </metal:block>
           </tal:block>
-          
+
           <tal:block replace="nothing">view closed version metadata</tal:block>
-          <tal:block 
+          <tal:block
             define="
               content model/get_last_closed | nothing;
               display_flag python:0"
@@ -316,7 +316,7 @@
             >
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon" 
+                <img tal:replace="structure icon"
                   tal:attributes="title icon_title" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
@@ -327,26 +327,26 @@
             </metal:block>
           </tal:block>
         </tal:block>
-        
+
         <tal:block replace="nothing">edit single version metadata</tal:block>
-        <tal:block 
+        <tal:block
           define="category python: 'layout';"
           condition="not: model/implements_versioning">
           <tal:block define="content model">
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon" 
+                <img tal:replace="structure icon"
                   tal:attributes="title icon_title" />
-                <span i18n:translate=""> layout settings for &#xab;<tal:block 
+                <span i18n:translate=""> layout settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
               </h2>
             </metal:block>
           </tal:block>
         </tal:block>
-      </td>            
+      </td>
     </tr>
-    
+
   </tbody>
 </table>
 </metal:block>

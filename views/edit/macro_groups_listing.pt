@@ -40,7 +40,7 @@
     </metal:block>
   </tal:block>
 </metal:block>
-  
+
 <metal:block define-macro="all_groups_listing">
   <tal:block define="groups view/service_groups/listAllGroups | nothing">
     <metal:block use-macro="here/macro_groups_listing/macros/listing">
@@ -56,9 +56,9 @@
 <!-- this form deliberately has no submit buttons; filled in in slots -->
 <metal:block define-macro="listing">
   <div class="info">
-    <metal:block define-macro="listing_no_style">      
+    <metal:block define-macro="listing_no_style">
       <form action="."
-        method="POST">
+        method="post">
         <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type(group_meta_type)" />
           <tal:block i18n:translate="">
@@ -75,7 +75,7 @@
               tal:condition="python: model_is_container and group_service">
               <td>
                 <metal:block define-slot="groups_admin_action">
-                  <a class="transport" 
+                  <a class="transport"
                     style="float: right;"
                     title="groups administration: alt-g"
                     accesskey="g"

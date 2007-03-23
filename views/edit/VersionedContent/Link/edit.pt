@@ -15,7 +15,7 @@
     vein string:edit;
 ">
 
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:content="structure python:here.focus_editor('url')">
   focus cursor
 </script>
@@ -37,7 +37,7 @@
       <td class="main">
 
 <form action="submit"
-  method="POST">
+  method="post">
   <table class="listing">
     <thead>
       <tal:block replace="nothing">
@@ -47,10 +47,10 @@
         <td class="top"
           colspan="2">
           <h2>
-            <img tal:replace="structure python:view.render_icon(model)" 
+            <img tal:replace="structure python:view.render_icon(model)"
               tal:attributes="title model/meta_type" />
             <span style="text-transform:lowercase;"
-              tal:content="model/meta_type">meta_type</span> 
+              tal:content="model/meta_type">meta_type</span>
             &#xab;<tal:block content="model/get_title_or_id_editable" />&#xbb;
           </h2>
         </td>
@@ -103,9 +103,9 @@
       </td>
 
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         &nbsp;
       </td>
     </tr>
@@ -113,4 +113,3 @@
 </table>
 
 </html>
-

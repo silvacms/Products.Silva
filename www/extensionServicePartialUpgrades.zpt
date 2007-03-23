@@ -23,14 +23,14 @@ Version of this file: $Revision: 1.2 $
   partial upgrade on an object may fail and may even (in some situations) cause
   the object to become unusable.
 </p>
-<form action="." method="POST">
+<form action="." method="post">
   <div class="form-text">Absolute path to object to upgrade:</div>
   <input class="form-element" type="text" name="path" />
   <br />
   <div class="form-text">Current Silva version of the object:</div>
   <input class="form-element" type="text" name="version" />
   <br />
-  <input type="submit" name="upgrade_object:method" value="upgrade" 
+  <input type="submit" name="upgrade_object:method" value="upgrade"
       i18n:attributes="value" />
 </form>
 

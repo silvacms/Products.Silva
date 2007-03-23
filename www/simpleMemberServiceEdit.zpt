@@ -9,12 +9,12 @@ Version of this file: $Revision: 1.7 $
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
 <h4><a href="../manage_services">Silva Services</a></h4>
-                                                                                                                                                                              
+
 <h2>
   Manage Simple MemberService
 </h2>
 
-<form action="." method="POST" class="form-text">
+<form action="." method="post" class="form-text">
 
 <table width="500">
   <tr>
