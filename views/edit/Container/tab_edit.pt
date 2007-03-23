@@ -57,7 +57,7 @@
       <td class="top"
         colspan="6">
         <h2 tal:attributes="title string:id: ${model/id}">
-          <img tal:replace="structure python:view.render_icon(model)" 
+          <img tal:replace="structure python:view.render_icon(model)"
             tal:attributes="title model/meta_type" />
           &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
         </h2>
@@ -77,14 +77,14 @@
           value="new..."
           title="add a new item - alt-n"
           accesskey="n"
-          tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value" 
+          tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value"
           i18n:attributes="value;title"
         />
-        <label for="meta_type" 
-          title="access key: alt-s" 
+        <label for="meta_type"
+          title="access key: alt-s"
           accesskey="s"
           i18n:attributes="title"
-        >
+        >&nbsp;
         </label>
         <select class="transport"
           name="meta_type"
@@ -196,7 +196,7 @@
                 "
               onkeypress="handle_default_action(this, event, 'tab_edit_copy')"
             />
-            <label 
+            <label
               tal:content="item_info/number"
               tal:attributes="for item_info/item_id"
               i18n:translate="">
@@ -295,7 +295,7 @@
             >
               <em i18n:translate="">n/a</em>
             </a>
-            <span 
+            <span
               tal:condition="item_info/is_content"
               tal:replace="item_info/last_author">
                 authorname
@@ -315,7 +315,7 @@
                   border="0"
                   height="12"
                   width="16"
-                  tal:attributes="src string:${root_url}/globals/down.gif" 
+                  tal:attributes="src string:${root_url}/globals/down.gif"
                   i18n:attributes="alt"
                 />
               </a>
@@ -328,7 +328,7 @@
                   border="0"
                   height="12"
                   width="16"
-                  tal:attributes="src string:${root_url}/globals/up.gif" 
+                  tal:attributes="src string:${root_url}/globals/up.gif"
                   i18n:attributes="alt"
                 />
               </a>
@@ -348,7 +348,7 @@
     <tal:block replace="nothing">
       ______________ assets ______________
     </tal:block>
-    <tal:block 
+    <tal:block
       condition="python:len(assets)"
       repeat="asset_info assets">
 
@@ -356,7 +356,7 @@
         odd_even python: iterate == 'odd' and 'odd' or 'even';
         iterate repeat/asset_info/?odd_even;
         ">
-        <tr 
+        <tr
           tal:define="
             show_top_border repeat/asset_info/start;"
           tal:attributes="
@@ -373,7 +373,7 @@
                 value asset_info/asset_id;
                 id asset_info/asset_id;"
             />
-            <label 
+            <label
               tal:condition="default_document"
               tal:attributes="for asset_info/asset_id">
               &#8211;
@@ -392,7 +392,7 @@
                   structure python: view.externalEditLink_(asset)"
               />
             </tal:block>
-            
+
             <a class="icon"
               tal:attributes="
                 href asset_info/editor_link;
@@ -500,21 +500,21 @@
       <td colspan="6">
         <tal:if condition="may_approve_content">
           <div style="float: right;">
-            <input class="close" 
-              name="tab_edit_close:method" 
-              value="close" 
-              title="close published items: alt-l" 
-              accesskey="l" 
-              type="submit" 
-              i18n:attributes="value; title" 
+            <input class="close"
+              name="tab_edit_close:method"
+              value="close"
+              title="close published items: alt-l"
+              accesskey="l"
+              type="submit"
+              i18n:attributes="value; title"
               tal:condition="python:published"
             />
-            <input class="executor" 
-              name="tab_edit_open_now:method" 
-              value="publish now" 
-              title="publish new versions: alt-p" 
-              accesskey="p" 
-              type="submit" 
+            <input class="executor"
+              name="tab_edit_open_now:method"
+              value="publish now"
+              title="publish new versions: alt-p"
+              accesskey="p"
+              type="submit"
               i18n:attributes="value; title"
               tal:condition="python:editables or closed"
             />
@@ -531,8 +531,8 @@
               <option value="position">
                 <tal:inline i18n:translate="">position</tal:inline>:
               </option>
-              <tal:loop repeat="item python:range(length)">                            
-                <option value="0"   
+              <tal:loop repeat="item python:range(length)">
+                <option value="0"
                   tal:define="pos repeat/item/number"
                   tal:content="pos"
                   tal:attributes="
@@ -551,7 +551,7 @@
               title="access key: alt-o"
               accesskey="o"
               i18n:attributes="title"
-            >
+            >&nbsp;
             </label>
             <input class="button"
               name="tab_edit_move_to:method"
@@ -567,7 +567,7 @@
             type="submit"
             value="rename..."
             title="rename and retitle items: alt-r"
-            accesskey="r" 
+            accesskey="r"
             i18n:attributes="value;title"
           />
           <input class="button"
@@ -575,9 +575,9 @@
             type="submit"
             value="cut"
             title="cut items: alt-x"
-            accesskey="x" 
+            accesskey="x"
             i18n:attributes="value;title"
-          />               
+          />
         </tal:if>
         <tal:if condition="python:(default_document or publishables or assets)">
           <input class="button"
@@ -585,14 +585,14 @@
             type="submit"
             value="copy"
             title="copy items: alt-c"
-            accesskey="c" 
+            accesskey="c"
             i18n:attributes="value;title"
           />
         </tal:if>
-        <tal:if condition="may_change_content">      
+        <tal:if condition="may_change_content">
           <tal:block replace="nothing">
             ______________ paste (to ghost) controls exist even
-            if there's no content (there should be something on 
+            if there's no content (there should be something on
             the clipboard though). ______________
           </tal:block>
           <tal:if condition="python:request.has_key('__cp') and request['__cp'] is not None">
@@ -600,8 +600,8 @@
               name="tab_edit_paste:method"
               type="submit"
               value="paste"
-              title="paste items: alt-v" 
-              accesskey="v" 
+              title="paste items: alt-v"
+              accesskey="v"
               i18n:attributes="value;title"
             />
             <input class="button"
@@ -609,7 +609,7 @@
               type="submit"
               value="paste ghost"
               title="paste (items on clipboard) as ghost objects: alt-g"
-              accesskey="g" 
+              accesskey="g"
               i18n:attributes="value;title"
             />
           </tal:if>

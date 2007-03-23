@@ -20,10 +20,10 @@
     root_url model/get_root_url;
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
-    
+
     silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
-    may_change_content  silva_permissions/ChangeSilvaContent | nothing;    
+    may_change_content  silva_permissions/ChangeSilvaContent | nothing;
 
     message_type options/message_type | request/message_type | nothing;
     message      options/message | request/message | nothing;
@@ -76,9 +76,9 @@
   xml:space="preserve"
   tal:attributes="src string:$root_url/globals/plone_javascripts.js">
 </script>
-<script type="text/javascript" 
+<script type="text/javascript"
         tal:attributes="src here/helperscripts.js/absolute_url"></script>
-<script type="text/javascript" 
+<script type="text/javascript"
         tal:attributes="src here/handler_registry.js/absolute_url"></script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
@@ -116,7 +116,7 @@
 <tal:set define="global nofeedback nofeedback | nothing" />
 <metal:slot define-slot="feedback"
   tal:condition="python:not (message or nofeedback)">
-  <div class="fixed-clear" 
+  <div class="fixed-clear"
     tal:define="in_development_mode model/sec_in_development_mode"
     tal:omit-tag="nofeedback">
     <tal:if condition="in_development_mode">
@@ -168,7 +168,7 @@
 </span>
 <div style="float:left; width:16px">
   <a href="#top"
-    title="jump to top: alt-t" 
+    title="jump to top: alt-t"
     i18n:attributes="title;">
     <img alt="jump to top: alt-t"
       border="0"
@@ -202,7 +202,7 @@
     name  python: view.get_metadata_element('silva-extra', 'contactname');
     email python: view.get_metadata_element('silva-extra', 'contactemail');
     ">
-    <div style="float: left;"> 
+    <div style="float: left;">
       <tal:block i18n:translate="">contact:</tal:block>
     <a shape="rect"
       tal:attributes="href string:mailto:$email">
@@ -236,7 +236,7 @@
 <div class="personalbar"
   tal:define="userid request/AUTHENTICATED_USER/getUserName">
   <div style="float: left;">
-    <a href=""
+    <a href="service_resources/Silva/edit_member"
       title="Change your settings: alt-~"
       accesskey="~"
       tal:attributes="
@@ -287,7 +287,7 @@
 <!-- ____________________________ /end workspace ____________________________ -->
 </span>
 </div>
- 
+
 <tal:block replace="structure string:<!-- served by ${request/HTTP_HOST} -->" />
 
 </body>
