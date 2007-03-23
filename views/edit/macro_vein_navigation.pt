@@ -99,7 +99,7 @@ macro plateau
 </metal:define-macro>
 
 
-______________ macro plateau: level navigation ______________ 
+______________ macro plateau: level navigation ______________
 
 <metal:define-macro define-macro="plateau">
 <tal:define define="
@@ -118,7 +118,7 @@ ______________ macro plateau: level navigation ______________
   _______ subheading row _______
 </tr>
 <tr tal:define="gentype python:model.meta_type.startswith('Silva ') and model.meta_type[6:].lower() or model.meta_type">
-  <th class="subth" comment="i18n:translate only works in French?">
+  <th class="subth">
     <tal:block i18n:translate=""><tal:block replace="string:$gentype" i18n:name="" /></tal:block>
     <tal:block i18n:translate="">siblings</tal:block>
   </th>
@@ -131,7 +131,7 @@ ______________ macro plateau: level navigation ______________
     style="border-top:none; padding-left:1px ! important;">
     <div class="normal"
       tal:attributes="onclick string:javascript:window.location='$container_vein_url'">
-      <a class="right" 
+      <a class="right"
         title="slide to the publish screen"
         tal:attributes="href string:$container_url/edit/tab_status"
         i18n:attributes="title">
@@ -173,14 +173,14 @@ ______________ macro plateau: level navigation ______________
 <tr>
   <td tal:attributes="class location"
     tal:define="title item/get_short_title_editable">
-    <a class="right" 
+    <a class="right"
       title="slide to the publish screen"
       tal:condition="python:item.implements_versioning() or item.implements_container()"
       tal:attributes="href string:$item_url/edit/tab_status"
       i18n:attributes="title">
       &nbsp;
     </a>
-    <a class="left" 
+    <a class="left"
       title="slide to the contents screen"
       tal:attributes="href string:$item_url/edit"
       i18n:attributes="title">
