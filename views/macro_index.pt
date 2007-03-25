@@ -220,7 +220,6 @@
   <div style="float: right;">
     <a shape="rect"
       title="Leave Silva and view the public page: alt-:"
-      accesskey=":"
       tal:attributes="href url"
       i18n:attributes="title"
       i18n:translate="">

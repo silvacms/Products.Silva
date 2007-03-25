@@ -108,7 +108,7 @@ div.tabs {
   display: block;
   height: 1.2em;
   margin: 0;
-  padding: 0 16px 0 16px;
+  padding: 0 8px 0 16px;
   border-width: 1px;
   border-style: none none solid none;
   border-bottom-color: &dtml-shade80;;
@@ -192,13 +192,6 @@ div.tabs a.right:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
 }
 
-/* help (available as accesskey link) */
-div.tabs a.normal {
-  display: none;
-  float: right;
-  width: 0em;
-}
-
 div.tabs img {
   margin: 0.3em 0 0 0;
   border: none;
@@ -211,6 +204,25 @@ div.tabs div.air {
   width: 2em;
   height: 1em;
   background: transparent;
+}
+
+/* help (available as accesskey link) */
+div.tabs a.normal {
+  float: right;
+  display: auto;
+  width: auto;
+  height: auto;
+  border: none;
+  color: transparent;
+  background: transparent;
+}
+/* public page link hover */
+div.tabs a.normal:hover {
+  background-image: url(<dtml-var root_url>/globals/roadsign.gif);
+  background-repeat: no-repeat;
+  background-position: 6px 3px;
+  background-color: transparent;
+  text-decoration: none;
 }
 
 /* ____________________________________ flow bar _______ */

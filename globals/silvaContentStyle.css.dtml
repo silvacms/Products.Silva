@@ -57,7 +57,7 @@ div.tabs a.recede:hover {
 }
 
 div.tabs a.normal:visited {
-  background: transparent;
+  background-color: transparent;
 }
 
 

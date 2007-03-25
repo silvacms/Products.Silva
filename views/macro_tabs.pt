@@ -7,7 +7,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 <metal:block define-macro="tabs">
-
 <tal:block define="
   tabs view/get_authorized_tabs;
   active_tab active_tab | nothing;
@@ -28,7 +27,6 @@
       </a>
     </div>
     <a class="normal"
-      href=""
       title="Silva top: alt-/"
       accesskey="/"
       tal:attributes="href string:$root_url/edit/tab_edit"
@@ -43,19 +41,15 @@
     </a>
     <a name="top"> </a>
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
-      <a href="url"
-        tal:content="python: item.get_short_title_editable() or item.id"
-        tal:attributes="href string:${item/absolute_url}/edit/${template/id}"
-        >
-        Name
+      <a tal:content="python: item.get_short_title_editable() or item.id"
+        tal:attributes="href string:${item/absolute_url}/edit/${template/id}">
+        name
       </a>
       <tal:block tal:condition="not:repeat/item/end">
         &middot;
       </tal:block>
     </tal:block>
-    <span tal:replace="nothing">
-      <!-- ____________ manage link ____________ -->
-    </span>
+    <span tal:replace="nothing"><!-- _______ manage link _______ --></span>
     <tal:block condition="python:user.has_role(['Manager'], object=model)">
       <a class="manage"
         title="Zope manage_main: alt-."
@@ -75,18 +69,28 @@
   </div>
 
 <!-- ______________ Matrix tabs ______________ -->
-<span tal:replace="nothing">
-  <!-- _______ help link _______ -->
-</span>
 <div class="tabs">
+  <span tal:replace="nothing"><!-- _______ public link _______ --></span>
+  <a class="normal"
+    title="Leave Silva and view the public page: alt-:"
+    accesskey=":"
+    tal:attributes="href string:${model/absolute_url}"
+    i18n:attributes="title"
+    >
+      <img border="0"
+         width="16"
+         height="11"
+         tal:attributes="src string:$root_url/globals/pixel.gif"
+      />
+  </a>
+  <span tal:replace="nothing"><!-- _______ help link _______ --></span>
   <a class="normal"
     title="Silva access keys: alt-?"
     accesskey="?"
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
     i18n:attributes="title"
-    ></a>
- 
+    ></a> 
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
       tab_info python:view.get_tab_info(item);
@@ -108,9 +112,7 @@
            tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url"
         />
       </a>
-      <a class=""
-        href=""
-        tal:content="structure string:${tab_info/tab_name}"
+      <a tal:content="structure string:${tab_info/tab_name}"
         tal:attributes="href tab_info/tab_url;
           class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
           title tab_info/tab_title;
@@ -118,7 +120,7 @@
           i18n:translate=""
           i18n:attributes="title"
         >
-        Tab Name
+        tab name
       </a>
       <a class="right"
         tal:condition="tab_info/uplink_url"
@@ -143,6 +145,5 @@
 <div class="flowbar"></div>
 
 </tal:block>
-
 </metal:block>
 </html>
