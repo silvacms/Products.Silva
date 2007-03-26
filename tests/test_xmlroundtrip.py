@@ -64,7 +64,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         zip_out = ZipFile(f, 'r')
         namelist = zip_out.namelist()
         namelist.sort()
-        self.assertEquals(namelist, ['assets/1', 'assets/2', 'assets/3', 'assets/4', 'assets/5', 'assets/6', 'silva.xml'])
+        self.assertEquals(namelist, [
+            'assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg', 'assets/4.jpg',
+            'assets/5.jpg', 'assets/6.wav', 'silva.xml'])
         zip_out.close()
         f.close()
         os.remove(os.path.join(directory, 'test_export.zip'))

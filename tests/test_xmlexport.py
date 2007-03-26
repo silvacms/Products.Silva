@@ -229,7 +229,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         namelist = zip_out.namelist()
         namelist.sort()
         self.assertEquals(
-            ['assets/1', 'assets/2', 'silva.xml', 'zexps/1.zexp', 
+            ['assets/1.swf', 'assets/2.mp3', 'silva.xml', 'zexps/1.zexp', 
             'zexps/2.zexp', 'zexps/3.zexp', 'zexps/4.zexp', 'zexps/5.zexp'], 
             namelist)
         zip_out.close()

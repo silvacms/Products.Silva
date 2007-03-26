@@ -63,10 +63,10 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
     def test_get_modification_datetime(self):
         now = DateTime()
         # folder modification time is not supported
-        self.assert_(self.folder.get_modification_datetime() is None)
+        self.assert_(self.folder.get_modification_datetime() < now)
         self.assert_(self.document.get_modification_datetime() < now)
         # silva root modification time is not supported
-        self.assert_(self.root.get_modification_datetime() is None)
+        self.assert_(self.root.get_modification_datetime() < now)
         self.assert_(self.folder.index.get_modification_datetime() < now)
 
     def test_get_breadcrumbs(self):
