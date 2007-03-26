@@ -17,7 +17,7 @@
 <!-- ______________ Breadcrumb space ______________ -->
   <div class="pathbar">
     <div style="float: right; margin-right: 5px;">
-      <a class="idea"      
+      <a class="idea"
         href="globals/reference"
         title="Silva info: alt-|"
         accesskey="|"
@@ -61,8 +61,8 @@
         &middot; manage...
       </a>
     </tal:block>
-    <a 
-      href="#bottom" 
+    <a
+      href="#bottom"
       accesskey="b"
       >
     </a>
@@ -80,7 +80,8 @@
       <img border="0"
          width="16"
          height="11"
-         tal:attributes="src string:$root_url/globals/pixel.gif"
+         tal:attributes="src string:$root_url/globals/pixel.gif;
+           alt string:spacer_image;"
       />
   </a>
   <span tal:replace="nothing"><!-- _______ help link _______ --></span>
@@ -90,7 +91,7 @@
     tal:condition="exists:here/help_url"
     tal:attributes="href string:${here/help_url}"
     i18n:attributes="title"
-    ></a> 
+    ></a>
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
       tab_info python:view.get_tab_info(item);
