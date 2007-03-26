@@ -793,18 +793,17 @@ textarea {
 }
 
 input.store, select.store, textarea.store {
-  width: 93%;
+  width: 99%;
+/* IE7 hack */
+!width: 94%;
   margin-top: 1px;
   margin-bottom: 1px;/* IE bug fix */
 }
 
-/* 
-* this selector works only for standard compatible browsers like mozilla, so
-* IE ignores this definition below. 
-*/
-td>textarea.fixIE6widget, td>input.fixIE6widget[type=text], td>div.fixIE6widget, 
-  td>input.store, td>textarea.store, td>select.store {
-  width: 98%;
+*> input.store {
+  width: 99%;
+/* IE7 hack */
+!width: 94%;
 }
 
 select {
@@ -819,8 +818,8 @@ select {
 }
 
 select.store {
-  font-size: 90%;
-  line-height: 96%;
+  width: 100%;
+!width: 94%;
 }
 
 optgroup {
