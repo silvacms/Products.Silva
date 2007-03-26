@@ -12,14 +12,14 @@ from Products.Formulator.Errors import FormValidationError
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('Nothing was selected, so no new version was created.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=view.render_form_errors(e),
         refs=refs)
 
@@ -34,7 +34,7 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_copied.append((get_name(obj), _('not a versionable object')))
+        not_copied.append((get_name(obj), _('not applicable')))
         continue
     if obj.get_next_version():
         not_copied.append((get_name(obj), _('already has a next version')))

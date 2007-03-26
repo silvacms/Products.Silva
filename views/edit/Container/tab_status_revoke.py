@@ -12,14 +12,14 @@ from zope.i18n import translate
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('Nothing was selected, so no approval was revoked.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=view.render_form_errors(e),
         refs=refs)
 
@@ -34,7 +34,7 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_revoked.append((get_name(obj), _('not a versionable object')))
+        not_revoked.append((get_name(obj), _('not applicable')))
         continue
     if not obj.is_version_approved():
         not_revoked.append((get_name(obj), _('it\'s not approved, or it\'s already published')))
@@ -55,5 +55,5 @@ if not_revoked:
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
-    
+
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

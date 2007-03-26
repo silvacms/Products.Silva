@@ -12,14 +12,14 @@ from Products.Formulator.Errors import FormValidationError
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('Nothing was selected, so no settings were changed.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=view.render_form_errors(e),
         refs=refs)
 
@@ -31,7 +31,7 @@ clear_expiration_flag = result['clear_expiration']
 if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('No publication nor expiration time nor any of the flags were set.'),
         refs=refs)
 
@@ -49,10 +49,10 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_changed.append((get_name(obj), _('not a versionable object')))
+        not_changed.append((get_name(obj), _('not applicable')))
         continue
     # HUGE check to see what actually may or can be changed...
-    if silva_permissions['ApproveSilvaContent']:        
+    if silva_permissions['ApproveSilvaContent']:
         if not obj.get_next_version():
             # No next version, so start looking for the published version
             # since we can change the expiration time for published content.

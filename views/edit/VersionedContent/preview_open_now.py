@@ -15,7 +15,7 @@ message = _('Document published')
 message_type = 'feedback'
 publish = True
 if not obj.implements_versioning():
-    message = _('not a versionable object')
+    message = _('not applicable')
     message_type = 'error'
     publish = False
 elif obj.is_version_approved():

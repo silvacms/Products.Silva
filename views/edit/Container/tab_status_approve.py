@@ -12,14 +12,14 @@ from Products.Formulator.Errors import FormValidationError
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('Nothing was selected, so nothing was approved.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=view.render_form_errors(e),
         refs=refs)
 
@@ -30,9 +30,9 @@ clear_expiration_flag = result['clear_expiration']
 
 #if not publish_now_flag and not publish_datetime:
 #    return view.tab_status(
-#        message_type='error', 
+#        message_type='error',
 #        message='No publication datetime set.')
- 
+
 now = DateTime()
 
 approved_ids = []
@@ -47,12 +47,12 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), _('not a versionable object')))
+        not_approved.append((get_name(obj), _('not applicable')))
         continue
     if obj.is_version_approved():
         not_approved.append((get_name(obj), _('version already approved')))
         continue
-    if ((publish_now_flag or publish_datetime) and 
+    if ((publish_now_flag or publish_datetime) and
             not obj.get_unapproved_version()):
     # SHORTCUT: To allow approval of closed docs with no new version available,
     # first create a new version. This "shortcuts" the workflow.
@@ -90,7 +90,7 @@ if approved_ids:
     message.set_mapping({'ids': view.quotify_list(approved_ids)})
     msg.append(translate(message))
 
-if not_approved:    
+if not_approved:
     message = _('<span class="error">could not approve: ${ids}</span>')
     message.set_mapping({'ids': view.quotify_list_ext(not_approved)})
     msg.append(translate(message))

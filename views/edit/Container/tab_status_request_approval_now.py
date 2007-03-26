@@ -16,14 +16,14 @@ from zope.i18n import translate
 # Check whether there's any checkboxes checked at all...
 if not refs:
     return view.tab_status(
-        message_type='error', 
+        message_type='error',
         message=_('Nothing was selected, so no approval was requested.'))
 
 try:
     result = view.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
     return view.tab_status(
-        message_type="error", 
+        message_type="error",
         message=view.render_form_errors(e),
         refs=refs)
 
@@ -32,9 +32,9 @@ clear_expiration_flag = result['clear_expiration']
 
 #if not publish_now_flag and not publish_datetime:
 #    return view.tab_status(
-#        message_type="error", 
+#        message_type="error",
 #        message=_("First set a publish time"))
- 
+
 now = DateTime()
 
 msg = []
@@ -50,7 +50,7 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), _('not a versionable object')))
+        not_approved.append((get_name(obj), _('not applicable')))
         not_approved_refs.append(ref)
         continue
     if not obj.get_unapproved_version():
@@ -73,7 +73,7 @@ for ref in refs:
     message = ('Request for approval via a bulk request in the publish '
                 'screen of /%s (automatically generated message)'
                 ) % model.absolute_url(1)
-    obj.request_version_approval(message)    
+    obj.request_version_approval(message)
     approved_ids.append(get_name(obj))
 
 if approved_ids:
@@ -89,5 +89,5 @@ if not_approved:
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
-    
+
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)), refs=no_date_refs)

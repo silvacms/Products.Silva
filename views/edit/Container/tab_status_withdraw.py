@@ -24,7 +24,7 @@ for ref in refs:
     if obj is None:
         continue
     if not obj.implements_versioning():
-        not_approved.append((get_name(obj), _('not a versionable object')))
+        not_approved.append((get_name(obj), _('not applicable')))
         continue
     if not obj.get_unapproved_version():
         not_approved.append((get_name(obj), _('no unapproved version')))
@@ -52,5 +52,5 @@ if not_approved:
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
-    
+
 return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )
