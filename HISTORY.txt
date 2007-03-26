@@ -23,7 +23,7 @@ Silva changes
       - The Extension Service page now has a button 'rebuild catalog' which
         will empty the silva catalog and reindex all silva content.
 
-      - Added Atom/Rss feed capabilities to arbitrary containers. To
+      - Added Atom/RSS feed capabilities to arbitrary containers. To
         use this go to the 'settings' in the properties tab of a
         container, and enable the checkbox marked 'allow feeds'. After
         that, adding /rss.xml or /atom.xml after that container's url
@@ -68,10 +68,6 @@ Silva changes
         giving editors a nice way to temporarily exclude trees from 
         navigation, so that they can be worked on.
 
-      - Fixed behavior in Internet Explorer where it's impossible to change
-        the "link to" field in the image toolbox in kupu, by removing the
-        onkeypress event.
-
       - Changed title fields to string fields, for easy FF fill-in
 
       - External sources inside headers or table cells were never allowed. An
@@ -105,7 +101,7 @@ Silva changes
         didn't appear because the link was empty (it was there). Now the
         id shows up so visitors can at least click it.
 
-      - Renevated the TOC/AutoToc rendering, replacing the ancient, legacy,
+      - Renovated the TOC/AutoToc rendering, replacing the ancient, legacy,
         Netscape4 compatible image-based indent, where long titles break 
         onto the next, non-indented line. The new rendering uses nested
         lists, which make the rendering easier to style, and more accessible
@@ -137,6 +133,8 @@ Silva changes
         anchor, and will not be found by Indexers.
 
     Ported from 1.5 branch
+
+      - Fixes for IE7 css selectors
 
       - With a base tag in the layout template the publisher form in public 
         preview 404's. The form now has a constructed action instead of a point.
