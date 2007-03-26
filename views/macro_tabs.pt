@@ -110,7 +110,8 @@
         <img border="0"
            height="9"
            width="9"
-           tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url"
+           tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url;
+             alt string:style_image;"
         />
       </a>
       <a tal:content="structure string:${tab_info/tab_name}"
@@ -134,7 +135,8 @@
         <img border="0"
            height="9"
            width="9"
-           tal:attributes="src python: '%s/globals/up_level.gif' % root_url"
+           tal:attributes="src python: '%s/globals/up_level.gif' % root_url;
+             alt string:level_up_image;"
         />
       </a>
       <div class="air"> </div>
