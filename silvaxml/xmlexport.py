@@ -420,9 +420,10 @@ class ExportInfo:
     
     def _makeUniqueAssetId(self, path):
         ext = ''
-        if len(path) > 4:
-            if path[-4] == '.':
-                ext = path[-4:]
+        name = path[-1]
+        if len(name) > 4:
+            if name[-4] == '.':
+                ext = name[-4:]
         self._last_asset_id += 1
         return str(self._last_asset_id) + ext
     
