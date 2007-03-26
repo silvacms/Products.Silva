@@ -775,7 +775,7 @@ form {
 
 input {
   margin-top: 1px;
-  margin-bottom: 1px;/* IE bug fix */
+  margin-bottom: 1px; /* IE6 bug fix */
   padding: 0.1em;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
@@ -794,16 +794,7 @@ textarea {
 
 input.store, select.store, textarea.store {
   width: 99%;
-/* IE7 hack */
-!width: 94%;
-  margin-top: 1px;
-  margin-bottom: 1px;/* IE bug fix */
-}
-
-*> input.store {
-  width: 99%;
-/* IE7 hack */
-!width: 94%;
+  !width: 94%; /* IE7 hack */
 }
 
 select {
@@ -819,11 +810,7 @@ select {
 
 select.store {
   width: 100%;
-!width: 94%;
-}
-
-optgroup {
-  font-size: 100%;
+  !width: 95%; /* IE7 hack */
 }
 
 select.transport {
@@ -863,7 +850,7 @@ button.button {
 }
 
 input.transport {
-  margin: 0.2em 0.2em 0.1em 0.2em;
+  margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-transportBorder;;
   color: &dtml-transportFontColor;;
@@ -874,7 +861,7 @@ input.transport {
 }
 
 input.warning {
-  margin: 0.2em 0.2em 0.1em 0.2em;
+  margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-destructiveBorder;;
   color: &dtml-destructiveFontColor;;
