@@ -12,9 +12,9 @@
 ">
 
 <head metal:define-slot="head">
-  <base tal:attributes="href here/absolute_url" />
   <title metal:define-slot="title"
     tal:content="here/get_title_or_id">doc title</title>
+  <base tal:attributes="href here/absolute_url" />
   <!-- Begin metatags -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <tal:skip replace="nothing">
