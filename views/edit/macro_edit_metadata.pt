@@ -149,7 +149,7 @@
                       condition="element/isAcquired"
                       replace="structure data" />
                     <sup tal:condition="element/isAcquireable" i18n:translate="">
-                      &#134;
+                      &#8224;
                     </sup>
                     <tal:block condition="not: element/isAcquired">
                       &nbsp;
@@ -179,7 +179,7 @@
               date format: day / month / year &nbsp;23:59
             </th>
             <th i18n:translate="">
-              &#134; acquireable
+              &#8224; acquireable
             </th>
             <th>
             </th>
