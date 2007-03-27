@@ -30,7 +30,6 @@ h2 {
 }
 </style>
 </tal:condition>
-<base tal:attributes="href string:${model/absolute_url}/edit/" />
 <metal:block define-slot="editor_css" />
 </metal:fill-slot>
 
