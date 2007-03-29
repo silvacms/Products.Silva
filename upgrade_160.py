@@ -1,6 +1,9 @@
 # silva imports
 import zLOG
 from zope import interface
+
+from Products.SilvaMetadata.Binding import BindingError
+
 from Products.Silva import mangle
 from Products.Silva.interfaces import IUpgrader, IInvisibleService
 from Products.Silva.adapters.interfaces import IIndexable
@@ -21,6 +24,8 @@ def initialize():
         CatalogRefresher(), '1.6', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(
         InvisibleMan(), '1.6', upgrade.AnyMetaType)
+    upgrade.registry.registerUpgrader(
+        LanguageMetadataLowerCaser(), '1.6', upgrade.AnyMetaType)
     
 class IndexItemUpgrader:
 
@@ -129,4 +134,27 @@ class InvisibleMan:
                         service,
                         IInvisibleService,
                         interface.directlyProvidedBy(service))
+        return obj
+
+class LanguageMetadataLowerCaser:
+    """The metadata field language in silva-extra was incorrectly
+    stored in uppercase in previous versions."""
+    interface.implements(IUpgrader)
+
+    def upgrade(self, obj):
+        metadata_service = obj.service_metadata
+        metadata = {}
+        try:
+            binding = metadata_service.getMetadata(obj)
+        except BindingError:
+            binding = None
+        if binding is None:
+            return obj
+        lang = binding['silva-extra']['language']
+        if not lang:
+            return obj
+        llang = lower(lang)
+        if llang == lang:
+            return obj
+        binding.setValues('silva-extra', {'language': llang})
         return obj
