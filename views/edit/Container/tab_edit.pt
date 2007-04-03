@@ -307,19 +307,6 @@
           <td class="listing-right">
             <tal:block condition="python:may_change_content and not item_info['is_default']">
               <a style="float:right"
-                title="move down"
-                tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
-                i18n:attributes="title"
-              >
-                <img alt="move down"
-                  border="0"
-                  height="12"
-                  width="16"
-                  tal:attributes="src string:${root_url}/globals/down.gif"
-                  i18n:attributes="alt"
-                />
-              </a>
-              <a style="float:right"
                 title="move up"
                 tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item_info/item_id}"
                 i18n:attributes="title"
@@ -329,6 +316,19 @@
                   height="12"
                   width="16"
                   tal:attributes="src string:${root_url}/globals/up.gif"
+                  i18n:attributes="alt"
+                />
+              </a>
+              <a style="float:right"
+                title="move down"
+                tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
+                i18n:attributes="title"
+              >
+                <img alt="move down"
+                  border="0"
+                  height="12"
+                  width="16"
+                  tal:attributes="src string:${root_url}/globals/down.gif"
                   i18n:attributes="alt"
                 />
               </a>
