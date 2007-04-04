@@ -91,8 +91,7 @@
           id="meta_type"
           title="select a new item: alt-s"
           tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
-          i18n:attributes="title"
-        >
+          i18n:attributes="title">
           <option value="None" i18n:translate="">
             select:
           </option>
@@ -247,16 +246,14 @@
               tal:condition="item_info/has_modification_time"
               tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
               tal:content="structure item_info/modification_time"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               date
             </a>
             <a class="closed"
               title="properties"
               tal:condition="not:item_info/has_modification_time"
               tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               <em i18n:translate="">n/a</em>
             </a>
           </td>
@@ -283,16 +280,14 @@
               tal:condition="item_info/is_versioned_content"
               tal:attributes="href string:${item_info/item_url}/edit/tab_status"
               tal:content="structure item_info/last_author"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               authorname
             </a>
             <a class="closed"
               title="publish"
               tal:condition="item_info/is_container"
               tal:attributes="href string:${item_info/item_url}/edit/tab_status"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               <em i18n:translate="">n/a</em>
             </a>
             <span
@@ -302,15 +297,14 @@
             </span>
           </td>
           <tal:block replace="nothing">
-            _______ move symbols _______
+            _______ shift symbols _______
           </tal:block>
           <td class="listing-right">
             <tal:block condition="python:may_change_content and not item_info['is_default']">
               <a style="float:right"
                 title="move up"
                 tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item_info/item_id}"
-                i18n:attributes="title"
-              >
+                i18n:attributes="title">
                 <img alt="move up"
                   border="0"
                   height="12"
@@ -322,8 +316,7 @@
               <a style="float:right"
                 title="move down"
                 tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
-                i18n:attributes="title"
-              >
+                i18n:attributes="title">
                 <img alt="move down"
                   border="0"
                   height="12"
@@ -405,8 +398,7 @@
               tal:define="id asset_info/asset_id"
               tal:content="python: ct(id, 30)"
               tal:attributes="href asset_info/editor_link"
-              i18n:attributes="title content-editor;"
-            >
+              i18n:attributes="title content-editor">
               id
             </a>
 
@@ -421,8 +413,7 @@
               tal:attributes="
                 href string:${asset_info/asset_url}/edit/tab_preview;
                 class asset_info/blacklink_class"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               <em i18n:translate="">view</em>
             </a>
           </td>
@@ -435,16 +426,14 @@
               tal:condition="asset_info/has_modification_time"
               tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
               tal:content="structure asset_info/modification_time"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               date
             </a>
             <a class="closed"
               title="properties"
               tal:condition="not: asset_info/has_modification_time"
               tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
-              i18n:attributes="title"
-            >
+              i18n:attributes="title">
               <em i18n:translate="">
                 unknown
               </em>
@@ -542,8 +531,7 @@
               </tal:loop>
               <option value="0"
                 tal:attributes="value python:test(default_document, len(publishables) - 1, len(publishables))"
-                i18n:translate=""
-              >
+                i18n:translate="">
                 end
               </option>
             </select>
@@ -551,7 +539,7 @@
               title="access key: alt-o"
               accesskey="o"
               i18n:attributes="title"
-            >&nbsp;
+              >&nbsp;
             </label>
             <input class="button"
               name="tab_edit_move_to:method"
