@@ -207,7 +207,7 @@
     <span id="kupu-tb-buttons" class="kupu-tb-buttons">
 
     <span class="kupu-tb-buttongroup kupu-logo" style="float: right" id="kupu-logo">
-      <button type="button" class="kupu-logo" title="Kupu 1.4.b1" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
+      <button type="button" class="kupu-logo" title="Kupu 1.4b1" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
     </span>
 
     <select id="kupu-tb-styles" onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
@@ -355,21 +355,21 @@
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0">
+                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore.</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-name"/></td>
+                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
+                      <td><input class="store" type="text" id="kupu-index-name" /></td>
                     </tr>
                     <tr>
-                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer.</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-title"/></td>
+                      <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
+                      <td><input class="store" type="text" id="kupu-index-title" /></td>
                     </tr>
                   </table>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="button" class="button" value="add" id="kupu-index-addbutton" i18n:attributes="value"/>
+                  <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value"/>
                   <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value"/>
                   <input type="button" class="warning" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
                 </td>
@@ -428,25 +428,23 @@
 
     </div>
 
-
     <div class="kupu-toolbox" id="kupu-toolbox-abbr">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">abbreviations and acronyms</h1>
 
       <div class="kupu-tooltray">
-
         <form name="kupu-abbr-form">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0">
+                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
-                      <td><input class="store" type="text" id="kupu-abbr-title"/></td>
+                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a></td>
+                      <td><input class="store" type="text" id="kupu-abbr-title" /></td>
                     </tr>
                     <tr id="kupu-abbr-radiorow">
-                      <td><a class="rollover" href=""><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym).</span></a></td>
+                      <td><a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span></a></td>
                       <td>
                         <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked"/>abbreviation</label>
                         <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym"/>acronym</label>
@@ -520,9 +518,9 @@
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0">
+                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td width="30%">author</td>
+                      <td width="15%">author</td>
                       <td><input class="store" type="text" id="kupu-citation-authorinput"/></td>
                     </tr>
                     <tr>
@@ -560,7 +558,7 @@
         <tbody>
           <tr>
             <td>
-                <table width="100%" style="color: #333;">
+                <table width="100%" style="color: #333;" cellspacing="0">
                   <tr>
                     <td class="align-right" width="30%">table class</td>
                     <td>
@@ -578,13 +576,13 @@
           <tr>
             <td colspan="2">
               <div id="kupu-toolbox-addtable" class="kupu-toolbox-addtable">
-                <table width="100%" style="color: #333;">
+                <table width="100%" style="color: #333;" cellspacing="0">
                   <tr>
-                    <td class="align-right" width="30%">rows</td>
+                    <td style="text-align:right" width="15%">rows</td>
                     <td><input class="store" id="kupu-table-newrows"/></td>
                   </tr>
                   <tr>
-                    <td class="align-right">columns</td>
+                    <td style="text-align:right">columns</td>
                     <td><input class="store" id="kupu-table-newcols"/></td>
                   </tr>
                   <tr>
@@ -657,7 +655,7 @@
 
       <div class="kupu-tooltray">
 
-        <form name="kupu_index_form" onsubmit="return false;">
+        <form name="kupu_toc_form" onsubmit="return false;">
           <select id="kupu-toolbox-toc-depth">
             <option value="1">1 level</option>
             <option value="2">2 levels</option>
@@ -695,6 +693,26 @@
       <div class="kupu-tooltray">
         <form action="." method="post" onsubmit="return false">
           <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()"/>
+        </form>
+      </div>
+
+    </div>
+
+    </div>
+
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+      </metal:macro>
+    </body>
+
+
+</html>
+
+e-toolbox-button" onclick="kupu.saveDocument()"/>
         </form>
       </div>
 
