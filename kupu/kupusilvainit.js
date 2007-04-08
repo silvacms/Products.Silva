@@ -169,7 +169,7 @@ function initSilvaKupu(iframe) {
     linktool.registerToolBox("linktoolbox", linktoolbox);
   
     var indextool = new SilvaIndexTool(
-        "kupu-index-title", "kupu-index-name", 'kupu-index-addbutton', 
+        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton', 
         'kupu-index-updatebutton', 'kupu-index-deletebutton', 
         'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('indextool', indextool);
