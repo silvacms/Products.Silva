@@ -68,6 +68,13 @@
     i18n:translate="">
     addables...
   </a>
+  <a title="see the content in the public layout: alt-;"
+    accesskey=";"
+    tal:attributes="href string:${model/absolute_url}/preview_html"
+    i18n:translate=""
+    i18n:attributes="title">
+    public&nbsp;preview...
+  </a>
 <tal:block define="
   permissions view/get_silva_permissions;
   unapproved_version model/get_unapproved_version | nothing;
