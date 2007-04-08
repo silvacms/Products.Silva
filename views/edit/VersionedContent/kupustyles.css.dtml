@@ -10,17 +10,15 @@
  *
  *****************************************************************************/
 
-<dtml-let last_modified="_.DateTime()-14"
-          expires="_.DateTime()+7"
-          root="get_root_url()">
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" root="get_root_url()">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
 <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
 
 div.kupu-fulleditor {
-  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
-  margin: 0em;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  margin: 0;
   height: 100%;
 }
 
@@ -28,13 +26,10 @@ div.kupu-fulleditor .kupu-editorframe {
 }
 
 div.kupu-smalleditor .kupu-editorframe {
-  margin-right: 0em;
 }
 
 div.kupu-smalleditor {
-  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
   border: solid 3px ButtonHighlight;
-  margin: 0em;
   height: 100%;
 }
 
@@ -143,11 +138,6 @@ div.kupu-tb select:hover {
   background: #b3d4bf;
 }
 
-div.kupu-editorframe {
-  margin-left: 0em;
-  margin-bottom: 0em;
-}
-
 #kupu-editor {
   height: 580px;
   margin: 0em;
@@ -162,18 +152,18 @@ div.kupu-editorframe {
   border: solid 1px #6c797f;
   display: none;
 }
-/* hack for IE */
+/* hack for IE5-6 */
 * html #kupu-editor-textarea {
   width:100%;
 }
 
+
 .kupu-toolboxes {
-  font-size: 1em;
-  background: #cedae8;
   margin-right: 0em;
   border: solid 1px #6c797f;
-  border-style: solid solid solid solid;
   border-bottom-width: 2px;
+  background: #cedae8;
+  font-size:1em;
 }
 
 div.kupu-toolbox, div.kupu-toolbox-active {
@@ -188,6 +178,7 @@ div.kupu-toolbox-active {
 }
 
 div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 1.1em;
   font-weight: normal;
   color: #ecfff3;
@@ -212,10 +203,19 @@ div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
 }
 
 div.kupu-tooltray {
-  /* background: #cedae8; */
   margin: 0;
-  padding: 0.4em 0.3em 0.4em 0.4em; 
+  padding: 0.3em;
   color: #333;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+  line-height: 100%;
+}
+
+div.kupu-tooltray table td {
+  padding: 0 0.1em 0;
+}
+
+div.kupu-tooltray input.store {
+  !width: 96%; /* IE7 hack */
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
@@ -274,11 +274,11 @@ div#kupu-fgcolorchooser div:hover {
 
 #kupu-properties input, #kupu-properties-description {
   font-size: x-small;
-  font-family: Verdana, "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
 
 }
 
-div.kupu-properties-checkbox-outerdiv h2{
+div.kupu-properties-checkbox-outerdiv h2 {
   font-size: 1.1em;
   font-weight: normal;
   color: #eCFFF3;
@@ -341,18 +341,16 @@ div.kupu-properties-checkbox-innerdiv {
 .kupu-tooltray span.tooltip {
   color: #444;
   background: #e3f1da;
-  margin: 0.8em 0.4em 0 0;
+  margin: 1.5em 0 0;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
-  text-align:left;
-  font-style: normal;
-  display: none
+  display: none;
 }
 
 .kupu-tooltray a.rollover:hover span {
   display:block;
   position:absolute;
-  width:21em;
+  width:21.5em;
 }
 
 .kupu-tooltray a.requiredfield {
