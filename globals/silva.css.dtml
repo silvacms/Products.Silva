@@ -359,6 +359,10 @@ table {
   font-size: 100%;/* for IE 5.x */
 }
 
+table th, table td {
+  padding:0;
+}
+
 table.columns {
   width: 100%;
   padding: 0;
@@ -414,6 +418,7 @@ table.listing {
   border-bottom: &dtml-listingBorder;;
   border-collapse: collapse;
   color: #444;
+  font-family:"Lucida Grande", "Lucida Sans Unicode", verdana, arial, helvetica, sans-serif;
 }
 
 table.listing img {
@@ -792,7 +797,7 @@ textarea {
   font: &dtml-inputFont;;
 }
 
-input.store, select.store, textarea.store {
+input.store, textarea.store {
   width: 99%;
   !width: 94%; /* IE7 hack */
 }
@@ -1308,6 +1313,13 @@ table.listing div.message {
 
 /* ______________________________________________________ typography _______ */
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0em 0em 1em 0em;
+  padding: 0;
+  border: none;
+  font-weight: bold;
+}
+
 h1 {
   font-size: &dtml-headingSize1;;
 }
@@ -1330,13 +1342,6 @@ h5 {
 
 h6 {
   font-size: &dtml-headingSize6;;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0em 0em 1em 0em;
-  padding: 0;
-  border: none;
-  font-weight: bold;
 }
 
 code {

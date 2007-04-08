@@ -36,7 +36,7 @@ shade26:string=#373e42
 nightShade:string=black
 
 
-mainFont:string=70% Verdana, Helvetica, Arial, sans-serif
+mainFont:string=70% Verdana, Arial, Helvetica, sans-serif
 mainBackground:string=#91989b
 mainFontColor:string=red
 mainLinkColor:string=#000080
