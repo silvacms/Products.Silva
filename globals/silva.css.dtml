@@ -1130,20 +1130,12 @@ input.imagebutton {
   background: transparent;
 }
 
-input[type="checkbox"]:focus, input[type="radio"]:focus {
-  color: #777;
-  background: #dee9eb;
-}
-
-input[type="checkbox"]:hover, input[type="radio"]:hover {
-  color: #777;
-  background: #b9e3e8 none;
-}
-
-/* hide stupid Exporer padding around checkboxes */
-input.min {
-  border: none;
-  background-color: transparent;
+input[type="checkbox"], input[type="radio"] {
+  margin-top:0;
+  margin-bottom:0;
+/* remove stupid Explorer framing of checkboxes and radio buttons */
+border: none;
+background-color: transparent;
 }
 
 

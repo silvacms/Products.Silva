@@ -100,8 +100,7 @@
   <tbody>
     <tr tal:condition="objects">
       <th class="listing-left">
-        <input class="min"
-          type="checkbox"
+        <input type="checkbox"
           name="all_0"
           id="all_0"
           title="select all: alt-a"
@@ -148,8 +147,7 @@
         tal:attributes="
           class python: iterate and 'odd' or 'even';">
         <td class="listing-left">
-          <input class="min"
-            type="checkbox"
+          <input type="checkbox"
             name="refs:list"
             tal:define="ref obj/ref | nothing"
             tal:condition="ref"

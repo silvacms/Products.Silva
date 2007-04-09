@@ -127,8 +127,7 @@
     </tal:block>
     <tr tal:condition="python:(default_document or publishables or assets)">
       <th class="listing-left">
-        <input class="min"
-          type="checkbox"
+        <input type="checkbox"
           name="all_0"
           id="all_0"
           title="select all: alt-a"
@@ -185,8 +184,7 @@
             _______ checkbox + position cell _______
           </tal:block>
           <td class="listing-left">
-            <input class="min"
-              type="checkbox"
+            <input type="checkbox"
               name="ids:list"
               tal:attributes="
                 value item_info/item_id;
@@ -359,8 +357,7 @@
             _______ checkbox + position cell _______
           </tal:block>
           <td class="listing-left">
-            <input class="min"
-              type="checkbox"
+            <input type="checkbox"
               name="ids:list"
               tal:attributes="
                 value asset_info/asset_id;
