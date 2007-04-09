@@ -207,7 +207,7 @@ div.kupu-tooltray {
   padding: 0.3em;
   color: #333;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-  line-height: 100%;
+  line-height: 110%;
 }
 
 div.kupu-tooltray table td {
@@ -216,6 +216,10 @@ div.kupu-tooltray table td {
 
 div.kupu-tooltray input.store {
   !width: 96%; /* IE7 hack */
+}
+
+table#extsourceform input.store, table#extsourceform select.store {
+  !width: 67%; /* IE7 hack */
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
@@ -341,7 +345,7 @@ div.kupu-properties-checkbox-innerdiv {
 .kupu-tooltray span.tooltip {
   color: #444;
   background: #e3f1da;
-  margin: 1.5em 0 0;
+  margin: 2em 0 0;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
   display: none;
