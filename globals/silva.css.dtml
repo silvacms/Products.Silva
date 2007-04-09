@@ -832,6 +832,11 @@ select.manipulator {
   background: &dtml-manipulatorBackground;;
 }
 
+/* seems to keep IE (inc 7) in check without anything else */ 
+input[type="submit"] {
+  overflow: visible; 
+}
+
 input.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;

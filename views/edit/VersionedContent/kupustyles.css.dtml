@@ -214,12 +214,13 @@ div.kupu-tooltray table td {
   padding: 0 0.1em 0;
 }
 
-div.kupu-tooltray input.store {
-  !width: 96%; /* IE7 hack */
+/* seems to keep IE (inc 7) in check without anything else */ 
+div.kupu-tooltray input.button {
+  overflow: visible; 
 }
-
-table#extsourceform input.store, table#extsourceform select.store {
-  !width: 67%; /* IE7 hack */
+/* improves problem with long values in string inputs in IE 7 */ 
+div.kupu-tooltray input.store {
+  overflow: visible;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
