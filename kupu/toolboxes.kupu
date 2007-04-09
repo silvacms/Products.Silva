@@ -10,6 +10,7 @@
 
   <kupu:part name="properties">
     <div class="kupu-toolbox" id="kupu-toolbox-properties">
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>
 
       <div class="kupu-tooltray">
@@ -32,6 +33,7 @@
 
   <kupu:part name="characters">
     <div class="kupu-toolbox" id="kupu-toolbox-characters">
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">non-standard characters</h1>
 
       <div class="kupu-tooltray">
@@ -63,7 +65,6 @@
       <div class="kupu-tooltray">
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
-
         <form name="kupu_link_form" onsubmit="return false;">
           <input type="button" class="transport" style="margin-bottom:0.2em;" onclick="getLink(); return false;" value="get link reference..." i18n:attributes="value" />
           <input class="store" type="text" id="kupu-link-input" name="kupu_link_href" style="margin-left:0.2em; width:96%" /><br />
@@ -78,7 +79,6 @@
           <input type="button" class="button" value="update link" id="kupu-link-updatebutton" i18n:attributes="value" />
           <input type="button" class="warning" value="remove" id="kupu-link-delbutton" i18n:attributes="value" />
         </form>
-
       </div>
     </div>
   </kupu:part>
@@ -99,7 +99,7 @@
                       <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name" /></td>
                     </tr>
-                    <tr id="">
+                    <tr>
                       <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-title" /></td>
                     </tr>
@@ -142,18 +142,14 @@
       }
     "></script>
 
-
     <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
 
     <div class="kupu-tooltray">
-
       <form name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
-
         <input type="button" class="transport" onclick="getImage()" value="get image reference..." />
-
         <div id="kupu-toolbox-image-edit" style="color: black; display: none">
           <input type="button" class="transport" value="edit image..."
-                  tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')" />
+            tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')" />
           <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%" />
           &#160;link to:<br />
           <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%" />
@@ -177,10 +173,8 @@
           &#160;tooltip:<br />
           <input type="text" id="kupu-toolbox-image-alt" style="margin-left:0.2em; width: 96%" /><br />
           <input type="button" class="button" value="update image" />
-
         </div>
       </form>
-
     </div>
 
     </div>
@@ -241,11 +235,11 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td width="15%"><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">title</span><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor.</span></a></td>
+                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span tal:omit-tag="" i18n:translate="">title</span></a></td>
                       <td><input class="store" type="text" id="kupu-abbr-title" /></td>
                     </tr>
                     <tr id="kupu-abbr-radiorow">
-                      <td><a class="rollover" href=""><span tal:omit-tag="" i18n:translate="">type</span><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym).</span></a></td>
+                      <td><a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span tal:omit-tag="" i18n:translate="">type</span></a></td>
                       <td>
                         <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" />abbreviation</label>
                         <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" />acronym</label>
@@ -284,19 +278,19 @@
         <tbody>
           <tr>
             <td>
-                <table width="100%" style="color: #333;" cellspacing="0">
-                  <tr>
-                    <td class="align-right" width="30%">table class</td>
-                    <td>
-                      <select class="manipulator" id="kupu-table-classchooser">
-                        <option value="plain">plain</option>
-                        <option value="list">list</option>
-                        <option value="grid">grid</option>
-                        <option value="datagrid">datagrid</option>
-                      </select>
-                    </td>
-                  </tr>
-                </table>
+              <table width="100%" style="color: #333;" cellspacing="0">
+                <tr>
+                  <td>table class</td>
+                  <td>
+                    <select class="manipulator" id="kupu-table-classchooser">
+                      <option value="plain">plain</option>
+                      <option value="list">list</option>
+                      <option value="grid">grid</option>
+                      <option value="datagrid">datagrid</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
@@ -308,11 +302,11 @@
                     <td><input class="store" id="kupu-table-newrows" /></td>
                   </tr>
                   <tr>
-                    <td class="align-right">columns</td>
+                    <td style="text-align:right">columns</td>
                     <td><input class="store" id="kupu-table-newcols" /></td>
                   </tr>
                   <tr>
-                    <td class="align-right">heading</td>
+                    <td style="text-align:right">heading</td>
                     <td>
                       <input id="kupu-table-makeheader" type="checkbox" />
                         <label for="kupu-table-makeheader">create</label>
@@ -370,7 +364,6 @@
       </table>
 
     </div>
-
     <!-- end kupu toolbox tables -->
       </div>
 
@@ -383,7 +376,6 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">table of contents</h1>
 
       <div class="kupu-tooltray">
-
         <form name="kupu_toc_form" onsubmit="return false;">
           <select id="kupu-toolbox-toc-depth">
             <option value="1">1 level</option>
@@ -400,7 +392,6 @@
           <input class="button" type="button" value="add toc" id="kupu-toc-add-button" />
           <input class="warning" type="button" value="remove" id="kupu-toc-del-button" />
         </form>
-
       </div>
 
     </div>
@@ -443,8 +434,8 @@
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
-      <div class="kupu-tooltray">
-        <!-- euro , ` ' ,, `` '' << >> - - -->
+
+      <div class="kupu-tooltray"><!-- euro , ` ' ,, `` '' << >> - - -->
         &#x20AC; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183;
       </div>
 
@@ -455,6 +446,7 @@
     <div class="kupu-toolbox" id="kupu-toolbox-save">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">save</h1>
+
       <div class="kupu-tooltray">
         <form action="." method="post" onsubmit="return false">
           <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()" />
@@ -466,12 +458,13 @@
 
   <kupu:part name="cleanupexpressions">
     <div class="kupu-toolbox" id="kupu-toolbox-cleanupexpressions">
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">cleanup</h1>
+
       <div class="kupu-tooltray">
         <select id="kupucleanupexpressionselect" class="kupu-toolbox-st">
         </select>
-        <input class="button" type="button" id="kupucleanupexpressionbutton"
-                value="perform" />
+        <input class="button" type="button" id="kupucleanupexpressionbutton" value="perform" />
       </div>
     </div>
   </kupu:part>
