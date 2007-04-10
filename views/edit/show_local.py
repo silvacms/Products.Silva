@@ -16,8 +16,8 @@ request = container.REQUEST
 RESPONSE =  request.RESPONSE
 
 # Return a string identifying this script.
-msg = _('This is the ${meta_type} "${id}"')
-msg.set_mapping({'meta_type': script.meta_type, 'id': script.getId()})
+msg = _('This is the ${meta_type} "${id}"',
+        mapping={'meta_type': script.meta_type, 'id': script.getId()})
 print msg,
 if script.title:
     print "(%s)" % html_quote(script.title),

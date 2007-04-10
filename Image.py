@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: Image.py,v 1.76 2006/01/25 18:13:30 faassen Exp $
@@ -28,6 +27,7 @@ import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import upgrade
+from Products.Silva import helpers
 from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAsset
 
@@ -77,8 +77,8 @@ class Image(Asset):
         'PNG': 'image/png',
     }
 
-    def __init__(self, id, title):
-        Image.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        Image.inheritedAttribute('__init__')(self, id)
         self.image = None # should create default
 
     # commented this out to shut up a security warning. assuming this is safe
@@ -106,37 +106,6 @@ class Image(Asset):
             img = self.image
         return self._image_index_html(img, REQUEST, RESPONSE)
 
-    def manage_afterAdd(self, item, container):
-        for id in ('hires_image', 'image', 'thumbnail_image'):
-            img = getattr(self, id, None)
-            if img is None:
-                continue
-            # fake it, to get filename correct
-            img.id = self.id
-            img.manage_afterAdd(img, self)
-            img.id = id
-        return Image.inheritedAttribute('manage_afterAdd')(self, item,
-            container)
-
-    def manage_beforeDelete(self, item, container):
-        """explicitly remove the images"""
-        for id in ('hires_image', 'image', 'thumbnail_image'):
-            self._remove_image(id, set_none=0)
-        return Image.inheritedAttribute('manage_beforeDelete')(self, item,
-            container)
-
-    def manage_afterClone(self, item):
-        "copy support"
-        for id in ('image', 'hires_image', 'thumbnail_image'):
-            img = getattr(self, id, None)
-            if img is None:
-                continue
-            # fake it, to get filename correct
-            img.id = self.id
-            img.manage_afterClone(item)
-            img.id = id
-        return Image.inheritedAttribute('manage_afterClone')(self, item)
-        
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
     def set_title(self, title):
@@ -218,9 +187,8 @@ class Image(Asset):
         if m is None:
             m = self.re_percentage.match(scale)
             if m is None:
-                msg = _(("'${scale}' is not a valid scale identifier. "
-                            "Probably a percent symbol is missing."))
-                msg.set_mapping({'scale': scale})
+                msg = _("'${scale}' is not a valid scale identifier. "
+                            "Probably a percent symbol is missing.", mapping={'scale': scale})
                 msg = translate(msg)
                 raise ValueError, msg
             cropbox = self.getCropBox()
@@ -238,9 +206,8 @@ class Image(Asset):
             width = m.group(1)
             height = m.group(2)
             if width == height == '*':
-                msg = _(("'${scale} is not a valid scale identifier. "
-                            "At least one number is required."))
-                msg.set_mapping({'scale': scale})
+                msg = _("'${scale} is not a valid scale identifier. "
+                            "At least one number is required.", mapping={'scale': scale})
                 msg = translate(msg)
                 raise ValueError, msg
             if width == '*':
@@ -264,8 +231,7 @@ class Image(Asset):
             return None
         m = self.re_box.match(crop)
         if m is None:
-            msg = _("'${crop} is not a valid crop identifier")
-            msg.set_mapping({'crop': crop})
+            msg = _("'${crop} is not a valid crop identifier", mapping={'crop': crop})
             msg = translate(msg)
             raise ValueError, msg
         x1 = int(m.group(1))
@@ -291,8 +257,7 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            msg = _("'${crop}' defines an impossible cropping")
-            msg.set_mapping({'crop': crop})
+            msg = _("'${crop}' defines an impossible cropping", mapping={'crop': crop})
             msg = translate(msg)
             raise ValueError, msg
         return (x1, y1, x2, y2)
@@ -771,7 +736,7 @@ def image_factory(self, id, content_type, body):
     if not id.isValid():
         return
     id = str(id)
-    img = Image(id, id).__of__(self)
+    img = Image(id).__of__(self)
     return img
 
 def _should_create_image(id, content_type, body):
@@ -780,3 +745,29 @@ def _should_create_image(id, content_type, body):
 contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
+
+def image_added(image, event):
+    for id in ('hires_image', 'image', 'thumbnail_image'):
+        img = getattr(image, id, None)
+        if img is None:
+            continue
+        # fake it, to get filename correct
+        img.id = image.id
+        img.manage_afterAdd(img, image)
+        img.id = id
+
+def image_will_be_removed(image, event):
+    """explicitly remove the images"""
+    for id in ('hires_image', 'image', 'thumbnail_image'):
+        image._remove_image(id, set_none=0)
+
+def image_cloned(image, event):
+    "copy support"
+    for id in ('image', 'hires_image', 'thumbnail_image'):
+        img = getattr(image, id, None)
+        if img is None:
+            continue
+        # fake it, to get filename correct
+        img.id = image.id
+        img.manage_afterClone(image)
+        img.id = id

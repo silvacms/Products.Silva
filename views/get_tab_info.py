@@ -22,12 +22,10 @@ if tab_id:
 else:
     tab_url = None
 
-uplink_title = _('up a level: alt-${key}')
-uplink_title.set_mapping({'key': uplink_accesskey})
-toplink_title = _('up to top of publication: alt-${key}')
-toplink_title.set_mapping({'key': toplink_accesskey})
-tab_title = _('access key: alt-${key}')
-tab_title.set_mapping({'key': tab_accesskey})
+uplink_title = _('up a level: alt-${key}', mapping={'key': uplink_accesskey})
+toplink_title = _('up to top of publication: alt-${key}',
+                  mapping={'key': toplink_accesskey})
+tab_title = _('access key: alt-${key}', mapping={'key': tab_accesskey})
 
 return { 
   'tab_name' : _(tab_name),

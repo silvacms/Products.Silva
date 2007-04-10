@@ -19,10 +19,6 @@ class SidebarCache(SimpleItem):
 
 InitializeClass(SidebarCache)
 
-manage_addSidebarCacheForm = PageTemplateFile(
-        'www/sidebarCacheAdd', globals(),
-        __name__ = 'manage_addSidebarCacheForm')
-
 def manage_addSidebarCache(self, id, REQUEST=None):
     """Add the sidebar cache to a folder (will usually be temp storage)"""
     id = self._setObject(id, SidebarCache(id))

@@ -34,7 +34,7 @@ class AutoTOC(Content, SimpleItem):
     _toc_depth = -1
 
     def __init__(self, id):
-        AutoTOC.inheritedAttribute('__init__')(self, id, 'Dummy Title')
+        AutoTOC.inheritedAttribute('__init__')(self, id)
         
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
@@ -76,18 +76,6 @@ class AutoTOC(Content, SimpleItem):
                                    toc_depth=self.toc_depth())
 
 InitializeClass(AutoTOC)
-
-def manage_addAutoTOC(self, id, title, depth=-1, REQUEST=None):
-    """Add a autotoc."""
-    if not mangle.Id(self, id).isValid():
-        return
-    object = AutoTOC(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    object.set_toc_depth(depth)
-    add_and_edit(self, id, REQUEST)
-    return ''
 
 class AutoTOCPolicy(Persistent):
 

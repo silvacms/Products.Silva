@@ -44,13 +44,13 @@ for ref in refs:
 
 if closed_ids:
     request.set('redisplay_timing_form', 0)
-    message = _('Closed: ${ids}')
-    message.set_mapping({'ids': view.quotify_list(closed_ids)})
+    message = _('Closed: ${ids}',
+                mapping={'ids': view.quotify_list(closed_ids)})
     msg.append(translate(message))
 
 if not_closed:
-    message = _('<span class="error">could not close: ${ids}</span>')
-    message.set_mapping({'ids': view.quotify_list_ext(not_closed)})
+    message = _('<span class="error">could not close: ${ids}</span>',
+                mapping={'ids': view.quotify_list_ext(not_closed)})
     msg.append(translate(message))
 
 return view.tab_status(message_type='feedback', message=(', '.join(msg)) )

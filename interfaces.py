@@ -1096,3 +1096,18 @@ class IAutoTOC(IContent):
 class IInvisibleService(Interface):
     """Marker interface for services that want to be not visible in
     the ZMI."""
+
+class IGroup(ISilvaObject):
+    def isValid():
+        """returns whether the group asset is valid
+
+            A group asset becomes invalid if it gets moved around ...
+        """
+
+class IIPGroup(ISilvaObject):
+    def isValid():
+        """returns whether the group asset is valid
+
+            A group asset becomes invalid if it gets moved around ...
+        """
+    

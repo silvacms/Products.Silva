@@ -201,9 +201,6 @@ class ExtensionService(SimpleItem.SimpleItem):
     
 InitializeClass(ExtensionService)
 
-manage_addExtensionServiceForm = PageTemplateFile(
-    "www/extensionServiceAdd", globals(), __name__='manage_addExtensionServiceForm')
-
 def manage_addExtensionService(self, id, title='', REQUEST=None):
     """Add extension service."""
     object = ExtensionService(id, title)    

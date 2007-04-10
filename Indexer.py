@@ -32,8 +32,7 @@ class Indexer(Content, SimpleItem):
     implements(IContent)
 
     def __init__(self, id):
-        Indexer.inheritedAttribute('__init__')(self, id,
-                                               '[No title, this is a bug]')
+        Indexer.inheritedAttribute('__init__')(self, id)
         # index format:
         # {index_name: (obj_path, obj_title),}
         self._index = {}

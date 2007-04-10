@@ -13,6 +13,48 @@ from DateTime import DateTime
 Root.Root.manage_main = lambda *foo, **bar: None
 Folder.Folder.manage_main = lambda *foo, **bar: None
 
+class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
+
+    def _query(self, **kwargs):
+        return self.root.service_catalog(**kwargs)
+
+    def test_cut1(self):
+        folder = self.add_folder(
+            self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
+        
+        subdoc = self.add_document(folder, 'subdoc', 'Subdoc')
+
+        folder2 = self.add_folder(
+            self.root, 'folder2', 'Folder2', policy_name='Silva AutoTOC')
+        
+        self.assertEquals(len([b.getPath() for b in
+                               self._query(path='/root/folder')]),
+                          2)
+        
+        self.root.action_cut(['folder'], self.app.REQUEST)
+        self.root.folder2.action_paste(self.app.REQUEST)
+
+        self.assertEquals(
+            [b.getPath() for b in self._query(path='/root/folder')], [])
+        self.assertEquals(len([b.getPath() for b in
+                               self._query(path='/root/folder2/folder')]),
+                          2)
+
+    def test_check_ordered_ids(self):
+        doc = self.add_document(self.root, 'mydoc', 'My Document')
+        self.assertEquals(self.root.get_ordered_publishables(), [doc])
+        self.root.action_delete(['mydoc'])
+        self.assertEquals(self.root.get_ordered_publishables(), [])
+
+    def test_remove_root(self):
+        folder = self.add_folder(
+            self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
+        
+        # Just to make sure that this works
+        self.app.manage_delObjects([self.root.getId()])
+        self.assert_(self.root.getId() not in self.app.objectIds())
+
+
 class CopyTestCase(SilvaTestCase.SilvaTestCase):
     """Test cut/copy/test/delete.
     """
@@ -300,5 +342,6 @@ import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(CopyTestCase))
+    suite.addTest(unittest.makeSuite(NoSetupCopyTestCase))
     return suite
 

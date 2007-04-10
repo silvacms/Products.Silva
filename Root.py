@@ -5,6 +5,8 @@
 from zope.interface import implements
 
 # Zope
+from OFS.interfaces import IObjectWillBeAddedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
@@ -49,16 +51,6 @@ class Root(Publication):
         self._content_version = self.get_silva_software_version()
     
     # MANIPULATORS
-
-    def manage_afterAdd(self, item, container):
-        # since we're root, we don't want to notify our container
-        # we do, however, have to add ourselves to the catalog then
-        self.index_object()
-        
-    def manage_beforeDelete(self, item, container):
-        # since we're root, we don't want to notify our container
-        # we do, however, have to remove ourselves from the catalog
-        self.unindex_object()
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_main')
@@ -338,3 +330,12 @@ def manage_addRoot(self, id, title, add_docs=0, REQUEST=None):
 
     add_and_edit(self, id, REQUEST)
     return ''
+
+def root_moved(root, event):
+    if not IObjectRemovedEvent.providedBy(event):
+        root.index_object()
+
+def root_will_be_moved(root, event):
+    if not IObjectWillBeAddedEvent.providedBy(event):
+        root.unindex_object()
+    

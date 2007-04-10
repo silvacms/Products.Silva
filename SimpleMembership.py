@@ -32,9 +32,6 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         self._creation_datetime = self._modification_datetime = DateTime()
         self._is_approved = 0
 
-    def manage_beforeDelete(self, item, container):
-        pass
-        
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'security_trigger')
     def security_trigger(self):

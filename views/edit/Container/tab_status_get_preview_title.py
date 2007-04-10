@@ -9,6 +9,5 @@
 ##
 from Products.Silva.i18n import translate as _
 
-msg = _('preview ${id}')
-msg.set_mapping({'id': id})
+msg = _('preview ${id}', mapping={'id': id})
 return msg

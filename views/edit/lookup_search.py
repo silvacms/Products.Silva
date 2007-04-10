@@ -16,22 +16,21 @@ if name == '':
         message=_("No search string supplied."))
 
 if len(name) < 2:
-    msg = _("Search string '${string}' is too short. Please try a longer search string.")
-    msg.set_mapping({'string': name})
+    msg = _("Search string '${string}' is too short. "
+            "Please try a longer search string.", mapping={'string': name})
     return view.lookup_ui(
         message_type="error", 
         message= msg)       
 
 results = model.sec_find_users(name)
 if not results:
-    msg = _("No users found for search string '${string}'.")
-    msg.set_mapping({'string': name})
+    msg = _("No users found for search string '${string}'.",
+            mapping={'string': name})
     return view.lookup_ui(
         message_type="feedback", 
         message= msg)
 
-msg = _("Searched for '${string}'.")
-msg.set_mapping({'string': name})
+msg = _("Searched for '${string}'.", mapping={'string': name})
 return view.lookup_ui(
     message_type="feedback", 
     message=msg,

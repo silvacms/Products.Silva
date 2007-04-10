@@ -12,8 +12,8 @@ if not groups:
 
 copied = model.copyIPRangesFromIPGroups(groups)
 if copied:
-    message = _("Range(s) ${copied} added.")
-    message.set_mapping({'copied': view.quotify_list(copied)})
+    message = _("Range(s) ${copied} added.",
+                mapping={'copied': view.quotify_list(copied)})
     type = 'feedback'
 else:
     message = _("Nothing copied.")

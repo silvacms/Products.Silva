@@ -13,10 +13,10 @@ model = context.REQUEST.model
 view = context
 result = model.move_object_down(id)
 if result:
-    message = _("Moved ${id} down.")
-    message.set_mapping({'id': view.quotify(id)})
+    message = _("Moved ${id} down.",
+                mapping={'id': view.quotify(id)})
     return view.tab_edit(message_type="feedback", message=message)
 else:
-    message = _("Could not move ${id} down.")
-    message.set_mapping({'id': view.quotify(id)})
+    message = _("Could not move ${id} down.",
+                mapping={'id': view.quotify(id)})
     return view.tab_edit(message_type="error", message=message)

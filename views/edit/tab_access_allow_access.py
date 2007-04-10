@@ -8,6 +8,7 @@
 ##title=
 ##
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 view = context
 request = view.REQUEST
@@ -22,9 +23,9 @@ for userid, role in [r.split('|') for r in request['requests']]:
         model.allow_role(userid, role)
     except Exception, e:
         return view.tab_access(message_type='error', message=e) 
-    msg = _('&#xab;${user_id}&#xbb; allowed the ${role} role')
-    msg.set_mapping({'user_id': userid, 'role': role})
-    messages.append(unicode(msg))
+    msg = _('&#xab;${user_id}&#xbb; allowed the ${role} role',
+            mapping={'user_id': userid, 'role': role})
+    messages.append(translate(msg))
 
 model.send_messages()
 

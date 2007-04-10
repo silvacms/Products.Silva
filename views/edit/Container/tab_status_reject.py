@@ -50,13 +50,13 @@ for ref in refs:
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
-    message = _('Rejected request for approval for: ${ids}')
-    message.set_mapping({'ids': view.quotify_list(approved_ids)})
+    message = _('Rejected request for approval for: ${ids}',
+                mapping={'ids': view.quotify_list(approved_ids)})
     msg.append(translate(message))
 
 if not_approved:
-    message = _('Not rejected: ${ids}')
-    message.set_mapping({'ids': view.quotify_list_ext(not_approved)})
+    message = _('Not rejected: ${ids}',
+                mapping={'ids': view.quotify_list_ext(not_approved)})
     msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):

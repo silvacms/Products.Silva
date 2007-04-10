@@ -13,6 +13,6 @@ from zope.i18n import translate
 if not model.is_default():
     return model.id
 else:
-    msg = _('${id} of ${parent_id}')
-    msg.set_mapping({'id': model.id, 'parent_id': model.get_container().getId()})
+    msg = _('${id} of ${parent_id}',
+            mapping={'id': model.id, 'parent_id': model.get_container().getId()})
     return translate(msg)

@@ -9,8 +9,6 @@ import ContainerPolicy
 from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
-from AutoTOC import manage_addAutoTOC
-
 try:
     # some people may have put Sprout in the Products directory
     # rather then somewhere in the PYTHONPATH, this makes Silva
@@ -73,8 +71,7 @@ def initialize(context):
     
     context.registerClass(
         ExtensionService.ExtensionService,
-        constructors = (ExtensionService.manage_addExtensionServiceForm,
-                        ExtensionService.manage_addExtensionService),
+        constructors = (ExtensionService.manage_addExtensionService,),
         icon = "www/extension_service.gif"
         )
 

@@ -7,6 +7,7 @@ __version__ = '0.3.1'
 from Testing import ZopeTestCase
 
 import transaction
+import zope.component.eventtesting
 
 user_name = ZopeTestCase.user_name
 ZopeTestCase.installProduct('ZCatalog')
@@ -37,12 +38,10 @@ ZopeTestCase.installProduct('Five')
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl.User import User
 
-from Acquisition import aq_base
-import time
-
-from zope.app.tests import placelesssetup
+from Products.Silva.tests import layer
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
+    layer = layer.SilvaZCMLLayer
 
     _configure_root = 1
 
@@ -93,16 +92,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         transaction.abort()
         noSecurityManager()
         self.beforeSetUp()
-        # XXX should be able to remove this in Zope 2.9
-        # XXX even worse, it shouldn't be there in Zope 2.8 as it
-        # somehow breaks the tests..
-        #placelesssetup.setUp()
-        # Philipp suggests we use this:
-        #zcml.load_config('configure.zcml', Products.Five)
-        # but still placelesssetup.tearDown()
-        # this would be slower than installProduct('Five'), but
-        # the advantage is that these tests would mix with
-        # Five's tests, or any tests that use zcml as part of the test
         try:
             self.app = self._app()
             self.silva = self.root = self.getRoot()
@@ -112,6 +101,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 self.login()
                 self.app.REQUEST.AUTHENTICATED_USER=\
                          self.app.acl_users.getUser(ZopeTestCase.user_name)
+            zope.component.eventtesting.clearEvents()
             self.afterSetUp()
         except:
             self.beforeClose()
@@ -124,10 +114,6 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         self.beforeTearDown()
         self._clear(1)
-        # XXX should be able to remove this in Zope 2.9
-        # XXX even worse, it shouldn't be there in Zope 2.8 as it
-        # somehow breaks the tests..
-        #placelesssetup.tearDown()
         
     def _app(self):
         '''Returns the app object for a test.'''
@@ -164,7 +150,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         getattr(container.manage_addProduct[product],
             'manage_add%s' % type_name)(id, **kw)
         # gives the new object a _p_jar ...
-        transaction.get().commit(1)
+        transaction.savepoint()
         return getattr(container, id)
 
     # Security interfaces
@@ -219,28 +205,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def add_image(self, object, id, title, **kw):
         return self.addObject(object, 'Image', id, title=title, **kw)
 
-def setupSilvaRoot(app, id='root', quiet=0):
-    '''Creates a Silva root.'''
-    if not hasattr(aq_base(app), id):
-        _start = time.time()
-        if not quiet:
-            ZopeTestCase._print('Adding Silva Root... ')
-        uf = app.acl_users
-        uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
-        user = uf.getUserById('SilvaTestCase').__of__(uf)
-        newSecurityManager(None, user)
-        factory = app.manage_addProduct['TemporaryFolder']
-        factory.constructTemporaryFolder('temp_folder', '')
-        factory = app.manage_addProduct['Silva']
-        factory.manage_addRoot(id, '')
-        root = app.root
-        noSecurityManager()
-        transaction.commit()
-        if not quiet:
-            ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
+    def get_events(self, event_type=None, filter=None):
+        """Return events that were fired since the beginning of the
+        test, which includes events fired in the `afterSetUp` method.
+        """
+        return zope.component.eventtesting.getEvents(event_type, filter)
 
-# Create a Silva site in the test (demo-) storage
-app = ZopeTestCase.app()
-setupSilvaRoot(app, id='root')
-transaction.commit()
-ZopeTestCase.close(app)
+    def clear_events(self):
+        zope.component.eventtesting.clearEvents()

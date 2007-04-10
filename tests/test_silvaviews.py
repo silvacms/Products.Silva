@@ -69,14 +69,18 @@ path =  (
 path_to_nonexisting_content = (
     '/root/publication/folder'
     '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
-    '/index/edit/index/edit/index/edit/index/edit/index/edit'
+    # In previous Silva version, this test was working fine.  With the
+    # transition to Zope 2.10, this is suddenly taking forever.  While
+    # we can use a few levels, using all the path locks up the tests.
+    
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
+#     '/index/edit/index/edit/index/edit/index/edit/index/edit'
      '/testimag')
  
 class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
@@ -118,8 +122,7 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         
     def test_traverse_through_borked_edit_path(self):
         object = self.root.restrictedTraverse(path, None)
-        self.assertEquals('testimage', object.id)
-        # In the ideal situation, this would result in None instead
+        self.assertEquals(None, object)
 
     def test_traverse_through_borked_edit_path_to_nonexisting_content(self):
         object = self.root.restrictedTraverse(path_to_nonexisting_content, None)

@@ -42,8 +42,7 @@ else:
     changed_metadata.append(('list of allowed addables'))
     model.set_silva_addables_allowed_in_publication(addables)
 
-message = _("Addable settings changed for: ${changed_metadata}")
-message.set_mapping({
-    'changed_metadata': context.quotify_list(changed_metadata)
-    })
+message = _("Addable settings changed for: ${changed_metadata}",
+            mapping={'changed_metadata': context.quotify_list(changed_metadata)
+                     })
 return context.tab_addables(message_type="feedback", message=message)

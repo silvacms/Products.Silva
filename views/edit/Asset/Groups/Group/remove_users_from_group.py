@@ -16,8 +16,8 @@ for userid in userids:
     model.removeUser(userid)
     removed.append(userid)
 
-message = _("User(s) ${removed} removed from group.")
-message.set_mapping({'removed': view.quotify_list(removed)})
+message = _("User(s) ${removed} removed from group.",
+            mapping={'removed': view.quotify_list(removed)})
 return view.tab_edit(
     message_type="feedback", 
     message=message

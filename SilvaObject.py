@@ -6,7 +6,11 @@
 from types import StringType
 import os
 from zope.i18n import translate
+from zope import component
+from zope import interface
 # Zope
+from OFS.interfaces import IObjectWillBeAddedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -23,6 +27,8 @@ from ViewCode import ViewCode
 from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
+from Products.Silva import helpers
+from Products.Silva.browser.skin.interfaces import ISilvaBareSkin
 # Silva adapters
 from Products.Silva.adapters import zipfileexport
 from Products.Silva.adapters.renderable import getRenderableAdapter
@@ -40,6 +46,42 @@ class XMLExportContext:
 class NoViewError(Exception):
     """no view defined"""
 
+class FrankenViewAttribute(ViewAttribute):
+    """A view attribute that switches skins and tries to look up Zope
+    3 views for fun and profit.
+
+    It enables skin switching, so that the 'bare bones' skin is active
+    when we look at preview pages.
+
+    It will also try to look up Zope 3 views and favour them, so that
+    you can define e.g. 'tab_edit' for your content type and it will
+    work.
+    """
+    def __init__(self, view_type, default_method, skin=None):
+        ViewAttribute.__init__(self, view_type, default_method)
+        self._skin = skin
+
+    def _switch_skin(self):
+        if self._skin:
+            interface.directlyProvides(
+                self.REQUEST,
+                self._skin, interface.directlyProvidedBy(self.REQUEST))
+
+    def index_html(self):
+        """Make Zope happy"""
+        return ViewAttribute.index_html(self)
+
+    def __getitem__(self, name):
+        """Make Zope happy"""
+        self._switch_skin()
+        context = self.aq_inner.aq_parent
+        request = self.REQUEST
+        view = component.queryAdapter((context, request), name=name)
+        if view:
+            return view.__of__(self.context)()
+        else:
+            return ViewAttribute.__getitem__(self, name)
+
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
     """
@@ -49,7 +91,7 @@ class SilvaObject(Security, ViewCode):
     _title = "No title yet"
 
     # allow edit view on this object
-    edit = ViewAttribute('edit', 'tab_edit')
+    edit = FrankenViewAttribute('edit', 'tab_edit', ISilvaBareSkin)
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'edit')
@@ -64,24 +106,14 @@ class SilvaObject(Security, ViewCode):
     _xml_namespace = "http://www.infrae.com/xml"
     _xml_schema = "silva-0.9.3.xsd"
 
-    def __init__(self, id, title):
+    def __init__(self, id):
         self.id = id
-        self._title = title
         self._v_creation_datetime = DateTime()
         
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
     # MANIPULATORS
-    def manage_afterAdd(self, item, container):
-        self._afterAdd_helper(item, container)
-        self._set_creation_datetime()
-
-    def _afterAdd_helper(self, item, container):
-        container._add_ordered_id(item)
-        if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
 
     def _set_creation_datetime(self):
         timings = {}
@@ -100,15 +132,6 @@ class SilvaObject(Security, ViewCode):
             if old is None:
                 timings[elem] = ctime
         binding.setValues('silva-extra', timings)
-
-    def manage_beforeDelete(self, item, container):
-        self._beforeDelete_helper(item, container)
-
-    def _beforeDelete_helper(self, item, container):
-        container._remove_ordered_id(item)
-        if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
@@ -330,8 +353,8 @@ class SilvaObject(Security, ViewCode):
         SilvaPermissions.ReadSilvaContent, 'view_version')
     def view_version(self, view_type, version):
         if version is None:
-            msg = _('Sorry, this ${meta_type} is not viewable.')
-            msg.set_mapping({'meta_type': self.meta_type})
+            msg = _('Sorry, this ${meta_type} is not viewable.',
+                    mapping={'meta_type': self.meta_type})
             return '<p>%s</p>' % translate(msg, context=self.REQUEST)
         result = getRenderableAdapter(version).view()
         if result is not None:
@@ -339,6 +362,18 @@ class SilvaObject(Security, ViewCode):
         request = self.REQUEST
         request.model = version
         request.other['model'] = version
+        
+        # Try to get a Zope 3 view
+        z3view = component.queryMultiAdapter(
+            (version, request), name=view_type)
+        if not z3view and view_type=='public':
+            z3view = component.queryMultiAdapter(
+                (version, request), name='index.html')
+        if z3view:
+            return z3view.__of__(version)()
+        
+
+        # Fallback on SilvaViews view
         try:
             view = self.service_view_registry.get_view(
                 view_type, version.meta_type)
@@ -545,3 +580,29 @@ class SilvaObject(Security, ViewCode):
         raise Conflict, 'not yet implemented'
 
 InitializeClass(SilvaObject)
+
+def object_moved(object, event):
+    if object != event.object or IObjectRemovedEvent.providedBy(
+        event) or IRoot.providedBy(object):
+        return
+    newParent = event.newParent
+
+    if (IPublishable.providedBy(object) and not (
+        IContent.providedBy(object) and object.is_default())):
+        newParent._add_ordered_id(object)
+            
+    if event.newName == 'index':
+        newParent._invalidate_sidebar(newParent)
+    object._set_creation_datetime()
+
+def object_will_be_moved(object, event):
+    if object != event.object or IObjectWillBeAddedEvent.providedBy(
+        event) or IRoot.providedBy(object):
+        return
+    container = event.oldParent
+    if (IPublishable.providedBy(object) and not (
+        IContent.providedBy(object) and object.is_default())):
+        container._remove_ordered_id(object)
+
+    if event.oldName == 'index':
+        container._invalidate_sidebar(container)

@@ -14,8 +14,8 @@ if not groups:
 
 added = model.copyUsersFromGroups(groups)
 if added:
-    message = _("User(s) ${added} added to group.")
-    message.set_mapping({'added': view.quotify_list(added)})
+    message = _("User(s) ${added} added to group.",
+                mapping={'added': view.quotify_list(added)})
 else:
     message = _("No other users added (were they already in this group?)")
 

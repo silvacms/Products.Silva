@@ -17,6 +17,7 @@ class ZODBVersioning(Versioning.Versioning,  SimpleItem.SimpleItem):
 
     def reindex_object(self):
         """ needed, as this is called by a folders manage_afterAdd """
+        # XXX Still needed now manage_afterAdd is gone?
         pass
 
 

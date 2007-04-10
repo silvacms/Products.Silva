@@ -41,13 +41,13 @@ for ref in refs:
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
-    message = _('Withdrawn request for approval for: ${list}')
-    message.set_mapping({'list': view.quotify_list(approved_ids)})
+    message = _('Withdrawn request for approval for: ${list}',
+                mapping={'list': view.quotify_list(approved_ids)})
     msg.append(translate(message))
 
 if not_approved:
-    message = _('Not withdrawn: ${list}')
-    message.set_mapping({'list': view.quotify_list_ext(not_approved)})
+    message = _('Not withdrawn: ${list}',
+                mapping={'list': view.quotify_list_ext(not_approved)})
     msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):

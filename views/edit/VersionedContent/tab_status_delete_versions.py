@@ -36,12 +36,12 @@ result = adapter.deleteVersions(versions)
 messages = []
 for id, error in result:
     if error is not None:
-        msg = _('could not delete ${id}: ${error}')
-        msg.set_mapping({'id': id, 'error': error})
+        msg = _('could not delete ${id}: ${error}',
+                mapping={'id': id, 'error': error})
         messages.append(translate(msg))
     else:
-        msg = _('deleted ${id}')
-        msg.set_mapping({'id': id})
+        msg = _('deleted ${id}',
+                mapping={'id': id})
         messages.append('<span class="error">' + translate(msg) + '</span>')
 
 return view.tab_status(message_type="feedback", 

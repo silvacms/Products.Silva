@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.44 $
@@ -13,6 +12,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 # Zope
+from zope.app.container.interfaces import IObjectRemovedEvent
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
@@ -24,6 +24,7 @@ from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 # Silva
 from Asset import Asset
+from Products.Silva import helpers
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
@@ -55,8 +56,8 @@ class File(Asset):
     __implements__ = (WriteLockInterface,)
     implements(IFile)
     
-    def __init__(self, id, title):
-        File.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        File.inheritedAttribute('__init__')(self, id)
 
     # ACCESSORS
 
@@ -243,10 +244,10 @@ InitializeClass(File)
 class ZODBFile(File):                                   
     """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """       
-    def __init__(self, id, title):
-        ZODBFile.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        ZODBFile.inheritedAttribute('__init__')(self, id)
         # Actual container of file data
-        self._file = Image.File(id, title, '')        
+        self._file = Image.File(id, id, '')        
 
     def _set_file_data_helper(self, file):
         # ensure consistent mimetype assignment by deleting content-type header
@@ -263,9 +264,9 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    def __init__(self, id, title, repository):
-        FileSystemFile.inheritedAttribute('__init__')(self, id, title)        
-        self._file = ExtFile(id, title)
+    def __init__(self, id, repository):
+        FileSystemFile.inheritedAttribute('__init__')(self, id)        
+        self._file = ExtFile(id, id)
         self._file._repository = cookPath(repository)
 
     def _set_file_data_helper(self, file):
@@ -276,17 +277,6 @@ class FileSystemFile(File):
     def _index_html_helper(self, REQUEST):
         return self._file.index_html(REQUEST=REQUEST)
 
-    def manage_beforeDelete(self, item, container):
-        FileSystemFile.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        self._file.manage_beforeDelete(item, container)
-
-    def manage_afterClone(self, item):
-        FileSystemFile.inheritedAttribute('manage_afterClone')(self, item)
-        self._file.manage_afterClone(item)
-
-    def manage_afterAdd(self, item, container):
-        FileSystemFile.inheritedAttribute('manage_afterAdd')(self, item, container)
-        self._file.manage_afterAdd(item, container)
 
 InitializeClass(FileSystemFile)
 
@@ -331,7 +321,7 @@ def file_factory(self, id, content_type, file):
     if service_files.useFSStorage():        
         object = FileSystemFile(id, id, service_files.filesystem_path())
     else:
-        object = ZODBFile(id, id)
+        object = ZODBFile(id)
     return object
 
 class FilesService(SimpleItem.SimpleItem):
@@ -507,3 +497,20 @@ contentObjectFactoryRegistry.registerFactory(
     file_factory,
     lambda id, ct, body: True,
     -1)
+
+def file_cloned(file, event):
+    if object != event.object:
+        return
+    file._file.manage_afterClone(file)
+
+def file_moved(file, event):
+    if object != event.object or IObjectRemovedEvent.providedBy(event):
+        return
+    container = event.oldParent
+    file._file.manage_afterAdd(file, container)
+    
+def file_will_be_moved(file, event):
+    if object != event.object:
+        return
+    container = event.oldParent
+    file._file.manage_beforeDelete(file, container)

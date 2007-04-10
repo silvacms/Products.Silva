@@ -36,15 +36,6 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         binding.setValues(
             'silva-content', {'maintitle': title}, reindex=1)
 
-    def manage_afterAdd(self, item, container):
-        self._afterAdd_helper(item, container)
-        self._set_creation_datetime()
-        Asset.inheritedAttribute('manage_afterAdd')(self, item, container)
-        
-    def manage_beforeDelete(self, item, container):
-        self._beforeDelete_helper(item, container)
-        Asset.inheritedAttribute('manage_beforeDelete')(self, item, container)
-
     def is_deletable(self):
         """assets are deletable
 

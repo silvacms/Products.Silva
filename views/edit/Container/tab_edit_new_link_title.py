@@ -8,6 +8,5 @@
 ##title=
 #
 from Products.Silva.i18n import translate as _
-msg = _('Create a ${addable_name}')
-msg.set_mapping({'addable_name': addable_name})
+msg = _('Create a ${addable_name}', mapping={'addable_name': addable_name})
 return msg

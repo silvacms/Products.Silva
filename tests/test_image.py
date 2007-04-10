@@ -4,9 +4,11 @@
 import SilvaTestCase
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
 from Testing.ZopeTestCase import utils
-
+import os
 
 from StringIO import StringIO
+
+test_path = os.path.dirname(__file__)
 
 try:
     import PIL
@@ -34,7 +36,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
             manage_addImage, 'testimage', 'Test Image', image_file)
 
     def _getimage_test(self):
-        image_file = open('test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',
@@ -61,6 +63,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
+
     def test_getImage_zodb(self):
         self.root.service_files.manage_filesServiceEdit('', 0, '')
         self._getimage_test()
@@ -70,7 +73,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self._getimage_test()
 
     def _test_index_html(self):
-        image_file = open('test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',
@@ -125,7 +128,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         return s
 
     def test_getCropBox(self):
-        image_file = open('test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage(
@@ -137,8 +140,22 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         cropbox = image.getCropBox(crop="242x379-392x479")
         self.assert_(cropbox is not None)
 
+    def test_copy_image(self):
+        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
+        image_data = image_file.read()
+        image_file.seek(0)
+        self.root.manage_addProduct['Silva'].manage_addImage('testimage',
+            'Test Image', image_file)
+        image_file.close()
+        self.root.action_copy(['testimage'], self.app.REQUEST)
+        # now do the paste action
+        self.root.action_paste(self.app.REQUEST)
+        # should have a copy now with same title
+        #self.assertEquals('Doc1', self.root.copy_of_doc1.get_title_editable())
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(FileTest))
+    suite.addTest(unittest.makeSuite(ImageTest))
     return suite

@@ -14,7 +14,7 @@ from zope.interface import implements
 # Zope
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
-from OFS import content_types
+from zope import contenttype
 # Silva
 from Products.Silva import interfaces as silva_interfaces
 from Products.Silva import SilvaPermissions
@@ -52,7 +52,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         # Extract filenames, not directories.
         for name in zip.namelist():
             extracted_file = StringIO(zip.read(name))
-            mimetype, enc = content_types.guess_content_type(name)
+            mimetype, enc = contenttype.guess_content_type(name)
             path, filename = os.path.split(name)
             if not filename:
                 # Its a directory entry

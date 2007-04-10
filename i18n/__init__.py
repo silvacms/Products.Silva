@@ -5,6 +5,6 @@
 and will provide a MessageIDFactory that returns MessageIDs for
 i18n'ing Product code and Python scripts.
 """
-from zope.i18nmessageid import MessageIDFactory
+from zope.i18nmessageid import MessageFactory
 
-translate = MessageIDFactory('silva')
+translate = MessageFactory('silva')

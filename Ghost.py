@@ -2,7 +2,9 @@
 # See also LICENSE.txt
 # $Revision: 1.101 $
 
-from zope.interface import implements
+from zope.interface import implements, directlyProvidedBy
+from zope.publisher.browser import applySkin
+from zope.publisher.interfaces.browser import IBrowserSkinType
 
 # Zope
 from OFS import SimpleItem
@@ -158,7 +160,12 @@ class GhostBase:
         # temporary tuck away old skin & resourcebase, so we don't
         # screw up any subsequence view lookups with traversal
         request = self.REQUEST
-        current_skin = request.getPresentationSkin()
+        current_skins = [iface for iface in directlyProvidedBy(request)
+                         if not IBrowserSkinType.providedBy(iface)]
+        if current_skins:
+            current_skin = current_skins[0]
+        else:
+            current_skin = None
         current_resourcebase = request.get('resourcebase')
         try:
             # XXX what if we're pointing to something that cannot be viewed
@@ -177,7 +184,8 @@ class GhostBase:
             return None
         finally:
             # put back the old skin & resourcebase...
-            request.setPresentationSkin(current_skin)
+            if current_skin is not None:
+                applySkin(request, current_skin)
             request.set('resourcebase', current_resourcebase)
             
     security.declarePrivate('get_haunted_unrestricted')

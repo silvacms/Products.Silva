@@ -7,6 +7,7 @@ from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from DateTime import DateTime
 
 from Products.Silva import SilvaPermissions
+from Products.Silva import helpers
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 
@@ -19,31 +20,11 @@ class Version(SimpleItem):
     security = ClassSecurityInfo()
 
     object_type = 'versioned_content'
-    _title = '[No title yet]'
 
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
         
-    def manage_afterAdd(self, item, container):
-        Version.inheritedAttribute('manage_afterAdd')(
-            self, item, container)
-        timings = {}
-        ctime = getattr(self, '_v_creation_datetime', None)
-        if ctime is None:
-            return
-        try:
-            binding = self.service_metadata.getMetadata(self)
-        except BindingError:
-            return
-        if binding is None:
-            return
-        for elem in ('creationtime', 'modificationtime'):
-            old = binding.get('silva-extra', element_id=elem)
-            if old is None:
-                timings[elem] = ctime
-        binding.setValues('silva-extra', timings)
-            
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
@@ -207,3 +188,21 @@ def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
+def version_moved(version, event):
+    if helpers.is_removed(event):
+        return
+    timings = {}
+    ctime = getattr(version, '_v_creation_datetime', None)
+    if ctime is None:
+        return
+    try:
+        binding = version.service_metadata.getMetadata(version)
+    except BindingError:
+        return
+    if binding is None:
+        return
+    for elem in ('creationtime', 'modificationtime'):
+        old = binding.get('silva-extra', element_id=elem)
+        if old is None:
+            timings[elem] = ctime
+    binding.setValues('silva-extra', timings)

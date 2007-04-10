@@ -17,8 +17,8 @@ except ValueError, e:
     message = str(e)
     type = 'error'
 else:
-    message = _("Range ${iprange} added to the IP Group")
-    message.set_mapping({'iprange': view.quotify(iprange)})
+    message = _("Range ${iprange} added to the IP Group",
+                mapping={'iprange': view.quotify(iprange)})
     type = 'feedback'
 return view.tab_edit(message_type=type, message=message)
 

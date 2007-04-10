@@ -23,35 +23,34 @@ elif status_code == id.RESERVED_PREFIX:
     # FIXME: needs to know about the prefix
     prefix = str(id).split('_')[0]+'_'
     message = _("""Sorry, ids starting with ${prefix} are reserved for
-        internal use.<br />Please use another id.""")
-    message.set_mapping({'prefix': view.quotify(prefix)})
+        internal use.<br />Please use another id.""",
+                mapping={'prefix': view.quotify(prefix)})
     return translate(message)
 elif status_code == id.RESERVED:
     message = _("""Sorry, the id ${id} is reserved for internal use.<br />
-        Please use another id.""")
-    message.set_mapping({'id': view.quotify(id)})
+        Please use another id.""", mapping={'id': view.quotify(id)})
     return translate(message)
 elif status_code == id.IN_USE_CONTENT:
     message = _("""There is already an object with the id ${id} in this 
-        folder.<br />Please use a different one.""")
-    message.set_mapping({'id': view.quotify(id)})
+        folder.<br />Please use a different one.""",
+                mapping={'id': view.quotify(id)})
     return translate(message)
 elif status_code == id.IN_USE_ASSET:
     message = _("""There is already an asset with the id ${id} in this 
-        folder.<br />Please use another id.""")
-    message.set_mapping({'id': view.quotify(id)})
+        folder.<br />Please use another id.""",
+                mapping={'id': view.quotify(id)})
     return translate(message)
 elif status_code == id.RESERVED_POSTFIX:
     message = _("""Sorry, the id ${id} ends with invalid characters.<br />
-        Please use another id.""")
-    message.set_mapping({'id': view.quotify(id)})
+        Please use another id.""",
+                mapping={'id': view.quotify(id)})
     return translate(message)
 
 # this should not happen
 message = _("""(Internal Error): An invalid status ${status_code} occured 
     while checking the id ${id}.<br />Please contact the person responsible 
-    for this Silva installation or file a bug report.""")
-message.set_mapping({
+    for this Silva installation or file a bug report.""",
+            mapping={
     'status_code': view.quotify(status_code), 
     'id': view.quotify(id)
     })

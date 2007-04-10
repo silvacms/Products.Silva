@@ -51,7 +51,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id,
             'image5.jpg')
-        transaction.get().commit(1)
+        transaction.savepoint()
         testfolder = importfolder.testfolder
         xmlexport.initializeXMLExportRegistry()
         settings = xmlexport.ExportSettings()

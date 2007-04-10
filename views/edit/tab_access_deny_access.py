@@ -8,6 +8,7 @@
 ##title=
 ##
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 view = context
 request = view.REQUEST
@@ -19,9 +20,9 @@ if not request.has_key('requests') or not request['requests']:
 messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
     model.deny_role(userid, role)
-    msg = _('&#xab;${user_id}&#xbb; has been denied the ${role} role')
-    msg.set_mapping({'user_id': userid, 'role': role})
-    messages.append(unicode(msg))
+    msg = _('&#xab;${user_id}&#xbb; has been denied the ${role} role',
+            mapping=='user_id': userid, 'role': role})
+    messages.append(translate(msg))
 
 model.send_messages()
 

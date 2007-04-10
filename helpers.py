@@ -3,6 +3,8 @@
 # $Revision: 1.30 $
 # Zope
 from AccessControl import ModuleSecurityInfo
+from zope.app.container.interfaces import (IObjectRemovedEvent,
+                                           IObjectAddedEvent)
 # Silva 
 import SilvaPermissions
 # python

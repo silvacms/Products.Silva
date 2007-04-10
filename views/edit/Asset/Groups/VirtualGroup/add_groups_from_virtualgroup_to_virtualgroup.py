@@ -14,8 +14,8 @@ if not groups:
 
 added = model.copyGroupsFromVirtualGroups(groups)
 if added:
-    message = _("Group(s) ${added} added to group.")
-    message.set_mapping({'added': view.quotify_list(added)})
+    message = _("Group(s) ${added} added to group.",
+                mapping={'added': view.quotify_list(added)})
 else:
     message = _(
         "No other groups added (were they already in this virtual group?)")

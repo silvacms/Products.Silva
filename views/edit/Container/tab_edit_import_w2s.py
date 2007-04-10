@@ -33,8 +33,8 @@ for item in request['storageids']:
             model.manage_addProduct['Silva'].manage_addFile('doc_%s.doc' % sid, 'Docma Word Document %s' % sid, data)
 
 if errors:
-    message = 'The following errors have occured during import: ${errors}'
-    message.set_mapping({'errors': ', '.join(errors)})
+    message = _('The following errors have occured during import: ${errors}',
+                mapping={'errors': ', '.join(errors)})
     return view.tab_edit_import(message_type='error', message=message)
 else:
     return view.tab_edit(message_type='feedback', message=_('Finished importing'))

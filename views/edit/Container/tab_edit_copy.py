@@ -16,6 +16,6 @@ if ids is None:
     return view.tab_edit(message_type="error", message=_("Nothing was selected, so nothing was copied."))
 
 model.action_copy(ids, context.REQUEST)
-message = _("Placed ${ids} on the clipboard for copying.")
-message.set_mapping({'ids': view.quotify_list(ids)})
+message = _("Placed ${ids} on the clipboard for copying.",
+            mapping={'ids': view.quotify_list(ids)})
 return view.tab_edit(message_type="feedback", message=message)

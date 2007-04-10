@@ -43,6 +43,6 @@ if not request['email']:
 
 ident, status = model.service_docma.silva2word(request['email'], data, request['template'], str(request.AUTHENTICATED_USER.getId()), description)
 
-msg = _('Your job is ${status}. The id of your job is ${job_id}.')
-msg.set_mapping({'status': status, 'job_id': ident})
+msg = _('Your job is ${status}. The id of your job is ${job_id}.',
+        mapping={'status': status, 'job_id': ident})
 return view.tab_status_export(message_type='feedback', message=msg)

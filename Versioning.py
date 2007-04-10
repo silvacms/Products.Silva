@@ -59,24 +59,25 @@ class Versioning:
         """
         self._update_publication_status()
         if self._approved_version != empty_version:
-            msg = _('There is an approved version already; unapprove it. (${id})')
-            msg.set_mapping({'id': self._approved_version[0]})
+            msg = _(
+                'There is an approved version already; unapprove it. (${id})',
+                mapping={'id': self._approved_version[0]})
             raise VersioningError, msg
         if self._unapproved_version != empty_version:
-            msg = _('There already is an unapproved version (${id}).')
-            msg.set_mapping({'id': self._unapproved_version[0]})
+            msg = _('There already is an unapproved version (${id}).',
+                    mapping={'id': self._unapproved_version[0]})
             raise VersioningError, msg
         # if a version with this name already exists, complain
         if (self._public_version and
             version_id == self._public_version[0]):
-            msg = _('The public version has that id already (${id}).')
-            msg.set_mapping({'id': self._public_version[0]})
+            msg = _('The public version has that id already (${id}).',
+                    mapping={'id': self._public_version[0]})
             raise VersioningError, msg
         previous_versions = self._previous_versions or []
         for previous_version in previous_versions:
             if version_id == previous_version[0]:
-                msg = _('A previous version has that id already (${id}).')
-                msg.set_mapping({'id': self._previous_version[0]})
+                msg = _('A previous version has that id already (${id}).',
+                        {'id': self._previous_version[0]})
                 raise VersioningError, msg
     
         self._unapproved_version = (version_id,
@@ -159,9 +160,9 @@ class Versioning:
                   _('No approved version to unapprove.')
         if self._unapproved_version != empty_version:
             msg = _(('Should never happen: unapproved version ${unapproved} found while '
-                   'approved version ${approved} exists at the same time.'))
-            msg.set_mapping({'unapproved': self._unapproved_version[0], 
-                                'approved': self._approved_version[0]})
+                   'approved version ${approved} exists at the same time.'),
+                    mapping={'unapproved': self._unapproved_version[0], 
+                             'approved': self._approved_version[0]})
             raise VersioningError, msg
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version

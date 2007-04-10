@@ -9,6 +9,8 @@ from zope.interface import implements
 
 # Zope
 from OFS import Folder
+from OFS.interfaces import IObjectWillBeAddedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -22,6 +24,7 @@ from Versioning import VersioningError
 import mangle
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
+from Products.Silva import helpers
 # Silva interfaces
 from interfaces import IVersionedContent
 
@@ -54,7 +57,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         VersionedContent has no title of its own; its versions do.
         """
         VersionedContent.inheritedAttribute('__init__')(
-            self, id, '[VersionedContent title bug]')
+            self, id)
         self._cached_data = {}
         self._cached_checked = {}
     
@@ -432,16 +435,6 @@ class CatalogedVersionedContent(VersionedContent):
 
     default_catalog = 'service_catalog'
 
-    def manage_afterAdd(self, item, container):
-        CatalogedVersionedContent.inheritedAttribute('manage_afterAdd')(
-            self, item, container)
-        self.indexVersions()
-
-    def manage_beforeDelete(self, item, container):
-        CatalogedVersionedContent.inheritedAttribute('manage_beforeDelete')(
-            self, item, container)
-        self.unindexVersions()
-    
     def indexVersions(self):
         for version in self._get_indexable_versions():
             version.index_object()
@@ -463,28 +456,32 @@ class CatalogedVersionedContent(VersionedContent):
         return result
 
     def _index_version(self, version_id):
-        # python2.2 and up compatibility check:
-        if version_id is None:
-            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.index_object()
         
     def _reindex_version(self, version_id):
-        # python2.2 and up compatibility check:
-        if version_id is None:
-            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.reindex_object()
 
     def _unindex_version(self, version_id):
-        # python2.2 and up compatibility check:
-        if version_id is None:
-            return
         version = getattr(self, version_id, None)
         if version is not None:
             version.unindex_object()
         
 InitializeClass(CatalogedVersionedContent)
 
+def versionedcontent_moved(versionedcontent, event):
+    if IObjectRemovedEvent.providedBy(event):
+        return
+    versionedcontent.indexVersions()
+
+def versionedcontent_will_be_moved(versionedcontent, event):
+    if IObjectWillBeAddedEvent.providedBy(event):
+        return
+    catalog = versionedcontent.service_catalog
+    versions = [
+        v for v in versionedcontent._get_indexable_versions()]
+    for version in versions:
+        catalog.uncatalog_object('/'.join(version.getPhysicalPath()))

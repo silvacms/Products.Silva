@@ -28,8 +28,8 @@ except (errors.AlreadySubscribedError, errors.NotSubscribedError), e:
     pass
 
 mailedmessage = _(
-    'Confirmation request for subscription has been emailed to ${emailaddress}')
-mailedmessage.set_mapping({'emailaddress': request['emailaddress']})
+    'Confirmation request for subscription has been emailed to ${emailaddress}',
+    mapping={'emailaddress': request['emailaddress']})
 
 return context.subscriptor(message=mailedmessage, message_type='feedback', show_form=False)
     

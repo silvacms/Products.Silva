@@ -66,8 +66,9 @@ if return_url:
 elif REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    message = _("Added ${meta_type} ${id}.")
-    message.set_mapping({
+    message = _(
+        "Added ${meta_type} ${id}.",
+        mapping={
         'meta_type': object.meta_type,
         'id': view.quotify(id)})
     return model.edit['tab_edit'](message_type="feedback", message=message)

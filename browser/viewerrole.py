@@ -46,8 +46,8 @@ class ViewerRole(BrowserView):
         
         viewer_security.setMinimumRole(role)
 
-        msg = _("Minimum role to access is now set to ${role}")
-        msg.set_mapping({'role': role})
+        msg = _("Minimum role to access is now set to ${role}",
+                mapping={'role': role})
         return context.edit['tab_access'](
             message_type='feedback',
             message= msg,

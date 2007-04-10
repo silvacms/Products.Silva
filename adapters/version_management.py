@@ -285,8 +285,7 @@ class VersionManagementAdapter(adapter.Adapter):
                   for (vid, vpt, vet) in self.context._previous_versions:
                     if vid == versionid:
                       return 'closed'
-        msg = _('no such version ${version}')
-        msg.set_mapping({'version': versionid})
+        msg = _('no such version ${version}', mapping={'version': versionid})
         raise VersioningError, msg
 
     def _createUniqueId(self):

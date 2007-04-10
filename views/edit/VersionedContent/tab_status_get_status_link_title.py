@@ -40,8 +40,8 @@ msg = _('view «${version_title}»')
 msg = unicode(msg, 'UTF-8')
 
 # now get a messageid with the contents and interpolate the variable
-msg = translate(msg)
-msg.set_mapping({'version_title': version_title})
+msg = translate(msg,
+                mapping={'version_title': version_title})
 
 # return the interpolated messageid, translation will be done on 
 # stringification

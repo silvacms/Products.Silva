@@ -77,30 +77,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         
     def __init__(self, id):
         Folder.inheritedAttribute('__init__')(
-            self, id, "[Containers have no titles, this is a bug]")
+            self, id)
         self._ordered_ids = []
-
-    def manage_afterAdd(self, item, container):
-        # call after add code on SilvaObject
-        self._afterAdd_helper(item, container)
-        self._set_creation_datetime()
-        # call code on CatalogAware
-        Folder.inheritedAttribute('manage_afterAdd')(self, item, container)
-        # container added, always invalidate sidebar
-        self._invalidate_sidebar(item)
-
-    def manage_beforeDelete(self, item, container):
-        # call before delete code on SilvaObject
-        self._beforeDelete_helper(item, container)
-        # call code on CatalogAware
-        Folder.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        # container removed, always invalidate sidebar
-        self._invalidate_sidebar(item)
-
-    def manage_afterClone(self, item):
-        Folder.inheritedAttribute('manage_afterClone')(self, item)
-        # XXX is this really necessary?
-        self._invalidate_sidebar(item)
 
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
@@ -326,8 +304,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             elif item.meta_type not in [addable['name'] for 
                     addable in self.get_silva_addables()]:
                 msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
-                                'this type of container'))
-                msg.set_mapping({'id': item.id})
+                         'this type of container'), mapping={'id': item.id})
                 messages.append(translate(msg))
                 message_type = 'error'
 
@@ -347,8 +324,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             object = getattr(self, paste_id)
             helpers.unapprove_close_helper(object)
             object.sec_update_last_author_info()
-            msg = _('pasted &#xab;${id}&#xbb;')
-            msg.set_mapping({'id': paste_id})
+            msg = _('pasted &#xab;${id}&#xbb;', mapping={'id': paste_id})
             messages.append(translate(msg))
         
         # on cut/paste, clear the clipboard when done
@@ -386,13 +362,11 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
                     else:
                         paste_id = 'copy%s_of_%s' % (add, org_paste_id)
                 self._ghost_paste(paste_id, item, REQUEST)
-                msg = _('pasted &#xab;${id}&#xbb;')
-                msg.set_mapping({'id': paste_id})
+                msg = _('pasted &#xab;${id}&#xbb;', mapping={'id': paste_id})
                 messages.append(translate(msg))
             else:
                 msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
-                                'this type of container'))
-                msg.set_mapping({'id': item.id})
+                         'this type of container'), mapping={'id': item.id})
                 messages.append(translate(msg))
                 message_type = 'error'
         return message_type, ', '.join(messages).capitalize()

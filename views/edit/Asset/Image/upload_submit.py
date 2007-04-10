@@ -19,8 +19,7 @@ if not file or not getattr(file, 'filename', None):
 try:
     model.set_image(file)
 except ValueError, e:
-    message = _('Problem: ${errors}')
-    message.set_mapping({'errors': e})
+    message = _('Problem: ${errors}', mapping={'errors': e})
     return view.tab_edit(message_type="error", message=message)
 
 model.sec_update_last_author_info()

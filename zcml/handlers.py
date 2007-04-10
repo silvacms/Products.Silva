@@ -9,6 +9,7 @@ from App.FactoryDispatcher import FactoryDispatcher
 import AccessControl.Permission
 import Globals
 from OFS import misc_ as icons
+from Products.Five.fiveconfigure import unregisterClass
 
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -63,6 +64,7 @@ def content(_context, extension_name, content, priority=0, icon=None,
 def registerContent(extension_name, content, priority, icon, content_factory):
     """Register content type.
     """
+    
     registerClass(content, extension_name)
 
     product = resolve('Products.%s' % extension_name)
@@ -231,7 +233,7 @@ def registerClass(class_, extension_name):
     interfaces = instancesOfObjectImplements(class_)
     
     info = {'name': class_.meta_type,
-            'action': '',
+            'action': 'manage_main',
             'product': extension_name,
             'permission': permission,
             'visibility': "Global",

@@ -14,7 +14,7 @@ from Products.Silva import mangle
 # misc
 from helpers import add_and_edit
 
-from interfaces import ISilvaObject
+from interfaces import IIPGroup
 
 class IPGroup(SilvaObject, SimpleItem):
     """Silva IP Group"""
@@ -22,16 +22,12 @@ class IPGroup(SilvaObject, SimpleItem):
 
     meta_type = "Silva IP Group"
     
-    implements(ISilvaObject)
+    implements(IIPGroup)
 
     def __init__(self, id, title, group_name):
         IPGroup.inheritedAttribute('__init__')(self, id, title)
         self._group_name = group_name
 
-    def manage_beforeDelete(self, item, container):
-        IPGroup.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        if self.isValid():
-            self.service_groups.removeIPGroup(self._group_name)
 
     def isValid(self):
         """returns whether the group asset is valid
@@ -102,6 +98,10 @@ class IPGroup(SilvaObject, SimpleItem):
         return result
 
 InitializeClass(IPGroup)
+
+def ipgroup_will_be_removed(ipgroup, event):
+    if ipgroup.isValid():
+        ipgroup.service_groups.removeIPGroup(ipgroup._group_name)
 
 def manage_addIPGroup(self, id, title, group_name, asset_only=0,
         REQUEST=None):
