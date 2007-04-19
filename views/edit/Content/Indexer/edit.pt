@@ -40,8 +40,7 @@
         <td class="top"
           colspan="3">
           <h2>
-            <img tal:replace="structure python:view.render_icon(model)"
-              tal:attributes="title model/meta_type" />
+            <img tal:replace="structure python:view.render_icon(model)" />
             <span style="text-transform:lowercase;"
               tal:content="model/meta_type">Meta type</span>
             &#xab;<tal:block content="model/get_title_or_id" />&#xbb;

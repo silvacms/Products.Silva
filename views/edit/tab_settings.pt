@@ -19,9 +19,7 @@
 
 <metal:block fill-slot="main"
   tal:define="
-    icon python:view.render_icon(model);
-    icon_title model/meta_type;
-">
+    icon python:view.render_icon(model);">
 <table class="columns columns2">
   <tbody>
     <tr>
@@ -51,8 +49,7 @@
             <tr>
               <td class="top" colspan="3">
                 <h2 tal:attributes="title string:id: ${model/id}">
-                  <img tal:replace="structure icon"
-                    tal:attributes="title icon_title" />
+                  <img tal:replace="structure icon" />
                   <span i18n:translate="">settings for &#xab;<tal:block
                     content="title"
                     i18n:name="title" />&#xbb;</span>
@@ -260,8 +257,7 @@
             <!-- editable version metadata table, thus editable -->
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon"
-                  tal:attributes="title icon_title" />
+                <img tal:replace="structure icon" />
                 <span i18n:translate=""> layout settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
@@ -275,8 +271,7 @@
             condition="model/get_approved_version">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon"
-                  tal:attributes="title icon_title" />
+                <img tal:replace="structure icon" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
                   for approved version of
@@ -295,8 +290,7 @@
             >
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon"
-                  tal:attributes="title icon_title" />
+                <img tal:replace="structure icon" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
                   for published version of
@@ -316,8 +310,7 @@
             >
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon"
-                  tal:attributes="title icon_title" />
+                <img tal:replace="structure icon" />
                 <tal:block i18n:translate="">layout settings</tal:block>
                 <span i18n:translate="">
                   for closed version of
@@ -335,8 +328,7 @@
           <tal:block define="content model">
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
-                <img tal:replace="structure icon"
-                  tal:attributes="title icon_title" />
+                <img tal:replace="structure icon" />
                 <span i18n:translate=""> layout settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>

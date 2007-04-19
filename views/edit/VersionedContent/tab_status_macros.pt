@@ -135,9 +135,7 @@ notes
   tal:define="field view/tab_status_form_author/message">
 <td class="align-right">
 <tal:input
-  replace="structure python: field.render(REQUEST=request)"
-  attributes="id field/id" 
-/>
+  replace="structure python: field.render(REQUEST=request)" />
 </td>
 <td i18n:translate="">
 This message will remain visible in the status screen for other authors and editors.
@@ -252,9 +250,7 @@ notes
   i18n:translate="">
 content publish time
 </label>
-<input tal:replace="structure python: field.render(REQUEST=request)"
- tal:attributes="id field/id"
-/>
+<input tal:replace="structure python: field.render(REQUEST=request)" />
 </td>
 <td style="vertical-align:middle"
   tal:content="structure field/description">
@@ -273,9 +269,7 @@ content publish time
   i18n:translate="">
 expiration time
 </label>
-<input tal:replace="structure python: field.render(REQUEST=request)"
-  tal:attributes="id field/id"
-/>
+<input tal:replace="structure python: field.render(REQUEST=request)" />
 </td>
 <td style="vertical-align:middle"
   tal:content="structure field/description">

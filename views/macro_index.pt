@@ -72,10 +72,6 @@
 <tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
 <metal:block define-slot="refresher" />
 <tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
-<script type="text/javascript" tal:replace="nothing"
-  xml:space="preserve"
-  tal:attributes="src string:$root_url/globals/plone_javascripts.js">
-</script>
 <script type="text/javascript"
         tal:attributes="src here/helperscripts.js/absolute_url"></script>
 <script type="text/javascript"

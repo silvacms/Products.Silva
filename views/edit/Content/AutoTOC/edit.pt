@@ -34,8 +34,7 @@
     <tr>
       <td class="top">
         <h2>
-          <img tal:replace="structure python:view.render_icon(model)" 
-            tal:attributes="title model/meta_type" />
+          <img tal:replace="structure python:view.render_icon(model)" />
           <tal:block i18n:translate="">automatic table of contents
           &#xab;<tal:block content="model/get_title_or_id" i18n:name="title_or_id"/>&#xbb;</tal:block>
         </h2>
