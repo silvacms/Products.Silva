@@ -1,0 +1,5 @@
+<html metal:define-macro="layout">
+  <metal:slot define-slot="main">
+    <!-- main slot -->
+  </metal:slot>
+</html>
