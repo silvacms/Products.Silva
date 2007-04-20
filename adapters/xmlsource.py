@@ -9,8 +9,8 @@ class XMLSourceAdapter(adapter.Adapter):
 
     implements(IXMLSource)
 
-    def getXML(self):
-        settings = xmlexport.ExportSettings()
+    def getXML(self, **kwargs):
+        settings = xmlexport.ExportSettings(**kwargs)
         settings.setExternalRendering(True)
         info = xmlexport.ExportInfo()
         exporter = xmlexport.theXMLExporter
