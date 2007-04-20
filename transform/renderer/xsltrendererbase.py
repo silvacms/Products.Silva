@@ -72,7 +72,7 @@ class XSLTRendererBase(Acquisition.Implicit):
     security.declareProtected("View", "render")
     def render(self, obj):
         source = xmlsource.getXMLSourceAdapter(obj)
-        source_xml = source.getXML()
+        source_xml = source.getXML(allVersions=False)
 
         style = self.stylesheet()
         try:
