@@ -179,10 +179,7 @@ class Publishable:
         while 1:
             if node is top:
                 return node
-            if IContainer.providedBy(node):
-                container = node.aq_parent
-            container = node.aq_parent 
-            #objects = container.get_public_tree(0)
+            container = node.get_container() 
             objects = container.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
             try:
@@ -209,7 +206,6 @@ class Publishable:
         node = self
         top = self.get_publication()
         if IContainer.providedBy(node):
-            #objects = node.get_public_tree(0)
             objects = node.get_public_tree_helper(0)
             if objects:
                 return objects[0][1]
@@ -218,7 +214,7 @@ class Publishable:
             if self is top:
                 return None
             
-            container = node.aq_parent
+            container = node.get_container()
             objects = node.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
             try:
