@@ -173,7 +173,7 @@ class Publishable:
         node = self
         top = self.get_publication()
         
-        if self is top:
+        if self.absolute_url() == top.absolute_url():
             return None
             
         while 1:
