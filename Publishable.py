@@ -11,7 +11,7 @@ import SilvaPermissions
 import helpers
 
 from interfaces import IPublishable, IContent, IVersioning, IContainer
-from interfaces import IPublication
+from interfaces import IPublication, IRoot
 
 class Publishable:
     """Mixin class that can be provided to implement the Publishable
@@ -177,7 +177,7 @@ class Publishable:
             return None
             
         while 1:
-            if node.absolute_url() == top.absolute_url():
+            if node.absolute_url() == top.absolute_url() or IRoot.providedBy(node):
                 return node
             container = node.get_container() 
             objects = container.get_public_tree_helper(0)
@@ -211,7 +211,7 @@ class Publishable:
                 return objects[0][1]
         
         while 1:
-            if self.absolute_url() is top.absolute_url():
+            if node.absolute_url() == top.absolute_url() or IRoot.providedBy(node):
                 return None
             
             container = node.get_container()
