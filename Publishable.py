@@ -179,7 +179,7 @@ class Publishable:
         while 1:
             if node.absolute_url() == top.absolute_url() or IRoot.providedBy(node):
                 return node
-            container = node.get_container() 
+            container = node.aq_inner.aq_parent
             objects = container.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
             try:
@@ -214,7 +214,7 @@ class Publishable:
             if node.absolute_url() == top.absolute_url() or IRoot.providedBy(node):
                 return None
             
-            container = node.get_container()
+            container = node.aq_inner.aq_parent
             objects = node.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
             try:
