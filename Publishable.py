@@ -150,7 +150,7 @@ class Publishable:
         prev = self.get_navigation_prev()
         last = self.get_navigation_last()
         
-        if top is not self:
+        if not top.absolute_url() == self.absolute_url():
             result['top'] = top
             result['first'] = top
             result['up'] = ".."
