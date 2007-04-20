@@ -177,7 +177,7 @@ class Publishable:
             return None
             
         while 1:
-            if node is top:
+            if node.absolute_url() == top.absolute_url():
                 return node
             container = node.get_container() 
             objects = container.get_public_tree_helper(0)
@@ -211,7 +211,7 @@ class Publishable:
                 return objects[0][1]
         
         while 1:
-            if self is top:
+            if self.absolute_url() is top.absolute_url():
                 return None
             
             container = node.get_container()
