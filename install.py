@@ -1,5 +1,5 @@
-# Copyright (c) 2002-2007 Infrae. All rights reserved.
-# See also LICENSE.txt
+# Copyright (c) 2002-2007 Infrae and contributors. All rights
+# reserved. See also LICENSE.txt
 # $Id: install.py,v 1.119 2006/01/24 16:14:13 faassen Exp $
 
 """Install for Silva Core
@@ -196,6 +196,32 @@ def configureMetadata(root):
     types = ('Silva Ghost Folder', 'Silva Ghost Version')
     root.service_metadata.addTypesMapping(types, ('', ))
     root.service_metadata.initializeMetadata()
+
+def resetMetadata(root, metadatasets):
+    """Remove metadata sets from the metadata mapping. API for use in
+    Silva Extensions."""
+    mapping = root.service_metadata.getTypeMapping()
+    default = ''
+    # Get all content types that have a metadata mapping
+    content_types =  [item.id for item in mapping.getTypeMappings()]
+    tm = []
+    # Remove the metadata sets for each content type
+    for content_type in content_types:
+        chain = mapping.getChainFor(content_type)
+        sets = [set.strip() for set in chain.split(',')]
+        sets_to_remove = []
+        for set in sets:
+            if set in metadatasets:
+                sets_to_remove.append(set)
+        for set in sets_to_remove:
+            sets.remove(set)
+        map = {'type':content_type,
+               'chain':', '.join(sets)}
+        tm.append(map)
+    mapping.editMappings(default, tm)
+
+    # Remove the metadata set specifications
+    root.service_metadata.collection.manage_delObjects(metadatasets)
             
 def configureProperties(root):
     """Configure properties on the root folder.
