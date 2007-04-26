@@ -28,7 +28,7 @@
           <title>message</title>
           <truncate type="int">0</truncate>
           <description></description>
-          <extra>wrap="soft" style="width:99%;"</extra>
+          <extra>wrap="soft" style="width:99%;" id="message"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

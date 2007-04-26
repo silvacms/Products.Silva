@@ -30,6 +30,7 @@
           <title>publish time</title>
           <description>day / month / year &amp;nbsp;(23:59)</description>
           <allow_empty_time type="int">1</allow_empty_time>
+          <extra>id="publish_datetime"</extra>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
