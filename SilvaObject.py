@@ -90,7 +90,7 @@ class SilvaObject(Security, ViewCode):
     _title = "No title yet"
 
     # allow edit view on this object
-    edit = FrankenViewAttribute('edit', 'tab_edit')
+    edit = ViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'edit')
