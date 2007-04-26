@@ -28,7 +28,6 @@ from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent
 from Products.Silva import helpers
-from Products.Silva.browser.skin.interfaces import ISilvaBareSkin
 # Silva adapters
 from Products.Silva.adapters import zipfileexport
 from Products.Silva.adapters.renderable import getRenderableAdapter
@@ -91,7 +90,7 @@ class SilvaObject(Security, ViewCode):
     _title = "No title yet"
 
     # allow edit view on this object
-    edit = FrankenViewAttribute('edit', 'tab_edit', ISilvaBareSkin)
+    edit = FrankenViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'edit')
@@ -363,16 +362,6 @@ class SilvaObject(Security, ViewCode):
         request.model = version
         request.other['model'] = version
         
-        # Try to get a Zope 3 view
-        z3view = component.queryMultiAdapter(
-            (version, request), name=view_type)
-        if not z3view and view_type=='public':
-            z3view = component.queryMultiAdapter(
-                (version, request), name='index.html')
-        if z3view:
-            return z3view.__of__(version)()
-        
-
         # Fallback on SilvaViews view
         try:
             view = self.service_view_registry.get_view(

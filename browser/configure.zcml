@@ -3,8 +3,6 @@
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five">
 
-  <include package=".skin" />
-
   <!-- default views should be index.html -->
   <browser:defaultView
     for="Products.Silva.interfaces.IContent"
@@ -15,34 +13,6 @@
     for="Products.Silva.interfaces.IContainer"
     name="index.html"
   />
-
-  <browser:page
-      for="Products.Silva.interfaces.ISilvaObject"
-      name="index.html"
-      class=".defaultview.Default"
-      permission="silva.ReadSilvaContent"
-      />
-
-  <browser:page
-      for="Products.Silva.interfaces.IContainer"
-      name="index.html"
-      class=".defaultview.ContainerView"
-      permission="silva.ReadSilvaContent"
-      />
-
-  <browser:page
-      for="Products.Silva.interfaces.ISilvaObject"
-      name="preview_html"
-      class=".defaultview.PreviewView"
-      permission="silva.ApproveSilvaContent"
-      />
-
-  <browser:page
-      for="Products.Silva.interfaces.IContainer"
-      name="preview_html"
-      class=".defaultview.ContainerPreviewView"
-      permission="silva.ReadSilvaContent"
-      />
 
   <browser:page
     for="Products.Silva.interfaces.ISilvaObject"
