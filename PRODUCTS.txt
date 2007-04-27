@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.6 (DC)
+Silva 2.0 (DC)
 --------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
@@ -35,14 +35,14 @@ such as Folders, Publications, and Ghosts.
 
 http://www.infrae.com/download/Silva
 
-SilvaViews 0.11 (DCI)
+SilvaViews 0.12 (DCI)
 ---------------------
 
 The infrastructure used by Silva to attach views to content objects.
 
 http://www.infrae.com/download/SilvaViews
 
-FileSystemSite 2.0 (DCI)
+FileSystemSite 2.1 (DCI)
 ------------------------
 
 FileSystemSite is a Zope extension extracted from the CMF Core. It can
@@ -62,7 +62,7 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 0.17 (DCI)
+SilvaMetadata 1.0 (DCI)
 ------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
@@ -73,7 +73,7 @@ Uses Formulator, Annotation and ProxyIndex.
 
 http://www.infrae.com/download/SilvaMetadata
 
-Annotations 0.4.4 (DCI)
+Annotations 0.4.5 (DCI)
 -----------------------
 
 A system for attaching information to Zope objects without changing
@@ -101,14 +101,6 @@ parser.
 
 http://www.infrae.com/download/Sprout
 
-Five 1.2 (DCI)
---------------
-
-Five is way to use Zope 3 technologies in Zope 2. Zope 2.8 and later
-ship with a version of Five.
-
-http://codespeak.net/z3/five
-
 Kupu 1.4b1 (DI)
 ---------------
 
@@ -118,7 +110,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.6 (DE)
+SilvaDocument 2.0 (DE)
 ----------------------
 
 Silva extension for XML-based documents. Contains a through the web
@@ -128,7 +120,7 @@ optionally be extended with SilvaExternalSources.
 
 http://www.infrae.com/download/SilvaDocument
 
-XMLWidgets 0.13 (DI)
+XMLWidgets 0.14 (DI)
 --------------------
 
 A system used to construct the forms-based editor for XML used by
@@ -224,7 +216,7 @@ content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
-SilvaLayout 0.5.8 (EX)
+SilvaLayout 1.0 (EX)
 ----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
