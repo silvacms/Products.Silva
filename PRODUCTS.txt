@@ -175,7 +175,7 @@ separation you need a Zope version higher than 2.7.0.
 
 http://www.dataflake.org/software/ldapuserfolder/
 
-ExtFile 1.5.2 (IX)
+ExtFile 1.5.6 (IX)
 ------------------
 
 If you plan to manage large upload files with Silva, you may want to
