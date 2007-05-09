@@ -762,6 +762,21 @@ class IVersionedContent(IVersioning, IContent):
         public version.
         """
 
+class ICatalogedVersionedContent(IVersionedContent):
+    """Content object that is also in the catalog.
+    """
+    def indexVersions():
+        """Reindex with catalog all the versions that need to be indexed.
+        """
+
+    def unindexVersions():
+        """Unindex all versions.
+        """
+
+    def _get_indexable_versions():
+        """Get all versions that need to be indexed by the catalog.
+        """
+        
 class IVersion(Interface):
     """Version of a versioned object
     """

@@ -147,13 +147,13 @@
   />
 
   <subscriber
-    for=".interfaces.IVersionedContent
+    for=".interfaces.ICatalogedVersionedContent
       zope.app.container.interfaces.IObjectMovedEvent"
     handler=".VersionedContent.versionedcontent_moved" 
   />
 
   <subscriber
-    for=".interfaces.IVersionedContent
+    for=".interfaces.ICatalogedVersionedContent
       OFS.interfaces.IObjectWillBeMovedEvent"
     handler=".VersionedContent.versionedcontent_will_be_moved" 
   />

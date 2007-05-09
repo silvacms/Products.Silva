@@ -26,7 +26,7 @@ import mangle
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 from Products.Silva import helpers
 # Silva interfaces
-from interfaces import IVersionedContent
+from interfaces import IVersionedContent, ICatalogedVersionedContent
 
 from webdav.common import PreconditionFailed, Conflict
 from zExceptions import Forbidden
@@ -432,7 +432,8 @@ InitializeClass(VersionedContent)
 class CatalogedVersionedContent(VersionedContent):
     """This class merely exists to mix VersionedContent with CatalogedVersioning
     """
-
+    implements(ICatalogedVersionedContent)
+    
     default_catalog = 'service_catalog'
 
     def indexVersions(self):
