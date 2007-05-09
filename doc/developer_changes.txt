@@ -2,6 +2,24 @@
 Developer level changes in Silva
 ================================
 
+From 1.6 to 2.0
+===============
+
+Different way of creating message ids for i18n
+----------------------------------------------
+
+Previously message ids for i18n which need interpolated values were
+created like this::
+
+  msg = _('the ${a} is ${b}')
+  msg.set_mapping({'a': 'cow', 'b': 'large'})
+
+This has changed to read like this::
+
+  msg = _('the ${a} is ${b}', mapping={'a': 'cow', 'b': 'large'})
+
+``set_mapping`` doesn't work anymore.
+  
 From 1.5 to 1.6
 ===============
 
