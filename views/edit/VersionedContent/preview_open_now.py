@@ -11,7 +11,7 @@ from DateTime import DateTime
 now = DateTime()
 
 obj = model
-message = _('Document published')
+message = _('Content is published')
 message_type = 'feedback'
 publish = True
 if not obj.implements_versioning():
