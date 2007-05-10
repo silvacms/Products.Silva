@@ -60,8 +60,10 @@ Silva changes
         indexer. The name is used for the anchor, and thus should be a valid
         anchor name.
 
-        If no title is given, the index is considered a 'pure' anchor, and
+      - If no title is given, the index is considered a 'pure' anchor, and
         will not be found by Indexers.
+
+      - XHTML compliancy improvements
 
   Silva 1.6
 
