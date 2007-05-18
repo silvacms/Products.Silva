@@ -65,6 +65,10 @@ Silva changes
 
       - XHTML compliancy improvements
 
+    Bugs Fixed:
+
+      - A security fix in Zope 2.10.3 broke install.py.
+
   Silva 1.6
 
     Features added:
