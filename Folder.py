@@ -412,7 +412,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             container.manage_addProduct['Silva'].manage_addPublication(
                 convert_id, self.get_title(), create_default=0)
         ## assure the folder/pub has a _p_jar
-        transaction.get().commit(1)
+        transaction.savepoint(optimistic=True)
         folder = getattr(container, convert_id)
         # copy all contents into new folder
         cb = self.manage_copyObjects(self.objectIds())
