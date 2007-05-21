@@ -53,7 +53,7 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.11.2 (DCI)
+Formulator 1.11.3 (DCI)
 -----------------------
 
 Formulator is a Zope extension for the easy construction, display and
@@ -81,7 +81,7 @@ them. Used by SilvaMetadata.
 
 http://www.infrae.com/download/Annotations
 
-ProxyIndex 1.2 (DCI)
+ProxyIndex 1.2.1 (DCI)
 --------------------
 
 ProxyIndex is a plugin catalog index. It uses a TALES expression
