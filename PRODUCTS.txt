@@ -53,7 +53,7 @@ system. SilvaDocument also uses it for the forms-based editor.
 
 http://www.infrae.com/download/FileSystemSite
 
-Formulator 1.11.2 (DCI)
+Formulator 1.11.3 (DCI)
 -----------------------
 
 Formulator is a Zope extension for the easy construction, display and
