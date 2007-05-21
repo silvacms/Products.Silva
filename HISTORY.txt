@@ -21,49 +21,24 @@ Silva changes
 
       - Removed obsolete five:traversable statements from zcml.
 
-      - PageTemplateFile was used with non-existing page templates. This used to
-        work in versions prior to Zope 2.10, but failed now. Changed __init__.py
-        so that these PageTemplateFile instances are not needed anymore.
+      - PageTemplateFile was used with non-existing page
+        templates. This used to work in versions prior to Zope 2.10,
+        but failed now. Changed __init__.py so that these
+        PageTemplateFile instances are not needed anymore.
 
-      - Use new MessageFactory from Zope 3.3 to make it compatible with Zope 2.10
+      - Use new MessageFactory from Zope 3.3 to make it compatible
+        with Zope 2.10
 
       - Changed set_mapping to mapping arguments for message IDs
 
-      - Changed css styling of the preview publisher buttons, making easier
-        for users to integrate the publisher into their own layout.
+      - Changed css styling of the preview publisher buttons, making
+        easier for users to integrate the publisher into their own
+        layout.
 
-      - Fix for TOCs and AutoTOCS where docs that didn't have a title
-        didn't appear because the link was empty (it was there). Now the
-        id shows up so visitors can at least click it.
+      - If no title is given, the index is considered a 'pure' anchor,
+        and will not be found by Indexers.
 
-      - Renovated the TOC/AutoToc rendering, replacing the ancient,
-        legacy, Netscape4 compatible image-based indent, where long titles
-        break onto the next, non-indented line. Updated frontend.css with
-        new selectors for the TOC levels.
-
-      - Tocs display links with a trailing slash because there may be
-        'edit/tab_preview' appended to it, but this conflicts with links made
-        in the editor that are rendered without the slash. Moved the slash
-        into the appendage.
-
-      - Removed get_layout_macro(.py) from the layout installation code and
-        thus it won't be present in the ZODB in future new installs. This is
-        legacy code from the doomed layout service development that has now
-        been superceded by SilvaLayout. Existing get_layout_macro python
-        scripts can be deleted.
-
-      - Updated standard_error_message with direct call of layout_macro.html,
-        404 in title, adjusted informative text.
-
-      - index items now have an 'index title' attribute in addition to an
-        'anchor name' attribute. The title is used for displaying in an
-        indexer. The name is used for the anchor, and thus should be a valid
-        anchor name.
-
-      - If no title is given, the index is considered a 'pure' anchor, and
-        will not be found by Indexers.
-
-      - XHTML compliancy improvements
+      - XHTML compliance improvements
 
     Bugs Fixed:
 
