@@ -14,6 +14,8 @@
     publication_url string:${publication/absolute_url}/edit/{__vein_id__};
 ">
 
+
+
 <tr tal:replace="nothing"> 
   ______________ stack publication row ______________ 
 </tr>

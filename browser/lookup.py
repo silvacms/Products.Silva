@@ -55,7 +55,6 @@ class ObjectLookup(BrowserView):
               addables - a list of meta_types that are allowed to be added 
                         to the page
         """
-
         model = self.context
 
         default = None
