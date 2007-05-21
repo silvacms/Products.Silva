@@ -120,7 +120,7 @@ optionally be extended with SilvaExternalSources.
 
 http://www.infrae.com/download/SilvaDocument
 
-XMLWidgets 0.14 (DI)
+XMLWidgets 0.13 (DI)
 --------------------
 
 A system used to construct the forms-based editor for XML used by
