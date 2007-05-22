@@ -11,9 +11,4 @@
      factory=".adapters.languageprovider.SilvaLanguages"
     />
 
-  <utility
-     provides="Products.PageTemplates.interfaces.IUnicodeEncodingConflictResolver"
-     component="Products.PageTemplates.unicodeconflictresolver.DefaultUnicodeEncodingConflictResolver"
-      />
-
 </configure>
