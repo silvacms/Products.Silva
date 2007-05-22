@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Meta::
 
-  Valid for:  Silva 1.6.x
+  Valid for:  Silva 2.0.x
   Author:     Martijn Faassen
   Email:      faassen@infrae.com
   CVS:        $Revision: 1.33 $
@@ -16,6 +16,7 @@ Infrae Silva team:
   Kit Blake <kitblake@infrae.com>
   Eric Casteleijn <eric@infrae.com>
   Daniel Nouri <daniel@infrae.com>
+  Jasper Op de Coul <jasper@infrae.com>
   Wim Boucqueart <wim@infrae.com>
   Torvald de Boskat <torvald@infrae.com>
 
