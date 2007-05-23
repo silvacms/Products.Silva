@@ -33,7 +33,7 @@ class Root(Publication):
     """Root of Silva site.
     """
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva Root"
 
     implements(IRoot)
@@ -49,14 +49,14 @@ class Root(Publication):
         Root.inheritedAttribute('__init__')(self, id)
         # if we add a new root, version starts out as the software version
         self._content_version = self.get_silva_software_version()
-    
+
     # MANIPULATORS
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_main')
     manage_main = DTMLFile(
         'www/folderContents', globals())
-    
+
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_services')
     manage_services = DTMLFile(
@@ -84,7 +84,7 @@ class Root(Publication):
         """Clear out all forbidden addables; everything allowed now.
         """
         self._addables_forbidden = {}
-        
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'serviceIds')
@@ -93,7 +93,7 @@ class Root(Publication):
         """
         return [id for id in Root.inheritedAttribute('objectIds')(self)
                 if id.startswith('service_')]
-        
+
     security.declarePublic('objectItemsContents')
     def objectItemsContents(self, spec=None):
         """Don't display services by default in the Silva root.
@@ -108,7 +108,7 @@ class Root(Publication):
         return [item for item in Root.inheritedAttribute('objectItems')(self)
                 if item[0].startswith('service_')
                 and not IInvisibleService.providedBy(item[1])]
- 
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_root')
     def get_root(self):
@@ -134,7 +134,7 @@ class Root(Publication):
 
     # FIXME: Being deprecated, will be deleted in the near future
     silva_root = get_root_url
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
@@ -142,10 +142,10 @@ class Root(Publication):
         """
         f = context.f
         f.write('<silva_root id="%s">' % self.id)
-        
+
         self._to_xml_helper(context)
         export_metadata(self, context)
-        
+
         f.write('</silva_root>')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -175,8 +175,8 @@ class Root(Publication):
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '1.6'
-    
+        return '2.0'
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
     def get_silva_content_version(self):
@@ -191,7 +191,7 @@ class Root(Publication):
     def get_silva_product_version(self):
         """Returns the release version of the Product"""
         return self.manage_addProduct['Silva'].version
-    
+
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
     def upgrade_silva(self):
@@ -230,7 +230,7 @@ class Root(Publication):
         """
         if not getattr(self, 'service_catalog', None):
             return 'No catalog found!'
-        
+
         # first get all approved objects that should be published
         query = {'silva-extrapublicationtime': DateTime(),
                  'silva-extrapublicationtime_usage': 'range:max',
@@ -246,7 +246,7 @@ class Root(Publication):
                 }
 
         result += self.service_catalog(query)
-        
+
         for item in result:
             ob = item.getObject()
             ob.object()._update_publication_status()
@@ -256,8 +256,8 @@ class Root(Publication):
     security.declarePublic('recordError')
     def recordError(self, message_type, message):
         """record given error/feedback
-        
-            actual logging is not implemented, just an idea; what really 
+
+            actual logging is not implemented, just an idea; what really
             happens is a ZODB transaction rollback if message_type == 'error'
 
             message_type: either 'feedback' or 'error'
@@ -273,7 +273,7 @@ class Root(Publication):
         """Get the container, even if we're a container.
 
         If we're the root object, returns None.
-        
+
         Can be used with acquisition to get the 'nearest' container.
         """
         return None
@@ -288,7 +288,7 @@ class Root(Publication):
         except DocumentationInstallationException, e:
             message = e
         return self.service_extensions.manage_main(manage_tabs_message=message)
-    
+
     def _installDocumentation(self):
         """Install user documentation into the root"""
         try:
@@ -338,4 +338,3 @@ def root_moved(root, event):
 def root_will_be_moved(root, event):
     if not IObjectWillBeAddedEvent.providedBy(event):
         root.unindex_object()
-    
