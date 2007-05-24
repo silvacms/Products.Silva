@@ -187,7 +187,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 1.3 (EX)
+SilvaExternalSources 1.3 (DE)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
@@ -199,26 +199,27 @@ http://www.infrae.com/download/SilvaExternalSources
 SilvaNewsNetwork 2.5 (EX)
 -------------------------
 
-SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and 
-SilvaDocument to provide News Publication, News Filters and News Viewers as 
-well as News Articles and Agenda Items to build a distributed news system 
-for your Silva site. It also contains RSS export and import facilities.
+SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and
+SilvaDocument to provide News Publication, News Filters and News
+Viewers as well as News Articles and Agenda Items to build a
+distributed news system for your Silva site. It also contains RSS
+export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaFind 1.1.1 (EX)
---------------------
+SilvaFind 1.1.1 (DCE)
+---------------------
 
 A highly customizable search solution for use with Silva. It allows
-defining searches in both the Silva Management Interface and on a public
-site. For developers of Silva Extensions, it is easy to define new
-search schemas so that custom metadata sets or other properties of their
-content can be made searchable.
+defining searches in both the Silva Management Interface and on a
+public site. For developers of Silva Extensions, it is easy to define
+new search schemas so that custom metadata sets or other properties of
+their content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
 SilvaLayout 1.0 (EX)
-----------------------
+--------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
