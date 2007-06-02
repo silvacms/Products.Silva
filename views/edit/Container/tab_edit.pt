@@ -71,52 +71,61 @@
       <td colspan="6">
         <div style="float: left;"
           tal:condition="may_change_content">
-        <input class="transport"
-          name="add_object:method"
-          type="submit"
-          value="new..."
-          title="add a new item - alt-n"
-          accesskey="n"
-          tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value"
-          i18n:attributes="value;title"
-        />
-        <label for="meta_type"
-          title="access key: alt-s"
-          accesskey="s"
-          i18n:attributes="title"
-        >&nbsp;
-        </label>
-        <select class="transport"
-          name="meta_type"
-          id="meta_type"
-          title="select a new item: alt-s"
-          tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
-          i18n:attributes="title">
-          <option value="None" i18n:translate="">
-            select:
-          </option>
-          <tal:block tal:repeat="addable model/get_silva_addables">
-            <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
-              tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
-              tal:attributes="value addable/name" />
-          </tal:block>
-        </select>
-        </div>
-        <div style="float:right;">
-          <input
-            class="transport"
-            name="tab_edit_import:method"
+          <input class="transport"
+            name="add_object:method"
             type="submit"
+            value="new..."
+            title="add a new item - alt-n"
+            accesskey="n"
+            tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value"
+            i18n:attributes="value;title"
+          />
+          <label for="meta_type"
+            title="access key: alt-s"
+            accesskey="s"
+            i18n:attributes="title"
+          >&nbsp;
+          </label>
+          <select class="transport"
+            name="meta_type"
+            id="meta_type"
+            title="select a new item: alt-s"
+            tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
+            i18n:attributes="title">
+            <option value="None" i18n:translate="">
+              select:
+            </option>
+            <tal:block tal:repeat="addable model/get_silva_addables">
+              <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
+                tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                tal:attributes="value addable/name" />
+            </tal:block>
+          </select>
+        </div>
+        <div style="float:right; margin-top:0.2em">
+          <a class="transport"
+            href="tab_edit_import"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
-            value="import..."
             tal:condition="may_change_content"
-            i18n:attributes="title;value"
-          />
-          <tal:if condition="not:may_change_content">
-            &nbsp;
-          </tal:if>
+            i18n:attributes="title"
+            i18n:translate="">
+            import...
+          </a>
+          <a class="transport"
+            href="tab_status_export"
+            title="export to xml or convert for export: alt-e"
+            accesskey="e"
+            tal:condition="may_change_content"
+            i18n:attributes="title"
+            i18n:translate="">
+            export...
+          </a>
         </div>
+        <h3 tal:condition="not:may_change_content"
+          i18n:translate="">
+          contents
+        </h3>
       </td>
     </tr>
   </thead>

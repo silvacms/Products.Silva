@@ -18,10 +18,8 @@
   name="silvaObjects"
   tal:define="
     objects model/get_processed_status_tree;
-
     refs options/refs | python: [];
     redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
-
     global approveables nothing;
     global rejectables nothing;
     global revokeables nothing;
@@ -69,27 +67,25 @@
     </tal:block>
     <tr class="top-controls">
       <td colspan="6">
-        <div style="float: right;">
-          <input
-            class="transport"
-            name="tab_edit_import:method"
-            type="submit"
+        <div style="float:right; margin-top:0.2em">
+          <a class="transport"
+            href="tab_edit_import"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
-            value="import..."
             tal:condition="may_change_content"
-            i18n:attributes="title;value"
-          />
-          <input
-            class="transport"
-            name="tab_status_export:method"
-            type="submit"
+            i18n:attributes="title"
+            i18n:translate="">
+            import...
+          </a>
+          <a class="transport"
+            href="tab_status_export"
             title="export to xml or convert for export: alt-e"
             accesskey="e"
-            value="export..."
             tal:condition="may_change_content"
-            i18n:attributes="title;value"
-          />
+            i18n:attributes="title"
+            i18n:translate="">
+            export...
+          </a>
         </div>
         <h3 i18n:translate="">
           publishing actions
