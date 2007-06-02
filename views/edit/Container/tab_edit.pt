@@ -67,10 +67,10 @@
     <tal:block replace="nothing">
       ______________ top controls row ______________
     </tal:block>
-    <tr class="top-controls">
+    <tr class="top-controls"
+      tal:condition="may_change_content">    
       <td colspan="6">
-        <div style="float: left;"
-          tal:condition="may_change_content">
+        <div style="float: left;">
           <input class="transport"
             name="add_object:method"
             type="submit"
@@ -107,7 +107,6 @@
             href="tab_edit_import"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
-            tal:condition="may_change_content"
             i18n:attributes="title"
             i18n:translate="">
             import...
@@ -116,16 +115,11 @@
             href="tab_status_export"
             title="export to xml or convert for export: alt-e"
             accesskey="e"
-            tal:condition="may_change_content"
             i18n:attributes="title"
             i18n:translate="">
             export...
           </a>
         </div>
-        <h3 tal:condition="not:may_change_content"
-          i18n:translate="">
-          contents
-        </h3>
       </td>
     </tr>
   </thead>
