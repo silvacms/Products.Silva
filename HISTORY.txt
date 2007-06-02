@@ -6,6 +6,12 @@ Silva changes
   Silva 1.6.1
 
     Bugs fixed:
+ 
+      - Changed the buttons that go to the import/export screens from inputs to
+        links, thereby fixing the problem of sending a partial selection along
+        to export. The code that handles the selection still exists, however we
+        may get a request to enable selection someday so it works with full
+        media export too. https://bugs.launchpad.net/silva/+bug/101809
 
       - Fixed import button missing in the export screen
         https://bugs.launchpad.net/silva/+bug/118335
