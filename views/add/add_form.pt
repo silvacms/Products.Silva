@@ -124,10 +124,29 @@
 
 <tfoot>
   <tr class="controls">
-    <td class="align-right"
-      colspan="3">
+    <td colspan="3">
+      <div style="float:right">
+        <input class="button"
+          type="submit"
+          name="add_submit"
+          value="save"
+          title="access key: alt-s"
+          accesskey="s"
+          i18n:attributes="value;title"
+        />
+        <tal:condition condition="python: not lookup_mode" >
+          <input class="button"
+            type="submit"
+            name="add_edit_submit"
+            value="save + edit"
+            title="access key: alt-e"
+            accesskey="e"
+            tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+            i18n:attributes="value;title"
+          />
+        </tal:condition>
+      </div>
       <input class="cancel"
-        style="float:left;"
         type="submit"
         name="add_cancel"
         value="cancel"
@@ -135,25 +154,6 @@
         accesskey="c"
         i18n:attributes="value;title;"
       />
-      <input class="button"
-        type="submit"
-        name="add_submit"
-        value="save"
-        title="access key: alt-s"
-        accesskey="s"
-        i18n:attributes="value;title"
-      />
-      <tal:condition condition="python: not lookup_mode" >
-      <input class="button"
-        type="submit"
-        name="add_edit_submit"
-        value="save + edit"
-        title="access key: alt-e"
-        accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title"
-      />
-      </tal:condition>
     </td>
   </tr>
 </tfoot>

@@ -2,6 +2,17 @@ Copyright (c) 2002-2007 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
+
+  Silva 1.6.1
+
+    Bugs fixed:
+
+      - Fixed import button missing in the export screen
+        https://bugs.launchpad.net/silva/+bug/118335
+
+      - When addding an item, hitting return caused the form to submit the
+        cancel action. The form buttons have been reordered so that hitting
+        return adds the item.
  
   Silva 1.6
 
