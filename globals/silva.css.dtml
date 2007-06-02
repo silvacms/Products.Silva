@@ -570,26 +570,6 @@ table.listing td.field-title {
   text-align: right;
 }
 
-/* 
-* some usability fixes
-* create a displayed block of the links, because then you can click on
-* the whole tablecell and don't have to focus the text
-*/
-
-table#sortable tbody a {
-  display: block;
-}
-
-table#sortable a.icon img {
-  float: left;
-  margin-right: 0.5em;
-}
-
-/* reset the margin for the up/down arrows */
-table#sortable td.listing-right a.icon img {
-  margin: 0;
-}
-
 /* __________________________ sidebar navigation _______ */
 
 table.listing th.top {
