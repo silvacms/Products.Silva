@@ -93,6 +93,15 @@
         </tr>
         <tr class="top-controls">
           <td colspan="3">
+            <a class="transport"
+              style="float: right;"
+              href="tab_edit_import"
+              title="over to the import screen: alt-i"
+              accesskey="i"
+              i18n:attributes="title"
+              i18n:translate="">
+              import...
+            </a>
             <h3 i18n:translate="">
               full media export (.zip)
             </h3>
@@ -170,6 +179,9 @@
       </table>
       </form>
 
+      <div tal:replace="nothing">
+        _____________________ old xml export (for export2pdf) _____________________
+      </div>
       <form action="." enctype="multipart/form-data" method="post"
         tal:condition="view/service_docmapdf | nothing">
         <input type="hidden"
@@ -179,19 +191,10 @@
           <thead>
             <tr class="top-controls">
               <td colspan="3">
-                <a class="transport"
-                  style="float: right;"
-                  href="tab_edit_import"
-                  title="over to the import screen: alt-i"
-                  accesskey="i"
-                  i18n:attributes="title"
-                  i18n:translate="">
-                  import...
-                </a>
                 <h3 i18n:translate="">
                   export to Silva xml (.xml)
                   <tal:block i18n:name="or_pdf">
-                    <tal:block i18n:translate="">or Adobe PDF (.pdf)</tal:block>
+                    <tal:block i18n:translate="">or PDF (.pdf)</tal:block>
                   </tal:block>
                 </h3>
               </td>
@@ -255,7 +258,7 @@
             <tr class="controls">
               <td class="align-right"
                 colspan="3">
-                <input class="button"
+                <input class="executor"
                   type="submit"
                   name="download_pdf_selected:method"
                   value="export pdf"
