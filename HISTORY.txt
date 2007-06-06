@@ -7,7 +7,7 @@ Silva changes
 
     Bugs fixed:
 
-      - fix for bug 109008: wrong tooltip when hovering over version status link
+      - fix for bug 109008 copied from trunk
 
       - Changed the buttons that go to the import/export screens from inputs to
         links, thereby fixing the problem of sending a partial selection along
