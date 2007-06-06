@@ -9,7 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
     global vein string:status;
-    " 
+    "
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
@@ -40,7 +40,7 @@
         </tal:block>
 
 <form action="." enctype="multipart/form-data" method="POST">
-  <input type="hidden" 
+  <input type="hidden"
     name="refs:list"
     tal:attributes="value python: request['model'].create_ref(request['model'])" />
 <table class="listing">
@@ -110,8 +110,8 @@
   <tr tal:condition="python:may_change_content and not next and closed">
     <td class="feedback" colspan="3">
       <span class="subhead" i18n:translate="">Content is closed</span><br />
-      <tal:block i18n:translate="">  
-        This content was once published but is now closed.<br /> 
+      <tal:block i18n:translate="">
+        This content was once published but is now closed.<br />
         If you wish you can make an editable copy in the <a tal:content="string:editor"
         href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
       </tal:block>
@@ -193,13 +193,13 @@ _______ manual close section here _______
 
 <span tal:replace="nothing"> _______ status: content is published _______ </span>
 <div class="feedback" tal:condition="python:may_change_content and not next and published">
-  <span class="subhead" 
+  <span class="subhead"
     i18n:translate="">Content is published
   </span>
   <br />
   <tal:block i18n:translate="">
   This content is published (online for the public).<br /> If you wish you
-  can make an editable copy by going to the 
+  can make an editable copy by going to the
   <a href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
   </tal:block>
 <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
@@ -233,7 +233,7 @@ _______ manual close section here _______
 
 <!-- version management -->
 <tal:block define="versions here/get_sorted_model_versions">
-  <input type="hidden" 
+  <input type="hidden"
     name="refs:list"
     tal:attributes="value python: request['model'].create_ref(request['model'])" />
   <table class="listing" id="sortable" tal:condition="may_change_content">
@@ -243,7 +243,7 @@ _______ manual close section here _______
            <h2 tal:attributes="title string:id: ${model/id}">
              <img tal:replace="structure python:view.render_icon(model)" />
              <tal:block i18n:translate="">
-             manage versions of &#xab;<tal:block 
+             manage versions of &#xab;<tal:block
                 content="string:${model/get_title_or_id}"
                 i18n:name="export_id">id</tal:block>&#xbb;
              </tal:block>
@@ -274,14 +274,14 @@ _______ manual close section here _______
           lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
           creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
           version_status python: vmadapter.getVersionStatus(versionid);
-          style python: ((version_status == 'unapproved' and 'draft') or 
+          style python: ((version_status == 'unapproved' and 'draft') or
                           (version_status == 'last_closed' and 'closed') or
                           version_status);
         ">
           <td class="listing-left">
             <input class="min"
-              type="checkbox" 
-              name="versions:list" 
+              type="checkbox"
+              name="versions:list"
               tal:attributes="value version/id; id string:version_${version/id}" />
             <label tal:attributes="for string:version_${version/id}"
               tal:content="version/id">
@@ -292,7 +292,7 @@ _______ manual close section here _______
             tal:content="structure python: mangle.DateTime(modificationtime).toShortStr() or '-'">
             modificationtime
           </td>
-          <td style="white-space: nowrap" 
+          <td style="white-space: nowrap"
             tal:content="structure python: mangle.DateTime(publicationtime).toShortStr() or '-'">
             publicationtime
           </td>
@@ -312,6 +312,7 @@ _______ manual close section here _______
                 href python:('%s/edit/tab_status_view_version?version=%s' % (model.absolute_url(), version.id));
                 title python:here.tab_status_get_status_link_title(version.get_title());
                 class style"
+              i18n:attributes="title"
               i18n:translate="">
               version_status
             </a>
@@ -371,9 +372,9 @@ _______ manual close section here _______
 
       </td>
       <tal:block replace="nothing">
-        _____________________ right column _____________________ 
+        _____________________ right column _____________________
       </tal:block>
-      <td class="right">        
+      <td class="right">
         &nbsp;
       </td>
     </tr>
