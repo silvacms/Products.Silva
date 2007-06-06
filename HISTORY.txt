@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.1
+
+    Bugs fixed:
+
+      - fix for bug 109008: wrong tooltip when hovering over version status link
+
   Silva 2.0
 
     Features added:

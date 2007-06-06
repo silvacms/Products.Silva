@@ -307,6 +307,7 @@ _______ manual close section here _______
               href python:('%s/edit/tab_status_view_version?version=%s' % (model.absolute_url(), version.id));
               title python:here.tab_status_get_status_link_title(version.get_title());
               class style"
+            i18n:attributes="title"
             i18n:translate="">
             version_status
           </a>
