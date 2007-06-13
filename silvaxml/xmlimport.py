@@ -80,18 +80,17 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                 element_names = elements.keys()
                 for element_name in element_names:
                     field = set.getElement(element_name).field
-                    elements[element_name] = field.validator.deserializeValue(field, elements[element_name])
                 
-                # Set data
-                errors = binding._setData(
-                    namespace_key=set.metadata_uri,
-                    data=elements,
-                    reindex=1
-                    )
+                    # Set data
+                    errors = binding._setData(
+                        namespace_key=set.metadata_uri,
+                        data={
+                            element_name:
+                            field.validator.deserializeValue(
+                                field, elements[element_name])},
+                        reindex=1
+                        )
 
-                if errors:
-                    raise ValidationError(
-                        "%s %s" % (str(content.getPhysicalPath()),str(errors)))
 
     def storeWorkflow(self):
         content = self._result
