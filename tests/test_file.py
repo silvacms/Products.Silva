@@ -40,7 +40,6 @@ class FileTest(SilvaTestCase.SilvaTestCase):
             'Test File', file_handle)
         file_handle.close()
         f = self.root.testfile
-
         data = f.index_html()
         silva_data = self._get_req_data(data)
         self.assertEqual(file_data, silva_data, "Asset didn't return original data")
@@ -57,7 +56,10 @@ class FileTest(SilvaTestCase.SilvaTestCase):
 
     def _get_req_data(self, data):
         if data:
-            s = data
+            if hasattr(data, 'next'):
+                s = data._stream.read()
+            else:
+                s = data
         else:
             s = self.request_out.getvalue()
             self.request_out.seek(0)
