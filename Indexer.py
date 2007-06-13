@@ -59,16 +59,22 @@ class Indexer(Content, SimpleItem):
         for path, (name, title) in self._index[indexTitle].items():
             result.append((title.lower(), title, path, name,))
         result.sort()
-        result = [(title, path, name) for title_lowercase, title, path, name in result]
+        result = [
+            (title, path, name) for title_lowercase, title, path, name in result]
         return result
     
     def _getIndexables(self):
-        """Returns all indexables from the container containing this Indexer object,
-        including and its subcontainers
+        """Returns all indexables from the container containing this
+        Indexer object, including and its subcontainers
         """
+        container = self.get_container()
+        default_obj = container.get_default()
         result = []
-        return [item for i, item in self.get_container().get_public_tree_all()]
-                      
+        if default_obj:
+            result.append(default_obj)
+        result.extend([item for i, item in container.get_public_tree_all()])
+        return result
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'update')
     def update(self):
