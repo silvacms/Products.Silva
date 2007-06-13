@@ -167,9 +167,10 @@ class Image(Asset):
             update_cache = 1
             self.hires_image = self.image
             self.image = None
-        if self.web_format != web_format:
-            self.web_format = web_format
-            update_cache = 1
+        if web_format != 'unknown':
+            if self.web_format != web_format:
+                self.web_format = web_format
+                update_cache = 1
         # check if web_scale can be parsed:
         canonical_scale = self.getCanonicalWebScale(web_scale)
         if self.web_scale != web_scale:
