@@ -35,6 +35,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         binding = self.service_metadata.getMetadata(self)
         binding.setValues(
             'silva-content', {'maintitle': title}, reindex=1)
+        self.reindex_object()
 
     def is_deletable(self):
         """assets are deletable
@@ -58,5 +59,11 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
                               'version_status')
     def version_status(self):
         return 'public'
-         
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                            'fulltext')
+    def fulltext(self):
+        fulltextlist = [self.id, self.get_title()]
+        return fulltextlist
+    
 InitializeClass(Asset)

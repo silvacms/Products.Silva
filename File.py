@@ -108,8 +108,9 @@ class File(Asset):
 
         mimetype = self.get_mime_type()   
         converter = get_converter_for_mimetype(mimetype)
+        fulltextlist = [self.id, self.get_title()]
         if converter is None:
-            return None
+            return fulltextlist
 
         file_data = ''
         if hasattr(self._file, 'data'):
@@ -129,15 +130,15 @@ class File(Asset):
             finally:
                 fp.close()
 
-        if not file_data:
-            return
-
-        fulltext = converter.convert(file_data, self.REQUEST)
+        fulltext = None
+        if file_data:
+            fulltext = converter.convert(file_data, self.REQUEST)
 
         if fulltext is None:
-            return 
-        return [self.id ,self.get_title(), fulltext]
-
+            return fulltextlist
+        fulltextlist.append(fulltext)
+        return fulltextlist
+    
     security.declareProtected(SilvaPermissions.View, 'index_html')
     def index_html(self, view_method=None):
         """ view (download) file data
