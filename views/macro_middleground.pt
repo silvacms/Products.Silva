@@ -56,7 +56,7 @@
       selected python:link_id == template.id;
       class python:selected and 'selected' or nothing;
       ellipsis python:not selected  and '...' or '';
-      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+      ispublication python: model.implements_publication();
     "
       tal:condition="ispublication"
     tal:content="string:$vein$ellipsis"

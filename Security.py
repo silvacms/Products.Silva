@@ -297,8 +297,12 @@ class Security(AccessManager):
     def sec_get_all_roles_for_userid(self, userid):
         """Returns all roles a user has in this context"""
         roles = []
+        user = self.acl_users.getUser(userid)
+        if not user:
+            return roles
+        rolesInContext = user.getRolesInContext(self)
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
-            if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
+            if role in rolesInContext:
                 roles.append(role)
         return roles
 
@@ -338,7 +342,7 @@ class Security(AccessManager):
         local level)
         """
         d = {}
-        self._sec_get_userids_deep_helper(d)
+        self._sec_get_downward_defined_userids_helper(d)
         return d.keys()
 
     def _sec_get_downward_defined_userids_helper(self, d):

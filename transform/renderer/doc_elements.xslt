@@ -370,9 +370,12 @@
   </xsl:template>
 
   <xsl:template match="doc:table">
-    <table class="silvatable {@type}" cellspacing="0" cellpadding="3">
-      <xsl:apply-templates mode="table-contents" />
-    </table>
+    <!-- only render table if it has child nodes (not empty) -->
+    <xsl:if test="*">
+      <table class="silvatable {@type}" cellspacing="0" cellpadding="3">
+        <xsl:apply-templates mode="table-contents" />
+      </table>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="doc:row_heading" mode="table-contents">

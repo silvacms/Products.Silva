@@ -21,7 +21,8 @@ if len(validation_error.errors) == 1:
 
     # translate error_text and title first
     error_text = translate(error_text, context=request)
-    title = translate(title, context=request)
+    #in some cases, translate returns None, in which case fallback to non-translated title
+    title = translate(title, context=request) or title
 
     result.append('%s: %s' % (title, error_text))
     return (''.join(result))
@@ -34,7 +35,8 @@ else:
     
         # translate error_text and title first
         error_text = translate(error_text, context=request)
-        title = translate(title, context=request)
+        #in some cases, translate returns None, in which case fallback to non-translated title
+        title = translate(title, context=request) or title
     
         result.append('<li class="error">%s: %s</li>\n' %  (title, error_text))
 
