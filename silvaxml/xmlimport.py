@@ -90,7 +90,10 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                                 field, elements[element_name])},
                         reindex=1
                         )
-
+                    if errors:
+                        zLOG.LOG(
+                            'Silva', zLOG.WARNING, 
+                            "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
 
     def storeWorkflow(self):
         content = self._result
