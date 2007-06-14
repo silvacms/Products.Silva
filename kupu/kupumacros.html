@@ -670,11 +670,13 @@
 
   
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">
-
+    
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
-
       <div class="kupu-tooltray">
-        &#8364; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183;
+       <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" define="ts here/service_typo_chars|nothing">
+        <span tal:condition="ts" tal:replace="structure python:' '.join(ts.getTypoChars())"/>
+        <span tal:condition="not:ts">&#8364; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183; &#169;</span>
+       </tal:block>
       </div>
 
     </div>

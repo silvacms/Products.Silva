@@ -55,6 +55,8 @@ def initialize(context):
     import SimpleMembership
     import EmailMessageService
 
+    import TypographicalService
+
     import DocmaService
     import SidebarCache
     import SidebarService
@@ -130,6 +132,12 @@ def initialize(context):
         icon = "www/containerpolicy_service.png"
         )
 
+    context.registerClass(
+        TypographicalService.TypographicalService,
+        constructors = (TypographicalService.manage_addTypographicalServiceForm,
+                        TypographicalService.manage_addTypographicalService),
+        #no icon for this yet!
+        )
     
     # register xml import functions (old style XML importer)	 
     # we let the xml import functionality of Publication handle any 	 

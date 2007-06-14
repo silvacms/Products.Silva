@@ -29,6 +29,7 @@ from Products.Silva import File
 from Products.Silva import assetregistry
 from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
+from Products.Silva import TypographicalService
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -132,6 +133,10 @@ def install(root):
     if not hasattr(root, 'service_renderer_registry'):
         root.manage_addProduct['Silva'].manage_addRendererRegistryService(
             'service_renderer_registry', 'Silva Renderer Registry Configuration')
+
+    #install the typochars service
+    if not hasattr(root,'service_typo_chars'):
+        TypographicalService.manage_addTypographicalService(root,'service_typo_chars')
 
     # try to install Kupu
     installKupu(root)

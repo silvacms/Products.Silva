@@ -1,0 +1,34 @@
+<tal:init define="global management_page_charset string:utf8" />
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message|request/manage_tabs_message|nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<form action="edit_typoService" method="post">
+<p class="form-help">This service contains the 'special' characters that are
+displayed in the 'typographical characters' section in kupu, as well as in the forms editor.  Enter the xml character entity.  Characters should be placed with whitespace around each.</p>
+<table cellspacing="2" cellpadding="3" borderr="0"
+  tal:define="chars here/getTypoChars">
+<tr>
+ <td><label for="chars">Characters</label></td>
+ <td><textarea id="chars" name="chars" width="40" height="10"
+      style="width:40em;height:10em;"
+      tal:content="python:' '.join(chars)"></textarea></td>
+</tr>
+<tr>
+ <td colspan="2">
+  <input type="submit" name="modify" value="Save Characters" />
+ </td>
+</tr>
+</table>
+</form>
+
+<div tal:content="structure python:' '.join(here.getTypoChars())" />
+
+<br /><br />
+
+
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
