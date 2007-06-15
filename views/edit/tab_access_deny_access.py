@@ -21,7 +21,7 @@ messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
     model.deny_role(userid, role)
     msg = _('&#xab;${user_id}&#xbb; has been denied the ${role} role',
-            mapping=='user_id': userid, 'role': role})
+            mapping={'user_id': userid, 'role': role})
     messages.append(translate(msg))
 
 model.send_messages()
