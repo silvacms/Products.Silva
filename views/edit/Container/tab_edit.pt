@@ -394,7 +394,7 @@
               tal:define="id asset_info/asset_id"
               tal:content="python: ct(id, 30)"
               tal:attributes="href asset_info/editor_link"
-              i18n:attributes="title content-editor">
+              i18n:attributes="title">
               id
             </a>
 
