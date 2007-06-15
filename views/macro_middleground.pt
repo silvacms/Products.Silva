@@ -14,59 +14,52 @@
 <div class="middleground">
   <a title="various settings: alt-e" accesskey="e"
     tal:define="
-      vein string:settings;
       link_id string:tab_settings;
       selected python:link_id == template.id;
       class python:selected and 'selected' or nothing;
-      ellipsis python:not selected  and '...' or '';
     "
-    tal:content="string:$vein$ellipsis"
     tal:attributes="
       href string:$url/edit/$link_id;
       class class;
       "
     i18n:attributes="title"
     i18n:translate="">
-    settings...
+    settings<span tal:condition="not: selected" i18n:name="ellipsis">...</span>
   </a>
   <a title="manage subscriptions: alt-u"
     accesskey="u"
     tal:define="
-      vein string:subscriptions;
       link_id string:tab_subscriptions;
       selected python:link_id == template.id;
       class python:selected and 'selected' or nothing;
-      ellipsis python:not selected  and '...' or '';
     "
     tal:condition="context/is_subscribable_content"
-    tal:content="string:$vein$ellipsis"
     tal:attributes="
       href string:$url/edit/$link_id;
       class class;
     "
     i18n:attributes="title"
     i18n:translate="">
-    subscriptions...
+    subscriptions<span 
+      tal:condition="not: selected" i18n:name="ellipsis">...</span>
   </a>
   <a title="change the addables allowed in this publication: alt-d"
     accesskey="d"
     tal:define="
-      vein string:addables;
       link_id string:tab_addables;
       selected python:link_id == template.id;
       class python:selected and 'selected' or nothing;
-      ellipsis python:not selected  and '...' or '';
       ispublication python: model.implements_publication();
     "
       tal:condition="ispublication"
-    tal:content="string:$vein$ellipsis"
     tal:attributes="
       href string:$url/edit/$link_id;
       class class;
     "
     i18n:attributes="title"
     i18n:translate="">
-    addables...
+    addables<span 
+      tal:condition="not: selected" i18n:name="ellipsis">...</span>
   </a>
   <a title="see the content in the public layout: alt-;"
     accesskey=";"
