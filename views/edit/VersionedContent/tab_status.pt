@@ -237,7 +237,7 @@ _______ manual close section here _______
 <table class="listing" id="sortable" tal:condition="may_change_content">
   <thead>
     <tr>
-      <td class="top" colspan="7">
+      <td class="top" colspan="6">
         <h2 tal:attributes="title string:id: ${model/id}">
           <img tal:replace="structure icon"
             tal:attributes="title icon_title" />
@@ -256,7 +256,6 @@ _______ manual close section here _______
         tal:define="select_id string:versions">
         <metal:plug use-macro="view/macro_select_all/macros/select_all" />
       </th>
-      <th width="25%" i18n:translate="">modification time</th>
       <th width="25%" i18n:translate="">publication time</th>
       <th width="25%" i18n:translate="">expiration time</th>
       <th width="1%" i18n:translate="">last author</th>
@@ -288,10 +287,6 @@ _______ manual close section here _______
           </label>
         </td>
         <td style="white-space: nowrap"
-          tal:content="structure python: mangle.DateTime(modificationtime).toShortStr() or '-'">
-          modification time
-        </td>
-        <td style="white-space: nowrap"
           tal:content="structure python: mangle.DateTime(publicationtime).toShortStr() or '-'">
           publication time
         </td>
@@ -318,13 +313,6 @@ _______ manual close section here _______
         </td>
       </tal:def>
     </tr>
-    <tr tal:condition="python:len(versions) > 20">
-      <th class="listing-left"
-        colspan="7"
-        tal:define="select_id string:versions">
-        <metal:plug use-macro="view/macro_select_all/macros/select_all" />
-      </th>
-    </tr>
   </tbody>
   <tfoot>
     <tr tal:condition="python:len(versions) > 1">
@@ -334,13 +322,13 @@ _______ manual close section here _______
       </th>
       <th class="listing-right"
         style="padding-right:0.6em"
-        colspan="6"
+        colspan="5"
         i18n:translate="">
         version actions
       </th>
     </tr>
     <tr class="controls">
-      <td class="align-right" colspan="7">
+      <td class="align-right" colspan="6">
         <tal:if condition="python:len(versions) > 1">
           <input class="transport"
             type="submit"
