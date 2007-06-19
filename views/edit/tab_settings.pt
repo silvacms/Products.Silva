@@ -185,8 +185,8 @@
                 tal:define="allow_feeds model/allow_feeds">
                 <tr class="top-controls">
                   <td colspan="3">
-                    <h3>
-                      <span i18n:translate="">atom/rss feeds</span>
+                    <h3 i18n:translate="">
+                      atom/rss feeds
                     </h3>
                   </td>
                 </tr>
@@ -215,14 +215,20 @@
                       type="checkbox"
                       name="allow_feeds"
                       tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
+                    <tal:block i18n:translate="">
+                      Check to provide an Atom/<acronym title="Really Simple Syndication">RSS</acronym> feed from this container.
+                    </tal:block>
                   </td>
                   <td>
                     <tal:block i18n:translate="">
-                      Check to allow an Atom/<acronym title="Really Simple Syndication">RSS</acronym> feed of this container (atom.xml or rss.xml).
+                      <tal:block i18n:translate="">The feed url is</tal:block>
+                      <a title="RSS feed"
+                        tal:attributes="href string:${model/absolute_url}/atom.xml"
+                        >atom.xml</a>/<a title="Atom feed" 
+                        tal:attributes="href string:${model/absolute_url}/rss.xml">rss.xml</a>.
                     </tal:block>
                   </td>
                 </tr>
-
                 <tr class="controls">
                   <td class="align-right" colspan="3">
                     <input class="button"
