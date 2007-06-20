@@ -8,7 +8,7 @@
   tal:define="
     global vein string:settings;
     global active_tab string:tab_metadata;
-    global parent_screen_name string:tab_properties;"
+    global parent_screen_name string:tab_metadata;"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
