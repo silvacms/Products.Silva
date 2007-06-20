@@ -166,10 +166,10 @@ _______ manual close section here _______
         tal:define="select_id string:versions">
         <metal:plug use-macro="view/macro_select_all/macros/select_all" />
       </th>
+      <th i18n:translate="">modification time</th>
       <th i18n:translate="">publication time</th>
       <th i18n:translate="">expiration time</th>
       <th i18n:translate="">last author</th>
-      <th i18n:translate="">creator</th>
       <th i18n:translate="">version status</th>
     </tr>
     <tr tal:repeat="version versions"
@@ -180,9 +180,8 @@ _______ manual close section here _______
         publicationtime python: vmadapter.getVersionPublicationTime(versionid);
         expirationtime python: vmadapter.getVersionExpirationTime(versionid);
         lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
-        creator python: vmadapter.getVersionCreatorInfo(versionid).fullname();
         version_status python: vmadapter.getVersionStatus(versionid);
-        style python: ((version_status == 'unapproved' and 'draft') or
+        state python: ((version_status == 'unapproved' and 'draft') or
                         (version_status == 'last_closed' and 'closed') or
                         version_status);
       ">
@@ -196,26 +195,24 @@ _______ manual close section here _______
             id
           </label>
         </td>
-        <td style="white-space: nowrap"
-          tal:content="structure python: mangle.DateTime(publicationtime).toShortStr() or '-'">
+        <td tal:content="structure python: mangle.DateTime(modificationtime).toShortStr() or '-'">
+          modificationtime
+        </td>
+        <td tal:content="structure python: mangle.DateTime(publicationtime).toShortStr() or '-'">
           publication time
         </td>
-        <td style="white-space: nowrap"
-          tal:content="structure python: mangle.DateTime(expirationtime).toShortStr() or '-'">
+        <td tal:content="structure python: mangle.DateTime(expirationtime).toShortStr() or '-'">
           expiration time
         </td>
-          <td tal:content="lastauthor">
-            last author
-          </td>
-          <td tal:content="creator">
-            creator
-          </td>
+        <td tal:content="lastauthor">
+          last author
+        </td>
         <td>
           <a tal:content="version_status"
             tal:attributes="
               href python:('%s/edit/tab_status_view_version?version=%s' % (model.absolute_url(), version.id));
               title python:here.tab_status_get_status_link_title(version.get_title());
-              class style"
+              class state"
             i18n:attributes="title"
             i18n:translate="">
             version_status
