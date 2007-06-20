@@ -8,7 +8,9 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global vein string:preview;
+    global vein string:compare;
+    global active_tab string:tab_status;
+    global parent_screen_name string:tab_status;
     version1 options/version1;
     version2 options/version2;
     "
