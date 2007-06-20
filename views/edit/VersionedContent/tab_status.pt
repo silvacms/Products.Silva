@@ -166,9 +166,9 @@ _______ manual close section here _______
         tal:define="select_id string:versions">
         <metal:plug use-macro="view/macro_select_all/macros/select_all" />
       </th>
-      <th i18n:translate="">modification time</th>
-      <th i18n:translate="">publication time</th>
-      <th i18n:translate="">expiration time</th>
+      <th width="10%" i18n:translate="">modification time</th>
+      <th width="10%" i18n:translate="">publication time</th>
+      <th width="10%" i18n:translate="">expiration time</th>
       <th i18n:translate="">last author</th>
       <th i18n:translate="">version status</th>
     </tr>
