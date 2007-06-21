@@ -7,6 +7,7 @@ Silva changes
 
     Bugs fixed:
 
+      - Removed extra <br/> tag when viewing codesources in kupu.
       - fix for bug 109008: wrong tooltip when hovering over version status link
 
   Silva 2.0
