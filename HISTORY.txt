@@ -7,6 +7,8 @@ Silva changes
 
     Bugs fixed:
 
+      - Removed extra <br/> tag when viewing codesources in kupu,
+        copied from trunk.
       - fix for bug 109008 copied from trunk
 
       - Changed the buttons that go to the import/export screens from inputs to

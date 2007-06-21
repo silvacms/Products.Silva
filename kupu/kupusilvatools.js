@@ -2247,7 +2247,10 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
             };
             var htext = doc.createTextNode(metatype + ' \xab' + object._id + '\xbb');
             header.insertBefore(htext, header.firstChild);
-            extsource.appendChild(doc.createElement('br'));
+            // jasper@2007-06-21 , do not add a br tag at the end
+            // of the external source, not sure why
+            // in the first place.
+            // extsource.appendChild(doc.createElement('br'));
             if (!currsource) {
                 object.editor.insertNodeAtSelection(extsource);
             } else {
