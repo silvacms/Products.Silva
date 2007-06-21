@@ -187,7 +187,7 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 1.3 (EX)
+SilvaExternalSources 1.4 (EX)
 ------------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
