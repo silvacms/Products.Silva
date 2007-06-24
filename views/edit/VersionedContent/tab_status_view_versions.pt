@@ -29,6 +29,9 @@
 div.preview-compare {
   margin: 0 16px 1em 16px;
 }
+tr {
+  vertical-align: top;
+}
 td.preview-compare-left {
   padding-right: 1.5em;
   border-right: 1px solid #678;
