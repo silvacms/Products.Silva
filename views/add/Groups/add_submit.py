@@ -56,10 +56,7 @@ object.sec_update_last_author_info()
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    message = _("Added ${meta_type} ${id}.")
-    message.set_mapping({
-        'meta_type': object.meta_type,
-        'id': view.quotify(id)})
+    message = _("Added ${meta_type} ${id}.",mapping={'meta_type': object.meta_type,'id': view.quotify(id)})
     return model.edit['tab_access_groups'](
         message_type="feedback", 
         message=message
