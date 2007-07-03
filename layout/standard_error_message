@@ -81,7 +81,7 @@
         <br /><br />
       </p>
 
-      <h4>Error Type: <span class="error" tal:content="structure error_type|string:unknwon">error_type</span></h4>
+      <h4>Error Type: <span class="error" tal:content="structure error_type|string:unknown">error_type</span></h4>
       <h4>Error Value: <span class="error" tal:content="structure error_value|string:unknown"></span></h4>
       <h4>Error info</h4>
       Path: <span class="error" tal:content="request/PATH_INFO|string:unknown">error</span> <br />
@@ -150,7 +150,7 @@
   </p>
   <p>
     The resource you are looking for is not or no longer available.<br />
-    Please check your request for typing errors and retry. 
+    Please check your request for typing errors and retry.
   </p>
 </div>
 </body>
