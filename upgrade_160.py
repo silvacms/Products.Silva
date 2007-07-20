@@ -153,7 +153,7 @@ class LanguageMetadataLowerCaser:
         lang = binding['silva-extra']['language']
         if not lang:
             return obj
-        llang = lower(lang)
+        llang = lang.lower()
         if llang == lang:
             return obj
         binding.setValues('silva-extra', {'language': llang})
