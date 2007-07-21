@@ -17,6 +17,7 @@
   <base tal:attributes="href here/absolute_url" />
   <!-- Begin metatags -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Silva" />
 <tal:skip replace="nothing">
 <!-- Turn these on as needed by moving them out of the tal:skip -->
   <meta name="subject"
@@ -40,7 +41,6 @@
     tal:condition="email"
     tal:attributes="content email" />
 </tal:skip>
-  <meta name="generator" content="Silva" />
   <meta metal:define-slot="meta" tal:omit-tag="" />
   <!-- End metatags -->
   <!-- Start related links -->
