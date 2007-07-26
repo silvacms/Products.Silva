@@ -62,8 +62,8 @@ display of forms. Also used by SilvaMetadata.
 
 http://www.infrae.com/download/Formulator
 
-SilvaMetadata 1.0 (DCI)
-------------------------
+SilvaMetadata 1.0.1 (DCI)
+-------------------------
 
 Silva Metadata can be used to create metadata sets and associate these
 with Zope object types. The metadata can be configured to be cataloged

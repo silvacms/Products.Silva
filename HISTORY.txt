@@ -8,7 +8,13 @@ Silva changes
     Bugs fixed:
 
       - Removed extra <br/> tag when viewing codesources in kupu.
+
       - fix for bug 109008: wrong tooltip when hovering over version status link
+
+      - importing a zexp file with the Silva root in there was failing, because
+        a Zope 3 event got fired that tried to re-add 'collection' to 
+        'service_metadata' while this is already there. Added a check to
+         SilvaMetadata (1.0.1) that fixes this.
 
   Silva 2.0
 
