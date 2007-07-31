@@ -5,6 +5,48 @@ Developer level changes in Silva
 From 1.6 to 2.0
 ===============
 
+
+Events instead of manage_afterAdd and manage_beforeDelete
+---------------------------------------------------------
+
+Zope 2.9 has deprecated manage_afterFoo and manage_beforeFoo methods in favor of events. A Simple example::
+
+  Silva 1.6:
+
+  def manage_afterAdd(self, item, container): 
+    # do your stuff here
+    
+  Silva 2.0:
+
+    in your configure.zcml:
+
+      <subscriber
+        for=".interfaces.IYourInterface
+          zope.app.container.interfaces.IObjectMovedEvent"
+        handler=".YourContentClassModule.object_moved" 
+      />
+
+    in YourContentClassModule.py
+
+      def object_moved(object, event):
+          # these lines do some checks because of the way the zope events 
+          # work: 
+          # 1) If a folder is moved, the moved event is triggered for
+          # all its sub objects. In this example we do not want to handle only 
+          # the event for the object itself.
+          # 
+          # 2) the events subclass from eachother, which means, for instance,
+          # that move handlers are triggered for remove events too. We do not 
+          # want to handle those here in this example.
+
+          if object != event.object or IObjectRemovedEvent.providedBy(
+              event) or IRoot.providedBy(object):
+              return
+          # do your stuff here
+
+See Silva itself for more involved examples.
+
+
 Different way of creating message ids for i18n
 ----------------------------------------------
 
