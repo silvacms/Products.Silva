@@ -9,7 +9,8 @@ From 1.6 to 2.0
 Events instead of manage_afterAdd and manage_beforeDelete
 ---------------------------------------------------------
 
-Zope 2.9 has deprecated manage_afterFoo and manage_beforeFoo methods in favor of events. A Simple example::
+Zope 2.9 has deprecated manage_afterFoo and manage_beforeFoo methods
+in favor of events. A Simple example::
 
   Silva 1.6:
 
