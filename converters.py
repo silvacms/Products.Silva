@@ -43,14 +43,19 @@ class WordConverter(object):
         converted = execute('antiword "%s"' % fname)
 
         os.unlink(fname)
-        if converted.endswith('is not a Word Document.') or converted.startswith("I'm afraid"):
+        if converted.endswith('is not a Word Document.') or converted.startswith(
+            "I'm afraid"):
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully.
             <span class="error">
                 The uploaded file does not appear to be a valid Word file.
             </span>"""
             return None
-        return unicode(converted, 'utf8') 
+        try:
+            decoded = unicode(converted, 'utf8')
+            return decoded
+        except UnicodeDecodeError:
+            return None
 
 class PDFConverter(object):
 
@@ -73,9 +78,17 @@ class PDFConverter(object):
                 The uploaded file does not appear to be a valid PDF file.
             </span>"""
             return None
-        return unicode(converted, 'utf8')
+        try:
+            decoded = unicode(converted, 'utf8')
+            return decoded
+        except UnicodeDecodeError:
+            return None
 
 class TextConverter(object):
     def convert(self, data, request):
-        return unicode(data, 'utf8')
+        try:
+            decoded = unicode(data, 'utf8')
+            return decoded
+        except UnicodeDecodeError:
+            return None
 
