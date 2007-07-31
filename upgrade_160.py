@@ -142,11 +142,11 @@ class LanguageMetadataLowerCaser:
     interface.implements(IUpgrader)
 
     def upgrade(self, obj):
-        metadata_service = obj.service_metadata
         metadata = {}
         try:
+            metadata_service = obj.service_metadata
             binding = metadata_service.getMetadata(obj)
-        except BindingError:
+        except:
             binding = None
         if binding is None:
             return obj
