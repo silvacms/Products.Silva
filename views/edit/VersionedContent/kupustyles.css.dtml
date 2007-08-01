@@ -265,6 +265,14 @@ div#kupu-fgcolorchooser div:hover {
   /* border: outset 1px; */
 }
 
+#kupu-toolbox-news-images {
+  display: none;
+}
+
+#kupu-toolbox-news-images {
+  display: none;
+}
+
 #kupu-toolbox-properties {
   display: none;
 }
@@ -283,7 +291,7 @@ div#kupu-fgcolorchooser div:hover {
 
 }
 
-div.kupu-properties-checkbox-outerdiv h2 {
+div.kupu-properties-item-outerdiv h2{
   font-size: 1.1em;
   font-weight: normal;
   color: #eCFFF3;
@@ -306,12 +314,12 @@ div.kupu-properties-checkbox-outerdiv h2 {
   margin-bottom:-0.3em;
 }
 
-div.kupu-properties-checkbox-outerdiv{
-  margin-top: -0.4em;
+div.kupu-properties-item-outerdiv{
+/*  margin-top: -0.3em;*/
 }
 
-div.kupu-properties-checkbox-innerdiv {
-  margin-bottom: 2.2em;
+div.kupu-properties-item-innerdiv {
+  margin: 1ex 0px;
 }
 
 .kupu-properties-checkbox-line {
