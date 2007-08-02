@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Jun 15 10:46:51 2007\n"
+"POT-Creation-Date: Wed Mar  7 17:19:41 2007\n"
 "PO-Revision-Date: 2007-02-22 22:57+0000\n"
 "Last-Translator: Samuel Schluep <schluep@ethz.ch>\n"
 "Language-Team: Name <email>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-05-21 14:38:23+0000\n"
+"X-Rosetta-Export-Date: 2007-08-02 08:58:47+0000\n"
 
 #: /AutoTOC.py:24
 msgid ""
@@ -40,7 +40,8 @@ msgstr "Fehler in der Validierung"
 msgid "Changed settings."
 msgstr "Einstellungen geändert."
 
-#: /File.py:175 /views/edit/Container/docma_queue.pt:167
+#: /File.py:175
+#: /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
 msgstr "Download"
@@ -60,11 +61,13 @@ msgstr ""
 "Dateiobjekte besitzen ebenfalls Metadaten.\n"
 "    "
 
-#: /Folder.py:306 /Folder.py:368
+#: /Folder.py:306
+#: /Folder.py:368
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr "Einfügen von «${id}» ist in dieser Art von Ordner nicht erlaubt."
 
-#: /Folder.py:327 /Folder.py:365
+#: /Folder.py:327
+#: /Folder.py:365
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr "&#xab;${id}&#xbb; eingefügt"
 
@@ -87,7 +90,7 @@ msgstr ""
 "(Baumnavigation bzw. «Veröffentlichen» Formular).\n"
 "    "
 
-#: /Ghost.py:231
+#: /Ghost.py:227
 msgid ""
 "Ghosts are special documents that function as a\n"
 "       placeholder for an item in another location (like an alias,\n"
@@ -114,8 +117,8 @@ msgid ""
 "all \n"
 "       the contents of the &#8216;original&#8217; folder. The advantage of "
 "Ghost \n"
-"       Folders is the contents stay in sync with the original, by manual "
-"or \n"
+"       Folders is the contents stay in sync with the original, by manual or "
+"\n"
 "       automatic resyncing. Note that when a folder is\n"
 "       ghosted, assets &#8211; such as Images and Files &#8211; are copied\n"
 "       (physically duplicated) while documents are ghosted."
@@ -253,7 +256,8 @@ msgstr "pendent"
 msgid "draft"
 msgstr "Entwurf"
 
-#: /Version.py:189 /views/edit/Container/tab_status.pt:262
+#: /Version.py:189
+#: /views/edit/Container/tab_status.pt:262
 msgid "closed"
 msgstr "geschlossen"
 
@@ -282,12 +286,15 @@ msgstr ""
 msgid "No public version to close."
 msgstr "Keine öffentliche Version zum Schliessen vorhanden."
 
-#: /Versioning.py:241 /adapters/version_management.py:83
+#: /Versioning.py:241
+#: /adapters/version_management.py:83
 #: /adapters/version_management.py:91
 msgid "No unapproved version available"
 msgstr "Keine nicht genehmigte Version verfügbar."
 
-#: /Versioning.py:274 /Versioning.py:323 /Versioning.py:353
+#: /Versioning.py:274
+#: /Versioning.py:323
+#: /Versioning.py:353
 msgid "There is no unapproved version to request approval for."
 msgstr "Keine Version für Bewilligungsanfrage vorhanden."
 
@@ -295,15 +302,18 @@ msgstr "Keine Version für Bewilligungsanfrage vorhanden."
 msgid "The version is already requested for approval."
 msgstr "Für diese Version liegt bereits eine Bewilligungsanfrage vor."
 
-#: /Versioning.py:327 /Versioning.py:357
+#: /Versioning.py:327
+#: /Versioning.py:357
 msgid "The version is not requested for approval."
 msgstr "Für diese Version liegt keine Bewilligungsanfrage vor."
 
-#: /Versioning.py:377 /Versioning.py:390
+#: /Versioning.py:377
+#: /Versioning.py:390
 msgid "No unapproved version."
 msgstr "Keine nicht genehmigte Version."
 
-#: /Versioning.py:403 /Versioning.py:424
+#: /Versioning.py:403
+#: /Versioning.py:424
 msgid "No approved version."
 msgstr "Keine genehmigte Version."
 
@@ -315,13 +325,15 @@ msgstr "Publikationsdatum/-zeit muss angegeben werden."
 msgid "No public version."
 msgstr "Keine öffentliche Version."
 
-#: /Versioning.py:464 /Versioning.py:483
+#: /Versioning.py:464
+#: /Versioning.py:483
 msgid "No next version."
 msgstr "Nächste Version nicht vorhanden."
 
 #: /Versioning.py:497
 msgid "There is no version to add messages for."
-msgstr "Keine Version vorhanden, zu der Nachrichten hinzugefügt werden können."
+msgstr ""
+"Keine Version vorhanden, zu der Nachrichten hinzugefügt werden können."
 
 #: /Versioning.py:62
 msgid "There is an approved version already; unapprove it. (${id})"
@@ -340,7 +352,8 @@ msgstr "Die öffentliche Version hat bereits diese Id (${id})."
 msgid "A previous version has that id already (${id})."
 msgstr "Eine vorhergehende Version hat breits diese Id (${id})."
 
-#: /Versioning.py:98 /views/edit/VersionedContent/tab_edit_publish.py:12
+#: /Versioning.py:98
+#: /views/edit/VersionedContent/tab_edit_publish.py:12
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_preview_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
@@ -443,9 +456,15 @@ msgstr "Thema dieses Bereiches."
 msgid "creation time"
 msgstr "Erstellungszeit"
 
-#: /doc/silva-extra.xml:386 /doc/silva-extra.xml:445 /doc/silva-extra.xml:620
+#: /doc/silva-extra.xml:386
+#: /doc/silva-extra.xml:445
+#: /doc/silva-extra.xml:620
 msgid "Automatically set."
 msgstr "Automatisch gesetzt."
+
+#: /doc/silva-extra.xml:618
+msgid "creator"
+msgstr "Urheber"
 
 #: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
@@ -510,14 +529,15 @@ msgstr "Innere Funktionsleiste"
 #: /globals/accesskeys.pt:109
 msgid ""
 "${listing_footer}<br /> a &nbsp; select all<br /> r &nbsp; rename<br /> d "
-"&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
-"paste<br /> g &nbsp; paste as ghost"
+"&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; paste<br "
+"/> g &nbsp; paste as ghost"
 msgstr ""
 "${listing_footer}<br /> a &nbsp; alles auswählen <br /> r &nbsp; umbenennen "
 "<br /> d &nbsp; löschen <br /> x &nbsp; ausschneiden  <br /> x &nbsp; "
 "kopieren <br /> v &nbsp;  einfügen <br /> g &nbsp; als ghost einfügen"
 
-#: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
+#: /globals/accesskeys.pt:110
+#: /globals/accesskeys.pt:136
 msgid "Listing footer"
 msgstr "Untere Funktionsleiste"
 
@@ -578,13 +598,13 @@ msgstr ""
 msgid ""
 "${kupu_editor}<br /> b &nbsp; bold<br /> i &nbsp; italic<br /> u &nbsp; "
 "underline<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # &nbsp; "
-"numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
-"list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
+"numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition list<br "
+"/> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
 msgstr ""
 "${kupu_editor}<br /> b &nbsp; fett <br /> i &nbsp; kursiv <br /> u &nbsp; "
-"unterstrichen <br /> - &nbsp; tiefgestellt <br /> + &nbsp; hochgestellt <br /"
-"> # &nbsp; nummerierte Liste <br /> * &nbsp; Aufzählungsiste <br /> = &nbsp; "
-"Definitionsliste<br /> z &nbsp; zurücknehmen <br /> y &nbsp; "
+"unterstrichen <br /> - &nbsp; tiefgestellt <br /> + &nbsp; hochgestellt <br "
+"/> # &nbsp; nummerierte Liste <br /> * &nbsp; Aufzählungsiste <br /> = "
+"&nbsp; Definitionsliste<br /> z &nbsp; zurücknehmen <br /> y &nbsp; "
 "Zurückgenommenes wiederherstellen <br /> h &nbsp; HTML-Programmcode<br />"
 
 #: /globals/accesskeys.pt:166
@@ -611,11 +631,13 @@ msgstr "Formulareditor"
 msgid "Other screens"
 msgstr "Andere Fenster"
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
+#: /globals/accesskeys.pt:19
+#: /globals/accesskeys.pt:266
 msgid "return"
 msgstr "zurück"
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
+#: /globals/accesskeys.pt:19
+#: /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:120
 #: /views/edit/VersionedContent/tab_status_macros.pt:151
 #: /views/edit/VersionedContent/tab_status_macros.pt:371
@@ -629,13 +651,13 @@ msgid ""
 "Usually the first letter of the button is the access key. You can always "
 "hover over the button to see the tooltip."
 msgstr ""
-"Die Fenster &#8220;Eigenschaften&#8221;, &#8220;Zugriff&#8221; und &#8220;"
-"Publizieren&#8221; haben, ebenso wie ihre Unterfenster (wie &#8220;"
-"Nachschlagen&#8221;, &#8220;Import&#8221; und &#8220;Exportieren&#8221;), "
-"Kurzwahl-Tasten für die meisten ihrer Schaltflächen. Üblicherweise verwendet "
-"eine Kurzwahl den ersten Buchstaben der englischen Version einer "
-"Schaltfläche. Der Befehl wird aber auch beim Überfahren der Schaltfläche mit "
-"dem Mauszeiger angezeigt"
+"Die Fenster &#8220;Eigenschaften&#8221;, &#8220;Zugriff&#8221; und "
+"&#8220;Publizieren&#8221; haben, ebenso wie ihre Unterfenster (wie "
+"&#8220;Nachschlagen&#8221;, &#8220;Import&#8221; und "
+"&#8220;Exportieren&#8221;), Kurzwahl-Tasten für die meisten ihrer "
+"Schaltflächen. Üblicherweise verwendet eine Kurzwahl den ersten Buchstaben "
+"der englischen Version einer Schaltfläche. Der Befehl wird aber auch beim "
+"Überfahren der Schaltfläche mit dem Mauszeiger angezeigt"
 
 #: /globals/accesskeys.pt:194
 msgid ""
@@ -697,8 +719,8 @@ msgid ""
 msgstr ""
 "Um zusätzliche Dokumentation anzubieten, kann der Link zur Silva-Hilfe mit "
 "der Einstellung &#8216;help_ur&#8217; im Silva Wurzelverzeichnis angepasst "
-"werden. Diese Einstellung findet sich unter dem Karteireiter &#8216;"
-"Properties&#8217; im Zope Management Interface."
+"werden. Diese Einstellung findet sich unter dem Karteireiter "
+"&#8216;Properties&#8217; im Zope Management Interface."
 
 #: /globals/accesskeys.pt:216
 msgid "Tip: one click editing"
@@ -725,19 +747,20 @@ msgstr ""
 
 #: /globals/accesskeys.pt:232
 msgid ""
-"Managers can do the same and create a <a href=\"javascript:window.location."
-"pathname=(window.location.pathname +'/manage_main').replace(/\\/\\//,'/')\" "
-"name=\"manage\">manage...</a> bookmark."
+"Managers can do the same and create a <a "
+"href=\"javascript:window.location.pathname=(window.location.pathname "
+"+'/manage_main').replace(/\\/\\//,'/')\" name=\"manage\">manage...</a> "
+"bookmark."
 msgstr ""
-"Administratoren können dies selbst erledigen und ein Lesezeichen  <a href="
-"\"javascript:window.location.pathname=(window.location.pathname +'/"
-"manage_main').replace(/\\/\\//,'/')\" name=\"manage\">manage...</a> "
+"Administratoren können dies selbst erledigen und ein Lesezeichen  <a "
+"href=\"javascript:window.location.pathname=(window.location.pathname "
+"+'/manage_main').replace(/\\/\\//,'/')\" name=\"manage\">manage...</a> "
 "erstellen."
 
 #: /globals/accesskeys.pt:236
 msgid ""
-"Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
-"rich</a> for this trick."
+"Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH "
+"Z&uuml;rich</a> for this trick."
 msgstr ""
 "Besten Dank an die <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH "
 "Z&uuml;rich</a> für diesen Trick."
@@ -757,7 +780,8 @@ msgstr ""
 "&#8211; oder den Namen einzelner Punkte  &#8211; besonders einfach. Beachten "
 "Sie dabei:<br /> ${typeaheadfind_link}"
 
-#: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:79
+#: /globals/accesskeys.pt:247
+#: /views/edit/Container/tab_edit_new.pt:79
 msgid "Silva documentation"
 msgstr "Silva-Dokumentation"
 
@@ -771,9 +795,9 @@ msgstr ""
 
 #: /globals/accesskeys.pt:253
 msgid ""
-"The technical documentation is included in the Silva product in &#8216;"
-"plain&#8217; structured text, gracefully degraded for text mode (no links, "
-"unicode entities, etc.)."
+"The technical documentation is included in the Silva product in "
+"&#8216;plain&#8217; structured text, gracefully degraded for text mode (no "
+"links, unicode entities, etc.)."
 msgstr ""
 "Die technische Dokumentation ist im Silva Produkt enthalten. Sie verwendet "
 "einfachen, Text ohne Links, Unicode-Zeiche usw."
@@ -826,8 +850,8 @@ msgstr "siehe unten"
 
 #: /globals/accesskeys.pt:49
 msgid ""
-"The most useful access keys are for screen navigation, <a title=\"x\" href="
-"\"#nav\">x</a>."
+"The most useful access keys are for screen navigation, <a title=\"x\" "
+"href=\"#nav\">x</a>."
 msgstr ""
 "Die gebräuchlichsten Kurzwahltasten dienen der Navigation am Bildschirm, <a "
 "title=\"x\" href=\"#nav\">x</a>."
@@ -838,7 +862,8 @@ msgstr "Kurzwahltasten, die überall verfügbar sind."
 
 #: /globals/accesskeys.pt:58
 msgid "The following access keys are available in every Silva screen."
-msgstr "Die folgenden Kurzwahltasten sind auf allen Silva-Fenstern verfügbar."
+msgstr ""
+"Die folgenden Kurzwahltasten sind auf allen Silva-Fenstern verfügbar."
 
 #: /globals/accesskeys.pt:62
 msgid ""
@@ -871,16 +896,16 @@ msgstr ""
 
 #: /globals/accesskeys.pt:73
 msgid ""
-"Each tab has a toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" alt="
-"\"tree\" />, the tall tree on the left side. It takes you to the top of the "
-"current publication, within the same tab, or &#8216;vein&#8217;. The access "
-"key is the shift character of the corresponding number (on the English "
-"keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, "
-"alt-$, and alt-% (note that the characters resemble the number)."
+"Each tab has a toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" "
+"alt=\"tree\" />, the tall tree on the left side. It takes you to the top of "
+"the current publication, within the same tab, or &#8216;vein&#8217;. The "
+"access key is the shift character of the corresponding number (on the "
+"English keyboard, sorry if you have an international one). Thus alt-!, alt-"
+"@, alt-#, alt-$, and alt-% (note that the characters resemble the number)."
 msgstr ""
-"Auf jedem Karteireiter steht links ein Symbol, ein großer Baum <img src="
-"\"up_tree.gif\" height=\"9\" width=\"9\" alt=\"tree\" />. Durch Klicken auf "
-"dieses Symbol kommt man in die oberste Ebene einer Publikation. Die "
+"Auf jedem Karteireiter steht links ein Symbol, ein großer Baum <img "
+"src=\"up_tree.gif\" height=\"9\" width=\"9\" alt=\"tree\" />. Durch Klicken "
+"auf dieses Symbol kommt man in die oberste Ebene einer Publikation. Die "
 "Tastenkombinationen sind alt-!, alt-@, alt-#, alt-$ und alt-%."
 
 #: /globals/accesskeys.pt:76
@@ -892,10 +917,10 @@ msgid ""
 "the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less "
 "than five tabs, you still add five to get the uplink key."
 msgstr ""
-"Auf der rechten Seite jedes Karteireiters steht ein Symbol <img src="
-"\"up_level.gif\" height=\"9\" width=\"9\" alt=\"bush\" />, ein kleiner Baum "
-"(eigentlich ein Dreieck), mit dem man eine Ebene in der gleichen Linie höher "
-"kommt. Die Kurzwahltasten für das Wechseln in die nächste höhere Ebene "
+"Auf der rechten Seite jedes Karteireiters steht ein Symbol <img "
+"src=\"up_level.gif\" height=\"9\" width=\"9\" alt=\"bush\" />, ein kleiner "
+"Baum (eigentlich ein Dreieck), mit dem man eine Ebene in der gleichen Linie "
+"höher kommt. Die Kurzwahltasten für das Wechseln in die nächste höhere Ebene "
 "entsprechen den verbleibenden Nummern (durch hinzufügen der Zahl 5 zur "
 "Kurzwahl für den Karteireiter). Sobald auf einem Fenster fünf Karteireiter "
 "zu sehen sind, sind die Kurzwahltasten alt-6, alt-7, alt-8, alt-9 und alt-0. "
@@ -940,7 +965,8 @@ msgstr ""
 "${listing_header}<br /> n &nbsp; neu <br /> s &nbsp; Auswahlliste für ein "
 "neues Objekt <br /> i &nbsp; import <br /> e &nbsp; exportieren"
 
-#: /globals/accesskeys.pt:96 /globals/accesskeys.pt:130
+#: /globals/accesskeys.pt:96
+#: /globals/accesskeys.pt:130
 msgid "Listing header"
 msgstr "Obere Funktionsleiste"
 
@@ -987,16 +1013,19 @@ msgstr ""
 "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
 "2007 Infrae. Alle Rechte vorbehalten."
 
-#: /globals/reference.pt:22 /globals/copyright.pt:17
+#: /globals/reference.pt:22
+#: /globals/copyright.pt:17
 msgid "access key: alt-b"
 msgstr "Kurzwahl: alt-b"
 
-#: /globals/reference.pt:22 /globals/copyright.pt:17
+#: /globals/reference.pt:22
+#: /globals/copyright.pt:17
 #: /views/edit/VersionedContent/tab_status_view_version.pt:53
 msgid "back"
 msgstr "zurück"
 
-#: /globals/reference.pt:33 /globals/copyright.pt:28
+#: /globals/reference.pt:33
+#: /globals/copyright.pt:28
 msgid "Silva info: alt-s"
 msgstr "Silvainfo: alt-s"
 
@@ -1024,7 +1053,7 @@ msgstr "Silva Alumni"
 msgid "External developers"
 msgstr "Externe Entwickler"
 
-#: /layout/layout_macro.html:92
+#: /layout/layout_macro.html:93
 msgid "Silva info on the Infrae site: alt-i"
 msgstr "Silvainfo auf der Infrae-Site: alt-i"
 
@@ -1108,9 +1137,11 @@ msgstr ""
 "Anzahl Ebenen des Inhaltsverzeichnisses, die angezeigt werden (-1 = "
 "unbeschränkte Anzahl Ebenen)."
 
-# Default: "id"
-#: /views/add/File/add_submit.py:78 /views/add/Image/add_submit.py:78
-#: /views/add/add_submit.py:69 /views/edit/show_local.py:19
+#: /views/add/File/add_submit.py:78
+#: /views/add/Groups/add_submit.py:59
+#: /views/add/Image/add_submit.py:78
+#: /views/add/add_submit.py:69
+#: /views/edit/show_local.py:19
 msgid "meta_type"
 msgstr ""
 
@@ -1136,7 +1167,8 @@ msgstr ""
 msgid "Location of originating document."
 msgstr "Ort des ursprünglichen Dokumentes."
 
-#: /views/add/GhostFolder/add_form.pt:42 /views/add/Ghost/add_form.pt:42
+#: /views/add/GhostFolder/add_form.pt:42
+#: /views/add/Ghost/add_form.pt:42
 msgid "create ${meta_type}"
 msgstr "Erzeuge ${meta_type}"
 
@@ -1152,8 +1184,10 @@ msgstr ""
 "Ort des ursprünglichen Ordners. Je nachdem, wie groß der refernzierte Ordner "
 "ist, kann es etwas dauern."
 
-#: /views/add/GhostFolder/form.form:48 /views/add/Ghost/form.form:48
-#: /views/add/Link/form.form:69 /doc/silva-extra.xml:735
+#: /views/add/GhostFolder/form.form:48
+#: /views/add/Ghost/form.form:48
+#: /views/add/Link/form.form:69
+#: /doc/silva-extra.xml:735
 msgid "url"
 msgstr "URL"
 
@@ -1171,10 +1205,6 @@ msgstr ""
 "Gegensatz zu anderen Silvaobjekten müssen Gruppen in einer Silva-Site "
 "eindeutig sein."
 
-#: /views/add/Groups/add_submit.py:59
-msgid "Added ${meta_type} ${id}."
-msgstr "Hinzugefügt: ${meta_type} ${id}."
-
 #: /views/add/Image/add_submit.py:38
 #: /views/edit/Asset/File/upload_submit.py:27
 #: /views/edit/Container/tab_edit_import_xml.py:20
@@ -1183,8 +1213,8 @@ msgstr "Leere oder ungültige Datei."
 
 #: /views/add/Image/form.form:47
 msgid ""
-"Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
-"\">ALT</abbr> text of the image."
+"Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative "
+"text\">ALT</abbr> text of the image."
 msgstr ""
 "Geben Sie einen Titel ein. Dieser wird für den <abbr title=\"Alternativer "
 "Text\">ALT</abbr>-Text zum Bild verwendet."
@@ -1209,7 +1239,8 @@ msgstr "Link-Typ"
 
 #: /views/add/Publication/form.form:59
 msgid "What type of object should be added after creating the folder."
-msgstr "Welcher Objekttyp soll nach der Erzeugung des Ordners angelegt werden."
+msgstr ""
+"Welcher Objekttyp soll nach der Erzeugung des Ordners angelegt werden."
 
 #: /views/add/Publication/form.form:68
 msgid "First item"
@@ -1223,13 +1254,17 @@ msgstr "${meta_type} hochladen"
 msgid "create ${TOC_or_meta_type}"
 msgstr "Erstellen ${TOC_or_meta_type}"
 
-#: /views/add/add_form.pt:62 /views/add/add_form.pt:108
+#: /views/add/add_form.pt:62
+#: /views/add/add_form.pt:108
 msgid "aspect"
 msgstr "Aspekt"
 
-#: /views/add/form.form:47 /views/add/SimpleContent/form.form:49
-#: /views/add/Publication/form.form:49 /views/add/Folder/form.form:49
-#: /views/add/Link/form.form:50 /views/add/AutoTOC/form.form:50
+#: /views/add/form.form:47
+#: /views/add/SimpleContent/form.form:49
+#: /views/add/Publication/form.form:49
+#: /views/add/Folder/form.form:49
+#: /views/add/Link/form.form:50
+#: /views/add/AutoTOC/form.form:50
 #: /views/add/Indexer/form.form:49
 msgid ""
 "The title will be publicly visible, and is used for the link in indexes."
@@ -1244,8 +1279,8 @@ msgid ""
 "        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
 "        and the id should start with a letter or digit."
 msgstr ""
-"Ungültige Zeichen in der Id. Die Id darf nur Buchstaben, Ziffern und &#8216;"
-"_&#8217; oder &#8216;-&#8217; oder &#8216;.&#8217; enthalten."
+"Ungültige Zeichen in der Id. Die Id darf nur Buchstaben, Ziffern und "
+"&#8216;_&#8217; oder &#8216;-&#8217; oder &#8216;.&#8217; enthalten."
 
 #: /views/add/get_id_status_text.py:25
 msgid ""
@@ -1289,8 +1324,8 @@ msgstr ""
 #: /views/add/get_id_status_text.py:50
 msgid ""
 "(Internal Error): An invalid status ${status_code} occured \n"
-"    while checking the id ${id}.<br />Please contact the person "
-"responsible \n"
+"    while checking the id ${id}.<br />Please contact the person responsible "
+"\n"
 "    for this Silva installation or file a bug report."
 msgstr ""
 "(Interner Fehler): Ein ungültiger Status ${status_code} ist während der "
@@ -1306,19 +1341,21 @@ msgstr "Dateiinfo"
 msgid "file mime type"
 msgstr "Datei-Mimetyp"
 
-#: /views/edit/Asset/File/edit.pt:27 /views/edit/Asset/Image/edit.pt:89
+#: /views/edit/Asset/File/edit.pt:27
+#: /views/edit/Asset/Image/edit.pt:89
 msgid "file size"
 msgstr "Dateigröße"
 
-#: /views/edit/Asset/File/edit.pt:36 /views/edit/Asset/Image/edit.pt:110
+#: /views/edit/Asset/File/edit.pt:36
+#: /views/edit/Asset/Image/edit.pt:110
 msgid "file system path"
 msgstr "Dateipfad"
 
-#: /views/edit/Asset/File/form.form:30 /views/edit/Asset/Image/form.form:31
+#: /views/edit/Asset/File/form.form:30
+#: /views/edit/Asset/Image/form.form:31
 msgid "Optional, but useful."
 msgstr "Wahlweise, aber nützlich."
 
-# Default: "new_title"
 #: /views/edit/Asset/File/submit.py:21
 msgid "old_title"
 msgstr ""
@@ -1435,9 +1472,9 @@ msgstr "IP-Bereich<span class=\"warning\">*</span>"
 
 #: /views/edit/Asset/Groups/IPGroup/edit.pt:144
 msgid ""
-"<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP-IP&nbsp;"
-"(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
-"&nbsp;10.1.1.0/255.255.255.0)."
+"<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP-"
+"IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> "
+"IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0)."
 msgstr ""
 "<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: "
 "10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: 10.1.1.0/255.255.255.0)."
@@ -1510,8 +1547,8 @@ msgstr "Gruppe entfernen"
 #: /views/edit/Asset/Groups/Group/edit.pt:121
 msgid "\"Things to do when virtual groups is not in its original location\""
 msgstr ""
-"\"Dinge die zu tun sind, wenn Virtual Groups nicht am ursprünglichen Ort ist."
-"\""
+"\"Dinge die zu tun sind, wenn Virtual Groups nicht am ursprünglichen Ort "
+"ist.\""
 
 #: /views/edit/Asset/Groups/VirtualGroup/edit.pt:139
 msgid "add group(s) to this virtual group."
@@ -1550,7 +1587,8 @@ msgstr "Keine Gruppen ausgewählt, es wurde nichts entfernt."
 msgid "Group(s) ${removed} removed from group."
 msgstr "Gruppe(n) ${removed} aus der Gruppe entfernt."
 
-#: /views/edit/Asset/Groups/get_tabs.py:14 /views/edit/Asset/get_tabs.py:14
+#: /views/edit/Asset/Groups/get_tabs.py:14
+#: /views/edit/Asset/get_tabs.py:14
 #: /views/edit/Content/AutoTOC/get_tabs.py:17
 #: /views/edit/Content/Indexer/get_tabs.py:17
 #: /views/edit/Content/SimpleContent/get_tabs.py:4
@@ -1586,7 +1624,8 @@ msgid "set crop coordinates..."
 msgstr "Beschneidungskoordinaten setzen..."
 
 #: /views/edit/Asset/Image/edit.pt:175
-msgid "specify the center of the area to crop by clicking in the image: alt-o"
+msgid ""
+"specify the center of the area to crop by clicking in the image: alt-o"
 msgstr "Die Zuschneidekoordinaten durch Klicken auf das Bild setzen: Alt-o"
 
 #: /views/edit/Asset/Image/edit.pt:186
@@ -1596,8 +1635,10 @@ msgstr "ändern"
 #: /views/edit/Asset/Image/edit.pt:186
 #: /views/edit/Container/tab_edit_rename.pt:128
 #: /views/edit/VersionedContent/tab_status_macros.pt:491
-#: /views/edit/VersionedContent/Link/edit.pt:89 /views/add/add_form.pt:129
-#: /views/add/GhostFolder/add_form.pt:113 /views/add/Ghost/add_form.pt:105
+#: /views/edit/VersionedContent/Link/edit.pt:89
+#: /views/add/add_form.pt:149
+#: /views/add/GhostFolder/add_form.pt:113
+#: /views/add/Ghost/add_form.pt:105
 msgid "access key: alt-c"
 msgstr "Kurzwahl: alt-c"
 
@@ -1605,15 +1646,18 @@ msgstr "Kurzwahl: alt-c"
 msgid "image info"
 msgstr "Bildinformation"
 
-#: /views/edit/Asset/Image/edit.pt:24 /views/edit/Asset/Image/edit.pt:38
+#: /views/edit/Asset/Image/edit.pt:24
+#: /views/edit/Asset/Image/edit.pt:38
 msgid "format"
 msgstr "Format"
 
-#: /views/edit/Asset/Image/edit.pt:27 /views/edit/Asset/Image/edit.pt:48
+#: /views/edit/Asset/Image/edit.pt:27
+#: /views/edit/Asset/Image/edit.pt:48
 msgid "dimensions"
 msgstr "Dimensionen"
 
-#: /views/edit/Asset/Image/edit.pt:40 /views/add/Image/form.form:24
+#: /views/edit/Asset/Image/edit.pt:40
+#: /views/add/Image/form.form:24
 msgid "image"
 msgstr "Bilder"
 
@@ -1740,9 +1784,9 @@ msgid ""
 "          "
 msgstr ""
 "\n"
-"              Bildbeschneidung: verwenden Sie den &#8216;"
-"Beschneidungskoordinaten setzen&#8217; Knopf oder geben Sie X1×Y1-X2×Y2 ein "
-"um das Beschneidungsrechteck festzulegen.\n"
+"              Bildbeschneidung: verwenden Sie den "
+"&#8216;Beschneidungskoordinaten setzen&#8217; Knopf oder geben Sie X1×Y1-"
+"X2×Y2 ein um das Beschneidungsrechteck festzulegen.\n"
 "          "
 
 #: /views/edit/Asset/Image/scale_submit.py:13
@@ -1773,9 +1817,11 @@ msgstr "Bild erneuert."
 #: /views/edit/Content/SimpleContent/get_tabs.py:5
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:18
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
-#: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
-#: /views/edit/Container/tab_edit.pt:150 /views/edit/Container/tab_edit.pt:227
-#: /views/edit/Container/tab_edit.pt:406
+#: /views/edit/get_authorized_tabs.py:15
+#: /views/edit/get_authorized_tabs.py:19
+#: /views/edit/Container/tab_edit.pt:150
+#: /views/edit/Container/tab_edit.pt:227
+#: /views/edit/Container/tab_edit.pt:401
 #: /views/edit/Container/GhostFolder/tab_edit.pt:237
 #: /views/edit/Container/GhostFolder/tab_edit.pt:313
 #: /views/edit/Container/GhostFolder/tab_edit.pt:448
@@ -1790,10 +1836,14 @@ msgstr "Vorschau"
 #: /views/edit/Content/Indexer/get_tabs.py:19
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:19
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
-#: /views/edit/tab_metadata.pt:61 /views/edit/tab_metadata.pt:82
-#: /views/edit/tab_metadata.pt:100 /views/edit/macro_edit_metadata.pt:40
-#: /views/edit/Container/tab_edit.pt:241 /views/edit/Container/tab_edit.pt:249
-#: /views/edit/Container/tab_edit.pt:420 /views/edit/Container/tab_edit.pt:428
+#: /views/edit/tab_metadata.pt:61
+#: /views/edit/tab_metadata.pt:82
+#: /views/edit/tab_metadata.pt:100
+#: /views/edit/macro_edit_metadata.pt:40
+#: /views/edit/Container/tab_edit.pt:241
+#: /views/edit/Container/tab_edit.pt:249
+#: /views/edit/Container/tab_edit.pt:415
+#: /views/edit/Container/tab_edit.pt:423
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
 msgid "properties"
 msgstr "Eigenschaften"
@@ -1820,7 +1870,8 @@ msgstr "Datei hochladen"
 
 #: /views/edit/Asset/macro_asset_edit.pt:182
 #: /views/edit/VersionedContent/tab_status_macros.pt:194
-#: /views/edit/Content/Indexer/edit.pt:75 /views/public/subscriptor.pt:71
+#: /views/edit/Content/Indexer/edit.pt:75
+#: /views/public/subscriptor.pt:71
 msgid "access key: alt-u"
 msgstr "Kurzwahl: alt-u"
 
@@ -1834,7 +1885,8 @@ msgstr "Charakterisierung"
 msgid "status of &#xab;${title}&#xbb;"
 msgstr "Status von &#xab;${title}&#xbb;"
 
-#: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
+#: /views/edit/Asset/tab_status.pt:31
+#: /views/edit/Content/tab_status.pt:31
 msgid "A automatically has a published state."
 msgstr "A hat automatisch den Status publiziert."
 
@@ -1849,7 +1901,8 @@ msgstr ""
 "subskribieren. Nur Dokumente, die Text beinhalten, oder Ordner, die diesen "
 "beinhalten, können subskribiert werden."
 
-#: /views/edit/Asset/upload_form.form:25 /views/add/File/form.form:24
+#: /views/edit/Asset/upload_form.form:25
+#: /views/add/File/form.form:24
 msgid "file"
 msgstr "Datei"
 
@@ -1872,7 +1925,8 @@ msgid "Ghost Folder has been replaced by a publication"
 msgstr "Ghost-Ordner wurde durch eine Publikation ersetzt"
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
-#: /views/edit/Container/get_tabs.py:17 /views/edit/get_authorized_tabs.py:14
+#: /views/edit/Container/get_tabs.py:17
+#: /views/edit/get_authorized_tabs.py:14
 msgid "contents"
 msgstr "Inhalte"
 
@@ -1880,7 +1934,8 @@ msgstr "Inhalte"
 #: /views/edit/Container/get_tabs.py:21
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
-#: /views/edit/Container/tab_edit.pt:275 /views/edit/Container/tab_edit.pt:283
+#: /views/edit/Container/tab_edit.pt:275
+#: /views/edit/Container/tab_edit.pt:283
 #: /views/edit/Container/tab_status.pt:199
 #: /views/edit/Container/tab_status.pt:208
 #: /views/edit/Container/GhostFolder/tab_edit.pt:372
@@ -1956,7 +2011,8 @@ msgstr "Ghost-Ordner für &#xab;${title}&#xbb;"
 #: /views/edit/VersionedContent/Link/edit.pt:61
 #: /views/edit/VersionedContent/Ghost/edit.pt:57
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
-#: /views/add/GhostFolder/add_form.pt:50 /views/add/Ghost/add_form.pt:50
+#: /views/add/GhostFolder/add_form.pt:50
+#: /views/add/Ghost/add_form.pt:50
 msgid "attributes"
 msgstr "Attribute"
 
@@ -1967,7 +2023,8 @@ msgstr "Objekt suchen, auf das verwiesen werden soll: alt-r"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:91
 #: /views/edit/VersionedContent/Ghost/edit.pt:72
-#: /views/add/GhostFolder/add_form.pt:72 /views/add/Ghost/add_form.pt:70
+#: /views/add/GhostFolder/add_form.pt:72
+#: /views/add/Ghost/add_form.pt:70
 msgid "reference..."
 msgstr "Verweis..."
 
@@ -2106,7 +2163,8 @@ msgstr "Es war nichts ausgewählt, folglich wird nichts exportiert."
 
 #: /views/edit/Container/download_fullmedia_selected.py:27
 msgid "Currently, fullmedia export only supports one item at a time."
-msgstr "Im Augenblick unterstützt Full-Meda Export nur einen Eintrag zur Zeit."
+msgstr ""
+"Im Augenblick unterstützt Full-Meda Export nur einen Eintrag zur Zeit."
 
 #: /views/edit/Container/export_delete.py:20
 #: /views/edit/Container/tab_edit_import_delete.py:19
@@ -2210,8 +2268,10 @@ msgstr "Speichern + Bearbeiten"
 
 #: /views/edit/Container/tab_access_groups.pt:136
 #: /views/edit/Container/tab_status_export.pt:266
-#: /views/edit/VersionedContent/tab_status.pt:62 /views/add/add_form.pt:147
-#: /views/add/GhostFolder/add_form.pt:131 /views/add/Ghost/add_form.pt:124
+#: /views/edit/VersionedContent/tab_status.pt:62
+#: /views/add/add_form.pt:138
+#: /views/add/GhostFolder/add_form.pt:131
+#: /views/add/Ghost/add_form.pt:124
 msgid "access key: alt-e"
 msgstr "Kurzwahl: alt-e"
 
@@ -2251,12 +2311,18 @@ msgstr "Gruppen in &#xab;${title}&#xbb;"
 msgid "create a group"
 msgstr "Gruppe anlegen"
 
-#: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:27
-#: /views/add/File/form.form:47 /views/add/Groups/form.form:30
-#: /views/add/GhostFolder/form.form:30 /views/add/Image/form.form:68
-#: /views/add/Ghost/form.form:30 /views/add/SimpleContent/form.form:30
-#: /views/add/Publication/form.form:30 /views/add/Folder/form.form:30
-#: /views/add/Link/form.form:30 /views/add/AutoTOC/form.form:30
+#: /views/edit/Container/tab_access_groups.pt:95
+#: /views/add/form.form:27
+#: /views/add/File/form.form:47
+#: /views/add/Groups/form.form:30
+#: /views/add/GhostFolder/form.form:30
+#: /views/add/Image/form.form:68
+#: /views/add/Ghost/form.form:30
+#: /views/add/SimpleContent/form.form:30
+#: /views/add/Publication/form.form:30
+#: /views/add/Folder/form.form:30
+#: /views/add/Link/form.form:30
+#: /views/add/AutoTOC/form.form:30
 #: /views/add/Indexer/form.form:30
 msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
@@ -2298,7 +2364,8 @@ msgstr "XML oder Zip Datei importieren: alt-i"
 msgid "import..."
 msgstr "Import..."
 
-#: /views/edit/Container/tab_edit.pt:147 /views/edit/Container/tab_edit.pt:212
+#: /views/edit/Container/tab_edit.pt:147
+#: /views/edit/Container/tab_edit.pt:212
 msgid "modify"
 msgstr "ändern"
 
@@ -2325,11 +2392,13 @@ msgstr "verschieben"
 msgid "There is no content here."
 msgstr "Kein Inhalt vorhanden."
 
-#: /views/edit/Container/tab_edit.pt:254 /views/edit/Container/tab_edit.pt:288
+#: /views/edit/Container/tab_edit.pt:254
+#: /views/edit/Container/tab_edit.pt:288
 #: /views/edit/Container/tab_status.pt:214
 #: /views/edit/Container/GhostFolder/tab_edit.pt:340
 #: /views/edit/Container/GhostFolder/tab_edit.pt:376
-#: /browser/object_lookup.pt:283 /browser/object_lookup.pt:313
+#: /browser/object_lookup.pt:283
+#: /browser/object_lookup.pt:313
 msgid "n/a"
 msgstr "n.v."
 
@@ -2343,50 +2412,52 @@ msgstr "Inhalt bewilligt oder veröffentlicht..."
 msgid "content approved or published"
 msgstr "Inhalt ist bewilligt oder veröffentlicht"
 
-#: /views/edit/Container/tab_edit.pt:301 /views/edit/Container/tab_edit.pt:305
+#: /views/edit/Container/tab_edit.pt:301
+#: /views/edit/Container/tab_edit.pt:304
 msgid "move up"
 msgstr "nach oben"
 
-#: /views/edit/Container/tab_edit.pt:313 /views/edit/Container/tab_edit.pt:317
+#: /views/edit/Container/tab_edit.pt:310
+#: /views/edit/Container/tab_edit.pt:313
 msgid "move down"
 msgstr "nach unten"
 
-#: /views/edit/Container/tab_edit.pt:391
+#: /views/edit/Container/tab_edit.pt:386
 msgid "editor"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:433
+#: /views/edit/Container/tab_edit.pt:428
 #: /views/edit/Container/GhostFolder/tab_edit.pt:472
 #: /browser/object_lookup.pt:400
 msgid "unknown"
 msgstr "Unbekannt"
 
-#: /views/edit/Container/tab_edit.pt:466
+#: /views/edit/Container/tab_edit.pt:461
 msgid "content actions"
 msgstr "Inhaltsfunktionen"
 
-#: /views/edit/Container/tab_edit.pt:473
+#: /views/edit/Container/tab_edit.pt:468
 #: /views/edit/Container/tab_status.pt:93
 #: /views/edit/VersionedContent/tab_status.pt:59
 msgid "publishing actions"
 msgstr "Veröffentlichungsfunktionen"
 
-#: /views/edit/Container/tab_edit.pt:488
+#: /views/edit/Container/tab_edit.pt:483
 msgid "close published items: alt-l"
 msgstr "Publizierte Punkte schließen: alt-l"
 
-#: /views/edit/Container/tab_edit.pt:488
+#: /views/edit/Container/tab_edit.pt:483
 #: /views/edit/Container/tab_status.pt:371
 #: /views/edit/Member/SimpleMember/tab_edit.pt:132
 msgid "close"
 msgstr "Schließen"
 
-#: /views/edit/Container/tab_edit.pt:497
+#: /views/edit/Container/tab_edit.pt:492
 #: /views/edit/Container/tab_status.pt:411
 msgid "publish new versions: alt-p"
 msgstr "Inhalte Jetzt Publizieren: alt-p"
 
-#: /views/edit/Container/tab_edit.pt:497
+#: /views/edit/Container/tab_edit.pt:492
 #: /views/edit/Container/tab_status.pt:411
 #: /views/edit/VersionedContent/tab_status_macros.pt:292
 #: /views/edit/tab_status_form.form:67
@@ -2394,86 +2465,87 @@ msgstr "Inhalte Jetzt Publizieren: alt-p"
 msgid "publish now"
 msgstr "Jetzt veröffentlichen"
 
-#: /views/edit/Container/tab_edit.pt:510
+#: /views/edit/Container/tab_edit.pt:505
 msgid "move selected items to"
 msgstr "ausgewählte Objekte verschieben nach"
 
-#: /views/edit/Container/tab_edit.pt:517
+#: /views/edit/Container/tab_edit.pt:512
 msgid "position"
 msgstr "Position"
 
-#: /views/edit/Container/tab_edit.pt:528
+#: /views/edit/Container/tab_edit.pt:523
 msgid "end"
 msgstr "Ende"
 
-#: /views/edit/Container/tab_edit.pt:534
+#: /views/edit/Container/tab_edit.pt:529
 #: /views/edit/Container/tab_status.pt:334
 #: /views/edit/VersionedContent/tab_status_macros.pt:264
 #: /views/edit/VersionedContent/tab_status_macros.pt:284
 msgid "access key: alt-o"
 msgstr "Kurzwahl: alt-o"
 
-#: /views/edit/Container/tab_edit.pt:540
+#: /views/edit/Container/tab_edit.pt:535
 msgid "move selected items into position: alt-m"
 msgstr "ausgewählte Objekte nach Position verschieben: alt-m"
 
-#: /views/edit/Container/tab_edit.pt:540
+#: /views/edit/Container/tab_edit.pt:535
 msgid "move"
 msgstr "Verschieben"
 
-#: /views/edit/Container/tab_edit.pt:549
+#: /views/edit/Container/tab_edit.pt:544
 msgid "rename..."
 msgstr "Umbenennen..."
 
-#: /views/edit/Container/tab_edit.pt:549
+#: /views/edit/Container/tab_edit.pt:544
 msgid "rename and retitle items: alt-r"
 msgstr "Objekte umbenennen: alt-r"
 
-#: /views/edit/Container/tab_edit.pt:557
+#: /views/edit/Container/tab_edit.pt:552
 msgid "cut"
 msgstr "Ausschneiden"
 
-#: /views/edit/Container/tab_edit.pt:557
+#: /views/edit/Container/tab_edit.pt:552
 msgid "cut items: alt-x"
 msgstr "Objekte ausschneiden: alt-x"
 
-#: /views/edit/Container/tab_edit.pt:567
+#: /views/edit/Container/tab_edit.pt:562
 msgid "copy items: alt-c"
 msgstr "Objekte kopieren: alt-x"
 
-#: /views/edit/Container/tab_edit.pt:567
+#: /views/edit/Container/tab_edit.pt:562
 msgid "copy"
 msgstr "Kopieren"
 
-#: /views/edit/Container/tab_edit.pt:583
+#: /views/edit/Container/tab_edit.pt:578
 msgid "paste items: alt-v"
 msgstr "Einträge einfügen.: alt-v"
 
-#: /views/edit/Container/tab_edit.pt:583
+#: /views/edit/Container/tab_edit.pt:578
 msgid "paste"
 msgstr "Einfügen"
 
-#: /views/edit/Container/tab_edit.pt:591
+#: /views/edit/Container/tab_edit.pt:586
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "Einfügen (der Objekte in der Zwischenablage) als Ghost-Objekte: alt-g"
+msgstr ""
+"Einfügen (der Objekte in der Zwischenablage) als Ghost-Objekte: alt-g"
 
-#: /views/edit/Container/tab_edit.pt:591
+#: /views/edit/Container/tab_edit.pt:586
 msgid "paste ghost"
 msgstr "Ghost-Objekt einfügen"
 
-#: /views/edit/Container/tab_edit.pt:601
+#: /views/edit/Container/tab_edit.pt:596
 #: /views/edit/Container/tab_access_groups.pt:249
 msgid "Really delete?"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:601
+#: /views/edit/Container/tab_edit.pt:596
 #: /views/edit/Container/tab_access_groups.pt:249
-#: /views/edit/VersionedContent/tab_status.pt:349
+#: /views/edit/VersionedContent/tab_status.pt:248
 msgid "delete"
 msgstr "Löschen"
 
-#: /views/edit/Container/tab_edit.pt:601
-#: /views/edit/VersionedContent/tab_status.pt:349
+#: /views/edit/Container/tab_edit.pt:596
+#: /views/edit/VersionedContent/tab_status.pt:248
 msgid "there's no undo: alt-d"
 msgstr "es gibt kein Undo: alt-d"
 
@@ -2485,11 +2557,13 @@ msgstr "neu..."
 msgid "add a new item - alt-n"
 msgstr "Neuen Eintrag hinzufügen: alt-n"
 
-#: /views/edit/Container/tab_edit.pt:88 /browser/object_lookup.pt:113
+#: /views/edit/Container/tab_edit.pt:88
+#: /browser/object_lookup.pt:113
 msgid "select a new item: alt-s"
 msgstr "neues Objekt hinzufügen: alt-s"
 
-#: /views/edit/Container/tab_edit.pt:94 /browser/object_lookup.pt:120
+#: /views/edit/Container/tab_edit.pt:94
+#: /browser/object_lookup.pt:120
 msgid "select:"
 msgstr "auswählen:"
 
@@ -2530,8 +2604,9 @@ msgid ""
 "Placed ${cut_ids} on clipboard for cutting, <span class=\"error\">but could "
 "not cut ${not_cut_ids}.</span>"
 msgstr ""
-"${cut_ids} zum Ausschneiden in der Zwischenablage abgelegt, <span class="
-"\"error\">aber ${not_cut_ids} konnte nicht ausgeschnitten werden. </span>"
+"${cut_ids} zum Ausschneiden in der Zwischenablage abgelegt, <span "
+"class=\"error\">aber ${not_cut_ids} konnte nicht ausgeschnitten werden. "
+"</span>"
 
 #: /views/edit/Container/tab_edit_cut.py:36
 msgid "Placed ${cut_ids} on clipboard for cutting."
@@ -2681,7 +2756,8 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:340
 #: /views/edit/Container/tab_status_export.pt:401
-#: /views/public/subscriptor.pt:41 /views/public/subscriptor.pt:66
+#: /views/public/subscriptor.pt:41
+#: /views/public/subscriptor.pt:66
 #: /views/edit/Member/SimpleMember/memberform.form:49
 msgid "email address"
 msgstr "E-Mail Adresse"
@@ -2695,7 +2771,8 @@ msgstr "Ihnen wird eine Email zugestellt, wenn der Eintrag bearbeitet wurde."
 #: /views/edit/Container/tab_status_export.pt:440
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
-#: /views/edit/Container/docma_queue.pt:164 /doc/silva-extra.xml:155
+#: /views/edit/Container/docma_queue.pt:164
+#: /doc/silva-extra.xml:155
 msgid "description"
 msgstr "Bezeichnung"
 
@@ -2756,7 +2833,6 @@ msgstr "Wählen Sie einen oder mehrere Aufträge zum Importieren aus"
 msgid "Could not import ${newid}"
 msgstr "Konnte nicht importiert werden: ${newid}"
 
-# Default: "errors,"
 #: /views/edit/Container/tab_edit_import_import_and_delete.py:45
 #: /views/edit/Container/tab_edit_import_w2s.py:36
 msgid "The following errors have occured during import: ${errors}"
@@ -2861,12 +2937,18 @@ msgid "old"
 msgstr "alt"
 
 #: /views/edit/Container/tab_edit_rename.pt:80
-#: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
-#: /views/add/form.form:45 /views/add/File/form.form:66
-#: /views/add/Groups/form.form:48 /views/add/Image/form.form:45
-#: /views/add/SimpleContent/form.form:48 /views/add/Publication/form.form:48
-#: /views/add/Folder/form.form:48 /views/add/Link/form.form:49
-#: /views/add/AutoTOC/form.form:49 /views/add/Indexer/form.form:48
+#: /views/edit/Asset/File/form.form:28
+#: /views/edit/Asset/Image/form.form:29
+#: /views/add/form.form:45
+#: /views/add/File/form.form:66
+#: /views/add/Groups/form.form:48
+#: /views/add/Image/form.form:45
+#: /views/add/SimpleContent/form.form:48
+#: /views/add/Publication/form.form:48
+#: /views/add/Folder/form.form:48
+#: /views/add/Link/form.form:49
+#: /views/add/AutoTOC/form.form:49
+#: /views/add/Indexer/form.form:48
 #: /doc/silva-content.xml:35
 msgid "title"
 msgstr "Titel"
@@ -2953,7 +3035,8 @@ msgstr "Tag / Monat / Jahr &nbsp; 23:59"
 msgid "access key: alt-m"
 msgstr "Kurzwahl: alt-m"
 
-#: /views/edit/Container/tab_status.pt:304 /views/edit/tab_status_form.form:30
+#: /views/edit/Container/tab_status.pt:304
+#: /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
@@ -3061,8 +3144,8 @@ msgstr "Einstellungen für ${ids} geändert"
 #: /views/edit/Container/tab_status_change_settings.py:109
 msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
 msgstr ""
-"<span class=\"error\">Einstellungen konnten nicht geändert werden für: ${ids}"
-"</span>"
+"<span class=\"error\">Einstellungen konnten nicht geändert werden für: "
+"${ids}</span>"
 
 #: /views/edit/Container/tab_status_change_settings.py:16
 msgid "Nothing was selected, so no settings were changed."
@@ -3158,7 +3241,8 @@ msgstr "Geschlossenen Inhalt exportieren?"
 
 #: /views/edit/Container/tab_status_export.pt:394
 msgid "Check to include closed content in the export."
-msgstr "Auswählen, wenn bereits abgeschlossener Inhalt exportiert werden soll."
+msgstr ""
+"Auswählen, wenn bereits abgeschlossener Inhalt exportiert werden soll."
 
 #: /views/edit/Container/tab_status_export.pt:417
 msgid "choose a template"
@@ -3211,12 +3295,18 @@ msgstr "Ändern von ${meta_type}"
 #: /views/edit/Container/tab_status_get_name.py:16
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
 #: /views/edit/Container/tab_access_groups.pt:84
-#: /views/edit/Container/tab_edit_rename.pt:57 /views/add/form.form:25
-#: /views/add/File/form.form:45 /views/add/Groups/form.form:28
-#: /views/add/GhostFolder/form.form:28 /views/add/Image/form.form:66
-#: /views/add/Ghost/form.form:28 /views/add/SimpleContent/form.form:28
-#: /views/add/Publication/form.form:28 /views/add/Folder/form.form:28
-#: /views/add/Link/form.form:28 /views/add/AutoTOC/form.form:28
+#: /views/edit/Container/tab_edit_rename.pt:57
+#: /views/add/form.form:25
+#: /views/add/File/form.form:45
+#: /views/add/Groups/form.form:28
+#: /views/add/GhostFolder/form.form:28
+#: /views/add/Image/form.form:66
+#: /views/add/Ghost/form.form:28
+#: /views/add/SimpleContent/form.form:28
+#: /views/add/Publication/form.form:28
+#: /views/add/Folder/form.form:28
+#: /views/add/Link/form.form:28
+#: /views/add/AutoTOC/form.form:28
 #: /views/add/Indexer/form.form:28
 msgid "id"
 msgstr "Id"
@@ -3227,7 +3317,8 @@ msgstr "Vorschau ${id}"
 
 #: /views/edit/Container/tab_status_new_version.py:16
 msgid "Nothing was selected, so no new version was created."
-msgstr "Es war nichts ausgewählt, folglich wurde keine neue Version angelegt."
+msgstr ""
+"Es war nichts ausgewählt, folglich wurde keine neue Version angelegt."
 
 #: /views/edit/Container/tab_status_new_version.py:40
 msgid "already has a next version"
@@ -3261,7 +3352,8 @@ msgstr "Nicht abgelehnt: ${ids}"
 #: /views/edit/Container/tab_status_request_approval.py:16
 #: /views/edit/Container/tab_status_request_approval_now.py:20
 msgid "Nothing was selected, so no approval was requested."
-msgstr "Es war nichts ausgewählt, folglich wurde keine Bewilligung angefragt."
+msgstr ""
+"Es war nichts ausgewählt, folglich wurde keine Bewilligung angefragt."
 
 #: /views/edit/Container/tab_status_request_approval.py:59
 #: /views/edit/Container/tab_status_request_approval_now.py:61
@@ -3280,7 +3372,8 @@ msgstr "Anfrage für Bestätgigung von: ${ids}"
 #: /views/edit/Container/tab_status_request_approval.py:92
 #: /views/edit/Container/tab_status_request_approval_now.py:86
 msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
-msgstr "<span class=\"error\">Keine Anfrage für Bestätigung von: ${ids}</span>"
+msgstr ""
+"<span class=\"error\">Keine Anfrage für Bestätigung von: ${ids}</span>"
 
 #: /views/edit/Container/tab_status_revoke.py:16
 msgid "Nothing was selected, so no approval was revoked."
@@ -3404,8 +3497,8 @@ msgstr "Editor einstellen"
 #: /views/edit/Member/SimpleMember/memberform.form:71
 msgid ""
 "Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu "
-"WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1"
-"+)"
+"WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla "
+"1.3.1+)"
 msgstr ""
 "Wählen Sie 'Formular-Editor' um den formularbasierten Editor zu verwenden "
 "oder 'Kupu' für den WYSIWYG Editor (benötigt Internet Explorer 5.5+, "
@@ -3629,76 +3722,21 @@ msgstr "Anfrage auf Bewilligung ablehnen"
 msgid "Withdrew request for approval"
 msgstr "Bewilligungsanfrage wurde zurückgenommen."
 
-#: /views/edit/VersionedContent/tab_status.pt:149
-msgid "document info"
-msgstr "Dokumentinformationen"
-
-#: /views/edit/VersionedContent/tab_status.pt:156
-msgid "Content is a draft and never published"
-msgstr "Inhalt ist ein Entwurf und wurde noch nie veröffentlicht"
-
-#: /views/edit/VersionedContent/tab_status.pt:159
-#: /views/edit/VersionedContent/tab_status.pt:171
-msgid "Publication settings can be changed."
-msgstr "Publikationseinstellungen können geändert werden."
-
-#: /views/edit/VersionedContent/tab_status.pt:168
-msgid "Content is approved, not published"
-msgstr "Inhalt ist genehmigt, nicht veröffentlicht."
-
-#: /views/edit/VersionedContent/tab_status.pt:182
-msgid "Content is published"
-msgstr "Inhalt ist veröffentlicht"
-
-#: /views/edit/VersionedContent/tab_status.pt:185
-msgid ""
-"This content is published (online for the public).<br /> If you wish you can "
-"make an editable copy by going to the ${editor}."
-msgstr ""
-"Dieser Inhalt ist publiziert. <br /> Sie können eine bearbeitbare Kopie "
-"erzeugen, wenn Sie zum ${editor} gehen."
-
-#: /views/edit/VersionedContent/tab_status.pt:186
-msgid "content-editor"
-msgstr "Editor"
-
-#: /views/edit/VersionedContent/tab_status.pt:195
-msgid "Published version exists"
-msgstr "Veröffentlichte Version existiert"
-
-#: /views/edit/VersionedContent/tab_status.pt:196
-msgid ""
-"Note: an older version of this content is online.<br /> Publishing this "
-"version will replace the public version."
-msgstr ""
-"Anmerkung: eine ältere Version dieses Inhaltes ist online. <br /> "
-"Publizieren dieser Version wird die öffentliche Version ersetzen."
-
-#: /views/edit/VersionedContent/tab_status.pt:207
-msgid "Content is closed"
-msgstr "Inhalt wurde geschlossen."
-
-#: /views/edit/VersionedContent/tab_status.pt:210
-msgid ""
-"This content was once published but is now closed.<br /> If you wish you can "
-"make an editable copy in the ${editor}."
-msgstr ""
-"Dieser Inhalt war einmal veröfentlicht ist aber jetzt geschlossen. <br /> "
-"Wenn Sie wünschen, können Sie eine bearbeitbare Kopie im ${editor} erzeugen."
-
-#: /views/edit/VersionedContent/tab_status.pt:241
+#: /views/edit/VersionedContent/tab_status.pt:155
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr "Versionen verwalten für &#xab;${export_id}&#xbb;"
 
-#: /views/edit/VersionedContent/tab_status.pt:255 /doc/silva-extra.xml:444
+#: /views/edit/VersionedContent/tab_status.pt:169
+#: /doc/silva-extra.xml:444
 msgid "modification time"
 msgstr "Änderungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:256 /doc/silva-extra.xml:503
+#: /views/edit/VersionedContent/tab_status.pt:170
+#: /doc/silva-extra.xml:503
 msgid "publication time"
 msgstr "Veröffentlichungsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:257
+#: /views/edit/VersionedContent/tab_status.pt:171
 #: /views/edit/tab_status_form.form:52
 #: /views/edit/VersionedContent/tab_status_form_author.form:72
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
@@ -3707,37 +3745,91 @@ msgstr "Veröffentlichungsdatum"
 msgid "expiration time"
 msgstr "Verfallsdatum"
 
-#: /views/edit/VersionedContent/tab_status.pt:258 /doc/silva-extra.xml:676
+#: /views/edit/VersionedContent/tab_status.pt:172
+#: /doc/silva-extra.xml:676
 msgid "last author"
 msgstr "letzter Autor"
 
-#: /views/edit/VersionedContent/tab_status.pt:259 /doc/silva-extra.xml:618
-msgid "creator"
-msgstr "Urheber"
-
-#: /views/edit/VersionedContent/tab_status.pt:260
+#: /views/edit/VersionedContent/tab_status.pt:173
 msgid "version status"
 msgstr "Versionsstatus"
 
-#: /views/edit/VersionedContent/tab_status.pt:331
+#: /views/edit/VersionedContent/tab_status.pt:230
 msgid "version actions"
 msgstr "Versionierungsfunktionen"
 
-#: /views/edit/VersionedContent/tab_status.pt:341
+#: /views/edit/VersionedContent/tab_status.pt:240
 msgid "compare..."
 msgstr "Vergleichen..."
 
-#: /views/edit/VersionedContent/tab_status.pt:341
+#: /views/edit/VersionedContent/tab_status.pt:240
 msgid "view the selected versions next to each other: alt-="
 msgstr "Die ausgewählten Versionen nebeneinander darstellen: alt-="
 
-#: /views/edit/VersionedContent/tab_status.pt:359
+#: /views/edit/VersionedContent/tab_status.pt:258
 msgid "create a new editable version of the selected old one: alt-f"
 msgstr "Überschreibt die aktuellen Arbeitsversion: alt-w"
 
-#: /views/edit/VersionedContent/tab_status.pt:359
+#: /views/edit/VersionedContent/tab_status.pt:258
 msgid "copy for editing"
 msgstr "Wiederherstellen als Arbeitsversion"
+
+#: /views/edit/VersionedContent/tab_status.pt:284
+msgid "document info"
+msgstr "Dokumentinformationen"
+
+#: /views/edit/VersionedContent/tab_status.pt:291
+msgid "Content is a draft and never published"
+msgstr "Inhalt ist ein Entwurf und wurde noch nie veröffentlicht"
+
+#: /views/edit/VersionedContent/tab_status.pt:294
+#: /views/edit/VersionedContent/tab_status.pt:306
+msgid "Publication settings can be changed."
+msgstr "Publikationseinstellungen können geändert werden."
+
+#: /views/edit/VersionedContent/tab_status.pt:303
+msgid "Content is approved, not published"
+msgstr "Inhalt ist genehmigt, nicht veröffentlicht."
+
+#: /views/edit/VersionedContent/tab_status.pt:317
+msgid "Content is published"
+msgstr "Inhalt ist veröffentlicht"
+
+#: /views/edit/VersionedContent/tab_status.pt:320
+msgid ""
+"This content is published (online for the public).<br /> If you wish you can "
+"make an editable copy by going to the ${editor}."
+msgstr ""
+"Dieser Inhalt ist publiziert. <br /> Sie können eine bearbeitbare Kopie "
+"erzeugen, wenn Sie zum ${editor} gehen."
+
+#: /views/edit/VersionedContent/tab_status.pt:321
+msgid "content-editor"
+msgstr "Editor"
+
+#: /views/edit/VersionedContent/tab_status.pt:330
+msgid "Published version exists"
+msgstr "Veröffentlichte Version existiert"
+
+#: /views/edit/VersionedContent/tab_status.pt:331
+msgid ""
+"Note: an older version of this content is online.<br /> Publishing this "
+"version will replace the public version."
+msgstr ""
+"Anmerkung: eine ältere Version dieses Inhaltes ist online. <br /> "
+"Publizieren dieser Version wird die öffentliche Version ersetzen."
+
+#: /views/edit/VersionedContent/tab_status.pt:342
+msgid "Content is closed"
+msgstr "Inhalt wurde geschlossen."
+
+#: /views/edit/VersionedContent/tab_status.pt:345
+msgid ""
+"This content was once published but is now closed.<br /> If you wish you can "
+"make an editable copy in the ${editor}."
+msgstr ""
+"Dieser Inhalt war einmal veröfentlicht ist aber jetzt geschlossen. <br /> "
+"Wenn Sie wünschen, können Sie eine bearbeitbare Kopie im ${editor} erzeugen."
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -3791,8 +3883,10 @@ msgstr "Nachricht an Redakteur"
 #: /views/edit/VersionedContent/tab_status_macros.pt:182
 #: /views/edit/VersionedContent/tab_status_macros.pt:235
 #: /views/edit/VersionedContent/tab_status_macros.pt:337
-#: /views/edit/Content/Indexer/edit.pt:55 /views/add/add_form.pt:70
-#: /views/add/add_form.pt:116 /views/add/GhostFolder/add_form.pt:58
+#: /views/edit/Content/Indexer/edit.pt:55
+#: /views/add/add_form.pt:70
+#: /views/add/add_form.pt:116
+#: /views/add/GhostFolder/add_form.pt:58
 #: /views/add/Ghost/add_form.pt:56
 msgid "notes"
 msgstr "Anmerkungen"
@@ -3960,11 +4054,11 @@ msgstr "Zur vorherigen Version zurückgekehrt."
 msgid "This content is not approved."
 msgstr "Dieser Inhalt ist nicht bewilligt."
 
-#: /views/edit/VersionedContent/tab_status_view_versions.pt:47
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:52
 msgid "Older version (${version_id})"
 msgstr "Alte Version (${version_id})"
 
-#: /views/edit/VersionedContent/tab_status_view_versions.pt:51
+#: /views/edit/VersionedContent/tab_status_view_versions.pt:56
 msgid "Newer version (${version_id})"
 msgstr "neue Version (${version_id})"
 
@@ -4060,23 +4154,29 @@ msgstr "Suche nach '${string}'."
 msgid "search"
 msgstr "Suche"
 
-#: /views/edit/lookup_ui.pt:110 /views/edit/macro_edit_metadata.pt:188
+#: /views/edit/lookup_ui.pt:110
+#: /views/edit/macro_edit_metadata.pt:188
 #: /views/edit/tab_subscriptions.pt:114
 #: /views/edit/Asset/macro_asset_edit.pt:96
 #: /views/edit/Container/tab_edit.pt:82
 #: /views/edit/Container/tab_access_groups.pt:128
 #: /views/edit/Container/GhostFolder/tab_edit.pt:158
-#: /views/edit/VersionedContent/Ghost/edit.pt:139 /views/add/add_form.pt:138
-#: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
-#: /views/public/subscriptor.pt:46 /browser/object_lookup.pt:107
+#: /views/edit/VersionedContent/Ghost/edit.pt:139
+#: /views/add/add_form.pt:129
+#: /views/add/GhostFolder/add_form.pt:122
+#: /views/add/Ghost/add_form.pt:114
+#: /views/public/subscriptor.pt:46
+#: /browser/object_lookup.pt:107
 msgid "access key: alt-s"
 msgstr "Kurzwahl: alt-s"
 
-#: /views/edit/lookup_ui.pt:130 /views/edit/lookup_ui.pt:199
+#: /views/edit/lookup_ui.pt:130
+#: /views/edit/lookup_ui.pt:199
 msgid "add checked users to clipboard: alt-a"
 msgstr "ausgewählte Benutzer zum Clipbord hinzufügen: alt-a"
 
-#: /views/edit/lookup_ui.pt:130 /views/edit/lookup_ui.pt:199
+#: /views/edit/lookup_ui.pt:130
+#: /views/edit/lookup_ui.pt:199
 msgid "add to clipboard"
 msgstr "Benutzer zur Zwischenablage hinzufügen"
 
@@ -4147,21 +4247,27 @@ msgstr ""
 #: /views/edit/macro_edit_metadata.pt:188
 #: /views/edit/Asset/macro_asset_edit.pt:96
 #: /views/edit/Container/tab_access_groups.pt:128
-#: /views/edit/Member/SimpleMember/tab_edit.pt:142 /views/add/add_form.pt:138
-#: /views/add/GhostFolder/add_form.pt:122 /views/add/Ghost/add_form.pt:114
+#: /views/edit/Member/SimpleMember/tab_edit.pt:142
+#: /views/add/add_form.pt:129
+#: /views/add/GhostFolder/add_form.pt:122
+#: /views/add/Ghost/add_form.pt:114
 msgid "save"
 msgstr "Speichern"
 
-#: /views/edit/macro_edit_metadata.pt:43 /views/edit/macro_edit_metadata.pt:48
+#: /views/edit/macro_edit_metadata.pt:43
+#: /views/edit/macro_edit_metadata.pt:48
 msgid "of &#xab;${title}&#xbb;"
 msgstr "von &#xab;${title}&#xbb;"
 
-#: /views/edit/macro_edit_metadata.pt:74 /views/edit/macro_view_metadata.pt:57
+#: /views/edit/macro_edit_metadata.pt:74
+#: /views/edit/macro_view_metadata.pt:57
 msgid "metadata set"
 msgstr "Metadatensatz"
 
-#: /views/edit/macro_edit_metadata.pt:79 /views/edit/tab_settings.pt:125
-#: /views/edit/tab_settings.pt:194 /views/edit/tab_subscriptions.pt:77
+#: /views/edit/macro_edit_metadata.pt:79
+#: /views/edit/tab_settings.pt:125
+#: /views/edit/tab_settings.pt:194
+#: /views/edit/tab_subscriptions.pt:77
 #: /views/edit/macro_view_metadata.pt:62
 #: /views/edit/Asset/macro_asset_edit.pt:64
 #: /views/edit/Asset/Image/edit.pt:138
@@ -4172,8 +4278,10 @@ msgstr "Metadatensatz"
 msgid "element"
 msgstr "Element"
 
-#: /views/edit/macro_edit_metadata.pt:84 /views/edit/tab_settings.pt:130
-#: /views/edit/tab_settings.pt:199 /views/edit/tab_subscriptions.pt:82
+#: /views/edit/macro_edit_metadata.pt:84
+#: /views/edit/tab_settings.pt:130
+#: /views/edit/tab_settings.pt:199
+#: /views/edit/tab_subscriptions.pt:82
 #: /views/edit/macro_view_metadata.pt:66
 #: /views/edit/Asset/macro_asset_edit.pt:69
 #: /views/edit/Asset/macro_asset_edit.pt:154
@@ -4187,8 +4295,10 @@ msgstr "Element"
 #: /views/edit/VersionedContent/Link/edit.pt:66
 #: /views/edit/VersionedContent/Ghost/edit.pt:62
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
-#: /views/edit/Member/SimpleMember/tab_edit.pt:68 /views/add/add_form.pt:66
-#: /views/add/add_form.pt:112 /views/add/GhostFolder/add_form.pt:55
+#: /views/edit/Member/SimpleMember/tab_edit.pt:68
+#: /views/add/add_form.pt:66
+#: /views/add/add_form.pt:112
+#: /views/add/GhostFolder/add_form.pt:55
 #: /views/add/Ghost/add_form.pt:53
 msgid "content"
 msgstr "Inhalt"
@@ -4197,9 +4307,12 @@ msgstr "Inhalt"
 msgid "acquired content"
 msgstr "Erworbener Inhalt"
 
-#: /views/edit/macro_edit_metadata.pt:90 /views/edit/tab_settings.pt:133
-#: /views/edit/tab_settings.pt:202 /views/edit/tab_subscriptions.pt:85
-#: /views/edit/tab_access.pt:575 /views/edit/tab_access.pt:707
+#: /views/edit/macro_edit_metadata.pt:90
+#: /views/edit/tab_settings.pt:133
+#: /views/edit/tab_settings.pt:202
+#: /views/edit/tab_subscriptions.pt:85
+#: /views/edit/tab_access.pt:575
+#: /views/edit/tab_access.pt:707
 #: /views/edit/Asset/Image/edit.pt:146
 #: /views/edit/Container/tab_edit_import.pt:94
 #: /views/edit/Container/tab_edit_import.pt:163
@@ -4239,13 +4352,16 @@ msgstr "Gruppen verwalten"
 msgid "ctrl-click to multi-select"
 msgstr "Strg-Klick für Mehrfachauswahl"
 
-#: /views/edit/macro_select_all.pt:14 /views/edit/macro_select_all.pt:26
-#: /views/edit/Container/tab_edit.pt:129 /views/edit/Container/tab_edit.pt:136
+#: /views/edit/macro_select_all.pt:14
+#: /views/edit/macro_select_all.pt:26
+#: /views/edit/Container/tab_edit.pt:129
+#: /views/edit/Container/tab_edit.pt:136
 #: /views/edit/Container/tab_status.pt:102
 msgid "select all: alt-a"
 msgstr "alles auswählen: alt-a"
 
-#: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:139
+#: /views/edit/macro_select_all.pt:31
+#: /views/edit/Container/tab_edit.pt:139
 msgid "select all"
 msgstr "alles auswählen"
 
@@ -4274,13 +4390,15 @@ msgid "siblings"
 msgstr "Geschwister"
 
 #: /views/edit/macro_vein_navigation.pt:134
-#: /views/edit/macro_vein_navigation.pt:176 /resources/sidebar_template.pt:25
+#: /views/edit/macro_vein_navigation.pt:176
+#: /resources/sidebar_template.pt:25
 #: /resources/sidebar_template.pt:65
 msgid "slide to the publish screen"
 msgstr "Zum Publizieren-Schirm"
 
 #: /views/edit/macro_vein_navigation.pt:140
-#: /views/edit/macro_vein_navigation.pt:183 /resources/sidebar_template.pt:71
+#: /views/edit/macro_vein_navigation.pt:183
+#: /resources/sidebar_template.pt:71
 msgid "slide to the contents screen"
 msgstr "Zum Inhalte-Schirm"
 
@@ -4337,8 +4455,8 @@ msgstr "Zeitüberschreitung der Sitzung"
 msgid ""
 "In about 5 minutes, the working session is going to expire for the document "
 "you are currently editing. This means that any unsaved work will be lost. "
-"Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;"
-"cancel&#8217; (alt-c) to do nothing, or save manually."
+"Press &#8216;save&#8217; (alt-s) to save any changes, or "
+"&#8216;cancel&#8217; (alt-c) to do nothing, or save manually."
 msgstr ""
 "Die Arbeitssitzung für das z.Z. bearbeitete Dokument verfällt in etwa 5 "
 "Minuten. Dies bedeutet, dass alle nicht gespeicherten Änderungen verloren "
@@ -4349,9 +4467,12 @@ msgstr ""
 msgid "cancel the automatic save action: alt-c"
 msgstr "Automatisches Speichern abbrechen: alt-c"
 
-#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:128
-#: /views/add/add_form.pt:129 /views/add/GhostFolder/add_form.pt:113
-#: /views/add/Ghost/add_form.pt:105 /browser/object_lookup.pt:427
+#: /views/edit/promptWindow.pt:35
+#: /views/edit/Container/tab_edit_rename.pt:128
+#: /views/add/add_form.pt:149
+#: /views/add/GhostFolder/add_form.pt:113
+#: /views/add/Ghost/add_form.pt:105
+#: /browser/object_lookup.pt:427
 msgid "cancel"
 msgstr "Abbrechen"
 
@@ -4383,12 +4504,15 @@ msgstr "in"
 msgid "No users with local roles are defined here."
 msgstr "Es sind hier keine Benutzer mit lokalen Rollen definiert."
 
-#: /views/edit/tab_access.pt:153 /views/edit/tab_access.pt:610
+#: /views/edit/tab_access.pt:153
+#: /views/edit/tab_access.pt:610
 msgid "select a role to assign"
 msgstr "Rolle zur Zuweisung auswählen"
 
-#: /views/edit/tab_access.pt:157 /views/edit/tab_access.pt:299
-#: /views/edit/tab_access.pt:460 /views/edit/tab_access.pt:503
+#: /views/edit/tab_access.pt:157
+#: /views/edit/tab_access.pt:299
+#: /views/edit/tab_access.pt:460
+#: /views/edit/tab_access.pt:503
 msgid "select role:"
 msgstr "Rolle wählen"
 
@@ -4396,7 +4520,8 @@ msgstr "Rolle wählen"
 msgid "assign role"
 msgstr "Rolle zuweisen"
 
-#: /views/edit/tab_access.pt:162 /views/edit/tab_access.pt:311
+#: /views/edit/tab_access.pt:162
+#: /views/edit/tab_access.pt:311
 #: /views/edit/tab_access.pt:466
 msgid "assign a local role to selected user(s)"
 msgstr "ausgewählten Benutzern eine lokale Rolle zuweisen"
@@ -4449,7 +4574,8 @@ msgstr "Kurzwahl: alt-a"
 msgid "Grant and approve"
 msgstr "zuweisen und gewähren"
 
-#: /views/edit/tab_access.pt:311 /views/edit/tab_access.pt:515
+#: /views/edit/tab_access.pt:311
+#: /views/edit/tab_access.pt:515
 msgid "assign"
 msgstr "zuweisen"
 
@@ -4461,8 +4587,8 @@ msgstr "Ein Gruppendienst ist nicht installiert."
 msgid ""
 "You are seeing this message because the Silva Groups extension is installed "
 "on the file system, but a Groups Service hasn't been added to this Silva "
-"instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;"
-"Groups Service&#8221; from the add list and give it the id "
+"instance. To install one, go to the ${silva_root_in_the_ZMI}, choose "
+"&#8220;Groups Service&#8221; from the add list and give it the id "
 "${service_groups}. No further configuration is necessary."
 msgstr ""
 "Sie sehen diese Nachricht weil die Silva Groups Erweiterung im Dateisystem "
@@ -4512,19 +4638,23 @@ msgstr "ausgewählte Gruppen löschen: alt-d"
 msgid "public view access restrictions for"
 msgstr "Zugangsbeschränkung öffentliche Version für"
 
-#: /views/edit/tab_access.pt:564 /views/edit/tab_access.pt:696
+#: /views/edit/tab_access.pt:564
+#: /views/edit/tab_access.pt:696
 msgid "access restriction by role"
 msgstr "Zugangsbeschränkungen nach Rolle"
 
-#: /views/edit/tab_access.pt:572 /views/edit/tab_access.pt:704
+#: /views/edit/tab_access.pt:572
+#: /views/edit/tab_access.pt:704
 msgid "current restriction"
 msgstr "Aktuelle Einschränkung"
 
-#: /views/edit/tab_access.pt:580 /views/edit/tab_access.pt:714
+#: /views/edit/tab_access.pt:580
+#: /views/edit/tab_access.pt:714
 msgid "Open to the public"
 msgstr "Der Öffentlichkeit zugänglich"
 
-#: /views/edit/tab_access.pt:585 /views/edit/tab_access.pt:717
+#: /views/edit/tab_access.pt:585
+#: /views/edit/tab_access.pt:717
 msgid "(acquired)."
 msgstr "(erworben)."
 
@@ -4570,15 +4700,18 @@ msgstr ""
 "Eine Zugriffsbeschränkung hier betrifft alle Objekte dieser und "
 "darunterliegender Ebenen."
 
-#: /views/edit/tab_access.pt:76 /views/edit/tab_access.pt:205
+#: /views/edit/tab_access.pt:76
+#: /views/edit/tab_access.pt:205
 msgid "username"
 msgstr "Benutzername"
 
-#: /views/edit/tab_access.pt:79 /views/edit/tab_access.pt:377
+#: /views/edit/tab_access.pt:79
+#: /views/edit/tab_access.pt:377
 msgid "roles defined above"
 msgstr "Weiter oben definierte Rollen"
 
-#: /views/edit/tab_access.pt:82 /views/edit/tab_access.pt:380
+#: /views/edit/tab_access.pt:82
+#: /views/edit/tab_access.pt:380
 msgid "roles defined here"
 msgstr "Hier definierte Rollen"
 
@@ -4588,7 +4721,6 @@ msgstr "Hier definierte Rollen"
 msgid "No requests selected"
 msgstr "Keine Requests ausgewählt"
 
-# Default: "role"
 #: /views/edit/tab_access_allow_access.py:26
 #: /views/edit/tab_access_allow_and_approve.py:24
 #: /views/edit/tab_access_deny_access.py:23
@@ -4619,7 +4751,8 @@ msgstr ""
 "Die hinzufügbaren Einstellungne können nur in Silva Publikationen geändert "
 "werden. A hat nicht die Möglichkeit,"
 
-#: /views/edit/tab_metadata.pt:103 /views/edit/tab_settings.pt:317
+#: /views/edit/tab_metadata.pt:103
+#: /views/edit/tab_settings.pt:323
 msgid "for closed version of &#xab;${title}&#xbb;"
 msgstr "für die abgeschlossene Version von &#xab;${title}&#xbb;"
 
@@ -4646,11 +4779,13 @@ msgstr "In Publikation umwandeln"
 msgid "change container type to a publication: alt-p"
 msgstr "Umwandeln eines Ordners in eine Publikation: alt-p"
 
-#: /views/edit/tab_settings.pt:120 /views/edit/macro_view_metadata.pt:111
+#: /views/edit/tab_settings.pt:120
+#: /views/edit/macro_view_metadata.pt:111
 msgid "content renderer"
 msgstr "Inhalts &#8216;renderer&#8217;"
 
-#: /views/edit/tab_settings.pt:140 /views/edit/macro_view_metadata.pt:120
+#: /views/edit/tab_settings.pt:140
+#: /views/edit/macro_view_metadata.pt:120
 msgid "renderer"
 msgstr "&#8216;renderer&#8217;"
 
@@ -4666,7 +4801,7 @@ msgstr "wechseln der Grafikschablone"
 msgid "change renderer: alt-c"
 msgstr "wechseln der Grafikschablone: alt-c"
 
-#: /views/edit/tab_settings.pt:189
+#: /views/edit/tab_settings.pt:188
 msgid "atom/rss feeds"
 msgstr ""
 
@@ -4674,34 +4809,46 @@ msgstr ""
 msgid "allow feeds"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:220
+#: /views/edit/tab_settings.pt:218
 msgid ""
-"Check to allow an Atom/<acronym title=\"Really Simple Syndication\">RSS</"
-"acronym> feed of this container (atom.xml or rss.xml)."
+"Check to provide an Atom/<acronym title=\"Really Simple "
+"Syndication\">RSS</acronym> feed from this container."
 msgstr ""
 
-#: /views/edit/tab_settings.pt:228
+#: /views/edit/tab_settings.pt:224
+msgid "The feed url is"
+msgstr ""
+
+#: /views/edit/tab_settings.pt:227
+msgid ""
+"x <a title=\"RSS feed\" href=\"\">atom.xml</a>/<a title=\"Atom feed\" "
+"href=\"\">rss.xml</a>."
+msgstr ""
+
+#: /views/edit/tab_settings.pt:234
 msgid "change feed settings"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:228
+#: /views/edit/tab_settings.pt:234
 msgid "change feed settings: alt-f"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:261 /views/edit/tab_settings.pt:332
+#: /views/edit/tab_settings.pt:267
+#: /views/edit/tab_settings.pt:338
 msgid "layout settings for &#xab;${title}&#xbb;"
 msgstr "Erweiterungseinstellungen für &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_settings.pt:275 /views/edit/tab_settings.pt:294
-#: /views/edit/tab_settings.pt:314
+#: /views/edit/tab_settings.pt:281
+#: /views/edit/tab_settings.pt:300
+#: /views/edit/tab_settings.pt:320
 msgid "layout settings"
 msgstr "Layout Einstellungen"
 
-#: /views/edit/tab_settings.pt:278
+#: /views/edit/tab_settings.pt:284
 msgid "for approved version of &#xab;${title}&#xbb;"
 msgstr "für die bestätigte Version von &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_settings.pt:297
+#: /views/edit/tab_settings.pt:303
 msgid "for published version of &#xab;${title}&#xbb;"
 msgstr "für die publizierte Version von &#xab;${title}&#xbb;"
 
@@ -4803,7 +4950,8 @@ msgid "Other subscriptions"
 msgstr "Andere Abonnements"
 
 #: /views/edit/tab_subscriptions.pt:181
-msgid "${numberofsubscriptions} subscription(s) for this object defined above."
+msgid ""
+"${numberofsubscriptions} subscription(s) for this object defined above."
 msgstr "${numberofsubscriptions} Abonnements für dieses Objekt."
 
 #: /views/edit/tab_subscriptions.pt:187
@@ -4916,8 +5064,10 @@ msgstr "sservices...."
 msgid "jump to silva services: alt-`"
 msgstr "Gehe zu Silva-Services: alt-`"
 
-#: /views/macro_index.pt:166 /views/macro_index.pt:169
-#: /views/macro_index.pt:179 /views/macro_index.pt:183
+#: /views/macro_index.pt:166
+#: /views/macro_index.pt:169
+#: /views/macro_index.pt:179
+#: /views/macro_index.pt:183
 msgid "jump to top: alt-t"
 msgstr "Zur obersten Ebene springen: alt-j"
 
@@ -4990,22 +5140,26 @@ msgstr "erlaubten Erweiterungen für diese Publikation konfigurieren: alt-d"
 msgid "addables${ellipsis}"
 msgstr ""
 
-#: /views/macro_middleground.pt:64 /views/edit/tab_preview.pt:45
+#: /views/macro_middleground.pt:64
+#: /views/edit/tab_preview.pt:45
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "see the content in the public layout: alt-;"
 msgstr "Vorschau des Dokumentes: alt-;"
 
-#: /views/macro_middleground.pt:64 /views/edit/tab_preview.pt:45
+#: /views/macro_middleground.pt:64
+#: /views/edit/tab_preview.pt:45
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "public&nbsp;preview..."
 msgstr "Vorschau"
 
-#: /views/macro_middleground.pt:76 /views/edit/tab_preview.pt:58
+#: /views/macro_middleground.pt:76
+#: /views/edit/tab_preview.pt:58
 #: /views/edit/VersionedContent/macro_tab_edit.pt:58
 msgid "publish this document: alt-p"
 msgstr "Dieses Dokument publizieren: alt-p"
 
-#: /views/macro_middleground.pt:76 /views/edit/tab_preview.pt:58
+#: /views/macro_middleground.pt:76
+#: /views/edit/tab_preview.pt:58
 #: /views/edit/VersionedContent/macro_tab_edit.pt:58
 msgid "publish&nbsp;now"
 msgstr "Jetzt&nbsp;veröffentlichen"
@@ -5030,7 +5184,8 @@ msgstr "&middot; bearbeiten"
 msgid "Zope manage_main: alt-."
 msgstr "Zope manage_main: alt-."
 
-#: /views/macro_tabs.pt:74 /views/macro_index.pt:217
+#: /views/macro_tabs.pt:74
+#: /views/macro_index.pt:217
 msgid "Leave Silva and view the public page: alt-:"
 msgstr "Silva verlassen und veröffentlichte Seite sehen: alt-:"
 
@@ -5043,7 +5198,8 @@ msgid "This ghost is broken. (${haunted_url})"
 msgstr "Diese Ghost-Objekt ist fehlerhaft (%{haunted_url})."
 
 #: /views/public/Ghost/view/render.py:15
-msgid "This 'ghost' document is broken. Please inform the site administrator."
+msgid ""
+"This 'ghost' document is broken. Please inform the site administrator."
 msgstr ""
 "Diese 'Geist' document ist fehlerhaft. Bitte informieren Sie den "
 "Administrator der Site."
@@ -5105,7 +5261,8 @@ msgstr ""
 "Sie wurden erfolgreich eingetragen. Das bedeutet, Sie bekommen eine Email "
 "Benachrichtigung für jede neue Version dieser Seite."
 
-#: /views/public/request_roles.pt:12 /views/public/request_roles.pt:20
+#: /views/public/request_roles.pt:12
+#: /views/public/request_roles.pt:20
 msgid "membership"
 msgstr "Mitgliedschaft"
 
@@ -5169,8 +5326,8 @@ msgstr ""
 #: /views/public/search_form.form:104
 msgid ""
 "\n"
-"              Select (multiple using ctrl-key) object type(s) to search "
-"in. \n"
+"              Select (multiple using ctrl-key) object type(s) to search in. "
+"\n"
 "              If none is selected, all types are searched.\n"
 "            "
 msgstr ""
@@ -5267,6 +5424,12 @@ msgstr "zurück zu &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
+#~ msgid "&#8211;"
+#~ msgstr "&#8211;"
+
+#~ msgid "Added ${meta_type} ${id}."
+#~ msgstr "Hinzugefügt: ${meta_type} ${id}."
+
 #~ msgid "${old_title} to ${new_title}"
 #~ msgstr "${old_title} zu ${new_title}"
 
@@ -5286,6 +5449,9 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "&#xab;${item}&#xbb; konnte nicht umbenannt werden zu &#xab;${new}&#xbb; "
 #~ "(${status})"
 
+#~ msgid "not a versionable object"
+#~ msgstr "nicht versionierbares Objekt"
+
 #~ msgid "${id} of ${parent_id}"
 #~ msgstr "${id} von ${parent_id}"
 
@@ -5298,8 +5464,8 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgid ""
 #~ "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
 #~ msgstr ""
-#~ "Das Objekt &#xab;${haunted_url}&#xbb;, auf das dieses Ghost-Objekt "
-#~ "verweist, existiert nicht."
+#~ "Das Objekt &#xab;${haunted_url}&#xbb;, auf das dieses Ghost-Objekt verweist, "
+#~ "existiert nicht."
 
 #~ msgid ""
 #~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
@@ -5307,14 +5473,13 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb;  zeigt auf einen Container."
 
 #~ msgid ""
-#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a "
-#~ "ghost."
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a ghost."
 #~ msgstr ""
 #~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt auf ein Ghost-Objekt."
 
 #~ msgid ""
-#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a "
-#~ "content object."
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a content "
+#~ "object."
 #~ msgstr ""
 #~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb;  zeigt nicht auf ein "
 #~ "Inhaltsobjekt."
@@ -5326,18 +5491,22 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt auf einen Container."
 
 #~ msgid ""
-#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a "
-#~ "container."
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a container."
 #~ msgstr ""
-#~ "Der Ghost-Ordner &#xab;${haunted_url}&#xbb; zeigt nicht aufeinen "
-#~ "Container."
+#~ "Der Ghost-Ordner &#xab;${haunted_url}&#xbb; zeigt nicht aufeinen Container."
 
 #~ msgid ""
 #~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is either the "
 #~ "ghost itself or an ancestor of the ghost."
 #~ msgstr ""
-#~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt entweder auf sich "
-#~ "selbst oder einen seiner Vorfahren."
+#~ "Das Ghost-Objekt &#xab;${haunted_url}&#xbb; zeigt entweder auf sich selbst "
+#~ "oder einen seiner Vorfahren."
+
+#~ msgid "&#134;"
+#~ msgstr "&#134;"
+
+#~ msgid "&#134; acquireable"
+#~ msgstr "&#134; erwerbbar"
 
 #~ msgid "This is the ${meta_type} \"${id}\""
 #~ msgstr "Das ist ${meta_type} \"${id}\""
@@ -5351,20 +5520,7 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} zuerkannt."
 
 #~ msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
-#~ msgstr ""
-#~ "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} verwehrt"
-
-#~ msgid "&#8211;"
-#~ msgstr "&#8211;"
-
-#~ msgid "not a versionable object"
-#~ msgstr "nicht versionierbares Objekt"
-
-#~ msgid "&#134;"
-#~ msgstr "&#134;"
-
-#~ msgid "&#134; acquireable"
-#~ msgstr "&#134; erwerbbar"
+#~ msgstr "Dem Benutzer &#xab;${user_id}&#xbb; wurde die Rolle ${role} verwehrt"
 
 #~ msgid "Up to Silva top"
 #~ msgstr "Zur obersten Silvaebene"
@@ -5412,8 +5568,7 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgstr "Nächste &gt;&gt;"
 
 #~ msgid ""
-#~ "An automatic table of contents is generated from the items in its "
-#~ "location."
+#~ "An automatic table of contents is generated from the items in its location."
 #~ msgstr ""
 #~ "Ein Inhaltsverzeichnis wird automatisch aus den Einträgen hier erstellt."
 
@@ -5452,11 +5607,11 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgstr "Es war nichts ausgewählt, folglich wurde nichts aktiviert."
 
 #~ msgid ""
-#~ "Content ${activated} activated, <span class=\"error\">but could not "
-#~ "activate ${not_activated}.</span>"
+#~ "Content ${activated} activated, <span class=\"error\">but could not activate "
+#~ "${not_activated}.</span>"
 #~ msgstr ""
-#~ "${activated} aktiviert, <span class=\"error\">aber ${not_activated} "
-#~ "konnte nicht aktiviert werden.</span>"
+#~ "${activated} aktiviert, <span class=\"error\">aber ${not_activated} konnte "
+#~ "nicht aktiviert werden.</span>"
 
 #~ msgid "Content ${activated} activated."
 #~ msgstr "Inhalt ${activated} aktiviert."
@@ -5539,9 +5694,8 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "A previous request for approval has been rejected / withdrawn by "
 #~ "${requester} on ${some_date}. The last message regarding this issue is:"
 #~ msgstr ""
-#~ "Eine vorherige Anfrage auf Bewilligung wurde abgelehnt bzw. "
-#~ "zurückgenommen von ${requester} am ${some_date}. Die letzte Nachricht zu "
-#~ "diesem Thema ist:"
+#~ "Eine vorherige Anfrage auf Bewilligung wurde abgelehnt bzw. zurückgenommen "
+#~ "von ${requester} am ${some_date}. Die letzte Nachricht zu diesem Thema ist:"
 
 #~ msgid "select <u>a</u>ll"
 #~ msgstr "<u>a</u>lles auswählen"
@@ -5572,12 +5726,11 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid ""
 #~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
-#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
-#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> "
+#~ "IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0)."
 #~ msgstr ""
 #~ "<strong>Möglich:</strong><br />IP (z.B.: 10.1.1.1), <br />IP-IP (z.B.: "
-#~ "10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: "
-#~ "10.1.1.0/255.255.255.0)."
+#~ "10.1.1.1-10.1.1.255) oder <br />IP/Netzmaske (z.B.: 10.1.1.0/255.255.255.0)."
 
 #~ msgid "view this asset"
 #~ msgstr "Anlage ansehen"
