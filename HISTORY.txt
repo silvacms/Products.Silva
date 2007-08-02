@@ -6,6 +6,10 @@ Silva changes
   Silva 2.0.1
 
     Bugs fixed:
+      - Fixed the thumbnailing/caching bug. When a thumbnailed image was resized
+        back to 100%, a copy was being made to make sure the modification date
+        headers are newer. I changed this so only the modifcation date is updated,
+        but no copy of the image is being made, instead the original image is used.
 
       - Removed extra <br/> tag when viewing codesources in kupu.
 
