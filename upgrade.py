@@ -139,6 +139,8 @@ class UpgradeRegistry:
             pass
 
     def upgrade(self, root, from_version, to_version):
+        zLOG.LOG('Silva', zLOG.INFO, 'Refreshing all installed extensions.')
+        root.service_extensions.refresh_all()
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
             from_version, to_version))
         versions = self.__registry.keys()
