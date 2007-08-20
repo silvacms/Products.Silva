@@ -92,4 +92,3 @@ class TextConverter(object):
         except UnicodeDecodeError:
             return None
 
-
