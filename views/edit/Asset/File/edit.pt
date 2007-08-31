@@ -41,6 +41,81 @@
 </metal:fill-slot>
 
 <metal:fill-slot fill-slot="additional_tools">
+<tal:cond condition="model/can_edit_text">
+ <form method="post"
+  action="."
+  name="form"
+  enctype="multipart/form-data">
+  <table class="listing">
+    <thead>
+      <tal:block replace="nothing">
+        ______________ inter-controls row ______________
+      </tal:block>
+      <tr class="inter-controls">
+        <td colspan="2">
+          <h3 i18n:translate="">
+            Edit Text Content
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+   <tal:cond condition="not:model/is_editable_size">
+    <tbody>
+     <tr class="odd">
+      <td colspan="2" i18n:translate="">Text content is too large to be edited through Silva.  Please upload changes.</td>
+     </tr>
+    </tbody>
+   </tal:cond>
+   <tal:cond condition="model/is_editable_size">
+    <tbody tal:define="fields python:view.text_edit_form.get_fields()">
+      <tr>
+        <th class="align-right"
+          width="12%">
+        </th>
+        <th i18n:translate="">
+          content
+        </th>
+      </tr>
+
+      <tal:repeat repeat="field fields">
+      <tal:define define="iterate repeat/field/odd">
+      <tr tal:attributes="class python: iterate and 'odd' or 'even'">
+      <td class="field-title">
+        <label accesskey="f"
+          tal:content="structure field/title"
+          tal:attributes="for string:field_${field/id}">
+          title
+        </label><span class="warning"
+          tal:condition="field/is_required">*</span>
+      </td>
+      <td>
+        <input tal:replace="structure python:field.render_from_request(request)" />
+      </td>
+      </tr>
+      </tal:define>
+      </tal:repeat>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="2">
+          <input class="button"
+            type="submit"
+            name="save_text_content:method"
+            value="save text content"
+            title="access key: alt-u"
+            accesskey="u"
+            i18n:attributes="value;title"
+          />
+        </td>
+      </tr>
+    </tfoot>
+   </tal:cond>
+  </table>
+ </form>
+ </tal:cond>
   <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
 

@@ -6,6 +6,7 @@ from zope.interface import implements
 # Python
 import os
 import string
+from types import StringTypes
 from cgi import escape
 try:
     from cStringIO import StringIO
@@ -237,7 +238,30 @@ class File(Asset):
         """
         # should this set the content-disposition header,
         # like the "index_html" does?
-        return self._file.HEAD(REQUEST, RESPONSE)
+        return self._file.HEAD(REQUEST, RESPONSE)        
+
+    # checks where the mime type is text/* or javascript, and whether
+    #   this file is a ZODB file. (editing is only supported with ZODB files)
+    def can_edit_text(self):
+        mt = self.get_mime_type()
+        if (mt.startswith('text/') or \
+           mt in ('application/x-javascript',)) \
+           and hasattr(self.aq_explicit,'get_text_content'):
+            #that last one (get_text_content), is so only ZODBFiles are used
+            return True
+
+    def is_editable_size(self):
+        #size is editable if it is less than 150 KB
+        size = self.get_file_size()
+        return not size > 153600
+
+    def set_text_file_data(self, datastr):
+        ct = self._file.content_type
+        datafile = StringIO()
+        datafile.write(datastr)
+        self.set_file_data(datafile)
+        datafile.close()
+        self._file.content_type = ct
 
 InitializeClass(File)
 
@@ -257,6 +281,15 @@ class ZODBFile(File):
 
     def _index_html_helper(self, REQUEST):
         return self._file.index_html(REQUEST, REQUEST.RESPONSE) # parameters needed for OFS.File
+
+    def get_text_content(self):
+        if not self.can_edit_text():
+            raise TypeError("Content of Silva File is not text")
+        data = self._file.data
+        if isinstance(data, StringTypes):
+            return data
+        else:
+            raise TypeError("Text content of Silva File is not a string")
 
 InitializeClass(ZODBFile)
 
@@ -278,6 +311,11 @@ class FileSystemFile(File):
     def _index_html_helper(self, REQUEST):
         return self._file.index_html(REQUEST=REQUEST)
 
+    def get_text_content(self):
+        if not self.can_edit_text():
+            raise TypeError("Content of Silva File is not text")
+        data = self._file.index_html()
+        return data
 
 InitializeClass(FileSystemFile)
 
