@@ -581,12 +581,14 @@ table#sortable tbody a {
 }
 
 table#sortable a.icon img {
+  display: inline;
   float: left;
   margin-right: 0.5em;
 }
 
 /* reset the margin for the up/down arrows */
-table#sortable td.listing-right a.icon img {
+table#sortable td.listing-right img {
+  float: right;
   margin: 0;
 }
 
