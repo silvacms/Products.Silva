@@ -488,7 +488,6 @@ table.listing th.listing-left {
 
 table.listing th.listing-right {
   width: 4%;
-  padding-right: 0.4em;
   text-align: right;
 }
 
@@ -552,14 +551,12 @@ table.listing tr.inter-controls h3 {
 }
 
 table.listing td.listing-left {
-  padding: 0em 0.4em;
-  text-align: left;
+  padding: 0 0.4em;
   white-space: nowrap;
 }
 
 table.listing td.listing-right {
-  text-align: right;
-  white-space: nowrap;
+  padding-right: 0.4em;
 }
 
 table.listing tr.controls td, tr.inter-controls td {
@@ -571,7 +568,7 @@ table.listing td.field-title {
 }
 
 /* 
-* some usability fixes
+* some usability selectors:
 * create a displayed block of the links, because then you can click on
 * the whole tablecell and don't have to focus the text
 */
