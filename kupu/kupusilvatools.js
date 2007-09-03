@@ -2119,6 +2119,7 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
         var callback = new ContextFixer(this._addExternalSourceIfValidated, request, this);
         request.onreadystatechange = callback.execute;
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	formdata += '&docref='+this.docref;
         request.send(formdata);
     };
 };
