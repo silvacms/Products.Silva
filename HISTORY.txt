@@ -5,20 +5,27 @@ Silva changes
 
   Silva 2.0.1
 
-    Bugs fixed:
-      - Fixed the thumbnailing/caching bug. When a thumbnailed image was resized
-        back to 100%, a copy was being made to make sure the modification date
-        headers are newer. I changed this so only the modifcation date is updated,
-        but no copy of the image is being made, instead the original image is used.
+    Bugs fixed: 
+
+      - The lookup window allowed one to add content and assets to
+        ghostfolders, which isn't really advisable. This is no longer
+        possible.
+
+      - Fixed the thumbnailing/caching bug. When a thumbnailed image
+        was resized back to 100%, a copy was being made to make sure
+        the modification date headers are newer. I changed this so
+        only the modifcation date is updated, but no copy of the image
+        is being made, instead the original image is used.
 
       - Removed extra <br/> tag when viewing codesources in kupu.
 
-      - fix for bug 109008: wrong tooltip when hovering over version status link
+      - fix for  bug 109008: wrong tooltip when  hovering over version
+        status link
 
-      - importing a zexp file with the Silva root in there was failing, because
-        a Zope 3 event got fired that tried to re-add 'collection' to 
-        'service_metadata' while this is already there. Added a check to
-         SilvaMetadata (1.0.1) that fixes this.
+      - importing a zexp file with the Silva root in there was
+        failing, because a Zope 3 event got fired that tried to re-add
+        'collection' to 'service_metadata' while this is already
+        there. Added a check to SilvaMetadata (1.0.1) that fixes this.
 
   Silva 2.0
 
