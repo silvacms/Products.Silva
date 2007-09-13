@@ -5,7 +5,7 @@ Silva changes
 
   Silva 2.0.1
 
-    Bugs fixed: 
+    Bugs fixed:
 
       - The lookup window allowed one to add content and assets to
         ghostfolders, which isn't really advisable. This is no longer
@@ -19,7 +19,7 @@ Silva changes
 
       - Removed extra <br/> tag when viewing codesources in kupu.
 
-      - fix for  bug 109008: wrong tooltip when  hovering over version
+      - fix for bug 109008: wrong tooltip when hovering over version
         status link
 
       - importing a zexp file with the Silva root in there was
