@@ -3,7 +3,8 @@
 # from Products.Silva.adapters.interfaces import IViewerSecurity
 # from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
-from Products.Silva.interfaces import IContent, IContainer, IAsset, IPublishable
+from Products.Silva.interfaces import IContent, IContainer, IAsset, \
+     IPublishable, IGhostFolder
 from DateTime import DateTime
 from AccessControl import getSecurityManager
 from Products.Five import BrowserView
@@ -60,11 +61,11 @@ class ObjectLookup(BrowserView):
         default = None
         ordered_publishables = []
         assets = []
-        addables = []
+        all_addables = []
 
         filter = filter or []
         
-        if show_add:
+        if show_add and not IGhostFolder.providedBy(model):
             all_addables = model.get_silva_addables()
 
         if isinstance(filter, str):
@@ -130,7 +131,8 @@ class ObjectLookup(BrowserView):
                         assets.append(o)
 
                 if show_add:
-                    addables = [a['name'] for a in all_addables if a['name'] in filter]
+                    addables = [
+                        a['name'] for a in all_addables if a['name'] in filter]
 
         # sort the assets
         assets.sort(lambda a, b: cmp(a.id, b.id))
