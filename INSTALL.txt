@@ -123,24 +123,6 @@ to use Groups.
 
 http://www.infrae.com/download/Groups
 
-ExtFile
--------
-
-If the ExtFile product is properly installed, Silva can use it to
-store Silva File objects in the file system instead of the ZODB.  To
-let Silva use the ExtFile product, you can change settings using the
-service_files object available in the services tab in the Silva
-root. 
-
-Note that enabling/disabling ExtFile storage does not change the
-storage of the already present Silva File objects. It has no effect to
-the Silva Image objects either, as they are stored in the ZODB in any
-case. More information is available in ``docs/FileObject.stx``.
-
-http://www.zope.org/Members/shh/ExtFile
-
-Note that version 1.5.2 or later of ExtFile is required.
-
 Installing Silva with LDAP support
 ----------------------------------
 
