@@ -217,5 +217,12 @@
       OFS.interfaces.IObjectWillBeRemovedEvent"
     handler=".IPGroup.ipgroup_will_be_removed" 
   />
+
+  <subscriber
+    for=".interfaces.IVersion
+      zope.app.container.interfaces.IObjectMovedEvent"
+    handler=".Version.version_moved"
+  />
+
   
 </configure>

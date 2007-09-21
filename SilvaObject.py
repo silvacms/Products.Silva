@@ -582,7 +582,8 @@ def object_moved(object, event):
             
     if event.newName == 'index':
         newParent._invalidate_sidebar(newParent)
-    object._set_creation_datetime()
+    if not IVersionedContent.providedBy(object):
+        object._set_creation_datetime()
 
 def object_will_be_moved(object, event):
     if object != event.object or IObjectWillBeAddedEvent.providedBy(
