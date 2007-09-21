@@ -102,9 +102,9 @@ class CatalogRefresher:
             # Clear the Silva catalog
             zLOG.LOG('Silva', zLOG.INFO, 'Catalog Refresh: clearing catalog and reindexing all content. This may take a long time.')
             obj.service_catalog.manage_catalogClear()
-        elif ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
+        elif ISilvaObject.providedBy(obj) and getattr(obj.aq_explicit, 'index_object', None):
             obj.index_object()
-        elif IVersion.providedBy(obj) and getattr(obj, 'index_object', None):
+        elif IVersion.providedBy(obj) and getattr(obj.aq_explicit, 'index_object', None):
             if obj.version_status() != 'last_closed' and \
                obj.version_status() != 'closed' :
                 obj.index_object()

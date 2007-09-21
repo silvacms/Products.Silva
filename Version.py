@@ -5,6 +5,7 @@ from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from DateTime import DateTime
+from zope.app.container.interfaces import IObjectRemovedEvent
 
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers
@@ -189,7 +190,7 @@ _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
 def version_moved(version, event):
-    if helpers.is_removed(event):
+    if version != event.object or IObjectRemovedEvent.providedBy(event):
         return
     timings = {}
     ctime = getattr(version, '_v_creation_datetime', None)
