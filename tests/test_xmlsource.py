@@ -4,6 +4,12 @@ from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.adapters import xmlsource
 
 class XMLSourceTest(SilvaTestCase.SilvaTestCase):
+    DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+    def replace_datetimes(self, s):
+        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
+
+    def genericize(self, s):
+        return self.replace_datetimes(s)
 
     def test_xml_source(self):
         importfolder = self.add_folder(
@@ -26,17 +32,15 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         # a hard deadline in place, things have to keep moving.  in an
         # ideal world, the output compared against would be a string
         # literal, of course.
-        # XXX: Not only does it suck, but it fails in a very small number
-        # of cases: If the second changes between the exportToString and
-        # the getXML, the expected_xml != the output of the getXML. 
-        # AIEIEIEIIIEIIEIEEE!
         obj = self.root.silva_xslt.test_document
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(obj)
-        expected_xml = exporter.exportToString(exportRoot, settings)
+        expected_xml = self.genericize(
+            exporter.exportToString(exportRoot, settings))
         self.assertEqual(
-            expected_xml, xmlsource.XMLSourceAdapter(obj).getXML())
+            expected_xml, self.genericize(
+            xmlsource.XMLSourceAdapter(obj).getXML()))
 
 import unittest
 def test_suite():
