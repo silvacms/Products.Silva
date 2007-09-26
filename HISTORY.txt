@@ -6,6 +6,7 @@ Silva changes
   Silva 2.0.1
 
     Bugs fixed:
+
       - Fixed the thumbnailing/caching bug. When a thumbnailed image was resized
         back to 100%, a copy was being made to make sure the modification date
         headers are newer. I changed this so only the modifcation date is updated,
@@ -19,6 +20,8 @@ Silva changes
         a Zope 3 event got fired that tried to re-add 'collection' to 
         'service_metadata' while this is already there. Added a check to
          SilvaMetadata (1.0.1) that fixes this.
+
+      - Adding Groups, Virtual Groups and IPGroups was broken.
 
   Silva 2.0
 

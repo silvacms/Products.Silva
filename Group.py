@@ -36,7 +36,7 @@ class Group(SilvaObject, SimpleItem):
     manage_main = PageTemplateFile('www/groupEdit', globals())
 
     def __init__(self, id, title, group_name):
-        Group.inheritedAttribute('__init__')(self, id, title)
+        Group.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
         
     security.declareProtected(

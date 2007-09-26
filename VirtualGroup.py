@@ -31,7 +31,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
     manage_main = PageTemplateFile('www/virtualGroupEdit', globals())
 
     def __init__(self, id, title, group_name):
-        VirtualGroup.inheritedAttribute('__init__')(self, id, title)
+        VirtualGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
 
     def manage_beforeDelete(self, item, container):
