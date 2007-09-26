@@ -29,6 +29,8 @@ Silva changes
         'collection' to 'service_metadata' while this is already
         there. Added a check to SilvaMetadata (1.0.1) that fixes this.
 
+      - Adding Groups, Virtual Groups and IPGroups was broken.
+
   Silva 2.0
 
     Features added:

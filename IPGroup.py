@@ -25,7 +25,7 @@ class IPGroup(SilvaObject, SimpleItem):
     implements(IIPGroup)
 
     def __init__(self, id, title, group_name):
-        IPGroup.inheritedAttribute('__init__')(self, id, title)
+        IPGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
 
 
