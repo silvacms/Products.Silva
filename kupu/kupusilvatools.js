@@ -1058,8 +1058,8 @@ SilvaTableToolBox.prototype.updateState = function(selNode) {
 
 SilvaTableToolBox.prototype.addTable = function() {
     /* add a Silvs specific table, with an (optional) header with colspan */
-    var rows = parseInt(this.newrowsinput.value);
-    var cols = parseInt(this.newcolsinput.value);
+    var rows = parseInt(this.newrowsinput.value||1);
+    var cols = parseInt(this.newcolsinput.value||1);
     var makeHeader = this.makeheaderinput.checked;
     var classchooser = getFromSelector("kupu-table-classchooser-add");
     var tableclass = this.classselect.options[this.classselect.selectedIndex].value;
