@@ -9,6 +9,17 @@ Silva changes
 
     Bugs Fixed:
 
+    Ported from 2.0 branch
+
+     - Adding Groups, Virtual Groups and IPGroups was broken.
+
+    Ported from 1.6 branch
+
+      - Several reserved ids such as 'home' were declared unreserved
+        previously. Unfortunately it turned out that at least 'home'
+        was reserved for a good reason, so to be sure re-reserved
+        these ids, except for 'search'.
+
   Silva 2.0.1
 
     Bugs fixed:
@@ -34,8 +45,6 @@ Silva changes
         failing, because a Zope 3 event got fired that tried to re-add
         'collection' to 'service_metadata' while this is already
         there. Added a check to SilvaMetadata (1.0.1) that fixes this.
-
-      - Adding Groups, Virtual Groups and IPGroups was broken.
 
       - fix for bug: 101651: default settings for columns / rows on table 
         creation in kupu
