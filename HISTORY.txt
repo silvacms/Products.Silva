@@ -37,6 +37,12 @@ Silva changes
 
       - Adding Groups, Virtual Groups and IPGroups was broken.
 
+      - fix for bug: 101651: default settings for columns / rows on table 
+        creation in kupu
+
+      - widget-based and xslt renderers render underlines in the same way
+        with <span class="underline">
+
   Silva 2.0
 
     Features added:
