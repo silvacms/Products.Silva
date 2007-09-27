@@ -24,6 +24,11 @@ Silva changes
         cancel action. The form buttons have been reordered so that hitting
         return adds the item.
 
+      - Several reserved ids such as 'home' were declared unreserved
+        previously. Unfortunately it turned out that at least 'home' was
+        reserved for a good reason, so to be sure re-reserved these ids, 
+        except for 'search'.
+
   Silva 1.6
 
     Features added:
