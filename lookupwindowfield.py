@@ -31,7 +31,7 @@ class LookupWindowWidget(TextWidget):
     default_onclick_handler = """reference.getReference(
     function(path, id, title) {
         document.getElementsByName('%(field_id)s')[0].value = path;;
-        }, '%(url)s', '', true)
+        }, '%(url)s', '', true, '%(selected_path)s')
         """
     
     onclick = fields.TextAreaField(
@@ -85,7 +85,8 @@ class LookupWindowWidget(TextWidget):
         container = model.get_container()
         interpolate = {
             'url': container.absolute_url(),
-            'field_id': key}
+            'field_id': key,
+            'selected_path': field.value}
         return field.get_value('onclick') % interpolate
     
 class ReferenceLookupWindowWidget(LookupWindowWidget):

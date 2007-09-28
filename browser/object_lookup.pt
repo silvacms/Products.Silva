@@ -36,11 +36,13 @@
       tal:define="
         objects context/get_tree;
         silva_permissions context/edit/get_silva_permissions;
+        selected_path request/selected_path | request/SESSION/selected_path | nothing;
         filter request/filter | request/SESSION/filter | nothing;
         filter python: filter or '';
         filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
         startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
         show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
+        dummy python: request.SESSION.set('selected_path', selected_path);
         dummy python: request.SESSION.set('filter', filter);
         dummy python: request.SESSION.set('show_add', show_add);
         dummy python: request.SESSION.set('startpath', startpath);
@@ -78,7 +80,6 @@
                   publishables python: ret[1];
                   assets python: ret[2];
                   addable_types python: ret[3];
-                  global first_checked python:False;
                 ">
                 <thead>
                   <tal:block replace="nothing">
@@ -185,8 +186,6 @@
                         path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, item));
                         status_style python:item.get_object_status()[1];
                         oddrow repeat/item/odd;
-                        checked not: first_checked;
-                        global first_checked python: True;
                         ">
                         <tr tal:attributes="class python:oddrow and 'odd' or 'even'">
                           <tal:block replace="nothing">
@@ -200,7 +199,7 @@
                                 id id;
                                 lookup:id id;
                                 lookup:title title;
-                                checked checked;
+                                checked python:path == selected_path;
                               "/>
                             <label
                               tal:condition="is_default"
@@ -332,7 +331,6 @@
                         id asset/id;
                         title asset/get_title;
                         path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, asset));
-                        checked not: first_checked;
                         global first_checked python: True;
                         ">
                         <tr
@@ -350,7 +348,7 @@
                                 lookup:id id;
                                 lookup:title title;
                                 value path;
-                                checked checked;
+                                checked python:path == selected_path;
                             "/>
                             <label
                               tal:condition="default_document"

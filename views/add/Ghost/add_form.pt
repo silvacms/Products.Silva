@@ -80,7 +80,7 @@
                                       )[0].value = path;;
                                     },
                                     '${asset_context/absolute_url}',
-                                    'Content', true)"
+                                    'Content', true, '')"
           i18n:attributes="value;title"
         /><span class="warning"
           tal:condition="field/is_required">*</span>
