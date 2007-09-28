@@ -101,7 +101,7 @@
                                             )[0].value = path;;
                                           },
                                           '${asset_context/absolute_url}',
-                                          'Container', true)"
+                                          'Container', true, '${content_url}')"
                 i18n:attributes="value;title"
               /><span class="warning">*</span>
            </td>

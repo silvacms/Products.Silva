@@ -138,7 +138,8 @@ class ObjectLookup(BrowserView):
         assets.sort(lambda a, b: cmp(a.id, b.id))
 
         return (default, ordered_publishables, assets, addables)
-    
+
+
 class SidebarView(BrowserView):
     def render(self, tab_name, vein):
         # XXX once we move everything to five views, the object_lookup

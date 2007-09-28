@@ -320,7 +320,7 @@
     </div>
   
     <div class="kupu-toolbox" id="kupu-toolbox-links">
-      <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: '/'.join(container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path);             }, '${container/absolute_url}',             '', true);;         }       "/>
+      <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: '/'.join(container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path);             }, '${container/absolute_url}',             '', true, '');;         }       "/>
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
@@ -383,7 +383,7 @@
 
     <div class="kupu-toolbox" id="kupu-toolbox-images">
 
-    <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: container" tal:content="string:       function getImage() {         reference.getReference(           function(path, id, title) {             var imgtool = kupu.getTool('imagetool');             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${folder_context/absolute_url}',           'Silva Image', true);;       }     "/>
+    <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: container" tal:content="string:       function getImage() {         reference.getReference(           function(path, id, title) {             var imgtool = kupu.getTool('imagetool');             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${folder_context/absolute_url}',           'Silva Image', true, '');;       }     "/>
 
     <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
 

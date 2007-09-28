@@ -8,7 +8,7 @@ this.reference = new function() {
 
     this.current_handler = undefined;
 
-    this.getReference = function(handler, startpath, filter, show_add) {
+        this.getReference = function(handler, startpath, filter, show_add, selected_path) {
         /* open the reference lookup window 
         
             when the user has selected an item, handler will be called
@@ -28,8 +28,8 @@ this.reference = new function() {
         var winname = 'object_lookup_window_' + level;
         var win = window.open(startpath + 
                               '/@@object_lookup?filter=' + filter + '&' +
-                              'show_add=' + (show_add ? '1' : '0') + '&',
-                              winname,
+                              'show_add=' + (show_add ? '1' : '0') + '&' +
+                              'selected_path=' + selected_path, winname,
                               'toolbar=yes,status=yes,scrollbars=yes,' +
                               'resizable=yes,width=' + winwidth +
                               ',height=' + winheight +
