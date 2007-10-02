@@ -55,6 +55,8 @@ Silva changes
       - widget-based and xslt renderers render underlines in the same way
         with <span class="underline">
 
+      - fixed 101494: Empty "source" elements break the XSLT renderer
+
   Silva 2.0
 
     Features added:
