@@ -29,6 +29,8 @@ Silva changes
       - widget-based and xslt renderers render underlines in the same way
         with <span class="underline">
 
+      - fixed 101494: Empty "source" elements break the XSLT renderer
+
     Ported from 1.6 branch
 
       - Several reserved ids such as 'home' were declared unreserved
