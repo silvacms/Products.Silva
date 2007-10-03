@@ -57,6 +57,9 @@ Silva changes
 
       - fixed 101494: Empty "source" elements break the XSLT renderer
 
+      - fixed 101396: paragraphs in lists, tables rendered differently 
+                      in widgets vs xslt renderers
+
   Silva 2.0
 
     Features added:
