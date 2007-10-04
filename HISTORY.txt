@@ -3,25 +3,51 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.1 (unreleased)
+
+    Features added:
+
+    Bugs Fixed:
+
+    Ported from 2.0 branch
+
+      - Adding Groups, Virtual Groups and IPGroups was broken.
+
+    Ported from 1.6 branch
+
+      - Several reserved ids such as 'home' were declared unreserved
+        previously. Unfortunately it turned out that at least 'home'
+        was reserved for a good reason, so to be sure re-reserved
+        these ids, except for 'search'.
+
+      - In the lookupwindowfield, a previously selected value is now
+        shown selected.
+
   Silva 2.0.1
 
     Bugs fixed:
 
-      - Fixed the thumbnailing/caching bug. When a thumbnailed image was resized
-        back to 100%, a copy was being made to make sure the modification date
-        headers are newer. I changed this so only the modifcation date is updated,
-        but no copy of the image is being made, instead the original image is used.
+      - creationdate is once again set on versioned content.
+
+      - The lookup window allowed one to add content and assets to
+        ghostfolders, which isn't really advisable. This is no longer
+        possible.
+
+      - Fixed the thumbnailing/caching bug. When a thumbnailed image
+        was resized back to 100%, a copy was being made to make sure
+        the modification date headers are newer. I changed this so
+        only the modifcation date is updated, but no copy of the image
+        is being made, instead the original image is used.
 
       - Removed extra <br/> tag when viewing codesources in kupu.
 
-      - fix for bug 109008: wrong tooltip when hovering over version status link
+      - fix for bug 109008: wrong tooltip when hovering over version
+        status link
 
-      - importing a zexp file with the Silva root in there was failing, because
-        a Zope 3 event got fired that tried to re-add 'collection' to 
-        'service_metadata' while this is already there. Added a check to
-         SilvaMetadata (1.0.1) that fixes this.
-
-      - Adding Groups, Virtual Groups and IPGroups was broken.
+      - importing a zexp file with the Silva root in there was
+        failing, because a Zope 3 event got fired that tried to re-add
+        'collection' to 'service_metadata' while this is already
+        there. Added a check to SilvaMetadata (1.0.1) that fixes this.
 
       - fix for bug: 101651: default settings for columns / rows on table 
         creation in kupu
@@ -34,12 +60,7 @@ Silva changes
       - fixed 101396: paragraphs in lists, tables rendered differently 
                       in widgets vs xslt renderers
 
-    Ported from 1.6 branch
-
-      - Several reserved ids such as 'home' were declared unreserved
-        previously. Unfortunately it turned out that at least 'home'
-        was reserved for a good reason, so to be sure re-reserved
-        these ids, except for 'search'.
+      - fixed 101567: hires image links work from kupu but not widgets renderers
 
   Silva 2.0
 
