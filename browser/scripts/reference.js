@@ -29,7 +29,7 @@ this.reference = new function() {
         var win = window.open(startpath + 
                               '/@@object_lookup?filter=' + filter + '&' +
                               'show_add=' + (show_add ? '1' : '0') + '&' +
-                              'selected_path=' escape(selected_path), winname,
+                              'selected_path=' + escape(selected_path), winname,
                               'toolbar=yes,status=yes,scrollbars=yes,' +
                               'resizable=yes,width=' + winwidth +
                               ',height=' + winheight +

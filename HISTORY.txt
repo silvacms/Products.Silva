@@ -60,6 +60,8 @@ Silva changes
       - fixed 101396: paragraphs in lists, tables rendered differently 
                       in widgets vs xslt renderers
 
+      - fixed 101567: hires image links work from kupu but not widgets renderers
+
   Silva 2.0
 
     Features added:
