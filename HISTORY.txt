@@ -62,6 +62,8 @@ Silva changes
 
       - fixed 101567: hires image links work from kupu but not widgets renderers
 
+      - fixed 148863: toc rendering not XHTML compliant
+
   Silva 2.0
 
     Features added:

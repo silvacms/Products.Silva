@@ -82,7 +82,9 @@ class TOCRenderingAdapter(adapter.Adapter):
             title = (public and item.get_title() or item.get_title_editable()) or item.id
             html.append(a_templ%(item.absolute_url(),append_to_url,title))
         else:
-            html.append('</ul>')
+            while depth >= 0:
+                html.append('</li></ul>')
+                depth -= 1
         return '\n'.join(html)
     
 Globals.InitializeClass(TOCRenderingAdapter)
