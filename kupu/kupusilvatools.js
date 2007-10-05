@@ -1925,7 +1925,8 @@ SilvaCitationTool.prototype.createContextMenuElements = function(selNode, event)
 };
 
 function SilvaExternalSourceTool(idselectid, formcontainerid, addbuttonid, cancelbuttonid,
-                                    updatebuttonid, delbuttonid, toolboxid, plainclass, activeclass) {
+				 updatebuttonid, delbuttonid, toolboxid, plainclass, activeclass,
+                                 isenabledid, disabledtextid) {
     this.idselect = getFromSelector(idselectid);
     this.formcontainer = getFromSelector(formcontainerid);
     this.addbutton = getFromSelector(addbuttonid);
@@ -1935,7 +1936,8 @@ function SilvaExternalSourceTool(idselectid, formcontainerid, addbuttonid, cance
     this.toolbox = getFromSelector(toolboxid);
     this.plainclass = plainclass;
     this.activeclass = activeclass;
-
+    this.is_enabled = getFromSelector(isenabledid).value=='1';
+    this.disabled_text = getFromSelector(disabledtextid);
     this._editing = false;
     this._url = null;
     this._id = null;
@@ -1986,6 +1988,11 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
     this.updatebutton.style.display = 'none';
     this.delbutton.style.display = 'none';
     this.cancelbutton.style.display = 'none';
+    if (!this.is_enabled) {
+      this.disabled_text.style.display='block';
+      this.addbutton.style.display = 'none';
+      this.idselect.style.display = 'none';
+  }
 };
 
 SilvaExternalSourceTool.prototype.updateState = function(selNode) {
@@ -1999,6 +2006,7 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode) {
         this.updatebutton.style.display = 'inline';
         this.delbutton.style.display = 'inline';
         this.startExternalSourceUpdate(extsource);
+	this.disabled_text.style.display = 'none';
         if (this.toolbox) {
             this.toolbox.className = this.activeclass;
         };
@@ -2093,8 +2101,11 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // you should not be allowed to add external sources inside 
-    // headers or table cells
+    // headers or table cells (but the cursor may be inside an ES title, which is an H4.
     var selNode = this.editor.getSelectedNode();
+    if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' && selNode.parentNode.className=='externalsource') {
+      selNode = selNode.parentNode;
+    }
     var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
     for (i=0; i < not_allowed_parent_tags.length; i++){
         if (selNode.tagName == not_allowed_parent_tags[i]){
@@ -2294,11 +2305,20 @@ SilvaExternalSourceTool.prototype.resetTool = function() {
     while (this.formcontainer.hasChildNodes()) {
         this.formcontainer.removeChild(this.formcontainer.firstChild);
     };
-    this.idselect.style.display = 'inline';
-    this.addbutton.style.display = 'inline';
-    this.cancelbutton.style.display = 'none';
-    this.updatebutton.style.display = 'none';
-    this.delbutton.style.display = 'none';
+    if (!this.is_enabled) {
+      this.updatebutton.style.display = 'none';
+      this.delbutton.style.display = 'none';
+      this.cancelbutton.style.display = 'none';
+      this.disabled_text.style.display='block';
+      this.addbutton.style.display = 'none';
+      this.idselect.style.display = 'none';
+    } else {
+      this.idselect.style.display = 'inline';
+      this.addbutton.style.display = 'inline';
+      this.cancelbutton.style.display = 'none';
+      this.updatebutton.style.display = 'none';
+      this.delbutton.style.display = 'none';
+    }
     //this.editor.updateState();
     this._editing = false;
 };

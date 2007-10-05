@@ -178,7 +178,8 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-extsource-id', 'kupu-extsource-formcontainer', 
         'kupu-extsource-addbutton', 'kupu-extsource-cancelbutton',
         'kupu-extsource-updatebutton', 'kupu-extsource-delbutton',
-        'kupu-toolbox-extsource', 'kupu-toolbox', 'kupu-toolbox-active');
+        'kupu-toolbox-extsource', 'kupu-toolbox', 'kupu-toolbox-active',
+	'kupu-extsource-enabledflag', 'kupu-extsource-disabledtext');
     kupu.registerTool('extsourcetool', extsourcetool);
 
     var citationtool = new SilvaCitationTool(

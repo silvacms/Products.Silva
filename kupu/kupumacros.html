@@ -356,11 +356,11 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
+                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name"/></td>
                     </tr>
                     <tr>
-                      <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
+                      <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">index title</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-title"/></td>
                     </tr>
                   </table>
@@ -491,7 +491,8 @@
               </tal:block>
             </tal:block>
           </select>
-
+	  <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'"/>
+          <div style="display: none" id="kupu-extsource-disabledtext">The External Sources product is not installed.  This tool is disabled.</div>
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton"/>
           <input class="cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
           <input class="button" type="button" value="update source" id="kupu-extsource-updatebutton"/>

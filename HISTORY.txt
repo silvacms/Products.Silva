@@ -9,6 +9,8 @@ Silva changes
 
     Bugs Fixed:
 
+      - fixed 101240: SilvaExternalSource cannot be disabled.
+
     Ported from 2.0 branch
 
       - Adding Groups, Virtual Groups and IPGroups was broken.
@@ -61,6 +63,8 @@ Silva changes
                       in widgets vs xslt renderers
 
       - fixed 101567: hires image links work from kupu but not widgets renderers
+      
+      - fixed 148863: toc rendering not XHTML compliant
 
   Silva 2.0
 
