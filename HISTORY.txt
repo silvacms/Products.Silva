@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - applied 101661: hide items user has no access to in sidebar
+        Note, in certain setups, this may be a big change, as
+        areas of the publication the current user has no access to
+        will not be displayed in the sidebar.
+
     Bugs Fixed:
 
       - fixed 101240: SilvaExternalSource cannot be disabled.

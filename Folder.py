@@ -737,6 +737,13 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         self._get_status_tree_helper(l, 0, depth)
         return l
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_container_tree')
+    def get_container_tree(self, depth=-1,skip_unauthorized=0):
+        l = []
+        self._get_container_tree_helper(l, 0, depth, skip_unauthorized)
+        return l
+
     def _get_tree_helper(self, l, indent, depth):
         for item in self.get_ordered_publishables():
             if item.getId() == 'index':
@@ -750,16 +757,32 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             else:
                 l.append((indent, item))
 
-    def _get_container_tree_helper(self, l, indent, depth):
+    def _get_container_tree_helper(self, l, indent, depth, skip_unauthorized=0):
+        user = getSecurityManager().getUser()
+        #do a depth-first search, so that we in the event skip_unauthorized=1, we can include
+        # all areas of the container tree having children the user has access to.
+        #Also, in the event skip_unauthorized=1, we can short-circuit the permissions testing
+        #  for lower-level items.  If the user has permissions for the current item, it is given
+        #  that the user will have permissions for _all_ lower-level items.  So in this case,
+        #  all lower-level items can be treated as if skip_unauthorized=1
+        #  this can be done by "skip_unauthorized and not user.has_permission()"
         for item in self.get_ordered_publishables():
             if not IContainer.providedBy(item):
                 continue
+            thisitem_items = []
+            #only do the check if we are checking authorization
+            thisitem_perm = skip_unauthorized and \
+                            user.has_permission(SilvaPermissions.ReadSilvaContent, item)
             if item.is_transparent():
-                l.append((indent, item))
                 if depth == -1 or indent < depth:
-                    item._get_container_tree_helper(l, indent + 1, depth)
-            else:
-                l.append((indent, item))
+                    #see note above about skip_unauthorized
+                    item._get_container_tree_helper(thisitem_items, indent + 1, depth,
+                                                    skip_unauthorized and not thisitem_perm)
+            if not skip_unauthorized or \
+                   len(thisitem_items) or \
+                   thisitem_perm:
+                thisitem_items.insert(0,(indent, item))
+                l.extend(thisitem_items)
 
     def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers=0):
         for item in self.get_ordered_publishables():
