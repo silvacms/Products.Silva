@@ -34,6 +34,8 @@ Silva changes
         reserved for a good reason, so to be sure re-reserved these ids, 
         except for 'search'.
 
+      - fixed 148863: toc rendering not XHTML compliant, backported from trunk
+
   Silva 1.6
 
     Features added:
