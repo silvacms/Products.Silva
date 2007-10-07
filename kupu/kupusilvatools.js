@@ -1989,7 +1989,6 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
 };
 
 SilvaExternalSourceTool.prototype.updateState = function(selNode) {
-  alert("update state" + selNode);
     var extsource = this.getNearestExternalSource(selNode);
     var heading = this.toolbox.getElementsByTagName('h1')[0];
     if (extsource) {
