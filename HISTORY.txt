@@ -3,26 +3,6 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1 (unreleased)
-
-    Features added:
-
-    Bugs Fixed:
-
-    Ported from 2.0 branch
-
-      - Adding Groups, Virtual Groups and IPGroups was broken.
-
-    Ported from 1.6 branch
-
-      - Several reserved ids such as 'home' were declared unreserved
-        previously. Unfortunately it turned out that at least 'home'
-        was reserved for a good reason, so to be sure re-reserved
-        these ids, except for 'search'.
-
-      - In the lookupwindowfield, a previously selected value is now
-        shown selected.
-
   Silva 2.0.1
 
     Bugs fixed:
