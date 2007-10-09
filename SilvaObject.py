@@ -26,7 +26,7 @@ from Security import Security
 from ViewCode import ViewCode
 from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
-from interfaces import IVersioning, IVersionedContent
+from interfaces import IVersioning, IVersionedContent, IFolder
 from Products.Silva import helpers
 # Silva adapters
 from Products.Silva.adapters import zipfileexport
@@ -593,6 +593,7 @@ def object_will_be_moved(object, event):
     if (IPublishable.providedBy(object) and not (
         IContent.providedBy(object) and object.is_default())):
         container._remove_ordered_id(object)
-
+    if IFolder.providedBy(object):
+        container._invalidate_sidebar(object)
     if event.oldName == 'index':
         container._invalidate_sidebar(container)
