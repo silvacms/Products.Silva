@@ -7,6 +7,9 @@ Silva changes
 
     Bugs fixed:
 
+      - fixed 150809: sidebar cache not invalidated when folder
+        removed
+    
       - creationdate is once again set on versioned content.
 
       - The lookup window allowed one to add content and assets to
@@ -29,18 +32,19 @@ Silva changes
         'collection' to 'service_metadata' while this is already
         there. Added a check to SilvaMetadata (1.0.1) that fixes this.
 
-      - fix for bug: 101651: default settings for columns / rows on table 
-        creation in kupu
+      - fix for bug: 101651: default settings for columns / rows on
+        table creation in kupu
 
-      - widget-based and xslt renderers render underlines in the same way
-        with <span class="underline">
+      - widget-based and xslt renderers render underlines in the same
+        way with <span class="underline">
 
       - fixed 101494: Empty "source" elements break the XSLT renderer
 
-      - fixed 101396: paragraphs in lists, tables rendered differently 
-                      in widgets vs xslt renderers
+      - fixed 101396: paragraphs in lists, tables rendered differently
+        in widgets vs xslt renderers
 
-      - fixed 101567: hires image links work from kupu but not widgets renderers
+      - fixed 101567: hires image links work from kupu but not widgets
+        renderers
 
       - fixed 148863: toc rendering not XHTML compliant
 
