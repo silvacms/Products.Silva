@@ -18,21 +18,10 @@ Silva changes
 
     Ported from 2.0 branch
 
+      - fixed 150809: sidebar cache not invalidated when folder
+        removed
+
       - Adding Groups, Virtual Groups and IPGroups was broken.
-
-    Ported from 1.6 branch
-
-      - Several reserved ids such as 'home' were declared unreserved
-        previously. Unfortunately it turned out that at least 'home'
-        was reserved for a good reason, so to be sure re-reserved
-        these ids, except for 'search'.
-
-      - In the lookupwindowfield, a previously selected value is now
-        shown selected.
-
-  Silva 2.0.1
-
-    Bugs fixed:
 
       - creationdate is once again set on versioned content.
 
@@ -56,20 +45,33 @@ Silva changes
         'collection' to 'service_metadata' while this is already
         there. Added a check to SilvaMetadata (1.0.1) that fixes this.
 
-      - fix for bug: 101651: default settings for columns / rows on table 
-        creation in kupu
+      - fix for bug: 101651: default settings for columns / rows on
+        table creation in kupu
 
-      - widget-based and xslt renderers render underlines in the same way
-        with <span class="underline">
+      - widget-based and xslt renderers render underlines in the same
+        way with <span class="underline">
 
       - fixed 101494: Empty "source" elements break the XSLT renderer
 
-      - fixed 101396: paragraphs in lists, tables rendered differently 
-                      in widgets vs xslt renderers
+      - fixed 101396: paragraphs in lists, tables rendered differently
+        in widgets vs xslt renderers
 
-      - fixed 101567: hires image links work from kupu but not widgets renderers
+      - fixed 101567: hires image links work from kupu but not widgets
+        renderers
+       
       
       - fixed 148863: toc rendering not XHTML compliant
+
+    Ported from 1.6 branch
+
+      - Several reserved ids such as 'home' were declared unreserved
+        previously. Unfortunately it turned out that at least 'home'
+        was reserved for a good reason, so to be sure re-reserved
+        these ids, except for 'search'.
+
+      - In the lookupwindowfield, a previously selected value is now
+        shown selected.
+
 
   Silva 2.0
 
