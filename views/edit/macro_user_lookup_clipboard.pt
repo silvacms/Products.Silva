@@ -35,8 +35,19 @@
                     accesskey="l"
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate=""
-                    i18n:attributes="title">
+                    i18n:attributes="title"
+                    tal:condition="not:python:view.use_direct_lookup()">
                     lookup users...
+                  </a>
+                  <a class="transport"
+                    style="float:right;"
+                    title="lookup users: alt-l"
+                    accesskey="l"
+                    tal:attributes="href string:${model/absolute_url}/edit/lookup"
+                    i18n:translate=""
+                    i18n:attributes="title"
+                    tal:condition="python:view.use_direct_lookup()">
+                    add users...
                   </a>
                 </metal:block>
               </td>

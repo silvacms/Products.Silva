@@ -1,6 +1,7 @@
 request = context.REQUEST
 session = request.SESSION
 model = request.model
+view = context
 
 key = ('silva_lookup_referer', model.get_root_url())
 default_referer = '%s/edit/tab_access' % model.absolute_url()
@@ -12,4 +13,9 @@ if referer.endswith('/edit/'):
 
 session[key] = referer
 
-request.RESPONSE.redirect('%s/edit/lookup_ui' % model.absolute_url())
+if not view.use_direct_lookup():
+    request.RESPONSE.redirect('%s/edit/lookup_ui' % model.absolute_url())
+else:
+    request.RESPONSE.redirect('%s/edit/lookup_ui_direct' %
+                              model.absolute_url())
+

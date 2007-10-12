@@ -7,6 +7,12 @@ Silva changes
 
     Features added:
 
+      - Support for direct username assignment to clipboard. If the
+        service_members service defines a method 'direct_user_lookup' that
+        returns True, the user lookup UI in the access tab is changed to
+        an add user to clipboard UI. This allows the adding of new
+        users to a clipboard directly.
+
       - applied 101661: hide items user has no access to in sidebar
         Note, in certain setups, this may be a big change, as
         areas of the publication the current user has no access to
