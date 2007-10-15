@@ -20,6 +20,7 @@ Silva changes
 
     Bugs Fixed:
 
+      - fixed wuw140: Incorrect caching of images.
       - fixed 101240: SilvaExternalSource cannot be disabled.
 
     Ported from 2.0 branch
