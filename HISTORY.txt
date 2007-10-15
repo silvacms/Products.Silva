@@ -7,6 +7,8 @@ Silva changes
 
     Bugs fixed:
 
+      - fixed wuw140: Incorrect caching of images.
+
       - fixed 150809: sidebar cache not invalidated when folder
         removed
     
