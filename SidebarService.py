@@ -3,13 +3,10 @@
 # $Id: SidebarService.py,v 1.23 2006/01/24 16:14:12 faassen Exp $
 # Zope
 from zope.interface import implements
-
 from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from AccessControl import ClassSecurityInfo, getSecurityManager
-
 # Silva
 from SidebarCache import SidebarCache
 import SilvaPermissions
@@ -70,7 +67,7 @@ class SidebarService(SimpleItem):
         the full pagetemplate and stores that in the cache
         """
         pub = obj.get_publication()
-        adapter = getVirtualHostingAdapter(pub)  
+        adapter = getVirtualHostingAdapter(pub)        
         if adapter.containsVirtualRoot():
             # If the virtual host points inside the publication, 
             # use that point as 'publication' to start from.
@@ -81,13 +78,9 @@ class SidebarService(SimpleItem):
 
         storage = self._get_storage()
         sidebar_cache = storage._sidebar_cache
-
-        user = getSecurityManager().getUser().getId()
-
-        cached_template = sidebar_cache.get((abs_url, user))
-
+        cached_template = sidebar_cache.get(abs_url)
         if cached_template is None:
-            cached_template = sidebar_cache[(abs_url,user)] = self._render_template(pub)
+            cached_template = sidebar_cache[abs_url] = self._render_template(pub)
             # now add the abs_url to the path_mapping of the storage so we
             # can find it for invalidation when the invalidation is done
             # from another virtual host.

@@ -10,7 +10,7 @@
   tal:define="    
     model           request/model;
     publication     model;
-    tree            python:publication.get_container_tree(skip_unauthorized=1);
+    tree            publication/get_container_tree;
     publication_url string:${publication/absolute_url}/edit/{__vein_id__};
 ">
 

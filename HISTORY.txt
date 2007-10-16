@@ -13,11 +13,6 @@ Silva changes
         an add user to clipboard UI. This allows the adding of new
         users to a clipboard directly.
 
-      - applied 101661: hide items user has no access to in sidebar
-        Note, in certain setups, this may be a big change, as
-        areas of the publication the current user has no access to
-        will not be displayed in the sidebar.
-
     Bugs Fixed:
 
       
