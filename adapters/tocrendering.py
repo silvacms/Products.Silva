@@ -61,12 +61,19 @@ class TOCRenderingAdapter(adapter.Adapter):
         else:
             append_to_url = ''
 
+        #func is either a generator function that returns the public items
+        #or all items to render in this TOC.  The functions use yields
+        #to generate the lists.  Rendering is sped up since the list
+        #is only iterated through once.
         func = public and self._get_public_tree_iterator or self._get_tree_iterator
         html = []
         a_templ = '<a href="%s%s">%s</a>'
 
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
+        depth = item = None  #need to pre-initialize these
+        #the func yeilds the depth and the item for each item, and
+        #this loop will quietly end when there are no more items to render
         for (depth,item) in func(container=self.context,toc_depth=toc_depth):
             pd = prev_depth[-1]
             if pd < depth: #down one level
@@ -82,6 +89,8 @@ class TOCRenderingAdapter(adapter.Adapter):
             title = (public and item.get_title() or item.get_title_editable()) or item.id
             html.append(a_templ%(item.absolute_url(),append_to_url,title))
         else:
+            #do this when the loop is finished, to
+            #ensure that the lists are ended properly
             while depth >= 0:
                 html.append('</li></ul>')
                 depth -= 1

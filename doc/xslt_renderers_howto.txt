@@ -224,7 +224,7 @@ for a specific content object, or select a renderer as a global policy
 for all objects of a type (except those which have a specific renderer
 selected).
 
-For a specific content object you can switch between renderers om the
+For a specific content object you can switch between renderers in the
 properties screen by changing the 'content renderer'. Note that this
 option is only available if there are alternative renderers available
 for this object at all. The preview, public preview and public view
