@@ -91,6 +91,8 @@ class TOCRenderingAdapter(adapter.Adapter):
         else:
             #do this when the loop is finished, to
             #ensure that the lists are ended properly
+            #the last item in the list could part of a nested list (with depth 1,2,3+, etc)
+            #so need to loop down the depth and close all open lists
             while depth >= 0:
                 html.append('</li></ul>')
                 depth -= 1
