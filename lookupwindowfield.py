@@ -86,7 +86,7 @@ class LookupWindowWidget(TextWidget):
         interpolate = {
             'url': container.absolute_url(),
             'field_id': key,
-            'selected_path': field.value}
+            'selected_path': getattr(field ,'value', '')}
         return field.get_value('onclick') % interpolate
     
 class ReferenceLookupWindowWidget(LookupWindowWidget):
