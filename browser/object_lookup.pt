@@ -47,6 +47,7 @@
         dummy python: request.SESSION.set('filter', filter);
         dummy python: request.SESSION.set('show_add', show_add);
         dummy python: request.SESSION.set('startpath', startpath);
+        dummy python: request.SESSION.set('lastpath', '/'.join(context.getPhysicalPath()));
         pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
         filter_string python: '|'.join(filter);
       ">
@@ -200,7 +201,7 @@
                                 id id;
                                 lookup:id id;
                                 lookup:title title;
-                                checked python:path == selected_path;
+                                checked python:'/'.join(item.getPhysicalPath()) == selected_path;
                               "/>
                             <label
                               tal:condition="is_default"
@@ -332,7 +333,6 @@
                         id asset/id;
                         title asset/get_title;
                         path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, asset));
-                        global first_checked python: True;
                         ">
                         <tr
                           tal:define="show_top_border repeat/asset/start;"

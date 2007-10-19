@@ -68,6 +68,9 @@ Silva changes
 
     Ported from 1.6 branch
 
+      - The lookup window now opens in the directory that was last
+        opened.
+
       - Several reserved ids such as 'home' were declared unreserved
         previously. Unfortunately it turned out that at least 'home'
         was reserved for a good reason, so to be sure re-reserved
