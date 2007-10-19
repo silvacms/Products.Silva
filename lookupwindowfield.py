@@ -67,6 +67,7 @@ class LookupWindowWidget(TextWidget):
         return ' '.join(widget)
     
     def _onclick_handler(self, field, key):
+        import pdb; pdb.set_trace()
         request = getattr(field, 'REQUEST', None)
         if request is None:
             # XXX not sure yet
@@ -78,13 +79,19 @@ class LookupWindowWidget(TextWidget):
         # when inside Kupu, 'model' points to the ExternalSource, which is not
         # very useful... however, in that case a request variable 'docref' will
         # be available to refer to the original model...
+        url = ''
         if request.has_key('docref'):
             # we're in an ExternalSource, use the document in which it is
             # placed instead of the source as the model
-            model = model.resolve_ref(request['docref'])
-        container = model.get_container()
+            url = model.resolve_ref(
+                request['docref']).get_container().absolute_url()
+        else:
+            # start where we last looked something up
+            url = request.SESSION.get('lastpath') or '' 
+        if url == '':
+            url = model.get_container().absolute_url()
         interpolate = {
-            'url': container.absolute_url(),
+            'url': url,
             'field_id': key,
             'selected_path': getattr(field ,'value', '')}
         return field.get_value('onclick') % interpolate
