@@ -67,7 +67,6 @@ class LookupWindowWidget(TextWidget):
         return ' '.join(widget)
     
     def _onclick_handler(self, field, key):
-        import pdb; pdb.set_trace()
         request = getattr(field, 'REQUEST', None)
         if request is None:
             # XXX not sure yet
