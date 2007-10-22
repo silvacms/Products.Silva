@@ -60,7 +60,7 @@
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
                     <tal:block define="sb context/@@sidebar"
-                      replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
+                               replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s&selected_path=%s' % (filter_string, show_add, selected_path) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
@@ -131,7 +131,7 @@
                           />
                           <input type="hidden"
                             name="return_url"
-                            tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
+                            tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}&selected_path=${selected_path}"
                           />
                         </form>
                       </div>
@@ -199,7 +199,7 @@
                                 id id;
                                 lookup:id id;
                                 lookup:title title;
-                                checked python:path == selected_path;
+                                checked python:'/'.join(item.getPhysicalPath()) == selected_path;
                               "/>
                             <label
                               tal:condition="is_default"
@@ -229,7 +229,7 @@
                               </tal:block>
                             </label>
                             <tal:block condition="item/implements_container">
-                              <tal:block define="lookuplink python:id + '/@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add)">
+                              <tal:block define="lookuplink python:id + '/@@object_lookup?filter=%s&show_add=%s&selected_path=%s' % (filter_string, show_add, selected_path)">
                                 <a class="icon"
                                   tal:attributes="
                                     href lookuplink;
@@ -331,7 +331,6 @@
                         id asset/id;
                         title asset/get_title;
                         path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, asset));
-                        global first_checked python: True;
                         ">
                         <tr
                           tal:define="show_top_border repeat/asset/start;"
