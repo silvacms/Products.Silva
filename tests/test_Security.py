@@ -2,8 +2,8 @@
 # See also LICENSE.txt
 # $Revision: 1.21 $
 from Testing import ZopeTestCase
-from Products.Silva.tests import SilvaTestCase
 
+from Products.Silva.tests import SilvaTestCase
 from Products.Silva import Folder
 from Products.Silva import roleinfo
 from Products.SilvaDocument import Document
@@ -21,6 +21,7 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
                          'folder4', 'Folder4')
         self.publication5 = publication5 = self.add_publication(self.root,
                          'publication5', 'Publication5')
+        self.publication5.manage_addUserFolder()
         self.subdoc = subdoc = self.add_folder(folder4,
                          'subdoc', 'Subdoc')
         self.subfolder = subfolder = self.add_folder(folder4,
@@ -32,6 +33,11 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
             'foo', 'silly', 'Anonymous', [])
         self.root.acl_users._doAddUser(
             'bar', 'sillytoo', 'Anonymous', [])
+        self.root.acl_users._doAddUser(
+            'baz', 'silliest', 'Manager', [])
+        self.publication5.acl_users._doAddUser(
+            'baz', 'silliest', 'Anonymous', [])
+
         # we are assuming 'author' and 'editor' are the only two 
         # interesting roles that will be returned by sec_get_roles()
         #self.root._addRole('Author')
@@ -109,7 +115,21 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.assertSameEntries(
             roleinfo.ASSIGNABLE_ROLES,
             self.root.sec_get_roles())
-        
+
+    def test_sec_get_all_roles_for_userid(self):
+        self.root.sec_assign('baz', 'Editor')
+        self.publication5.sec_assign('baz', 'Author')
+        self.assertSameEntries(
+            ['Author','Editor'],
+            self.publication5.sec_get_all_roles_for_userid('baz'))
+
+    def test_sec_get_local_roles_for_userid(self):
+        self.root.sec_assign('baz', 'Editor')
+        self.publication5.sec_assign('baz', 'Author')
+        self.assertSameEntries(
+            ['Author'],
+            self.publication5.sec_get_local_roles_for_userid('baz'))
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

@@ -297,12 +297,10 @@ class Security(AccessManager):
     def sec_get_all_roles_for_userid(self, userid):
         """Returns all roles a user has in this context"""
         roles = []
-        user = self.acl_users.getUser(userid)
-        if not user:
-            return roles
-        rolesInContext = user.getRolesInContext(self)
+        local_roles = self.sec_get_local_roles_for_userid(userid)
+        upward_roles =  self.sec_get_upward_roles_for_userid(userid)
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
-            if role in rolesInContext:
+            if role in local_roles or role in upward_roles:
                 roles.append(role)
         return roles
 
