@@ -1,7 +1,6 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.21 $
-from AccessControl.User import UserFolder
 from Testing import ZopeTestCase
 
 from Products.Silva.tests import SilvaTestCase
@@ -29,8 +28,6 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
                          'subfolder', 'Subfolder')
         self.subsubdoc = subsubdoc = self.add_document(subfolder,
                          'subsubdoc', 'Subsubdoc')
-
-
         # add some users
         self.root.acl_users._doAddUser(
             'foo', 'silly', 'Anonymous', [])
@@ -132,7 +129,7 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.assertSameEntries(
             ['Author'],
             self.publication5.sec_get_local_roles_for_userid('baz'))
-    
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
