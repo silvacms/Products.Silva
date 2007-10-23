@@ -492,11 +492,15 @@
             </tal:block>
           </select>
 	  <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'"/>
-          <div style="display: none" id="kupu-extsource-disabledtext">The External Sources product is not installed.  This tool is disabled.</div>
+          <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">the external sources product is not installed.  this tool is disabled.</div>
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton"/>
           <input class="cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
           <input class="button" type="button" value="update source" id="kupu-extsource-updatebutton"/>
           <input class="warning" type="button" value="remove" id="kupu-extsource-delbutton"/>
+	  <div id="kupu-extsource-nosourcestext" style="display: none" i18n:translate="">
+	    no external sources found in document context.  
+            this tool is disabled for this document.
+          </div>
         </form>
 
       </div>

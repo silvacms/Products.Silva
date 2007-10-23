@@ -1926,7 +1926,7 @@ SilvaCitationTool.prototype.createContextMenuElements = function(selNode, event)
 
 function SilvaExternalSourceTool(idselectid, formcontainerid, addbuttonid, cancelbuttonid,
 				 updatebuttonid, delbuttonid, toolboxid, plainclass, activeclass,
-                                 isenabledid, disabledtextid) {
+                                 isenabledid, disabledtextid, nosourcestextid) {
     this.idselect = getFromSelector(idselectid);
     this.formcontainer = getFromSelector(formcontainerid);
     this.addbutton = getFromSelector(addbuttonid);
@@ -1938,11 +1938,21 @@ function SilvaExternalSourceTool(idselectid, formcontainerid, addbuttonid, cance
     this.activeclass = activeclass;
     this.is_enabled = getFromSelector(isenabledid).value=='1';
     this.disabled_text = getFromSelector(disabledtextid);
+    this.nosources_text = getFromSelector(nosourcestextid);
+    this.nosources = false;
     this._editing = false;
     this._url = null;
     this._id = null;
     this._form = null;
     this._insideExternalSource = false;
+
+    /* no external sources found, so hide add and select */
+    if (this.idselect.options.length==0) {
+      this.nosources = true;
+      this.idselect.style.display="none";
+      this.addbutton.style.display="none";
+      this.nosources_text.style.display="block";
+    } 
 
     // store the base url, this will be prepended to the id to form the url to
     // get the codesource from (Zope's acquisition will make sure it ends up on
@@ -1963,6 +1973,7 @@ SilvaExternalSourceTool.prototype = new KupuTool;
 
 SilvaExternalSourceTool.prototype.initialize = function(editor) {
     this.editor = editor;
+
     addEventHandler(this.addbutton, 'click', this.startExternalSourceAddEdit, this);
     addEventHandler(this.cancelbutton, 'click', this.resetTool, this);
     addEventHandler(this.updatebutton, 'click', this.startExternalSourceAddEdit, this);
@@ -1992,7 +2003,7 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
       this.disabled_text.style.display='block';
       this.addbutton.style.display = 'none';
       this.idselect.style.display = 'none';
-  }
+    }
 };
 
 SilvaExternalSourceTool.prototype.updateState = function(selNode) {
