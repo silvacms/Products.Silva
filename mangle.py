@@ -232,17 +232,17 @@ class Id:
         
         return self.OK
 
-    def new(self):
+    def new(self, raiseoninvalid=True):
         """changes id based on the old id to get a potentially unique id
 
             if old_id ends with a number, the number is increased, otherwise 2,
             3, 4, ... is appended until the id is available
             
             returns self
-            raises ValueError if id is not valid
+            raises ValueError if id is not valid, unless raiseoninvalid is set to False
         """
         self._allow_dup = 1
-        if not self.isValid():
+        if raiseoninvalid and not self.isValid():
             raise ValueError, "The id %r is not valid" % (self._maybe_id, )
         m = self._number_postfix.match(self._maybe_id)
         if m is None:

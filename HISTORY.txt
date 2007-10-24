@@ -13,14 +13,20 @@ Silva changes
         an add user to clipboard UI. This allows the adding of new
         users to a clipboard directly.
 
+    Features ported from 2.0 branch
+
+      - additional behaviour to mangle.Id.new(), when passing True
+        as the first argument one can suppress the ValueError raised
+        on invalid ids (and always have a new id generated)
+
+
     Bugs Fixed:
 
-      
       - fixed 101240: SilvaExternalSource cannot be disabled.
 
       - fixed 100835: image upload screen should show allowed formats
 
-    Ported from 2.0 branch
+    Bugfixes ported from 2.0 branch
 
       - fixed wuw140: Incorrect caching of images.
 
