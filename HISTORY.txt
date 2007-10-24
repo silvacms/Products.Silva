@@ -18,6 +18,8 @@ Silva changes
       
       - fixed 101240: SilvaExternalSource cannot be disabled.
 
+      - fixed 100835: image upload screen should show allowed formats
+
     Ported from 2.0 branch
 
       - fixed wuw140: Incorrect caching of images.

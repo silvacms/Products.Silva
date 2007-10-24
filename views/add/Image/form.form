@@ -29,6 +29,7 @@
           </values>
           <tales>
             <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
+            <description>python:not here.pil_installed() and "Only gif, jpeg and png formats allowed, since Python Imaging Library is not installed."</description>
           </tales>
         </field>
         <field><id>object_title</id> <type>StringField</type>

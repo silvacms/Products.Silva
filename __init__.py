@@ -17,6 +17,18 @@ try:
 except ImportError:
     pass
 
+#set havePIL here, so the Image add screen can determine
+#allowed image filetypes, which are different depending
+#on whether PIL is installed or not.  I don't like that
+#havePIL is also defined in Image.py, and here it's used
+#for the sole purpose of imported into untrusted pagetemplate
+#land.
+try:
+    import PIL.Image
+    havePIL = 1
+except ImportError:
+    havePIL = 0
+
 #----------------------------------------
 # Initialize subscription feature, part 1
 #----------------------------------------
