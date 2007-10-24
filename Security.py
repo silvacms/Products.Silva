@@ -293,17 +293,16 @@ class Security(AccessManager):
                 if role in roleinfo.ASSIGNABLE_ROLES]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'sec_get_all_roles_for_userid')
-    def sec_get_all_roles_for_userid(self, userid):
-        """Returns all roles a user has in this context"""
+                              'sec_get_all_roles')
+    def sec_get_all_roles(self):
+        """Returns all roles the currently logged in user has in this
+        context"""
         roles = []
-        local_roles = self.sec_get_local_roles_for_userid(userid)
-        upward_roles =  self.sec_get_upward_roles_for_userid(userid)
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
-            if role in local_roles or role in upward_roles:
+            if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
                 roles.append(role)
         return roles
-
+    
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_userids')
     def sec_get_upward_defined_userids(self):

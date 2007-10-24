@@ -117,11 +117,9 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
             self.root.sec_get_roles())
 
     def test_sec_get_all_roles_for_userid(self):
-        self.root.sec_assign('baz', 'Editor')
-        self.publication5.sec_assign('baz', 'Author')
         self.assertSameEntries(
-            ['Author','Editor'],
-            self.publication5.sec_get_all_roles_for_userid('baz'))
+            ['ChiefEditor'],
+            self.publication5.sec_get_all_roles())
 
     def test_sec_get_local_roles_for_userid(self):
         self.root.sec_assign('baz', 'Editor')
