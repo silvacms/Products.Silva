@@ -50,6 +50,12 @@ Silva changes
 
       - fixed 148863: toc rendering not XHTML compliant
 
+    Features added:
+
+      - additional behaviour to mangle.Id.new(), when passing True
+        as the first argument one can suppress the ValueError raised
+        on invalid ids (and always have a new id generated)
+
   Silva 2.0
 
     Features added:
