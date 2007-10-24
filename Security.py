@@ -302,7 +302,7 @@ class Security(AccessManager):
             if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
                 roles.append(role)
         return roles
-    
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_userids')
     def sec_get_upward_defined_userids(self):
