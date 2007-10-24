@@ -50,6 +50,11 @@ Silva changes
 
       - fixed 148863: toc rendering not XHTML compliant
 
+      - Security.sec_get_all_roles_for_userid(userid) was broken in
+        that it ignored the argument. Changed it to
+        Security.sec_get_all_roles() and all calls to it, which were
+        passing in the current userid anyway.
+
     Features added:
 
       - additional behaviour to mangle.Id.new(), when passing True
