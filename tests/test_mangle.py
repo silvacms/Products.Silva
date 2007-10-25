@@ -71,6 +71,11 @@ class MangleIdTest(SilvaTestCase.SilvaTestCase):
         id = mangle.Id(self.folder, 'index', instance=an_asset)
         self.assertEqual(id.validate(), id.RESERVED)
 
+        #test IN_USE_ZOPE, by adding a non-reserved object to self.folder
+        self.addObject(self.folder, "PageTemplate", "pt_test", "PageTemplates")
+        id = mangle.Id(self.folder, 'pt_test')
+        self.assertEqual(id.validate(), id.IN_USE_ZOPE)
+        self.folder.manage_delObjects(["pt_test"])
 
     def test_cook_id(self):
         id = mangle.Id(self.folder, u'Gro\N{LATIN SMALL LETTER SHARP S}e Datei').cook()

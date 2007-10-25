@@ -5,6 +5,10 @@ Silva changes
 
   Silva 2.0.2
 
+    Bugs fixed:
+
+      - fixed 101174: When an id is in use on the Zope level, inform 
+                      users accordingly
 
   Silva 2.0.1
 
