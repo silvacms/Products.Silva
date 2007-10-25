@@ -243,7 +243,7 @@ class Id:
             3, 4, ... is appended until the id is available
             
             returns self
-            raises ValueError if id is not valid, unless raiseoninvalid is set to False
+            raises ValueError if id is not valid
         """
         self._allow_dup = 1
         if not self.isValid():
