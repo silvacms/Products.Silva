@@ -38,8 +38,7 @@ except BindingError, be:
 if binding is None:
     return None
 
-user_id = request.AUTHENTICATED_USER.getId()
-user_roles = model.sec_get_all_roles_for_userid(user_id)
+user_roles = model.sec_get_all_roles()
 def isAllowed(set_name):
     minimal_role = binding.getSet(set_name).getMinimalRole()
     if not minimal_role:

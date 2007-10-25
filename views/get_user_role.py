@@ -3,6 +3,5 @@
 # "sec_get_roles_for_userid()"
 # 
 model = context.REQUEST.model
-user = context.REQUEST.AUTHENTICATED_USER
 
-return '/'.join(model.sec_get_all_roles_for_userid(user.getId()))
+return '/'.join(model.sec_get_all_roles())
