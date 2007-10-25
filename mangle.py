@@ -49,6 +49,7 @@ class Id:
     IN_USE_CONTENT = 4
     IN_USE_ASSET = 5
     RESERVED_POSTFIX = 6
+    IN_USE_ZOPE = 7
     
     
     # does only match strings containig valid chars
@@ -219,9 +220,12 @@ class Id:
             # allowed
             attr2 = getattr(folder.aq_base, maybe_id, _marker)
             if attr2 is not _marker:
-                # XXX: RESERVED might be missleading here, since there is
-                # "just" sitting a non silva object
-                return self.RESERVED
+                #either it is an attribute/method (self.RESERVED)
+                #or it is an object within the container (self.IN_USE_ZOPE)
+                if maybe_id in folder.objectIds():
+                    return self.IN_USE_ZOPE
+                else:
+                    return self.RESERVED
 
             # object using wanted id is acquried
             # now it may be a Zope object, which is allowed (for now)

@@ -45,6 +45,11 @@ elif status_code == id.RESERVED_POSTFIX:
         Please use another id.""",
                 mapping={'id': view.quotify(id)})
     return translate(message)
+elif status_code == id.IN_USE_ZOPE:
+    message = _("""Sorry, the id ${id} is already in use by a Zope object.<br />
+        Please use another id.""",
+                mapping={'id': view.quotify(id)})
+    return translate(message)
 
 # this should not happen
 message = _("""(Internal Error): An invalid status ${status_code} occured 
