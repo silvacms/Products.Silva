@@ -27,8 +27,8 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 2.0 (DC)
---------------
+Silva 2.0.1 (DC)
+----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
@@ -110,8 +110,8 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 2.0 (DE)
-----------------------
+SilvaDocument 2.0.1 (DE)
+------------------------
 
 Silva extension for XML-based documents. Contains a through the web
 editing system for them. This is shipped along with the core, though
