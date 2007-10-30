@@ -31,6 +31,8 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - fixed 157010: anchors in links: # -> %23
+
       - fixed wuw140: Incorrect caching of images.
 
       - fixed 150809: sidebar cache not invalidated when folder
