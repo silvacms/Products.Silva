@@ -77,14 +77,14 @@ class PathAdapter(adapter.Adapter):
         #strip off fragment (#) or query before
         #calling physicalPathtoURL, so they don't
         #get converted
-        m = frag_or_query_re.search(path)
+        m = frag_re.search(path)
         path = m.group(1)
-        frag_or_query = m.group(2)
+        frag = m.group(2)
         url = request.physicalPathToURL(path.split('/'))
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
         # try to retain fragment or query information
-        if frag_or_query:
-            path += frag_or_query
+        if frag:
+            path += frag
         return path
 
 InitializeClass(PathAdapter)
