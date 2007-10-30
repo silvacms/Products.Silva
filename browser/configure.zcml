@@ -111,19 +111,6 @@
     template="rss.pt"
   />
   
-  <browser:page
-    for="Products.Silva.interfaces.ISilvaObject"
-    name="subscriptor"
-    class="Products.Silva.browser.subscriptor.Subscriptor"
-    attribute="do_subscriptor"
-    permission="silva.ReadSilvaContent"
-  />
-
-  <adapter factory=".subscriptor.SubscriptorView"
-    for="Products.Silva.interfaces.ISilvaObject"
-    provides="Products.Silva.browser.interfaces.ISubscriptorView"
-    name="SubscriptorView" />
-
   <browser:resourceDirectory
     name="silva_scripts"
     directory="scripts"
