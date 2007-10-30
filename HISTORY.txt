@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 1.6.2
+
+    Bugs fixed:
+
+      - fixed 157010: anchors in links: # -> %23
+
   Silva 1.6.1
 
     Bugs fixed:
