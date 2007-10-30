@@ -10,6 +10,8 @@ Silva changes
       - fixed 101174: When an id is in use on the Zope level, inform 
                       users accordingly
 
+      - fixed 157010: anchors in links: # -> %23
+
   Silva 2.0.1
 
     Bugs fixed:

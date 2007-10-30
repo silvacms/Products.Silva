@@ -12,6 +12,10 @@ from ZPublisher.HTTPRequest import HTTPRequest
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.path')
 
+import re
+
+frag_re = re.compile("([^\#]*)(\#.*)?")
+
 class PathAdapter(adapter.Adapter):
     """adapter that contains some magic to convert HTTP paths to
         physical paths and back (respecting virtual hosting situations)
@@ -70,11 +74,17 @@ class PathAdapter(adapter.Adapter):
             # passed along
             return path
         request = self.request
+        #strip off fragment (#) or query before
+        #calling physicalPathtoURL, so they don't
+        #get converted
+        m = frag_re.search(path)
+        path = m.group(1)
+        frag = m.group(2)
         url = request.physicalPathToURL(path.split('/'))
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
-        # try to retain fragment information
-        if fragment:
-            path += '#' + fragment
+        # try to retain fragment or query information
+        if frag:
+            path += frag
         return path
 
 InitializeClass(PathAdapter)

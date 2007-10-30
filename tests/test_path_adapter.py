@@ -23,16 +23,21 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         ptu = path_adapter.pathToUrlPath
         self.assertEquals(ptu('foo'), 'foo')
         self.assertEquals(ptu('index'), 'index')
+        self.assertEquals(ptu('index#anchor'), 'index#anchor')
         self.assertEquals(ptu('/root/foo/index'), '/index')
+        self.assertEquals(ptu('/root/foo/index#anchor'), '/index#anchor')
 
     def test_urlToPath(self):
         path_adapter = path.getPathAdapter(self.request)
         utp = path_adapter.urlToPath
         self.assertEquals(utp('index'), 'index')
         self.assertEquals(utp('foo/index'), 'foo/index')
+        self.assertEquals(utp('foo/index#anchor'), 'foo/index#anchor')
         self.assertEquals(utp('/index'), '/root/foo/index')
         self.assertEquals(utp('http://foo.bar.com:80/index'), 
                                 '/root/foo/index')
+        self.assertEquals(utp('http://foo.bar.com:80/index#anchor'), 
+                                '/root/foo/index#anchor')
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
