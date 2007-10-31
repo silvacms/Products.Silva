@@ -28,6 +28,8 @@ Silva changes
 
       - fixed 101174: When an id is in use on the Zope level, inform 
                       users accordingly
+      
+      - Added True switch to Image.py tag method to escape double quotes.
 
     Bugfixes ported from 2.0 branch
 
