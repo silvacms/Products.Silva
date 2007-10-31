@@ -348,10 +348,10 @@ class Image(Asset):
             del kw['css_class']
 
         for name, value in kw.items():
-            named.append('%s="%s"' % (escape(name), escape(value)))
+            named.append('%s="%s"' % (escape(name, 1), escape(value, 1)))
         named = ' '.join(named)
         return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
-            img_src, width, height, escape(title), named)
+            img_src, width, height, escape(title, 1), named)
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def url(self, hires=0, thumbnail=0):
