@@ -13,6 +13,8 @@ Silva changes
 
     Bugs fixed:
 
+      - Added True switch to Image.py tag method to escape double quotes.
+
       - Subscription Functionality for dLCMS Content Elements
         https://bugs.launchpad.net/dlcms/+bug/152635
         Added a Zope 3 (Five) view to the subscription framework,
