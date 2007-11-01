@@ -22,6 +22,8 @@ Silva changes
 
     Bugs Fixed:
 
+      - fixed 156921: Escaping image title strings.
+
       - fixed 101240: SilvaExternalSource cannot be disabled.
 
       - fixed 100835: image upload screen should show allowed formats
