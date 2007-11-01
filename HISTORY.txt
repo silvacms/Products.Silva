@@ -109,6 +109,8 @@ Silva changes
 
     Bugs Fixed:
       
+      - fixed 156921: Escaping image title strings.
+
       - Added True switch to Image.py tag method to escape double quotes.
 
       - A security fix in Zope 2.10.3 broke install.py.

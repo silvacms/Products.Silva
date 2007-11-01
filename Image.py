@@ -7,6 +7,7 @@ from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
 from cgi import escape
+from xml.sax.saxutils import unescape
 from zope.i18n import translate
 
 from zope.interface import implements
@@ -109,6 +110,7 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
+    
     def set_title(self, title):
         """Set the title of the silva object.
         Overrides SilvaObject set_title() to accomodate the OFS.Image.Image
