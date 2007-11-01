@@ -13,6 +13,8 @@ Silva changes
 
     Bugs fixed:
 
+      - fixed 156921: Escaping image title strings.
+
       - Added True switch to Image.py tag method to escape double quotes.
 
       - Subscription Functionality for dLCMS Content Elements

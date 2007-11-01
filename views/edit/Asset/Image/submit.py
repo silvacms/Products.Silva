@@ -1,6 +1,7 @@
 from Products.Silva import mangle
 from Products.Formulator.Errors import ValidationError, FormValidationError
 from Products.Silva.i18n import translate as _
+from zope.i18n import translate
 
 model = context.REQUEST.model
 view = context
@@ -10,11 +11,20 @@ try:
 except FormValidationError, e:
     return view.tab_edit(message_type="error", message=context.render_form_errors(e))
 
-model.sec_update_last_author_info()
-model.set_title(mangle.entities(result['image_title']))
+changed = []
+old_title = mangle.entities(model.get_title())
 
-msg = _('Properties changed')
-msg_type = 'feedback'
+model.sec_update_last_author_info()
+model.set_title(result['image_title'])
+
+
+
+message = _('${old_title} to ${new_title}')
+message.set_mapping({
+    'old_title': old_title,
+    'new_title': mangle.entities(model.get_title())
+    })
+changed.append(('title', translate(message)))
 
 # is this still in use?
 if (model.canScale() and 
@@ -23,4 +33,7 @@ if (model.canScale() and
     model.set_web_presentation_properties(
         result['web_format'], result['web_scaling'])
     
-return view.tab_edit(message_type=msg_type, message=msg)
+message = _("Properties changed: ${changed}")
+message.set_mapping({'changed': context.quotify_list_ext(changed)})
+return view.tab_edit(message_type="feedback",
+    message=message)
