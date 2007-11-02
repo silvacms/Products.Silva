@@ -9,6 +9,10 @@ Silva changes
 
       - fixed 157010: anchors in links: # -> %23
 
+      - fixed "excessive recursion" error when users click 'new version' 
+        to make a new copy of a silva document to edit then click the
+        browser's back button and click 'new version' again.
+
   Silva 1.6.1
 
     Bugs fixed:
