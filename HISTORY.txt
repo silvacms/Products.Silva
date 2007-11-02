@@ -19,7 +19,6 @@ Silva changes
         as the first argument one can suppress the ValueError raised
         on invalid ids (and always have a new id generated)
 
-
     Bugs Fixed:
 
       - fixed 156921: Escaping image title strings.
@@ -86,6 +85,10 @@ Silva changes
         that it ignored the argument. Changed it to
         Security.sec_get_all_roles() and all calls to it, which were
         passing in the current userid anyway.
+
+      - fixed "excessive recursion" error when users click 'new version' 
+        to make a new copy of a silva document to edit then click the
+        browsers back button and click 'new version' again.
 
     Features added:
 
