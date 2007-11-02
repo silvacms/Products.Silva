@@ -24,7 +24,7 @@ class IPGroup(SilvaObject, SimpleItem):
     
     implements(IIPGroup)
 
-    def __init__(self, id, title, group_name):
+    def __init__(self, id, group_name):
         IPGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
 
@@ -36,17 +36,6 @@ class IPGroup(SilvaObject, SimpleItem):
         """
         return (self.valid_path == self.getPhysicalPath())
     
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title')
-    def get_title(self):
-        """Get the title of this group.
-        """
-        return self._title
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    get_short_title = get_title
-
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addIPRange')
@@ -100,7 +89,7 @@ class IPGroup(SilvaObject, SimpleItem):
 InitializeClass(IPGroup)
 
 def ipgroup_will_be_removed(ipgroup, event):
-    if ipgroup.isValid():
+    if ipgroup.isValid() and hasattr(ipgroup, 'service_groups'):
         ipgroup.service_groups.removeIPGroup(ipgroup._group_name)
 
 def manage_addIPGroup(self, id, title, group_name, asset_only=0,
@@ -113,9 +102,10 @@ def manage_addIPGroup(self, id, title, group_name, asset_only=0,
             raise AttributeError, "There is no service_groups"
         if self.service_groups.isGroup(group_name):
             raise ValueError, "There is already a group of that name."
-    object = IPGroup(id, title, group_name)
+    object = IPGroup(id, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
+    object.set_title(title)
     # set the valid_path, this cannot be done in the constructor because the 
     # context is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
