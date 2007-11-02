@@ -34,6 +34,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - fixed 158381: Group objects should be removable even if the 
+        groups service isn't installed.
+
       - fixed 158384: can't add groups: title error issue
 
       - fixed 157010: anchors in links: # -> %23
