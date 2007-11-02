@@ -474,15 +474,8 @@ input:focus:hover, textarea:focus:hover, select:focus:hover {
 
 input.button[type="submit"]:hover, button[type="button"]:hover {
   border-color: #444546;
-  background-color: #f7f8f9;
-}
-
-input.button, input.control { /* used in SNN, public forms */
-  margin: 0.5em 0.4em 0 0;
-  padding: 0 0.2em;
-  border: 1px solid #787980;
   color: #337;
-  background-color: #e4e5e6;
+  background-color: #f7f8f9;
 }
 
 input.button, input.control { /* used in SNN, public forms */
