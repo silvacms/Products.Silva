@@ -210,6 +210,10 @@ div.citation p.source {
   font-size: 90%;
 }
 
+span.underline {
+  text-decoration: underline;
+}
+
 
 /* __________________________________________________ silva list styles _____ */
 
