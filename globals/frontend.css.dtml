@@ -9,15 +9,17 @@
 **
 ** _______ Selector groups _______
 **
-** silva frontend layout
+** layout
 ** alignments
 ** typography
 ** silva specific typography
 ** silva list styles
 ** links
 ** silva table styles
-** various table layouts
-** subscription forms
+**   various table-like layouts
+** form controls
+**   preveiw publisher
+**   subscription forms
 ** css2 selectors
 */
 
@@ -32,7 +34,7 @@ body {
 }
 </dtml-let>
 
-/* ______________________________________________ silva frontend layout _____ */
+/* _____________________________________________________________ layout _____ */
 
 div.header {
   margin: 2em 2.1em 0 0;  
@@ -269,7 +271,8 @@ span.breadcrumb a:hover {
 }  
 
 /* highlighting index links */
-/* keep this if you markup text with index elements, this overrides the highlighting in the editor */
+/* keep this if you markup text with index elements, this overrides the 
+   highlighting in the editor */
 a.index-element {
   background-color: transparent;
   text-decoration: none;
@@ -364,6 +367,7 @@ table.simple {
 }
 
 table.simple thead th {
+  text-align: left;
   font-weight: normal;
 }
 
@@ -460,21 +464,21 @@ input[type="submit"] {
 
 input:hover, textarea:hover, select:hover {
   border-color : #444546;
-  background-color: #f7f8f9;
+  background-color: #f8f9fa;
 }
 
 input:focus, textarea:focus, select:focus {
   border-color : #444546;
-  background-color: #fff;
+  background-color: #ffe;
 }
 
 input:focus:hover, textarea:focus:hover, select:focus:hover {
-  background-color: #fff;
+  background-color: #ffe;
 }
 
 input.button[type="submit"]:hover, button[type="button"]:hover {
   border-color: #444546;
-  color: #337;
+  color: #16168b;
   background-color: #f7f8f9;
 }
 
@@ -486,6 +490,7 @@ input.button, input.control { /* used in SNN, public forms */
   background-color: #e4e5e6;
 }
 
+
 /* ____________________________ preview publisher _______ */
 
 div.publisher {
@@ -494,6 +499,7 @@ div.publisher {
   left: 0;
   width: 100%;
 }
+
 
 /* ____________________________ subscription forms _______ */
 
