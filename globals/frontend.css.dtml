@@ -222,7 +222,7 @@ ul.disc {
 }
   
 ul.square {
-  list-style-type: square ! important;
+  list-style-type: square;
 } 
 
 ul.circle {
@@ -309,10 +309,9 @@ table.silvatable tr.rowheading {
   font-weight: bold;
 } 
 table.silvatable td {
-  border-right: none ! important;
+  border-right: none;
 } 
-table.silvatable th.align-left, table.silvatable td.align-left,
-table.silvatable th.align-left p, table.silvatable td.align-left p {
+table.silvatable th.align-left, table.silvatable td.align-left {
   text-align: left;
 }
 
@@ -334,7 +333,7 @@ table.plain {
   border-style: none;
 } 
 table.plain td {
-  border-right: none ! important;
+  border-right: none;
 }
  
 table.list td {
@@ -347,17 +346,17 @@ table.list tr.rowheading td, table.list thead th {
   
 table.grid td, table.grid thead th {
   border: 2px solid #444444;
-  border-right: 2px solid #444444 ! important;
+  border-right: 2px solid #444444;
 } 
   
 table.datagrid td {
   border: 2px solid #444444;
-  border-right: 2px solid #444444 ! important;
+  border-right: 2px solid #444444;
 } 
 table.datagrid tr.rowheading td {
   border-top-style: none;
   border-left-style: none;
-  border-right-style: none ! important;  
+  border-right-style: none;  
 } 
 
 table.simple {
@@ -369,7 +368,7 @@ table.simple thead th {
 }
 
 td.even table td {
-  border-right: none ! important;
+  border-right: none;
 }
 
 
@@ -443,12 +442,55 @@ div.listingBar .previous {
 
 /* ____________________________________________________ form controls _______ */
 
-input {
+input, textarea, select {
   padding: 0.1em;
-  border: 1px solid #03956a;
+  border: 1px solid #787980;
   color: #333767;
-  background-color: #e8f7ef;
+  background-color: #f3f4f5;
   font: normal 100% verdana, helvetica, arial, sans-serif;
+}
+
+input[type="submit"] {
+  margin: 0.5em 0 0;
+  border: 1px solid #787980;
+  color: #337;
+  background-color: #e4e5e6;
+  cursor: pointer;
+}
+
+input:hover, textarea:hover, select:hover {
+  border-color : #444546;
+  background-color: #f7f8f9;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color : #444546;
+  background-color: #fff;
+}
+
+input:focus:hover, textarea:focus:hover, select:focus:hover {
+  background-color: #fff;
+}
+
+input.button[type="submit"]:hover, button[type="button"]:hover {
+  border-color: #444546;
+  background-color: #f7f8f9;
+}
+
+input.button, input.control { /* used in SNN, public forms */
+  margin: 0.5em 0.4em 0 0;
+  padding: 0 0.2em;
+  border: 1px solid #787980;
+  color: #337;
+  background-color: #e4e5e6;
+}
+
+input.button, input.control { /* used in SNN, public forms */
+  margin: 0.5em 0.4em 0 0;
+  padding: 0 0.2em;
+  border: 1px solid #787980;
+  color: #337;
+  background-color: #e4e5e6;
 }
 
 /* ____________________________ preview publisher _______ */
@@ -459,7 +501,6 @@ div.publisher {
   left: 0;
   width: 100%;
 }
-
 
 /* ____________________________ subscription forms _______ */
 
@@ -487,17 +528,6 @@ span.warning {
 
 div.backlink {
   margin-top: 1.5em;
-}
-
-input.button, input.control { /* used in SNN, public forms */
-  margin: 0.1em 0.4em 0.1em 0;
-  padding: 0 0.2em;
-  border: 1px solid #557;
-  color: #d9f3f1;
-  background-color: #283365;
-  font-size: 95%;
-  font-weight: normal;
-  cursor: pointer;
 }
 
 
