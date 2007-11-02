@@ -7,6 +7,8 @@ Silva changes
 
     Bugs fixed:
 
+      - fixed 158384: can't add groups: title error issue
+
       - fixed 101174: When an id is in use on the Zope level, inform 
                       users accordingly
 
@@ -15,6 +17,9 @@ Silva changes
       - fixed "excessive recursion" error when users click 'new version' 
         to make a new copy of a silva document to edit then click the
         browser's back button and click 'new version' again.
+
+      - fixed 158381: Group objects should be removable even if the 
+        groups service isn't installed.
 
   Silva 2.0.1
 

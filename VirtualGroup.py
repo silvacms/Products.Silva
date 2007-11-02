@@ -14,7 +14,7 @@ from Products.Silva import mangle
 # misc
 from helpers import add_and_edit
 
-from interfaces import ISilvaObject
+from interfaces import IVirtualGroup
 
 class VirtualGroup(SilvaObject, SimpleItem):
     """Silva Virtual Group"""
@@ -22,7 +22,7 @@ class VirtualGroup(SilvaObject, SimpleItem):
 
     meta_type = "Silva Virtual Group"
     
-    implements(ISilvaObject)
+    implements(IVirtualGroup)
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
@@ -30,14 +30,9 @@ class VirtualGroup(SilvaObject, SimpleItem):
 
     manage_main = PageTemplateFile('www/virtualGroupEdit', globals())
 
-    def __init__(self, id, title, group_name):
+    def __init__(self, id, group_name):
         VirtualGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
-
-    def manage_beforeDelete(self, item, container):
-        VirtualGroup.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        if self.isValid():
-            self.service_groups.removeVirtualGroup(self._group_name)
 
     def isValid(self):
         """returns whether the group asset is valid
@@ -46,17 +41,6 @@ class VirtualGroup(SilvaObject, SimpleItem):
         """
         return (self.valid_path == self.getPhysicalPath())
     
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title')
-    def get_title(self):
-        """Get the title of this group.
-        """
-        return self._title
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    get_short_title = get_title
-
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addGroup')
@@ -116,9 +100,10 @@ def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
             raise AttributeError, "There is no service_groups"
         if self.service_groups.isGroup(group_name):
             raise ValueError, "There is already a group of that name."
-    object = VirtualGroup(id, title, group_name)
+    object = VirtualGroup(id, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
+    object.set_title(title)
     # set the valid_path, this cannot be done in the constructor because the context
     # is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
@@ -126,3 +111,8 @@ def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
         self.service_groups.addVirtualGroup(group_name)
     add_and_edit(self, id, REQUEST)
     return ''
+
+def vgroup_will_be_removed(vgoup, event):
+    if vgroup.isValid() and hasattr(vgroup, 'service_groups'):
+        vgroup.service_groups.removeVirtualGroup(vgroup._group_name)
+

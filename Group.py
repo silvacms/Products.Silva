@@ -35,7 +35,7 @@ class Group(SilvaObject, SimpleItem):
     
     manage_main = PageTemplateFile('www/groupEdit', globals())
 
-    def __init__(self, id, title, group_name):
+    def __init__(self, id, group_name):
         Group.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
         
@@ -48,17 +48,6 @@ class Group(SilvaObject, SimpleItem):
         """
         return (self.valid_path == self.getPhysicalPath())
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title')
-    def get_title(self):
-        """Get the title of this group.
-        """
-        return self._title
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    get_short_title = get_title
-    
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'addUser')
@@ -123,9 +112,10 @@ def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
             raise AttributeError, "There is no service_groups"
         if self.service_groups.isGroup(group_name):
             raise ValueError, "There is already a group of that name."
-    object = Group(id, title, group_name)
+    object = Group(id, group_name)
     self._setObject(id, object)
     object = getattr(self, id)
+    object.set_title(title)
     # set the valid_path, this cannot be done in the constructor because the context
     # is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
@@ -135,5 +125,5 @@ def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
     return ''
 
 def group_will_be_removed(group, event):        
-    if group.isValid():
+    if group.isValid() and hasattr(group, 'service_groups'):
         group.service_groups.removeNormalGroup(group._group_name)        

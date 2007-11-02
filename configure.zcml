@@ -219,6 +219,12 @@
   />
 
   <subscriber
+    for=".interfaces.IVirtualPGroup
+      OFS.interfaces.IObjectWillBeRemovedEvent"
+    handler=".VirtualGroup.vgroup_will_be_removed" 
+  />
+
+  <subscriber
     for=".interfaces.IVersion
       zope.app.container.interfaces.IObjectMovedEvent"
     handler=".Version.version_moved"
