@@ -448,7 +448,7 @@ div.listingBar .previous {
 
 input, textarea, select {
   padding: 0.1em;
-  border: 1px solid #787980;
+  border: 1px solid #78797a;
   color: #333767;
   background-color: #f3f4f5;
   font: normal 100% verdana, helvetica, arial, sans-serif;
@@ -456,7 +456,8 @@ input, textarea, select {
 
 input[type="submit"] {
   margin: 0.5em 0 0;
-  border: 1px solid #787980;
+  padding: 0 0.2em;
+  border: 1px solid #78797a;
   color: #337;
   background-color: #e4e5e6;
   cursor: pointer;
@@ -482,14 +483,6 @@ input.button[type="submit"]:hover, button[type="button"]:hover {
   background-color: #f7f8f9;
 }
 
-input.button, input.control { /* used in SNN, public forms */
-  margin: 0.5em 0.4em 0 0;
-  padding: 0 0.2em;
-  border: 1px solid #787980;
-  color: #337;
-  background-color: #e4e5e6;
-}
-
 
 /* ____________________________ preview publisher _______ */
 
@@ -505,9 +498,8 @@ div.publisher {
 
 div.subscriptionform, div.cancellationform {
   margin: 1.2em 0;
-  padding: 0em 1em 0.7em 1em;
-  border: 1px solid #788;
-  background-color: #d9f2d2;
+  padding: 0 1em 1.5em;
+  border: 1px solid #898A8B;
 }
 
 div.feedback {
