@@ -454,7 +454,7 @@ input, textarea, select {
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
 
-input[type="submit"] {
+input[type="submit"], input.button /*4 IE*/ {
   margin: 0.5em 0 0;
   padding: 0 0.2em;
   border: 1px solid #78797a;
@@ -477,7 +477,7 @@ input:focus:hover, textarea:focus:hover, select:focus:hover {
   background-color: #ffe;
 }
 
-input.button[type="submit"]:hover, button[type="button"]:hover {
+input[type="submit"]:hover, button[type="button"]:hover {
   border-color: #444546;
   color: #16168b;
   background-color: #f7f8f9;
