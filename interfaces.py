@@ -1126,7 +1126,7 @@ class IIPGroup(ISilvaObject):
             A group asset becomes invalid if it gets moved around ...
         """
 
-class IVirtualPGroup(ISilvaObject):
+class IVirtualGroup(ISilvaObject):
     def isValid():
         """returns whether the group asset is valid
 

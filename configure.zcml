@@ -219,7 +219,7 @@
   />
 
   <subscriber
-    for=".interfaces.IVirtualPGroup
+    for=".interfaces.IVirtualGroup
       OFS.interfaces.IObjectWillBeRemovedEvent"
     handler=".VirtualGroup.vgroup_will_be_removed" 
   />
