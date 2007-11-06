@@ -95,6 +95,9 @@ Silva changes
         to make a new copy of a silva document to edit then click the
         browser's back button and click 'new version' again.
 
+      - adjusted the description in the add form of links, since that
+        incorrectly indicated that absolute links would be checked.
+
     Features added:
 
       - additional behaviour to mangle.Id.new(), when passing True
