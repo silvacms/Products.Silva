@@ -80,7 +80,7 @@
           <alternate_name></alternate_name>
           <css_class></css_class>
           <default>absolute</default>
-          <description>For absolute links the url will be checked, and 'http://' will be prepended if necessary. Relative links can contain anything, so it is the author's responsibility to create valid urls.</description>
+          <description>Links can contain anything, so it is the author's responsibility to create valid urls.</description>
           <enabled type="int">1</enabled>
           <external_validator></external_validator>
           <extra_item></extra_item>
