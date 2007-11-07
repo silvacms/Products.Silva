@@ -144,7 +144,7 @@
             i18n:attributes="alt"
           /></label>
       </th>
-      <th>
+      <th i18n:translate="">
         modify
       </th>
       <th i18n:translate="">
