@@ -156,8 +156,9 @@
       <th i18n:translate="">
         author
       </th>
-      <th class="nosort listing-right">
-        &nbsp;<tal:inline i18n:translate="">shift</tal:inline>&nbsp;
+      <th class="nosort listing-right"
+        i18n:translate="">
+        shift
       </th>
     </tr>
 
@@ -257,13 +258,13 @@
           <tal:block replace="nothing">
             _______ author / publish downlink cell _______
           </tal:block>
-          <td>
+          <td style="white-space:nowrap">
             <a style="float:right"
               title="content approved, or published..."
               tal:condition="item_info/is_published_or_approved"
               tal:attributes="
                 href item_info/item_url;"
-              i18n:attributes="title">
+              i18n:attributes="title">&nbsp;
               <img alt="content approved or published"
                 border="0"
                 width="10"
