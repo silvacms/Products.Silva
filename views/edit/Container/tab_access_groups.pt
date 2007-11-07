@@ -262,6 +262,88 @@
   </table>
 </form>
 
+
+  <table class="listing" tal:define="groups view/get_groups_defined_elsewhere">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="5">
+          <h3 i18n:translate="">
+            groups defined elsewhere
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr tal:condition="groups">
+        <th class="listing-left">
+        </th>
+        <th i18n:translate="">
+          name
+        </th>
+        <th tal:replace="nothing">
+          title
+        </th>
+        <th i18n:translate="">
+          type
+        </th>
+        <th i18n:translate="">
+          modified
+        </th>
+        <th i18n:translate="">
+          modifier
+        </th>
+      </tr>
+      <tal:repeat repeat="group groups">
+        <tal:define define="iterate repeat/group/odd">
+          <tr tal:attributes="class python:iterate and 'odd' or 'even'">
+            <td nowrap="1">
+              <input class="min"
+                type="checkbox"
+                name="groupids:list"
+                tal:attributes="value group/id;
+              " />
+              <a class="icon"
+                title="edit"
+                tal:attributes="
+                  href string:${group/absolute_url}/edit;
+                  title group/meta_type">
+                <img tal:replace="structure python:view.render_icon(group)" />
+              </a>
+            </td>
+            <td>
+              <a class="published"
+                title="edit this group"
+                tal:attributes="href string:${group/absolute_url}/edit"
+                i18n:attributes="title">
+                <tal:block replace="group/id">
+                  id
+                </tal:block>
+              </a>
+            </td>
+            <td tal:content="structure group/meta_type" />
+            <td>
+              <tal:block replace="structure python:mangle.DateTime(group.get_modification_datetime()).toShortStr() or default">
+                -
+              </tal:block>
+            </td>
+            <td tal:content="python:group.sec_get_last_author_info().fullname()">
+              author name
+            </td>
+          </tr>
+        </tal:define>
+      </tal:repeat>
+      <tr class="even">
+        <td colspan="5"
+          tal:condition="not:groups">
+          <i i18n:translate="">
+            No groups have been defined in this location.
+          </i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
       </td>
       <tal:block replace="nothing">
         _____________________ right column _____________________

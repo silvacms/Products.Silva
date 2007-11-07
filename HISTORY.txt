@@ -13,6 +13,10 @@ Silva changes
         an add user to clipboard UI. This allows the adding of new
         users to a clipboard directly.
 
+      - bug 100741: when groups are be used, the groups management screen
+                    also shows groups defined elsewhere (not just local to the 
+                    container) and provides links to edit those groups
+
     Features ported from 2.0 branch
 
       - additional behaviour to mangle.Id.new(), when passing True
