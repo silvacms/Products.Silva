@@ -3,6 +3,7 @@
 # $Revision: 1.21 $
 from zope.interface import implements
 
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -21,10 +22,11 @@ except ImportError, ie:
 
 from interfaces import ISilvaObject, IGroup
 
-class Group(SilvaObject, SimpleItem):
+class Group(CatalogPathAware, SilvaObject, SimpleItem):
     """Silva Group"""
     security = ClassSecurityInfo()
 
+    default_catalog = 'service_catalog'
     meta_type = "Silva Group"
 
     implements(IGroup)

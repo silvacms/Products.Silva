@@ -3,6 +3,7 @@
 # $Id: IPGroup.py,v 1.9 2006/01/25 18:13:30 faassen Exp $
 from zope.interface import implements
 
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -16,10 +17,11 @@ from helpers import add_and_edit
 
 from interfaces import IIPGroup
 
-class IPGroup(SilvaObject, SimpleItem):
+class IPGroup(CatalogPathAware, SilvaObject, SimpleItem):
     """Silva IP Group"""
     security = ClassSecurityInfo()
 
+    default_catalog = 'service_catalog'
     meta_type = "Silva IP Group"
     
     implements(IIPGroup)

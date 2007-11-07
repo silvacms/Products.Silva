@@ -3,6 +3,7 @@
 # $Id: VirtualGroup.py,v 1.18 2006/01/24 16:14:13 faassen Exp $
 from zope.interface import implements
 
+from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -16,11 +17,12 @@ from helpers import add_and_edit
 
 from interfaces import IVirtualGroup
 
-class VirtualGroup(SilvaObject, SimpleItem):
+class VirtualGroup(CatalogPathAware, SilvaObject, SimpleItem):
     """Silva Virtual Group"""
     security = ClassSecurityInfo()
 
     meta_type = "Silva Virtual Group"
+    default_catalog = 'service_catalog'
     
     implements(IVirtualGroup)
 
