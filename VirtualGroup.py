@@ -112,7 +112,7 @@ def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
     add_and_edit(self, id, REQUEST)
     return ''
 
-def vgroup_will_be_removed(vgoup, event):
+def vgroup_will_be_removed(vgroup, event):
     if vgroup.isValid() and hasattr(vgroup, 'service_groups'):
         vgroup.service_groups.removeVirtualGroup(vgroup._group_name)
 
