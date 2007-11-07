@@ -148,7 +148,7 @@ def initialize(context):
         TypographicalService.TypographicalService,
         constructors = (TypographicalService.manage_addTypographicalServiceForm,
                         TypographicalService.manage_addTypographicalService),
-        #no icon for this yet!
+        icon = "www/typochars_service.png"
         )
     
     # register xml import functions (old style XML importer)	 
