@@ -7,6 +7,12 @@ REQUEST = context.REQUEST
 
 lookup_mode = REQUEST.get('lookup_mode', 0)
 return_url = REQUEST.get('return_url', '')
+position = REQUEST.get('position', None)
+if position:
+    try:
+        position = int(position)
+    except ValueError:
+        position = None
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):
@@ -49,6 +55,9 @@ else:
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)
+
+if position is not None and position >= 0:
+    model.move_to([object.id], position)
 
 # update last author info in new object
 object.sec_update_last_author_info()

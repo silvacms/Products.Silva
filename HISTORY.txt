@@ -17,6 +17,11 @@ Silva changes
                     also shows groups defined elsewhere (not just local to the 
                     container) and provides links to edit those groups
 
+      - 100750: "Insert new object here" functionality.  When you select an
+        object in a containers edit list, then select the new object to add
+        from the "add new content drop-down", the new object will be placed
+        at the location of the selected object in the edit list.
+
     Features ported from 2.0 branch
 
       - additional behaviour to mangle.Id.new(), when passing True

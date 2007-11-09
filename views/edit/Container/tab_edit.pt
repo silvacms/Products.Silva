@@ -70,13 +70,33 @@
       <td colspan="6">
         <div style="float: left;"
           tal:condition="may_change_content">
+<script type="text/javascript">
+function addNewContent(form, url) {
+ var mt = form.meta_type.options[form.meta_type.selectedIndex].value;
+ var url = url + '/edit/add_object?meta_type=' + mt;
+ /* find the first checked item, and send that one along;
+    we skip over index, which  */
+ var idlist = form['ids:list'];
+ var i = 0;
+ if (idlist[0].id == 'index') { idlist.shift() };
+ for (i; i<idlist.length; i++) {
+  if (idlist[i].checked) {
+    url += '&position=' + i;
+    break;
+  }
+ }
+alert(url);
+ location.href = url;
+ return false;
+}
+</script>
           <input class="transport"
             name="add_object:method"
-            type="submit"
+            type="button"
             value="new..."
             title="add a new item - alt-n"
             accesskey="n"
-            tal:attributes="onclick string:location.href='${url}/edit/add_object?meta_type='+this.form.meta_type.options[this.form.meta_type.selectedIndex].value"
+            tal:attributes="onclick string:return addNewContent(this.form, '${url}')"
             i18n:attributes="value;title"
           />
           <label for="meta_type"
@@ -89,7 +109,7 @@
             name="meta_type"
             id="meta_type"
             title="select a new item: alt-s"
-            tal:attributes="onChange string:location.href='${url}/edit/add_object?meta_type='+this.options[this.selectedIndex].value"
+            tal:attributes="onchange string:addNewContent(this.form, '${url}')"
             i18n:attributes="title">
             <option value="None" i18n:translate="">
               select:

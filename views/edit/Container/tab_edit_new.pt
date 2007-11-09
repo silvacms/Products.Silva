@@ -9,12 +9,14 @@
   tal:define="
     global vein string:new;
     global active_tab string:tab_edit;
-    global parent_screen_name string:contents;"
+    global parent_screen_name string:contents;
+    position request/position|nothing;
+    addobject_url python:'add_object?meta_type=%s' + (position and '&position='+str(position) or '')"
     tal:omit-tag=""
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
-
+<span tal:replace="addobject_url" />
 <tal:block define="
   global objects python:model.get_tree();
   dummy model/security_trigger;" />
@@ -92,7 +94,7 @@
             <a class="published"
               style="padding-left:0.2em; padding-bottom: 0em ! important;"
               tal:attributes="
-                href python:'add_object?meta_type=%s' % addable['name'].replace(' ', '+');
+                href python:addobject_url%addable['name'].replace(' ', '+');
                 title python: view.tab_edit_new_link_title(addable['name'])">
               <span tal:replace="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']">object</span>
             </a>
