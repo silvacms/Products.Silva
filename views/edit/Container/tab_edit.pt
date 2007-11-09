@@ -71,24 +71,36 @@
         <div style="float: left;"
           tal:condition="may_change_content">
 <script type="text/javascript">
-function addNewContent(form, url) {
- var mt = form.meta_type.options[form.meta_type.selectedIndex].value;
- var url = url + '/edit/add_object?meta_type=' + mt;
- /* find the first checked item, and send that one along;
-    we skip over index, which  */
- var idlist = form['ids:list'];
- var i = 0;
- if (idlist[0].id == 'index') { idlist.shift() };
- for (i; i<idlist.length; i++) {
-  if (idlist[i].checked) {
-    url += '&position=' + i;
-    break;
-  }
- }
-alert(url);
- location.href = url;
- return false;
-}
+
+  function addNewContent(form, url) {
+    var mtselect = document.getElementById('meta_type');
+    var meta_type = mtselect.options[mtselect.selectedIndex].value;
+    var url = url + '/edit/add_object?meta_type=' + meta_type;
+    // XXX this whole function was broken in r26521, I fixed it but disabled
+    // the following bit of code... the intention seems to be to provide a
+    // shortcut to place an item on a certain location in the list of
+    // content items, but tbh i think the behaviour of 'place it after the
+    // first checked item' is rather implicit and not very clear
+    // from a usability point of view... i may be wrong, though, or this may
+    // be a specific customer request or already decided upon, in that case
+    // uncomment to re-enable (if you decide not to use it, please remove!!)...
+    /*
+    var idcheckboxes = document.getElementsByName('ids:list');
+    for (var i=0; i < idcheckboxes.length; i++) {
+      var cb = idcheckboxes[i];
+      if (i == 0 && cb.value == 'index') {
+        continue;
+      };
+      if (idcheckboxes[i].checked) {
+        url += '&position=' + i;
+        break;
+      };
+    };
+    */
+    location.href = url;
+    return false;
+  };
+
 </script>
           <input class="transport"
             name="add_object:method"
