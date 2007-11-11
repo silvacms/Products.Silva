@@ -84,15 +84,16 @@
     // from a usability point of view... i may be wrong, though, or this may
     // be a specific customer request or already decided upon, in that case
     // uncomment to re-enable (if you decide not to use it, please remove!!)...
+
+    /* the position is "off by one" if the container has an index item.
+       So, subtract one when determining the position, if an index document
+       is present */
     /*
-    var idcheckboxes = document.getElementsByName('ids:list');
+    var idcheckboxes = form['ids:list'];
+    var hasindex = (idcheckboxes[0].id == 'index') ? true : false;
     for (var i=0; i < idcheckboxes.length; i++) {
-      var cb = idcheckboxes[i];
-      if (i == 0 && cb.value == 'index') {
-        continue;
-      };
       if (idcheckboxes[i].checked) {
-        url += '&position=' + i;
+        url += '&position=' + (hasindex?i-1 : i);
         break;
       };
     };
