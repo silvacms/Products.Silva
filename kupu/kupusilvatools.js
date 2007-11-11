@@ -2112,7 +2112,7 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // you should not be allowed to add external sources inside 
-    // headers or table cells (but the cursor may be inside an ES title, which is an H4.
+    // headers or table cells (but the cursor may be inside an ES title, which is an H4.)
     var selNode = this.editor.getSelectedNode();
     if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' && selNode.parentNode.className=='externalsource') {
       selNode = selNode.parentNode;
