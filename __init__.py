@@ -345,7 +345,13 @@ def initialize_upgrade():
 
     from Products.Silva import upgrade_160
     upgrade_160.initialize()
-    
+
+    from Products.Silva import upgrade_200
+    upgrade_200.initialize()
+
+    from Products.Silva import upgrade_210
+    upgrade_210.initialize()
+
 #------------------------------------------------------------------------------
 # Monkey patches
 #------------------------------------------------------------------------------
