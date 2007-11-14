@@ -5,9 +5,17 @@ Silva changes
 
   Silva 2.0.3 (unreleased)
 
+    Bugs Fixed:
+
       - fixed a bug where clicking on the title of a code source in
         a document, then attempting to save the parameters raised a
         "code course cannot be in a header" error
+
+      - Images in documents that were set to 'link to hires' from 
+        kupu were rendered as <url_to_image>?hires?hires
+
+      - on rare occasions, the external source tool in kupu wouldn't
+        work for specific documents (double-unquoting the docref)
 
   Silva 2.0.2
 

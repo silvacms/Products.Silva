@@ -4,7 +4,7 @@
 """
 Thank you Samuel, for having the brilliant idea!
 """
-
+from urllib import quote
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
@@ -81,7 +81,7 @@ class LookupWindowWidget(TextWidget):
         if request.has_key('docref'):
             # we're in an ExternalSource, use the document in which it is
             # placed instead of the source as the model
-            model = model.resolve_ref(request['docref'])
+            model = model.resolve_ref(quote(request['docref']))
         container = model.get_container()
         interpolate = {
             'url': container.absolute_url(),
