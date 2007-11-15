@@ -107,6 +107,9 @@ Silva changes
       - adjusted the description in the add form of links, since that
         incorrectly indicated that absolute links would be checked.
 
+      - on rare occasions, the external source tool in kupu wouldn't
+        work for specific documents (double-unquoting the docref)
+
     Features added:
 
       - additional behaviour to mangle.Id.new(), when passing True

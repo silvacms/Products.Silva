@@ -5,6 +5,7 @@
 Thank you Samuel, for having the brilliant idea!
 """
 
+from urllib import quote
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
@@ -83,7 +84,7 @@ class LookupWindowWidget(TextWidget):
             # we're in an ExternalSource, use the document in which it is
             # placed instead of the source as the model
             url = model.resolve_ref(
-                request['docref']).get_container().absolute_url()
+                quote(request['docref'])).get_container().absolute_url()
         else:
             # start where we last looked something up
             url = request.SESSION.get('lastpath') or '' 
