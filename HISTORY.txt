@@ -22,6 +22,15 @@ Silva changes
         from the "add new content drop-down", the new object will be placed
         at the location of the selected object in the edit list.
 
+      - 100765 caching issues with /globals: All files in /globals are now
+        tied to an Accelerated HTTP Cache Manager at 
+        <silva_root>/service_static_cache_manager.  This cache manager sets
+        the appropriate HTTP headers to enable browsers to cache these objects.
+        The default setting is to cache for one day, and since the content is
+        static, also cache non-anonymous requests.  The Silva root needs to be
+        refreshed in order to take advantage of this cache manager.  Refreshing
+        happens automatically during Silva upgrades.
+
     Features ported from 2.0 branch
 
       - additional behaviour to mangle.Id.new(), when passing True

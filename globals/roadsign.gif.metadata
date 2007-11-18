@@ -1,0 +1,3 @@
+[default]
+_Cacheable__enabled=1
+_Cacheable__manager_id=service_static_cache_manager

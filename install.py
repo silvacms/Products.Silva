@@ -14,6 +14,7 @@ from OFS.Uninstalled import BrokenClass
 from DateTime import DateTime
 from OFS import Image
 from Products.ProxyIndex.ProxyIndex import RecordStyle
+from Products.StandardCacheManagers.AcceleratedHTTPCacheManager import manage_addAcceleratedHTTPCacheManager
 from zope import interface
 
 # sibling
@@ -252,6 +253,16 @@ def configureMiscServices(root):
     if not hasattr(root, 'service_toc_filter'):
         filter_service = TOCFilterService()
         root._setObject(filter_service.id, filter_service)
+    #add a cache manager for /globals, and anything else that
+    #is "static"
+    if not hasattr(root, 'service_static_cache_manager'):
+        manage_addAcceleratedHTTPCacheManager(root, 'service_static_cache_manager')
+        sscm = getattr(root, 'service_static_cache_manager')
+        sscm.manage_editProps(title="Cache Manager for static non-silva objects",
+                              settings={"anonymous_only": 0,
+                                        "interval": 86400, #set expires to 1 day
+                                        "notify_urls": []}
+                               )
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
