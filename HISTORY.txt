@@ -59,7 +59,8 @@ Silva changes
 
       - fixed 157010: anchors in links: # -> %23
 
-      - fixed wuw140: Incorrect caching of images.
+      - fixed wuw144: Incorrect caching of images. 
+                      (was reverted in silva-2.0.3b1)
 
       - fixed 150809: sidebar cache not invalidated when folder
         removed
