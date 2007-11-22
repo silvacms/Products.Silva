@@ -7,6 +7,10 @@ Silva changes
 
     Bugs Fixed:
 
+      - Commented out the no-cache line in Image.py that was added 
+        because of wuw issue 144 (image not scaling in kupu), it was
+        to big of a performance hit
+
       - fixed a bug where clicking on the title of a code source in
         a document, then attempting to save the parameters raised a
         "code course cannot be in a header" error
@@ -16,6 +20,7 @@ Silva changes
 
       - on rare occasions, the external source tool in kupu wouldn't
         work for specific documents (double-unquoting the docref)
+
 
   Silva 2.0.2
 

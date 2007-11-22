@@ -98,7 +98,9 @@ class Image(Asset):
         if REQUEST is None:
             REQUEST = self.REQUEST
         RESPONSE = REQUEST.RESPONSE
-        RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        # line below solves wuw issue144 (images no scaled in kupu)
+        # but it's to much of a performance hit
+        # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
         query = REQUEST.QUERY_STRING
         if query == 'hires':
             img = self.hires_image
