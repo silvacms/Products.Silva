@@ -3,13 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.0.3 (unreleased)
+  Silva 2.0.3 (2007-11-23)
 
     Bugs Fixed:
 
       - Commented out the no-cache line in Image.py that was added 
         because of wuw issue 144 (image not scaling in kupu), it was
-        to big of a performance hit
+        to big of a performance hit. Although zope returns 
+        304 NOT MODIFIED headers if possible, it still sends the 
+        images at least once, the first time.
 
       - fixed a bug where clicking on the title of a code source in
         a document, then attempting to save the parameters raised a
