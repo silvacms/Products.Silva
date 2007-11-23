@@ -3,6 +3,10 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.4 (unreleased)
+
+    Bugs Fixed:
+
   Silva 2.0.3 (2007-11-23)
 
     Bugs Fixed:
