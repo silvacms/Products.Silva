@@ -20,6 +20,9 @@ Silva changes
       - the properties tool in kupu wasn't functional with 
         SilvaNewsNetwork 2.6 (unreleased)
 
+      - Ghosts and Ghostfolders no longer show editable titles in the rename
+        screen.
+
   Silva 2.0.3 (2007-11-23)
 
     Bugs Fixed:
