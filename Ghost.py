@@ -74,6 +74,12 @@ class GhostBase:
         else:
             return content.get_title_editable()
 
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """title comes from haunted object
+        """
+        return False
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
@@ -271,6 +277,13 @@ class Ghost(CatalogedVersionedContent):
         if previewable is None:
             return "[No title available]"
         return previewable.get_title_editable()
+
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """title comes from haunted object
+        """
+        return False
 
     security.declarePrivate('getLastVersion')
     def getLastVersion(self):
