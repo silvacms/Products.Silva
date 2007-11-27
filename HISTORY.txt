@@ -10,6 +10,12 @@ Silva changes
       - added 2 feed icons in /globals, see http://feedicons.com
 
     Bugs Fixed:
+    
+      - In SilvaDocument2.0.4: When images are scaled in kupu they are
+        shown with correct size after a save action. This is accomplished by
+        setting width and height attributes on the image. The image itself
+        is still cached, but can be refreshed with a force reload in 
+        the browser.
 
       - the properties tool in kupu wasn't functional with 
         SilvaNewsNetwork 2.6 (unreleased)
