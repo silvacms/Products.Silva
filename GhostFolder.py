@@ -154,6 +154,13 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         self._content_path = None
 
     security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+    def can_set_title(self):
+        """title comes from haunted object
+        """
+        return False
+
+    security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunt')
     def haunt(self):
         """populate the the ghost folder with ghosts
