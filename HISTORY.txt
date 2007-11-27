@@ -8,28 +8,30 @@ Silva changes
     Features added:
 
       - Support for direct username assignment to clipboard. If the
-        service_members service defines a method 'direct_user_lookup' that
-        returns True, the user lookup UI in the access tab is changed to
-        an add user to clipboard UI. This allows the adding of new
-        users to a clipboard directly.
+        service_members service defines a method 'direct_user_lookup'
+        that returns True, the user lookup UI in the access tab is
+        changed to an add user to clipboard UI. This allows the adding
+        of new users to a clipboard directly.
 
-      - bug 100741: when groups are be used, the groups management screen
-                    also shows groups defined elsewhere (not just local to the 
-                    container) and provides links to edit those groups
+      - bug 100741: when groups are be used, the groups management
+        screen also shows groups defined elsewhere (not just local to
+        the container) and provides links to edit those groups
 
-      - 100750: "Insert new object here" functionality.  When you select an
-        object in a containers edit list, then select the new object to add
-        from the "add new content drop-down", the new object will be placed
-        at the location of the selected object in the edit list.
+      - 100750: "Insert new object here" functionality.  When you
+        select an object in a containers edit list, then select the
+        new object to add from the "add new content drop-down", the
+        new object will be placed at the location of the selected
+        object in the edit list.
 
-      - 100765 caching issues with /globals: All files in /globals are now
-        tied to an Accelerated HTTP Cache Manager at 
-        <silva_root>/service_static_cache_manager.  This cache manager sets
-        the appropriate HTTP headers to enable browsers to cache these objects.
-        The default setting is to cache for one day, and since the content is
-        static, also cache non-anonymous requests.  The Silva root needs to be
-        refreshed in order to take advantage of this cache manager.  Refreshing
-        happens automatically during Silva upgrades.
+      - 100765 caching issues with /globals: All files in /globals are
+        now tied to an Accelerated HTTP Cache Manager at
+        <silva_root>/service_static_cache_manager.  This cache manager
+        sets the appropriate HTTP headers to enable browsers to cache
+        these objects.  The default setting is to cache for one day,
+        and since the content is static, also cache non-anonymous
+        requests.  The Silva root needs to be refreshed in order to
+        take advantage of this cache manager.  Refreshing happens
+        automatically during Silva upgrades.
 
     Features ported from 2.0 branch
 
@@ -122,6 +124,9 @@ Silva changes
 
       - on rare occasions, the external source tool in kupu wouldn't
         work for specific documents (double-unquoting the docref)
+
+      - Ghosts and Ghostfolders no longer show editable titles in the
+        rename screen.
 
     Features added:
 
