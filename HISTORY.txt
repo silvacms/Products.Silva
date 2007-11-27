@@ -5,7 +5,14 @@ Silva changes
 
   Silva 2.0.4 (unreleased)
 
+    Features Added:
+ 
+      - added 2 feed icons in /globals, see http://feedicons.com
+
     Bugs Fixed:
+
+      - the properties tool in kupu wasn't functional with 
+        SilvaNewsNetwork 2.6 (unreleased)
 
   Silva 2.0.3 (2007-11-23)
 

@@ -15,11 +15,11 @@
 // be moved to somewhere in Silva or something?)
 EDITABLE_METADATA = {
     'http://infrae.com/namespaces/metadata/silva-news': 
-            [['subjects', 'checkbox', 1, 'subjects'],
-                ['target_audiences', 'checkbox', 1, 'target audiences'],
-                ['start_datetime', 'datetime', 1, 'start date/time'],
-                ['end_datetime', 'datetime', 0, 'end date/time'],
-                ['location', 'text', 0, 'location']
+    [['subjects', 'checkbox', 1, 'subjects'],
+     ['target_audiences', 'checkbox', 1, 'target audiences'],
+     ['start_datetime', 'datetime', 1, 'start date/time (dmy)'],
+     ['end_datetime', 'datetime', 0, 'end date/time (dmy)'],
+     ['location', 'text', 0, 'location']
             ]
 }
  
@@ -2122,6 +2122,7 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
         var callback = new ContextFixer(this._addExternalSourceIfValidated, request, this);
         request.onreadystatechange = callback.execute;
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	formdata += '&docref='+this.docref;
         request.send(formdata);
     };
 };
@@ -2590,11 +2591,11 @@ SilvaPropertyTool.prototype.parseFormElIntoRow = function(metatag, tablerow) {
     var td = tablerow.getElementsByTagName('td')[0]
     if (type == 'text' || type == 'textarea' || type == 'datetime') {
         this._createSimpleItemHTML(type, value, name, 
-                                    namespace, mandatory, td);
+				   namespace, mandatory, td, fieldtitle);
     } else if (type == 'checkbox') {
         var titlecell = tablerow.getElementsByTagName('td')[0];
         this._createCheckboxItemHTML(titlecell, value, name, namespace, 
-                                        mandatory, td);
+				     mandatory, td, fieldtitle);
     };
     if (parentvalue && parentvalue != '') {
         td.appendChild(document.createElement('br'));
@@ -2609,8 +2610,42 @@ SilvaPropertyTool.prototype.parseFormElIntoRow = function(metatag, tablerow) {
 // just to make the above method a bit more readable
 SilvaPropertyTool.prototype._createSimpleItemHTML = function(type, value, 
                                                             name, namespace,
-                                                            mandatory, td) {
+							     mandatory, td,
+							     fieldtitle) {
+
+    var outerdiv = document.createElement('div');
+    outerdiv.className = 'kupu-properties-item-outerdiv';
+
+    // the arrow and 'items' label
+    var h2div = document.createElement('h2');
+    outerdiv.appendChild(h2div);
+    var img = document.createElement('img');
+    // XXX would be nice if this would be absolute...
+    img.src = 'service_kupu_silva/closed_arrow.gif'; 
+    outerdiv.image = img; // XXX memory leak!!
+    h2div.appendChild(img);
+    h2div.appendChild(document.createTextNode(fieldtitle));
+    h2div.className = 'kupu-properties-metadata-field'
+    // handler for showing/hiding the checkbox divs
+    var handler = function(evt) {
+        if (this.lastChild.style.display == 'none') {
+            this.image.src = 'service_kupu_silva/opened_arrow.gif';
+            this.image.setAttribute('title', _('click to fold'));
+            this.lastChild.style.display = 'block';
+        } else {
+            this.image.src = 'service_kupu_silva/closed_arrow.gif';
+            this.image.setAttribute('title', _('click to unfold'));
+            this.lastChild.style.display = 'none';
+        }
+    };
+    addEventHandler(h2div, 'click', handler, outerdiv);
+
+    var innerdiv = document.createElement('div');
+    innerdiv.className = 'kupu-properties-item-innerdiv';
+    outerdiv.appendChild(innerdiv);
+
     var input = null;
+
     if (type == 'text' || type == 'datetime') {
         input = document.createElement('input');
         input.setAttribute('type', 'text');
@@ -2629,19 +2664,22 @@ SilvaPropertyTool.prototype._createSimpleItemHTML = function(type, value,
     if (mandatory) {
         input.setAttribute('mandatory', 'true');
     };
-    td.appendChild(input);
+    innerdiv.appendChild(input);
+    td.style.textAlign = "center";
+    td.appendChild(outerdiv);
 };
 
 SilvaPropertyTool.prototype._createCheckboxItemHTML = function(titlecell, 
                                                     value, name, namespace, 
-                                                    mandatory, td) {
+							       mandatory, td,
+							       fieldtitle) {
     // elements are seperated by ||
     var infos = value.split('||');
 
     // messy stuff coming up, that make the checkboxes appear in some
     // 'foldable' div
     var outerdiv = document.createElement('div');
-    outerdiv.className = 'kupu-properties-checkbox-outerdiv';
+    outerdiv.className = 'kupu-properties-item-outerdiv';
 
     // the arrow and 'items' label
     var h2div = document.createElement('h2');
@@ -2651,7 +2689,7 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(titlecell,
     img.src = 'service_kupu_silva/closed_arrow.gif'; 
     outerdiv.image = img; // XXX memory leak!!
     h2div.appendChild(img);
-    h2div.appendChild(document.createTextNode(name));
+    h2div.appendChild(document.createTextNode(fieldtitle));
     h2div.className = 'kupu-properties-metadata-field'
     
     // handler for showing/hiding the checkbox divs
@@ -2671,7 +2709,7 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(titlecell,
     // innerdiv is where the actual checkboxes are displayed in, and what
     // is collapsed/uncollapsed
     var innerdiv = document.createElement('div');
-    innerdiv.className = 'kupu-properties-checkbox-innerdiv';
+    innerdiv.className = 'kupu-properties-item-innerdiv';
     outerdiv.appendChild(innerdiv);
     td.appendChild(outerdiv);
 
