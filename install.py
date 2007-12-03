@@ -260,7 +260,7 @@ def configureMiscServices(root):
         sscm = getattr(root, 'service_static_cache_manager')
         sscm.manage_editProps(title="Cache Manager for static non-silva objects",
                               settings={"anonymous_only": 0,
-                                        "interval": 86400, #set expires to 1 day
+                                        "interval": 604800, #set expires to 1 week
                                         "notify_urls": []}
                                )
 

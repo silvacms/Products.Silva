@@ -27,7 +27,7 @@ Silva changes
         now tied to an Accelerated HTTP Cache Manager at
         <silva_root>/service_static_cache_manager.  This cache manager
         sets the appropriate HTTP headers to enable browsers to cache
-        these objects.  The default setting is to cache for one day,
+        these objects.  The default setting is to cache for one week,
         and since the content is static, also cache non-anonymous
         requests.  The Silva root needs to be refreshed in order to
         take advantage of this cache manager.  Refreshing happens
