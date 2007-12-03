@@ -80,16 +80,19 @@
        So, subtract one when determining the position, if an index document
        is present */
     var idcheckboxes = form['ids:list'];
-    var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
-    for (var i=0; i < idcheckboxes.length; i++) {
-      if (idcheckboxes[i].checked) {
-	/* if the index item is checked, leave the position at zero, so the
-           new item will be added at position one (as listed in the contents tab)
-        */
-        if (checkboxListHasIndex && i>0) i-=1;
-        url += '&position=' + i;
-	alert("checked" + url);
-        break;
+    /* this will be blank if there are no items in the container */
+    if (idcheckboxes) {
+      var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
+      for (var i=0; i < idcheckboxes.length; i++) {
+	if (idcheckboxes[i].checked) {
+	  /* if the index item is checked, leave the position at zero, so the
+	     new item will be added at position one (as listed in the contents tab)
+	  */
+	  if (checkboxListHasIndex && i>0) i-=1;
+	  url += '&position=' + i;
+	  alert("checked" + url);
+	  break;
+	};
       };
     };
     location.href = url;
