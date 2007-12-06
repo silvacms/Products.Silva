@@ -10,6 +10,9 @@ Silva changes
       - added 2 feed icons in /globals, see http://feedicons.com
 
     Bugs Fixed:
+
+      - Image cropping was not shown correctly when after resizing the image
+        was resized back to 100% 
     
       - In SilvaDocument2.0.4: When images are scaled in kupu they are
         shown with correct size after a save action. This is accomplished by

@@ -502,7 +502,7 @@ class Image(Asset):
         web_image_data = StringIO()
         if cropbox:
             image = image.crop(cropbox)
-        if self.web_scale == '100%':
+        if self.web_scale == '100%' and not cropbox:
             if self.image is not None and not self._image_is_hires():
                 self._remove_image('image')
             self.image = self.hires_image
