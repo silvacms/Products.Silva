@@ -27,7 +27,7 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 2.0.1 (DC)
+Silva 2.0.4 (DC)
 ----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
@@ -110,7 +110,7 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 2.0.1 (DE)
+SilvaDocument 2.0.4 (DE)
 ------------------------
 
 Silva extension for XML-based documents. Contains a through the web
@@ -177,8 +177,8 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 1.4 (DE)
-------------------------------
+SilvaExternalSources 1.5 (DE)
+-----------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
@@ -186,7 +186,7 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNewsNetwork 2.5 (EX)
+SilvaNewsNetwork 2.6 (EX)
 -------------------------
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and
@@ -197,7 +197,7 @@ export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaFind 1.1.1 (DCE)
+SilvaFind 1.1.2 (DCE)
 ---------------------
 
 A highly customizable search solution for use with Silva. It allows
@@ -208,8 +208,8 @@ their content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
-SilvaLayout 1.0 (EX)
---------------------
+SilvaLayout 1.0.1 (EX)
+----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
