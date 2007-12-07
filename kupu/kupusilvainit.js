@@ -195,6 +195,9 @@ function initSilvaKupu(iframe) {
                                         'kupu-abbr-deletebutton', 'kupu-toolbox-abbr',
                                         'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('abbrtool', abbrtool);
+
+    var editorcommentstool = new SilvaEditorCommentsTool('kupu-toolbox-comments');
+    kupu.registerTool('editorcommentstool', editorcommentstool);
   
     var imagetool = new SilvaImageTool(
         'kupu-toolbox-image-edit', 'kupu-toolbox-image-src',

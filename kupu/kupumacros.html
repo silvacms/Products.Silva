@@ -298,6 +298,16 @@
             
     <div class="kupu-toolboxes" id="kupu-toolboxes">
       
+    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox not-collapsible" id="kupu-toolbox-comments" tal:define="comments python:here.service_metadata.getMetadataValue(request['model'].get_editable(),'silva-extra','comment',acquire=0)" tal:condition="comments">
+
+      <h1 class="kupu-toolbox-heading" i18n:translate="">editor comments</h1>
+
+      <div class="kupu-tooltray">
+       <div class="kupu-editor-comments-content" tal:content="comments"/>
+      </div>
+
+    </div>
+  
     <div class="kupu-toolbox" id="kupu-toolbox-properties">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>

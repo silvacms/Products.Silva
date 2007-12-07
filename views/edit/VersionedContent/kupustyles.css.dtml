@@ -177,6 +177,8 @@ div.kupu-toolbox-active {
   color: red;
 }
 
+div.not-collapsible h1.kupu-toolbox-heading { background-image: none; }
+
 div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 1.1em;
@@ -332,6 +334,13 @@ div.kupu-properties-item-innerdiv {
 
 .kupu-properties-checkbox-item-title {
   float: left;
+}
+
+#kupu-toolbox-comments .kupu-tooltray {
+   color: #3c2d50;
+   background: #f7d1d1;
+   height: 4em;
+   overflow: auto;
 }
 
 #kupu-toolbox-debug {

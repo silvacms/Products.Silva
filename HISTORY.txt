@@ -7,6 +7,14 @@ Silva changes
 
     Features added:
 
+      - New "Editor Comments" Kupu Tool: displays the "internal comments"
+        silva-extra metadata field if there are comments.  This
+        promotes the visibility of internal / editor comments so that
+        anyone editing the document will see them.  This tool is only
+        visible if there are comments, and does not allow editing at this
+        time.  This toolbox is non-collapsible, and requires a version
+        of kupu newer than 1.4b1 to support non-collapsible toolboxes
+
       - Support for direct username assignment to clipboard. If the
         service_members service defines a method 'direct_user_lookup'
         that returns True, the user lookup UI in the access tab is
