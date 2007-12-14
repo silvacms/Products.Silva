@@ -177,7 +177,10 @@ div.kupu-toolbox-active {
   color: red;
 }
 
-div.not-collapsible h1.kupu-toolbox-heading { background-image: none; }
+div.not-collapsible h1.kupu-toolbox-heading {
+  padding-left: 0.3em;
+  background-image: none; 
+}
 
 div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
