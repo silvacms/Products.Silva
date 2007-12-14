@@ -449,7 +449,7 @@ div.listingBar .previous {
 input, textarea, select {
   padding: 0.1em;
   border: 1px solid #78797a;
-  color: #333767;
+  color: #337;
   background-color: #f3f4f5;
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
