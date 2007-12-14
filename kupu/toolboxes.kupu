@@ -165,17 +165,17 @@
           <input type="button" class="transport" value="edit image..."
             tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')" />
           <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%" />
-          &#160;link to:<br />
+          &#160;<label for="kupu-toolbox-image-link">link to:</label><br />
           <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%" />
-          <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked" />link to high resolution version<br />
-          &#160;target for link
+          <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked" /><label for="kupu-toolbox-image-link-checkbox-hires">link to high resolution version</label><br />
+          &#160;<label for="kupu-toolbox-image-target">target for link</label>
           <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
             <option value="_self">same window</option>
             <option value="_blank">new window</option>
             <option value="input">custom target</option>
           </select><br />
           <input type="text" id="kupu-toolbox-image-target-input" style="margin-left:0.2em; width:96%; display: none" />
-          &#160;image alignment
+          &#160;<label for="kupu-toolbox-image-align"><label for="kupu-toolbox-image-align">image alignment</label></label>
           <select id="kupu-toolbox-image-align" style="margin-left:0.2em">
             <option value="default">default</option>
             <option value="image-left">align left</option>
@@ -184,7 +184,7 @@
             <option value="float-left">float left</option>
             <option value="float-right">float right</option>
           </select><br />
-          &#160;tooltip:<br />
+          &#160;<label for="kupu-toolbox-image-alt">tooltip:</label><br />
           <input type="text" id="kupu-toolbox-image-alt" style="margin-left:0.2em; width: 96%" /><br />
           <input type="button" class="button" value="update image" />
         </div>
