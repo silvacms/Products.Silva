@@ -1281,8 +1281,6 @@ table.listing tr.feedback, table.listing td.feedback {
   background: #f3f3d9;
 }
 table.listing tr.alert, table.listing td.alert {
-  padding-top: 0.1em;
-  padding-bottom: 0.2em;
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
   color: #3c2d50;
