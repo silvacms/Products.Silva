@@ -1739,7 +1739,7 @@ SilvaAbbrTool.prototype.deleteElement = function() {
     this.editor.logMessage('Deleted ' + element.nodeName.toLowerCase() + ' deleted');
 };
 
-function SilvaEditorCommentsTool(toolboxid) {
+function SilvaCommentsTool(toolboxid) {
     /* tool to manage Abbreviation elements */
     this.toolbox = getFromSelector(toolboxid);
     if (this.toolbox) {
@@ -1748,9 +1748,9 @@ function SilvaEditorCommentsTool(toolboxid) {
     }
 };
 
-SilvaEditorCommentsTool.prototype = new KupuTool;
+SilvaCommentsTool.prototype = new KupuTool;
 
-SilvaEditorCommentsTool.prototype.initialize = function(editor) {
+SilvaCommentsTool.prototype.initialize = function(editor) {
     this.editor = editor;
     if (this.toolbox && this.tooltrayContent.offsetHeight > 0 && this.tooltrayContent.offsetHeight < this.tooltray.offsetHeight) {
       this.tooltray.style.height = this.tooltrayContent.offsetHeight + 'px';

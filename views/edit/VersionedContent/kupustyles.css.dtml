@@ -336,10 +336,8 @@ div.kupu-properties-item-innerdiv {
   float: left;
 }
 
-#kupu-toolbox-comments .kupu-tooltray {
-   color: #3c2d50;
-   background: #f7d1d1;
-   height: 4em;
+#kupu-toolbox-comment .kupu-tooltray {
+   height: 5em;
    overflow: auto;
 }
 

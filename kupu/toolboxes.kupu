@@ -8,15 +8,15 @@
     xmlns:tal="http://xml.zope.org/namespaces/tal"
     >
 
-  <kupu:part name="editor-comments">
-    <div class="kupu-toolbox not-collapsible" id="kupu-toolbox-comments"
-     tal:define="comments python:here.service_metadata.getMetadataValue(request['model'].get_editable(),'silva-extra','comment',acquire=0)"
-     tal:condition="comments">
+  <kupu:part name="comment">
+    <div class="kupu-toolbox not-collapsible" id="kupu-toolbox-comment"
+     tal:define="comment python:here.service_metadata.getMetadataValue(request['model'].get_editable(),'silva-extra','comment',acquire=0)"
+     tal:condition="comment">
 
-      <h1 class="kupu-toolbox-heading" i18n:translate="">editor comments</h1>
+      <h1 class="kupu-toolbox-heading" i18n:translate="">comment</h1>
 
-      <div class="kupu-tooltray">
-       <div class="kupu-editor-comments-content" tal:content="comments" />
+      <div class="kupu-tooltray fixed-alert">
+       <div class="kupu-comment-content" tal:content="structure python:comment.replace('\n','&lt;br /&gt;')" />
       </div>
 
     </div>
