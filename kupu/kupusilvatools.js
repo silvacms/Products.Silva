@@ -189,10 +189,11 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
 function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid, 
                         hireslinkcheckboxid, linkinputid, 
                         alignselectid, titleinputid, toolboxid, plainclass, 
-                        activeclass, editimagebuttonid) {
+                        activeclass, editimagebuttonid, linktocontainerid,
+                        linksettingscontainerid) {
     /* Silva specific image tool */
     this.editel = getFromSelector(editelid);
-    this.editImageButton = getFromSelector(editimagebuttonid);
+    this.editimagebutton = getFromSelector(editimagebuttonid);
     this.urlinput = getFromSelector(urlinputid);
     this.targetselect = getFromSelector(targetselectid);
     this.targetinput = getFromSelector(targetinputid);
@@ -201,6 +202,7 @@ function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid,
     this.alignselect = getFromSelector(alignselectid);
     this.titleinput = getFromSelector(titleinputid);
     this.toolboxel = getFromSelector(toolboxid);
+    this.linktocontainer = getFromSelector(linktocontainerid);
     this.plainclass = plainclass;
     this.activeclass = activeclass;
 }
@@ -217,7 +219,7 @@ SilvaImageTool.prototype.initialize = function(editor) {
     addEventHandler(this.linkinput, 'change', this.setLink, this);
     addEventHandler(this.alignselect, 'change', this.setAlign, this);
     addEventHandler(this.titleinput, 'change', this.setTitle, this);
-    this.editImageButton.style.display = 'none';
+    this.editimagebutton.style.display = 'none';
     this.targetinput.style.display = 'none';
     this.editor.logMessage('Image tool initialized');
 };
@@ -242,7 +244,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
         this.editel.style.display = 'block';
-	this.editImageButton.style.display = 'inline';
+	this.editimagebutton.style.display = 'inline';
         var src = image.getAttribute('silva_src');
         if (!src) {
             src = image.getAttribute('src');
@@ -278,6 +280,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             this.linkinput.value = link == null ? '' : link;
         } else {
             this.hireslinkcheckbox.checked = 'checked';
+	    this.linktocontainer.style.display = 'none';
             this.linkinput.value = '';
             this.linkinput.disabled = 'disabled';
         };
@@ -299,7 +302,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
         selectSelectItem(this.alignselect, align);
     } else {
         this.editel.style.display = 'none';
-	this.editImageButton.style.display = 'none';
+	this.editimagebutton.style.display = 'none';
         this.urlinput.value = '';
         this.titleinput.value = '';
         if (this.toolboxel) {
@@ -371,10 +374,12 @@ SilvaImageTool.prototype.setHires = function() {
         image.removeAttribute('link');
         this.linkinput.value = '';
         this.linkinput.disabled = 'disabled';
+        this.linktocontainer.style.display = 'none';
     } else {
         image.setAttribute('link_to_hires', '0');
         image.setAttribute('link', this.linkinput.value);
         this.linkinput.disabled = false;
+        this.linktocontainer.style.display = 'block';
     };
     this.editor.content_changed = true;
 };

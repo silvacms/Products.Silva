@@ -377,4 +377,8 @@ div.kupu-properties-item-innerdiv {
  border-bottom: 1px solid #cc0000;
 }
 
+#kupu-toolbox-image-link-settings {
+  padding: 3px 0px;
+}
+
 </dtml-let>

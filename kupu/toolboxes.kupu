@@ -154,6 +154,15 @@
           }, '${folder_context/absolute_url}',
           'Silva Image', true, '');;
       }
+      function imageToolGetLinkReference() {
+        reference.getReference(
+          function(path, id, title) {
+            imgtool = kupu.getTool('imagetool');
+            imgtool.linkinput.value = path;
+            imgtool.setLink();
+          }, '${folder_context/absolute_url}',
+          '', true, '');;
+      }
     "></script>
 
     <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
@@ -166,16 +175,6 @@
         <div id="kupu-toolbox-image-edit" style="color: black; display: none">
           <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%" 
             title="image source" />
-          &#160;<label for="kupu-toolbox-image-link">link to:</label><br />
-          <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%" />
-          <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked" /><label for="kupu-toolbox-image-link-checkbox-hires">link to high resolution version</label><br />
-          &#160;<label for="kupu-toolbox-image-target">target for link</label>
-          <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
-            <option value="_self">same window</option>
-            <option value="_blank">new window</option>
-            <option value="input">custom target</option>
-          </select><br />
-          <input type="text" id="kupu-toolbox-image-target-input" style="margin-left:0.2em; width:96%; display: none" />
           &#160;<label for="kupu-toolbox-image-align"><label for="kupu-toolbox-image-align">image alignment</label></label>
           <select id="kupu-toolbox-image-align" style="margin-left:0.2em">
             <option value="default">default</option>
@@ -184,9 +183,23 @@
             <option value="image-right">align right</option>
             <option value="float-left">float left</option>
             <option value="float-right">float right</option>
+          </select>
+         <fieldset id="kupu-toolbox-image-link-settings">
+          <legend>link settings</legend>
+          <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked" /><label for="kupu-toolbox-image-link-checkbox-hires">link to high resolution version</label><br />
+          <div id="kupu-toolbox-image-link-cont">&#160;<label for="kupu-toolbox-image-link">link to:</label>&#160;<input type="button" class="transport" onclick="imageToolGetLinkReference()" value="get link reference..." /><br />
+          <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%" /></div>
+          &#160;<label for="kupu-toolbox-image-target">link target</label>
+          <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
+            <option value="_self">same window</option>
+            <option value="_blank">new window</option>
+            <option value="input">custom target</option>
           </select><br />
+          <input type="text" id="kupu-toolbox-image-target-input" style="margin-left:0.2em; width:96%; display: none" />
+
           &#160;<label for="kupu-toolbox-image-alt">tooltip:</label><br />
           <input type="text" id="kupu-toolbox-image-alt" style="margin-left:0.2em; width: 96%" /><br />
+         </fieldset>
           <input type="button" class="button" value="update image" />
         </div>
       </form>
