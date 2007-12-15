@@ -161,10 +161,11 @@
     <div class="kupu-tooltray">
       <form name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
         <input type="button" class="transport" onclick="getImage()" value="get image reference..." />
-        <div id="kupu-toolbox-image-edit" style="color: black; display: none">
-          <input type="button" class="transport" value="edit image..."
+        <input type="button" class="transport" value="edit image..." id="kupu-toolbox-image-edit-button"
             tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')" />
-          <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%" />
+        <div id="kupu-toolbox-image-edit" style="color: black; display: none">
+          <input type="text" id="kupu-toolbox-image-src" style="margin-left:0.2em; width:96%" 
+            title="image source" />
           &#160;<label for="kupu-toolbox-image-link">link to:</label><br />
           <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%" />
           <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked" /><label for="kupu-toolbox-image-link-checkbox-hires">link to high resolution version</label><br />
