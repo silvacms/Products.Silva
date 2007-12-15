@@ -508,7 +508,7 @@
           </select>
 	  <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'"/>
           <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">the external sources product is not installed.  this tool is disabled.</div>
-          <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton"/>
+          <input class="button" type="button" value="add source" id="kupu-extsource-addbutton"/>
           <input class="cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
           <input class="button" type="button" value="update source" id="kupu-extsource-updatebutton"/>
           <input class="warning" type="button" value="remove" id="kupu-extsource-delbutton"/>
@@ -572,50 +572,41 @@
       <table width="100%" cellpadding="0" cellspacing="0">
         <tbody>
           <tr>
+            <td width="35%">css class</td>
             <td>
-              <table width="100%" style="color: #333;" cellspacing="0">
-                <tr>
-                  <td>table class</td>
-                  <td>
-                    <select class="manipulator" id="kupu-table-classchooser">
-                      <option value="plain">plain</option>
-                      <option value="list">list</option>
-                      <option value="grid">grid</option>
-                      <option value="datagrid">datagrid</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
+              <select class="manipulator" id="kupu-table-classchooser">
+                <option value="plain">plain</option>
+                <option value="list">list</option>
+                <option value="grid">grid</option>
+                <option value="datagrid">datagrid</option>
+              </select>
             </td>
           </tr>
           <tr>
             <td colspan="2">
               <div id="kupu-toolbox-addtable" class="kupu-toolbox-addtable">
-                <table width="100%" style="color: #333;" cellspacing="0">
+                <table width="100%" style="color:#333;padding-left:0" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td style="text-align:right" width="15%">rows</td>
-                    <td><input class="store" id="kupu-table-newrows"/></td>
+                    <td width="35%" style="padding-left:0">rows</td>
+                    <td style="padding-left:0.2em"><input id="kupu-table-newrows" size="4"/></td>
                   </tr>
                   <tr>
-                    <td style="text-align:right">columns</td>
-                    <td><input class="store" id="kupu-table-newcols"/></td>
+                    <td style="padding-left:0">columns</td>
+                    <td style="padding-left:0.2em"><input id="kupu-table-newcols" size="4"/></td>
                   </tr>
                   <tr>
-                    <td style="text-align:right">heading</td>
-                    <td>
-                      <input id="kupu-table-makeheader" type="checkbox"/>
-                        <label for="kupu-table-makeheader">create</label>
-                    </td>
+                    <td style="padding-left:0"><label for="kupu-table-makeheader">create header</label></td>
+                    <td style="padding-left:0"><input id="kupu-table-makeheader" type="checkbox"/></td>
                   </tr>
                 </table>
                 <input type="button" class="button" id="kupu-table-addtable-button" value="add table"/>
               </div>
               <div id="kupu-toolbox-edittable" class="kupu-toolbox-edittable" style="display: none">
-                <table width="100%">
+                <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td class="align-right" style="padding-right:0.3em" width="30%">column align</td>
+                    <td class="align-right" style="padding-right:0.3em; padding-left:0" width="35%">column align</td>
                     <td>
-                      <select class="manipulator" id="kupu-table-alignchooser">
+                      <select class="manipulator" style="margin-left:0" id="kupu-table-alignchooser">
                         <option value="left">left</option>
                         <option value="center">center</option>
                         <option value="right">right</option>
@@ -623,31 +614,31 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="align-right" style="padding-right: 0.3em">column widths</td>
-                    <td><input type="text" id="kupu-table-columnwidth"/></td>
+                    <td style="padding-right: 0.3em; padding-left:0">column widths</td>
+                    <td><input type="text" class="store" id="kupu-table-columnwidth"/></td>
                   </tr>
                   <tr>
-                    <td class="align-right">column</td>
+                    <td style="padding-left:0">column</td>
                     <td>
                         <input type="button" class="button" id="kupu-table-addcolumn-button" value="add column"/>
                         <input type="button" class="warning" id="kupu-table-delcolumn-button" value="remove"/>
                     </td>
                   </tr>
                   <tr>
-                    <td class="align-right">row</td>
+                    <td style="padding-left:0">row</td>
                     <td>
                       <input type="button" class="button" id="kupu-table-addrow-button" value="add row"/>
                       <input type="button" class="warning" id="kupu-table-delrow-button" value="remove"/></td>
                   </tr>
                   <tr>
-                    <td class="align-right">table</td>
+                    <td style="padding-left:0">table</td>
                     <td>
                       <input type="button" class="button" id="kupu-table-fix-button" value="cleanup"/>
                       <input type="button" class="warning" id="kupu-table-delete-button" value="remove"/>
                     </td>
                   </tr>
                   <tr>
-                    <td class="align-right" colspan="2">
+                    <td style="padding-left:0" colspan="2">
                       <input type="button" class="button" value="update table"/>
                     </td>
                   </tr>
