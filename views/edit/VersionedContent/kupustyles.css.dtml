@@ -378,7 +378,18 @@ div.kupu-properties-item-innerdiv {
 }
 
 #kupu-toolbox-image-link-settings {
-  padding: 3px 0px;
+  margin: 0.2em 0;
+  padding: 0.3em 0;
 }
 
 </dtml-let>
+
+/* used in image toolbox */
+fieldset {
+  border:1px solid #8cacbb;
+  width:auto;
+}
+legend {
+  color:#333;
+  font-size:110%;
+}
