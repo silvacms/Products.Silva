@@ -199,6 +199,17 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   cursor: default;
 }
 
+div.kupu-tooltray h3 {
+  font-size: 1.1em;
+  font-weight: normal;
+  color: #fff;
+  background-color: #A3B7C2;
+  width: inherit;
+  max-width: 22em;
+  margin: 0.2em -0.3em 0.2em -0.3em;
+  padding: 0.1em 0 0.1em 0.3em;
+}
+
 div.kupu-toolbox h1.kupu-toolbox-heading-opened, 
 div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
   background-image: url('<dtml-var root>/service_kupu_silva/opened_arrow.gif');
