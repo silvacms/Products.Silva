@@ -1754,6 +1754,7 @@ SilvaCommentsTool.prototype.initialize = function(editor) {
     this.editor = editor;
     if (this.toolbox && this.tooltrayContent.offsetHeight > 0 && this.tooltrayContent.offsetHeight < this.tooltray.offsetHeight) {
       this.tooltray.style.height = this.tooltrayContent.offsetHeight + 'px';
+      this.tooltray.style.overflow = 'visible';
     }
 };
 
