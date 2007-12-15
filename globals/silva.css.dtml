@@ -867,6 +867,7 @@ input.transport {
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
+  overflow: visible; /* for IE7 */
 }
 
 input.warning {
