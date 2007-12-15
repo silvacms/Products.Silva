@@ -69,6 +69,7 @@
   </kupu:fill-slot>
 
   <kupu:fill-slot name="toolboxes">
+    <kupu:insert-part feature="toolboxes" part="comment" />
     <kupu:insert-part feature="toolboxes" part="properties" />
     <kupu:insert-part feature="toolboxes" part="links" />
     <kupu:insert-part feature="toolboxes" part="indexes" />

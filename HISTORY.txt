@@ -13,6 +13,16 @@ Silva changes
         to make a new copy of a silva document to edit then click the
         browser's back button and click 'new version' again.
 
+    Features added:
+
+      - New "Editor Comments" Kupu Tool: displays the "internal comments"
+        silva-extra metadata field if there are comments.  This
+        promotes the visibility of internal / editor comments so that
+        anyone editing the document will see them.  This tool is only
+        visible if there are comments, and does not allow editing at this
+        time.  This toolbox is non-collapsible, and requires a version
+        of kupu newer than 1.4b1 to support non-collapsible toolboxes
+
   Silva 1.6.1
 
     Bugs fixed:

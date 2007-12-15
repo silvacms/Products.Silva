@@ -1739,6 +1739,25 @@ SilvaAbbrTool.prototype.deleteElement = function() {
     this.editor.logMessage('Deleted ' + element.nodeName.toLowerCase() + ' deleted');
 };
 
+function SilvaCommentsTool(toolboxid) {
+    /* tool to manage Abbreviation elements */
+    this.toolbox = getFromSelector(toolboxid);
+    if (this.toolbox) {
+      this.tooltray = this.toolbox.getElementsByTagName("div")[0];
+      this.tooltrayContent = this.tooltray.getElementsByTagName("div")[0];
+    }
+};
+
+SilvaCommentsTool.prototype = new KupuTool;
+
+SilvaCommentsTool.prototype.initialize = function(editor) {
+    this.editor = editor;
+    if (this.toolbox && this.tooltrayContent.offsetHeight > 0 && this.tooltrayContent.offsetHeight < this.tooltray.offsetHeight) {
+      this.tooltray.style.height = this.tooltrayContent.offsetHeight + 'px';
+      this.tooltray.style.overflow = 'visible';
+    }
+};
+
 function SilvaCitationTool(authorinputid, sourceinputid, addbuttonid, updatebuttonid, delbuttonid, 
                             toolboxid, plainclass, activeclass) {
     /* tool to manage citation elements */

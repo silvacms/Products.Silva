@@ -298,6 +298,16 @@
             
     <div class="kupu-toolboxes" id="kupu-toolboxes">
       
+    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox not-collapsible" id="kupu-toolbox-comment" tal:define="comment python:here.service_metadata.getMetadataValue(request['model'].get_editable(),'silva-extra','comment',acquire=0)" tal:condition="comment">
+
+      <h1 class="kupu-toolbox-heading" i18n:translate="">comment</h1>
+
+      <div class="kupu-tooltray fixed-alert" style="padding-left:0.4em; border-bottom-style:none;">
+      <div class="kupu-comment-content" tal:content="structure python:comment.replace('\n','&lt;br /&gt;')"/>
+      </div>
+
+    </div>
+  
     <div class="kupu-toolbox" id="kupu-toolbox-properties">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>
@@ -356,11 +366,11 @@
                 <td>
                   <table width="100%" style="color: #333;" border="0" cellspacing="0">
                     <tr>
-                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
+                      <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name"/></td>
                     </tr>
                     <tr>
-                      <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
+                      <td><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">index title</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-title"/></td>
                     </tr>
                   </table>
