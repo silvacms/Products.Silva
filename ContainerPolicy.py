@@ -3,6 +3,7 @@
 # $Revision: 1.19 $
 
 from zope.interface import implements
+from zope import interface
 
 # Python
 from bisect import insort_right
@@ -17,6 +18,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.interfaces import IContainerPolicy, IContainer
+from Products.Silva.interfaces import IInvisibleService
 
 # XXX: can these "helper" classes for ordering be refactored in something
 # more generic? See also ExtensionRegistry.Addable.
@@ -36,6 +38,7 @@ class ContainerPolicyRegistry(SimpleItem):
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
     title = 'Container Policies Listing'
+    interface.implements(IInvisibleService)
     meta_type = 'Silva Container Policy Registry'
 
     manage_options = (
