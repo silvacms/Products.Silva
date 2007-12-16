@@ -35,6 +35,7 @@ class ContainerPolicyRegistry(SimpleItem):
 
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
+    title = 'Container Policies Listing'
     meta_type = 'Silva Container Policy Registry'
 
     manage_options = (
