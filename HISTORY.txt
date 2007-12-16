@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - Renovated the Kupu image toolbox to make it more userfriendly. 
+        Improved the alignments in the table toolbox. 
+
       - New "Editor Comments" Kupu Tool: displays the "internal comments"
         silva-extra metadata field if there are comments.  This
         promotes the visibility of internal / editor comments so that
