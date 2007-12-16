@@ -7,10 +7,10 @@
  * Instead of customizing this file, it is recommended to customize
  * kupucustom.css. 
  *
- *****************************************************************************/
-/**  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
-** <dtml-let root_url="get_root_url()" >
-*/
+ *****************************************************************************
+ ** Get root url of the Silva site so resources are properly cached:
+ ** <dtml-let root_url="get_root_url()" >
+ */
 
 div.kupu-fulleditor {
   font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -187,14 +187,10 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   background-repeat: no-repeat;
   background-position: center left;
   background-color: #829199;
-  width: inherit;
   max-width: 22em;
-  margin-top: 0;
-  margin-bottom: 0px;
+  margin: 0;
   padding-left: 14px;
-  border: solid 1px #6c797f;
-  border-style: solid none none none;
-  text-align: left;
+  border-top: solid 1px #6c797f;
   cursor: default;
 }
 
@@ -264,10 +260,6 @@ div#kupu-fgcolorchooser div:hover {
   display: none;
 }
 
-#kupu-toolbox-news-images {
-  display: none;
-}
-
 #kupu-toolbox-properties {
   display: none;
 }
@@ -291,29 +283,20 @@ div.kupu-properties-item-outerdiv h2 {
   font-weight: normal;
   color: #eCFFF3;
   background-color: #9AACB6;
-  width: inherit;
-  max-width: 22em;
-  margin-top: 0em;
-  margin-bottom: 0em;
-  margin-left:-0.6em;
-  margin-right:-1.2em;
-  padding: 0px;
-  padding-left: 0.8em;
-  border: solid 1px #6c797f;
-  border-style: solid none none none;
-  text-align: left;
+  width: 101%;
+  margin: 0 0 0 -0.1em;
+  padding: 0 0 0 0.8em;
+  border-top: solid 1px #829199;
   cursor: default;
 }
 
 #kupu-toolbox-properties h1.kupu-toolbox-heading-opened {
-  margin-bottom:-0.3em;
 }
 
 div.kupu-properties-item-outerdiv {
 }
 
 div.kupu-properties-item-innerdiv {
-  margin: 1ex 0px;
 }
 
 .kupu-properties-checkbox-line {
