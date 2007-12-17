@@ -297,6 +297,7 @@ div.kupu-properties-item-outerdiv {
 }
 
 div.kupu-properties-item-innerdiv {
+  padding-left:0.4em;
 }
 
 .kupu-properties-checkbox-line {
