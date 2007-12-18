@@ -1,0 +1,52 @@
+Copyright (c) 2007 Infrae. All rights reserved.
+See also LICENSE.txt
+
+Priority settings
+=================
+
+Why?
+----
+
+This document lists the different priority settings for <silva:content> types
+in Silva and Silva Products. This should reduce conflicting priority settings
+for existing and newly developed products. Please list any new priority numbers 
+in this document.
+
+Product and priority
+--------------------
+Silva 3rd Party Extension Page: 10
+Silva 3rd Party Software Package: 10
+Silva 3rd Party Software Release: 10
+Silva Software File: 9
+Silva Software Package: 9
+Silva Software Release: 9
+Silva Forum: 4
+Silva Agenda Item: 3.8
+Silva Article: 3.7
+Silva RSS Aggregator: 3.5
+Silva Agenda Filter: 3.4
+Silva Agenda Viewer: 3.3
+Silva News Filter: 3.2
+Silva News Viewer: 3.1
+Silva News Publication: 3
+Silva AutoTOC: 2
+Silva CSV Source: 1.8
+Silva Find: 0
+Silva Flash: 0
+Silva Ghost: 0
+Silva Ghost Folder: 0
+Silva Group: 0
+Silva IP Group: 0
+Silva Indexer: 0
+Silva Link: 0
+Silva Poll Question: 0
+Silva Virtual Group: 0
+Silva Abstract Document: -1
+Silva Abstract Document Version: -1
+Silva File: -3
+Silva Image: -4
+Silva Folder: -5
+Silva Publication: -5
+Silva Document: -6
+Silva Topic: -7
+Silva Comment: -7
