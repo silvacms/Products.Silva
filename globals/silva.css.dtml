@@ -1069,69 +1069,71 @@ select:focus, select:hover {
 input.transport[type="submit"]:hover, button[type="button"]:hover {
   border-color: #99b4cf;
   color: #e5fffe;
-  background: #74748b;
+  background-color: #74748b;
 }
 
 input.transport[type="submit"]:focus {
   color: #e9f7ff;
-  background: #7a83a6;
+  background-color: #7a83a6;
 }
 
 /* warm glow */
-input.button[type="submit"]:hover, button[type="button"]:hover {
+input.button[type="submit"]:hover, button[type="button"]:hover, 
+button[type="submit"]:hover {
   border-color: #8dc1a8;
   color: #e5ffec;
-  background: #548e72;
+  background-color: #548e72;
 }
 
-input.button[type="submit"]:focus, button[type="button"]:focus {
+input.button[type="submit"]:focus, button[type="button"]:focus, 
+button[type="submit"]:focus {
   color: #bfffd3;
-  background: #538b58;
+  background-color: #538b58;
 }
 
 /* hot glow */
 input.warning[type="submit"]:hover {
   border-color: #cdb1a3;
   color: #fff5f5;
-  background: #a85353;
+  background-color: #a85353;
 }
 
 input.warning[type="submit"]:focus {
   color: #f0c0c0;
-  background: #53538b;
+  background-color: #53538b;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover {
   color: #bfffd3;
-  background: #69878c;
+  background-color: #69878c;
 }
 
 input[type="submit"]:focus, input[type="button"]:focus {
   color: #bfffd3;
-  background: #008a8a;
+  background-color: #008a8a;
 }
 
 /* publish screen state coded buttons */
 input.reject[type="submit"]:hover {
   border-color: #8dc1a8;
   color: #e5ffec;
-  background: #9b8800;
+  background-color: #9b8800;
 }
 input.revoke[type="submit"]:hover {
   border-color: #8dc1a8;
   color: #e5ffec;
-  background: #009a62;
+  background-color: #009a62;
 }
 input.close[type="submit"]:hover {
   border-color: #8dc1a8;
   color: #e5ffec;
-  background: #4a4aa7;
+  background-color: #4a4aa7;
 }
 
 /* image button */
 input.imagebutton {
   border: 0;
-  background: transparent;
+  background-color: transparent;
 }
 
 input[type="checkbox"], input[type="radio"] {

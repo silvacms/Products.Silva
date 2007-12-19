@@ -105,16 +105,17 @@ h2 {
       <tal:note replace="nothing"> _ do not change the value attribute _ </tal:note>
       <input type="hidden"
         name="came_from_view"
-	tal:attributes="value template/id"
+        tal:attributes="value template/id"
       />
-      <input class="button"
+      <button class="button"
         style="margin-left: 7px; margin-bottom:0.1em;"
         type="submit"
-        value="new version"
         title="work on a new version while the previous one stays online: alt-n"
         accesskey="n"
-        i18n:attributes="value;title"
-      />
+        i18n:attributes="title"
+        i18n:translate="">
+        new version
+      </button>
       <tal:block i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
         content. Changes can only be made in a new version.

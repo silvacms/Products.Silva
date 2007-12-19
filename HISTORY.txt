@@ -52,6 +52,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - Changed the new version button in the editor screen from an input to
+        a button, to avoid css conflicts with frontend.css controls styles
+
       - fixed 156921: Escaping image title strings.
 
       - fixed 101240: SilvaExternalSource cannot be disabled.
