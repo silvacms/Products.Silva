@@ -100,15 +100,20 @@ h2 {
 
 <span tal:replace="nothing"> _______ make changes in a new version _______ </span>
 <tal:condition condition="python: not model.get_next_version()">
-  <div class="fixed-feedback">
+  <div class="fixed-feedback"
+    style="padding:3px 16px">
     <form action="tab_edit_make_copy" method="post">
       <tal:note replace="nothing"> _ do not change the value attribute _ </tal:note>
       <input type="hidden"
         name="came_from_view"
         tal:attributes="value template/id"
       />
+      <tal:block i18n:translate="">
+        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
+        content. Changes can only be made in a new version.
+      </tal:block><br />
       <button class="button"
-        style="margin-left: 7px; margin-bottom:0.1em;"
+        style="font-size:100%"
         type="submit"
         title="work on a new version while the previous one stays online: alt-n"
         accesskey="n"
@@ -116,10 +121,6 @@ h2 {
         i18n:translate="">
         new version
       </button>
-      <tal:block i18n:translate="">
-        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
-        content. Changes can only be made in a new version.
-      </tal:block>
     </form>
   </div>
 </tal:condition>

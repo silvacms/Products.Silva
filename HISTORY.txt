@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - Moved the "new version" button in the editor screen below the feedback
+        text, as opposed to nestled in the corner next to the text. This
+        because a Silva trainer reported that a trainee couldn't figure out
+        how to make a new version. Now it's more obvious, hopefully enough.
+
       - Renovated the Kupu image toolbox to make it more userfriendly. 
         Improved the alignments in the table toolbox. 
 
