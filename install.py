@@ -258,7 +258,7 @@ def configureMiscServices(root):
     if not hasattr(root, 'service_static_cache_manager'):
         manage_addAcceleratedHTTPCacheManager(root, 'service_static_cache_manager')
         sscm = getattr(root, 'service_static_cache_manager')
-        sscm.manage_editProps(title="Cache Manager for static non-silva objects",
+        sscm.manage_editProps(title="Cache Manager for static filesystem objects",
                               settings={"anonymous_only": 0,
                                         "interval": 604800, #set expires to 1 week
                                         "notify_urls": []}
