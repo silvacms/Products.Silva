@@ -7,10 +7,15 @@ Priority settings
 Why?
 ----
 
-This document lists the different priority settings for <silva:content> types
-in Silva and Silva Products. This should reduce conflicting priority settings
-for existing and newly developed products. Please list any new priority numbers 
-in this document.
+This document lists the different priority settings for <silva:content> and 
+<silva:versionedcontent> types in Silva and Silva Products. This should reduce
+conflicting priority settings for existing and newly developed products. Please
+list any new priority numbers in this document.
+
+A few notes about reserved priority numbers:
+1. negatives are reserved for Silva core metatypes
+2. the 3 range is reserved for SilvaNewsNetwork
+3. the 4 range is reserved for Silva dLCMS
 
 Product and priority
 --------------------
@@ -21,14 +26,15 @@ Silva Software File: 9
 Silva Software Package: 9
 Silva Software Release: 9
 Silva Forum: 4
-Silva Agenda Item: 3.8
-Silva Article: 3.7
+Silva News Category Filter: 3.9
+Silva News Publication: 3.8
+Silva Agenda Item: 3.7
+Silva Article: 3.6
 Silva RSS Aggregator: 3.5
 Silva Agenda Filter: 3.4
 Silva Agenda Viewer: 3.3
 Silva News Filter: 3.2
 Silva News Viewer: 3.1
-Silva News Publication: 3
 Silva AutoTOC: 2
 Silva CSV Source: 1.8
 Silva Find: 0

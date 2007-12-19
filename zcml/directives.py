@@ -34,9 +34,10 @@ class IContentDirective(interface.Interface):
         required=True,
         )
 
-    priority = schema.Int(
+    priority = schema.Float(
         title=u"The priority in the add list",
         required=False,
+        default=0.0
         )
 
     icon = Path(

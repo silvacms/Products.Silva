@@ -63,6 +63,10 @@ Silva changes
       
       - Added True switch to Image.py tag method to escape double quotes.
 
+      - Changed the 'priority' attribute of the silva:content zcml
+        attribute to a float, to support more granular priorities
+        (they way it was prior to Silva 2.0 zcml)
+
     Bugfixes ported from 2.0 branch
 
       - fixed WuW144: Images were not always shown correctly in kupu 
