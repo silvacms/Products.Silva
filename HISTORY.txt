@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  since Silva 2.0.4
+
+    Bugs Fixed:
+
+      - Changed the 'priority' attribute of the silva:content zcml
+        attribute to a float, to support more granular priorities
+        (they way it was prior to Silva 2.0 zcml)
+
   Silva 2.0.4
 
     Features Added:
