@@ -10,6 +10,7 @@ import transaction
 import zope.component.eventtesting
 
 user_name = ZopeTestCase.user_name
+user_password = ZopeTestCase.user_password
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
@@ -94,6 +95,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         try:
             self.app = self._app()
+            # Set up sessioning objects, this is not done by default...
+            ZopeTestCase.utils.setupCoreSessions(self.app)
+
             self.silva = self.root = self.getRoot()
             self.catalog = self.silva.service_catalog
             if self._configure_root:
