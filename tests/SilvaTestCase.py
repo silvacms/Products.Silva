@@ -52,6 +52,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         """
         return self.app.root
 
+    @property
+    def silva_url(self):
+        """Return the absolute url of silva root.
+        """
+        return self.getRoot().absolute_url()
+
     def afterSetUp(self):
         '''Called after setUp() has completed. This is
            far and away the most useful hook.
