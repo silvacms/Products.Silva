@@ -17,20 +17,37 @@ Create folder:
    
     >>> browser.getControl(name='meta_type').value = ['Silva Folder', ]
     >>> browser.getControl(name='add_object:method').click()
-    >>> browser.getControl(name='field_object_id').value = 'dummyfolder'
-    >>> browser.getControl(name='field_object_title').value = 'Dummy Folder'
+    >>> browser.getControl(name='field_object_id').value = 'dummyfolder1'
+    >>> browser.getControl(name='field_object_title').value = 'Dummy Folder 1'
     >>> browser.getControl(name='add_submit').click()
-    >>> "Dummy Folder" in browser.contents
+    >>> "Dummy Folder 1" in browser.contents
     True
 
+Create folder:
+    
+    >>> browser.getControl(name='meta_type').value = ['Silva Folder', ]
+    >>> browser.getControl(name='add_object:method').click()
+    >>> browser.getControl(name='field_object_id').value = 'dummyfolder2'
+    >>> browser.getControl(name='field_object_title').value = 'Dummy Folder 2'
+    >>> browser.getControl(name='add_submit').click()
+    >>> "Dummy Folder 2" in browser.contents
+    True
 
 Recreate the same folder:
 
     >>> browser.getControl(name='meta_type').value = ['Silva Folder',]
     >>> browser.getControl(name='add_object:method').click()
-    >>> browser.getControl(name='field_object_id').value = 'dummyfolder'
-    >>> browser.getControl(name='field_object_title').value = 'Dummy Folder'
+    >>> browser.getControl(name='field_object_id').value = 'dummyfolder1'
+    >>> browser.getControl(name='field_object_title').value = 'Dummy Folder 1'
     >>> browser.getControl(name='add_submit').click()
     >>> "There is already an object with the id" in browser.contents
     True
+
+Delete a folder
+
+    >>> browser.open(self.silva_url + '/edit/tab_edit')
+    >>> browser.getControl(name='ids:list').value = ['dummyfolder1',]
+    >>> browser.getControl(name='tab_edit_delete:method').click()
+    >>> "Dummy Folder 1" in browser.contents
+    False
 

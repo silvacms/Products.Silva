@@ -11,12 +11,12 @@ OPTIONS = doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE
 
 def test_suite():
 
-    simplefolderadd = FunctionalDocFileSuite('funit/simplefolderadd.txt',
+    folder = FunctionalDocFileSuite('funit/folder.txt',
                                              test_class=SilvaFunctionalTestCase,
                                              optionflags=OPTIONS,
                                              )
     suite = unittest.TestSuite()
-    suite.addTest(simplefolderadd)
+    suite.addTest(folder)
     return suite
 
 
