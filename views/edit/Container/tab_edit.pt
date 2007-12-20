@@ -102,7 +102,7 @@
 </script>
           <input class="transport"
             name="add_object:method"
-            type="button"
+            type="submit"
             value="new..."
             title="add a new item - alt-n"
             accesskey="n"
