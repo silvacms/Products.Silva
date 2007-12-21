@@ -33,10 +33,9 @@
       <tal:block replace="nothing">
         ______________ vein + title row ______________
       </tal:block>
-      <metal:block define-slot="title_row">
       <tr>
         <td class="top"
-          colspan="2">
+          tal:attributes="colspan title_row_colspan|string:2">
           <h2>
             <img tal:replace="structure icon" />
             <span style="text-transform:lowercase;"
@@ -45,11 +44,10 @@
           </h2>
         </td>
       </tr>
-      </metal:block>
       <tal:block replace="nothing">
         ______________ top controls row ______________
       </tal:block>
-      <metal:block define-slot="title_metadata">
+      <metal:block define-slot='title_metadata'>
       <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="">
