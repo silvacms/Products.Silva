@@ -35,7 +35,7 @@
       </tal:block>
       <tr>
         <td class="top"
-          colspan="2">
+          tal:attributes="colspan title_row_colspan|string:2">
           <h2>
             <img tal:replace="structure icon" />
             <span style="text-transform:lowercase;"
