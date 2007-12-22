@@ -7,52 +7,63 @@ Priority settings
 Why?
 ----
 
-This document lists the different priority settings for <silva:content> and 
-<silva:versionedcontent> types in Silva and Silva Products. This should reduce
-conflicting priority settings for existing and newly developed products. Please
-list any new priority numbers in this document.
+This document lists the different priority settings for <silva:content> and
+<silva:versionedcontent> metatypes (aka addables) in Silva and Silva products.
+This listing helps reduce priority conflicts for existing and newly developed
+products. Please list any new priority numbers in this document.
 
 A few notes about reserved priority numbers:
 1. negatives are reserved for Silva core metatypes
 2. the 3 range is reserved for SilvaNewsNetwork
-3. the 4 range is reserved for Silva dLCMS
+
+If an addable has no priority setting, thus defaulting to zero, it'll appear in
+the middle of a listing, such as in the addables screen or the add select list.
+Addables with the same priority (e.g. 0) are presented in alphabetical order,
+as below. 
 
 Product and priority
 --------------------
-Silva 3rd Party Extension Page: 10
-Silva 3rd Party Software Package: 10
-Silva 3rd Party Software Release: 10
-Silva Software File: 9
-Silva Software Package: 9
-Silva Software Release: 9
-Silva Forum: 4
-Silva News Category Filter: 3.9
-Silva News Publication: 3.8
-Silva Agenda Item: 3.7
-Silva Article: 3.6
-Silva RSS Aggregator: 3.5
-Silva Agenda Filter: 3.4
-Silva Agenda Viewer: 3.3
-Silva News Filter: 3.2
-Silva News Viewer: 3.1
-Silva AutoTOC: 2
-Silva CSV Source: 1.8
-Silva Find: 0
-Silva Flash: 0
-Silva Ghost: 0
-Silva Ghost Folder: 0
-Silva Group: 0
-Silva IP Group: 0
-Silva Indexer: 0
-Silva Link: 0
-Silva Poll Question: 0
-Silva Virtual Group: 0
-Silva Abstract Document: -1
-Silva Abstract Document Version: -1
-Silva File: -3
-Silva Image: -4
+Silva Document: -6
 Silva Folder: -5
 Silva Publication: -5
-Silva Document: -6
-Silva Topic: -7
-Silva Comment: -7
+Silva Image: -4
+Silva File: -3
+Silva Abstract Document: -1
+Silva Find: None
+Silva Flash: None
+Silva Ghost: None
+Silva Ghost Folder: None
+Silva Indexer: None
+Silva Link: None
+Silva Poll Question: None
+Silva CSV Source: 0.1
+Silva AutoTOC: 0.2
+Silva News Publication: 3
+Silva News Viewer: 3.1
+Silva News Filter: 3.2
+Silva Agenda Viewer: 3.3
+Silva Agenda Filter: 3.4
+Silva RSS Aggregator: 3.5
+Silva News Category Filter: 3.6
+Silva Forum: 4
+Silva Mailing: 5
+Silva Software Release: 9
+Silva 3rd Party Extension Page: 10
+
+Metatypes that only appear in addable restricted containers
+-----------------------------------------------------------
+These may not need a priority but are listed here for completeness: 
+Silva Article (SNN): 3.7
+Silva Agenda Item (SNN): 3.8
+Silva Topic (Silva Forum): None
+Silva Comment (Silva Topic): None
+Silva Software Package (Silva Software Release): 9
+Silva Software File (Silva Software Package): 9
+Silva 3rd Party Software Release (Silva 3rd Party Extension Page): 10
+Silva 3rd Party Software Package (Silva 3rd Party Software Release): 10
+
+Group metatypes that appear in the access screen
+------------------------------------------------
+Silva Group: None
+Silva IP Group: None
+Silva Virtual Group: None
