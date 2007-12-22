@@ -107,7 +107,7 @@
     content=".AutoTOC.AutoTOC"
     extension_name="Silva"
     icon="www/autotoc.png"
-    priority="2"
+    priority="0.2"
     />
 
   <silva:content
