@@ -7,19 +7,27 @@ Priority settings
 Why?
 ----
 
-This document lists the different priority settings for <silva:content> and
-<silva:versionedcontent> metatypes (aka addables) in Silva and Silva products.
-This listing helps reduce priority conflicts for existing and newly developed
-products. Please list any new priority numbers in this document.
+This document lists the different priority settings that determine where an
+addable falls in various listings (such as such the addables screen or the add
+select list). They apply to <silva:content> and <silva:versionedcontent>
+metatypes (aka addables) in Silva and Silva extensions. This listing helps
+reduce priority conflicts for existing and newly developed products. Please
+list any new priority numbers here.
 
 A few notes about reserved priority numbers:
 1. negatives are reserved for Silva core metatypes
 2. the 3 range is reserved for SilvaNewsNetwork
+3. if in doubt, don't set a priority
 
 If an addable has no priority setting, thus defaulting to zero, it'll appear in
-the middle of a listing, such as in the addables screen or the add select list.
-Addables with the same priority (e.g. 0) are presented in alphabetical order,
-as below. 
+the middle of a listing, after the negatives and before any positives. Addables
+with the same priority (e.g. 0) are presented in alphabetical order, as below. 
+
+Probably it's better not to set a priority, because whether an item is an
+extension or not is only important to developers. For Authors, if the listing
+is alphabetical they'll look for an addable accordingly. However if you create
+an extension with multiple addables, and you want to group them together, then
+it makes sense to add priorities.
 
 Product and priority
 --------------------
@@ -31,10 +39,12 @@ Silva File: -3
 Silva Abstract Document: -1
 Silva Find: None
 Silva Flash: None
+Silva Forum: None
 Silva Ghost: None
 Silva Ghost Folder: None
 Silva Indexer: None
 Silva Link: None
+Silva Mailing: None
 Silva Poll Question: None
 Silva CSV Source: 0.1
 Silva AutoTOC: 0.2
@@ -45,8 +55,6 @@ Silva Agenda Viewer: 3.3
 Silva Agenda Filter: 3.4
 Silva RSS Aggregator: 3.5
 Silva News Category Filter: 3.6
-Silva Forum: 4
-Silva Mailing: 5
 Silva Software Release: 9
 Silva 3rd Party Extension Page: 10
 
