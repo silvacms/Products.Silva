@@ -487,7 +487,7 @@ table.listing th.listing-left {
 }
 
 table.listing th.listing-right {
-  width: 4%;
+  width:6%;
   text-align: right;
 }
 
@@ -556,7 +556,9 @@ table.listing td.listing-left {
 }
 
 table.listing td.listing-right {
-  padding-right: 0.4em;
+  padding-right: 0.3em;
+  padding-left: 0.5em;
+  white-space: nowrap;
 }
 
 table.listing tr.controls td, tr.inter-controls td {
@@ -585,7 +587,6 @@ table#sortable a.icon img {
 
 /* reset the margin for the up/down arrows */
 table#sortable td.listing-right img {
-  float: right;
   margin: 0;
 }
 

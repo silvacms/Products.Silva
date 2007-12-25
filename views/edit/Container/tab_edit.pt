@@ -193,7 +193,7 @@
     </tr>
 
     <tal:block replace="nothing">
-      ______________ if folder is empty (XXX: check for Zope level objects?) ______________
+      if folder is empty (XXX: check for Zope level objects and inform?)
     </tal:block>
     <tr class="odd"
       tal:condition="python: not(default_document or publishables or assets)">
@@ -240,8 +240,7 @@
                 title item_info/meta_type;">
               <img tal:replace="structure item_info/rendered_icon" />
             </a>
-            <a class="blacklink"
-              title="modify"
+            <a title="modify"
               tal:define="id item_info/item_id"
               tal:content="python: ct(id, 30)"
               tal:attributes="
@@ -255,8 +254,7 @@
             _______ title cell _______
           </tal:block>
           <td>
-            <a class="blacklink"
-              title="preview"
+            <a title="preview"
               tal:attributes="
                 href string:${item_info/item_url}/edit/tab_preview;
                 class item_info/status_style;"
@@ -289,20 +287,6 @@
             _______ author / publish downlink cell _______
           </tal:block>
           <td style="white-space:nowrap">
-            <a style="float:right"
-              title="content approved, or published..."
-              tal:condition="item_info/is_published_or_approved"
-              tal:attributes="
-                href item_info/item_url;"
-              i18n:attributes="title">&nbsp;
-              <img alt="content approved or published"
-                border="0"
-                width="10"
-                height="10"
-                tal:attributes="src string:${root_url}/globals/checkmark.gif"
-                i18n:attributes="alt"
-              />
-            </a>
             <a class="blacklink"
               title="publish"
               tal:condition="item_info/is_versioned_content"
@@ -328,21 +312,32 @@
             _______ shift symbols _______
           </tal:block>
           <td class="listing-right">
+            <a style="float:left"
+              title="content approved, or published..."
+              tal:condition="item_info/is_published_or_approved"
+              tal:attributes="
+                href item_info/item_url;"
+              i18n:attributes="title">
+              <img alt="content approved or published"
+                width="12"
+                height="10"
+                tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                i18n:attributes="alt"
+              />
+            </a>
             <tal:block condition="python:may_change_content and not item_info['is_default']">
-              <a title="move up"
+              <a style="float:right" title="move up"
                 tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item_info/item_id}"
                 i18n:attributes="title"
                 ><img alt="move up"
-                  border="0"
                   height="12"
                   width="16"
                   tal:attributes="src string:${root_url}/globals/up.gif"
                   i18n:attributes="alt"
-                /></a><a title="move down"
+                /></a><a style="float:right" title="move down"
                 tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
                 i18n:attributes="title"
                 ><img alt="move down"
-                  border="0"
                   height="12"
                   width="16"
                   tal:attributes="src string:${root_url}/globals/down.gif"
@@ -407,7 +402,6 @@
                   structure python: view.externalEditLink_(asset)"
               />
             </tal:block>
-
             <a class="icon"
               tal:attributes="
                 href asset_info/editor_link;
@@ -423,14 +417,12 @@
               i18n:attributes="title">
               id
             </a>
-
           </td>
           <tal:block replace="nothing">
             _______ title cell _______
           </tal:block>
           <td>
-            <a class="blacklink"
-              title="preview"
+            <a title="preview"
               tal:content="python: asset_info['title'] or default"
               tal:attributes="
                 href string:${asset_info/asset_url}/edit/tab_preview;
@@ -496,7 +488,7 @@
       </th>
       <th class="controls listing-right" colspan="3">
         <tal:if condition="may_approve_content">
-          <span style="margin-right:0.2em"
+          <span style="margin-right:0.1em"
             tal:condition="python:(published or editables or closed)"
             i18n:translate="">
             publishing actions
