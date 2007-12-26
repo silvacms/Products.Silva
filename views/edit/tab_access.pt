@@ -13,7 +13,6 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
-    icon python:view.render_icon(model);
     model_is_container model/implements_container | nothing;
     groups_enabled model/sec_groups_enabled | nothing;
     group_service view/service_groups | nothing;

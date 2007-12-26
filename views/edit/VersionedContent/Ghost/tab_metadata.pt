@@ -41,7 +41,7 @@
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title" i18n:translate="">
-                <img tal:replace="structure python:view.render_icon(model)" />
+                <img tal:replace="structure icon" />
                 <tal:block i18n:translate="">properties</tal:block>
                 <span tal:condition="not: model/implements_container">
                   <tal:block i18n:translate="">

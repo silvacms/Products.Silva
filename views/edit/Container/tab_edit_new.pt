@@ -52,7 +52,7 @@
     <tr>
       <td class="top">
         <h2>
-          <img tal:replace="structure python:view.render_icon(model)" />
+          <img tal:replace="structure icon" />
             &#xab;<tal:block content="title" />&#xbb;
         </h2>
       </td>

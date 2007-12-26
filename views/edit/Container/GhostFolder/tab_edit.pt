@@ -21,9 +21,7 @@
   </script>
 </metal:block>
 
-<metal:block fill-slot="main"
-  tal:define="
-    icon python:view.render_icon(model);">
+<metal:block fill-slot="main">
 
 <table class="columns columns2"
   tal:define="

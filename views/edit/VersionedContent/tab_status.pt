@@ -13,7 +13,6 @@
 <metal:block fill-slot="main"
   tal:define="
     view here;
-    icon python:view.render_icon(model);
     unapproved python:model.get_unapproved_version() is not None;
     request_pending python:unapproved and model.is_version_approval_requested();
     approved python:model.get_approved_version() is not None;

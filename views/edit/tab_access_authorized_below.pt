@@ -39,7 +39,7 @@
     <tr>
       <td class="top" colspan="3">
       <h2>
-        <img tal:replace="structure python:view.render_icon(model)" />
+        <img tal:replace="structure icon" />
 			  <span i18n:translate="">email addresses for</span> <span tal:content="structure string:&#xab;${title}&#xbb;">title</span>
       </h2>
       </td>

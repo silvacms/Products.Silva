@@ -53,7 +53,7 @@ function focus_editor() {
         <td class="top"
           colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
-            <img tal:replace="structure python:view.render_icon(model)" />
+            <img tal:replace="structure icon" />
             <span i18n:translate="">member data of</span> &#xab;<span tal:replace="model/fullname">title</span>&#xbb;
           </h2>
         </td>

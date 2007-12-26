@@ -9,6 +9,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
+    icon python:view.render_icon(model);
     nix string:nix;
   "
   i18n:domain="silva">
@@ -49,7 +50,7 @@
       <td class="top"
         colspan="3">
         <h2 metal:define-slot="table_title" i18n:translate="">
-          <img tal:replace="structure python:view.render_icon(model)" />
+          <img tal:replace="structure icon" />
           &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
         </h2>
       </td>
@@ -61,7 +62,6 @@
         <metal:block define-slot="message">
           Information about no-screen-available gets slotted in.
           This screen is a placeholder, and doesn&#8217;t have any function. 
-          
         </metal:block>
       </td>
     </tr>

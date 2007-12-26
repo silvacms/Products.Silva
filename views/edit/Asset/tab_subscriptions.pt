@@ -25,7 +25,7 @@
   </metal:fill-slot>
   
   <h2 metal:fill-slot="table_title">
-    <img tal:replace="structure python:view.render_icon(model)" />
+    <img tal:replace="structure icon" />
     <tal:block i18n:translate="">manage subscriptions for &#xab;<tal:block content="title" i18n:name="title" />&#xbb;</tal:block>
   </h2>
   
