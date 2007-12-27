@@ -2734,9 +2734,11 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(titlecell,
         cbdiv.className = 'kupu-properties-checkbox-input';
         div.appendChild(cbdiv);
         
+	checkbox_id = 'kupu-properties-' + fieldtitle + '-' + title;
         var checkbox = document.createElement('input');
         checkbox.setAttribute('name', name);
         checkbox.setAttribute('namespace', namespace);
+	checkbox.setAttribute('id',checkbox_id);
         checkbox.type = 'checkbox';
         checkbox.value = itemvalue;
         cbdiv.appendChild(checkbox);
@@ -2750,7 +2752,11 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(titlecell,
         };
         var textdiv = document.createElement('div');
         textdiv.className = 'kupu-properties-checkbox-item-title';
-        textdiv.appendChild(document.createTextNode(title));
+	var cblabel = document.createElement('label');
+	cblabel.setAttribute('for',checkbox_id);
+	cblabel.htmlFor = checkbox_id; /* for IE 6 setAttribute doesn't work */
+	cblabel.appendChild(document.createTextNode(title));
+        textdiv.appendChild(cblabel);
         div.appendChild(textdiv);
     };
     // we can not hide the checkboxes earlier because IE requires them
