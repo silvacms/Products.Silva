@@ -152,12 +152,12 @@
           </label>
         </td>
         <td class="align-center">
-            <input class="min"
-              type="checkbox"
-              name="export_last_version"
-              id="export_last_version"
-              checked="checked"
-            />
+          <input class="min"
+            type="checkbox"
+            name="export_last_version"
+            id="export_last_version"
+            checked="checked"
+          />
         </td>
         <td i18n:translate="">
           If not checked all versions are exported.
@@ -167,17 +167,17 @@
   
     <tfoot>
       <tr class="controls">
-      <td class="align-right"
-      colspan="3">
-      <input class="button"
-      type="submit"
-      name="download_fullmedia_selected:method"
-      value="export zip"
-      title="access key: alt-z"
-      accesskey="z"
-      i18n:attributes="value;title"
-      />
-      </td>
+        <td class="align-right"
+          colspan="3">
+          <input class="button"
+            type="submit"
+            name="download_fullmedia_selected:method"
+            value="export zip"
+            title="access key: alt-z"
+            accesskey="z"
+            i18n:attributes="value;title"
+          />
+        </td>
       </tr>
     </tfoot>
   </table>
