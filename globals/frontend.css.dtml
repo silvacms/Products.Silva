@@ -18,7 +18,7 @@
 ** silva table styles
 **   various table-like layouts
 ** form controls
-**   preveiw publisher
+**   preview publisher
 **   subscription forms
 ** css2 selectors
 */
@@ -483,6 +483,9 @@ input[type="submit"]:hover, button[type="button"]:hover {
   background-color: #f7f8f9;
 }
 
+div.public a.transport {
+color:#D9F3F1; /* for more details in error page */
+}
 
 /* ____________________________ preview publisher _______ */
 

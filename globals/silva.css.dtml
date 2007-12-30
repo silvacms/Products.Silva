@@ -444,7 +444,6 @@ table.listing tr.controls td {
   border-bottom: &dtml-listingBorder;;
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
-  text-align: right;
 }
 
 /* cycle text color */
