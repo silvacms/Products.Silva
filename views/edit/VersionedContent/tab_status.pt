@@ -234,17 +234,19 @@ _______ manual close section here _______
       </th>
     </tr>
     <tr class="controls">
-      <td class="align-right" colspan="6">
+      <td colspan="6">
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="tab_status_revert_to_old:method"
+          value="copy for editing"
+          title="create a new editable version of the selected old one: alt-f"
+          accesskey="f"
+          i18n:attributes="value;title"
+        />
         <tal:if condition="python:len(versions) > 1">
-          <input class="transport"
-            type="submit"
-            name="tab_status_view_versions_start:method"
-            title="view the selected versions next to each other: alt-="
-            value="compare..."
-            accesskey="="
-            i18n:attributes="value;title"
-          />
           <input class="warning"
+            style="float:right"
             type="submit"
             name="tab_status_delete_versions:method"
             value="delete"
@@ -253,15 +255,16 @@ _______ manual close section here _______
             onclick="if (!confirm('Are you sure?')) return false"
             i18n:attributes="value;title"
           />
+          <input class="transport"
+            style="float:right"
+            type="submit"
+            name="tab_status_view_versions_start:method"
+            title="view the selected versions next to each other: alt-="
+            value="compare..."
+            accesskey="="
+            i18n:attributes="value;title"
+          />
         </tal:if>
-        <input class="button"
-          type="submit"
-          name="tab_status_revert_to_old:method"
-          value="copy for editing"
-          title="create a new editable version of the selected old one: alt-f"
-          accesskey="f"
-          i18n:attributes="value;title"
-        />
       </td>
     </tr>
   </tfoot>

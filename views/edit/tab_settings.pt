@@ -86,22 +86,26 @@
             </tr>
             <tr class="controls"
               tal:condition="iscontainer">
-              <td class="align-right" colspan="3">
-                <input class="button" type="submit"
-                  value="convert to folder"
-                  name="tab_edit_to_folder:method"
-                  title="change container type to a folder: alt-f"
-                  accesskey="f"
-                  i18n:attributes="value;title"
-                  tal:condition="python: ispublication or isghostfolder"
-                />
-                <input class="button" type="submit"
+              <td colspan="3">
+                <input class="button"
+                  style="float:right"
+                  type="submit"
                   value="convert to publication"
                   name="tab_edit_to_publication:method"
                   title="change container type to a publication: alt-p"
                   accesskey="p"
                   i18n:attributes="value;title"
                   tal:condition="python: isfolder or isghostfolder"
+                />
+                <input class="button"
+                  style="float:right"
+                  type="submit"
+                  value="convert to folder"
+                  name="tab_edit_to_folder:method"
+                  title="change container type to a folder: alt-f"
+                  accesskey="f"
+                  i18n:attributes="value;title"
+                  tal:condition="python: ispublication or isghostfolder"
                 />
               </td>
             </tr>

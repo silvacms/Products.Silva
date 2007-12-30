@@ -61,17 +61,10 @@
     addables<span 
       tal:condition="not: selected" i18n:name="ellipsis">...</span>
   </a>
-  <a title="see the content in the public layout: alt-;"
-    accesskey=";"
-    tal:attributes="href string:${model/absolute_url}/preview_html"
-    i18n:translate=""
-    i18n:attributes="title">
-    public&nbsp;preview...
-  </a>
-<tal:block define="
-  permissions view/get_silva_permissions;
-  unapproved_version model/get_unapproved_version | nothing;
-  have_approve_permission permissions/ApproveSilvaContent | nothing;
+  <tal:block define="
+    permissions view/get_silva_permissions;
+    unapproved_version model/get_unapproved_version | nothing;
+    have_approve_permission permissions/ApproveSilvaContent | nothing;
   ">
   <a class="executor"
     style="float:right"
@@ -83,7 +76,16 @@
     tal:condition="python: unapproved_version and have_approve_permission">
     publish&nbsp;now
   </a>
-</tal:block>
+  </tal:block>
+  <a title="see the content in the public layout: alt-;"
+    style="float:right"
+    accesskey=";"
+    tal:attributes="href string:${model/absolute_url}/preview_html"
+    i18n:translate=""
+    i18n:attributes="title">
+    public&nbsp;preview...
+  </a>
+
 </div>
 </metal:block>
 

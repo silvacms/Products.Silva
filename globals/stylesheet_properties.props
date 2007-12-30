@@ -37,7 +37,7 @@ nightShade:string=black
 
 
 mainFont:string=70% Verdana, Arial, Helvetica, sans-serif
-mainBackground:string=#91989b
+mainBackground:string=#8E98A2
 mainFontColor:string=red
 mainLinkColor:string=#000080
 
@@ -47,7 +47,7 @@ contentWorkspace:string=#eceeee
 pathBarBackground:string=#b0c4d8
 
 mainTabBackdrop:string=#d7e8f0
-mainTabBackground:string=#7a90a6
+mainTabBackground:string=#61738A
 mainTabBackgroundRecede:string=#9ebad7
 mainTabBackgroundSelected:string=#c1daf3
 mainTabBorderColor:string=#3d4b67
@@ -56,7 +56,7 @@ mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
 mainTabFontColorSelected:string=#424244
 
-contentTabBackground:string=#729b87
+contentTabBackground:string=#638776
 contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
@@ -69,12 +69,12 @@ listingTopHeadingColor:string=#2d2d4c
 
 listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
-listingControlsBackground:string=#678
 
 listingHeaderBackground:string=#7c8c9c
 listingHeaderFontColor:string=#e0eefc
 
 listingInterControlsBackground:string=#718191
+listingControlsBackground:string=#607080
 listingDividerBackground:string=#89a
 
 listingBorder:string=1px solid #678
@@ -93,19 +93,21 @@ inputFontColor:string=#337
 inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #599
 
-buttonMargin:string=0.2em 0.4em 0.1em 0
-buttonPadding:string=0 0.2em
-buttonFontSize:string=95%
+buttonMargin:string=0 0 0
+buttonPadding:string=0.2em 0.4em
+buttonBorder:string=1px solid #345
+buttonBorderStyle:string=none solid none
+buttonFontSize:string=100%
 buttonWeight:string=normal
 bottonCursor:string=pointer
-
-transportBorder:string=1px solid #8faecf
-transportFontColor:string=#d9f3f1
-transportBackground:string=#283365
 
 manipulatorBorder:string=1px solid #6bb591
 manipulatorFontColor:string=#d9f3da
 manipulatorBackground:string=#064C29
+
+transportBorder:string=1px solid #8faecf
+transportFontColor:string=#d9f3f1
+transportBackground:string=#283365
 
 destructiveBorder:string=1px solid #b48f8f
 destructiveFontColor:string=#fdeaea
@@ -115,8 +117,8 @@ cancelBorder:string=1px solid #b9c2c1
 cancelFontColor:string=#ccd7d6
 cancelBackground:string=#444446
 
-pseudoButtonMargin:string=0.1em 0.2em
-pseudoButtonPadding:string=0em 1em 0.1em 1em
+pseudoButtonMargin:string=0
+pseudoButtonPadding:string=0.3em 0.6em
 pseudoButtonFontSize:string=100%
 
 textTransform:string=lowercase

@@ -1,9 +1,4 @@
 <dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
-<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
-<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
-<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
-<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )">
-
 /*
 ** _______ Silva stylesheet ___________________________________________________
 **
@@ -111,7 +106,7 @@ div.tabs {
   padding: 0 8px 0 16px;
   border-width: 1px;
   border-style: none none solid none;
-  border-bottom-color: &dtml-shade80;;
+  border-bottom-color: #BCC2CA;
   background-image: url(<dtml-var root_url>/globals/skyrise.gif);
   background-repeat: repeat-x;
   background-color: &dtml-mainTabBackdrop;;
@@ -131,19 +126,22 @@ div.tabs a {
   border-bottom-color: &dtml-shade50;;
   color: &dtml-mainTabFontColor;;
   background: &dtml-mainTabBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
 
 div.tabs a:visited {
   color: &dtml-mainTabFontColor;;
-  background: &dtml-mainTabBackground;;
+  background-color: &dtml-mainTabBackground;;
 }
 
 div.tabs a:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  background-color: &dtml-mainTabBackgroundSelected;;
   text-decoration: none;
 }
 
@@ -151,25 +149,25 @@ div.tabs a.selected {
   /* The selected tab. There's only one of these */
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  background-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.selected:visited {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
   color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  background-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.recede {
   border-bottom-color: &dtml-mainTabBackground;;
   /* The parent tab of a subscreen. There might be one of these :) */
   color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-mainTabBackgroundRecede;;
+  background-color: &dtml-mainTabBackgroundRecede;;
 }
 
 div.tabs a.recede:hover {
   border-bottom-color: &dtml-mainTabBackgroundSelected;;
-  background: &dtml-mainTabBackgroundSelected;;
+  background-color: &dtml-mainTabBackgroundSelected;;
 }
 
 div.tabs a.left {
@@ -201,9 +199,9 @@ div.tabs img {
 div.tabs div.air {
   display: block;
   float: left;
-  width: 2em;
+  width: 1.6em;
   height: 1em;
-  background: transparent;
+  background-color: transparent;
 }
 
 /* help (available as accesskey link) */
@@ -231,7 +229,7 @@ div.flowbar {
   margin: 0;
   padding: 0;
   border-top: 3px solid &dtml-mainTabBackgroundSelected;;
-  border-bottom: 1px solid #84a7a5;
+  border-bottom: 1px solid #6E8094;
   background: &dtml-mainTabBackgroundSelected;;
   clear:both;
 }
@@ -240,68 +238,67 @@ div.flowbar {
 
 div.middleground {
   display: block;
-  height: 1.6em;
+  height: 1.5em;
   margin: 0;
-  padding: 0 17px 0 17px;
-  border-bottom: 1px solid #456555;
-  background-color: #677a8c;
-  font-size: 105%;
+  padding: 0;
+  border-bottom: 1px solid #657;
+  background-color: #8797A8;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
 }
 
 div.middleground a {
   /* The normal, unselected buttons. They are all links */
   float: left;
   display: block;
-  width: 12em;
-  height: 1.3em;
-  margin: 1px 1em 1px 1.5em;
-  padding: 0;
-  border-color: #8faecf;
-  border-width: 1px;
-  border-style: solid solid solid solid;
+  margin: 0em 0 0;
+  padding: 0.1em 2em 0.2em;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
 div.middleground a:link {
   color: &dtml-transportFontColor;;
-  background: #4d5680;
+  background-color: #4d5680;
 }
 div.middleground a:visited {
   color: &dtml-transportFontColor;;
-  background: #4d5680;
+  background-color: #4d5680;
 }
 div.middleground a:hover {
-  border-color: #99b4cf;
   color: #e5fffe;
-  background: #74748b;
+  background-color: #74748b;
   text-decoration: none;
 }
 div.middleground a:active {
   color: #bfffd3;
-  background: #008a8a;
+  background-color: #008a8a;
 }
 
 div.middleground a.selected {
   /* A selected, highlighted button. There should only be one of these. */
-  border-color: #3d4b67;
   color: #424244;
-  background: #b6d6f3;
+  background-color: #b6d6f3;
 }
 
 /* _______ middleground executor (publish now) _______ */
 
 div.middleground a.executor {
   color: #b3fffb;
-  background: #38656c;
+  background-color: #38656c;
 }
 div.middleground a.executor:hover {
-  border-color: #8dc1a8;
   color: #e5ffec;
-  background: #538da3;
+  background-color: #538da3;
 }
 div.middleground a.executor:active {
   color: #bfffd3;
-  background: #008a8a;
+  background-color: #008a8a;
 }
 
 
@@ -369,10 +366,6 @@ table.columns {
   border-collapse: collapse;
 }
 
-table.columns tr {
-  vertical-align: top;
-}
-
 /* 3 column table (default) */
 table.columns td.left {
   width: 20%;
@@ -414,8 +407,8 @@ table.columns1 td.main {
 table.listing {
   width: 100%;
   margin: 0 0 1em 0;
-  border-left: &dtml-listingBorder;;
-  border-bottom: &dtml-listingBorder;;
+  border: &dtml-listingBorder;;
+  border-style: solid none none solid;
   border-collapse: collapse;
   color: #444;
   font-family:"Lucida Grande", "Lucida Sans Unicode", verdana, arial, helvetica, sans-serif;
@@ -427,22 +420,40 @@ table.listing img {
 
 /* ______________ rows ______________ */
 
-table.listing tr.top-controls {
-  background: &dtml-listingTopControlsBackground;;
-  /* in case it's empty */
-  height: 0.2em;
+table.listing td.top {
+  padding: 0;
+  color: &dtml-shade40;;
+  background: &dtml-listingTopBackground;;
 }
 
-table.listing tr.controls {
-  text-align: right;
-  /* in case it's empty */
-  height: 0.2em;
+table.listing tr.top-controls td {
+  height: 0.1em; /* in case it's empty */
+  padding: 0;
+  background: &dtml-listingTopControlsBackground;;
+}
+
+table.listing tr.inter-controls td {
+  padding: 0;
+  color: #c9dfe2;
+  background-color : &dtml-listingInterControlsBackground;;
+}
+
+table.listing tr.controls td {
+  height: 0.1em; /* in case it's empty */
+  padding: 0;
+  border-bottom: &dtml-listingBorder;;
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
+  text-align: right;
 }
 
-table.listing tr.odd {
+/* cycle text color */
+table.listing tr.odd td {
   background: &dtml-listingOddBackground;;
+}
+table.listing tr.even td {
+  color: #333;
+  background: &dtml-listingEvenBackground;;
 }
 
 /* applies only to mozilla comp. browsers */
@@ -450,17 +461,12 @@ td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
   background-color: #e5f2ff;
 }
 
-table.listing tr.inter-controls td {
-  color: #c9dfe2;
-  background-color : &dtml-listingInterControlsBackground;;
-}
-
-tr.divider, td.divider {
+tr.divider td, td.divider td {
   height: 0.5em;
   background: &dtml-listingDividerBackground;; /* dark */
 }
 
-tr.separator, td.separator {
+tr.separator td, td.separator {
   height: 0.5em;
   background-color: #c5d6e6; /* light */
 }
@@ -468,7 +474,7 @@ tr.separator, td.separator {
 /* ______________ cells ______________ */
 
 table.listing th {
-  padding: 0em 0.6em;
+padding: 0em 0.4em;
   border-top: none;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
@@ -482,12 +488,12 @@ table.listing th {
 
 table.listing th.listing-left {
   width: 2%;
-  padding-left: 0.4em;
+  padding-left: 0;
   text-align: left;
 }
 
 table.listing th.listing-right {
-  width:6%;
+  width:7%;
   text-align: right;
 }
 
@@ -502,27 +508,15 @@ table.listing th.align-right, table.listing td.align-right {
 }
 
 table.listing td {
-  padding: 0em 0.6em;
+  padding: 0 0.4em;
   border-right: &dtml-listingBorder;;
   text-align: left;
   vertical-align: top;
 }
 
-/* cycle text color */
-table.listing tr.even td {
-  color: #333;
-  background: &dtml-listingEvenBackground;;
-}
-
 /* _______ title cell _______ */
-table.listing td.top {
-  padding: 0em;
-  border: &dtml-listingBorder;;
-  color: &dtml-shade40;;
-  background: &dtml-listingTopBackground;;
-}
 table.listing td.top h2 {
-  margin: 0.1em 0.4em;
+  margin: 0.1em 0.3em;
   border: none;
   color: &dtml-listingTopHeadingColor;;
   text-align: left;
@@ -531,13 +525,9 @@ table.listing td.top img {
   vertical-align: top;
 }
 
-table.listing tr.top-controls td {
-  padding: 0em 0.4em;
-}
-
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-  margin: 0.3em 0.2em 0.2em;
+  margin: 0.1em 0.3em;
   padding: 0;
   border: none;
   color: &dtml-listingTopControlsHeadingColor;;
@@ -551,25 +541,21 @@ table.listing tr.inter-controls h3 {
 }
 
 table.listing td.listing-left {
-  padding: 0 0.4em;
+  padding: 0 0.4em 0 0;
   white-space: nowrap;
 }
 
 table.listing td.listing-right {
   padding-right: 0.3em;
-  padding-left: 0.5em;
+  padding-left: 0.4em;
   white-space: nowrap;
-}
-
-table.listing tr.controls td, tr.inter-controls td {
-  padding: 0 0.2em 0 0.4em;
 }
 
 table.listing td.field-title {
   text-align: right;
 }
 
-/* 
+/*
 * some usability selectors:
 * create a displayed block of the links, because then you can click on
 * the whole tablecell and don't have to focus the text
@@ -594,7 +580,7 @@ table#sortable td.listing-right img {
 
 table.listing th.top {
   padding: 0;
-  border-top: &dtml-listingBorder;;
+  border: &dtml-listingBorder;;
   border-bottom: none;
   color: #e3eef0;
   background: &dtml-listingHeaderBackground;;
@@ -688,7 +674,7 @@ td.unselected:hover {
   color: &dtml-mainTabFontColorSelected;;
   background-color: #d5e1ef;
   cursor: pointer;
-} 
+}
 
 table.listing td a.normal:link {
   display: block;
@@ -803,13 +789,12 @@ input.store, textarea.store {
 }
 
 select {
-  margin: 0.1em;
+  margin: 0;
   border: &dtml-inputBorder;;
   color: &dtml-mainTabFontColorSelected;;
   background: &dtml-inputBackground;;
   font: &dtml-inputFont;;
-  font-size: 90%;
-  line-height: 96%;
+  font-size: 95%;
   vertical-align: top;
 }
 
@@ -818,31 +803,37 @@ select.store {
   !width: 95%; /* IE7 hack */
 }
 
-select.transport {
-  margin-top: 0.2em;
-  border: &dtml-transportBorder;;
-  color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
-}
-
 select.manipulator {
-  margin-top: 0.2em;
+padding:0.1em 0;
   border: &dtml-manipulatorBorder;;
+border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
 }
 
-/* seems to keep IE (inc 7) in check without anything else */ 
+select.transport {
+padding:0.1em 0;
+  border: &dtml-transportBorder;;
+border-color: #283365 #345 #283365;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
+}
+
+/* seems to keep IE (inc 7) in check without anything else */
 input[type="submit"] {
-  overflow: visible; 
+  overflow: visible;
 }
 
 input.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -851,9 +842,13 @@ input.button {
 button.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -862,9 +857,13 @@ button.button {
 input.transport {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-transportBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -873,9 +872,13 @@ input.transport {
 input.warning {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-destructiveBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-destructiveFontColor;;
   background: &dtml-destructiveBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -884,9 +887,13 @@ input.warning {
 input.cancel {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-cancelBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-cancelFontColor;;
   background: &dtml-cancelBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -895,26 +902,29 @@ input.cancel {
 input.executor {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: 1px solid #6bb591;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: #b3fffb;
   background: #21565b;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
-}
-input.executor[type="submit"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background: #538da3;
 }
 
 /* publish screen state coded buttons */
 input.reject {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: #8f7f01;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -922,9 +932,13 @@ input.reject {
 input.revoke {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: #008c55;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -932,9 +946,13 @@ input.revoke {
 input.close {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: #202080;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-bottonCursor;;
@@ -958,27 +976,35 @@ th label {
 
 /* _______ pseudo form button selectors, matches button style _______ */
 
-table.listing a.button:link {
+a.button:link {
   margin: &dtml-pseudoButtonMargin;;
   padding: &dtml-pseudoButtonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
+  font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
-table.listing a.button:visited {
+a.button:visited {
   margin: &dtml-pseudoButtonMargin;;
   padding: &dtml-pseudoButtonPadding;;
-  border: &dtml-manipulatorBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
+  font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
-table.listing a.button:hover {
+a.button:hover {
   color: #bfffd3;
   background: #668b69;
   cursor: pointer;
@@ -986,27 +1012,36 @@ table.listing a.button:hover {
 
 /* _______ transport between screens _______ */
 
-table.listing a.transport:link {
+a.transport:link {
+  margin: &dtml-pseudoButtonMargin;;
+  padding: &dtml-pseudoButtonPadding;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
+  color: &dtml-transportFontColor;;
+  background: &dtml-transportBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
+  font: &dtml-inputFont;;
+  font-size: &dtml-pseudoButtonFontSize;;
+  text-decoration: none;
+}
+a.transport:visited {
   margin: &dtml-pseudoButtonMargin;;
   padding: &dtml-pseudoButtonPadding;;
   border: &dtml-transportBorder;;
+border: &dtml-buttonBorder;;
+border-style: &dtml-buttonBorderStyle;;
   color: &dtml-transportFontColor;;
   background: &dtml-transportBackground;;
+background-image: url(<dtml-var root_url>/globals/glow.png);
+background-position: top left;
+background-repeat: repeat-x;
+  font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   text-decoration: none;
 }
-table.listing a.transport:visited {
-  margin: &dtml-pseudoButtonMargin;;
-  padding: &dtml-pseudoButtonPadding;;
-  border: &dtml-transportBorder;;
-  color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
-  font-size: &dtml-pseudoButtonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  text-decoration: none;
-}
-table.listing a.transport:hover {
+a.transport:hover {
   border-color: #99b4cf;
   color: #e5fffe;
   background: #74748b;
@@ -1066,11 +1101,10 @@ select:focus, select:hover {
   background-color: #e8f7ef;
 }
 
-/* cool glow */
+/* cool glow 74748b */
 input.transport[type="submit"]:hover, button[type="button"]:hover {
-  border-color: #99b4cf;
   color: #e5fffe;
-  background-color: #74748b;
+  background-color: #68687E;
 }
 
 input.transport[type="submit"]:focus {
@@ -1078,15 +1112,14 @@ input.transport[type="submit"]:focus {
   background-color: #7a83a6;
 }
 
-/* warm glow */
-input.button[type="submit"]:hover, button[type="button"]:hover, 
+/* warm glow 548e72 */
+input.button[type="submit"]:hover, button[type="button"]:hover,
 button[type="submit"]:hover {
-  border-color: #8dc1a8;
-  color: #e5ffec;
-  background-color: #548e72;
+  color: #e5fffe;
+  background-color: #4A7F67;
 }
 
-input.button[type="submit"]:focus, button[type="button"]:focus, 
+input.button[type="submit"]:focus, button[type="button"]:focus,
 button[type="submit"]:focus {
   color: #bfffd3;
   background-color: #538b58;
@@ -1094,7 +1127,6 @@ button[type="submit"]:focus {
 
 /* hot glow */
 input.warning[type="submit"]:hover {
-  border-color: #cdb1a3;
   color: #fff5f5;
   background-color: #a85353;
 }
@@ -1102,6 +1134,12 @@ input.warning[type="submit"]:hover {
 input.warning[type="submit"]:focus {
   color: #f0c0c0;
   background-color: #53538b;
+}
+
+/* eerie glow 538da3 */
+input.executor[type="submit"]:hover {
+  color: #e5ffec;
+  background-color: #4C8298;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover {
@@ -1114,19 +1152,16 @@ input[type="submit"]:focus, input[type="button"]:focus {
   background-color: #008a8a;
 }
 
-/* publish screen state coded buttons */
+/* state coded buttons */
 input.reject[type="submit"]:hover {
-  border-color: #8dc1a8;
   color: #e5ffec;
   background-color: #9b8800;
 }
 input.revoke[type="submit"]:hover {
-  border-color: #8dc1a8;
   color: #e5ffec;
   background-color: #009a62;
 }
 input.close[type="submit"]:hover {
-  border-color: #8dc1a8;
   color: #e5ffec;
   background-color: #4a4aa7;
 }
@@ -1140,7 +1175,7 @@ input.imagebutton {
 input[type="checkbox"], input[type="radio"] {
   margin-top:0;
   margin-bottom:0;
-/* remove stupid Explorer framing of checkboxes and radio buttons */
+/* remove stupid IE6 framing of checkboxes and radio buttons */
 border: none;
 background-color: transparent;
 }
@@ -1156,9 +1191,9 @@ div.info {
   background: &dtml-evenRowBackground;;
 }
 
-/* override IE glitch */
+/* override IE6 glitch */
 td.right>div.info {
-  margin-top:-1px;
+/*margin-top:-1px;*/
 }
 
 div.info h3 {
@@ -1244,7 +1279,7 @@ div.fixed-clear a.reveal {
 }
 div.fixed-clear a.reveal:visited {
   color: &dtml-shade96;;
-} 
+}
 div.fixed-clear a.reveal:hover {
   color: &dtml-shade58;;
   text-decoration: none;
@@ -1262,14 +1297,14 @@ div.feedback {
   border: &dtml-listingBorder;;
   padding: 0.4em 0.7em 0.7em 0.7em;
   color: #555;
-  background: #f3f3d9;
+  background-color: #f3f3d9;
 }
 div.alert {
   margin: 0;
   border: &dtml-listingBorder;;
   padding: 0.4em 0.7em 0.7em 0.7em;
   color: #3c2d50;
-  background: #f7d1d1;
+  background-color: #f7d1d1;
 }
 div.feedback a {
   color: &dtml-mainLinkColor;;
@@ -1280,14 +1315,15 @@ div.feedback a {
 table.listing tr.feedback, table.listing td.feedback {
   padding-top: 0.1em;
   padding-bottom: 0.2em;
+  border-top: &dtml-listingBorder;;
   color: #555;
-  background: #f3f3d9;
+  background-color: #f3f3d9;
 }
 table.listing tr.alert, table.listing td.alert {
   border-top: &dtml-listingBorder;;
   border-bottom: &dtml-listingBorder;;
   color: #3c2d50;
-  background: #f7d1d1;
+  background-color: #f7d1d1;
 }
 
 
@@ -1303,7 +1339,7 @@ table.listing div.message {
   border: &dtml-messageBorder;;
   border-style: solid none solid none;
   color: #2e2e77;
-  background: &dtml-messageBackground;;
+  background-color: &dtml-messageBackground;;
   font-weight: normal;
 }
 
@@ -1602,7 +1638,7 @@ a.closed:hover {
   color: #333767;
   font-weight: bold;
   font-family: verdana, arial, helvetica, sans-serif;
-} 
+}
 
 .idea {
   color: #634d82;
@@ -1625,7 +1661,7 @@ div.listingbar {
 
 div.listingbar .next {
   margin-left: 5em;
-} 
+}
 
 div.listingbar .previous {
   margin-right: 5em;

@@ -123,22 +123,23 @@
     </tbody>
     <tfoot>
       <tr class="controls">
-        <td class="align-right"
-          colspan="3">
+        <td colspan="3">
           <input class="button"
-            type="submit"
-            name="add_submit"
-            value="save"
-            title="access key: alt-s"
-            accesskey="s"
-            i18n:attributes="title;value"
-          />
-          <input class="button"
+            style="float:right"
             type="submit"
             name="add_edit_submit"
             value="save + edit"
             title="access key: alt-e"
             accesskey="e"
+            i18n:attributes="title;value"
+          />
+          <input class="button"
+            style="float:right"
+            type="submit"
+            name="add_submit"
+            value="save"
+            title="access key: alt-s"
+            accesskey="s"
             i18n:attributes="title;value"
           />
         </td>

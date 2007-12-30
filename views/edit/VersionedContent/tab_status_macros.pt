@@ -279,22 +279,23 @@ expiration time
 </metal:def>
 
 <tr class="inter-controls">
-<td class="align-right"
-  colspan="2">
-<input class="button"
-  type="submit"
-  name="tab_status_approve:method"
-  value="approve for future"
-  title="access key: alt-o"
-  accesskey="o"
-  i18n:attributes="value;title"
-/>
+<td colspan="2">
 <input class="executor"
+  style="float:right"
   name="tab_status_open_now:method"
   type="submit"
   value="publish now"
   title="access key: alt-p"
   accesskey="p"
+  i18n:attributes="value;title"
+/>
+<input class="button"
+  style="float:right"
+  type="submit"
+  name="tab_status_approve:method"
+  value="approve for future"
+  title="access key: alt-o"
+  accesskey="o"
   i18n:attributes="value;title"
 />
 </td>
@@ -359,18 +360,16 @@ The message may be viewed by local users.
 &nbsp;
 </td>
 <td class="align-right">
-<input 
+<input class="reject"
   type="submit" 
-  class="button"  
   title="access key: alt-j" 
   accesskey="j"
   tal:condition="may_approve_content" 
   value="reject approval request" 
   i18n:attributes="title;value" 
 />
-<input 
+<input class="button"
   type="submit" 
-  class="button"  
   title="access key: alt-r" 
   accesskey="r"
   tal:condition="not: may_approve_content" 
@@ -427,7 +426,7 @@ If further editing is required, first revoke the approval.
 <span tal:replace="nothing"> _______ / Revoke approval _______ </span>
 
 
-<span tal:replace="nothing"> _______ Revert to previous _______ </span>
+<span tal:replace="nothing"> _______ XXX depped?: Revert to previous _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="revert_to_previous">
 <form action="tab_status_revert_to_previous" method="post">
@@ -488,7 +487,7 @@ If necessary, the published version of this content can be manually closed (take
 <tfoot>
 <tr class="controls">
 <td class="align-right">
-<input class="button"
+<input class="close"
   type="submit"
   value="close published version"
   title="access key: alt-c"

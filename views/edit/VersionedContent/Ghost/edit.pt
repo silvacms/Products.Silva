@@ -84,10 +84,10 @@
                                       '${asset_context/absolute_url}',
                                       'Content', true, '${content_url}')"
             i18n:attributes="value;title"
-            /><span class="warning">*</span>
+            /><span class="warning"> *</span>
         </td>
         <td>
-          <input style="width:100%;"
+          <input class="store"
             type="text"
             name="content_url"
             size="60"

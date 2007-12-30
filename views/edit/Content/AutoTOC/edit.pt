@@ -24,7 +24,7 @@
       <tal:block replace="nothing">
         _____________________ main _____________________
       </tal:block>
-      <td>
+      <td class="main">
 
 <table class="listing">
   <thead>
@@ -43,7 +43,7 @@
   </thead>
 
   <tbody>
-    <tr class="even">
+    <tr class="feedback">
       <td i18n:translate="">
         An automatic table of contents is generated from the items in its location (depth: <tal:block content="model/toc_depth" i18n:name="depth"></tal:block>.)
       </td>

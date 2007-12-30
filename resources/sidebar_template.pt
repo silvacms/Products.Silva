@@ -105,7 +105,6 @@
     </td>
   </tr>
   <tr class="controls"
-    style="height:0.1em"
     tal:condition="repeat/indent_item/end">
     <td>
     </td>

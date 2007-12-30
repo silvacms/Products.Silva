@@ -83,7 +83,7 @@
                                     'Content', true, '')"
           i18n:attributes="value;title"
         /><span class="warning"
-          tal:condition="field/is_required">*</span>
+          tal:condition="field/is_required"> *</span>
       </tal:block>
     </td>
     <td tal:content="structure python:field.render_from_request(request)">
@@ -102,6 +102,27 @@
   <tr class="controls">
     <td class="align-right"
       colspan="3">
+      <tal:if condition="python: not lookup_mode" >
+      <input class="button"
+        style="float:right"
+        type="submit"
+        name="add_edit_submit"
+        value="save + edit"
+        title="access key: alt-e"
+        accesskey="e"
+        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+        i18n:attributes="value;title"
+      />
+      </tal:if>
+      <input class="button"
+        style="float:right"
+        type="submit"
+        name="add_submit"
+        value="save"
+        title="access key: alt-s"
+        accesskey="s"
+        i18n:attributes="value;title"
+      />
       <input class="cancel"
         style="float:left;"
         type="submit"
@@ -111,26 +132,6 @@
         accesskey="c"
         i18n:attributes="value;title"
       />
-      <input class="button"
-        type="submit"
-        name="add_submit"
-        value="save"
-        title="access key: alt-s"
-        accesskey="s"
-        i18n:attributes="value;title"
-      />
-      <tal:condition condition="python: not lookup_mode" >
-      <!--XXX: Here be i18n issues:-->
-      <input class="button"
-        type="submit"
-        name="add_edit_submit"
-        value="save + edit"
-        title="access key: alt-e"
-        accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title"
-      />
-      </tal:condition>
     </td>
   </tr>
 </tfoot>
