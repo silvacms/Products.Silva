@@ -29,28 +29,40 @@ Version of this file: $Revision: 1.16 $
 </div>
 <div tal:repeat="module_name here/get_names"
   tal:attributes="
-    style python:'width:70%%;; border:solid 1px;; padding:1em;; margin:1em;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
-  <h3 tal:content="python:here.get_description(module_name)" />
-  <p tal:content="python:here.get_version_info(module_name)"/>
-  <form action="." method="post" tal:condition="python:module_name != 'Silva'">
-    <input type="hidden" name="name" value="value"
-      tal:attributes="value module_name" />
-    <input type="submit" name="install:method" value="install"
-      tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
-      tal:attributes="name string:${blerk}:method; value blerk;"
-      i18n:attributes="value"/>
-    <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)"
-      i18n:attributes="value"/>
-  </form>
-  <form action="." method="post" tal:condition="python:module_name =='Silva'">
-    <input type="hidden" name="name" value="value"
-      tal:attributes="value module_name" />
-    <input type="submit" name="refresh:method" value="refresh"
-      i18n:attributes="value"/>
-    <input type="submit" name="install_layout:method" value="install default layout"
-      i18n:attributes="value"/>
-  </form>
+    style python:'width:70%%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
 
+ <div style="float: right">
+  <h4 style="margin: 0">Dependencies:</h4>
+  <ul tal:define="dep python:here.get_depends_on(module_name)"
+      style="padding-left: 0;list-style-position:inside;margin-top:0;">
+   <li tal:repeat="d dep">
+    <span tal:content="python:here.get_description(d)"
+          tal:on-error="string:$d (not available)" />
+   </li>
+   <li tal:condition="not:dep">None</li>
+  </ul>
+ </div>
+
+ <h3 style="margin: 0 0 1ex;" tal:content="python:here.get_description(module_name)" />
+ <p style="margin: 0 0 1ex;" tal:content="python:here.get_version_info(module_name)"/>
+
+ <form action="." method="post" style="margin-bottom: 0">
+  <input type="hidden" name="name" tal:attributes="value module_name" />
+  <tal:cond tal:condition="python:module_name != 'Silva'">
+   <input type="submit" name="install:method" value="install"
+     tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
+     tal:attributes="name string:${blerk}:method; value blerk;"
+     i18n:attributes="value" />
+   <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)"
+     i18n:attributes="value" />
+  </tal:cond>
+  <tal:cond tal:condition="python:module_name == 'Silva'">
+   <input type="submit" name="refresh:method" value="refresh"
+     i18n:attributes="value"/>
+   <input type="submit" name="install_layout:method" value="install default layout"
+     i18n:attributes="value"/>
+  </tal:cond>
+ </form>
 </div>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

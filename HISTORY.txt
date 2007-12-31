@@ -52,6 +52,9 @@ Silva changes
       - 101351 Extension registration now allows multuple extensions in 
         the depends_on argument (in the form of tuples).  The zcml
         silva:extension depends_on directive, if present, now requires tuples.
+        Additionally the extensions service now displays the dependencies for
+        each extension and displays a warning next to each dependency that
+        is not available.
 
     Features ported from 2.0 branch
 

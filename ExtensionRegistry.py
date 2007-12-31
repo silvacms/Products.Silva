@@ -34,6 +34,9 @@ class ExtensionRegistry:
     def register(
         self, name, description, context, modules, install_module,
         depends_on=(u'Silva',)):
+
+        if depends_on and not (isinstance(depends_on,ListType) or isinstance(depends_on,TupleType)):
+            depends_on = (depends_on,)
         
         self._extensions[name] = (description, install_module, depends_on)
         # try to order based on dependencies
@@ -99,10 +102,10 @@ class ExtensionRegistry:
         # make mapping from name depended on to names that depend on it
         depends_on_mapping = {}
         for key, value in self._extensions.items():
-            dos = value[2]
-            if not (isinstance(dos,ListType) or isinstance(dos,TupleType)):
-                dos = (dos,)
-            for do in dos:
+            if not value[2]:
+                depends_on_mapping.setdefault(None, []).append(key)
+                continue
+            for do in value[2]:
                 depends_on_mapping.setdefault(do, []).append(key)
        
         # if depends_on is None, this should be first in the list

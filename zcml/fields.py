@@ -2,8 +2,12 @@ from zope.interface import implements
 
 from zope import schema
 from zope.schema.interfaces import IFromUnicode
-from zope.configuration.fields import Tokens
 
+#the TupleTokens field was created to support multiple values
+# in the depends_on attribute of silva:extension.  There is a
+# Tokens field in zope.configuration.fields, but it extends from schema.List
+# it doesn't support the 'default' parameter, as the default then has to be
+# a list, and lists aren't hashable.  TupleTokens supports default values
 class TupleTokens(schema.Tuple):
 
     implements(IFromUnicode)
