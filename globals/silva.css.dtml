@@ -408,7 +408,7 @@ table.listing {
   width: 100%;
   margin: 0 0 1em 0;
   border: &dtml-listingBorder;;
-  border-style: solid none none solid;
+  border-style: solid none solid solid;
   border-collapse: collapse;
   color: #444;
   font-family:"Lucida Grande", "Lucida Sans Unicode", verdana, arial, helvetica, sans-serif;
@@ -441,7 +441,6 @@ table.listing tr.inter-controls td {
 table.listing tr.controls td {
   height: 0.1em; /* in case it's empty */
   padding: 0;
-  border-bottom: &dtml-listingBorder;;
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
 }
@@ -1081,13 +1080,13 @@ table.listing div.transport-border:hover {
   width: 90%;
 }
 
+input:hover, textarea:hover {
+  background-color: #e3f0e4;
+}
+
 input:focus, textarea:focus {
   border-color : #04c78e;
   background-color: #e8f7ef;
-}
-
-input:hover, textarea:hover {
-  background-color: #e3f0e4;
 }
 
 input:focus:hover, textarea:focus:hover {
