@@ -13,9 +13,10 @@
  */
 
 div.kupu-fulleditor {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  margin: 0;
+  clear: both;
   height: 100%;
+  margin: 0;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
 div.kupu-fulleditor .kupu-editorframe {
