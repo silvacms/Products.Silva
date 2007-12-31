@@ -49,6 +49,10 @@ Silva changes
         take advantage of this cache manager.  Refreshing happens
         automatically during Silva upgrades.
 
+      - 101351 Extension registration now allows multuple extensions in 
+        the depends_on argument (in the form of tuples).  The zcml
+        silva:extension depends_on directive, if present, now requires tuples.
+
     Features ported from 2.0 branch
 
       - additional behaviour to mangle.Id.new(), when passing True

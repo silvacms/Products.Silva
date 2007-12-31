@@ -18,8 +18,7 @@ from Products.Silva.icon import registry as icon_registry
 from Products.Silva import mangle
 from Products.Silva.helpers import add_and_edit
 
-
-def extension(_context, name, title, depends="Silva"):
+def extension(_context, name, title, depends=(u"Silva",)):
     """The handler for the silva:extension directive.
 
     See .directives.IExtensionDirective

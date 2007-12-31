@@ -3,6 +3,8 @@ from zope import schema
 
 from zope.configuration.fields import GlobalObject, PythonIdentifier, Path
 
+from Products.Silva.zcml.fields import TupleTokens
+
 class IExtensionDirective(interface.Interface):
     """Register Product as a Silva Extension.
     """
@@ -16,9 +18,10 @@ class IExtensionDirective(interface.Interface):
         required=True,
         )
 
-    depends = PythonIdentifier(
+    depends = TupleTokens(
+        value_type=PythonIdentifier(),
         title=u"Dependency",
-        default=u'Silva',
+        default=(u'Silva',),
         )
 
 class IContentDirective(interface.Interface):

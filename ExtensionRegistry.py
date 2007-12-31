@@ -3,12 +3,12 @@
 # $Revision: 1.12 $
 
 from bisect import insort_right
+from types import ListType,TupleType
 
 import Products
 
 from Products.Silva import icon
 from Products.Silva.interfaces import ISilvaObject
-
 
 class Addable:
 
@@ -22,7 +22,6 @@ class Addable:
             sort = cmp(self._meta_type['name'], other._meta_type['name'])
         return sort
         
-
 class ExtensionRegistry:
 
     def __init__(self):
@@ -34,7 +33,7 @@ class ExtensionRegistry:
 
     def register(
         self, name, description, context, modules, install_module,
-        depends_on='Silva'):
+        depends_on=(u'Silva',)):
         
         self._extensions[name] = (description, install_module, depends_on)
         # try to order based on dependencies
@@ -100,7 +99,11 @@ class ExtensionRegistry:
         # make mapping from name depended on to names that depend on it
         depends_on_mapping = {}
         for key, value in self._extensions.items():
-            depends_on_mapping.setdefault(value[2], []).append(key)
+            dos = value[2]
+            if not (isinstance(dos,ListType) or isinstance(dos,TupleType)):
+                dos = (dos,)
+            for do in dos:
+                depends_on_mapping.setdefault(do, []).append(key)
        
         # if depends_on is None, this should be first in the list
         added = depends_on_mapping.get(None, [])
@@ -108,9 +111,11 @@ class ExtensionRegistry:
         # now add them to the list and get dependencies in turn
         result = []
         while added:
-            result.extend(added)
             new_added = []
             for name in added:
+                if name in result:
+                    result.remove(name)
+                result.append(name)
                 new_added.extend(depends_on_mapping.get(name, []))
             added = new_added
         self._extensions_order = result
