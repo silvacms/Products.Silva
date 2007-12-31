@@ -70,41 +70,19 @@
       <td colspan="6">
         <tal:if condition="may_change_content">
 <script type="text/javascript">
-
-  function addNewContent(form, url) {
-    var mtselect = document.getElementById('meta_type');
-    var meta_type = mtselect.options[mtselect.selectedIndex].value;
-    var url = url + '/edit/add_object?meta_type=' + meta_type;
-    /* NOTE": the position is "off by one" if the container has an index item.
-       So, subtract one when determining the position, if an index document
-       is present */
-    var idcheckboxes = form['ids:list'];
-    /* this will be blank if there are no items in the container */
-    if (idcheckboxes) {
-      var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
-      for (var i=0; i < idcheckboxes.length; i++) {
-	if (idcheckboxes[i].checked) {
-	  /* if the index item is checked, leave the position at zero, so the
-	     new item will be added at position one (as listed in the contents tab)
-	  */
-	  if (checkboxListHasIndex && i>0) i-=1;
-	  url += '&position=' + i;
-	  alert("checked" + url);
-	  break;
-	};
-      };
-    };
-    location.href = url;
-    return false;
-  };
-
+window.onload_registry.register(function() {
+  ao = document.getElementById("add_object_button");
+  mt = document.getElementById("meta_type");
+  ao.onclick = addNewContent;
+  mt.onchange = function(event) { ao.click(); return true; }
+});
 </script>
+          <input type="hidden" name="add_object_position" value="" />
           <select class="transport"
             style="float:left"
             name="meta_type"
             id="meta_type"
             title="select a new item: alt-s"
-            tal:attributes="onchange string:addNewContent(this.form, '${url}')"
             i18n:attributes="title">
             <option value="None" i18n:translate="">
               select:
@@ -124,11 +102,11 @@
           <input class="transport"
             style="float:left"
             name="add_object:method"
+            id="add_object_button"
             type="submit"
             value="new..."
             title="add a new item - alt-n"
             accesskey="n"
-            tal:attributes="onclick string:return addNewContent(this.form, '${url}')"
             i18n:attributes="value;title"
           />
           <input class="transport"

@@ -35,9 +35,9 @@
   name="return_url"
   tal:attributes="value return_url"
 />
-<input name="position:int" type="hidden" 
-  tal:condition="request/position|nothing"
-  tal:attributes="value request/position|nothing" />
+<input name="add_object_position" type="hidden" 
+  tal:condition="request/add_object_position|nothing"
+  tal:attributes="value request/add_object_position|nothing" />
 <table class="listing">
   <thead>
     <tr>

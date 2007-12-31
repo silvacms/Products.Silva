@@ -10,8 +10,8 @@
     global vein string:new;
     global active_tab string:tab_edit;
     global parent_screen_name string:contents;
-    position request/position|nothing;
-    addobject_url python:'add_object?meta_type=%s' + (position and '&position='+str(position) or '')"
+    position request/add_object_position|nothing;
+    addobject_url python:'add_object?meta_type=%s' + (position is not nothing and '&add_object_position='+str(position) or '')"
     tal:omit-tag=""
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
