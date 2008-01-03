@@ -59,18 +59,12 @@ Version of this file: $Revision: 1.8 $
         </td>
       </tr>
       <tr>
-        <td align="left" valign="top">
+        <td align="left" valign="top" colspan="2">
           <div class="form-label">
-            Filesystem path<br />
-            (relative to Zope's INSTANCE_HOME.<br />
-            For security reasons, only alphanumeric<br />
-            and '/' characters are allowed. However<br />
-            a leading '/' will be ignored.)
+            <small>Filesystem path is now configured in extfile.ini in <br />
+            ExtFile itself. (Copy extfile.ini from ExtFile to your <br />
+            INSTANCE_HOME/etc/ and change the 'location' variable)</small>
           </div>
-        </td>
-        <td align="left" valign="top">
-          <input type="text" name="filesystem_path" size="40"
-            tal:attributes="value here/filesystem_path" />
         </td>
       </tr>
       <tr>
