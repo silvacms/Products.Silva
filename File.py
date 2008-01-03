@@ -300,8 +300,7 @@ class FileSystemFile(File):
 
     def __init__(self, id, repository):
         FileSystemFile.inheritedAttribute('__init__')(self, id)        
-        self._file = ExtFile(id, id)
-        self._file._repository = cookPath(repository)
+        self._file = ExtFile(id)
 
     def _set_file_data_helper(self, file):
         # ensure consistent mimetype assignment by deleting content-type header
@@ -381,12 +380,10 @@ class FilesService(SimpleItem.SimpleItem):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_filesServiceEditForm # used by add_and_edit()
 
-    def __init__(self, id, title, filesystem_storage_enabled=0,
-            filesystem_path='var/repository'):
+    def __init__(self, id, title, filesystem_storage_enabled=0):
         self.id = id
         self.title = title
         self._filesystem_storage_enabled = filesystem_storage_enabled
-        self._filesystem_path = filesystem_path
 
     # ACCESSORS
     
@@ -410,13 +407,6 @@ class FilesService(SimpleItem.SimpleItem):
         return (self.is_filesystem_storage_available() and 
             self.filesystem_storage_enabled())
     
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'filesystem_path')
-    def filesystem_path(self):
-        """filesystem_path
-        """
-        return self._filesystem_path
-
     security.declarePublic('cookPath')
     def cookPath(self, path):
         "call cook path"
@@ -425,13 +415,12 @@ class FilesService(SimpleItem.SimpleItem):
     # MANIPULATORS
     security.declareProtected('View management screens', 
         'manage_filesServiceEdit')
-    def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0, 
-            filesystem_path='', REQUEST=None):
+    def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0,
+                                REQUEST=None):
         """Sets storage type/path for this site.
         """
         self.title = title
         self._filesystem_storage_enabled = filesystem_storage_enabled
-        self._filesystem_path = filesystem_path
         if REQUEST is not None:
             return self.manage_filesServiceEditForm(
                 manage_tabs_message='Settings Changed')
@@ -511,10 +500,9 @@ class _dummy:
     pass
     
 def manage_addFilesService(self, id, title='', filesystem_storage_enabled=0,
-        filesystem_path='', REQUEST=None):    
+                           REQUEST=None):    
     """Add files service."""
-    object = FilesService(id, title, filesystem_storage_enabled,
-        filesystem_path)    
+    object = FilesService(id, title, filesystem_storage_enabled)
     self._setObject(id, object)
     object = getattr(self, id)
     add_and_edit(self, id, REQUEST)
