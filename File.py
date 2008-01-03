@@ -358,7 +358,7 @@ def file_factory(self, id, content_type, file):
                         ("There is no service_files. "
                             "Refresh your silva root.")
     if service_files.useFSStorage():        
-        object = FileSystemFile(id, id, service_files.filesystem_path())
+        object = FileSystemFile(id, service_files.filesystem_path())
     else:
         object = ZODBFile(id)
     return object
