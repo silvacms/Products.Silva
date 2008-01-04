@@ -26,57 +26,57 @@
     i18n:translate="">
     settings<span tal:condition="not: selected" i18n:name="ellipsis">...</span>
   </a>
-  <a title="manage subscriptions: alt-u"
-    accesskey="u"
-    tal:define="
-      link_id string:tab_subscriptions;
-      selected python:link_id == template.id;
-      class python:selected and 'selected' or nothing;
-    "
-    tal:condition="context/is_subscribable_content"
-    tal:attributes="
-      href string:$url/edit/$link_id;
-      class class;
-    "
-    i18n:attributes="title"
-    i18n:translate="">
-    subscriptions<span 
-      tal:condition="not: selected" i18n:name="ellipsis">...</span>
-  </a>
-  <a title="change the addables allowed in this publication: alt-d"
-    accesskey="d"
-    tal:define="
-      link_id string:tab_addables;
-      selected python:link_id == template.id;
-      class python:selected and 'selected' or nothing;
-      ispublication python: model.implements_publication();
-    "
-      tal:condition="ispublication"
-    tal:attributes="
-      href string:$url/edit/$link_id;
-      class class;
-    "
-    i18n:attributes="title"
-    i18n:translate="">
-    addables<span 
-      tal:condition="not: selected" i18n:name="ellipsis">...</span>
-  </a>
-  <tal:block define="
-    permissions view/get_silva_permissions;
+  <tal:if condition="may_approve_content">
+    <a title="manage subscriptions: alt-u"
+      accesskey="u"
+      tal:define="
+        link_id string:tab_subscriptions;
+        selected python:link_id == template.id;
+        class python:selected and 'selected' or nothing;
+      "
+      tal:condition="context/is_subscribable_content"
+      tal:attributes="
+        href string:$url/edit/$link_id;
+        class class;
+      "
+      i18n:attributes="title"
+      i18n:translate="">
+      subscriptions<span 
+        tal:condition="not: selected" i18n:name="ellipsis">...</span>
+    </a>
+    <a title="change the addables allowed in this publication: alt-d"
+      accesskey="d"
+      tal:define="
+        link_id string:tab_addables;
+        selected python:link_id == template.id;
+        class python:selected and 'selected' or nothing;
+        ispublication python: model.implements_publication();
+      "
+        tal:condition="ispublication"
+      tal:attributes="
+        href string:$url/edit/$link_id;
+        class class;
+      "
+      i18n:attributes="title"
+      i18n:translate="">
+        addables<span 
+        tal:condition="not: selected" i18n:name="ellipsis">...</span>
+    </a>
+  </tal:if>
+  <tal:def define="
     unapproved_version model/get_unapproved_version | nothing;
-    have_approve_permission permissions/ApproveSilvaContent | nothing;
   ">
-  <a class="executor"
-    style="float:right"
-    title="publish this document: alt-p"
-    accesskey="p"
-    tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
-    i18n:translate=""
-    i18n:attributes="title"
-    tal:condition="python: unapproved_version and have_approve_permission">
-    publish&nbsp;now
-  </a>
-  </tal:block>
+    <a class="executor"
+      style="float:right"
+      title="publish this document: alt-p"
+      accesskey="p"
+      tal:attributes="href string:${model/absolute_url}/edit/tab_metadata_publish"
+      i18n:translate=""
+      i18n:attributes="title"
+      tal:condition="python: unapproved_version and may_approve_content">
+      publish&nbsp;now
+    </a>
+  </tal:def>
   <a title="see the content in the public layout: alt-;"
     style="float:right"
     accesskey=";"

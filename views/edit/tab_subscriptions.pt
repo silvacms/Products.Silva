@@ -23,17 +23,11 @@
 <table class="columns columns3"
   tal:define="
     model request/model;
-    dummy context/get_subscribable;
     type  model/meta_type;
     path  model/getPhysicalPath;
     url   model/absolute_url;
-
     title python: model.get_title_editable() or model.id;
-
-    subscribable request/subscribable;
-    "
-  tal:condition="may_approve_content"
-  >
+  ">
   <tbody>
     <tr>
       <tal:block replace="nothing">
@@ -50,12 +44,15 @@
       <tal:block replace="nothing">
         _____________________ main _____________________
       </tal:block>
-      <td class="main">
-        <tal:block>
+      <td class="main"
+        tal:condition="may_approve_content">
+        <tal:block define="
+          dummy context/get_subscribable;
+          subscribable request/subscribable;
+          ">
           <tal:block condition="subscribable">
             <form method="post" name="form" action="." enctype="multipart/form-data"
-              tal:define="form context/tab_subscriptions_form"
-              >
+              tal:define="form context/tab_subscriptions_form">
               <table class="listing">
                 <thead>
                   <tr tal:replace="nothing">
@@ -127,21 +124,27 @@
           </tal:block>
           <tal:block
             condition="not:subscribable"
-            i18n:translate=""
-            >
+            i18n:translate="">
             This object is not subscribable content.
           </tal:block>
         </tal:block>
+      </td>
+      <td class="main"
+        tal:condition="not:may_approve_content">
+        If you see this message you have an author or reader role and there is
+        nothing you can do in this screen. How did you get here?
       </td>
       <tal:block replace="nothing">
         _____________________ right column _____________________
       </tal:block>
       <td class="right">
+      <tal:if condition="may_approve_content">
         <div class="info"
           tal:define="
+            dummy context/get_subscribable;
             subscribable request/subscribable;
-            is_subscribable subscribable/isSubscribable;"
-          >
+            is_subscribable subscribable/isSubscribable;
+          ">
           <h3>
             <img class="icon"
               style="margin-top:-1px;"
@@ -167,12 +170,11 @@
             </tal:block>
           </p>
           <p tal:define="
-              localsubscriptions request/subscriptions;
-              allsubscriptions subscribable/getSubscriptions;
-              numberofsubscriptions python: len(allsubscriptions) - len(localsubscriptions);
-              "
-            tal:condition="is_subscribable"
-            >
+            localsubscriptions request/subscriptions;
+            allsubscriptions subscribable/getSubscriptions;
+            numberofsubscriptions python: len(allsubscriptions) - len(localsubscriptions);
+            "
+            tal:condition="is_subscribable">
             <span class="subhead" i18n:translate="">
               Other subscriptions
             </span><br />
@@ -190,6 +192,7 @@
             </tal:block>
           </p>
         </div>
+      </tal:if>
       </td>
     </tr>
   </tbody>
