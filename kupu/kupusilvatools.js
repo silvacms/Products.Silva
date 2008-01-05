@@ -2722,7 +2722,6 @@ SilvaPropertyTool.prototype._createSimpleItemHTML = function(type, value,
         input.setAttribute('mandatory', 'true');
     };
     innerdiv.appendChild(input);
-    td.style.textAlign = "center";
     td.appendChild(outerdiv);
 };
 
