@@ -31,7 +31,7 @@ div.kupu-smalleditor {
 }
 
 div.kupu-tb {
-  background: #616d73;
+  background: #607080;
   padding: 2px 0 2px 11px;
   margin-bottom: 0em;
   border: 1px solid #475155;
@@ -154,12 +154,11 @@ div.kupu-tb select:hover {
   width:100%;
 }
 
-
 .kupu-toolboxes {
   margin-right: 0em;
   border: solid 1px #6c797f;
   border-bottom-width: 2px;
-  background: #cedae8;
+  background: #c6d2dd;
   font-size:1em;
 }
 
@@ -187,7 +186,7 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   background-image: url('<dtml-var root_url>/service_kupu_silva/closed_arrow.gif');
   background-repeat: no-repeat;
   background-position: center left;
-  background-color: #829199;
+  background-color: #7c8c9c;
   max-width: 22em;
   margin: 0;
   padding-left: 14px;
@@ -276,14 +275,13 @@ div#kupu-fgcolorchooser div:hover {
 #kupu-properties input, #kupu-properties-description {
   font-size: x-small;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-
 }
 
 div.kupu-properties-item-outerdiv h2 {
   font-size: 1.1em;
   font-weight: normal;
   color: #eCFFF3;
-  background-color: #9AACB6;
+  background-color: #8C9CAC;
   width: 101%;
   margin: 0 0 0 -0.1em;
   padding: 0 0 0 0.8em;
