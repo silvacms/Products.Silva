@@ -99,7 +99,7 @@ class LinkVersion(CatalogedVersion):
                     'CONTENT="0; URL=%s"></head><body bgcolor="#FFFFFF">'
                     '</body></html>') % url
         else:
-            response.redirect(self._url)
+            response.redirect(url)
             return ""
         
     security.declareProtected(

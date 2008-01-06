@@ -11,6 +11,8 @@ Silva changes
         attribute to a float, to support more granular priorities
         (they way it was prior to Silva 2.0 zcml)
 
+      - fixed 101791: problem with Link object as index of a container
+
   Silva 2.0.4
 
     Features Added:
