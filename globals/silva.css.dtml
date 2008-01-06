@@ -290,7 +290,7 @@ div.middleground a.selected {
 
 div.middleground a.executor {
   color: #b3fffb;
-  background-color: #38656c;
+  background-color: #38656c; /* #3C777E */
 }
 div.middleground a.executor:hover {
   color: #e5ffec;
@@ -903,7 +903,7 @@ input.executor {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: #b3fffb;
-  background: #21565b;
+  background: #1F626D; /*#21565b*/
 background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;

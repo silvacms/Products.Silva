@@ -61,9 +61,6 @@ contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-evenRowBackground:string=#c6d2dd
-oddRowBackground:string=#dae7fa
-
 listingTopBackground:string=#c4d6e7
 listingTopHeadingColor:string=#2d2d4c
 
@@ -77,6 +74,9 @@ listingInterControlsBackground:string=#718191
 listingControlsBackground:string=#607080
 listingDividerBackground:string=#89a
 
+evenRowBackground:string=#c6d2dd
+oddRowBackground:string=#dae7fa
+
 listingBorder:string=1px solid #678
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
@@ -85,8 +85,6 @@ listingLinkHover:string=underline
 listingTopBackgroundContent:string=#c5d4ca
 listingTopHeadingColorContent:string=#51545c
 listingTopControlsHeadingColorContent:string=#ddeee3
-
-controlBackground:string=#d5e7e7
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 inputFontColor:string=#337

@@ -119,10 +119,11 @@ h2 {
         i18n:translate="">
         new version
       </button>
-      <tal:i18n i18n:translate="">
+      <span class="warning"
+        i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
         content. Changes can only be made in a new version.
-      </tal:i18n>
+      </span>
     </form>
   </div>
 </tal:condition>
