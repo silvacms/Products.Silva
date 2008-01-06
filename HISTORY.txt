@@ -85,6 +85,8 @@ Silva changes
       - xslt renderer: fixed an extra whitespace issue that occurred
         when an image as linked, by setting indent="no" in normal_view.xslt
 
+      - fixed 101791: problem with Link object as index of a container
+
     Bugfixes ported from 2.0 branch
 
       - fixed WuW144: Images were not always shown correctly in kupu 
