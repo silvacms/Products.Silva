@@ -23,8 +23,7 @@
       setnames binding/setNames | nothing;
       is_container request/model/implements_container | nothing;
       form_errors options/form_errors | nothing;"
-    tal:condition="python: content and setnames"
-    >
+    tal:condition="python: content and setnames">
     <input type="hidden" name="returntotab" tal:attributes="value template/id"/>
     <table class="listing"
       tal:condition="binding"
@@ -41,7 +40,7 @@
               <tal:block condition="model/implements_container"
                 i18n:translate="">
                   of &#xab;<tal:block content="string:${title}"
-                    i18n:name="title">title</tal:block>&#xbb;
+                  i18n:name="title">title</tal:block>&#xbb;
               </tal:block>
               <tal:block condition="not: model/implements_container"
                 i18n:translate="">
@@ -56,10 +55,10 @@
       <tbody>
         <tal:block repeat="set_name setnames">
           <tal:block define="set_errors form_errors/?set_name | nothing">
-            <tr tal:condition="not:repeat/set_name/start">
-              <td class="divider"
-                colspan="4"
-                tal:attributes="style python:model.implements_container() and 'background:#c4d6e7' or 'background:#c5d4ca'">
+            <tr class="divider"
+              tal:condition="not:repeat/set_name/start">
+              <td colspan="4"
+                tal:attributes="style python:model.implements_container() and 'background-color:#c4d6e7' or 'background-color:#c5d4ca'">
               </td>
             </tr>
             <tr tal:replace="nothing">
@@ -71,7 +70,7 @@
                   set binding/?set_name/setTitle | set_name;
                   label python:set == 'silva-extra' and 'silva-meta' or set;
                   ">
-                    <span i18n:translate="">metadata set</span> &#xab;<tal:block replace="label" />&#xbb;
+                  <tal:i18n i18n:translate="">metadata set</tal:i18n> &#xab;<tal:block replace="label" />&#xbb;
                 </h3>
               </td>
             </tr>
@@ -93,27 +92,22 @@
               </th>
             </tr>
             <tal:block repeat="element_name binding/?set_name/elementNames">
-              <tal:block
-                define="
-                  element binding/?set_name/?element_name;
-                  element_error form_errors/?set_name/?element_name | nothing;
-                  iterate repeat/element_name/odd;"
-                >
+              <tal:block define="
+                element binding/?set_name/?element_name;
+                element_error form_errors/?set_name/?element_name | nothing;
+                iterate repeat/element_name/odd;
+                ">
                 <tal:block
                   condition="element/hidden"
                   replace="structure element/render"
                 />
-                <tr
-                  tal:condition="not: element/hidden"
-                  tal:attributes="
-                    class python:element_error and 'alert' or iterate and 'odd' or 'even';"
-                  >
+                <tr tal:condition="not: element/hidden"
+                  tal:attributes="class python:element_error and 'alert' or iterate and 'odd' or 'even';">
                   <tal:block replace="nothing">
                     ___ element name column ___
                   </tal:block>
                   <td class="align-right">
-                    <label
-                      tal:content="element/title"
+                    <label tal:content="element/title"
                       tal:attributes="for element_name"
                       tal:omit-tag="not:element/isEditable"
                       i18n:translate="">
@@ -131,20 +125,17 @@
                     data python: element['render'] or element['view'];
                     data python: element_name in truncatable and ct(data, 50) or data;
                     "
-                    tal:condition="
-                      python: element['isEditable'] or not element['isAcquired']"
-                    tal:content="
-                      structure data">
+                    tal:condition="python: element['isEditable'] or not element['isAcquired']"
+                    tal:content="structure data">
                     element edit widget
                   </td>
                   <tal:block replace="nothing">
                     ___ element acquired value column ___
                   </tal:block>
                   <td>
-                    <tal:block
-                      define="
-                        data element/view;
-                        data python: element_name in truncatable and ct(data, 50) or data;"
+                    <tal:block define="
+                      data element/view;
+                      data python: element_name in truncatable and ct(data, 50) or data;"
                       condition="element/isAcquired"
                       replace="structure data" />
                     <sup tal:condition="element/isAcquireable" i18n:translate="">
