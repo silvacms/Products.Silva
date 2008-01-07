@@ -214,7 +214,7 @@ for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaFind 1.1.1 (DC)
+SilvaFind 1.1.2 (DC)
 --------------------
 
 A highly customizable search solution for use with Silva. It allows
@@ -225,7 +225,7 @@ content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
-SilvaLayout 0.5.9 (EX)
+SilvaLayout 0.5.10 (EX)
 ----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
