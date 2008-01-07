@@ -4,6 +4,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
+  xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
+  xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
   version="1.0">
   <!--  
   For your own renderers for Silva Documents, import this stylesheet and
