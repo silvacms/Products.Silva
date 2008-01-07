@@ -1,43 +1,41 @@
 Copyright (c) 2002-2007 Infrae. All rights reserved.
 See also LICENSE.txt
-
 Silva changes
 
-  Silva 1.6.2
+  Silva 1.6.1
+
+    Features added:
+
+      - New "Editor Comments" Kupu Tool: displays the "internal
+        comments" silva-extra metadata field if there are comments.
+        This promotes the visibility of internal / editor comments so
+        that anyone editing the document will see them.  This tool is
+        only visible if there are comments, and does not allow editing
+        at this time.  This toolbox is non-collapsible, and requires a
+        version of kupu newer than 1.4b1 to support non-collapsible
+        toolboxes
 
     Bugs fixed:
 
       - fixed 157010: anchors in links: # -> %23
 
-      - fixed "excessive recursion" error when users click 'new version' 
-        to make a new copy of a silva document to edit then click the
-        browser's back button and click 'new version' again.
-
-    Features added:
-
-      - New "Editor Comments" Kupu Tool: displays the "internal comments"
-        silva-extra metadata field if there are comments.  This
-        promotes the visibility of internal / editor comments so that
-        anyone editing the document will see them.  This tool is only
-        visible if there are comments, and does not allow editing at this
-        time.  This toolbox is non-collapsible, and requires a version
-        of kupu newer than 1.4b1 to support non-collapsible toolboxes
-
-  Silva 1.6.1
-
-    Bugs fixed:
-
+      - fixed "excessive recursion" error when users click 'new
+        version' to make a new copy of a silva document to edit then
+        click the browser's back button and click 'new version' again.
+        
       - fixed 156921: Escaping image title strings.
 
-      - Added True switch to Image.py tag method to escape double quotes.
+      - Added True switch to Image.py tag method to escape double
+        quotes.
 
       - Subscription Functionality for dLCMS Content Elements
-        https://bugs.launchpad.net/dlcms/+bug/152635
-        Added a Zope 3 (Five) view to the subscription framework,
-        accessible by appending '/subscriptor' to the public url of content.
-        This enables the subscriptor to be accessible when using SilvaLayout.
-        The old-style subscriptor, which uses layout_macro.html,  is still 
-        accessible by appending '/public/subscriptor'.
+        https://bugs.launchpad.net/dlcms/+bug/152635 Added a Zope 3
+        (Five) view to the subscription framework, accessible by
+        appending '/subscriptor' to the public url of content.  This
+        enables the subscriptor to be accessible when using
+        SilvaLayout.  The old-style subscriptor, which uses
+        layout_macro.html, is still accessible by appending
+        '/public/subscriptor'.
 
       - The lookup window now opens in the directory that was last
         opened.
@@ -65,11 +63,12 @@ Silva changes
         that hitting return adds the item.
 
       - Several reserved ids such as 'home' were declared unreserved
-        previously. Unfortunately it turned out that at least 'home' was
-        reserved for a good reason, so to be sure re-reserved these ids, 
-        except for 'search'.
+        previously. Unfortunately it turned out that at least 'home'
+        was reserved for a good reason, so to be sure re-reserved
+        these ids, except for 'search'.
 
-      - fixed 148863: toc rendering not XHTML compliant, backported from trunk
+      - fixed 148863: toc rendering not XHTML compliant, backported
+        from trunk
 
   Silva 1.6
 
