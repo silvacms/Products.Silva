@@ -27,8 +27,8 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 1.6 (DC)
---------------
+Silva 1.6.1 (DC)
+----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
@@ -118,8 +118,8 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 1.6 (DE)
-----------------------
+SilvaDocument 1.6.1 (DE)
+------------------------
 
 Silva extension for XML-based documents. Contains a through the web
 editing system for them. This is shipped along with the core, though
@@ -214,8 +214,8 @@ for your Silva site. It also contains RSS export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaFind 1.1.2 (DC)
---------------------
+SilvaFind 1.1.1.2 (DC)
+----------------------
 
 A highly customizable search solution for use with Silva. It allows
 defining searches in both the Silva Management Interface and on a public
@@ -226,7 +226,7 @@ content can be made searchable.
 http://www.infrae.com/products/silva/extensions/silva_find
 
 SilvaLayout 0.5.10 (EX)
-----------------------
+-----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so
