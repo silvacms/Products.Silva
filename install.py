@@ -243,7 +243,7 @@ def configureMiscServices(root):
     # add service_files if it doesn't exist
     if not hasattr(root, 'service_files'):
         File.manage_addFilesService(root, 'service_files', 
-            'Silva Files Service', filesystem_path='var/repository')    
+            'Silva Files Service')    
     # do the same for the sidebar service
     if not hasattr(root, 'service_sidebar'):
         root.manage_addProduct['Silva'] \

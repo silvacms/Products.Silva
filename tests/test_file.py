@@ -46,11 +46,11 @@ class FileTest(SilvaTestCase.SilvaTestCase):
         
        
     def test_file_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.service_files.manage_filesServiceEdit('', 1)
         self._test_file()
     
     def test_file_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.service_files.manage_filesServiceEdit('', 0)
         self._test_file()
     
 

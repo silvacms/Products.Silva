@@ -65,11 +65,11 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
 
 
     def test_getImage_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.service_files.manage_filesServiceEdit('', 0)
         self._getimage_test()
 
     def test_getImage_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.service_files.manage_filesServiceEdit('', 1)
         self._getimage_test()
 
     def _test_index_html(self):
@@ -87,33 +87,43 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
             return
 
         data = image.index_html(request)
-        it = self._get_req_data(data)
-        pil_image = PIL.Image.open(StringIO(it))
+        if type(data) == type(''):
+            it = StringIO(self._get_req_data(data))
+        else:
+            it = data._stream
+        pil_image = PIL.Image.open(it)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
         request.QUERY_STRING = 'hires'
         data = image.index_html(request)
-        it = self._get_req_data(data)
-        pil_image = PIL.Image.open(StringIO(it))
+        if type(data) == type(''):
+            it = StringIO(self._get_req_data(data))
+        else:
+            it = data._stream
+        pil_image = PIL.Image.open(it)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('TIFF', pil_image.format)
-        self.assertEquals(image_data, it)
+        it.seek(0)
+        self.assertEquals(image_data, it.read())
 
         request.QUERY_STRING = 'thumbnail'
         data = image.index_html(request)
-        it = self._get_req_data(data)
-        pil_image = PIL.Image.open(StringIO(it))
+        if type(data) == type(''):
+            it = StringIO(self._get_req_data(data))
+        else:
+            it = data._stream
+        pil_image = PIL.Image.open(it)
         w, h = pil_image.size
         self.assert_(w == 120 or h == 120)
         self.assertEquals('JPEG', pil_image.format)
 
     def test_index_html_extifile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.service_files.manage_filesServiceEdit('', 1)
         self._test_index_html()
 
     def test_index_html_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.service_files.manage_filesServiceEdit('', 0)
         self._test_index_html()
 
     def _get_req_data(self, data):

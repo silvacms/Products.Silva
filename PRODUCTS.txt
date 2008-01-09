@@ -167,6 +167,20 @@ separation you need a Zope version higher than 2.7.0.
 
 http://www.dataflake.org/software/ldapuserfolder/
 
+ExtFile 2.0.2 (I)
+-----------------
+
+If you plan to manage large upload files with Silva, you may want to
+avoid storing them in the ZODB, instead putting them in the filesystem
+of your server. You can do this by install ExtFile (see INSTALL.txt
+for more details).
+
+ExtFile now configures where files are stored in its own configuration
+(extfile.ini), and Silva's service_files doesn't allow you to change
+that path anymore.
+
+http://www.zope.org/Members/shh/ExtFile
+
 MailDropHost 1.9 (IX)
 ---------------------
 

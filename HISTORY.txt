@@ -5,6 +5,12 @@ Silva changes
 
   since Silva 2.0.4
 
+    Features Added:
+
+      - Made Silva work with ExtFile once again: we no longer
+        configure the filesystem_path in the service_files, but leave
+        it to the extfile.ini.
+
     Bugs Fixed:
 
       - Changed the 'priority' attribute of the silva:content zcml
@@ -12,6 +18,10 @@ Silva changes
         (they way it was prior to Silva 2.0 zcml)
 
       - fixed 101791: problem with Link object as index of a container
+
+      - Fixed the factory function calls for File and Image, which
+        still were still called with the spurious 'title' arguments on
+        some code paths.
 
   Silva 2.0.4
 
