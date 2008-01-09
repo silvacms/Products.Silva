@@ -553,7 +553,7 @@ class Image(Asset):
         image = getattr(self, id, None)
         created = 0
         title = self.get_title()
-        if repository is None:
+        if not repository:
             image = OFS.Image.Image(id, title, file,
                 content_type=content_type)
             created = 1
@@ -562,9 +562,8 @@ class Image(Asset):
                 self._remove_image(id)
                 image = None
             if image is None:
-                image = ExtImage(self.getId(), title)
+                image = ExtImage(self.getId())
                 created = 1
-                image._repository = repository
                 image = image.__of__(self)
             # self.getId() is used to get a `normal' file name. We restore
             # it later to get the a working absolute_url()
@@ -593,8 +592,8 @@ class Image(Asset):
         msg = 'There is no service_files. Refresh your Silva root.'
         assert service_files is not None, msg
         if service_files.useFSStorage():
-            return service_files.cookPath(service_files.filesystem_path())
-        return None
+            return True
+        return False
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
         img_src = self.absolute_url()

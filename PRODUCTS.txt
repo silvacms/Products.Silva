@@ -27,8 +27,8 @@ I - Usable independently of Silva.
 E - Silva extension.
 X - Included in the Silva-extra tarball.
 
-Silva 2.0 (DC)
---------------
+Silva 2.1.x (DC)
+----------------
 
 The Silva core. Silva implements the behavior for the Silva objects,
 such as Folders, Publications, and Ghosts.
@@ -110,8 +110,8 @@ Silva Documents.
 
 http://kupu.oscom.org/download/
 
-SilvaDocument 2.0 (DE)
-----------------------
+SilvaDocument 2.1.x (DE)
+------------------------
 
 Silva extension for XML-based documents. Contains a through the web
 editing system for them. This is shipped along with the core, though
@@ -167,6 +167,20 @@ separation you need a Zope version higher than 2.7.0.
 
 http://www.dataflake.org/software/ldapuserfolder/
 
+ExtFile 2.0.2 (I)
+-----------------
+
+If you plan to manage large upload files with Silva, you may want to
+avoid storing them in the ZODB, instead putting them in the filesystem
+of your server. You can do this by install ExtFile (see INSTALL.txt
+for more details).
+
+ExtFile now configures where files are stored in its own configuration
+(extfile.ini), and Silva's service_files doesn't allow you to change
+that path anymore.
+
+http://www.zope.org/Members/shh/ExtFile
+
 MailDropHost 1.9 (IX)
 ---------------------
 
@@ -177,8 +191,8 @@ separate process.
 
 http://www.dataflake.org/software/maildrophost/
 
-SilvaExternalSources 1.4 (DE)
-------------------------------
+SilvaExternalSources 1.5 (DE)
+-----------------------------
 
 External Sources can integrate with SilvaDocument so that data coming
 from arbitrary Python sources, SQL databases or CSV (comma separated
@@ -186,7 +200,7 @@ values) can be shown inside SilvaDocuments.
 
 http://www.infrae.com/download/SilvaExternalSources
 
-SilvaNewsNetwork 2.5 (EX)
+SilvaNewsNetwork 2.6 (EX)
 -------------------------
 
 SilvaNewsNetwork (formerly known as SilvaNews) builds on Silva and
@@ -197,7 +211,7 @@ export and import facilities.
 
 http://www.infrae.com/download/SilvaNews
 
-SilvaFind 1.1.1 (DCE)
+SilvaFind 1.1.2 (DCE)
 ---------------------
 
 A highly customizable search solution for use with Silva. It allows
@@ -208,8 +222,8 @@ their content can be made searchable.
 
 http://www.infrae.com/products/silva/extensions/silva_find
 
-SilvaLayout 1.0 (EX)
---------------------
+SilvaLayout 1.0.1 (EX)
+----------------------
 
 Advanced website layout system based on Zope 3 technologies. If you
 install this, the default Silva layout system won't work anymore, so

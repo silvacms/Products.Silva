@@ -77,14 +77,14 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         return s
     
     def test_file_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.service_files.manage_filesServiceEdit('', 1)
         self.assertEqual(
             self.root.service_files.useFSStorage(), WITH_EXTFILE)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.useFSStorage(), False)
         self._test_file('testfile', self.root)
         self._test_file('testfile', self.root.folder2)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
         self.assertEqual(
             self.root.service_files.useFSStorage(), WITH_EXTFILE)
         self.assertEqual(
@@ -107,13 +107,13 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
 
     def test_file_zodb_explicitly(self):
         # Explicitly disable fs storage
-        self.root.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.service_files.manage_filesServiceEdit('', 0)
         self.assertEqual(self.root.service_files.useFSStorage(), False)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.useFSStorage(), False)
         self._test_file('testfile', self.root)
         self._test_file('testfile', self.root.folder2)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
         self.assertEqual(self.root.service_files.useFSStorage(), False)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.useFSStorage(), False)
@@ -136,43 +136,28 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
             self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
             False)
         # Then enable it
-        self.root.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.service_files.manage_filesServiceEdit('', 1)
         self.assertEqual(
             self.root.service_files.filesystem_storage_enabled(), True)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
             False)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1, '')
+        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
             True)
         # Explicitly disable fs storage
-        self.root.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.service_files.manage_filesServiceEdit('', 0)
         self.assertEqual(
             self.root.service_files.filesystem_storage_enabled(), False)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
             True)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0, '')
+        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
         self.assertEqual(
             self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
             False)
 
-    # Covered by the test_file_zodb and test_file_extfile tests I guess
-    #def test_useFSStorage(self):
-    #    pass
-    
-    def test_filesystem_path(self):
-        # XXX this needs an actual test!        
-        #print self.root.service_files.filesystem_path()
-        #print self.root.service_files.folder1.folder1in1.filesystem_path()
-        pass
-    
-    # Covered by the test_filesystem_path, test_file_zodb and
-    # test_file_extfile tests I guess
-    #def test_manage_filesServiceEdit(self):
-    #    pass
-    
     def test_manage_convertStorage(self):
         # by default we use ZODB storage
         self._test_image('testimage', self.root)
@@ -195,7 +180,7 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(
             self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
         if WITH_EXTFILE:
-            self.root.service_files.manage_filesServiceEdit('', 1, '')
+            self.root.service_files.manage_filesServiceEdit('', 1)
             self.root.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
@@ -208,7 +193,7 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.testfile._file.meta_type, 'ExtFile')
             self.assertEqual(
                 self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
-            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1, '')
+            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
             self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
@@ -221,7 +206,7 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.testfile._file.meta_type, 'ExtFile')
             self.assertEqual(
                 self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
-            self.root.service_files.manage_filesServiceEdit('', 0, '')
+            self.root.service_files.manage_filesServiceEdit('', 0)
             self.root.service_files.manage_convertStorage()
             self.assertEqual(self.root.testimage.image.meta_type, 'Image')
             self.assertEqual(

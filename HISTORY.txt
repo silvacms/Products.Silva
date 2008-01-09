@@ -58,6 +58,10 @@ Silva changes
 
     Features ported from 2.0 branch
 
+      - Made Silva work with ExtFile once again: we no longer
+        configure the filesystem_path in the service_files, but leave
+        it to the extfile.ini.
+
       - additional behaviour to mangle.Id.new(), when passing True
         as the first argument one can suppress the ValueError raised
         on invalid ids (and always have a new id generated)
@@ -88,6 +92,10 @@ Silva changes
       - fixed 101791: problem with Link object as index of a container
 
     Bugfixes ported from 2.0 branch
+
+      - Fixed the factory function calls for File and Image, which
+        still were still called with the spurious 'title' arguments on
+        some code paths.
 
       - fixed WuW144: Images were not always shown correctly in kupu 
         when resized.

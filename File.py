@@ -298,7 +298,7 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    def __init__(self, id, repository):
+    def __init__(self, id):
         FileSystemFile.inheritedAttribute('__init__')(self, id)        
         self._file = ExtFile(id)
 
@@ -357,7 +357,7 @@ def file_factory(self, id, content_type, file):
                         ("There is no service_files. "
                             "Refresh your silva root.")
     if service_files.useFSStorage():        
-        object = FileSystemFile(id, service_files.filesystem_path())
+        object = FileSystemFile(id)
     else:
         object = ZODBFile(id)
     return object
@@ -460,10 +460,9 @@ class FileStorageConverter:
         title = context.get_title()
         files_service = context.service_files
         if files_service.useFSStorage():
-            fileobject = FileSystemFile(
-                id, title, files_service.filesystem_path())
+            fileobject = FileSystemFile(id)
         else:
-            fileobject = ZODBFile(id, title)
+            fileobject = ZODBFile(id)
         del context.__dict__['_file']
         fileobject.__dict__.update(context.__dict__)
         container = context.aq_parent
