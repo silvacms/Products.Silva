@@ -11,6 +11,28 @@ import zope.component.eventtesting
 
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
+
+# Default silva test user and password
+
+users = {
+    'manager': {'password': ZopeTestCase.user_password,
+                'role': 'Manager' },
+    'chiefeditor': {'password': ZopeTestCase.user_password,
+                    'role': 'ChiefEditor' },
+    'editor': {'password': ZopeTestCase.user_password,
+               'role': 'Editor' },
+    'author': {'password': ZopeTestCase.user_password,
+               'role': 'Author' },
+    'reader': {'password': ZopeTestCase.user_password,
+               'role': 'Reader' },
+}
+
+user_manager = 'manager'
+user_chiefeditor = 'chiefeditor'
+user_editor = 'editor'
+user_author = 'author'
+user_reader = 'reader'
+
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
@@ -28,6 +50,7 @@ try:
 except ImportError:
     pass
 
+ZopeTestCase.installProduct('SilvaFind')
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
 if ZopeTestCase.hasProduct('SilvaExternalSources'):
@@ -132,7 +155,10 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _setupRootUser(self):
         '''Creates the root user.'''
         uf = self.root.acl_users
-        uf._doAddUser(user_name, 'secret', ['ChiefEditor'], [])
+        uf._doAddUser(user_name, user_password, ['Manager'], [])
+
+        for username, info in users.items():
+           uf._doAddUser(username, info['password'], [info['role']], [])
 
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
