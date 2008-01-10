@@ -52,7 +52,7 @@ h2 {
         style="float:right"
         title="publish this document: alt-p"
         accesskey="p"
-        tal:attributes="href string:${model/absolute_url}/edit/tab_edit_publish"
+        tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_edit"
         i18n:translate=""
         i18n:attributes="title"
         tal:condition="python: unapproved_version and have_approve_permission">

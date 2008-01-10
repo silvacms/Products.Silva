@@ -20,5 +20,8 @@ model.approve_version()
 
 if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
-    
-return view.tab_edit(message_type="feedback", message=_("Version approved."))
+
+#get the tab to return to, defaulting to tab_edit
+return_to = context.REQUEST.get('return_to','tab_edit')
+
+return getattr(view,return_to,'tab_edit')(message_type="feedback", message=_("Version approved."))
