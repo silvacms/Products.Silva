@@ -15,7 +15,7 @@ def _openFile(filename):
     name = os.path.dirname(__file__)
     return open(name + '/' + filename)
 
-class MixinRole(test_login.MixinLoginLogout):
+class MixinRoleContent(test_login.MixinLoginLogout):
 
     def role_logout(self, browser):
         self.do_logout(browser)
@@ -27,10 +27,11 @@ class MixinRole(test_login.MixinLoginLogout):
         self.do_login(browser, url, user_name, password)
         p = re.compile('logout\s+%s' % role)
         p.findall(browser.contents)
-        self.failUnless(p, 'The roles do not match')
+        self.failUnless(p, 'The role does not match logout message')
 
     def do_make_content(self, user_name, content_type, creator, result):
         browser = Browser()
+        # Test role login
         try:
             browser
         except HTTPError, err:
@@ -39,6 +40,7 @@ class MixinRole(test_login.MixinLoginLogout):
             else:
                 self.fail()
         self.role_login(browser, user_name)
+        # Test if role has access to no content_types
         try:
             meta_type = browser.getControl(name="meta_type")
         except LookupError:
@@ -46,19 +48,23 @@ class MixinRole(test_login.MixinLoginLogout):
                 self.role_logout(browser)
                 return
             self.fail()
+        # Test if role has access to content_type
         if result is fail_not_addable:
-            self.failIf(content_type in meta_type.options, 'on result is fail_not_addable')
+            self.failIf(content_type in meta_type.options, 'Role can access meta_type')
         else:
-            self.failUnless(content_type in meta_type.options, '')
+            self.failUnless(content_type in meta_type.options, 'Content type is
+                            not included as a meta_type')
             # Create the content 
-            #import pdb; pdb.set_trace()
             browser.getControl(name='meta_type').value = [content_type]
             browser.getControl(name='add_object:method').click()
             browser.getControl(name='field_object_id').value = 'test_content'
+            # Check for special fields
             if creator:
                creator(browser)
             browser.getControl(name='add_submit').click()
-            self.failUnless('Added %s' % content_type in browser.contents)
+            self.failUnless('Added %s' % content_type in browser.contents,
+                            'Content type is not included in submit feedback
+                            message')
             self.failUnless('test_content' in browser.contents)
 
             # Delete the content
@@ -71,7 +77,7 @@ class MixinRole(test_login.MixinLoginLogout):
 
         
 class ContentTypeTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                         MixinRole):
+                         MixinRoleContent):
     """
        make a document as each role
        login as role
