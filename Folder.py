@@ -16,6 +16,7 @@ from zExceptions import InternalError
 import transaction
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
+from Products.Silva.Publication import Publication
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from SilvaObject import SilvaObject
 from Publishable import Publishable
@@ -400,51 +401,12 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         self._to_folder_or_publication_helper(to_folder=0)
 
     def _to_folder_or_publication_helper(self, to_folder):
-        container = self.aq_parent
-        container_ordered_ids = container._ordered_ids[:]
-        orig_id = self.id
-        convert_id = 'convert__%s' % orig_id
         if to_folder:
-            container.manage_addProduct['Silva'].manage_addFolder(
-                convert_id, self.get_title(), create_default=0)
+            sc = helpers.SwitchClass(Folder)
         else:
             # to publication
-            container.manage_addProduct['Silva'].manage_addPublication(
-                convert_id, self.get_title(), create_default=0)
-        ## assure the folder/pub has a _p_jar
-        transaction.savepoint(optimistic=True)
-        folder = getattr(container, convert_id)
-        # copy all contents into new folder
-        cb = self.manage_copyObjects(self.objectIds())
-        folder.manage_pasteObjects(cb)
-        folder._ordered_ids = self._ordered_ids
-        # copy over annotations
-        # XXX hack as relying on ANNOTATION_MARKER, but okay
-        if hasattr(self.aq_base, '_portal_annotations_'):
-            folder._portal_annotations_ = self._portal_annotations_
-        # copy over authorization info
-        folder.__ac_local_roles__ = self.__ac_local_roles__
-        folder.__ac_local_groups__ = self.__ac_local_groups__
-        # also over copy over View permission information
-        acquire = self.acquiredRolesAreUsedBy('View') == 'CHECKED'
-        roles = []
-        for info in self.rolesOfPermission('View'):
-            role = info['name']
-            selected = info['selected'] == 'SELECTED'
-            if selected:
-                roles.append(role)
-        if acquire:
-            folder.manage_permission('View', [], acquire)
-        else:
-            folder.manage_permission('View', roles, acquire)
-        
-        # now remove this object from the container
-        container.manage_delObjects([self.id])
-        # and rename the copy
-        container.manage_renameObject(convert_id, orig_id)
-        # now restore ordered ids of container to original state
-        container._ordered_ids = container_ordered_ids
-        return folder
+            sc = helpers.SwitchClass(Folder)
+        return sc.upgrade(self)
         
     # ACCESSORS
     

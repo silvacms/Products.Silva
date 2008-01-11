@@ -57,6 +57,9 @@ Silva changes
         each extension and displays a warning next to each dependency that
         is not available.
 
+      - Significant performance improvement in converting folders to
+        publications and vice-versa
+
     Features ported from 2.0 branch
 
       - Made Silva work with ExtFile once again: we no longer

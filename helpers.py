@@ -73,3 +73,39 @@ def fix_content_type_header(uploaded_file):
     if hasattr(uploaded_file, 'headers'):
         if uploaded_file.headers.has_key('content-type'):            
             del uploaded_file.headers['content-type']
+
+# this class used to be in SilvaDocument.upgrade, but was moved
+# here when Folder._to_folder_or_publication_helper began using it.
+class SwitchClass:
+    """This class can be used to switch an instances class.
+       This was used when SilvaDocument was moved to it's own
+       product, to switch instances of SilvaDocument and Silva
+       Document Version from Products.Silva.Document.Document and
+       Products.Silva.Document.DocumentVersion to Products.SilvaDocument.
+       Document.Document and DocumentVersion.
+
+       This is also used by Folder._to_folder_or_publication_helper
+       to switch a container between folders and publications
+
+       This class conforms to the Silva upgrader API, in that you
+       call class.upgrade(obj) to upgrade obj, and the upgraded
+       obj is returned"""
+    
+    implements(IUpgrader)
+
+    def __init__(self, new_class, args=(), kwargs={}):
+        self.new_class = new_class
+        self.args = args
+        self.kwargs = kwargs
+
+    def upgrade(self, obj):
+        obj_id = obj.getId()
+        new_obj = self.new_class(obj_id, *self.args, **self.kwargs)
+        new_obj.__dict__.update(obj.__dict__)
+        container = obj.aq_parent
+        setattr(container, obj_id, new_obj)
+        new_obj = getattr(container, obj_id)
+        return new_obj
+   
+    def __repr__(self):
+        return "<SwitchClass %r>" % self.new_class
