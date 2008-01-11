@@ -19,6 +19,9 @@ Silva changes
 
     Bugs fixed:
 
+      - Setting the i18n domain for kupu htmlmacros.html to silva so
+        toolbox is translated again bug 101706.
+
       - fixed 157010: anchors in links: # -> %23
 
       - fixed "excessive recursion" error when users click 'new
