@@ -13,6 +13,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - Setting the i18n domain for kupu htmlmacros.html to silva so
+        toolbox is translated again bug 101706.
+
       - Changed the 'priority' attribute of the silva:content zcml
         attribute to a float, to support more granular priorities
         (they way it was prior to Silva 2.0 zcml)
