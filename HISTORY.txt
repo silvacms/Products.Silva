@@ -70,7 +70,7 @@ Silva changes
     Bugs Fixed:
 
       - Setting the i18n domain for kupu htmlmacros.html to silva so
-        toolbox is translated again.
+        toolbox is translated again bug 101706.
 
       - Changed the new version button in the editor screen from an input to
         a button, to avoid css conflicts with frontend.css controls styles
