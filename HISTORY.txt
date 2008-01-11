@@ -7,6 +7,7 @@ Silva changes
 
     Features added:
 
+
       - Moved the "new version" button in the editor screen below the feedback
         text, as opposed to nestled in the corner next to the text. This
         because a Silva trainer reported that a trainee couldn't figure out
@@ -67,6 +68,9 @@ Silva changes
         on invalid ids (and always have a new id generated)
 
     Bugs Fixed:
+
+      - Setting the i18n domain for kupu htmlmacros.html to silva so
+        toolbox is translated again.
 
       - Changed the new version button in the editor screen from an input to
         a button, to avoid css conflicts with frontend.css controls styles
