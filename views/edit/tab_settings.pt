@@ -75,12 +75,10 @@
                 <tal:block condition="isfolder"
                    i18n:translate="">
                   This Silva Folder can be converted to a Publication
-                  (may take awhile if it&#8217;s large).
                 </tal:block>
                 <tal:block condition="ispublication"
                   i18n:translate="">
                   This Silva Publication can be converted to a Silva Folder
-                  (may take awhile if it&#8217;s large).
                 </tal:block>
               </td>
             </tr>
