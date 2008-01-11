@@ -16,7 +16,6 @@ from zExceptions import InternalError
 import transaction
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
-from Products.Silva.Publication import Publication
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from SilvaObject import SilvaObject
 from Publishable import Publishable
@@ -405,6 +404,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             sc = helpers.SwitchClass(Folder)
         else:
             # to publication
+            from Products.Silva.Publication import Publication
             sc = helpers.SwitchClass(Folder)
         return sc.upgrade(self)
         
