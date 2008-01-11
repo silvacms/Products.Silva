@@ -405,7 +405,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         else:
             # to publication
             from Products.Silva.Publication import Publication
-            sc = helpers.SwitchClass(Folder)
+            sc = helpers.SwitchClass(Publication)
         return sc.upgrade(self)
         
     # ACCESSORS

@@ -2,11 +2,13 @@
 # See also LICENSE.txt
 # $Revision: 1.30 $
 # Zope
+from zope.interface import implements
 from AccessControl import ModuleSecurityInfo
 from zope.app.container.interfaces import (IObjectRemovedEvent,
                                            IObjectAddedEvent)
 # Silva 
 import SilvaPermissions
+from Products.Silva.interfaces import IUpgrader
 # python
 import string, re, urllib
 from cgi import escape
