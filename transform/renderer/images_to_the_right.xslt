@@ -5,6 +5,7 @@
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
+  xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
   version="1.0">
   
 <!--
@@ -24,7 +25,7 @@
   No changes should be made to doc_elements.xslt.
   -->
 
-  <xsl:import href="%(url)s/doc_elements.xslt"/>
+  <xsl:import href="./doc_elements.xslt"/>
 
   <xsl:output 
     method="xml" 

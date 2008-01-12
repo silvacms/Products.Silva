@@ -98,6 +98,19 @@ Silva changes
 
       - fixed 101791: problem with Link object as index of a container
 
+      - fixed 101514: Empty list elements in Kupu.  When you press tab twice, 
+        Kupu inserts an element in the "missed out" level automatically.  This
+        empty list element appears as a bullet that can't be clicked on.  
+        Now, the 'intermediate' empty list is now stripped out when saving.
+
+      - fixed 101411: Compilation of an XSLT stylesheet fails if an imported 
+        stylesheet imports another stylesheet.  A string interpolation method
+        was used to insert the path to imported stylesheets.  This method
+        is no longer used, and relative paths can be used instead.
+        E.g. to override noramal_view.xslt from your product's 
+        'transform/renderer/myrender.xslt', you can do:
+        <xsl:import href="../../Silva/transform/renderer/normal_view.xslt" />
+
     Bugfixes ported from 2.0 branch
 
       - Fixed the factory function calls for File and Image, which

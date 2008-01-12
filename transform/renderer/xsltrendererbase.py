@@ -48,17 +48,13 @@ class XSLTRendererBase(Acquisition.Implicit):
         self._stylesheet_dir = path_context
         self._stylesheet = None
         self._error_handler = ErrorHandler()
-        libxml2.registerErrorHandler(self._error_handler.callback, None)
+        #commenting this out since it's not working
+        #libxml2.registerErrorHandler(self._error_handler.callback, None)
 
     def stylesheet(self):
         if self._stylesheet is None:
-            xslt_stylesheet = open(self._stylesheet_path).read()
-            base_xslt_path = os.path.dirname(os.path.abspath(__file__))
-            xslt_stylesheet = xslt_stylesheet % {
-                'url': self._generateXSLTPath(base_xslt_path),
-                'local_url': self._generateXSLTPath(self._stylesheet_dir)}
             try:
-                styledoc = libxml2.parseDoc(xslt_stylesheet)
+                styledoc = libxml2.parseFile(self._stylesheet_path)
                 self._stylesheet = libxslt.parseStylesheetDoc(styledoc)
             except libxml2.parserError, err:
                 raise RenderError(

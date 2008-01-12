@@ -4,9 +4,10 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:doc="http://infrae.com/ns/silva_document"
   xmlns:silva="http://infrae.com/ns/silva"
+  xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
-  <xsl:import href="%(url)s/doc_elements.xslt"/>
+  <xsl:import href="./doc_elements.xslt"/>
   <xsl:output 
     method="xml" 
     omit-xml-declaration="yes" 

@@ -10,6 +10,52 @@
 
 // $Id: kupusilvainit.js 25442 2006-04-06 10:29:19Z guido $
 
+/* SEE kupu/doc/EXTENDING.txt RE: contentfilters,
+   and kupucontentfilters.js for examples */
+function fixupNestedListFilter() {
+  this.initialize = function(editor) {
+    this.editor = editor;
+  }
+
+  this.filter = function(ownerdoc, htmlnode) {
+    /* loop through <li>'s, checking for nested list items that have no content
+       but a nested list.  These "empty" list items aren't selectable in kupu
+       so they need to have an empty paragraph added to them.  Note: this
+       empty paragraph get's removed when the document is saved.
+       See https://bugs.launchpad.net/silva/+bug/101514 */
+    var listitems = htmlnode.getElementsByTagName('li');
+    var saved_lis = new Array();
+    for (var i=0; i < listitems.length; i++) {
+      var li = listitems[i];
+      /*      alert('li length: ' + li.childNodes.length);
+      for (var j = 0; j<li.childNodes.length;j++) {
+	alert('li type: ' + li.childNodes[j].nodeName);
+	}*/
+      if (li.childNodes.length == 1 && 
+	  li.firstChild.nodeType == li.ELEMENT_NODE) {
+	nodeName = li.firstChild.nodeName.toLowerCase();
+	if (nodeName == 'ul' || nodeName == 'ol') {
+	  saved_lis.push(li);
+	}
+      }
+    }
+    var li = saved_lis.pop();
+    while (li) {
+      /* li is the list item containing the one nested list...
+	 so, add the nested list's children as siblings to
+	 the parent of li, and then remove li */
+      nested_list = li.childNodes[0];
+      while (nested_list.hasChildNodes()) {
+	li.parentNode.insertBefore(nested_list.childNodes[0],
+				   li);
+      }
+      li.parentNode.removeChild(li);
+      li = saved_lis.pop();
+    }
+    return htmlnode;
+  }
+}
+
 // XXX Port this to the default dist?
 KupuEditor.prototype.afterInit = function() {
     // select the line after the first heading, if the document is correctly
@@ -44,6 +90,9 @@ KupuEditor.prototype.afterInit = function() {
             break;
         };
     };
+    
+    this.registerFilter(new fixupNestedListFilter());
+
     // if we don't first focus the outer window, Mozilla won't show a cursor
     window.focus();
     this.getDocument().getWindow().focus();
