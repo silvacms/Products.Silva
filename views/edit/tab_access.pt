@@ -83,24 +83,24 @@
                 </th>
               </tr>
               <tal:block repeat="member members">
-                <tr
-                  tal:define="
-                    iterate repeat/member/odd;
-                    userid member/userid;
-                    fullname member/fullname;"
-                  tal:attributes="class python: iterate and 'odd' or 'even';">
+                <tr tal:define="
+                  iterate repeat/member/odd;
+                  userid member/userid;
+                  fullname member/fullname;"
+                  tal:attributes="class python: iterate and 'odd' or 'even'">
                   <td class="align-left">
                     <input class="min"
                       type="checkbox"
                       name="userids:list"
                       tal:attributes="
                         value userid;
-                        id fullname;" />
-                      <label style="text-transform:none"
-                        tal:content="fullname"
-                        tal:attributes="for fullname">
-                        username
-                      </label>
+                        id fullname;
+                    "/>
+                    <label style="text-transform:none"
+                      tal:content="fullname"
+                      tal:attributes="for fullname">
+                      username
+                    </label>
                   </td>
                   <td class="align-right"
                     tal:define="upward_roles python:model.sec_get_upward_roles_for_userid(userid)">

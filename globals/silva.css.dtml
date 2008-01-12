@@ -249,7 +249,7 @@ background-repeat: repeat-x;
 div.middleground a {
   /* The normal, unselected buttons. They are all links */
   margin: 0;
-padding: 0.2em 2em;
+padding: 0em 2em 0.1em;
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
 background-image: url(<dtml-var root_url>/globals/glow.png);
@@ -257,7 +257,7 @@ background-position: top left;
 background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
-line-height:160%;
+line-height:130%;
 }
 div.middleground a:link {
   color: &dtml-transportFontColor;;
@@ -437,7 +437,6 @@ table.listing tr.inter-controls td {
 }
 
 table.listing tr.controls td {
-  height: 0.1em; /* in case it's empty */
   padding: 0;
   color: #c9dfe2;
   background: &dtml-listingControlsBackground;;
@@ -779,14 +778,14 @@ textarea {
 
 input.store, textarea.store {
   width: 99%;
-  !width: 94%; /* IE7 hack */
+  !width: 94%; /* IE6 hack */
 }
 
 select {
   margin: 0;
   border: &dtml-inputBorder;;
   color: &dtml-mainTabFontColorSelected;;
-  background: &dtml-inputBackground;;
+  background-color: &dtml-inputBackground;;
   font: &dtml-inputFont;;
   font-size: 95%;
   vertical-align: top;
@@ -798,11 +797,10 @@ select.store {
 }
 
 select.manipulator {
-padding:0.1em 0;
   border: &dtml-manipulatorBorder;;
 border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
-  background: &dtml-manipulatorBackground;;
+  background-color: &dtml-manipulatorBackground;;
 }
 
 select.transport {
@@ -810,7 +808,7 @@ padding:0.1em 0;
   border: &dtml-transportBorder;;
 border-color: #283365 #345 #283365;
   color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
+  background-color: &dtml-transportBackground;;
 }
 
 /* seems to keep IE (inc 7) in check without anything else */
@@ -830,7 +828,8 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
+line-height:160%
 }
 
 button.button {
@@ -845,7 +844,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 input.transport {
@@ -860,7 +859,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 input.warning {
@@ -875,7 +874,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 input.cancel {
@@ -890,7 +889,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 input.executor {
@@ -905,7 +904,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 /* publish screen state coded buttons */
@@ -921,7 +920,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 input.revoke {
   margin: &dtml-buttonMargin;;
@@ -935,7 +934,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 input.close {
   margin: &dtml-buttonMargin;;
@@ -949,7 +948,7 @@ background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-bottonCursor;;
+  cursor: &dtml-buttonCursor;;
 }
 
 
@@ -1185,15 +1184,14 @@ div.info {
   background: &dtml-evenRowBackground;;
 }
 
-/* override IE6 glitch */
-td.right>div.info {
-/*margin-top:-1px;*/
-}
-
 div.info h3 {
   margin-top: 0.4em;
   margin-bottom: 0.2em;
   color: &dtml-inputFontColor;;
+}
+
+div.info h3 img {
+vertical-align:top;
 }
 
 div.info p {

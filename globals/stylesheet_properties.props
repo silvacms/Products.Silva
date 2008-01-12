@@ -91,13 +91,13 @@ inputFontColor:string=#337
 inputBackground:string=#d5e7e7
 inputBorder:string=1px solid #599
 
-buttonMargin:string=0 0 0
-buttonPadding:string=0.2em 0.4em
+buttonMargin:string=0
+buttonPadding:string=0.05em 0.4em
 buttonBorder:string=1px solid #345
 buttonBorderStyle:string=none solid none
 buttonFontSize:string=100%
 buttonWeight:string=normal
-bottonCursor:string=pointer
+buttonCursor:string=pointer
 
 manipulatorBorder:string=1px solid #6bb591
 manipulatorFontColor:string=#d9f3da
@@ -116,7 +116,7 @@ cancelFontColor:string=#ccd7d6
 cancelBackground:string=#444446
 
 pseudoButtonMargin:string=0
-pseudoButtonPadding:string=0.3em 0.6em
+pseudoButtonPadding:string=0.1em 0.6em
 pseudoButtonFontSize:string=100%
 
 headingSize1:string=140%
