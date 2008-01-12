@@ -12,7 +12,27 @@
 
 <metal:block define-macro="properties">
 <div class="middleground">
-  <a title="various settings: alt-e" accesskey="e"
+  <div style="float:right">
+    <a title="see the content in the public layout: alt-;"
+      accesskey=";"
+      tal:attributes="href string:${model/absolute_url}/preview_html"
+      i18n:translate=""
+      i18n:attributes="title">
+      public&nbsp;preview...
+    </a><tal:def define="unapproved_version model/get_unapproved_version | nothing"
+      ><a class="executor"
+        title="publish this document: alt-p"
+        accesskey="p"
+        tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_metadata"
+        i18n:translate=""
+        i18n:attributes="title"
+        tal:condition="python: unapproved_version and may_approve_content">
+        publish&nbsp;now
+      </a>
+    </tal:def>
+  </div>
+  <a title="various settings: alt-e"
+    accesskey="e"
     tal:define="
       link_id string:tab_settings;
       selected python:link_id == template.id;
@@ -25,9 +45,7 @@
     i18n:attributes="title"
     i18n:translate="">
     settings<span tal:condition="not: selected" i18n:name="ellipsis">...</span>
-  </a>
-  <tal:if condition="may_approve_content">
-    <a title="manage subscriptions: alt-u"
+  </a><tal:if condition="may_approve_content"><a title="manage subscriptions: alt-u"
       accesskey="u"
       tal:define="
         link_id string:tab_subscriptions;
@@ -43,8 +61,8 @@
       i18n:translate="">
       subscriptions<span 
         tal:condition="not: selected" i18n:name="ellipsis">...</span>
-    </a>
-    <a title="change the addables allowed in this publication: alt-d"
+    </a
+    ><a title="change the addables allowed in this publication: alt-d"
       accesskey="d"
       tal:define="
         link_id string:tab_addables;
@@ -63,29 +81,6 @@
         tal:condition="not: selected" i18n:name="ellipsis">...</span>
     </a>
   </tal:if>
-  <tal:def define="
-    unapproved_version model/get_unapproved_version | nothing;
-  ">
-    <a class="executor"
-      style="float:right"
-      title="publish this document: alt-p"
-      accesskey="p"
-      tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_metadata"
-      i18n:translate=""
-      i18n:attributes="title"
-      tal:condition="python: unapproved_version and may_approve_content">
-      publish&nbsp;now
-    </a>
-  </tal:def>
-  <a title="see the content in the public layout: alt-;"
-    style="float:right"
-    accesskey=";"
-    tal:attributes="href string:${model/absolute_url}/preview_html"
-    i18n:translate=""
-    i18n:attributes="title">
-    public&nbsp;preview...
-  </a>
-
 </div>
 </metal:block>
 

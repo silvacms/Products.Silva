@@ -42,21 +42,13 @@ h2 {
 <metal:block metal:fill-slot="middleground">
   <div class="middleground"
     tal:define="active python: editor == 'kupu'">
-    <a class="wide"
-      title="see the content in the public layout: alt-;"
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html"
-      i18n:translate=""
-      i18n:attributes="title">
-      public&nbsp;preview...
-    </a>
-    <tal:block define="
+    <div style="float:right"
+      tal:define="
       permissions             view/get_silva_permissions;
       unapproved_version      model/get_unapproved_version | nothing;
       have_approve_permission permissions/ApproveSilvaContent | nothing;
     ">
       <a class="executor"
-        style="float:right"
         title="publish this document: alt-p"
         accesskey="p"
         tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_preview"
@@ -65,7 +57,15 @@ h2 {
         tal:condition="python: unapproved_version and have_approve_permission">
         publish&nbsp;now
       </a>
-    </tal:block>
+    </div>
+    <a class="wide"
+      title="see the content in the public layout: alt-;"
+      accesskey=";"
+      tal:attributes="href string:${model/absolute_url}/preview_html"
+      i18n:translate=""
+      i18n:attributes="title">
+      public&nbsp;preview...
+    </a>
   </div>
 </metal:block>
 

@@ -44,29 +44,28 @@ h2 {
 <metal:block fill-slot="middleground"
   tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
-    <metal:block define-slot="editor_selection" />
-    <tal:block define="
-      permissions view/get_silva_permissions;
-      have_approve_permission permissions/ApproveSilvaContent | nothing">
-      <a class="executor"
-        style="float:right"
-        title="publish this document: alt-p"
-        accesskey="p"
-        tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_edit"
+    <div style="float:right">
+      <a title="see the content in the public layout: alt-;"
+        accesskey=";"
+        tal:attributes="href string:${model/absolute_url}/preview_html"
         i18n:translate=""
-        i18n:attributes="title"
-        tal:condition="python: unapproved_version and have_approve_permission">
-        publish&nbsp;now
-      </a>
-    </tal:block>
-    <a title="see the content in the public layout: alt-;"
-      style="float:right"
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html"
-      i18n:translate=""
-      i18n:attributes="title">
-      public&nbsp;preview...
-    </a>
+        i18n:attributes="title">
+        public&nbsp;preview...
+      </a><tal:block define="
+        permissions view/get_silva_permissions;
+        have_approve_permission permissions/ApproveSilvaContent | nothing;
+        "><a class="executor"
+          title="publish this document: alt-p"
+          accesskey="p"
+          tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_edit"
+          i18n:translate=""
+          i18n:attributes="title"
+          tal:condition="python: unapproved_version and have_approve_permission">
+          publish&nbsp;now
+        </a>
+      </tal:block>
+    </div>
+    <metal:plug define-slot="editor_selection" />
   </div>
 </metal:block>
 
