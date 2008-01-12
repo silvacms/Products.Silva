@@ -163,9 +163,9 @@
 <!-- _______ white space + jump to top _______ -->
 </span>
 <div style="float:left; width:16px">
-  <a href="#top"
-    title="jump to top: alt-t"
-    i18n:attributes="title;">
+  <a title="jump to top: alt-t"
+    tal:attributes="href string:$url/edit/${template/id}#top"
+    i18n:attributes="title">
     <img alt="jump to top: alt-t"
       border="0"
       height="16"
@@ -176,9 +176,9 @@
   </a>
 </div>
 <div style="float:right; text-align:right; width:16px">
-  <a href="#top"
+  <a title="jump to top: alt-t"
     accesskey="t"
-    title="jump to top: alt-t"
+    tal:attributes="href string:$url/edit/${template/id}#top"
     i18n:attributes="title">
     <img alt="jump to top: alt-t"
       border="0"
@@ -261,11 +261,13 @@
       <tal:block i18n:name="userid" tal:content="userid" />
     </a>
   </div>
+  <a tal:attributes="href string:$url/edit/${template/id}#bottom"
+    accesskey="b">
+  </a>
   <a name="bottom">
     &nbsp;
   </a>
-  <a href=""
-    title="Request an additional role in this location: alt-,"
+  <a title="Request an additional role in this location: alt-,"
     accesskey=","
     tal:condition="view/service_members/allow_authentication_requests"
     tal:attributes="href string:public/request_roles?last_url=$url/edit/${template/id}"
