@@ -42,9 +42,8 @@
       href string:$url/edit/$link_id;
       class class;
       "
-    i18n:attributes="title"
-    i18n:translate="">
-    settings<span tal:condition="not: selected" i18n:name="ellipsis">...</span>
+    i18n:attributes="title">
+    <tal:i18n i18n:translate="">settings</tal:i18n><tal:if condition="not: selected">...</tal:if>
   </a><tal:if condition="may_approve_content"><a title="manage subscriptions: alt-u"
       accesskey="u"
       tal:define="
@@ -57,10 +56,8 @@
         href string:$url/edit/$link_id;
         class class;
       "
-      i18n:attributes="title"
-      i18n:translate="">
-      subscriptions<span 
-        tal:condition="not: selected" i18n:name="ellipsis">...</span>
+      i18n:attributes="title">
+      <tal:i18n i18n:translate="">subscriptions</tal:i18n><tal:if condition="not: selected">...</tal:if>
     </a
     ><a title="change the addables allowed in this publication: alt-d"
       accesskey="d"
@@ -75,10 +72,8 @@
         href string:$url/edit/$link_id;
         class class;
       "
-      i18n:attributes="title"
-      i18n:translate="">
-        addables<span 
-        tal:condition="not: selected" i18n:name="ellipsis">...</span>
+      i18n:attributes="title">
+      <tal:i18n i18n:translate="">addables</tal:i18n><tal:if condition="not: selected">...</tal:if>
     </a>
   </tal:if>
 </div>
