@@ -237,12 +237,10 @@ div.flowbar {
 /* ________________________________ middleground _______ */
 
 div.middleground {
-  display: block;
-  height: 1.5em;
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #657;
-  background-color: #8797A8;
+  background-color: #8797ab;
 background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;
@@ -250,10 +248,8 @@ background-repeat: repeat-x;
 
 div.middleground a {
   /* The normal, unselected buttons. They are all links */
-  float: left;
-  display: block;
-  margin: 0em 0 0;
-  padding: 0.1em 2em 0.2em;
+  margin: 0;
+padding: 0.2em 2em;
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
 background-image: url(<dtml-var root_url>/globals/glow.png);
@@ -261,6 +257,7 @@ background-position: top left;
 background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
+line-height:160%;
 }
 div.middleground a:link {
   color: &dtml-transportFontColor;;
@@ -290,7 +287,7 @@ div.middleground a.selected {
 
 div.middleground a.executor {
   color: #b3fffb;
-  background-color: #38656c; /* #3C777E */
+  background-color: #38656c;
 }
 div.middleground a.executor:hover {
   color: #e5ffec;
@@ -311,7 +308,8 @@ div.footer {
   border-top: &dtml-shade60; 1px solid;
   border-bottom: none;
   color: &dtml-shade30;;
-  background: &dtml-listingTopBackground;;
+/*background: &dtml-listingTopBackground;;*/
+background-color:#C4D6E7;
   font-size: 94%;
 }
 
@@ -332,7 +330,7 @@ div.personalbar {
   margin: 0em 0em 0em 0em;
   padding: 0.1em 16px 0.2em 16px;
   border-bottom: &dtml-shade30; 1px solid;
-  background: #4c5c6c;
+  background-color: #4c5c6c;
   text-align: center;
 }
 
@@ -363,7 +361,7 @@ table th, table td {
 table.columns {
   width: 100%;
   padding: 0;
-  border-collapse: collapse;
+  border-spacing:0;
 }
 
 /* 3 column table (default) */
@@ -374,7 +372,7 @@ table.columns td.left {
 }
 table.columns td.main {
   width: 60%;
-  padding : 0 7px 0 0;
+  padding: 0 7px 0 0;
   vertical-align: top;
 }
 table.columns td.right {
@@ -422,7 +420,7 @@ table.listing img {
 
 table.listing td.top {
   padding: 0;
-  color: &dtml-shade40;;
+  color: &dtml-listingTopHeadingColor;;
   background: &dtml-listingTopBackground;;
 }
 
@@ -435,7 +433,7 @@ table.listing tr.top-controls td {
 table.listing tr.inter-controls td {
   padding: 0;
   color: #c9dfe2;
-  background-color : &dtml-listingInterControlsBackground;;
+  background-color: &dtml-listingInterControlsBackground;;
 }
 
 table.listing tr.controls td {
@@ -459,9 +457,9 @@ td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
   background-color: #e5f2ff;
 }
 
-tr.divider td, td.divider td {
+tr.divider td, td.divider {
   height: 0.5em;
-  background: &dtml-listingDividerBackground;; /* dark */
+  background-color: &dtml-listingDividerBackground;; /* dark */
 }
 
 tr.separator td, td.separator {
@@ -514,10 +512,8 @@ table.listing td {
 
 /* _______ title cell _______ */
 table.listing td.top h2 {
-  margin: 0.1em 0.3em;
-  border: none;
+  margin: 0em 0.2em 0.1em 0.1em;
   color: &dtml-listingTopHeadingColor;;
-  text-align: left;
 }
 table.listing td.top img {
   vertical-align: top;
@@ -525,7 +521,7 @@ table.listing td.top img {
 
 /* _______ subhead cell _______ */
 table.listing tr.top-controls h3 {
-  margin: 0.1em 0.3em;
+  margin: 0.1em 0.2em;
   padding: 0;
   border: none;
   color: &dtml-listingTopControlsHeadingColor;;
@@ -534,7 +530,7 @@ table.listing tr.top-controls h3 {
 
 /* _______ subsubhead cell _______ */
 table.listing tr.inter-controls h3 {
-  color : #e3e9f4;
+  color: #e3e9f4;
   margin: 0.2em 0.3em 0.1em;
 }
 
@@ -1182,7 +1178,7 @@ background-color: transparent;
 /* ________________________________________________ info + clipboard _______ */
 
 div.info {
-  margin : 0;
+  margin: 0;
   padding: 0.1em 0.5em 0.5em 0.5em;
   border: &dtml-listingBorder;;
   color: &dtml-inputFontColor;;
@@ -1285,7 +1281,7 @@ div.fixed-clear a.reveal:hover {
 
 /* for notifications in right column */
 td.right div.feedback {
-  margin-top : 0;
+  margin-top: 0;
 }
 
 /* floating feedback  */

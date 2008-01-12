@@ -61,8 +61,8 @@ contentTabBackgroundRecede:string=#8fb39e
 contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
-listingTopBackground:string=#c4d6e7
-listingTopHeadingColor:string=#2d2d4c
+listingTopBackground:string=#456
+listingTopHeadingColor:string=#D6EAFF
 
 listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
@@ -82,8 +82,8 @@ listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
 listingLinkHover:string=underline
 
-listingTopBackgroundContent:string=#c5d4ca
-listingTopHeadingColorContent:string=#51545c
+listingTopBackgroundContent:string=#506070
+listingTopHeadingColorContent:string=#c5d4ca
 listingTopControlsHeadingColorContent:string=#ddeee3
 
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
@@ -119,16 +119,12 @@ pseudoButtonMargin:string=0
 pseudoButtonPadding:string=0.3em 0.6em
 pseudoButtonFontSize:string=100%
 
-textTransform:string=lowercase
-
-headingFont:string=80% Verdana, Helvetica, Arial, sans-serif
-headingSize1:string=150%
-headingSize2:string=130%
+headingSize1:string=140%
+headingSize2:string=125%
 headingSize3:string=115%
 headingSize4:string=110%
 headingSize5:string=105%
 headingSize6:string=100%
 
-messageFont:string=bold 100% Verdana, Helvetica, Arial, sans-serif
 messageBackground:string=#d9f4eb
 messageBorder:string=1px solid #557

@@ -105,10 +105,6 @@ td.unselected:hover {
 
 /* ______________________________________________ content listing table _____ */
 
-table.listing td.top {
-  background: &dtml-listingTopBackgroundContent;;
-}
-
 table.listing td.top h2 {
   color: &dtml-listingTopHeadingColorContent;;
 }
@@ -116,12 +112,17 @@ table.listing td.top h2 {
 table.listing tr.top-controls h3 {
   color: &dtml-listingTopControlsHeadingColorContent;;
 }
-
+/*
+table.listing td.top img {
+border-color:&dtml-listingTopHeadingColorContent;;
+background-color:&dtml-listingTopHeadingColorContent;;
+}
+*/
 
 /* _____________________________________________________________ footer _____ */
 
 div.footer {
-  background: &dtml-listingTopBackgroundContent;;
+  background-color: &dtml-listingTopHeadingColorContent;;
 }
 
 
