@@ -597,8 +597,25 @@
             </tal:block>
             <tfoot>
               <tr class="controls">
-                <td>
-                  <input class="cancel"
+                <td colspan="2">
+                  <select class="manipulator"
+                    style="float:left"
+                    name="role"
+                    title="select a role to assign" 
+                    i18n:attributes="title">
+                    <tal:block define="preselected selected_role">
+                      <metal:plug use-macro="here/macro_role_options/macros/access_restriction_options" />
+                    </tal:block>
+                  </select>
+                  <input class="button"
+                    style="float:left"
+                    type="submit"
+                    name="@@minimum_role_submit:method"
+                    value="set restriction"
+                    title="restrict access to users with a specific role"
+                    i18n:attributes="title;value"
+                  />
+                  <input class="warning"
                     style="float:left"
                     type="submit"
                     name="@@acquire_minimum_role_submit:method"
@@ -607,27 +624,6 @@
                     i18n:attributes="title;value"
                     tal:condition="not:acquired"
                   />
-                </td>
-                <td>
-                  <input class="button"
-                    style="float:right"
-                    type="submit"
-                    name="@@minimum_role_submit:method"
-                    value="set restriction"
-                    title="restrict access to users with a specific role"
-                    i18n:attributes="title;value"
-                  />
-                  <select class="manipulator"
-                    style="float:right"
-                    name="role"
-                    title="select a role to assign" 
-                    i18n:attributes="title">
-                    <tal:block define="preselected selected_role">
-                      <metal:block 
-                        use-macro="
-                          here/macro_role_options/macros/access_restriction_options" />
-                    </tal:block>                    
-                  </select>
                 </td>
               </tr>
             </tfoot>
@@ -639,7 +635,7 @@
     </tr>
     <tal:comment replace="nothing"> _______ 
       hack to fix a scaling problem for sites having very long sidebars, so the
-      the browser renders heights of the table cells according to their content,
+      browser renders heights of the table cells according to their content,
       causing users to have to scroll to adjust groups or access restrictions;
       this adds lines in a last table row that compensates for the sidebar;
       we'll remove this when we switch Silva over to tableless layout
