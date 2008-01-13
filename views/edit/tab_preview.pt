@@ -40,15 +40,21 @@ h2 {
 </metal:block>
 
 <metal:block metal:fill-slot="middleground">
-  <div class="middleground"
-    tal:define="active python: editor == 'kupu'">
+  <div class="middleground">
     <div style="float:right"
       tal:define="
       permissions             view/get_silva_permissions;
       unapproved_version      model/get_unapproved_version | nothing;
       have_approve_permission permissions/ApproveSilvaContent | nothing;
     ">
-      <a class="executor"
+      <a title="see the content in the public layout: alt-;"
+        accesskey=";"
+        tal:attributes="href string:${model/absolute_url}/preview_html"
+        i18n:translate=""
+        i18n:attributes="title">
+        public&nbsp;preview...
+      </a><a
+      class="executor"
         title="publish this document: alt-p"
         accesskey="p"
         tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_preview"
@@ -58,14 +64,7 @@ h2 {
         publish&nbsp;now
       </a>
     </div>
-    <a class="wide"
-      title="see the content in the public layout: alt-;"
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html"
-      i18n:translate=""
-      i18n:attributes="title">
-      public&nbsp;preview...
-    </a>
+    &nbsp;
   </div>
 </metal:block>
 

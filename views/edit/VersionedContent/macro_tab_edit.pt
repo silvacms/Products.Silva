@@ -66,6 +66,7 @@ h2 {
       </tal:block>
     </div>
     <metal:plug define-slot="editor_selection" />
+    &nbsp;
   </div>
 </metal:block>
 
