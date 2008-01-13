@@ -101,20 +101,16 @@
             </tal:block>
           </select>
         </div>
-        <div style="float:right;">
-          <input
-            class="transport"
+        <div style="float:right;"
+          tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)">
+          <input class="transport"
             name="tab_edit_import:method"
             type="submit"
             title="import xml data or a zip file: alt-i"
             accesskey="i"
             value="import..."
-            tal:condition="may_change_content"
             i18n:attributes="title;value"
           />
-          <tal:if condition="not:may_change_content">
-            &nbsp;
-          </tal:if>
         </div>
       </td>
     </tr>

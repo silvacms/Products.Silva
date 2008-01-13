@@ -68,7 +68,8 @@
     </tal:block>
     <tr class="top-controls">
       <td colspan="6">
-        <div style="float: right;">
+        <div style="float: right;"
+          tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)">
           <input
             class="transport"
             name="tab_edit_import:method"
