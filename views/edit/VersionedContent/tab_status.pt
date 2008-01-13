@@ -64,6 +64,7 @@
         value="export..."
         title="access key: alt-e"
         accesskey="e"
+        tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
         i18n:attributes="value;title"
       />
     </td>

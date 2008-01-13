@@ -7,6 +7,10 @@ Silva changes
 
     Features added:
 
+      - Since the full media export is restricted to Chief Editors and 
+        Managers, there's no reason to show the import or export buttons to 
+        lower level roles (since the pure xml import/export is deprecated). 
+        Conditioned the buttons. 
 
       - Modernized buttons and matrix nav based on trainee feedback. Use a
         float for button alignment classes or obviate the spaces in html.

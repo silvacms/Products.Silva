@@ -68,26 +68,28 @@
     </tal:block>
     <tr class="top-controls">
       <td colspan="6">
-        <input class="transport"
-          style="float:right"
-          name="tab_status_export:method"
-          type="submit"
-          title="export to xml or convert for export: alt-e"
-          accesskey="e"
-          value="export..."
-          tal:condition="may_change_content"
-          i18n:attributes="title;value"
-        />
-        <input class="transport"
-          style="float:right"
-          name="tab_edit_import:method"
-          type="submit"
-          title="import xml data or a zip file: alt-i"
-          accesskey="i"
-          value="import..."
-          tal:condition="may_change_content"
-          i18n:attributes="title;value"
-        />
+        <tal:if condition="python:user.has_role(['Manager', 'ChiefEditor'], model)">
+          <input class="transport"
+            style="float:right"
+            name="tab_status_export:method"
+            type="submit"
+            title="export to xml or convert for export: alt-e"
+            accesskey="e"
+            value="export..."
+            tal:condition="may_change_content"
+            i18n:attributes="title;value"
+          />
+          <input class="transport"
+            style="float:right"
+            name="tab_edit_import:method"
+            type="submit"
+            title="import xml data or a zip file: alt-i"
+            accesskey="i"
+            value="import..."
+            tal:condition="may_change_content"
+            i18n:attributes="title;value"
+          />
+        </tal:if>
         <h3 i18n:translate="">
           publishing actions
         </h3>
