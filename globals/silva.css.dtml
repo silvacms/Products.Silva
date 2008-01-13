@@ -244,6 +244,7 @@ div.middleground {
 background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;
+line-height:130%;
 }
 
 div.middleground a {
@@ -257,7 +258,6 @@ background-position: top left;
 background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
-line-height:130%;
 }
 div.middleground a:link {
   color: &dtml-transportFontColor;;
