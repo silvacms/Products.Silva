@@ -827,12 +827,12 @@ background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
 line-height:160%
 }
 
-button.button {
+/* used in conflict situations where public view css wins */
+button.button { 
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
 border: &dtml-buttonBorder;;
@@ -842,9 +842,9 @@ border-style: &dtml-buttonBorderStyle;;
 background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
+  font: &dtml-inputFont;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 input.transport {
@@ -858,8 +858,8 @@ background-image: url(<dtml-var root_url>/globals/glow.png);
 background-position: top left;
 background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 input.warning {
@@ -875,6 +875,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 input.cancel {
@@ -890,6 +891,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 input.executor {
@@ -905,6 +907,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 /* publish screen state coded buttons */
@@ -921,6 +924,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 input.revoke {
   margin: &dtml-buttonMargin;;
@@ -935,6 +939,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 input.close {
   margin: &dtml-buttonMargin;;
@@ -949,6 +954,7 @@ background-repeat: repeat-x;
   font-size: &dtml-buttonFontSize;;
   font-weight: &dtml-buttonWeight;;
   cursor: &dtml-buttonCursor;;
+line-height:160%;
 }
 
 

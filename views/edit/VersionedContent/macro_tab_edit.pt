@@ -83,7 +83,6 @@ h2 {
     style="padding:0">
     <form action="tab_edit_break_lock" method="post">
       <input class="warning"
-        style="font-size:100%"
         type="submit"
         value="break lock"
         title="Somebody else just edited this item, unlock it: alt-u"
@@ -111,7 +110,6 @@ h2 {
         tal:attributes="value template/id"
       />
       <button class="button"
-        style="font-size:100%"
         type="submit"
         title="work on a new version while the previous one stays online: alt-n"
         accesskey="n"
@@ -133,17 +131,17 @@ h2 {
   <div class="fixed-feedback"
     style="padding:0">
     <form action="tab_edit_revoke_approval" method="post">
-      <input class="warning"
-        style="font-size:100%"
+      <button class="button"
         type="submit"
-        value="revoke approval"
         title="'first un-approve' this item in order to edit: alt-r"
         accesskey="r"
-        i18n:attributes="value;title"
-      />
-      <i18n i18n:translate="">
+        i18n:attributes="title"
+        i18n:translate="">
+        revoke approval
+      </button>
+      <tal:i18n i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
-      </i18n>
+      </tal:i18n>
     </form>
   </div>
 </tal:condition>
@@ -155,16 +153,17 @@ h2 {
     <form action="tab_edit_withdraw" method="post">
       <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
       <input type="hidden" name="tab_name" value="edit" />
-      <input class="warning"
-        style="font-size:100%"
+      <button class="button"
         type="submit"
-        value="withdraw request"
         title="withdraw a request for approval in order to edit: alt-w"
         accesskey="w"
-        i18n:attributes="value;title"/>
-      <i18n i18n:translate="">
+        i18n:attributes="title"
+        i18n:translate="">
+        withdraw request
+      </button>
+      <tal:i18n i18n:translate="">
         <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
-      </i18n>
+      </tal:i18n>
     </form>
   </div>
 </tal:condition>
