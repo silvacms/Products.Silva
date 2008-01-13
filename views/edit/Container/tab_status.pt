@@ -76,7 +76,6 @@
             title="export to xml or convert for export: alt-e"
             accesskey="e"
             value="export..."
-            tal:condition="may_change_content"
             i18n:attributes="title;value"
           />
           <input class="transport"
@@ -86,7 +85,6 @@
             title="import xml data or a zip file: alt-i"
             accesskey="i"
             value="import..."
-            tal:condition="may_change_content"
             i18n:attributes="title;value"
           />
         </tal:if>
