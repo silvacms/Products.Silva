@@ -442,7 +442,7 @@ table.listing tr.controls td {
   background: &dtml-listingControlsBackground;;
 }
 
-/* cycle text color */
+/* cycle text color in listing rows */
 table.listing tr.odd td {
   background: &dtml-listingOddBackground;;
 }
@@ -803,7 +803,6 @@ border-color: #064C29 #345 #064C29;
 }
 
 select.transport {
-padding:0.1em 0;
   border: &dtml-transportBorder;;
 border-color: #283365 #345 #283365;
   color: &dtml-transportFontColor;;
@@ -1183,7 +1182,7 @@ background-color: transparent;
 
 div.info {
   margin: 0;
-  padding: 0.1em 0.5em 0.5em 0.5em;
+  padding: 0em 0.4em 0.4em;
   border: &dtml-listingBorder;;
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;

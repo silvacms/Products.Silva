@@ -290,7 +290,7 @@
         </tal:if>
       </th>
     </tr>
-    <tr class="controls inter-controls"
+    <tr class="inter-controls"
       tal:condition="
         python: approveables or ((revokeables or rejectables or new_versionables) and may_approve_content)">
       <tal:block replace="nothing">

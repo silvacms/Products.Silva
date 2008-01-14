@@ -475,28 +475,6 @@ window.onload_registry.register(function() {
     </tal:block>
     <tr class="controls">
       <td colspan="6">
-        <tal:if condition="may_approve_content">
-          <input class="executor"
-            style="float:right"
-            name="tab_edit_open_now:method"
-            value="publish now"
-            title="publish new versions: alt-p"
-            accesskey="p"
-            type="submit"
-            i18n:attributes="value; title"
-            tal:condition="python:editables or closed"
-          />
-          <input class="close"
-            style="float:right"
-            name="tab_edit_close:method"
-            value="close"
-            title="close published items: alt-l"
-            accesskey="l"
-            type="submit"
-            i18n:attributes="value; title"
-            tal:condition="python:published"
-          />
-        </tal:if>
         <tal:if condition="python:(default_document or publishables or assets) and may_change_content">
           <select class="manipulator"
             style="float:left"
@@ -607,6 +585,31 @@ window.onload_registry.register(function() {
               i18n:attributes="value;title;alt"
             />
           </tal:if>
+        </tal:if>
+        <tal:block replace="nothing">
+          _______ editor controls for publishing actions _______
+        </tal:block>
+        <tal:if condition="may_approve_content">
+          <input class="executor"
+            style="float:right"
+            name="tab_edit_open_now:method"
+            value="publish now"
+            title="publish new versions: alt-p"
+            accesskey="p"
+            type="submit"
+            i18n:attributes="value; title"
+            tal:condition="python:editables or closed"
+          />  
+          <input class="close"
+            style="float:right"
+            name="tab_edit_close:method"
+            value="close"
+            title="close published items: alt-l"
+            accesskey="l"
+            type="submit"
+            i18n:attributes="value; title"
+            tal:condition="python:published"
+          />
         </tal:if>
       </td>
     </tr>
