@@ -22,7 +22,7 @@ publish.append('publishing actions')
 class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase,
                        MixinRoleContent, MixinNavigate):
     """
-        test navigation tabs as manager
+        test navigation tabs as manager at Silva root
     """
 
     def test_content_tab(self):

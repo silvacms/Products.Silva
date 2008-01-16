@@ -177,6 +177,9 @@ class MixinRoleContent(MixinLoginLogout):
         self.role_logout(browser)
 
 class MixinNavigate(MixinLoginLogout):
+    """
+        Log a manager in and access all the navigation tabs
+    """
     def navigate_tab(self, browser, tab_properties):
         url = '%s/edit' % self.getRoot().absolute_url()
         browser.open(url)
@@ -187,12 +190,10 @@ class MixinNavigate(MixinLoginLogout):
                         "content" % tab_properties[1])
 
     def do_navigate(self, user_name, result, tab_properties, base=None):
-        """
-        This method logs a user in then clicks on a Silva tab
-        """
         browser = Browser()
         self.role_login_edit(browser, user_name, result, base=base)
         if result is fail_login:
             return
         self.navigate_tab(browser, tab_properties)
+        self.role_logout(browser)
 
