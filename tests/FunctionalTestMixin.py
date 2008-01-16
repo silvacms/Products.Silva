@@ -65,7 +65,7 @@ class MixinFieldParameters(object):
         browser.getControl(name='field_file').add_file(openFile('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
 
     def fill_create_file_field(self, browser):
-        browser.getControl(name='field_file').add_file(openFile('test_role_content_types.py'), 'text/plain', 'test.txt')
+        browser.getControl(name='field_file').add_file(openFile('test_roles_contents.py'), 'text/plain', 'test.txt')
 
     def fill_create_url_field(self, browser):
         browser.getControl(name='field_url').value = 'index'
@@ -75,6 +75,7 @@ class MixinFieldParameters(object):
                              
     def fill_create_title_field(self, browser):
         browser.getControl(name='field_object_title').value = 'test content'
+        #browser.getControl(name='field_object_title').value = '€ ‚ ‘ ’ „ “ ” « » — – · ©'
 
     def fill_create_folderish_field(self, browser):
         self.fill_create_title_field(browser)
@@ -115,7 +116,7 @@ class MixinRoleContent(MixinLoginLogout):
         # Check the role
         p = re.compile('logout\s+%s' % role)
         p.findall(browser.contents)
-        self.failUnless(p, 'The role does not match logout message')
+        self.failUnless(p, "The role '%s' does not match logout message" % role)
 
     def do_create_content(self, browser, content_type, creator, result):
         # Test if role has access to no content_types
@@ -127,9 +128,12 @@ class MixinRoleContent(MixinLoginLogout):
             self.fail()
         # Test if role has access to content_type
         if result is fail_not_addable:
-            self.failIf(content_type in meta_type.options, 'Role can access meta_type')
+            self.failIf(content_type in meta_type.options, 
+                        "Role has access to this '%s'" % meta_type)
         else:
-            self.failUnless(content_type in meta_type.options, 'Content type is not included as meta_type')
+            self.failUnless(content_type in meta_type.options,
+                            "Content type '%s' is not included as meta_type"
+                            % content_type)
             # Create the content 
             browser.getControl(name='meta_type').value = [content_type]
             browser.getControl(name='add_object:method').click()
@@ -138,8 +142,9 @@ class MixinRoleContent(MixinLoginLogout):
             if creator:
                creator(browser)
             browser.getControl(name='add_submit').click()
-            #import pdb; pdb.set_trace()
-            self.failUnless('Added %s' % content_type in browser.contents, 'Content type is not included in submit feedback message')
+            self.failUnless('Added %s' % content_type in browser.contents,
+                            "Content type: '%s' is not included in submit "
+                            "feedback message" % content_type)
             self.failUnless(self.item_id in browser.contents)
 
     def do_delete_content(self, browser):
@@ -170,3 +175,24 @@ class MixinRoleContent(MixinLoginLogout):
             return
         self.do_delete_content(browser)
         self.role_logout(browser)
+
+class MixinNavigate(MixinLoginLogout):
+    def navigate_tab(self, browser, tab_properties):
+        url = '%s/edit' % self.getRoot().absolute_url()
+        browser.open(url)
+        link = browser.getLink(tab_properties[0])
+        link.click()
+        self.failUnless(tab_properties[1] in browser.contents, 
+                        "title attribute '%s' is not included in browser "
+                        "content" % tab_properties[1])
+
+    def do_navigate(self, user_name, result, tab_properties, base=None):
+        """
+        This method logs a user in then clicks on a Silva tab
+        """
+        browser = Browser()
+        self.role_login_edit(browser, user_name, result, base=base)
+        if result is fail_login:
+            return
+        self.navigate_tab(browser, tab_properties)
+
