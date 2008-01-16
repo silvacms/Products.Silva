@@ -10,6 +10,24 @@ fail_nothing_addable = object()
 fail_not_addable = object()
 success = object()
 
+# Expected tab properties
+contents = []
+preview = []
+properties = []
+access = []
+publish = []
+
+contents.append('contents')
+contents.append('add a new item')
+preview.append('preview')
+preview.append('see the content in the public layout:')
+properties.append('properties')
+properties.append('various settings:')
+access.append('access')
+access.append('restrict access to users with a specific role')
+publish.append('publish')
+publish.append('publishing actions')
+
 def openFile(filename):
     name = os.path.dirname(__file__)
     return open(name + '/' + filename)
@@ -180,20 +198,32 @@ class MixinNavigate(MixinLoginLogout):
     """
         Log a manager in and access all the navigation tabs
     """
-    def navigate_tab(self, browser, tab_properties):
-        url = '%s/edit' % self.getRoot().absolute_url()
+    def navigate_tab(self, browser, tab_properties, url):
         browser.open(url)
         link = browser.getLink(tab_properties[0])
         link.click()
-        self.failUnless(tab_properties[1] in browser.contents, 
+        self.failUnless(tab_properties[1] in browser.contents,
                         "title attribute '%s' is not included in browser "
                         "content" % tab_properties[1])
 
-    def do_navigate(self, user_name, result, tab_properties, base=None):
+    def navigate_link(self, browser, url):
+        browser.open(url)
+        # receive link passed in
+        # receive conditions for testing link 
+        link_url = '%s/test_content/edit/tab_edit' % self.getRoot().absolute_url()
+        link = browser.getLink(text='test_content', url=link_url)
+        # test the link
+        self.assertEquals(link.text, 'test_content')
+        # click link
+        link.click()
+        # test conditions for linked page
+        self.failUnless('kupu editor' in browser.contents)
+
+    def do_navigate(self, user_name, result, tab_properties, url, base=None):
         browser = Browser()
         self.role_login_edit(browser, user_name, result, base=base)
         if result is fail_login:
             return
-        self.navigate_tab(browser, tab_properties)
+        self.navigate_tab(browser, tab_properties, url)
         self.role_logout(browser)
 
