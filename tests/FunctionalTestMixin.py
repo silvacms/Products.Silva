@@ -198,28 +198,12 @@ class MixinNavigate(MixinLoginLogout):
     """
         Log a manager in and access all the navigation tabs
     """
-    def navigate_tab(self, browser, tab_properties, url):
-        browser.open(url)
-        link = browser.getLink(tab_properties[0])
-        link.click()
-        self.failUnless(tab_properties[1] in browser.contents,
-                        "title attribute '%s' is not included in browser "
-                        "content" % tab_properties[1])
-
-    def navigate_link(self, browser, url):
-        browser.open(url)
-        # receive link passed in
-        # receive conditions for testing link 
-        link_url = '%s/test_content/edit/tab_edit' % self.getRoot().absolute_url()
-        link = browser.getLink(text='test_content', url=link_url)
-        # test the link
-        self.assertEquals(link.text, 'test_content')
-        # click link
-        link.click()
-        # test conditions for linked page
-        self.failUnless('kupu editor' in browser.contents)
 
     def do_navigate(self, user_name, result, tab_properties, url, base=None):
+        """
+            this method is used with navigate_tab to test all the navigation
+            tabs
+        """
         browser = Browser()
         self.role_login_edit(browser, user_name, result, base=base)
         if result is fail_login:
@@ -227,3 +211,54 @@ class MixinNavigate(MixinLoginLogout):
         self.navigate_tab(browser, tab_properties, url)
         self.role_logout(browser)
 
+    def navigate_tab(self, browser, tab_properties, url):
+        """
+            this method tests all the Silva tabs
+        """
+        browser.open(url)
+        link = browser.getLink(tab_properties[0])
+        link.click()
+        self.failUnless(tab_properties[1] in browser.contents,
+                        "title attribute '%s' is not included in browser "
+                         "content" % tab_properties[1])
+
+    def tab_link_builder(self, base_url, tab_name):
+        """
+            build a tab link
+        """
+        tab_link = base_url.split('/')
+        tab_link.append('%s' % tab_name)
+        tab_link = '/'.join(tab_link)
+        return tab_link
+
+    def content_link_builder(self, base_url, content, tab_name=None):
+        """
+            build content tab_edit link
+        """ 
+        print tab_name
+        content_link = base_url.split('/')
+        if tab_name:
+            content_link.append('%s' % tab_name)
+            content_link.insert(4, content)
+            content_link = '/'.join(content_link)
+        else:
+            content_link = '/'.join(content_link)
+        return content_link
+
+    def click_content_link(self, browser, base_url, test_condition,
+                              content, tab_name=None):
+        """
+            this method builds and tests links to editing content 
+            content/edit/tab_edit
+        """
+        browser.open(base_url)
+        if tab_name:
+            link = self.content_link_builder(base_url, content, tab_name)
+        else:
+            link = self.content_link_builder(base_url, content)
+        print link
+        return link
+        link = browser.getLink(text='%s' % content, url=link)
+        self.assertEquals(link.text, '%s' % content)
+        link.click()
+        self.failUnless('%s' % test_condition in browser.contents)
