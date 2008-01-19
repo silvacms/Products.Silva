@@ -278,8 +278,9 @@ expiration time
 </tr>
 </metal:def>
 
-<tr class="inter-controls">
-<td colspan="2">
+<tr class="controls">
+<td class="align-right"
+  colspan="2">
 <input class="executor"
   style="float:right"
   name="tab_status_open_now:method"
@@ -424,43 +425,6 @@ If further editing is required, first revoke the approval.
 </form>
 </div>
 <span tal:replace="nothing"> _______ / Revoke approval _______ </span>
-
-
-<span tal:replace="nothing"> _______ XXX depped?: Revert to previous _______ </span>
-<div tal:omit-tag=""
-  metal:define-macro="revert_to_previous">
-<form action="tab_status_revert_to_previous" method="post">
-<table class="listing">
-<tr class="inter-controls">
-<td>
-<h3 i18n:translate="">
-revert to previous version
-</h3>
-</td>
-</tr>
-<tr class="even">
-<td i18n:translate="">
-The current editable version can be replaced with the previous (published)
-version. This can not be undone afterwards and will discard all changes
-made to the current version.
-</td>
-</tr>
-<tr class="inter-controls">
-<td class="align-right">
-<input class="button"
-  type="submit"
-  value="revert to previous"
-  title="access key: alt-p"
-  accesskey="p"
-  onclick="return confirm('Really revert ?')"
-  i18n:attributes="value;title"
-/>
-</td>
-</tr>
-</table>
-</form>
-</div>
-<span tal:replace="nothing"> _______ / Revert to previous _______ </span>
 
 
 <span tal:replace="nothing"> _______ Manual close _______ </span>
