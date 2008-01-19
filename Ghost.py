@@ -390,6 +390,16 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
     # in constructor, as getPhysicalRoot() won't work there
     getattr(object, '0').set_haunted_url(content_url)
     object.create_version('0', None, None)
+
+    # ghost metadata is defered to the haunted object.
+    # author / mod time data is in the haunted object's metadata
+    # BUT this data it is also stored on the ghost itself (being
+    # a SilvaObject).  This author data needs to be set when
+    # it's created, so the 'author' tab in the containers edit tab
+    # shows a username instead of "unknown".
+    # See:https://bugs.launchpad.net/silva/+bug/101253
+    object.sec_update_last_author_info()
+
     add_and_edit(self, id, REQUEST)
     return ''
 

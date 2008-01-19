@@ -113,6 +113,10 @@ Silva changes
         'transform/renderer/myrender.xslt', you can do:
         <xsl:import href="../../Silva/transform/renderer/normal_view.xslt" />
 
+      - fixed 101253: Pasted ghosts have unknown author
+        when you click "paste to ghost", the resultant ghost object
+        now has author info
+
     Bugfixes ported from 2.0 branch
 
       - Fixed the factory function calls for File and Image, which
