@@ -106,7 +106,7 @@
   </tr>
   <tr class="controls"
     tal:condition="repeat/indent_item/end">
-    <td>
+    <td style="border-top:1px solid #abc">
     </td>
   </tr>
 </tal:block>
