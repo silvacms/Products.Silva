@@ -67,29 +67,30 @@ listingTopHeadingColor:string=#D6EAFF
 listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
 
-listingHeaderBackground:string=#7c8c9c
-listingHeaderFontColor:string=#e0eefc
-
-listingInterControlsBackground:string=#718191
+listingInterControlsBackground:string=#678
 listingControlsBackground:string=#607080
 listingDividerBackground:string=#89a
 
-evenRowBackground:string=#c6d2dd
-oddRowBackground:string=#dae7fa
+listingHeaderBackground:string=#789
+listingHeaderFontColor:string=#e0eefc
 
-listingBorder:string=1px solid #678
+listingBorder:string=1px solid #607080
+
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
 listingLinkHover:string=underline
+
+evenRowBackground:string=#c6d2dd
+oddRowBackground:string=#dae7fa
 
 listingTopBackgroundContent:string=#506070
 listingTopHeadingColorContent:string=#c5d4ca
 listingTopControlsHeadingColorContent:string=#ddeee3
 
-inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
-inputFontColor:string=#337
+inputBorder:string=1px solid #366
 inputBackground:string=#d5e7e7
-inputBorder:string=1px solid #599
+inputFontColor:string=#339
+inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 
 buttonMargin:string=0
 buttonPadding:string=0.05em 0.5em

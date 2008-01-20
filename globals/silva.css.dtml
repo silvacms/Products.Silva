@@ -425,7 +425,6 @@ table.listing td.top {
 }
 
 table.listing tr.top-controls td {
-  height: 0.1em; /* in case it's empty */
   padding: 0;
   background: &dtml-listingTopControlsBackground;;
 }
@@ -439,7 +438,7 @@ table.listing tr.inter-controls td {
 table.listing tr.controls td {
   padding: 0;
   color: #c9dfe2;
-  background: &dtml-listingControlsBackground;;
+  background-color: &dtml-listingControlsBackground;;
 }
 
 /* cycle text color in listing rows */
@@ -474,7 +473,7 @@ padding: 0em 0.4em;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
   color: &dtml-listingHeaderFontColor;;
-  background: &dtml-listingHeaderBackground;;
+  background-color: &dtml-listingHeaderBackground;;
   font-weight: normal;
   text-align: left;
   vertical-align: middle;
@@ -528,8 +527,8 @@ table.listing tr.top-controls h3 {
 
 /* _______ subsubhead cell _______ */
 table.listing tr.inter-controls h3 {
-  color: #e3e9f4;
-  margin: 0.2em 0.3em 0.1em;
+margin: 0em 0.3em 0.1em;
+  color: #dbe9f7; /* e3e9f4 */
 }
 
 table.listing td.listing-left {
@@ -758,7 +757,6 @@ form {
 
 input {
   margin-top: 1px;
-  margin-bottom: 1px; /* IE6 bug fix */
   padding: 0.1em;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
@@ -809,7 +807,12 @@ border-color: #283365 #345 #283365;
   background-color: &dtml-transportBackground;;
 }
 
-/* seems to keep IE (inc 7) in check without anything else */
+/* for forms editor IE6 */
+.fixIE6widget {
+  width: 90%;
+}
+
+/* seems to keep IE7 in check without anything else */
 input[type="submit"] {
   overflow: visible;
 }
@@ -1075,90 +1078,85 @@ table.listing div.transport-border:hover {
 
 /* _____________________________ forms eye candy _______ */
 
-.fixIE6widget {
-  width: 90%;
+/* _______ input fields _______ */
+
+input:hover, textarea:hover, select:hover {
+border-color : #599;
+background-color: #deeded;
 }
 
-input:hover, textarea:hover {
-  background-color: #e3f0e4;
-}
-
-input:focus, textarea:focus {
-  border-color : #04c78e;
-  background-color: #e8f7ef;
+input:focus, textarea:focus, select:focus {
+border-color : #0cc;
+background-color: #e8f2f2;
 }
 
 input:focus:hover, textarea:focus:hover {
-  background-color: #effbf2;
+background-color: #effbfb;
 }
 
-select:focus, select:hover {
-  border-color : #04c78e;
-  color: #333344;
-  background-color: #e8f7ef;
-}
+/* _______ button controls _______ */
 
-/* cool glow 74748b */
-input.transport[type="submit"]:hover, button[type="button"]:hover {
-  color: #e5fffe;
-  background-color: #68687E;
+/* default stylers for classless buttons, delete or make into shockers:
+input[type="submit"]:hover, input[type="button"]:hover {
+  color: #bfffd3;
+  background-color: #69878c;
 }
-
-input.transport[type="submit"]:focus {
-  color: #e9f7ff;
-  background-color: #7a83a6;
+input[type="submit"]:focus, input[type="button"]:focus {
+  color: #bfffd3;
+  background-color: #008a8a;
 }
-
+*/ 
+ 
 /* warm glow 548e72 */
-input.button[type="submit"]:hover, button[type="button"]:hover,
+input.button:hover, button.button:hover,
 button[type="submit"]:hover {
   color: #e5fffe;
   background-color: #4A7F67;
 }
 
-input.button[type="submit"]:focus, button[type="button"]:focus,
-button[type="submit"]:focus {
+input.button:focus, button.button:focus {
   color: #bfffd3;
   background-color: #538b58;
 }
 
+/* cool glow 74748b */
+input.transport:hover, button.transport:hover {
+  color: #e5fffe;
+  background-color: #68687E;
+}
+
+input.transport:focus {
+  color: #e9f7ff;
+  background-color: #7a83a6;
+}
+
 /* hot glow */
-input.warning[type="submit"]:hover {
+input.warning:hover {
   color: #fff5f5;
   background-color: #a85353;
 }
 
-input.warning[type="submit"]:focus {
+input.warning:focus {
   color: #f0c0c0;
   background-color: #53538b;
 }
 
 /* eerie glow 538da3 */
-input.executor[type="submit"]:hover {
+input.executor:hover {
   color: #e5ffec;
   background-color: #4C8298;
 }
 
-input[type="submit"]:hover, input[type="button"]:hover {
-  color: #bfffd3;
-  background-color: #69878c;
-}
-
-input[type="submit"]:focus, input[type="button"]:focus {
-  color: #bfffd3;
-  background-color: #008a8a;
-}
-
 /* state coded buttons */
-input.reject[type="submit"]:hover {
+input.reject:hover {
   color: #e5ffec;
   background-color: #9b8800;
 }
-input.revoke[type="submit"]:hover {
+input.revoke:hover {
   color: #e5ffec;
   background-color: #009a62;
 }
-input.close[type="submit"]:hover {
+input.close:hover {
   color: #e5ffec;
   background-color: #4a4aa7;
 }
