@@ -1082,16 +1082,16 @@ table.listing div.transport-border:hover {
 
 input:hover, textarea:hover, select:hover {
 border-color : #599;
-background-color: #deeded;
+background-color: #def2f2;
 }
 
 input:focus, textarea:focus, select:focus {
 border-color : #0cc;
-background-color: #e8f2f2;
+background-color: #e8f7f7;
 }
 
 input:focus:hover, textarea:focus:hover {
-background-color: #effbfb;
+background-color: #f2fbfb;
 }
 
 /* _______ button controls _______ */
