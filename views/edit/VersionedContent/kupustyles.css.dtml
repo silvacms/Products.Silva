@@ -207,8 +207,13 @@ div.kupu-tooltray {
   line-height: 110%;
 }
 
-div.kupu-tooltray table td {
-  padding: 0 0.1em 0;
+div.kupu-tooltray table td.titlecell {
+width:15%;
+padding-right:0.2em;
+}
+
+div.kupu-tooltray input {
+margin:0.1em 0;
 }
 
 /* seems to keep IE (inc 7) in check without anything else */ 
