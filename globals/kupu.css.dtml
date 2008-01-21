@@ -1,14 +1,4 @@
-/* _________ Stylesheet for Silva frontend _______________ */
-/* _________ Silva users can insert their own frontend styles _________ */
-/* _________ Styles modified here will affect the Silva preview  ______ */
-/*
-**  Instructions to set caching headers. Inside comments area to play nicer with CSS editors.
-** <dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" root="get_root_url()" >
-** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
-** <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
-** <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
-** <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
-*/
+/* _________ Extra stylesheet for Kupu rendering _______________ */
 
 body {
   margin: 0.5em 1em 1.5em 1em;
@@ -16,6 +6,11 @@ body {
 
 body, h1, h2, h3, h4, h5, h6, p, div, ul, ol, dl, pre, table {
   max-width: 44em;
+}
+
+th {
+  font-size:70%;
+  text-align:left;
 }
 
 td {
@@ -57,7 +52,5 @@ table td.align-right, table th.align-right,
 table td.align-right p, table th.align-right p {
   text-align: right;
 }
-
-</dtml-let>
 
 /* end cascade */
