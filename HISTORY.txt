@@ -7,24 +7,26 @@ Silva changes
 
     Features added:
 
-      - Since the full media export is restricted to Chief Editors and 
-        Managers, there's no reason to show the import or export buttons to 
-        lower level roles (since the pure xml import/export is deprecated). 
-        Conditioned the buttons. 
+      - Since the full media export is restricted to Chief Editors and
+        Managers, there's no reason to show the import or export
+        buttons to lower level roles (since the pure xml import/export
+        is deprecated).  Conditioned the buttons.
 
-      - Modernized buttons and matrix nav based on trainee feedback. Use a
-        float for button alignment classes or obviate the spaces in html.
+      - Modernized buttons and matrix nav based on trainee
+        feedback. Use a float for button alignment classes or obviate
+        the spaces in html.
 
-      - Renovated the Kupu image toolbox to make it more userfriendly. 
-        Improved the alignments in the table toolbox. 
+      - Renovated the Kupu image toolbox to make it more userfriendly.
+        Improved the alignments in the table toolbox.
 
-      - New "Editor Comments" Kupu Tool: displays the "internal comments"
-        silva-extra metadata field if there are comments.  This
-        promotes the visibility of internal / editor comments so that
-        anyone editing the document will see them.  This tool is only
-        visible if there are comments, and does not allow editing at this
-        time.  This toolbox is non-collapsible, and requires a version
-        of kupu newer than 1.4b1 to support non-collapsible toolboxes
+      - New "Editor Comments" Kupu Tool: displays the "internal
+        comments" silva-extra metadata field if there are comments.
+        This promotes the visibility of internal / editor comments so
+        that anyone editing the document will see them.  This tool is
+        only visible if there are comments, and does not allow editing
+        at this time.  This toolbox is non-collapsible, and requires a
+        version of kupu newer than 1.4b1 to support non-collapsible
+        toolboxes
 
       - Support for direct username assignment to clipboard. If the
         service_members service defines a method 'direct_user_lookup'
@@ -52,12 +54,12 @@ Silva changes
         take advantage of this cache manager.  Refreshing happens
         automatically during Silva upgrades.
 
-      - 101351 Extension registration now allows multuple extensions in 
-        the depends_on argument (in the form of tuples).  The zcml
-        silva:extension depends_on directive, if present, now requires tuples.
-        Additionally the extensions service now displays the dependencies for
-        each extension and displays a warning next to each dependency that
-        is not available.
+      - 101351 Extension registration now allows multuple extensions
+        in the depends_on argument (in the form of tuples).  The zcml
+        silva:extension depends_on directive, if present, now requires
+        tuples.  Additionally the extensions service now displays the
+        dependencies for each extension and displays a warning next to
+        each dependency that is not available.
 
       - Significant performance improvement in converting folders to
         publications and vice-versa
@@ -74,11 +76,17 @@ Silva changes
 
     Bugs Fixed:
 
+      - Changed the threshold variable in upgrade.py from 500 to 50,
+        this may impact speed of upgrades negatively but it seems
+        necessary for for instance ExtFile migration, where 500
+        objects can become too large for a single commit.
+
       - Setting the i18n domain for kupu htmlmacros.html to silva so
         toolbox is translated again bug 101706.
 
-      - Changed the new version button in the editor screen from an input to
-        a button, to avoid css conflicts with frontend.css controls styles
+      - Changed the new version button in the editor screen from an
+        input to a button, to avoid css conflicts with frontend.css
+        controls styles
 
       - fixed 156921: Escaping image title strings.
 
@@ -86,32 +94,36 @@ Silva changes
 
       - fixed 100835: image upload screen should show allowed formats
 
-      - fixed 101174: When an id is in use on the Zope level, inform 
+      - fixed 101174: When an id is in use on the Zope level, inform
                       users accordingly
       
-      - Added True switch to Image.py tag method to escape double quotes.
+      - Added True switch to Image.py tag method to escape double
+        quotes.
 
       - Changed the 'priority' attribute of the silva:content zcml
         attribute to a float, to support more granular priorities
         (they way it was prior to Silva 2.0 zcml)
 
       - xslt renderer: fixed an extra whitespace issue that occurred
-        when an image as linked, by setting indent="no" in normal_view.xslt
+        when an image as linked, by setting indent="no" in
+        normal_view.xslt
 
       - fixed 101791: problem with Link object as index of a container
 
-      - fixed 101514: Empty list elements in Kupu.  When you press tab twice, 
-        Kupu inserts an element in the "missed out" level automatically.  This
-        empty list element appears as a bullet that can't be clicked on.  
-        Now, the 'intermediate' empty list is now stripped out when saving.
+      - fixed 101514: Empty list elements in Kupu.  When you press tab
+        twice, Kupu inserts an element in the "missed out" level
+        automatically.  This empty list element appears as a bullet
+        that can't be clicked on.  Now, the 'intermediate' empty list
+        is now stripped out when saving.
 
-      - fixed 101411: Compilation of an XSLT stylesheet fails if an imported 
-        stylesheet imports another stylesheet.  A string interpolation method
-        was used to insert the path to imported stylesheets.  This method
-        is no longer used, and relative paths can be used instead.
-        E.g. to override noramal_view.xslt from your product's 
-        'transform/renderer/myrender.xslt', you can do:
-        <xsl:import href="../../Silva/transform/renderer/normal_view.xslt" />
+      - fixed 101411: Compilation of an XSLT stylesheet fails if an
+        imported stylesheet imports another stylesheet.  A string
+        interpolation method was used to insert the path to imported
+        stylesheets.  This method is no longer used, and relative
+        paths can be used instead.  E.g. to override noramal_view.xslt
+        from your product's 'transform/renderer/myrender.xslt', you
+        can do: <xsl:import
+        href="../../Silva/transform/renderer/normal_view.xslt" />
 
       - fixed 101253: Pasted ghosts have unknown author
         when you click "paste to ghost", the resultant ghost object
