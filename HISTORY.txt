@@ -16,6 +16,11 @@ Silva changes
         filesystem_path in the service_files, but leave it to the extfile.ini.
 
     Bugs Fixed:
+    
+      - Changed the threshold variable in upgrade.py from 500 to 50,
+        this may impact speed of upgrades negatively but it seems
+        necessary for for instance ExtFile migration, where 500
+        objects can become too large for a single commit.
 
       - Setting the i18n domain for kupu htmlmacros.html to silva so
         toolbox is translated again bug 101706.
