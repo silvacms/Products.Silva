@@ -117,6 +117,11 @@ Silva changes
         when you click "paste to ghost", the resultant ghost object
         now has author info
 
+      - fixed 101554: Ghost Version item in service_catalog is not 
+        updated after haunted has been modified (example 2)
+        When documents are updated, all ghosts referencing them
+        are also reindexed.
+
     Bugfixes ported from 2.0 branch
 
       - Fixed the factory function calls for File and Image, which

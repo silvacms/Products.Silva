@@ -166,6 +166,16 @@ class CatalogedVersion(Version):
         catalog = getattr(self, 'service_catalog', None)
         if catalog is not None:
             catalog.catalog_object(self, self.getPath())
+            if self.version_status() in ('unapproved','approved','public'):
+                #search for Ghost objects in the catalog
+                # that have this object's path as the haunted_path
+                # these Ghost objects need to be reindexed
+                # NOTE: this will change published and unpublished
+                # Ghost versions.
+                res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
+                for r in res:
+                    r.getObject().index_object()
+                
 
     def unindex_object(self):
         """Unindex"""
@@ -181,6 +191,15 @@ class CatalogedVersion(Version):
         path = self.getPath()
         catalog.uncatalog_object(path)
         catalog.catalog_object(self, path)
+        if self.version_status() in ('unapproved','approved','public'):
+            #search for Ghost objects in the catalog
+            # that have this object's path as the haunted_path
+            # these Ghost objects need to be reindexed
+            # NOTE: this will change published and unpublished
+            # Ghost versions.
+            res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
+            for r in res:
+                r.getObject().index_object()
         
     
 InitializeClass(CatalogedVersion)
