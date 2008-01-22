@@ -8,6 +8,7 @@ view = context
 
 if not name:
     name = request.form.get('name', ' ')
+name = name.decode('utf-8')
 name = name.strip()
 
 if name == '':
