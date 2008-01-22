@@ -9,7 +9,7 @@ import transaction
 from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
 from Products.Silva import mangle
 
-threshold = 500
+threshold = 50
 
 class GeneralUpgrader:
     """wrapper for upgrade functions"""
@@ -122,10 +122,10 @@ class UpgradeRegistry:
                         stats['maxqueue'] = max(stats['maxqueue'],
                                                 len(object_list))
                 stats['total'] += 1
-                stats['threshold'] += 1                
+                stats['threshold'] += 1
                 if stats['threshold'] > threshold:
                     #print '#### Commit sub transaction ####'
-                    transaction.get().commit(1)
+                    transaction.get().commit()
                     if hasattr(o, '_p_jar') and o._p_jar is not None:
                         o._p_jar.cacheGC()
                     else:
