@@ -7,13 +7,14 @@ Silva changes
 
     Features Added:
 
-      - Since the full media export is restricted to Chief Editors and 
-        Managers, there's no reason to show the import or export buttons to
-        lower level roles (since the pure xml import/export is deprecated).
-        Conditioned the buttons.
+      - Since the full media export is restricted to Chief Editors and
+        Managers, there's no reason to show the import or export
+        buttons to lower level roles (since the pure xml import/export
+        is deprecated).  Conditioned the buttons.
 
-      - Made Silva work with ExtFile once again: we no longer configure the
-        filesystem_path in the service_files, but leave it to the extfile.ini.
+      - Made Silva work with ExtFile once again: we no longer
+        configure the filesystem_path in the service_files, but leave
+        it to the extfile.ini.
 
     Bugs Fixed:
     
