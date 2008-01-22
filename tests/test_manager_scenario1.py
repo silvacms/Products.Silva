@@ -9,7 +9,13 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         select silva document
         make silva document
         enter silva document
-        test tabs and buttons
+        click preview tab
+        click public view
+        click back
+        click publish now tab
+        click public view
+        click back
+        logout
     """
 
     def afterSetUp(self):
@@ -38,7 +44,7 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # build the link
         browser.open(base_url)
         url = self.click_content_link(browser, base_url, test_condition, content,
-                                link_text, tab_name)
+                                      link_text, tab_name)
         # click on the preview tab
         tab_name = 'tab_preview'
         link_text = 'preview'

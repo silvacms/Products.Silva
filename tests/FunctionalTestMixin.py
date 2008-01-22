@@ -33,7 +33,6 @@ def openFile(filename):
     return open(name + '/' + filename)
 
 class BaseMixin(object):
-
     def setUpMixin(self):
         """Set up method for test mixin class
         """
@@ -201,11 +200,16 @@ class MixinRoleContent(MixinLoginLogout):
         self.do_delete_content(browser)
         self.role_logout(browser)
 
-
 class MixinNavigate(MixinLoginLogout):
     """
         Log a manager in and access all the navigation tabs
     """
+
+    def setUpMixin(self):
+        super(MixinNavigate, self).setUpMixin()
+        self.root_url = '%s/edit' % self.getRoot().absolute_url()
+        self.content_url = '%s/edit/tab_edit' % self.getRoot().absolute_url()
+        self.content_type_url = '%s/content_test/edit/tab_edit' % self.getRoot().absolute_url()
 
     def do_navigate(self, user_name, result, tab_properties, url, base=None):
         """
@@ -231,10 +235,6 @@ class MixinNavigate(MixinLoginLogout):
                         "title attribute '%s' is not included in browser "
                          "content" % tab_properties[1])
 
-    def back(self, browser):
-        browser.back()
-        pass
-    
     def tab_link_builder(self, base_url, tab_name):
         """
             build a tab link
@@ -244,12 +244,6 @@ class MixinNavigate(MixinLoginLogout):
         tab_link = '/'.join(tab_link)
         return tab_link
     
-    def setUpMixin(self):
-        super(MixinNavigate, self).setUpMixin()
-        self.root_url = '%s/edit' % self.getRoot().absolute_url()
-        self.content_url = '%s/edit/tab_edit' % self.getRoot().absolute_url()
-        self.content_type_url = '%s/content_test/edit/tab_edit' % self.getRoot().absolute_url()
-
     def content_link_builder(self, content, tab_name=None):
         """
             build content tab_edit link
@@ -265,9 +259,14 @@ class MixinNavigate(MixinLoginLogout):
             content_link.insert(4, content)
             content_link = '/'.join(content_link)
         return content_link
+    
+    def click_submit(self, browser):
+        browser.getControl(name='tab_status_request').click()
+        print browser.contents
+        return browser.url
 
     def click_content_link(self, browser, base_url, test_condition,
-                              content, link_text, tab_name=None):
+                              content, link_text, tab_name=None, submit=None):
         """
             this method builds and tests links to editing content 
             content/edit/tab_edit
@@ -282,6 +281,18 @@ class MixinNavigate(MixinLoginLogout):
             self.failUnless(test_condition in browser.contents, "test "
                             "condition '%s' is not included in browser content"
                             % test_condition)
+            return browser.url
+        elif submit:
+            print 'got a submit here'
+            print 'base_url: ' + base_url
+            print 'browser: ', browser.url
+            print browser.contents
+            form = browser.getForm(name='approval_form')
+            
+            #self.click_submit(browser)
+            #self.failUnless(test_condition in browser.contents, "test "
+            #                "condition '%s' is not included in browser content"
+            #                % test_condition)
             return browser.url
         else:
             link = self.content_link_builder(content)
