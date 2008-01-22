@@ -11,13 +11,12 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         enter silva document
         test tabs and buttons
     """
+
+    def afterSetUp(self):
+        self.setUpMixin()
     
     def smi_url(self):
         url = '%s/edit' % self.getRoot().absolute_url()
-        return url
-
-    def preview_url(self, content):
-        url = '%s/%s' % (self.getRoot().absolute_url(), content)
         return url
 
     def test_manager_scenario_one(self):
@@ -30,21 +29,44 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # create silva document
         self.do_create_content(browser, 'Silva Document',
                                self.fill_create_title_field, success)
-        test_condition = 'kupu editor'
+        # click into the Silva Document
+        # set parameters for operation
         content = 'test_content'
         tab_name = 'tab_edit'
-        link = self.click_content_link(browser, base_url, test_condition, content,
-                                       tab_name)
-        test_condition = 'public&nbsp;preview...'
+        link_text = 'test_content'
+        test_condition = 'kupu editor'
+        # build the link
+        browser.open(base_url)
+        url = self.click_content_link(browser, base_url, test_condition, content,
+                                link_text, tab_name)
+        # click on the preview tab
         tab_name = 'tab_preview'
-        self.click_content_link(browser, link, test_condition, content,
-                                tab_name)
-        public_view_url = self.preview_url(content)
+        link_text = 'preview'
+        test_condition = 'public&nbsp;preview...'
+        url = self.click_content_link(browser, url, test_condition, content,
+                                      link_text, tab_name)
+        # click the public view link
+        link_text = 'view public version'
         test_condition = 'Sorry, this Silva Document is not viewable.'
-        self.click_content_link(browser, public_view_url, test_condition, content)
-        # click on preview_tab in kupu editor
-        # /test_content/edit/tab_preview
-        #self.content_preview_tab(base_url, test_condition, content)
+        url = self.click_content_link(browser, url, test_condition, content,
+                                      link_text)
+        # oops, document not viewable, go back to public preview
+        browser.goBack()
+        url = browser.url
+        self.failUnless('public&nbsp;preview' in browser.contents)
+        self.failUnless('<h2 class="heading">test content</h2>' in browser.contents)
+        # click publish now button
+        tab_name = 'tab_preview_publish'
+        link_text = '\n        publish&nbsp;now\n      ' 
+        test_condition = 'Version approved.'
+        url = self.click_content_link(browser, url, test_condition, content,
+                                      link_text, tab_name)
+        # now that the document is published, click public view
+        link_text = 'view public version'
+        test_condition = '<h2 class="heading">test content</h2>'
+        url = self.click_content_link(browser, url, test_condition, content,
+                                    link_text)
+        browser.goBack()
         self.do_logout(browser)
 
 def test_suite():

@@ -32,7 +32,14 @@ def openFile(filename):
     name = os.path.dirname(__file__)
     return open(name + '/' + filename)
 
-class MixinLoginLogout(object):
+class BaseMixin(object):
+
+    def setUpMixin(self):
+        """Set up method for test mixin class
+        """
+        pass
+
+class MixinLoginLogout(BaseMixin):
     """ Test login and logout in the Silva SMI for specific roles """
     
     def do_login(self, browser, url, username, password):
@@ -64,7 +71,7 @@ class MixinLoginLogout(object):
         self.assertEquals('You have been logged out.' in browser.contents, True)
         return Browser()
 
-class MixinFieldParameters(object):
+class MixinFieldParameters(BaseMixin):
     
     def fill_create_image_fields(self, browser):
         self.fill_create_title_field(browser)
@@ -92,7 +99,7 @@ class MixinFieldParameters(object):
         browser.getControl(name='field_link_type').value = ['absolute']
                              
     def fill_create_title_field(self, browser):
-        browser.getControl(name='field_object_title').value = 'test content€'
+        browser.getControl(name='field_object_title').value = 'test content'
         # other unicode characters to choose from '€ ‚ ‘ ’ „ “ ” « » — – · ©'
 
     def fill_create_folderish_field(self, browser):
@@ -194,6 +201,7 @@ class MixinRoleContent(MixinLoginLogout):
         self.do_delete_content(browser)
         self.role_logout(browser)
 
+
 class MixinNavigate(MixinLoginLogout):
     """
         Log a manager in and access all the navigation tabs
@@ -215,6 +223,7 @@ class MixinNavigate(MixinLoginLogout):
         """
             this method tests all the Silva tabs
         """
+
         browser.open(url)
         link = browser.getLink(tab_properties[0])
         link.click()
@@ -222,6 +231,10 @@ class MixinNavigate(MixinLoginLogout):
                         "title attribute '%s' is not included in browser "
                          "content" % tab_properties[1])
 
+    def back(self, browser):
+        browser.back()
+        pass
+    
     def tab_link_builder(self, base_url, tab_name):
         """
             build a tab link
@@ -230,35 +243,53 @@ class MixinNavigate(MixinLoginLogout):
         tab_link.append('%s' % tab_name)
         tab_link = '/'.join(tab_link)
         return tab_link
+    
+    def setUpMixin(self):
+        super(MixinNavigate, self).setUpMixin()
+        self.root_url = '%s/edit' % self.getRoot().absolute_url()
+        self.content_url = '%s/edit/tab_edit' % self.getRoot().absolute_url()
+        self.content_type_url = '%s/content_test/edit/tab_edit' % self.getRoot().absolute_url()
 
-    def content_link_builder(self, base_url, content, tab_name=None):
+    def content_link_builder(self, content, tab_name=None):
         """
             build content tab_edit link
         """ 
-        print tab_name
-        content_link = base_url.split('/')
+        url = self.root_url
+        content_link = url.split('/')
         if tab_name:
             content_link.append('%s' % tab_name)
             content_link.insert(4, content)
             content_link = '/'.join(content_link)
         else:
+            content_link.remove('edit')
+            content_link.insert(4, content)
             content_link = '/'.join(content_link)
         return content_link
 
     def click_content_link(self, browser, base_url, test_condition,
-                              content, tab_name=None):
+                              content, link_text, tab_name=None):
         """
             this method builds and tests links to editing content 
             content/edit/tab_edit
         """
         browser.open(base_url)
         if tab_name:
-            link = self.content_link_builder(base_url, content, tab_name)
+            link = self.content_link_builder(content, tab_name)
+            link = browser.getLink(url=link)
+            link_url = link.url
+            self.assertEquals(link.url, '%s' % link_url)
+            link.click()
+            self.failUnless(test_condition in browser.contents, "test "
+                            "condition '%s' is not included in browser content"
+                            % test_condition)
+            return browser.url
         else:
-            link = self.content_link_builder(base_url, content)
-        print link
-        return link
-        link = browser.getLink(text='%s' % content, url=link)
-        self.assertEquals(link.text, '%s' % content)
-        link.click()
-        self.failUnless('%s' % test_condition in browser.contents)
+            link = self.content_link_builder(content)
+            link = browser.getLink(text='%s' % link_text, url=link)
+            link_url = link.url
+            self.assertEquals(link.url, '%s' % link_url)
+            link.click()
+            self.failUnless(test_condition in browser.contents, "test "
+                            "condition '%s' is not included in browser content"
+                            % test_condition)
+            return browser.url
