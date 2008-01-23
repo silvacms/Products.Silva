@@ -1094,6 +1094,10 @@ input:focus:hover, textarea:focus:hover {
 background-color: #f2fbfb;
 }
 
+select:focus, select:hover {
+color:#336;
+}
+
 /* _______ button controls _______ */
 
 /* default stylers for classless buttons, delete or make into shockers:
