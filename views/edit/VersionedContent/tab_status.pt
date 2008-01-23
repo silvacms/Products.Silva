@@ -37,11 +37,6 @@
           _____________________ main subtable _____________________
         </tal:block>
 
-<form action="." enctype="multipart/form-data" method="post">
-  <input type="hidden"
-    name="refs:list"
-    tal:attributes="value python: request['model'].create_ref(request['model'])" />
-
 <table class="listing">
 <thead>
   <tr tal:replace="nothing"> ______________ vein + title row ______________ </tr>
@@ -55,18 +50,23 @@
   </tr>
   <tr class="top-controls">
     <td colspan="7" class="align-right">
-      <h3 style="float:left;" i18n:translate="">
-        publishing actions
-      </h3>
-      <input class="transport"
-        type="submit"
-        name="../../edit/tab_status_export:method"
-        value="export..."
-        title="access key: alt-e"
-        accesskey="e"
-        tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
-        i18n:attributes="value;title"
-      />
+      <form action="." enctype="multipart/form-data" method="post">
+        <input type="hidden"
+          name="refs:list"
+          tal:attributes="value python: request['model'].create_ref(request['model'])" />
+        <h3 style="float:left;" i18n:translate="">
+          publishing actions
+        </h3>
+        <input class="transport"
+          type="submit"
+          name="../../edit/tab_status_export:method"
+          value="export..."
+          title="access key: alt-e"
+          accesskey="e"
+          tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
+          i18n:attributes="value;title"
+        />
+      </form>
     </td>
   </tr>
 </thead>
@@ -94,8 +94,6 @@
 </tal:if>
 </tbody>
 </table>
-
-</form>
 
 <span tal:replace="nothing"> ______________ sub tables ______________ </span>
 
