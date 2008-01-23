@@ -40,7 +40,7 @@ class CachedData(Persistent):
 
 class VersionedContent(Content, Versioning, Folder.Folder):
     security = ClassSecurityInfo()
-    
+
     # there is always at least a single version to start with,
     # created by the object's factory function
     _version_count = 1

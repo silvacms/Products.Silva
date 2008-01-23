@@ -31,8 +31,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
             doc.set_unapproved_version_publication_datetime(now)
             doc.approve_version()
             doc.close_version()
-        id = str(doc._version_count)
-        doc._version_count += 1
+        id = doc.get_new_version_id()
         doc.manage_addProduct['SilvaDocument'].\
             manage_addDocumentVersion(id, 'Version %s' % id)
         doc.create_version(id, None, None)

@@ -215,8 +215,7 @@ class Versioning:
                 # FIXME: could create new empty version..
                 raise  VersioningError, "Should never happen!"
         # copy published version
-        new_version_id = str(self._version_count)
-        self._version_count = self._version_count + 1
+        new_version_id = self.get_new_version_id()
         # FIXME: this only works if versions are stored in a folder as
         # objects; factory function for VersionedContent objects should
         # create an initial version with name '0', too.
@@ -224,6 +223,16 @@ class Versioning:
         self.manage_clone(getattr(self, version_id_to_copy),
                           new_version_id, self.REQUEST)
         self.create_version(new_version_id, None, None)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'get_new_version_id')
+    def get_new_version_id(self):
+        """get_new_version_id is used when a new version will be created,
+        to get a new unique id.  This may or may not change internal
+        variables"""
+        new_version_id = str(self._version_count)
+        self._version_count = self._version_count + 1
+        return str(new_version_id)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'revert_to_previous')

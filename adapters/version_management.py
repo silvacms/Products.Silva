@@ -289,11 +289,7 @@ class VersionManagementAdapter(adapter.Adapter):
         raise VersioningError, msg
 
     def _createUniqueId(self):
-        # for now we use self.context._version_count, we may
-        # want to get rid of that nasty trick in the future though...
-        newid = str(self.context._version_count)
-        self.context._version_count += 1
-        return newid
+        return self.context.get_new_version_id()
     
 Globals.InitializeClass(VersionManagementAdapter)
 
