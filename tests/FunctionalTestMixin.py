@@ -235,11 +235,12 @@ class MixinNavigate(MixinLoginLogout):
                         "title attribute '%s' is not included in browser "
                          "content" % tab_properties[1])
 
-    def tab_link_builder(self, base_url, tab_name):
+    def tab_link_builder(self, tab_name):
         """
             build a tab link
         """
-        tab_link = base_url.split('/')
+        url = self.root_url
+        tab_link = url.split('/')
         tab_link.append('%s' % tab_name)
         tab_link = '/'.join(tab_link)
         return tab_link
@@ -287,6 +288,17 @@ class MixinNavigate(MixinLoginLogout):
                                   content, link_text):
         link = self.content_link_builder(content)
         link = browser.getLink(text='%s' % link_text, url=link)
+        link_url = link.url
+        self.assertEquals(link.url, '%s' % link_url)
+        link.click()
+        self.failUnless(test_condition in browser.contents, "test "
+                        "condition '%s' is not included in browser content"
+                        % test_condition)
+        return browser.url
+    
+    def click_tab_name(self, browser, base_url, test_condition, tab_name, redirect=None):
+        link = self.tab_link_builder(tab_name)
+        link = browser.getLink(url=link)
         link_url = link.url
         self.assertEquals(link.url, '%s' % link_url)
         link.click()

@@ -12,10 +12,6 @@ import zope.component.eventtesting
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
 
-# Default dummy test user and password
-dummy_name = ZopeTestCase.user_name
-dummy_password = ZopeTestCase.user_password
-
 # Default silva test user and password
 users = {
     'manager': {'password': ZopeTestCase.user_password,
@@ -28,6 +24,8 @@ users = {
                'role': 'Author' },
     'reader': {'password': ZopeTestCase.user_password,
                'role': 'Reader' },
+    'dummy': {'password': ZopeTestCase.user_password,
+              'role': '' },
 }
 
 user_manager = 'manager'
@@ -35,6 +33,7 @@ user_chiefeditor = 'chiefeditor'
 user_editor = 'editor'
 user_author = 'author'
 user_reader = 'reader'
+user_dummy = 'dummy'
 
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('TemporaryFolder')

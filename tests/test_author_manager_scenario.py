@@ -46,14 +46,6 @@ class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         test_condition = 'public&nbsp;preview...'
         url = self.click_content_tab_name(browser, url, test_condition, content,
                                           tab_name)
-        # XXX
-        # i'd go through the process of clicking on the publish tab and then
-        # submit for approval, but it isn't possible to get the form from
-        # browser.getForm(), because the form is nested in another.
-        # this nesting can be found in tab_status.pt and tab_status_macros.pt
-        # so instead i'm just going to log out, and the manager will take up
-        # publishing the document.
-
         # click on the publish tab
         tab_name = 'tab_status'
         test_condition = 'status of'
