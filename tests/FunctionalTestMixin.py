@@ -260,47 +260,37 @@ class MixinNavigate(MixinLoginLogout):
             content_link = '/'.join(content_link)
         return content_link
     
-    def click_submit(self, browser):
-        browser.getControl(name='tab_status_request').click()
-        print browser.contents
+    def get_form_submit(self, browser, base_url, test_condition,
+                        form_name, submit_value):
+        form = browser.getForm(name=form_name)
+        self.failUnless(form_name in form.name, "test condition '%s' is not "
+                        "the name of the form" % form_name)
+        form.submit(submit_value)
+        self.failUnless(test_condition in browser.contents, "test "
+                        "condition '%s' is not included in browser content"
+                        % test_condition)
+        return browser.url
+    
+    def click_content_tab_name(self, browser, base_url, test_condition,
+                               content, tab_name=None):
+        link = self.content_link_builder(content, tab_name)
+        link = browser.getLink(url=link)
+        link_url = link.url
+        self.assertEquals(link.url, '%s' % link_url)
+        link.click()
+        self.failUnless(test_condition in browser.contents, "test "
+                        "condition '%s' is not included in browser content"
+                        % test_condition)
         return browser.url
 
-    def click_content_link(self, browser, base_url, test_condition,
-                              content, link_text, tab_name=None, submit=None):
-        """
-            this method builds and tests links to editing content 
-            content/edit/tab_edit
-        """
-        browser.open(base_url)
-        if tab_name:
-            link = self.content_link_builder(content, tab_name)
-            link = browser.getLink(url=link)
-            link_url = link.url
-            self.assertEquals(link.url, '%s' % link_url)
-            link.click()
-            self.failUnless(test_condition in browser.contents, "test "
-                            "condition '%s' is not included in browser content"
-                            % test_condition)
-            return browser.url
-        elif submit:
-            print 'got a submit here'
-            print 'base_url: ' + base_url
-            print 'browser: ', browser.url
-            print browser.contents
-            form = browser.getForm(name='approval_form')
-            
-            #self.click_submit(browser)
-            #self.failUnless(test_condition in browser.contents, "test "
-            #                "condition '%s' is not included in browser content"
-            #                % test_condition)
-            return browser.url
-        else:
-            link = self.content_link_builder(content)
-            link = browser.getLink(text='%s' % link_text, url=link)
-            link_url = link.url
-            self.assertEquals(link.url, '%s' % link_url)
-            link.click()
-            self.failUnless(test_condition in browser.contents, "test "
-                            "condition '%s' is not included in browser content"
-                            % test_condition)
-            return browser.url
+    def click_content_no_tab_name(self, browser, base_url, test_condition,
+                                  content, link_text):
+        link = self.content_link_builder(content)
+        link = browser.getLink(text='%s' % link_text, url=link)
+        link_url = link.url
+        self.assertEquals(link.url, '%s' % link_url)
+        link.click()
+        self.failUnless(test_condition in browser.contents, "test "
+                        "condition '%s' is not included in browser content"
+                        % test_condition)
+        return browser.url

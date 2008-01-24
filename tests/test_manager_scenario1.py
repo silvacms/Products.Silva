@@ -39,38 +39,35 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # set parameters for operation
         content = 'test_content'
         tab_name = 'tab_edit'
-        link_text = 'test_content'
         test_condition = 'kupu editor'
         # build the link
         browser.open(base_url)
-        url = self.click_content_link(browser, base_url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, base_url, test_condition, content,
+                                          tab_name)
         # click on the preview tab
         tab_name = 'tab_preview'
-        link_text = 'preview'
         test_condition = 'public&nbsp;preview...'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, url, test_condition, content,
+                                          tab_name)
         # click the public view link
         link_text = 'view public version'
         test_condition = 'Sorry, this Silva Document is not viewable.'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                      link_text)
+        url = self.click_content_no_tab_name(browser, url, test_condition, content,
+                                             link_text)
         # oops, document not viewable, go back to public preview
         browser.goBack()
         url = browser.url
         self.failUnless('public&nbsp;preview' in browser.contents)
         self.failUnless('<h2 class="heading">test content</h2>' in browser.contents)
         # click publish now button
-        tab_name = 'tab_preview_publish'
-        link_text = '\n        publish&nbsp;now\n      ' 
+        tab_name = 'quick_publish?return_to=tab_preview'
         test_condition = 'Version approved.'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, url, test_condition, content,
+                                          tab_name)
         # now that the document is published, click public view
         link_text = 'view public version'
         test_condition = '<h2 class="heading">test content</h2>'
-        url = self.click_content_link(browser, url, test_condition, content,
+        url = self.click_content_no_tab_name(browser, url, test_condition, content,
                                     link_text)
         browser.goBack()
         self.do_logout(browser)

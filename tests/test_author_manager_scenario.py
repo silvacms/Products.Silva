@@ -37,17 +37,15 @@ class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # click into the Document
         content = 'test_content'
         tab_name = 'tab_edit'
-        link_text = 'test_content'
         test_condition = 'kupu editor'
         browser.open(base_url)
-        url = self.click_content_link(browser, base_url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, base_url, test_condition, content,
+                                          tab_name)
         # click on the preview tab
         tab_name = 'tab_preview'
-        link_text = 'preview'
         test_condition = 'public&nbsp;preview...'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, url, test_condition, content,
+                                          tab_name)
         # XXX
         # i'd go through the process of clicking on the publish tab and then
         # submit for approval, but it isn't possible to get the form from
@@ -57,16 +55,16 @@ class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # publishing the document.
 
         # click on the publish tab
-        #tab_name = 'tab_status'
-        #link_text = 'publish'
-        #test_condition = 'status of'
-        #url = self.click_content_link(browser, url, test_condition, content,
-        #                              link_text, tab_name)
+        tab_name = 'tab_status'
+        test_condition = 'status of'
+        url = self.click_content_tab_name(browser, url, test_condition, content,
+                                          tab_name)
         # click on request approval
-        #link_text = ''
-        #test_condition = 'withdraw approval request'
-        #url = self.click_content_link(browser, url, test_condition, content,
-        #                              link_text, submit=True)
+        submit_value = 'request approval'
+        form_name = 'author_request_approval'
+        test_condition = 'withdraw approval request'
+        url = self.get_form_submit(browser, url, test_condition, form_name,
+                                   submit_value)
         # logout author
         self.do_logout(browser)
         # login manager
@@ -76,28 +74,32 @@ class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         # click into silva document
         content = 'test_content'
         tab_name = 'tab_edit'
-        link_text = 'test_content'
         test_condition = 'kupu editor'
         browser.open(base_url)
-        url = self.click_content_link(browser, base_url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, base_url, test_condition, content,
+                                          tab_name)
         # click prevew tab
         tab_name = 'tab_preview'
-        link_text = 'preview'
         test_condition = 'public&nbsp;preview...'
-        url = self.click_content_link(browser, base_url, test_condition, content,
-                                      link_text, tab_name)
+        url = self.click_content_tab_name(browser, base_url, test_condition, content,
+                                      tab_name)
         # click the publish tab
-        tab_name = 'tab_preview_publish'
-        link_text = '\n        publish&nbsp;now\n      '
-        test_condition = 'Version approved.'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                      link_text, tab_name)
+        tab_name = 'tab_status'
+        #link_text = '\n        publish&nbsp;now\n      '
+        test_condition = 'status of'
+        url = self.click_content_tab_name(browser, url, test_condition, content,
+                                          tab_name)
+        # click publish now
+        submit_value = 'publish now'
+        form_name = 'editor_approves'
+        test_condition = 'close published version'
+        url = self.get_form_submit(browser, url, test_condition, form_name,
+                                   submit_value)
         # view the public document
-        link_text = 'view public version'
-        test_condition = '<h2 class="heading">test content</h2>'
-        url = self.click_content_link(browser, url, test_condition, content,
-                                    link_text)
+        #link_text = 'view public version'
+        #test_condition = '<h2 class="heading">test content</h2>'
+        #url = self.click_content_link(browser, url, test_condition, content,
+        #                            link_text)
         browser.goBack()
         self.do_logout(browser)
 

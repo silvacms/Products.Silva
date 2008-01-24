@@ -12,8 +12,11 @@ import zope.component.eventtesting
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
 
-# Default silva test user and password
+# Default dummy test user and password
+dummy_name = ZopeTestCase.user_name
+dummy_password = ZopeTestCase.user_password
 
+# Default silva test user and password
 users = {
     'manager': {'password': ZopeTestCase.user_password,
                 'role': 'Manager' },
