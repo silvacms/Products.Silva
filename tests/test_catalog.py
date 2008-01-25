@@ -154,7 +154,10 @@ class FulltextIndexTestCase(CatalogTestCase):
         
         document = self.document
         editable = self.editable
-        editable.content.manage_edit('''<foo> Hello world! <source id=""><parameter type="string" key="hidden_text">verboten</parameter></source></foo>''')
+        editable.content.manage_edit('''<foo> Hello world!
+            <source id="">
+            <parameter type="string" key="hidden_text">verboten</parameter>
+            </source></foo>''')
         # We need to do this so that document.fulltext() actually
         # returns content:
         document._unapproved_version = ('0', DateTime(), None)
