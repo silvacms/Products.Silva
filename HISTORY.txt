@@ -10,13 +10,20 @@ Silva changes
 
       - fix for bug 109008 copied from trunk
 
-      - With a base tag in the layout template the publisher form in public
-        preview 404's. The form now has a constructed action instead of a point.
-        This will work for sites that don't define a base tag too (issue1705).
+      - With a base tag in the layout template the publisher form in
+        public preview 404's. The form now has a constructed action
+        instead of a point.
+        
+        This will work for sites that don't define a base tag too
+        (issue1705).
 
-     - 2007-03-15: Ghost and GhostFolder Metadata Access Handlers
+      - 2007-03-15: Ghost and GhostFolder Metadata Access Handlers
         return read only metadata bindings, so that the metadata of
         the haunted original can not be accidentally written to.
+
+      - External sources are removed when extracting the fulltext from
+        a document, since the values of the parameters are not
+        necessarily meant to be public information.
 
   1.5.10
 
