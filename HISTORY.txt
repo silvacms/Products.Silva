@@ -17,7 +17,7 @@ Silva changes
         it to the extfile.ini.
 
     Bugs Fixed:
-    
+
       - Changed the threshold variable in upgrade.py from 500 to 50,
         this may impact speed of upgrades negatively but it seems
         necessary for for instance ExtFile migration, where 500
@@ -203,6 +203,12 @@ Silva changes
       - Added True switch to Image.py tag method to escape double quotes.
 
       - A security fix in Zope 2.10.3 broke install.py.
+
+    Ported from the 1.6 branch:
+
+      - External sources are removed when extracting the fulltext from
+        a document, since the values of the parameters are not
+        necessarily meant to be public information.
 
   Silva 1.6
 
