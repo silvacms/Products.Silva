@@ -154,7 +154,10 @@ class FulltextIndexTestCase(CatalogTestCase):
         
         document = self.document
         editable = self.editable
-        editable.content.manage_edit("<foo> Hello world! </foo>")
+        editable.content.manage_edit('''<foo> Hello world!
+            <source id="">
+            <parameter type="string" key="hidden_text">verboten</parameter>
+            </source></foo>''')
         # We need to do this so that document.fulltext() actually
         # returns content:
         document._unapproved_version = ('0', DateTime(), None)
@@ -168,6 +171,9 @@ class FulltextIndexTestCase(CatalogTestCase):
         # But not <foo>, which isn't really content
         self.assertEquals(len(self.catalog(fulltext='foo')), 0)
 
+        # Also not 'verboten', because external sources are removed
+        # from the fulltext.
+        self.assertEquals(len(self.catalog(fulltext='verboten')), 0)
 
 import unittest
 def test_suite():
