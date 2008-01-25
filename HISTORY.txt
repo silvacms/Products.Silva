@@ -4,6 +4,13 @@ Silva changes
 
   Silva 1.6.2 (unreleased)
 
+    Bugs fixed:
+
+      - External sources are removed when extracting the fulltext from
+        a document, since the values of the parameters are not
+        necessarily meant to be public information.
+
+
   Silva 1.6.1
 
     Features added:
