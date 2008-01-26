@@ -89,11 +89,11 @@ listingTopControlsHeadingColorContent:string=#ddeee3
 
 inputBorder:string=1px solid #366
 inputBackground:string=#d5e7e7
-inputFontColor:string=#339
+inputFontColor:string=#336
 inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 
 buttonMargin:string=0
-buttonPadding:string=0.05em 0.5em
+buttonPadding:string=1px 0.5em
 buttonBorder:string=1px solid #345
 buttonBorderStyle:string=none solid none
 buttonFontSize:string=100%
@@ -108,9 +108,9 @@ transportBorder:string=1px solid #8faecf
 transportFontColor:string=#d9f3f1
 transportBackground:string=#283365
 
-destructiveBorder:string=1px solid #b48f8f
-destructiveFontColor:string=#fdeaea
-destructiveBackground:string=#752e2f
+removeBorder:string=1px solid #b48f8f
+removeFontColor:string=#fdeaea
+removeBackground:string=#752e2f
 
 cancelBorder:string=1px solid #b9c2c1
 cancelFontColor:string=#ccd7d6

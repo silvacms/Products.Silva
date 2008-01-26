@@ -281,7 +281,7 @@ expiration time
 <tr class="controls">
 <td class="align-right"
   colspan="2">
-<input class="executor"
+<input class="button executor"
   style="float:right"
   name="tab_status_open_now:method"
   type="submit"
@@ -361,7 +361,7 @@ The message may be viewed by local users.
 &nbsp;
 </td>
 <td class="align-right">
-<input class="reject"
+<input class="button reject"
   type="submit" 
   title="access key: alt-j" 
   accesskey="j"
@@ -450,8 +450,9 @@ If necessary, the published version of this content can be manually closed (take
 
 <tfoot>
 <tr class="controls">
-<td class="align-right">
-<input class="close"
+<td>
+<input class="button close"
+  style="float:right"
   type="submit"
   value="close published version"
   title="access key: alt-c"

@@ -63,7 +63,7 @@
                   <metal:fill-slot fill-slot="sidebar">
                     <tal:block define="sb context/@@sidebar"
                                replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s&selected_path=%s' % (filter_string, show_add, selected_path) , vein)" />
-                  </metal:fill-slot>
+input class="button cancel                  </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
             </td>
@@ -421,7 +421,7 @@
                   <tr class="controls">
                     <td class="align-right"
                       colspan="5">
-                      <input class="cancel"
+                      <input class="button cancel"
                         style="float:left;"
                         type="button"
                         name="cancel"
@@ -431,7 +431,7 @@
                         i18n:attributes="title;value"
                         onclick="window.close();return false;"
                       />
-                      <input class="executor"
+                      <input class="button executor"
                         type="button"
                         name="place"
                         value="place reference..."

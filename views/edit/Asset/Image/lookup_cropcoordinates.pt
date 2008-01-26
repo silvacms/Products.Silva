@@ -55,21 +55,12 @@
         
         a.button, a, a:link, a:visited {
         display: block;
-        font-size: 95%; 
-        color: #def3de;
-        background-color: #004d29;
-        border: 1px solid #6bb694;
-        padding: 0.2em 0.5em;
-        margin: 0.7em 0;
         width: 10em;
         text-align: center;
-        text-decoration: none;
         }
         a.button:hover {
         color: #e6ffef;
         background-color: #528e73;
-        border: 1px solid #8cc2ad;
-        text-decoration: none;
         }
         
         #ground {
@@ -170,7 +161,7 @@
             </li>
           </ul>
           
-          <input class="transport" 
+          <input class="button transport" 
               type="button" 
               onclick="cropper.insertCropCoords()"
               value="use coordinates..."

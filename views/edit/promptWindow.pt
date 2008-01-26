@@ -32,7 +32,7 @@
       </tr>
       <tr class="controls">
         <td>
-          <input class="cancel"
+          <input class="button cancel"
             type="button" 
             value="cancel"
             title="cancel the automatic save action: alt-c"

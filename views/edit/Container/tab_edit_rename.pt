@@ -125,7 +125,7 @@
               accesskey="r"
               i18n:attributes="value;title"
             />
-            <input class="cancel"
+            <input class="button cancel"
               type="button"
               name="edit_cancel"
               value="cancel"

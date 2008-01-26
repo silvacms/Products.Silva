@@ -20,7 +20,7 @@
 **   sidebar navigation
 **   focus shapes
 ** form definitions
-**   forms eye candy
+**   form control interaction
 ** info + clipboard
 ** feedback
 ** typography
@@ -126,7 +126,7 @@ div.tabs a {
   border-bottom-color: &dtml-shade50;;
   color: &dtml-mainTabFontColor;;
   background: &dtml-mainTabBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   text-align: center;
@@ -241,7 +241,7 @@ div.middleground {
   padding: 0;
   border-bottom: 1px solid #657;
   background-color: #8797ab;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
 line-height:130%;
@@ -253,7 +253,7 @@ div.middleground a {
 padding: 0em 2em 0.1em;
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   text-align: center;
@@ -752,24 +752,23 @@ form.sublisting {
 form {
   margin: 0;
   border: none;
-  border-collapse: collapse;
 }
 
 input {
-  margin-top: 1px;
-  padding: 0.1em;
+  margin: 1px 0;
+  padding: 1px;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
-  background: &dtml-inputBackground;;
+  background-color: &dtml-inputBackground;;
   font: &dtml-inputFont;;
-  vertical-align: middle;
 }
 
 textarea {
-  padding: 0.1em;
+  margin: 1px 0;
+  padding: 1px;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
-  background: &dtml-inputBackground;;
+  background-color: &dtml-inputBackground;;
   font: &dtml-inputFont;;
 }
 
@@ -817,19 +816,18 @@ input[type="submit"] {
   overflow: visible;
 }
 
+/* manipulator button style from which all others derive */
 input.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
+  border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
-  background: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
   cursor: &dtml-buttonCursor;;
-line-height:160%
 }
 
 /* used in conflict situations where public view css wins */
@@ -839,8 +837,8 @@ button.button {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
-  background: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -849,113 +847,34 @@ line-height:160%;
 }
 
 input.transport {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
   color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: &dtml-transportBackground;;
 }
 
-input.warning {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-destructiveFontColor;;
-  background: &dtml-destructiveBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+input.remove, input.warning {
+  color: &dtml-removeFontColor;;
+  background-color: &dtml-removeBackground;;
 }
 
 input.cancel {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
   color: &dtml-cancelFontColor;;
-  background: &dtml-cancelBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: &dtml-cancelBackground;;
 }
 
 input.executor {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
   color: #b3fffb;
-  background: #1F626D; /*#21565b*/
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: #1F626D; /*#21565b*/
 }
 
-/* publish screen state coded buttons */
+/* state coded publish action buttons */
 input.reject {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background: #8f7f01;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: #8f7f01;
 }
 input.revoke {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background: #008c55;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: #008c55;
 }
 input.close {
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background: #202080;
-background-image: url(<dtml-var root_url>/globals/glow.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font-size: &dtml-buttonFontSize;;
-  font-weight: &dtml-buttonWeight;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
+  background-color: #202080;
 }
 
 
@@ -982,8 +901,8 @@ a.button:link {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
-  background: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -996,8 +915,8 @@ a.button:visited {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
-  background: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-manipulatorBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -1006,7 +925,7 @@ background-repeat: repeat-x;
 }
 a.button:hover {
   color: #bfffd3;
-  background: #668b69;
+  background-color: #668b69;
   cursor: pointer;
 }
 
@@ -1018,8 +937,8 @@ a.transport:link {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-transportBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -1033,8 +952,8 @@ a.transport:visited {
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
   color: &dtml-transportFontColor;;
-  background: &dtml-transportBackground;;
-background-image: url(<dtml-var root_url>/globals/glow.png);
+  background-color: &dtml-transportBackground;;
+background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -1044,7 +963,7 @@ background-repeat: repeat-x;
 a.transport:hover {
   border-color: #99b4cf;
   color: #e5fffe;
-  background: #74748b;
+  background-color: #74748b;
   cursor: pointer;
 }
 
@@ -1053,7 +972,7 @@ a.transport:hover {
 table.listing td.parent {
   padding: 0;
   border: &dtml-listingBorder;;
-  background: &dtml-transportBackground;;
+  background-color: &dtml-transportBackground;;
   text-align: center;
   vertical-align: bottom;
 }
@@ -1064,21 +983,22 @@ table.listing td.parent a {
 }
 table.listing td.parent a:hover {
   color: #bfffd3;
-  background: #53538b;
+  background-color: #53538b;
 }
-
+/* only used in lookup ui for back */
 table.listing div.transport-border {
   padding-bottom: 1px;
   border: &dtml-transportBorder;;
 }
 table.listing div.transport-border:hover {
   color: #bfffd3;
-  background: #53538b;
+  background-color: #53538b;
 }
 
-/* _____________________________ forms eye candy _______ */
+/* _____________________________ form control interaction _______ */
 
 /* _______ input fields _______ */
+/* these selectors are also define unclassed submit buttons */
 
 input:hover, textarea:hover, select:hover {
 border-color : #599;
@@ -1086,7 +1006,7 @@ background-color: #def2f2;
 }
 
 input:focus, textarea:focus, select:focus {
-border-color : #0cc;
+border-color : #4cc;
 background-color: #e8f7f7;
 }
 
@@ -1100,20 +1020,8 @@ color:#336;
 
 /* _______ button controls _______ */
 
-/* default stylers for classless buttons, delete or make into shockers:
-input[type="submit"]:hover, input[type="button"]:hover {
-  color: #bfffd3;
-  background-color: #69878c;
-}
-input[type="submit"]:focus, input[type="button"]:focus {
-  color: #bfffd3;
-  background-color: #008a8a;
-}
-*/ 
- 
-/* warm glow 548e72 */
-input.button:hover, button.button:hover,
-button[type="submit"]:hover {
+/* manipulator warm glow 548e72 */
+input.button:hover, button.button:hover {
   color: #e5fffe;
   background-color: #4A7F67;
 }
@@ -1135,12 +1043,12 @@ input.transport:focus {
 }
 
 /* hot glow */
-input.warning:hover {
+input.remove:hover, input.warning:hover {
   color: #fff5f5;
   background-color: #a85353;
 }
 
-input.warning:focus {
+input.remove:focus, input.warning:focus {
   color: #f0c0c0;
   background-color: #53538b;
 }
@@ -1171,14 +1079,25 @@ input.imagebutton {
   background-color: transparent;
 }
 
-input[type="checkbox"], input[type="radio"] {
+/*input[type="checkbox"], input[type="radio"] {
   margin-top:0;
   margin-bottom:0;
-/* remove stupid IE6 framing of checkboxes and radio buttons */
+   remove stupid IE6 framing of checkboxes and radio buttons 
 border: none;
 background-color: transparent;
-}
+}*/
 
+/* default stylers for classless buttons (either delete or make into shockers):
+input[type="submit"]:hover, input[type="button"]:hover {
+  color: #bfffd3;
+  background-color: #69878c;
+}
+input[type="submit"]:focus, input[type="button"]:focus {
+  color: #bfffd3;
+  background-color: #008a8a;
+}
+*/ 
+ 
 
 /* ________________________________________________ info + clipboard _______ */
 

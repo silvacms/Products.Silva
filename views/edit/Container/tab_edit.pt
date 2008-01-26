@@ -99,7 +99,7 @@ window.onload_registry.register(function() {
             accesskey="s"
             i18n:attributes="title"
           ></label>
-          <input class="transport"
+          <input class="button transport"
             style="float:left"
             name="add_object:method"
             id="add_object_button"
@@ -109,7 +109,7 @@ window.onload_registry.register(function() {
             accesskey="n"
             i18n:attributes="value;title"
           />
-          <input class="transport"
+          <input class="button transport"
             style="float:right"
             name="tab_edit_import:method"
             type="submit"
@@ -516,7 +516,7 @@ window.onload_registry.register(function() {
             accesskey="m"
             i18n:attributes="value;title"
           />
-          <input class="transport"
+          <input class="button transport"
             style="float:left"
             name="tab_edit_rename_start:method"
             type="submit"
@@ -573,7 +573,7 @@ window.onload_registry.register(function() {
             />
           </tal:if>
           <tal:if condition="python:(default_document or publishables or assets)">
-            <input class="warning"
+            <input class="button remove"
               style="float:left"
               name="tab_edit_delete:method"
               type="submit"
@@ -590,7 +590,7 @@ window.onload_registry.register(function() {
           _______ editor controls for publishing actions _______
         </tal:block>
         <tal:if condition="may_approve_content">
-          <input class="executor"
+          <input class="button executor"
             style="float:right"
             name="tab_edit_open_now:method"
             value="publish now"
@@ -600,7 +600,7 @@ window.onload_registry.register(function() {
             i18n:attributes="value; title"
             tal:condition="python:editables or closed"
           />  
-          <input class="close"
+          <input class="button close"
             style="float:right"
             name="tab_edit_close:method"
             value="close"

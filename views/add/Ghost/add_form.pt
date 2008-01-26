@@ -67,7 +67,7 @@
           tal:condition="field/is_required">*</span>
       </tal:block>
       <tal:block tal:condition="python:field.getId() == 'content_url'">
-        <input class="transport"
+        <input class="button transport"
           type="button"
           value="reference..."
           title="find the content this ghost should refer to: alt-r"
@@ -123,7 +123,7 @@
         accesskey="s"
         i18n:attributes="value;title"
       />
-      <input class="cancel"
+      <input class="button cancel"
         style="float:left;"
         type="submit"
         name="add_cancel"

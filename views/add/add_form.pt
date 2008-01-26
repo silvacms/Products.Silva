@@ -149,7 +149,7 @@
           accesskey="s"
           i18n:attributes="value;title"
         />
-        <input class="cancel"
+        <input class="button cancel"
           style="float:left"
           type="submit"
           name="add_cancel"

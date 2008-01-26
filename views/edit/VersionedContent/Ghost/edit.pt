@@ -69,7 +69,7 @@
 
       <tr class="even">
         <td class="align-right">
-          <input class="transport"
+          <input class="button transport"
             type="button"
             value="reference..."
             title="Locate item to refer to: alt-r"

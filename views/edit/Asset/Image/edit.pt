@@ -172,7 +172,7 @@
         <tr class="controls">
           <td></td>
           <td>
-            <input class="transport"
+            <input class="button transport"
               type="button"
               value="set crop coordinates..."
               title="specify the center of the area to crop by clicking in the image: alt-o"
