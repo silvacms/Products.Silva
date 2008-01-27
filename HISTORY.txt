@@ -7,26 +7,30 @@ Silva changes
 
     Features added:
 
-      - Since the full media export is restricted to Chief Editors and
-        Managers, there's no reason to show the import or export
-        buttons to lower level roles (since the pure xml import/export
-        is deprecated).  Conditioned the buttons.
+      - The css for form button controls has been refactored. There is now a
+        standard class, 'button', which can be modified by adding a second
+        class name, the action type which the button performs. These actions
+        are: manipulator, transporter, executor, remover, and canceler. E.g.
+        class="button transporter".
 
-      - Modernized buttons and matrix nav based on trainee
-        feedback. Use a float for button alignment classes or obviate
-        the spaces in html.
+      - Since the full media export is restricted to Chief Editors and
+        up, there's no reason to show the import or export buttons to lower
+        level roles (since the pure xml import/export is deprecated). 
+        Conditioned the buttons.
+
+      - Modernized buttons and matrix nav based on trainee feedback. Use a 
+        float for button alignment classes or obviate the spaces in html.
 
       - Renovated the Kupu image toolbox to make it more userfriendly.
         Improved the alignments in the table toolbox.
 
-      - New "Editor Comments" Kupu Tool: displays the "internal
-        comments" silva-extra metadata field if there are comments.
-        This promotes the visibility of internal / editor comments so
-        that anyone editing the document will see them.  This tool is
-        only visible if there are comments, and does not allow editing
-        at this time.  This toolbox is non-collapsible, and requires a
-        version of kupu newer than 1.4b1 to support non-collapsible
-        toolboxes
+      - New "Editor Comments" Kupu Tool: displays the "internal comments"
+        silva-extra metadata field if there are comments. This promotes the
+        visibility of internal / editor comments so that anyone editing the
+        document will see them.  This tool is only visible if there are
+        comments, and does not allow editing at this time.  This toolbox is
+        non-collapsible, and requires a version of kupu newer than 1.4b1 to
+        support non-collapsible toolboxes.
 
       - Support for direct username assignment to clipboard. If the
         service_members service defines a method 'direct_user_lookup'
@@ -34,9 +38,9 @@ Silva changes
         changed to an add user to clipboard UI. This allows the adding
         of new users to a clipboard directly.
 
-      - bug 100741: when groups are be used, the groups management
+      - bug 100741: when groups are to be used, the groups management
         screen also shows groups defined elsewhere (not just local to
-        the container) and provides links to edit those groups
+        the container) and provides links to edit those groups.
 
       - 100750: "Insert new object here" functionality.  When you
         select an object in a containers edit list, then select the

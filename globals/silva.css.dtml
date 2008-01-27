@@ -260,21 +260,23 @@ background-repeat: repeat-x;
   font-weight: &dtml-mainTabFontWeight;;
 }
 div.middleground a:link {
-  color: &dtml-transportFontColor;;
+  color: &dtml-transporterFontColor;;
   background-color: #4d5680;
 }
 div.middleground a:visited {
-  color: &dtml-transportFontColor;;
+  color: &dtml-transporterFontColor;;
   background-color: #4d5680;
 }
 div.middleground a:hover {
+border-color: #567;
   color: #e5fffe;
   background-color: #74748b;
   text-decoration: none;
 }
 div.middleground a:active {
-  color: #bfffd3;
-  background-color: #008a8a;
+border-color: #789;
+color: #b3fffb;
+background-color: #8d97c2;
 }
 
 div.middleground a.selected {
@@ -286,8 +288,8 @@ div.middleground a.selected {
 /* _______ middleground executor (publish now) _______ */
 
 div.middleground a.executor {
-  color: #b3fffb;
-  background-color: #38656c;
+  color: &dtml-executorFontColor;;
+  background-color: &dtml-executorBackground;;
 }
 div.middleground a.executor:hover {
   color: #e5ffec;
@@ -295,7 +297,7 @@ div.middleground a.executor:hover {
 }
 div.middleground a.executor:active {
   color: #bfffd3;
-  background-color: #008a8a;
+  background-color: #64ABC8;
 }
 
 
@@ -756,7 +758,7 @@ form {
 
 input {
   margin: 1px 0;
-  padding: 1px;
+  padding: 0.1em;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
   background-color: &dtml-inputBackground;;
@@ -765,7 +767,7 @@ input {
 
 textarea {
   margin: 1px 0;
-  padding: 1px;
+  padding: 0.1em;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
   background-color: &dtml-inputBackground;;
@@ -778,7 +780,7 @@ input.store, textarea.store {
 }
 
 select {
-  margin: 0;
+  margin: 0 0 1px;
   border: &dtml-inputBorder;;
   color: &dtml-mainTabFontColorSelected;;
   background-color: &dtml-inputBackground;;
@@ -793,17 +795,19 @@ select.store {
 }
 
 select.manipulator {
+  margin: 0;
   border: &dtml-manipulatorBorder;;
 border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
   background-color: &dtml-manipulatorBackground;;
 }
 
-select.transport {
-  border: &dtml-transportBorder;;
+select.transporter {
+  margin: 0;
+  border: &dtml-transporterBorder;;
 border-color: #283365 #345 #283365;
-  color: &dtml-transportFontColor;;
-  background-color: &dtml-transportBackground;;
+  color: &dtml-transporterFontColor;;
+  background-color: &dtml-transporterBackground;;
 }
 
 /* for forms editor IE6 */
@@ -817,7 +821,7 @@ input[type="submit"] {
 }
 
 /* manipulator button style from which all others derive */
-input.button {
+input.button, button.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-buttonBorder;;
@@ -832,48 +836,37 @@ background-repeat: repeat-x;
 
 /* used in conflict situations where public view css wins */
 button.button { 
-  margin: &dtml-buttonMargin;;
-  padding: &dtml-buttonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background-color: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
   font: &dtml-inputFont;;
-  cursor: &dtml-buttonCursor;;
-line-height:160%;
 }
 
-input.transport {
-  color: &dtml-transportFontColor;;
-  background-color: &dtml-transportBackground;;
-}
-
-input.remove, input.warning {
-  color: &dtml-removeFontColor;;
-  background-color: &dtml-removeBackground;;
-}
-
-input.cancel {
-  color: &dtml-cancelFontColor;;
-  background-color: &dtml-cancelBackground;;
+input.transporter {
+  color: &dtml-transporterFontColor;;
+  background-color: &dtml-transporterBackground;;
 }
 
 input.executor {
-  color: #b3fffb;
-  background-color: #1F626D; /*#21565b*/
+  color: &dtml-executorFontColor;;
+  background-color: &dtml-executorBackground;;
+}
+
+input.remover, input.warning {
+  color: &dtml-removerFontColor;;
+  background-color: &dtml-removerBackground;;
+}
+
+input.canceler {
+  color: &dtml-cancelerFontColor;;
+  background-color: &dtml-cancelerBackground;;
 }
 
 /* state coded publish action buttons */
-input.reject {
+input.rejector {
   background-color: #8f7f01;
 }
-input.revoke {
+input.revoker {
   background-color: #008c55;
 }
-input.close {
+input.closer {
   background-color: #202080;
 }
 
@@ -893,78 +886,37 @@ th label {
 }
 
 
-/* _______ pseudo form button selectors, matches button style _______ */
+/* _______ pseudo form button selectors, matches transporter button style _______ */
 
-a.button:link {
+/* transport between screens */
+a.transporter {
   margin: &dtml-pseudoButtonMargin;;
   padding: &dtml-pseudoButtonPadding;;
 border: &dtml-buttonBorder;;
 border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background-color: &dtml-manipulatorBackground;;
 background-image: url(<dtml-var root_url>/globals/reflection.png);
 background-position: top left;
 background-repeat: repeat-x;
   font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
-  text-decoration: none;
 }
-a.button:visited {
-  margin: &dtml-pseudoButtonMargin;;
-  padding: &dtml-pseudoButtonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-manipulatorFontColor;;
-  background-color: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font: &dtml-inputFont;;
-  font-size: &dtml-pseudoButtonFontSize;;
-  text-decoration: none;
+a.transporter:link {
+  color: &dtml-transporterFontColor;;
+  background-color: &dtml-transporterBackground;;
 }
-a.button:hover {
-  color: #bfffd3;
-  background-color: #668b69;
-  cursor: pointer;
+a.transporter:visited {
+  color: &dtml-transporterFontColor;;
+  background-color: &dtml-transporterBackground;;
 }
-
-/* _______ transport between screens _______ */
-
-a.transport:link {
-  margin: &dtml-pseudoButtonMargin;;
-  padding: &dtml-pseudoButtonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-transportFontColor;;
-  background-color: &dtml-transportBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font: &dtml-inputFont;;
-  font-size: &dtml-pseudoButtonFontSize;;
-  text-decoration: none;
-}
-a.transport:visited {
-  margin: &dtml-pseudoButtonMargin;;
-  padding: &dtml-pseudoButtonPadding;;
-  border: &dtml-transportBorder;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-  color: &dtml-transportFontColor;;
-  background-color: &dtml-transportBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
-  font: &dtml-inputFont;;
-  font-size: &dtml-pseudoButtonFontSize;;
-  text-decoration: none;
-}
-a.transport:hover {
+a.transporter:hover {
   border-color: #99b4cf;
   color: #e5fffe;
   background-color: #74748b;
-  cursor: pointer;
+  text-decoration: none;
+}
+a.transporter:active {
+color: #bfffd3;
+background-color: #008a8a;
 }
 
 /* _______ subscreen parent links _______ */
@@ -972,13 +924,13 @@ a.transport:hover {
 table.listing td.parent {
   padding: 0;
   border: &dtml-listingBorder;;
-  background-color: &dtml-transportBackground;;
+  background-color: &dtml-transporterBackground;;
   text-align: center;
   vertical-align: bottom;
 }
 
 table.listing td.parent a {
-  color: &dtml-transportFontColor;;
+  color: &dtml-transporterFontColor;;
   text-decoration: none;
 }
 table.listing td.parent a:hover {
@@ -988,7 +940,7 @@ table.listing td.parent a:hover {
 /* only used in lookup ui for back */
 table.listing div.transport-border {
   padding-bottom: 1px;
-  border: &dtml-transportBorder;;
+  border: &dtml-transporterBorder;;
 }
 table.listing div.transport-border:hover {
   color: #bfffd3;
@@ -1006,57 +958,60 @@ background-color: #def2f2;
 }
 
 input:focus, textarea:focus, select:focus {
-border-color : #4cc;
-background-color: #e8f7f7;
+border-color : #0ff;
+background-color: #edf7f7;
 }
 
 input:focus:hover, textarea:focus:hover {
-background-color: #f2fbfb;
+background-color: #f2fcfc;
 }
 
 select:focus, select:hover {
 color:#336;
 }
 
-/* _______ button controls _______ */
+/* _______ controls candy _______ */
 
-/* manipulator warm glow 548e72 */
+/* manipulator warm glow */
 input.button:hover, button.button:hover {
+border-color: #567;
   color: #e5fffe;
   background-color: #4A7F67;
 }
-
 input.button:focus, button.button:focus {
+border-color: #789;
   color: #bfffd3;
   background-color: #538b58;
 }
 
-/* cool glow 74748b */
-input.transport:hover, button.transport:hover {
+/* transporter cool glow */
+input.transporter:hover, button.transporter:hover {
   color: #e5fffe;
   background-color: #68687E;
 }
-
-input.transport:focus {
-  color: #e9f7ff;
-  background-color: #7a83a6;
+input.transporter:focus {
+  color: #b3fffb;
+background-color: #8d97c2;
 }
 
-/* hot glow */
-input.remove:hover, input.warning:hover {
+/* remover hot glow */
+input.remover:hover, input.warning:hover {
   color: #fff5f5;
   background-color: #a85353;
 }
-
-input.remove:focus, input.warning:focus {
+input.remover:focus, input.warning:focus {
   color: #f0c0c0;
   background-color: #53538b;
 }
 
-/* eerie glow 538da3 */
+/* executor eerie glow */
 input.executor:hover {
   color: #e5ffec;
   background-color: #4C8298;
+}
+input.executor:focus {
+color: #bfffd3;
+background-color: #008a8a;
 }
 
 /* state coded buttons */
@@ -1073,19 +1028,12 @@ input.close:hover {
   background-color: #4a4aa7;
 }
 
-/* image button */
-input.imagebutton {
-  border: 0;
-  background-color: transparent;
+input[type="radio"] {
+margin: 0 0.5em 0;
 }
-
-/*input[type="checkbox"], input[type="radio"] {
-  margin-top:0;
-  margin-bottom:0;
-   remove stupid IE6 framing of checkboxes and radio buttons 
-border: none;
-background-color: transparent;
-}*/
+input[type="checkbox"] {
+margin: 0 1px;
+}
 
 /* default stylers for classless buttons (either delete or make into shockers):
 input[type="submit"]:hover, input[type="button"]:hover {

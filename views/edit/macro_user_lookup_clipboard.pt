@@ -29,7 +29,7 @@
             <tr class="top-controls">
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
-                  <a class="transport"
+                  <a class="transporter"
                     style="float:right;"
                     title="lookup users: alt-l"
                     accesskey="l"
@@ -39,7 +39,7 @@
                     tal:condition="not:python:view.use_direct_lookup()">
                     lookup users...
                   </a>
-                  <a class="transport"
+                  <a class="transporter"
                     style="float:right;"
                     title="lookup users: alt-l"
                     accesskey="l"

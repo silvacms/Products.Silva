@@ -168,7 +168,7 @@
                   </tal:block>
                 </td>
                 <td class="align-right">
-                  <input class="button remove"
+                  <input class="button remover"
                     name="access_revoke_from_user:method"
                     title="revoke selected role(s) from selected user(s)"
                     type="submit"
@@ -251,7 +251,7 @@
               </tr>
               <tr class="controls align-right">
                 <td>
-                  <input class="button remove"
+                  <input class="button remover"
                     name="tab_access_deny_access:method"
                     type="submit"
                     value="deny role"
@@ -475,7 +475,7 @@
                     </tal:block>
                   </td>
                   <td class="align-right">
-                    <input class="button remove"
+                    <input class="button remover"
                       name="access_revoke_from_group:method"
                       title="revoke selected role(s) from selected group(s)"
                       type="submit"
@@ -615,7 +615,7 @@
                     title="restrict access to users with a specific role"
                     i18n:attributes="title;value"
                   />
-                  <input class="button remove"
+                  <input class="button remover"
                     style="float:left"
                     type="submit"
                     name="@@acquire_minimum_role_submit:method"

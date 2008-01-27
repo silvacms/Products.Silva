@@ -215,7 +215,7 @@
         <!-- Clipboard -->
         <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
           <metal:block fill-slot="clipboard_lookup_action">
-            <a class="transport"
+            <a class="transporter"
               style="float: right;"
               accesskey="u"
               title="return to the access screen with this clipboard: alt-u"
@@ -227,7 +227,7 @@
             </a>
           </metal:block>
           <metal:block fill-slot="clipboard_actions">
-            <input class="warning"
+            <input class="button remover"
               name="lookup_remove_from_selection:method"
               type="submit"
               value="remove user"

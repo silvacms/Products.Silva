@@ -349,7 +349,7 @@
           <input class="store" type="text" id="kupu-linktarget-input" name="kupu_link_target"/>
           <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value"/>
           <input type="button" class="button" value="update" id="kupu-link-updatebutton" i18n:attributes="value"/>
-          <input type="button" class="button remove" value="remove" id="kupu-link-delbutton" i18n:attributes="value"/>
+          <input type="button" class="button remover" value="remove" id="kupu-link-delbutton" i18n:attributes="value"/>
         </form>
       </div>
     </div>
@@ -364,7 +364,7 @@
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
+                  <table width="100%" border="0" cellspacing="0">
                     <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name"/></td>
@@ -380,7 +380,7 @@
                 <td>
                   <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value"/>
                   <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remove" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
+                  <input type="button" class="button remover" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
                 </td>
               </tr>
             </tbody>
@@ -447,7 +447,7 @@
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
+                  <table width="100%" border="0" cellspacing="0">
                     <tr>
                       <td width="15%"><a class="rollover" href=""><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a></td>
                       <td><input class="store" type="text" id="kupu-abbr-title"/></td>
@@ -466,7 +466,7 @@
                 <td>
                   <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value" />
                   <input type="button" class="button" value="update" id="kupu-abbr-updatebutton" i18n:attributes="value" />
-                  <input type="button" class="button remove" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value" />
+                  <input type="button" class="button remover" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value" />
                 </td>
               </tr>
             </tbody>
@@ -509,9 +509,9 @@
           <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'"/>
           <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">the external sources product is not installed.  this tool is disabled.</div>
           <input class="button" type="button" value="add source" id="kupu-extsource-addbutton"/>
-          <input class="button cancel" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
+          <input class="button canceler" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
           <input class="button" type="button" value="update" id="kupu-extsource-updatebutton"/>
-          <input class="button remove" type="button" value="remove" id="kupu-extsource-delbutton"/>
+          <input class="button remover" type="button" value="remove" id="kupu-extsource-delbutton"/>
           <div id="kupu-extsource-nosourcestext" style="display: none" i18n:translate="">
             No external sources found.
           </div>
@@ -532,7 +532,7 @@
             <tbody>
               <tr>
                 <td>
-                  <table width="100%" style="color: #333;" border="0" cellspacing="0">
+                  <table width="100%" border="0" cellspacing="0">
                     <tr>
                       <td class="titlecell">author</td>
                       <td><input class="store" type="text" id="kupu-citation-authorinput"/></td>
@@ -548,7 +548,7 @@
                 <td>
                   <input type="button" class="button" value="add element" id="kupu-citation-addbutton" i18n:attributes="value" />
                   <input type="button" class="button" value="update" id="kupu-citation-updatebutton" i18n:attributes="value" />
-                  <input type="button" class="button remove" value="remove" id="kupu-citation-deletebutton" i18n:attributes="value" />
+                  <input type="button" class="button remover" value="remove" id="kupu-citation-deletebutton" i18n:attributes="value" />
                 </td>
               </tr>
             </tbody>
@@ -584,13 +584,13 @@
           <tr>
             <td colspan="2">
               <div id="kupu-toolbox-addtable" class="kupu-toolbox-addtable">
-                <table width="100%" style="color:#333" cellpadding="0" cellspacing="0">
+                <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td class="titlecell" style="width:34%">rows</td>
+                    <td class="titlecell" style="width:34%"><label for="kupu-table-newrows">rows</label></td>
                     <td><input id="kupu-table-newrows" size="4"/></td>
                   </tr>
                   <tr>
-                    <td class="titlecell">columns</td>
+                    <td class="titlecell"><label for="kupu-table-newcols">columns</label></td>
                     <td><input id="kupu-table-newcols" size="4"/></td>
                   </tr>
                   <tr>
@@ -620,20 +620,20 @@
                     <td class="titlecell">column</td>
                     <td>
                         <input type="button" class="button" id="kupu-table-addcolumn-button" value="add column" i18n:attributes="value" />
-                        <input type="button" class="button remove" id="kupu-table-delcolumn-button" value="remove" i18n:attributes="value" />
+                        <input type="button" class="button remover" id="kupu-table-delcolumn-button" value="remove" i18n:attributes="value" />
                     </td>
                   </tr>
                   <tr>
                     <td class="titlecell">row</td>
                     <td>
                       <input type="button" class="button" id="kupu-table-addrow-button" value="add row" i18n:attributes="value" />
-                      <input type="button" class="button remove" id="kupu-table-delrow-button" value="remove" i18n:attributes="value" /></td>
+                      <input type="button" class="button remover" id="kupu-table-delrow-button" value="remove" i18n:attributes="value" /></td>
                   </tr>
                   <tr>
                     <td class="titlecell">table</td>
                     <td>
                       <input type="button" class="button" id="kupu-table-fix-button" value="cleanup" i18n:attributes="value" />
-                      <input type="button" class="button remove" id="kupu-table-delete-button" value="remove" i18n:attributes="value" />
+                      <input type="button" class="button remover" id="kupu-table-delete-button" value="remove" i18n:attributes="value" />
                     </td>
                   </tr>
                   <tr>
@@ -672,7 +672,7 @@
             <option value="-1">unlimited</option>
           </select>
           <input class="button" type="button" value="add element" id="kupu-toc-add-button" i18n:attributes="value" />
-          <input class="button remove" type="button" value="remove" id="kupu-toc-del-button" i18n:attributes="value" />
+          <input class="button remover" type="button" value="remove" id="kupu-toc-del-button" i18n:attributes="value" />
         </form>
       </div>
 

@@ -100,7 +100,7 @@
       </tr>
       <tr class="controls">
         <td>
-          <input class="warning"
+          <input class="button remover"
             type="submit"
             value="remove group"
             name="remove_groups_from_virtualgroup:method"

@@ -54,7 +54,7 @@ mainTabBorderColor:string=#3d4b67
 mainTabBorderColorSelected:string=#26334c
 mainTabFontWeight:string=normal
 mainTabFontColor:string=#e3ecff
-mainTabFontColorSelected:string=#424244
+mainTabFontColorSelected:string=#444
 
 contentTabBackground:string=#638776
 contentTabBackgroundRecede:string=#8fb39e
@@ -104,20 +104,21 @@ manipulatorBorder:string=1px solid #6bb591
 manipulatorFontColor:string=#d9f3da
 manipulatorBackground:string=#064C29
 
-transportBorder:string=1px solid #8faecf
-transportFontColor:string=#d9f3f1
-transportBackground:string=#283365
+transporterBorder:string=1px solid #8faecf
+transporterFontColor:string=#d9f3f1
+transporterBackground:string=#283365
 
-removeBorder:string=1px solid #b48f8f
-removeFontColor:string=#fdeaea
-removeBackground:string=#752e2f
+executorFontColor:string=#b3fffb
+executorBackground:string=#1f626d
 
-cancelBorder:string=1px solid #b9c2c1
-cancelFontColor:string=#ccd7d6
-cancelBackground:string=#444446
+removerFontColor:string=#fdeaea
+removerBackground:string=#752e2f
+
+cancelerFontColor:string=#ccd7d6
+cancelerBackground:string=#444446
 
 pseudoButtonMargin:string=0
-pseudoButtonPadding:string=0.1em 0.6em
+pseudoButtonPadding:string=0.1em 0.7em 0.2em
 pseudoButtonFontSize:string=100%
 
 headingSize1:string=140%

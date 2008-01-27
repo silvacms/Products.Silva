@@ -57,7 +57,7 @@
         <h3 style="float:left;" i18n:translate="">
           publishing actions
         </h3>
-        <input class="button transport"
+        <input class="button transporter"
           type="submit"
           name="../../edit/tab_status_export:method"
           value="export..."
@@ -244,7 +244,7 @@ _______ manual close section here _______
           i18n:attributes="value;title"
         />
         <tal:if condition="python:len(versions) > 1">
-          <input class="button remove"
+          <input class="button remover"
             style="float:right"
             type="submit"
             name="tab_status_delete_versions:method"
@@ -254,7 +254,7 @@ _______ manual close section here _______
             onclick="if (!confirm('Are you sure?')) return false"
             i18n:attributes="value;title"
           />
-          <input class="button transport"
+          <input class="button transporter"
             style="float:right"
             type="submit"
             name="tab_status_view_versions_start:method"

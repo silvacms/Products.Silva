@@ -201,7 +201,7 @@ div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
 
 div.kupu-tooltray {
   margin: 0;
-  padding: 0.3em;
+  padding: 0.1em 0.3em;
   color: #333;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
   line-height: 110%;
@@ -214,6 +214,11 @@ padding-right:0.2em;
 
 div.kupu-tooltray input {
 margin:0.1em 0;
+}
+
+div.kupu-tooltray input[type="radio"] {
+margin-right:0.5em;
+vertical-align:middle;
 }
 
 /* seems to keep IE (inc 7) in check without anything else */ 

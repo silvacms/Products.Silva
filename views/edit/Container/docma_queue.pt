@@ -37,7 +37,7 @@
     <thead>
       <tr class="top-controls">
         <td colspan="5">
-          <a class="transport"
+          <a class="transporter"
             style="float: right;"
             title="reload to update the queue lists: alt-r"
             accesskey="r"
@@ -228,7 +228,7 @@
             </span>
             <div notal:condition="may_change_content"
               metal:define-slot="manipulators">
-              <input class="warning"
+              <input class="button remover"
                 accesskey="x"
                 name="tab_edit_import_delete:method"
                 onclick="return confirm('Really remove?')"

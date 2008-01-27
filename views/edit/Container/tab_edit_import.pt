@@ -65,7 +65,7 @@
       </tr>
       <tr class="top-controls">
         <td colspan="3">
-          <a class="transport"
+          <a class="transporter"
             style="float: right;"
             href="tab_status_export"
             title="over to the export screen: alt-e"

@@ -12,8 +12,8 @@
     vein string:export;
     active_tab string:tab_status;
     parent_screen_name string:publish;
-    docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     refs request/refs | python:[request['model'].create_ref(request['model'])];
+    docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
     "
   i18n:domain="silva">
 
@@ -97,7 +97,7 @@
       </tr>
       <tr class="top-controls">
         <td colspan="3">
-          <a class="transport"
+          <a class="transporter"
             style="float: right;"
             href="tab_edit_import"
             title="over to the import screen: alt-i"
@@ -489,8 +489,8 @@
 ">
 <metal:use-macro use-macro="here/docma_queue/macros/listings">
 <metal:fill-slot fill-slot="manipulators">
-  <!--  XXX i18n hell-->
-  <input class="warning"
+  <!--  XXX i18n hell, but docma won't be supported anymore -->
+  <input class="button remover"
     accesskey="x"
     name="export_delete:method"
     onclick="return confirm('Really remove?')"

@@ -69,7 +69,7 @@
     <tr class="top-controls">
       <td colspan="6">
         <tal:if condition="python:user.has_role(['Manager', 'ChiefEditor'], model)">
-          <input class="button transport"
+          <input class="button transporter"
             style="float:right"
             name="tab_status_export:method"
             type="submit"
@@ -78,7 +78,7 @@
             value="export..."
             i18n:attributes="title;value"
           />
-          <input class="button transport"
+          <input class="button transporter"
             style="float:right"
             name="tab_edit_import:method"
             type="submit"
@@ -377,7 +377,7 @@
           i18n:attributes="value;title"
         />
         <metal:def define-macro="versioning_controls">
-          <input class="button reject"
+          <input class="button rejector"
             style="float:left"
             type="submit"
             name="tab_status_reject:method"
@@ -387,7 +387,7 @@
             tal:condition="rejectables"
             i18n:attributes="value;title"
           />
-          <input class="button revoke"
+          <input class="button revoker"
             style="float:left"
             type="submit"
             name="tab_status_revoke:method"
@@ -397,7 +397,7 @@
             tal:condition="revokeables"
             i18n:attributes="value;title"
           />
-          <input class="button close"
+          <input class="button closer"
             style="float:left"
             type="submit"
             name="tab_status_close:method"

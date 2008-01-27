@@ -82,7 +82,7 @@ h2 {
   <div class="fixed-feedback"
     style="padding:0">
     <form action="tab_edit_break_lock" method="post">
-      <input class="warning"
+      <input class="button remover"
         type="submit"
         value="break lock"
         title="Somebody else just edited this item, unlock it: alt-u"

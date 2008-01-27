@@ -131,7 +131,7 @@
         accesskey="s"
         i18n:attributes="value;title"
       />
-      <input class="button cancel"
+      <input class="button canceler"
         style="float:left;"
         type="submit"
         name="add_cancel"

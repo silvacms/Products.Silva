@@ -129,7 +129,7 @@ function focus_editor() {
       <tr class="controls">
         <td class="align-right"
           colspan="2">
-          <input class="button cancel"
+          <input class="button canceler"
             style="float:left;"
             type="button"
             name="edit_cancel"

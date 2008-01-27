@@ -451,7 +451,7 @@ If necessary, the published version of this content can be manually closed (take
 <tfoot>
 <tr class="controls">
 <td>
-<input class="button close"
+<input class="button closer"
   style="float:right"
   type="submit"
   value="close published version"

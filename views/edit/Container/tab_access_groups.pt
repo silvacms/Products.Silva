@@ -247,7 +247,7 @@
     <tfoot>
       <tr class="controls">
         <td colspan="5">
-          <input class="warning"
+          <input class="button remover"
             type="submit"
             value="delete"
             title="delete selected groups: alt-d"
