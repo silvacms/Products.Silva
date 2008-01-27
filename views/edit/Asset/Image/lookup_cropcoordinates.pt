@@ -161,7 +161,7 @@
             </li>
           </ul>
           
-          <input class="button transport" 
+          <input class="button transporter" 
               type="button" 
               onclick="cropper.insertCropCoords()"
               value="use coordinates..."

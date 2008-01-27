@@ -949,7 +949,7 @@ table.listing div.transport-border:hover {
 
 /* _____________________________ form control interaction _______ */
 
-/* _______ input fields _______ */
+/* _______ field interaction _______ */
 /* these selectors are also define unclassed submit buttons */
 
 input:hover, textarea:hover, select:hover {

@@ -338,7 +338,7 @@
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-          <input type="button" class="button transport" style="" onclick="getLink(); return false;" value="get link reference..." i18n:attributes="value"/>
+          <input type="button" class="button transporter" style="" onclick="getLink(); return false;" value="get link reference..." i18n:attributes="value"/>
           <input class="store" type="text" id="kupu-link-input" name="kupu_link_href" /><br/>
           <span i18n:translate="">link target</span>
           <select id="kupu-linktarget-select">
@@ -399,8 +399,8 @@
 
     <div class="kupu-tooltray">
       <form name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
-        <input type="button" class="button transport" onclick="getImage()" value="get image reference..."/>
-        <input type="button" class="button transport" value="edit image..." id="kupu-toolbox-image-edit-button" tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')"/>
+        <input type="button" class="button transporter" onclick="getImage()" value="get image reference..."/>
+        <input type="button" class="button transporter" value="edit image..." id="kupu-toolbox-image-edit-button" tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
           <input type="text" id="kupu-toolbox-image-src" style="width:98%" title="image source"/>
           <label class="select" for="kupu-toolbox-image-align">image alignment:</label>
@@ -416,7 +416,7 @@
             <legend>link settings</legend>
             <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked"/><label for="kupu-toolbox-image-link-checkbox-hires">link to high resolution version</label><br/>
             <div id="kupu-toolbox-image-link-cont">
-              &#160;<label for="kupu-toolbox-image-link">link to:</label>&#160;<input type="button" class="button transport" onclick="imageToolGetLinkReference()" value="get link reference..."/><br/>
+              &#160;<label for="kupu-toolbox-image-link">link to:</label>&#160;<input type="button" class="button transporter" onclick="imageToolGetLinkReference()" value="get link reference..."/><br/>
               <input type="text" id="kupu-toolbox-image-link" style="margin-left:0.2em; width:96%"/>
             </div>
             &#160;<label class="select" for="kupu-toolbox-image-target">link target:</label>
