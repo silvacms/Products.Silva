@@ -322,8 +322,9 @@ div.kupu-properties-item-innerdiv {
 }
 
 #kupu-toolbox-comment .kupu-tooltray {
-   height: 5em;
-   overflow: auto;
+  height: 5em;
+  overflow: auto;
+  color:#3c2d50;
 }
 
 #kupu-toolbox-debug {
