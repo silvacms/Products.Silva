@@ -33,7 +33,7 @@ def openFile(filename):
     return open(name + '/' + filename)
 
 class BaseMixin(object):
-    def setUpMixin(self):
+     def setUpMixin(self):
         """Set up method for test mixin class
         """
         pass
@@ -111,6 +111,9 @@ class MixinFieldParameters(BaseMixin):
 
     def fill_create_ghost_url_field(self, browser):
         browser.getControl(name='field_content_url').value = 'index'
+
+    def fill_create_properties_title_field(self, browser):
+        browser.getControl(name='silva-content.maintitle:record').value = 'test content€'
 
 class MixinRoleContent(MixinLoginLogout):
 
@@ -202,7 +205,7 @@ class MixinRoleContent(MixinLoginLogout):
 
 class MixinNavigate(MixinLoginLogout):
     """
-        Log a manager in and access all the navigation tabs
+        methods that simulate or support navigating the smi
     """
 
     def setUpMixin(self):
@@ -261,8 +264,12 @@ class MixinNavigate(MixinLoginLogout):
             content_link = '/'.join(content_link)
         return content_link
     
-    def get_form_submit(self, browser, base_url, test_condition,
-                        form_name, submit_value):
+    def get_form_submit(self, browser, base_url, test_condition, form_name,
+                        submit_value):
+        """
+            this is used when clicking onto a page that embeds a button in a
+            form, like 'publish now' in the publish page
+        """
         form = browser.getForm(name=form_name)
         self.failUnless(form_name in form.name, "test condition '%s' is not "
                         "the name of the form" % form_name)
@@ -271,6 +278,20 @@ class MixinNavigate(MixinLoginLogout):
                         "condition '%s' is not included in browser content"
                         % test_condition)
         return browser.url
+
+    def get_form(self, browser, base_url, form_name):
+        ret = {}
+        form = browser.getForm(name=form_name)
+        self.failUnless(form_name in form.name, "test condition '%s' is not "
+                        "the name of the form" % form_name)
+        ret = {
+            'url': browser.url,
+            'form': form,
+        }
+        return ret
+
+    def submit(self, browser, base_url, test_condition, form, submit_value):
+        pass
     
     def click_content_tab_name(self, browser, base_url, test_condition,
                                content, tab_name=None):

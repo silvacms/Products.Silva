@@ -40,7 +40,6 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         content = 'test_content'
         tab_name = 'tab_edit'
         test_condition = 'kupu editor'
-        # build the link
         browser.open(base_url)
         url = self.click_content_tab_name(browser, base_url, test_condition, content,
                                           tab_name)
