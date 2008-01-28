@@ -58,7 +58,7 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         browser.goBack()
         url = browser.url
         self.failUnless('public&nbsp;preview' in browser.contents)
-        self.failUnless('<h2 class="heading">test content</h2>' in browser.contents)
+        self.failUnless('<h2 class="heading">test content€</h2>' in browser.contents)
         # click publish now button
         tab_name = 'quick_publish?return_to=tab_preview'
         test_condition = 'Version approved.'
@@ -66,7 +66,7 @@ class ManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
                                           tab_name)
         # now that the document is published, click public view
         link_text = 'view public version'
-        test_condition = '<h2 class="heading">test content</h2>'
+        test_condition = '<h2 class="heading">test content€</h2>'
         url = self.click_content_no_tab_name(browser, url, test_condition, content,
                                     link_text)
         browser.goBack()

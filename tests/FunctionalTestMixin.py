@@ -98,7 +98,7 @@ class MixinFieldParameters(BaseMixin):
         browser.getControl(name='field_link_type').value = ['absolute']
                              
     def fill_create_title_field(self, browser):
-        browser.getControl(name='field_object_title').value = 'test content'
+        browser.getControl(name='field_object_title').value = 'test content€'
         # other unicode characters to choose from '€ ‚ ‘ ’ „ “ ” « » — – · ©'
 
     def fill_create_folderish_field(self, browser):
