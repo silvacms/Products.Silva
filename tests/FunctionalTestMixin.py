@@ -155,7 +155,7 @@ class MixinRoleContent(MixinLoginLogout):
             self.fail()
         # Test if role has access to content_type
         if result is fail_not_addable:
-            self.failIf(content_type in meta_type.options, 
+            self.failIf(content_type in meta_type.options,
                         "Role has access to this '%s'" % meta_type)
         else:
             self.failUnless(content_type in meta_type.options,

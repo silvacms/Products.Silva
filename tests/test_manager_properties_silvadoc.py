@@ -1,7 +1,7 @@
 from FunctionalTestMixin import *
 from Products.Five.testbrowser import Browser
 
-class ManagerPropertiesScenarioTestCase(SilvaTestCase.SilvaFunctionalTestCase,
+class ManagerPropertiesSilvaDocTestCase(SilvaTestCase.SilvaFunctionalTestCase,
                                         MixinRoleContent, MixinNavigate,
                                         MixinFieldParameters):
     """
@@ -9,6 +9,8 @@ class ManagerPropertiesScenarioTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         select silva document
         make silva document
         click properties tab
+        fill in all property fields
+        submit
     """
 
     def afterSetUp(self):
@@ -76,5 +78,5 @@ class ManagerPropertiesScenarioTestCase(SilvaTestCase.SilvaFunctionalTestCase,
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ManagerPropertiesScenarioTestCase))
+    suite.addTest(unittest.makeSuite(ManagerPropertiesSilvaDocTestCase))
     return suite
