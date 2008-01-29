@@ -180,45 +180,46 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(
             self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
         if WITH_EXTFILE:
-            self.root.service_files.manage_filesServiceEdit('', 1)
-            self.root.service_files.manage_convertStorage()
-            self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
+        ##    self.root.service_files.manage_filesServiceEdit('', 1)
+        ##    self.root.service_files.manage_convertStorage()
+        ##     self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
+        ##     self.assertEqual(
+        ##         self.root.folder1.testimage.image.meta_type, 'ExtImage')
+        ##     self.assertEqual(
+        ##         self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
+        ##     self.assertEqual(
+        ##         self.root.folder2.testimage.image.meta_type, 'ExtImage')
+        ##     self.assertEqual(
+        ##         self.root.testfile._file.meta_type, 'ExtFile')
+        ##     self.assertEqual(
+        ##         self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
+            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
+            self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(
-                self.root.folder1.testimage.image.meta_type, 'ExtImage')
+                self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
+            self.assertEqual(
+                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
+
+            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
+            self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
             self.assertEqual(
-                self.root.folder2.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.testfile._file.meta_type, 'ExtFile')
-            self.assertEqual(
                 self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
-            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
-            self.root.folder1.folder1in1.service_files.manage_convertStorage()
-            self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.folder1.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.folder2.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.testfile._file.meta_type, 'ExtFile')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
-            self.root.service_files.manage_filesServiceEdit('', 0)
-            self.root.service_files.manage_convertStorage()
-            self.assertEqual(self.root.testimage.image.meta_type, 'Image')
-            self.assertEqual(
-                self.root.folder1.testimage.image.meta_type, 'Image')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.folder2.testimage.image.meta_type, 'Image')
-            self.assertEqual(
-                self.root.testfile._file.meta_type, 'File')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
+            
+            ## self.root.service_files.manage_filesServiceEdit('', 0)
+            ## self.root.service_files.manage_convertStorage()
+            ## self.assertEqual(self.root.testimage.image.meta_type, 'Image')
+            ## self.assertEqual(
+            ##     self.root.folder1.testimage.image.meta_type, 'Image')
+            ## self.assertEqual(
+            ##     self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
+            ## self.assertEqual(
+            ##     self.root.folder2.testimage.image.meta_type, 'Image')
+            ## self.assertEqual(
+            ##     self.root.testfile._file.meta_type, 'File')
+            ## self.assertEqual(
+            ##     self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
         
 import unittest
 def test_suite():
