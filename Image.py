@@ -752,9 +752,6 @@ def image_added(image, event):
         img = getattr(image, id, None)
         if img is None:
             continue
-        # fake it, to get filename correct
-        img.id = image.id
-        img.manage_afterAdd(img, image)
         img.id = id
 
 def image_will_be_removed(image, event):
@@ -768,7 +765,4 @@ def image_cloned(image, event):
         img = getattr(image, id, None)
         if img is None:
             continue
-        # fake it, to get filename correct
-        img.id = image.id
-        img.manage_afterClone(image)
         img.id = id

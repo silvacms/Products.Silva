@@ -111,7 +111,8 @@ class UpgradeRegistry:
             while object_list:
                 o = object_list[-1]
                 del object_list[-1]
-                #print 'Upgrading object', o.absolute_url(), '(still %s objects to go)' % len(object_list)
+                # print 'Upgrading object', o.absolute_url(), '(still
+                # %s objects to go)' % len(object_list)
                 o = self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
@@ -123,14 +124,13 @@ class UpgradeRegistry:
                                                 len(object_list))
                 stats['total'] += 1
                 stats['threshold'] += 1
+                #print '#### threshold subtotal: %s, total: %s ####' % (
+                #    stats['threshold'], stats['total'])
                 if stats['threshold'] > threshold:
                     #print '#### Commit sub transaction ####'
                     transaction.get().commit()
                     if hasattr(o, '_p_jar') and o._p_jar is not None:
                         o._p_jar.cacheGC()
-                    else:
-                        #print 'No _p_jar, or it is None for', repr(o)
-                        pass
                     stats['threshold'] = 0
             stats['endtime'] = DateTime.DateTime()
             self.tearDown(root, version)
