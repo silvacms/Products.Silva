@@ -752,8 +752,6 @@ def image_added(image, event):
         img = getattr(image, id, None)
         if img is None:
             continue
-        # fake it, to get filename correct
-        img.id = image.id
         img.id = id
 
 def image_will_be_removed(image, event):

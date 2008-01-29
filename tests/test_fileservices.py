@@ -199,7 +199,6 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
             self.assertEqual(
                 self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
-
             self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
             self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(
