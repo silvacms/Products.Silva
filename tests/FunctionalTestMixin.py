@@ -295,6 +295,10 @@ class MixinNavigate(MixinLoginLogout):
     
     def click_content_tab_name(self, browser, base_url, test_condition,
                                content, tab_name=None):
+        """
+            use this to click within content types
+            example: host_name/root/test_content/edit/tab_name
+        """
         link = self.content_link_builder(content, tab_name)
         link = browser.getLink(url=link)
         link_url = link.url
@@ -307,6 +311,10 @@ class MixinNavigate(MixinLoginLogout):
 
     def click_content_no_tab_name(self, browser, base_url, test_condition,
                                   content, link_text):
+        """
+            use this to click something like the 'view public version'
+            example: host_name/root/test_content
+        """
         link = self.content_link_builder(content)
         link = browser.getLink(text='%s' % link_text, url=link)
         link_url = link.url
@@ -318,6 +326,10 @@ class MixinNavigate(MixinLoginLogout):
         return browser.url
     
     def click_tab_name(self, browser, base_url, test_condition, tab_name, redirect=None):
+        """
+            use this to click around the root level of the smi
+            example: host_name/root/edit/tab_name
+        """
         link = self.tab_link_builder(tab_name)
         link = browser.getLink(url=link)
         link_url = link.url
