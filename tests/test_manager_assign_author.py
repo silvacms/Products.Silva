@@ -1,5 +1,7 @@
 from FunctionalTestMixin import *
 from Products.Five.testbrowser import Browser
+from urllib2 import HTTPError
+
 
 class ManagerAssignRoleTestCase(SilvaTestCase.SilvaFunctionalTestCase,
                                 MixinRoleContent, MixinNavigate,
@@ -39,6 +41,7 @@ class ManagerAssignRoleTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         test_condition = 'user roles for'
         browser.open(base_url)
         url = self.click_tab_name(browser, base_url, test_condition, tab_name)
+
         # XXX
         # there is a redirect done in python, this makes the test hang until
         # you ctrl + c out. not sure how to work around this.
@@ -46,7 +49,7 @@ class ManagerAssignRoleTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         #tab_name = 'lookup'
         #test_condition = 'user lookup at'
         #url = self.click_tab_name(browser, url, test_condition, tab_name)
-        
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ManagerAssignRoleTestCase))
