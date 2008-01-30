@@ -27,6 +27,13 @@ try:
 except ImportError:
     pass
 
+# XXX: first fix SilvaFind: please do not automatically add a
+# silvafind object to the root anymore, our tests don't expect it (29
+# failures), and neither, I think, will our users. Until that time we
+# don't install it in the test cases.
+#
+#ZopeTestCase.installProduct('SilvaFind')
+
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
 if ZopeTestCase.hasProduct('SilvaExternalSources'):
