@@ -263,18 +263,11 @@ window.onload_registry.register(function() {
           <td style="white-space:nowrap">
             <a class="blacklink"
               title="publish"
-              tal:condition="item_info/is_versioned_content"
+              tal:condition="python:item_info['is_versioned_content'] or item_info['is_container']"
               tal:attributes="href string:${item_info/item_url}/edit/tab_status"
               tal:content="structure item_info/last_author"
               i18n:attributes="title">
               authorname
-            </a>
-            <a class="closed"
-              title="publish"
-              tal:condition="item_info/is_container"
-              tal:attributes="href string:${item_info/item_url}/edit/tab_status"
-              i18n:attributes="title">
-              <em i18n:translate="">n/a</em>
             </a>
             <span
               tal:condition="item_info/is_content"

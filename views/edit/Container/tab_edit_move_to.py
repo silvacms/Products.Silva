@@ -45,6 +45,7 @@ if result:
         message2 = _(', <span class="error">but could not move ${ids}</span>',
                      mapping={'ids': view.quotify_list(inactives)})
         message += translate(message2)
+    model.sec_update_last_author_info()
     return view.tab_edit(message_type="feedback", message=message)
 else:
     message = _("Could not move ${ids}.",

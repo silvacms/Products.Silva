@@ -35,6 +35,7 @@ if deleted_ids:
     else:
         message = _('Deleted ${deleted_ids}.',
                     mapping={'deleted_ids': view.quotify_list(deleted_ids)})
+    model.sec_update_last_author_info()
 else:
     message = _('Could not delete ${not_deleted_ids}. Possibly there is a published version, which must be closed before it can be deleted. Or, the document is approved (the link will be green), and approval needs to be revoked. Change the status in the Publish screen (alt-5).',
                 mapping={'not_deleted_ids': view.quotify_list(not_deleted_ids)})

@@ -174,6 +174,7 @@ for item in renamed_now:
         obj = getattr(model, newid)
         obj.set_title(mangle.String.inputConvert(item[0][2]))
 
+model.sec_update_last_author_info()
 # send the user back to the list
 return context.tab_edit(
     message_type=message_type, message=', '.join(messages))

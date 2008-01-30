@@ -61,6 +61,7 @@ if position is not None and position >= 0:
 
 # update last author info in new object
 object.sec_update_last_author_info()
+model.sec_update_last_author_info()
 
 if lookup_mode:
     if return_url:

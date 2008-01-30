@@ -689,8 +689,7 @@
      <value key="display_width"></value>
      <value key="required"></value>
      <value key="css_class"></value>
-     <value key="default">python: not content.implements_container() and
-       content.sec_get_last_author_info().fullname() or "n/a" </value>
+     <value key="default">python:content.sec_get_last_author_info().fullname() or "n/a" </value>
      <value key="title"></value>
      <value key="truncate"></value>
      <value key="description"></value>

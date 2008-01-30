@@ -68,6 +68,14 @@ Silva changes
       - Significant performance improvement in converting folders to
         publications and vice-versa
 
+      - #162545 Containers should retain the last author information
+        Container author information is now displayed in the parent
+        container's contents tab in the "author" column, rather than
+        "n/a".  Container last author and last modified dates are updated
+        when objects are moved, deleted, added, pasted into the container,
+        when the container's metadata is modified (properties tab and settings
+        sub-tab), and when the container is converted to/from a publication/folder.
+
     Features ported from 2.0 branch
 
       - Made Silva work with ExtFile once again: we no longer

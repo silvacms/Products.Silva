@@ -14,6 +14,7 @@ view = context
 result = model.move_object_up(id)
 if result:
     msg = _("Moved ${id} up.", mapping={'id': view.quotify(id)})
+    model.sec_update_last_author_info()
     return view.tab_edit(message_type="feedback", message=msg)
 else:
     msg = _("Could not move ${id} up.", mapping={'id': view.quotify(id)})

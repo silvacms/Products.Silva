@@ -231,9 +231,9 @@ class Security(AccessManager):
     def sec_get_last_author_info(self):
         """Get the info of the last author (this is a IMember object)
         """
-        # containers have no author
-        if IContainer.providedBy(self):
-            return noneMember.__of__(self)
+        # 1/15/08, containers now do have author info
+        #if IContainer.providedBy(self):
+        #    return noneMember.__of__(self)
         
         # get cached author info (may be None)
         version = self.get_previewable()
