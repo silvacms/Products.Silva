@@ -63,7 +63,7 @@
                   <metal:fill-slot fill-slot="sidebar">
                     <tal:block define="sb context/@@sidebar"
                                replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s&selected_path=%s' % (filter_string, show_add, selected_path) , vein)" />
-input class="button cancel                  </metal:fill-slot>
+                  </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
             </td>
