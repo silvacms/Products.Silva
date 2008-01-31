@@ -174,7 +174,7 @@ div.kupu-toolbox-active {
 }
 
 div.not-collapsible h1.kupu-toolbox-heading {
-  padding-left: 0.3em;
+  padding-left: 0.25em;
   background-image: none; 
 }
 
@@ -324,6 +324,7 @@ div.kupu-properties-item-innerdiv {
 #kupu-toolbox-comment .kupu-tooltray {
   height: 5em;
   overflow: auto;
+  padding-bottom:0.2em;
   color:#3c2d50;
 }
 
