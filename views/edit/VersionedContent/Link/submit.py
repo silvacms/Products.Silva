@@ -1,6 +1,5 @@
 ##parameters=url
 from Products.Silva.i18n import translate as _
-
 model = context.REQUEST.model
 view = context
 url = unicode(url, 'UTF-8')

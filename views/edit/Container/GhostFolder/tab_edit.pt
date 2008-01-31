@@ -13,7 +13,19 @@
     "
   i18n:domain="silva">
 
-<metal:block use-macro="here/macro_index/macros/master">
+<tal:def define="
+    model request/model;
+    mangle  modules/Products/Silva/mangle;
+    version     python:model.get_editable();
+    link_status python:here.get_ghost_link_status_text(version);
+    content_url python:version.get_haunted_url();
+    ct python: mangle.String.centeredTruncate;
+    maintitlecolspan string:3;
+">
+<metal:use-macro use-macro="here/macro_edit/macros/editor">
+
+<metal:fill-editor-slot fill-slot="main">
+ <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
 
 <metal:block fill-slot="script">
   <script type="text/javascript"
@@ -21,56 +33,18 @@
   </script>
 </metal:block>
 
-<metal:block fill-slot="main">
+<metal:fill fill-slot="sidebar">
+ <td class="left">
+  <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+   <metal:fill-slot fill-slot="sidebar">
+    <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
+   </metal:fill-slot>
+  </metal:use-macro>
+ </td>
+</metal:fill>
 
-<table class="columns columns2"
-  tal:define="
-    version     python:model.get_editable();
-    link_status python:here.get_ghost_link_status_text(version);
-    content_url python:version.get_haunted_url();
-    ct python: mangle.String.centeredTruncate;
-">
-  <tbody>
-    <tr>
-      <td class="left">
-        <tal:block replace="nothing">
-          _____________________ sidebar subtable _____________________
-        </tal:block>
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
-            </metal:fill-slot>
-          </metal:use-macro>
-      </td>
 
-      <tal:block replace="nothing">
-        _____________________ main _____________________
-      </tal:block>
-      <td class="main">
-
-<table class="listing">
-   <thead>
-      <tal:block replace="nothing">
-         ______________ vein + title row ______________
-      </tal:block>
-      <tr>
-         <td class="top"
-            colspan="3">
-            <h2>
-               <img tal:replace="structure icon" />
-               <tal:block i18n:translate="">
-               ghost folder of &#xab;<tal:block
-               content="title" i18n:name="title" />&#xbb;
-               </tal:block>
-            </h2>
-         </td>
-      </tr>
-   </thead>
-
-  <form method="post"
-     name="form"
-     action=".">
-     <tbody>
+     <metal:fillbody fill-slot="main-body">
         <tr>
            <th class="align-right"
              width="12%" i18n:translate="">
@@ -147,9 +121,9 @@
               &nbsp;
            </td>
         </tr>
-     </tbody>
+     </metal:fillbody>
 
-     <tfoot>
+     <metal:fillfoot fill-slot="main-foot">
         <tr class="controls">
            <td class="align-right"
               colspan="3">
@@ -163,9 +137,7 @@
               />
            </td>
         </tr>
-     </tfoot>
-  </form>
-</table>
+     </metal:fillfoot>
 
 <tal:block replace="nothing">
   ____________________________ contents listing ____________________________
@@ -174,7 +146,7 @@
   ______________ This listing duplicates code of the Contents screen,
   but it's so adjusted it may not make sense to macro it.  ______________
 </tal:block>
-
+<metal:fillextra fill-slot="main-extra">
 <table class="listing"
   id="sortable"
   tal:define="
@@ -491,12 +463,10 @@
     </tr>
   </tfoot>
 </table>
+</metal:fillextra>
 
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-</metal:block>
-</metal:block>
+</metal:use-macro>
+</metal:fill-editor-slot>
+</metal:use-macro>
+</tal:def>
 </html>

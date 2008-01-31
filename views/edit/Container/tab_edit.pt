@@ -10,13 +10,9 @@
   tal:define="global vein string:contents;"
   i18n:domain="silva">
 
-<metal:use use-macro="here/macro_index/macros/master">
-<metal:fill fill-slot="main">
-
-<form action="."
-  method="post"
-  name="silvaObjects"
-  tal:define="
+<tal:def define="
+    model request/model;
+    mangle  modules/Products/Silva/mangle;
     default_document model/get_default;
     publishables model/get_processed_items;
     assets model/get_processed_assets;
@@ -27,42 +23,24 @@
     position request/position | options/position | nothing;
     iterate string:odd;
     ct python: mangle.String.centeredTruncate;
-">
-<table class="columns columns2">
-  <tbody>
-    <tr>
-      <tal:block replace="nothing">
-        _____________________ sidebar _____________________
-      </tal:block>
-      <td class="left">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
-          <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
-          </metal:fill-slot>
-        </metal:use-macro>
-      </td>
+    maintitlecolspan string:6;
+   ">
+<metal:use-macro use-macro="here/macro_edit/macros/editor">
 
-      <tal:block replace="nothing">
-        _____________________ main _____________________
-      </tal:block>
-      <td class="main">
+<metal:fill-editor-slot fill-slot="main">
+ <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
 
-<table class="listing"
-  id="sortable">
-  <thead>
-    <tal:block replace="nothing">
-      ______________ vein + title row ______________
-    </tal:block>
-    <tr>
-      <td class="top"
-        colspan="6">
-        <h2 tal:attributes="title string:id: ${model/id}">
-          <img tal:replace="structure icon" />
-          &#xab;<span tal:replace="structure string:${title}">title</span>&#xbb;
-        </h2>
-      </td>
-    </tr>
+<metal:fill fill-slot="sidebar">
+ <td class="left">
+  <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+   <metal:fill-slot fill-slot="sidebar">
+    <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
+   </metal:fill-slot>
+  </metal:use-macro>
+ </td>
+</metal:fill>
 
+   <metal:fillhead fill-slot="main-head">
     <tal:block replace="nothing">
       ______________ top controls row ______________
     </tal:block>
@@ -122,9 +100,9 @@ window.onload_registry.register(function() {
         </tal:if>
       </td>
     </tr>
-  </thead>
+   </metal:fillhead>
 
-  <tbody>
+   <metal:fillbody fill-slot="main-body">
     <tal:block replace="nothing">
       ______________ listing header ______________
     </tal:block>
@@ -436,9 +414,9 @@ window.onload_registry.register(function() {
         </tr>
       </tal:block>
     </tal:block>
-  </tbody>
+   </metal:fillbody>
 
-  <tfoot>
+   <metal:fillfoot fill-slot="main-foot">
     <tal:block replace="nothing">
       ______________ select all row ______________
     </tal:block>
@@ -606,14 +584,10 @@ window.onload_registry.register(function() {
         </tal:if>
       </td>
     </tr>
-  </tfoot>
-</table>
+   </metal:fillfoot>
 
-      </td>
-    </tr>
-  </tbody>
-</table>
-</form>
-</metal:fill>
-</metal:use>
+</metal:use-macro>
+</metal:fill-editor-slot>
+</metal:use-macro>
+</tal:def>
 </html>

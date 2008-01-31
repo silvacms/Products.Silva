@@ -71,10 +71,17 @@ Silva changes
       - #162545 Containers should retain the last author information
         Container author information is now displayed in the parent
         container's contents tab in the "author" column, rather than
-        "n/a".  Container last author and last modified dates are updated
-        when objects are moved, deleted, added, pasted into the container,
-        when the container's metadata is modified (properties tab and settings
-        sub-tab), and when the container is converted to/from a publication/folder.
+        "n/a".  Container last author and last modified dates are 
+        updated when objects are moved, deleted, added, pasted into 
+        the container, when the container's metadata is modified 
+        (properties tab and settings sub-tab), and when the container 
+        is converted to/from a publication/folder.
+
+      - developers: issue 100712: tab_edit infrastructure has been
+        refactoring so that each content has a tab_edit.pt rather than
+        the 'edit.pt/.py' method.  The 'edit.pt/.py' method has been
+        deprecated so that extensions may use this release to transition.
+        FMI see doc/developer_notes.txt
 
     Features ported from 2.0 branch
 

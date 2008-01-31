@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="model-action string:">
+
+<metal:block use-macro="here/macro_edit/macros/editor">
+ <metal:fill-editor-slot fill-slot="main">
+  <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
+
+ <metal:slot fill-slot="main-body">
+  <tr>
+   <th colspan="3" i18n:translate="">notes</th>
+  </tr>
+
+  <tr class="even">
+   <td colspan="3">
+    <ol style="margin:0.3em 0 0.5em 0;padding-left:2.2em;">
+     <li i18n:translate="">An index is not editable.  To view the index go to the <a class="underline" tal:attributes="href string:tab_preview" i18n:name="preview_screen"><tal:block i18n:translate="">preview screen</tal:block></a>.</li>
+     <li i18n:translate="">Note that <span class="warning">the index only displays links to published content</span>, so the list may be empty if nothing is published.</li>
+     <li i18n:translate="">If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while).</li>
+    </ol>
+   </td>
+  </tr>
+ </metal:slot>
+
+ <metal:slot fill-slot="main-foot">
+  <tr class="controls">
+   <td class="align-right" colspan="3">
+    <input class="button"
+      type="submit"
+      value="update index"
+      title="access key: alt-u"
+      accesskey="u"
+      name="tab_edit_update_index:method"
+      i18n:attributes="value;title"
+     />
+   </td>
+  </tr>
+ </metal:slot>
+
+  </metal:use-macro>
+ </metal:fill-editor-slot>
+</metal:block>
+
+</html>

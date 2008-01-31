@@ -9,7 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
-<metal:define-macro metal:define-macro="editor">
+<metal:define-macro define-macro="editor">
 <metal:use-macro metal:use-macro="here/macro_index/macros/master">
 
 <metal:fill-slot fill-slot="metatype_css">

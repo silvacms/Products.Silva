@@ -1,65 +1,33 @@
 <html tal:omit-tag=""
-  tal:define="
-    view here;
-    model request/model;
-    root_url model/get_root_url;
-    title model/get_title_editable;
-    vein string:edit;"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
-<metal:define-macro define-macro="editor"
-  tal:define="icon python:view.render_icon(model)">
-<table class="columns columns3">
-  <tbody>
-    <tr>
-      <tal:block replace="nothing">
-        _____________________ sidebar _____________________
-      </tal:block>
-      <td class="left"
-        tal:define="template_id string:tab_edit">
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+<metal:define-editor-macro define-macro="editor" 
+   tal:define="global maintitlecolspan string:2">
+
+ <metal:use-editor-macro use-macro="here/macro_edit/macros/editor">
+  <metal:fill-editor-slot fill-slot="main">
+   <metal:use-three-col-layout 
+          use-macro="here/macro_edit/macros/three-col-layout">
+
+   <metal:fill-main-head fill-slot="main-head">
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <metal:block define-slot='title_metadata'>
+    <tr class="top-controls">
+      <td colspan="2">
+        <h3 i18n:translate="">
+          characterization
+        </h3>
       </td>
+    </tr>
+    </metal:block>
+   </metal:fill-main-head>
 
-      <tal:block replace="nothing">
-        _____________________ main _____________________
-      </tal:block>
-      <td class="main">
-
-<form method="post" name="form" action=".">
-  <table class="listing">
-    <thead
-      tal:define="meta_type model/meta_type">
-      <tal:block replace="nothing">
-        ______________ vein + title row ______________
-      </tal:block>
-      <tr>
-        <td class="top"
-          tal:attributes="colspan title_row_colspan|string:2">
-          <h2>
-            <img tal:replace="structure icon" />
-            <span style="text-transform:lowercase;"
-              tal:content="meta_type">meta type</span>
-            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
-          </h2>
-        </td>
-      </tr>
-      <tal:block replace="nothing">
-        ______________ top controls row ______________
-      </tal:block>
-      <metal:block define-slot='title_metadata'>
-      <tr class="top-controls">
-        <td colspan="2">
-          <h3 i18n:translate="">
-            characterization
-          </h3>
-        </td>
-      </tr>
-      </metal:block>
-    </thead>
-
-    <metal:block define-slot='title_editor'>
-    <tbody tal:define="fields view/form/get_fields">
+   <metal:title_editor_slot define-slot="title_editor">
+    <metal:fill-main-body fill-slot="main-body">
+     <tal:block define="fields view/form/get_fields">
       <tr>
         <th class="align-right"
           width="12%"
@@ -87,42 +55,38 @@
       </tr>
       </tal:define>
       </tal:repeat>
-    </tbody>
+     </tal:block>
+    </metal:fill-main-body>
 
-    <tfoot>
-      <tr class="controls">
-        <td class="align-right"
-          colspan="2">
-          <input class="button"
-            type="submit"
-            name="submit:method"
-            value="save"
-            title="access key: alt-s"
-            accesskey="s"
-            i18n:attributes="title;value"
-          />
-        </td>
-      </tr>
-    </tfoot>
-    </metal:block>
-  </table>
-</form>
+    <metal:fill-main-foot fill-slot="main-foot">
+     <tr class="controls">
+       <td class="align-right"
+         colspan="2">
+         <input class="button"
+           type="submit"
+           name="submit:method"
+           value="save"
+           title="access key: alt-s"
+           accesskey="s"
+           i18n:attributes="title;value"
+         />
+       </td>
+     </tr>
+    </metal:fill-main-foot>
+   </metal:title_editor_slot>
 
-<metal:define-slot define-slot="additional_tools" />
+   <metal:main-extra-slot fill-slot="main-extra">
+    <metal:define-slot define-slot="additional_tools" />
+   </metal:main-extra-slot>
 
-      </td>
-      <tal:block replace="nothing">
-        _____________________ right column _____________________
-      </tal:block>
-      <td class="right">
-        <metal:block define-slot="info" />
-      </td>
-    </tr>
-  </tbody>
-</table>
-</metal:define-macro>
+   <metal:right-column-slot fill-slot="right-column">
+    <metal:define-slot define-slot="info" />
+   </metal:right-column-slot>
 
-
+  </metal:use-three-col-layout>
+ </metal:fill-editor-slot>
+</metal:use-editor-macro>
+</metal:define-editor-macro>
 
 <tal:block replace="nothing">
   ______________ this macro fills the additional_tools slot (just above) ______________
@@ -192,6 +156,7 @@
     </tfoot>
   </table>
 </form>
+
 </metal:define-macro>
 
 </html>

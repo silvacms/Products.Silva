@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="
+    active_tab string:../../edit/tab_access_groups;
+    parent_screen_name string:groups;
+    has_access here/has_change_access_permission;"
+>
+<metal:block use-macro="here/macro_edit/macros/editor">
+ <metal:fill-editor-slot fill-slot="main">
+  <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
+ <metal:fillhead fill-slot="main-head">
+  <tr class="top-controls">
+   <td>
+    <h3 i18n:translate="">
+     IPs and IP ranges
+    </h3>
+   </td>
+  </tr>
+ </metal:fillhead>
+
+ <metal:fillbody fill-slot="main-body">
+  <tal:block condition="python:has_access and model.isValid()"
+    tal:define="ipranges model/listIPRanges">
+      <tr>
+        <th tal:condition="ipranges" i18n:translate="">
+          settings
+        </th>
+      </tr>
+      <tal:block replace="nothing">
+        ______________ group listing ______________
+      </tal:block>
+      <tal:block repeat="iprange ipranges">
+        <tr valign="top"
+          tal:define="iterate repeat/iprange/odd;"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td>
+            <input class="min"
+              type="checkbox"
+              name="ipranges:list"
+              tal:attributes="value iprange"
+            />
+            &nbsp;
+            <label tal:content="iprange"
+              tal:attributes="for iprange">
+              group name
+            </label>
+          </td>
+        </tr>
+      </tal:block>
+      <tr class="even"
+        tal:condition="not:ipranges">
+        <td>
+          <em i18n:translate="">
+            This IP Group does not contain any IPs.
+          </em>
+        </td>
+      </tr>
+      <tr class="controls">
+        <td>
+          <input class="warning"
+            type="submit"
+            name="remove_iprange_from_ipgroup:method"
+            value="remove ranges"
+            title="remove range(s) from this ip group: alt-r"
+            accesskey="r"
+            onclick="return confirm('Really remove?')"
+            tal:condition="ipranges"
+            i18n:attributes="title;value"
+          />
+        </td>
+      </tr>
+  </tal:block>
+
+  <tal:block condition="not:model/isValid | nothing"  i18n:translate="">
+    "Things to do when virtual groups is not in its original location"
+  </tal:block>
+ </metal:fillbody>
+
+ <tal:block replace="nothing">
+   _____________________ add ip _____________________
+ </tal:block>
+ <metal:fillextra fill-slot="main-extra">
+  <form method="post"
+    action="."
+    enctype="multipart/form-data">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="3">
+          <h3 i18n:translate="">
+            add an IP address
+          </h3>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="even">
+        <td class="align-right"
+          width="10%" i18n:translate="">
+          ip range<span class="warning">*</span>
+        </td>
+        <td style="width: 20em;">
+          <input style="width: 100%;"
+            type="text"
+            name="iprange"
+          />
+        </td>
+        <td  i18n:translate="">
+          <strong>Can be:</strong><br />
+          IP&nbsp;(like: 10.1.1.1), <br />
+          IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br />
+          IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0).
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="controls">
+        <td class="align-right"
+          colspan="3">
+        <input class="button"
+          type="submit"
+          value="add ip range"
+          name="add_iprange_to_ipgroup:method"
+          title="add an ip or an ip range"
+          i18n:attributes="value;title"
+          />
+        </td>
+      </tr>
+    </tfoot>
+   </table>
+  </form>
+ </metal:fillextra>
+
+ <metal:fillright fill-slot="right-column">
+  <tal:block condition="has_access">
+   <tal:block replace="nothing">
+     ______________ ip groups clipboard ______________
+   </tal:block>
+   <tal:define define="
+       global group_meta_type string:Silva IP Group;
+       global group_type string:ip;
+       ">
+    <metal:block use-macro="view/macro_groups_listing/macros/ip_groups_listing">
+     <metal:block fill-slot="listing_actions">
+           <input class="button"
+             name="copy_ipranges_from_ipgroups:method"
+             title="transfer ip(s) to this ip group"
+             type="submit"
+             value="copy ips to ip group"
+             i18n:attributes="title;value"
+           />
+     </metal:block>
+    </metal:block>
+   </tal:define>
+  </tal:block>
+ </metal:fillright>
+  </metal:use-macro>
+ </metal:fill-editor-slot>
+</metal:block>
+</html>

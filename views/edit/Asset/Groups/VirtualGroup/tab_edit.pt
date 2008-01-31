@@ -1,66 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
   tal:define="
-    view here;
-    model request/model;
-    root_url model/get_root_url;
-    title model/get_title_editable;
-    vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
     has_access here/has_change_access_permission;"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+>
 
-<table class="columns columns3">
-  <tbody>
-    <tr>
-      <tal:block replace="nothing">
-        _____________________ sidebar _____________________
-      </tal:block>
-      <td class="left"
-        tal:define="template_id string:tab_edit">
-        <tal:block replace="nothing">
-          ______________ vein navigation ______________
-        </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
-      </td>
+<metal:block use-macro="here/macro_edit/macros/editor">
+ <metal:fill-editor-slot fill-slot="main">
+  <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
+ <metal:fillhead fill-slot="main-head">
+  <tr class="top-controls">
+    <td>
+      <h3 i18n:translate="">
+        Virtual Group &#8216;members&#8217;
+      </h3>
+    </td>
+  </tr>
+ </metal:fillhead>
 
-      <tal:block replace="nothing">
-        _____________________ main _____________________
-      </tal:block>
-      <td class="main">
-
-<table class="listing">
-  <thead>
-    <tal:block replace="nothing">
-      ______________ vein + title row ______________
-    </tal:block>
-    <tr>
-      <td class="top"
-        colspan="3">
-        <h2>
-          <img tal:replace="structure python:view.render_icon(model)" />
-          <span style="text-transform:lowercase;"
-            tal:content="model/meta_type">Meta type</span>
-            &#xab;<tal:block content="model/get_title_or_id" />&#xbb;
-        </h2>
-      </td>
-    </tr>
-    <tr class="top-controls">
-      <td>
-        <h3 i18n:translate="">
-          Virtual Group &#8216;members&#8217;
-        </h3>
-      </td>
-    </tr>
-  </thead>
-
-  <tbody tal:condition="has_access">
-    <form action="."
-      method="post"
-      tal:define="groupids model/listGroups"
-      tal:condition="model/isValid | nothing">
+ <metal:fillbody fill-slot="main-body">
+  <tal:block tal:condition="python:has_access and model.isValid()"
+    tal:define="groupids model/listGroups">
       <tr>
         <th tal:condition="groupids"
           i18n:translate="">
@@ -100,7 +69,7 @@
       </tr>
       <tr class="controls">
         <td>
-          <input class="button remover"
+          <input class="warning"
             type="submit"
             value="remove group"
             name="remove_groups_from_virtualgroup:method"
@@ -112,20 +81,15 @@
           />
         </td>
       </tr>
-    </form>
-  </tbody>
-</table>
+  </tal:block>
 
-<tal:block condition="not:model/isValid | nothing"  i18n:translate="">
-  "Things to do when virtual groups is not in its original location"
-</tal:block>
+  <tal:block condition="not:model/isValid | nothing"  i18n:translate="">
+    "Things to do when virtual groups is not in its original location"
+  </tal:block>
 
-      </td>
+ </metal:fillbody>
 
-      <tal:block replace="nothing">
-        _____________________ right column _____________________
-      </tal:block>
-      <td class="right">
+ <metal:fillright fill-slot="right-column">
         <tal:block condition="has_access">
           <tal:block replace="nothing">
             ______________ groups clipboard ______________
@@ -167,9 +131,8 @@
             </metal:block>
           </tal:define>
         </tal:block>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
+  </metal:fillright>
+  </metal:use-macro>
+ </metal:fill-editor-slot>
+</metal:block>
 </html>

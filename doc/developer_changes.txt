@@ -2,6 +2,47 @@
 Developer level changes in Silva
 ================================
 
+From 2.0 to 2.1
+===============
+
+Edit tabs of content objects
+----------------------------
+
+The edit tab framework has been refactored.  The old model was to define an 
+"edit" script that renders the main content/controls of the content object.
+This was ineffecient as it caused a lot of code duplication (and non-standard
+methods), as well as a number of variable redefinitions.  The "edit" script 
+method has been deprecated in Silva 2.1.  This is to ease transition of 
+content objects into the new method.
+
+The new method is much easier to use, and takes advantage of metal macros
+to reduce code duplication, standardize rendering methods, and virtually
+eliminate variable redefinitions.  Converting a content object's edit tab from
+"edit" to the new method involves renaming the edit template to "tab_edit.pt",
+converting the code to the primary macro in "views/macro_edit", and then
+using one of the layout macros.
+
+There is a primary macros in "macro_edit", "editor", and two layout macros:
+editor-three-col and editor-two-col, for three and two column layouts, 
+respectively.  Read the comments at the top of this file to see the slots 
+that can be overridden for the content object.
+
+VersionedContent types are a bit more challenging.  They use an intermediate
+macro which manages the "version" stuff in the tab.  For VersionedContent
+types that don't use kupu (e.g. Ghost, Link), 
+views/edit/VersionedContent/macro_tab_edit/macros/editor is used.  The 
+"editable" view of the tab (i.e. when the content isn't closed or only published)
+is defined by filling in the "editor_content" slot of the editor macro.  Either
+of the layout macros in "views/macro_edit" may be used.
+
+To ease the conversion, stepping through a comparable content types 'edit' tab
+is recommended.  Use the following to determine a recommented comparable type:
+content type is   | look here
+IContainer        | Container/Folder/tab_edit.pt
+IContent	  | Content/(Indexer|AutoTOC)/tab_edit.pt
+IVersionedContent | VersionedContent/Link/tab_edit.pt
+
+
 From 1.6 to 2.0
 ===============
 

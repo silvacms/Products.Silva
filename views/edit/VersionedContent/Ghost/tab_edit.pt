@@ -1,58 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html tal:omit-tag=""
-  tal:define="
-    view here;
-    model request/model;
-    root_url model/get_root_url;
-    global editable model/get_editable;
-    title model/get_title_editable;
-    vein string:edit;
-    "
-    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="silva"
-    >
-<table class="columns columns3">
-  <tbody>
-    <tr>
-      <tal:block replace="nothing">
-        _____________________ sidebar subtable _____________________
-      </tal:block>
-      <td class="left"
-        tal:define="template_id string:tab_edit">
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
-      </td>
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="maintitlecolspan string:3;
+              vein string:edit"
+>
+<metal:use-macro use-macro="here/macro_tab_edit/macros/editor">
 
-      <tal:block replace="nothing">
-        _____________________ main _____________________
-      </tal:block>
-      <td class="main">
+<metal:block fill-slot="script">
+<script type="text/javascript" 
+  tal:attributes="src here/reference.js/absolute_url">
+</script>
+</metal:block>
 
-<form method="post"
-  name="form"
-  action="submit"
-  tal:condition="model/get_unapproved_version"
-  tal:define="
+<metal:editorcontent fill-slot="editor_content">
+ <tal:def define="
     version     python:model.get_editable();
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
-">
+  ">
+ <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
+   <metal:fillbody fill-slot="main-body">
 
-  <table class="listing">
-    <thead>
-      <tal:block replace="nothing">
-        ______________ vein + title row ______________
-      </tal:block>
-      <tr>
-        <td class="top"
-          colspan="3">
-          <h2>
-            <img tal:replace="structure python:view.render_icon(model)" />
-            <tal:block i18n:translate="">ghost of &#xab;<tal:block i18n:name="name" content="title" />&#xbb;</tal:block>
-          </h2>
-        </td>
-      </tr>
-    </thead>
-
-    <tbody>
       <tr>
         <th class="align-right"
           width="15%"
@@ -69,7 +44,7 @@
 
       <tr class="even">
         <td class="align-right">
-          <input class="button transporter"
+          <input class="transport"
             type="button"
             value="reference..."
             title="Locate item to refer to: alt-r"
@@ -130,15 +105,15 @@
           &nbsp;
         </td>
       </tr>
-    </tbody>
+   </metal:fillbody>
 
-    <tfoot>
+   <metal:fillfoot fill-slot="main-foot">
       <tr class="controls">
         <td class="align-right"
           colspan="3">
           <input class="button"
             type="submit"
-            name="form_submitted"
+            name="submit:method"
             value="save reference"
             title="access key: alt-s"
             accesskey="s"
@@ -146,19 +121,10 @@
           />
         </td>
       </tr>
-    </tfoot>
-  </table>
-</form>
+   </metal:fillfoot>
+ </metal:use-macro>
+  </tal:def>
+</metal:editorcontent>
 
-      </td>
-      <tal:block replace="nothing">
-        _____________________ right column _____________________
-      </tal:block>
-      <td class="right">
-        &nbsp;
-      </td>
-    </tr>
-  </tbody>
-</table>
-
+</metal:use-macro>
 </html>

@@ -9,7 +9,9 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="vein string:edit;"
   i18n:domain="silva">
-
+<!-- Use of this is deprecated and will be removed in a later Silva
+     release (perhaps 2.2).  Please use views/edit/macro_edit instead,
+     and see developer_changes.txt for more info -->
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main" tal:omit-tag="">
 
