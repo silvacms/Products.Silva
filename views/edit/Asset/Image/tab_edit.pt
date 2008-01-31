@@ -13,7 +13,7 @@
 
  <metal:fill-slot fill-slot="info">
   <script type="text/javascript"
-          tal:attributes="src view/cropping.js/absolute_url">
+    tal:attributes="src view/cropping.js/absolute_url">
   </script>
   <div class="info">
     <h3 i18n:translate="">
@@ -83,8 +83,8 @@
         >Square</span>
     </p>
     <p tal:define="
-        size model/get_file_size;
-        scaled_size model/get_scaled_file_size;
+      size model/get_file_size;
+      scaled_size model/get_scaled_file_size;
       ">
       <span class="subhead"><strong i18n:translate="">file size</strong><br /></span>
       <span tal:attributes="title string: ${size} Bytes"
@@ -172,7 +172,7 @@
         <tr class="controls">
           <td></td>
           <td>
-            <input class="transport"
+            <input class="button transporter"
               type="button"
               value="set crop coordinates..."
               title="specify the center of the area to crop by clicking in the image: alt-o"
@@ -180,7 +180,7 @@
               tal:define="asset_context python:request.model"
               tal:attributes="onclick python:'openlookupWindow(\'%s/edit/lookup_cropcoordinates?asset_context=%s\');; ' % (asset_context.absolute_url(), '/'.join(asset_context.getPhysicalPath()))"
               i18n:attributes="title;value"
-              />
+            />
           </td>
           <td class="align-right">
             <input class="button"

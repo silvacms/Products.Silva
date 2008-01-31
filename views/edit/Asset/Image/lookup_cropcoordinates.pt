@@ -53,14 +53,16 @@
         padding-left: 15px;
         }
         
-        a.button, a, a:link, a:visited {
+        a.button, a.button:link, a.button:visited {
         display: block;
         width: 10em;
+        color: #d9f3da;
+        background-color: #064C29;
         text-align: center;
         }
         a.button:hover {
-        color: #e6ffef;
-        background-color: #528e73;
+        color: #e5fffe;
+        background-color: #4a7f67;
         }
         
         #ground {
@@ -124,43 +126,47 @@
           <h3 i18n:translate="">predefined sizes</h3>
           <ul style="list-item-style: none">
             <li>
-              <a href="#" class="button" 
-              onclick="setDraggableSize(50, 50)"
-              title="50x50 pixels"
-              i18n:attributes="title"
-              i18n:translate="">
+              <a class="transporter button"
+                href="#"
+                onclick="setDraggableSize(50, 50)"
+                title="50x50 pixels"
+                i18n:attributes="title"
+                i18n:translate="">
                 50x50 pixel
               </a>
             </li>
             <li>
-              <a href="#" class="button"
-              onclick="setDraggableSize(75, 75)"
-              title="75x75 pixels"
-              i18n:attributes="title"
-              i18n:translate="">
+              <a class="transporter button"
+                href="#"
+                onclick="setDraggableSize(75, 75)"
+                title="75x75 pixels"
+                i18n:attributes="title"
+                i18n:translate="">
                 75x75 pixel
               </a>
             </li>
             <li>
-              <a href="#" class="button"
-              onclick="setDraggableSize(100, 100)" 
-              title="100x100 pixels"
-              i18n:attributes="title"
-              i18n:translate="">
+              <a class="transporter button"
+                href="#"
+                onclick="setDraggableSize(100, 100)" 
+                title="100x100 pixels"
+                i18n:attributes="title"
+                i18n:translate="">
                 100x100 pixel
               </a>
             </li>
             <li>
-              <a href="#" class="button"
-              onclick="setDraggableSize(250, 250)" 
-              title="250x250 pixels"
-              i18n:attributes="title"
-              i18n:translate="">
+              <a class="transporter button"
+                href="#"
+                onclick="setDraggableSize(250, 250)" 
+                title="250x250 pixels"
+                i18n:attributes="title"
+                i18n:translate="">
                 250x250 pixel
               </a>
             </li>
           </ul>
-          
+
           <input class="button transporter" 
               type="button" 
               onclick="cropper.insertCropCoords()"
