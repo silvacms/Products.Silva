@@ -216,6 +216,10 @@ div.kupu-tooltray input {
 margin:0.1em 0;
 }
 
+div.kupu-tooltray select {
+  overflow: hidden;
+}
+
 div.kupu-tooltray input[type="radio"] {
 margin-right:0.5em;
 vertical-align:middle;
