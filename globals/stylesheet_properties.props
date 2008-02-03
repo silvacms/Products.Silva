@@ -68,7 +68,7 @@ listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
 
 listingInterControlsBackground:string=#678
-listingControlsBackground:string=#607080
+listingControlsBackground:string=#567
 listingDividerBackground:string=#89a
 
 listingHeaderBackground:string=#789

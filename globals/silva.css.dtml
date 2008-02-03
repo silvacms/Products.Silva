@@ -452,8 +452,8 @@ table.listing tr.even td {
   background: &dtml-listingEvenBackground;;
 }
 
-/* applies only to mozilla comp. browsers */
-td.main>table.listing tr.odd:hover td, td.main>table.listing tr.even:hover td {
+/* applies only to mozilla and IE7 */
+table.listing tr.odd:hover td, table.listing tr.even:hover td {
   background-color: #e5f2ff;
 }
 
@@ -470,7 +470,7 @@ tr.separator td, td.separator {
 /* ______________ cells ______________ */
 
 table.listing th {
-padding: 0em 0.4em;
+padding: 0em 0.3em;
   border-top: none;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
@@ -504,7 +504,7 @@ table.listing th.align-right, table.listing td.align-right {
 }
 
 table.listing td {
-  padding: 0 0.4em;
+  padding: 0 0.3em;
   border-right: &dtml-listingBorder;;
   text-align: left;
   vertical-align: top;
@@ -512,7 +512,7 @@ table.listing td {
 
 /* _______ title cell _______ */
 table.listing td.top h2 {
-  margin: 0em 0.2em 0.1em 0.1em;
+  margin: 0 0.2em 0.1em 0.1em;
   color: &dtml-listingTopHeadingColor;;
 }
 table.listing td.top img {
@@ -534,13 +534,12 @@ margin: 0em 0.3em 0.1em;
 }
 
 table.listing td.listing-left {
-  padding: 0 0.4em 0 0;
+  padding: 0 0.3em 0 0;
   white-space: nowrap;
 }
 
 table.listing td.listing-right {
-  padding-right: 0.3em;
-  padding-left: 0.4em;
+  padding: 0 0 0 0.2em;
   white-space: nowrap;
 }
 
@@ -758,7 +757,7 @@ form {
 
 input {
   margin: 1px 0;
-  padding: 0.1em;
+  padding: 1px 2px;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
   background-color: &dtml-inputBackground;;
@@ -767,7 +766,7 @@ input {
 
 textarea {
   margin: 1px 0;
-  padding: 0.1em;
+  padding: 1px 2px;
   border: &dtml-inputBorder;;
   color: &dtml-inputFontColor;;
   background-color: &dtml-inputBackground;;
@@ -791,7 +790,7 @@ select {
 
 select.store {
   width: 100%;
-  !width: 95%; /* IE7 hack */
+  !width: 95%; /* IE6 hack */
 }
 
 select.manipulator {
@@ -954,11 +953,13 @@ table.listing div.transport-border:hover {
 
 input:hover, textarea:hover, select:hover {
 border-color : #599;
+color:#339;
 background-color: #def2f2;
 }
 
 input:focus, textarea:focus, select:focus {
 border-color : #0ff;
+color:#339;
 background-color: #edf7f7;
 }
 
@@ -976,22 +977,32 @@ color:#336;
 input.button:hover, button.button:hover {
 border-color: #567;
   color: #e5fffe;
-  background-color: #4A7F67;
+  background-color: #4a7f67;
 }
 input.button:focus, button.button:focus {
 border-color: #789;
   color: #bfffd3;
-  background-color: #538b58;
+  background-color: #62A269;
 }
 
 /* transporter cool glow */
 input.transporter:hover, button.transporter:hover {
   color: #e5fffe;
-  background-color: #68687E;
+  background-color: #68687e;
 }
 input.transporter:focus {
   color: #b3fffb;
 background-color: #8d97c2;
+}
+
+/* executor eerie glow */
+input.executor:hover {
+  color: #e5ffec;
+  background-color: #4c8298;
+}
+input.executor:focus {
+color: #bfffd3;
+background-color: #5B99B3;
 }
 
 /* remover hot glow */
@@ -1002,16 +1013,6 @@ input.remover:hover, input.warning:hover {
 input.remover:focus, input.warning:focus {
   color: #f0c0c0;
   background-color: #53538b;
-}
-
-/* executor eerie glow */
-input.executor:hover {
-  color: #e5ffec;
-  background-color: #4C8298;
-}
-input.executor:focus {
-color: #bfffd3;
-background-color: #008a8a;
 }
 
 /* state coded buttons */
