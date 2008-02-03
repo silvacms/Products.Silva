@@ -18,6 +18,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - Set overflow of selects in Kupu toolboxes to hidden, preventing long
+        titles from pushing the toolbox wider.
+
       - Changed the threshold variable in upgrade.py from 500 to 50,
         this may impact speed of upgrades negatively but it seems
         necessary for for instance ExtFile migration, where 500

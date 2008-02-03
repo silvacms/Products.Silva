@@ -213,13 +213,17 @@ div.kupu-tooltray table td {
   padding: 0 0.1em 0;
 }
 
-/* seems to keep IE (inc 7) in check without anything else */ 
+/* seems to keep IE (inc 7) buttons in check without anything else */ 
 div.kupu-tooltray input.button, div.kupu-tooltray input.transport {
   overflow: visible; 
 }
 /* improves problem with long values in string inputs in IE 7 */ 
 div.kupu-tooltray input.store {
   overflow: visible;
+}
+
+div.kupu-tooltray select {
+  overflow: hidden;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
