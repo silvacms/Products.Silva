@@ -198,7 +198,7 @@
       ______________ listing header ______________
     </tal:block>
     <tr tal:condition="python:(default_document or publishables or assets)">
-      <th class="listing-right">
+      <th class="listing-left">
         #&nbsp;
       </th>
       <th i18n:translate="">
@@ -240,7 +240,7 @@
           <tal:block replace="nothing">
             _______ checkbox + position cell _______
           </tal:block>
-          <td class="align-right">
+          <td class="listing-left">
             <span
               tal:condition="default_document"
               tal:content="repeat/item/index"
@@ -383,7 +383,7 @@
           <tal:block replace="nothing">
             _______ checkbox + position cell _______
           </tal:block>
-          <td class="align-right">
+          <td class="listing-left">
             &#8211;
           </td>
           <tal:block replace="nothing">
