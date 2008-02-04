@@ -158,6 +158,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - Special characters in titles are escaped in the tocrenderer
+        adapter, to play nice with xslt rendering.
+
       - Fixed the factory function calls for File and Image, which
         still were still called with the spurious 'title' arguments on
         some code paths.

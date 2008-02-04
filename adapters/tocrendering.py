@@ -11,6 +11,12 @@ from types import StringType
 
 module_security = AccessControl.ModuleSecurityInfo('Products.Silva.adapters.tocrendering')
 
+def escape(thestring):
+    thestring = thestring.replace('&','&amp;')
+    thestring = thestring.replace('<','&lt;')
+    thestring = thestring.replace('>','&gt;')
+    return thestring
+
 class TOCRenderingAdapter(adapter.Adapter):
     """ Adapter for TOCs (autotoc, document toc) to render"""
 
@@ -71,9 +77,8 @@ class TOCRenderingAdapter(adapter.Adapter):
 
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
-        depth = item = None  #need to pre-initialize these
-        #the func yeilds the depth and the item for each item, and
-        #this loop will quietly end when there are no more items to render
+        depth = 0
+        item = None
         for (depth,item) in func(container=self.context,toc_depth=toc_depth):
             pd = prev_depth[-1]
             if pd < depth: #down one level
@@ -87,7 +92,10 @@ class TOCRenderingAdapter(adapter.Adapter):
                 html.append('</li>')
             html.append('<li>')
             title = (public and item.get_title() or item.get_title_editable()) or item.id
-            html.append(a_templ%(item.absolute_url(),append_to_url,title))
+            html.append(a_templ%(
+                item.absolute_url(),
+                append_to_url,
+                escape(title)))
         else:
             #do this when the loop is finished, to
             #ensure that the lists are ended properly
