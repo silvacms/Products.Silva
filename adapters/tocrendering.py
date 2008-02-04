@@ -67,6 +67,10 @@ class TOCRenderingAdapter(adapter.Adapter):
         else:
             append_to_url = ''
 
+        #func is either a generator function that returns the public items
+        #or all items to render in this TOC.  The functions use yields
+        #to generate the lists.  Rendering is sped up since the list
+        #is only iterated through once.
         func = public and self._get_public_tree_iterator or self._get_tree_iterator
         html = []
         a_templ = '<a href="%s%s">%s</a>'
@@ -93,6 +97,10 @@ class TOCRenderingAdapter(adapter.Adapter):
                 append_to_url,
                 escape(title)))
         else:
+            #do this when the loop is finished, to
+            #ensure that the lists are ended properly
+            #the last item in the list could part of a nested list (with depth 1,2,3+, etc)
+            #so need to loop down the depth and close all open lists
             while depth >= 0:
                 html.append('</li></ul>')
                 depth -= 1
