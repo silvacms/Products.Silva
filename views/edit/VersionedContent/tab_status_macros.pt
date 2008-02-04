@@ -89,7 +89,7 @@ sent a message on
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <div metal:define-macro="request_approval" tal:omit-tag="">
-<form action="." method="post">
+<form name="author_request_approval" action="." method="post">
 <tr tal:condition="python:model.get_approval_request_message()">
 <td class="feedback"
  colspan="2" i18n:translate="">
@@ -166,7 +166,7 @@ This message will remain visible in the status screen for other authors and edit
 
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
-<form action="." method="post">
+<form name="editor_change_setting" action="." method="post">
 <tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
@@ -211,7 +211,7 @@ notes
 <span tal:replace="nothing"> _______ Editor approves _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
-<form action="tab_status_approve" method="post">
+<form name="editor_approves" action="tab_status_approve" method="post">
 <table class="listing sublisting">
 <tr class="inter-controls">
 <td colspan="2">
@@ -310,7 +310,7 @@ expiration time
 <span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for approval _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="withdraw_request_approval">
-<form action="tab_status_withdraw" method="post">
+<form name="auth_ed_reject_approval" action="tab_status_withdraw" method="post">
 <table class="listing">
 <tr class="inter-controls">
 <td colspan="2">
@@ -388,7 +388,7 @@ The message may be viewed by local users.
 <span tal:replace="nothing"> _______ Revoke approval _______ </span>
 <div tal:omit-tag=""
   metal:define-macro="revoke_approval">
-<form action="tab_status_revoke" method="post">
+<form name="revoke_approval" action="tab_status_revoke" method="post">
 <table class="listing sublisting">
 <thead>
 <tr class="inter-controls">
