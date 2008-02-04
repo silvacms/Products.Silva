@@ -11,6 +11,12 @@ from types import StringType
 
 module_security = AccessControl.ModuleSecurityInfo('Products.Silva.adapters.tocrendering')
 
+def escape(thestring):
+    thestring = thestring.replace('&','&amp;')
+    thestring = thestring.replace('<','&lt;')
+    thestring = thestring.replace('>','&gt;')
+    return thestring
+
 class TOCRenderingAdapter(adapter.Adapter):
     """ Adapter for TOCs (autotoc, document toc) to render"""
 
@@ -82,7 +88,10 @@ class TOCRenderingAdapter(adapter.Adapter):
                 html.append('</li>')
             html.append('<li>')
             title = (public and item.get_title() or item.get_title_editable()) or item.id
-            html.append(a_templ%(item.absolute_url(),append_to_url,title))
+            html.append(a_templ%(
+                item.absolute_url(),
+                append_to_url,
+                escape(title)))
         else:
             while depth >= 0:
                 html.append('</li></ul>')
