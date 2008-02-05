@@ -85,6 +85,9 @@ Silva changes
 
     Features ported from 2.0 branch
 
+      - 128518 Import of non existing values for (multi)list metadata
+        values gave a formulator SelectionValidator error.
+
       - Made Silva work with ExtFile once again: we no longer
         configure the filesystem_path in the service_files, but leave
         it to the extfile.ini.
