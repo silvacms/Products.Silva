@@ -1,20 +1,21 @@
+# Estonian translation for silva
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# This file is distributed under the same license as the silva package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: silva-zh-cn\n"
-"Report-Msgid-Bugs-To:  \n"
+"Project-Id-Version: silva\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Tue Feb  5 17:45:01 2008\n"
-"PO-Revision-Date: 2007-11-02 14:57+0000\n"
-"Last-Translator: thisfred <eric@infrae.com>\n"
-"Language-Team: marco.sens\n"
+"PO-Revision-Date: 2008-01-15 18:41+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2008-02-05 16:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"Language-code: zh-cn\n"
-"Domain: silva\n"
-"Language-name: Chinese Simplified\n"
-"Preferred-encodings: utf-8\n"
 
 #: /AutoTOC.py:24
 msgid ""
@@ -26,20 +27,20 @@ msgstr ""
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr "未连接"
+msgstr ""
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr "确认错误"
+msgstr ""
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr "更改设置"
+msgstr ""
 
 #: /File.py:176 /views/edit/Container/docma_queue.pt:167
 #: /views/edit/Container/docma_queue.pt:192
 msgid "download"
-msgstr "下载"
+msgstr ""
 
 #: /File.py:47
 msgid ""
@@ -1077,7 +1078,7 @@ msgstr ""
 
 #: /roleinfo.py:31
 msgid "Manager"
-msgstr "管理员"
+msgstr ""
 
 #: /roleinfo.py:32
 msgid "Viewer"
@@ -1839,7 +1840,7 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:418
 #: /browser/object_lookup.pt:378
 msgid "preview"
-msgstr "预览"
+msgstr ""
 
 #: /views/edit/Asset/get_tabs.py:16
 #: /views/edit/Container/GhostFolder/get_tabs.py:19
@@ -1855,7 +1856,7 @@ msgstr "预览"
 #: /views/edit/Container/tab_edit.pt:383 /views/edit/Container/tab_edit.pt:391
 #: /kupu/kupumacros.html:313
 msgid "properties"
-msgstr "属性"
+msgstr ""
 
 #: /views/edit/Asset/get_tabs.py:17
 #: /views/edit/Container/GhostFolder/get_tabs.py:20
@@ -1866,7 +1867,7 @@ msgstr "属性"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:20
 #: /views/edit/VersionedContent/Link/get_tabs.py:18
 msgid "access"
-msgstr "权限"
+msgstr ""
 
 #: /views/edit/Asset/macro_asset_edit.pt:107
 #: /views/edit/Container/tab_edit_import.pt:372
@@ -1917,7 +1918,7 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
 #: /views/edit/Container/get_tabs.py:17 /views/edit/get_authorized_tabs.py:14
 msgid "contents"
-msgstr "内容"
+msgstr ""
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:21
 #: /views/edit/Container/get_tabs.py:21
@@ -1929,7 +1930,7 @@ msgstr "内容"
 #: /views/edit/Container/tab_status.pt:349
 #: /views/edit/Container/GhostFolder/tab_edit.pt:342
 msgid "publish"
-msgstr "发布"
+msgstr ""
 
 #: /views/edit/Container/GhostFolder/submit.py:19
 msgid ""
@@ -2296,7 +2297,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:129 /views/edit/Container/tab_edit.pt:195
 msgid "modify"
-msgstr "修改"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:135
 #: /views/edit/Container/tab_access_groups.pt:180
@@ -2304,17 +2305,17 @@ msgstr "修改"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:210
 #: /browser/object_lookup.pt:159
 msgid "modified"
-msgstr "修改日期"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:138
 #: /views/edit/Container/GhostFolder/tab_edit.pt:213
 #: /browser/object_lookup.pt:162
 msgid "author"
-msgstr "作者"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:141
 msgid "shift"
-msgstr "切换"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:152
 #: /views/edit/Container/GhostFolder/tab_edit.pt:223
@@ -2328,12 +2329,12 @@ msgstr ""
 #: /views/edit/Container/GhostFolder/tab_edit.pt:346
 #: /browser/object_lookup.pt:282 /browser/object_lookup.pt:312
 msgid "n/a"
-msgstr "-"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:260
 #: /views/edit/Container/GhostFolder/tab_edit.pt:317
 msgid "content approved, or published..."
-msgstr "已批准或已发布的内容..."
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:266
 #: /views/edit/Container/GhostFolder/tab_edit.pt:327
@@ -2342,11 +2343,11 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:274 /views/edit/Container/tab_edit.pt:277
 msgid "move up"
-msgstr "上移"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:282 /views/edit/Container/tab_edit.pt:285
 msgid "move down"
-msgstr "下移"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:356
 msgid "editor"
@@ -2364,63 +2365,63 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:450
 msgid "move selected items to"
-msgstr "将选定项目移至"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:458
 msgid "position"
-msgstr "位置"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:469
 msgid "end"
-msgstr "最后一行"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:481
 msgid "move selected items into position: alt-m"
-msgstr "将选定项目移至位置: alt-m"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:481
 msgid "move"
-msgstr "移动"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:490
 msgid "rename..."
-msgstr "重命名…"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:490
 msgid "rename and retitle items: alt-r"
-msgstr "重命名项目: alt-r"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:499
 msgid "cut"
-msgstr "剪切"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:499
 msgid "cut items: alt-x"
-msgstr "剪切项目: alt-x"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:510
 msgid "copy"
-msgstr "复制"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:510
 msgid "copy items: alt-c"
-msgstr "复制项目: alt-c"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:527
 msgid "paste items: alt-v"
-msgstr "粘贴项目: alt-v"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:527
 msgid "paste"
-msgstr "粘贴"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:536
 msgid "paste (items on clipboard) as ghost objects: alt-g"
-msgstr "粘贴（剪贴簿上的项目）为快捷对象: alt-g"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:536
 msgid "paste ghost"
-msgstr "粘贴快捷对象"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/Container/tab_access_groups.pt:250
@@ -2444,23 +2445,23 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:59 /browser/object_lookup.pt:114
 msgid "select a new item: alt-s"
-msgstr "选择新项目: alt-s"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:65 /browser/object_lookup.pt:121
 msgid "select:"
-msgstr "选择:"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:80
 msgid "new..."
-msgstr "新建..."
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:80
 msgid "add a new item - alt-n"
-msgstr "添加新项目: alt-n"
+msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:90 /views/edit/Container/tab_status.pt:81
 msgid "import xml data or a zip file: alt-i"
-msgstr "导入 xml 数据或 zip 文件: alt-i"
+msgstr ""
 
 #: /views/edit/Container/tab_edit_close.py:15
 #: /views/edit/Container/tab_status_close.py:16
@@ -2787,7 +2788,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_rename.pt:84
 msgid "no title"
-msgstr "无标题"
+msgstr ""
 
 #: /views/edit/Container/tab_edit_rename_start.py:13
 msgid "Nothing was selected, so nothing can be renamed."
@@ -2976,7 +2977,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_export.pt:100
 #: /views/edit/Container/tab_edit.pt:90 /views/edit/Container/tab_status.pt:81
 msgid "import..."
-msgstr "导入..."
+msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:109
 msgid "full media export (.zip)"
@@ -3539,13 +3540,13 @@ msgstr ""
 #: /views/edit/VersionedContent/tab_status.pt:247
 #: /views/edit/Container/tab_edit.pt:547
 msgid "there's no undo: alt-d"
-msgstr "此操作不可撤销: alt-d"
+msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:247
 #: /views/edit/Container/tab_edit.pt:547
 #: /views/edit/Container/tab_access_groups.pt:250
 msgid "delete"
-msgstr "删除"
+msgstr ""
 
 #: /views/edit/VersionedContent/tab_status.pt:257
 msgid "compare..."
@@ -4080,7 +4081,7 @@ msgstr ""
 #: /views/edit/Container/tab_edit.pt:111 /views/edit/Container/tab_edit.pt:118
 #: /views/edit/Container/tab_status.pt:100
 msgid "select all: alt-a"
-msgstr "全选: alt-a"
+msgstr ""
 
 #: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:121
 msgid "select all"
@@ -4143,7 +4144,7 @@ msgstr ""
 
 #: /views/edit/macro_vein_navigation.pt:66
 msgid "reload screen"
-msgstr "刷新屏幕"
+msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:111 /views/edit/tab_settings.pt:120
 msgid "content renderer"
@@ -4722,7 +4723,7 @@ msgstr ""
 
 #: /views/macro_index.pt:120
 msgid "jump to zope root: alt-z"
-msgstr "跳至 zope 根目录: alt-z"
+msgstr ""
 
 #: /views/macro_index.pt:120
 msgid "zroot..."
@@ -4734,7 +4735,7 @@ msgstr ""
 
 #: /views/macro_index.pt:129
 msgid "jump to silva root in zodb: alt-'"
-msgstr "跳至 zodb 中的 silva 根目录: alt-'"
+msgstr ""
 
 #: /views/macro_index.pt:138
 msgid "sservices..."
@@ -4742,7 +4743,7 @@ msgstr ""
 
 #: /views/macro_index.pt:138
 msgid "jump to silva services: alt-`"
-msgstr "跳至 silva 服务页面: alt-`"
+msgstr ""
 
 #: /views/macro_index.pt:167 /views/macro_index.pt:170
 #: /views/macro_index.pt:180 /views/macro_index.pt:184
@@ -4751,31 +4752,31 @@ msgstr ""
 
 #: /views/macro_index.pt:203
 msgid "contact:"
-msgstr "联系人:"
+msgstr ""
 
 #: /views/macro_index.pt:211
 msgid "no name"
-msgstr "佚名"
+msgstr ""
 
 #: /views/macro_index.pt:218
 msgid "view public version"
-msgstr "查看公共版本"
+msgstr ""
 
 #: /views/macro_index.pt:235
 msgid "Change your settings: alt-~"
-msgstr "更改设置: alt-~"
+msgstr ""
 
 #: /views/macro_index.pt:249
 msgid "user settings"
-msgstr "用户设置"
+msgstr ""
 
 #: /views/macro_index.pt:253
 msgid "Logout of Silva: alt-q"
-msgstr "注销 Silva: alt-q"
+msgstr ""
 
 #: /views/macro_index.pt:262
 msgid "logout ${role} ${userid}"
-msgstr "注销 ${role} ${userid}"
+msgstr ""
 
 #: /views/macro_index.pt:271
 msgid "Request an additional role in this location: alt-,"
@@ -4857,7 +4858,7 @@ msgstr ""
 
 #: /views/macro_tabs.pt:69 /views/macro_index.pt:218
 msgid "Leave Silva and view the public page: alt-:"
-msgstr "离开 Silva 并查看公共页面: alt-:"
+msgstr ""
 
 #: /views/macro_tabs.pt:83
 msgid "Silva access keys: alt-?"
@@ -5011,8 +5012,6 @@ msgid ""
 "\n"
 "            "
 msgstr ""
-"\n"
-"            "
 
 #: /views/public/search_form.form:77
 msgid "Subtree only"
@@ -5079,27 +5078,3 @@ msgstr ""
 #: /views/render_form_errors.py:44
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-
-#~ msgid "select <u>a</u>ll"
-#~ msgstr "全选"
-
-#~ msgid "manage..."
-#~ msgstr "管理主界面..."
-
-#~ msgid "access key: alt-1"
-#~ msgstr "访问键: alt-1"
-
-#~ msgid "access key: alt-2"
-#~ msgstr "访问键: alt-2"
-
-#~ msgid "access key: alt-3"
-#~ msgstr "访问键: alt-3"
-
-#~ msgid "access key: alt-4"
-#~ msgstr "访问键: alt-4"
-
-#~ msgid "access key: alt-5"
-#~ msgstr "访问键: alt-5"
-
-#~ msgid "jump to top: alt-["
-#~ msgstr "跳至页首: alt-["
