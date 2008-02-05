@@ -5,7 +5,7 @@ Upgrading Silva
 Meta
 ----
 
-Copyright (c) 2002-2007 Infrae. All rights reserved.  See also
+Copyright (c) 2002-2008 Infrae. All rights reserved.  See also
 LICENSE.txt
 
 Valid for:  Silva 1.5.x
