@@ -1,5 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-# Copyright (c) 2002-2007 Infrae. All rights reserved.
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: mangle.py,v 1.37 2006/01/24 16:14:13 faassen Exp $
 # Python
