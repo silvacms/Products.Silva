@@ -42,6 +42,12 @@ Silva changes
         still were still called with the spurious 'title' arguments on
         some code paths.
 
+    Ported from the 1.6 branch:
+
+      - External sources are removed when extracting the fulltext from
+        a document, since the values of the parameters are not
+        necessarily meant to be public information.
+
   Silva 2.0.4
 
     Features Added:
@@ -209,12 +215,6 @@ Silva changes
       - Added True switch to Image.py tag method to escape double quotes.
 
       - A security fix in Zope 2.10.3 broke install.py.
-
-    Ported from the 1.6 branch:
-
-      - External sources are removed when extracting the fulltext from
-        a document, since the values of the parameters are not
-        necessarily meant to be public information.
 
   Silva 1.6
 
