@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "Report-Msgid-Bugs-To:  \n"
-"POT-Creation-Date: Tue Feb  5 17:45:01 2008\n"
+"POT-Creation-Date: Fri Feb  8 12:55:52 2008\n"
 "PO-Revision-Date: 2008-01-30 14:02+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -259,46 +259,41 @@ msgstr ""
 msgid "No public version to close."
 msgstr "Geen publieke versie om te sluiten."
 
-#: /Versioning.py:250 /adapters/version_management.py:83
-#: /adapters/version_management.py:91
-msgid "No unapproved version available"
-msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
-
-#: /Versioning.py:283 /Versioning.py:332 /Versioning.py:362
+#: /Versioning.py:261 /Versioning.py:310 /Versioning.py:340
 msgid "There is no unapproved version to request approval for."
 msgstr ""
 "Er is geen versie die nog niet is goedgekeurd waar goedkeuring voor kan "
 "worden aangevraagd."
 
-#: /Versioning.py:287
+#: /Versioning.py:265
 msgid "The version is already requested for approval."
 msgstr "Er is al goedkeuring aangevraagd voor deze versie."
 
-#: /Versioning.py:336 /Versioning.py:366
+#: /Versioning.py:314 /Versioning.py:344
 msgid "The version is not requested for approval."
 msgstr "Er is geen goedkeuring voor de versie aangevraagd."
 
-#: /Versioning.py:386 /Versioning.py:399
+#: /Versioning.py:364 /Versioning.py:377
 msgid "No unapproved version."
 msgstr "Geen versie die nog niet is goedgekeurd."
 
-#: /Versioning.py:412 /Versioning.py:433
+#: /Versioning.py:390 /Versioning.py:411
 msgid "No approved version."
 msgstr "Geen goedgekeurde versie."
 
-#: /Versioning.py:415
+#: /Versioning.py:393
 msgid "Must specify publication datetime."
 msgstr "Publicatie-tijdstip moet worden opegeven."
 
-#: /Versioning.py:446
+#: /Versioning.py:424
 msgid "No public version."
 msgstr "Geen publieke versie."
 
-#: /Versioning.py:473 /Versioning.py:492
+#: /Versioning.py:451 /Versioning.py:470
 msgid "No next version."
 msgstr "Geen volgende versie."
 
-#: /Versioning.py:506
+#: /Versioning.py:484
 msgid "There is no version to add messages for."
 msgstr "Er is geen versie om boodschappen voor toe te voegen."
 
@@ -335,6 +330,10 @@ msgstr "Kan niet alle versies verwijderen"
 #: /adapters/version_management.py:288
 msgid "no such version ${version}"
 msgstr "versie bestaat niet ${version}"
+
+#: /adapters/version_management.py:83 /adapters/version_management.py:91
+msgid "No unapproved version available"
+msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
 
 #: /browser/object_lookup.pt:153
 msgid "select"
@@ -590,8 +589,8 @@ msgid "return"
 msgstr "terug"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
-#: /views/edit/VersionedContent/tab_status_macros.pt:151
-#: /views/edit/VersionedContent/tab_status_macros.pt:372
+#: /views/edit/VersionedContent/tab_status_macros.pt:150
+#: /views/edit/VersionedContent/tab_status_macros.pt:371
 #: /views/edit/Container/tab_edit_rename.pt:120
 msgid "access key: alt-r"
 msgstr "sneltoets: alt-r"
@@ -1031,9 +1030,7 @@ msgstr "Overdoen: Sneltoets (Alt of Ctrl) + Y"
 
 #: /kupu/kupumacros.html:262
 msgid "toggle_source_view"
-msgstr ""
-"h:   \t Copy text   \t\r\n"
-"toggle_source_view"
+msgstr "toggle_source_view"
 
 #: /kupu/kupumacros.html:268
 msgid "list-disc"
@@ -1053,9 +1050,7 @@ msgstr "list-nobullet"
 
 #: /kupu/kupumacros.html:274
 msgid "list-decimal"
-msgstr ""
-"Copy text   \t\r\n"
-"list-decimal"
+msgstr "list-decimal"
 
 #: /kupu/kupumacros.html:275
 msgid "list-upperroman"
@@ -1407,7 +1402,7 @@ msgstr "sneltoets: alt-s"
 
 #: /views/add/add_form.pt:152 /views/add/GhostFolder/add_form.pt:134
 #: /views/add/Ghost/add_form.pt:126 /views/edit/Asset/Image/tab_edit.pt:186
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:453
 #: /views/edit/VersionedContent/Link/tab_edit.pt:55
 #: /views/edit/Container/tab_edit_rename.pt:128
 msgid "access key: alt-c"
@@ -1456,10 +1451,10 @@ msgstr "inhoud"
 #: /views/add/add_form.pt:73 /views/add/add_form.pt:119
 #: /views/add/GhostFolder/add_form.pt:58 /views/add/Ghost/add_form.pt:56
 #: /views/edit/Content/Indexer/tab_edit.pt:19
-#: /views/edit/VersionedContent/tab_status_macros.pt:129
-#: /views/edit/VersionedContent/tab_status_macros.pt:182
-#: /views/edit/VersionedContent/tab_status_macros.pt:235
-#: /views/edit/VersionedContent/tab_status_macros.pt:339
+#: /views/edit/VersionedContent/tab_status_macros.pt:128
+#: /views/edit/VersionedContent/tab_status_macros.pt:181
+#: /views/edit/VersionedContent/tab_status_macros.pt:234
+#: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "notes"
 msgstr "notities"
 
@@ -3486,7 +3481,7 @@ msgstr "Index bijgewerkt"
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/macro_middleground.pt:46
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:33
-#: /views/edit/VersionedContent/tab_status_macros.pt:232
+#: /views/edit/VersionedContent/tab_status_macros.pt:231
 #: /views/edit/Container/GhostFolder/tab_edit.pt:306
 msgid "settings"
 msgstr "instellingen"
@@ -3931,19 +3926,19 @@ msgstr "Leeg betekent: verloopt niet."
 msgid "view «${version_title}»"
 msgstr "bekijk «${version_title}»"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:121
+#: /views/edit/VersionedContent/tab_status_macros.pt:120
 msgid "request approval ${for_new_version}"
 msgstr "goedkeuring aanvragen ${for_new_version}"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:121
+#: /views/edit/VersionedContent/tab_status_macros.pt:120
 msgid "for new version"
 msgstr "voor nieuwe versie"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:126
+#: /views/edit/VersionedContent/tab_status_macros.pt:125
 msgid "message to editor"
 msgstr "boodschap aan redacteur"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:140
+#: /views/edit/VersionedContent/tab_status_macros.pt:139
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
@@ -3951,124 +3946,124 @@ msgstr ""
 "Deze boodschap zal zichtbaar blijven in het scherm 'status' voor andere "
 "auteurs en redacteuren."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:151
+#: /views/edit/VersionedContent/tab_status_macros.pt:150
 #: /views/edit/Container/tab_status.pt:439
 msgid "request approval"
 msgstr "goedkeuring aanvragen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:172
+#: /views/edit/VersionedContent/tab_status_macros.pt:171
 msgid "change settings"
 msgstr "instellingen veranderen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:179
+#: /views/edit/VersionedContent/tab_status_macros.pt:178
 msgid "current timings"
 msgstr "huidige tijdstippen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:194
+#: /views/edit/VersionedContent/tab_status_macros.pt:193
 #: /views/edit/Container/tab_status.pt:369
 #: /views/edit/Container/tab_status.pt:449
 msgid "update timing"
 msgstr "tijdstippen instellen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:219
+#: /views/edit/VersionedContent/tab_status_macros.pt:218
 msgid "publish new version"
 msgstr "nieuwe versie publiceren"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:223
+#: /views/edit/VersionedContent/tab_status_macros.pt:222
 msgid "publish closed version"
 msgstr "gesloten versie publiceren"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:245
+#: /views/edit/VersionedContent/tab_status_macros.pt:244
 #: /views/edit/Container/tab_status.pt:302
 msgid "access key: alt-m"
 msgstr "sneltoets: alt-m"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:264
-#: /views/edit/VersionedContent/tab_status_macros.pt:293
+#: /views/edit/VersionedContent/tab_status_macros.pt:263
+#: /views/edit/VersionedContent/tab_status_macros.pt:292
 #: /views/edit/Container/tab_edit.pt:475
 #: /views/edit/Container/tab_status.pt:332
 msgid "access key: alt-o"
 msgstr "sneltoets: alt-o"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:284
+#: /views/edit/VersionedContent/tab_status_macros.pt:283
 #: /views/edit/Container/tab_edit.pt:564 /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:70
 msgid "publish now"
 msgstr "nu publiceren"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:284
+#: /views/edit/VersionedContent/tab_status_macros.pt:283
 #: /views/edit/Container/tab_status_export.pt:264
 msgid "access key: alt-p"
 msgstr "sneltoets: alt-p"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:293
+#: /views/edit/VersionedContent/tab_status_macros.pt:292
 #: /views/edit/Container/tab_status.pt:359
 msgid "approve for future"
 msgstr "goedkeuren voor de toekomst"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:318
+#: /views/edit/VersionedContent/tab_status_macros.pt:317
 #: /views/edit/Container/tab_status.pt:380
 msgid "reject"
 msgstr "afwijzen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:319
+#: /views/edit/VersionedContent/tab_status_macros.pt:318
 msgid "withdraw"
 msgstr "intrekken"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:320
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
 msgid "request"
 msgstr "aanvraag"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:329
+#: /views/edit/VersionedContent/tab_status_macros.pt:328
 msgid "add message on"
 msgstr "boodschap toevoegen over"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:332
-msgid "rejection"
-msgstr "afwijzing"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:335
-msgid "withdrawal"
-msgstr "intrekking"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:34
+#: /views/edit/VersionedContent/tab_status_macros.pt:33
 msgid "Publication time of public version"
 msgstr "Publicatietijdstip van publieke versie"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:354
+#: /views/edit/VersionedContent/tab_status_macros.pt:331
+msgid "rejection"
+msgstr "afwijzing"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:334
+msgid "withdrawal"
+msgstr "intrekking"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:353
 msgid "The message may be viewed by local users."
 msgstr "De boodschap mag door lokale gebruikers bekeken worden."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:364
+#: /views/edit/VersionedContent/tab_status_macros.pt:363
 msgid "reject approval request"
 msgstr "aanvraag voor goedkeuring afwijzen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:364
+#: /views/edit/VersionedContent/tab_status_macros.pt:363
 msgid "access key: alt-j"
 msgstr "sneltoets: alt-j"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:372
+#: /views/edit/VersionedContent/tab_status_macros.pt:371
 msgid "withdraw approval request"
 msgstr "verzoek om goedkeuring intrekken"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:39
+#: /views/edit/VersionedContent/tab_status_macros.pt:38
 msgid "Publication and expiration time of public version"
 msgstr "publicatie- en verlooptijdstip van publieke versie"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:405
+#: /views/edit/VersionedContent/tab_status_macros.pt:404
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 "Als verder bewerken nodig is, moet eerst de goedkeuring worden ingetrokken."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:414
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "access key: alt-v"
 msgstr "sneltoets: alt-v"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:438
+#: /views/edit/VersionedContent/tab_status_macros.pt:437
 msgid "manual close"
 msgstr "handmatig sluiten"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:445
+#: /views/edit/VersionedContent/tab_status_macros.pt:444
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
@@ -4076,19 +4071,19 @@ msgstr ""
 "Indien nodig, kan de gepubliceerde versie van deze inhoud handmatig gesloten "
 "(offline gezet) worden. Deze zal ook verwijderd worden uit de publieke index."
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:453
 msgid "close published version"
 msgstr "gepubliceerde versie sluiten"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:55
+#: /views/edit/VersionedContent/tab_status_macros.pt:54
 msgid "messages"
 msgstr "boodschappen"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:69
+#: /views/edit/VersionedContent/tab_status_macros.pt:68
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr "${author_id} verstuurde op ${some_date} een boodschap ${with_comments}"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:99
+#: /views/edit/VersionedContent/tab_status_macros.pt:98
 msgid ""
 "A previous request for approval has been rejected / withdrawn by "
 "${requester} on ${some_date}. actually the last message may not have been "
@@ -4123,7 +4118,6 @@ msgid "Can only set 1 version as editable."
 msgstr "Er kan maar één versie als bewerkbaar ingesteld worden."
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:31
-#: /views/edit/VersionedContent/tab_status_revert_to_previous.py:17
 msgid "Reverted to previous version."
 msgstr "Teruggevallen op vorige versie."
 
@@ -4449,8 +4443,8 @@ msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:146
 #: /views/edit/VersionedContent/macro_tab_edit.pt:134
-#: /views/edit/VersionedContent/tab_status_macros.pt:396
-#: /views/edit/VersionedContent/tab_status_macros.pt:414
+#: /views/edit/VersionedContent/tab_status_macros.pt:395
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "revoke approval"
 msgstr "goedkeuring intrekken"
 
@@ -5423,7 +5417,7 @@ msgstr "email-notificaties deactiveren"
 #: /views/public/subscriptor.pt:71 /views/edit/Asset/macro_asset_edit.pt:146
 #: /views/edit/Asset/File/tab_edit.pt:103
 #: /views/edit/Content/Indexer/tab_edit.pt:36
-#: /views/edit/VersionedContent/tab_status_macros.pt:194
+#: /views/edit/VersionedContent/tab_status_macros.pt:193
 msgid "access key: alt-u"
 msgstr "sneltoets: alt-u"
 

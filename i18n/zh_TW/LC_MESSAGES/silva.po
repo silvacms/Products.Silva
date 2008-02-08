@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Feb  5 17:45:01 2008\n"
+"POT-Creation-Date: Fri Feb  8 12:55:52 2008\n"
 "PO-Revision-Date: 2007-04-01 03:52+0000\n"
 "Last-Translator: Formichelle <for1018@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
@@ -274,44 +274,39 @@ msgstr ""
 msgid "No public version to close."
 msgstr "沒有關閉公眾版本。"
 
-#: /Versioning.py:250 /adapters/version_management.py:83
-#: /adapters/version_management.py:91
-msgid "No unapproved version available"
-msgstr "沒有未證實版本可用。"
-
-#: /Versioning.py:283 /Versioning.py:332 /Versioning.py:362
+#: /Versioning.py:261 /Versioning.py:310 /Versioning.py:340
 msgid "There is no unapproved version to request approval for."
 msgstr "沒有未證實版本提出驗證需求。"
 
-#: /Versioning.py:287
+#: /Versioning.py:265
 msgid "The version is already requested for approval."
 msgstr "這個版本已經提出驗證需求。"
 
-#: /Versioning.py:336 /Versioning.py:366
+#: /Versioning.py:314 /Versioning.py:344
 msgid "The version is not requested for approval."
 msgstr "這個版本未提出驗證需求。"
 
-#: /Versioning.py:386 /Versioning.py:399
+#: /Versioning.py:364 /Versioning.py:377
 msgid "No unapproved version."
 msgstr "無未驗證版本"
 
-#: /Versioning.py:412 /Versioning.py:433
+#: /Versioning.py:390 /Versioning.py:411
 msgid "No approved version."
 msgstr "無已驗證版本"
 
-#: /Versioning.py:415
+#: /Versioning.py:393
 msgid "Must specify publication datetime."
 msgstr "必須指明出版日期"
 
-#: /Versioning.py:446
+#: /Versioning.py:424
 msgid "No public version."
 msgstr "無公眾版本"
 
-#: /Versioning.py:473 /Versioning.py:492
+#: /Versioning.py:451 /Versioning.py:470
 msgid "No next version."
 msgstr "無下一個版本"
 
-#: /Versioning.py:506
+#: /Versioning.py:484
 msgid "There is no version to add messages for."
 msgstr "無適合的版本來增加訊息"
 
@@ -348,6 +343,10 @@ msgstr "不能刪除所有版本"
 #: /adapters/version_management.py:288
 msgid "no such version ${version}"
 msgstr "沒有這個版本 ${version}"
+
+#: /adapters/version_management.py:83 /adapters/version_management.py:91
+msgid "No unapproved version available"
+msgstr "沒有未證實版本可用。"
 
 #: /browser/object_lookup.pt:153
 msgid "select"
@@ -595,8 +594,8 @@ msgid "return"
 msgstr "返回"
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
-#: /views/edit/VersionedContent/tab_status_macros.pt:151
-#: /views/edit/VersionedContent/tab_status_macros.pt:372
+#: /views/edit/VersionedContent/tab_status_macros.pt:150
+#: /views/edit/VersionedContent/tab_status_macros.pt:371
 #: /views/edit/Container/tab_edit_rename.pt:120
 msgid "access key: alt-r"
 msgstr "存取鍵：alt-r"
@@ -1376,7 +1375,7 @@ msgstr "存取鍵：alt-s"
 
 #: /views/add/add_form.pt:152 /views/add/GhostFolder/add_form.pt:134
 #: /views/add/Ghost/add_form.pt:126 /views/edit/Asset/Image/tab_edit.pt:186
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:453
 #: /views/edit/VersionedContent/Link/tab_edit.pt:55
 #: /views/edit/Container/tab_edit_rename.pt:128
 msgid "access key: alt-c"
@@ -1425,10 +1424,10 @@ msgstr "內容"
 #: /views/add/add_form.pt:73 /views/add/add_form.pt:119
 #: /views/add/GhostFolder/add_form.pt:58 /views/add/Ghost/add_form.pt:56
 #: /views/edit/Content/Indexer/tab_edit.pt:19
-#: /views/edit/VersionedContent/tab_status_macros.pt:129
-#: /views/edit/VersionedContent/tab_status_macros.pt:182
-#: /views/edit/VersionedContent/tab_status_macros.pt:235
-#: /views/edit/VersionedContent/tab_status_macros.pt:339
+#: /views/edit/VersionedContent/tab_status_macros.pt:128
+#: /views/edit/VersionedContent/tab_status_macros.pt:181
+#: /views/edit/VersionedContent/tab_status_macros.pt:234
+#: /views/edit/VersionedContent/tab_status_macros.pt:338
 msgid "notes"
 msgstr "注意"
 
@@ -3405,7 +3404,7 @@ msgstr "已更新索引"
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/macro_middleground.pt:46
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:33
-#: /views/edit/VersionedContent/tab_status_macros.pt:232
+#: /views/edit/VersionedContent/tab_status_macros.pt:231
 #: /views/edit/Container/GhostFolder/tab_edit.pt:306
 msgid "settings"
 msgstr "設定"
@@ -3834,160 +3833,160 @@ msgstr "清除沒有逾期的指示"
 msgid "view «${version_title}»"
 msgstr "瀏覽 «${version_title}»"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:121
+#: /views/edit/VersionedContent/tab_status_macros.pt:120
 msgid "request approval ${for_new_version}"
 msgstr "請求同意 ${for_new_version}"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:121
+#: /views/edit/VersionedContent/tab_status_macros.pt:120
 msgid "for new version"
 msgstr "給新版本"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:126
+#: /views/edit/VersionedContent/tab_status_macros.pt:125
 msgid "message to editor"
 msgstr "編輯訊息"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:140
+#: /views/edit/VersionedContent/tab_status_macros.pt:139
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr "對其他作者及編輯者而言，此訊息在狀態畫面中為可視的。"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:151
+#: /views/edit/VersionedContent/tab_status_macros.pt:150
 #: /views/edit/Container/tab_status.pt:439
 msgid "request approval"
 msgstr "請求同意"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:172
+#: /views/edit/VersionedContent/tab_status_macros.pt:171
 msgid "change settings"
 msgstr "更改設定"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:179
+#: /views/edit/VersionedContent/tab_status_macros.pt:178
 msgid "current timings"
 msgstr "目前時間"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:194
+#: /views/edit/VersionedContent/tab_status_macros.pt:193
 #: /views/edit/Container/tab_status.pt:369
 #: /views/edit/Container/tab_status.pt:449
 msgid "update timing"
 msgstr "更新時間"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:219
+#: /views/edit/VersionedContent/tab_status_macros.pt:218
 msgid "publish new version"
 msgstr "發表新版本"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:223
+#: /views/edit/VersionedContent/tab_status_macros.pt:222
 msgid "publish closed version"
 msgstr "發表不公開版本"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:245
+#: /views/edit/VersionedContent/tab_status_macros.pt:244
 #: /views/edit/Container/tab_status.pt:302
 msgid "access key: alt-m"
 msgstr "存取鍵：alt-m"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:264
-#: /views/edit/VersionedContent/tab_status_macros.pt:293
+#: /views/edit/VersionedContent/tab_status_macros.pt:263
+#: /views/edit/VersionedContent/tab_status_macros.pt:292
 #: /views/edit/Container/tab_edit.pt:475
 #: /views/edit/Container/tab_status.pt:332
 msgid "access key: alt-o"
 msgstr "存取鍵：alt-o"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:284
+#: /views/edit/VersionedContent/tab_status_macros.pt:283
 #: /views/edit/Container/tab_edit.pt:564 /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:70
 msgid "publish now"
 msgstr "現在出版"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:284
+#: /views/edit/VersionedContent/tab_status_macros.pt:283
 #: /views/edit/Container/tab_status_export.pt:264
 msgid "access key: alt-p"
 msgstr "存取鍵：alt-p"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:293
+#: /views/edit/VersionedContent/tab_status_macros.pt:292
 #: /views/edit/Container/tab_status.pt:359
 msgid "approve for future"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:318
+#: /views/edit/VersionedContent/tab_status_macros.pt:317
 #: /views/edit/Container/tab_status.pt:380
 msgid "reject"
 msgstr "拒絕"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:319
+#: /views/edit/VersionedContent/tab_status_macros.pt:318
 msgid "withdraw"
 msgstr "取回"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:320
+#: /views/edit/VersionedContent/tab_status_macros.pt:319
 msgid "request"
 msgstr "請求"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:329
+#: /views/edit/VersionedContent/tab_status_macros.pt:328
 msgid "add message on"
 msgstr "新增訊息"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:332
-msgid "rejection"
-msgstr "拒絕"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:335
-msgid "withdrawal"
-msgstr "撤回"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:34
+#: /views/edit/VersionedContent/tab_status_macros.pt:33
 msgid "Publication time of public version"
 msgstr "公眾版本的發表時間"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:354
+#: /views/edit/VersionedContent/tab_status_macros.pt:331
+msgid "rejection"
+msgstr "拒絕"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:334
+msgid "withdrawal"
+msgstr "撤回"
+
+#: /views/edit/VersionedContent/tab_status_macros.pt:353
 msgid "The message may be viewed by local users."
 msgstr "訊息也許正由在線使用者觀看。"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:364
+#: /views/edit/VersionedContent/tab_status_macros.pt:363
 msgid "reject approval request"
 msgstr "拒絕驗証要求"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:364
+#: /views/edit/VersionedContent/tab_status_macros.pt:363
 msgid "access key: alt-j"
 msgstr "存取鍵：alt-j"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:372
+#: /views/edit/VersionedContent/tab_status_macros.pt:371
 msgid "withdraw approval request"
 msgstr "撤回驗證要求"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:39
+#: /views/edit/VersionedContent/tab_status_macros.pt:38
 msgid "Publication and expiration time of public version"
 msgstr "公開版本的發行與逾期期間"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:405
+#: /views/edit/VersionedContent/tab_status_macros.pt:404
 msgid "If further editing is required, first revoke the approval."
 msgstr "如需進一步編輯，需先取消驗證要求。"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:414
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "access key: alt-v"
 msgstr "存取鍵： alt-v"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:438
+#: /views/edit/VersionedContent/tab_status_macros.pt:437
 msgid "manual close"
 msgstr "關閉指南"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:445
+#: /views/edit/VersionedContent/tab_status_macros.pt:444
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
 msgstr ""
 "如有需要，此內容的發表版本可採取手工關閉(透過離線)。同時從公眾索引中移除。"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:454
+#: /views/edit/VersionedContent/tab_status_macros.pt:453
 msgid "close published version"
 msgstr "關閉公開的版本"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:55
+#: /views/edit/VersionedContent/tab_status_macros.pt:54
 msgid "messages"
 msgstr "訊息"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:69
+#: /views/edit/VersionedContent/tab_status_macros.pt:68
 msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr "${author_id} 發送訊息於 ${some_date} ${with_comments}"
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:99
+#: /views/edit/VersionedContent/tab_status_macros.pt:98
 msgid ""
 "A previous request for approval has been rejected / withdrawn by "
 "${requester} on ${some_date}. actually the last message may not have been "
@@ -4017,7 +4016,6 @@ msgid "Can only set 1 version as editable."
 msgstr "只能設定一種版本為可編輯。"
 
 #: /views/edit/VersionedContent/tab_status_revert_to_old.py:31
-#: /views/edit/VersionedContent/tab_status_revert_to_previous.py:17
 msgid "Reverted to previous version."
 msgstr "復原早先版本。"
 
@@ -4341,8 +4339,8 @@ msgstr "為了要編輯，請先取消同意此項目：alt-r"
 
 #: /views/edit/macro_view_metadata.pt:146
 #: /views/edit/VersionedContent/macro_tab_edit.pt:134
-#: /views/edit/VersionedContent/tab_status_macros.pt:396
-#: /views/edit/VersionedContent/tab_status_macros.pt:414
+#: /views/edit/VersionedContent/tab_status_macros.pt:395
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "revoke approval"
 msgstr "取消同意"
 
@@ -5282,7 +5280,7 @@ msgstr "取消訂閱"
 #: /views/public/subscriptor.pt:71 /views/edit/Asset/macro_asset_edit.pt:146
 #: /views/edit/Asset/File/tab_edit.pt:103
 #: /views/edit/Content/Indexer/tab_edit.pt:36
-#: /views/edit/VersionedContent/tab_status_macros.pt:194
+#: /views/edit/VersionedContent/tab_status_macros.pt:193
 msgid "access key: alt-u"
 msgstr "存取鍵：alt-u"
 
