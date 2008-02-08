@@ -105,7 +105,7 @@
       <tr class="even">
         <td class="align-right"
           width="10%" i18n:translate="">
-          ip range<span class="warning">*</span>
+          ip range<span class="warning" i18n:name="asterisk">*</span>
         </td>
         <td style="width: 20em;">
           <input style="width: 100%;"
@@ -113,11 +113,11 @@
             name="iprange"
           />
         </td>
-        <td  i18n:translate="">
-          <strong>Can be:</strong><br />
-          IP&nbsp;(like: 10.1.1.1), <br />
-          IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br />
-          IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0).
+        <td>
+          <strong i18n:translate="">Can be:</strong><br />
+          <tal:block i18n:translate="">IP&nbsp;(like: 10.1.1.1),</tal:block><br />
+          <tal:block i18n:translate="">IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or</tal:block><br />
+          <tal:block i18n:translate="">IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0).</tal:block>
         </td>
       </tr>
     </tbody>

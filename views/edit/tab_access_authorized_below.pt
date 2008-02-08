@@ -40,7 +40,7 @@
       <td class="top" colspan="3">
       <h2>
         <img tal:replace="structure icon" />
-			  <span i18n:translate="">email addresses for</span> <span tal:content="structure string:&#xab;${title}&#xbb;">title</span>
+        <span i18n:translate="">email addresses for</span> &#xab;<span tal:content="structure title" />&#xbb;
       </h2>
       </td>
     </tr>

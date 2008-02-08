@@ -80,8 +80,8 @@
 	           i18n:name="silva_documentation">
              <tal:block i18n:translate="">Silva documentation</tal:block>
           </a>.
-          <br />
         </p>
+       <br />
       </td>
     </tr>
 

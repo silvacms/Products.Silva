@@ -282,7 +282,7 @@ _______ manual close section here _______
 <div class="info"
   style="margin-bottom:1em">
   <h3 i18n:translate="">
-    <img tal:replace="structure icon" />
+    <img tal:replace="structure icon" i18n:name="icon"/>
     document info
   </h3>
 
@@ -316,9 +316,8 @@ _______ manual close section here _______
   <tal:if condition="python:may_change_content and not next and published">
     <p>
       <span class="subhead" i18n:translate="">Content is published</span><br />
-      <tal:block i18n:translate="">
-      This content is published (online for the public).<br />
-      If you wish you can make an editable copy by going to the <span i18n:name="editor">
+      <tal:block i18n:translate="">This content is published (online for the public).</tal:block><br />
+      <tal:block i18n:translate="">If you wish you can make an editable copy by going to the <span i18n:name="editor">
       <a href="tab_edit"><tal:block i18n:translate="content-editor">editor</tal:block></a></span>.
       </tal:block>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
@@ -329,10 +328,9 @@ _______ manual close section here _______
   <tal:if condition="python:may_change_content and unapproved and published">
     <p>
       <span class="subhead" i18n:translate="">Published version exists</span><br />
-      <span class="warning"
-        i18n:translate="">
-        Note: an older version of this content is online.<br />
-        Publishing this version will replace the public version.</span>
+      <span class="warning">
+        <tal:block i18n:translate="">Note: an older version of this content is online.</tal:block><br />
+        <tal:block i18n:translate="">Publishing this version will replace the public version.</tal:block></span>
       <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />
     </p>
   </tal:if>
@@ -341,9 +339,8 @@ _______ manual close section here _______
   <tal:if condition="python:may_change_content and not next and closed">
     <p>
       <span class="subhead" i18n:translate="">Content is closed</span><br />
-      <tal:block i18n:translate="">
-        This content was once published but is now closed.<br />
-        If you wish you can make an editable copy in the <a tal:content="string:editor"
+      <tal:block i18n:translate="">This content was once published but is now closed.</tal:block><br />
+      <tal:block i18n:translate="">If you wish you can make an editable copy in the <a tal:content="string:editor"
         href="tab_edit" i18n:name="editor"><tal:block i18n:translate="content-editor">editor</tal:block></a>.
       </tal:block>
      <metal:block use-macro="here/tab_status_macros/macros/datetime_info" />

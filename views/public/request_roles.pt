@@ -42,8 +42,8 @@
   <tal:condition condition="python: not member.email() or not member.fullname()">
     <p tal:condition="not: notice" i18n:translate="">
         Please fill in the following fields.
-        <br /><br />
     </p>
+    <br /><br />
     <p>
       <span i18n:translate="">full name</span>:<br />
       <input type="text" name="fullname" style="width: 100%;"

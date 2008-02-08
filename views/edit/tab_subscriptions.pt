@@ -62,7 +62,7 @@
                     <td class="top"
                       colspan="3">
                       <h2 i18n:translate="">
-                        <img tal:replace="structure icon" />
+                        <img tal:replace="structure icon" i18n:name="icon"/>
                         manage subscriptions for
                         &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
                       </h2>
@@ -73,7 +73,7 @@
                   <tr>
                     <th class="align-right"
                       width="12%"
-                      i18n:translate="element">
+                      i18n:translate="">
                       element
                     </th>
                     <th i18n:translate="">
@@ -158,15 +158,15 @@
           </h3>
           <p>
             <span class="subhead" i18n:translate="">
-              Subscribability
+              Subscribing
             </span><br />
             <tal:block i18n:translate=""
               tal:condition="not: is_subscribable">
-              This object is currently not subscribable.
+              This object can not be subscribed to.
             </tal:block>
             <tal:block i18n:translate=""
               tal:condition="is_subscribable">
-              This object is currently subscribable.
+              This object can be subscribed to.
             </tal:block>
           </p>
           <p tal:define="

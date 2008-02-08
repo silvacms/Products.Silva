@@ -54,7 +54,7 @@ function focus_editor() {
           colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure icon" />
-            <span i18n:translate="">member data of</span> &#xab;<span tal:replace="model/fullname">title</span>&#xbb;
+            <tal:block i18n:translate="">member data of &#xab;<span tal:replace="model/fullname" i18n:name="fullname">title</span>&#xbb;</tal:block>
           </h2>
         </td>
       </tr>
@@ -113,8 +113,8 @@ function focus_editor() {
         </td>
         <td class="align-right"
           i18n:translate="">
-          Approved member?&nbsp;
-          <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" i18n:name="yes_no">&nbsp;</span>
+          Approved member?
+          <span tal:replace="python: test(model.is_approved(), 'Yes', 'No')" i18n:name="yes_no" />
           <input class="button"
             type="submit"
             name="approve_visitor:method"
@@ -155,10 +155,9 @@ function focus_editor() {
 
 <div class="info"
   tal:condition="not:silva_permissions/ChangeSilvaAccess">
-  <h3 i18n:translate="">Dear <span tal:content="python:user.getId()" i18n:name="user_id"/><br />
-    You are not allowed to edit membership data of member <span tal:content="model/id" i18n:name="member_id"/>
+  <h3><span tal:content="python:user.getId()" /><br />
+    <tal:block i18n:translate="">You are not allowed to edit membership data of member <tal:block replace="model/id" i18n:name="member_id"/></tal:block>
   </h3>
-  <tal:comment condition="nothing" i18n:translate="">Add read only view here?</tal:comment>
 </div>
 
 </metal:slot>

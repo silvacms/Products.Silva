@@ -21,7 +21,7 @@
         >
         <h3 style="margin-top:0">
           <img tal:replace="structure python:view.render_icon_by_meta_type('Silva Simple Member')" />
-          <span i18n:translate="" tal:omit-tag="">user clipboard</span>
+          <tal:block i18n:translate="">user clipboard</tal:block>
         </h3>
         <table class="listing"
           style="margin-bottom:0.5em;">

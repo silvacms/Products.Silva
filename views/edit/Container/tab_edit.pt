@@ -455,7 +455,7 @@ window.onload_registry.register(function() {
             tal:define="length python: len(publishables) - test(default_document, 1, 0)"
             i18n:attributes="title">
             <option value="position">
-              <tal:inline i18n:translate="">position</tal:inline>:
+              <tal:block i18n:translate="">position:</tal:block>
             </option>
             <tal:loop repeat="item python:range(length)">
               <option value="0"

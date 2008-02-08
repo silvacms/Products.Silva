@@ -199,9 +199,8 @@
             tal:attributes="
               class obj/status_style | default;
               href string:${obj_url}/edit/tab_status;"
-              i18n:attributes="title"
-              i18n:translate="">
-            <tal:plug replace="obj/status" />
+              i18n:attributes="title">
+            <tal:block replace="obj/status" />
           </a>
           <a class="closed"
             title="publish"
@@ -286,7 +285,7 @@
       <th class="align-right"
         colspan="6">
         <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
-          <tal:inline i18n:translate="">day / month / year &nbsp;(23:59)</tal:inline>
+          <tal:inline i18n:translate="">day / month / year (hh:mm)</tal:inline>
         </tal:if>
       </th>
     </tr>
@@ -318,7 +317,7 @@
             accesskey="x"
             i18n:attributes="title"
             i18n:translate="">
-            &nbsp;&nbsp;expiration time
+            expiration time
           </label>
           <tal:plug condition="redisplay_timing_form"
             replace="structure python: view.tab_status_form.expiration_datetime.render_from_request(request)"

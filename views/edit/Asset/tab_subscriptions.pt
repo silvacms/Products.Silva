@@ -31,8 +31,8 @@
   
   <metal:fill-slot fill-slot="message">
     <tal:block i18n:translate="">
-      This <span tal:replace="vein" /> screen doesn&#8217;t have settings, 
-      because it&#8217;s not possible to subscribe to a <span tal:replace="type" />. 
+      This <span tal:replace="vein" i18n:name="vein" /> screen doesn&#8217;t have settings, 
+      because it&#8217;s not possible to subscribe to a <span tal:replace="type" i18n:name="type"/>. 
       Only documents that contain textual content, or folders that contain them, 
       can be subscribed to.
     </tal:block>

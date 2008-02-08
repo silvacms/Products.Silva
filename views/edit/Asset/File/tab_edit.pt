@@ -14,7 +14,7 @@
 <metal:fill-slot fill-slot="info">
   <div class="info">
     <h3 i18n:translate="">
-      <img tal:replace="structure icon" />
+      <img tal:replace="structure icon" i18n:name="icon"/>
       file info
     </h3>
     <p tal:define="mime_type model/get_mime_type"

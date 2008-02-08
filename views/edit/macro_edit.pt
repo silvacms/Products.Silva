@@ -62,8 +62,8 @@ editor
 <metal:macro define-macro="main-title">
  <h2>
   <img tal:replace="structure python:view.render_icon(model)" />
-  <tal:block i18n:translate=""><tal:repl replace="pretty_meta_type|model/meta_type" />
-  &#xab;<tal:block content="model/get_title_or_id" i18n:name="title_or_id"/>&#xbb;</tal:block>
+  <tal:repl replace="pretty_meta_type|model/meta_type" />
+  &#xab;<tal:block content="model/get_title_or_id" i18n:name="title_or_id"/>&#xbb;
  </h2>
 </metal:macro>
 

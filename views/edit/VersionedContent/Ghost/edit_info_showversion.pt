@@ -26,7 +26,7 @@
         <td class="top"
           colspan="3">
           <h2 i18n:translate="">
-            <img tal:replace="structure python:view.render_icon(model)" />
+            <img tal:replace="structure python:view.render_icon(model)" i18n:name="icon" />
             ghost of &#xab;<tal:block content="title" i18n:name="title" />&#xbb; (<tal:block content="version_name" i18n:name="version_name" /> version)
           </h2>
         </td>

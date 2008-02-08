@@ -17,12 +17,12 @@
   </script>
   <div class="info">
     <h3 i18n:translate="">
-      <img tal:replace="structure icon" />
+      <img tal:replace="structure icon" i18n:name="" />
       image info
     </h3>
     <p tal:condition="not: model/hires_image">
       <span class="subhead" i18n:translate="">format</span><br />
-      <span tal:replace="python: model.web_format.lower()" /> image
+      <span tal:replace="python: model.web_format.lower()" /> <tal:block i18n:translate="">image</tal:block>
       <br />
       <span class="subhead" i18n:translate="">dimensions</span><br />
       <span tal:define="
@@ -37,7 +37,7 @@
     <p tal:condition="model/hires_image">
     <span class="subhead" i18n:translate="">format</span><br />
     <span tal:replace="python: model.web_format.lower()">format</span>
-    <span i18n:translate="">image</span>
+    <tal:block i18n:translate="">image</tal:block>
     </p>
     <p tal:define="
       image_width python: model.getDimensions()[0];
@@ -51,15 +51,14 @@
       />
       <tal:condition condition="python:
         image_width != scale_width or
-        image_height != scale_height"
-        i18n:translate=""><br />
-        scaled to
+        image_height != scale_height"><br />
+        <tal:block i18n:translate="">scaled to
         <span
           tal:on-error="string: unknown"
           tal:replace="string:${scale_width}x${scale_height}"
           i18n:name="WxH"
         />
-        pixels
+        pixels</tal:block>
       </tal:condition>
     </p>
     <p tal:condition="model/canScale">

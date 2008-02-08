@@ -22,14 +22,14 @@
       tal:attributes="href string:${url}/edit/tab_settings"
       i18n:attributes="title"
       i18n:translate=""
-      >s<u>e</u>ttings...
+      >s<u i18n:name="e">e</u>ttings...
     </a><tal:block condition="context/is_subscribable_content"><a 
       title="manage subscriptions: alt-u"
         accesskey="u"
         tal:attributes="href string:${url}/edit/tab_subscriptions"
         i18n:attributes="title"
         i18n:translate=""
-        >s<u>u</u>bscriptions...</a>
+        >s<u i18n:name="u">u</u>bscriptions...</a>
     </tal:block>
   </div>
 </metal:block>
@@ -59,12 +59,12 @@
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title" i18n:translate="">
-                <img tal:replace="structure icon" />
+                <img tal:replace="structure icon" i18n:name="icon" />
                 metadata
                 <span tal:condition="not: model/implements_container" i18n:name="for_public_version_of">
                   <tal:block i18n:translate="">
                   for public version of
-                  &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;</tal:block>
+                  &#xab;<span tal:replace="string:${title}" i18n:name="title" />&#xbb;</tal:block>
                 </span>
               </h2>
             </metal:block>

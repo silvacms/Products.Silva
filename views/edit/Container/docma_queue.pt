@@ -45,7 +45,7 @@
             i18n:attributes="title"
             i18n:translate=""
           >
-            <u>r</u>efresh queue lists
+            <u i18n:name="r">r</u>efresh queue lists
           </a>
           <h3 i18n:translate="">
             queue of items to process
@@ -97,8 +97,7 @@
             description
           </td>
           <td i18n:translate="">
-            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time">
-            estimated time</span>
+            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time" />
             &nbsp;seconds
           </td>
           <td class="align-right"

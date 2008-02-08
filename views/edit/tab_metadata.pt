@@ -59,11 +59,9 @@
                 <h2 metal:fill-slot="table_title">
                   <img tal:replace="structure icon" />
                   <tal:block i18n:translate="">properties</tal:block>
-                  <tal:block i18n:translate="">
-                  <tal:block condition="not: model/implements_container" i18n:name="for_approved_version_of_title">
+                  <tal:block condition="not: model/implements_container">
                     <tal:block i18n:translate="">for approved version of
                       &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
-                    </tal:block>
                   </tal:block>
                   </tal:block>
                 </h2>

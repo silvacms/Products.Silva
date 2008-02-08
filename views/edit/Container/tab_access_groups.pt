@@ -60,7 +60,7 @@
       <tr>
         <td class="top"
           colspan="5">
-          <h2 tal:attributes="title string:id: ${model/id}" i18n:translate="">
+          <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure icon" />
             <tal:block i18n:translate="">
               groups in
@@ -171,9 +171,6 @@
         <th i18n:translate="">
           name
         </th>
-        <th tal:replace="nothing">
-          title
-        </th>
         <th i18n:translate="">
           type
         </th>
@@ -281,9 +278,6 @@
         </th>
         <th i18n:translate="">
           name
-        </th>
-        <th tal:replace="nothing">
-          title
         </th>
         <th i18n:translate="">
           type

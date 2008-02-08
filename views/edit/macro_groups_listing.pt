@@ -82,7 +82,7 @@
                     tal:attributes="href string:${model/absolute_url}/edit/tab_access_groups"
                     i18n:attributes="title"
                     i18n:translate="">
-                    <u>g</u>roups admin...
+                    <u i18n:name="g">g</u>roups admin...
                   </a>
                 </metal:block>
               </td>

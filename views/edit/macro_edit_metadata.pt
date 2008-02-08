@@ -40,13 +40,12 @@
               <tal:block condition="model/implements_container"
                 i18n:translate="">
                   of &#xab;<tal:block content="string:${title}"
-                  i18n:name="title">title</tal:block>&#xbb;
+                  i18n:name="title" />&#xbb;
               </tal:block>
               <tal:block condition="not: model/implements_container"
                 i18n:translate="">
                   of &#xab;<tal:block content="string:${title}"
-                  i18n:name="title">
-                  title</tal:block>&#xbb;
+                  i18n:name="title" /></tal:block>&#xbb;
               </tal:block>
             </h2>
           </td>
@@ -138,7 +137,7 @@
                       data python: element_name in truncatable and ct(data, 50) or data;"
                       condition="element/isAcquired"
                       replace="structure data" />
-                    <sup tal:condition="element/isAcquireable" i18n:translate="">
+                    <sup tal:condition="element/isAcquireable">
                       &#8224;
                     </sup>
                     <tal:block condition="not: element/isAcquired">
@@ -154,7 +153,6 @@
                     </tal:block>
                     <span class="error"
                       tal:condition="element_error"
-                      i18n:translate=""
                       tal:content="element_error">
                     </span>
                   </td>
@@ -166,7 +164,7 @@
             <th class="align-right">
             </th>
             <th i18n:translate="">
-              date format: day / month / year &nbsp;23:59
+              date format: day / month / year hh:mm
             </th>
             <th i18n:translate="">
               &#8224; acquireable

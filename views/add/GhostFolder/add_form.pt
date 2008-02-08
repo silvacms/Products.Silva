@@ -98,7 +98,7 @@
       </span>
       <tal:block tal:condition="python:field.getId() == 'content_url'"
       i18n:translate="">
-      Location of originating folder. Depending on how much content there is, <span class="warning">creation may take a while</span>.
+        Location of originating folder. Depending on how much content there is, <span class="warning" i18n:name="warning"><tal:block i18n:translate="">creation may take a while</tal:block></span>.
       </tal:block>
     </td>
   </tr>

@@ -49,9 +49,9 @@
     <tr>
       <td class="top"
         colspan="3">
-        <h2 metal:define-slot="table_title" i18n:translate="">
+        <h2 metal:define-slot="table_title">
           <img tal:replace="structure icon" />
-          &#xab;<tal:block content="title" i18n:name="title" />&#xbb;
+          &#xab;<tal:block content="title" />&#xbb;
         </h2>
       </td>
     </tr>

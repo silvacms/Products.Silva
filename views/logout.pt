@@ -33,15 +33,15 @@
   <div style="margin:2em;">
     <div class="feedback"
       style="width:55%">
-      <span i18n:translate="">To <strong>actually</strong> logout, wait 5 seconds or hit this</span>
+      <span i18n:translate="">To <tal:block i18n:name="actually"><strong i18n:translate="">actually</strong></tal:block> logout, wait 5 seconds or hit this</span>
       <a href="/manage_zmi_logout"
         title="accesskey: alt-l"
         accesskey="l"
         tal:attributes="href string:${request/model/absolute_url}/manage_zmi_logout"
         i18n:attributes="title"
-        i18n:translate="">logout link</a>.
+        i18n:translate="">logout link.</a>
       <br />
-        <span i18n:translate="">When the login dialog appears, choose <strong>"Cancel"</strong></span>.
+        <span i18n:translate="">When the login dialog appears, choose <tal:block i18n:name="Cancel"><strong i18n:translate="">"Cancel"</strong></tal:block>.</span>
     </div>
   </div>
 <!--            __________________________ feedback ends __________________________            -->

@@ -23,7 +23,7 @@
    <td colspan="3">
     <ol style="margin:0.3em 0 0.5em 0;padding-left:2.2em;">
      <li i18n:translate="">An index is not editable.  To view the index go to the <a class="underline" tal:attributes="href string:tab_preview" i18n:name="preview_screen"><tal:block i18n:translate="">preview screen</tal:block></a>.</li>
-     <li i18n:translate="">Note that <span class="warning">the index only displays links to published content</span>, so the list may be empty if nothing is published.</li>
+     <li i18n:translate="">Note that <tal:block i18n:name="warning"><span class="warning" i18n:translate="">the index only displays links to published content</span></tal:block>, so the list may be empty if nothing is published.</li>
      <li i18n:translate="">If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while).</li>
     </ol>
    </td>
