@@ -159,6 +159,11 @@ Silva changes
         When documents are updated, all ghosts referencing them
         are also reindexed.
 
+      - fixed 101064: revert to previous focus box in Content Publish 
+        screen remains available after reverting. The revert_to_previous
+        functionality has been removed from Silva, since it was
+        obsoleted by "manage versions"
+
     Bugfixes ported from 2.0 branch
 
       - Special characters in titles are escaped in the tocrenderer

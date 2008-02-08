@@ -757,11 +757,6 @@ class IVersionedContent(IVersioning, IContent):
         """
         pass
 
-    def revert_to_previous():
-        """The editable version will be replaced by a copy of the
-        public version.
-        """
-
 class ICatalogedVersionedContent(IVersionedContent):
     """Content object that is also in the catalog.
     """

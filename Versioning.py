@@ -234,28 +234,6 @@ class Versioning:
         self._version_count = self._version_count + 1
         return str(new_version_id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'revert_to_previous')
-    def revert_to_previous(self):
-        """Create a new version of public version, throw away the current one
-        """
-        # get the id of the version to revert to
-        version_id_to_copy = (self.get_public_version() or
-                              self.get_last_closed_version())
-        if version_id_to_copy is None:
-            raise VersioningError, "Should never happen!"
-        # get the id of the current version
-        current_version_id = self.get_unapproved_version()
-        if current_version_id is None:
-            raise VersioningError, _("No unapproved version available")
-        self._unindex_version(current_version_id)
-        # delete the current version
-        self.manage_delObjects([current_version_id])
-        # and copy the previous using the current id
-        self.manage_clone(getattr(self, version_id_to_copy),
-                          current_version_id, self.REQUEST)
-        self._index_version(current_version_id)
-    
     def _get_editable_rfa_info(self):
         """ helper method: return the request for approval information,
         this creates a new one, if necessary; notifes Zope that this

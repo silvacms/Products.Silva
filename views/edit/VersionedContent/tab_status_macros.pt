@@ -19,7 +19,6 @@ approved_editor......Editor can change settings
 editor_approves......Editor approves
 withdraw_request_approval Author/Editor withdraws/rejects request for approval
 revoke_approval......Revoke approval
-revert_to_previous...Revert to previous
 manual_close.........Manual close
 </tal:toc>
 

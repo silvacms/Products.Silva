@@ -5,6 +5,15 @@ Developer level changes in Silva
 From 2.0 to 2.1
 ===============
 
+VersionedContent revert_to_previous
+-----------------------------------
+
+The revert_to_previous macro in views/edit/VersionedContent/tab_status_macros 
+has been removed because it is no longer used.  You now use the 'manage
+versions' table on the status screen.  The API call for this functionality
+has also been removed. Make sure to update any extensions so that no 
+reference to revert_to_previous or it's API is used.
+
 Edit tabs of content objects
 ----------------------------
 
