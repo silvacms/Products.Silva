@@ -114,8 +114,7 @@
               problem
            </td>
            <td class="alert">
-              <span class="error" i18n:translate=""
-                 tal:content="structure link_status" />
+              <span class="error" tal:content="structure link_status" />
            </td>
            <td>
               &nbsp;

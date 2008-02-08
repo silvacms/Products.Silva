@@ -63,7 +63,7 @@ editor
  <h2>
   <img tal:replace="structure python:view.render_icon(model)" />
   <tal:repl replace="pretty_meta_type|model/meta_type" />
-  &#xab;<tal:block content="model/get_title_or_id" i18n:name="title_or_id"/>&#xbb;
+  &#xab;<tal:block content="model/get_title_or_id"/>&#xbb;
  </h2>
 </metal:macro>
 

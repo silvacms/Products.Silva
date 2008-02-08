@@ -46,7 +46,6 @@
                 i18n:translate="">
                   of &#xab;<tal:block content="string:${title}"
                   i18n:name="title" /></tal:block>&#xbb;
-              </tal:block>
             </h2>
           </td>
         </tr>

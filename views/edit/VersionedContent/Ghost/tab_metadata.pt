@@ -40,7 +40,7 @@
             define="content python: model.get_viewable() or model.get_previewable()"
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
-              <h2 metal:fill-slot="table_title" i18n:translate="">
+              <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
                 <tal:block i18n:translate="">properties</tal:block>
                 <span tal:condition="not: model/implements_container">
