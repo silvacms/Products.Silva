@@ -4281,7 +4281,7 @@ msgstr "Kein Suchbegriff eingegeben."
 msgid ""
 "Search string '${string}' is too short. Please try a longer search string."
 msgstr ""
-"Suchbegriff '$[string}' is zu kurz. Bitte längeren Suchbegriff versuchen."
+"Suchbegriff '${string}' ist zu kurz. Bitte längeren Suchbegriff versuchen."
 
 #: /views/edit/lookup_search.py:28
 msgid "No users found for search string '${string}'."
