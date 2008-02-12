@@ -438,14 +438,15 @@
         </div>
 
         <form name="kupu_extsource_form" onsubmit="return false">
-          <select id="kupu-toolbox-extsource-id"
+          <select id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" 
             tal:define="sources here/get_available_sources;
               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
             <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
-                <option tal:attributes="value id" tal:content="python:object.get_title() or id" />
+                <option tal:attributes="value id;
+                                        title object/description" tal:content="python:object.get_title() or id" />
               </tal:block>
-            </tal:block>
+            </tal:block> 
           </select>
           <input type="hidden" id="kupu-extsource-enabledflag"
             tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'" />
