@@ -140,8 +140,15 @@ class ExtensionRegistry:
     def get_product_module_name(self, name):
         install_module = self._extensions[name][1]
         module_name = install_module.__name__
+        # If module is a regular Zope Product
         # module_name is something like Products.Silva.install
-        return module_name.split('.')[1]
+        if module_name.startswith('Products.'):
+            return module_name.split('.')[1]
+        # Otherwise this should an egg based extension, with an
+        # install method in it:
+        if module_name.endswith('.install'):
+            return '.'.join(module_name.split('.')[:-1])
+        raise ValueError("Don't how to guess product name for %s extension" % name)
     
     def is_installed(self, name, root):
         if not self._extensions.has_key(name):
