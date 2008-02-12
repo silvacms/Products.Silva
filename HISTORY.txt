@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - Took out automatic install of SilvaFind when making a new Silva root.
+      Added SilvaFind to SilvaTestCase.py
+
       - The css for form button controls has been refactored. There is now a
         standard class, 'button', which can be modified by adding a second
         class name, the action type which the button performs. These actions

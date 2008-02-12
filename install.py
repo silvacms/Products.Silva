@@ -653,13 +653,6 @@ def installSilvaFind(root):
     if 'SilvaFind' not in extensionRegistry.get_names():
         return 
     root.service_extensions.install('SilvaFind')
-    # create the demo content:
-    root.sec_update_last_author_info()
-    root.manage_addProduct['SilvaFind'].manage_addSilvaFind('search',
-        'Search this site')
-    doc = root.search
-    doc.sec_update_last_author_info()
-    
 
 def installSubscriptions(root):
     # Setup infrastructure for subscriptions feature.

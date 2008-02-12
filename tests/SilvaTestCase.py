@@ -39,6 +39,7 @@ ZopeTestCase.installProduct('SilvaViews')
 if ZopeTestCase.hasProduct('SilvaExternalSources'):
     ZopeTestCase.installProduct('SilvaExternalSources')
 ZopeTestCase.installProduct('SilvaDocument')
+ZopeTestCase.installProduct('SilvaFind')
 ZopeTestCase.installProduct('Silva')
 ZopeTestCase.installProduct('Five')
 
