@@ -88,6 +88,10 @@ Silva changes
 
     Features ported from 2.0 branch
 
+      - Links to local (i.e. not fully qualified) domain names are no
+        longer incorrectly converted to relative urls in rendered
+        SilvaDocuments.
+
       - 128518 Import of non existing values for (multi)list metadata
         values gave a formulator SelectionValidator error.
 
