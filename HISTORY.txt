@@ -3,6 +3,14 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.6 (unreleased)
+
+    Bugs Fixed:
+
+      - Links to local (i.e. not fully qualified) domain names are no
+        longer incorrectly converted to relative urls in rendered
+        SilvaDocuments.
+
   Silva 2.0.5
 
     Features Added:
@@ -17,10 +25,6 @@ Silva changes
         it to the extfile.ini.
 
     Bugs Fixed:
-
-      - Links to local (i.e. not fully qualified) domain names are no
-        longer incorrectly converted to relative urls in rendered
-        SilvaDocuments.
 
       - Special characters in titles are escaped in the tocrenderer
         adapter, to play nice with xslt rendering.
