@@ -88,7 +88,8 @@ Silva changes
 
       - changed the External Source kupu tool title when editing a source 
         in a document so it now says "es <<source title>>" and the source 
-        id is displayed on hover.
+        id is displayed on hover.  External Sources in documents now 
+        display the title inside the "<< >>" and the id when hovered over.
 
     Features ported from 2.0 branch
 

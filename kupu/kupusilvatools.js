@@ -2052,8 +2052,6 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode) {
         };
 	/* now do the new heading */
 	title = extsource.getAttribute('source_title') || extsource.getAttribute('source_id');
-	/* XXX aaltepet: would like to replace with a span having a title=source_id
-	  and between << >> be the source_title */
 	span = document.createElement('span');
 	span.setAttribute('title','source id: ' + extsource.getAttribute('source_id'));
 	span.appendChild(document.createTextNode('es \xab' + title + '\xbb'));
