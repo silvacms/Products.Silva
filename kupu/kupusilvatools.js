@@ -2050,11 +2050,14 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode) {
         if (this.toolbox) {
             this.toolbox.className = this.activeclass;
         };
-        heading.replaceChild(
-            document.createTextNode('external source \xab' + 
-                extsource.getAttribute('source_id') + '\xbb'),
-            heading.firstChild
-        );
+	/* now do the new heading */
+	title = extsource.getAttribute('source_title') || extsource.getAttribute('source_id');
+	/* XXX aaltepet: would like to replace with a span having a title=source_id
+	  and between << >> be the source_title */
+	span = document.createElement('span');
+	span.setAttribute('title','source id: ' + extsource.getAttribute('source_id'));
+	span.appendChild(document.createTextNode('es \xab' + title + '\xbb'));
+        heading.replaceChild(span, heading.firstChild);
     } else {
         this._insideExternalSource = false;
         this.resetTool();
@@ -2262,6 +2265,7 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
             
             var extsource = doc.createElement('div');
             extsource.setAttribute('source_id', object._id);
+	    extsource.setAttribute('source_title', object.idselect.options[object.idselect.selectedIndex].childNodes[0].data);
             var header = doc.createElement('h4');
             extsource.appendChild(header);
             extsource.className = 'externalsource';

@@ -86,6 +86,10 @@ Silva changes
         deprecated so that extensions may use this release to transition.
         FMI see doc/developer_notes.txt
 
+      - changed the External Source kupu tool title when editing a source 
+        in a document so it now says "es <<source title>>" and the source 
+        id is displayed on hover.
+
     Features ported from 2.0 branch
 
       - Links to local (i.e. not fully qualified) domain names are no

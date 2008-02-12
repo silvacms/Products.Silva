@@ -185,7 +185,7 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
   color: #ecfff3;
   background-image: url('<dtml-var root_url>/service_kupu_silva/closed_arrow.gif');
   background-repeat: no-repeat;
-  background-position: center left;
+  background-position: top left;
   background-color: #7c8c9c;
   max-width: 22em;
   margin: 0;
@@ -197,6 +197,7 @@ div.kupu-toolbox h1, div.kupu-toolbox-active h1 {
 div.kupu-toolbox h1.kupu-toolbox-heading-opened, 
 div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
   background-image: url('<dtml-var root_url>/service_kupu_silva/opened_arrow.gif');
+  background-position: top left;
 }
 
 div.kupu-tooltray {
