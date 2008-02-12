@@ -18,6 +18,10 @@ Silva changes
 
     Bugs Fixed:
 
+      - Links to local (i.e. not fully qualified) domain names are no
+        longer incorrectly converted to relative urls in rendered
+        SilvaDocuments.
+
       - Special characters in titles are escaped in the tocrenderer
         adapter, to play nice with xslt rendering.
 
