@@ -27,7 +27,7 @@ class GeneralUpgrader:
     def upgrade(self, obj):
         new_object = self._upgrade_handler(obj)
         if new_object:
-            return new_obj
+            return new_object
         return obj
    
     def __repr__(self):
