@@ -91,6 +91,14 @@ Silva changes
         id is displayed on hover.  External Sources in documents now 
         display the title inside the "<< >>" and the id when hovered over.
 
+      - AutoTOCs are now more configurable, with the following new features:
+        1. choose Silva types that AutoTOCs will list (any Silva type,
+           including Assets!)
+        2. changeable depth
+        3. optionally display the silva-extra content_description of content
+        4. optionally show the icon of each content type
+        5. Specify sort order: alphabetical, reverse-alpha, and silva SMI order
+
     Features ported from 2.0 branch
 
       - Links to local (i.e. not fully qualified) domain names are no

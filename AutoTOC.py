@@ -21,20 +21,27 @@ from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
 class AutoTOC(Content, SimpleItem):
-    __doc__ = _("""This is a special document that automagically displays a
+    __doc__ = _("""This is a special document that automatically displays a
        table of contents. Usually it&#8217;s used as an &#8216;index&#8217;
        document. In that case the parent folder shows a table of contents
-       when accessed (e.g. http://www.x.yz/silva/myFolder/).""")
+       when accessed (e.g. http://www.x.yz/silva/myFolder/). This can
+       display any set of Silva Content Types (including assets).""")
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
 
     implements(IAutoTOC)
 
-    _toc_depth = -1
-
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id)
+        #it'd be really nice if these could be placed in the Interface, and z3-ized
+        self._local_types = ['Silva Document', 'Silva Publication',
+                             'Silva Folder']
+        self._toc_depth = -1
+        self._display_desc_flag = False
+        #possible values: 'silva', 'alpha', 'reversealpha'
+        self._sort_order = 'silva'
+        self._show_icon = False
         
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
@@ -64,8 +71,56 @@ class AutoTOC(Content, SimpleItem):
                               'toc_depth')
     def toc_depth(self):
         """get the depth to which the toc will be rendered"""
+        if not hasattr(self, '_toc_depth'):
+            self._toc_depth = -1
         return self._toc_depth
     
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'get_silva_types')
+    def get_silva_types(self):
+        st = self.get_silva_addables_allowed_in_publication()
+        return st
+
+    security.declareProtected(SilvaPermissions.View, 'get_local_types')
+    def get_local_types(self):
+        if not hasattr(self, '_local_types'):
+            self._local_types = ['Silva Document', 'Silva Publication',
+                                 'Silva Folder']
+        return self._local_types
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_local_types')
+    def set_local_types(self, types):
+        self._local_types = types
+
+    security.declareProtected(SilvaPermissions.View, 'display_desc_flag')
+    def display_desc_flag(self):
+        if not hasattr(self,'_display_desc_flag'):
+            self._display_desc_flag = False
+        return self._display_desc_flag
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_display_desc_flag')
+    def set_display_desc_flag(self, flag):
+        self._display_desc_flag = not not flag
+
+    security.declareProtected(SilvaPermissions.View, 'show_icon')
+    def show_icon(self):
+        if not hasattr(self,'_show_icon'):
+            self._show_icon = False
+        return self._show_icon
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_show_icon')
+    def set_show_icon(self, flag):
+        self._show_icon = not not flag
+
+    security.declareProtected(SilvaPermissions.View, 'sort_order')
+    def sort_order(self):
+        if not hasattr(self, '_sort_order'):
+            self._sort_order = 'silva'
+        return self._sort_order
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_sort_order')
+    def set_sort_order(self, order):
+        self._sort_order = order
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_tree')
     def render_tree(self, public=1,append_to_url=None):
@@ -73,7 +128,11 @@ class AutoTOC(Content, SimpleItem):
         adapter = tocrendering.getTOCRenderingAdapter(self)
         return adapter.render_tree(public,
                                    append_to_url,
-                                   toc_depth=self.toc_depth())
+                                   toc_depth=self.toc_depth(),
+                                   display_desc_flag=self.display_desc_flag(),
+                                   sort_order=self.sort_order(),
+                                   show_types=self.get_local_types(),
+                                   show_icon=self.show_icon())
 
 InitializeClass(AutoTOC)
 

@@ -228,6 +228,18 @@ class AutoTOCHandler(SilvaBaseHandler):
             uid = self.generateOrReplaceId(id)
             self.parent().manage_addProduct['Silva'].manage_addAutoTOC(
                 uid, '')
+            obj = getattr(self.parent(),uid)
+            #not all imported TOCs will have these, so only set if they do
+            if (attrs.get((None,'depth'),None)):
+                obj.set_toc_depth(int(attrs[(None,'depth')]))
+            if (attrs.get((None,'types'),None)):
+                obj.set_local_types(attrs[(None, 'types')].split(','))
+            if (attrs.get((None,'display_desc_flag'),None)):
+                obj.set_display_desc_flag(attrs[(None,'display_desc_flag')]=='True')
+            if (attrs.get((None,'show_icon'),None)):
+                obj.set_show_icon(attrs[(None,'show_icon')]=='True')
+            if (attrs.get((None,'sort_order'),None)):
+                obj.set_sort_order(attrs[(None,'sort_order')])
             self.setResult(getattr(self.parent(), uid))
             
     def endElementNS(self, name, qname):

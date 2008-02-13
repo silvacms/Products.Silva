@@ -6,7 +6,7 @@
 ">
 <h2 class="heading" 
   tal:define="heading model/get_title"
-  tal:condition="not:request/other/suppress_title | nothing" 
+  tal:condition="not:request/other/suppress_title | model/suppress_title | nothing" 
   tal:content="heading"
   tal:omit-tag="not:heading">
   Title
