@@ -8,7 +8,14 @@ view = context
 
 if not name:
     name = request.form.get('name', ' ')
-name = name.decode('utf-8')
+
+try:
+    name = unicode(name, 'utf-8')
+except TypeError:
+    #already unicode. name could be coming from code *or* a
+    #form. Obviously that sucks.
+    pass
+
 name = name.strip()
 
 if name == '':
