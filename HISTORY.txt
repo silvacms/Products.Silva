@@ -7,11 +7,16 @@ Silva changes
 
     Bugs Fixed:
 
+      - lookup_search conditionally converts username to unicode. The
+        name could come from a form, or from code, we don't know
+        which, so we have to code defensively. :(
+
       - KeyError in tab_status_export fixed
 
       - Links to local (i.e. not fully qualified) domain names are no
         longer incorrectly converted to relative urls in rendered
         SilvaDocuments.
+
 
   Silva 2.0.5
 
