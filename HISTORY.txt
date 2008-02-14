@@ -120,12 +120,6 @@ Silva changes
 
     Bugs Fixed:
 
-      - KeyError in tab_status_export fixed
-
-      - Links to local (i.e. not fully qualified) domain names are no
-        longer incorrectly converted to relative urls in rendered
-        SilvaDocuments.
-
       - Set overflow of selects in Kupu toolboxes to hidden,
         preventing long titles from pushing the toolbox wider.
 
@@ -193,6 +187,16 @@ Silva changes
         since it was obsoleted by "manage versions"
 
     Bugfixes ported from 2.0 branch
+
+      - lookup_search conditionally converts username to unicode. The
+        name could come from a form, or from code, we don't know
+        which, so we have to code defensively. :(
+
+      - KeyError in tab_status_export fixed
+
+      - Links to local (i.e. not fully qualified) domain names are no
+        longer incorrectly converted to relative urls in rendered
+        SilvaDocuments.
 
       - Special characters in titles are escaped in the tocrenderer
         adapter, to play nice with xslt rendering.
