@@ -143,6 +143,7 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         uf = self.root.acl_users
         uf._doAddUser('manager', 'r00t', ['Manager'], [])
         path = '/root/publication/folder/doc2/edit/tab_metadata'
+        self.assertEquals(0, self.root.temp_folder.session_data._length())
         response = self.publish(path)
         self.assertEquals(401, response.getStatus())
         response = self.publish(path, basic='manager:r00t')

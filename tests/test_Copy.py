@@ -10,8 +10,8 @@ from DateTime import DateTime
 # manage_main hacks to copy succeeds
 # the original manage_main needs a request['URL1']
 # which is not set up in the test request
-Root.Root.manage_main = lambda *foo, **bar: None
-Folder.Folder.manage_main = lambda *foo, **bar: None
+#Root.Root.manage_main = lambda *foo, **bar: None
+#Folder.Folder.manage_main = lambda *foo, **bar: None
 
 class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -23,7 +23,7 @@ class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
             self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
         
         subdoc = self.add_document(folder, 'subdoc', 'Subdoc')
-
+    
         folder2 = self.add_folder(
             self.root, 'folder2', 'Folder2', policy_name='Silva AutoTOC')
         
@@ -33,7 +33,7 @@ class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
         
         self.root.action_cut(['folder'], self.app.REQUEST)
         self.root.folder2.action_paste(self.app.REQUEST)
-
+    
         self.assertEquals(
             [b.getPath() for b in self._query(path='/root/folder')], [])
         self.assertEquals(len([b.getPath() for b in
@@ -49,11 +49,10 @@ class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
     def test_remove_root(self):
         folder = self.add_folder(
             self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
-        
+       
         # Just to make sure that this works
         self.app.manage_delObjects([self.root.getId()])
         self.assert_(self.root.getId() not in self.app.objectIds())
-
 
 class CopyTestCase(SilvaTestCase.SilvaTestCase):
     """Test cut/copy/test/delete.
@@ -93,7 +92,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not self.root.copy_of_doc1.is_version_approved())
         # original *should* be approved
         self.assert_(self.root.doc1.is_version_approved())
-        
+       
     def test_copy3(self):
         # approve & publish version
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -105,7 +104,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not self.root.copy_of_doc1.is_version_published())
         # original *should* be published
         self.assert_(self.root.doc1.is_version_published())
-        
+
     def test_copy4(self):
         # approve
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() + 1)
@@ -118,7 +117,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not self.root.copy_of_folder4.subdoc.is_version_approved())
         # original *should* be approved
         self.assert_(self.subdoc.is_version_approved())
-        
+       
     def test_copy5(self):
         # approve & publish
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -146,25 +145,24 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         # original *should* be published
         self.assert_(self.subdoc.is_version_published())
 
-
     def test_copy7(self):
         # test for issue 92: pasted ghosts have unknown author
         self.add_ghost(self.root.folder4, 'ghost6', '/root/doc1')
         self.failUnless(self.root.folder4.ghost6)
-        # gotcha this makes the tests pass but I am not sure it is the desired
-        # functionality : test was failing because a ghost on a private doc does
-        # not get metadata !
-        # approve & publish version
+       # gotcha this makes the tests pass but I am not sure it is the desired
+       # functionality : test was failing because a ghost on a private doc does
+       # not get metadata !
+       # approve & publish version
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
         self.assert_(self.root.doc1.is_version_published())
-        # gotcha    
+       # gotcha    
         self.root.folder4.ghost6.sec_update_last_author_info()        
         self.assertEquals(
             ZopeTestCase.user_name,
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
         # copy ghost to folder 4 and check author
-        # XXX maybe we should rename the user inbetween ?
+       # XXX maybe we should rename the user inbetween ?
         self.root.folder4.action_copy(['ghost6'], self.app.REQUEST)
         self.root.folder5.action_paste(self.app.REQUEST)
         self.assertEquals(
@@ -189,20 +187,20 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.root.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root, 'copy_of_doc1'))
 
-        # now copy the object again and test the new id, should be
-        # 'copy2_of_doc1' according to Zope 2.7.4+, used to be
-        # 'copy_of_copy_of_doc1'
+       # now copy the object again and test the new id, should be
+       # 'copy2_of_doc1' according to Zope 2.7.4+, used to be
+       # 'copy_of_copy_of_doc1'
         self.root.action_copy(['copy_of_doc1'], self.app.REQUEST)
         from OFS.CopySupport import _cb_decode # HACK
         self.root.action_paste(self.app.REQUEST)
-        # this fails in Zope < 2.7.4
+       # this fails in Zope < 2.7.4
         self.assert_(hasattr(self.root, 'copy2_of_doc1'))
         self.assertEquals(self.root.copy2_of_doc1.get_editable(), None)
         self.assertEquals(self.root.copy2_of_doc1.get_viewable(), None)
         self.assert_(self.root.copy2_of_doc1.get_last_closed() != None)
 
     def test_cut1(self):
-        # try to cut object to paste it to the same folder
+       # try to cut object to paste it to the same folder
         self.root.action_cut(['doc1'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.assert_(hasattr(self.root, 'doc1'))
@@ -228,8 +226,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(hasattr(self.root, 'folder4'))
 
     def test_cut5(self):
-        # try to cut an approved content
-        # should lead to an empty clipboard
+       # try to cut an approved content
+       # should lead to an empty clipboard
         self.root.doc1.set_unapproved_version_publication_datetime(
             DateTime() - 1)
         self.root.doc1.approve_version()
@@ -244,8 +242,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
     # could occur if content is approved after its put on clipboard..
 
     def test_cut6(self):
-        # try to cut a content, approve it and paste it later on
-        # (should lead to an error at paste time, for now nothing happens)
+       # try to cut a content, approve it and paste it later on
+       # (should lead to an error at paste time, for now nothing happens)
         self.root.action_cut(['doc1'], self.app.REQUEST)
         self.root.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.root.doc1.approve_version()
@@ -256,68 +254,66 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not hasattr(self.root.folder4.aq_explicit, 'doc1'),
                      msg='doc1 should not be pasted in folder4')
 
-
-    
     def test_delete1(self):
-        # just delete doc1, it should work
+       # just delete doc1, it should work
         self.assert_(self.root.is_delete_allowed('doc1'))
         self.root.action_delete(['doc1'])
         self.assert_(not hasattr(self.root, 'doc1'))
 
     def test_delete2(self):
-        # just delete folder4, it should work
+       # just delete folder4, it should work
         self.assert_(self.root.is_delete_allowed('folder4'))
         self.root.action_delete(['folder4'])
         self.assert_(not hasattr(self.root, 'folder4'))
-        
+       
     def test_delete3(self):
-        # make doc1 approved
+       # make doc1 approved
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.doc1.approve_version()
         self.assert_(self.doc1.is_approved())
-        # now try to delete it (shouldn't be possible)
+       # now try to delete it (shouldn't be possible)
         self.assert_(not self.root.is_delete_allowed('doc1'))
         self.root.action_delete(['doc1'])
-        # should still be there
+       # should still be there
         self.assert_(hasattr(self.root, 'doc1'))
-        
+       
     def test_delete4(self):
-        # make doc1 approved & published
+       # make doc1 approved & published
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
-        # now try to delete it (shouldn't be possible)
+       # now try to delete it (shouldn't be possible)
         self.assert_(not self.root.is_delete_allowed('doc1'))
         self.root.action_delete(['doc1'])
-        # should still be there
+       # should still be there
         self.assert_(hasattr(self.root, 'doc1'))
 
     def test_delete5(self):
-        # approve
+       # approve
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.subdoc.approve_version()
         self.assert_(not self.root.is_delete_allowed('folder4'))
         self.root.action_delete(['folder4'])
-        # should still be there, as it contains an approved subdoc
+       # should still be there, as it contains an approved subdoc
         self.assert_(hasattr(self.root, 'folder4'))
 
     def test_delete6(self):
-        # approve & published
+       # approve & published
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.subdoc.approve_version()
         self.assert_(not self.root.is_delete_allowed('folder4'))
         self.root.action_delete(['folder4'])
-        # should still be there, as it contains a published subdoc
+       # should still be there, as it contains a published subdoc
         self.assert_(hasattr(self.root, 'folder4'))
 
     def test_delete7(self):
-        # delete folder without default doc
+       # delete folder without default doc
         self.folder4.action_delete(['index'])
         self.assert_(not hasattr(self.folder4.aq_explicit, 'index'))
         self.root.action_delete(['folder4'])
         self.assert_(not hasattr(self.root, 'folder4'))
 
     def test_delete8(self):
-        # delete folder with default doc
+       # delete folder with default doc
         self.folder6.index.set_unapproved_version_publication_datetime(DateTime())
         self.folder6.index.approve_version()
         self.root.action_delete(['folder6'])

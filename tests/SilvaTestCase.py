@@ -10,6 +10,31 @@ import transaction
 import zope.component.eventtesting
 
 user_name = ZopeTestCase.user_name
+user_password = ZopeTestCase.user_password
+
+# Default silva test user and password
+users = {
+    'manager': {'password': ZopeTestCase.user_password,
+                'role': 'Manager' },
+    'chiefeditor': {'password': ZopeTestCase.user_password,
+                    'role': 'ChiefEditor' },
+    'editor': {'password': ZopeTestCase.user_password,
+               'role': 'Editor' },
+    'author': {'password': ZopeTestCase.user_password,
+               'role': 'Author' },
+    'reader': {'password': ZopeTestCase.user_password,
+               'role': 'Reader' },
+    'dummy': {'password': ZopeTestCase.user_password,
+              'role': '' },
+}
+
+user_manager = 'manager'
+user_chiefeditor = 'chiefeditor'
+user_editor = 'editor'
+user_author = 'author'
+user_reader = 'reader'
+user_dummy = 'dummy'
+
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('TemporaryFolder')
 ZopeTestCase.installProduct('ZCTextIndex')
@@ -27,19 +52,12 @@ try:
 except ImportError:
     pass
 
-# XXX: first fix SilvaFind: please do not automatically add a
-# silvafind object to the root anymore, our tests don't expect it (29
-# failures), and neither, I think, will our users. Until that time we
-# don't install it in the test cases.
-#
-#ZopeTestCase.installProduct('SilvaFind')
-
+ZopeTestCase.installProduct('SilvaFind')
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
 if ZopeTestCase.hasProduct('SilvaExternalSources'):
     ZopeTestCase.installProduct('SilvaExternalSources')
 ZopeTestCase.installProduct('SilvaDocument')
-ZopeTestCase.installProduct('SilvaFind')
 ZopeTestCase.installProduct('Silva')
 ZopeTestCase.installProduct('Five')
 
@@ -58,6 +76,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
            Override if you don't like the default.
         """
         return self.app.root
+
+    @property
+    def silva_url(self):
+        """Return the absolute url of silva root.
+        """
+        return self.getRoot().absolute_url()
 
     def afterSetUp(self):
         '''Called after setUp() has completed. This is
@@ -102,8 +126,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         try:
             self.app = self._app()
+            # Set up sessioning objects, this is not done by default...
+            ZopeTestCase.utils.setupCoreSessions(self.app)
+
             self.silva = self.root = self.getRoot()
             self.catalog = self.silva.service_catalog
+            self.root.temp_folder.session_data._reset()
             if self._configure_root:
                 self._setupRootUser()
                 self.login()
@@ -130,7 +158,11 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _setupRootUser(self):
         '''Creates the root user.'''
         uf = self.root.acl_users
-        uf._doAddUser(user_name, 'secret', ['ChiefEditor'], [])
+        # original
+        uf._doAddUser(user_name, user_password, ['ChiefEditor'], [])
+
+        for username, info in users.items():
+           uf._doAddUser(username, info['password'], [info['role']], [])
 
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
@@ -142,6 +174,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 except: pass
                 try: self.root.Members._delObject(user_name)
                 except: pass
+                self.root.temp_folder.session_data._reset()
             if call_close_hook:
                 self.beforeClose()
         finally:
@@ -221,3 +254,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     def clear_events(self):
         zope.component.eventtesting.clearEvents()
+
+class SilvaFunctionalTestCase(
+    ZopeTestCase.FunctionalTestCase, SilvaTestCase):
+    pass
+
+    

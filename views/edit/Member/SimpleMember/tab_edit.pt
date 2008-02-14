@@ -39,6 +39,7 @@ function focus_editor() {
 </script>
 
 <form action="."
+  name="user_settings_form"
   method="post"
   accepted-charset="UTF-8"
   tal:attributes="action python:model.absolute_url()+'/edit'"

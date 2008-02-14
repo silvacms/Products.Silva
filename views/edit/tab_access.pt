@@ -44,7 +44,7 @@
         <tal:block replace="nothing"> 
           ________________ user roles management ________________ 
         </tal:block>
-        <form action="."
+        <form name="user_roles_management" action="."
           method="post"
           tal:define="
             members view/get_members;
@@ -186,7 +186,7 @@
         </tal:block>
         <!-- Pending role request listing -->
         <tal:block condition="allow_authentication_requests">
-          <form action="."
+          <form name="pending_roles_management" action="."
             method="post"
             tal:define="requested_roles model/requested_roles"
             tal:condition="requested_roles">
@@ -345,7 +345,7 @@
           <tal:block condition="group_service">
             <!-- Defined groups listing -->
             <!-- Role assignment table -->
-            <form action="."
+            <form name="group_roles_management" action="."
               method="post">
               <table class="listing"
                 border="0"
@@ -534,7 +534,7 @@
       </tal:block>
       <td class="main"
         style="padding-top:2em;">
-        <form action=".."
+        <form name="access_restrict_by_role" action=".."
           method="post"
           tal:define="
             info model/@@get_viewer_role_info; 
