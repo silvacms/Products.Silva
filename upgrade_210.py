@@ -12,7 +12,7 @@ def initialize():
 
 class AutoTOCUpgrader:
 
-    interface.implements(IUpgrader)
+    implements(IUpgrader)
 
     def upgrade(self, autotoc):
         zLOG.LOG(
