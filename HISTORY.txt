@@ -7,33 +7,36 @@ Silva changes
 
     Features added:
 
-      - Took out automatic install of SilvaFind when making a new Silva root.
-      Added SilvaFind to SilvaTestCase.py
+      - Took out automatic install of SilvaFind when making a new
+        Silva root.  Added SilvaFind to SilvaTestCase.py
 
-      - The css for form button controls has been refactored. There is now a
-        standard class, 'button', which can be modified by adding a second
-        class name, the action type which the button performs. These actions
-        are: manipulator, transporter, executor, remover, and canceler. E.g.
-        class="button transporter".
+      - The css for form button controls has been refactored. There is
+        now a standard class, 'button', which can be modified by
+        adding a second class name, the action type which the button
+        performs. These actions are: manipulator, transporter,
+        executor, remover, and canceler. E.g.  class="button
+        transporter".
 
       - Since the full media export is restricted to Chief Editors and
-        up, there's no reason to show the import or export buttons to lower
-        level roles (since the pure xml import/export is deprecated). 
-        Conditioned the buttons.
+        up, there's no reason to show the import or export buttons to
+        lower level roles (since the pure xml import/export is
+        deprecated).  Conditioned the buttons.
 
-      - Modernized buttons and matrix nav based on trainee feedback. Use a 
-        float for button alignment classes or obviate the spaces in html.
+      - Modernized buttons and matrix nav based on trainee
+        feedback. Use a float for button alignment classes or obviate
+        the spaces in html.
 
       - Renovated the Kupu image toolbox to make it more userfriendly.
         Improved the alignments in the table toolbox.
 
-      - New "Editor Comments" Kupu Tool: displays the "internal comments"
-        silva-extra metadata field if there are comments. This promotes the
-        visibility of internal / editor comments so that anyone editing the
-        document will see them.  This tool is only visible if there are
-        comments, and does not allow editing at this time.  This toolbox is
-        non-collapsible, and requires a version of kupu newer than 1.4b1 to
-        support non-collapsible toolboxes.
+      - New "Editor Comments" Kupu Tool: displays the "internal
+        comments" silva-extra metadata field if there are
+        comments. This promotes the visibility of internal / editor
+        comments so that anyone editing the document will see them.
+        This tool is only visible if there are comments, and does not
+        allow editing at this time.  This toolbox is non-collapsible,
+        and requires a version of kupu newer than 1.4b1 to support
+        non-collapsible toolboxes.
 
       - Support for direct username assignment to clipboard. If the
         service_members service defines a method 'direct_user_lookup'
@@ -74,36 +77,35 @@ Silva changes
       - #162545 Containers should retain the last author information
         Container author information is now displayed in the parent
         container's contents tab in the "author" column, rather than
-        "n/a".  Container last author and last modified dates are 
-        updated when objects are moved, deleted, added, pasted into 
-        the container, when the container's metadata is modified 
-        (properties tab and settings sub-tab), and when the container 
+        "n/a".  Container last author and last modified dates are
+        updated when objects are moved, deleted, added, pasted into
+        the container, when the container's metadata is modified
+        (properties tab and settings sub-tab), and when the container
         is converted to/from a publication/folder.
 
       - developers: issue 100712: tab_edit infrastructure has been
         refactoring so that each content has a tab_edit.pt rather than
         the 'edit.pt/.py' method.  The 'edit.pt/.py' method has been
-        deprecated so that extensions may use this release to transition.
-        FMI see doc/developer_notes.txt
+        deprecated so that extensions may use this release to
+        transition.  FMI see doc/developer_notes.txt
 
-      - changed the External Source kupu tool title when editing a source 
-        in a document so it now says "es <<source title>>" and the source 
-        id is displayed on hover.  External Sources in documents now 
-        display the title inside the "<< >>" and the id when hovered over.
+      - changed the External Source kupu tool title when editing a
+        source in a document so it now says "es <<source title>>" and
+        the source id is displayed on hover.  External Sources in
+        documents now display the title inside the "<< >>" and the id
+        when hovered over.
 
       - AutoTOCs are now more configurable, with the following new features:
         1. choose Silva types that AutoTOCs will list (any Silva type,
            including Assets!)
         2. changeable depth
-        3. optionally display the silva-extra content_description of content
+        3. optionally display the silva-extra content_description of
+           content
         4. optionally show the icon of each content type
-        5. Specify sort order: alphabetical, reverse-alpha, and silva SMI order
+        5. Specify sort order: alphabetical, reverse-alpha, and silva
+           SMI order
 
     Features ported from 2.0 branch
-
-      - Links to local (i.e. not fully qualified) domain names are no
-        longer incorrectly converted to relative urls in rendered
-        SilvaDocuments.
 
       - 128518 Import of non existing values for (multi)list metadata
         values gave a formulator SelectionValidator error.
@@ -112,14 +114,20 @@ Silva changes
         configure the filesystem_path in the service_files, but leave
         it to the extfile.ini.
 
-      - additional behaviour to mangle.Id.new(), when passing True
-        as the first argument one can suppress the ValueError raised
-        on invalid ids (and always have a new id generated)
+      - additional behaviour to mangle.Id.new(), when passing True as
+        the first argument one can suppress the ValueError raised on
+        invalid ids (and always have a new id generated)
 
     Bugs Fixed:
 
-      - Set overflow of selects in Kupu toolboxes to hidden, preventing long
-        titles from pushing the toolbox wider.
+      - KeyError in tab_status_export fixed
+
+      - Links to local (i.e. not fully qualified) domain names are no
+        longer incorrectly converted to relative urls in rendered
+        SilvaDocuments.
+
+      - Set overflow of selects in Kupu toolboxes to hidden,
+        preventing long titles from pushing the toolbox wider.
 
       - Changed the threshold variable in upgrade.py from 500 to 50,
         this may impact speed of upgrades negatively but it seems
@@ -170,19 +178,19 @@ Silva changes
         can do: <xsl:import
         href="../../Silva/transform/renderer/normal_view.xslt" />
 
-      - fixed 101253: Pasted ghosts have unknown author
-        when you click "paste to ghost", the resultant ghost object
-        now has author info
+      - fixed 101253: Pasted ghosts have unknown author when you click
+        "paste to ghost", the resultant ghost object now has author
+        info
 
-      - fixed 101554: Ghost Version item in service_catalog is not 
-        updated after haunted has been modified (example 2)
-        When documents are updated, all ghosts referencing them
-        are also reindexed.
+      - fixed 101554: Ghost Version item in service_catalog is not
+        updated after haunted has been modified (example 2) When
+        documents are updated, all ghosts referencing them are also
+        reindexed.
 
-      - fixed 101064: revert to previous focus box in Content Publish 
-        screen remains available after reverting. The revert_to_previous
-        functionality has been removed from Silva, since it was
-        obsoleted by "manage versions"
+      - fixed 101064: revert to previous focus box in Content Publish
+        screen remains available after reverting. The
+        revert_to_previous functionality has been removed from Silva,
+        since it was obsoleted by "manage versions"
 
     Bugfixes ported from 2.0 branch
 
