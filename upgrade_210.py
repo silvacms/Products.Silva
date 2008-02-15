@@ -18,15 +18,17 @@ class AutoTOCUpgrader:
         zLOG.LOG(
             'Silva', zLOG.INFO,
             'Upgrading AutoTOC: %s' % autotoc.get_title_or_id())
+        if not hasattr(autotoc,'_local_types'):
+            autotoc._local_types = ['Silva Document', 'Silva Publication',
+                                 'Silva Folder']
         if not hasattr(autotoc, '_toc_depth'):
             autotoc._toc_depth = -1
+        if not hasattr(autotoc, '_display_desc_flag'):
+            autotoc._display_desc_flag = False
         if not hasattr(autotoc, '_sort_order'):
             autotoc._sort_order = "silva"
         if not hasattr(autotoc, '_show_icon'):
             autotoc._show_icon = False
-        if not hasattr(autotoc,'_local_types'):
-            autotoc._local_types = ['Silva Document', 'Silva Publication',
-                                 'Silva Folder']
         autotoc.index_object()
         return autotoc
 
