@@ -82,14 +82,17 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                     field = set.getElement(element_name).field
                 
                     # Set data
-                    errors = binding._setData(
-                        namespace_key=set.metadata_uri,
-                        data={
-                            element_name:
-                            field.validator.deserializeValue(
-                                field, elements[element_name])},
-                        reindex=1
-                        )
+                    try:
+                        errors = binding._setData(
+                            namespace_key=set.metadata_uri,
+                            data={
+                                element_name: field.validator.deserializeValue(
+                                    field, elements[element_name])},
+                            reindex=1)
+                    except ValidationError:
+                        zLOG.LOG(
+                            'Silva', zLOG.WARNING, 
+                            "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
                     if errors:
                         zLOG.LOG(
                             'Silva', zLOG.WARNING, 
