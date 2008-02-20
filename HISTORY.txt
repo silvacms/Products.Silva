@@ -25,6 +25,9 @@ Silva changes
 
     Features Added:
 
+      - 128518 Import of non existing values for (multi)list metadata
+        values gave a formulator SelectionValidator error.
+
       - Since the full media export is restricted to Chief Editors and
         Managers, there's no reason to show the import or export
         buttons to lower level roles (since the pure xml import/export
