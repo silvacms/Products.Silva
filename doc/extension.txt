@@ -140,5 +140,10 @@ The corresponding zcml::
 
 Again, `icon` is optional.
 
+NOTE
+----
+
+There are attributes of these zcml directives that aren't covered in this
+document.  To learn more, read the definitions in Products.Silva.zcml.directives.
 
 [TDB Explain how to use zope:content directive for security declarations]

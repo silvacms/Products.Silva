@@ -3,6 +3,7 @@ import os
 from zope.configuration.name import resolve
 import Products
 from Interface.Implements import instancesOfObjectImplements
+from zope.interface import implementedBy
 from AccessControl.PermissionRole import PermissionRole
 from App.ProductContext import AttrDict
 from App.FactoryDispatcher import FactoryDispatcher
@@ -16,7 +17,8 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.fssite import registerDirectory
 from Products.Silva.icon import registry as icon_registry
 from Products.Silva import mangle
-from Products.Silva.helpers import add_and_edit
+from Products.Silva.helpers import add_and_edit, makeContainerFilter
+from Products.Silva.interfaces import ISilvaObject
 
 def extension(_context, name, title, depends=(u"Silva",)):
     """The handler for the silva:extension directive.
@@ -47,7 +49,7 @@ def registerExtension(name, title, depends):
     registerDirectory('views', getProductDir(product))
 
 def content(_context, extension_name, content, priority=0, icon=None,
-            content_factory=None):
+            content_factory=None, zmi_addable=False):
     """The handler for the silva:content directive.
 
     See .directives.IContentDirective
@@ -57,14 +59,13 @@ def content(_context, extension_name, content, priority=0, icon=None,
     _context.action(
         discriminator=(content,),
         callable=registerContent,
-        args=(extension_name, content, priority, icon, content_factory),
+        args=(extension_name, content, priority, icon, content_factory, zmi_addable),
         )
 
-def registerContent(extension_name, content, priority, icon, content_factory):
+def registerContent(extension_name, content, priority, icon, content_factory, zmi_addable):
     """Register content type.
     """
-    
-    registerClass(content, extension_name)
+    registerClass(content, extension_name, zmi_addable)
 
     product = resolve('Products.%s' % extension_name)
 
@@ -82,7 +83,7 @@ def registerContent(extension_name, content, priority, icon, content_factory):
     extensionRegistry.addAddable(content.meta_type, priority)
     
 def versionedcontent(_context, extension_name, content, version, priority=0,
-                     icon=None, content_factory=None, version_factory=None):
+                     icon=None, content_factory=None, version_factory=None, zmi_addable=False):
     """The handler for the silva:versionedcontent directive.
 
     See .directives.IVersionedContentDirective
@@ -93,16 +94,16 @@ def versionedcontent(_context, extension_name, content, version, priority=0,
         discriminator=(content, version),
         callable=registerVersionedContent,
         args=(extension_name, content, version, priority, icon,
-              content_factory, version_factory),
+              content_factory, version_factory, zmi_addable),
         )
 
 def registerVersionedContent(extension_name, content, version, priority,
-                             icon, content_factory, version_factory):
+                             icon, content_factory, version_factory, zmi_addable):
     """Register a versioned content type and the implementation of its version.
     """
     
-    registerClass(content, extension_name)
-    registerClass(version, extension_name)
+    registerClass(content, extension_name, zmi_addable)
+    registerClass(version, extension_name, zmi_addable)
 
     product = resolve('Products.%s' % extension_name)
 
@@ -225,12 +226,21 @@ def VersionFactory(version_class):
 _register_monkies = []
 _meta_type_regs = []
 
-def registerClass(class_, extension_name):
+#visibility can be "Global" or None
+def registerClass(class_, extension_name, zmi_addable=False):
     """Register a class with Zope as a type.
     """
     permission = getAddPermissionName(class_)
-    interfaces = instancesOfObjectImplements(class_)
-    
+    interfaces = instancesOfObjectImplements(class_) + list(implementedBy(class_))
+
+    #There are two ways to remove this object from the list,
+    #by either specifying "visibility: none", in which case
+    #the object is never visible (and copy support is broken)
+    #or by specifying a container_filter, which can return true
+    #if the container is an ISilvaObject.  I'm opting for the latter,
+    #as at least the objects aren't addable from outside the Silva Root then.
+    #Also, Products.Silva.Folder will override ObjectManager.filtered_meta_types
+    #to also remove any ISilvaObject types from the add list
     info = {'name': class_.meta_type,
             'action': 'manage_main',
             'product': extension_name,
@@ -238,7 +248,7 @@ def registerClass(class_, extension_name):
             'visibility': "Global",
             'interfaces': interfaces,
             'instance': class_,
-            'container_filter': None
+            'container_filter': makeContainerFilter(zmi_addable)
             }
     Products.meta_types += (info,)
 

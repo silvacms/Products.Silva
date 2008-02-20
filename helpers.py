@@ -111,3 +111,24 @@ class SwitchClass:
    
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
+
+#make a container_filter.  See doc/developer_changes for more info
+# basically, this returns a closure that can be used for a container filter
+# for a content type during product registration.  This closure then
+# knows whether the particular content type should be available in
+# the zmi add list, whether it should only be visible outside
+# of Silva (e.g. the silva root), and the container filter contains
+# an extended parameter list to control whether to use the
+# lexically-scoped zmi_addable variable when called
+def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
+    def SilvaZCMLContainerFilter(object_manager, filter_addable=False):
+        if filter_addable and not zmi_addable: return False;
+        if only_outside_silva:
+            if not ISilvaObject.providedBy(object_manager):
+                return True
+            return False
+        else:
+            if ISilvaObject.providedBy(object_manager):
+                return True
+            return False
+    return SilvaZCMLContainerFilter

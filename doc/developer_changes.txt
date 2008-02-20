@@ -51,10 +51,90 @@ IContainer        | Container/Folder/tab_edit.pt
 IContent	  | Content/(Indexer|AutoTOC)/tab_edit.pt
 IVersionedContent | VersionedContent/Link/tab_edit.pt
 
+Removing Silva Content Types from the ZMI Add List
+--------------------------------------------------
+
+The ZMI add list has always been incredibly cluttered.  This affects
+users new to Silva, as they're presented many different Silva content
+types when all they want is the "Silva Root", and all of the others won't work
+outside of a Silva Root.  Also, many Silva content types should only be
+added through the SMI.  This can create confusion when these types are added 
+from the ZMI, then fail to work.  This also creates clutter for site 
+administrators who need to search for a "Silva Code Source" amongst this large
+list of items that aren't ever applicable.
+
+Silva 2.1 provides a facility to eliminate this clutter.  The core Silva content
+types are already setup to do this.  From Silva 2.1 on, the ZMI add list is
+now "clutter free".
+
+There are two types of Silva content objects, and there two ways to eliminate
+them from the ZMI.  The first method is used for content types that are 
+registered through the Silva zcml extension (i.e. <silva:content> and
+<silva:versionedcontent>).  Both directives have the new boolean attribute 
+"zmi_addable", which controls whether the content object will appear in the 
+ZMI add list.  
+
+Here's an example for a content object that you want to have available in the ZMI
+add list:
+
+<silva:content
+  extension_name="MySilvaExtension"
+  content=".content.MyType"
+  icon="icon.png"
+  zmi_addable="true"
+  />
+
+The zmi_addable attribute is "false" by default, so it can be omitted from
+content (or versionedcontent) registration if you want the content omitted 
+from the ZMI add list.
+
+Note: even if zmi_addable is "true", the content will not appear in the
+ZMI add list of containers that aren't Silva objects (i.e. implement 
+ISilvaObject).
+
+The second method is for objects that are registered via __init__.py.  
+Commonly, these objects are Silva services or Silva External Sources (e.g. 
+Code Sources).  The intent of hiding these from the ZMI add list is to hide
+these from the add list of containers that are not Silva objects, and/or outside
+the Silva Root (i.e. implement ISilvaObject).  A typical service is 
+registered like this:
+
+def initialize(context):
+    context.registerClass(
+        ExtensionService.ExtensionService,
+        constructors = (ExtensionService.manage_addExtensionService,),
+        icon = "www/extension_service.gif"
+        )
+
+To hide this service from the ZMI add list, you add a special container_filter
+to registerClass (see docstring ofApp.ProductContext.registerClass):
+
+from Products.Silva.helpers import makeContainerFilter
+def initialize(context):
+    context.registerClass(
+        ExtensionService.ExtensionService,
+        constructors = (ExtensionService.manage_addExtensionService,),
+        icon = "www/extension_service.gif",
+        container_filter = makeContainerFilter()
+        )
+
+The makeContainerFilter function returns a container filter that will:
+1) filter the item for containers that aren't ISilvaObjects
+2) display the item for containers that are ISilvaObjects
+
+This function's signature is the following:
+def makeContainerFilter(zmi_addable=True, only_outside_silva=False)
+
+When zmi_addable is set to False, the registered content object does is filtered
+from the ZMI add list of all containers.  The zcml-based registrations, does this.
+
+The only_ousite_silva parameter is used to reverse the behavior such that the
+registered content object appears in ZMI add lists of non-Silva containers.
+This is used to register the Silva Root, since it doesn't make much sense to
+next Silva roots.
 
 From 1.6 to 2.0
 ===============
-
 
 Events instead of manage_afterAdd and manage_beforeDelete
 ---------------------------------------------------------

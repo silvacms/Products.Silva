@@ -56,6 +56,13 @@ class IContentDirective(interface.Interface):
         required=False,
         )
 
+    zmi_addable = schema.Bool(
+        title=u"Appear in ZMI Add list?",
+        description=(u"allow this object to appear in the ZMI Add list"),
+        required=False,
+        default=False
+        )
+
 class IVersionedContentDirective(IContentDirective):
     """Register the implementation of a versioned content type for
     Silva.

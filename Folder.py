@@ -80,6 +80,23 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             self, id)
         self._ordered_ids = []
 
+    #overridden from ObjectManager, so that additional filtering
+    #can be done to remove those objects that aren't zmi-addable
+    #(see the doc/developer_changes notes for more info)
+    def filtered_meta_types(self, user=None):
+        mt = Folder.inheritedAttribute('filtered_meta_types')(self, user)
+        newm = []
+        for m in mt:
+            cf = m['container_filter']
+            #If the container_filter is the specail filter for
+            #Silva content types, then call it to see if that type
+            #should be filtered from the zmi-add list as well
+            if cf and cf.__name__=="SilvaZCMLContainerFilter" \
+                   and not cf(self, filter_addable=True):
+                continue
+            newm.append(m)
+        return newm
+
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
         # changed

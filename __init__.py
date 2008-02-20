@@ -8,6 +8,7 @@ import ContainerPolicy
 # registers fields
 from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
+from Products.Silva.helpers import makeContainerFilter
 
 try:
     # some people may have put Sprout in the Products directory
@@ -80,75 +81,86 @@ def initialize(context):
         constructors = (Root.manage_addRootForm,
                         Root.manage_addRoot),
         icon="www/silva.png",
+        container_filter = makeContainerFilter(only_outside_silva=True)
         )
     registerTypeForMetadata(Root.Root.meta_type)
     
     context.registerClass(
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionService,),
-        icon = "www/extension_service.gif"
+        icon = "www/extension_service.gif",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         RendererRegistryService.RendererRegistryService,
         constructors = (RendererRegistryService.manage_addRendererRegistryServiceForm,
                         RendererRegistryService.manage_addRendererRegistryService),
-        icon = 'www/renderer_service.png'
+        icon = 'www/renderer_service.png',
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         File.FilesService,
         constructors = (File.manage_addFilesServiceForm,
                         File.manage_addFilesService),
-        icon = "www/files_service.gif"
+        icon = "www/files_service.gif",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         SimpleMembership.SimpleMemberService,
         constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
                         SimpleMembership.manage_addSimpleMemberService),
-        icon = "www/members.png"
+        icon = "www/members.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         SimpleMembership.SimpleMember,
         constructors = (SimpleMembership.manage_addSimpleMemberForm,
                         SimpleMembership.manage_addSimpleMember),
-        icon = "www/member.png"
+        icon = "www/member.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         EmailMessageService.EmailMessageService,
         constructors = (EmailMessageService.manage_addEmailMessageServiceForm,
                         EmailMessageService.manage_addEmailMessageService),
-        icon = "www/message_service.png"
+        icon = "www/message_service.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         DocmaService.DocmaService,
         constructors = (DocmaService.manage_addDocmaServiceForm,
                         DocmaService.manage_addDocmaService),
-        icon = "www/docma.png"
+        icon = "www/docma.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         SidebarService.SidebarService,
         constructors = (SidebarService.manage_addSidebarServiceForm, 
                         SidebarService.manage_addSidebarService),
-        icon = "www/sidebar_service.png"
+        icon = "www/sidebar_service.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         ContainerPolicy.ContainerPolicyRegistry,
         constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
-        icon = "www/containerpolicy_service.png"
+        icon = "www/containerpolicy_service.png",
+        container_filter = makeContainerFilter()
         )
 
     context.registerClass(
         TypographicalService.TypographicalService,
         constructors = (TypographicalService.manage_addTypographicalServiceForm,
                         TypographicalService.manage_addTypographicalService),
-        icon = "www/typochars_service.png"
+        icon = "www/typochars_service.png",
+        container_filter = makeContainerFilter()
         )
     
     # register xml import functions (old style XML importer)	 
@@ -215,7 +227,8 @@ def initialize(context):
         constructors = (
             subscriptionservice.manage_addSubscriptionServiceForm,
             subscriptionservice.manage_addSubscriptionService),
-        icon = "www/subscription_service.png"
+        icon = "www/subscription_service.png",
+        container_filter = makeContainerFilter()
         )
 
     #if MAILDROPHOST_AVAILABLE:
