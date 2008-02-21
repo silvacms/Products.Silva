@@ -71,6 +71,20 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     _configure_root = 1
 
+    def get_users(self):
+        return users.keys()
+
+    def get_password(self, username):
+        return users[username]['password']
+
+    def get_role(self, username):
+        return users[username]['role']
+
+    def get_user_by_role(self, role):
+        for name, value in users.items():
+            if value['role'] == role:
+                return name
+
     def getRoot(self):
         """Returns the silva root object, i.e. the "fixture root". 
            Override if you don't like the default.

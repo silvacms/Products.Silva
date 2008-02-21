@@ -91,6 +91,12 @@ class MixinFieldParameters(BaseMixin):
     def fill_create_file_field(self, browser):
         browser.getControl(name='field_file').add_file(openFile('test.txt'), 'text/plain', 'test.txt')
 
+    def fill_create_file_field_raven(self, browser):
+        browser.getControl(name='field_file').add_file(openFile('the_raven.txt'), 'text/plain', 'the_raven.txt')
+        
+    def fill_create_file_field_ode(self, browser):
+        browser.getControl(name='field_file').add_file(openFile('ode_to_a_nightingale.txt'), 'text/plain', 'ode_to_a_nightingale.txt')
+
     def fill_create_folderish_field(self, browser):
         self.fill_create_title_field(browser)
         browser.getControl(name='field_policy_name').value = ['Silva Document']
@@ -111,12 +117,13 @@ class MixinFieldParameters(BaseMixin):
         browser.getControl(name='field_object_title').value = 'test content€'
         # other unicode characters to choose from '€ ‚ ‘ ’ „ “ ” « » — – · ©'
         
+    #def fill_create_title_field2(self, browser):
+    #    browser.getControl(name='field_object_title').value = 'test content2'
+
     def fill_create_url_field(self, browser):
         browser.getControl(name='field_url').value = 'index'
 
 class MixinRoleContent(MixinLoginLogout):
-
-    item_id = 'test_content'
 
     def role_logout(self, browser):
         self.do_logout(browser)
@@ -128,7 +135,6 @@ class MixinRoleContent(MixinLoginLogout):
             url = '%s/edit' % self.getRoot().absolute_url()
         else:
             url = '%s/%s/edit' % (self.getRoot().absolute_url(), base)
-
         # Try login
         try:
             self.do_login(browser, url, user_name, password)
@@ -137,13 +143,12 @@ class MixinRoleContent(MixinLoginLogout):
                 self.assertEquals(str(err), 'HTTP Error 401: Unauthorized')
             else:
                 self.fail()
-
         # Check the role
         p = re.compile('logout\s+%s' % role)
         p.findall(browser.contents)
         self.failUnless(p, "The role '%s' does not match logout message" % role)
 
-    def do_create_content(self, browser, content_type, creator, result):
+    def do_create_content(self, browser, content_type, creator, result, item_id='test_content'):
         # Test if role has access to no content_types
         try:
             meta_type = browser.getControl(name="meta_type")
@@ -162,19 +167,18 @@ class MixinRoleContent(MixinLoginLogout):
             # Create the content 
             browser.getControl(name='meta_type').value = [content_type]
             browser.getControl(name='add_object:method').click()
-            browser.getControl(name='field_object_id').value = self.item_id
-            # Check for special fields
+            browser.getControl(name='field_object_id').value = item_id
             if creator:
                creator(browser)
             browser.getControl(name='add_submit').click()
             self.failUnless('Added %s' % content_type in browser.contents,
                             "Content type: '%s' is not included in submit "
                             "feedback message" % content_type)
-            self.failUnless(self.item_id in browser.contents)
+            self.failUnless(item_id in browser.contents)
 
-    def do_delete_content(self, browser):
+    def do_delete_content(self, browser, id="test_content"):
         # Delete the content
-        browser.getControl(name='ids:list').value = [self.item_id]
+        browser.getControl(name='ids:list').value = [id]
         browser.getControl(name='tab_edit_delete:method').click()
         self.failUnless('Deleted' in browser.contents)
 
@@ -323,7 +327,7 @@ class MixinNavigate(MixinLoginLogout):
                         "condition '%s' is not included in browser content"
                         % test_condition)
     
-    def click_tab_name(self, browser, base_url, test_condition, tab_name, redirect=None):
+    def click_tab_name(self, browser, base_url, test_condition, tab_name):
         """
             use this to click around the root level of the smi
             example: host_name/root/edit/tab_name

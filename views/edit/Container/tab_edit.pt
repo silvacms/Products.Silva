@@ -115,7 +115,8 @@ window.onload_registry.register(function() {
           onclick="toggleSelect(this, 'ids');"
           i18n:attributes="title"
         />
-        <label for="all_0"
+        <label 
+          for="all_0"
           title="select all: alt-a"
           i18n:attributes="title"
           ><img alt="select all"

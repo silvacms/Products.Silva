@@ -30,7 +30,7 @@ class ManagerPropertiesSilvaFolderTestCase(SilvaTestCase.SilvaFunctionalTestCase
         tab_name = 'tab_edit'
         test_condition = '&#xab;test content€&#xbb;'
         self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
+                                    tab_name)
         # click on the properties button
         tab_name = 'tab_metadata'
         test_condition = 'settings...'
