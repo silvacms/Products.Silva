@@ -91,12 +91,6 @@ class MixinFieldParameters(BaseMixin):
     def fill_create_file_field(self, browser):
         browser.getControl(name='field_file').add_file(openFile('test.txt'), 'text/plain', 'test.txt')
 
-    def fill_create_file_field_raven(self, browser):
-        browser.getControl(name='field_file').add_file(openFile('the_raven.txt'), 'text/plain', 'the_raven.txt')
-        
-    def fill_create_file_field_ode(self, browser):
-        browser.getControl(name='field_file').add_file(openFile('ode_to_a_nightingale.txt'), 'text/plain', 'ode_to_a_nightingale.txt')
-
     def fill_create_folderish_field(self, browser):
         self.fill_create_title_field(browser)
         browser.getControl(name='field_policy_name').value = ['Silva Document']
