@@ -19,7 +19,7 @@ from Products.Silva.Image import Image
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
     def replace_datetimes(self, s):
-        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
+        return self.DATETIME_RE.sub(r'BROKEN', s)
 
     def genericize(self, s):
         return self.replace_datetimes(s)
