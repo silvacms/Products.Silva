@@ -270,8 +270,9 @@ def configureSecurity(root):
     # add the appropriate roles if necessary
     userdefined_roles = root.userdefined_roles()
 
-    roles = set(root.__ac_roles__).union(set(userdefined_roles))
-    root.__ac_roles__ = tuple(roles)
+    app = root.getPhysicalRoot()
+    roles = set(app.__ac_roles__).union(set(userdefined_roles))
+    app.__ac_roles__ = tuple(roles)
 
     # now configure permissions
     
