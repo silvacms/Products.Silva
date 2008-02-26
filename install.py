@@ -269,14 +269,9 @@ def configureSecurity(root):
     """
     # add the appropriate roles if necessary
     userdefined_roles = root.userdefined_roles()
-    request = root.REQUEST
-    request.set('URL1', '')
-    request.set('REQUEST_METHOD', 'POST')
-    for role in roleinfo.ASSIGNABLE_ROLES:
-        if role not in userdefined_roles:
 
-            request.set('role', role)
-            root.manage_defined_roles(submit='Add Role', REQUEST=request)
+    roles = set(root.__ac_roles__).union(set(userdefined_roles))
+    root.__ac_roles__ = tuple(roles)
 
     # now configure permissions
     
