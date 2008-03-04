@@ -5,6 +5,9 @@ Silva changes
 
   Silva 2.0.7 (unreleased)
 
+      - silva_lookup_referer is stored in the session. If for some
+        reason the session gets lost, that no longer results in an
+        error.
 
   Silva 2.0.6
 
