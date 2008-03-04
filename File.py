@@ -244,7 +244,7 @@ class File(Asset):
     #   this file is a ZODB file. (editing is only supported with ZODB files)
     def can_edit_text(self):
         mt = self.get_mime_type()
-        if (mt.startswith('text/') or \
+        if ((mt.startswith('text/') and mt != 'text/rtf') or \
            mt in ('application/x-javascript',)) \
            and hasattr(self.aq_explicit,'get_text_content'):
             #that last one (get_text_content), is so only ZODBFiles are used
