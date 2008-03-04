@@ -198,6 +198,10 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - silva_lookup_referer is stored in the session. If for some
+        reason the session gets lost, that no longer results in an
+        error.
+
       - lookup_search conditionally converts username to unicode. The
         name could come from a form, or from code, we don't know
         which, so we have to code defensively. :(
