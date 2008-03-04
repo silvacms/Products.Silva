@@ -73,7 +73,7 @@ Version of this file: $Revision: 1.8 $
         <td align="left" valign="top">
           <div class="form-element">
             <input class="form-element" type="submit" name="submit_edit"
-              value=" Edit " />
+              value=" Save " />
           </div>
         </td>
       </tr>
