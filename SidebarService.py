@@ -67,7 +67,7 @@ class SidebarService(SimpleItem):
         the full pagetemplate and stores that in the cache
         """
         pub = obj.get_publication()
-        adapter = getVirtualHostingAdapter(pub)        
+        adapter = getVirtualHostingAdapter(pub)
         if adapter.containsVirtualRoot():
             # If the virtual host points inside the publication, 
             # use that point as 'publication' to start from.

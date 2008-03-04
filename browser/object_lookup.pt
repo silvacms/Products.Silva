@@ -21,6 +21,9 @@
 
 
   <metal:block use-macro="python: context.edit['macro_no_tabs'].macros['master']">
+    <style type="text/css" metal:fill-slot="extension_css">
+.slide-links { visibility: hidden; }
+    </style>
     <metal:block fill-slot="script">
       <script type="text/javascript" tal:attributes="src string:${root_url}/++resource++silva_scripts/reference.js"></script>
       <script type="text/javascript">

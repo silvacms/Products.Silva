@@ -4,6 +4,7 @@ import transaction
 
 import zLOG
 from sprout.saxext import xmlimport, collapser
+from Products.Formulator.Errors import ValidationError
 from Products.Silva.Ghost import Ghost, GhostVersion
 from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder

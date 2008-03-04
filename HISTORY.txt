@@ -127,6 +127,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - 101228: remove slide links from object lookup window, so that
+        the full SMI cannot be loaded within it
+
       - Set overflow of selects in Kupu toolboxes to hidden,
         preventing long titles from pushing the toolbox wider.
 

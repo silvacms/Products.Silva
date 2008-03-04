@@ -22,7 +22,7 @@
 <tr>
   <td class="{__class__}"
     style="border-top:none;">
-    <a class="right" 
+    <a class="right slide-links" 
       title="slide to the publish screen"
       tal:attributes="href string:${publication/absolute_url}/edit/tab_status"
       i18n:attributes="title">
@@ -62,13 +62,13 @@
         item_url string:${item/absolute_url};
         vein_url string:${item_url}/edit/{__vein_id__};
         title    item/get_short_title_editable">
-      <a class="right" 
+      <a class="right slide-links" 
         title="slide to the publish screen"
         tal:attributes="href string:${item_url}/edit/tab_status"
         i18n:attributes="title">
         &nbsp;
       </a>
-      <a class="left" 
+      <a class="left slide-links"
         title="slide to the contents screen"
         tal:attributes="href string:${item_url}/edit"
         i18n:attributes="title">
