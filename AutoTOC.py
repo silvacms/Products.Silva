@@ -39,7 +39,7 @@ class AutoTOC(Content, SimpleItem):
                              'Silva Folder']
         self._toc_depth = -1
         self._display_desc_flag = False
-        #possible values: 'silva', 'alpha', 'reversealpha'
+        #possible values: 'silva', 'alpha', 'reversealpha', 'chronmod', 'rchronmod'
         self._sort_order = 'silva'
         self._show_icon = False
         

@@ -36,10 +36,17 @@ class TOCRenderingAdapter(adapter.Adapter):
             items = [ o[1] for o in items ]
             if sort_order == 'reversealpha':
                 items.reverse()
-        else: #determine silva sorting
+        elif sort_order=='silva': #determine silva sorting
             nonordered_items = [ i for i in container.objectItems(show_types) if i[0] not in container._ordered_ids ]
             ordered_items = [ (i,getattr(container.aq_explicit,i)) for i in container._ordered_ids  ]
             items = ordered_items + nonordered_items
+        else: # chronologically by modification date
+            items = container.objectItems(show_types)
+            items = [ (o[1].get_modification_datetime(),o) for o in items ]
+            items.sort()
+            items = [ o[1] for o in items ]
+            if sort_order.startswith('r'):
+                items.reverse()
         return items
     
 

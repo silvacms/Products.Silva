@@ -78,6 +78,8 @@
       <option value="alpha" tal:attributes="selected python:sort_order=='alpha' and 'selected' or nothing">Alpha</option>
       <option value="reversealpha" tal:attributes="selected python:sort_order=='reversealpha' and 'selected' or nothing">Reverse-Alpha</option>
       <option value="silva" tal:attributes="selected python:sort_order=='silva' and 'selected' or nothing">Silva</option>
+     <option value="chronmod" tal:attributes="selected python:sort_order=='chronmod' and 'selected' or nothing">Chronologically by modification date</option>
+     <option value="rchronmod" tal:attributes="selected python:sort_order=='rchronmod' and 'selected' or nothing">Reverse Chronologically by modification date</option>
      </select>
     </td>
     <td>
@@ -86,6 +88,8 @@
        <li><b>Alpha:</b> sort alphabetically</li>
        <li><b>Reverse-Alpha:</b> reverse-sort alphabetically</li>
        <li><b>Silva:</b> the order the items appear within the SMI.</li>
+       <li><b>Chronologically by modification date:</b> sort by the modification date.</li>
+       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date.</li>
       </ul>
      </td>
     </tr>
