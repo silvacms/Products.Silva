@@ -6,6 +6,8 @@ Silva changes
   Silva 2.1 (unreleased)
 
     Features added:
+      - Refactoring functional tests, built SilvaBrowser API for
+        basic Silva functional tests.
 
       - Took out automatic install of SilvaFind when making a new
         Silva root.  Added SilvaFind to SilvaTestCase.py
