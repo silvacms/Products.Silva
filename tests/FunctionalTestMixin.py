@@ -334,3 +334,4 @@ class MixinNavigate(MixinLoginLogout):
         self.failUnless(test_condition in browser.contents, "test "
                         "condition '%s' is not included in browser content"
                         % test_condition)
+
