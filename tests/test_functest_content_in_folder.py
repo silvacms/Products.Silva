@@ -1,241 +1,204 @@
-from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import unittest
 
-class ContentTypeInFolderTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                                  MixinRoleContent, MixinFieldParameters):
+from SilvaTestCase import SilvaFunctionalTestCase
+from SilvaBrowser import SilvaBrowser
+
+class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
+    """ each role make each content type in a folder
     """
-       make a content type then enter the content type and make the same
-         content type as each role of silva
-       login role
-       select folder
-       make folder
-       enter folder
-       make folder
-       delete folder
-       navigate up one level
-       delete folder
-       logout role
-    """
-
-    def test_folder_in_folder(self):
-        """
-            create folder, create folder in folder, delete the folder,
-            delete folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Folder',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Folder',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Folder',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Folder',
-                             self.fill_create_folderish_field, fail_nothing_addable, delete=False)
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
-
-    def test_publication_in_folder(self):
-        """
-            create a folder, create a publication in the folder, delete the 
-            publication, delete the folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Publication',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Publication',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Publication',
-                             self.fill_create_folderish_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Publication',
-                             self.fill_create_folderish_field, fail_not_addable, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Publication',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
     
-    def test_document_in_folder(self):
+    def create_content_and_logout(self, sb, content_type, username, url=None,
+                                  **fields):
+        """ make content type, logout
         """
-            create a folder, create a document in folder, delete the document,
-            delete the folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager,'Silva Document',
-                              self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor,'Silva Document',
-                              self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor,'Silva Document',
-                              self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author,'Silva Document',
-                              self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Document',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
+        sb.login(username, url='http://nohost/root/edit')
+        self.failUnless('logout' in sb.browser.contents,
+                        "logout not found on browser page. Test failed login")
+        sb.make_content(content_type, **fields)
+        self.failUnless(fields['id'] in sb.get_content_ids())
+        sb.logout()
+        self.failUnless('You have been logged out' in sb.browser.contents)
+        return fields['id']
 
-    def test_image_in_folder(self):
+    def create_content_delete_logout(self, sb, content_type, username,
+                                     existing_content, url=None, **fields):
+        """ click into a container, make content type, delete content type,
+            logout
         """
-            create a folder, create an image in the folder, delete the image,
-            delete the folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Image',
-                             self.fill_create_image_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Image',
-                             self.fill_create_image_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Image',
-                             self.fill_create_image_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Image',
-                             self.fill_create_image_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Image',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
-    
-    def test_file_in_folder(self):
-        """
-            create a folder, create a file in the folder, delete the file,
-            delete the folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva File',
-                             self.fill_create_file_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva File',
-                             self.fill_create_file_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva File',
-                             self.fill_create_file_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva File',
-                             self.fill_create_file_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva File',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
-    
-    def test_ghost_in_folder(self):
-        """
-            create a folder, create a ghost in the folder, delete the ghost,
-            delete the folder
-        """
-        # make folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Ghost',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Ghost',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Ghost',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Ghost',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Ghost',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
-    
-    def test_ghost_folder_in_folder(self):
-        """
-            create a folder, create a ghost folder in the folder, delete the 
-            ghost folder, delete the folder
-        """
-        # make folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Ghost Folder',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Ghost Folder',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Ghost Folder',
-                             self.fill_create_ghost_url_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Ghost Folder',
-                             self.fill_create_ghost_url_field, fail_not_addable, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Ghost Folder',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        # delete folder 
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
+        sb.login(username, url='http://nohost/root/edit')
+        self.failUnless('logout' in sb.browser.contents,
+                        "logout not found on browser page. Test failed login")
+        sb.click_href_labeled(existing_content)
+        sb.make_content(content_type, **fields)
+        self.failUnless(fields['id'] in sb.get_content_ids())
+        status, url = sb.select_delete_content(fields['id'])
+        self.failIf(fields['id'] in sb.get_content_ids())
+        sb.logout()
+        self.failUnless('You have been logged out' in sb.browser.contents)
 
-    def test_indexer_in_folder(self):
+    def login_delete_logout(self, sb, username, existing_content, url=None):
+        """ login, select existing content, delete, logout
         """
-            create an folder, create and indexer in the folder, delete the
-            indexer, delete the folder
-        """
-        # make a folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Indexer',
-                             self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Indexer',
-                             self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Indexer',
-                             self.fill_create_title_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Indexer',
-                             self.fill_create_title_field, fail_not_addable, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Indexer',
-                             self.fill_create_title_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
+        sb.login(username, url='http://nohost/root/edit')
+        sb.select_delete_content(existing_content)
+        self.failIf(existing_content in sb.get_content_ids())
+        sb.logout()
+        self.failUnless('You have been logged out' in sb.browser.contents)
 
-    def test_link_in_folder(self):
-        """
-            create a folder, create an link in the folder, delete the 
-            link, delete the folder
-        """
-        # make folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Link',
-                             self.fill_create_link_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva Link',
-                             self.fill_create_link_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva Link',
-                             self.fill_create_link_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva Link',
-                             self.fill_create_link_fields, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva Link',
-                             self.fill_create_folderish_field, fail_nothing_addable, base='test_content')
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
+    def test_silva_document_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Document', username,
+                                              existing_content, url=None,
+                                              id='test_document',
+                                              title='Test document')
+        self.login_delete_logout(sb, 'manager', existing_content)
     
-    def test_autoTOC_in_folder(self):
-        """
-            create folder, create autoTOC in folder, delete the autoTOC,
-            delete folder
-        """
+    def test_silva_folder_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Folder', username,
+                                              existing_content, url=None,
+                                              id='test_folder',
+                                              title='Test folder',
+                                              policy='Silva Document')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_publication_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor']:
+            self.create_content_delete_logout(sb, 'Silva Publication', username,
+                                              existing_content, url=None,
+                                              id='test_publication',
+                                              title='Test publication',
+                                              policy='Silva Document')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_image_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Image', username,
+                                              existing_content, url=None,
+                                              id='test_image',
+                                              title='Test image',
+                                              image='torvald.jpg')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_file_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva File', username,
+                                              existing_content, url=None,
+                                              id='test_file',
+                                              title='Test file',
+                                              file='test.txt')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_find_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor']:
+            self.create_content_delete_logout(sb, 'Silva Find', username,
+                                              existing_content, url=None,
+                                              id='test_find',
+                                              title='Test find')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_ghost_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Ghost', username,
+                                              existing_content, url=None,
+                                              id='test_ghost',
+                                              reference='index')
+        self.login_delete_logout(sb, 'manager', existing_content)
+    
+    def test_silva_indexer_in_folder(self):
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor']:
+            self.create_content_delete_logout(sb, 'Silva Indexer', username,
+                                              existing_content, url=None,
+                                              id='test_indexer',
+                                              title='Test indexer')
+        self.login_delete_logout(sb, 'manager', existing_content)
+        
+    def test_silva_link_in_folder(self):
+        # toggle absolute
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Link', username,
+                                              existing_content, url=None,
+                                              id='test_link',
+                                              title='Test link',
+                                              link_url='www.infrae.com',
+                                              link_type='absolute')
+        self.login_delete_logout(sb, 'manager', existing_content)
 
-        # make folder as manager
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva Folder',
-                             self.fill_create_folderish_field, success, delete=False)
-        # go into content type and add new content type
-        self.do_make_content(SilvaTestCase.user_manager, 'Silva AutoTOC',
-                            self.fill_create_depth_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_chiefeditor, 'Silva AutoTOC',
-                            self.fill_create_depth_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_editor, 'Silva AutoTOC',
-                            self.fill_create_depth_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_author, 'Silva AutoTOC',
-                            self.fill_create_depth_field, success, base='test_content')
-        self.do_make_content(SilvaTestCase.user_reader, 'Silva AutoTOC',
-                            self.fill_create_depth_field, fail_nothing_addable, base='test_content')
-        # delete folder
-        self.do_login_and_delete_content(SilvaTestCase.user_manager, success)
+    def test_silva_link_in_folder(self):
+        # toggle relative
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva Link', username,
+                                              existing_content, url=None,
+                                              id='test_link',
+                                              title='Test link',
+                                              link_url='www.infrae.com',
+                                              link_type='relative')
+        self.login_delete_logout(sb, 'manager', existing_content)
+
+    def test_silva_autotoc_in_folder(self):
+        # toggle relative
+        sb = SilvaBrowser()
+        existing_content = self.create_content_and_logout(
+                                sb, 'Silva Folder', 'manager', url=None,
+                                id='test_folder1', title='Test folder 1',
+                                policy='Silva Document')
+        for username in ['manager', 'chiefeditor', 'editor', 'author']:
+            self.create_content_delete_logout(sb, 'Silva AutoTOC', username,
+                                              existing_content, url=None,
+                                              id='test_autotoc',
+                                              title='Test AutoTOC',
+                                              depth='-1')
+        self.login_delete_logout(sb, 'manager', existing_content)
 
 def test_suite():
     suite = unittest.TestSuite()

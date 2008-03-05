@@ -1,9 +1,8 @@
-from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import unittest
+from SilvaBrowser import SilvaBrowser
+from SilvaTestCase import SilvaFunctionalTestCase
 
-class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                                       MixinRoleContent, MixinNavigate,
-                                       MixinFieldParameters):
+class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
     """
         login author
         select silva document
@@ -15,85 +14,40 @@ class AuthorManagerScenarioOneTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         enter silva document
         click preview
         click publish
+        click root
+        delete
+        logout
     """
 
-    def afterSetUp(self):
-        self.setUpMixin()
-
-    def smi_url(self):
-        url = '%s/edit' % self.getRoot().absolute_url()
-        return url
-
     def test_author_manager_scenario_one(self):
-        base_url = self.smi_url()
-        base = None
-        browser = Browser()
-        # login author
-        self.role_login_edit(browser, SilvaTestCase.user_author, success,
-                             base=base)
-        # create silva document
-        self.do_create_content(browser, 'Silva Document',
-                               self.fill_create_title_field, success)
-        # click into the Document
-        content = 'test_content'
-        tab_name = 'tab_edit'
-        test_condition = 'kupu editor'
-        browser.open(base_url)
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # click on the preview tab
-        tab_name = 'tab_preview'
-        test_condition = 'public&nbsp;preview...'
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # click on the publish tab
-        tab_name = 'tab_status'
-        test_condition = 'status of'
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # click on request approval
-        submit_value = 'request approval'
-        form_name = 'author_request_approval'
-        test_condition = 'Approval requested.'
-        self.get_form_submit(browser, base_url, test_condition, form_name,
-                                   submit_value)
-        # logout author
-        self.do_logout(browser)
-        # login manager
-        browser = Browser()
-        self.role_login_edit(browser, SilvaTestCase.user_manager, success,
-                             base=base)
-        # click into silva document
-        content = 'test_content'
-        tab_name = 'tab_edit'
-        test_condition = 'kupu editor'
-        browser.open(base_url)
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # click prevew tab
-        tab_name = 'tab_preview'
-        test_condition = 'public&nbsp;preview...'
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                      tab_name)
-        # click the publish tab
-        tab_name = 'tab_status'
-        link_text = '\n        publish&nbsp;now\n      '
-        test_condition = 'status of'
-        self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # click publish now
-        submit_value = 'publish now'
-        form_name = 'editor_approves'
-        test_condition = 'close published version'
-        self.get_form_submit(browser, base_url, test_condition, form_name,
-                                   submit_value)
-        # view the public document
-        link_text = 'view public version'
-        test_condition = '<h2 class="heading">test content€</h2>'
-        self.click_content_no_tab_name(browser, base_url, test_condition, content,
-                                    link_text)
-        browser.goBack()
-        self.do_logout(browser)
+        sb = SilvaBrowser()
+        status, url = sb.login('author', 'secret', sb.smi_url())
+        sb.make_content('Silva Document', id='test_document',
+                         title='Test document')
+        
+        data = sb.get_content_data()
+        self.assertEquals(data[1]['name'], u'Test document')
+        sb.click_href_labeled('test_document')
+        tab_name = sb.get_tabs_named('editor')
+        self.failUnless(tab_name in sb.browser.contents)
+        sb.click_tab_named('preview')
+        self.assertEquals(sb.browser.url,
+                          'http://nohost/root/test_document/edit/tab_preview')
+        sb.logout()
+        status, url = sb.login('manager', 'secret', sb.smi_url())
+        sb.click_href_labeled('test_document')
+        tab_name = sb.get_tabs_named('editor')
+        self.failUnless(tab_name in sb.browser.contents)
+        sb.click_tab_named('preview')
+        self.assertEquals(sb.browser.url,
+                          'http://nohost/root/test_document/edit/tab_preview')
+        status, url = sb.click_button_labeled('publish now')
+        self.failUnless('Version approved.' in sb.browser.contents)
+        sb.go(sb.smi_url())
+        sb.select_delete_content('test_document')
+        self.failUnless('test_document' in sb.get_content_ids())
+        status, url = sb.click_href_labeled('logout')
+        self.assertEquals(status, 401)
 
 def test_suite():
     suite = unittest.TestSuite()

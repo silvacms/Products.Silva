@@ -1,14 +1,8 @@
-import os.path
-from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import unittest
+from SilvaBrowser import SilvaBrowser
+from SilvaTestCase import SilvaFunctionalTestCase
 
-def openFile(filename):
-    name = os.path.dirname(__file__)
-    return open(name + '/data/' + filename)
-
-class ManagerImageTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                           MixinRoleContent, MixinNavigate,
-                           MixinFieldParameters):
+class ManagerImageTestCase(SilvaFunctionalTestCase):
     """
         login manager
         select silva image
@@ -20,58 +14,33 @@ class ManagerImageTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         logout
     """
 
-    def afterSetUp(self):
-        self.setUpMixin()
-
-    def smi_url(self):
-        url = '%s/edit' % self.getRoot().absolute_url()
-        return url
-
     def test_manager_image(self):
-        base_url = self.smi_url()
-        base = None
-        browser = Browser()
-        # login
-        self.role_login_edit(browser, SilvaTestCase.user_manager, success,
-                             base=base)
-        # create silva document
-        self.do_create_content(browser, 'Silva Image',
-                               self.fill_create_image_fields, success)
-        # click on image
-        content = 'test_content'
-        tab_name = 'tab_edit'
-        test_condition = 'format and scaling'
-        url = self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # change field image title
-        browser.getControl(name='field_image_title').value = 'new test content€'
-        browser.getControl(name='submit:method').click()
-        self.failUnless('Properties changed' in browser.contents)
-        # change image type
-        browser.getControl(name='field_web_format').value = ['PNG']
-        browser.getControl(name='scale_submit:method').click()
-        self.failUnless('Scaling and/or format changed' in browser.contents)
-        # scale image by 100x200
-        browser.getControl(name='field_web_scaling').value = '100x200'
-        browser.getControl(name='scale_submit:method').click()
-        self.failUnless('Scaling and/or format changed' in browser.contents)
-        # scale image by 40%
-        browser.getControl(name='field_web_scaling').value = '80%'
-        browser.getControl(name='scale_submit:method').click()
-        self.failUnless('Scaling and/or format changed' in browser.contents)
-        # click on view unscaled image
-        # click on upload a file
-        browser.getControl(name='field_file').add_file(openFile('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
-        browser.getControl(name='upload_submit:method').click()
-        self.failUnless('Image updated.' in browser.contents)
-        # click root link
-        tab_name = 'tab_edit'
-        test_condition = '&#xab;root&#xbb;'
-        self.click_tab_name(browser, base_url, test_condition, tab_name)
-        # delete content
-        self.do_delete_content(browser)
-        # logout
-        self.do_logout(browser)
+        sb = SilvaBrowser()
+        status, url = sb.login('manager', 'secret', sb.smi_url())
+        self.assertEquals(status, 200)
+        sb.make_content('Silva Image', id='test_image', title='Test image',
+                        image='torvald.jpg')
+        data = sb.get_content_data()
+        self.assertEquals(data[1]['name'], u'Test image')
+        sb.click_href_labeled('test_image')
+        sb.browser.getControl(name='field_image_title').value = 'new test content€'
+        sb.browser.getControl(name='submit:method').click()
+        self.failUnless('Properties changed' in sb.browser.contents)
+        sb.browser.getControl(name='field_web_format').value = ['PNG']
+        sb.browser.getControl(name='scale_submit:method').click()
+        self.failUnless('Scaling and/or format changed' in sb.browser.contents)
+        sb.browser.getControl(name='field_web_scaling').value = '100x200'
+        sb.browser.getControl(name='scale_submit:method').click()
+        self.failUnless('Scaling and/or format changed' in sb.browser.contents)
+        sb.browser.getControl(name='field_file').add_file(
+                   sb.open_file('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
+        sb.browser.getControl(name='upload_submit:method').click()
+        self.failUnless('Image updated.' in sb.browser.contents)
+        sb.go(sb.smi_url())
+        sb.select_delete_content('test_image')
+        self.failUnless('test_image' in sb.browser.contents)
+        status, url = sb.click_href_labeled('logout')
+        self.assertEquals(status, 401)
 
 def test_suite():
     suite = unittest.TestSuite()
