@@ -5,18 +5,12 @@ from SilvaBrowser import SilvaBrowser
 
 class SilvaBrowserTest(SilvaFunctionalTestCase):
     """
-        test the SilvaBrowser API methods
+        test the basic SilvaBrowser API methods
     """
     def test_silvabrowser(self):
-        """initialize the SilvaBrowser API"""
         sb = SilvaBrowser()
 
     def test_login_logout(self):
-        """
-            go()
-            login()
-            click_href_labeled()
-        """
         # login
         sb = SilvaBrowser()
         # goto silva root
@@ -37,16 +31,8 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
         self.assertEquals(status, 401)
-    
+        
     def test_delete_published_content(self):
-        """
-            test
-            get_content()
-            select_content()
-            click_button_labeled()
-            get_alert_feedback()
-            get_status_feedback()
-        """
         # login
         sb = SilvaBrowser()
         status, url = sb.login('manager', 'secret', sb.smi_url())
@@ -72,17 +58,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         self.assertEquals(status, 401)
     
     def test_get_all_content(self):
-        """
-            test
-            get_addables_list()
-            select_addable()
-            get_addform_title()
-            set_id_field()
-            set_title_field()
-            get_content_data()
-            select_all_content
-        """
-    #    # login
+        # login
         sb = SilvaBrowser()
         status, url = sb.login('manager', 'secret', sb.smi_url())
         # make some content
@@ -152,186 +128,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
         self.assertEquals(status, 401)
-
-    def test_make_silva_folder(self):
-        # login
-        sb = SilvaBrowser()
-        #status, url = sb.login(sb.smi_url(self.silva_url), 'manager', 'secret')
-        status, url = sb.login('manager', 'secret', sb.smi_url())
-        # select meta_type
-        addables = sb.get_addables_list()
-        self.failUnless('Silva Folder' in addables)
-        sb.select_addable('Silva Folder')
-        # create silva folder
-        status, url = sb.click_button_labeled('new...')
-        self.failUnless(sb.get_addform_title)
-        self.failUnless(sb.get_addform_title() == 'create Silva Folder')
-        # fill in form fields
-        sb.set_id_field('test_content')
-        sb.set_title_field('test content')
-        sb.set_policy_field('Silva Document')
-        status, url = sb.click_button_labeled('save')
-        self.failUnless(sb.get_status_feedback().startswith('Added Silva Folder'))
-        # delete content
-        data = sb.get_content_data()
-        # get the right content
-        self.assertEquals(data[1]['name'], u'test content')
-        sb.select_content('test_content')
-        status, url = sb.click_button_labeled('delete')
-        self.failIf('test_content' in sb.get_content_ids())
-        # logout
-        status, url = sb.click_href_labeled('logout Manager manager')
-        self.assertEquals(status, 401)
-
-    #def test_make_silva_publication(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # select meta_type
-    #    addables = sb.get_addables_list()
-    #    self.failUnless('Silva Publication' in addables)
-    #    sb.select_addable('Silva Publication')
-    #    # create silva publication
-    #    status, url = sb.click_button_labeled('new...')
-    #    self.failUnless(sb.get_addform_title)
-    #    self.failUnless(sb.get_addform_title() == 'create Silva Publication')
-    #    # fill in form fields
-    #    sb.set_field(id='test_content', title='test content', policy='Silva Document')
-    #    status, url = sb.click_button_labeled('save')
-    #    self.failUnless(sb.get_status_feedback().startswith('Added Silva Publication'))
-    #    # delete content
-    #    data = sb.get_content_data()
-    #    # get the right content
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    sb.select_content('test_content')
-    #    status, url = sb.click_button_labeled('delete')
-    #    self.failIf('test_content' in sb.get_content_ids())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-
-    #def test_make_silva_image(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # select meta_type
-    #    addables = sb.get_addables_list()
-    #    self.failUnless('Silva Image' in addables)
-    #    sb.select_addable('Silva Image')
-    #    # create silva publication
-    #    status, url = sb.click_button_labeled('new...')
-    #    self.failUnless(sb.get_addform_title)
-    #    self.failUnless(sb.get_addform_title() == 'upload Silva Image')
-    #    # fill in form fields
-    #    sb.set_id_title_image_fields('test_content', 'test content')
-    #    status, url = sb.click_button_labeled('save')
-    #    self.failUnless(sb.get_status_feedback().startswith('Added Silva Image'))
-    #    # delete content
-    #    data = sb.get_content_data()
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    # get the right content
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    sb.select_content('test_content')
-    #    status, url = sb.click_button_labeled('delete')
-    #    self.failIf('test content' in sb.get_content_ids())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    
-    #def test_make_silva_file(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # select meta_type
-    #    addables = sb.get_addables_list()
-    #    self.failUnless('Silva File' in addables)
-    #    sb.select_addable('Silva File')
-    #    # create silva publication
-    #    status, url = sb.click_button_labeled('new...')
-    #    self.failUnless(sb.get_addform_title)
-    #    self.failUnless(sb.get_addform_title() == 'upload Silva File')
-    #    # fill in form fields
-    #    sb.set_id_title_file_fields('test_content', 'test content')
-    #    status, url = sb.click_button_labeled('save')
-    #    self.failUnless(sb.get_status_feedback().startswith('Added Silva File'))
-    #    # delete content
-    #    data = sb.get_content_data()
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    # get the right content
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    sb.select_content('test_content')
-    #    status, url = sb.click_button_labeled('delete')
-    #    self.failIf('test content' in sb.get_content_ids())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    
-    #def test_make_silva_find(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # select meta_type
-    #    addables = sb.get_addables_list()
-    #    self.failUnless('Silva Find' in addables)
-    #    sb.select_addable('Silva Find')
-    #    # create silva publication
-    #    status, url = sb.click_button_labeled('new...')
-    #    self.failUnless(sb.get_addform_title)
-    #    self.failUnless(sb.get_addform_title() == 'create Silva Find')
-    #    # fill in form fields
-    #    sb.set_id_title_fields('test_content', 'test content')
-    #    status, url = sb.click_button_labeled('save')
-    #    self.failUnless(sb.get_status_feedback().startswith('Added Silva Find'))
-    #    # delete content
-    #    data = sb.get_content_data()
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    # get the right content
-    #    self.assertEquals(data[1]['name'], u'test content')
-    #    sb.select_content('test_content')
-    #    status, url = sb.click_button_labeled('delete')
-    #    self.failIf('test content' in sb.get_content_ids())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    
-    #def test_make_silva_ghost(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('chiefeditor', 'secret', sb.smi_url())
-    #    #print sb.browser.contents
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout ChiefEditor chiefeditor')
-    #    self.assertEquals(status, 401)
-    #
-    #def test_make_silva_ghost_folder(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    #
-    #def test_make_silva_link(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    #
-    #def test_make_silva_indexer(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-    #    # logout
-    #    status, url = sb.click_href_labeled('logout Manager manager')
-    #    self.assertEquals(status, 401)
-    #
-    #def test_make_silva_link(self):
-    #    # login
-    #    sb = SilvaBrowser()
-    #    status, url = sb.login('manager', 'secret', sb.smi_url())
-        
+       
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SilvaBrowserTest))
