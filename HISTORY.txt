@@ -129,6 +129,8 @@ Silva changes
 
     Bugs Fixed:
 
+      - 101464: can't place headings inside list items in kupu 
+
       - 101228: remove slide links from object lookup window, so that
         the full SMI cannot be loaded within it
 
