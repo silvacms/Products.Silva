@@ -5,6 +5,11 @@ Silva changes
   Silva 1.6.2 (unreleased)
 
     Bugs fixed:
+    
+      - Reversal of fix for issue
+        https://bugs.launchpad.net/silva/+bug/101791 "Problem with
+        Link object" since the issue was fixed in Zope 2.8+ itself,
+        and then the bugfix turned out to break the link urls.
 
       - External sources are removed when extracting the fulltext from
         a document, since the values of the parameters are not
