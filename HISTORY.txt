@@ -5,9 +5,18 @@ Silva changes
 
   Silva 2.0.7 (unreleased)
 
+    Bugs fixed:
+
       - silva_lookup_referer is stored in the session. If for some
         reason the session gets lost, that no longer results in an
         error.
+
+      Ported from 1.6 branch:
+
+      - Reversal of fix for issue
+        https://bugs.launchpad.net/silva/+bug/101791 "Problem with
+        Link object" since the issue was fixed in Zope 2.8+ itself,
+        and then the bugfix turned out to break the link urls.
 
   Silva 2.0.6
 
