@@ -90,15 +90,12 @@ class LinkVersion(CatalogedVersion):
         request = self.REQUEST
         response = request.RESPONSE
         url = self._url
-        if self._link_type == 'relative' and not request.get('ACTUAL_URL').endswith('/'):
-            url = '%s/%s' %(request.get('ACTUAL_URL'), url)
-        
         if (request['HTTP_USER_AGENT'].startswith('Mozilla/4.77') or
             request['HTTP_USER_AGENT'].find('Konqueror') > -1 or
             request['HTTP_USER_AGENT'].find('Opera') > -1):
             return ('<html><head><META HTTP-EQUIV="refresh" '
                     'CONTENT="0; URL=%s"></head><body bgcolor="#FFFFFF">'
-                    '</body></html>') % url
+                    '</body></html>') % self._url
         else:
             response.redirect(self._url)
             return ""
