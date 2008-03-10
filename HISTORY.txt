@@ -305,6 +305,11 @@ Silva changes
 
     Ported from 1.6 branch
 
+      - Reversal of fix for issue
+        https://bugs.launchpad.net/silva/+bug/101791 "Problem with
+        Link object" since the issue was fixed in Zope 2.8+ itself,
+        and then the bugfix turned out to break the link urls.
+
       - The lookup window now opens in the directory that was last
         opened.
 
