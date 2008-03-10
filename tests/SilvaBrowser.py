@@ -43,14 +43,12 @@ class SilvaBrowser(object):
                     # found the button
                     button = control
 
-
         assert button != None, 'No button labeled: "%s" found' % value_name
         # we cannot click this control, we need to get a browser
         # control, since all controls have a name, we can use that to
         # get the real control.
         self.browser.getControl(name=button.name).click()
         return self.get_status_and_url()
-    
     
     def click_href_labeled(self, value_name):
         """click on a link with a specific label""" 
