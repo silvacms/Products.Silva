@@ -144,6 +144,9 @@ class SilvaBrowser(object):
         """Get a list of ids for objects in this container"""
         return [o['id'] for o in self.get_content_data()]
 
+    def get_href_named(self, value_name):
+        href = self.browser.getLink(value_name)
+        return href
 
     def get_status_and_url(self):
         status = self.browser.headers.getheader('Status')
