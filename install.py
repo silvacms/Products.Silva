@@ -207,7 +207,8 @@ def configureProperties(root):
     """Configure properties on the root folder.
     XXX Probably we'll get rid of most properties in the future.
     """
-    root.manage_changeProperties(title='Silva')
+    #title is now defered to metadata
+    #root.manage_changeProperties(title='Silva')
     property_info = [
         ('help_url', '/%s/globals/accesskeys' % root.absolute_url(1), 'string'),
         ('comment', "This is just a place for local notes.", 'string'),
