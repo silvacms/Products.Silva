@@ -13,8 +13,12 @@ class ManagerPropertiesSilvaRootTestCase(SilvaFunctionalTestCase):
         self.assertEquals(status, 200)
         sb.click_tab_named('properties')
         sb.click_button_labeled('addables...')
-        form = sb.browser.getForm(name='form')
-        field = form.getControl(name='field_addables')       
+        fields = sb.browser.getControl(name='field_addables')
+        fields.value = []
+        sb.click_button_labeled('save addables settings')
+        
+        #form = sb.browser.getForm(name='form')
+        #field = form.getControl(name='field_addables')       
         # uncheck the checked boxes
         # XXX
         # seems the only way i can use selected is by a label name, however the
