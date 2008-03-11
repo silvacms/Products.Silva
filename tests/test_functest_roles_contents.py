@@ -88,7 +88,7 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
             self.create_content_and_delete(sb, 'Silva Link', username,
                                            url=None, id='test_link',
                                            title='Test link',
-                                           link_url='www.infrae.com',
+                                           link_url='index',
                                            link_type='relative')
     def test_silva_autotoc(self):
         sb = SilvaBrowser()
