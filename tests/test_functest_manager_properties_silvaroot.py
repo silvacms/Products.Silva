@@ -13,19 +13,19 @@ class ManagerPropertiesSilvaRootTestCase(SilvaFunctionalTestCase):
         self.assertEquals(status, 200)
         sb.click_tab_named('properties')
         sb.click_button_labeled('addables...')
+        field = sb.browser.getControl(name='field_acquire_addables')
+        field.value = False
         fields = sb.browser.getControl(name='field_addables')
         fields.value = []
         sb.click_button_labeled('save addables settings')
-        
-        #form = sb.browser.getForm(name='form')
-        #field = form.getControl(name='field_addables')       
-        # uncheck the checked boxes
-        # XXX
-        # seems the only way i can use selected is by a label name, however the
-        # fields on this page have been built in formulator which doesn't make
-        # label tags. been trying to use selected by a checkbox name, but that
+        field = sb.browser.getControl(name='field_acquire_addables')
+        self.assertEquals(field.value, False)
+        fields = sb.browser.getControl(name='field_addables')
+        self.assertEquals(fields.value, [])
         status, url = sb.click_href_labeled('logout')
         self.assertEquals(status, 401)        # doesn't work!?!
+                                              # does work(?) logout
+                                              # results in 401
 
 def test_suite():
     suite = unittest.TestSuite()
