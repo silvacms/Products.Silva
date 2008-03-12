@@ -1,46 +1,34 @@
-from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import unittest
 
-class ManagerUserSettingsTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                                       MixinRoleContent, MixinNavigate,
-                                       MixinFieldParameters):
+from SilvaTestCase import SilvaFunctionalTestCase
+from SilvaBrowser import SilvaBrowser
+
+class ManagerUserSettingsTestCase(SilvaFunctionalTestCase):
     """
     """
-
-    def afterSetup(self):
-        self.setUpMixin()
-
-    def smi_url(self):
-        url = '%s/edit' % self.getRoot().absolute_url()
-        return url
 
     def test_manager_user_settings(self):
-        base_url = self.smi_url()
-        base = None
-        browser = Browser()
+        sb = SilvaBrowser()
         # login
-        self.role_login_edit(browser, SilvaTestCase.user_manager, success,
-                             base=base)
-        browser.open(base_url)
-        link = browser.getLink('user settings')
-        link.click()
-        form = browser.getForm(name='user_settings_form')
+        sb.login('manager', 'secret', sb.smi_url())
+        sb.click_href_labeled('user settings')
+        form = sb.browser.getForm(name='user_settings_form')
         form.getControl(name='field_fullname').value = 'test_bill'
         form.getControl(name='field_email').value = 'test@example.com'
         form.getControl(name='langsetting').value = ['it']
         form.getControl(name='field_editor').value = ['forms editor']
         form.getControl(name='save_memberdata:method').click()
-        self.assertEquals(browser.getControl(name='field_fullname').value, 'test_bill')
-        self.assertEquals(browser.getControl(name='field_email').value, 'test@example.com')
-        f = browser.getControl('italiano').selected
+        self.assertEquals(sb.browser.getControl(name='field_fullname').value, 'test_bill')
+        self.assertEquals(sb.browser.getControl(name='field_email').value, 'test@example.com')
+        f = sb.browser.getControl('italiano').selected
         self.assertEquals(f, True)
-        f = browser.getControl('forms editor').selected
+        f = sb.browser.getControl('forms editor').selected
         self.assertEquals(f, True)
-        form = browser.getForm(name='user_settings_form')
+        form = sb.browser.getForm(name='user_settings_form')
         # XXX js onclick to close!!!
-        # so i just logout
-        # logout
-        self.do_logout(browser)
+        # so i just 'hard' logout via the zmi
+        sb.logout()
+        self.failUnless('You have been logged out.' in sb.browser.contents)
 
 def test_suite():
     suite = unittest.TestSuite()
