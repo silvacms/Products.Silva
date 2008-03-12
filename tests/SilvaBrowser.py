@@ -49,7 +49,25 @@ class SilvaBrowser(object):
         # get the real control.
         self.browser.getControl(name=button.name).click()
         return self.get_status_and_url()
-    
+
+    def get_listing_h2(self):
+        """return the content type and name of h2 in the listing table"""
+        doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
+        tables = doc.getElementsByTagName('table')
+        for table in tables:
+            if table.getAttribute('class') != 'listing':
+                continue
+            trs = doc.getElementsByTagName('tr')
+            for tr in trs:
+                tds = doc.getElementsByTagName('td')
+                for td in tds:
+                    if td.getAttribute('class') != 'top':
+                        continue
+                    h2s = doc.getElementsByTagName('h2')
+                    for h2 in h2s:
+                        text = self.html2text(h2.toxml())
+                        return text
+        
     def click_href_labeled(self, value_name):
         """click on a link with a specific label""" 
         if 'logout' in value_name:

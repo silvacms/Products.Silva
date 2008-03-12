@@ -1,80 +1,60 @@
-from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import unittest
 
-class ManagerUpIconsTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                             MixinRoleContent, MixinNavigate,
-                             MixinFieldParameters):
+from SilvaTestCase import SilvaFunctionalTestCase
+from SilvaBrowser import SilvaBrowser
+
+class ManagerUpIconsTestCase(SilvaFunctionalTestCase):
     """
        login manager
-       select image folder
-       make silva folder
-       enter folder
-       for each tab type
+       select silva folder
+       make test_folder1
+       enter test_folder1
+       select silva folder
+       make test_folder2
+       enter test_folder2
        click up_tree
-       enter folder
-       for each tab type
-       click up level
-       delete folder
+       re-enter test_folder2
+       click up_level
+       click up_tree
+       select test_folder1
+       delete test_folder1
        logout
     """
 
-    def afterSetUp(self):
-        self.setUpMixin()
-    
-    def smi_url(self):
-        url = '%s/edit' % self.getRoot().absolute_url()
-        return url
-
     def test_manager_level_icons(self):
-        base_url = self.smi_url()
-        base = None
-        browser = Browser()
-        # login
-        self.role_login_edit(browser, SilvaTestCase.user_manager, success,
-                             base=base)
-        # create silva folder
-        self.do_create_content(browser, 'Silva Folder',
-                               self.fill_create_folderish_field, success)
-        # click on folder
-        content = 'test_content'
-        tab_name = 'tab_edit'
-        test_condition = 'test_content'
-        url = self.click_content_tab_name(browser, base_url, test_condition, content,
-                                          tab_name)
-        # create silva folder
-        self.do_create_content(browser, 'Silva Folder',
-                               self.fill_create_folderish_field, success)
-        base_url = url.split('/')
-        base_url.insert(4, 'test_content')
-        base_url = '/'.join(base_url)
-        self.content_link_builder(content, tab_name)
-        # click on folder
-        link = browser.getLink(url=base_url)
+        sb = SilvaBrowser()
+        sb.login('manager', 'secret', sb.smi_url())
+        sb.make_content('Silva Folder', id='test_folder1',
+                                        title='Test folder1',
+                                        policy='Silva Document')
+        sb.click_href_labeled('test_folder1')
+        h2 = sb.get_listing_h2()
+        self.failUnless(h2.startswith('Silva Folder '))
+        sb.make_content('Silva Folder', id='test_folder2',
+                                        title='Test folder2',
+                                        policy='Silva Document')
+        sb.click_href_labeled('test_folder2')
+        h2 = sb.get_listing_h2()
+        self.failUnless(h2.startswith('Silva Folder '))
+        link = sb.browser.getLink(url='http://nohost/root/edit/tab_edit')
         link.click()
-        link = browser.getLink('index')
-        # check we are two level deep
-        self.assertEquals(link.text, 'index')
-        # get level up icon
-        link = browser.getLink(id='level_up')
-        # check we have the content level_up link
-        self.assertEquals(link.url, 'http://nohost/root/test_content/edit/tab_edit')
-        # click level up icon
+        h2 = sb.get_listing_h2()
+        self.failUnless(h2.startswith('Silva Root '))
+        sb.click_href_labeled('test_folder1')
+        sb.click_href_labeled('test_folder2')
+        h2 = sb.get_listing_h2()
+        self.failUnless('Test folder2' in h2)
+        link = sb.browser.getLink(url='http://nohost/root/test_folder1/edit/tab_edit')
         link.click()
-        # get tree up icon
-        link = browser.getLink(id='tree_up')
-        # check we have the content tree_up link
-        self.assertEquals(link.url, 'http://nohost/root/edit/tab_edit')
-        # click tree up icon
-        link.click()
-        self.failUnless('&#xab;root&#xbb;' in browser.contents)
-        # click root link
-        tab_name = 'tab_edit'
-        test_condition = '&#xab;root&#xbb;'
-        self.click_tab_name(browser, base_url, test_condition, tab_name)
-        # delete content
-        self.do_delete_content(browser)
-        # logout
-        self.do_logout(browser)
+        h2 = sb.get_listing_h2()
+        self.failUnless('Test folder1' in h2)
+        sb.click_href_labeled('root')
+        h2 = sb.get_listing_h2()
+        self.failUnless(h2.startswith('Silva Root'))
+        status, url =sb.select_delete_content('test_folder1')
+        self.failUnless(sb.get_status_feedback().startswith('Deleted'))
+        status, url = sb.click_href_labeled('logout')
+        self.assertEquals(status, 401)
 
 def test_suite():
     suite = unittest.TestSuite()

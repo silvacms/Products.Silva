@@ -4,6 +4,8 @@ from SilvaTestCase import SilvaFunctionalTestCase
 
 class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
     """
+        test the service tab
+        install/uninstall silva products
     """
 
     def test_manager_services(self):
