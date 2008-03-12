@@ -10,7 +10,9 @@ class SilvaBrowser(object):
         self.browser = Browser()
     
     def click_button_labeled(self, value_name):
-        """click on a button with a specific label"""
+        """
+        click on a button or psuedo button (an href) with a specific label
+        """
         # for some reason the browser object does not expose
         # enough input and form info, however we can reach what
         # we want through the mech_... objects. Since they are not
@@ -51,7 +53,9 @@ class SilvaBrowser(object):
         return self.get_status_and_url()
 
     def get_listing_h2(self):
-        """return the content type and name of h2 in the listing table"""
+        """
+        return the content type and name of the <h2> in the listing table
+        """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         tables = doc.getElementsByTagName('table')
         for table in tables:
@@ -69,7 +73,9 @@ class SilvaBrowser(object):
                         return text
         
     def click_href_labeled(self, value_name):
-        """click on a link with a specific label""" 
+        """
+        click on a link with a specific label
+        """ 
         if 'logout' in value_name:
             # logout always results in a 401 error, login window. since
             # you can't access the popup, i accept that a logout is, an href 
@@ -85,12 +91,16 @@ class SilvaBrowser(object):
             return self.get_status_and_url()
 
     def click_tab_named(self, name):
-        """ click on a tab """
+        """
+        click on a tab with a specific label
+        """
         link = self.browser.getLink(name)
         link.click()
     
     def get_addables_list(self):
-        """return a list of addable meta_type"""
+        """
+        return a list of addable meta_types
+        """
         try:
             addables = self.browser.getControl(name='meta_type').options
             addables.remove('None')
@@ -100,7 +110,9 @@ class SilvaBrowser(object):
         return addables
 
     def get_addform_title(self):
-        """Return a normalized <h2> title for add forms"""
+        """
+        return a normalized <h2> title for add forms
+        """
         start = self.browser.contents.find('<h2>')
         if start == -1:
             return ''
@@ -108,7 +120,9 @@ class SilvaBrowser(object):
         return self.html2text(self.browser.contents[start:end+5])
 
     def get_alert_feedback(self):
-        """return the alert message in the page, or an empty string"""
+        """
+        return the alert message in the page, or an empty string
+        """
         div = '<div class="fixed-alert">'
         start = self.browser.contents.find(div)
         if start == -1:
@@ -118,7 +132,9 @@ class SilvaBrowser(object):
         return self.browser.contents[start:end].strip()
 
     def get_content_data(self):
-        """ return a list of dictionaries describing the content objects """
+        """
+        return a list of dictionaries describing the content objects
+        """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         result = []
         for form in doc.getElementsByTagName('form'):
@@ -159,20 +175,30 @@ class SilvaBrowser(object):
         return result
 
     def get_content_ids(self):
-        """Get a list of ids for objects in this container"""
+        """
+        get a list of ids for objects in current container
+        """
         return [o['id'] for o in self.get_content_data()]
 
     def get_href_named(self, value_name):
+        """
+        get an href with a specific label
+        """
         href = self.browser.getLink(value_name)
         return href
 
     def get_status_and_url(self):
+        """
+        return status and url of current page
+        """
         status = self.browser.headers.getheader('Status')
         status = int(status.split(' ')[0])
         return (status, self.browser.url)
 
     def get_status_feedback(self):
-        """return the status message in the page, or an empty string"""
+        """
+        return the status message in the page, or an empty string
+        """
         div = '<div class="fixed-feedback">'
         start = self.browser.contents.find(div)
         if start == -1:
@@ -182,6 +208,9 @@ class SilvaBrowser(object):
         return self.browser.contents[start:end].strip()
 
     def get_tabs_named(self, value_name):
+        """
+        get a tab with a specific label
+        """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         divs = doc.getElementsByTagName('div')
         for div in divs:
@@ -194,7 +223,9 @@ class SilvaBrowser(object):
                     return tab_name
 
     def get_middleground_buttons(self, value_name):
-        """ gets an href by value_name """
+        """
+        return a specific button from the middleground navigation
+        """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         divs = doc.getElementsByTagName('div')
         for div in divs:
@@ -207,15 +238,22 @@ class SilvaBrowser(object):
                     return tab_name
 
     def get_url(self):
+        """
+        get the current url
+        """
         return self.browser.url
 
     def get_root_url(self):
+        """
+        get the zmi root url
+        """
         return 'http://nohost/root'
 
     def go(self, url):
-        """same as browser.open, but handles http exceptions, and returns http 
-        status and url tuple"""
-
+        """
+        same as browser.open, but handles http exceptions, and returns http 
+        status and url tuple
+        """
         try:
             self.browser.open(str(url))
         except HTTPError, err:
@@ -227,8 +265,10 @@ class SilvaBrowser(object):
         return self.get_status_and_url()
 
     def html2text(self, htmlstring):
-        """return children of an html element, stripping out child elements, 
-           and normalizing text nodes """
+        """
+        return children of an html element, stripping out child elements, 
+        and normalizing text nodes
+        """
         # replace all text within <> with an empty string
         text = re.compile('<([^>]+)>').sub('', htmlstring)
         # replace multiple whitespace characters with a space
@@ -236,7 +276,9 @@ class SilvaBrowser(object):
         return text.strip()
 
     def login(self, username='manager', password='secret', url=None):
-        """login to the smi"""
+        """
+        login to the smi
+        """
         # it seems the Browser object gets confused if 401's are
         # raised. Because of this we always use a new Browser 
         # when logginf in
@@ -248,7 +290,9 @@ class SilvaBrowser(object):
         return self.go(url)
 
     def logout(self, url=None):
-        """logout of the zmi"""
+        """
+        logout of the zmi
+        """
         url = url or self.get_root_url()
         url = '%s/manage_zmi_logout' % url
         try:
@@ -257,10 +301,12 @@ class SilvaBrowser(object):
             return (err.code, None)
 
     def make_content(self, content_type, url=None, **fields):
-        """ makes content of a specific type as a specific user, 
-            with one or more fields filled in.
-            This method returns True if object is created, otherwise
-            it will always return False"""
+        """
+        makes content of a specific type as a specific user, 
+        with one or more fields filled in.
+        This method returns True if object is created, otherwise
+        it will always return False
+        """
         fields_needed = self.content_type_fields[content_type]
         # do some testing to determine if needed fields are supplied
         assert fields_needed != None, 'unknown content type'
@@ -289,6 +335,7 @@ class SilvaBrowser(object):
     }
 
     def make_default_content(self, content_type):
+        """ """
         field_names = self.content_type_fields[content_type]
         fields = {}
         for field_name in field_names:
@@ -297,23 +344,31 @@ class SilvaBrowser(object):
         return self.make_content(content_type, **fields)
         
     def open_file(self, filename):
-        """format the path to data/ for test files"""
+        """
+        format the path to data/ for test files
+        """
         name = os.path.dirname(__file__)
         return open(name + '/data/' + filename)
 
     def select_addable(self, meta_type):
-        """select a meta_type from the addables list """
+        """
+        select a meta_type from the addables list
+        """
         self.browser.getControl(name='meta_type').value = [meta_type]
 
     def select_all_content(self, data):
-        """toggle all content item checkboxes"""
+        """
+        toggle all content item checkboxes
+        """
         # Hack way to select all the checkboxes, since this is done
         # with js
         ids = [item['id'] for item in data]
         self.browser.getControl(name='ids:list').value = ids
         
     def select_content(self, content_id):
-        """toggle a content item checkbox"""
+        """
+        toggle a content item checkbox
+        """
         self.browser.getControl(name='ids:list').value = [content_id]
 
     def select_delete_content(self, content_id):
@@ -332,42 +387,69 @@ class SilvaBrowser(object):
 
     def set_field(self, **kwargs):
         """
-            fill (multiple) field_object controls where keyword
-            is a fieldname and value the value
-            for example, to fill the id and title field call
-            sb.set_field(id='test', title='A test object')
+        fill (multiple) field_object controls where keyword
+        is a fieldname and value the value
+        for example, to fill the id and title field call
+        sb.set_field(id='test', title='A test object')
         """
         for field_name, field_value in kwargs.items():
             self.fields[field_name](self, field_value)
 
     def set_id_field(self, id):
+        """
+        set the id field
+        """
         self.browser.getControl(name='field_object_id').value = id
 
     def set_title_field(self, title):
+        """
+        set the title field
+        """
         self.browser.getControl(name='field_object_title').value = title
         
     def set_policy_field(self, content_type='Silva Document'):
+        """
+        set the policy field
+        """
         self.browser.getControl(name='field_policy_name').value = [content_type]
 
     def set_image_field(self, image):
+        """
+        set the image upload field
+        """
         self.browser.getControl(name='field_file').add_file(
                                                    self.open_file(image),
                                                    'image/jpg', image)
     def set_file_field(self, file):
+        """
+        set the file upload field
+        """
         self.browser.getControl(name='field_file').add_file(
                                                    self.open_file(file),
                                                    'text/plain', file)
     
     def set_ghost_url_field(self, reference):
+        """
+        set the ghost url field
+        """
         self.browser.getControl(name='field_content_url').value = reference
 
     def set_url_field(self, link_url):
+        """
+        set the url field
+        """
         self.browser.getControl(name='field_url').value = link_url
 
     def set_link_type_field(self, link_type):
+        """
+        set the Silva Link absolute/relative radio button
+        """
         self.browser.getControl(name='field_link_type').value = [link_type]
 
     def set_depth_field(self, depth):
+        """
+        set the depth field
+        """
         self.browser.getControl(name='field_depth').value = '-1'
     
     # existing content type fields
