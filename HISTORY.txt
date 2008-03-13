@@ -210,6 +210,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - 185422: Javascript prompt to save changes in kupu when
+        leaving the editor wasn't working
+
       - silva_lookup_referer is stored in the session. If for some
         reason the session gets lost, that no longer results in an
         error.

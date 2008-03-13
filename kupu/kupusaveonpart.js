@@ -12,21 +12,22 @@
 
 function saveOnPart(event) {
     /* ask the user if (s)he wants to save the document before leaving */
-    if (kupu.content_changed && !confirm(
-            _('You have unsaved changes. Are you sure you want to ' +
-                'leave the editor?')
-            )) {
-        kupu.config.reload_src = 0;
-        if (event.stopPropagation) {
-            event.stopPropagation();
-        } else {
-            event.returnValue = false;
-        };
+  if (kupu.content_changed) {
+    if (confirm(_('You are leaving the editor.  Do you want to save your changes?\n\nClick OK to save your changes and leave the editor.'))) {
+      kupu.config.reload_src = 0;
+      kupu.saveDocument(false, true);
+    } else {
+      if (event.stopPropagation) {
+	event.stopPropagation();
+      } else {
+	event.returnValue = false;
+      };
 
-        if(event.preventDefault){
-            event.preventDefault();
-        }
-        //return false;
+      if(event.preventDefault){
+	event.preventDefault();
+      }
+      return false;
     };
-    return true;
+  }
+  return true;
 };
