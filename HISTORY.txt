@@ -133,6 +133,10 @@ Silva changes
 
     Bugs Fixed:
 
+      - 101780: worked around a ZCatalog bug which causes
+        containers to be unindexed twice when a parent 
+	container is removed.
+
       - 101464: can't place headings inside list items in kupu 
 
       - 101228: remove slide links from object lookup window, so that
