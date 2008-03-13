@@ -52,26 +52,6 @@ class SilvaBrowser(object):
         self.browser.getControl(name=button.name).click()
         return self.get_status_and_url()
 
-    def get_listing_h2(self):
-        """
-        return the content type and name of the <h2> in the listing table
-        """
-        doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
-        tables = doc.getElementsByTagName('table')
-        for table in tables:
-            if table.getAttribute('class') != 'listing':
-                continue
-            trs = doc.getElementsByTagName('tr')
-            for tr in trs:
-                tds = doc.getElementsByTagName('td')
-                for td in tds:
-                    if td.getAttribute('class') != 'top':
-                        continue
-                    h2s = doc.getElementsByTagName('h2')
-                    for h2 in h2s:
-                        text = self.html2text(h2.toxml())
-                        return text
-        
     def click_href_labeled(self, value_name):
         """
         click on a link with a specific label
@@ -176,17 +156,37 @@ class SilvaBrowser(object):
 
     def get_content_ids(self):
         """
-        get a list of ids for objects in current container
+        return a list of ids for objects in current container
         """
         return [o['id'] for o in self.get_content_data()]
 
     def get_href_named(self, value_name):
         """
-        get an href with a specific label
+        return an href with a specific label
         """
         href = self.browser.getLink(value_name)
         return href
-
+    
+    def get_listing_h2(self):
+        """
+        return the content type and name of the <h2> in the listing table
+        """
+        doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
+        tables = doc.getElementsByTagName('table')
+        for table in tables:
+            if table.getAttribute('class') != 'listing':
+                continue
+            trs = doc.getElementsByTagName('tr')
+            for tr in trs:
+                tds = doc.getElementsByTagName('td')
+                for td in tds:
+                    if td.getAttribute('class') != 'top':
+                        continue
+                    h2s = doc.getElementsByTagName('h2')
+                    for h2 in h2s:
+                        text = self.html2text(h2.toxml())
+                        return text
+                    
     def get_status_and_url(self):
         """
         return status and url of current page
@@ -239,13 +239,13 @@ class SilvaBrowser(object):
 
     def get_url(self):
         """
-        get the current url
+        return the current url
         """
         return self.browser.url
 
     def get_root_url(self):
         """
-        get the zmi root url
+        return the zmi root url
         """
         return 'http://nohost/root'
 
@@ -304,8 +304,6 @@ class SilvaBrowser(object):
         """
         makes content of a specific type as a specific user, 
         with one or more fields filled in.
-        This method returns True if object is created, otherwise
-        it will always return False
         """
         fields_needed = self.content_type_fields[content_type]
         # do some testing to determine if needed fields are supplied
@@ -372,6 +370,9 @@ class SilvaBrowser(object):
         self.browser.getControl(name='ids:list').value = [content_id]
 
     def select_delete_content(self, content_id):
+        """
+        select and then delete a content item
+        """
         self.select_content(content_id)
         self.click_button_labeled('delete')
         return self.get_status_and_url()
