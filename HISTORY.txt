@@ -7,6 +7,10 @@ Silva changes
 
     Features added:
 
+      - Use lxml instead of libxml2/libxslt for XSLT rendering. Note:
+        still improve error handling, documentation, check encoding of
+        output.
+
       - #200507: ZMI titles now appear for Silva objects.  The title
         is retrieved from the object's metadata.
 
