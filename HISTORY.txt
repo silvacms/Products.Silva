@@ -7,6 +7,8 @@ Silva changes
 
     Features added:
 
+      - Made 'keywords' metadata field an 'index field' by default
+
       - Use lxml instead of libxml2/libxslt for XSLT rendering. Note:
         still improve error handling, documentation, check encoding of
         output.
