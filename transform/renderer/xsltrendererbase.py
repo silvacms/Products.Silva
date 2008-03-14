@@ -1,8 +1,6 @@
 import os
-#import libxml2, libxslt
+import libxml2, libxslt
 import urllib
-from lxml import etree
-from StringIO import StringIO
 
 from zope.interface import implements
 
@@ -50,18 +48,21 @@ class XSLTRendererBase(Acquisition.Implicit):
         self._stylesheet_dir = path_context
         self._stylesheet = None
         self._error_handler = ErrorHandler()
+        #commenting this out since it's not working
         #libxml2.registerErrorHandler(self._error_handler.callback, None)
 
     def stylesheet(self):
         if self._stylesheet is None:
-            xslt_stylesheet = open(self._stylesheet_path).read()
-            base_xslt_path = os.path.dirname(os.path.abspath(__file__))
-            xslt_stylesheet = xslt_stylesheet % {
-                'url': self._generateXSLTPath(base_xslt_path),
-                'local_url': self._generateXSLTPath(self._stylesheet_dir)}
-            xslt_doc = etree.parse(StringIO(xslt_stylesheet))
-            self._stylesheet = etree.XSLT(xslt_doc)
-    
+            try:
+                styledoc = libxml2.parseFile(self._stylesheet_path)
+                self._stylesheet = libxslt.parseStylesheetDoc(styledoc)
+            except libxml2.parserError, err:
+                raise RenderError(
+                    self._error_handler.getErrorText() or str(err))
+
+        if self._stylesheet is None:
+            raise RenderError(self._error_handler.getErrorText())
+
         return self._stylesheet
 
     security.declareProtected("View", "render")
@@ -70,13 +71,26 @@ class XSLTRendererBase(Acquisition.Implicit):
         source_xml = source.getXML()
 
         style = self.stylesheet()
-        doc = etree.parse(StringIO(source_xml))
-        result_tree = style(doc)
-        result_string = str(result_tree) #.tostring(encoding='UTF-8')
-        doctypestring = '<!DOCTYPE'
-        if result_string.startswith(doctypestring):
-            result_string = result_string[result_string.find('>')+1:]
-            
+        try:
+            doc = libxml2.parseDoc(source_xml)
+            result = style.applyStylesheet(doc, {})
+        except libxml2.parserError, err:
+            raise RenderError(
+                self._error_handler.getErrorText() or str(err))
+
+        if not result:
+            raise RenderError(self._error_handler.getErrorText())
+        try:
+            doctypestring = '<!DOCTYPE'
+            result_string = style.saveResultToString(result)
+            if result_string.startswith(doctypestring):
+                result_string = result_string[result_string.find('>')+1:]
+        except libxml2.parserError:
+            raise RenderError(self._error_handler.getErrorText())
+
+        doc.freeDoc()
+        result.freeDoc()
+
         return result_string
 
     def _generateXSLTPath(self, path):
