@@ -66,7 +66,7 @@
  </metadata_element>
  <metadata_element id="keywords">
    <index_type>ZCTextIndex</index_type>
-   <index_p>0</index_p>
+   <index_p>1</index_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>1</acquire_p>
    <read_only_p>0</read_only_p>
