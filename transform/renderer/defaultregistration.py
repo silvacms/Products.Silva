@@ -1,9 +1,10 @@
 try:
-    import lxml
+    import libxslt
+    import libxml2
     NO_XSLT = False
 except ImportError:
     NO_XSLT = True
-
+ 
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
 def registerDefaultRenderers():
