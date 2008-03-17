@@ -20,7 +20,8 @@ Silva changes
         basic Silva functional tests.
 
       - Took out automatic install of SilvaFind when making a new
-        Silva root.  Added SilvaFind to SilvaTestCase.py
+        Silva root. Instead a new option is added in the SilvaRoot
+        addform to create a Search instance.
 
       - The css for form button controls has been refactored. There is
         now a standard class, 'button', which can be modified by

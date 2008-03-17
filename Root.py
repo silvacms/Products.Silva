@@ -300,13 +300,21 @@ class Root(Publication):
         zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'rb')
         importer.importFromZip(self, zipfile)
         zipfile.close()
+    def _installSilvaFindInstance(self):
+        """Install a SilvaFind instance in the siteroot"""
 
+        self.manage_addProduct['SilvaFind'
+                               ].manage_addSilvaFind('search',
+                                                     'Search this site')
+        self.search.sec_update_last_author_info()
+
+        
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
-def manage_addRoot(self, id, title, add_docs=0, REQUEST=None):
+def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
     # Zope id check is fine
@@ -324,6 +332,10 @@ def manage_addRoot(self, id, title, add_docs=0, REQUEST=None):
     install.installFromScratch(object)
     object.set_title(title)
 
+    if add_search:
+        # install a silva find instance
+        object._installSilvaFindInstance()
+        
     if add_docs:
         # install the user documentation .zexp
         object._installDocumentation()
