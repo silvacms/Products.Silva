@@ -21,7 +21,7 @@ Add a Silva Root.
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="id" size="40" />
+    <input type="text" name="id" size="40" style="margin-left:4px"/>
     </td>
   </tr>
 
@@ -32,7 +32,18 @@ Add a Silva Root.
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="title" size="40" />
+    <input type="text" name="title" size="40" style="margin-left:4px"/>
+    </td>
+  </tr>
+
+  <tr tal:condition="modules/Products/SilvaFind | nothing">
+    <td align="left" valign="top" class="form-text">
+    <div class="form-label">
+    Add Search object?
+    </div>
+    </td>
+    <td align="left" valign="top">
+    <input type="checkbox" name="add_search" />
     </td>
   </tr>
 

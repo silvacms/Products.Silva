@@ -5,6 +5,11 @@ Silva changes
 
   Silva 2.0.7 (unreleased)
 
+    Backported from trunk:
+
+      - Don't add add a silva find instance by default, instead
+        make it an option in the silvaroot addform
+
     Bugs fixed:
 
       - silva_lookup_referer is stored in the session. If for some
