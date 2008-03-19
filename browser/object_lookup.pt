@@ -85,6 +85,8 @@
                   publishables python: ret[1];
                   assets python: ret[2];
                   addable_types python: ret[3];
+		  show_containers python: ret[4];
+                  default_in_publishables python:default_document and default_document in publishables;
                 ">
                 <thead>
                   <tal:block replace="nothing">
@@ -205,15 +207,15 @@
                                 lookup:id id;
                                 lookup:title title;
                                 checked python:'/'.join(item.getPhysicalPath()) == selected_path;
-                              "/>
+			        style python:item in show_containers and 'visibility:hidden' or nothing"/>
                             <label
-                              tal:condition="is_default"
+                              tal:condition="default_in_publishables"
                               tal:content="repeat/item/index"
                               tal:attributes="for id">
                               # with default doc, starts at 0
                             </label>
                             <label
-                              tal:condition="not: is_default"
+                              tal:condition="not:default_in_publishables"
                               tal:content="repeat/item/number"
                               tal:attributes="for id">
                               # without default doc, starts at 1
@@ -445,6 +447,19 @@
                         'object'); return false;"
                         tal:condition="python: publishables or assets or default"
                         i18n:attributes="title;value"
+                      />
+		      <input class="button executor"
+                        type="button"
+                        name="place_container"
+                        value="place reference to container..."
+                        title="insert a reference to this container: alt-c"
+                        accesskey="c"
+                        onclick="window.reference.setReferenceFromElement(this); return false;"
+                        tal:condition="python: publishables or assets or default"
+                        i18n:attributes="title;value"
+			tal:attributes="lookup:path python:pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath,context.get_container()));
+			                lookup:id context/id;
+			                lookup:title context/get_title_editable;"
                       />
                     </td>
                   </tr>

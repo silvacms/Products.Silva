@@ -45,7 +45,7 @@ class ObjectLookup(BrowserView):
             show_add: whether or not to show the 'add' button (to add new 
                         objects)
 
-            returns a tuple with 4 values:
+            returns a tuple with 5 values:
 
               default - can be None or refers to the default object (index)
 
@@ -55,6 +55,9 @@ class ObjectLookup(BrowserView):
 
               addables - a list of meta_types that are allowed to be added 
                         to the page
+
+              show_containers - true if containers are in the list of publishables
+                                but shouldn't be selectable
         """
         model = self.context
 
@@ -62,6 +65,8 @@ class ObjectLookup(BrowserView):
         ordered_publishables = []
         assets = []
         all_addables = []
+
+        show_containers = []
 
         filter = filter or []
         
@@ -73,6 +78,10 @@ class ObjectLookup(BrowserView):
         
         if filter == ['Asset']:
             assets = model.get_assets()
+            ordered_publishables = [
+                o for o in model.get_ordered_publishables() 
+                if o.implements_container()]
+            show_containers = ordered_publishables
             if show_add:
                 addables = [a['name'] for a in all_addables if 
                                 IAsset.implementedBy(
@@ -84,8 +93,9 @@ class ObjectLookup(BrowserView):
                 ordered_publishables.append(default)
             ordered_publishables.extend(
                 [o for o in model.get_ordered_publishables() if 
-                    o.implements_content()]
+                    o.implements_content() or o.implements_container() ]
             )
+            show_containers = [ o for o in ordered_publishables if o.implements_container() ]
             if show_add:
                 addables = [a['name'] for a in all_addables if
                                 IContent.implementedBy(
@@ -119,6 +129,7 @@ class ObjectLookup(BrowserView):
                 if show_add:
                     addables = [a['name'] for a in all_addables]
             else:
+                #assume filter containers a list of meta types
                 objects = model.objectValues(filter)
                 defaultobj = model.get_default()
                 if defaultobj and defaultobj in objects:
@@ -126,6 +137,9 @@ class ObjectLookup(BrowserView):
                 for o in model.get_ordered_publishables():
                     if o in objects:
                         ordered_publishables.append(o)
+                    elif o.implements_container():
+                        ordered_publishables.append(o)
+                        show_containers.append(o)
                 for o in model.get_assets():
                     if o in objects:
                         assets.append(o)
@@ -137,7 +151,7 @@ class ObjectLookup(BrowserView):
         # sort the assets
         assets.sort(lambda a, b: cmp(a.id, b.id))
 
-        return (default, ordered_publishables, assets, addables)
+        return (default, ordered_publishables, assets, addables, show_containers)
 
 
 class SidebarView(BrowserView):
