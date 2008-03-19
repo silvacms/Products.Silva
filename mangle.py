@@ -93,6 +93,8 @@ class Id:
         'lookup',
         'memberform',
         'override.html',
+        'object_path',
+        'path',
         'placeholder',
         'preview_html',
         'promptWindow',
@@ -104,6 +106,7 @@ class Id:
         'standard_unauthorized_message',
         'submit',
         'up',
+        'version_status'
          )
 
     _reserved_ids_for_interface = {

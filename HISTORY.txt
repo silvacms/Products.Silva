@@ -140,6 +140,10 @@ Silva changes
 
     Bugs Fixed:
 
+      - 101376: adding content with the same name as catalog indexes
+        can cause problems and break the content.  The catalog index
+        ids are now reserved ids.
+
       - 101780: worked around a ZCatalog bug which causes
         containers to be unindexed twice when a parent 
 	container is removed.
