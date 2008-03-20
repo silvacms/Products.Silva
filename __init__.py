@@ -6,7 +6,7 @@ import zLOG
 # Silva
 import ContainerPolicy
 # registers fields
-from Products.Silva import emaillinesfield, lookupwindowfield, YUIFields
+from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
 
