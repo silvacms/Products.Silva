@@ -7,6 +7,17 @@ Silva changes
 
     Features added:
 
+      - 101827: A) lookup window will now list containers for any type
+        of lookup window.  You can click the container title to 
+        "drill down" into the container, rather than (or in addition to)
+        clicking the container's title in the sidebar.  In the cases
+        where previously containers weren't listed, the containers 
+        are now listed, but references cannot be placed to them.
+        B) a "place reference to this container..." button was added,
+        so you don't have to use the sidebar to navigate up one level
+        C) Immediately when the radio button is selected, the reference
+           is placed and the window is closed
+
       - Made 'keywords' metadata field an 'index field' by default
 
       - Use lxml instead of libxml2/libxslt for XSLT rendering. Note:

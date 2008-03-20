@@ -201,6 +201,7 @@
                           <td class="listing-left">
                             <input type="radio"
                               name="object"
+			      onclick="window.reference.setReference(this.form,'object');"
                               tal:attributes="
                                 value path;
                                 id id;
@@ -436,7 +437,7 @@
                         i18n:attributes="title;value"
                         onclick="window.close();return false;"
                       />
-                      <input class="button executor"
+                      <input class="button executor" style="visibility: hidden"
                         type="button"
                         name="place"
                         value="place reference..."
