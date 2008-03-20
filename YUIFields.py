@@ -2,8 +2,10 @@
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
-from Products.Formulator.Validator import StringValidator
-from Products.Formulator.Widget import render_element,TextWidget
+from Products.Formulator.Validator import ValidatorBase
+from Products.Formulator.Widget import (render_element,
+                                        TextWidget,
+                                        MultiCheckBoxWidget)
 from Products.Silva.adapters.path import getPathAdapter
 
 
@@ -15,15 +17,14 @@ class AutoCompleteWidget(TextWidget):
     """YUI Autocomplete Widget
     """
 
-    property_names = TextWidget.property_names +\
-                     ['type_ahead',
-                      'always_show_container',
-                      'max_results',
-                      'js_array',
-                      'source_uri',
-                      'query_param',
-                      'extra_params',
-                      'schema']
+    property_names = TextWidget.property_names + ['type_ahead',
+                                                  'always_show_container',
+                                                  'max_results',
+                                                  'js_array',
+                                                  'source_uri',
+                                                  'query_param',
+                                                  'extra_params',
+                                                  'schema']
 
     type_ahead = fields.CheckBoxField('type_ahead',
                                       title="Type ahead",
@@ -90,75 +91,223 @@ class AutoCompleteWidget(TextWidget):
                                 width=20)
                                 
 
-    def render(self, field, key, value, REQUEST):
+    def render(self, field, key, value, REQUEST,
+               autocomplete_id=None,
+               initial_load=True):
         """ Render AutoComplete input field.
         """
+
+        if autocomplete_id is None:
+            autocomplete_id = key
+
+        input_tag = TextWidget.render(self,
+                                      field,
+                                      key,
+                                      value,                                  
+                                      REQUEST)
+
+        loader = ''
+        if initial_load:
+            # add the yui javascript and autocomplete functions
+            loader = self.render_yui_loader(field, autocomplete_id, value, REQUEST)
+        
+        
+
+        html = render_element("div",
+                              id = key,
+                              extra='class="yui-skin-sam"',
+                              style="width:%sem;" % field.get_value('display_width'),
+                              contents='')
+        
+        script =  self.render_autocompleter(field,
+                                            autocomplete_id,
+                                            value,
+                                            REQUEST)
+        
+        return '%s\n%s\n%s' % (loader, html, script)
+        
+
+    def is_multi_widget(self):
+        return False
+    
+    def render_autocompleter(self, field, key, value, REQUEST):
+        result = []
+        
+        if type(value) == list:
+            values = value
+        elif not value:
+            values = ['']
+        else:
+            values = [value]
+        
+        JS ="""
+new YAHOO.util.YUILoader({
+require: ['autocomplete', 'connection', 'json', 'element'],
+base: '%s',
+onSuccess: function(){formulator_autocomplete('%s', %s, %s, %s)}
+}).insert()
+""" % (YUI_BUILD_URL,
+       key,
+       values,
+       str(self.is_multi_widget()).lower(),
+       field.get_value('display_width'))
+
+        result.append(render_element("script",
+                                     type="text/javascript",
+                                     contents=JS))
+        return '\n'.join(result)
+    
+    def render_yui_loader(self, field, key, value, REQUEST):
         
         if field.get_value('source_uri'):
             uri = field.get_value('source_uri')
             ds = 'DS_XHR("%s", %s);' % (uri, field.get_value('schema'))
-            ds += '\nds.connMgr = YAHOO.util.Connect;'
-            ds += '\nds.responseType = YAHOO.widget.DS_XHR.TYPE_JSON;'
-            ds += '\nds.scriptQueryParam = "%s";' % field.get_value(
+            ds += '\n  ds.connMgr = YAHOO.util.Connect;'
+            ds += '\n  ds.responseType = YAHOO.widget.DS_XHR.TYPE_JSON;'
+            ds += '\n  ds.scriptQueryParam = "%s";' % field.get_value(
                 'query_param')
             if field.get_value('extra_params'):
-                ds += '\nds.scriptQueryAppend="%s";' % field.get_value(
+                ds += '\n  ds.scriptQueryAppend="%s";' % field.get_value(
                     'extra_params')
             
         else:
             ds = 'DS_JSArray(%s);' % field.get_value('js_array')
-        input_tag = TextWidget.render(self,
-                                      field,
-                                      key,
-                                      value,
-                                      REQUEST)
-
+        
         result = [render_element('script',
                                  type='text/javascript',
                                  src=YUI_BUILD_URL + 'yuiloader/yuiloader-beta.js',
                                  contents='')]
-        result.append(input_tag.replace('name=', 'id="%s_input" name=' % key))
-        result.append(render_element("div",
-                                     id="%s_container" % key, contents=''))
         result.append("""
 <script type="text/javascript">
-new YAHOO.util.YUILoader({
-require: ['autocomplete', 'connection', 'json'],
-base: '%(url)s',
-onSuccess: function(){
-var ds = new YAHOO.widget.%(ds)s
-var ac = new YAHOO.widget.AutoComplete("%(id)s_input","%(id)s_container", ds);
-ac.typeAhead = %(type_ahead)s;
-ac.alwaysShowContainer = %(always_show)s;
-ac.maxResultsDisplayed = %(max_results)s;
-ac.useShadow = true;
-}}).insert()
+function formulator_remove_autocomplete(event){
+  var div  = event.target.parentNode;
+  var pdiv =  event.target.parentNode.parentNode;
+  if (div.nextSibling && div.nextSibling.tagName == 'BR'){
+    pdiv.removeChild(div.nextSibling);
+  }
+  pdiv.removeChild(div);
+
+}
+
+function formulator_autocomplete(id, values, multi, size){
+
+  if (values == undefined) values = [''];
+  if (size == undefined) size = 20;
+
+  for (i=0;i<values.length;i++){
+    var value = values[i];
+    var pdiv = document.getElementById(id);
+    var div = document.createElement('div');
+    div.className = 'yui-skin-sam';
+    var indiv = document.createElement('div');
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.name = id;
+    input.value = value;
+    container = document.createElement('div');
+
+    pdiv.appendChild(div);
+    div.appendChild(indiv);
+    indiv.appendChild(input);
+    indiv.appendChild(container);
+
+    ds = new YAHOO.widget.%(ds)s
+    var ac = new YAHOO.widget.AutoComplete(input, container, ds);
+    ac.typeAhead = %(type_ahead)s;
+    ac.alwaysShowContainer = %(always_show)s;
+    ac.maxResultsDisplayed = %(max_results)s;
+    ac.animVert = false;
+    ac.animHoriz = false;
+    ac.animSpeed = 2;
+    ac.useShadow = true;
+
+    if (multi){
+       var minbut = document.createElement('input')
+       minbut.type = 'button';
+       minbut.value = '-';
+       minbut.className = 'autocomplete-remove';
+       var elbut = new YAHOO.util.Element(minbut)
+       elbut.on('click', formulator_remove_autocomplete);
+       elbut.setStyle('float', 'right');
+       new YAHOO.util.Element(indiv).setStyle('width', (size-2)+'em');
+       div.appendChild(minbut);
+    }
+    
+    if ( i < (values.length-1)){
+       var br = document.createElement('br');
+       new YAHOO.util.Element(br).setStyle('clear', 'both');
+       pdiv.appendChild(br);
+    }
+
+  }
+  if (multi){
+    var br = document.createElement('br');
+    new YAHOO.util.Element(br).setStyle('clear', 'both');
+    pdiv.appendChild(br);
+    var addbut = document.createElement('input')
+    addbut.type = 'button';
+    addbut.value = 'Add';
+    new YAHOO.util.Element(addbut).on('click', formulator_add_autocomplete, size);
+    pdiv.appendChild(addbut);
+  }
+ 
+}
+
+
+function formulator_add_autocomplete(event, size){
+  var but = event.target;
+  var pdiv = but.parentNode;
+  var id = pdiv.id;
+  pdiv.removeChild(but);
+  formulator_autocomplete(id, [''], true, size);
+
+}
+
 </script>""" % {'url': YUI_BUILD_URL,
-                'id': key,
                 'type_ahead': str(field.get_value('type_ahead')).lower(),
                 'always_show': str(field.get_value('always_show_container')
                                    ).lower(),
                 'max_results': field.get_value('max_results'),
                 'ds':ds
                 })
-                          
-        return render_element("div",
-                              extra='class="yui-skin-sam"',
-                              style="width:%sem;" % field.get_value('display_width'),
-                              contents = '<div>%s</div>' % '\n'.join(result))
+        return '\n'.join(result)
+    
+class MutltiAutoCompleteWidget(AutoCompleteWidget):
+    
+    property_names = AutoCompleteWidget.property_names
+    
+    default = fields.LinesField('default',
+                                title='Default',
+                                description=(
+        "The initial selections of the widget. This is a list of "
+        "zero or more values. If you override this property from Python "
+        "your code should return a Python list."),
+                                width=20, height=3,
+                                default=[],
+                                required=0)
 
-
-class AutoCompleteValidator(StringValidator):
+    def is_multi_widget(self):
+        return True
+    
+class AutoCompleteValidator(ValidatorBase):
     
     def validate(self, field, key, REQUEST):
         # XXX no real validation at the moment
-        return StringValidator.validate(self, field, key, REQUEST)
+        return ValidatorBase.validate(self, field, key, REQUEST)
+
         
 class AutoCompleteField(StringField):
 
-    meta_type = 'AutoCompleteField'
+    meta_type = 'AutocompleteField'
     widget = AutoCompleteWidget()
     validator = AutoCompleteValidator()
 
+class MutltiAutoCompleteField(AutoCompleteField):
+    
+    meta_type = 'MutltiAutoCompleteField'
+    widget =MutltiAutoCompleteWidget()
+    validator = AutoCompleteValidator()
 
 FieldRegistry.registerField(AutoCompleteField, '../Silva/www/YUIField.gif')
+FieldRegistry.registerField(MutltiAutoCompleteField,
+                            '../Silva/www/YUIField.gif')
