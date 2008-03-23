@@ -448,7 +448,6 @@ table.listing tr.odd td {
   background: &dtml-listingOddBackground;;
 }
 table.listing tr.even td {
-  color: #333;
   background: &dtml-listingEvenBackground;;
 }
 
@@ -1052,7 +1051,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
 
 div.info {
   margin: 0;
-  padding: 0em 0.4em 0.4em;
+  padding: 0.2em 0.4em 0.4em;
   border: &dtml-listingBorder;;
   color: &dtml-inputFontColor;;
   background: &dtml-evenRowBackground;;
