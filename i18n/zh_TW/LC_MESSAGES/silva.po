@@ -7,27 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Fri Feb  8 16:17:35 2008\n"
-"PO-Revision-Date: 2007-04-01 03:52+0000\n"
+"POT-Creation-Date: Thu Apr  3 17:17:23 2008\n"
+"PO-Revision-Date: 2008-02-08 16:13+0000\n"
 "Last-Translator: Formichelle <for1018@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-02-05 16:20+0000\n"
+"X-Launchpad-Export-Date: 2008-04-02 06:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
 msgid ""
-"This is a special document that automagically displays a\n"
+"This is a special document that automatically displays a\n"
 "       table of contents. Usually it&#8217;s used as an &#8216;index&#8217;\n"
 "       document. In that case the parent folder shows a table of contents\n"
-"       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+"       when accessed (e.g. http://www.x.yz/silva/myFolder/). This can\n"
+"       display any set of Silva Content Types (including assets)."
 msgstr ""
-"這是一份特殊的文件，將會自動顥示目次。\n"
-"        通常這個 ’ 會被當做 ‘index’ 文件。\n"
-"        在這種情形之下，當存取資料時，上一層的目錄會顯示目次內容 （例如："
-"http://www.x.yz/silva/myFolder/ ）"
 
 #: /DocmaService.py:116
 msgid "Not connected"
@@ -63,11 +60,11 @@ msgstr ""
 "(sorry) -->\n"
 "    "
 
-#: /Folder.py:306 /Folder.py:368
+#: /Folder.py:323 /Folder.py:385
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr "這個型態的 container (容納器) 不允許貼入 #xab;${id}»"
 
-#: /Folder.py:327 /Folder.py:365
+#: /Folder.py:344 /Folder.py:382
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr "已貼入  &#xab;${id}&#xbb;"
 
@@ -218,7 +215,7 @@ msgstr ""
 "站台而言，次出版品也可以是巢狀結構。\n"
 "    "
 
-#: /SilvaObject.py:355
+#: /SilvaObject.py:358
 msgid "Sorry, this ${meta_type} is not viewable."
 msgstr "抱歉，這個 ${meta_type} 是無法預覽的。"
 
@@ -348,33 +345,99 @@ msgstr "沒有這個版本 ${version}"
 msgid "No unapproved version available"
 msgstr "沒有未證實版本可用。"
 
-#: /browser/object_lookup.pt:153
+#: /browser/object_lookup.pt:113 /views/edit/lookup_ui.pt:110
+#: /views/edit/tab_subscriptions.pt:111 /views/edit/lookup_ui_direct.pt:110
+#: /views/edit/macro_edit_metadata.pt:176
+#: /views/edit/Container/tab_access_groups.pt:136
+#: /views/edit/Container/tab_edit.pt:74
+#: /views/edit/Container/GhostFolder/tab_edit.pt:129
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:115
+#: /views/edit/Asset/macro_asset_edit.pt:65 /views/public/subscriptor.pt:46
+#: /views/add/add_form.pt:143 /views/add/GhostFolder/add_form.pt:125
+#: /views/add/Ghost/add_form.pt:117
+msgid "access key: alt-s"
+msgstr "存取鍵：alt-s"
+
+#: /browser/object_lookup.pt:119 /views/edit/Container/tab_edit.pt:59
+msgid "select a new item: alt-s"
+msgstr "選擇新項目: alt-s"
+
+#: /browser/object_lookup.pt:126 /views/edit/Container/tab_edit.pt:65
+msgid "select:"
+msgstr "選擇："
+
+#: /browser/object_lookup.pt:158
 msgid "select"
 msgstr "選擇"
 
-#: /browser/object_lookup.pt:156
+#: /browser/object_lookup.pt:161
 msgid "view"
 msgstr "預覽"
 
-#: /browser/object_lookup.pt:242
+#: /browser/object_lookup.pt:164
+#: /views/edit/Container/tab_access_groups.pt:177
+#: /views/edit/Container/tab_access_groups.pt:285
+#: /views/edit/Container/tab_edit.pt:136
+#: /views/edit/Container/GhostFolder/tab_edit.pt:209
+msgid "modified"
+msgstr "修改"
+
+#: /browser/object_lookup.pt:167 /views/edit/Container/tab_edit.pt:139
+#: /views/edit/Container/GhostFolder/tab_edit.pt:212
+msgid "author"
+msgstr "作者"
+
+#: /browser/object_lookup.pt:177 /views/edit/Container/tab_edit.pt:153
+#: /views/edit/Container/GhostFolder/tab_edit.pt:222
+msgid "There is no content here."
+msgstr "無內容。"
+
+#: /browser/object_lookup.pt:248
 msgid "enter"
 msgstr ""
 
-#: /browser/object_lookup.pt:289
+#: /browser/object_lookup.pt:288 /browser/object_lookup.pt:318
+#: /views/edit/Container/tab_status.pt:211
+#: /views/edit/Container/tab_edit.pt:236
+#: /views/edit/Container/GhostFolder/tab_edit.pt:309
+#: /views/edit/Container/GhostFolder/tab_edit.pt:345
+msgid "n/a"
+msgstr "無"
+
+#: /browser/object_lookup.pt:295
 msgid "content is published"
 msgstr ""
 
-#: /browser/object_lookup.pt:424
+#: /browser/object_lookup.pt:403 /views/edit/Container/tab_edit.pt:397
+#: /views/edit/Container/GhostFolder/tab_edit.pt:441
+msgid "unknown"
+msgstr "無法確認"
+
+#: /browser/object_lookup.pt:430
 msgid "cancel operation: alt-c"
 msgstr "取消操作：alt-c"
 
-#: /browser/object_lookup.pt:434
+#: /browser/object_lookup.pt:430 /views/edit/promptWindow.pt:35
+#: /views/edit/Container/tab_edit_rename.pt:128 /views/add/add_form.pt:152
+#: /views/add/GhostFolder/add_form.pt:134 /views/add/Ghost/add_form.pt:126
+msgid "cancel"
+msgstr "取消"
+
+#: /browser/object_lookup.pt:440
 msgid "insert a reference to this asset: alt-p"
 msgstr "在此頁插入參考資源：alt-p"
 
-#: /browser/object_lookup.pt:434
+#: /browser/object_lookup.pt:440
 msgid "place reference..."
 msgstr "插置參考資源..."
+
+#: /browser/object_lookup.pt:452
+msgid "place reference to container..."
+msgstr ""
+
+#: /browser/object_lookup.pt:452
+msgid "insert a reference to this container: alt-c"
+msgstr ""
 
 #: /browser/viewerrole.py:44
 msgid "Minimum role to access has not changed"
@@ -411,6 +474,10 @@ msgstr ""
 #: /doc/silva-extra.xml:262
 msgid "Language of content in this area."
 msgstr ""
+
+#: /doc/silva-extra.xml:323
+msgid "comment"
+msgstr "註解"
 
 #: /doc/silva-extra.xml:324
 msgid "Internal comments."
@@ -593,13 +660,6 @@ msgstr "其他畫面"
 msgid "return"
 msgstr "返回"
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
-#: /views/edit/VersionedContent/tab_status_macros.pt:146
-#: /views/edit/VersionedContent/tab_status_macros.pt:367
-#: /views/edit/Container/tab_edit_rename.pt:120
-msgid "access key: alt-r"
-msgstr "存取鍵：alt-r"
-
 #: /globals/accesskeys.pt:191
 msgid ""
 "The Properties, Access, and Publish screens as well as their subscreens "
@@ -718,10 +778,6 @@ msgstr ""
 "${tip_for_mozilla_users}<br /> 使用 &#8220;Find As You Type&#8221; 的功能會讓"
 "鍵盤直接跳至項目名稱為 &#8211; 的超連結，非常容易使用。請參照：<br /> "
 "${typeaheadfind_link}"
-
-#: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:81
-msgid "Silva documentation"
-msgstr "Silva 文件"
 
 #: /globals/accesskeys.pt:251
 msgid ""
@@ -894,11 +950,6 @@ msgstr "列出表頭"
 msgid "access key: alt-b"
 msgstr "存取鍵：alt-b"
 
-#: /globals/copyright.pt:17 /globals/reference.pt:22
-#: /views/edit/VersionedContent/tab_status_view_version.pt:53
-msgid "back"
-msgstr "返回"
-
 #: /globals/copyright.pt:28 /globals/reference.pt:33
 msgid "Silva info: alt-s"
 msgstr "Silva 資訊：alt-s"
@@ -961,193 +1012,6 @@ msgstr ""
 #: /globals/reference.pt:91
 msgid "External developers"
 msgstr "外部的開發者"
-
-#: /kupu/kupumacros.html:210
-msgid "Kupu 1.4b1"
-msgstr ""
-
-#: /kupu/kupumacros.html:231
-msgid "save: alt-s"
-msgstr ""
-
-#: /kupu/kupumacros.html:235
-msgid "Bold: Access key (Alt or Ctrl) + B"
-msgstr ""
-
-#: /kupu/kupumacros.html:236
-msgid "Italic: Access key (Alt or Ctrl) + I"
-msgstr ""
-
-#: /kupu/kupumacros.html:237
-msgid "Underline: Access key (Alt or Ctrl) + U"
-msgstr ""
-
-#: /kupu/kupumacros.html:241
-msgid "Subscript: Access key (Alt or Ctrl) + -"
-msgstr ""
-
-#: /kupu/kupumacros.html:242
-msgid "Superscript: Access key (Alt or Ctrl) + +"
-msgstr ""
-
-#: /kupu/kupumacros.html:247
-msgid "Numbered list: Access key (Alt or Ctrl) + #"
-msgstr ""
-
-#: /kupu/kupumacros.html:248
-msgid "Unordered list: Access key (Alt or Ctrl) + *"
-msgstr ""
-
-#: /kupu/kupumacros.html:253
-msgid "Definition list: Access key (Alt or Ctrl) + ="
-msgstr ""
-
-#: /kupu/kupumacros.html:257
-msgid "Undo: Access key (Alt or Ctrl) + Z"
-msgstr ""
-
-#: /kupu/kupumacros.html:258
-msgid "Redo: Access key (Alt or Ctrl) + Y"
-msgstr ""
-
-#: /kupu/kupumacros.html:262
-msgid "toggle_source_view"
-msgstr ""
-
-#: /kupu/kupumacros.html:268
-msgid "list-disc"
-msgstr ""
-
-#: /kupu/kupumacros.html:269
-msgid "list-square"
-msgstr ""
-
-#: /kupu/kupumacros.html:270
-msgid "list-circle"
-msgstr ""
-
-#: /kupu/kupumacros.html:271
-msgid "list-nobullet"
-msgstr ""
-
-#: /kupu/kupumacros.html:274
-msgid "list-decimal"
-msgstr ""
-
-#: /kupu/kupumacros.html:275
-msgid "list-upperroman"
-msgstr ""
-
-#: /kupu/kupumacros.html:276
-msgid "list-lowerroman"
-msgstr ""
-
-#: /kupu/kupumacros.html:277
-msgid "list-upperalpha"
-msgstr ""
-
-#: /kupu/kupumacros.html:278
-msgid "list-loweralpha"
-msgstr ""
-
-#: /kupu/kupumacros.html:303 /doc/silva-extra.xml:323
-msgid "comment"
-msgstr "註解"
-
-#: /kupu/kupumacros.html:341
-msgid "get link reference..."
-msgstr ""
-
-#: /kupu/kupumacros.html:343
-msgid "link target"
-msgstr ""
-
-#: /kupu/kupumacros.html:345
-msgid "same window"
-msgstr ""
-
-#: /kupu/kupumacros.html:346
-msgid "new window"
-msgstr ""
-
-#: /kupu/kupumacros.html:347
-msgid "custom target"
-msgstr ""
-
-#: /kupu/kupumacros.html:350
-msgid "add link"
-msgstr ""
-
-#: /kupu/kupumacros.html:351 /kupu/kupumacros.html:382
-#: /kupu/kupumacros.html:468 /kupu/kupumacros.html:550
-#: /kupu/kupumacros.html:641
-msgid "update"
-msgstr ""
-
-#: /kupu/kupumacros.html:359
-msgid "anchor/index item"
-msgstr ""
-
-#: /kupu/kupumacros.html:369
-msgid "anchor name"
-msgstr ""
-
-#: /kupu/kupumacros.html:373
-msgid "index title"
-msgstr ""
-
-#: /kupu/kupumacros.html:381 /kupu/kupumacros.html:467
-#: /kupu/kupumacros.html:549 /kupu/kupumacros.html:674
-msgid "add element"
-msgstr ""
-
-#: /kupu/kupumacros.html:442
-msgid "abbreviations and acronyms"
-msgstr ""
-
-#: /kupu/kupumacros.html:456
-msgid "Choose the kind of html tag (abbr or acronym)."
-msgstr ""
-
-#: /kupu/kupumacros.html:483 /kupu/kupumacros.html:635
-msgid "cleanup"
-msgstr ""
-
-#: /kupu/kupumacros.html:494
-msgid "external source"
-msgstr ""
-
-#: /kupu/kupumacros.html:510
-msgid "the external sources product is not installed. this tool is disabled."
-msgstr ""
-
-#: /kupu/kupumacros.html:515
-msgid "No external sources found."
-msgstr ""
-
-#: /kupu/kupumacros.html:527
-msgid "citation"
-msgstr ""
-
-#: /kupu/kupumacros.html:567
-msgid "table"
-msgstr ""
-
-#: /kupu/kupumacros.html:622
-msgid "add column"
-msgstr ""
-
-#: /kupu/kupumacros.html:629
-msgid "add row"
-msgstr ""
-
-#: /kupu/kupumacros.html:658
-msgid "table of contents"
-msgstr ""
-
-#: /kupu/kupumacros.html:684
-msgid "typographical characters"
-msgstr ""
 
 #: /layout/layout_macro.html:93
 msgid "Silva info on the Infrae site: alt-i"
@@ -1237,10 +1101,6 @@ msgstr ""
 msgid "meta_type"
 msgstr ""
 
-#: /views/add/File/form.form:24 /views/edit/Asset/upload_form.form:25
-msgid "file"
-msgstr "檔案"
-
 #: /views/add/File/form.form:68
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
 msgstr "<b>要訣:</b> 不用填寫 id 及 title"
@@ -1275,23 +1135,14 @@ msgstr ""
 msgid "create ${meta_type}"
 msgstr "建立 ${meta_type}"
 
-#: /views/add/GhostFolder/add_form.pt:50 /views/add/Ghost/add_form.pt:50
-#: /views/edit/VersionedContent/Link/tab_edit.pt:27
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:33
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
-#: /views/edit/Container/GhostFolder/tab_edit.pt:49
-msgid "attributes"
-msgstr "屬性"
-
 #: /views/add/GhostFolder/add_form.pt:72
 msgid "find the folder this ghost should refer to: alt-r"
 msgstr "找出此 ghost 所參照的目錄所在：alt-r"
 
-#: /views/add/GhostFolder/add_form.pt:72 /views/add/Ghost/add_form.pt:70
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:48
-#: /views/edit/Container/GhostFolder/tab_edit.pt:63
-msgid "reference..."
-msgstr "參見 ..."
+#: /views/add/GhostFolder/form.form:48 /views/add/Ghost/form.form:48
+#: /views/add/Link/form.form:69 /doc/silva-extra.xml:734
+msgid "url"
+msgstr "url"
 
 #: /views/add/GhostFolder/form.form:50
 msgid "Location of originating folder."
@@ -1319,11 +1170,6 @@ msgid ""
 "\">ALT</abbr> text of the image."
 msgstr ""
 
-#: /views/add/Link/form.form:69 /views/add/GhostFolder/form.form:48
-#: /views/add/Ghost/form.form:48 /doc/silva-extra.xml:734
-msgid "url"
-msgstr "url"
-
 #: /views/add/Link/form.form:71
 msgid "Link url."
 msgstr "連結 url。"
@@ -1346,49 +1192,6 @@ msgstr "在建立目錄夾之後，何種型態的物件應該被加入。"
 msgid "First item"
 msgstr "第一個項目"
 
-#: /views/add/add_form.pt:132 /views/add/GhostFolder/add_form.pt:114
-#: /views/add/Ghost/add_form.pt:106
-#: /views/edit/VersionedContent/tab_status.pt:60
-#: /views/edit/Container/tab_status_export.pt:273
-#: /views/edit/Container/tab_access_groups.pt:127
-msgid "access key: alt-e"
-msgstr "存取鍵：alt-e"
-
-#: /views/add/add_form.pt:143 /views/add/GhostFolder/add_form.pt:125
-#: /views/add/Ghost/add_form.pt:117 /views/edit/macro_edit_metadata.pt:176
-#: /views/edit/Asset/macro_asset_edit.pt:65
-#: /views/edit/Container/tab_access_groups.pt:136
-#: /views/edit/Member/SimpleMember/tab_edit.pt:142 /kupu/kupumacros.html:696
-msgid "save"
-msgstr "儲存"
-
-#: /views/add/add_form.pt:143 /views/add/GhostFolder/add_form.pt:125
-#: /views/add/Ghost/add_form.pt:117 /views/public/subscriptor.pt:46
-#: /views/edit/lookup_ui_direct.pt:110 /views/edit/macro_edit_metadata.pt:176
-#: /views/edit/tab_subscriptions.pt:111 /views/edit/lookup_ui.pt:110
-#: /views/edit/Asset/macro_asset_edit.pt:65
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:115
-#: /views/edit/Container/tab_edit.pt:74
-#: /views/edit/Container/tab_access_groups.pt:136
-#: /views/edit/Container/GhostFolder/tab_edit.pt:129
-#: /browser/object_lookup.pt:108
-msgid "access key: alt-s"
-msgstr "存取鍵：alt-s"
-
-#: /views/add/add_form.pt:152 /views/add/GhostFolder/add_form.pt:134
-#: /views/add/Ghost/add_form.pt:126 /views/edit/Asset/Image/tab_edit.pt:185
-#: /views/edit/VersionedContent/tab_status_macros.pt:449
-#: /views/edit/VersionedContent/Link/tab_edit.pt:55
-#: /views/edit/Container/tab_edit_rename.pt:128
-msgid "access key: alt-c"
-msgstr "存取鍵：alt-c"
-
-#: /views/add/add_form.pt:152 /views/add/GhostFolder/add_form.pt:134
-#: /views/add/Ghost/add_form.pt:126 /views/edit/promptWindow.pt:35
-#: /views/edit/Container/tab_edit_rename.pt:128 /browser/object_lookup.pt:424
-msgid "cancel"
-msgstr "取消"
-
 #: /views/add/add_form.pt:50
 msgid "upload ${meta_type}"
 msgstr ""
@@ -1401,41 +1204,9 @@ msgstr "建立 ${TOC_or_meta_type}"
 msgid "aspect"
 msgstr "各別"
 
-#: /views/add/add_form.pt:69 /views/add/add_form.pt:115
-#: /views/add/GhostFolder/add_form.pt:55 /views/add/Ghost/add_form.pt:53
-#: /views/edit/macro_view_metadata.pt:66 /views/edit/tab_settings.pt:130
-#: /views/edit/tab_settings.pt:199 /views/edit/macro_edit_metadata.pt:81
-#: /views/edit/tab_subscriptions.pt:79
-#: /views/edit/Asset/macro_asset_edit.pt:37
-#: /views/edit/Asset/macro_asset_edit.pt:118
-#: /views/edit/Asset/File/tab_edit.pt:75
-#: /views/edit/Asset/Image/tab_edit.pt:142
-#: /views/edit/VersionedContent/Link/tab_edit.pt:32
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:38
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
-#: /views/edit/Container/tab_edit_import.pt:91
-#: /views/edit/Container/tab_edit_import.pt:160
-#: /views/edit/Container/tab_edit_import.pt:317
-#: /views/edit/Container/tab_status_export.pt:342
-#: /views/edit/Container/GhostFolder/tab_edit.pt:53
-#: /views/edit/Container/Publication/tab_addables.pt:79
-#: /views/edit/Member/SimpleMember/tab_edit.pt:68
-msgid "content"
-msgstr "內容"
-
-#: /views/add/add_form.pt:73 /views/add/add_form.pt:119
-#: /views/add/GhostFolder/add_form.pt:58 /views/add/Ghost/add_form.pt:56
-#: /views/edit/Content/Indexer/tab_edit.pt:19
-#: /views/edit/VersionedContent/tab_status_macros.pt:124
-#: /views/edit/VersionedContent/tab_status_macros.pt:177
-#: /views/edit/VersionedContent/tab_status_macros.pt:230
-#: /views/edit/VersionedContent/tab_status_macros.pt:334
-msgid "notes"
-msgstr "注意"
-
-#: /views/add/form.form:47 /views/add/Link/form.form:50
-#: /views/add/Folder/form.form:49 /views/add/Publication/form.form:49
-#: /views/add/SimpleContent/form.form:49 /views/add/AutoTOC/form.form:50
+#: /views/add/form.form:47 /views/add/Folder/form.form:49
+#: /views/add/AutoTOC/form.form:50 /views/add/Publication/form.form:49
+#: /views/add/Link/form.form:50 /views/add/SimpleContent/form.form:49
 msgid ""
 "The title will be publicly visible, and is used for the link in indexes."
 msgstr "標題將會可視的，而且會在索引中被當做連結使用。"
@@ -1816,11 +1587,11 @@ msgid "predefined sizes"
 msgstr "預定尺寸"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:129
-msgid "50x50 pixel"
+msgid "50x50 pixels"
 msgstr "50X50 像素"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:129
-msgid "50x50 pixels"
+msgid "50x50 pixel"
 msgstr "50X50 像素"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:139
@@ -1936,8 +1707,7 @@ msgid "format"
 msgstr "格式"
 
 #: /views/edit/Asset/Image/tab_edit.pt:25
-#: /views/edit/Asset/Image/tab_edit.pt:40 /kupu/kupumacros.html:398
-#: /views/add/Image/form.form:24
+#: /views/edit/Asset/Image/tab_edit.pt:40 /views/add/Image/form.form:24
 msgid "image"
 msgstr "圖片"
 
@@ -1991,12 +1761,11 @@ msgstr "圖片更新。"
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:18
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
 #: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
-#: /views/edit/Container/tab_edit.pt:132 /views/edit/Container/tab_edit.pt:209
-#: /views/edit/Container/tab_edit.pt:370
+#: /browser/object_lookup.pt:384 /views/edit/Container/tab_edit.pt:133
+#: /views/edit/Container/tab_edit.pt:210 /views/edit/Container/tab_edit.pt:371
 #: /views/edit/Container/GhostFolder/tab_edit.pt:206
 #: /views/edit/Container/GhostFolder/tab_edit.pt:282
 #: /views/edit/Container/GhostFolder/tab_edit.pt:417
-#: /browser/object_lookup.pt:378
 msgid "preview"
 msgstr "預覽"
 
@@ -2009,10 +1778,9 @@ msgstr "預覽"
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
 #: /views/edit/tab_metadata.pt:61 /views/edit/tab_metadata.pt:80
 #: /views/edit/tab_metadata.pt:98 /views/edit/macro_edit_metadata.pt:39
+#: /views/edit/Container/tab_edit.pt:223 /views/edit/Container/tab_edit.pt:231
+#: /views/edit/Container/tab_edit.pt:384 /views/edit/Container/tab_edit.pt:392
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
-#: /views/edit/Container/tab_edit.pt:222 /views/edit/Container/tab_edit.pt:230
-#: /views/edit/Container/tab_edit.pt:383 /views/edit/Container/tab_edit.pt:391
-#: /kupu/kupumacros.html:313
 msgid "properties"
 msgstr "屬性"
 
@@ -2027,11 +1795,6 @@ msgstr "屬性"
 msgid "access"
 msgstr "存取"
 
-#: /views/edit/Asset/macro_asset_edit.pt:107
-#: /views/edit/Container/tab_edit_import.pt:372
-msgid "upload"
-msgstr "上傳"
-
 #: /views/edit/Asset/macro_asset_edit.pt:146
 msgid "upload file"
 msgstr "上傳檔案"
@@ -2039,11 +1802,6 @@ msgstr "上傳檔案"
 #: /views/edit/Asset/macro_asset_edit.pt:20
 msgid "characterization"
 msgstr "描述"
-
-#: /views/edit/Asset/tab_status.pt:26 /views/edit/Content/tab_status.pt:26
-#: /views/edit/VersionedContent/tab_status.pt:47
-msgid "status of &#xab;${title}&#xbb;"
-msgstr "&#xab;${title}&#xbb; 的狀態"
 
 #: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
 msgid "A ${type} automatically has a published state."
@@ -2061,6 +1819,10 @@ msgid ""
 "possible to subscribe to a ${type}. Only documents that contain textual "
 "content, or folders that contain them, can be subscribed to."
 msgstr ""
+
+#: /views/edit/Asset/upload_form.form:25 /views/add/File/form.form:24
+msgid "file"
+msgstr "檔案"
 
 #: /views/edit/Asset/upload_form.form:26
 msgid "Locate a file."
@@ -2087,10 +1849,10 @@ msgstr "內容"
 #: /views/edit/Container/get_tabs.py:21
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:21
 #: /views/edit/VersionedContent/Link/get_tabs.py:19
-#: /views/edit/Container/tab_edit.pt:242
 #: /views/edit/Container/tab_status.pt:197
 #: /views/edit/Container/tab_status.pt:205
 #: /views/edit/Container/tab_status.pt:348
+#: /views/edit/Container/tab_edit.pt:243
 #: /views/edit/Container/GhostFolder/tab_edit.pt:341
 msgid "publish"
 msgstr "發表"
@@ -2116,6 +1878,17 @@ msgstr "Ghost檔案夾已同步。"
 msgid "Link to contents screen of original."
 msgstr "連結到內容的原始畫面。"
 
+#: /views/edit/Container/GhostFolder/tab_edit.pt:113
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:98
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:81
+msgid "problem"
+msgstr "問題"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:129
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:115
+msgid "save reference"
+msgstr "儲存參考資源"
+
 #: /views/edit/Container/GhostFolder/tab_edit.pt:166
 msgid "ghost folder contents"
 msgstr "ghost檔案夾內容"
@@ -2131,6 +1904,37 @@ msgstr "Ghost 檔案夾重新同步"
 #: /views/edit/Container/GhostFolder/tab_edit.pt:432
 msgid "metadata"
 msgstr "中繼資料"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:49
+#: /views/edit/VersionedContent/Link/tab_edit.pt:27
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:33
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:38
+#: /views/edit/Content/AutoTOC/tab_edit.pt:18
+#: /views/add/GhostFolder/add_form.pt:50 /views/add/Ghost/add_form.pt:50
+msgid "attributes"
+msgstr "屬性"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:63
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:48
+msgid "Locate item to refer to: alt-r"
+msgstr "找尋項目的參照:alt-r"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:63
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:48
+#: /views/add/GhostFolder/add_form.pt:72 /views/add/Ghost/add_form.pt:70
+msgid "reference..."
+msgstr "參見 ..."
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:89
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:74
+msgid "Path to original (begins with &#8216;/&#8217;)."
+msgstr "原始路徑（介於 &#8216;/&#8217;）。"
+
+#: /views/edit/Container/GhostFolder/tab_edit.pt:96
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:81
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
+msgid "link"
+msgstr "連結"
 
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:20
 msgid "miscellaneous settings: alt-e"
@@ -2203,7 +2007,7 @@ msgstr "已處理的項目名單 ${format}"
 #: /views/edit/Container/docma_queue.pt:159
 #: /views/edit/Container/tab_access_groups.pt:101
 #: /views/edit/Container/tab_access_groups.pt:174
-#: /views/edit/Container/tab_access_groups.pt:282 /kupu/kupumacros.html:456
+#: /views/edit/Container/tab_access_groups.pt:282
 msgid "type"
 msgstr "型態"
 
@@ -2225,11 +2029,7 @@ msgid "there's no undo: alt-x"
 msgstr "無法復原：alt-x"
 
 #: /views/edit/Container/docma_queue.pt:230
-#: /views/edit/Container/tab_status_export.pt:493 /kupu/kupumacros.html:352
-#: /kupu/kupumacros.html:383 /kupu/kupumacros.html:469
-#: /kupu/kupumacros.html:551 /kupu/kupumacros.html:623
-#: /kupu/kupumacros.html:630 /kupu/kupumacros.html:636
-#: /kupu/kupumacros.html:675
+#: /views/edit/Container/tab_status_export.pt:493
 msgid "remove"
 msgstr "移除"
 
@@ -2244,8 +2044,8 @@ msgstr "匯入和移除"
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
 #: /views/edit/Container/docma_queue.pt:163
-#: /views/edit/Container/tab_edit_import.pt:356
-#: /views/edit/Container/tab_status_export.pt:448 /doc/silva-extra.xml:155
+#: /views/edit/Container/tab_status_export.pt:448
+#: /views/edit/Container/tab_edit_import.pt:356 /doc/silva-extra.xml:155
 msgid "description"
 msgstr "描述"
 
@@ -2414,6 +2214,17 @@ msgstr "目前所在沒有指定群組。"
 msgid "delete selected groups: alt-d"
 msgstr "刪除所選群組：alt-d"
 
+#: /views/edit/Container/tab_access_groups.pt:247
+#: /views/edit/Container/tab_edit.pt:548
+msgid "Really delete?"
+msgstr ""
+
+#: /views/edit/Container/tab_access_groups.pt:247
+#: /views/edit/Container/tab_edit.pt:548
+#: /views/edit/VersionedContent/tab_status.pt:247
+msgid "delete"
+msgstr "刪除"
+
 #: /views/edit/Container/tab_access_groups.pt:268
 msgid "groups defined elsewhere"
 msgstr ""
@@ -2427,11 +2238,11 @@ msgid "create a group"
 msgstr "增加一個群組"
 
 #: /views/edit/Container/tab_access_groups.pt:95 /views/add/form.form:27
+#: /views/add/GhostFolder/form.form:30 /views/add/Folder/form.form:30
+#: /views/add/AutoTOC/form.form:30 /views/add/Ghost/form.form:30
+#: /views/add/Publication/form.form:30 /views/add/Image/form.form:69
 #: /views/add/Link/form.form:30 /views/add/File/form.form:47
-#: /views/add/Folder/form.form:30 /views/add/GhostFolder/form.form:30
-#: /views/add/Groups/form.form:30 /views/add/Publication/form.form:30
-#: /views/add/SimpleContent/form.form:30 /views/add/Image/form.form:69
-#: /views/add/Ghost/form.form:30 /views/add/AutoTOC/form.form:30
+#: /views/add/SimpleContent/form.form:30 /views/add/Groups/form.form:30
 msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
 "or &#8216;.&#8217;"
@@ -2461,161 +2272,115 @@ msgstr "已刪除 ${deleted_ids}。"
 msgid "Could not delete ${not_deleted_ids}."
 msgstr "無法刪除 ${not_deleted_ids}。"
 
-#: /views/edit/Container/tab_edit.pt:129 /views/edit/Container/tab_edit.pt:195
+#: /views/edit/Container/tab_edit.pt:130 /views/edit/Container/tab_edit.pt:196
 msgid "modify"
 msgstr "修改"
 
-#: /views/edit/Container/tab_edit.pt:135
-#: /views/edit/Container/tab_access_groups.pt:177
-#: /views/edit/Container/tab_access_groups.pt:285
-#: /views/edit/Container/GhostFolder/tab_edit.pt:209
-#: /browser/object_lookup.pt:159
-msgid "modified"
-msgstr "修改"
-
-#: /views/edit/Container/tab_edit.pt:138
-#: /views/edit/Container/GhostFolder/tab_edit.pt:212
-#: /browser/object_lookup.pt:162
-msgid "author"
-msgstr "作者"
-
-#: /views/edit/Container/tab_edit.pt:141
+#: /views/edit/Container/tab_edit.pt:142
 msgid "shift"
 msgstr "轉換"
 
-#: /views/edit/Container/tab_edit.pt:152
-#: /views/edit/Container/GhostFolder/tab_edit.pt:222
-#: /browser/object_lookup.pt:172
-msgid "There is no content here."
-msgstr "無內容。"
-
-#: /views/edit/Container/tab_edit.pt:235
-#: /views/edit/Container/tab_status.pt:211
-#: /views/edit/Container/GhostFolder/tab_edit.pt:309
-#: /views/edit/Container/GhostFolder/tab_edit.pt:345
-#: /browser/object_lookup.pt:282 /browser/object_lookup.pt:312
-msgid "n/a"
-msgstr "無"
-
-#: /views/edit/Container/tab_edit.pt:260
+#: /views/edit/Container/tab_edit.pt:261
 #: /views/edit/Container/GhostFolder/tab_edit.pt:316
 msgid "content approved, or published..."
 msgstr "內容已經同意，或已發表...."
 
-#: /views/edit/Container/tab_edit.pt:266
+#: /views/edit/Container/tab_edit.pt:267
 #: /views/edit/Container/GhostFolder/tab_edit.pt:326
 msgid "content approved or published"
 msgstr "內容已驗證或出版"
 
-#: /views/edit/Container/tab_edit.pt:274 /views/edit/Container/tab_edit.pt:277
+#: /views/edit/Container/tab_edit.pt:275 /views/edit/Container/tab_edit.pt:278
 msgid "move up"
 msgstr "往上移動"
 
-#: /views/edit/Container/tab_edit.pt:282 /views/edit/Container/tab_edit.pt:285
+#: /views/edit/Container/tab_edit.pt:283 /views/edit/Container/tab_edit.pt:286
 msgid "move down"
 msgstr "往下移動"
 
-#: /views/edit/Container/tab_edit.pt:356
+#: /views/edit/Container/tab_edit.pt:357
 msgid "editor"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:396
-#: /views/edit/Container/GhostFolder/tab_edit.pt:441
-#: /browser/object_lookup.pt:397
-msgid "unknown"
-msgstr "無法確認"
-
-#: /views/edit/Container/tab_edit.pt:429
+#: /views/edit/Container/tab_edit.pt:430
 msgid "content actions"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:450
+#: /views/edit/Container/tab_edit.pt:451
 msgid "move selected items to"
 msgstr "移動所選項目至"
 
-#: /views/edit/Container/tab_edit.pt:458
+#: /views/edit/Container/tab_edit.pt:459
 msgid "position:"
 msgstr ""
 
-#: /views/edit/Container/tab_edit.pt:469
+#: /views/edit/Container/tab_edit.pt:470
 msgid "end"
 msgstr "結束"
 
-#: /views/edit/Container/tab_edit.pt:481
+#: /views/edit/Container/tab_edit.pt:482
 msgid "move selected items into position: alt-m"
 msgstr "移動所選項目位置：alt-m"
 
-#: /views/edit/Container/tab_edit.pt:481
+#: /views/edit/Container/tab_edit.pt:482
 msgid "move"
 msgstr "移動"
 
-#: /views/edit/Container/tab_edit.pt:490
+#: /views/edit/Container/tab_edit.pt:491
 msgid "rename and retitle items: alt-r"
 msgstr "重新命名和更改標題：alt-r"
 
-#: /views/edit/Container/tab_edit.pt:490
+#: /views/edit/Container/tab_edit.pt:491
 msgid "rename..."
 msgstr "重新命名"
 
-#: /views/edit/Container/tab_edit.pt:499
+#: /views/edit/Container/tab_edit.pt:500
 msgid "cut"
 msgstr "剪下"
 
-#: /views/edit/Container/tab_edit.pt:499
+#: /views/edit/Container/tab_edit.pt:500
 msgid "cut items: alt-x"
 msgstr "剪下項目：alt-x"
 
-#: /views/edit/Container/tab_edit.pt:510
+#: /views/edit/Container/tab_edit.pt:511
 msgid "copy"
 msgstr "複製"
 
-#: /views/edit/Container/tab_edit.pt:510
+#: /views/edit/Container/tab_edit.pt:511
 msgid "copy items: alt-c"
 msgstr "複製項目：alt-c"
 
-#: /views/edit/Container/tab_edit.pt:527
+#: /views/edit/Container/tab_edit.pt:528
 msgid "paste items: alt-v"
 msgstr "貼上項目：alt-v"
 
-#: /views/edit/Container/tab_edit.pt:527
+#: /views/edit/Container/tab_edit.pt:528
 msgid "paste"
 msgstr "貼上"
 
-#: /views/edit/Container/tab_edit.pt:536
+#: /views/edit/Container/tab_edit.pt:537
 msgid "paste (items on clipboard) as ghost objects: alt-g"
 msgstr "貼上(剪貼簿上的文件) 作為ghost主題：alt-g"
 
-#: /views/edit/Container/tab_edit.pt:536
+#: /views/edit/Container/tab_edit.pt:537
 msgid "paste ghost"
 msgstr "貼上ghost"
 
-#: /views/edit/Container/tab_edit.pt:547
-#: /views/edit/Container/tab_access_groups.pt:247
-msgid "Really delete?"
-msgstr ""
+#: /views/edit/Container/tab_edit.pt:548
+#: /views/edit/VersionedContent/tab_status.pt:247
+msgid "there's no undo: alt-d"
+msgstr "沒有復原：alt-d"
 
-#: /views/edit/Container/tab_edit.pt:564
-#: /views/edit/Container/tab_status.pt:348
-msgid "publish new versions: alt-p"
-msgstr "發表新版本：alt-p"
+#: /views/edit/Container/tab_edit.pt:565
+#: /views/edit/VersionedContent/tab_status_macros.pt:279
+#: /views/edit/tab_status_form.form:67
+#: /views/edit/VersionedContent/tab_status_form_editor.form:70
+msgid "publish now"
+msgstr "現在出版"
 
-#: /views/edit/Container/tab_edit.pt:574
+#: /views/edit/Container/tab_edit.pt:575
 msgid "close published items: alt-l"
 msgstr "關閉已發表項目：alt-l"
-
-#: /views/edit/Container/tab_edit.pt:574
-#: /views/edit/Container/tab_status.pt:399
-#: /views/edit/Member/SimpleMember/tab_edit.pt:132
-msgid "close"
-msgstr "關閉"
-
-#: /views/edit/Container/tab_edit.pt:59 /browser/object_lookup.pt:114
-msgid "select a new item: alt-s"
-msgstr "選擇新項目: alt-s"
-
-#: /views/edit/Container/tab_edit.pt:65 /browser/object_lookup.pt:121
-msgid "select:"
-msgstr "選擇："
 
 #: /views/edit/Container/tab_edit.pt:80
 msgid "new..."
@@ -2624,10 +2389,6 @@ msgstr "新增..."
 #: /views/edit/Container/tab_edit.pt:80
 msgid "add a new item - alt-n"
 msgstr "增加新項目- alt-n"
-
-#: /views/edit/Container/tab_edit.pt:90 /views/edit/Container/tab_status.pt:81
-msgid "import xml data or a zip file: alt-i"
-msgstr "匯入 xml 資料或壓縮檔案：alt-i"
 
 #: /views/edit/Container/tab_edit_close.py:15
 #: /views/edit/Container/tab_status_close.py:16
@@ -2764,21 +2525,6 @@ msgstr ""
 msgid "import zip"
 msgstr "匯入壓縮檔"
 
-#: /views/edit/Container/tab_edit_import.pt:247
-#: /views/edit/Container/tab_status_export.pt:172
-msgid "access key: alt-z"
-msgstr "存取鍵：alt-z"
-
-#: /views/edit/Container/tab_edit_import.pt:285
-#: /views/edit/Container/tab_status_export.pt:314
-msgid "docma icon"
-msgstr "docma  圖案"
-
-#: /views/edit/Container/tab_edit_import.pt:293
-#: /views/edit/Container/tab_status_export.pt:322
-msgid "docma facilities"
-msgstr "docma  設施"
-
 #: /views/edit/Container/tab_edit_import.pt:305
 msgid "upload a document in word format (.doc) for conversion"
 msgstr "上傳一種以word為格式的文件(.doc)來轉換"
@@ -2791,20 +2537,14 @@ msgstr ""
 "找尋 Word  檔來上傳。它將會被轉換並出現在以下的已處理項目之中。 同樣地，也可"
 "以被滙入到Silva 的任何地方。"
 
-#: /views/edit/Container/tab_edit_import.pt:350
-#: /views/edit/Container/tab_status_export.pt:419
-msgid "An e-mail will be sent to you when the item is processed."
-msgstr "當項目處理時將發送電子郵件通知您。"
-
-#: /views/edit/Container/tab_edit_import.pt:364
-#: /views/edit/Container/tab_status_export.pt:457
-msgid ""
-"This description will be shown in the queue and the list of processed items."
-msgstr "此描述將會顯示在等待和處理項目名單上。"
-
 #: /views/edit/Container/tab_edit_import.pt:372
 msgid "upload a word document from your local drive: alt-u"
 msgstr "從您的電腦中上傳word文件: alt-u"
+
+#: /views/edit/Container/tab_edit_import.pt:372
+#: /views/edit/Asset/macro_asset_edit.pt:107
+msgid "upload"
+msgstr "上傳"
 
 #: /views/edit/Container/tab_edit_import.pt:62
 msgid "import in &#xab;${title}&#xbb;"
@@ -2920,6 +2660,10 @@ msgid ""
 "information about an item see the ${silva_documentation}."
 msgstr ""
 
+#: /views/edit/Container/tab_edit_new.pt:81 /globals/accesskeys.pt:247
+msgid "Silva documentation"
+msgstr "Silva 文件"
+
 #: /views/edit/Container/tab_edit_new_link_title.py:11
 msgid "Create a ${addable_name}"
 msgstr "增加一個 ${addable_name}"
@@ -2938,6 +2682,22 @@ msgstr "沒有內容可貼上。"
 msgid "rename"
 msgstr "重新命名"
 
+#: /views/edit/Container/tab_edit_rename.pt:120
+#: /views/edit/VersionedContent/tab_status_macros.pt:146
+#: /views/edit/VersionedContent/tab_status_macros.pt:367
+#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
+msgid "access key: alt-r"
+msgstr "存取鍵：alt-r"
+
+#: /views/edit/Container/tab_edit_rename.pt:128
+#: /views/edit/VersionedContent/tab_status_macros.pt:449
+#: /views/edit/VersionedContent/Link/tab_edit.pt:55
+#: /views/edit/Asset/Image/tab_edit.pt:185
+#: /views/edit/Content/AutoTOC/tab_edit.pt:101 /views/add/add_form.pt:152
+#: /views/add/GhostFolder/add_form.pt:134 /views/add/Ghost/add_form.pt:126
+msgid "access key: alt-c"
+msgstr "存取鍵：alt-c"
+
 #: /views/edit/Container/tab_edit_rename.pt:31
 msgid "${icon} rename objects in &#xab;${title}&#xbb;"
 msgstr ""
@@ -2950,13 +2710,13 @@ msgstr "屬性"
 msgid "old"
 msgstr "舊"
 
-#: /views/edit/Container/tab_edit_rename.pt:80 /kupu/kupumacros.html:452
-#: /views/add/form.form:45 /views/add/Link/form.form:49
-#: /views/add/File/form.form:66 /views/add/Folder/form.form:48
-#: /views/add/Groups/form.form:48 /views/add/Publication/form.form:48
-#: /views/add/SimpleContent/form.form:48 /views/add/Image/form.form:46
-#: /views/add/AutoTOC/form.form:49 /views/edit/Asset/File/form.form:28
-#: /views/edit/Asset/Image/form.form:29 /doc/silva-content.xml:35
+#: /views/edit/Container/tab_edit_rename.pt:80
+#: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
+#: /views/add/form.form:45 /views/add/Folder/form.form:48
+#: /views/add/AutoTOC/form.form:49 /views/add/Publication/form.form:48
+#: /views/add/Image/form.form:46 /views/add/Link/form.form:49
+#: /views/add/File/form.form:66 /views/add/SimpleContent/form.form:48
+#: /views/add/Groups/form.form:48 /doc/silva-content.xml:35
 msgid "title"
 msgstr "標題"
 
@@ -3036,10 +2796,15 @@ msgstr "沒有可發表的項目"
 msgid "day / month / year (hh:mm)"
 msgstr ""
 
+#: /views/edit/Container/tab_status.pt:301
+#: /views/edit/VersionedContent/tab_status_macros.pt:240
+msgid "access key: alt-m"
+msgstr "存取鍵：alt-m"
+
 #: /views/edit/Container/tab_status.pt:301 /views/edit/tab_status_form.form:30
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 msgid "publish time"
 msgstr "發表時間"
 
@@ -3047,21 +2812,59 @@ msgstr "發表時間"
 msgid "access key: alt-x"
 msgstr "存取鍵：alt-x"
 
+#: /views/edit/Container/tab_status.pt:316
+#: /views/edit/VersionedContent/tab_status.pt:169
+#: /views/edit/tab_status_form.form:52
+#: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
+#: /views/edit/VersionedContent/tab_status_form_author.form:72
+#: /views/edit/VersionedContent/tab_status_form_editor.form:54
+#: /doc/silva-extra.xml:562
+msgid "expiration time"
+msgstr "無效時間"
+
 #: /views/edit/Container/tab_status.pt:331
 msgid "clear&nbsp;expiration"
 msgstr "清除&nbsp;失效"
 
+#: /views/edit/Container/tab_status.pt:331
+#: /views/edit/Container/tab_edit.pt:476
+#: /views/edit/VersionedContent/tab_status_macros.pt:259
+#: /views/edit/VersionedContent/tab_status_macros.pt:288
+msgid "access key: alt-o"
+msgstr "存取鍵：alt-o"
+
+#: /views/edit/Container/tab_status.pt:348
+#: /views/edit/Container/tab_edit.pt:565
+msgid "publish new versions: alt-p"
+msgstr "發表新版本：alt-p"
+
 #: /views/edit/Container/tab_status.pt:358
 msgid "approve new versions for publication at a later date: alt-o"
+msgstr ""
+
+#: /views/edit/Container/tab_status.pt:358
+#: /views/edit/VersionedContent/tab_status_macros.pt:288
+msgid "approve for future"
 msgstr ""
 
 #: /views/edit/Container/tab_status.pt:368
 msgid "change publish and expiration times: alt-u"
 msgstr "改變發表和失效時效：alt-u"
 
+#: /views/edit/Container/tab_status.pt:368
+#: /views/edit/Container/tab_status.pt:448
+#: /views/edit/VersionedContent/tab_status_macros.pt:189
+msgid "update timing"
+msgstr "更新時間"
+
 #: /views/edit/Container/tab_status.pt:379
 msgid "reject pending request for approval: alt-j"
 msgstr "拒絕懸置的驗証要求；alt-j"
+
+#: /views/edit/Container/tab_status.pt:379
+#: /views/edit/VersionedContent/tab_status_macros.pt:313
+msgid "reject"
+msgstr "拒絕"
 
 #: /views/edit/Container/tab_status.pt:389
 msgid "revoke"
@@ -3074,6 +2877,12 @@ msgstr "取消對驗證版本的認同：alt-v"
 #: /views/edit/Container/tab_status.pt:399
 msgid "close published items: alt-c"
 msgstr "關閉已發表項目： alt-c"
+
+#: /views/edit/Container/tab_status.pt:399
+#: /views/edit/Container/tab_edit.pt:575
+#: /views/edit/Member/SimpleMember/tab_edit.pt:133
+msgid "close"
+msgstr "關閉"
 
 #: /views/edit/Container/tab_status.pt:409
 msgid "create new versions of published docs: alt-n"
@@ -3091,6 +2900,11 @@ msgstr "現在請求同意"
 msgid "request approval for new versions: alt-r"
 msgstr "同意新版本請求：alt-r"
 
+#: /views/edit/Container/tab_status.pt:438
+#: /views/edit/VersionedContent/tab_status_macros.pt:146
+msgid "request approval"
+msgstr "請求同意"
+
 #: /views/edit/Container/tab_status.pt:448
 msgid "change publish and expiration times: alt-s"
 msgstr "改變發表和失效時間： alt-s"
@@ -3098,6 +2912,27 @@ msgstr "改變發表和失效時間： alt-s"
 #: /views/edit/Container/tab_status.pt:72
 msgid "export to xml or convert for export: alt-e"
 msgstr "輸出成xml或轉換： alt-e"
+
+#: /views/edit/Container/tab_status.pt:72
+#: /views/edit/VersionedContent/tab_status.pt:60
+msgid "export..."
+msgstr "輸出...."
+
+#: /views/edit/Container/tab_status.pt:81 /views/edit/Container/tab_edit.pt:90
+msgid "import xml data or a zip file: alt-i"
+msgstr "匯入 xml 資料或壓縮檔案：alt-i"
+
+#: /views/edit/Container/tab_status.pt:81
+#: /views/edit/Container/tab_status_export.pt:100
+#: /views/edit/Container/tab_edit.pt:90
+msgid "import..."
+msgstr "匯入...."
+
+#: /views/edit/Container/tab_status.pt:91
+#: /views/edit/Container/tab_edit.pt:437
+#: /views/edit/VersionedContent/tab_status.pt:57
+msgid "publishing actions"
+msgstr "發表動作"
 
 #: /views/edit/Container/tab_status_approve.py:65
 msgid "version already public"
@@ -3143,11 +2978,6 @@ msgstr "沒有未經驗證的版本"
 msgid "over to the import screen: alt-i"
 msgstr "跳過匯入畫面：alt-i"
 
-#: /views/edit/Container/tab_status_export.pt:100
-#: /views/edit/Container/tab_edit.pt:90 /views/edit/Container/tab_status.pt:81
-msgid "import..."
-msgstr "匯入...."
-
 #: /views/edit/Container/tab_status_export.pt:109
 msgid "full media export (.zip)"
 msgstr "所有媒材都輸出（.zip）"
@@ -3176,6 +3006,11 @@ msgstr ""
 msgid "export zip"
 msgstr "輸出壓縮檔"
 
+#: /views/edit/Container/tab_status_export.pt:172
+#: /views/edit/Container/tab_edit_import.pt:247
+msgid "access key: alt-z"
+msgstr "存取鍵：alt-z"
+
 #: /views/edit/Container/tab_status_export.pt:200
 msgid "export to Silva xml (.xml) ${or_pdf}"
 msgstr "輸出成Silva xml (.xml) ${or_pdf}"
@@ -3194,9 +3029,31 @@ msgstr "若沒勾選則已出版的版本會被輸出。"
 msgid "export pdf"
 msgstr "輸出pdf"
 
+#: /views/edit/Container/tab_status_export.pt:264
+#: /views/edit/VersionedContent/tab_status_macros.pt:279
+msgid "access key: alt-p"
+msgstr "存取鍵：alt-p"
+
 #: /views/edit/Container/tab_status_export.pt:273
 msgid "export xml"
 msgstr "輸出xml"
+
+#: /views/edit/Container/tab_status_export.pt:273
+#: /views/edit/Container/tab_access_groups.pt:127
+#: /views/edit/VersionedContent/tab_status.pt:60 /views/add/add_form.pt:132
+#: /views/add/GhostFolder/add_form.pt:114 /views/add/Ghost/add_form.pt:106
+msgid "access key: alt-e"
+msgstr "存取鍵：alt-e"
+
+#: /views/edit/Container/tab_status_export.pt:314
+#: /views/edit/Container/tab_edit_import.pt:285
+msgid "docma icon"
+msgstr "docma  圖案"
+
+#: /views/edit/Container/tab_status_export.pt:322
+#: /views/edit/Container/tab_edit_import.pt:293
+msgid "docma facilities"
+msgstr "docma  設施"
 
 #: /views/edit/Container/tab_status_export.pt:329
 msgid "export to Docma (.doc)"
@@ -3210,6 +3067,18 @@ msgstr "輸出已關閉的內容？"
 msgid "Check to include closed content in the export."
 msgstr "勾選將已關閉的內容含入輸出中。"
 
+#: /views/edit/Container/tab_status_export.pt:409
+#: /views/edit/Container/tab_edit_import.pt:340
+#: /views/public/subscriptor.pt:41 /views/public/subscriptor.pt:66
+#: /views/edit/Member/SimpleMember/memberform.form:49
+msgid "email address"
+msgstr "電子郵件地址"
+
+#: /views/edit/Container/tab_status_export.pt:419
+#: /views/edit/Container/tab_edit_import.pt:350
+msgid "An e-mail will be sent to you when the item is processed."
+msgstr "當項目處理時將發送電子郵件通知您。"
+
 #: /views/edit/Container/tab_status_export.pt:425
 msgid "choose a template"
 msgstr "選擇樣板"
@@ -3217,6 +3086,12 @@ msgstr "選擇樣板"
 #: /views/edit/Container/tab_status_export.pt:432
 msgid "none"
 msgstr "無"
+
+#: /views/edit/Container/tab_status_export.pt:457
+#: /views/edit/Container/tab_edit_import.pt:364
+msgid ""
+"This description will be shown in the queue and the list of processed items."
+msgstr "此描述將會顯示在等待和處理項目名單上。"
 
 #: /views/edit/Container/tab_status_export.pt:468
 msgid "export to Docma"
@@ -3246,13 +3121,13 @@ msgstr "修改 ${meta_type}"
 
 #: /views/edit/Container/tab_status_get_name.py:16
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
-#: /views/edit/Container/tab_access_groups.pt:84
-#: /views/edit/Container/tab_edit_rename.pt:57 /views/add/form.form:25
+#: /views/edit/Container/tab_edit_rename.pt:57
+#: /views/edit/Container/tab_access_groups.pt:84 /views/add/form.form:25
+#: /views/add/GhostFolder/form.form:28 /views/add/Folder/form.form:28
+#: /views/add/AutoTOC/form.form:28 /views/add/Ghost/form.form:28
+#: /views/add/Publication/form.form:28 /views/add/Image/form.form:67
 #: /views/add/Link/form.form:28 /views/add/File/form.form:45
-#: /views/add/Folder/form.form:28 /views/add/GhostFolder/form.form:28
-#: /views/add/Groups/form.form:28 /views/add/Publication/form.form:28
-#: /views/add/SimpleContent/form.form:28 /views/add/Image/form.form:67
-#: /views/add/Ghost/form.form:28 /views/add/AutoTOC/form.form:28
+#: /views/add/SimpleContent/form.form:28 /views/add/Groups/form.form:28
 msgid "id"
 msgstr "id帳號"
 
@@ -3363,10 +3238,24 @@ msgstr "沒有取回：${list}"
 msgid "Not yet :)"
 msgstr "還沒有：)"
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:17
+# Default: "c"
+#: /views/edit/Content/AutoTOC/tab_edit.pt:101
+msgid "change_link_accesskey"
+msgstr ""
+
+#: /views/edit/Content/AutoTOC/tab_edit.pt:101
+msgid "save types"
+msgstr ""
+
+#: /views/edit/Content/AutoTOC/tab_edit.pt:114
+msgid "${icon} AutoTOC"
+msgstr ""
+
+#: /views/edit/Content/AutoTOC/tab_edit.pt:114
 msgid ""
-"An automatic table of contents is generated from the items in its location "
-"(depth: ${depth}.)"
+"<h3>x</h3> <p>An automatic table of contents is generated from the items in "
+"its location, and renders all items from this location that are types in the "
+"'AutoTOC Types' list.</p>"
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:25
@@ -3400,9 +3289,9 @@ msgstr "已更新索引"
 
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
 #: /views/macro_middleground.pt:46
-#: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:33
-#: /views/edit/VersionedContent/tab_status_macros.pt:227
 #: /views/edit/Container/GhostFolder/tab_edit.pt:305
+#: /views/edit/VersionedContent/tab_status_macros.pt:227
+#: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:33
 msgid "settings"
 msgstr "設定"
 
@@ -3451,27 +3340,27 @@ msgstr "語言更新"
 msgid "Nothing changed."
 msgstr "沒有改變。"
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:132
+#: /views/edit/Member/SimpleMember/tab_edit.pt:133
 msgid "close window: alt-c"
 msgstr "關閉視窗：alt-c"
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:142
+#: /views/edit/Member/SimpleMember/tab_edit.pt:143
 msgid "save member data: alt-s"
 msgstr "儲存組員資料：alt-s"
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:159
+#: /views/edit/Member/SimpleMember/tab_edit.pt:160
 msgid "You are not allowed to edit membership data of member ${member_id}"
 msgstr ""
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:57
+#: /views/edit/Member/SimpleMember/tab_edit.pt:58
 msgid "member data of &#xab;${fullname}&#xbb;"
 msgstr ""
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:65
+#: /views/edit/Member/SimpleMember/tab_edit.pt:66
 msgid "characteristic"
 msgstr "特徵"
 
-#: /views/edit/Member/SimpleMember/tab_edit.pt:91
+#: /views/edit/Member/SimpleMember/tab_edit.pt:92
 msgid "preferred language"
 msgstr "優先語言"
 
@@ -3491,37 +3380,10 @@ msgstr "原始路徑 (從 &#8216;/&#8217 開始；)。"
 msgid "Ghost changed."
 msgstr "Ghost 更新。"
 
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:115
-#: /views/edit/Container/GhostFolder/tab_edit.pt:129
-msgid "save reference"
-msgstr "儲存參考資源"
-
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:48
-#: /views/edit/Container/GhostFolder/tab_edit.pt:63
-msgid "Locate item to refer to: alt-r"
-msgstr "找尋項目的參照:alt-r"
-
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:74
-#: /views/edit/Container/GhostFolder/tab_edit.pt:89
-msgid "Path to original (begins with &#8216;/&#8217;)."
-msgstr "原始路徑（介於 &#8216;/&#8217;）。"
-
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:81
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:64
-#: /views/edit/Container/GhostFolder/tab_edit.pt:96 /kupu/kupumacros.html:335
-msgid "link"
-msgstr "連結"
-
 #: /views/edit/VersionedContent/Ghost/tab_edit.pt:91
 #: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:74
 msgid "Link to editor screen of original."
 msgstr "連結至原始的編輯畫面。"
-
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:98
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:81
-#: /views/edit/Container/GhostFolder/tab_edit.pt:113
-msgid "problem"
-msgstr "問題"
 
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:49
 msgid "of public version of &#xab;${title}&#xbb;"
@@ -3670,15 +3532,6 @@ msgstr "修改時間"
 msgid "publication time"
 msgstr "發表時間"
 
-#: /views/edit/VersionedContent/tab_status.pt:169
-#: /views/edit/Container/tab_status.pt:316 /views/edit/tab_status_form.form:52
-#: /views/edit/VersionedContent/tab_status_form_author.form:72
-#: /views/edit/VersionedContent/tab_status_form_editor.form:54
-#: /views/edit/VersionedContent/tab_status_form_change_settings.form:52
-#: /doc/silva-extra.xml:562
-msgid "expiration time"
-msgstr "無效時間"
-
 #: /views/edit/VersionedContent/tab_status.pt:170 /doc/silva-extra.xml:676
 msgid "last author"
 msgstr "最新作者"
@@ -3698,17 +3551,6 @@ msgstr "從已選取的舊版本中建立新的可編輯版本：alt-f"
 #: /views/edit/VersionedContent/tab_status.pt:237
 msgid "copy for editing"
 msgstr "編輯上的複製"
-
-#: /views/edit/VersionedContent/tab_status.pt:247
-#: /views/edit/Container/tab_edit.pt:547
-msgid "there's no undo: alt-d"
-msgstr "沒有復原：alt-d"
-
-#: /views/edit/VersionedContent/tab_status.pt:247
-#: /views/edit/Container/tab_edit.pt:547
-#: /views/edit/Container/tab_access_groups.pt:247
-msgid "delete"
-msgstr "刪除"
 
 #: /views/edit/VersionedContent/tab_status.pt:257
 msgid "compare..."
@@ -3775,16 +3617,10 @@ msgstr ""
 msgid "If you wish you can make an editable copy in the ${editor}."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:57
-#: /views/edit/Container/tab_edit.pt:436
-#: /views/edit/Container/tab_status.pt:91
-msgid "publishing actions"
-msgstr "發表動作"
-
-#: /views/edit/VersionedContent/tab_status.pt:60
-#: /views/edit/Container/tab_status.pt:72
-msgid "export..."
-msgstr "輸出...."
+#: /views/edit/VersionedContent/tab_status.pt:47
+#: /views/edit/Asset/tab_status.pt:26 /views/edit/Content/tab_status.pt:26
+msgid "status of &#xab;${title}&#xbb;"
+msgstr "&#xab;${title}&#xbb; 的狀態"
 
 #: /views/edit/VersionedContent/tab_status_change_settings.py:11
 msgid "There is no approved version."
@@ -3838,16 +3674,22 @@ msgstr "給新版本"
 msgid "message to editor"
 msgstr "編輯訊息"
 
+#: /views/edit/VersionedContent/tab_status_macros.pt:124
+#: /views/edit/VersionedContent/tab_status_macros.pt:177
+#: /views/edit/VersionedContent/tab_status_macros.pt:230
+#: /views/edit/VersionedContent/tab_status_macros.pt:334
+#: /views/edit/Content/Indexer/tab_edit.pt:19
+#: /views/edit/Content/AutoTOC/tab_edit.pt:20 /views/add/add_form.pt:73
+#: /views/add/add_form.pt:119 /views/add/GhostFolder/add_form.pt:58
+#: /views/add/Ghost/add_form.pt:56
+msgid "notes"
+msgstr "注意"
+
 #: /views/edit/VersionedContent/tab_status_macros.pt:135
 msgid ""
 "This message will remain visible in the status screen for other authors and "
 "editors."
 msgstr "對其他作者及編輯者而言，此訊息在狀態畫面中為可視的。"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:146
-#: /views/edit/Container/tab_status.pt:438
-msgid "request approval"
-msgstr "請求同意"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:167
 msgid "change settings"
@@ -3858,10 +3700,11 @@ msgid "current timings"
 msgstr "目前時間"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:189
-#: /views/edit/Container/tab_status.pt:368
-#: /views/edit/Container/tab_status.pt:448
-msgid "update timing"
-msgstr "更新時間"
+#: /views/edit/Asset/macro_asset_edit.pt:146
+#: /views/edit/Asset/File/tab_edit.pt:103
+#: /views/edit/Content/Indexer/tab_edit.pt:36 /views/public/subscriptor.pt:71
+msgid "access key: alt-u"
+msgstr "存取鍵：alt-u"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:214
 msgid "publish new version"
@@ -3870,39 +3713,6 @@ msgstr "發表新版本"
 #: /views/edit/VersionedContent/tab_status_macros.pt:218
 msgid "publish closed version"
 msgstr "發表不公開版本"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:240
-#: /views/edit/Container/tab_status.pt:301
-msgid "access key: alt-m"
-msgstr "存取鍵：alt-m"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:259
-#: /views/edit/VersionedContent/tab_status_macros.pt:288
-#: /views/edit/Container/tab_edit.pt:475
-#: /views/edit/Container/tab_status.pt:331
-msgid "access key: alt-o"
-msgstr "存取鍵：alt-o"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:279
-#: /views/edit/Container/tab_edit.pt:564 /views/edit/tab_status_form.form:67
-#: /views/edit/VersionedContent/tab_status_form_editor.form:70
-msgid "publish now"
-msgstr "現在出版"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:279
-#: /views/edit/Container/tab_status_export.pt:264
-msgid "access key: alt-p"
-msgstr "存取鍵：alt-p"
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:288
-#: /views/edit/Container/tab_status.pt:358
-msgid "approve for future"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:313
-#: /views/edit/Container/tab_status.pt:379
-msgid "reject"
-msgstr "拒絕"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:314
 msgid "withdraw"
@@ -4015,6 +3825,11 @@ msgstr "復原早先版本。"
 msgid "This content is not approved."
 msgstr "這個內容不經過認可。"
 
+#: /views/edit/VersionedContent/tab_status_view_version.pt:53
+#: /globals/copyright.pt:17 /globals/reference.pt:22
+msgid "back"
+msgstr "返回"
+
 #: /views/edit/VersionedContent/tab_status_view_versions.pt:52
 msgid "Older version (${version_id})"
 msgstr "較舊版本(${version_id})"
@@ -4101,20 +3916,20 @@ msgstr "移除所選使用者。"
 msgid "No users removed."
 msgstr "沒有使用者被移除。"
 
-#: /views/edit/lookup_search.py:17
+#: /views/edit/lookup_search.py:24
 msgid "No search string supplied."
 msgstr "無合乎的搜尋字串。"
 
-#: /views/edit/lookup_search.py:20
+#: /views/edit/lookup_search.py:27
 msgid ""
 "Search string '${string}' is too short. Please try a longer search string."
 msgstr "搜尋字串 '${string}' 過短。請嘗試一個更長的搜索字符串。"
 
-#: /views/edit/lookup_search.py:28
+#: /views/edit/lookup_search.py:35
 msgid "No users found for search string '${string}'."
 msgstr "沒有發現合乎搜尋字串的使用者'${string}'。"
 
-#: /views/edit/lookup_search.py:34
+#: /views/edit/lookup_search.py:41
 msgid "Searched for '${string}'."
 msgstr "搜尋 '${string}'。"
 
@@ -4146,6 +3961,30 @@ msgstr "電子郵件"
 msgid "No search results."
 msgstr "沒有搜尋結果。"
 
+#: /views/edit/lookup_ui.pt:218 /views/edit/lookup_ui_direct.pt:128
+msgid "return to the access screen with this clipboard: alt-u"
+msgstr "用此剪貼薄傳回存取畫面：alt-u"
+
+#: /views/edit/lookup_ui.pt:226 /views/edit/lookup_ui_direct.pt:136
+msgid "${u}se clipboard..."
+msgstr ""
+
+#: /views/edit/lookup_ui.pt:230 /views/edit/lookup_ui_direct.pt:140
+msgid "remove user"
+msgstr "移除使用者"
+
+#: /views/edit/lookup_ui.pt:230 /views/edit/lookup_ui_direct.pt:140
+msgid "remove users from the clipboard: alt-r"
+msgstr "從剪貼簿中移除使用者：alt-r"
+
+#: /views/edit/lookup_ui.pt:45 /views/edit/lookup_ui_direct.pt:45
+msgid "return to previous screen: alt-k"
+msgstr "回到先前畫面：alt-k"
+
+#: /views/edit/lookup_ui.pt:52 /views/edit/lookup_ui_direct.pt:52
+msgid "bac${k}..."
+msgstr ""
+
 #: /views/edit/lookup_ui.pt:78
 msgid "user lookup at &#xab;${title_or_id}&#xbb;"
 msgstr "使用者在 &#xab;${title_or_id}&#xbb; 查尋"
@@ -4162,30 +4001,6 @@ msgstr "名稱(或名稱的一部份)"
 msgid "add"
 msgstr ""
 
-#: /views/edit/lookup_ui_direct.pt:128 /views/edit/lookup_ui.pt:218
-msgid "return to the access screen with this clipboard: alt-u"
-msgstr "用此剪貼薄傳回存取畫面：alt-u"
-
-#: /views/edit/lookup_ui_direct.pt:136 /views/edit/lookup_ui.pt:226
-msgid "${u}se clipboard..."
-msgstr ""
-
-#: /views/edit/lookup_ui_direct.pt:140 /views/edit/lookup_ui.pt:230
-msgid "remove user"
-msgstr "移除使用者"
-
-#: /views/edit/lookup_ui_direct.pt:140 /views/edit/lookup_ui.pt:230
-msgid "remove users from the clipboard: alt-r"
-msgstr "從剪貼簿中移除使用者：alt-r"
-
-#: /views/edit/lookup_ui_direct.pt:45 /views/edit/lookup_ui.pt:45
-msgid "return to previous screen: alt-k"
-msgstr "回到先前畫面：alt-k"
-
-#: /views/edit/lookup_ui_direct.pt:52 /views/edit/lookup_ui.pt:52
-msgid "bac${k}..."
-msgstr ""
-
 #: /views/edit/lookup_ui_direct.pt:78
 msgid "user clipboard at &#xab;${title_or_id}&#xbb;"
 msgstr ""
@@ -4194,11 +4009,6 @@ msgstr ""
 msgid "add user to clipboard"
 msgstr ""
 
-#: /views/edit/lookup_ui_direct.pt:94 /views/edit/tab_access.pt:75
-#: /views/edit/tab_access.pt:204
-msgid "username"
-msgstr "使用者名稱"
-
 #: /views/edit/macro_edit_metadata.pt:165
 msgid "date format: day / month / year hh:mm"
 msgstr ""
@@ -4206,6 +4016,14 @@ msgstr ""
 #: /views/edit/macro_edit_metadata.pt:168
 msgid "&#8224; acquireable"
 msgstr ""
+
+#: /views/edit/macro_edit_metadata.pt:176
+#: /views/edit/Container/tab_access_groups.pt:136
+#: /views/edit/Asset/macro_asset_edit.pt:65
+#: /views/edit/Member/SimpleMember/tab_edit.pt:143 /views/add/add_form.pt:143
+#: /views/add/GhostFolder/add_form.pt:125 /views/add/Ghost/add_form.pt:117
+msgid "save"
+msgstr "儲存"
 
 #: /views/edit/macro_edit_metadata.pt:42
 msgid "of &#xab;${title}&#xbb;"
@@ -4245,12 +4063,12 @@ msgid "ctrl-click to multi-select"
 msgstr "按  ctrl-click 可複選"
 
 #: /views/edit/macro_select_all.pt:14 /views/edit/macro_select_all.pt:26
-#: /views/edit/Container/tab_edit.pt:111 /views/edit/Container/tab_edit.pt:118
 #: /views/edit/Container/tab_status.pt:100
+#: /views/edit/Container/tab_edit.pt:111 /views/edit/Container/tab_edit.pt:118
 msgid "select all: alt-a"
 msgstr "全選：alt-a"
 
-#: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:121
+#: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:122
 msgid "select all"
 msgstr ""
 
@@ -4313,14 +4131,6 @@ msgstr "上移至含出版品的位置：alt-["
 msgid "reload screen"
 msgstr "重新整理畫面"
 
-#: /views/edit/macro_view_metadata.pt:111 /views/edit/tab_settings.pt:120
-msgid "content renderer"
-msgstr "內容算圖器（renderer）"
-
-#: /views/edit/macro_view_metadata.pt:120 /views/edit/tab_settings.pt:140
-msgid "renderer"
-msgstr "算圖器（renderer）"
-
 #: /views/edit/macro_view_metadata.pt:146
 msgid "first 'un-approve' this item in order to edit: alt-r"
 msgstr "為了要編輯，請先取消同意此項目：alt-r"
@@ -4337,8 +4147,8 @@ msgid "create a new version of this content: alt-n"
 msgstr "對此內容建立新版本：alt-n"
 
 #: /views/edit/macro_view_metadata.pt:166
-#: /views/edit/VersionedContent/macro_tab_edit.pt:112
 #: /views/edit/Container/tab_status.pt:409
+#: /views/edit/VersionedContent/macro_tab_edit.pt:112
 msgid "new version"
 msgstr "建立版本"
 
@@ -4349,18 +4159,6 @@ msgstr ""
 #: /views/edit/macro_view_metadata.pt:57 /views/edit/macro_edit_metadata.pt:71
 msgid "metadata set"
 msgstr "元資料設定"
-
-#: /views/edit/macro_view_metadata.pt:62 /views/edit/tab_settings.pt:125
-#: /views/edit/tab_settings.pt:194 /views/edit/macro_edit_metadata.pt:76
-#: /views/edit/tab_subscriptions.pt:74
-#: /views/edit/Asset/macro_asset_edit.pt:32
-#: /views/edit/Asset/Image/tab_edit.pt:137
-#: /views/edit/Container/tab_edit_import.pt:86
-#: /views/edit/Container/tab_edit_import.pt:155
-#: /views/edit/Container/tab_edit_import.pt:312
-#: /views/edit/Container/Publication/tab_addables.pt:74
-msgid "element"
-msgstr "元素"
 
 #: /views/edit/promptWindow.pt:21
 msgid "session timeout"
@@ -4588,6 +4386,11 @@ msgstr ""
 msgid "An access restriction here affects objects on this and lower levels."
 msgstr "此存取權限制會影響到這層的物件以及其下的階層。"
 
+#: /views/edit/tab_access.pt:75 /views/edit/tab_access.pt:204
+#: /views/edit/lookup_ui_direct.pt:94
+msgid "username"
+msgstr "使用者名稱"
+
 #: /views/edit/tab_access.pt:78 /views/edit/tab_access.pt:378
 msgid "roles defined above"
 msgstr "角色定義如前"
@@ -4646,22 +4449,13 @@ msgstr "給 &#xab;${title}&#xbb; 的公開版本"
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr "此為封閉版本。您可對其檢視，但一般大眾無法!"
 
-#: /views/edit/tab_settings.pt:133 /views/edit/tab_settings.pt:202
-#: /views/edit/macro_edit_metadata.pt:87 /views/edit/tab_access.pt:575
-#: /views/edit/tab_access.pt:706 /views/edit/tab_subscriptions.pt:82
-#: /views/edit/Asset/Image/tab_edit.pt:145
-#: /views/edit/VersionedContent/Ghost/tab_edit.pt:41
-#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
-#: /views/edit/Container/tab_edit_import.pt:94
-#: /views/edit/Container/tab_edit_import.pt:163
-#: /views/edit/Container/tab_edit_import.pt:320
-#: /views/edit/Container/tab_status_export.pt:124
-#: /views/edit/Container/tab_status_export.pt:217
-#: /views/edit/Container/tab_status_export.pt:345
-#: /views/edit/Container/GhostFolder/tab_edit.pt:56
-#: /views/edit/Container/Publication/tab_addables.pt:82
-msgid "note"
-msgstr "備註"
+#: /views/edit/tab_settings.pt:120 /views/edit/macro_view_metadata.pt:111
+msgid "content renderer"
+msgstr "內容算圖器（renderer）"
+
+#: /views/edit/tab_settings.pt:140 /views/edit/macro_view_metadata.pt:120
+msgid "renderer"
+msgstr "算圖器（renderer）"
 
 #: /views/edit/tab_settings.pt:159
 msgid "Select a renderer to render this content."
@@ -4765,8 +4559,8 @@ msgid "Renderer setting saved."
 msgstr "算圖器（renderer）設定已儲存。"
 
 #: /views/edit/tab_status_form.form:53
-#: /views/edit/VersionedContent/tab_status_form_author.form:73
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:53
+#: /views/edit/VersionedContent/tab_status_form_author.form:73
 msgid "If this document should expire, set the time."
 msgstr "如果此文件應該已過期，請設定其時間。"
 
@@ -4818,6 +4612,58 @@ msgstr "此物件沒有其他的訂閱記錄"
 #: /views/edit/tab_subscriptions.pt:67
 msgid "${icon} manage subscriptions for &#xab;${title}&#xbb;"
 msgstr ""
+
+#: /views/edit/tab_subscriptions.pt:74 /views/edit/tab_settings.pt:125
+#: /views/edit/tab_settings.pt:194 /views/edit/macro_view_metadata.pt:62
+#: /views/edit/macro_edit_metadata.pt:76
+#: /views/edit/Container/tab_edit_import.pt:86
+#: /views/edit/Container/tab_edit_import.pt:155
+#: /views/edit/Container/tab_edit_import.pt:312
+#: /views/edit/Container/Publication/tab_addables.pt:74
+#: /views/edit/Asset/macro_asset_edit.pt:32
+#: /views/edit/Asset/Image/tab_edit.pt:137
+msgid "element"
+msgstr "元素"
+
+#: /views/edit/tab_subscriptions.pt:79 /views/edit/tab_settings.pt:130
+#: /views/edit/tab_settings.pt:199 /views/edit/macro_view_metadata.pt:66
+#: /views/edit/macro_edit_metadata.pt:81
+#: /views/edit/Container/tab_status_export.pt:342
+#: /views/edit/Container/tab_edit_import.pt:91
+#: /views/edit/Container/tab_edit_import.pt:160
+#: /views/edit/Container/tab_edit_import.pt:317
+#: /views/edit/Container/Publication/tab_addables.pt:79
+#: /views/edit/Container/GhostFolder/tab_edit.pt:53
+#: /views/edit/VersionedContent/Link/tab_edit.pt:32
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:38
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:42
+#: /views/edit/Asset/macro_asset_edit.pt:37
+#: /views/edit/Asset/macro_asset_edit.pt:118
+#: /views/edit/Asset/File/tab_edit.pt:75
+#: /views/edit/Asset/Image/tab_edit.pt:142
+#: /views/edit/Content/AutoTOC/tab_edit.pt:19
+#: /views/edit/Member/SimpleMember/tab_edit.pt:69 /views/add/add_form.pt:69
+#: /views/add/add_form.pt:115 /views/add/GhostFolder/add_form.pt:55
+#: /views/add/Ghost/add_form.pt:53
+msgid "content"
+msgstr "內容"
+
+#: /views/edit/tab_subscriptions.pt:82 /views/edit/tab_access.pt:575
+#: /views/edit/tab_access.pt:706 /views/edit/tab_settings.pt:133
+#: /views/edit/tab_settings.pt:202 /views/edit/macro_edit_metadata.pt:87
+#: /views/edit/Container/tab_status_export.pt:124
+#: /views/edit/Container/tab_status_export.pt:217
+#: /views/edit/Container/tab_status_export.pt:345
+#: /views/edit/Container/tab_edit_import.pt:94
+#: /views/edit/Container/tab_edit_import.pt:163
+#: /views/edit/Container/tab_edit_import.pt:320
+#: /views/edit/Container/Publication/tab_addables.pt:82
+#: /views/edit/Container/GhostFolder/tab_edit.pt:56
+#: /views/edit/VersionedContent/Ghost/tab_edit.pt:41
+#: /views/edit/VersionedContent/Ghost/edit_info_showversion.pt:45
+#: /views/edit/Asset/Image/tab_edit.pt:145
+msgid "note"
+msgstr "備註"
 
 #: /views/edit/tab_subscriptions_form.form:27
 msgid ""
@@ -5120,12 +4966,12 @@ msgid "Choose role(s) to request"
 msgstr "選擇請求職務"
 
 #: /views/public/request_roles.pt:73
-msgid " Send request "
-msgstr " 送出請求 "
-
-#: /views/public/request_roles.pt:73
 msgid "Send request for role: alt-s"
 msgstr "傳送職務請求：alt-s"
+
+#: /views/public/request_roles.pt:73
+msgid " Send request "
+msgstr " 送出請求 "
 
 #: /views/public/request_roles.pt:87
 msgid "This site does not allow requests for roles"
@@ -5222,13 +5068,6 @@ msgid ""
 msgstr ""
 "請填寫您旳email 位址，當本頁或其下文件有新的版本時，將會以電子郵件通知您。"
 
-#: /views/public/subscriptor.pt:41 /views/public/subscriptor.pt:66
-#: /views/edit/Container/tab_edit_import.pt:340
-#: /views/edit/Container/tab_status_export.pt:409
-#: /views/edit/Member/SimpleMember/memberform.form:49
-msgid "email address"
-msgstr "電子郵件地址"
-
 #: /views/public/subscriptor.pt:46
 msgid "subscribe"
 msgstr "訂閱"
@@ -5247,13 +5086,6 @@ msgstr "請填寫您旳email 位址以取消本頁及其下文件的訂閱功能
 msgid "unsubscribe"
 msgstr "取消訂閱"
 
-#: /views/public/subscriptor.pt:71 /views/edit/Asset/macro_asset_edit.pt:146
-#: /views/edit/Asset/File/tab_edit.pt:103
-#: /views/edit/Content/Indexer/tab_edit.pt:36
-#: /views/edit/VersionedContent/tab_status_macros.pt:189
-msgid "access key: alt-u"
-msgstr "存取鍵：alt-u"
-
 #: /views/public/subscriptor.pt:84
 msgid "Return to &#xab;${title_or_id}&#xbb;"
 msgstr "回到 &#xab;${title_or_id}&#xbb;"
@@ -5262,11 +5094,18 @@ msgstr "回到 &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "抱歉，這些表單欄位有問題。"
 
-#~ msgid "x <span> x </span>"
-#~ msgstr "x <span> x </span>"
+#~ msgid "Cannot approve version; not allowed."
+#~ msgstr "無法驗證版本；因為權限不足。"
 
-#~ msgid "properties ${for_title}"
-#~ msgstr "${for_title} 的屬性"
+#~ msgid ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+#~ "2005 Infrae. All rights reserved."
+#~ msgstr ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9;版權宣告 "
+#~ "Copyright 2001-2005 Infrae. All rights reserved."
+
+#~ msgid "Added ${meta_type} ${id}."
+#~ msgstr "增加 ${meta_type} ${id}"
 
 #~ msgid ""
 #~ "Location of originating folder. Depending on how much content there is, "
@@ -5277,6 +5116,9 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "file info"
 #~ msgstr "檔案資訊"
+
+#~ msgid "${old_title} to ${new_title}"
+#~ msgstr "${old_title} 到 ${new_title}"
 
 #~ msgid "ip range<span class=\"warning\">*</span>"
 #~ msgstr "ip範圍<span class=\"warning\">*</span>"
@@ -5293,6 +5135,9 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "<br /> scaled to ${WxH} pixels"
 #~ msgstr "<br /> 對比例 ${WxH} 像素"
 
+#~ msgid "Properties changed"
+#~ msgstr "屬性已改變"
+
 #~ msgid "A automatically has a published state."
 #~ msgstr "自動發表狀態。"
 
@@ -5304,6 +5149,9 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ "此畫面因為不能訂閱而無法設定。只有在文件含有正文或是檔案夾含有文件時，才能"
 #~ "被訂閱。"
 
+#~ msgid "ghost folder of &#xab;${title}&#xbb;"
+#~ msgstr "&#xab;${title}&#xbb; 的ghost檔案夾"
+
 #~ msgid "s<u>e</u>ttings..."
 #~ msgstr "設定..."
 
@@ -5312,141 +5160,6 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "metadata ${for_public_version_of}"
 #~ msgstr "資料 ${for_public_version_of}"
-
-#~ msgid "<u>r</u>efresh queue lists"
-#~ msgstr "更新佇列表列"
-
-#~ msgid "x"
-#~ msgstr "X"
-
-#~ msgid "position"
-#~ msgstr "位置"
-
-#~ msgid ""
-#~ "Click a name to create an item. Note that this screen only lists "
-#~ "descriptions of objects that are available at this location. For "
-#~ "additional information about an item see the ${silva_documentation}. <br /"
-#~ ">"
-#~ msgstr ""
-#~ "輸入名稱以建立一個項目。注意這個畫面僅顯示此位置可用的物件說明。項目相關的"
-#~ "其他資訊請看 ${silva_documentation}。"
-
-#~ msgid "rename objects in &#xab;${title}&#xbb;"
-#~ msgstr "在 &#xab;${title}&#xbb; 做物件更名"
-
-#~ msgid "&nbsp;&nbsp;expiration time"
-#~ msgstr "&nbsp;&nbsp;失效日期"
-
-#~ msgid ""
-#~ "Note that <span class=\"warning\">the index only displays links to "
-#~ "published content</span>, so the list may be empty if nothing is "
-#~ "published."
-#~ msgstr ""
-#~ "注意 <span class=\"warning\">此索引僅顯示已出版的內容</span>，若沒有任何出"
-#~ "版項目，則會顯示空值。"
-
-#~ msgid ""
-#~ "Dear ${user_id}<br /> You are not allowed to edit membership data of "
-#~ "member ${member_id}"
-#~ msgstr "親愛的 ${user_id}<br /> 您不被允許編輯組員資料 ${member_id}"
-
-#~ msgid "Add read only view here?"
-#~ msgstr "在此增加一個僅限閱讀的 view ?"
-
-#~ msgid "member data of"
-#~ msgstr "的組員資料"
-
-#~ msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
-#~ msgstr "ghost 的 &#xab;${title}&#xbb; (${version_name} 版本)"
-
-#~ msgid ""
-#~ "This content is published (online for the public).<br /> If you wish you "
-#~ "can make an editable copy by going to the ${editor}."
-#~ msgstr ""
-#~ "此內容已公開發行（線上公眾版）。<br /> 若您想製作一個可編輯的複本，請至 "
-#~ "${editor}."
-
-#~ msgid ""
-#~ "Note: an older version of this content is online.<br /> Publishing this "
-#~ "version will replace the public version."
-#~ msgstr ""
-#~ "注意： 此內容已有一舊版本在線上。<br /> 發行此版本會取代該公開版本。"
-
-#~ msgid ""
-#~ "This content was once published but is now closed.<br /> If you wish you "
-#~ "can make an editable copy in the ${editor}."
-#~ msgstr ""
-#~ "此內容曾經出版過但現在已關閉。<br /> 若希望能進一步做內容編輯，請複製到 "
-#~ "${editor}。"
-
-#~ msgid "<u>u</u>se clipboard..."
-#~ msgstr "使用剪貼薄..."
-
-#~ msgid "bac<u>k</u>..."
-#~ msgstr "退回..."
-
-#~ msgid "date format: day / month / year &nbsp;23:59"
-#~ msgstr "日期格式：日/月/年 &nbsp;23:59"
-
-#~ msgid "<u>g</u>roups admin..."
-#~ msgstr "群組管理..."
-
-#~ msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
-#~ msgstr "lt;broken&gt; <!-- XXX 註解欄-->"
-
-#~ msgid "public view access restrictions for &#xab;${title}&#xbb;"
-#~ msgstr "對於 &#xab;${title}&#xbb; 僅能公開瀏覽"
-
-#~ msgid ""
-#~ "The addables settings can only be changed on Silva Publications. A "
-#~ "doesn&#8217;t have that capability."
-#~ msgstr "可增加的設定僅能在 Silva 出版品中變更。在此沒有此能力。"
-
-#~ msgid "${for_approved_version_of_title}"
-#~ msgstr "${for_approved_version_of_title}"
-
-#~ msgid "Subscribability"
-#~ msgstr "可訂閱性"
-
-#~ msgid "This object is currently not subscribable."
-#~ msgstr "此主題目前無法訂閱"
-
-#~ msgid "This object is currently subscribable."
-#~ msgstr "此主題目前可訂閱"
-
-#~ msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
-#~ msgstr "為了 <strong> 確定 </strong> 登出，請等後五秒鐘或點此連結。"
-
-#~ msgid "logout link"
-#~ msgstr "登出連結"
-
-#~ msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
-#~ msgstr "當登入對話窗出現，選擇<strong>\"取消\"</strong>"
-
-#~ msgid "&#xab;${title}&#xbb;"
-#~ msgstr "&#xab;${標題}&#xbb;"
-
-#~ msgid "Please fill in the following fields. <br /><br />"
-#~ msgstr "請根據以下欄位填寫。 <br /><br />"
-
-#~ msgid "Cannot approve version; not allowed."
-#~ msgstr "無法驗證版本；因為權限不足。"
-
-#~ msgid ""
-#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
-#~ "2005 Infrae. All rights reserved."
-#~ msgstr ""
-#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9;版權宣告 "
-#~ "Copyright 2001-2005 Infrae. All rights reserved."
-
-#~ msgid "Added ${meta_type} ${id}."
-#~ msgstr "增加 ${meta_type} ${id}"
-
-#~ msgid "${old_title} to ${new_title}"
-#~ msgstr "${old_title} 到 ${new_title}"
-
-#~ msgid "Properties changed"
-#~ msgstr "屬性已改變"
 
 #~ msgid "Layout copied"
 #~ msgstr "配置複製"
@@ -5463,11 +5176,20 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "Layout has been removed."
 #~ msgstr "配置已移除。"
 
+#~ msgid "<u>r</u>efresh queue lists"
+#~ msgstr "更新佇列表列"
+
 #~ msgid "not a versionable object"
 #~ msgstr "不可設定版本的物件"
 
 #~ msgid "content object or one of its containers is deactivated"
 #~ msgstr "內容物件或是其中某一個容器處於 deactivated 狀態"
+
+#~ msgid "x"
+#~ msgstr "X"
+
+#~ msgid "position"
+#~ msgstr "位置"
 
 #~ msgid "Nothing was selected, so nothing is activated."
 #~ msgstr "沒有選擇任何項目，所以無法動作。"
@@ -5504,6 +5226,18 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "Your job is ${status}. The id of your job is ${id}."
 #~ msgstr "您的職位是 ${status}。在您工作中所使用的id為 ${id}。"
 
+#~ msgid ""
+#~ "Click a name to create an item. Note that this screen only lists "
+#~ "descriptions of objects that are available at this location. For "
+#~ "additional information about an item see the ${silva_documentation}. <br /"
+#~ ">"
+#~ msgstr ""
+#~ "輸入名稱以建立一個項目。注意這個畫面僅顯示此位置可用的物件說明。項目相關的"
+#~ "其他資訊請看 ${silva_documentation}。"
+
+#~ msgid "rename objects in &#xab;${title}&#xbb;"
+#~ msgstr "在 &#xab;${title}&#xbb; 做物件更名"
+
 #~ msgid "&#xab;${item}&#xbb; could not be renamed to ${new} (invalid id)"
 #~ msgstr "&#xab;${item}&#xbb;無法重新命名為 ${new} (無效id)"
 
@@ -5513,6 +5247,9 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "day / month / year"
 #~ msgstr "日/月/年"
+
+#~ msgid "&nbsp;&nbsp;expiration time"
+#~ msgstr "&nbsp;&nbsp;失效日期"
 
 #~ msgid "approve new versions for publication at a later date: alt-l"
 #~ msgstr "稍後驗證發表的新版本：alt-l"
@@ -5538,10 +5275,61 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "Your job is ${status}. The id of your job is ${job_id}."
 #~ msgstr "您的工作為 ${status}。您的工作帳號為 ${status}。"
 
+#~ msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
+#~ msgstr "自動目次 &#xab;${title_or_id}&#xbb;"
+
 #~ msgid ""
 #~ "An automatic table of contents is generated from the items in its "
 #~ "location."
 #~ msgstr "從項目處產生一個自動目次。"
+
+#~ msgid ""
+#~ "Note that <span class=\"warning\">the index only displays links to "
+#~ "published content</span>, so the list may be empty if nothing is "
+#~ "published."
+#~ msgstr ""
+#~ "注意 <span class=\"warning\">此索引僅顯示已出版的內容</span>，若沒有任何出"
+#~ "版項目，則會顯示空值。"
+
+#~ msgid ""
+#~ "Dear ${user_id}<br /> You are not allowed to edit membership data of "
+#~ "member ${member_id}"
+#~ msgstr "親愛的 ${user_id}<br /> 您不被允許編輯組員資料 ${member_id}"
+
+#~ msgid "Add read only view here?"
+#~ msgstr "在此增加一個僅限閱讀的 view ?"
+
+#~ msgid "member data of"
+#~ msgstr "的組員資料"
+
+#~ msgid "ghost of &#xab;${name}&#xbb;"
+#~ msgstr "ghost 的 &#xab;${name}&#xbb;"
+
+#~ msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
+#~ msgstr "ghost 的 &#xab;${title}&#xbb; (${version_name} 版本)"
+
+#~ msgid "x <span> x </span>"
+#~ msgstr "x <span> x </span>"
+
+#~ msgid ""
+#~ "Note: an older version of this content is online.<br /> Publishing this "
+#~ "version will replace the public version."
+#~ msgstr ""
+#~ "注意： 此內容已有一舊版本在線上。<br /> 發行此版本會取代該公開版本。"
+
+#~ msgid ""
+#~ "This content was once published but is now closed.<br /> If you wish you "
+#~ "can make an editable copy in the ${editor}."
+#~ msgstr ""
+#~ "此內容曾經出版過但現在已關閉。<br /> 若希望能進一步做內容編輯，請複製到 "
+#~ "${editor}。"
+
+#~ msgid ""
+#~ "This content is published (online for the public).<br /> If you wish you "
+#~ "can make an editable copy by going to the ${editor}."
+#~ msgstr ""
+#~ "此內容已公開發行（線上公眾版）。<br /> 若您想製作一個可編輯的複本，請至 "
+#~ "${editor}."
 
 #~ msgid "could not delete ${id}: ${error}"
 #~ msgstr "無法刪除 ${id}：${error}"
@@ -5629,17 +5417,38 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "&#8211;"
 #~ msgstr "&#8211;"
 
+#~ msgid "<u>u</u>se clipboard..."
+#~ msgstr "使用剪貼薄..."
+
+#~ msgid "bac<u>k</u>..."
+#~ msgstr "退回..."
+
 #~ msgid "&#134;"
 #~ msgstr "&#134;"
+
+#~ msgid "date format: day / month / year &nbsp;23:59"
+#~ msgstr "日期格式：日/月/年 &nbsp;23:59"
 
 #~ msgid "&#134; acquireable"
 #~ msgstr "&#134; 可以請求"
 
+#~ msgid "<u>g</u>roups admin..."
+#~ msgstr "群組管理..."
+
 #~ msgid "select <u>a</u>ll"
 #~ msgstr "全選"
 
+#~ msgid "properties ${for_title}"
+#~ msgstr "${for_title} 的屬性"
+
 #~ msgid "This is the ${meta_type} \"${id}\""
 #~ msgstr "此為 ${meta_type} \"${id帳號}\""
+
+#~ msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
+#~ msgstr "lt;broken&gt; <!-- XXX 註解欄-->"
+
+#~ msgid "public view access restrictions for &#xab;${title}&#xbb;"
+#~ msgstr "對於 &#xab;${title}&#xbb; 僅能公開瀏覽"
 
 #~ msgid "&#xab;${user_id}&#xbb; allowed the ${role} role"
 #~ msgstr "#xab;${user_id}&#xbb; 允許此 ${role}  角色"
@@ -5649,6 +5458,14 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
 #~ msgstr "#xab;${user_id}&#xbb; 已被拒絕此 ${role} 角色"
+
+#~ msgid ""
+#~ "The addables settings can only be changed on Silva Publications. A "
+#~ "doesn&#8217;t have that capability."
+#~ msgstr "可增加的設定僅能在 Silva 出版品中變更。在此沒有此能力。"
+
+#~ msgid "${for_approved_version_of_title}"
+#~ msgstr "${for_approved_version_of_title}"
 
 #~ msgid ""
 #~ "This Silva Folder can be converted to a Publication (may take awhile if "
@@ -5661,11 +5478,35 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgstr ""
 #~ "此 Silva 出版品可以被轉換成 Silva 資料夾（若內容很多，可能會花許多時間）。"
 
+#~ msgid "Subscribability"
+#~ msgstr "可訂閱性"
+
+#~ msgid "This object is currently not subscribable."
+#~ msgstr "此主題目前無法訂閱"
+
+#~ msgid "This object is currently subscribable."
+#~ msgstr "此主題目前可訂閱"
+
+#~ msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
+#~ msgstr "為了 <strong> 確定 </strong> 登出，請等後五秒鐘或點此連結。"
+
+#~ msgid "logout link"
+#~ msgstr "登出連結"
+
+#~ msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
+#~ msgstr "當登入對話窗出現，選擇<strong>\"取消\"</strong>"
+
 #~ msgid "Up to Silva top"
 #~ msgstr "跳至Silva頂端"
 
 #~ msgid "Up one level"
 #~ msgstr "上一層"
+
+#~ msgid "&#xab;${title}&#xbb;"
+#~ msgstr "&#xab;${標題}&#xbb;"
+
+#~ msgid "Please fill in the following fields. <br /><br />"
+#~ msgstr "請根據以下欄位填寫。 <br /><br />"
 
 #~ msgid "Search"
 #~ msgstr "搜尋"
@@ -5714,11 +5555,15 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ "將會檢查作為絕對路徑的url，並視需要加入'http://'。相對路徑範圍很廣，能讓作"
 #~ "者建立有效的url。"
 
-#~ msgid "ghost folder of &#xab;${title}&#xbb;"
-#~ msgstr "&#xab;${title}&#xbb; 的ghost檔案夾"
-
-#~ msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
-#~ msgstr "自動目次 &#xab;${title_or_id}&#xbb;"
-
-#~ msgid "ghost of &#xab;${name}&#xbb;"
-#~ msgstr "ghost 的 &#xab;${name}&#xbb;"
+#~ msgid ""
+#~ "This is a special document that automagically displays a\n"
+#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
+#~ "index&#8217;\n"
+#~ "       document. In that case the parent folder shows a table of "
+#~ "contents\n"
+#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+#~ msgstr ""
+#~ "這是一份特殊的文件，將會自動顥示目次。\n"
+#~ "        通常這個 ’ 會被當做 ‘index’ 文件。\n"
+#~ "        在這種情形之下，當存取資料時，上一層的目錄會顯示目次內容 （例如："
+#~ "http://www.x.yz/silva/myFolder/ ）"
