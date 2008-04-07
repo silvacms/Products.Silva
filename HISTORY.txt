@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - 209497: Silva Link preview tab now displays rendered http link,
+        rather than just redirecting.
+
       - 100974: the preview tab in the SMI now previews using the
         public layout, with the SMI tabs still at the top.
 

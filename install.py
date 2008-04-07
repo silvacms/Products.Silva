@@ -485,6 +485,7 @@ def registerViews(reg):
     reg.register('preview', 'Silva Publication', ['public', 'Folder', 'preview'])
     reg.register('preview', 'Silva Root', ['public', 'Folder', 'preview'])
     reg.register('preview', 'Silva Ghost Version', ['public', 'Ghost', 'preview'])
+    reg.register('preview', 'Silva Link Version', ['public', 'Link', 'preview'])
     reg.register('preview', 'Silva Image', ['public', 'Image', 'preview'])
     reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
     reg.register('preview', 'Silva AutoTOC', ['public', 'AutoTOC', 'preview'])
@@ -529,7 +530,8 @@ def unregisterViews(reg):
                         'Silva Root',
                         'Silva Image',
                         'Silva Ghost Folder',
-                        'Silva AutoTOC']:
+                        'Silva AutoTOC',
+                        'Silva Link Version']:
         reg.unregister('preview', meta_type)
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
