@@ -45,6 +45,12 @@
 </style>
 <link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title" />
+<link href="globals/silvaContentStyle.css"
+  rel="stylesheet"
+  type="text/css"
+  tal:condition="python: not model.implements_container()"
+  tal:attributes="href string:$root_url/globals/silvaContentStyle.css"
+/>
 </head>
 
 <body>
