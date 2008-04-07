@@ -12,7 +12,7 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         sb = SilvaBrowser()
         # login
         status, url = sb.login('manager', 'secret', sb.smi_url())
-                # goto zmi/manage_main
+        # goto zmi/manage_main
         sb.go('http://nohost/manage_main')
         self.failUnless('Control_Panel (Control Panel)' in sb.browser.contents)
         # click Silva root
@@ -24,21 +24,21 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         # click service_extensions
         sb.click_href_labeled('service_extensions (Silva Product and Extension Configuration)')
         self.failUnless('Configure Silva Extension Products' in sb.browser.contents)
-        # uninstall Silva Documents
-        form = sb.browser.getForm(index=3)
+        # install Silva Documents
+        form = sb.browser.getForm(index=2)
         form.getControl(name='uninstall:method').click()
-        form = sb.browser.getForm(index=3)
+        form = sb.browser.getForm(index=2)
         self.failUnless('SilvaDocument uninstalled' in sb.browser.contents)
         # install Silva Documents
         form.getControl(name='install:method').click()
-        input = sb.browser.getForm(index=3).getControl(name='uninstall:method').value
+        input = sb.browser.getForm(index=2).getControl(name='uninstall:method').value
         self.failUnless('SilvaDocument installed' in sb.browser.contents)
         # install Silva External Sources
-        form = sb.browser.getForm(index=2)
+        form = sb.browser.getForm(index=4)
         form.getControl(name='install:method').click()
         self.failUnless('SilvaExternalSources installed' in sb.browser.contents)
         # uninstall Silva External Sources
-        form = sb.browser.getForm(index=2)
+        form = sb.browser.getForm(index=4)
         form.getControl(name='uninstall:method').click()
         self.failUnless('SilvaExternalSources uninstalled' in sb.browser.contents)
         # refresh Silva Core
