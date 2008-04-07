@@ -2114,17 +2114,21 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
         var id = this.idselect.options[this.idselect.selectedIndex].value;
         this.getUrlAndContinue(id, this._continueStartExternalSourceEdit);
     } else {
-        // validate the data and take further actions
-        var formdata = this._gatherFormData();
-        var doc = window.document;
-        var request = new XMLHttpRequest();
-        request.open('POST', this._url + '/validate_form_to_request', true);
-        var callback = new ContextFixer(this._addExternalSourceIfValidated, request, this);
-        request.onreadystatechange = callback.execute;
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	formdata += '&docref='+this.docref;
-        request.send(formdata);
+        this._validateAndSubmit();
     };
+};
+
+SilvaExternalSourceTool.prototype._validateAndSubmit = function _validateAndSubmit(ignorefocus) {
+    // validate the data and take further actions
+    var formdata = this._gatherFormData();
+    var doc = window.document;
+    var request = new XMLHttpRequest();
+    request.open('POST', this._url + '/validate_form_to_request', true);
+    var callback = new ContextFixer(this._addExternalSourceIfValidated, request, this, ignorefocus);
+    request.onreadystatechange = callback.execute;
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    formdata += '&docref='+this.docref;
+    request.send(formdata);
 };
 
 SilvaExternalSourceTool.prototype._continueStartExternalSourceEdit = function(url) {
@@ -2188,23 +2192,48 @@ SilvaExternalSourceTool.prototype._addFormToTool = function(object) {
         // insertion for now, needless to say it should be changed to DOM
         // manipulation asap...
         // XXX why is this.responseXML.documentElement.xml sometimes 'undefined'?
-        object.formcontainer.innerHTML = this.responseText;
-        object.idselect.style.display = 'none';
-        // the formcontainer will contain a table with a form
+        var responseText = this.responseText;
         var form = null;
-        var iterator = new NodeIterator(object.formcontainer);
-        while (form == null) {
-            var next = iterator.next();
-            if (next.nodeName.toLowerCase() == 'form') {
-                form = next;
+        if (responseText.indexOf(' class="elaborate"') > -1) {
+            object._showFormInWindow(object.formcontainer, responseText);
+        } else {
+            object.formcontainer.innerHTML = this.responseText;
+            object.idselect.style.display = 'none';
+            // the formcontainer will contain a table with a form
+            var iterator = new NodeIterator(object.formcontainer);
+            while (form == null) {
+                var next = iterator.next();
+                if (next.nodeName.toLowerCase() == 'form') {
+                    form = next;
+                };
             };
         };
         object._form = form;
     };
 };
 
+SilvaExternalSourceTool.prototype._showFormInWindow = function _showFormInWindow(formcontainer, responseText) {
+    if (this._opened_edit_window) {
+        this._opened_edit_window = false;
+        return this._form;
+    };
+    this._opened_edit_window = true;
+    var lpos = (screen.width - 760) / 2;
+    var tpos = (screen.height - 500) / 2;
+    var win = window.open("about:blank", "extFormWindow", "toolbar=no," + 
+                          "status=no,scrollbars=yes,resizable=yes," + 
+                          "width=760,height=500,left=" + lpos + 
+                          ",top=" + tpos);
+    this._extFormWindowOpened = true;
+    var doc = win.document;
+    //var body = doc.getElementsByTagName('body')[0];
+    doc.open();
+    doc.write(responseText);
+    doc.close();
+};
+
 SilvaExternalSourceTool.prototype._addExternalSourceIfValidated = 
-        function(object) {
+        function(object, ignorefocus) {
     if (this.readyState == 4) {
         if (this.status == '200') {
             // success, add the external source element to the document
@@ -2265,7 +2294,9 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
             };
             object.editor.content_changed = true;
             object.resetTool();
-            object.editor.updateState();
+            if (!ignorefocus) {
+                object.editor.updateState();
+            };
         } else if (this.status == '400') {
             // failure, provide some feedback and return to the form
             alert('Form could not be validated, error message: ' + this.responseText);
