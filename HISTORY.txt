@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - 100974: the preview tab in the SMI now previews using the
+        public layout, with the SMI tabs still at the top.
+
       - 101827: A) lookup window will now list containers for any type
         of lookup window.  You can click the container title to 
         "drill down" into the container, rather than (or in addition to)
