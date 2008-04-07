@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="global vein string:preview;
+    view    here;
+    model   request/model;
+    trigger model/security_trigger;
+    mangle  modules/Products/Silva/mangle;
+    url     model/absolute_url;
+    title   python: model.get_title_editable() or model.id;
+    root_url model/get_root_url;
+    global   publication model/get_publication;
+    global   containing_publication publication/../get_publication | publication;
+    message_type options/message_type | request/message_type | nothing;
+    message      options/message | request/message | nothing;
+    global nofeedback nofeedback | nothing;
+    global active_tab string:tab_preview;
+">
+
+<head>
+  <tal:block replace="structure request/model/@@set_content_type_and_nocache" />
+<title>
+  <tal:block content="title">title</tal:block> &#8211;
+  <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
+</title>
+<tal:block replace="nothing"> _______ base tag to handle Five methods with .. _______ </tal:block>
+<base tal:attributes="href string:${model/absolute_url}/edit/" target="_parent" />
+<link rel="shortcut icon"
+  tal:attributes="href string:$root_url/globals/silvacon.ico"
+/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style media="all"
+  type="text/css"
+  xml:space="preserve"
+  tal:content="structure python: view.css_imports(['silva.css'])"
+>
+@imports
+</style>
+<link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
+<link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title" />
+</head>
+
+<body>
+
+<metal:block use-macro="here/macro_tabs/macros/tabs" />
+
+<div class="workspace">
+<div class="middleground">
+  <div style="float:right"
+    tal:define="
+    permissions             view/get_silva_permissions;
+    versionmodel            python:model.implements_container() and model.get_default() or model;
+    unapproved_version      python:getattr(versionmodel,'get_unapproved_version',lambda: None)();
+    have_approve_permission permissions/ApproveSilvaContent | nothing;
+  ">
+   <a
+    class="executor"
+      title="publish this document: alt-p"
+      accesskey="p"
+      tal:attributes="href string:${versionmodel/absolute_url}/edit/quick_publish?return_to=tab_preview"
+      i18n:translate=""
+      i18n:attributes="title"
+      tal:condition="python: unapproved_version and have_approve_permission">
+      publish&nbsp;now
+   </a>
+  </div>
+  &nbsp;
+</div>
+
+<tal:if condition="message">
+  <div class="feedback"
+    tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+    <span tal:replace="structure message">
+      message
+    </span>
+    <tal:block tal:condition="python:message_type == 'feedback'">
+      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+    </tal:block>
+  </div>
+</tal:if>
+<tal:block
+  tal:condition="python:not (message or nofeedback)">
+  <div class="fixed-clear"
+    tal:define="in_development_mode model/sec_in_development_mode"
+    tal:omit-tag="nofeedback">
+    <tal:if condition="in_development_mode">
+      <a class="reveal"
+        href="/manage_main"
+        title="jump to zope root: alt-z"
+        accesskey="z"
+        i18n:attributes="title"
+        i18n:translate="">
+        zroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva root in zodb: alt-'"
+        tal:attributes="href string:$root_url/manage_main"
+        accesskey="'"
+        i18n:attributes="title"
+        i18n:translate="">
+        sroot...
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a class="reveal"
+        title="jump to silva services: alt-`"
+        tal:attributes="href string:$root_url/manage_services"
+        accesskey="`"
+        i18n:attributes="title"
+        i18n:translate="">
+        sservices...
+      </a>
+    </tal:if>
+    <tal:if condition="not: in_development_mode">
+      &nbsp;
+    </tal:if>
+  </div>
+</tal:block>
+
+</div>
+</body>
+</html>

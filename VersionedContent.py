@@ -195,15 +195,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     def public_preview(self):
         """Override public preview to add back and publish now button.
         """
-        # this is a bit nasty: to allow displaying some additional buttons
-        # in preview mode (the 'back' and 'publish now' ones) we add
-        # some HTML to the result before sending it to the browser
-        preview_buttons = PageTemplateFile(
-            'www/preview_buttons', globals(),
-            __name__ = 'preview_buttons').__of__(self)
 
         REQUEST = self.REQUEST
-        SESSION = REQUEST.SESSION
         
         # have to make sure the clients don't cache the public preview page
         # because of the back button
@@ -227,33 +220,7 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             else:
                 response.addHeader(key, value)
                 
-        # make sure the back button points to the last edit screen visited
-        back_url = SESSION.get('public_preview_back_url', None)
-        # [sic]
-        referer = REQUEST.get('HTTP_REFERER', None)
-        if (referer and 'edit' in referer.split('/') and 
-                not referer.endswith('/public_html')):
-            # set the referer as the target for the back button...
-            SESSION['public_preview_back_url'] = referer
-            back_url = referer
-
-        # check whether this should have a publish now button
-        show_publish_now = (
-            self.get_unapproved_version() is not None and
-            getSecurityManager().checkPermission(
-            'Approve Silva content', self))
-
-        # prepare arguments for preview_buttons page template
-        args = {
-            'message': REQUEST.get('message', ''),
-            'message_type': REQUEST.get('message_type', ''),
-            'show_publish_now': show_publish_now,
-            'back_url': back_url,
-            }
-        # now render html
-        buttonhtml = preview_buttons(**args)
-        # XXX yuck, this doesn't deliver valid HTML by definition..
-        return '%s%s' % (self.preview(), buttonhtml)
+        return self.preview()
     
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):

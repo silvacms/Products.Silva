@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global vein string:preview"
+  tal:define="global vein string:preview; active_tab string:tab_preview"
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">

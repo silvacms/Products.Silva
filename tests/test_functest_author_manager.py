@@ -39,9 +39,18 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         tab_name = sb.get_tabs_named('editor')
         self.failUnless(tab_name in sb.browser.contents)
         sb.click_tab_named('preview')
+        # get the url of the top frame, then click the button labeled publish now
         self.assertEquals(sb.browser.url,
                           'http://nohost/root/test_document/edit/tab_preview')
+        preview_top_url = sb.get_frame_url(0)
+        self.assertEquals(preview_top_url,
+                          'http://nohost/root/test_document/edit/tab_preview_frame_top?message=&message_type=')
+        sb.go(preview_top_url)
         status, url = sb.click_button_labeled('publish now')
+        preview_top_url = sb.get_frame_url(0)
+        self.assertEquals(preview_top_url,
+                          'http://nohost/root/test_document/edit/tab_preview_frame_top?message=Version approved.&message_type=feedback')
+        sb.go(preview_top_url)
         self.failUnless('Version approved.' in sb.browser.contents)
         sb.go(sb.smi_url())
         sb.select_delete_content('test_document')

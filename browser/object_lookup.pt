@@ -437,7 +437,8 @@
                         i18n:attributes="title;value"
                         onclick="window.close();return false;"
                       />
-                      <input class="button executor" style="visibility: hidden"
+<!-- placing references now happens automatically when the radio button is pressed
+                      <input class="button executor"
                         type="button"
                         name="place"
                         value="place reference..."
@@ -448,7 +449,7 @@
                         'object'); return false;"
                         tal:condition="python: publishables or assets or default"
                         i18n:attributes="title;value"
-                      />
+                      />-->
 		      <input class="button executor"
                         type="button"
                         name="place_container"

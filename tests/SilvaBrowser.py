@@ -111,6 +111,17 @@ class SilvaBrowser(object):
         end = self.browser.contents.find('</div>', start)
         return self.browser.contents[start:end].strip()
 
+    def get_frame_url(self,frameindex):
+        """
+        return the src of the [frameindex] frame of a frameset
+        """
+        doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
+        result = []
+        frames = doc.getElementsByTagName('frame')
+        if len(frames) >= frameindex + 1:
+            return frames[0].getAttribute('src')
+        return None
+
     def get_content_data(self):
         """
         return a list of dictionaries describing the content objects

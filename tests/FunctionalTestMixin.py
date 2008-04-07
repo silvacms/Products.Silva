@@ -20,7 +20,7 @@ publish = []
 contents.append('contents')
 contents.append('add a new item')
 preview.append('preview')
-preview.append('see the content in the public layout:')
+preview.append('root &#8211;\n   preview')
 properties.append('properties')
 properties.append('various settings:')
 access.append('access')
