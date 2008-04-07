@@ -76,12 +76,8 @@ h2 {
         <tal:block replace="nothing">
           _____________________ sidebar _____________________
         </tal:block>
-        <td class="left">
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
-            <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_preview', vein)" />
-            </metal:fill-slot>
-          </metal:block>
+        <td class="left" tal:define="template_id string:tab_preview">
+          <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
         </td>
         <tal:block replace="nothing">
           _____________________ main _____________________
