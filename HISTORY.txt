@@ -123,7 +123,8 @@ Silva changes
         source in a document so it now says "es <<source title>>" and
         the source id is displayed on hover.  External Sources in
         documents now display the title inside the "<< >>" and the id
-        when hovered over.
+        when hovered over.  The description of the external source
+        is also included in the kupu content.
 
       - AutoTOCs are now more configurable, with the following new features:
         1. choose Silva types that AutoTOCs will list (any Silva type,
