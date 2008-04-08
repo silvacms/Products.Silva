@@ -7,8 +7,15 @@ Silva changes
 
     Backported from trunk:
 
-      - Don't add add a silva find instance by default, instead
-        make it an option in the silvaroot addform
+      - Don't add add a silva find instance by default, instead make
+        it an option in the silvaroot addform
+
+    Features added:
+
+      - added support for 'elaborate' code sources, that show their
+        add/edit form in a pop-up instead of in the kupu
+        toolbox. Useful when code sources have a large number of
+        variables.
 
     Bugs fixed:
 
@@ -16,8 +23,8 @@ Silva changes
         reason the session gets lost, that no longer results in an
         error.
 
-      - 185422: Javascript prompt to save changes in kupu when
-        leaving the editor wasn't working
+      - 185422: Javascript prompt to save changes in kupu when leaving
+        the editor wasn't working
 
       Ported from 1.6 branch:
 
