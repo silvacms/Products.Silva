@@ -145,6 +145,11 @@ Silva changes
 
     Features ported from 2.0 branch
 
+      - added support for 'elaborate' code sources, that show their
+        add/edit form in a pop-up instead of in the kupu
+        toolbox. Useful when code sources have a large number of
+        variables.
+
       - 128518 Import of non existing values for (multi)list metadata
         values gave a formulator SelectionValidator error.
 
