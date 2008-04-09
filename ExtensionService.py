@@ -164,7 +164,7 @@ class ExtensionService(SimpleItem.SimpleItem):
     security.declareProtected('View management screens', 'get_version_info')
     def get_version_info(self, name):
         mname = extensionRegistry.get_product_module_name(name)
-        product_info = self.restrictedTraverse('/Control_Panel/Products/' + mname)
+        product_info = self.unrestrictedTraverse('/Control_Panel/Products/' + mname)
         return product_info.version
         
     def get_installed_names(self):
