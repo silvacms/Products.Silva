@@ -1,0 +1,169 @@
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="    
+    model           request/model;
+    publication     model;
+    tree            publication/get_container_tree;
+    publication_url string:${publication/absolute_url}/edit/{__vein_id__};
+">
+
+
+
+<tr tal:replace="nothing"> 
+  ______________ stack publication row ______________ 
+</tr>
+<tr>
+  <td class="{__class__}"
+    style="border-top:none;">
+    <a class="right slide-links" 
+      title="slide to the publish screen"
+      tal:attributes="href string:${publication/absolute_url}/edit/tab_status"
+      i18n:attributes="title">
+      &nbsp;
+    </a>
+    <a class="navicon"
+      title="up to top contents of publication"
+      tal:attributes="href string:${publication/absolute_url}/edit/{__vein_id__};"
+      i18n:attributes="title">
+      <img tal:replace="structure python:here.render_icon(model.get_publication())" />
+    </a>
+    <div class="normal"
+      tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
+      <a class="blacklink"
+        href="top"
+        title="up to top of publication"
+        tal:attributes="href publication_url"
+        tal:content="python: publication.get_short_title_editable() == '' and publication.id or publication.get_short_title_editable()"
+        i18n:attributes="title">
+        Publication
+      </a>
+    </div>
+  </td>
+</tr>
+
+<span tal:replace="nothing">
+  ______________ stack iteration ______________
+</span>
+
+<tal:block repeat="indent_item tree">
+  <tr tal:define="
+    item   python:indent_item[1];
+    indent python:indent_item[0];
+    " tal:attributes="class python:'treelevel_%s' % indent">
+    <td class="{__class__}"
+      tal:define="
+        item_url string:${item/absolute_url};
+        vein_url string:${item_url}/edit/{__vein_id__};
+        title    item/get_short_title_editable">
+      <a class="right slide-links" 
+        title="slide to the publish screen"
+        tal:attributes="href string:${item_url}/edit/tab_status"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
+      <a class="left slide-links"
+        title="slide to the contents screen"
+        tal:attributes="href string:${item_url}/edit"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
+      <a class="navicon"
+        tal:attributes="
+          href  string:${vein_url};
+          style python:'padding-left:'+str(indent * 10 + 4)+'px';
+          title item/meta_type;
+        "
+        i18n:attributes="title">
+        <img tal:replace="structure python:here.render_icon(item)" />
+      </a>
+      <div class="normal"
+        tal:attributes="onclick string:javascript:window.location='${vein_url}'">
+        <a class="blacklink"
+          tal:attributes="
+            href string:${vein_url};
+            title string:id: ${item/id};"
+          tal:content="title">
+          title
+        </a>
+        <a class="normal"
+          tal:attributes="
+            href string:${vein_url};
+            title string:id: ${item/id};"
+          tal:condition="python:title == ''"
+          tal:content="item/id"
+          i18n:translate="">
+            no title
+        </a>
+      </div>
+    </td>
+  </tr>
+  <tr class="controls"
+    tal:condition="repeat/indent_item/end">
+    <td style="border-top:1px solid #abc">
+    </td>
+  </tr>
+</tal:block>
+<script language="javascript">
+
+function hide_treelevels(){
+var tables = document.getElementsByTagName('table')
+var do_indent = false;
+for (t=0; t<tables.length; t++){
+  var table = tables[t];
+  if (table.className == 'listing'){
+    var tds = table.getElementsByTagName('td');
+    for(d=0;d<tds.length;d++){
+      var td = tds[d];
+      if (td.className == 'selected'){
+        var seltr = td.parentNode;
+        if (seltr.className.substr(0,9) == 'treelevel'){
+          var level = seltr.className.split('_')[1]-0;
+        }else{
+          var level = -1
+        }
+          var selnodes = [seltr];
+          for (si=0; si<level; si++){
+            seltr = seltr.previousSibling;
+            while (seltr.nodeType != 1){
+              seltr = seltr.previousSibling;
+            }
+            selnodes[selnodes.length] = seltr;
+          }
+          var trs = table.getElementsByTagName('tr')
+          for (r=0;r<trs.length;r++){
+            var tr = trs[r];
+            if (tr == seltr)do_indent=true;
+            if (tr.className.substr(0,9) == 'treelevel'){
+              var curlevel = tr.className.split('_')[1]-0;
+              if (curlevel != 0){
+                if (do_indent == false){
+                  tr.style.display = 'none';
+                }else{
+                  if (curlevel > level+1){
+                    tr.style.display = 'none';
+                  }
+                }
+              }
+            }
+            var is_selnode = false;
+            for (si=0;si<selnodes.length;si++){
+              if (selnodes[si] == tr) is_selnode = true;
+            }
+            if (!is_selnode && curlevel <= level) do_indent=false;
+          }
+        }
+      }
+    }
+  }
+}
+hide_treelevels();
+
+</script>
+</html>
