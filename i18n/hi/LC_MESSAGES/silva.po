@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Thu Apr  3 17:17:23 2008\n"
+"POT-Creation-Date: Fri Apr 11 10:13:02 2008\n"
 "PO-Revision-Date: 2008-02-08 15:58+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Hindi <hi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-04-02 06:00+0000\n"
+"X-Launchpad-Export-Date: 2008-04-11 07:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
@@ -278,7 +278,7 @@ msgstr ""
 msgid "A previous version has that id already (${id})."
 msgstr ""
 
-#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:12
+#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:16
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
@@ -378,19 +378,11 @@ msgstr ""
 msgid "cancel"
 msgstr "रद्द करें"
 
-#: /browser/object_lookup.pt:440
-msgid "insert a reference to this asset: alt-p"
-msgstr ""
-
-#: /browser/object_lookup.pt:440
-msgid "place reference..."
-msgstr ""
-
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "place reference to container..."
 msgstr ""
 
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "insert a reference to this container: alt-c"
 msgstr ""
 
@@ -3314,7 +3306,7 @@ msgstr ""
 msgid "Revoked approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/quick_publish.py:27
+#: /views/edit/VersionedContent/quick_publish.py:29
 #: /views/edit/VersionedContent/tab_metadata_publish.py:24
 #: /views/edit/VersionedContent/tab_status_approve.py:36
 msgid "Version approved."
@@ -4273,7 +4265,7 @@ msgstr ""
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_preview.pt:105
+#: /views/edit/tab_preview_noframes.pt:101
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 
@@ -4556,27 +4548,27 @@ msgstr ""
 msgid "Next ${n} items &raquo;"
 msgstr ""
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "jump to zope root: alt-z"
 msgstr ""
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "zroot..."
 msgstr ""
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "jump to silva services: alt-`"
 msgstr ""
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "sservices..."
 msgstr ""
 
@@ -4621,30 +4613,32 @@ msgstr ""
 msgid "request access"
 msgstr ""
 
-#: /views/macro_index.pt:83
+#: /views/macro_index.pt:83 /views/edit/tab_preview_frame_top.pt:46
 msgid "Help with access keys"
 msgstr ""
 
-#: /views/macro_index.pt:84
+#: /views/macro_index.pt:84 /views/edit/tab_preview_frame_top.pt:47
 msgid "Silva copyright info"
 msgstr ""
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "see the content in the public layout: alt-;"
 msgstr ""
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "public&nbsp;preview..."
 msgstr ""
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish this document: alt-p"
 msgstr ""
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish&nbsp;now"
 msgstr ""

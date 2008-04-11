@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Thu Apr  3 17:17:23 2008\n"
-"PO-Revision-Date: 2008-03-25 13:00+0000\n"
-"Last-Translator: Yves MATHIEU <ymathieu@moulins-vichy.cci.fr>\n"
+"POT-Creation-Date: Fri Apr 11 10:13:02 2008\n"
+"PO-Revision-Date: 2008-04-11 07:46+0000\n"
+"Last-Translator: Sylvain Viollon <sylvain@infrae.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-04-02 06:00+0000\n"
+"X-Launchpad-Export-Date: 2008-04-11 07:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: fr\n"
 "Domain: silva\n"
@@ -350,7 +350,7 @@ msgstr "La version publique a déjà l'id (${id})."
 msgid "A previous version has that id already (${id})."
 msgstr "Une version précédente a déjà l'identifiant ${id}."
 
-#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:12
+#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:16
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
@@ -358,7 +358,7 @@ msgstr "Il n'y a pas de version non approuvée à approuver."
 
 #: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
-msgstr "Utiliser language du navigateur"
+msgstr "Utiliser la langue du navigateur"
 
 #: /adapters/version_management.py:115
 msgid "Can not delete all versions"
@@ -450,19 +450,11 @@ msgstr "annuler opération: alt-c"
 msgid "cancel"
 msgstr "annuler"
 
-#: /browser/object_lookup.pt:440
-msgid "insert a reference to this asset: alt-p"
-msgstr "insérer une référence à cet élément: alt-p"
-
-#: /browser/object_lookup.pt:440
-msgid "place reference..."
-msgstr "insérer la référence..."
-
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "place reference to container..."
 msgstr ""
 
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "insert a reference to this container: alt-c"
 msgstr ""
 
@@ -2357,7 +2349,7 @@ msgstr "${deleted_ids} ont été supprimés."
 
 #: /views/edit/Container/tab_access_groups_delete.py:32
 msgid "Could not delete ${not_deleted_ids}."
-msgstr "Ne peut pas effacer ${not_deleted_ids}."
+msgstr "Ne peut pas supprimer ${not_deleted_ids}."
 
 #: /views/edit/Container/tab_edit.pt:130 /views/edit/Container/tab_edit.pt:196
 msgid "modify"
@@ -2365,7 +2357,7 @@ msgstr "modifier"
 
 #: /views/edit/Container/tab_edit.pt:142
 msgid "shift"
-msgstr "bouger"
+msgstr "ré-ordonner"
 
 #: /views/edit/Container/tab_edit.pt:261
 #: /views/edit/Container/GhostFolder/tab_edit.pt:316
@@ -2419,7 +2411,7 @@ msgstr "renommer et changer les titres des éléments: alt-r"
 
 #: /views/edit/Container/tab_edit.pt:491
 msgid "rename..."
-msgstr "renommer&nbsp;..."
+msgstr "renommer ..."
 
 #: /views/edit/Container/tab_edit.pt:500
 msgid "cut"
@@ -2468,15 +2460,15 @@ msgstr "publier maintenant"
 
 #: /views/edit/Container/tab_edit.pt:575
 msgid "close published items: alt-l"
-msgstr "fermer items publiés: alt-l"
+msgstr "fermer les éléments  publiés: alt-l"
 
 #: /views/edit/Container/tab_edit.pt:80
 msgid "new..."
-msgstr "nouveau..."
+msgstr "nouveau ..."
 
 #: /views/edit/Container/tab_edit.pt:80
 msgid "add a new item - alt-n"
-msgstr "ajouter nouvel item: alt-s"
+msgstr "ajouter un nouvel élément: alt-s"
 
 #: /views/edit/Container/tab_edit_close.py:15
 #: /views/edit/Container/tab_status_close.py:16
@@ -2536,9 +2528,9 @@ msgid ""
 "in the Publish screen (alt-5).</span>"
 msgstr ""
 "Effacées ${deleted_ids}, <span class=\"error\">mais pourrait ne pas effacer "
-"${not_deleted_ids}. Probablement une version publiée qui doit être fermée, "
-"ou une version approuvée qui a besoin d'être annulée. Changer l'état dans "
-"l'écran de Publication (alt-5).</span>"
+"${not_deleted_ids}. Probablement une version publiée doit être fermée, ou "
+"une version approuvée a besoin d'être annulée. Changer l'état dans l'écran "
+"de Publication (alt-5).</span>"
 
 #: /views/edit/Container/tab_edit_delete.py:40
 msgid ""
@@ -2626,7 +2618,7 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:247
 msgid "import zip"
-msgstr "importer zip"
+msgstr "importer un fichier zip"
 
 #: /views/edit/Container/tab_edit_import.pt:305
 msgid "upload a document in word format (.doc) for conversion"
@@ -2664,7 +2656,7 @@ msgstr "aller ver l'écran exportation: alt-e"
 
 #: /views/edit/Container/tab_edit_import.pt:77
 msgid "import silva xml"
-msgstr "importer silva xml"
+msgstr "importer un fichier silva xml"
 
 #: /views/edit/Container/tab_edit_import_docma.py:19
 msgid "Select a file for upload"
@@ -2727,7 +2719,7 @@ msgstr "Aucun choix, donc aucun déplacement"
 
 #: /views/edit/Container/tab_edit_move_to.py:25
 msgid "First choose a position number."
-msgstr "D'abord choisir un nombre de position"
+msgstr "D'abord choisir une position"
 
 #: /views/edit/Container/tab_edit_move_to.py:41
 msgid "Object(s) ${ids} moved"
@@ -2735,19 +2727,19 @@ msgstr "Objet(s) ${ids} déplacé(s)"
 
 #: /views/edit/Container/tab_edit_move_to.py:45
 msgid ", <span class=\"error\">but could not move ${ids}</span>"
-msgstr ", <span class=\"error\">mais pourrait ne pas se déplacer ${ids}</span>"
+msgstr ", <span class=\"error\">mais ne peut pas déplacer ${ids}</span>"
 
 #: /views/edit/Container/tab_edit_move_to.py:51
 msgid "Could not move ${ids}."
-msgstr "Pourrait ne pas être déplacé ${ids}."
+msgstr "${ids} ne peuvent pas être déplacés."
 
 #: /views/edit/Container/tab_edit_move_up.py:16
 msgid "Moved ${id} up."
-msgstr "Déplacé vers le haut ${id}."
+msgstr "${id} a été déplacé vers le haut."
 
 #: /views/edit/Container/tab_edit_move_up.py:20
 msgid "Could not move ${id} up."
-msgstr "Pourrait ne pas être déplacé vers le haut ${id} ."
+msgstr "${id} ne peut pas être déplacé vers le haut ."
 
 #: /views/edit/Container/tab_edit_new.pt:121
 msgid "Sorry, you're not authorized to add anything in this location."
@@ -2870,7 +2862,7 @@ msgstr "Transformé en publication"
 
 #: /views/edit/Container/tab_status.pt:108
 msgid "modify / preview"
-msgstr "modifier /apperçu"
+msgstr "modifier / aperçu"
 
 #: /views/edit/Container/tab_status.pt:111
 msgid "revision"
@@ -3026,7 +3018,7 @@ msgstr "exporter..."
 
 #: /views/edit/Container/tab_status.pt:81 /views/edit/Container/tab_edit.pt:90
 msgid "import xml data or a zip file: alt-i"
-msgstr "importer fichiers xml ou fichiers zip: alt-i"
+msgstr "importer un fichier xml ou zip: alt-i"
 
 #: /views/edit/Container/tab_status.pt:81
 #: /views/edit/Container/tab_status_export.pt:100
@@ -3155,7 +3147,7 @@ msgstr "raccourci: alt-e"
 #: /views/edit/Container/tab_status_export.pt:314
 #: /views/edit/Container/tab_edit_import.pt:285
 msgid "docma icon"
-msgstr "icon docma"
+msgstr "icone docma"
 
 #: /views/edit/Container/tab_status_export.pt:322
 #: /views/edit/Container/tab_edit_import.pt:293
@@ -3184,7 +3176,7 @@ msgstr "adresse email"
 #: /views/edit/Container/tab_status_export.pt:419
 #: /views/edit/Container/tab_edit_import.pt:350
 msgid "An e-mail will be sent to you when the item is processed."
-msgstr "Un email vous sera adressé quand l'item sera traité"
+msgstr "Un email vous sera adressé quand l'élément sera traité"
 
 #: /views/edit/Container/tab_status_export.pt:425
 msgid "choose a template"
@@ -3200,7 +3192,7 @@ msgid ""
 "This description will be shown in the queue and the list of processed items."
 msgstr ""
 "Cette description sera présenté dans la file d'attente et dans la liste des "
-"items traités"
+"éléments traités."
 
 #: /views/edit/Container/tab_status_export.pt:468
 msgid "export to Docma"
@@ -3603,7 +3595,7 @@ msgstr "Document déjà publié"
 msgid "Revoked approval."
 msgstr "Approbation annulée."
 
-#: /views/edit/VersionedContent/quick_publish.py:27
+#: /views/edit/VersionedContent/quick_publish.py:29
 #: /views/edit/VersionedContent/tab_metadata_publish.py:24
 #: /views/edit/VersionedContent/tab_status_approve.py:36
 msgid "Version approved."
@@ -4074,7 +4066,7 @@ msgstr "Recherche pour '${string}'."
 
 #: /views/edit/lookup_ui.pt:110
 msgid "search"
-msgstr "recherche"
+msgstr "rechercher"
 
 #: /views/edit/lookup_ui.pt:130 /views/edit/lookup_ui.pt:199
 msgid "add checked users to clipboard: alt-a"
@@ -4110,11 +4102,11 @@ msgstr "${u}tiliser le presse-papier..."
 
 #: /views/edit/lookup_ui.pt:230 /views/edit/lookup_ui_direct.pt:140
 msgid "remove user"
-msgstr "enlever utilisateur"
+msgstr "enlever l'utilisateur"
 
 #: /views/edit/lookup_ui.pt:230 /views/edit/lookup_ui_direct.pt:140
 msgid "remove users from the clipboard: alt-r"
-msgstr "enlever utilisateurs du presse-papier: alt-r"
+msgstr "enlever des utilisateurs du presse-papier: alt-r"
 
 #: /views/edit/lookup_ui.pt:45 /views/edit/lookup_ui_direct.pt:45
 msgid "return to previous screen: alt-k"
@@ -4130,7 +4122,7 @@ msgstr "voir utilisateur à &#xab;${title_or_id}&#xbb;"
 
 #: /views/edit/lookup_ui.pt:85
 msgid "user search"
-msgstr "recherche utilisateur"
+msgstr "rechercher un utilisateur"
 
 #: /views/edit/lookup_ui.pt:94
 msgid "name (or part of name)"
@@ -4179,7 +4171,7 @@ msgstr "contenu acquis"
 
 #: /views/edit/macro_groups_listing.pt:106
 msgid "select_groups"
-msgstr "select_groups"
+msgstr "sélectioner un groupe"
 
 #: /views/edit/macro_groups_listing.pt:119
 msgid "no_groups_available"
@@ -4191,7 +4183,7 @@ msgstr "groupes ${type} existants"
 
 #: /views/edit/macro_groups_listing.pt:78
 msgid "groups administration: alt-g"
-msgstr "administration de groupes : Alt+g"
+msgstr "administration des groupes: Alt+g"
 
 #: /views/edit/macro_groups_listing.pt:85
 msgid "${g}roups admin..."
@@ -4200,17 +4192,17 @@ msgstr ""
 #: /views/edit/macro_groups_listing.pt:91
 #: /views/edit/macro_user_lookup_clipboard.pt:57
 msgid "ctrl-click to multi-select"
-msgstr "ctrl-click pour sélection multiple"
+msgstr "ctrl-click pour faire une sélection multiple"
 
 #: /views/edit/macro_select_all.pt:14 /views/edit/macro_select_all.pt:26
 #: /views/edit/Container/tab_status.pt:100
 #: /views/edit/Container/tab_edit.pt:111 /views/edit/Container/tab_edit.pt:118
 msgid "select all: alt-a"
-msgstr "sélectionner tout : Alt+a"
+msgstr "sélectionner tout: Alt+a"
 
 #: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:122
 msgid "select all"
-msgstr "sélectionner tout"
+msgstr "tout sélectionner"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:24
 msgid "user clipboard"
@@ -4218,20 +4210,20 @@ msgstr "presse-papier utilisateur"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 msgid "lookup users..."
-msgstr "voir utilisateurs..."
+msgstr "rechercher des utilisateurs..."
 
 #: /views/edit/macro_user_lookup_clipboard.pt:32
 #: /views/edit/macro_user_lookup_clipboard.pt:42
 msgid "lookup users: alt-l"
-msgstr "voir utilisateurs : Alt+l"
+msgstr "rechercher des utilisateurs: Alt+l"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:42
 msgid "add users..."
-msgstr "ajouter des utilisateurs&nbps;..."
+msgstr "ajouter des utilisateurs ..."
 
 #: /views/edit/macro_user_lookup_clipboard.pt:71
 msgid "select users:"
-msgstr "choisir les utilisateurs :"
+msgstr "choisir les utilisateurs:"
 
 #: /views/edit/macro_user_lookup_clipboard.pt:86
 msgid "No users on clipboard"
@@ -4269,7 +4261,7 @@ msgstr "vers niveau zéro de la publication: alt-["
 
 #: /views/edit/macro_vein_navigation.pt:66
 msgid "reload screen"
-msgstr "rafraîchir écran"
+msgstr "rafraîchir l'écran"
 
 #: /views/edit/macro_view_metadata.pt:146
 msgid "first 'un-approve' this item in order to edit: alt-r"
@@ -4302,7 +4294,7 @@ msgstr "ensemble de méta-données"
 
 #: /views/edit/promptWindow.pt:21
 msgid "session timeout"
-msgstr "pause de session"
+msgstr "expiration de la session"
 
 #: /views/edit/promptWindow.pt:27
 msgid ""
@@ -4318,7 +4310,7 @@ msgstr ""
 
 #: /views/edit/promptWindow.pt:35
 msgid "cancel the automatic save action: alt-c"
-msgstr "annuler sauvegarde automatique"
+msgstr "annuler la sauvegarde automatique"
 
 #: /views/edit/promptWindow.pt:44
 msgid " save "
@@ -4355,16 +4347,16 @@ msgstr "choisir rôle à attribuer"
 #: /views/edit/tab_access.pt:155 /views/edit/tab_access.pt:299
 #: /views/edit/tab_access.pt:460 /views/edit/tab_access.pt:505
 msgid "select role:"
-msgstr "choisir rôle"
+msgstr "choisir un rôle"
 
 #: /views/edit/tab_access.pt:160
 msgid "assign role"
-msgstr "attribuer rôle"
+msgstr "attribuer le rôle"
 
 #: /views/edit/tab_access.pt:160 /views/edit/tab_access.pt:311
 #: /views/edit/tab_access.pt:466
 msgid "assign a local role to selected user(s)"
-msgstr "attribuer  rôle local à utilisateur(s) choisi(s)"
+msgstr "attribuer le rôle local à un(des) utilisateur(s) choisi(s)"
 
 #: /views/edit/tab_access.pt:171
 msgid "revoke selected role(s) from selected user(s)"
@@ -4372,7 +4364,7 @@ msgstr "annuler rôle(s) choisi(s) d'utilisateur(s) choisi(s)"
 
 #: /views/edit/tab_access.pt:171
 msgid "revoke role"
-msgstr "annuler rôle"
+msgstr "retirer le rôle"
 
 #: /views/edit/tab_access.pt:200
 msgid "pending requests for roles"
@@ -4388,7 +4380,7 @@ msgstr "est approuvé"
 
 #: /views/edit/tab_access.pt:247
 msgid "No roles have been requested."
-msgstr "Aucun rôle demandé"
+msgstr "Aucun rôle n'est demandé."
 
 #: /views/edit/tab_access.pt:254
 msgid "access key: alt-d"
@@ -4396,7 +4388,7 @@ msgstr "touche d'accès: alt-d"
 
 #: /views/edit/tab_access.pt:254
 msgid "deny role"
-msgstr "Réfuser rôle"
+msgstr "refuser le rôle"
 
 #: /views/edit/tab_access.pt:266
 msgid "access key: alt-g"
@@ -4404,7 +4396,7 @@ msgstr "touche d'accès: alt-g"
 
 #: /views/edit/tab_access.pt:266
 msgid "grant role"
-msgstr "accorder rôle"
+msgstr "accorder le rôle"
 
 #: /views/edit/tab_access.pt:274
 msgid "access key: alt-a"
@@ -4416,7 +4408,7 @@ msgstr "Accorder et approuver"
 
 #: /views/edit/tab_access.pt:311 /views/edit/tab_access.pt:514
 msgid "assign"
-msgstr "attribue"
+msgstr "attribuer"
 
 #: /views/edit/tab_access.pt:334
 msgid "A Groups Service is not installed"
@@ -4595,7 +4587,7 @@ msgstr "pour version approuvée de&#xab;${title}&#xbb;"
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr "pour la version publique de &#xab;${title}&#xbb;"
 
-#: /views/edit/tab_preview.pt:105
+#: /views/edit/tab_preview_noframes.pt:101
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr "Ceci est une version privée. Vous pouvez la voir, mais pas le public."
 
@@ -4891,27 +4883,27 @@ msgstr "&laquo; Précedents ${n} items"
 msgid "Next ${n} items &raquo;"
 msgstr "Suivant ${n} items &raquo;"
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "jump to zope root: alt-z"
 msgstr "aller à la racine zope: alt-z"
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "zroot..."
 msgstr "zracine..."
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "sroot..."
 msgstr "sracine..."
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "jump to silva root in zodb: alt-'"
 msgstr "aller à la racine silva dans zodb: alt-'"
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "jump to silva services: alt-`"
 msgstr "aller à services silva: alt-`"
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "sservices..."
 msgstr "sservices..."
 
@@ -4956,30 +4948,32 @@ msgstr "Demander un rôle supplémentaire dans cet endroit: alt-,"
 msgid "request access"
 msgstr "Demande d'accès"
 
-#: /views/macro_index.pt:83
+#: /views/macro_index.pt:83 /views/edit/tab_preview_frame_top.pt:46
 msgid "Help with access keys"
 msgstr "Aide pour les raccourcis"
 
-#: /views/macro_index.pt:84
+#: /views/macro_index.pt:84 /views/edit/tab_preview_frame_top.pt:47
 msgid "Silva copyright info"
 msgstr "info copyright Silva"
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "see the content in the public layout: alt-;"
 msgstr "voir contenu d'apperçu public: alt-;"
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "public&nbsp;preview..."
 msgstr "aperçu&nbsp;public..."
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish this document: alt-p"
 msgstr "publier ce document: alt-p"
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish&nbsp;now"
 msgstr "publier&nbsp;maintenant"
@@ -6066,6 +6060,12 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ "       “index”. Dans ce cas le dossier parent affiche la table des "
 #~ "matières\n"
 #~ "       lorsqu’on y accède (par ex. http://www.x.yz/silva/monDossier/)."
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "insérer une référence à cet élément: alt-p"
+
+#~ msgid "place reference..."
+#~ msgstr "insérer la référence..."
 
 #~ msgid "Kupu 1.4b1"
 #~ msgstr "kupu 1.4b1"

@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Thu Apr  3 17:17:23 2008\n"
-"PO-Revision-Date: 2008-02-08 15:57+0000\n"
-"Last-Translator: bamuhrez <bamuhrez@gmail.com>\n"
+"POT-Creation-Date: Fri Apr 11 10:13:02 2008\n"
+"PO-Revision-Date: 2008-04-06 15:48+0000\n"
+"Last-Translator: Agari <Unknown>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-04-02 06:00+0000\n"
+"X-Launchpad-Export-Date: 2008-04-11 07:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
@@ -32,11 +32,11 @@ msgstr "غير متصل"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
-msgstr "خطأ"
+msgstr "خطأ/أخطاء في التحقق في السلامة"
 
 #: /EmailMessageService.py:116
 msgid "Changed settings."
-msgstr "التهيئة المغيرة"
+msgstr "الإعدادات مغيرة."
 
 #: /File.py:176 /views/edit/Container/docma_queue.pt:166
 #: /views/edit/Container/docma_queue.pt:191
@@ -121,15 +121,15 @@ msgstr ""
 
 #: /Image.py:407
 msgid "square"
-msgstr ""
+msgstr "مربع"
 
 #: /Image.py:409
 msgid "landscape"
-msgstr ""
+msgstr "عرضي"
 
 #: /Image.py:410
 msgid "portrait"
-msgstr ""
+msgstr "طولي"
 
 #: /Image.py:51
 msgid ""
@@ -178,15 +178,15 @@ msgstr ""
 
 #: /Version.py:208
 msgid "unapproved"
-msgstr "غير معتمد"
+msgstr "غير مصادق عليه"
 
 #: /Version.py:208
 msgid "approved"
-msgstr "معتمد"
+msgstr "مصادق عليه"
 
 #: /Version.py:208
 msgid "last_closed"
-msgstr "آخر أقفال"
+msgstr "آخر_إغلاق"
 
 #: /Version.py:209
 msgid "public"
@@ -194,27 +194,27 @@ msgstr "عام"
 
 #: /Version.py:209
 msgid "pending"
-msgstr "منتضر"
+msgstr "عالق"
 
 #: /Version.py:209
 msgid "draft"
-msgstr ""
+msgstr "مسودة"
 
 #: /Version.py:209 /views/edit/Container/tab_status.pt:259
 msgid "closed"
-msgstr "مقفل"
+msgstr "مغلق"
 
 #: /Versioning.py:101
 msgid "There already is an approved version."
-msgstr ""
+msgstr "توجد هناك إصدار مصادق عليها."
 
 #: /Versioning.py:104
 msgid "Cannot approve version without publication datetime."
-msgstr ""
+msgstr "لا يمكن التصديق على الإصدار بدون تاريخ النشر."
 
 #: /Versioning.py:160
 msgid "No approved version to unapprove."
-msgstr ""
+msgstr "لا يوجد إصدار مصادق عليه كي يرفع التصديق عنه."
 
 #: /Versioning.py:162
 msgid ""
@@ -224,44 +224,44 @@ msgstr ""
 
 #: /Versioning.py:189
 msgid "No public version to close."
-msgstr "لاتوجد نسخة عامة لأقفالها"
+msgstr "لا يوجد إصدار عام لإقفاله."
 
 #: /Versioning.py:261 /Versioning.py:310 /Versioning.py:340
 msgid "There is no unapproved version to request approval for."
-msgstr ""
+msgstr "لا يوجد إصدار لم يتم التصديق عليه لطلب التصديق."
 
 #: /Versioning.py:265
 msgid "The version is already requested for approval."
-msgstr "النسخة مطلوبة لأعتمادها"
+msgstr "قد تم التصديق على الإصدار سابقاً."
 
 #: /Versioning.py:314 /Versioning.py:344
 #, fuzzy
 msgid "The version is not requested for approval."
-msgstr "النسخة غير مطلوبة لأعتمادها"
+msgstr "لم يتم الطلب للتصديق على الإصدار سابقاً."
 
 #: /Versioning.py:364 /Versioning.py:377
 msgid "No unapproved version."
-msgstr "لاتوجد نسخة غير معتمدة"
+msgstr "لا يوجد إصدار غير مصدق عليه."
 
 #: /Versioning.py:390 /Versioning.py:411
 msgid "No approved version."
-msgstr "لاتوجد نسخة معتمدة"
+msgstr "لا يوجد إصدار مصدق عليه."
 
 #: /Versioning.py:393
 msgid "Must specify publication datetime."
-msgstr ""
+msgstr "يجب تحديد تاريخ نشر."
 
 #: /Versioning.py:424
 msgid "No public version."
-msgstr "لاتوجد نسخة عامة"
+msgstr "لا يوجد إصدار عام."
 
 #: /Versioning.py:451 /Versioning.py:470
 msgid "No next version."
-msgstr "لاتوجد نسخة تالية"
+msgstr "لا يوجد إصدار تالي."
 
 #: /Versioning.py:484
 msgid "There is no version to add messages for."
-msgstr ""
+msgstr "لا يوجد إصدار لإضافة له رسائل."
 
 #: /Versioning.py:62
 msgid "There is an approved version already; unapprove it. (${id})"
@@ -279,19 +279,19 @@ msgstr ""
 msgid "A previous version has that id already (${id})."
 msgstr ""
 
-#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:12
+#: /Versioning.py:98 /views/edit/VersionedContent/quick_publish.py:16
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
-msgstr ""
+msgstr "لا يوجد إصدار غير مصدق عليه للتصديق عليه."
 
 #: /adapters/languageprovider.py:49
 msgid "Use browser language setting"
-msgstr ""
+msgstr "إستحدام إعدادات اللغوية لدى المتصفح"
 
 #: /adapters/version_management.py:115
 msgid "Can not delete all versions"
-msgstr ""
+msgstr "لا يمكن حذف كل الإصدارات"
 
 #: /adapters/version_management.py:288
 msgid "no such version ${version}"
@@ -299,7 +299,7 @@ msgstr ""
 
 #: /adapters/version_management.py:83 /adapters/version_management.py:91
 msgid "No unapproved version available"
-msgstr "لايوجد نسخة غير معتمدة"
+msgstr "لا يتوفر إصدار غير مصدق عليه"
 
 #: /browser/object_lookup.pt:113 /views/edit/lookup_ui.pt:110
 #: /views/edit/tab_subscriptions.pt:111 /views/edit/lookup_ui_direct.pt:110
@@ -324,11 +324,11 @@ msgstr ""
 
 #: /browser/object_lookup.pt:158
 msgid "select"
-msgstr ""
+msgstr "إنتق"
 
 #: /browser/object_lookup.pt:161
 msgid "view"
-msgstr ""
+msgstr "عرض"
 
 #: /browser/object_lookup.pt:164
 #: /views/edit/Container/tab_access_groups.pt:177
@@ -350,7 +350,7 @@ msgstr ""
 
 #: /browser/object_lookup.pt:248
 msgid "enter"
-msgstr ""
+msgstr "دخول"
 
 #: /browser/object_lookup.pt:288 /browser/object_lookup.pt:318
 #: /views/edit/Container/tab_status.pt:211
@@ -362,7 +362,7 @@ msgstr ""
 
 #: /browser/object_lookup.pt:295
 msgid "content is published"
-msgstr ""
+msgstr "تم نشر المحتوى"
 
 #: /browser/object_lookup.pt:403 /views/edit/Container/tab_edit.pt:397
 #: /views/edit/Container/GhostFolder/tab_edit.pt:441
@@ -379,19 +379,11 @@ msgstr ""
 msgid "cancel"
 msgstr ""
 
-#: /browser/object_lookup.pt:440
-msgid "insert a reference to this asset: alt-p"
-msgstr ""
-
-#: /browser/object_lookup.pt:440
-msgid "place reference..."
-msgstr ""
-
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "place reference to container..."
 msgstr ""
 
-#: /browser/object_lookup.pt:452
+#: /browser/object_lookup.pt:453
 msgid "insert a reference to this container: alt-c"
 msgstr ""
 
@@ -409,7 +401,7 @@ msgstr ""
 
 #: /doc/silva-content.xml:32
 msgid "Title of content."
-msgstr ""
+msgstr "عنوان المحتوى."
 
 #: /doc/silva-content.xml:90
 msgid "a.k.a. &#8216;navigation title&#8217;."
@@ -417,19 +409,19 @@ msgstr ""
 
 #: /doc/silva-content.xml:93
 msgid "short title"
-msgstr ""
+msgstr "عنوان قصير"
 
 #: /doc/silva-extra.xml:156
 msgid "Description of content in this area."
-msgstr ""
+msgstr "وصف للمحتوى في هذا المنطقة."
 
 #: /doc/silva-extra.xml:215
 msgid "language"
-msgstr ""
+msgstr "اللغة"
 
 #: /doc/silva-extra.xml:262
 msgid "Language of content in this area."
-msgstr ""
+msgstr "لغة المحتوى في هذه المنطقة."
 
 #: /doc/silva-extra.xml:323
 msgid "comment"
@@ -437,19 +429,19 @@ msgstr ""
 
 #: /doc/silva-extra.xml:324
 msgid "Internal comments."
-msgstr ""
+msgstr "تعليقات داخلية."
 
 #: /doc/silva-extra.xml:35
 msgid "subject"
-msgstr ""
+msgstr "الموضوع"
 
 #: /doc/silva-extra.xml:36
 msgid "Subject of content in this area."
-msgstr ""
+msgstr "موضوع المحتوى في هذه المنطقة."
 
 #: /doc/silva-extra.xml:385
 msgid "creation time"
-msgstr ""
+msgstr "وقت الإنشاء"
 
 #: /doc/silva-extra.xml:386 /doc/silva-extra.xml:445 /doc/silva-extra.xml:620
 msgid "Automatically set."
@@ -457,11 +449,11 @@ msgstr ""
 
 #: /doc/silva-extra.xml:618
 msgid "creator"
-msgstr ""
+msgstr "منشئ"
 
 #: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
-msgstr ""
+msgstr "المستخدم الذي حرر هذا المحتوى أخيراً."
 
 #: /doc/silva-extra.xml:736
 msgid "Resource location of this content."
@@ -528,7 +520,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:120
 msgid "Preview screen"
-msgstr ""
+msgstr "شاشة المعاينة"
 
 #: /globals/accesskeys.pt:122
 msgid "; &nbsp; See public preview<br />"
@@ -553,7 +545,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
-msgstr ""
+msgstr "إضافة الشاشة"
 
 #: /globals/accesskeys.pt:149
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
@@ -619,7 +611,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:198
 msgid "Notes"
-msgstr ""
+msgstr "الملاحظات"
 
 #: /globals/accesskeys.pt:202
 msgid ""
@@ -3315,7 +3307,7 @@ msgstr ""
 msgid "Revoked approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/quick_publish.py:27
+#: /views/edit/VersionedContent/quick_publish.py:29
 #: /views/edit/VersionedContent/tab_metadata_publish.py:24
 #: /views/edit/VersionedContent/tab_status_approve.py:36
 msgid "Version approved."
@@ -4274,7 +4266,7 @@ msgstr ""
 msgid "for public version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_preview.pt:105
+#: /views/edit/tab_preview_noframes.pt:101
 msgid "This is a closed version. You see it, but the public won't!"
 msgstr ""
 
@@ -4557,27 +4549,27 @@ msgstr ""
 msgid "Next ${n} items &raquo;"
 msgstr ""
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "jump to zope root: alt-z"
 msgstr ""
 
-#: /views/macro_index.pt:120
+#: /views/macro_index.pt:120 /views/edit/tab_preview_frame_top.pt:100
 msgid "zroot..."
 msgstr ""
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "sroot..."
 msgstr ""
 
-#: /views/macro_index.pt:129
+#: /views/macro_index.pt:129 /views/edit/tab_preview_frame_top.pt:109
 msgid "jump to silva root in zodb: alt-'"
 msgstr ""
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "jump to silva services: alt-`"
 msgstr ""
 
-#: /views/macro_index.pt:138
+#: /views/macro_index.pt:138 /views/edit/tab_preview_frame_top.pt:118
 msgid "sservices..."
 msgstr ""
 
@@ -4622,30 +4614,32 @@ msgstr ""
 msgid "request access"
 msgstr ""
 
-#: /views/macro_index.pt:83
+#: /views/macro_index.pt:83 /views/edit/tab_preview_frame_top.pt:46
 msgid "Help with access keys"
 msgstr ""
 
-#: /views/macro_index.pt:84
+#: /views/macro_index.pt:84 /views/edit/tab_preview_frame_top.pt:47
 msgid "Silva copyright info"
 msgstr ""
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "see the content in the public layout: alt-;"
 msgstr ""
 
-#: /views/macro_middleground.pt:16 /views/edit/tab_preview.pt:50
+#: /views/macro_middleground.pt:16 /views/edit/tab_preview_noframes.pt:50
 #: /views/edit/VersionedContent/macro_tab_edit.pt:48
 msgid "public&nbsp;preview..."
 msgstr ""
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish this document: alt-p"
 msgstr ""
 
-#: /views/macro_middleground.pt:23 /views/edit/tab_preview.pt:56
+#: /views/macro_middleground.pt:23 /views/edit/tab_preview_frame_top.pt:69
+#: /views/edit/tab_preview_noframes.pt:56
 #: /views/edit/VersionedContent/macro_tab_edit.pt:57
 msgid "publish&nbsp;now"
 msgstr ""
@@ -4901,3 +4895,6 @@ msgstr ""
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "لايمكن أعتماد النسخة ، غير مصرح به"
+
+#~ msgid "place reference..."
+#~ msgstr "وضع مرجع..."
