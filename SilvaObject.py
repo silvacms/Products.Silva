@@ -5,6 +5,9 @@
 # python
 from types import StringType
 import os
+
+from warnings import warn
+
 from zope.i18n import translate
 from zope import component
 from zope import interface
@@ -28,14 +31,15 @@ from interfaces import ISilvaObject, IContent, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent, IFolder
 from Products.Silva import helpers
+from Products.Silva.utility import interfaces as utility_interfaces
 # Silva adapters
-from Products.Silva.adapters import zipfileexport
 from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
 from Products.Silva.i18n import translate as _
+
 
 class XMLExportContext:
     """Simple context class used in XML export.
@@ -450,13 +454,37 @@ class SilvaObject(Security, ViewCode):
         """Get Zipfile with XML-Document for object, and binary files
         in a subdirectory 'assets'.
         """
+        warn('you should use export_content with zip as formater'
+             ' instead of get_zip', DeprecationWarning)
+        return self.export_content('zip', with_sub_publications, last_version)
+
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'export_content')
+    def export_content(self, export_format, 
+                       with_sub_publications=0, 
+                       last_version=0):
+        """Export content using the exporter export_format.
+        """
         from Products.Silva.silvaxml import xmlexport
         settings = xmlexport.ExportSettings()
         settings.setWithSubPublications(with_sub_publications)
         settings.setLastVersion(last_version)
-        adapter = zipfileexport.getZipfileExportAdapter(self)
-        result = adapter.exportToZip(self, settings)
-        return result
+
+        utility = component.getUtility(utility_interfaces.IExportUtility)()
+        exporter = utility.createContentExporter(self, export_format)
+        return exporter.export(settings)
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'export_content_format')
+    def export_content_format(self, ref=None):
+        """Retrieve a list of export format.
+        """
+        context = self
+        if ref:
+            context =  self.resolve_ref(ref)
+        utility = component.getUtility(utility_interfaces.IExportUtility)()
+        return utility.listContentExporter(context)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
@@ -483,6 +511,7 @@ class SilvaObject(Security, ViewCode):
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
             'xsi:schemaLocation="%s %s" '
             #'xml:base="%s" '
+
             'silva_root="%s" >' % (self._xml_namespace,
                 self._xml_namespace, self._xml_schema,
             #    self.absolute_url(),

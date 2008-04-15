@@ -3,6 +3,7 @@ import os
 import re
 from os.path import join
 from zipfile import ZipFile, BadZipfile
+from zope.component import getAdapter
 
 import SilvaTestCase
 from SilvaTestCase import transaction
@@ -10,10 +11,11 @@ from SilvaTestCase import transaction
 from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
 # Silva
+from Products.Silva.adapters import interfaces
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.adapters import zipfileexport, archivefileimport, xmlsource
+from Products.Silva.adapters import archivefileimport, xmlsource
 from Products.Silva.Image import Image
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
@@ -229,8 +231,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # fallback kicks in
         xmlexport.theXMLExporter._mapping[Image] = None
         settings = xmlexport.ExportSettings()
-        adapter = zipfileexport.getZipfileExportAdapter(testfolder)
-        result = adapter.exportToZip(testfolder, settings)
+        adapter = getAdapter(testfolder, interfaces.IContentExporter, name='zip')
+        result = adapter.export(settings)
         f = open(join(directory, 'test_export.zip'), 'wb')
         f.write(result)
         f.close()

@@ -1,24 +1,35 @@
 from tempfile import TemporaryFile
-# Zope
+
+# Zope 3
 from zope.interface import implements
+from zope.component import adapts
+
+# Zope 2
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
-# Silva Adapters
+
+# Silva
 from Products.Silva.adapters import adapter, interfaces
+from Products.Silva import interfaces as silva_interfaces
 from Products.Silva import SilvaPermissions
+
 
 class ZipfileExportAdapter(adapter.Adapter):
     """ Adapter for silva objects to facilitate
     the export to zipfiles. 
     """
 
-    implements(interfaces.IZipfileExporter)
+    implements(interfaces.IDefaultContentExporter)
+    adapts(silva_interfaces.ISilvaObject)
     
     security = ClassSecurityInfo()
 
+    name = "Full Media (zip)"
+    extension = "zip"
+
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'exportToZip')    
-    def exportToZip(self, context, settings=None):
+        SilvaPermissions.ChangeSilvaContent, 'export')    
+    def export(self, settings=None):
         from zipfile import ZipFile, ZIP_DEFLATED
         from Products.Silva.silvaxml import xmlexport
         tempFile = TemporaryFile()
@@ -29,7 +40,7 @@ class ZipfileExportAdapter(adapter.Adapter):
             settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         info = xmlexport.ExportInfo()
-        exportRoot = xmlexport.SilvaExportRoot(context)
+        exportRoot = xmlexport.SilvaExportRoot(self.context)
 
         archive.writestr(
             'silva.xml', 
@@ -38,7 +49,7 @@ class ZipfileExportAdapter(adapter.Adapter):
         
         # process data from the export, i.e. export binaries
         for path, id in info.getAssetPaths():
-            asset = context.restrictedTraverse(path)
+            asset = self.context.restrictedTraverse(path)
             # XXX Code will change when AssetData adapters are phased out
             adapter = interfaces.IAssetData(asset)
             if adapter is not None:
@@ -47,7 +58,7 @@ class ZipfileExportAdapter(adapter.Adapter):
                     asset_path,
                     adapter.getData())
         for path, id in info.getZexpPaths():
-            ob = context.restrictedTraverse(path)
+            ob = self.context.restrictedTraverse(path)
             obid = ob.id
             if callable(obid):
                 obid = obid()
@@ -65,6 +76,4 @@ class ZipfileExportAdapter(adapter.Adapter):
         
 Globals.InitializeClass(ZipfileExportAdapter)
 
-def getZipfileExportAdapter(context):
-    return ZipfileExportAdapter(context).__of__(context)
     

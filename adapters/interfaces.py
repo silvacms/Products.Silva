@@ -1,4 +1,4 @@
-from zope.interface import Interface
+from zope.interface import Interface, Attribute
 
 class IViewerSecurity(Interface):
     def setAcquired():
@@ -70,14 +70,21 @@ class IZipfileImporter(Interface):
         replace -- Replace content objects with identical ids.
         """
 
-class IZipfileExporter(Interface):
-    def exportToZip(context, zipname, settings):
-        """Export Silva content to a zip file.
-        
-        context -- The content object to be exported
-        zipname -- The filename of the zip archive
-        settings -- The export settings
+class IContentExporter(Interface):
+    """Adapter for export context content in a file.
+    """
+
+    name = Attribute("Name of the registered exporter")
+    extension = Attribute("Filename extension for this exporter")
+
+    def export(settings):
+        """Export context with given settings.
         """
+
+class IDefaultContentExporter(IContentExporter):
+    """This mark the default content exporter.
+    """
+
 
 class IAssetData(Interface):
     def getData():

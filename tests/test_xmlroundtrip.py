@@ -1,13 +1,15 @@
 import os
 import xml.sax
 from xml.sax.handler import feature_namespaces
+from zope.component import getAdapter
 
 import SilvaTestCase
 from SilvaTestCase import transaction
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import mangle
 from Products.SilvaMetadata.Compatibility import getToolByName
-from Products.Silva.silvaxml import xmlimport 
+from Products.Silva.silvaxml import xmlimport
+from Products.Silva.adapters import interfaces
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_roundtrip(self):
@@ -55,8 +57,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         testfolder = importfolder.testfolder
         xmlexport.initializeXMLExportRegistry()
         settings = xmlexport.ExportSettings()
-        adapter = zipfileexport.getZipfileExportAdapter(testfolder)
-        result = adapter.exportToZip(testfolder, settings)
+        adapter = getAdapter(testfolder, interfaces.IContentExporter, name='zip')
+        result = adapter.export(settings)
         f = open(os.path.join(directory, 'test_export.zip'), 'wb')
         f.write(result)
         f.close()

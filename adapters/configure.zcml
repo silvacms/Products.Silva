@@ -74,4 +74,9 @@
     factory=".catalog.VersionedContentIndexable"
     />
 
+  <adapter 
+     factory=".zipfileexport.ZipfileExportAdapter"
+     provides=".interfaces.IContentExporter"
+     name="zip" />
+
 </configure>

@@ -33,6 +33,7 @@
 
   <include package=".adapters" /> 
   <include package=".browser" />
+  <include package=".utility" />
 
   <!-- define Silva core as the root 'extension' -->
   <silva:extension
