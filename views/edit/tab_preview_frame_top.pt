@@ -4,24 +4,24 @@
   xml:lang="en"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
-  tal:define="global vein string:preview;
-    view    here;
-    model   request/model;
-    trigger model/security_trigger;
-    mangle  modules/Products/Silva/mangle;
-    url     model/absolute_url;
-    title   python: model.get_title_editable() or model.id;
+  tal:define="
+    global   vein string:preview;
+    view     here;
+    model    request/model;
+    trigger  model/security_trigger;
+    mangle   modules/Products/Silva/mangle;
+    url      model/absolute_url;
+    title    python: model.get_title_editable() or model.id;
     root_url model/get_root_url;
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
     message_type options/message_type | request/message_type | nothing;
-    message      options/message | request/message | nothing;
-    global nofeedback nofeedback | nothing;
-    global active_tab string:tab_preview;
+    message  options/message | request/message | nothing;
+    global   nofeedback nofeedback | nothing;
+    global   active_tab string:tab_preview;
 ">
 
 <head>
@@ -67,8 +67,7 @@
     unapproved_version      python:getattr(versionmodel,'get_unapproved_version',lambda: None)();
     have_approve_permission permissions/ApproveSilvaContent | nothing;
   ">
-   <a
-    class="executor"
+   <a class="executor"
       title="publish this document: alt-p"
       accesskey="p"
       tal:attributes="href string:${versionmodel/absolute_url}/edit/quick_publish?return_to=tab_preview"
@@ -82,8 +81,7 @@
 </div>
 
 <tal:if condition="message">
-  <div class="feedback"
-    tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+  <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
     <span tal:replace="structure message">
       message
     </span>
@@ -92,6 +90,12 @@
     </tal:block>
   </div>
 </tal:if>
+
+<span tal:replace="nothing"> _______ closed notice _______ </span>
+<div class="fixed-feedback"
+  tal:condition="here/tab_preview_needs_feedback">
+  <span class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</span>
+</div>
 
 </div>
 </body>

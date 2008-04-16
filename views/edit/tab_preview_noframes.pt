@@ -95,11 +95,6 @@ h2 {
           </div>
         </td>
         <td class="right">
-          <span tal:replace="nothing"> _______ closed notice _______ </span>
-          <div class="feedback" style="padding-bottom:0.5em;" 
-            tal:condition="here/tab_preview_needs_feedback">
-            <strong class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</strong>
-          </div>
         </td>
       </tr>
     </tbody>
