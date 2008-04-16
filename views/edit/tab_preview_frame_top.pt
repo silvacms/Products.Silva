@@ -58,7 +58,8 @@
 <metal:block use-macro="here/macro_tabs/macros/tabs" />
 
 <div class="workspace">
-<div class="middleground">
+<div class="middleground"
+  tal:condition="python:not (message or nofeedback)">
   <div style="float:right"
     tal:define="
     permissions             view/get_silva_permissions;
@@ -91,44 +92,6 @@
     </tal:block>
   </div>
 </tal:if>
-<tal:block
-  tal:condition="python:not (message or nofeedback)">
-  <div class="fixed-clear"
-    tal:define="in_development_mode model/sec_in_development_mode"
-    tal:omit-tag="nofeedback">
-    <tal:if condition="in_development_mode">
-      <a class="reveal"
-        href="/manage_main"
-        title="jump to zope root: alt-z"
-        accesskey="z"
-        i18n:attributes="title"
-        i18n:translate="">
-        zroot...
-      </a>
-      &nbsp;&nbsp;&nbsp;
-      <a class="reveal"
-        title="jump to silva root in zodb: alt-'"
-        tal:attributes="href string:$root_url/manage_main"
-        accesskey="'"
-        i18n:attributes="title"
-        i18n:translate="">
-        sroot...
-      </a>
-      &nbsp;&nbsp;&nbsp;
-      <a class="reveal"
-        title="jump to silva services: alt-`"
-        tal:attributes="href string:$root_url/manage_services"
-        accesskey="`"
-        i18n:attributes="title"
-        i18n:translate="">
-        sservices...
-      </a>
-    </tal:if>
-    <tal:if condition="not: in_development_mode">
-      &nbsp;
-    </tal:if>
-  </div>
-</tal:block>
 
 </div>
 </body>
