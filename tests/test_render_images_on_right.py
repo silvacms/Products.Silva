@@ -8,8 +8,8 @@ from Products.Silva.transform.interfaces import IRenderer
 xslt = True
 try: 	 
     from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-    from Products.Silva.transform.renderer.xsltrendererbase import RenderError
-except ImportError: 	
+    from lxml import etree
+except ImportError:
     xslt = False
 
 directory = os.path.dirname(__file__)
@@ -79,7 +79,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         obj = self.root.silva_xslt.test_document
 
         images_on_right = BrokenImagesOnRightRenderer()
-        self.assertRaises(RenderError, images_on_right.render, obj)
+        self.assertRaises(etree.XMLSyntaxError, images_on_right.render, obj)
 
 import unittest
 def test_suite():

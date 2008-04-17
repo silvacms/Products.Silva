@@ -31,8 +31,9 @@ Silva changes
       - Made 'keywords' metadata field an 'index field' by default
 
       - Use lxml instead of libxml2/libxslt for XSLT rendering. Note:
-        still improve error handling, documentation, check encoding of
-        output.
+        documentation, check encoding of output, integration with
+        extensions that produce XSLT (probably by developing a custom
+        lxml Resolver).
 
       - #200507: ZMI titles now appear for Silva objects.  The title
         is retrieved from the object's metadata.
