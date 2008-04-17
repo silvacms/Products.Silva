@@ -252,6 +252,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - In the reference lookup, nothing is stored in the SESSION
+        anymore, preventing weird heisenbugs.
+
       - 185422: Javascript prompt to save changes in kupu when
         leaving the editor wasn't working
 
