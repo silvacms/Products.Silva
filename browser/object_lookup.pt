@@ -38,14 +38,11 @@
       tal:define="
         objects context/get_tree;
         silva_permissions context/edit/get_silva_permissions;
-        filter request/filter | request/SESSION/filter | nothing;
+        filter request/filter | nothing;
         filter python: filter or '';
         filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
-        startpath python: request.SESSION.get('startpath') or '/'.join(context.getPhysicalPath());
-        show_add python: request.get('show_add', request.SESSION.get('show_add', '0'));
-        dummy python: request.SESSION.set('filter', filter);
-        dummy python: request.SESSION.set('show_add', show_add);
-        dummy python: request.SESSION.set('startpath', startpath);
+        startpath python: request.get('startpath') or '/'.join(context.getPhysicalPath());
+        show_add python: request.get('show_add') or '0';
         pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);
         filter_string python: '|'.join(filter);
       ">
@@ -60,7 +57,7 @@
                 <metal:use-macro use-macro="python: context.edit['macro_vein_navigation'].macros['vein']">
                   <metal:fill-slot fill-slot="sidebar">
                     <tal:block define="sb context/@@sidebar"
-                      replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add) , vein)" />
+                      replace="structure python: sb.render('@@object_lookup?filter=%s&show_add=%s&startpath=%s' % (filter_string, show_add, startpath) , vein)" />
                   </metal:fill-slot>
                 </metal:use-macro>
               </tal:block>
@@ -132,7 +129,7 @@
                           />
                           <input type="hidden"
                             name="return_url"
-                            tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}"
+                            tal:attributes="value string:${context/absolute_url}/@@object_lookup?filter=${filter_string}&show_add=${show_add}&startpath=${startpath}"
                           />
                         </form>
                       </div>
@@ -232,7 +229,7 @@
                               </tal:block>
                             </label>
                             <tal:block condition="item/implements_container">
-                              <tal:block define="lookuplink python:id + '/@@object_lookup?filter=%s&show_add=%s' % (filter_string, show_add)">
+                              <tal:block define="lookuplink python:id + '/@@object_lookup?filter=%s&show_add=%s&startpath=%s' % (filter_string, show_add, startpath)">
                                 <a class="icon"
                                   tal:attributes="
                                     href lookuplink;
@@ -333,10 +330,11 @@
                         oddrow repeat/asset/odd;
                         id asset/id;
                         title asset/get_title;
-                        path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, asset));
                         checked not: first_checked;
                         global first_checked python: True;
+                        path python: pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath, asset));
                         ">
+
                         <tr
                           tal:define="show_top_border repeat/asset/start;"
                           tal:attributes="class python:oddrow and 'odd' or 'even';
