@@ -11,7 +11,11 @@ Silva changes
         rather than just redirecting.
 
       - 100974: the preview tab in the SMI now previews using the
-        public layout, with the SMI tabs still at the top.
+        public layout, with the SMI tabs still at the top.  NOTE:
+        TOC elements in documents used to link to each items
+        '/edit/tab_preview' when the document was viewed via it's
+        preview tab.  This was creating issues, so now links in 
+        TOC elements always link to the public version.
 
       - 101827: A) lookup window will now list containers for any type
         of lookup window.  You can click the container title to 
@@ -125,6 +129,9 @@ Silva changes
         documents now display the title inside the "<< >>" and the id
         when hovered over.  The description of the external source
         is also included in the kupu content.
+
+      - The kupu content no longer displays the keys and values of 
+        external source parameters.
 
       - AutoTOCs are now more configurable, with the following new features:
         1. choose Silva types that AutoTOCs will list (any Silva type,
