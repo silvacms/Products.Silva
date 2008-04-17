@@ -19,6 +19,9 @@ Silva changes
 
     Bugs fixed:
 
+      - In the reference lookup, nothing is stored in the SESSION
+        anymore, preventing weird heisenbugs.
+
       - silva_lookup_referer is stored in the session. If for some
         reason the session gets lost, that no longer results in an
         error.
