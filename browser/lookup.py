@@ -64,6 +64,7 @@ class ObjectLookup(BrowserView):
         default = None
         ordered_publishables = []
         assets = []
+        addables = []
         all_addables = []
 
         show_containers = []
@@ -95,7 +96,8 @@ class ObjectLookup(BrowserView):
                 [o for o in model.get_ordered_publishables() if 
                     o.implements_content() or o.implements_container() ]
             )
-            show_containers = [ o for o in ordered_publishables if o.implements_container() ]
+            show_containers = [
+                o for o in ordered_publishables if o.implements_container()]
             if show_add:
                 addables = [a['name'] for a in all_addables if
                                 IContent.implementedBy(
