@@ -57,12 +57,13 @@ class ObjectLookup(BrowserView):
                         to the page
         """
         model = self.context
-
+        
         default = None
         ordered_publishables = []
         assets = []
+        addables = []
         all_addables = []
-
+        
         filter = filter or []
         
         if show_add and not IGhostFolder.providedBy(model):
@@ -141,8 +142,6 @@ class ObjectLookup(BrowserView):
     
 class SidebarView(BrowserView):
     def render(self, tab_name, vein):
-        # XXX once we move everything to five views, the object_lookup
-        # template can become much much simpler.
         context = self.context.aq_inner
         sidebar = context.service_sidebar.render(context, tab_name, vein)
         sidebar = sidebar.replace('/edit/', '/')
