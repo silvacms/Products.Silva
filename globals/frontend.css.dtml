@@ -546,6 +546,15 @@ div.access input[type=submit] {
   top:0;
 }
 
+table.access {
+  padding:0;
+  border-spacing:0;
+}
+
+table.access input {
+  margin-top:0.5em;
+}
+
 /* _____________________________________________________ CSS2 selectors _____ */ 
 
 acronym[title], abbr[title] {
