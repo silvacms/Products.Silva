@@ -9,8 +9,10 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="global vein string:contents;
-    here python: context.edit;"
-  i18n:domain="silva">
+    here python: context.edit;
+    global startpath python: request.get('startpath') or '/'.join(context.getPhysicalPath());"
+  i18n:domain="silva"
+>
 
 <tal:block condition="nothing">
   <!--
@@ -45,7 +47,6 @@
         filter request/filter | nothing;
         filter python: filter or '';
         filter python:filter.__class__ == [].__class__ and filter or filter.split('|');
-        startpath python: request.get('startpath') or '/'.join(context.getPhysicalPath());
         show_add python: request.get('show_add') or '0';
         dummy python: request.SESSION.set('lastpath', '/'.join(context.getPhysicalPath()));
         pathadapter python: modules['Products'].Silva.adapters.path.getPathAdapter(request);

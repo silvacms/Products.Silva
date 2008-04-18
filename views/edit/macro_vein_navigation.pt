@@ -33,7 +33,9 @@ macro plateau
           publication_is_root    python: model.get_publication() == model.get_root();
           containing_publication publication/../get_publication | publication;
           query_string           python: request.get('QUERY_STRING');
-          query_string           query_string | nothing;
+          query_string           query_string | string:;
+          startpath              startpath | string:;
+          query_string           python: test(startpath and query_string and ('startpath=' not in query_string), query_string + '&startpath=' + startpath, query_string);
           vein_id                template_id | python: template.id;
           global vein_id         python: vein_id + test(query_string, '?' + query_string, '');
           edit                   python:test('@@' in vein_id, '/', '/edit/');
