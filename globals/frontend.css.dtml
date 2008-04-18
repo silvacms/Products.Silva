@@ -524,6 +524,27 @@ div.backlink {
   margin-top: 1.5em;
 }
 
+/* _________________________________________________ login/openid forms _____ */ 
+
+div.access label {
+  display:block;
+  position:relative;
+  height:1.5em;
+  margin:0.5em 0 0;
+  font-weight:bold;
+}
+
+div.access label input {
+  position:absolute;
+  left:7em;
+  top:0;
+}
+
+div.access input[type=submit] {
+  position:relative;
+  left:7em;
+  top:0;
+}
 
 /* _____________________________________________________ CSS2 selectors _____ */ 
 
