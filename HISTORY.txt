@@ -252,6 +252,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - object_lookup.py had a missing variable definition 'addables'
+        for some code paths. Added this again.
+
       - In the reference lookup, nothing is stored in the SESSION
         anymore, preventing weird heisenbugs.
 
