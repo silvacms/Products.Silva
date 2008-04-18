@@ -32,8 +32,10 @@ macro plateau
           publication            model/get_publication;
           publication_is_root    python: model.get_publication() == model.get_root();
           containing_publication publication/../get_publication | publication;
+          query_string           python: request.get('QUERY_STRING');
           query_string           query_string | nothing;
-          global vein_id         template_id | python: template.id + test(query_string, query_string, '');
+          vein_id                template_id | python: template.id;
+          global vein_id         python: vein_id + test(query_string, '?' + query_string, '');
           edit                   python:test('@@' in vein_id, '/', '/edit/');
           up                     python:test('@@' in vein_id, '..', '../..');
           ">
