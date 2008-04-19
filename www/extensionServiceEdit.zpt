@@ -31,22 +31,25 @@ Version of this file: $Revision: 1.16 $
   tal:attributes="
     style python:'width:70%%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
 
- <div style="float: right">
-  <h4 style="margin: 0">Dependencies:</h4>
+ <div style="float:right; width:40%;">
+  <h4 class="form-title"
+    style="margin: 0">Dependencies:</h4>
   <ul tal:define="dep python:here.get_depends_on(module_name)"
       style="padding-left: 0;list-style-position:inside;margin-top:0;">
-   <li tal:repeat="d dep">
+   <li class="list-item"
+     tal:repeat="d dep">
     <span tal:content="python:here.get_description(d)"
           tal:on-error="string:$d (not available)" />
    </li>
-   <li tal:condition="not:dep">None</li>
+   <li class="list-item"
+     tal:condition="not:dep">None</li>
   </ul>
  </div>
 
- <h3 style="margin: 0 0 1ex;" tal:content="python:here.get_description(module_name)" />
- <p style="margin: 0 0 1ex;" tal:content="python:here.get_version_info(module_name)"/>
+   <h3 style="margin: 0 0 0.5ex;" tal:content="python:here.get_description(module_name)" />
+   <p style="margin: 0 0 1ex;" tal:content="python:here.get_version_info(module_name)"/>
 
- <form action="." method="post" style="margin-bottom: 0">
+ <form action="." method="post" style="margin-bottom: 0;">
   <input type="hidden" name="name" tal:attributes="value module_name" />
   <tal:cond tal:condition="python:module_name != 'Silva'">
    <input type="submit" name="install:method" value="install"
