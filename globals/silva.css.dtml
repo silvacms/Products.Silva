@@ -1058,7 +1058,7 @@ div.info {
 }
 
 div.info h3 {
-  margin-top: 0.4em;
+  margin-top: 0.2em;
   margin-bottom: 0.2em;
   color: &dtml-inputFontColor;;
 }

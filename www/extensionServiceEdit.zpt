@@ -33,7 +33,7 @@ Version of this file: $Revision: 1.16 $
 
  <div style="float:right; width:40%;">
   <h4 class="form-title"
-    style="margin: 0">Dependencies:</h4>
+    style="margin: 0">Dependencies</h4>
   <ul tal:define="dep python:here.get_depends_on(module_name)"
       style="padding-left: 0;list-style-position:inside;margin-top:0;">
    <li class="list-item"
