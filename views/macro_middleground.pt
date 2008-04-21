@@ -13,14 +13,8 @@
 <metal:block define-macro="properties">
 <div class="middleground">
   <div style="float:right">
-    <a title="see the content in the public layout: alt-;"
-      accesskey=";"
-      tal:attributes="href string:${model/absolute_url}/preview_html"
-      i18n:translate=""
-      i18n:attributes="title">
-      public&nbsp;preview...
-    </a><tal:def define="unapproved_version model/get_unapproved_version | nothing"
-      ><a class="executor"
+    <tal:def define="unapproved_version model/get_unapproved_version | nothing">
+      <a class="executor"
         title="publish this document: alt-p"
         accesskey="p"
         tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_metadata"

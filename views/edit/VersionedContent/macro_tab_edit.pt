@@ -45,16 +45,10 @@ h2 {
   tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
     <div style="float:right">
-      <a title="see the content in the public layout: alt-;"
-        accesskey=";"
-        tal:attributes="href string:${model/absolute_url}/preview_html"
-        i18n:translate=""
-        i18n:attributes="title">
-        public&nbsp;preview...
-      </a><tal:block define="
+      <tal:block define="
         permissions view/get_silva_permissions;
-        have_approve_permission permissions/ApproveSilvaContent | nothing;
-        "><a class="executor"
+        have_approve_permission permissions/ApproveSilvaContent | nothing;">
+        <a class="executor"
           title="publish this document: alt-p"
           accesskey="p"
           tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_edit"

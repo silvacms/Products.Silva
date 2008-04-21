@@ -98,7 +98,7 @@ def install(root):
     if not hasattr(root, 'service_resources'):
         # folder containing some extra views and resources
         root.manage_addFolder('service_resources')
-        
+
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
@@ -151,7 +151,7 @@ def uninstall(root):
         # XXX this can happen always if service_resources is
         # assumed to be just there in the future (like service_views)
         root.service_resources.manage_delObjects(['Silva'])
-    
+       
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
 
