@@ -2,7 +2,7 @@ from zope.interface import implements
 
 # zope
 from OFS import SimpleItem
-from AccessControl import ClassSecurityInfo, Unauthorized
+from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 from DateTime import DateTime
@@ -12,8 +12,6 @@ from Security import Security
 from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
-
-import urlparse
 
 from interfaces import IMember, IMemberService
 
