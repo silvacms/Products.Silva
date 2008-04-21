@@ -2,7 +2,7 @@ from zope.interface import implements
 
 # zope
 from OFS import SimpleItem
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, Unauthorized
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
 from DateTime import DateTime
@@ -12,6 +12,8 @@ from Security import Security
 from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
+
+import urlparse
 
 from interfaces import IMember, IMemberService
 
@@ -119,6 +121,7 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         else:
             return 'field editor'
 
+
 Globals.InitializeClass(SimpleMember)
 
 manage_addSimpleMemberForm = PageTemplateFile(
@@ -223,6 +226,18 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     def get_extra_names(self):
         return []
     
+    security.declarePublic('logout')
+    def logout(self, REQUEST=None):
+        """Logout the user.
+        """
+        if REQUEST is None and hasattr(self, REQUEST):
+            REQUEST = self.REQUEST
+        if REQUEST is None:
+            return
+        # URL2 removes service_members/logout
+        REQUEST.RESPONSE.redirect(REQUEST.URL2 + '/edit/logout')
+
+
 Globals.InitializeClass(SimpleMemberService)
 
 manage_addSimpleMemberServiceForm = PageTemplateFile(

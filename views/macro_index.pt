@@ -250,11 +250,12 @@
     </a>
   </div>
   <div style="float: right;">
-    <a href="logout"
+    <a href="#"
       accesskey="q"
       title="Logout of Silva: alt-q"
       i18n:translate=""
-      i18n:attributes="title">
+      i18n:attributes="title"
+      tal:attributes="href string:${request/model/absolute_url}/service_members/logout">
       logout
       <tal:block tal:condition="here/get_user_role"
         i18n:name="role"
