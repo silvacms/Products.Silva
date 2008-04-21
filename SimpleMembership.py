@@ -227,7 +227,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         return []
     
     security.declarePublic('logout')
-    def logout(self, REQUEST=None):
+    def logout(self, came_from=None, REQUEST=None):
         """Logout the user.
         """
         if REQUEST is None and hasattr(self, REQUEST):

@@ -931,6 +931,10 @@ class IMemberService(Interface):
         """Return list of names of extra information.
         """
 
+    def logout(came_from=None, REQUEST=None):
+        """Logout the current user.
+        """
+
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member
 # object (if they have the permissions to do so, but the user associated
