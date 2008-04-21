@@ -170,6 +170,8 @@ Silva changes
         invalid ids (and always have a new id generated)
 
     Bugs Fixed:
+    
+      - fixed attribute error in kupu editor of changed images
 
       - 101376: adding content with the same name as catalog indexes
         can cause problems and break the content.  The catalog index
