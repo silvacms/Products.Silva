@@ -108,7 +108,7 @@ class File(Asset):
 
         mimetype = self.get_mime_type()   
         converter = get_converter_for_mimetype(mimetype)
-        fulltextlist = [self.id, self.get_title()]
+        fulltextlist = [self.get_title()]
         if converter is None:
             return fulltextlist
 
