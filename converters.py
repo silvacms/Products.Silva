@@ -1,6 +1,7 @@
 import os, tempfile
 from subprocess import Popen, PIPE
 
+
 def execute(cmd):
     p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
     fp_err = p.stderr
@@ -14,6 +15,7 @@ def execute(cmd):
 PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[0].startswith('pdftotext')
 WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[0].startswith('antiword') 
 
+
 def get_converter_for_mimetype(mimetype):
     converter = {
         'text/plain': TextConverter,
@@ -24,6 +26,7 @@ def get_converter_for_mimetype(mimetype):
     if converter is None:
         return
     return converter()
+
 
 class WordConverter(object):
 
@@ -52,6 +55,7 @@ class WordConverter(object):
             return decoded
         except UnicodeDecodeError:
             return None
+
 
 class PDFConverter(object):
 
