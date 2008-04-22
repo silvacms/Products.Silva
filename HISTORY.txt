@@ -254,6 +254,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - The word and pdf to text converters no longer include error
+        messages in the returned converted text.
+
       - object_lookup.py had a missing variable definition 'addables'
         for some code paths. Added this again.
 
