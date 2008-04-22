@@ -254,6 +254,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - The id of a Silva Object is no longer in its indexed fulltext,
+        as that makes no sense.
+
       - The word and pdf to text converters no longer include error
         messages in the returned converted text.
 
