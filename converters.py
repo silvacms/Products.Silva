@@ -37,6 +37,9 @@ class WordConverter(object):
         err, converted = execute('antiword "%s"' % fname)
         os.unlink(fname)
         if err:
+            # XXX This, as far as I can tell is never actually
+            # presented back to the user. Did something change or did
+            # this just never work?
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully.
             <span class="error">
@@ -62,6 +65,9 @@ class PDFConverter(object):
         err, converted = execute('pdftotext -enc UTF-8 "%s" -' % fname)
         os.unlink(fname)
         if err:
+            # XXX This, as far as I can tell is never actually
+            # presented back to the user. Did something change or did
+            # this just never work?
             request.form['message_type']='feedback'
             request.form['message'] = """File uploaded succesfully. 
             <span class="error">
