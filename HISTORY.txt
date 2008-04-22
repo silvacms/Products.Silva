@@ -254,6 +254,10 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - Message feedback from the pdf/word to text converters is once
+        again presented to the user. (Was inadvertently lost in the
+        Z2.10 merge)
+
       - The id of a Silva Object is no longer in its indexed fulltext,
         as that makes no sense.
 
