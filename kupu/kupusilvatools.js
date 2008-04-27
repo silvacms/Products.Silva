@@ -2281,7 +2281,7 @@ SilvaExternalSourceTool.prototype._showFormInWindow = function _showFormInWindow
 };
 
 SilvaExternalSourceTool.prototype._addExternalSourceIfValidated = 
-        function(object) {
+  function(object, ignorefocus) {
     if (this.readyState == 4) {
         if (this.status == '200') {
 	  // success, add the external source element to the document
@@ -2299,17 +2299,24 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
 	  extsource.className = 'externalsource';
 	  var sourceinfo = rxml.getElementsByTagName("sourceinfo")[0];
 	  var metatype = sourceinfo.childNodes[0].childNodes[0].data;
-	  var desc = sourceinfo.childNodes[3].childNodes[0].data;
+	  var desc = sourceinfo.childNodes[3];
+	  if (desc.childNodes.length) {
+	    desc = desc.childNodes[0].data;
+	  } else {
+	    desc = null;
+	  }
 
 	  var header = doc.createElement('h4');
 	  header.appendChild(doc.createTextNode(metatype + ' \xab' + source_title + '\xbb'));
 	  header.setAttribute('title',source_id);
 	  extsource.appendChild(header);
 
-	  var desc_el = doc.createElement('p');
-	  desc_el.className = "externalsource-description";
-	  desc_el.appendChild(doc.createTextNode(desc));
-	  extsource.appendChild(desc_el);
+	  if (desc) {
+	    var desc_el = doc.createElement('p');
+	    desc_el.className = "externalsource-description";
+	    desc_el.appendChild(doc.createTextNode(desc));
+	    extsource.appendChild(desc_el);
+	  }
 	  
 	  var params = rxml.getElementsByTagName("parameter");
 	  for (var i=0; i<params.length; i++) {
