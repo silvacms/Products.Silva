@@ -24,31 +24,56 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         # click service_extensions
         sb.click_href_labeled('service_extensions (Silva Product and Extension Configuration)')
         self.failUnless('Configure Silva Extension Products' in sb.browser.contents)
-        # install Silva Documents
-        form = sb.browser.getForm(index=2)
-        form.getControl(name='uninstall:method').click()
-        form = sb.browser.getForm(index=2)
-        self.failUnless('SilvaDocument uninstalled' in sb.browser.contents)
-        # install Silva Documents
-        form.getControl(name='install:method').click()
-        input = sb.browser.getForm(index=2).getControl(name='uninstall:method').value
-        self.failUnless('SilvaDocument installed' in sb.browser.contents)
-        # install Silva External Sources
-        form = sb.browser.getForm(index=4)
-        form.getControl(name='install:method').click()
-        self.failUnless('SilvaExternalSources installed' in sb.browser.contents)
-        # uninstall Silva External Sources
-        form = sb.browser.getForm(index=4)
-        form.getControl(name='uninstall:method').click()
-        self.failUnless('SilvaExternalSources uninstalled' in sb.browser.contents)
-        # refresh Silva Core
-        form = sb.browser.getForm(index=1)
-        form.getControl(name='refresh:method').click()
-        self.failUnless('Silva refreshed' in sb.browser.contents)
-        # install default layout
-        form = sb.browser.getForm(index=1)
-        form.getControl(name='install_layout:method').click()
+
+        # install Silva Core
+        form1 = sb.browser.getForm(index=1)
+        input_hidden = form1.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'Silva')
+        form1.getControl(name='install_layout:method').click()
         self.failUnless('Default layout code installed' in sb.browser.contents)
+
+        # uninstall SilvaDocument
+        form2 = sb.browser.getForm(index=2)
+        input_hidden = form2.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaDocument')
+        form2.getControl(name='uninstall:method').click()
+        self.failUnless('SilvaDocument uninstalled' in sb.browser.contents)
+        
+        # install Silva Documents
+        form2 = sb.browser.getForm(index=2)
+        input_hidden = form2.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaDocument')
+        form2.getControl(name='install:method').click()
+        self.failUnless('SilvaDocument installed' in sb.browser.contents)
+
+        # uninstall SilvaFind
+        form3 = sb.browser.getForm(index=3)
+        input_hidden = form3.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaFind')
+        form3.getControl(name='uninstall:method').click()
+        self.failUnless('SilvaFind uninstalled' in sb.browser.contents)
+
+        # install SilvaFind
+        form3 = sb.browser.getForm(index=3)
+        input_hidden = form3.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaFind')
+        form3.getControl(name='install:method').click()
+        self.failUnless('SilvaFind installed' in sb.browser.contents)
+
+        # install SilvaExternalSources
+        form4 = sb.browser.getForm(index=4)
+        input_hidden = form4.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaExternalSources')
+        form4.getControl(name='install:method').click()
+        self.failUnless('SilvaExternalSources installed' in sb.browser.contents)
+
+        # uninstall SilvaExternalSources
+        form4 = sb.browser.getForm(index=4)
+        input_hidden = form4.getControl(name='name')
+        self.assertEquals(input_hidden.value, 'SilvaExternalSources')
+        form4.getControl(name='uninstall:method').click()
+        self.failUnless('SilvaExternalSources uninstalled' in sb.browser.contents)
+
         # get back to the smi
         sb.go('http://nohost/root/manage_workspace')
         self.failUnless('Silva Root' in sb.browser.contents)

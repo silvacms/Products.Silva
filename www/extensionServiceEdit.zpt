@@ -30,7 +30,7 @@ Version of this file: $Revision: 1.16 $
 <div tal:repeat="module_name here/get_names"
   tal:attributes="
     style python:'width:70%%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:%s;;' % test(here.is_installed(module_name), 'White', 'LightGrey')" >
-
+  <!--<span tal:content="module_name" />-->
  <div style="float:right; width:40%;">
   <h4 class="form-title"
     style="margin: 0">Dependencies</h4>
@@ -49,7 +49,7 @@ Version of this file: $Revision: 1.16 $
    <h3 style="margin: 0 0 0.5ex;" tal:content="python:here.get_description(module_name)" />
    <p style="margin: 0 0 1ex;" tal:content="python:here.get_version_info(module_name)"/>
 
- <form action="." method="post" style="margin-bottom: 0;">
+ <form action="." method="post" style="margin-bottom: 0;" tal:attributes="name module_name">
   <input type="hidden" name="name" tal:attributes="value module_name" />
   <tal:cond tal:condition="python:module_name != 'Silva'">
    <input type="submit" name="install:method" value="install"
