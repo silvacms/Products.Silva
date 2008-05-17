@@ -159,7 +159,7 @@
             <th class="align-right">
             </th>
             <th i18n:translate="">
-              date format: day / month / year hh:mm
+              day / month / year &nbsp;(23:59)
             </th>
             <th i18n:translate="">
               &#8224; acquireable

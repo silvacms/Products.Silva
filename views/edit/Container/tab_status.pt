@@ -285,7 +285,7 @@
       <th class="align-right"
         colspan="6">
         <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or republishables) and may_approve_content)">
-          <tal:inline i18n:translate="">day / month / year (hh:mm)</tal:inline>
+          <tal:inline i18n:translate="">day / month / year &nbsp;(23:59)</tal:inline>
         </tal:if>
       </th>
     </tr>
