@@ -36,7 +36,7 @@
 <table class="listing">
 <thead>
   <tr>
-    <td class="top location" colspan="3">
+    <td class="top location" colspan="2">
     <h2>
       <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />&nbsp;
       <tal:block i18n:translate="">create <span tal:replace="python: request.meta_type" i18n:name="meta_type" /></tal:block>
@@ -46,52 +46,56 @@
 </thead>
 
 <tbody>
-  <tr>
-    <th class="align-right" i18n:translate="">
-      attributes
-    </th>
-    <th style="width:50%;" i18n:translate="">
-      content
-    </th>
-    <th i18n:translate="">
-      notes
-    </th>
-  </tr>
+    <tr>
+      <th style="width:33%"
+        i18n:translate="">
+        aspect
+      </th>
+      <th i18n:translate="">
+        content
+      </th>
+    </tr>
 
   <tal:repeat repeat="field here/form/get_fields">
   <tal:define define="oddrow repeat/field/odd">
   <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
-    <td class="align-right">
-      <tal:block tal:condition="python:field.getId() != 'content_url'">
-        <span tal:replace="structure field/title" /><span class="warning"
+    <td class="designator">
+      <h6>
+        <label tal:content="structure field/title"
+          tal:attributes="
+            for string:field_${field/id};
+            accesskey python:field.id == 'file' and 'f' or nothing;
+          ">
+          title
+        </label><span class="warning"
           tal:condition="field/is_required">*</span>
-      </tal:block>
-      <tal:block tal:condition="python:field.getId() == 'content_url'">
-        <input class="button transporter"
-          type="button"
-          value="reference..."
-          title="find the content this ghost should refer to: alt-r"
-          accesskey="r"
-          tal:define="asset_context model"
-          tal:attributes="onclick string: reference.getReference(
-                                    function(path, id, title) {
-                                      document.getElementsByName(
-                                        'field_content_url'
-                                      )[0].value = path;;
-                                    },
-                                    '${asset_context/absolute_url}',
-                                    'Content', true, '')"
-          i18n:attributes="value;title"
-        /><span class="warning"
-          tal:condition="field/is_required"> *</span>
-      </tal:block>
+      </h6>
+      <p tal:define="note field/description"
+        tal:condition="python:note != 'False'"
+        tal:content="structure note"
+        i18n:translate="">
+        note
+      </p>
     </td>
-    <td tal:content="structure python:field.render_from_request(request)">
-      <input />
-    </td>
-    <td>
-      <tal:block content="structure field/description" i18n:translate="">note</tal:block>
-      &nbsp;
+    <td class="field">
+      <input class="button transporter"
+        type="button"
+        value="reference..."
+        title="find the content this ghost should refer to: alt-r"
+        accesskey="r"
+        tal:define="asset_context model"
+        tal:condition="python:field.getId() == 'content_url'"
+        tal:attributes="onclick string: reference.getReference(
+                                  function(path, id, title) {
+                                    document.getElementsByName(
+                                      'field_content_url'
+                                    )[0].value = path;;
+                                  },
+                                  '${asset_context/absolute_url}',
+                                  'Content', true, '')"
+        i18n:attributes="value;title"
+      />
+      <input tal:replace="structure python:field.render_from_request(request)" />
     </td>
   </tr>
   </tal:define>
@@ -101,7 +105,7 @@
 <tfoot>
   <tr class="controls">
     <td class="align-right"
-      colspan="3">
+      colspan="2">
       <tal:if condition="python: not lookup_mode" >
       <input class="button"
         style="float:right"

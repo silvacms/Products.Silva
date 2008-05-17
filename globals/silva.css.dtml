@@ -731,17 +731,9 @@ form.sublisting {
 }
 
 /* used to shape non-nested listing tables */
-.focus-box {
-  /* for IE5 */
-  width: 73%;
-  max-width: 56em;
-  margin: 0 7px 0 7px;
-}
-
 .focus-rectangle {
   width: 64em;
   margin: 0 7px;
-  padding-top: 7px;
 }
 
 
