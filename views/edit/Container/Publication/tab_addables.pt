@@ -30,7 +30,7 @@
 >
 
 <form method="post" name="form" action="tab_addables_submit">
-  <table class="columns columns2">
+  <table class="columns columns3">
     <tbody>
       <tr>
         <tal:block replace="nothing">
@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                   <td class="top"
-                    colspan="3">
+                    colspan="2">
                     <h2>
                       <img tal:replace="structure icon" />
                       <span i18n:translate=""> addable settings for
@@ -71,16 +71,12 @@
 
               <tbody>
                 <tr>
-                  <th class="align-right"
-                    width="12%"
+                  <th width="33%"
                     i18n:translate="">
                     element
                   </th>
                   <th i18n:translate="">
                     content
-                  </th>
-                  <th width="60%" i18n:translate="">
-                    note
                   </th>
                 </tr>
 
@@ -88,16 +84,18 @@
                   <tal:define define="oddrow repeat/field/odd">
                     <tr valign="top"
                       tal:attributes="class python:oddrow and 'even' or 'odd'">
-                      <td class="align-right">
-                        <tal:block content="structure python: field.title()" i18n:translate="">title</tal:block><span class="warning" tal:condition="python:field.is_required()">*</span>
-                      </td>
-                      <td>
-                        <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
-                      </td>
-                      <td>
-                        <tal:block content="python:field.get_value('description')" i18n:translate="">
+                      <td class="designator">
+                        <h6>
+                          <tal:block content="structure python: field.title()"
+                          i18n:translate="">title</tal:block><span class="warning" tal:condition="python:field.is_required()">*</span>
+                        </h6>
+                        <p tal:content="python:field.get_value('description')"
+                          i18n:translate="">
                           comments here (field description)
-                        </tal:block><br />
+                        </p>
+                      </td>
+                      <td class="field">
+                        <input tal:replace="structure python:field.render(value=model.getProperty(field.id))" />
                       </td>
                     </tr>
                   </tal:define>
@@ -107,7 +105,7 @@
               <tfoot>
                 <tr class="controls">
                   <td class="align-right"
-                    colspan="3">
+                    colspan="2">
                     <input class="button"
                       type="submit"
                       name="form_submitted"
@@ -121,6 +119,8 @@
               </tfoot>
             </table>
 
+        </td>
+        <td class="right">
         </td>
       </tr>
     </tbody>

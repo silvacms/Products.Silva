@@ -27,7 +27,7 @@
             </description>
             <enabled type="int">1</enabled>
             <external_validator></external_validator>
-            <extra></extra>
+            <extra>id="subscribable"</extra>
             <extra_item></extra_item>
             <first_item type="int">1</first_item>
             <hidden type="int">0</hidden>
@@ -56,7 +56,7 @@
             </description>
             <enabled type="int">1</enabled>
             <external_validator></external_validator>
-            <extra></extra>
+            <extra>id="subscriptions"</extra>
             <height type="int">8</height>
             <hidden type="int">0</hidden>
             <max_length></max_length>

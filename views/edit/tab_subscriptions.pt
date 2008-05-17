@@ -60,7 +60,7 @@
                   </tr>
                   <tr>
                     <td class="top"
-                      colspan="3">
+                      colspan="2">
                       <h2 i18n:translate="">
                         <img tal:replace="structure icon" i18n:name="icon"/>
                         manage subscriptions for
@@ -71,43 +71,48 @@
                 </thead>
                 <tbody tal:define="fields form/get_fields">
                   <tr>
-                    <th class="align-right"
-                      width="12%"
+                    <th width="33%"
                       i18n:translate="">
                       element
                     </th>
                     <th i18n:translate="">
                       content
                     </th>
-                    <th width="40%" i18n:translate="">
-                      note
-                    </th>
                   </tr>
                   <tal:repeat repeat="field fields">
                     <tal:define define="iterate repeat/field/odd">
                       <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-                        <td class="field-title">
-                          <span tal:content="python:field['title']" >
-                            title</span><span class="warning"
-                            tal:condition="python:field.is_required()">*</span>
-                        </td>
-                        <td>
-                          <input tal:replace="structure python:field.render()" />
-                        </td>
-                        <td>
-                          <span tal:replace="structure python:field.get_value('description')">
+                        <td class="designator"
+                          style="width:33%">
+                          <h6>
+                            <label tal:content="field/title"
+                              tal:attributes="for field/id"
+                              i18n:translate="">
+                              title
+                            </label><span class="warning"
+                              tal:condition="field/is_required">*</span>
+                          </h6>
+                          <p tal:content="structure python:field.get_value('description')">
                             comments here (field description)
-                          </span>
+                          </p>
+                        </td>
+                        <td class="field">
+                          <input tal:replace="structure field/render" />
                         </td>
                       </tr>
                     </tal:define>
                   </tal:repeat>
                 </tbody>
                 <tfoot>
+                  <tr>
+                    <th i18n:translate=""
+                      colspan="2">
+                      * required
+                    </th>
+                  </tr>
                   <tr class="controls">
-                    <td></td>
-                    <td></td>
-                    <td class="align-right">
+                    <td class="align-right"
+                      colspan="2">
                       <input class="button"
                         type="submit"
                         name="tab_subscriptions_submit:method"

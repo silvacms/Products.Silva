@@ -541,11 +541,11 @@ table.listing td.listing-right {
   padding: 0 0 0 0.2em;
   white-space: nowrap;
 }
-
+/* deprecated, use designator
 table.listing td.field-title {
   text-align: right;
 }
-
+*/
 /*
 * some usability selectors:
 * create a displayed block of the links, because then you can click on

@@ -162,7 +162,7 @@ current timings
 </tr>
 
 <tr metal:use-macro="here/tab_status_macros/macros/date_controls">
-  pub/exp/display controls inserted (see below, about line 2226)
+  pub/exp/display controls inserted (see below, about line 208)
 </tr>
 
 <tr class="controls">

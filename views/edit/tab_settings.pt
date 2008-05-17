@@ -18,7 +18,7 @@
 </metal:block>
 
 <metal:block fill-slot="main">
-<table class="columns columns2">
+<table class="columns columns3">
   <tbody>
     <tr>
       <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
@@ -45,7 +45,8 @@
             tal:condition="python: editable">
           <thead>
             <tr>
-              <td class="top" colspan="3">
+              <td class="top"
+                colspan="2">
                 <h2 tal:attributes="title string:id: ${model/id}">
                   <img tal:replace="structure icon" />
                   <span i18n:translate="">settings for &#xab;<tal:block
@@ -58,14 +59,14 @@
           <tbody>
             <tr class="top-controls"
               tal:condition="iscontainer">
-              <td colspan="3">
+              <td colspan="2">
                 <h3>
                   <span i18n:translate="">container type</span>
                 </h3>
               </td>
             </tr>
             <tr class="odd">
-              <td colspan="3">
+              <td colspan="2">
                 <tal:block condition="isghostfolder"
                    i18n:translate="">
                   This Ghost Folder can be converted to a normal
@@ -84,7 +85,7 @@
             </tr>
             <tr class="controls"
               tal:condition="iscontainer">
-              <td colspan="3">
+              <td colspan="2">
                 <input class="button"
                   style="float:right"
                   type="submit"
@@ -110,59 +111,47 @@
 
             <tr tal:condition="iscontainer">
               <td class="separator"
-                colspan="3">
+                colspan="2">
               </td>
             </tr>
 
             <tr class="top-controls">
-              <td colspan="3">
+              <td colspan="2">
                 <h3>
                   <span i18n:translate="">content renderer</span>
                 </h3>
               </td>
             </tr>
-            <tr>
-              <th class="align-right"
-                width="12%"
-                i18n:translate="">
-                element
-              </th>
-              <th i18n:translate="">
-                content
-              </th>
-              <th width="25%"
-                i18n:translate="">
-                note
-              </th>
-            </tr>
             <tr class="odd">
-              <td class="align-right">
-                <tal:block i18n:translate="">
-                  renderer
-                </tal:block>
+              <td class="designator"
+                style="width:33%">
+                <h6>
+                  <label for="renderer"
+                    i18n:translate="">
+                    renderer
+                  </label>
+                </h6>
+                <p i18n:translate="">
+                  Select a renderer to render this content.
+                </p>
               </td>
-              <td>
-                <select class="store" name="renderer_name_select">
-                  <tal:block
-                    define="selected_renderer_name python: editable.get_renderer_name()"
+              <td class="field">
+                <select class="store" name="renderer_name_select" id="renderer">
+                  <tal:block define="selected_renderer_name python: editable.get_renderer_name()"
                     repeat="renderer_name renderers">
-                    <option
-                      tal:content="renderer_name"
+                    <option tal:content="renderer_name"
                       tal:attributes="
                         value python:renderer_name;
-                        selected python: selected_renderer_name == renderer_name and 'selected' or None;">
+                        selected python: selected_renderer_name == renderer_name and 'selected' or None;
+                      ">
                     </option>
                   </tal:block>
                 </select>
               </td>
-              <td>
-                <tal:block i18n:translate="">
-                  Select a renderer to render this content.
-                </tal:block>
-              </td>
             </tr>
             <tr class="controls">
-              <td class="align-right" colspan="3">
+              <td class="align-right"
+                colspan="2">
                 <input class="button"
                   value="change renderer"
                   name="tab_settings_save_renderer:method"
@@ -177,58 +166,47 @@
             <tal:block condition="may_approve_content">
               <tr tal:condition="iscontainer">
                 <td class="separator"
-                  colspan="3">
+                  colspan="2">
                 </td>
               </tr>
 
-              <tal:block condition="iscontainer"
-                tal:define="allow_feeds model/allow_feeds">
+              <tal:block tal:define="allow_feeds model/allow_feeds"
+                condition="iscontainer">
                 <tr class="top-controls">
-                  <td colspan="3">
+                  <td colspan="2">
                     <h3 i18n:translate="">
                       atom/rss feeds
                     </h3>
                   </td>
                 </tr>
-                <tr>
-                  <th class="align-right"
-                    width="12%"
-                    i18n:translate="">
-                    element
-                  </th>
-                  <th i18n:translate="">
-                    content
-                  </th>
-                  <th width="25%"
-                    i18n:translate="">
-                    note
-                  </th>
-                </tr>
                 <tr class="odd">
-                  <td class="align-right">
-                    <tal:block i18n:translate="">
-                      allow feeds
-                    </tal:block>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="allow_feeds"
-                      tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
-                    <tal:block i18n:translate="">
+                  <td class="designator"
+                    style="width:33%">
+                    <h6>
+                      <label for="feeds"
+                        i18n:translate="">
+                        allow feeds
+                      </label>
+                    </h6>
+                    <p i18n:translate="">
                       Check to provide an Atom/<acronym title="Really Simple Syndication" i18n:name="RSS">RSS</acronym> feed from this container.
-                    </tal:block>
+                    </p>
                   </td>
-                  <td>
+                  <td class="field">
+                    <input type="checkbox"
+                      name="allow_feeds"
+                      id="feeds"
+                      tal:attributes="checked python: allow_feeds and 'checked' or None;"/>
                     <tal:block i18n:translate="">The feed url is</tal:block>
                       <a title="RSS feed"
                         tal:attributes="href string:${model/absolute_url}/atom.xml"
-                        >atom.xml</a>/<a title="Atom feed" 
+                        >atom.xml</a> / <a title="Atom feed" 
                         tal:attributes="href string:${model/absolute_url}/rss.xml">rss.xml</a>.
                   </td>
                 </tr>
                 <tr class="controls">
-                  <td class="align-right" colspan="3">
+                  <td class="align-right"
+                    colspan="2">
                     <input class="button"
                       value="change feed settings"
                       name="tab_settings_save_feeds:method"
@@ -246,11 +224,14 @@
         </table>
       </form>
     </td>
+    <td class="right">
+    </td>
   </tr>
 
   <tal:block replace="nothing">layout settings</tal:block>
     <tr>
-      <td class="main">
+      <td class="main"
+        colspan="2">
         <tal:block
           define="category python: 'layout';"
           condition="model/implements_versioning">
@@ -333,7 +314,7 @@
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <span i18n:translate=""> layout settings for &#xab;<tal:block
+                <span i18n:translate="">layout settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
               </h2>
