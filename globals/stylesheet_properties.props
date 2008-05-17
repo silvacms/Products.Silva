@@ -67,14 +67,14 @@ listingTopHeadingColor:string=#D6EAFF
 listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
 
-listingInterControlsBackground:string=#678
-listingControlsBackground:string=#567
+listingInterControlsBackground:string=#789
+listingControlsBackground:string=#89a
 listingDividerBackground:string=#89a
 
-listingHeaderBackground:string=#789
+listingHeaderBackground:string=#678
 listingHeaderFontColor:string=#e0eefc
 
-listingBorder:string=1px solid #607080
+listingBorder:string=1px solid #789
 
 listingEvenBackground:string=#cfdbe7
 listingOddBackground:string=#d7e4f0
@@ -94,7 +94,7 @@ inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 
 buttonMargin:string=0
 buttonPadding:string=1px 0.5em
-buttonBorder:string=1px solid #345
+buttonBorder:string=1px solid #234
 buttonBorderStyle:string=none solid none
 buttonFontSize:string=100%
 buttonWeight:string=normal

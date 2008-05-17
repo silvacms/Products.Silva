@@ -62,36 +62,37 @@
   
   <tbody>
     <tr>
-      <th class="align-right"
+      <th style="width:33%"
         i18n:translate="">
         aspect
       </th>
-      <th style="width:50%;"
-        i18n:translate="">
-        content
-      </th>
       <th i18n:translate="">
-        notes
+        content
       </th>
     </tr>
     <tal:repeat repeat="field here/form/get_fields">
     <tal:define define="iterate repeat/field/odd">
     <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-      <td class="align-right">
-        <label tal:content="structure field/title"
-          tal:attributes="
-            for string:field_${field/id};
-            accesskey python:field.id == 'file' and 'f' or nothing;
-          ">
-          title
-        </label><span class="warning"
-          tal:condition="field/is_required">*</span>
+      <td class="designator">
+        <h6>
+          <label tal:content="structure field/title"
+            tal:attributes="
+              for string:field_${field/id};
+              accesskey python:field.id == 'file' and 'f' or nothing;
+            ">
+            title
+          </label><span class="warning"
+            tal:condition="field/is_required">*</span>
+        </h6>
+        <p tal:define="note field/description"
+          tal:condition="python:note != 'False'"
+          tal:content="structure note"
+          i18n:translate="">
+          note
+        </p>
       </td>
-      <td>
+      <td class="field">
         <input tal:replace="structure python:field.render_from_request(request)" />
-      </td>
-      <td>
-        <tal:block tal:content="structure field/description" i18n:translate="">note</tal:block>&nbsp;
       </td>
     </tr>
     <tal:comment replace="nothing"> _______ insert subhead for images and files _______ </tal:comment>
@@ -100,24 +101,17 @@
       or (metatype == 'Silva File' and field.id == 'file')
       ">
     <tr class="inter-controls">
-      <td>
-          &nbsp;
-      </td>
       <td colspan="2">
-        <h3>optional fields</h3>
+        <h3>optional field<tal:plural condition="python:metatype != 'Silva Image'">s</tal:plural></h3>
       </td>
     </tr>
     <tr>
-      <th class="align-right"
-        i18n:translate="">
+      <th i18n:translate="">
         aspect
       </th>
       <th style="width:50%;"
         i18n:translate="">
         content
-      </th>
-      <th i18n:translate="">
-        notes
       </th>
     </tr>
     </tal:if>
@@ -126,8 +120,14 @@
   </tbody>
   
   <tfoot>
+    <tr>
+      <th i18n:translate="">
+        * required
+      </th>
+      <th>&nbsp;</th>
+    </tr>
     <tr class="controls">
-      <td colspan="3">
+      <td colspan="2">
         <tal:if condition="python: not lookup_mode" >
         <input class="button"
           style="float:right"

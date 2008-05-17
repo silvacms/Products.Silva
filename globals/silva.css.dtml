@@ -509,16 +509,16 @@ table.listing td {
   vertical-align: top;
 }
 
-/* _______ title cell _______ */
+/* title cell */
 table.listing td.top h2 {
-  margin: 0 0.2em 0.1em 0.1em;
+  margin: 0 0.2em 0.1em 0.3em;
   color: &dtml-listingTopHeadingColor;;
 }
 table.listing td.top img {
   vertical-align: top;
 }
 
-/* _______ subhead cell _______ */
+/* subhead cell */
 table.listing tr.top-controls h3 {
   margin: 0.1em 0.3em 0.2em;
   padding: 0;
@@ -526,7 +526,7 @@ table.listing tr.top-controls h3 {
   line-height: 100%;
 }
 
-/* _______ subsubhead cell _______ */
+/* subsubhead cell */
 table.listing tr.inter-controls h3 {
 margin: 0em 0.3em 0.1em;
   color: #dbe9f7; /* e3e9f4 */
@@ -739,9 +739,7 @@ form.sublisting {
 }
 
 .focus-rectangle {
-  /* for IE5 */
-  width: 96%;/* for IE6 */
-  max-width: 98%;
+  width: 64em;
   margin: 0 7px;
   padding-top: 7px;
 }
@@ -857,7 +855,7 @@ input.canceler {
   background-color: &dtml-cancelerBackground;;
 }
 
-/* state coded publish action buttons */
+/* _______ state coded publishing action buttons _______ */
 input.rejector {
   background-color: #8f7f01;
 }
@@ -867,7 +865,6 @@ input.revoker {
 input.closer {
   background-color: #202080;
 }
-
 
 /* _______ form labels _______ */
 
@@ -883,6 +880,30 @@ th label {
   color: &dtml-listingHeaderFontColor;;
 }
 
+/* _______ field iterators _______ */
+
+table.listing td.designator {
+padding-top:0.2em;
+padding-bottom:0.2em;
+}
+table.listing td.designator h6 {
+margin:0;
+font-size: 115%;
+font-weight: normal;
+}
+table.listing td.designator p,
+table.listing td.field p {
+margin:0;
+color:#778;
+}
+table.listing td.designator:hover p,
+table.listing td.field:hover p {
+color:#333;
+}
+
+table.listing td.field {
+vertical-align:middle;
+}
 
 /* _______ pseudo form button selectors, matches transporter button style _______ */
 
@@ -970,11 +991,11 @@ select:focus, select:hover {
 color:#336;
 }
 
-/* _______ controls candy _______ */
+/* _______ controls candy: hover/focus _______ */
 
 /* manipulator warm glow */
 input.button:hover, button.button:hover {
-border-color: #567;
+border-color: #456;
   color: #e5fffe;
   background-color: #4a7f67;
 }
@@ -1014,16 +1035,16 @@ input.remover:focus, input.warning:focus {
   background-color: #53538b;
 }
 
-/* state coded buttons */
-input.reject:hover {
+/* state coded button hovers */
+input.rejector:hover {
   color: #e5ffec;
   background-color: #9b8800;
 }
-input.revoke:hover {
+input.revoker:hover {
   color: #e5ffec;
   background-color: #009a62;
 }
-input.close:hover {
+input.closer:hover {
   color: #e5ffec;
   background-color: #4a4aa7;
 }

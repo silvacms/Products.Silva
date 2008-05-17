@@ -62,7 +62,7 @@ messages
   colspan="2"
   i18n:translate="">
 <span tal:replace="python:model.get_approval_requester()" i18n:name="author_id">author id</span>
-sent a message on 
+sent a message on
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()"
   i18n:name="some_date">some date</span>
 <tal:if condition="python:model.get_approval_request_message()"
@@ -90,10 +90,9 @@ sent a message on
 <div metal:define-macro="request_approval" tal:omit-tag="">
 <form name="author_request_approval" action="." method="post">
 <tr tal:condition="python:model.get_approval_request_message()">
-<td class="feedback"
- colspan="2" i18n:translate="">
-A previous request for approval has been rejected / withdrawn by 
-<span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on 
+<td class="feedback" colspan="2" i18n:translate="">
+A previous request for approval has been rejected / withdrawn by
+<span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on
 <span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>.
 The last message regarding this issue is:
 </td>
@@ -112,41 +111,33 @@ The last message regarding this issue is:
 </tr>
 
 <tr class="inter-controls">
-<td colspan="2">
-<h3 i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></h3>
-</td>
-</tr>
-
-<tr>
-<th i18n:translate="">
-message to editor
-</th>
-<th style="width:40%" i18n:translate="">
-notes
+<th colspan="2">
+<tal:block i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></tal:block>
 </th>
 </tr>
 
 <tr class="odd"
   tal:define="field view/tab_status_form_author/message">
-<td class="align-right">
-<tal:input
-  replace="structure python: field.render(REQUEST=request)" />
-</td>
-<td i18n:translate="">
+<td class="designator" style="width:33%">
+<h6><label for="message" i18n:translate="">message to editor</label></h6>
+<p i18n:translate="">
 This message will remain visible in the status screen for other authors and editors.
+</p>
+</td>
+<td class="field" style="text-align:right">
+<tal:input replace="structure python: field.render(REQUEST=request)" />
 </td>
 </tr>
 
 <tr metal:use-macro="here/tab_status_macros/macros/date_controls">
-  pub/exp/display controls inserted (see below, @ line 241)
+  pub/exp/display controls inserted (see below, @ line 221)
 </tr>
 
 <tr class="controls">
 <td class="align-right" colspan="2">
-<input 
-  type="submit"
+<input type="submit"
   value="request approval"
-  class="button"
+  class="button executor"
   name="tab_status_request:method"
   title="access key: alt-r"
   accesskey="r"
@@ -165,28 +156,19 @@ This message will remain visible in the status screen for other authors and edit
 <tr class="inter-controls">
 <td colspan="2">
 <h3 i18n:translate="">
-change settings
+current timings
 </h3>
 </td>
 </tr>
 
-<tr>
-<th class="align-right" i18n:translate="">
-current timings
-</th>
-<th i18n:translate="">
-notes
-</th>
-</tr>
-
 <tr metal:use-macro="here/tab_status_macros/macros/date_controls">
-  pub/exp/display controls inserted (see below, @ line 241)
+  pub/exp/display controls inserted (see below, about line 2226)
 </tr>
 
-<tr class="inter-controls">
+<tr class="controls">
 <td class="align-right"
   colspan="2">
-<input type="submit" 
+<input type="submit"
   value="update timing"
   name="tab_status_change_settings:method"
   class="button"
@@ -223,20 +205,11 @@ publish closed version
 </td>
 </tr>
 
-<tr>
-<th class="align-right" i18n:translate="">
-settings
-</th>
-<th style="width:40%" i18n:translate="">
-notes
-</th>
-</tr>
-
-<metal:def define-macro="date_controls"> 
+<metal:def define-macro="date_controls">
 <tr class="even"
-  style="vertical-align:middle"
   tal:define="field view/tab_status_form_editor/publish_datetime">
-<td class="align-right" style="white-space: nowrap;">
+<td class="designator">
+<h6>
 <label title="access key: alt-m"
   accesskey="m"
   tal:content="field/title"
@@ -245,17 +218,22 @@ notes
   i18n:translate="">
 content publish time
 </label>
-<input tal:replace="structure python: field.render(REQUEST=request)" />
+</h6>
 </td>
-<td style="vertical-align:middle"
+<td class="field"
+  style="text-align:right">
+<p style="float:left; margin-top:0.3em"
   tal:content="structure field/description">
   description
+</p>
+<input tal:replace="structure python: field.render(REQUEST=request)" />
 </td>
 </tr>
 
 <tr class="odd"
   tal:define="field view/tab_status_form_editor/expiration_datetime">
-<td class="align-right" style="white-space: nowrap;">
+<td class="designator" style="white-space: nowrap;">
+<h6>
 <label title="access key: alt-o"
   accesskey="o"
   tal:content="field/title"
@@ -264,11 +242,15 @@ content publish time
   i18n:translate="">
 expiration time
 </label>
-<input tal:replace="structure python: field.render(REQUEST=request)" />
+</h6>
 </td>
-<td style="vertical-align:middle"
+<td class="field"
+  style="text-align:right">
+<p style="float:left; margin-top:0.3em"
   tal:content="structure field/description">
   description
+</p>
+<input tal:replace="structure python: field.render(REQUEST=request)" />
 </td>
 </tr>
 </metal:def>
@@ -306,6 +288,8 @@ expiration time
 <div tal:omit-tag=""
   metal:define-macro="withdraw_request_approval">
 <form name="auth_ed_reject_approval" action="tab_status_withdraw" method="post">
+<input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
+<input type="hidden" name="tab_name" value="publish" />
 <table class="listing">
 <tr class="inter-controls">
 <td colspan="2">
@@ -317,10 +301,9 @@ expiration time
 </td>
 </tr>
 
-<tr>
-<input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
-<input type="hidden" name="tab_name" value="publish" />
-<th>
+<tr class="odd">
+<td class="designator" style="width:33%">
+<h6><label for="message" i18n:translate="">
 <tal:block i18n:translate="">
 add message on
 </tal:block>
@@ -330,24 +313,18 @@ rejection
 <tal:block condition="not: may_approve_content" i18n:translate="">
 withdrawal
 </tal:block>
-</th>
-<th style="width:40%"
-  i18n:translate="">
-notes
-</th>
-</tr>
-
-<tr class="odd">
-<td>
+</label></h6>
+<p i18n:translate="">
+The message may be viewed by local users.
+</p>
+</td>
+<td class="field" style="text-align:right">
 <textarea
   class="store"
   name="message"
   cols="65"
   rows="7"
   wrap="soft"></textarea>
-</td>
-<td width="40%" i18n:translate="">
-The message may be viewed by local users.
 </td>
 </tr>
 
@@ -356,28 +333,28 @@ The message may be viewed by local users.
 &nbsp;
 </td>
 <td class="align-right">
-<input class="button reject"
-  type="submit" 
-  title="access key: alt-j" 
+<input class="button rejector"
+  type="submit"
+  title="access key: alt-j"
   accesskey="j"
-  tal:condition="may_approve_content" 
-  value="reject approval request" 
-  i18n:attributes="title;value" 
+  tal:condition="may_approve_content"
+  value="reject approval request"
+  i18n:attributes="title;value"
 />
-<input class="button"
-  type="submit" 
-  title="access key: alt-r" 
+<input class="button rejector"
+  type="submit"
+  title="access key: alt-r"
   accesskey="r"
-  tal:condition="not: may_approve_content" 
+  tal:condition="not: may_approve_content"
   value="withdraw approval request"
-  i18n:attributes="title;value" 
+  i18n:attributes="title;value"
 />
 </td>
 </tr>
 </table>
 </form>
 </div>
-<span tal:replace="nothing"> _______ / Author/Editor withdraws/rejects request for  approval _______ </span>
+<span tal:replace="nothing"> _______ / Author/Editor withdraws/rejects request for approval _______ </span>
 
 
 <span tal:replace="nothing"> _______ Revoke approval _______ </span>
@@ -406,12 +383,12 @@ If further editing is required, first revoke the approval.
 <tfoot>
 <tr class="controls">
 <td class="align-right">
-<input 
-  type="submit" 
-  value="revoke approval" 
-  class="button" 
+<input
+  type="submit"
+  value="revoke approval"
+  class="button revoker"
   title="access key: alt-v"
-  accesskey="v" 
+  accesskey="v"
   i18n:attributes="value;title" />
 </td>
 </tr>
@@ -430,7 +407,7 @@ If further editing is required, first revoke the approval.
 <thead>
 <tr class="inter-controls">
 <td>
-<h3 i18n:translate="">manual close</h3> 
+<h3 i18n:translate="">manual close</h3>
 </td>
 </tr>
 </thead>
@@ -451,7 +428,7 @@ If necessary, the published version of this content can be manually closed (take
   type="submit"
   value="close published version"
   title="access key: alt-c"
-  accesskey="c" 
+  accesskey="c"
   i18n:attributes="value;title"
 />
 </td>

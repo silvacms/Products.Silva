@@ -59,8 +59,8 @@
             </td>
           </tr>
           <tr>
-            <th class="align-right"
-              width="12%" i18n:translate="">
+            <th width="20%"
+              i18n:translate="">
               element
             </th>
             <th i18n:translate="">
@@ -81,8 +81,7 @@
               <tal:block replace="nothing">
                 ___ element name column ___
               </tal:block>
-              <td class="align-right"
-                tal:content="element/title" i18n:translate="">
+              <td tal:content="element/title" i18n:translate="">
                 Element name
               </td>
               <tal:block replace="nothing">

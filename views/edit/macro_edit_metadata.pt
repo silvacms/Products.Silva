@@ -55,7 +55,7 @@
           <tal:block define="set_errors form_errors/?set_name | nothing">
             <tr class="divider"
               tal:condition="not:repeat/set_name/start">
-              <td colspan="4"
+              <td colspan="3"
                 tal:attributes="style python:model.implements_container() and 'background-color:#c4d6e7' or 'background-color:#c5d4ca'">
               </td>
             </tr>
@@ -63,7 +63,7 @@
               ______________ top controls row ______________
             </tr>
             <tr class="top-controls">
-              <td colspan="4">
+              <td colspan="3">
                 <h3 tal:define="
                   set binding/?set_name/setTitle | set_name;
                   label python:set == 'silva-extra' and 'silva-meta' or set;
@@ -73,20 +73,16 @@
               </td>
             </tr>
             <tr>
-              <th class="align-right"
-                width="12%"
+              <th width="20%"
                 i18n:translate="">
                 element
               </th>
-              <th i18n:translate="">
+              <th i18n:translate=""
+                width="50%">
                 content
               </th>
               <th i18n:translate="">
                 acquired content
-              </th>
-              <th width="25%"
-                i18n:translate="">
-                note
               </th>
             </tr>
             <tal:block repeat="element_name binding/?set_name/elementNames">
@@ -102,30 +98,42 @@
                 <tr tal:condition="not: element/hidden"
                   tal:attributes="class python:element_error and 'alert' or iterate and 'odd' or 'even';">
                   <tal:block replace="nothing">
-                    ___ element name column ___
+                    ___ element designator column ___
                   </tal:block>
-                  <td class="align-right">
-                    <label tal:content="element/title"
-                      tal:attributes="for element_name"
-                      tal:omit-tag="not:element/isEditable"
-                      i18n:translate="">
-                      Element name
-                    </label>
-                    <span class="warning"
-                      tal:condition="element/isRequired">
-                      *
-                    </span>
+                  <td class="designator">
+                    <h6>
+                      <label tal:content="element/title"
+                        tal:attributes="for element_name"
+                        tal:omit-tag="not:element/isEditable"
+                        i18n:translate="">
+                        Element name
+                      </label>
+                      <span class="warning"
+                        tal:condition="element/isRequired">
+                        *
+                      </span>
+                    </h6>
+                    <p tal:content="structure element/description" i18n:translate="">
+                      Element description
+                    </p>
                   </td>
                   <tal:block replace="nothing">
                     ___ element widget column ___
                   </tal:block>
-                  <td tal:define="
-                    data python: element['render'] or element['view'];
-                    data python: element_name in truncatable and ct(data, 50) or data;
-                    "
-                    tal:condition="python: element['isEditable'] or not element['isAcquired']"
-                    tal:content="structure data">
-                    element edit widget
+                  <td class="field"
+                    tal:define="
+                      data python: element['render'] or element['view'];
+                      data python: element_name in truncatable and ct(data, 50) or data">
+                    <span class="error"
+                      tal:condition="element_error"
+                      tal:content="element_error">
+                      Error message
+                    </span>
+                    <tal:input  
+                      tal:condition="python: element['isEditable'] or not element['isAcquired']"
+                      tal:content="structure data">
+                      element edit widget
+                    </tal:input>
                   </td>
                   <tal:block replace="nothing">
                     ___ element acquired value column ___
@@ -143,18 +151,6 @@
                       &nbsp;
                     </tal:block>
                   </td>
-                  <tal:block replace="nothing">
-                    ___ element desc. column ___
-                  </tal:block>
-                  <td>
-                    <tal:block content="structure element/description" i18n:translate="">
-                      Element description
-                    </tal:block>
-                    <span class="error"
-                      tal:condition="element_error"
-                      tal:content="element_error">
-                    </span>
-                  </td>
                 </tr>
               </tal:block>
             </tal:block>
@@ -168,11 +164,9 @@
             <th i18n:translate="">
               &#8224; acquireable
             </th>
-            <th>
-            </th>
           </tr>
           <tr class="controls">
-            <td class="align-right" colspan="4">
+            <td class="align-right" colspan="3">
               <input class="button"
                 type="submit"
                 name="save_metadata:method"
