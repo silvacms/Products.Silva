@@ -17,8 +17,7 @@
   tal:define="objects view/REQUEST/ids">
 
 <tal:if condition="python:view.REQUEST.has_key('ids')">
-<div class="focus-rectangle"
-  style="padding-top:1px;">
+<div class="focus-rectangle">
   <form action="tab_edit_rename_submit" method="post">
     <table class="listing">
       <thead>
@@ -26,7 +25,8 @@
           <td class="top"
             colspan="3">
             <h2 i18n:translate="">
-              <img tal:replace="structure icon" i18n:name="icon" />
+              <img tal:replace="structure icon"
+                i18n:name="icon" />
               rename objects in
               &#xab;<tal:plug content="title" i18n:name="title" />&#xbb;
             </h2>
@@ -36,7 +36,8 @@
 
       <tbody>
         <tr>
-          <th class="align-right" i18n:translate="">
+          <th class="align-right"
+            i18n:translate="">
             attribute
           </th>
           <th i18n:translate="">
