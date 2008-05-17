@@ -6,9 +6,7 @@
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="
-  vein string:publish;
-  "
+  tal:define="vein string:publish"
   i18n:domain="silva">
 <metal:use use-macro="here/macro_index/macros/master">
 <metal:fill fill-slot="main">
@@ -18,10 +16,8 @@
   name="silvaObjects"
   tal:define="
     objects model/get_processed_status_tree;
-
     refs options/refs | python: [];
     redisplay_timing_form request/redisplay_timing_form | options/redisplay_timing_form | python: 1;
-
     global approveables nothing;
     global rejectables nothing;
     global revokeables nothing;
@@ -137,7 +133,7 @@
           global revokeables python: test(state == 'approved', 1, revokeables);
           global approveables python: test(state == 'draft', 1, approveables);
           global new_versionables python:test(
-            ((public_status == 'published' or public_status == 'closed') 
+            ((public_status == 'published' or public_status == 'closed')
             and state != 'draft' and state != 'pending' and state != 'approved'
             ), 1, new_versionables);
           global republishables python: test(state == 'closed', 1, republishables);"
@@ -161,8 +157,9 @@
           <div tal:attributes="style string:margin-left:${indent_depth}">
             <div style="float: left;">
               <a class="icon"
-                tal:attributes="href string:${obj_url}/edit/tab_edit;
-                title python: here.tab_status_get_modify_title(obj['meta_type']);
+                tal:attributes="
+                  href string:${obj_url}/edit/tab_edit;
+                  title python: here.tab_status_get_modify_title(obj['meta_type']);
                 "
                 i18n:attributes="title">
                 <img tal:replace="structure obj/icon" />
@@ -247,7 +244,7 @@
             tal:attributes="href obj_url;"
             tal:condition="python: public_status == 'published'"
             i18n:attributes="title">
-            <tal:def 
+            <tal:def
               define="
                 global closeables python: 1;
                 global expireables python:end_time and 1 or expireables"
@@ -268,8 +265,8 @@
     </tal:block>
     <tr class="even"
       tal:condition="not: objects">
-      <td
-        colspan="6" i18n:translate="">
+      <td colspan="6"
+        i18n:translate="">
         There are no publishable items here.
       </td>
     </tr>
@@ -298,8 +295,7 @@
       <td class="align-right"
         style="padding-right:0.5em;"
         colspan="6">
-        <label
-          title="access key: alt-m"
+        <label title="access key: alt-m"
           accesskey="m"
           i18n:attributes="title"
           i18n:translate=""
@@ -313,6 +309,7 @@
           replace="structure python: view.tab_status_form.publish_datetime.render()"
         />
         <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or new_versionables) and may_approve_content)">
+          &nbsp;
           <label title="access key: alt-x"
             accesskey="x"
             i18n:attributes="title"
