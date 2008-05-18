@@ -21,11 +21,11 @@ from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
 class AutoTOC(Content, SimpleItem):
-    __doc__ = _("""This is a special document that automatically displays a
-       table of contents. Usually it&#8217;s used as an &#8216;index&#8217;
-       document. In that case the parent folder shows a table of contents
-       when accessed (e.g. http://www.x.yz/silva/myFolder/). This can
-       display any set of Silva Content Types (including assets).""")
+    __doc__ = _("""This is a special document type that automatically generates
+       a Table of Contents. Usually it's used as the 'index' document of a
+       folder. Then the parent folder displays a TOC when accessed (e.g.
+       http://www.x.yz/silva/myFolder/). The AutoTOC can display any selection
+       of Silva content types including assets.""")
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
