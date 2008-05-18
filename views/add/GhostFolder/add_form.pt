@@ -34,114 +34,120 @@
   tal:attributes="value return_url"
 />
 <table class="listing">
-<thead>
-  <tr>
-    <td class="top location" colspan="2">
-    <h2>
-      <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />&nbsp;
-      <tal:block i18n:translate="">create <span tal:replace="python: request.meta_type" i18n:name="meta_type" /></tal:block>
-    </h2>
-    </td>
-  </tr>
-</thead>
-
-<tbody>
+  <thead>
     <tr>
-      <th style="width:33%"
-        i18n:translate="">
-        aspect
-      </th>
-      <th i18n:translate="">
-        content
-      </th>
+      <td class="top location" colspan="2">
+      <h2>
+        <img tal:replace="structure python:context.render_icon_by_meta_type(request.meta_type)" />&nbsp;
+        <tal:block i18n:translate="">create <span tal:replace="python: request.meta_type" i18n:name="meta_type" /></tal:block>
+      </h2>
+      </td>
     </tr>
-
-  <tal:repeat repeat="field here/form/get_fields">
-  <tal:define define="oddrow repeat/field/odd">
-  <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
-    <td class="designator">
-      <h6>
-        <label tal:content="structure field/title"
-          tal:attributes="
-            for string:field_${field/id};
-            accesskey python:field.id == 'file' and 'f' or nothing;
-          ">
-          title
-        </label><span class="warning"
-          tal:condition="field/is_required">*</span>
-      </h6>
-      <p tal:condition="python:field.getId() != 'content_url'"
-        tal:content="structure field/description"
-        i18n:translate="">
-        description
-      </p>
-      <p tal:condition="python:field.getId() == 'content_url'"
-        i18n:translate="">
-        Location of originating folder. Depending on how much content there is, <span class="warning" i18n:name="warning"><tal:block i18n:translate="">creation may take a while</tal:block></span>.
-      </p>
-    </td>
-    <td class="field">
-      <input class="button transporter"
-        type="button"
-        value="reference..."
-        title="find the folder this ghost should refer to: alt-r"
-        accesskey="r"
-        tal:define="asset_context model"
-        tal:condition="python:field.getId() == 'content_url'"
-        tal:attributes="onclick string: reference.getReference(
-                                  function(path, id, title) {
-                                    document.getElementsByName(
-                                      'field_content_url'
-                                    )[0].value = path;;
-                                  },
-                                  '${asset_context/absolute_url}',
-                                  'Container', true, '')"
-        i18n:attributes="value;title"
-      />
-      <input tal:replace="structure python:field.render_from_request(request)" />
-    </td>
-  </tr>
-  </tal:define>
-  </tal:repeat>
-</tbody>
-
-<tfoot>
-  <tr class="controls">
-    <td class="align-right"
-      colspan="2">
-      <tal:if condition="python: not lookup_mode" >
-      <input class="button"
-        style="float:right"
-        type="submit"
-        name="add_edit_submit"
-        value="save + edit"
-        title="access key: alt-e"
-        accesskey="e"
-        tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-        i18n:attributes="value;title"
-      />
-      </tal:if>
-      <input class="button"
-        style="float:right"
-        type="submit"
-        name="add_submit"
-        value="save"
-        title="access key: alt-s"
-        accesskey="s"
-        i18n:attributes="value;title"
-      />
-      <input class="button canceler"
-        style="float:left;"
-        type="submit"
-        name="add_cancel"
-        value="cancel"
-        title="access key: alt-c"
-        accesskey="c"
-        i18n:attributes="value;title"
-      />
-    </td>
-  </tr>
-</tfoot>
+  </thead>
+  
+  <tbody>
+      <tr>
+        <th style="width:33%"
+          i18n:translate="">
+          aspect
+        </th>
+        <th i18n:translate="">
+          content
+        </th>
+      </tr>
+  
+    <tal:repeat repeat="field here/form/get_fields">
+    <tal:define define="oddrow repeat/field/odd">
+    <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
+      <td class="designator">
+        <h6>
+          <label tal:content="structure field/title"
+            tal:attributes="
+              for string:field_${field/id};
+              accesskey python:field.id == 'file' and 'f' or nothing;
+            ">
+            title
+          </label><span class="warning"
+            tal:condition="field/is_required">*</span>
+        </h6>
+        <p tal:condition="python:field.getId() != 'content_url'"
+          tal:content="structure field/description"
+          i18n:translate="">
+          description
+        </p>
+        <p tal:condition="python:field.getId() == 'content_url'"
+          i18n:translate="">
+          Location of originating folder. Depending on how much content there is, <span class="warning" i18n:name="warning"><tal:block i18n:translate="">creation may take a while</tal:block></span>.
+        </p>
+      </td>
+      <td class="field">
+        <input class="button transporter"
+          type="button"
+          value="reference..."
+          title="find the folder this ghost should refer to: alt-r"
+          accesskey="r"
+          tal:define="asset_context model"
+          tal:condition="python:field.getId() == 'content_url'"
+          tal:attributes="onclick string: reference.getReference(
+                                    function(path, id, title) {
+                                      document.getElementsByName(
+                                        'field_content_url'
+                                      )[0].value = path;;
+                                    },
+                                    '${asset_context/absolute_url}',
+                                    'Container', true, '')"
+          i18n:attributes="value;title"
+        />
+        <input tal:replace="structure python:field.render_from_request(request)" />
+      </td>
+    </tr>
+    </tal:define>
+    </tal:repeat>
+  </tbody>
+  
+  <tfoot>
+    <tr>
+      <th i18n:translate="">
+        * required
+      </th>
+      <th>&nbsp;</th>
+    </tr>
+    <tr class="controls">
+      <td class="align-right"
+        colspan="2">
+        <tal:if condition="python: not lookup_mode" >
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="add_edit_submit"
+          value="save + edit"
+          title="access key: alt-e"
+          accesskey="e"
+          tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+          i18n:attributes="value;title"
+        />
+        </tal:if>
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="add_submit"
+          value="save"
+          title="access key: alt-s"
+          accesskey="s"
+          i18n:attributes="value;title"
+        />
+        <input class="button canceler"
+          style="float:left;"
+          type="submit"
+          name="add_cancel"
+          value="cancel"
+          title="access key: alt-c"
+          accesskey="c"
+          i18n:attributes="value;title"
+        />
+      </td>
+    </tr>
+  </tfoot>
 </table>
 </form>
 

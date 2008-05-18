@@ -110,7 +110,8 @@
                       </label><span class="warning"
                         tal:condition="element/isRequired">*</span>
                     </h6>
-                    <p tal:content="structure element/description" i18n:translate="">
+                    <p tal:content="structure element/description"
+                      i18n:translate="">
                       Element description
                     </p>
                   </td>
@@ -152,21 +153,18 @@
               </tal:block>
             </tal:block>
           </tal:block>
-          <tr tal:condition="python: set_name == 'silva-extra'">
+          <tr tal:condition="python: set_name != 'silva-content'">
             <th i18n:translate="">
               * required
             </th>
-            <th i18n:translate="">
-              day / month / year &nbsp;(23:59)
+            <th>
+              <tal:if tal:condition="python: set_name == 'silva-extra'"
+                i18n:translate="">
+                day / month / year &nbsp;(23:59)
+              </tal:if>&nbsp;
             </th>
             <th i18n:translate="">
               &#8224; acquireable
-            </th>
-          </tr>
-          <tr tal:condition="python:set_name != 'silva-extra' and set_name != 'silva-content'">
-            <th i18n:translate=""
-              colspan="3">
-              * required
             </th>
           </tr>
           <tr class="controls">
