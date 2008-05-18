@@ -20,10 +20,10 @@
      <th i18n:translate="">notes</th>
     </tr>
    <tr class="odd">
-    <td class="align-right"><label for="toc_types">AutoTOC Types</label></td>
+    <td class="align-right"><label for="toc_types">types to list</label></td>
     <td tal:define="all_types model/get_silva_types;
                     my_types model/get_local_types">
-     <select name="toc_types:list" id="toc_types" multiple="multiple" size="6">
+     <select class="store" name="toc_types:list" id="toc_types" multiple="multiple" size="6">
       <option tal:repeat="type all_types"
         tal:attributes="value type;
                         selected python:type in my_types and 'selected' or nothing"
@@ -31,13 +31,13 @@
      </select>
     </td>
     <td>
-     You need to have container types selected (e.g. Folder and Publication) in order for AutoTOC to descend into them.  If no container types are selected,  this will act as if the depth=1, i.e. only return items in this container.
+     You must have container types selected (e.g. Folder and Publication) in order for the AutoTOC to descend into them. If no container types are selected, this will act as if the depth=0, i.e. only list items in this container.
     </td>
    </tr>
    <tr class="even">
-    <td class="align-right"><label for="depth">Depth</label></td>
+    <td class="align-right"><label for="depth">depth</label></td>
     <td tal:define="depth model/toc_depth">
-     <input type="text" name="depth" id="depth" tal:attributes="value depth" />
+     <input type="text" name="depth" id="depth" size="3" tal:attributes="value depth" />
     </td>
     <td>
      <ul>
@@ -47,7 +47,7 @@
     </td>
    </tr>
    <tr class="odd">
-    <td class="align-right"><label for="display_desc">Display Description</label></td>
+    <td class="align-right"><label for="display_desc">display description</label></td>
     <td tal:define="display_desc model/display_desc_flag">
      <select name="display_desc" id="display_desc" size="1">
       <option value="no" tal:attributes="selected python:not display_desc and 'selected' or nothing">No</option>
@@ -55,41 +55,41 @@
      </select>
     </td>
     <td>
-     If yes, each item displayed will include it's title and silva-extra
-     content_description, if available.
+     If yes, each item displayed will include its title and metadata
+     description, if available.
     </td>
    </tr>
 
    <tr class="even">
-    <td class="align-right"><label for="show_icon">Show Icon</label></td>
+    <td class="align-right"><label for="show_icon">show icon</label></td>
     <td tal:define="show_icon model/show_icon">
      <select name="show_icon" id="show_icon" size="1">
       <option value="no" tal:attributes="selected python:not show_icon and 'selected' or nothing">No</option>
       <option value="yes" tal:attributes="selected python:show_icon and 'selected' or nothing">Yes</option>
      </select>
     </td>
-    <td>If yes, each item displayed will include it's icon.</td>
+    <td>If yes, each item displayed will include its icon.</td>
    </tr>
 
    <tr class="odd">
-    <td class="align-right"><label for="sort_order">Sort Order</label></td>
+    <td class="align-right"><label for="sort_order">sort order</label></td>
     <td tal:define="sort_order model/sort_order">
-     <select name="sort_order" id="sort_order" size="1">
+     <select class="store" name="sort_order" id="sort_order" size="5">
       <option value="alpha" tal:attributes="selected python:sort_order=='alpha' and 'selected' or nothing">Alpha</option>
       <option value="reversealpha" tal:attributes="selected python:sort_order=='reversealpha' and 'selected' or nothing">Reverse-Alpha</option>
-      <option value="silva" tal:attributes="selected python:sort_order=='silva' and 'selected' or nothing">Silva</option>
-     <option value="chronmod" tal:attributes="selected python:sort_order=='chronmod' and 'selected' or nothing">Chronologically by modification date</option>
-     <option value="rchronmod" tal:attributes="selected python:sort_order=='rchronmod' and 'selected' or nothing">Reverse Chronologically by modification date</option>
+      <option value="silva" tal:attributes="selected python:sort_order=='silva' and 'selected' or nothing">Silva folder order</option>
+      <option value="chronmod" tal:attributes="selected python:sort_order=='chronmod' and 'selected' or nothing">Chronologically by modification date</option>
+      <option value="rchronmod" tal:attributes="selected python:sort_order=='rchronmod' and 'selected' or nothing">Reverse Chronologically by modification date</option>
      </select>
     </td>
     <td>
-      The order items with the same parent will be sorted.
+      The order items in a container will be sorted:
       <ul>
        <li><b>Alpha:</b> sort alphabetically</li>
        <li><b>Reverse-Alpha:</b> reverse-sort alphabetically</li>
-       <li><b>Silva:</b> the order the items appear within the SMI.</li>
-       <li><b>Chronologically by modification date:</b> sort by the modification date.</li>
-       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date.</li>
+       <li><b>Silva folder order:</b> same order as the items have in their folder</li>
+       <li><b>Chronologically by modification date:</b> sort by the modification date</li>
+       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date</li>
       </ul>
      </td>
     </tr>
@@ -101,10 +101,10 @@
      <input class="button"
        type="submit"
        name="submit:method"
-       value="save types"
-       title="access key: alt-c"
-       accesskey="c"
-       i18n:attributes="value;title;accesskey change_link_accesskey"
+       value="save changes"
+       title="access key: alt-s"
+       accesskey="s"
+       i18n:attributes="value;title"
       />
     </td>
    </tr>
@@ -114,7 +114,7 @@
       <img tal:replace="structure icon" i18n:name="icon"/>
       AutoTOC
     </h3>
-    <p>An automatic table of contents is generated from the items in its location, and renders all items from this location that are types in the 'AutoTOC Types' list.</p>
+    <p>An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector.</p>
    </div>
 
   </metal:use-macro>
