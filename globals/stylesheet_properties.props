@@ -37,13 +37,11 @@ nightShade:string=black
 
 
 mainFont:string=70% Verdana, Arial, Helvetica, sans-serif
-mainBackground:string=#8E98A2
 mainFontColor:string=red
 mainLinkColor:string=#000080
 
 workspace:string=#dde5ee
 contentWorkspace:string=#eceeee
-
 pathBarBackground:string=#b0c4d8
 
 mainTabBackdrop:string=#d7e8f0
