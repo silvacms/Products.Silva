@@ -469,7 +469,7 @@ tr.separator td, td.separator {
 /* ______________ cells ______________ */
 
 table.listing th {
-padding: 0em 0.3em;
+padding: 0em 0.3em 0.1em;
   border-top: none;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
@@ -886,7 +886,7 @@ font-weight: normal;
 table.listing td.designator p,
 table.listing td.field p {
 margin:0;
-color:#778;
+color:#667;
 }
 table.listing td.designator:hover p,
 table.listing td.field:hover p {
@@ -987,7 +987,7 @@ color:#336;
 
 /* manipulator warm glow */
 input.button:hover, button.button:hover {
-border-color: #456;
+border-color: #567;
   color: #e5fffe;
   background-color: #4a7f67;
 }

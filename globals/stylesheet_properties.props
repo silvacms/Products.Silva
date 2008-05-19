@@ -92,7 +92,7 @@ inputFont:string=normal 100% verdana, helvetica, arial, sans-serif
 
 buttonMargin:string=0
 buttonPadding:string=1px 0.5em
-buttonBorder:string=1px solid #234
+buttonBorder:string=1px solid #345
 buttonBorderStyle:string=none solid none
 buttonFontSize:string=100%
 buttonWeight:string=normal
