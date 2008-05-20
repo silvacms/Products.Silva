@@ -323,7 +323,7 @@
     <tal:block replace="nothing">
       _______________ group roles management ________________
     </tal:block>
-    <tr tal:condition="python:groups_enabled or group_service">
+    <tr tal:condition="python:user.has_role(['Manager'], object=model) and (groups_enabled or group_service)">
       <td class="main"
         style="padding-top:2em;">
         <tal:block condition="groups_enabled">
