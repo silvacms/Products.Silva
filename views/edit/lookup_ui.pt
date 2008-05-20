@@ -147,8 +147,7 @@
                 <th i18n:translate="">
                   user
                 </th>
-                <th
-                  style="width:60%;" i18n:translate="">
+                <th i18n:translate="">
                   email
                 </th>
                 <th tal:repeat="extra_name extra_names">
