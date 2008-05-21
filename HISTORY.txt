@@ -3,8 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.0.7
+  Silva 2.0.8
 
+      - When pdf/word conversion results in errors, the converted text
+        is indexed anyway, if there is any.
+
+  Silva 2.0.7
+  
     Backported from trunk:
 
       - Don't add add a silva find instance by default, instead make
