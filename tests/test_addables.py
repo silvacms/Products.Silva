@@ -16,7 +16,7 @@ class OldAddablesTestCase(SilvaTestCase.SilvaTestCase):
         addables = ['Silva Image']
         self.publication.set_silva_addables_allowed_in_publication(addables)
         self.assertEquals(
-            ['Silva Image'], 
+            ['Silva Image', 'Silva Borken test'], 
             self.publication.get_silva_addables_allowed_in_publication()
             )
 
