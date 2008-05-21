@@ -46,10 +46,11 @@ class WordConverter(object):
             The uploaded file does not appear to be a valid Word file:
             <br /><br />%s
             </span>""" % "<br />".join(err.split("\n"))
-            return None
         try:
-            decoded = unicode(converted, 'utf8')
-            return decoded
+            if converted:
+                decoded = unicode(converted, 'utf8')
+                return decoded
+            return None
         except UnicodeDecodeError:
             return None
 
@@ -72,10 +73,11 @@ class PDFConverter(object):
             The uploaded file does not appear to be a valid PDF file:
             <br /><br />%s
             </span>""" % "<br />".join(err.split("\n"))
-            return None
         try:
-            decoded = unicode(converted, 'utf8')
-            return decoded
+            if converted:
+                decoded = unicode(converted, 'utf8')
+                return decoded
+            return None
         except UnicodeDecodeError:
             return None
 
