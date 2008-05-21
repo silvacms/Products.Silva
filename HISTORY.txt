@@ -144,12 +144,13 @@ Silva changes
         5. Specify sort order: alphabetical, reverse-alpha, and silva
            SMI order
 
-      - 100670: The ZMI add list has been uncluttered.  Silva content types that
-        should only be created through the SMI are no longer addable in
-        the ZMI.  Also, content types that only make sense within a Silva
-        Root aren't addable outside one.  Developers: see 
-        doc/developer_changes.txt for further information on how your
-        Silva extensions can take advantage of this.
+      - 100670: The ZMI add list has been uncluttered.  Silva content
+        types that should only be created through the SMI are no
+        longer addable in the ZMI.  Also, content types that only make
+        sense within a Silva Root aren't addable outside one.
+        Developers: see doc/developer_changes.txt for further
+        information on how your Silva extensions can take advantage of
+        this.
 
     Features ported from 2.0 branch
 
@@ -170,6 +171,9 @@ Silva changes
         invalid ids (and always have a new id generated)
 
     Bugs Fixed:
+
+      - When pdf/word conversion results in errors, the converted text
+        is indexed anyway, if there is any.
     
       - fixed attribute error in kupu editor of changed images
 
