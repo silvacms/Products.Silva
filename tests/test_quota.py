@@ -17,7 +17,9 @@ import os.path
 
 data_directory = os.path.join(os.path.dirname(__file__), 'data')
 zipfile1 = os.path.join(data_directory, 'test1.zip')
+zipfile2 = os.path.join(data_directory, 'test2.zip')
 imagefile1 = os.path.join(data_directory, 'torvald.jpg')
+imagefile2 = os.path.join(data_directory, 'testimage.gif')
 
 def fileSize(filename):
     """Return the size of a file.
@@ -84,8 +86,15 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
 
         # Add a file
         zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File', 
-                             file=open(zipfile1))
+                             file=open(zipfile2))
         #verifyObject(IAsset, zip1)
+        zip2_size = fileSize(zipfile2)
+        self.assertEqual(zip1.get_file_size(), zip2_size)
+        # And check used space
+        self.assertEqual(subfolder1.used_space, zip2_size)
+        self.assertEqual(root.used_space, zip2_size)
+        # Change file data
+        zip1.set_file_data(open(zipfile1))
         zip1_size = fileSize(zipfile1)
         self.assertEqual(zip1.get_file_size(), zip1_size)
         # And check used space
@@ -95,8 +104,15 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
 
         # Add an image
         image1 = self.add_image(folder2, 'image1.jpg', 'Image File', 
-                                file=open(imagefile1))
+                                file=open(imagefile2))
         #verifyObject(IAsset, image1)
+        image2_size = fileSize(imagefile2)
+        self.assertEqual(image1.get_file_size(), image2_size)
+        # And check used space
+        self.assertEqual(root.used_space, zip1_size + image2_size)
+        self.assertEqual(folder2.used_space, image2_size)
+        # Change image and check size
+        image1.set_image(open(imagefile1))
         image1_size = fileSize(imagefile1)
         self.assertEqual(image1.get_file_size(), image1_size)
         # And check used space
