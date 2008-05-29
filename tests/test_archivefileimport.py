@@ -39,17 +39,9 @@ Test file 'test2.zip' structure:
   sound1.mp3
 """
 
-class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase):
-    def test_getAdapter(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        self.assert_(
-            isinstance(adapter, archivefileimport.ArchiveFileImportAdapter))
-        document = self.add_document(self.root, 'bar', 'BarDocument')
-        adapter = archivefileimport.getArchiveFileImportAdapter(document)        
-        self.assertEquals(None, adapter)
-    
-    def test_importArchiveFileDefaultSettings(self):
+class ArchiveFileImport(object):
+
+    def importArchiveFileDefaultSettings(self):
         folder = self.add_folder(self.root, 'foo', 'FooFolder')
         adapter = archivefileimport.getArchiveFileImportAdapter(folder)
         succeeded, failed = adapter.importArchive(zipfile1)
@@ -79,8 +71,8 @@ class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase):
         # I'd like to test the flash asset, but it is not in Silva core.
         object = folder['testzip']['Clock.swf']
         self.assert_(isinstance(object, File.File))
-    
-    def test_importArchiveFileDefaultSettingsNoSubdirsInArchive(self):
+
+    def importArchiveFileDefaultSettingsNoSubdirsInArchive(self):
         folder = self.add_folder(self.root, 'foo', 'FooFolder')
         adapter = archivefileimport.getArchiveFileImportAdapter(folder)
         succeeded, failed = adapter.importArchive(zipfile2)
@@ -94,6 +86,24 @@ class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase):
         # I'd like to test the flash asset, but it is not in Silva core.
         object = folder['Clock.swf']
         self.assert_(isinstance(object, File.File))
+
+
+
+class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
+    def test_getAdapter(self):
+        folder = self.add_folder(self.root, 'foo', 'FooFolder')
+        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
+        self.assert_(
+            isinstance(adapter, archivefileimport.ArchiveFileImportAdapter))
+        document = self.add_document(self.root, 'bar', 'BarDocument')
+        adapter = archivefileimport.getArchiveFileImportAdapter(document)        
+        self.assertEquals(None, adapter)
+    
+    def test_importArchiveFileDefaultSettings(self):
+        self.importArchiveFileDefaultSettings()
+    
+    def test_importArchiveFileDefaultSettingsNoSubdirsInArchive(self):
+        self.importArchiveFileDefaultSettingsNoSubdirsInArchive()
         
     def test_importArchiveFileTitleSet(self):
         folder = self.add_folder(self.root, 'foo', 'FooFolder')

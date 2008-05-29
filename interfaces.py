@@ -828,29 +828,29 @@ class IAsset(ISilvaObject):
 
     # MANIPULATORS
 
-    def update_quota(self):
+    def update_quota():
         """Update used space, and verify quota for this asset.
         """
 
-    def reset_quota(self):
+    def reset_quota():
         """Reset the status of the quota.
         """
 
     # ACCESSORS
 
-    def get_filename(self):
+    def get_filename():
         """Object's id is filename
         PUBLIC
         """
         pass
 
-    def get_file_size(self):
+    def get_file_size():
         """Get the size of the file as it will be downloaded.
         PUBLIC
         """
         pass
 
-    def get_mime_type(self):
+    def get_mime_type():
         """Get the mime-type for this file.
         PUBLIC
         """

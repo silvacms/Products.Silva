@@ -260,6 +260,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def add_image(self, object, id, title, **kw):
         return self.addObject(object, 'Image', id, title=title, **kw)
 
+    def add_file(self, object, id, title, **kw):
+        return self.addObject(object, 'File', id, title=title, **kw)
+
     def get_events(self, event_type=None, filter=None):
         """Return events that were fired since the beginning of the
         test, which includes events fired in the `afterSetUp` method.
