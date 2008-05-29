@@ -159,16 +159,45 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
 
 
     def test_extension(self):
-        """Test that we can disable the extension.
+        """Test that we can disable the extension.  After, create some
+        content (same structure than the test folderAction), activate
+        it, and check that all values are updated.
         """
-        s_ext = self.root.service_extensions
-        self.failIf(s_ext.get_quota_subsystem_status(),
-                    "Quota should be disable by default")
+        root = self.root
+        s_ext = root.service_extensions
+        self.assertEqual(s_ext.get_quota_subsystem_status(), False,
+                         "Quota should be disable by default")
         s_ext.enable_quota_subsystem()
-        self.failUnless(s_ext.get_quota_subsystem_status())
+        self.assertEqual(s_ext.get_quota_subsystem_status(), True)
         s_ext.disable_quota_subsystem()
-        self.failIf(s_ext.get_quota_subsystem_status())
+        self.assertEqual(s_ext.get_quota_subsystem_status(), False)
    
+        # Create some content
+        folder1 = self.add_folder(root, 'folder1', 'FooFolder 1')
+        folder2 = self.add_folder(root, 'folder2', 'FooFolder 2')
+        subfolder1 = self.add_folder(folder1, 'subfolder', 'Sub FooFolder')
+        zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File', 
+                             file=open(zipfile1))
+        zip1_size = fileSize(zipfile1)
+        image1 = self.add_image(folder2, 'image1.jpg', 'Image File', 
+                                file=open(imagefile1))
+        image1_size = fileSize(imagefile1)
+
+        # No counting should be done (extensions not activated, and
+        # site empty)
+        self.assertEqual(root.used_space, 0)
+        self.assertEqual(folder1.used_space, 0)
+        self.assertEqual(folder2.used_space, 0)
+
+        # Acticate it again
+        s_ext.enable_quota_subsystem()
+        # Values should be updated
+        self.assertEqual(root.used_space, zip1_size + image1_size)
+        self.assertEqual(folder1.used_space, zip1_size)
+        self.assertEqual(subfolder1.used_space, zip1_size)
+        self.assertEqual(folder2.used_space, image1_size)
+
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
