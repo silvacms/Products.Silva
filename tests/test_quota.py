@@ -189,12 +189,29 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assertEqual(folder1.used_space, 0)
         self.assertEqual(folder2.used_space, 0)
 
-        # Acticate it again
+        # Activate it again
         s_ext.enable_quota_subsystem()
         # Values should be updated
         self.assertEqual(root.used_space, zip1_size + image1_size)
         self.assertEqual(folder1.used_space, zip1_size)
         self.assertEqual(subfolder1.used_space, zip1_size)
+        self.assertEqual(folder2.used_space, image1_size)
+
+        # Disable
+        s_ext.disable_quota_subsystem()
+        # Do some changes
+        folder1.action_delete(['subfolder'])
+        root.action_copy(['folder2'], self.app.REQUEST)
+        folder1.action_paste(self.app.REQUEST)
+        # Nothing had change
+        self.assertEqual(root.used_space, zip1_size + image1_size)
+        self.assertEqual(folder1.used_space, zip1_size)
+        self.assertEqual(folder2.used_space, image1_size)
+        # Re-enable
+        s_ext.enable_quota_subsystem()
+        # Values should be updated
+        self.assertEqual(root.used_space, (2 * image1_size))
+        self.assertEqual(folder1.used_space, image1_size)
         self.assertEqual(folder2.used_space, image1_size)
 
 
