@@ -136,100 +136,114 @@
   <!-- event handlers -->
 
   <subscriber
-    for=".interfaces.ISilvaObject
-      zope.app.container.interfaces.IObjectMovedEvent"
-    handler=".SilvaObject.object_moved" 
-  />
+     for=".interfaces.ISilvaObject
+          zope.app.container.interfaces.IObjectMovedEvent"
+     handler=".SilvaObject.object_moved" 
+     />
 
   <subscriber
-    for=".interfaces.ISilvaObject
-      OFS.interfaces.IObjectWillBeMovedEvent"
-    handler=".SilvaObject.object_will_be_moved" 
-  />
+     for=".interfaces.ISilvaObject
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".SilvaObject.object_will_be_moved" 
+     />
 
   <subscriber
-    for=".interfaces.ICatalogedVersionedContent
-      zope.app.container.interfaces.IObjectMovedEvent"
-    handler=".VersionedContent.versionedcontent_moved" 
-  />
+     for=".interfaces.ICatalogedVersionedContent
+          zope.app.container.interfaces.IObjectMovedEvent"
+     handler=".VersionedContent.versionedcontent_moved" 
+     />
 
   <subscriber
-    for=".interfaces.ICatalogedVersionedContent
-      OFS.interfaces.IObjectWillBeMovedEvent"
-    handler=".VersionedContent.versionedcontent_will_be_moved" 
-  />
+     for=".interfaces.ICatalogedVersionedContent
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".VersionedContent.versionedcontent_will_be_moved" 
+     />
 
   <subscriber
-    for=".interfaces.IRoot
-      OFS.interfaces.IObjectWillBeMovedEvent"
-    handler=".Root.root_will_be_moved" 
-  />
+     for=".interfaces.IRoot
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".Root.root_will_be_moved" 
+     />
 
   <subscriber
-    for=".interfaces.IRoot
-      zope.app.container.interfaces.IObjectMovedEvent"
-    handler=".Root.root_moved" 
-  />
+     for=".interfaces.IRoot
+          zope.app.container.interfaces.IObjectMovedEvent"
+     handler=".Root.root_moved" 
+     />
   
   <subscriber
-    for=".interfaces.IFile
-      OFS.interfaces.IObjectWillBeMovedEvent"
-    handler=".File.file_will_be_moved" 
-  />
+     for=".interfaces.IFile
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".File.file_will_be_moved" 
+     />
 
   <subscriber
-    for=".interfaces.IFile
-      zope.app.container.interfaces.IObjectMovedEvent"
-    handler=".File.file_moved" 
-  />
-
-  <subscriber
-    for=".interfaces.IFile
-      OFS.interfaces.IObjectClonedEvent"
-    handler=".File.file_cloned" 
-  />
+     for=".interfaces.IFile
+          zope.app.container.interfaces.IObjectMovedEvent"
+     handler=".File.file_moved" 
+     />
   
   <subscriber
-    for=".interfaces.IImage
-      OFS.interfaces.IObjectWillBeRemovedEvent"
-    handler=".Image.image_will_be_removed" 
-  />
+     for=".interfaces.IFile
+          OFS.interfaces.IObjectClonedEvent"
+     handler=".File.file_cloned" 
+     />
+  
+  <subscriber
+     for=".interfaces.IImage
+          OFS.interfaces.IObjectWillBeRemovedEvent"
+     handler=".Image.image_will_be_removed" 
+     />
+  
+  <subscriber
+     for=".interfaces.IImage
+          zope.app.container.interfaces.IObjectAddedEvent"
+     handler=".Image.image_added" 
+     />
+  
+  <subscriber
+     for=".interfaces.IImage
+         OFS.interfaces.IObjectClonedEvent"
+     handler=".Image.image_cloned" 
+     />
+  
+  <subscriber
+     for=".interfaces.IGroup
+         OFS.interfaces.IObjectWillBeRemovedEvent"
+     handler=".Group.group_will_be_removed" 
+     />
+  
+  <subscriber
+     for=".interfaces.IIPGroup
+         OFS.interfaces.IObjectWillBeRemovedEvent"
+     handler=".IPGroup.ipgroup_will_be_removed" 
+     />
+  
+  <subscriber
+     for=".interfaces.IVirtualGroup
+          OFS.interfaces.IObjectWillBeRemovedEvent"
+     handler=".VirtualGroup.vgroup_will_be_removed" 
+     />
+  
+  <subscriber
+     for=".interfaces.IVersion
+          zope.app.container.interfaces.IObjectMovedEvent"
+     handler=".Version.version_moved"
+     />
+
+  <!-- quota support -->
 
   <subscriber
-    for=".interfaces.IImage
-      zope.app.container.interfaces.IObjectAddedEvent"
-    handler=".Image.image_added" 
-  />
+     for=".interfaces.IAsset
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".Asset.asset_moved_update_quota"
+     />
 
   <subscriber
-    for=".interfaces.IImage
-      OFS.interfaces.IObjectClonedEvent"
-    handler=".Image.image_cloned" 
-  />
-
-  <subscriber
-    for=".interfaces.IGroup
-      OFS.interfaces.IObjectWillBeRemovedEvent"
-    handler=".Group.group_will_be_removed" 
-  />
-
-  <subscriber
-    for=".interfaces.IIPGroup
-      OFS.interfaces.IObjectWillBeRemovedEvent"
-    handler=".IPGroup.ipgroup_will_be_removed" 
-  />
-
-  <subscriber
-    for=".interfaces.IVirtualGroup
-      OFS.interfaces.IObjectWillBeRemovedEvent"
-    handler=".VirtualGroup.vgroup_will_be_removed" 
-  />
-
-  <subscriber
-    for=".interfaces.IVersion
-      zope.app.container.interfaces.IObjectMovedEvent"
-    handler=".Version.version_moved"
-  />
-
+     for=".interfaces.IFolder
+          OFS.interfaces.IObjectWillBeMovedEvent"
+     handler=".Folder.folder_moved_update_quota"
+     />
+     
   
 </configure>

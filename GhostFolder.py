@@ -386,6 +386,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhostFolder(id,
             content_url)
+
        
 InitializeClass(GhostFolder)
 

@@ -20,7 +20,29 @@ from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
-from interfaces import IPublication
+from interfaces import IPublication, IRoot
+
+from zExceptions import BadRequest
+import transaction
+import Acquisition
+
+class OverQuotaException(BadRequest):
+    """Exception triggered when you're overquota.
+    """
+    pass
+
+class AcquisitionMethod(Acquisition.Explicit):
+    """This class let you have an acquisition context on a method.
+    """
+    def __init__(self, parent, method_name):
+        self.parent = parent
+        self.method_name = method_name
+
+    def __call__(self, *args, **kwargs):
+        instance = self.parent.aq_inner
+        method = getattr(instance, self.method_name)
+        return method(*args, **kwargs)
+
 
 class Publication(Folder.Folder):
     __doc__ = _("""Publications are special folders. They function as the 
@@ -57,8 +79,56 @@ class Publication(Folder.Folder):
         """Publication becomes a folder instead.
         """
         self._to_folder_or_publication_helper(to_folder=1)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'validate_wanted_quota')
+    def validate_wanted_quota(self, value, REQUEST=None):
+        """Validate the wanted quota is correct the current
+        publication.
+        """
+        if (not value) or IRoot.providedBy(self):
+            return True
+        parent = self.aq_parent.get_publication()
+        quota = parent.get_current_quota()
+        if quota and quota < value:
+            return False
+        return True
+
+    def get_wanted_quota_validator(self):
+        """Return the quota validator with an acquisition context
+        (needed to be used in Formulator).
+        """
+        return AcquisitionMethod(self, 'validate_wanted_quota')
+
+
+    def _verify_quota(self, REQUEST=None):
+
+        quota = self.get_current_quota()
+        if quota and self.used_space > (quota * 1024 * 1024):
+            # No comments.
+            if (not REQUEST) and hasattr(self, 'REQUEST'):
+                REQUEST = self.REQUEST
+            if REQUEST:
+                transaction.abort()
+                REQUEST.form.clear()
+                REQUEST.form['message_type'] = 'error'
+                REQUEST.form['message'] = _('You are overquota.')
+                REQUEST.RESPONSE.write(unicode(REQUEST.PARENTS[0].index_html()).encode('utf-8'))
+                raise OverQuotaException
+            else:
+                raise RuntimeError, "Overquota"
+
         
     # ACCESSORS
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_current_quota')
+    def get_current_quota(self):
+        """Return the current quota value on the publication.
+        """
+        service_metadata = self.service_metadata
+        binding = service_metadata.getMetadata(self)
+        return int(binding.get('silva-quota', element_id='quota') or 0)
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')

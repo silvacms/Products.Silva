@@ -1,4 +1,4 @@
-from zope.interface import Interface
+from zope.interface import Interface, Attribute
 
 from AccessControl import ModuleSecurityInfo
 module_security = ModuleSecurityInfo('Products.Silva.interfaces')
@@ -280,6 +280,8 @@ class IPublishable(Interface):
 
 class IContainer(ISilvaObject, IPublishable):
 
+    used_space = Attribute(u"Used space by assets.")
+
     # MANIPULATORS
     def move_object_up(id):
         """Move object with id up in the list of ordered publishables.
@@ -328,6 +330,14 @@ class IContainer(ISilvaObject, IPublishable):
         unapproved and/or closed.
         """
         pass
+
+
+    def update_quota(self, delta):
+        """
+        Update used space, and verify quota for this folder.
+        """
+        pass
+
 
     # ACCESSORS
     def get_silva_addables():
@@ -438,7 +448,9 @@ class IContainer(ISilvaObject, IPublishable):
         pass
 
 class IFolder(IContainer):
-    pass
+    """Basic Silva Folder.
+    """
+
 
 class IPublication(IContainer):
     """An interface supported by publication objects.
@@ -814,16 +826,15 @@ class IAsset(ISilvaObject):
     table of content directly.
     """
 
-class IFile(IAsset):
-    """A File object to encapsulate "downloadable" data
-    """
     # MANIPULATORS
 
-    def set_file_data(self, file):
-        """Re-upload data for this file object. It will change the
-        content_type, however id, _title, etc. will not change.
+    def update_quota(self):
+        """Update used space, and verify quota for this asset.
         """
-        pass
+
+    def reset_quota(self):
+        """Reset the status of the quota.
+        """
 
     # ACCESSORS
 
@@ -844,6 +855,21 @@ class IFile(IAsset):
         PUBLIC
         """
         pass
+
+
+class IFile(IAsset):
+    """A File object to encapsulate "downloadable" data
+    """
+    # MANIPULATORS
+
+    def set_file_data(self, file):
+        """Re-upload data for this file object. It will change the
+        content_type, however id, _title, etc. will not change.
+        """
+        pass
+
+    # ACCESSORS
+
 
     def get_download_url(self):
         """Obtain the public URL the public could use to download this file

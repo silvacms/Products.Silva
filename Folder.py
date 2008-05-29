@@ -39,6 +39,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.ExtraDOM import writeStream
 
+from adapters.interfaces import IContentImporter
 from interfaces import IPublishable, IContent, IGhost
 from interfaces import IVersionedContent, ISilvaObject, IAsset
 from interfaces import IContainer, IFolder, IPublication, IRoot
@@ -72,6 +73,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
         )
 
     _allow_feeds = False
+
+    used_space = 0
 
     implements(IFolder)
         
@@ -425,6 +428,29 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
             sc = helpers.SwitchClass(Publication)
         return sc.upgrade(self)
         
+
+    def _verify_quota(self):
+        # Hook to check quota. Do nothing by default.
+        pass
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'update_quota')
+    def update_quota(self, delta):
+
+        if IContentImporter.providedBy(self.aq_parent):
+            self.aq_inner.update_quota(delta)
+            return
+
+        self.used_space += delta
+        if delta > 0:           # If we add stuff, check we're not
+                                # over quota.
+            self._verify_quota()
+
+        if not IRoot.providedBy(self):
+            self.aq_parent.update_quota(delta)
+
+
+
     # ACCESSORS
     
     security.declareProtected(
@@ -928,3 +954,28 @@ def xml_import_handler(object, node, factory=None):
 ##     if object != event.object:
 ##         return
 ##     event.oldParent._invalidate_sidebar(object)
+
+
+def folder_moved_update_quota(obj, event):
+    if obj != event.object:
+        return
+    if IRoot.providedBy(obj):
+        return                  # Root is being destroyed, we don't
+                                # care about quota anymore.
+    if event.newParent is event.oldParent: # For rename event, we
+                                           # don't need to do
+                                           # something.
+        return
+
+    context = event.newParent or event.oldParent
+    if not context.service_extensions.get_quota_subsystem_status():
+        return
+
+    size = obj.used_space
+    if not size:
+        return
+    if event.oldParent:
+        event.oldParent.update_quota(-size)
+    if event.newParent:
+        event.newParent.update_quota(size)
+

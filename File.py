@@ -208,6 +208,7 @@ class File(Asset):
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
         self.reindex_object()
+        self.update_quota()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')

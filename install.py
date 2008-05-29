@@ -184,6 +184,9 @@ def configureMetadata(root):
     if 'silva-extra' in collection.objectIds():
         collection.manage_delObjects(['silva-extra'])
 
+    if 'silva-quota' in collection.objectIds():
+        collection.manage_delObjects(['silva-quota'])
+
     xml_file = path.join(silva_docs, 'silva-content.xml')
     fh = open(xml_file, 'r')        
     collection.importSet(fh)
@@ -192,13 +195,20 @@ def configureMetadata(root):
     fh = open(xml_file, 'r')
     collection.importSet(fh)    
 
+    xml_file = path.join(silva_docs, 'silva-quota.xml')
+    fh = open(xml_file, 'r')
+    collection.importSet(fh)    
+
     setids = ('silva-content', 'silva-extra')
-    types = (
-        'Silva Root', 'Silva Publication', 'Silva Folder', 'Silva File',
-        'Silva Image', 'Silva Indexer', 'Silva AutoTOC', 'Silva Group',
-        'Silva Virtual Group', 'Silva IP Group', 'Silva Link Version')
+    types = ( 'Silva Folder', 'Silva File', 'Silva Image', 
+              'Silva Indexer', 'Silva AutoTOC', 'Silva Group', 
+              'Silva Virtual Group', 'Silva IP Group', 'Silva Link Version')
     root.service_metadata.addTypesMapping(types, setids)
     
+    setids = ('silva-content', 'silva-extra', 'silva-quota')
+    types = ('Silva Root', 'Silva Publication', )
+    root.service_metadata.addTypesMapping(types, setids)
+
     types = ('Silva Ghost Folder', 'Silva Ghost Version')
     root.service_metadata.addTypesMapping(types, ('', ))
     root.service_metadata.initializeMetadata()

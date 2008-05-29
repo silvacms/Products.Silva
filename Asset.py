@@ -23,6 +23,9 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     default_catalog = 'service_catalog'
 
     object_type = 'asset'
+    _old_size = 0               # Old size of the object.
+
+    # MANIPULATORS
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
@@ -36,6 +39,25 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
         binding.setValues(
             'silva-content', {'maintitle': title}, reindex=1)
         self.reindex_object()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'update_quota')
+    def update_quota(self):
+        if not self.service_extensions.get_quota_subsystem_status():
+            return
+
+        new_size = self.get_file_size()
+        delta = new_size - self._old_size
+        self.aq_parent.update_quota(delta)
+        self._old_size = new_size
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'reset_quota')
+    def reset_quota(self):
+        self._old_size = self.get_file_size()
+        return self._old_size
+
+    # ACCESSORS
 
     def is_deletable(self):
         """assets are deletable
@@ -65,5 +87,42 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     def fulltext(self):
         fulltextlist = [self.id, self.get_title()]
         return fulltextlist
-    
+
+    def get_filename(self):
+        raise NotImplementedError
+
+    def get_file_size(self):
+        raise NotImplementedError
+
+    def get_mime_type(self):
+        raise NotImplementedError
+        
+
 InitializeClass(Asset)
+
+
+def asset_moved_update_quota(obj, event):
+    if obj != event.object:
+        return
+
+    if event.newParent is event.oldParent: # For rename event, we
+                                           # don't need to do
+                                           # something.
+        return
+
+    context = event.newParent or event.oldParent
+    if not context.service_extensions.get_quota_subsystem_status():
+        return
+
+    size = obj.get_file_size()
+    if not size:
+        return
+    if event.oldParent:
+        event.oldParent.update_quota(-size)
+    if event.newParent:
+        event.newParent.update_quota(size)
+
+
+
+
+

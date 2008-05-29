@@ -173,6 +173,7 @@ class Image(Asset):
         if format in self.web_formats:
             self.web_format = format
         self._createDerivedImages()
+        self.update_quota()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_zope_image')
@@ -456,7 +457,9 @@ class Image(Asset):
         return img.HEAD(REQUEST, RESPONSE)
 
     def get_file_size(self):
-        return self.hires_image.get_size()
+        if self.hires_image:
+            return self.hires_image.get_size()
+        return 0
 
     security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
     def get_scaled_file_size(self):

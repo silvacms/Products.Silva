@@ -39,7 +39,11 @@ class ILockable(Interface):
         """Check whether this object is locked by another user.
         """
 
-class IArchiveFileImporter(Interface):
+class IContentImporter(Interface):
+    """Generic content importer.
+    """
+
+class IArchiveFileImporter(IContentImporter):
     def importArchive(archivefile, assettitle=None, recreatedirs=1, replace=0):
         """Import archive file
         
@@ -57,7 +61,7 @@ class IArchiveFileImporter(Interface):
         imported into Silva Assets and what contents have not.
         """
 
-class IZipfileImporter(Interface):
+class IZipfileImporter(IContentImporter):
     def isFullmediaArchive(zipname):
         """Tests if the zip archive is a fullmedia archive
         """

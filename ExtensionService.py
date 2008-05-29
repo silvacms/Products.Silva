@@ -12,7 +12,7 @@ from DateTime import DateTime
 from helpers import add_and_edit
 import SilvaPermissions
 from ExtensionRegistry import extensionRegistry
-from Products.Silva.interfaces import ISilvaObject, IVersion
+from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 import install
 
 class ExtensionService(SimpleItem.SimpleItem):
@@ -37,6 +37,8 @@ class ExtensionService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
+
+    _quota_enabled = False
 
     def __init__(self, id, title):
         self.id = id
@@ -152,8 +154,52 @@ class ExtensionService(SimpleItem.SimpleItem):
                 obj.index_object()
         for child in obj.objectValues():
             self._reindex(child)
+
+    security.declareProtected('View management screens',
+                              'disable_quota_subsystem')
+    def disable_quota_subsystem(self, REQUEST=None):
+        """Disable quota sub-system.
+        """
+        assert (self._quota_enabled)
+
+        self._quota_enabled = False
+        if REQUEST:
+            return self.manage_main(manage_tabs_message = 	 
+                                    'Quota sub-system disabled.')
+
+    security.declareProtected('View management screens',
+                              'enable_quota_subsystem')
+    def enable_quota_subsystem(self, REQUEST=None):
+        """Enable quota sub-system.
+        """
+        assert (not self._quota_enabled)
+
+        def visitor(item):
+            total = 0
+            if IContainer.providedBy(item):
+                used_space = 0
+                for _, obj in item.objectItems():
+                    used_space += visitor(obj)
+                item.used_space = used_space
+                total += used_space
+            elif IAsset.providedBy(item):
+                total += item.reset_quota()
+            return total
+
+        root = self.get_root()
+        root.used_space = visitor(root)
+        self._quota_enabled = True
+        if REQUEST:
+            return self.manage_main(manage_tabs_message = 	 
+                                    'Quota sub-system enabled.')
+
         
     # ACCESSORS
+
+    security.declareProtected('Access contents information',
+                              'get_quota_subsystem_status')
+    def get_quota_subsystem_status(self):
+        return self._quota_enabled
 
     security.declareProtected('View management screens', 'get_names')
     def get_names(self):

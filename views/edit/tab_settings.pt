@@ -220,6 +220,39 @@
               </tal:block>
 
             </tal:block>
+
+            <tal:condition tal:condition="here/service_extensions/get_quota_subsystem_status">
+              <tr tal:condition="iscontainer">
+                <td class="separator"
+                    colspan="2">
+                </td>
+              </tr>
+
+              <tr class="top-controls">
+                <td colspan="2">
+                  <h3>
+                    <span i18n:translate="">used space</span>
+                  </h3>
+                </td>
+              </tr>
+              <tr class="odd">
+                <td class="designator"
+                    style="width:33%">
+                  <h6>
+                    used space by this folder and its data
+                  </h6>
+                </td>
+                <td class="field">
+                  <span tal:attributes="title string: ${model/used_space} Bytes"
+                        tal:content="python:mangle.Bytes(model.used_space)" />
+                  <span tal:define="quota model/get_current_quota"
+                        tal:condition="quota"
+                        i18n:translate="">
+                    (quota for this area set to <span tal:replace="quota" i18n:name="quota" /> MB)
+                  </span>
+                </td>
+              </tr>
+            </tal:condition>
           </tbody>
         </table>
       </form>
@@ -228,12 +261,12 @@
     </td>
   </tr>
 
-  <tal:block replace="nothing">layout settings</tal:block>
+  <tal:block replace="nothing">settings</tal:block>
     <tr>
       <td class="main"
         colspan="2">
         <tal:block
-          define="category python: 'layout';"
+          repeat="category python:('layout', 'settings',)"
           condition="model/implements_versioning">
           <tal:block replace="nothing">edit editable version metadata</tal:block>
           <tal:block
@@ -243,7 +276,7 @@
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <span i18n:translate=""> layout settings for &#xab;<tal:block
+                <span i18n:translate=""> settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
               </h2>
@@ -257,7 +290,7 @@
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <tal:block i18n:translate="">layout settings</tal:block>
+                <tal:block i18n:translate="">settings</tal:block>
                 <span i18n:translate="">
                   for approved version of
                   &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
@@ -276,7 +309,7 @@
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <tal:block i18n:translate="">layout settings</tal:block>
+                <tal:block i18n:translate="">settings</tal:block>
                 <span i18n:translate="">
                   for published version of
                   &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
@@ -296,7 +329,7 @@
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <tal:block i18n:translate="">layout settings</tal:block>
+                <tal:block i18n:translate="">settings</tal:block>
                 <span i18n:translate="">
                   for closed version of
                   &#xab;<span tal:replace="string:${title}" i18n:name="title">title</span>&#xbb;
@@ -308,13 +341,13 @@
 
         <tal:block replace="nothing">edit single version metadata</tal:block>
         <tal:block
-          define="category python: 'layout';"
+          repeat="category python:('layout', 'settings')"
           condition="not: model/implements_versioning">
           <tal:block define="content model">
             <metal:block use-macro="here/macro_edit_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title">
                 <img tal:replace="structure icon" />
-                <span i18n:translate="">layout settings for &#xab;<tal:block
+                <span i18n:translate="">settings for &#xab;<tal:block
                   content="title"
                   i18n:name="title" />&#xbb;</span>
               </h2>
