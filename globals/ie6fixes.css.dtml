@@ -7,7 +7,7 @@
 **
 */
 
-/* if you need css with a dtml var you can add a selector like after this comment
+/* if you need css with a dtml variable you can add a selector like this (after this comment):
 
 body {
   background-image: url(<dtml-var root_url>/globals/myimage.gif); 
