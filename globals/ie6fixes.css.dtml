@@ -7,9 +7,12 @@
 **
 */
 
-/*body {
-  background-image: url(<dtml-var root_url>/globals/skyfade.gif); 
+/* if you need css with a dtml var you can add a selector like after this comment
+
+body {
+  background-image: url(<dtml-var root_url>/globals/myimage.gif); 
 }
+
 */
 </dtml-let>
 
