@@ -42,6 +42,12 @@
 >
 @imports
 </style>
+<tal:ie6fixstart replace="structure string:&lt;!--[if IE 6]&gt;" />
+     <style type="text/css" media="all"
+	    tal:condition="exists:string:$root_url/globals/ie6fixes.css"
+            tal:content="string:@import url($root_url/globals/ie6fixes.css);">
+     </style>
+<tal:ie6fixend replace="structure string:&lt;![endif]--&gt;" />
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />

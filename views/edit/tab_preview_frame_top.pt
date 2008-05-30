@@ -51,6 +51,13 @@
   tal:condition="python: not model.implements_container()"
   tal:attributes="href string:$root_url/globals/silvaContentStyle.css"
 />
+<tal:ie6fixstart replace="structure string:&lt;!--[if IE 6]&gt;" />
+     <style type="text/css" media="all"
+	    tal:condition="exists:string:$root_url/globals/ie6fixes.css"
+            tal:content="string:@import url($root_url/globals/ie6fixes.css);">
+     </style>
+<tal:ie6fixend replace="structure string:&lt;![endif]--&gt;" />
+
 </head>
 
 <body>

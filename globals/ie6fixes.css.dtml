@@ -1,0 +1,21 @@
+/* _______ Stylesheet with fixes for IE6 for Silva 1.6.x frontend __________________________
+** <dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+** <dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+**
+*/
+
+/*body {
+  background-image: url(<dtml-var root_url>/globals/skyfade.gif); 
+}
+*/
+</dtml-let>
+
+/* ____ fixes for internet explorer 6 without dtml variables _____ */
+
+/* hiding transparent png's for this non standard compliant browser */
+input.button, button.button, div.tabs a, a.transporter, div.middleground a, input.canceler {
+background-image:none;
+}
