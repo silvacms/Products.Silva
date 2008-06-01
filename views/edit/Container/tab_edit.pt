@@ -67,7 +67,7 @@ window.onload_registry.register(function() {
             </option>
             <tal:block tal:repeat="addable model/get_silva_addables">
               <option tal:condition="python:here.service_view_registry.has_view('add', addable['name'])"
-                tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
+                tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Automatic Table of Contents' or addable['name'].replace('Silva ', '')"
                 tal:attributes="value addable/name" />
             </tal:block>
           </select>
