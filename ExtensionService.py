@@ -1,19 +1,23 @@
-
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision: 1.21 $
+
 # Zope
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
+from Globals import package_home
 from DateTime import DateTime
+
 # Silva
 from helpers import add_and_edit
 import SilvaPermissions
 from ExtensionRegistry import extensionRegistry
 from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 import install
+
+import os.path
 
 class ExtensionService(SimpleItem.SimpleItem):
     meta_type = 'Silva Extension Service'
@@ -162,6 +166,16 @@ class ExtensionService(SimpleItem.SimpleItem):
         """
         assert (self._quota_enabled)
 
+        root = self.get_root()
+    
+        # Disable metadata for quota
+        collection = root.service_metadata.getCollection()
+        if 'silva-quota' in collection.objectIds():
+            collection.manage_delObjects(['silva-quota'])
+        setids = ('silva-quota',)
+        types = ('Silva Root', 'Silva Publication', )
+        root.service_metadata.removeTypesMapping(types, setids)
+
         self._quota_enabled = False
         if REQUEST:
             return self.manage_main(manage_tabs_message = 	 
@@ -173,6 +187,25 @@ class ExtensionService(SimpleItem.SimpleItem):
         """Enable quota sub-system.
         """
         assert (not self._quota_enabled)
+        
+        root = self.get_root()
+    
+        # Setup metadata for quota
+        silva_home = package_home(globals())
+        silva_docs = os.path.join(silva_home, 'doc')
+
+        collection = root.service_metadata.getCollection()
+        if 'silva-quota' in collection.objectIds():
+            collection.manage_delObjects(['silva-quota'])
+            
+        xml_file = os.path.join(silva_docs, 'silva-quota.xml')
+        fh = open(xml_file, 'r')
+        collection.importSet(fh)    
+
+        setids = ('silva-quota',)
+        types = ('Silva Root', 'Silva Publication', )
+        root.service_metadata.addTypesMapping(types, setids)
+        root.service_metadata.initializeMetadata()
 
         def visitor(item):
             total = 0
