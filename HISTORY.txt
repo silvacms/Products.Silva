@@ -2,14 +2,22 @@ Copyright (c) 2002-2008 Infrae. All rights reserved.
 See also LICENSE.txt
 Silva changes
 
-  Silva 1.6.2 (unreleased)
+  Silva 1.6.3 (unreleased)
 
     Bugs fixed:
-    
+
+      - When SMTP errors occur while sending notification, we log
+        them, but no longer hold up the publication/approval process.
+
       - Reversal of fix for issue
         https://bugs.launchpad.net/silva/+bug/101791 "Problem with
         Link object" since the issue was fixed in Zope 2.8+ itself,
         and then the bugfix turned out to break the link urls.
+
+
+  Silva 1.6.2
+
+    Bugs fixed:
 
       - External sources are removed when extracting the fulltext from
         a document, since the values of the parameters are not
