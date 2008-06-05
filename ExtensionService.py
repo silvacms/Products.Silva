@@ -220,8 +220,8 @@ class ExtensionService(SimpleItem.SimpleItem):
                     total += item.reset_quota()
                 except AttributeError:      # Well, not all asset
                                             # respect its interface.
-                    path = '/'.join(obj.getPhysicalPath())
-                    klass = str(obj.__class__)
+                    path = '/'.join(item.getPhysicalPath())
+                    klass = str(item.__class__)
                     zLOG.LOG('Silva quota', zLOG.WARNING, 
                              'bad asset object %s - %s' % (path, klass))
             return total
