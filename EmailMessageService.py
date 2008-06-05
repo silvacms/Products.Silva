@@ -269,8 +269,7 @@ class EmailMessageService(SimpleItem.SimpleItem):
                 # kind of exception but smtplib.SMTPException
                 zLOG.LOG('Silva service_messages', zLOG.PROBLEM,
                          'sending mail failed', sys.exc_info())
-                # XXX how to notify user? do it the hard way for now:
-                raise
+
 
 Globals.InitializeClass(EmailMessageService)
 
