@@ -131,7 +131,11 @@ class Publication(Folder.Folder):
         """
         service_metadata = self.service_metadata
         binding = service_metadata.getMetadata(self)
-        return int(binding.get('silva-quota', element_id='quota') or 0)
+        try:
+            return int(binding.get('silva-quota', element_id='quota') or 0)
+        except KeyError:        # This publication object doesn't have
+                                # this metadata set
+            return self.aq_parent.get_current_quota()
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
