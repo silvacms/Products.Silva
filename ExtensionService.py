@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Globals import package_home
 from DateTime import DateTime
+import zLOG
 
 # Silva
 from helpers import add_and_edit
@@ -218,7 +219,7 @@ class ExtensionService(SimpleItem.SimpleItem):
             elif IAsset.providedBy(item):
                 try:
                     total += item.reset_quota()
-                except AttributeError:      # Well, not all asset
+                except (AttributeError, NotImplementedError):      # Well, not all asset
                                             # respect its interface.
                     path = '/'.join(item.getPhysicalPath())
                     klass = str(item.__class__)

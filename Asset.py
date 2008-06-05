@@ -118,8 +118,9 @@ def asset_moved_update_quota(obj, event):
 
     try:
         size = obj.get_file_size()
-    except AttributeError:      # Well, not all asset respect its
-                                # interface.
+    except (AttributeError, NotImplementedError): # Well, not all
+                                                  # asset respect its
+                                                  # interface.
         path = '/'.join(obj.getPhysicalPath())
         klass = str(obj.__class__)
         zLOG.LOG('Silva quota', zLOG.WARNING, 
