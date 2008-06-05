@@ -86,8 +86,11 @@ class Publication(Folder.Folder):
         """Validate the wanted quota is correct the current
         publication.
         """
+        if value < 0:
+            return False        # Quota can't be negative.
         if (not value) or IRoot.providedBy(self):
-            return True
+            return True         # 0 means no quota, Root don't have
+                                # any parents.
         parent = self.aq_parent.get_publication()
         quota = parent.get_current_quota()
         if quota and quota < value:

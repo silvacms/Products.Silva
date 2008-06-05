@@ -58,6 +58,10 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assertEqual(pub1.get_current_quota(), 0)
         self.assertEqual(pub3.get_current_quota(), 0)
 
+        # Wanted quota check if the wanted value is correct
+        self.failIf(pub1.validate_wanted_quota(-10))
+        self.failUnless(pub1.validate_wanted_quota(10))
+
         # FIXME: we can't test it like this. We have to make
         # functional tests (invalid request object in tests).
 
