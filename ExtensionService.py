@@ -216,7 +216,14 @@ class ExtensionService(SimpleItem.SimpleItem):
                 item.used_space = used_space
                 total += used_space
             elif IAsset.providedBy(item):
-                total += item.reset_quota()
+                try:
+                    total += item.reset_quota()
+                except AttributeError:      # Well, not all asset
+                                            # respect its interface.
+                    path = '/'.join(obj.getPhysicalPath())
+                    klass = str(obj.__class__)
+                    zLOG.LOG('Silva quota', zLOG.WARNING, 
+                             'bad asset object %s - %s' % (path, klass))
             return total
 
         root = self.get_root()

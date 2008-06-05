@@ -8,10 +8,12 @@ from Globals import InitializeClass
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+import zLOG
 
 # Silva
 from SilvaObject import SilvaObject
 import SilvaPermissions
+
 
 from interfaces import IAsset
 
@@ -114,7 +116,15 @@ def asset_moved_update_quota(obj, event):
     if not context.service_extensions.get_quota_subsystem_status():
         return
 
-    size = obj.get_file_size()
+    try:
+        size = obj.get_file_size()
+    except AttributeError:      # Well, not all asset respect its
+                                # interface.
+        path = '/'.join(obj.getPhysicalPath())
+        klass = str(obj.__class__)
+        zLOG.LOG('Silva quota', zLOG.WARNING, 
+                 'bad asset object %s - %s' % (path, klass))
+        return
     if not size:
         return
     if event.oldParent:
