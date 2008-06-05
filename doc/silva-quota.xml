@@ -57,7 +57,7 @@
      <value key="extra">string: id="${here/id}"</value>
    </field_tales>
    <field_messages>
-     <message name="external_validator_failed">Wanted quota should be smaller than the parent quota.</message>
+     <message name="external_validator_failed">Wanted quota can't be negative or bigger than the parent quota.</message>
    </field_messages>
    <index_args>
    </index_args>
