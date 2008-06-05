@@ -5,6 +5,11 @@ Silva changes
 
   Silva 2.0.8
 
+    Bugs fixed:
+    
+      - When SMTP errors occur while sending notification, we log
+        them, but no longer hold up the publication/approval process.
+
       - When pdf/word conversion results in errors, the converted text
         is indexed anyway, if there is any.
 
