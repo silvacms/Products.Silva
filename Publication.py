@@ -117,9 +117,8 @@ class Publication(Folder.Folder):
                 REQUEST.form['message_type'] = 'error'
                 REQUEST.form['message'] = _('You are overquota.')
                 REQUEST.RESPONSE.write(unicode(REQUEST.PARENTS[0].index_html()).encode('utf-8'))
-                raise OverQuotaException
-            else:
-                raise RuntimeError, "Overquota"
+                REQUEST.close()
+            raise OverQuotaException
 
         
     # ACCESSORS

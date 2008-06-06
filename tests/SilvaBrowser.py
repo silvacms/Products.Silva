@@ -8,6 +8,9 @@ from Products.Five.testbrowser import Browser
 class SilvaBrowser(object):
     def __init__(self):
         self.browser = Browser()
+
+    def go_back(self):
+        return self.browser.goBack()
     
     def click_button_labeled(self, value_name):
         """

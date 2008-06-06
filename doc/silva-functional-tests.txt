@@ -147,7 +147,7 @@ get_tabs_named()
     Example: 'editor'
     Usage: check location specific tabs
 
-get_middlegroun_buttons()
+get_middleground_buttons()
     Return a specific button from the <div class="middleground">
     Example: 'settings...', 'addables...'
     Usage: check locations specific buttons
