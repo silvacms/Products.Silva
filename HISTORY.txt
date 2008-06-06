@@ -4,7 +4,13 @@ See also LICENSE.txt
 
 Silva changes
 
-  1.5.11  (SVN/UNRELEASED)
+  1.5.12
+
+    Bugs Fixed
+
+      - backported fix to make kupu work with Firefox 3
+
+  1.5.11
 
     Bugs fixed
 
@@ -29,62 +35,68 @@ Silva changes
 
     Features added
 
-      - Simplified the content.html layout file to make it easier to understand.
-        Moved the content call into the layout macro. Reformatted the comments.
+      - Simplified the content.html layout file to make it easier to
+        understand.  Moved the content call into the layout
+        macro. Reformatted the comments.
 
-      - Default installations will have the html meta tags and accessibility
-        links skipped in the layout macro to have better out of the box
-        performance. Site managers can turn them on as needed.
+      - Default installations will have the html meta tags and
+        accessibility links skipped in the layout macro to have better
+        out of the box performance. Site managers can turn them on as
+        needed.
 
-      - 2007-01-24: added an explicit base tag to the layout template, so
-        that it no longer includes a trailing slash which zope adds for
-        all containerlike objects, which Silva Documents are. This means
-        that linking to anchors now works like you would expect it to.
+      - 2007-01-24: added an explicit base tag to the layout template,
+        so that it no longer includes a trailing slash which zope adds
+        for all containerlike objects, which Silva Documents are. This
+        means that linking to anchors now works like you would expect
+        it to.
 
-      - Changed css styling of the preview publisher buttons, making easier
-        for users to integrate the publisher into their own layout. This
-        should be noted in the release communication.
+      - Changed css styling of the preview publisher buttons, making
+        easier for users to integrate the publisher into their own
+        layout. This should be noted in the release communication.
 
       - Fix for TOCs and AutoTOCS where docs that didn't have a title
-        didn't appear because the link was empty (it was there). Now the
-        id shows up so visitors can at least click it.
+        didn't appear because the link was empty (it was there). Now
+        the id shows up so visitors can at least click it.
 
       - Tocs display links with a trailing slash because there may be
-        'edit/tab_preview' appended to it, but this conflicts with links
-        made in the editor that are rendered without the slash. Moved the
-        slash into the appendage.
+        'edit/tab_preview' appended to it, but this conflicts with
+        links made in the editor that are rendered without the
+        slash. Moved the slash into the appendage.
 
     Bugs fixed
 
-      - When there's a base tag in the layout_macro the forms in ./public, such
-        as the subscription form, return a 404. If the form action is
-        constructed using absolute_url, it works. This should also be backwards
-        compatible, working for sites that don't include a base tag. Tweaked
-        formatting of the search form while at it.
+      - When there's a base tag in the layout_macro the forms in
+        ./public, such as the subscription form, return a 404. If the
+        form action is constructed using absolute_url, it works. This
+        should also be backwards compatible, working for sites that
+        don't include a base tag. Tweaked formatting of the search
+        form while at it.
 
-      - The spacer images used to indent tocs now have an alt attribute
+      - The spacer images used to indent tocs now have an alt
+        attribute
 
-      - alt attribute for meta_type icons now have the name of the meta_type
-        instead of 'Unknown' (Issue 1654)
+      - alt attribute for meta_type icons now have the name of the
+        meta_type instead of 'Unknown' (Issue 1654)
 
-      - i18n problem in views/edit/Asset/File/submit.py (Thanks Benno!)
-
-      - Solved problem with trailing slashes in relative Links. (Thanks
+      - i18n problem in views/edit/Asset/File/submit.py (Thanks
         Benno!)
+
+      - Solved problem with trailing slashes in relative
+        Links. (Thanks Benno!)
 
 
   1.5.9
 
     Features added
 
-      - Changed calls from getMetdata to getMetadataValue where possible,
-        resulting in a significant performance gain.
+      - Changed calls from getMetdata to getMetadataValue where
+        possible, resulting in a significant performance gain.
 
     Bugs fixed
 
-      - Added a check to tocfilter to see if a metadata binding is found,
-        since it isn't for broken ghost folders, and that used to break
-        autotocs, and possibly other navigation.
+      - Added a check to tocfilter to see if a metadata binding is
+        found, since it isn't for broken ghost folders, and that used
+        to break autotocs, and possibly other navigation.
 
   1.5.8
 
@@ -94,15 +106,15 @@ Silva changes
 
     Bugs fixed
 
-      - Non Ascii characters in names or values of codesource paramaters
-        no longer result in errors.
+      - Non Ascii characters in names or values of codesource
+        paramaters no longer result in errors.
 
-      - Incorrect links entered by hand or imported broke the path adapter.
-        Since this made editing the document impossible, I added some
-        defensive code.
+      - Incorrect links entered by hand or imported broke the path
+        adapter.  Since this made editing the document impossible, I
+        added some defensive code.
 
-      - Anchors around divs break in explorer, so they were put inside in
-        the xslt renderer.
+      - Anchors around divs break in explorer, so they were put inside
+        in the xslt renderer.
 
       - User settings screen did not work when user did not have
         sufficient rights in the Silva Root. This is now fixed.
@@ -121,12 +133,13 @@ Silva changes
 
     Features added
 
-      - Added a ReferenceLookupWindowField, to store references to zope
-        objects instead of urls.
+      - Added a ReferenceLookupWindowField, to store references to
+        zope objects instead of urls.
 
       - Much i18n polishing
 
-      - Removed commented out template code for listing all email addresses
+      - Removed commented out template code for listing all email
+        addresses
 
       - GhostFolders (and probably also Ghosts) could mess up
         SilvaLayout if they referred to a location with a different
@@ -136,40 +149,42 @@ Silva changes
 
     Bugs fixed
 
-      - Fixed problem in SilvaDocument that used kupu where it whasn't needed
-        and caused js exceptions
+      - Fixed problem in SilvaDocument that used kupu where it whasn't
+        needed and caused js exceptions
 
-      - Fix for issue 1618 where messagebox didn't appear in ie also removed
-        nbsp in macro_index
+      - Fix for issue 1618 where messagebox didn't appear in ie also
+        removed nbsp in macro_index
 
-      - Fixed issues where hide_from_toc filters wouldn't work in ghost contexts.
-        Also removed some unused cruft from previous filtering implementations.
+      - Fixed issues where hide_from_toc filters wouldn't work in
+        ghost contexts.  Also removed some unused cruft from previous
+        filtering implementations.
 
-      - Fixed issue 1608 where tab_edit_revoke_approval caused versioning errors
+      - Fixed issue 1608 where tab_edit_revoke_approval caused
+        versioning errors
 
-      - In the tab_status "set timings" caused an error without saving the
-        changes and returned a wrong tab
+      - In the tab_status "set timings" caused an error without saving
+        the changes and returned a wrong tab
 
   1.5.6
 
     Features added
 
-      - Made image titles required, since they provide the alt attribute, as
-        requested by two customers.
+      - Made image titles required, since they provide the alt
+        attribute, as requested by two customers.
 
     Bugs fixed
 
-      - Fixed bug in sidebar uplinks where you couldn't jump up and out of a
-        publication.
+      - Fixed bug in sidebar uplinks where you couldn't jump up and
+        out of a publication.
 
       - Fixed hover bug in sidebar uplinks.
 
-      - XML export rewrote the urls of links and images on export, which
-        was a bad thing. They now have extra rewritten_ attributes, which
-        are only used by the xslt rendering.
+      - XML export rewrote the urls of links and images on export,
+        which was a bad thing. They now have extra rewritten_
+        attributes, which are only used by the xslt rendering.
 
-      - XML export of Silvadocuments with images that have no link attribute
-        was broken.
+      - XML export of Silvadocuments with images that have no link
+        attribute was broken.
 
       - Fixed public restriction bug cfr. issue 1588 and 1596
 
@@ -180,30 +195,31 @@ Silva changes
 
       - Changed to a more discreet favicon for the public views
 
-      - XSLT renderers did not take virtual hosting situations into account
-        when rendering images and links in documents.
+      - XSLT renderers did not take virtual hosting situations into
+        account when rendering images and links in documents.
 
       - In 'normal' headings index items were not rendered by the XSLT
         renderers.
 
-      - The full media export now uses a tempfile instead of an in memory
-        stringIO to build the zipfile, hopefully improving memory
-        footprint.
+      - The full media export now uses a tempfile instead of an in
+        memory stringIO to build the zipfile, hopefully improving
+        memory footprint.
 
     Bugs Fixed:
 
       - Added a missing note to the doc/developer_changes.txt about
         i18n changes.
 
-      - Ghostfolders exported haunted content, which broke asset ids in the
-        zip. Since this content was ignored on import it is no longer
-        exported.
+      - Ghostfolders exported haunted content, which broke asset ids
+        in the zip. Since this content was ignored on import it is no
+        longer exported.
 
       - Fixed Issue1449: Siblings Sidebar should display title or id
 
-      - Fixed issue1516: space above kupu in news items. The previous fix
-        messed up the display of non-kupu versionedcontent, so this fix is more
-        robust, allowing other extensions to control the feedback space too.
+      - Fixed issue1516: space above kupu in news items. The previous
+        fix messed up the display of non-kupu versionedcontent, so
+        this fix is more robust, allowing other extensions to control
+        the feedback space too.
 
   1.5.4
 
@@ -211,40 +227,42 @@ Silva changes
 
       - Fix for Firefox html edit problem in kupu
 
-      - Added div with css class to make public preview buttons positionable
-        in public layouts (they can be behind something if layers are used),
-        thus added css class for the form too, and moved local style to the css
-        so the stylesheet can be overridden by user.
+      - Added div with css class to make public preview buttons
+        positionable in public layouts (they can be behind something
+        if layers are used), thus added css class for the form too,
+        and moved local style to the css so the stylesheet can be
+        overridden by user.
 
-      - The previous fix to the public preview buttons broke keeping the user
-        in the same screen when making new versions, i.e. for the metadata
-        screen, where when making a new version the user was returned to the
-        editor, while in fact metadata needed to be edited. Removed a classic
-        very ugly url.
+      - The previous fix to the public preview buttons broke keeping
+        the user in the same screen when making new versions, i.e. for
+        the metadata screen, where when making a new version the user
+        was returned to the editor, while in fact metadata needed to
+        be edited. Removed a classic very ugly url.
 
-      - If a user names the Silva root 'root', it gets priority in the dtml
-        namespace, so change the variable in silva.css and frontend.css to
-        'root_url'
+      - If a user names the Silva root 'root', it gets priority in the
+        dtml namespace, so change the variable in silva.css and
+        frontend.css to 'root_url'
 
       - Clarified descriptions of exporting versions.
 
-      - Full media export/import of images did not take account of format
-        scaling and cropping.
+      - Full media export/import of images did not take account of
+        format scaling and cropping.
 
-      - Images in tables were not shown correctly in the xslt rendering.
+      - Images in tables were not shown correctly in the xslt
+        rendering.
 
-      - The xslt rendering allowed empty width and height attributes on
-        images, which breaks in IE. These are now caught.
+      - The xslt rendering allowed empty width and height attributes
+        on images, which breaks in IE. These are now caught.
 
-      - XMLexport of SilvaDocument passed a string instead of an integer to
-        get_tree/get_public_tree
+      - XMLexport of SilvaDocument passed a string instead of an
+        integer to get_tree/get_public_tree
 
-      - The lookup window had some problems with incorrect content type
-        filtering, and a strange javascript issue, where 'document' was
-        empty. Both are fixed.
+      - The lookup window had some problems with incorrect content
+        type filtering, and a strange javascript issue, where
+        'document' was empty. Both are fixed.
 
-      - Fixed illegal attribute value for cellpadding attribute in XSLT
-        renderer.
+      - Fixed illegal attribute value for cellpadding attribute in
+        XSLT renderer.
 
       - Fixed unicode issue in approval.
 
@@ -258,10 +276,12 @@ Silva changes
 
     Bugs fixed:
 
-      - Explicitly delete model from request in view_version() to break a
-        cyclic reference that prevents model from being garbage collected.
+      - Explicitly delete model from request in view_version() to
+        break a cyclic reference that prevents model from being
+        garbage collected.
 
-      - Add ZCatalog index upgrader to comply with an API change in Zope.
+      - Add ZCatalog index upgrader to comply with an API change in
+        Zope.
 
       - FSDTMLMethod and FSPageTemplate were imported directly
         from FileSystemSite product instead of from fssite module
@@ -271,37 +291,42 @@ Silva changes
 
       - Small context bug fixes in the LookupWindowWidget.
 
-      - Changed mangle.Path.fromObject() so it doesn't return '' anymore when
-        from and to objects are the same.
+      - Changed mangle.Path.fromObject() so it doesn't return ''
+        anymore when from and to objects are the same.
 
       - Some text related to reserved ids wasn't properly translated.
 
-      - Failure in user preferences dialog if the browser for some reason
-        has no preferred languages configured whatsoever.
+      - Failure in user preferences dialog if the browser for some
+        reason has no preferred languages configured whatsoever.
 
       - Fixed bug in XML export (to_xml()) of Link objects, escaping
         (entitizing) title and url properly now.
 
-      - The back button should now always go back to the last edit page
-        visited.
+      - The back button should now always go back to the last edit
+        page visited.
 
-      - The tab_edit_make_copy script now redirects to tab_edit instead of
-        returning it, fixing a problem with public preview (where pressing
-        the back button sometimes caused the make_copy script to get triggered)
-        and making the URL in tab_edit look better after creating a new copy.
+      - The tab_edit_make_copy script now redirects to tab_edit
+        instead of returning it, fixing a problem with public preview
+        (where pressing the back button sometimes caused the make_copy
+        script to get triggered) and making the URL in tab_edit look
+        better after creating a new copy.
 
-      - File uploads were broken due to a missing return_url variable. Fixed.
+      - File uploads were broken due to a missing return_url
+        variable. Fixed.
 
       - Fixed multi-value form element support in external sources.
 
-      - Removed quote (probably typo) from JS string in lookupwindowfield.
+      - Removed quote (probably typo) from JS string in
+        lookupwindowfield.
 
-      - A bug was found in the Sprout extension; Silva now requires Sprout 0.7.
+      - A bug was found in the Sprout extension; Silva now requires
+        Sprout 0.7.
 
       - Anchor links are rendered in a non-HTML compliant but in a
         Silva backwards compatible way.
 
-      - XSLT and widgets based renderer for anchor links are identical.
+      - XSLT and widgets based renderer for anchor links are
+        identical.
 
   1.5.2
 
@@ -339,7 +364,8 @@ Silva changes
         layout; we were too vigorous in removing layout related code
         and removed too much.
 
-      - Removed some more traces of FileSystemSite-based layout system.
+      - Removed some more traces of FileSystemSite-based layout
+        system.
 
       - Some fixes in the refactored lookup window code.
 
@@ -356,8 +382,8 @@ Silva changes
       - Slight simplification of icon generation code which in some
         circumstances gave rise to a bug.
 
-      - get_layout_macro was stored with DOS line endings, switched
-        to Unix to be in line with the rest of the source code.
+      - get_layout_macro was stored with DOS line endings, switched to
+        Unix to be in line with the rest of the source code.
 
       - Further bugfixes in Kupu and Kupu integration, includes Kupu
         1.3.5.
@@ -368,8 +394,8 @@ Silva changes
         file. Buttons have been added to the UI to publish and close
         content more directly.
 
-      - Added the newest translations from the Launchpad Rosetta system.
-        (https://launchpad.net/products/silva/+translations)
+      - Added the newest translations from the Launchpad Rosetta
+        system. (https://launchpad.net/products/silva/+translations)
 
   1.5b1
 
@@ -384,50 +410,50 @@ Silva changes
 
       - Use Zope 2.8 style transactions.
 
-      - Changed over Silva so it works with the Five/Zope 3 translation
-        architecture, using Five. See doc/developer_changes for more
-        details.
+      - Changed over Silva so it works with the Five/Zope 3
+        translation architecture, using Five. See
+        doc/developer_changes for more details.
 
-      - Some parts of the Silva UI (for instance the lookup window in the
-        edit views) are now based on Zope 3 adapters and views, using Five.
-        This is a first step of a long evolutionary transition for the Silva
-        UI.
+      - Some parts of the Silva UI (for instance the lookup window in
+        the edit views) are now based on Zope 3 adapters and views,
+        using Five.  This is a first step of a long evolutionary
+        transition for the Silva UI.
 
       - Converted IViewerSecurity, IIndexable, IHaunted, IAssetData to
         Zope 3 adapters.
 
-      - The silva-extra metadata set now has a language field that stores
-        a ISO 639 two letter language code.
+      - The silva-extra metadata set now has a language field that
+        stores a ISO 639 two letter language code.
 
       - Language setting in the user preferences is now shown as human
-        readable text, not as a language code. Moreover, using Zope 3's
-        locale database, names for languages are shown in the configured
-        language.
+        readable text, not as a language code. Moreover, using Zope
+        3's locale database, names for languages are shown in the
+        configured language.
 
       - Added support for Kupu 1.3.4.
 
     Bugs fixed
 
-      - Added missing 'is_default' method on SilvaObject, it was already
-        available on Content but some new functionality (closing objects
-        from tab_edit of Container types) made that it was required for
-        other types as well.
+      - Added missing 'is_default' method on SilvaObject, it was
+        already available on Content but some new functionality
+        (closing objects from tab_edit of Container types) made that
+        it was required for other types as well.
 
-      - Never really an official feature, the FileSystemSite-based layout
-        system has been removed from the code. This means that
+      - Never really an official feature, the FileSystemSite-based
+        layout system has been removed from the code. This means that
         service_layouts is now gone.
 
       - Kupu now uses frontend.css instead of an almost entire copy.
 
-      - Moved 'get_extsource_url.py' out of SilvaDocument to the core to
-        allow using it from other products.
+      - Moved 'get_extsource_url.py' out of SilvaDocument to the core
+        to allow using it from other products.
 
   1.4.1
 
     Bugs fixed
 
-      - Added support for Kupu 1.3.2, in which a SilvaExternalSources related
-        bug is fixed.
+      - Added support for Kupu 1.3.2, in which a SilvaExternalSources
+        related bug is fixed.
 
       - Fixed unicode bug in table rendering.
 
@@ -442,32 +468,34 @@ Silva changes
 
     Features added
 
-      - Added a JavaScript registry for onload handlers and used that to
-        do some refactoring of the tab_edit pagetemplates.
+      - Added a JavaScript registry for onload handlers and used that
+        to do some refactoring of the tab_edit pagetemplates.
 
       - Added support for Kupu 1.3.
 
       - Added a field to the silva-extra metadata-set: hide_from_toc.
-        By default set to do not hide, when this is set to hide on a piece
-        of content, that content (and what it contains) will not show up in
-        tables of content.
+        By default set to do not hide, when this is set to hide on a
+        piece of content, that content (and what it contains) will not
+        show up in tables of content.
 
       - Added a link_type attribute to Link (Version) objects. Adding
         relative links is now possible.
 
       - Browsing to objects (for e.g. link and image lookups) has been
-        refactored, now there's only a single implementation of the lookup
-        window, and somewhat cleaner HTML.
+        refactored, now there's only a single implementation of the
+        lookup window, and somewhat cleaner HTML.
 
-      - It is now possible to have table cells without a width attribute,
-        which means you can style your tables through css entirely. To use
-        this feature, give the column widths a value of '*'.
+      - It is now possible to have table cells without a width
+        attribute, which means you can style your tables through css
+        entirely. To use this feature, give the column widths a value
+        of '*'.
 
     Bugs Fixed
 
-      - Un-fixed a Zope-2.7.7 compatibility issue with using ZCTextIndex.
-        The original fix was basically a work arround for Zope bug. This
-        means Silva can no longer work properly with Zope-2.7.7.
+      - Un-fixed a Zope-2.7.7 compatibility issue with using
+        ZCTextIndex.  The original fix was basically a work arround
+        for Zope bug. This means Silva can no longer work properly
+        with Zope-2.7.7.
 
       - Updated tests/README.txt to reflect the now preferred way for
         running the tests. ZopeTestCase-0.9.8 is now required.
@@ -478,18 +506,19 @@ Silva changes
       - Image tags in exported silva documents had their src attribute
         converted to an absolute url on export.
 
-      - In some cases the registered upgraders for the new Silva version
-        would not run. This is fixed by regsitering upgraders for all Silva
-        versions, even if the particular version didn't really have any
-        upgrading to do.
+      - In some cases the registered upgraders for the new Silva
+        version would not run. This is fixed by regsitering upgraders
+        for all Silva versions, even if the particular version didn't
+        really have any upgrading to do.
 
-      - Saving metadata in tab_metadata did not trigger a catalog reindex
-        action.
+      - Saving metadata in tab_metadata did not trigger a catalog
+        reindex action.
 
-      - The test_subscriptions would fail if the MaildropHost was installed.
+      - The test_subscriptions would fail if the MaildropHost was
+        installed.
 
-      - pathToUrl() (path.py) has been renamed to pathToUrlPath(). Fixed
-        tests accordingly.
+      - pathToUrl() (path.py) has been renamed to
+        pathToUrlPath(). Fixed tests accordingly.
 
       - Various issues in Kupu have been addressed.
 
@@ -503,136 +532,150 @@ Silva changes
 
     Features added
 
-      - All Silva css files (silva, silvaContentStyle, frontend) have been
-        cleaned up, a table of contents added, and the properties have been
-        reordered following W3C recommendations. They validate.
+      - All Silva css files (silva, silvaContentStyle, frontend) have
+        been cleaned up, a table of contents added, and the properties
+        have been reordered following W3C recommendations. They
+        validate.
 
       - The border color of focused form fields highlights.
 
-      - Editable metadata fields now have labels, allowing the field to be
-        focused with a mouse click.
+      - Editable metadata fields now have labels, allowing the field
+        to be focused with a mouse click.
 
-      - The content workspace now has a sidebar, which displays siblings of
-        the item in the current folder.
+      - The content workspace now has a sidebar, which displays
+        siblings of the item in the current folder.
 
-      - The middleground of properties and its subscreens is now handled by
-        a macro.
+      - The middleground of properties and its subscreens is now
+        handled by a macro.
 
-      - A macro_nonscreen has been added, for situations where the user clicks
-        to a screen that doesn't exist, e.g. there is no addables screen for
-        folders, but the user can navigate to it via the sidebar.
+      - A macro_nonscreen has been added, for situations where the
+        user clicks to a screen that doesn't exist, e.g. there is no
+        addables screen for folders, but the user can navigate to it
+        via the sidebar.
 
-      - macro_index has been cleaned up, and doesn't try to load Kupu unless
-        Kupu is needed.
+      - macro_index has been cleaned up, and doesn't try to load Kupu
+        unless Kupu is needed.
 
       - The service_subscriptions has a service icon.
 
     Bugs fixed
 
-      - Fixed a bug in the editor transformations that made that external
-        source form fields couldn't contain non-ascii characters in Kupu.
+      - Fixed a bug in the editor transformations that made that
+        external source form fields couldn't contain non-ascii
+        characters in Kupu.
 
-      - Fixed the naive inclusion of Silva extensions in view trees, which
-        caused an AttributeError on service_views when a view-less
-        extension, like SilvaLayout, was installed.
+      - Fixed the naive inclusion of Silva extensions in view trees,
+        which caused an AttributeError on service_views when a
+        view-less extension, like SilvaLayout, was installed.
 
       - Cosmetic improvements to the public Indexer rendering.
 
-      - Changed the xmlimporter to import metadata sets that are actually
-        present in the import instead of iterating over all installed metadata
-        sets.
+      - Changed the xmlimporter to import metadata sets that are
+        actually present in the import instead of iterating over all
+        installed metadata sets.
 
       - Fixed a unicode bug in the xmlimporter.
 
-      - Fixed an API incompatibility with Zope 2.7.7 ZCTextIndex (fix works
-        with 2.7.6 as well).
+      - Fixed an API incompatibility with Zope 2.7.7 ZCTextIndex (fix
+        works with 2.7.6 as well).
 
-      - Suppressed the xsltrenderer's copying of silva related namespace
-        attributes and declarations in rendered html.
+      - Suppressed the xsltrenderer's copying of silva related
+        namespace attributes and declarations in rendered html.
 
-      - Fixed a bug where unknown classnames used on p-tags (usually after
-        copy/paste to Kupu) confused the editor and widget renderer.
+      - Fixed a bug where unknown classnames used on p-tags (usually
+        after copy/paste to Kupu) confused the editor and widget
+        renderer.
 
-      - The user clipboard no longer hits the right side of the window.
+      - The user clipboard no longer hits the right side of the
+        window.
 
       - Numerous i18n bugs have been fixed.
 
-      - The form field widths have been fixed in the csv source edit screen.
+      - The form field widths have been fixed in the csv source edit
+        screen.
 
-      - Various bugs and the layout have been fixed in tab_status_macros.
+      - Various bugs and the layout have been fixed in
+        tab_status_macros.
 
-      - If a document heading is empty, an empty h2 tag is not rendered.
+      - If a document heading is empty, an empty h2 tag is not
+        rendered.
 
       - Feedback in user settings (always saying the language has been
         edited, even if it wasn't) has been fixed.
 
-      - Access keys in the contents screen have been fixed, so it is now
-        possible to add items using just the keyboard.
+      - Access keys in the contents screen have been fixed, so it is
+        now possible to add items using just the keyboard.
 
       - A bug in the select_all macro js has been fixed.
 
-      - Fixed incompatibility of code source forms between editors, requires
-        Kupu 1.3 (issue 1351).
+      - Fixed incompatibility of code source forms between editors,
+        requires Kupu 1.3 (issue 1351).
 
-      - Fixed problem with paths, that made that if you'd revoke a pending
-        version of an object using the button in tab_edit of that object and
-        then would edit it with Kupu, saving would fail (issue 1345).
+      - Fixed problem with paths, that made that if you'd revoke a
+        pending version of an object using the button in tab_edit of
+        that object and then would edit it with Kupu, saving would
+        fail (issue 1345).
 
       - Fixed hyperlink support in headings in Kupu (issue 1324).
 
       - Fixed the request approval button (issue 1337).
 
-      - Removed 'publish now' button from the public preview screen for
-        authors (who are not allowed to publish anything) (issue 1369).
+      - Removed 'publish now' button from the public preview screen
+        for authors (who are not allowed to publish anything) (issue
+        1369).
 
       - Fixed image cropping button (issue 921).
 
-      - Fixed charset problems in public/subscriptor view (issue 1357).
+      - Fixed charset problems in public/subscriptor view (issue
+        1357).
 
-      - Fixed modification time in tab_status' version management table (issue
-        1355).
+      - Fixed modification time in tab_status' version management
+        table (issue 1355).
 
-      - Fixed SilvaMetadata tests (XML validation problem) (issue 1354).
+      - Fixed SilvaMetadata tests (XML validation problem) (issue
+        1354).
 
-      - Fixed AttributeError (__call__) on DummyMessageID (issue 1342).
+      - Fixed AttributeError (__call__) on DummyMessageID (issue
+        1342).
 
-      - Fixed some bugs in Image, when an image was stored on the FS and
-        removed, a Silva Image object referring to it didn't work anymore
-        (issue 1350).
+      - Fixed some bugs in Image, when an image was stored on the FS
+        and removed, a Silva Image object referring to it didn't work
+        anymore (issue 1350).
 
-      - Added 'X-Is-Fallback-For' directive in the appropriate .po files
-        (providing information about fallbacks for e.g. de-ch to de)
-        (issue 1305).
+      - Added 'X-Is-Fallback-For' directive in the appropriate .po
+        files (providing information about fallbacks for e.g. de-ch to
+        de) (issue 1305).
 
-      - After a cut/paste action, the paste buttons now (correctly) disappear
-        from view (issue 1326).
+      - After a cut/paste action, the paste buttons now (correctly)
+        disappear from view (issue 1326).
 
-      - Fixed problems with IE mangling URLs (hrefs of anchors and src for
-        images), by storing an additional attribute and reading that if
-        available. Requires Kupu 1.2.2.
+      - Fixed problems with IE mangling URLs (hrefs of anchors and src
+        for images), by storing an additional attribute and reading
+        that if available. Requires Kupu 1.2.2.
 
       - Fixed bug in exporting ZODB-based files to the filesystem (for
         ExtFile), which also fixed a unit test (issue 1384).
 
   1.3b3
 
-    Note: there were a couple internal betas, this is the first public one.
+    Note: there were a couple internal betas, this is the first public
+    one.
 
     Features added
 
       - WebDAV support for Silva. Silva can now be accessed by a WebDAV
         client.
 
-      - User interface refactoring for the properties (metadata) tab, and
-        settings tab.
+      - User interface refactoring for the properties (metadata) tab,
+        and settings tab.
 
       - Silva users can now set their preferred language on the user
-        settings page if PTS is installed. The preference is stored in a
-        cookie which expires after one year.
+        settings page if PTS is installed. The preference is stored in
+        a cookie which expires after one year.
 
       - Partial upgrades, an feature that allows upgrading imported
-        Z-exported Silva content. This feature should be handled with care,
-        as it cannot always be guaranteed to be correct.
+        Z-exported Silva content. This feature should be handled with
+        care, as it cannot always be guaranteed to be correct.
 
       - Public preview mode now has a back button to go back to the
         Silva UI. For EXISTING SILVA SETUPS, the preview_html Python
@@ -649,20 +692,20 @@ Silva changes
       - Export button in publish screen was replaced to a more logical
         location.
 
-      - The publish screen controls have been reorganized and a publish
-        now button has been added, saving users a click (the publish now
-        checkbox is gone).
+      - The publish screen controls have been reorganized and a
+        publish now button has been added, saving users a click (the
+        publish now checkbox is gone).
 
-      - A publish now button has been added to almost all screens where a
-        user my want to publish now, including contents, preview, public
-        preview, propoerties and its subscreens.
+      - A publish now button has been added to almost all screens
+        where a user my want to publish now, including contents,
+        preview, public preview, propoerties and its subscreens.
 
-      - Users can close and publish (now) content in the contents screen.
-        This makes moving of items much easier, obviating the need to switch
-        to the publish screen to close.
+      - Users can close and publish (now) content in the contents
+        screen.  This makes moving of items much easier, obviating the
+        need to switch to the publish screen to close.
 
-      - Both the contents and the publish screen have import and export
-        (transport) buttons.
+      - Both the contents and the publish screen have import and
+        export (transport) buttons.
 
     Bugs fixed
 
@@ -672,47 +715,53 @@ Silva changes
           * Do not use the wrappers for the dom, but the DOM directly.
           * Improved metadata values handling
 
-      - URLs generated by Indexers, now point to the correct anchors in
-        the documents referenced.
+      - URLs generated by Indexers, now point to the correct anchors
+        in the documents referenced.
 
       - Fixed issue1246, where the cropbox didn't work correctly.
 
       - Saving metadata uses Formulator forms for improved validation.
 
-      - The import/export of metadata values other than string now works
-        correctly. (previously only datetime values were, hackishly, checked
-        for.) This requires an update of Formulator.
+      - The import/export of metadata values other than string now
+        works correctly. (previously only datetime values were,
+        hackishly, checked for.) This requires an update of
+        Formulator.
 
-      - Fixed acquistion problem with ExternalSource objects and Kupu: when
-        adding or updating an ExternalSource object that had an id that
-        returned another object using acquisition, Kupu would display a 404
-        page instead of the source's form. This has now been fixed: instead
-        of acquisition of the id a full url is used to find the source.
-        Note that this requires Kupu 1.2.1+.
+      - Fixed acquistion problem with ExternalSource objects and Kupu:
+        when adding or updating an ExternalSource object that had an
+        id that returned another object using acquisition, Kupu would
+        display a 404 page instead of the source's form. This has now
+        been fixed: instead of acquisition of the id a full url is
+        used to find the source.  Note that this requires Kupu 1.2.1+.
 
-      - Fixed issue 1275, copy/paste and cut/paste now queries Zope for the
-        ids it has generated rather than generating them in sync (which was
-        broken due to a change in Zope's renaming behaviour).
+      - Fixed issue 1275, copy/paste and cut/paste now queries Zope
+        for the ids it has generated rather than generating them in
+        sync (which was broken due to a change in Zope's renaming
+        behaviour).
 
-      - Fixed issue 1224, the 'model' variable inside the form of external
-        sources now points to the document in which the code source element
-        was embedded rather than to the code source itself. Note that this
-        requires Kupu 1.2.1 and SilvaExternalSources 0.10.2.
+      - Fixed issue 1224, the 'model' variable inside the form of
+        external sources now points to the document in which the code
+        source element was embedded rather than to the code source
+        itself. Note that this requires Kupu 1.2.1 and
+        SilvaExternalSources 0.10.2.
 
       - Fix unicode issues in SilvaDocument (if
         PlacelessTranslationService is used) by introducing a
         safeJoin() operation.
 
-      - Fixed issue 1277, unicode error in membership form saving mechanism.
+      - Fixed issue 1277, unicode error in membership form saving
+        mechanism.
 
-      - Fixed broken i18n:name (string interpolation) in user lookup screen.
+      - Fixed broken i18n:name (string interpolation) in user lookup
+        screen.
 
-      - Fixed issue 1288, tab_status_approve should never create copies
-        anymore without publishing them.
+      - Fixed issue 1288, tab_status_approve should never create
+        copies anymore without publishing them.
 
       - Fixed issue 1311, some problems with nested lists in Kupu.
 
-      - Fixed issue 1301, Kupu now uses object.get_title() where appropriate.
+      - Fixed issue 1301, Kupu now uses object.get_title() where
+        appropriate.
 
       - Updated Silva software version number to 1.3
 
@@ -729,13 +778,15 @@ Silva changes
 
     Features added
 
-      - Silva has been i18n-ed. (Works with Placeless Translation Service
-        1.0). There's an English, German and Dutch version of Silva now.
+      - Silva has been i18n-ed. (Works with Placeless Translation
+        Service 1.0). There's an English, German and Dutch version of
+        Silva now.
 
       - Subscriptions feature: visitors can now easily subscribe to
-        publish events of VersionedContent objects (like Silva Documents).
-        If a visitor is subscribed, he will receive notifications by email
-        whenever a publication event for this object is triggered.
+        publish events of VersionedContent objects (like Silva
+        Documents).  If a visitor is subscribed, he will receive
+        notifications by email whenever a publication event for this
+        object is triggered.
 
       - Version management feature:
 
@@ -744,9 +795,9 @@ Silva changes
           * reverting to older versions of content
           * removal of selected old versions
 
-      - When ExtFile is installed, a site manager can switch between ZODB
-        storage and file system storage of assets with one click of a
-        button.
+      - When ExtFile is installed, a site manager can switch between
+        ZODB storage and file system storage of assets with one click
+        of a button.
 
     Bugs fixed
 
@@ -756,17 +807,18 @@ Silva changes
       - Link objects now accept other protocols in the URL too (https,
         news, ftp, mailto).
 
-      - Fixed a bug in the xml importer that could result in loss of text
-        data.
+      - Fixed a bug in the xml importer that could result in loss of
+        text data.
 
-      - Fixed color of error display when something could not be pasted.
-        Note: see doc/developer_changes.txt for information about the impact
-        this change had on the API.
+      - Fixed color of error display when something could not be
+        pasted.  Note: see doc/developer_changes.txt for information
+        about the impact this change had on the API.
 
       - Removed namespace declaration from XML produced by Kupu.
 
-      - Fixed standard_error_message, it's now displayed properly when a user
-        chooses 'cancel' when the browser asks for login credentials.
+      - Fixed standard_error_message, it's now displayed properly when
+        a user chooses 'cancel' when the browser asks for login
+        credentials.
 
       - Fixed problem with vanishing paragraphs after a Kupu save.
 
@@ -779,14 +831,15 @@ Silva changes
 
     Features Added
 
-      - Added a new xslt renderer that renders Silva Documents without a
-        title at the top.
+      - Added a new xslt renderer that renders Silva Documents without
+        a title at the top.
 
       - Made kupu the default editor if available.
 
     Bugs Fixed
 
-      - TOC rendered with the XSLT renderer now use the correct context.
+      - TOC rendered with the XSLT renderer now use the correct
+        context.
 
       - Fixed a nasty unicode error in the XSLT renderer, that somehow
         slips through in Zope 2.7.2 and only breaks Silva in 2.7.3
@@ -794,40 +847,44 @@ Silva changes
       - Fixed issue where is_published return true in situations where
         there isn't any viewable content.
 
-      - URLs are now rendered correctly in the context of a Ghost object.
+      - URLs are now rendered correctly in the context of a Ghost
+        object.
 
-      - Added 'Delete objects' permission to authors and up, this was not
-        used in previous Zope versions but is in 2.7.3.
+      - Added 'Delete objects' permission to authors and up, this was
+        not used in previous Zope versions but is in 2.7.3.
 
-      - Fixed bug that made Internet Explorer generate paths to images in
-        Kupu that couldn't be reached by unauthorized users (issues 1165
-        and 1168).
+      - Fixed bug that made Internet Explorer generate paths to images
+        in Kupu that couldn't be reached by unauthorized users (issues
+        1165 and 1168).
 
-      - Updated footer of the Silva documentation template, used to mention
-        incorrect Silva and Zope versions.
+      - Updated footer of the Silva documentation template, used to
+        mention incorrect Silva and Zope versions.
 
-      - Fixed bug with metadata sets with restricted access, they were not
-        accessible with people who did have the required role(s) but didn't
-        have them defined on the root.
+      - Fixed bug with metadata sets with restricted access, they were
+        not accessible with people who did have the required role(s)
+        but didn't have them defined on the root.
 
-      - Headings are no longer incorrectly discarded by the xslt renderer.
+      - Headings are no longer incorrectly discarded by the xslt
+        renderer.
 
-      - Code and data sources no longer incorrectly copy their parameters
-        into the result html.
+      - Code and data sources no longer incorrectly copy their
+        parameters into the result html.
 
-      - Images in SilvaDocuments now get their widths, heights, aligments
-        and titles in the xml export, which fixes some bugs in the xslt
-        rendering.
+      - Images in SilvaDocuments now get their widths, heights,
+        aligments and titles in the xml export, which fixes some bugs
+        in the xslt rendering.
 
-      - Tables should have a width of 100%, but this got removed in 1.0
+      - Tables should have a width of 100%, but this got removed in
+        1.0
 
-      - Nested lists only worked in the xslt renderers when the outer list
-        was bulleted. Nested lists can now have any type normal lists can.
+      - Nested lists only worked in the xslt renderers when the outer
+        list was bulleted. Nested lists can now have any type normal
+        lists can.
 
       - Newlines can be used instead of <br> in the forms editor.
 
-      - Markup and linebreaks within tables is no longer removed in the
-        xslt renderers.
+      - Markup and linebreaks within tables is no longer removed in
+        the xslt renderers.
 
   1.1
 
@@ -845,32 +902,34 @@ Silva changes
 
       - Replaced print statement in Indexer for a LOG entry.
 
-      - The Indexer could break when the content tree it indexed contains
-        Silva Publications.
+      - The Indexer could break when the content tree it indexed
+        contains Silva Publications.
 
       - Protect methods on the service_files.
 
-      - Content publication state is now not touched anymore when imported
-        using *.zexp files in the ZMI.
+      - Content publication state is now not touched anymore when
+        imported using *.zexp files in the ZMI.
 
       - zip-file XML import/export of Silva root should now work.
 
       - Unused XSLT support cruft has been cleaned up.
 
-      - Fixed problem with very long titles and ids in lookup screens, they're
-        truncated now
+      - Fixed problem with very long titles and ids in lookup screens,
+        they're truncated now
 
-      - Ghosts and ghost folders should import properly with zip file import.
+      - Ghosts and ghost folders should import properly with zip file
+        import.
 
       - Fixed incorrect recursive call for get_public_tree_helper
 
     Removals
 
-      - Remnant of SQLDataSource removed. Use SilvaExternalSources instead.
-        (SQLDataSource was deprecated since version 0.9.3).
+      - Remnant of SQLDataSource removed. Use SilvaExternalSources
+        instead.  (SQLDataSource was deprecated since version 0.9.3).
 
       - Remnants of old archive file import code (for bulk creation of
-        assets) has been removed. Use the archivefileimport adapter instead.
+        assets) has been removed. Use the archivefileimport adapter
+        instead.
 
   1.1 beta 2
 
@@ -930,8 +989,8 @@ Silva changes
 
       - Properties tab for Ghost Folder works again.
 
-      - Fixed bug in images that caused a ZODB transaction on every public
-        view.
+      - Fixed bug in images that caused a ZODB transaction on every
+        public view.
 
       - Fixed kupu transformation bug that made paragraph type not
         come through on save.
@@ -948,32 +1007,34 @@ Silva changes
 
     Bugs fixed
 
-      - Made the 0.9.3-1.0 Image upgrade even more forgiving, basically it
-        will now not break on anything anymore, it will print a warning to
-        the zLOG on every exception.
+      - Made the 0.9.3-1.0 Image upgrade even more forgiving,
+        basically it will now not break on anything anymore, it will
+        print a warning to the zLOG on every exception.
 
-      - Problem in Kupu transformations that made 'spurious' <p> elements
-        without content appear on the page.
+      - Problem in Kupu transformations that made 'spurious' <p>
+        elements without content appear on the page.
 
       - Problem in Kupu transformations that made <div>'s get removed
-        completely from a document on save: now instead of removing it it's
-        contents get converted and added to the document.
+        completely from a document on save: now instead of removing it
+        it's contents get converted and added to the document.
 
-      - Issue 942: quotes in links around images broke the public view.
+      - Issue 942: quotes in links around images broke the public
+        view.
 
       - Added refresh all to update.
 
-      - Issues 996 and 998: changed image links that pointed to the hires
-        version of the image, instead of pointing to <image>/hires_image
-        they now point to <image>?hires.
+      - Issues 996 and 998: changed image links that pointed to the
+        hires version of the image, instead of pointing to
+        <image>/hires_image they now point to <image>?hires.
 
       - Minor problem where the image edit form in the form editor
         didn't recognize a link as one to the hires version of the
         image.
 
       - Added test cases for get_creation_datetime() and
-        get_modification_datetime() in SilvaObject. Also re-enabled and
-        revised some tests that were commented out in test_SilvaObject.
+        get_modification_datetime() in SilvaObject. Also re-enabled
+        and revised some tests that were commented out in
+        test_SilvaObject.
 
       - Indexer is now updated when installation documentation.
 
@@ -984,11 +1045,12 @@ Silva changes
       - Removed problematic code from index_html Python script that
         accidentally triggered an experimental layout service.
 
-      - Fixed bug in Kupu transformations that broke tables with incomplete
-        alignment information.
+      - Fixed bug in Kupu transformations that broke tables with
+        incomplete alignment information.
 
-      - Made the 0.9.3-1.0 Image upgrade a bit more forgiving, which may result
-        in broken images but at least lets the upgrade continue.
+      - Made the 0.9.3-1.0 Image upgrade a bit more forgiving, which
+        may result in broken images but at least lets the upgrade
+        continue.
 
   1.0 (release candidate 3)
 
@@ -1032,14 +1094,14 @@ Silva changes
       - Extensive documentation released along with Silva, and can be
         automatically installed.
 
-      - All images of a Silva Image asset are stored in the filesystem if
-        ExtFile is available and the corresponding option is set in
-        service_files. Also better support for ExtFile's static serving was
-        introduced. service_files allows to convert the storage method of
-        all Silva Image assets.
+      - All images of a Silva Image asset are stored in the filesystem
+        if ExtFile is available and the corresponding option is set in
+        service_files. Also better support for ExtFile's static
+        serving was introduced. service_files allows to convert the
+        storage method of all Silva Image assets.
 
-      - Image scaling supports "keep aspect ratio" now. You can scale with
-        120x* or *x211 to fix width or height.
+      - Image scaling supports "keep aspect ratio" now. You can scale
+        with 120x* or *x211 to fix width or height.
 
       - An Image has a thumbnail now, retrievable via foo.jpg?thumbnail.
 
@@ -1061,9 +1123,11 @@ Silva changes
 
       - Revision of the archive file import (i.e. zipfile import)
         functionality. Mimetypes can be registered for specific Asset
-        types. The importer will create Assets depending on the mimetype.
+        types. The importer will create Assets depending on the
+        mimetype.
 
-      - Silva now should deliver the right mime type for HEAD requests.
+      - Silva now should deliver the right mime type for HEAD
+        requests.
 
     Bugs fixed
 
@@ -1071,17 +1135,20 @@ Silva changes
         for Silva 1.0), suppress source code encoding warnings when
         starting up.
 
-      - Another problem with the upgrade code for handling index elements,
-        which causes a few of them to be missed, has been repaired.
+      - Another problem with the upgrade code for handling index
+        elements, which causes a few of them to be missed, has been
+        repaired.
 
-      - Ghost Folders now can be added by Editors (required Manager role
-        previously)
+      - Ghost Folders now can be added by Editors (required Manager
+        role previously)
 
-      - Groups are installable as specified in the UI (no more KeyError).
+      - Groups are installable as specified in the UI (no more
+        KeyError).
 
-      - The File asset behaves more like the Image asset, where the URL
-        to the object now will return the actual data. This obsoletes
-        the need for URL's like "path/to/some/file/download'.
+      - The File asset behaves more like the Image asset, where the
+        URL to the object now will return the actual data. This
+        obsoletes the need for URL's like
+        "path/to/some/file/download'.
 
       - A long standing problem with occasional InvalidObjectReference
         errors when installing or refreshing Silva should now be
@@ -1100,17 +1167,17 @@ Silva changes
 
       - Smaller bugfixes in the silvaparser.
 
-      - created a new method addAddable on ExtensionRegistry. This makes
-        it possible (again) to add classes to Silva without being required
-        to name your class the same as the module name (which the
-        registerClass method needs). You simply register your class
-        the normal way with Zope, and then invoke addAddable for its
-        meta type.
+      - created a new method addAddable on ExtensionRegistry. This
+        makes it possible (again) to add classes to Silva without
+        being required to name your class the same as the module name
+        (which the registerClass method needs). You simply register
+        your class the normal way with Zope, and then invoke
+        addAddable for its meta type.
 
       - Fixed acquisition for viewing locally defined roles on Silva
-        objects. (For instance: if user1 has editor role on pub1, and not
-        on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show user1
-        as an editor, and now doesn't).
+        objects. (For instance: if user1 has editor role on pub1, and
+        not on pub2, viewing /pub1/pub2/foo/tab_access shouldn't show
+        user1 as an editor, and now doesn't).
 
   0.9.3.2
 
@@ -1145,9 +1212,9 @@ Silva changes
           in the folder edit- or properties tab.
 
         - "Container policies" - When creating a new container object
-           the author can choose the tpye of the index object being
-           created, or not to create an index object at all. The
-           options presented can be extended.
+          the author can choose the tpye of the index object being
+          created, or not to create an index object at all. The
+          options presented can be extended.
 
         - Import assets from a zipfile now creates Silva Folder for
           the zipfiles's directory structure.
@@ -1208,12 +1275,12 @@ Silva changes
 
         - Error messages in public sites should now be shown within
           the context of the public template (if
-          standard_error_message is replaced in the Silva root or if
-          a new Silva root is created).
+          standard_error_message is replaced in the Silva root or if a
+          new Silva root is created).
 
-        - Some infrastructure is now in place to drive workflow
-          from an outside process like a cron job. This is needed to
-          keep the catalog and thus search functionality up to date if
+        - Some infrastructure is now in place to drive workflow from
+          an outside process like a cron job. This is needed to keep
+          the catalog and thus search functionality up to date if
           publication dates are set in the future or expiration dates
           are used.
 
@@ -1262,7 +1329,8 @@ Silva changes
           ZopeTestCase system
           (http://www.zope.org/Members/shh/ZopeTestCase) allows much
           higher performance and less hackery for running unit tests.
-          See the README.txt in the tests directory for more information.
+          See the README.txt in the tests directory for more
+          information.
 
         - publication and modification datetime support is now not
           dependent on ZODB bobobase_modification_datetime anymore but
@@ -1307,20 +1375,22 @@ Silva changes
 
     Features Added
 
-        - Image elements in a Silva Document now have to possibility to
-          link to the hires version or other URLs with a optional "_target".
+        - Image elements in a Silva Document now have to possibility
+          to link to the hires version or other URLs with a optional
+          "_target".
 
     Bugs fixed
 
-        - No Catalog indexes are created for Metadata fields which do not
-          need indexing.
+        - No Catalog indexes are created for Metadata fields which do
+          not need indexing.
 
-        - Metadata form and acquisition didn't work properly in all cases.
+        - Metadata form and acquisition didn't work properly in all
+          cases.
 
         - UI improvements in tab_edit and tab_publish
 
-        - XML export of folders when the "export last version" option is
-          checked, did not use correct Folder title.
+        - XML export of folders when the "export last version" option
+          is checked, did not use correct Folder title.
 
         - Fixed two issues with the SQLDataSource and integer fields:
           the code doesn't try to convert the contents of the field to
@@ -1338,8 +1408,8 @@ Silva changes
 
     Features Added
 
-        - Import assets from a zipfile now creates Silva Folder for the
-          zipfiles's directory structure.
+        - Import assets from a zipfile now creates Silva Folder for
+          the zipfiles's directory structure.
 
     Bugs fixed
 
@@ -1350,8 +1420,8 @@ Silva changes
           improvements, bugfixes and some code optimizations.
 
         - SilvaMetadata contained a bug which actually made metadata
-          cataloging fail. This has been fixed in SilvaMetadata
-          0.7.2, so the only upgrade necessary is in fact of this
+          cataloging fail. This has been fixed in SilvaMetadata 0.7.2,
+          so the only upgrade necessary is in fact of this
           dependency. For convenience we've also done a new Silva
           release, but the only thing it contains is one new test for
           getting metadata.
@@ -1391,20 +1461,22 @@ Silva changes
               indexing. Previously, for n elements that are indexed,
               for each element indexing the data for the n indexes was
               accessed, resulting in quadratic behavior while indexing
-              (n * n values were accessed per object). Upgrade SilvaMetadata
-              to version 0.7.1 for another boost in indexing performance.
+              (n * n values were accessed per object). Upgrade
+              SilvaMetadata to version 0.7.1 for another boost in
+              indexing performance.
 
             * Fulltext indexing of unapproved versions is avoided.
 
-            * Old versions should now not show up in the catalog anymore.
+            * Old versions should now not show up in the catalog
+              anymore.
 
         - Fix icon rendering. It should now be faster and more
           browser-cache friendly.
 
         - Fixed unicode issue when deleting a table column.
 
-        - A number of things fixed in 0.9.1.x have also been fixed
-          for 0.9.2.
+        - A number of things fixed in 0.9.1.x have also been fixed for
+          0.9.2.
 
   0.9.2.2
 
@@ -1422,63 +1494,66 @@ Silva changes
           splitter, and accept if one is already there.
 
         - Changed check_reserved_ids() function in the content upgrade
-          script from breadth-first to depth-first. This works better for
-          content hierarchies where folders with an invalid id containing
-          content also with invalid ids, are being renamed.
+          script from breadth-first to depth-first. This works better
+          for content hierarchies where folders with an invalid id
+          containing content also with invalid ids, are being renamed.
 
-        - The metadata tab wouldn't show the metadata set's title when it
-          was available.
+        - The metadata tab wouldn't show the metadata set's title when
+          it was available.
 
   0.9.2.1
 
     Features added
 
-        - Added support for ExternalEditor, Silva Files and Images can now
-          be edited using your favorite editor
+        - Added support for ExternalEditor, Silva Files and Images can
+          now be edited using your favorite editor
 
     Bugs Fixed
 
         - Fix bug where viewing content normally restricted by an
           AccessRestriction, could be viewed via a Ghost.
 
-        - Pressing upgrade more than once now doesn't mess up object titles
-          anymore
+        - Pressing upgrade more than once now doesn't mess up object
+          titles anymore
 
-        - All content types should now have the correct metadata sets setup
-          for them (led to a KeyError on 'silva-extra' in all of the views
-          of those content types)
+        - All content types should now have the correct metadata sets
+          setup for them (led to a KeyError on 'silva-extra' in all of
+          the views of those content types)
 
   0.9.2
 
     Features Added
 
-        - Bulk import of files (for File Assets) and/or images (for Image
-          Assets) using a zipfile.
+        - Bulk import of files (for File Assets) and/or images (for
+          Image Assets) using a zipfile.
 
-        - New metadata architecture, which provides multiple configurable
-          metadata sets. Sets can defined on a per object type basis and
-          uses the catalog to make this metadata searchable.
+        - New metadata architecture, which provides multiple
+          configurable metadata sets. Sets can defined on a per object
+          type basis and uses the catalog to make this metadata
+          searchable.
 
-        - Unicode support. All content and meta data can contain any character
-          defined by the unicode standard. On upgrade you have replace or
-          update your index_html set the the correct encoding; the default
-          index_html does this.
+        - Unicode support. All content and meta data can contain any
+          character defined by the unicode standard. On upgrade you
+          have replace or update your index_html set the the correct
+          encoding; the default index_html does this.
 
-        - Sidebar caching. For performance reasons, the sidebar is now cached,
-          making it possible to use it throughout the site without slowing
-          down page rendering.
+        - Sidebar caching. For performance reasons, the sidebar is now
+          cached, making it possible to use it throughout the site
+          without slowing down page rendering.
 
-        - High resolution image support. If you have PIL installed images can
-          be both converted to JPEG or PNG and arbitrary scaled for web
-          presentation. The high resolution image can be used for printing.
+        - High resolution image support. If you have PIL installed
+          images can be both converted to JPEG or PNG and arbitrary
+          scaled for web presentation. The high resolution image can
+          be used for printing.
 
-        - Asset references and code element references will now be relative
-          paths if the Assets are in the same container the Document is in,
-          or in a subcontainer of this container. If not, the path will be
-          an absolute path.
+        - Asset references and code element references will now be
+          relative paths if the Assets are in the same container the
+          Document is in, or in a subcontainer of this container. If
+          not, the path will be an absolute path.
 
-        - Docma queue viewer is now on both import and export screen. On import
-          only Silva XML files are shown, on export only Word documents.
+        - Docma queue viewer is now on both import and export
+          screen. On import only Silva XML files are shown, on export
+          only Word documents.
 
         - Export screen prefills email address and description.
 
