@@ -1,1 +1,1 @@
-Silva 1.5.12 (unreleased)
+Silva 1.5.12
