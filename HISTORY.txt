@@ -7,8 +7,6 @@ Silva changes
 
     Features added:
 
-      - 238341: frontend.css.dtml is css valid now. 
-
       - 209497: Silva Link preview tab now displays rendered http link,
         rather than just redirecting.
 
@@ -173,6 +171,11 @@ Silva changes
         invalid ids (and always have a new id generated)
 
     Bugs Fixed:
+
+      - ie 6 compatibilite fix so smi is readable in this non
+        standards compliant browser.
+
+      - 238341: frontend.css.dtml is css valid now.
 
       - When SMTP errors occur while sending notification, we log
         them, but no longer hold up the publication/approval process.
