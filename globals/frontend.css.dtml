@@ -18,7 +18,7 @@
 ** silva table styles
 **   various table-like layouts
 ** form controls
-**   preveiw publisher
+**   preview publisher
 **   subscription forms
 ** css2 selectors
 */
@@ -406,11 +406,11 @@ table.black1 td {
 }
 
 table.red { 
-  border: 1px solid darkred;
+  border: 1px solid #8b0000;
 }
 
 table.red td {
-  border: 1px solid darkred;
+  border: 1px solid #8b0000;
 }
 
 table.red tr.odd td {
@@ -418,11 +418,11 @@ table.red tr.odd td {
 }
 
 table.green {
-  border: 1px solid darkgreen;
+  border: 1px solid #006400;
 }
 
 table.green td {
-  border: 1px solid darkgreen;
+  border: 1px solid #006400;
 }
 
 table.green tr.odd td {
