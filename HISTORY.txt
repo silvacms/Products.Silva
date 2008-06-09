@@ -7,6 +7,8 @@ Silva changes
 
     Features added:
 
+      - 238341: frontend.css.dtml is css valid now. 
+
       - 209497: Silva Link preview tab now displays rendered http link,
         rather than just redirecting.
 
