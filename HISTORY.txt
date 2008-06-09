@@ -6,6 +6,8 @@ Silva changes
   Silva 2.0.8
 
     Bugs fixed:
+
+      - 238341: frontend.css.dtml is css valid now.
     
       - When SMTP errors occur while sending notification, we log
         them, but no longer hold up the publication/approval process.
