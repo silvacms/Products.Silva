@@ -7,6 +7,13 @@ Silva changes
 
     Features added:
 
+      - Quota system has been added. It can be activated through
+        ``service_extension``, and let people set a quota on
+        publication, and objects inheriting of publication (root,
+        others extensions). Used space only concern Assets, and is
+        tracked on every container, displayed on the settings tab of
+        Silva. Quota is set by Manager on the same tab.
+
       - 209497: Silva Link preview tab now displays rendered http link,
         rather than just redirecting.
 
