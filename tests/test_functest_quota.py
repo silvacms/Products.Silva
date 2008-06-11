@@ -48,9 +48,10 @@ class QuotaTestCase(SilvaFunctionalTestCase):
 	    test inside content
             make_content(folder2)
 	"""	
-	pass
 
     def util_goOnSettings(self):
+        """Go on the settings tab of an item.
+        """
         # go on properties tab
         self.sb.click_href_labeled('properties')
         self.failUnless(self.sb.get_listing_h2().startswith('properties of'))
@@ -59,13 +60,15 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.failUnless(self.sb.get_listing_h2().startswith('settings for'))
     
     def set_quota(self, quota, expected_message):
-        
+        """Set the quota value, and expect a reply.
+        """
         self.sb.browser.getControl(name='silva-quota.quota:record').value = quota
         self.sb.browser.getControl(name='save_metadata:method').click()
         self.failUnless(expected_message in self.sb.browser.contents)
 
     def build_browser(self):        
-
+        """Create a SilvaBrowser.
+        """
         #initializes silva browser
         self.sb = SilvaBrowser()
         status, url = self.sb.login('manager', 'secret', self.sb.smi_url())
@@ -75,8 +78,9 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.sb.go(url)
 
     def enable_quota(self):
+        """Go in ZMI, and on service_extension enable the quota system.
+        """
 
-        # test that we're in the zmi
         self.failUnless('Silva /edit...' in self.sb.browser.contents)
         self.sb.click_href_labeled('Services')
         self.assertEquals(self.sb.get_url(),'http://nohost/root/manage_services')
@@ -174,7 +178,7 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         
         
         self.sb.make_content('Silva File', id='quota_test', title='q test',
-                                      file='beameruserguide.pdf')
+                                      file='docs_export_2008-06-11.odt')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
         
         
@@ -187,7 +191,7 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.failUnless(self.sb.get_listing_h2().startswith('properties of'))
         
         self.sb.click_href_labeled('settings...')
-        byte_span = '<span title=" 1951836 Bytes">'
+        byte_span = '<span title=" 1444981 Bytes">'
         self.failUnless(byte_span in self.sb.browser.contents)
         
         
@@ -230,7 +234,7 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         
         #file
         self.sb.make_content('Silva File', id='file1', title='File 1',
-                                      file='beameruserguide.pdf')
+                                      file='docs_export_2008-06-11.odt')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
         
         #go back to publication 1
