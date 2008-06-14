@@ -33,11 +33,9 @@ Version of this file: $Revision: 1.16 $
   <h3 tal:content="python:here.get_description(module_name)" />
   <p tal:content="python:here.get_version_info(module_name)"/>
   <form action="." method="post" tal:condition="python:module_name != 'Silva'">
-    <input type="hidden" name="name" value="value"
-      tal:attributes="value module_name" />
-    <input type="submit" name="install:method" value="install"
-      tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
-      tal:attributes="name string:${blerk}:method; value blerk;"
+    <input type="hidden" name="name"/r      tal:attributes="value module_name" />
+    <input type="submit"/r      tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
+      tal:attributes="name string:${blerk}:method; value python:blerk == 'install' and 'activate' or 'deactivate';"
       i18n:attributes="value"/>
     <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)"
       i18n:attributes="value"/>
