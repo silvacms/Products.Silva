@@ -58,9 +58,9 @@ Version of this file: $Revision: 1.16 $
  <form action="." method="post" style="margin-bottom: 0;" tal:attributes="name module_name">
   <input type="hidden" name="name" tal:attributes="value module_name" />
   <tal:cond tal:condition="python:module_name != 'Silva'">
-   <input type="submit" name="install:method" value="install"
+   <input type="submit"
      tal:define="blerk python:test(here.is_installed(module_name), 'uninstall', 'install')"
-     tal:attributes="name string:${blerk}:method; value blerk;"
+     tal:attributes="name string:${blerk}:method; value python:blerk == 'install' and 'activate' or 'deactivate';"
      i18n:attributes="value" />
    <input type="submit" name="refresh:method" value="refresh" tal:condition="python:here.is_installed(module_name)"
      i18n:attributes="value" />
