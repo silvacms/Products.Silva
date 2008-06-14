@@ -189,7 +189,7 @@ current timings
 <div tal:omit-tag=""
   metal:define-macro="approve_new">
 <form name="editor_approves" action="tab_status_approve" method="post">
-<table class="listing sublisting">
+<table class="listing">
 <tr class="inter-controls">
 <td colspan="2">
 <h3>
@@ -361,7 +361,7 @@ The message may be viewed by local users.
 <div tal:omit-tag=""
   metal:define-macro="revoke_approval">
 <form name="revoke_approval" action="tab_status_revoke" method="post">
-<table class="listing sublisting">
+<table class="listing">
 <thead>
 <tr class="inter-controls">
 <td>

@@ -96,8 +96,7 @@
                         value userid;
                         id fullname;
                     "/>
-                    <label style="text-transform:none"
-                      tal:content="fullname"
+                    <label tal:content="fullname"
                       tal:attributes="for fullname">
                       username
                     </label>
@@ -110,10 +109,9 @@
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                      <label style="text-transform:none"
-                        i18n:translate=""
-                        tal:content="local" 
-                        tal:attributes="for string:revoke_${local}-${userid}">
+                      <label tal:content="local" 
+                        tal:attributes="for string:revoke_${local}-${userid}"
+                        i18n:translate="">
                         local
                       </label>
                         <input class="min"
@@ -224,8 +222,7 @@
                       tal:attributes="
                         value python: '|'.join(req);
                         id string:pending_${member/userid};" />
-                      <label style="text-transform:none"
-                        tal:content="member/userid" 
+                      <label tal:content="member/userid" 
                         tal:attributes="for string:pending_${member/userid}">
                         name
                       </label>
@@ -395,15 +392,15 @@
                           value group;
                           id group;" />
                         &nbsp;
-                        <label style="text-transform:none"
-                          tal:content="group"
+                        <label tal:content="group"
                           tal:attributes="for group">
                           group
                         </label>
-                        <tal:block 
-                          condition="python: group not in group_service.listAllGroups()" i18n:translate="">
-                          broken
-                        </tal:block>
+                        <span class="warning" 
+                          condition="python: group not in group_service.listAllGroups()"
+                          i18n:translate="">
+                          (broken group, not listed in Groups Service)
+                        </span>
                     </td>
                     <td class="align-right">
                       <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
@@ -414,8 +411,7 @@
                     </td>
                     <td class="align-right">
                       <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                        <label style="text-transform:none"
-                          tal:content="local" 
+                        <label tal:content="local" 
                           tal:attributes="for string:revoke_${group}">
                           local
                         </label>
@@ -541,7 +537,7 @@
             acquired info/acquired;
             selected_role info/selected_role;
             ">
-          <table class="listing sublisting">
+          <table class="listing">
             <thead>
               <tal:block replace="nothing"> 
                 _____________ vein + title row ______________
