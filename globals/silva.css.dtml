@@ -126,9 +126,9 @@ div.tabs a {
   border-bottom-color: &dtml-shade50;;
   color: &dtml-mainTabFontColor;;
   background: &dtml-mainTabBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
+  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-position: top left;
+  background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
@@ -241,21 +241,21 @@ div.middleground {
   padding: 0;
   border-bottom: 1px solid #657;
   background-color: #8797ab;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
-line-height:130%;
+  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-position: top left;
+  background-repeat: repeat-x;
+  line-height:130%;
 }
 
 div.middleground a {
   /* The normal, unselected buttons. They are all links */
   margin: 0;
-padding: 0em 2em 0.1em;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
+  padding: 0em 2em 0.1em;
+  border: &dtml-buttonBorder;;
+  border-style: &dtml-buttonBorderStyle;;
+  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-position: top left;
+  background-repeat: repeat-x;
   text-align: center;
   font-weight: &dtml-mainTabFontWeight;;
 }
@@ -268,15 +268,15 @@ div.middleground a:visited {
   background-color: #4d5680;
 }
 div.middleground a:hover {
-border-color: #567;
+  border-color: #567;
   color: #e5fffe;
   background-color: #74748b;
   text-decoration: none;
 }
 div.middleground a:active {
-border-color: #789;
-color: #b3fffb;
-background-color: #8d97c2;
+  border-color: #789;
+  color: #b3fffb;
+  background-color: #8d97c2;
 }
 
 div.middleground a.selected {
@@ -310,7 +310,7 @@ div.footer {
   border-top: &dtml-shade60; 1px solid;
   border-bottom: none;
   color: &dtml-shade30;;
-/*background: &dtml-listingTopBackground;;*/
+  /*background: &dtml-listingTopBackground;;*/
 background-color:#C4D6E7;
   font-size: 94%;
 }
@@ -469,7 +469,7 @@ tr.separator td, td.separator {
 /* ______________ cells ______________ */
 
 table.listing th {
-padding: 0em 0.3em 0.1em;
+  padding: 0em 0.3em 0.1em;
   border-top: none;
   border-bottom: &dtml-listingBorder;;
   border-right: &dtml-listingBorder;;
@@ -528,7 +528,7 @@ table.listing tr.top-controls h3 {
 
 /* subsubhead cell */
 table.listing tr.inter-controls h3 {
-margin: 0em 0.3em 0.1em;
+  margin: 0em 0.3em 0.1em;
   color: #dbe9f7; /* e3e9f4 */
 }
 
@@ -785,15 +785,15 @@ select.store {
 select.manipulator {
   margin: 0;
   border: &dtml-manipulatorBorder;;
-border-color: #064C29 #345 #064C29;
+  border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
-  background-color: &dtml-manipulatorBackground;;
+background-color:#195A3E;
 }
 
 select.transporter {
   margin: 0;
   border: &dtml-transporterBorder;;
-border-color: #283365 #345 #283365;
+  border-color: #283365 #345 #283365;
   color: &dtml-transporterFontColor;;
   background-color: &dtml-transporterBackground;;
 }
@@ -813,12 +813,12 @@ input.button, button.button {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
+  border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background-color: &dtml-manipulatorBackground;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
+  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-position: top left;
+  background-repeat: repeat-x;
   cursor: &dtml-buttonCursor;;
 }
 
@@ -875,26 +875,26 @@ th label {
 /* _______ field iterators _______ */
 
 table.listing td.designator {
-padding-top:0.2em;
-padding-bottom:0.2em;
+  padding-top:0.2em;
+  padding-bottom:0.2em;
 }
 table.listing td.designator h6 {
-margin:0;
-font-size: 115%;
-font-weight: normal;
+  margin:0;
+  font-size: 115%;
+  font-weight: normal;
 }
 table.listing td.designator p,
 table.listing td.field p {
-margin:0;
-color:#667;
+  margin:0;
+  color:#667;
 }
 table.listing td.designator:hover p,
 table.listing td.field:hover p {
-color:#333;
+  color:#333;
 }
 
 table.listing td.field {
-vertical-align:middle;
+  vertical-align:middle;
 }
 
 /* _______ pseudo form button selectors, matches transporter button style _______ */
@@ -903,11 +903,11 @@ vertical-align:middle;
 a.transporter {
   margin: &dtml-pseudoButtonMargin;;
   padding: &dtml-pseudoButtonPadding;;
-border: &dtml-buttonBorder;;
-border-style: &dtml-buttonBorderStyle;;
-background-image: url(<dtml-var root_url>/globals/reflection.png);
-background-position: top left;
-background-repeat: repeat-x;
+  border: &dtml-buttonBorder;;
+  border-style: &dtml-buttonBorderStyle;;
+  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-position: top left;
+  background-repeat: repeat-x;
   font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
 }
@@ -926,8 +926,8 @@ a.transporter:hover {
   text-decoration: none;
 }
 a.transporter:active {
-color: #bfffd3;
-background-color: #008a8a;
+  color: #bfffd3;
+  background-color: #008a8a;
 }
 
 /* _______ subscreen parent links _______ */
@@ -964,35 +964,35 @@ table.listing div.transport-border:hover {
 /* these selectors are also define unclassed submit buttons */
 
 input:hover, textarea:hover, select:hover {
-border-color : #599;
-color:#339;
-background-color: #def2f2;
+  border-color : #599;
+  color:#339;
+  background-color: #def2f2;
 }
 
 input:focus, textarea:focus, select:focus {
-border-color : #0ff;
-color:#339;
-background-color: #edf7f7;
+  border-color : #0ff;
+  color:#339;
+  background-color: #edf7f7;
 }
 
 input:focus:hover, textarea:focus:hover {
-background-color: #f2fcfc;
+  background-color: #f2fcfc;
 }
 
 select:focus, select:hover {
-color:#336;
+  color:#336;
 }
 
 /* _______ controls candy: hover/focus _______ */
 
 /* manipulator warm glow */
 input.button:hover, button.button:hover {
-border-color: #567;
+  border-color: #567;
   color: #e5fffe;
   background-color: #4a7f67;
 }
 input.button:focus, button.button:focus {
-border-color: #789;
+  border-color: #789;
   color: #bfffd3;
   background-color: #62A269;
 }
@@ -1004,7 +1004,7 @@ input.transporter:hover, button.transporter:hover {
 }
 input.transporter:focus {
   color: #b3fffb;
-background-color: #8d97c2;
+  background-color: #8d97c2;
 }
 
 /* executor eerie glow */
@@ -1013,8 +1013,8 @@ input.executor:hover {
   background-color: #4c8298;
 }
 input.executor:focus {
-color: #bfffd3;
-background-color: #5B99B3;
+  color: #bfffd3;
+  background-color: #5B99B3;
 }
 
 /* remover hot glow */
@@ -1042,10 +1042,10 @@ input.closer:hover {
 }
 
 input[type="radio"] {
-margin: 0 0.5em 0;
+  margin: 0 0.5em 0;
 }
 input[type="checkbox"] {
-margin: 0 1px;
+  margin: 0 1px;
 }
 
 /* default stylers for classless buttons (either delete or make into shockers):
@@ -1077,7 +1077,7 @@ div.info h3 {
 }
 
 div.info h3 img {
-vertical-align:top;
+  vertical-align:top;
 }
 
 div.info p {

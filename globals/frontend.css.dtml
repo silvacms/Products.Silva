@@ -304,6 +304,7 @@ table.silvatable {
   empty-cells: show;
   border-collapse: collapse;
   margin-bottom: 1em;
+  font-size: 100%; /* FF needs this with SL */
 }
 table.silvatable tr {
   vertical-align: top;
