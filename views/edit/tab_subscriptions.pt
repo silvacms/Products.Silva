@@ -84,14 +84,12 @@
                       <tr tal:attributes="class python:iterate and 'odd' or 'even'">
                         <td class="designator"
                           style="width:33%">
-                          <h6>
-                            <label tal:content="field/title"
-                              tal:attributes="for field/id"
-                              i18n:translate="">
-                              title
-                            </label><span class="warning"
-                              tal:condition="field/is_required">*</span>
-                          </h6>
+                          <label tal:content="field/title"
+                            tal:attributes="for field/id"
+                            i18n:translate="">
+                            title
+                          </label><span class="warning"
+                            tal:condition="field/is_required">*</span>
                           <p tal:content="structure python:field.get_value('description')">
                             comments here (field description)
                           </p>

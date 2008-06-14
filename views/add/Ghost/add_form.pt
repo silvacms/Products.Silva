@@ -60,16 +60,14 @@
     <tal:define define="oddrow repeat/field/odd">
     <tr tal:attributes="class python:test(oddrow, 'odd', 'even')">
       <td class="designator">
-        <h6>
-          <label tal:content="structure field/title"
-            tal:attributes="
-              for string:field_${field/id};
-              accesskey python:field.id == 'file' and 'f' or nothing;
-            ">
-            title
-          </label><span class="warning"
-            tal:condition="field/is_required">*</span>
-        </h6>
+        <label tal:content="structure field/title"
+          tal:attributes="
+            for string:field_${field/id};
+            accesskey python:field.id == 'file' and 'f' or nothing;
+          ">
+          title
+        </label><span class="warning"
+          tal:condition="field/is_required">*</span>
         <p tal:define="note field/description"
           tal:condition="python:note != 'False'"
           tal:content="structure note"

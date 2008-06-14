@@ -878,18 +878,19 @@ table.listing td.designator {
   padding-top:0.2em;
   padding-bottom:0.2em;
 }
-table.listing td.designator h6 {
-  margin:0;
+table.listing td.designator label {
   font-size: 115%;
-  font-weight: normal;
+}
+table.listing td.designator span.matchlabel {
+  font-size: 115%;
 }
 table.listing td.designator p,
 table.listing td.field p {
   margin:0;
   color:#667;
 }
-table.listing td.designator:hover p,
-table.listing td.field:hover p {
+table.listing tr:hover td.designator p,
+table.listing tr:hover td.field p {
   color:#333;
 }
 

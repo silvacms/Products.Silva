@@ -101,15 +101,15 @@
                     ___ element designator column ___
                   </tal:block>
                   <td class="designator">
-                    <h6>
+                    <span class="matchlabel" tal:omit-tag="element/isEditable">
                       <label tal:content="element/title"
                         tal:attributes="for element_name"
-                        tal:omit-tag="not:element/isEditable"
+                         tal:omit-tag="not:element/isEditable"
                         i18n:translate="">
                         Element name
                       </label><span class="warning"
                         tal:condition="element/isRequired">*</span>
-                    </h6>
+                    </span>
                     <p tal:content="structure element/description"
                       i18n:translate="">
                       Element description

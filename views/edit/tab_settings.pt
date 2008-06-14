@@ -125,12 +125,10 @@
             <tr class="odd">
               <td class="designator"
                 style="width:33%">
-                <h6>
-                  <label for="renderer"
-                    i18n:translate="">
-                    renderer
-                  </label>
-                </h6>
+                <label for="renderer"
+                  i18n:translate="">
+                  renderer
+                </label>
                 <p i18n:translate="">
                   Select a renderer to render this content.
                 </p>
@@ -182,12 +180,10 @@
                 <tr class="odd">
                   <td class="designator"
                     style="width:33%">
-                    <h6>
-                      <label for="feeds"
-                        i18n:translate="">
-                        allow feeds
-                      </label>
-                    </h6>
+                    <label for="feeds"
+                      i18n:translate="">
+                      allow feeds
+                    </label>
                     <p>
                     <tal:block i18n:translate="">The feed url is</tal:block>
                       <a title="RSS feed"
@@ -221,13 +217,12 @@
 
             </tal:block>
 
-            <tal:condition tal:condition="here/service_extensions/get_quota_subsystem_status">
+            <tal:condition condition="here/service_extensions/get_quota_subsystem_status">
               <tr tal:condition="iscontainer">
                 <td class="separator"
                     colspan="2">
                 </td>
               </tr>
-
               <tr class="top-controls">
                 <td colspan="2">
                   <h3>
@@ -237,17 +232,17 @@
               </tr>
               <tr class="odd">
                 <td class="designator"
-                    style="width:33%">
-                  <h6>
-                    used space by this folder and its data
-                  </h6>
+                  style="width:33%">
+                  <span class="labelmatch">
+                    space used by the contents of this folder
+                  </span>
                 </td>
                 <td class="field">
                   <span tal:attributes="title string: ${model/used_space} Bytes"
-                        tal:content="python:mangle.Bytes(model.used_space)" />
+                    tal:content="python:mangle.Bytes(model.used_space)" />
                   <span tal:define="quota model/get_current_quota"
-                        tal:condition="quota"
-                        i18n:translate="">
+                    tal:condition="quota"
+                    i18n:translate="">
                     (quota for this area set to <span tal:replace="quota" i18n:name="quota" /> MB)
                   </span>
                 </td>

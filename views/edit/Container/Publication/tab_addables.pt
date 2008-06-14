@@ -85,10 +85,10 @@
                     <tr valign="top"
                       tal:attributes="class python:oddrow and 'even' or 'odd'">
                       <td class="designator">
-                        <h6>
+                        <span class="matchlabel">
                           <tal:block content="structure python: field.title()"
                           i18n:translate="">title</tal:block><span class="warning" tal:condition="python:field.is_required()">*</span>
-                        </h6>
+                        </span>
                         <p tal:content="python:field.get_value('description')"
                           i18n:translate="">
                           comments here (field description)

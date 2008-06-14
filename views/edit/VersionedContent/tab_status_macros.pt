@@ -119,7 +119,7 @@ The last message regarding this issue is:
 <tr class="odd"
   tal:define="field view/tab_status_form_author/message">
 <td class="designator" style="width:33%">
-<h6><label for="message" i18n:translate="">message to editor</label></h6>
+<label for="message" i18n:translate="">message to editor</label>
 <p i18n:translate="">
 This message will remain visible in the status screen for other authors and editors.
 </p>
@@ -209,16 +209,12 @@ publish closed version
 <tr class="even"
   tal:define="field view/tab_status_form_editor/publish_datetime">
 <td class="designator">
-<h6>
-<label title="access key: alt-m"
-  accesskey="m"
-  tal:content="field/title"
+<label tal:content="field/title"
   tal:attributes="for field/id"
   i18n:attributes="title"
   i18n:translate="">
 content publish time
 </label>
-</h6>
 </td>
 <td class="field"
   style="text-align:right">
@@ -233,22 +229,18 @@ content publish time
 <tr class="odd"
   tal:define="field view/tab_status_form_editor/expiration_datetime">
 <td class="designator" style="white-space: nowrap;">
-<h6>
-<label title="access key: alt-o"
-  accesskey="o"
-  tal:content="field/title"
+<label tal:content="field/title"
   tal:attributes="for field/id"
   i18n:attributes="title"
   i18n:translate="">
 expiration time
 </label>
-</h6>
 </td>
 <td class="field"
   style="text-align:right">
 <p style="float:left; margin-top:0.3em"
   tal:content="structure field/description">
-  description
+description
 </p>
 <input tal:replace="structure python: field.render(REQUEST=request)" />
 </td>
@@ -303,7 +295,7 @@ expiration time
 
 <tr class="odd">
 <td class="designator" style="width:33%">
-<h6><label for="message" i18n:translate="">
+<label for="message" i18n:translate="">
 <tal:block i18n:translate="">
 add message on
 </tal:block>
@@ -313,7 +305,7 @@ rejection
 <tal:block condition="not: may_approve_content" i18n:translate="">
 withdrawal
 </tal:block>
-</label></h6>
+</label>
 <p i18n:translate="">
 The message may be viewed by local users.
 </p>
