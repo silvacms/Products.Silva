@@ -23,7 +23,8 @@
       setnames binding/setNames | nothing;
       is_container request/model/implements_container | nothing;
       form_errors options/form_errors | nothing;"
-    tal:condition="python: content and setnames">
+    tal:condition="python: content and setnames"
+    tal:attributes="class python: template.id != 'tab_metadata' and 'sublisting' or nothing">
     <input type="hidden" name="returntotab" tal:attributes="value template/id"/>
     <table class="listing"
       tal:condition="binding"
