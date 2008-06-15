@@ -31,7 +31,7 @@
      <value key="display_maxwidth" type="str" value="" />
      <value key="display_width" type="int" value="20" />
      <value key="required" type="int" value="0" />
-     <value key="description" type="str" value="maximum used space by sub-folder and sub-publication, in MB." />
+     <value key="description" type="str" value="Maximum space allowed for this container, including sub-containers, in MB." />
      <value key="css_class" type="str" value="store" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="quota" />
@@ -57,7 +57,7 @@
      <value key="extra">string: id="${here/id}"</value>
    </field_tales>
    <field_messages>
-     <message name="external_validator_failed">Wanted quota can't be negative or bigger than the parent quota.</message>
+     <message name="external_validator_failed">The quota can't be negative or bigger than the quota of the parent container.</message>
    </field_messages>
    <index_args>
    </index_args>
