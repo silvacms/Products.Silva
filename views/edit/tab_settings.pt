@@ -18,7 +18,7 @@
 </metal:block>
 
 <metal:block fill-slot="main">
-<table class="columns columns3">
+<table class="columns columns2">
   <tbody>
     <tr>
       <tal:block replace="nothing">_____________________ sidebar _____________________</tal:block>
@@ -254,14 +254,11 @@
 </form>
 
     </td>
-    <td class="right">
-    </td>
   </tr>
 
     <tr>
       <tal:block replace="nothing">_____________________ main 2 _____________________</tal:block>
-      <td class="main"
-        colspan="2">
+      <td class="main">
 
 <tal:block replace="nothing">______________ settings ______________</tal:block>
 <tal:block
