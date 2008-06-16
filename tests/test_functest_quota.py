@@ -26,6 +26,10 @@ class QuotaTestCase(SilvaFunctionalTestCase):
        [x]check screen (should get an error)
     """
 
+    # default message reported by the interface.
+    quota_report = 'The quota for this area is set to %d MB.'
+    quota_error = "The quota can't be negative or bigger than the quota of the parent container."
+
     def container_tree(self):
 	"""
             content = {
@@ -59,17 +63,23 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.sb.click_href_labeled('settings...')
         self.failUnless(self.sb.get_listing_h2().startswith('settings for'))
     
-    def set_quota(self, quota, expected_message):
-        """Set the quota value, and expect a reply.
+    def set_quota(self, quota, expected_quota=None, expect_error=False):
+        """Set the quota value, and expect a reply or an error.
         """
         self.sb.browser.getControl(name='silva-quota.quota:record').value = quota
         self.sb.browser.getControl(name='save_metadata:method').click()
-        self.failUnless(expected_message in self.sb.browser.contents)
+        if not (expected_quota is None):
+            msg = self.quota_report % expected_quota
+            self.failUnless(msg in self.sb.browser.contents)
+        if expect_error:
+            self.failUnless(self.quota_error in self.sb.browser.contents)
+        else:
+            self.failIf(self.quota_error in self.sb.browser.contents)
 
     def build_browser(self):        
         """Create a SilvaBrowser.
         """
-        #initializes silva browser
+        # initializes silva browser
         self.sb = SilvaBrowser()
         status, url = self.sb.login('manager', 'secret', self.sb.smi_url())
         self.assertEqual(status, 200)
@@ -172,18 +182,16 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         # check and set quota
 	byte_span = '<span title=" 0 Bytes">'
         self.failUnless(byte_span in self.sb.browser.contents)        
-        self.set_quota('10', 'quota for this area set to 10 MB')
+        self.set_quota('10', expected_quota=10)
         self.sb.click_href_labeled('contents')
         
-        
-        
         self.sb.make_content('Silva File', id='quota_test', title='q test',
-                                      file='docs_export_2008-06-11.odt')
+                             file='docs_export_2008-06-11.odt')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
         
         
-        #try to get the size of the added file in order to see if it's really here
-        #check changes
+        # try to get the size of the added file in order to see if it's really here
+        # check changes
 
         self.sb.click_href_labeled('test')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva File'))
@@ -195,8 +203,8 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.failUnless(byte_span in self.sb.browser.contents)
         
         
-        #this allows me to come back to the Silva root page  
-        #go back on contents = 3 times go back browser button
+        # this allows me to come back to the Silva root page  
+        # go back on contents = 3 times go back browser button
         
         self.sb.go_back()
         self.sb.go_back()
@@ -204,59 +212,62 @@ class QuotaTestCase(SilvaFunctionalTestCase):
 
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Root'))
         
-        #create a folder, called folder1
+        # create a folder, called folder1
         self.sb.make_content('Silva Folder', id='folder1', title='Folder 1',
-                                        policy='Silva Document')
+                             policy='Silva Document')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Folder'))
         self.sb.click_href_labeled('folder1')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
         
-        #create a publication inside of folder1, called publication1
+        # create a publication inside of folder1, called publication1
         self.sb.make_content('Silva Publication', id='publication1', title='Publication 1',
-                                        policy='Silva Document')
+                             policy='Silva Document')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Publication'))
         self.sb.click_href_labeled('publication1')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Publication'))
         
-        #create a folder inside of publication1, called folder2
+        # create a folder inside of publication1, called folder2
         self.sb.make_content('Silva Folder', id='folder2', title='Folder 2',
-                                        policy='Silva Document')
+                             policy='Silva Document')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Folder'))
         self.sb.click_href_labeled('folder2')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
         
-        #in folder2 create a file and a publication
-        
-        #publication
+        # add a publication
         self.sb.make_content('Silva Publication', id='publication2', title='Publication 2',
-                                        policy='Silva Document')
+                             policy='Silva Document')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Publication'))
         
-        #file
+        # add a file
         self.sb.make_content('Silva File', id='file1', title='File 1',
                                       file='docs_export_2008-06-11.odt')
         self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
         
-        #go back to publication 1
+        # go back to publication 1
         self.sb.browser.getLink('Publication 1').click()
         
         # go on settings and check the acquired quota
         self.util_goOnSettings()
-        
+
         # check acquired quota
-        self.failUnless('quota for this area set to 10 MB' in self.sb.browser.contents) 
+        self.failUnless((self.quota_report % 10) in self.sb.browser.contents) 
         
         # put a correct quota
-        self.set_quota('5', 'quota for this area set to 5 MB')
+        self.set_quota('5', expected_quota=5)
         
         # put a quota == 0
-        self.set_quota('0', 'quota for this area set to 10 MB')
+        self.set_quota('0', expected_quota=10)
+        self.set_quota('', expected_quota=10)
         
         # put a quota which is too big
-        self.set_quota('100', "Wanted quota can't be negative or bigger than the parent quota.")
+        self.set_quota('100', expect_error=True)
+        # reset error
+        self.set_quota('', expected_quota=10)
         
         # put a quota which is negative
-        self.set_quota('-3', "Wanted quota can't be negative or bigger than the parent quota.")
+        self.set_quota('-3', expect_error=True)
+        # reset error
+        self.set_quota('', expected_quota=10)
         
         #logout
         status, url = self.sb.click_href_labeled('logout')
