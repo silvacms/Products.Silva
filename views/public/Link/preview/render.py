@@ -8,9 +8,8 @@
 ##title=
 ##
 version = context.REQUEST.model
-if context.REQUEST.get('HTTP_REFERER','').find('tab_preview') > -1:
-    #loading from the ZMI preview tab, so render a link to the
-    # location, rather than just redirecting (which can be refusing)
-    return 'Silva Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>'%(version.get_title(),version.get_url(),version.get_url())
+if context.REQUEST.get('HTTP_REFERER','').find('tab_edit') > -1:
+    # loading the preview in the SMI edit tab, so render a link to the
+    # location, rather than just redirecting (which can be confusing)
+    return 'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>'%(version.get_title(),version.get_url(),version.get_url())
 return version.redirect()
-
