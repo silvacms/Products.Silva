@@ -2,9 +2,12 @@ Copyright (c) 2002-2008 Infrae. All rights reserved.
 See also LICENSE.txt
 Silva changes
 
-  Silva 1.6.3 (unreleased)
+  Silva 1.6.3
 
     Bugs fixed:
+
+      - Fixed mimetype checking in SilvaDocument to make kupu editing
+        work in Firefox 3
 
       - When SMTP errors occur while sending notification, we log
         them, but no longer hold up the publication/approval process.
