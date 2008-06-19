@@ -8,8 +8,11 @@
 ##title=
 ##
 version = context.REQUEST.model
-if context.REQUEST.get('HTTP_REFERER','').find('tab_edit') > -1:
-    # loading the preview in the SMI edit tab, so render a link to the
-    # location, rather than just redirecting (which can be confusing)
+if context.REQUEST.get('URL','').find('tab_preview') > -1:
+    # in the SMI show the public view (the redirect) in preview
+    return version.redirect()
+if context.REQUEST.get('URL','').find('edit') > -1:
+    # when loading the preview in the edit tab of published content, 
+    # render a link to the location 
     return 'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>'%(version.get_title(),version.get_url(),version.get_url())
 return version.redirect()
