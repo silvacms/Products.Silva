@@ -104,7 +104,8 @@ class IVersionManagement(Interface):
         """return the current published version, None if it doesn't exist"""
 
     def getUnapprovedVersion():
-        """return the current unapproved (editable) version, None if it doesn't exist"""
+        """return the current unapproved (editable) version, None if
+        it doesn't exist"""
 
     def getApprovedVersion():
         """return the current approved version, None if it doesn't exist"""
@@ -182,6 +183,7 @@ class IPath(Interface):
     def urlToPath(url):
         """convert a HTTP URL to a physical path"""
 
+
 class ICatalogIndexable(Interface):
     """Index and reindex an object.
     """
@@ -196,13 +198,7 @@ class ICatalogIndexable(Interface):
     def reindex():
         """Reindex an object.
         """
-class IFeed(Interface):
-    """
-    Atom or RSS2 feed
-    """
-    def getFeed(format='atom'):
-        """Get the atom or rss2 feed for a container like Silva object. 
-        """
+
         
 class IFeedEntry(Interface):
     """Interface for objects that can act like an item in a atom or rss 
