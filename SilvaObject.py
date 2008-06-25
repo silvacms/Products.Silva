@@ -11,6 +11,8 @@ from warnings import warn
 from zope.i18n import translate
 from zope import component
 from zope import interface
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.publisher.interfaces.browser import IBrowserPage
 # Zope
 from OFS.interfaces import IObjectWillBeAddedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
