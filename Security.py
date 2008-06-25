@@ -360,6 +360,12 @@ class Security(AccessManager):
         """
         # this is possibly horribly inefficient, but the simplest way
         # to implement this.
+
+        # XXX: Not only inefficient, this will actually break in the
+        # case of anything other than standard zope acl_users. The
+        # problem is that get_valid_userids (potentially?) triggers an
+        # OverFlowError
+
         valid_user_ids = self.get_valid_userids()
         invalid_user_ids = [ user_id for user_id in self.sec_get_local_defined_userids()
                              if user_id not in valid_user_ids ]
