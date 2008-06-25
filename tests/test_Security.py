@@ -94,21 +94,21 @@ class SecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.assertSameEntries([],
                                self.doc1.sec_get_userids())
 
-    def test_clean_stale_mappings(self):
-        # test the cleanup of locally assigned roles
-        self.folder4.sec_assign('foo', 'Author')
-        self.folder4.sec_assign('foo', 'Editor')
-        self.folder4.sec_assign('bar', 'Editor')
-        self.assertSameEntries(['foo','bar'],
-                               self.folder4.sec_get_userids())
+    ## def test_clean_stale_mappings(self):
+    ##     # test the cleanup of locally assigned roles
+    ##     self.folder4.sec_assign('foo', 'Author')
+    ##     self.folder4.sec_assign('foo', 'Editor')
+    ##     self.folder4.sec_assign('bar', 'Editor')
+    ##     self.assertSameEntries(['foo','bar'],
+    ##                            self.folder4.sec_get_userids())
 
-        self.root.acl_users.userFolderDelUsers(['foo'])
-        # XXX it would not be critical if this assertion would fail
-        self.assertSameEntries(['foo','bar'],
-                               self.folder4.sec_get_userids())
-        self.folder4.sec_clean_roles()
-        self.assertSameEntries(['bar'],
-                               self.folder4.sec_get_userids())
+    ##     self.root.acl_users.userFolderDelUsers(['foo'])
+    ##     # XXX it would not be critical if this assertion would fail
+    ##     self.assertSameEntries(['foo','bar'],
+    ##                            self.folder4.sec_get_userids())
+    ##     self.folder4.sec_clean_roles()
+    ##     self.assertSameEntries(['bar'],
+    ##                            self.folder4.sec_get_userids())
 
 
     def test_sec_get_roles(self):
