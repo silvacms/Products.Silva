@@ -162,6 +162,8 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'find_members')
     def find_members(self, search_string):
+        # XXX: get_valid_userids is evil: will break with other user
+        # folder implementations.
         userids = self.get_valid_userids()
         result = []
         for userid in userids:
@@ -172,6 +174,8 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_user')
     def is_user(self, userid):
+        # XXX: get_valid_userids is evil: will break with other user
+        # folder implementations.
         return userid in self.get_valid_userids()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
