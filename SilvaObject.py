@@ -291,6 +291,12 @@ class SilvaObject(Security, ViewCode):
             if item == root: # XXX does equality always work in Zope?
                 break
             item = item.aq_parent
+            #if using SilvaLayout, eventually an items parent will be the
+            #view class.  This needs to be skipped over.  I'm not sure
+            #which is the "correct" interface (IBrowserView or IBrowserPage),
+            #but they both seem to work.
+            if IBrowserView.providedBy(item) or IBrowserPage.providedBy(item):
+                item = item.aq_parent
         result.reverse()
         return result
 
