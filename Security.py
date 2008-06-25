@@ -353,24 +353,6 @@ class Security(AccessManager):
             for item in self.get_assets():
                 item._sec_get_downward_defined_userids_helper(d)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'sec_clean_roles')
-    def sec_clean_roles(self):
-        """Clean all roles where the corresponding user is no longer available
-        """
-        # this is possibly horribly inefficient, but the simplest way
-        # to implement this.
-
-        # XXX: Not only inefficient, this will actually break in the
-        # case of anything other than standard zope acl_users. The
-        # problem is that get_valid_userids (potentially?) triggers an
-        # OverFlowError. It isn't in the API and shouldn't be used.
-
-        valid_user_ids = self.get_valid_userids()
-        invalid_user_ids = [ user_id for user_id in self.sec_get_local_defined_userids()
-                             if user_id not in valid_user_ids ]
-        self.manage_delLocalRoles(invalid_user_ids)
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_members_for_userids')
     def sec_get_members_for_userids(self, userids):
