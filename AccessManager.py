@@ -116,6 +116,8 @@ class AccessManager:
                               'is_userid_available')
     def is_userid_available(self, userid):
         """Returns true if the userid is not yet in use"""
+        # XXX: get_valid_userids is evil: will break with other user
+        # folder implementations.
         return userid not in self.get_valid_userids()
 
 InitializeClass(AccessManager)
