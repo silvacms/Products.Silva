@@ -183,6 +183,11 @@ Silva changes
 
     Bugs Fixed:
 
+      - Took out the sec_clean_roles method in Security.py: it was
+        used nowhere, and it broke with anything other than standard
+        zope acl_users, because it called the non API
+        get_valid_userids.
+
       - Fixed mimetype checking in SilvaDocument to make kupu editing
         work in Firefox 3
 
