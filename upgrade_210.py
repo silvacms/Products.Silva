@@ -5,8 +5,10 @@ from Products.Silva.interfaces import IUpgrader, ISilvaObject, IRoot
 import zLOG
 
 def initialize():
-    upgrade.registry.registerUpgrader(
-        CleanRolesUpgrader(), '2.1', upgrade.AnyMetaType)
+    ## taking this upgrader out, until we can fix sec_clean_roles to
+    ## get around the get_valid_userids OverFlowError issue.
+    ## upgrade.registry.registerUpgrader(
+    ##     CleanRolesUpgrader(), '2.1', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(
         AutoTOCUpgrader(), '2.1', 'Silva AutoTOC')
 
@@ -32,14 +34,14 @@ class AutoTOCUpgrader:
         autotoc.index_object()
         return autotoc
 
-class CleanRolesUpgrader:
-    """Calls sec_clean_roles on each ISilvaObject to remove any stale
-       username->rolemappings (bug #100561)"""
-    implements(IUpgrader)
+## class CleanRolesUpgrader:
+##     """Calls sec_clean_roles on each ISilvaObject to remove any stale
+##        username->rolemappings (bug #100561)"""
+##     implements(IUpgrader)
 
-    def upgrade(self, obj):
-        if IRoot.providedBy(obj):
-            zLOG.LOG('Silva', zLOG.INFO, "Cleaning Stale Role Mappings: this may take some time")
-        if ISilvaObject.providedBy(obj):
-            obj.sec_clean_roles()
-        return obj
+##     def upgrade(self, obj):
+##         if IRoot.providedBy(obj):
+##             zLOG.LOG('Silva', zLOG.INFO, "Cleaning Stale Role Mappings: this may take some time")
+##         if ISilvaObject.providedBy(obj):
+##             obj.sec_clean_roles()
+##         return obj
