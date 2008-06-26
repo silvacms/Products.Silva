@@ -348,6 +348,7 @@
                           <td class="listing-left">
                             <input type="radio"
                               name="object"
+                              onclick="window.reference.setReference(this.form,'object');"
                               tal:attributes="
                                 id id;
                                 lookup:id id;
