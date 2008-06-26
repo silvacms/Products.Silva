@@ -6,7 +6,7 @@
   xmlns:silva="http://infrae.com/ns/silva"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
-  <xsl:import href="%(url)s/doc_elements.xslt"/>
+  <xsl:import href="silvabase:doc_elements.xslt"/>
 
   <xsl:template match="/">
       <tr>

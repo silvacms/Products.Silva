@@ -38,16 +38,13 @@ see images_to_the_right.xslt::
   
 
  <!--  
-  This is hackish, but no other way was found to get the relative
-  url of the two stylesheets right. The xsl:import is weird in this, IMHO.
-  Python uses a string interpolation to get the right url. This also
-  should probably not be changed. This import gets the document with
+  This import gets the document with
   the normal renderers for all the xml elements that can occur in a
   Silva Document. These renderers are then overridden in this file.
   No changes should be made to doc_elements.xslt.
   -->
 
-  <xsl:import href="%(url)s/doc_elements.xslt"/>
+  <xsl:import href="silvabase:doc_elements.xslt"/>
 
  <!-- 
   In this example we want to render all content in in two table cells.

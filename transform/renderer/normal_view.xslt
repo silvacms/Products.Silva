@@ -7,7 +7,7 @@
   xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
-  <xsl:import href="./doc_elements.xslt"/>
+  <xsl:import href="silvabase:doc_elements.xslt"/>
   <xsl:output 
     method="xml" 
     omit-xml-declaration="yes" 

@@ -25,7 +25,7 @@
   No changes should be made to doc_elements.xslt.
   -->
 
-  <xsl:import href="./doc_elements.xslt"/>
+  <xsl:import href="silvabase:doc_elements.xslt"/>
 
   <xsl:output 
     method="xml" 
