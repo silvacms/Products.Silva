@@ -5,6 +5,19 @@ Developer level changes in Silva
 From 2.0 to 2.1
 ===============
 
+Custom XSLT renderers
+---------------------
+
+We switched to lxml instead of libxslt for the xslt transformations,
+giving us more pythonic ways to handle xml and xslt. We also got rid
+of the ugly string interpolation hack that was necessary to import
+doc_elements.xslt from Silva in an extension that defines its own xslt
+stylesheets. From now on use:
+
+<xsl:import href="silvabase:doc_elements.xslt"/>
+
+and a custom resolver will figure out where to find the file.
+
 VersionedContent revert_to_previous
 -----------------------------------
 

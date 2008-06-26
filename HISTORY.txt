@@ -7,6 +7,7 @@ Silva changes
 
     Features added:
 
+
       - A quota subsystem has been added. It lets Managers set a quota
         on a publication (which can also be a virtual host
         root). Containers within the publication acquire the
@@ -40,10 +41,15 @@ Silva changes
 
       - Made 'keywords' metadata field an 'index field' by default
 
-      - Use lxml instead of libxml2/libxslt for XSLT rendering. Note:
-        documentation, check encoding of output, integration with
-        extensions that produce XSLT (probably by developing a custom
-        lxml Resolver).
+      - Use lxml instead of libxml2/libxslt for XSLT rendering. xslt
+        stylesheets in extensions can import doc_elements.xslt by
+        using:
+
+        <xsl:import href="silvabase:doc_elements.xslt"/>
+
+        A custom lxml filename resolver will find the actual file.
+
+        Note: check encoding of output.
 
       - #200507: ZMI titles now appear for Silva objects.  The title
         is retrieved from the object's metadata.
