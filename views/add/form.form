@@ -25,7 +25,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra></extra>
+          <extra>id="object_id"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -45,7 +45,7 @@
           <title>title</title>
           <truncate type="int">0</truncate>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra></extra>
+          <extra>id="object_title"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

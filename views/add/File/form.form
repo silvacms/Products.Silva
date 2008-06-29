@@ -22,13 +22,13 @@
             <css_class></css_class>
             <default></default>
             <title>file</title>
-            <extra></extra>
+            <extra>id="file"</extra>
             <description></description>
             <external_validator></external_validator>
             <required type="int">1</required>
           </values>
           <tales>
-            <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
+            <extra>string: id="${field/id}" title="access key: alt-f"</extra>
           </tales>
         </field>
         <field><id>object_id</id> <type>StringField</type>
@@ -45,11 +45,11 @@
             <title>id</title>
             <truncate type="int">0</truncate>
             <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-            <extra></extra>
+            <extra>id="object_id"</extra>
             <unicode>1</unicode>
           </values>
           <tales>
-            <extra>string: id="field_${field/id}"</extra>
+            <extra>string:id="${field/id}"</extra>
           </tales>
         </field>
         <field><id>object_title</id> <type>StringField</type>
@@ -66,11 +66,11 @@
             <title>title</title>
             <truncate type="int">0</truncate>
             <description>&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and title.</description>
-            <extra></extra>
+            <extra>id="object_title"</extra>
             <unicode>1</unicode>
           </values>
           <tales>
-            <extra>string: id="field_${field/id}"</extra>
+            <extra>string:id="${field/id}"</extra>
           </tales>
         </field>
       </fields>

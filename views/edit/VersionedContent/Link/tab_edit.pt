@@ -24,8 +24,7 @@
  <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
   <metal:fillbody fill-slot="main-body">
       <tr>
-        <th class="align-right"
-          width="12%"
+        <th width="12%"
           i18n:translate="">
           attributes
         </th>
@@ -33,15 +32,17 @@
           content
         </th>
       </tr>
-
       <tr class="even">
-        <td class="align-right" i18n:translate="">
-          link url
+        <td class="designator" i18n:translate="">
+          <label for="url">
+            link url
+          </label>
         </td>
-        <td>
+        <td class="field">
           <input class="store"
             type="text"
             name="url"
+            id="url"
             tal:attributes="value python:model.get_editable().get_url()"
           />
         </td>

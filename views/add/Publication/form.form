@@ -28,7 +28,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra></extra>
+          <extra>id="object_id"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -47,7 +47,7 @@
           <default></default>
           <title>title</title>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra></extra>
+          <extra>id="object_title"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -58,7 +58,6 @@
           <alternate_name></alternate_name>
           <description>What type of object should be added after creating the folder.</description>
           <external_validator></external_validator>
-          <extra></extra>
           <extra_item></extra_item>
           <hidden type="int">0</hidden>
           <items type="list">[('Silva Document', 'Silva Document'), ('Automatic Table of Contents', 'Auto TOC'), ('None', 'None')]</items>
@@ -66,6 +65,7 @@
           <css_class>store</css_class>
           <size type="int">5</size>
           <title>First item</title>
+          <extra>id="policy_name"</extra>
           <unicode type="int">0</unicode>
           <view_separator><br /></view_separator>
           <first_item type="int">1</first_item>

@@ -28,7 +28,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra></extra>
+          <extra>id="object_id"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -48,8 +48,31 @@
           <default></default>
           <title>title</title>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra></extra>
+          <extra>id="object_title"</extra>
           <unicode>1</unicode>
+        </values>
+        <tales>
+        </tales>
+      </field>
+
+      <field><id>link_type</id> <type>RadioField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class></css_class>
+          <default>absolute</default>
+          <description>Links can contain anything, so it is the author's responsibility to create valid urls.</description>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra_item></extra_item>
+          <first_item type="int">0</first_item>
+          <hidden type="int">0</hidden>
+          <items type="list">[('absolute', 'absolute'), ('relative', 'relative')]</items>
+          <orientation>vertical</orientation>
+          <required type="int">1</required>
+          <title>link type</title>
+          <extra></extra>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
         </values>
         <tales>
         </tales>
@@ -69,29 +92,8 @@
           <title>url</title>
           <truncate type="int">0</truncate>
           <description>Link url.</description>
-          <extra></extra>
+          <extra>id="url"</extra>
           <unicode>1</unicode>
-        </values>
-        <tales>
-        </tales>
-      </field>
-      <field><id>link_type</id> <type>RadioField</type>
-        <values>
-          <alternate_name></alternate_name>
-          <css_class></css_class>
-          <default>absolute</default>
-          <description>Links can contain anything, so it is the author's responsibility to create valid urls.</description>
-          <enabled type="int">1</enabled>
-          <external_validator></external_validator>
-          <extra_item></extra_item>
-          <first_item type="int">0</first_item>
-          <hidden type="int">0</hidden>
-          <items type="list">[('absolute', 'absolute'), ('relative', 'relative')]</items>
-          <orientation>vertical</orientation>
-          <required type="int">1</required>
-          <title>link type</title>
-          <unicode type="int">0</unicode>
-          <whitespace_preserve type="int">0</whitespace_preserve>
         </values>
         <tales>
         </tales>

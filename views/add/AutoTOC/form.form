@@ -28,7 +28,7 @@
           <title>id</title>
           <truncate type="int">0</truncate>
           <description>No spaces or special characters besides &amp;#8216;_&amp;#8217; or &amp;#8216;-&amp;#8217; or &amp;#8216;.&amp;#8217;</description>
-          <extra></extra>
+          <extra>id="object_id"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -48,7 +48,7 @@
           <default></default>
           <title>title</title>
           <description>The title will be publicly visible, and is used for the link in indexes.</description>
-          <extra></extra>
+          <extra>id="object_title"</extra>
           <unicode>1</unicode>
         </values>
         <tales>
@@ -69,7 +69,7 @@
           <title>depth</title>
           <truncate type="int">0</truncate>
           <description>The depth to which the Table of Contents will be rendered (-1 means unlimited depth.)</description>
-          <extra></extra>
+          <extra>id="depth"</extra>
           <unicode>1</unicode>
         </values>
         <tales>

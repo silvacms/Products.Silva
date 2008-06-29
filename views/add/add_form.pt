@@ -76,7 +76,7 @@
       <td class="designator">
         <label tal:content="structure field/title"
           tal:attributes="
-            for string:field_${field/id};
+            for field/id;
             accesskey python:field.id == 'file' and 'f' or nothing;
           ">
           title
