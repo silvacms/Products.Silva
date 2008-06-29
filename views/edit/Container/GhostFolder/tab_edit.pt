@@ -20,7 +20,7 @@
     link_status python:here.get_ghost_link_status_text(version);
     content_url python:version.get_haunted_url();
     ct python: mangle.String.centeredTruncate;
-    maintitlecolspan string:3;
+    maintitlecolspan string:2;
 ">
 <metal:use-macro use-macro="here/macro_edit/macros/editor">
 
@@ -43,68 +43,67 @@
  </td>
 </metal:fill>
 
-
      <metal:fillbody fill-slot="main-body">
         <tr>
-           <th class="align-right"
-             width="12%" i18n:translate="">
-              attributes
+           <th width="33%"
+             i18n:translate="">
+             attributes
            </th>
            <th i18n:translate="">
               content
            </th>
-           <th width="30%" i18n:translate="">
-              note
-           </th>
         </tr>
-
         <tr class="even">
-           <td class="field-title">
-              <input class="button transporter"
-                type="button"
-                value="reference..."
-                title="Locate item to refer to: alt-r"
-                accesskey="r"
-                tal:define="asset_context python:here.get_start_container();"
-                tal:attributes="onclick string: reference.getReference(
-                                          function(path, id, title) {
-                                            document.getElementsByName(
-                                              'content_url'
-                                            )[0].value = path;;
-                                          },
-                                          '${asset_context/absolute_url}',
-                                          'Container', true, '${content_url}')"
-                i18n:attributes="value;title"
-              /><span class="warning"> *</span>
-           </td>
-           <td>
-              <input class="store"
-                 type="text"
-                 name="content_url"
-                 size="60"
-                 value=""
-                 tal:attributes="value content_url"
-              />
-           </td>
-           <td i18n:translate="">
+          <td class="designator">
+            <label for="content_url"
+              i18n:translate="">path</label><span class="warning">*</span>
+            <p i18n:translate="">
               Path to original (begins with &#8216;/&#8217;).
-           </td>
+            </p>
+          </td>
+          <td>
+            <input class="button transporter"
+              style="margin-top:0.2em"
+              type="button"
+              value="reference..."
+              title="Locate item to refer to: alt-r"
+              accesskey="r"
+              tal:define="asset_context python:here.get_start_container();"
+              tal:attributes="onclick string: reference.getReference(
+                                        function(path, id, title) {
+                                          document.getElementsByName(
+                                            'content_url'
+                                          )[0].value = path;;
+                                        },
+                                        '${asset_context/absolute_url}',
+                                        'Container', true, '${content_url}')"
+              i18n:attributes="value;title"
+            />
+            <input class="store"
+               type="text"
+               id="content_url"
+               name="content_url"
+               size="60"
+               value=""
+               tal:attributes="value content_url"
+            />
+          </td>
         </tr>
 
         <tr class="odd"
            tal:condition="not:link_status">
-           <td class="field-title" i18n:translate="">
-              link
+           <td class="designator">
+             <span class="matchlabel" i18n:translate="">link</span>
+             <p i18n:translate="">
+                Link to contents screen of original.
+             </p>
            </td>
-           <td>
-              <a href="original"
-                 tal:attributes="href python:content_url + '/edit/tab_edit'"
-                 tal:content="python: model.get_editable().get_title_or_id()">
-                 link
-              </a>
-           </td>
-           <td i18n:translate="">
-              Link to contents screen of original.
+           <td class="field">
+             <a href="original"
+               tal:attributes="href python:content_url + '/edit/tab_edit'"
+               tal:content="python: model.get_editable().get_title_or_id()">
+               link
+             </a>
            </td>
         </tr>
 

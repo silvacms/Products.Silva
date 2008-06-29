@@ -23,7 +23,6 @@
           <description></description>
           <enabled type="int">1</enabled>
           <external_validator></external_validator>
-          <extra></extra>
           <height type="int">20</height>
           <hidden type="int">0</hidden>
           <max_length></max_length>
@@ -31,6 +30,7 @@
           <max_lines></max_lines>
           <required type="int">1</required>
           <title>Text Context</title>
+          <extra>id="text"</extra>
           <unicode type="int">0</unicode>
           <whitespace_preserve type="int">0</whitespace_preserve>
           <width type="int">50</width>

@@ -12,86 +12,86 @@
   
   <metal:block use-macro="here/macro_no_tabs/macros/master">
     <metal:block fill-slot="extension_css">
-      <style type="text/css">
-        body {
-        background: #91989b;
-        }
-        
-        #draggable {
-        background-color: transparent;
-        position: absolute;
-        }
-        
-        table {
-        border: 1px dashed #73868c;
-        background-color: white;
-        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
-        -moz-opacity: 0.5;
-        }
-        
-        #dragbar, #additional_draggable {
-        color: #73868c;
-        text-align: center;
-        cursor: move;
-        }
-        
-        #handle {
-        cursor: se-resize;
-        border-right: 3px solid #73868c;
-        border-bottom: 3px solid #73868c;
-        margin: 0; 
-        padding: 0;
-        }
-        
-        #handle:active {
-        border-right: 3px solid red;
-        border-bottom: 3px solid red;
-        }
-        
-        ul {
-        list-style: none;
-        padding-left: 15px;
-        }
-        
-        a.button, a.button:link, a.button:visited {
-        display: block;
-        width: 10em;
-        color: #d9f3da;
-        background-color: #064C29;
-        text-align: center;
-        }
-        a.button:hover {
-        color: #e5fffe;
-        background-color: #4a7f67;
-        }
-        
-        #ground {
-        position: absolute;
-        top: 350px;
-        left: 0px;
-        width: 180px;
-        height: 130px;
-        }
+<style type="text/css">
+  body {
+  background: #91989b;
+  }
+  
+  #draggable {
+  background-color: transparent;
+  position: absolute;
+  }
+  
+  table {
+  border: 1px dashed #73868c;
+  background-color: white;
+  FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
+  -moz-opacity: 0.5;
+  }
+  
+  #dragbar, #additional_draggable {
+  color: #73868c;
+  text-align: center;
+  cursor: move;
+  }
+  
+  #handle {
+  cursor: se-resize;
+  border-right: 3px solid #73868c;
+  border-bottom: 3px solid #73868c;
+  margin: 0; 
+  padding: 0;
+  }
+  
+  #handle:active {
+  border-right: 3px solid red;
+  border-bottom: 3px solid red;
+  }
+  
+  ul {
+  list-style: none;
+  padding-left: 15px;
+  }
+  
+  a.button, a.button:link, a.button:visited {
+  display: block;
+  width: 10em;
+  color: #d9f3da;
+  background-color: #064C29;
+  text-align: center;
+  }
+  a.button:hover {
+  color: #e5fffe;
+  background-color: #4a7f67;
+  }
+  
+  #ground {
+  position: absolute;
+  top: 350px;
+  left: 0px;
+  width: 180px;
+  height: 130px;
+  }
 
 
-      </style>
-      <!--[if IE 6]>
-      <style type="text/css">
-        #additional_draggable {
-        background-color: white;
-        FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
-        border: 1px dashed #73868c;
-        }
-       
-        table {
-          border: 0;
-          background-color: transparent;
-        }
-        tr.foot{
-        background-color: white;
-        }
-      </style>
-      <![endif]-->
+</style>
+<!--[if IE 6]>
+<style type="text/css">
+  #additional_draggable {
+  background-color: white;
+  FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
+  border: 1px dashed #73868c;
+  }
+ 
+  table {
+    border: 0;
+    background-color: transparent;
+  }
+  tr.foot{
+  background-color: white;
+  }
+</style>
+<![endif]-->
     </metal:block>
     <metal:block fill-slot="main"
       tal:define="model python:request.model;">
@@ -100,17 +100,17 @@
         <script type="text/javascript"
           tal:attributes="src view/cropping.js/absolute_url">
         </script>
-        <script type="text/javascript">
-          //<![CDATA[
+<script type="text/javascript">
+  //<![CDATA[
 
-          function setDraggableSize(width, height) {
-            var draggable = document.getElementById('draggable');
-            draggable.style.width = width + 'px';
-            draggable.style.height = height + 'px'; // added the height of the dragbar
-          };
-        
-        //]]>
-        </script>
+  function setDraggableSize(width, height) {
+    var draggable = document.getElementById('draggable');
+    draggable.style.width = width + 'px';
+    draggable.style.height = height + 'px'; // added the height of the dragbar
+  };
+
+//]]>
+</script>
         <div class="info" style='width: 180px; top: 0px; left: 0px;
         position: absolute; '>
           
@@ -167,15 +167,16 @@
             </li>
           </ul>
 
-          <input class="button transporter" 
-              type="button" 
-              onclick="cropper.insertCropCoords()"
-              value="use coordinates..."
-              title="alt-u"
-              accesskey="u"
-              style="float: right"
-              i18n:attributes="value;title"
-            />
+          <input class="button transporter"
+            style="margin-left 0.2em"
+            type="button" 
+            onclick="cropper.insertCropCoords()"
+            value="use coordinates..."
+            title="alt-u"
+            accesskey="u"
+            style="float: right"
+            i18n:attributes="value;title"
+          />
         </div>
         <div style="top: 0px; margin-left: 200px;">
           <div class="info" id="ground">
@@ -213,17 +214,17 @@
             tal:attributes="src string:${model/absolute_url}/getImage?hires=1&webformat=1" />
         </div>
         
-        <script type="text/javascript">
-          //<![CDATA[
-        
-          cropper = new Cropper('draggable', 
-                                  'dragbar', 
-                                  'handle', 
-                                  25, 
-                                  25);
+<script type="text/javascript">
+  //<![CDATA[
 
-        //]]>
-        </script>
+  cropper = new Cropper('draggable', 
+                          'dragbar', 
+                          'handle', 
+                          25, 
+                          25);
+
+//]]>
+</script>
       </div>
        
     </metal:block>

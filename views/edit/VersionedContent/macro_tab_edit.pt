@@ -13,7 +13,7 @@
 <metal:use-macro metal:use-macro="here/macro_index/macros/master">
 
 <metal:fill-slot fill-slot="metatype_css">
-<tal:condition condition="python: not model.get_unapproved_version() and model.implements_versioned_content()">
+<tal:condition condition="python: not model.get_unapproved_version() and model.implements_versioned_content() and not model.meta_type == 'Silva Ghost'">
 <link rel="stylesheet"
   type="text/css"
   tal:attributes="href here/frontend.css/absolute_url | nothing"
@@ -175,7 +175,7 @@ h2 {
   <metal:block define-slot="editor_content" />
 </tal:block>
 <span tal:replace="nothing"> _________ or preview document ____ </span>
-<tal:block condition="python:not model.get_unapproved_version() and model.implements_versioned_content()">
+<tal:block condition="python:not model.get_unapproved_version() and model.implements_versioned_content() and not model.meta_type == 'Silva Ghost'">
   <div class="public"
     tal:content="structure model/preview">
     <!-- this text is replaced by Silva content -->

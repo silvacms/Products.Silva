@@ -29,10 +29,9 @@
     <metal:fill-main-body fill-slot="main-body">
      <tal:block define="fields view/form/get_fields">
       <tr>
-        <th class="align-right"
-          width="12%"
+        <th width="33%"
           i18n:translate="">
-          element
+          aspect
         </th>
         <th i18n:translate="">
           content
@@ -42,14 +41,18 @@
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
       <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-        <td class="field-title">
+        <td class="designator">
           <label tal:content="structure field/title"
-            tal:attributes="for string:field_${field/id}">
+            tal:attributes="for field/id">
             title
           </label><span class="warning"
             tal:condition="field/is_required">*</span>
+          <p style="display:inline"
+            tal:condition="not:field/is_required">
+            (optional)
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input tal:replace="structure python:field.render_from_request(request)" />
         </td>
       </tr>
@@ -112,8 +115,9 @@
     </thead>
     <tbody tal:define="fields python:view.upload_form.get_fields()">
       <tr>
-        <th class="align-right"
-          width="12%">
+        <th width="33%"
+          i18n:translate="">
+          aspect
         </th>
         <th i18n:translate="">
           content
@@ -123,17 +127,17 @@
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
       <tr tal:attributes="class python: iterate and 'odd' or 'even'">
-      <td class="field-title">
-        <label accesskey="f"
-          tal:content="structure field/title"
-          tal:attributes="for string:field_${field/id}">
-          title
-        </label><span class="warning"
-          tal:condition="field/is_required">*</span>
-      </td>
-      <td>
-        <input tal:replace="structure python:field.render_from_request(request)" />
-      </td>
+        <td class="designator">
+          <label accesskey="f"
+            tal:content="structure field/title"
+            tal:attributes="for field/id">
+            title
+          </label><span class="warning"
+            tal:condition="field/is_required">*</span>
+        </td>
+        <td class="field">
+          <input tal:replace="structure python:field.render_from_request(request)" />
+        </td>
       </tr>
       </tal:define>
       </tal:repeat>

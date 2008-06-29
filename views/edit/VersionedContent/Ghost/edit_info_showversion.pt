@@ -24,7 +24,7 @@
       </tal:block>
       <tr>
         <td class="top"
-          colspan="3">
+          colspan="2">
           <h2 i18n:translate="">
             <img tal:replace="structure python:view.render_icon(model)" i18n:name="icon" />
             ghost of &#xab;<tal:block content="title" i18n:name="title" />&#xbb; (<tal:block content="version_name" i18n:name="version_name" /> version)
@@ -35,65 +35,59 @@
 
     <tbody>
       <tr>
-        <th class="align-right"
-          width="15%" i18n:translate="">
+        <th width="33%" i18n:translate="">
           attributes
         </th>
         <th i18n:translate="">
           content
         </th>
-        <th width="30%" i18n:translate="">
-          note
-        </th>
       </tr>
 
       <tr class="even">
-        <td class="field-title" i18n:translate="">
-          reference
+        <td class="designator">
+          <span class="matchlabel" i18n:translate="">reference</span>
+          <p i18n:translate="">
+            path to original (begins with &#8216;/&#8217;).
+          </p>
         </td>
-        <td tal:content="content_url">
+        <td class="field"
+          tal:content="content_url">
           /foo/bar
-        </td>
-        <td i18n:translate="">
-          path to original (begins with &#8216;/&#8217;).
         </td>
       </tr>
 
       <tr class="odd"
         tal:condition="not:link_status">
-        <td class="field-title" i18n:translate="">
-          link
+        <td class="designator">
+          <span class="matchlabel" i18n:translate="">link</span>
+          <p i18n:translate="">
+            Link to editor screen of original.
+          </p>
         </td>
-        <td>
+        <td class="field">
           <a href="original"
             tal:attributes="href python:content_url + '/edit/tab_edit'"
             tal:content="title">
             Link
           </a>
         </td>
-        <td i18n:translate="">
-          Link to editor screen of original.
-        </td>
       </tr>
 
       <tr class="odd"
         tal:condition="link_status">
-        <td class="field-title" i18n:translate="">
-          problem
+        <td class="designator">
+          <span class="matchlabel" i18n:translate="">problem</span>
         </td>
-        <td class="alert">
+        <td class="field alert">
           <span class="error" i18n:translate=""
             tal:content="structure link_status" />
-        </td>
-        <td>
-          &nbsp;
         </td>
       </tr>
     </tbody>
 
     <tfoot>
       <tr class="controls">
-        <td colspan="3">
+        <td colspan="2">
         </td>
       </tr>
     </tfoot>

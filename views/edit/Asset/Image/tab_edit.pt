@@ -33,7 +33,6 @@
         tal:replace="string:${img_width}x${img_height} pixels"
       />
     </p>
-
     <p tal:condition="model/hires_image">
     <span class="subhead" i18n:translate="">format</span><br />
     <span tal:replace="python: model.web_format.lower()">format</span>
@@ -125,7 +124,7 @@
           ______________ top controls row ______________
         </tal:block>
         <tr class="top-controls">
-          <td colspan="3">
+          <td colspan="2">
             <h3 i18n:translate="">
               format and scaling
             </h3>
@@ -134,34 +133,28 @@
       </thead>
       <tbody tal:define="fields view/scale_form/get_fields">
         <tr>
-          <th class="align-right"
-            width="12%"
+          <th width="33%"
             i18n:translate="">
-            element
+            aspect
           </th>
           <th i18n:translate="">
             content
-          </th>
-          <th width="40%" i18n:translate="">
-            note
           </th>
         </tr>
         <tal:repeat repeat="field fields">
           <tal:define define="iterate repeat/field/odd">
             <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-              <td class="field-title">
+              <td class="designator">
                 <label tal:content="field/title"
-                  tal:attributes="for string:field_${field/id}">
+                  tal:attributes="for field/id">
                   title</label><span class="warning"
                   tal:condition="field/is_required">*</span>
-              </td>
-              <td>
-                <input tal:replace="structure python:field.render_from_request(request)" />
-              </td>
-              <td>
-                <span tal:replace="structure python:field.get_value('description')">
+                <p tal:content="structure python:field.get_value('description')">
                   comments here (field description)
-                </span>
+                </p>
+              </td>
+              <td class="field">
+                <input tal:replace="structure python:field.render_from_request(request)" />
               </td>
             </tr>
           </tal:define>
@@ -169,7 +162,6 @@
       </tbody>
       <tfoot>
         <tr class="controls">
-          <td></td>
           <td>
             <input class="button transporter"
               type="button"

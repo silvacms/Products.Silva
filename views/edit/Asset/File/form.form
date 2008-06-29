@@ -27,13 +27,13 @@
           <default></default>
           <title>title</title>
           <truncate type="int">0</truncate>
-          <description>Optional, but useful.</description>
+          <description>(optional)</description>
           <extra></extra>
           <unicode>1</unicode>
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
-          <extra>string: id="field_${field/id}"</extra>
+          <extra>string:id="${field/id}"</extra>
         </tales>
       </field>
       </fields>

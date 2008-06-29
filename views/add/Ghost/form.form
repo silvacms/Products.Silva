@@ -45,7 +45,7 @@
           <required type="int">1</required>
           <css_class>store</css_class>
           <default></default>
-          <title>url</title>
+          <title>path</title>
           <truncate type="int">0</truncate>
           <description>Location of originating document.</description>
           <extra>id="content_url"</extra>

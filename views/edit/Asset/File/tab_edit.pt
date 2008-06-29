@@ -51,9 +51,9 @@
         ______________ inter-controls row ______________
       </tal:block>
       <tr class="inter-controls">
-        <td colspan="2">
+        <td>
           <h3 i18n:translate="">
-            Edit Text Content
+            edit textual content
           </h3>
         </td>
       </tr>
@@ -62,35 +62,26 @@
    <tal:cond condition="not:model/is_editable_size">
     <tbody>
      <tr class="odd">
-      <td colspan="2" i18n:translate="">Text content is too large to be edited through Silva.  Please upload changes.</td>
+      <td i18n:translate="">
+        Text content is too large to be edited through Silva.  Please upload changes.
+      </td>
      </tr>
     </tbody>
    </tal:cond>
    <tal:cond condition="model/is_editable_size">
     <tbody tal:define="fields python:view.text_edit_form.get_fields()">
-      <tr>
-        <th class="align-right"
-          width="12%">
-        </th>
-        <th i18n:translate="">
-          content
-        </th>
-      </tr>
-
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
-      <tr tal:attributes="class python: iterate and 'odd' or 'even'">
-      <td class="field-title">
-        <label accesskey="f"
-          tal:content="structure field/title"
-          tal:attributes="for string:field_${field/id}">
+      <tr>
+        <th tal:content="structure field/title"
+          i18n:translate="">
           title
-        </label><span class="warning"
-          tal:condition="field/is_required">*</span>
-      </td>
-      <td>
-        <input tal:replace="structure python:field.render_from_request(request)" />
-      </td>
+        </th>
+      </tr>
+      <tr class="odd">
+        <td>
+          <input tal:replace="structure python:field.render_from_request(request)" />
+        </td>
       </tr>
       </tal:define>
       </tal:repeat>

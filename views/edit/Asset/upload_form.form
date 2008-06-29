@@ -13,14 +13,13 @@
     <group>
       <title>default</title>
       <fields multiple="true">
-
       <field><id>file</id> <type>FileField</type>
         <values>
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">54</display_width>
-          <css_class></css_class>
+          <display_width type="int">44</display_width>
+          <css_class>store</css_class>
           <default></default>
           <title>file</title>
           <description>Locate a file.</description>
@@ -29,7 +28,7 @@
           <required type="int">1</required>
         </values>
         <tales>
-          <extra>string: id="field_${field/id}" title="access key: alt-f"</extra>
+          <extra>string:id="${field/id}" title="access key: alt-f"</extra>
         </tales>
       </field>
       </fields>

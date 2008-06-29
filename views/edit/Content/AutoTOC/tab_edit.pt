@@ -8,19 +8,23 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="pretty_meta_type string:automatic table of contents;
-              maintitlecolspan string:3"
+              maintitlecolspan string:2"
   i18n:domain="silva">
 <metal:block use-macro="here/macro_edit/macros/editor">
  <metal:fill-editor-slot fill-slot="main">
   <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
    <metal:slot fill-slot="main-body">
     <tr>
-     <th class="align-right" width="12%" i18n:translate="">attributes</th>
+     <th width="45%" i18n:translate="">attributes</th>
      <th i18n:translate="">content</th>
-     <th i18n:translate="">notes</th>
     </tr>
    <tr class="odd">
-    <td class="align-right"><label for="toc_types">types to list</label></td>
+    <td class="designator">
+      <label for="toc_types">types to list</label>
+      <p>
+        You must have container types selected (e.g. Folder and Publication) in order for the AutoTOC to descend into them. If no container types are selected, this will act as if the depth=0, i.e. only list items in this container.
+      </p>
+    </td>
     <td tal:define="all_types model/get_silva_types;
                     my_types model/get_local_types">
      <select class="store" name="toc_types:list" id="toc_types" multiple="multiple" size="6">
@@ -30,49 +34,62 @@
         tal:content="type" />
      </select>
     </td>
-    <td>
-     You must have container types selected (e.g. Folder and Publication) in order for the AutoTOC to descend into them. If no container types are selected, this will act as if the depth=0, i.e. only list items in this container.
-    </td>
    </tr>
    <tr class="even">
-    <td class="align-right"><label for="depth">depth</label></td>
+    <td class="designator">
+      <label for="depth">depth</label>
+     <ul>
+       <li>-1 = unlimited</li>
+       <li>0 = container's items</li>
+     </ul>
+    </td>
     <td tal:define="depth model/toc_depth">
      <input type="text" name="depth" id="depth" size="3" tal:attributes="value depth" />
     </td>
-    <td>
-     <ul>
-      <li>-1 = unlimited</li>
-      <li>0 = container's items</li>
-     </ul>
-    </td>
    </tr>
    <tr class="odd">
-    <td class="align-right"><label for="display_desc">display description</label></td>
+    <td class="designator">
+      <label for="display_desc">display description</label>
+      <p>
+        If yes, each item displayed will include its title and metadata description, if available.
+      </p>
+    </td>
     <td tal:define="display_desc model/display_desc_flag">
      <select name="display_desc" id="display_desc" size="1">
       <option value="no" tal:attributes="selected python:not display_desc and 'selected' or nothing">No</option>
       <option value="yes" tal:attributes="selected python:display_desc and 'selected' or nothing">Yes</option>
      </select>
     </td>
-    <td>
-     If yes, each item displayed will include its title and metadata
-     description, if available.
-    </td>
    </tr>
 
    <tr class="even">
-    <td class="align-right"><label for="show_icon">show icon</label></td>
+    <td class="designator">
+      <label for="show_icon">show icon</label>
+      <p>
+        If yes, each item displayed will include its icon.      </p>
+    </td>
     <td tal:define="show_icon model/show_icon">
      <select name="show_icon" id="show_icon" size="1">
       <option value="no" tal:attributes="selected python:not show_icon and 'selected' or nothing">No</option>
       <option value="yes" tal:attributes="selected python:show_icon and 'selected' or nothing">Yes</option>
      </select>
     </td>
-    <td>If yes, each item displayed will include its icon.</td>
    </tr>
 
    <tr class="odd">
-    <td class="align-right"><label for="sort_order">sort order</label></td>
+    <td class="designator">
+      <label for="sort_order">sort order</label>
+      <p>
+        The order items in a container will be sorted:
+      </p>
+      <ul>
+       <li><b>Alpha:</b> sort alphabetically</li>
+       <li><b>Reverse-Alpha:</b> reverse-sort alphabetically</li>
+       <li><b>Silva folder order:</b> same order as the items have in their folder</li>
+       <li><b>Chronologically by modification date:</b> sort by the modification date</li>
+       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date</li>
+      </ul>
+    </td>
     <td tal:define="sort_order model/sort_order">
      <select class="store" name="sort_order" id="sort_order" size="5">
       <option value="alpha" tal:attributes="selected python:sort_order=='alpha' and 'selected' or nothing">Alpha</option>
@@ -82,22 +99,12 @@
       <option value="rchronmod" tal:attributes="selected python:sort_order=='rchronmod' and 'selected' or nothing">Reverse Chronologically by modification date</option>
      </select>
     </td>
-    <td>
-      The order items in a container will be sorted:
-      <ul>
-       <li><b>Alpha:</b> sort alphabetically</li>
-       <li><b>Reverse-Alpha:</b> reverse-sort alphabetically</li>
-       <li><b>Silva folder order:</b> same order as the items have in their folder</li>
-       <li><b>Chronologically by modification date:</b> sort by the modification date</li>
-       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date</li>
-      </ul>
-     </td>
     </tr>
 
    </metal:slot>
 
    <tr class="controls" metal:fill-slot="main-foot">
-    <td class="align-right" colspan="3">
+    <td class="align-right" colspan="2">
      <input class="button"
        type="submit"
        name="submit:method"

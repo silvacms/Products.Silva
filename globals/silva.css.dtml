@@ -884,12 +884,13 @@ table.listing td.designator label {
 table.listing td.designator span.matchlabel {
   font-size: 115%;
 }
-table.listing td.designator p,
+table.listing td.designator p, td.designator ul,
 table.listing td.field p {
   margin:0;
   color:#667;
 }
-table.listing tr:hover td.designator p,
+table.listing tr:hover td.designator p, 
+table.listing tr:hover td.designator ul:hover,
 table.listing tr:hover td.field p {
   color:#333;
 }

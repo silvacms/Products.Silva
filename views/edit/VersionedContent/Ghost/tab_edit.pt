@@ -9,7 +9,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    maintitlecolspan string:3;
+    maintitlecolspan string:2;
     vein string:edit;
 ">
 <metal:use-macro use-macro="here/macro_tab_edit/macros/editor">
@@ -30,22 +30,26 @@
    <metal:fillbody fill-slot="main-body">
 
       <tr>
-        <th class="align-right"
-          width="15%"
+        <th width="33%"
           i18n:translate="">
           attributes
         </th>
         <th i18n:translate="">
           content
         </th>
-        <th width="30%" i18n:translate="">
-          note
-        </th>
       </tr>
 
       <tr class="even">
-        <td class="align-right">
+        <td class="designator">
+          <label for="content_url"
+            i18n:translate="">path</label><span class="warning">*</span>
+          <p i18n:translate="">
+            Path to original (begins with &#8216;/&#8217;).
+          </p>
+        </td>
+        <td class="field">
           <input class="button transporter"
+            style="margin-top:0.2em"
             type="button"
             value="reference..."
             title="Locate item to refer to: alt-r"
@@ -60,45 +64,42 @@
                                       '${asset_context/absolute_url}',
                                       'Content', true, '${content_url}')"
             i18n:attributes="value;title"
-            /><span class="warning"> *</span>
-        </td>
-        <td>
+          />
           <input class="store"
             type="text"
+            id="content_url"
             name="content_url"
             size="60"
             value=""
             tal:attributes="value content_url"
           />
         </td>
-        <td i18n:translate="">
-          Path to original (begins with &#8216;/&#8217;).
-        </td>
       </tr>
 
       <tr class="odd"
         tal:condition="not:link_status">
-        <td class="align-right" i18n:translate="">
-          link
+        <td class="designator">
+          <span class="matchlabel" i18n:translate="">link</span>
+          <p i18n:translate="">
+            Link to editor screen of original.
+          </p>
         </td>
-        <td>
+        <td class="field">
           <a href="original"
             tal:attributes="href python:content_url + '/edit/tab_edit'"
             tal:content="python: model.get_editable().get_title_editable()">
             Link
           </a>
         </td>
-        <td i18n:translate="">
-          Link to editor screen of original.
-        </td>
       </tr>
 
       <tr class="odd"
         tal:condition="link_status">
-        <td class="field-title" i18n:translate="">
+        <td class="designator"
+          i18n:translate="">
           problem
         </td>
-        <td class="alert">
+        <td class="field alert">
           <span class="error" i18n:translate=""
             tal:content="structure link_status" />
         </td>

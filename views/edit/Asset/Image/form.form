@@ -23,17 +23,16 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
-          <required type="int">0</required>
+          <required type="int">1</required>
           <css_class>store</css_class>
           <default></default>
           <title>title</title>
           <truncate type="int">0</truncate>
-          <description>Optional, but useful.</description>
-          <extra></extra>
+          <description></description>
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
-          <extra>string: id="field_${field/id}"</extra>
+          <extra>string:id="${field/id}"</extra>
         </tales>
         <messages>
           <message name="external_validator_failed">Sorry, the form content failed validation.</message>
