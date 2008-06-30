@@ -103,9 +103,9 @@
   <table class="listing">
     <thead>
       <tal:block replace="nothing">
-        ______________ inter-controls row ______________
+        ______________ top-controls row ______________
       </tal:block>
-      <tr class="inter-controls">
+      <tr class="top-controls">
         <td colspan="2">
           <h3 i18n:translate="">
             upload

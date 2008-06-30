@@ -49,7 +49,7 @@ Publication and expiration time of public version
 <div tal:omit-tag=""
   tal:condition="python:model.get_approval_request_message()"
   metal:define-macro="messages">
-<tr class="inter-controls">
+<tr class="top-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 messages
@@ -110,7 +110,7 @@ The last message regarding this issue is:
 </td>
 </tr>
 
-<tr class="inter-controls">
+<tr class="top-controls">
 <th colspan="2">
 <tal:block i18n:translate="">request approval <span tal:condition="python:may_change_content and unapproved and published" i18n:name="for_new_version"><tal:block i18n:translate="">for new version</tal:block></span></tal:block>
 </th>
@@ -153,7 +153,7 @@ This message will remain visible in the status screen for other authors and edit
 <span tal:replace="nothing"> _______ Editor can change settings _______ </span>
 <div metal:define-macro="approved_editor" tal:omit-tag="">
 <form name="editor_change_setting" action="." method="post">
-<tr class="inter-controls">
+<tr class="top-controls">
 <td colspan="2">
 <h3 i18n:translate="">
 current timings
@@ -190,7 +190,7 @@ current timings
   metal:define-macro="approve_new">
 <form name="editor_approves" action="tab_status_approve" method="post">
 <table class="listing">
-<tr class="inter-controls">
+<tr class="top-controls">
 <td colspan="2">
 <h3>
 <span tal:condition="python:not closed or (unapproved and (closed or published))"
@@ -283,7 +283,7 @@ description
 <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
 <input type="hidden" name="tab_name" value="publish" />
 <table class="listing">
-<tr class="inter-controls">
+<tr class="top-controls">
 <td colspan="2">
 <h3>
 <tal:block condition="may_approve_content" i18n:translate="">reject</tal:block>
@@ -355,7 +355,7 @@ The message may be viewed by local users.
 <form name="revoke_approval" action="tab_status_revoke" method="post">
 <table class="listing">
 <thead>
-<tr class="inter-controls">
+<tr class="top-controls">
 <td>
 <h3 i18n:translate="">
 revoke approval
@@ -397,7 +397,7 @@ If further editing is required, first revoke the approval.
 <form name="tab_status_close" action="tab_status_close" method="post">
 <table class="listing">
 <thead>
-<tr class="inter-controls">
+<tr class="top-controls">
 <td>
 <h3 i18n:translate="">manual close</h3>
 </td>
