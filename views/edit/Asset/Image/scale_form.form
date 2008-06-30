@@ -44,7 +44,7 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <required type="int">1</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default>100%</default>
           <title>scaling</title>
           <alternate_name></alternate_name>
@@ -73,7 +73,7 @@
           <max_length></max_length>
           <external_validator></external_validator>
           <required type="int">0</required>
-          <css_class></css_class>
+          <css_class>store</css_class>
           <default></default>
           <title>cropping</title>
           <alternate_name></alternate_name>
