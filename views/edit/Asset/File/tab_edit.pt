@@ -50,7 +50,7 @@
       <tal:block replace="nothing">
         ______________ inter-controls row ______________
       </tal:block>
-      <tr class="inter-controls">
+      <tr class="top-controls">
         <td>
           <h3 i18n:translate="">
             edit textual content
@@ -73,9 +73,12 @@
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
       <tr>
-        <th tal:content="structure field/title"
-          i18n:translate="">
-          title
+        <th>
+          <label tal:content="structure field/title"
+            tal:attributes="for field/id"
+            i18n:translate="">
+            title
+          </label>
         </th>
       </tr>
       <tr class="odd">
@@ -95,8 +98,8 @@
             type="submit"
             name="save_text_content:method"
             value="save text content"
-            title="access key: alt-u"
-            accesskey="u"
+            title="access key: alt-c"
+            accesskey="c"
             i18n:attributes="value;title"
           />
         </td>
