@@ -1,6 +1,7 @@
 from urlparse import urlparse
 
 from zope.interface import implements
+from zope.publisher.interfaces.http import IHTTPRequest
 
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Globals import InitializeClass
@@ -95,5 +96,11 @@ def __allow_access_to_unprotected_subobjects__(name, value=None):
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getPathAdapter')
 def getPathAdapter(request):
-    assert isinstance(request, HTTPRequest)
+    #first test if request provides the zope3 IHTTPRequest interface
+    # and if not, fallback to checking if request is an instance of HTTPRequest
+    #The interface check allows code to use this pathadapter on other types
+    # of httprequest-like objects -- they just have to implement IHTTPRequest
+    # SilvaMetadata does this to "fake" a request object, when saving
+    # values from request (Binding.setValuesFromRequest)
+    assert IHTTPRequest.providedBy(request) or isinstance(request, HTTPRequest)
     return PathAdapter(request)
