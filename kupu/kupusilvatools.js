@@ -2263,27 +2263,39 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                     // for presentation only change some stuff
                     var displayvalue = value.toString();
                     var attrkey = key;
-                    if (child.getAttribute('type') == 'list') {
-                        displayvalue = eval(value).join(', ');
-                        attrkey = key + '__type__list';
-                    }
-                    else if (child.getAttribute('type') == 'bool') {
+                    var strong = doc.createElement('strong');
+                    strong.appendChild(doc.createTextNode(key + ': '));
+                    extsource.appendChild(strong);
+                    if (child.getAttribute('type') == 'bool') {
                     	value = (value == "True" ? 1 : 0);
                     	attrkey = key + '__type__boolean';
                     };
-                    extsource.setAttribute(attrkey, value);
-                    key = key.replace(/_/g, ' ');
-                    var textel = doc.createTextNode(key + ': ' + displayvalue);
-                    extsource.appendChild(textel);
+                    if (child.getAttribute('type') == 'list') {
+                        var vallist = eval(value);
+                        attrkey = key + '__type__list';
+                        for (var k=0; k < vallist.length; k++) {
+                            var span = doc.createElement('span');
+                            span.setAttribute('key', attrkey);
+                            extsource.appendChild(span);
+                            var textel = doc.createTextNode(vallist[k]);
+                            span.appendChild(textel);
+                            if (k < vallist.length - 1) {
+                                extsource.appendChild(doc.createTextNode(', '));
+                            };
+                        };
+                    }
+                    else {
+                        var span = doc.createElement('span');
+                        span.setAttribute('key', attrkey);
+                        extsource.appendChild(span);
+                        var textel = doc.createTextNode(displayvalue);
+                        span.appendChild(textel);
+                    };
                     extsource.appendChild(doc.createElement('br'));
                 };
             };
             var htext = doc.createTextNode(metatype + ' \xab' + object._id + '\xbb');
             header.insertBefore(htext, header.firstChild);
-            // jasper@2007-06-21 , do not add a br tag at the end
-            // of the external source, not sure why this was done
-            // in the first place.
-            // extsource.appendChild(doc.createElement('br'));
             if (!currsource) {
                 object.editor.insertNodeAtSelection(extsource);
             } else {
@@ -2418,13 +2430,11 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function() {
         return '';
     };
     var ret = new Array();
-    for (var i=0; i < source.attributes.length; i++) {
-        var attr = source.attributes[i];
-        var name = attr.nodeName;
-        var value = attr.nodeValue;
-        if (name != 'class' && name != 'source_id' && name != 'id') {
-            ret.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
-        };
+    var spans = source.getElementsByTagName('span');
+    for (var i=0; i < spans.length; i++) {
+        var name = spans[i].getAttribute('key');
+        var value = spans[i].childNodes[0].nodeValue;
+        ret.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
     };
     return ret.join('&');
 };
