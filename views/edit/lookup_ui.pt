@@ -91,13 +91,14 @@
 
             <tbody>
               <tr class="odd">
-                <td class="align-right"
-                  i18n:translate="">
-                  name (or part of name)
+                <td class="designator"
+                  style="width:33%">
+                  <label for="name"
+                  i18n:translate="">name (or part of name)</label>
                 </td>
-                <td class="align-right"
-                  style="width:60%;">
+                <td class="field">
                   <input class="store"
+                    id="name"
                     name="name"
                     type="text"
                     value=""
@@ -144,7 +145,8 @@
 
             <tbody>
               <tr tal:condition="python: lookup_result">
-                <th i18n:translate="">
+                <th i18n:translate=""
+                  style="width:50%">
                   user
                 </th>
                 <th i18n:translate="">
