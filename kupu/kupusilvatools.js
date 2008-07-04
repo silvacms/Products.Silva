@@ -2281,66 +2281,89 @@ SilvaExternalSourceTool.prototype._showFormInWindow = function _showFormInWindow
 };
 
 SilvaExternalSourceTool.prototype._addExternalSourceIfValidated = 
-  function(object, ignorefocus) {
+        function(object, ignorefocus) {
     if (this.readyState == 4) {
         if (this.status == '200') {
-	  // success, add the external source element to the document
-	  rxml = this.responseXML.documentElement;
-
-	  var selNode = object.editor.getSelectedNode();
-	  var currsource = object.getNearestExternalSource(selNode);
-	  var doc = object.editor.getInnerDocument();
+            // success, add the external source element to the document
+            rxml = this.responseXML.documentElement;
+            var selNode = object.editor.getSelectedNode();
+            var currsource = object.getNearestExternalSource(selNode);
+            var doc = object.editor.getInnerDocument();
             
-	  var extsource = doc.createElement('div');
-	  var source_id = object._id;
-	  var source_title = object.idselect.options[object.idselect.selectedIndex].childNodes[0].data;
-	  extsource.setAttribute('source_id', source_id);
-	  extsource.setAttribute('source_title', source_title);
-	  extsource.className = 'externalsource';
-	  var sourceinfo = rxml.getElementsByTagName("sourceinfo")[0];
-	  var metatype = sourceinfo.childNodes[0].childNodes[0].data;
-	  var desc = sourceinfo.childNodes[3];
-	  if (desc.childNodes.length) {
-	    desc = desc.childNodes[0].data;
-	  } else {
-	    desc = null;
-	  }
+            var extsource = doc.createElement('div');
+            var source_id = object._id;
+            var source_title = object.idselect.options[object.idselect.selectedIndex].childNodes[0].data;
+            extsource.setAttribute('source_id', source_id);
+            extsource.setAttribute('source_title', source_title);
+            extsource.className = 'externalsource';
+            var sourceinfo = rxml.getElementsByTagName("sourceinfo")[0];
+            var metatype = sourceinfo.childNodes[0].childNodes[0].data;
+            var desc = sourceinfo.childNodes[3];
+            if (desc.childNodes.length) {
+                desc = desc.childNodes[0].data;
+            } else {
+                desc = null;
+            };
 
-	  var header = doc.createElement('h4');
-	  header.appendChild(doc.createTextNode(metatype + ' \xab' + source_title + '\xbb'));
-	  header.setAttribute('title',source_id);
-	  extsource.appendChild(header);
+            var header = doc.createElement('h4');
+            header.appendChild(doc.createTextNode(metatype + ' \xab' + source_title + '\xbb'));
+            header.setAttribute('title',source_id);
+            extsource.appendChild(header);
 
-	  if (desc) {
-	    var desc_el = doc.createElement('p');
-	    desc_el.className = "externalsource-description";
-	    desc_el.appendChild(doc.createTextNode(desc));
-	    extsource.appendChild(desc_el);
-	  }
-	  
-	  var params = rxml.getElementsByTagName("parameter");
-	  for (var i=0; i<params.length; i++) {
-	    var child = params[i];
-	    var key = child.getAttribute('id');
-	    var value = '';
-	    for (var j=0; j < child.childNodes.length; j++) {
-	      value += child.childNodes[j].nodeValue;
-	    };
-	    // for presentation only change some stuff
-	    var attrkey = key;
-	    if (child.getAttribute('type') == 'list') {
-	      attrkey = key + '__type__list';
-	    }
-	    else if (child.getAttribute('type') == 'bool') {
-	      value = (value == "True" ? 1 : 0);
-	      attrkey = key + '__type__boolean';
-	    };
-	    extsource.setAttribute(attrkey, value);
-	  };
-            // jasper@2007-06-21 , do not add a br tag at the end
-            // of the external source, not sure why this was done
-            // in the first place.
-            // extsource.appendChild(doc.createElement('br'));
+            if (desc) {
+                var desc_el = doc.createElement('p');
+                desc_el.className = "externalsource-description";
+                desc_el.appendChild(doc.createTextNode(desc));
+                extsource.appendChild(desc_el);
+            }
+  
+            for (var i=0; i < 
+                    this.responseXML.documentElement.childNodes.length; i++) {
+                var child = this.responseXML.documentElement.childNodes[i];
+                if (child.nodeName.toLowerCase() == 'parameter') {
+                    var key = child.getAttribute('key');
+                    var value = '';
+                    for (var j=0; j < child.childNodes.length; j++) {
+                        value += child.childNodes[j].nodeValue;
+                    };
+                    if (key == 'metatype') {
+                        metatype = value;
+                        continue;
+                    };
+                    // for presentation only change some stuff
+                    var displayvalue = value.toString();
+                    var attrkey = key;
+                    var strong = doc.createElement('strong');
+                    strong.appendChild(doc.createTextNode(key + ': '));
+                    extsource.appendChild(strong);
+                    if (child.getAttribute('type') == 'bool') {
+                    	value = (value == "True" ? 1 : 0);
+                    	attrkey = key + '__type__boolean';
+                    };
+                    if (child.getAttribute('type') == 'list') {
+                        var vallist = eval(value);
+                        attrkey = key + '__type__list';
+                        for (var k=0; k < vallist.length; k++) {
+                            var span = doc.createElement('span');
+                            span.setAttribute('key', attrkey);
+                            extsource.appendChild(span);
+                            var textel = doc.createTextNode(vallist[k]);
+                            span.appendChild(textel);
+                            if (k < vallist.length - 1) {
+                                extsource.appendChild(doc.createTextNode(', '));
+                            };
+                        };
+                    }
+                    else {
+                        var span = doc.createElement('span');
+                        span.setAttribute('key', attrkey);
+                        extsource.appendChild(span);
+                        var textel = doc.createTextNode(displayvalue);
+                        span.appendChild(textel);
+                    };
+                    extsource.appendChild(doc.createElement('br'));
+                };
+            };
             if (!currsource) {
                 object.editor.insertNodeAtSelection(extsource);
             } else {
