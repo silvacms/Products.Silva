@@ -137,6 +137,15 @@ function focus_editor() {
     <tr class="controls">
       <td class="align-right"
         colspan="2">
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="save_memberdata:method"
+          value="save"
+          title="save member data: alt-s"
+          accesskey="s"
+          i18n:attributes="title;value"
+        />
         <input class="button canceler"
           style="float:left;"
           type="button"
@@ -146,14 +155,6 @@ function focus_editor() {
           accesskey="c"
           i18n:attributes="title;value"
           onclick="window.close(); window.opener.location.reload(); return false;"
-        />
-        <input class="button"
-          type="submit"
-          name="save_memberdata:method"
-          value="save"
-          title="save member data: alt-s"
-          accesskey="s"
-          i18n:attributes="title;value"
         />
       </td>
     </tr>
