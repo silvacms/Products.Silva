@@ -2507,13 +2507,15 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function() {
         return '';
     };
     var ret = new Array();
-    for (var i=0; i < source.attributes.length; i++) {
-        var attr = source.attributes[i];
-        var name = attr.nodeName;
-        var value = attr.nodeValue;
-        if (name != 'class' && name != 'source_id' && name != 'id') {
-            ret.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
+    var spans = source.getElementsByTagName('span');
+    for (var i=0; i < spans.length; i++) {
+        var name = spans[i].getAttribute('key');
+        if (spans[i].childNodes.length > 0) {
+            var value = spans[i].childNodes[0].nodeValue;            
+        } else {
+            var value = '';
         };
+        ret.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
     };
     return ret.join('&');
 };
