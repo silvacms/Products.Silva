@@ -24,18 +24,9 @@
   <span tal:replace="structure python: (message == '' or message == None) and '&nbsp;' or message">message</span>
 </div>
 
-<script type="text/javascript">
-// Called from body onload() method which is defined in the
-// macro_index. It focusses the appropiate form field.
-function focus_editor() {
-  if (document.getElementsByName) {
-    elements = document.getElementsByName('field_fullname');
-    if (elements.length > 0) {
-        //alert(elements);
-        elements[0].focus();
-     }
-  }
-}
+<script type="text/javascript"
+  tal:content="structure python:here.focus_editor('field_fullname')">
+  focus cursor
 </script>
 
 <form action="."
