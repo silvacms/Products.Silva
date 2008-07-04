@@ -2433,7 +2433,11 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function() {
     var spans = source.getElementsByTagName('span');
     for (var i=0; i < spans.length; i++) {
         var name = spans[i].getAttribute('key');
-        var value = spans[i].childNodes[0].nodeValue;
+        if (spans[i].childNodes.length > 0) {
+            var value = spans[i].childNodes[0].nodeValue;            
+        } else {
+            var value = '';
+        };
         ret.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
     };
     return ret.join('&');
