@@ -208,23 +208,11 @@
      />
   
   <subscriber
-     for=".interfaces.IGroup
+     for=".interfaces.IBaseGroup
          OFS.interfaces.IObjectWillBeRemovedEvent"
      handler=".Group.group_will_be_removed" 
      />
-  
-  <subscriber
-     for=".interfaces.IIPGroup
-         OFS.interfaces.IObjectWillBeRemovedEvent"
-     handler=".IPGroup.ipgroup_will_be_removed" 
-     />
-  
-  <subscriber
-     for=".interfaces.IVirtualGroup
-          OFS.interfaces.IObjectWillBeRemovedEvent"
-     handler=".VirtualGroup.vgroup_will_be_removed" 
-     />
-  
+    
   <subscriber
      for=".interfaces.IVersion
           zope.app.container.interfaces.IObjectMovedEvent"

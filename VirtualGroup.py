@@ -3,45 +3,24 @@
 # $Id: VirtualGroup.py,v 1.18 2006/01/24 16:14:13 faassen Exp $
 from zope.interface import implements
 
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from OFS.SimpleItem import SimpleItem
 # Silva
-from SilvaObject import SilvaObject
 import SilvaPermissions
-from Products.Silva import mangle
-# misc
-from helpers import add_and_edit
 
 from interfaces import IVirtualGroup
+from Group import BaseGroup, manage_addGroupUsingFactory
 
-class VirtualGroup(CatalogPathAware, SilvaObject, SimpleItem):
+class VirtualGroup(BaseGroup):
     """Silva Virtual Group"""
-    security = ClassSecurityInfo()
 
-    meta_type = "Silva Virtual Group"
-    default_catalog = 'service_catalog'
+    meta_type = "Silva Virtual Group"    
+    security = ClassSecurityInfo()
     
     implements(IVirtualGroup)
 
-    manage_options = (
-        {'label': 'Edit', 'action': 'manage_main'},
-    ) + SimpleItem.manage_options
-
     manage_main = PageTemplateFile('www/virtualGroupEdit', globals())
-
-    def __init__(self, id, group_name):
-        VirtualGroup.inheritedAttribute('__init__')(self, id)
-        self._group_name = group_name
-
-    def isValid(self):
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
-        """
-        return (self.valid_path == self.getPhysicalPath())
     
     # MANIPULATORS
     security.declareProtected(
@@ -92,29 +71,8 @@ class VirtualGroup(CatalogPathAware, SilvaObject, SimpleItem):
 
 InitializeClass(VirtualGroup)
 
-def manage_addVirtualGroup(self, id, title, group_name, asset_only=0,
-        REQUEST=None):
+def manage_addVirtualGroup(*args, **kwargs):
     """Add a Virtual Group."""
-    if not asset_only:
-        if not mangle.Id(self, id).isValid():
-            return
-        if not hasattr(self, 'service_groups'):
-            raise AttributeError, "There is no service_groups"
-        if self.service_groups.isGroup(group_name):
-            raise ValueError, "There is already a group of that name."
-    object = VirtualGroup(id, group_name)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    # set the valid_path, this cannot be done in the constructor because the context
-    # is not known as the object is not inserted into the container.
-    object.valid_path = object.getPhysicalPath()
-    if not asset_only:
-        self.service_groups.addVirtualGroup(group_name)
-    add_and_edit(self, id, REQUEST)
-    return ''
+    return manage_addGroupUsingFactory(VirtualGroup, *args, **kwargs)
 
-def vgroup_will_be_removed(vgroup, event):
-    if vgroup.isValid() and hasattr(vgroup, 'service_groups'):
-        vgroup.service_groups.removeVirtualGroup(vgroup._group_name)
 

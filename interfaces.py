@@ -1137,24 +1137,24 @@ class IInvisibleService(Interface):
     """Marker interface for services that want to be not visible in
     the ZMI."""
 
-class IGroup(ISilvaObject):
-    def isValid():
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
-        """
-
-class IIPGroup(ISilvaObject):
-    def isValid():
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
-        """
+class IBaseGroup(ISilvaObject):
+    """A group implementation.
+    """
     
-class IVirtualGroup(ISilvaObject):
     def isValid():
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
+        """Returns whether the group asset is valid.
         """
+
+class IGroup(IBaseGroup):
+    """Simple Group with user in it.
+    """
+
+class IIPGroup(IBaseGroup):
+    """Group using IP as members.
+    """
+    
+class IVirtualGroup(IBaseGroup):
+    """Virtual group.
+    """
+
     

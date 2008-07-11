@@ -20,35 +20,41 @@ try:
 except ImportError, ie:
     pass
 
-from interfaces import ISilvaObject, IGroup
+import interfaces
 
-class Group(CatalogPathAware, SilvaObject, SimpleItem):
-    """Silva Group"""
-    security = ClassSecurityInfo()
+class BaseGroup(CatalogPathAware, SilvaObject, SimpleItem):
+
+    implements(interfaces.IBaseGroup)
 
     default_catalog = 'service_catalog'
-    meta_type = "Silva Group"
-
-    implements(IGroup)
+    security = ClassSecurityInfo()
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
     ) + SimpleItem.manage_options
-    
-    manage_main = PageTemplateFile('www/groupEdit', globals())
 
     def __init__(self, id, group_name):
-        Group.inheritedAttribute('__init__')(self, id)
+        BaseGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
         
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'isValid')
     def isValid(self):
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
+        """Returns whether the group asset is valid.
         """
         return (self.valid_path == self.getPhysicalPath())
+
+InitializeClass(BaseGroup)
+    
+class Group(BaseGroup):
+    """Silva Group"""
+
+    meta_type = "Silva Group"    
+    security = ClassSecurityInfo()
+
+    implements(interfaces.IGroup)
+
+    manage_main = PageTemplateFile('www/groupEdit', globals())
 
     # MANIPULATORS
     security.declareProtected(
@@ -104,28 +110,64 @@ class Group(CatalogPathAware, SilvaObject, SimpleItem):
 
 InitializeClass(Group)
 
-def manage_addGroup(self, id, title, group_name, asset_only=0, REQUEST=None):
-    """Add a Group."""
+def manage_addGroupUsingFactory(factory, context, id, title,
+                                group_name, asset_only=0, REQUEST=None):
+    """Add a Group using factory."""
     if not asset_only:
-        if not mangle.Id(self, id).isValid():
+        if not mangle.Id(context, id).isValid():
             return
         # these checks should also be repeated in the UI
-        if not hasattr(self, 'service_groups'):
+        if not hasattr(context, 'service_groups'):
             raise AttributeError, "There is no service_groups"
-        if self.service_groups.isGroup(group_name):
+        if context.service_groups.isGroup(group_name):
             raise ValueError, "There is already a group of that name."
-    object = Group(id, group_name)
-    self._setObject(id, object)
-    object = getattr(self, id)
+    object = factory(id, group_name)
+    context._setObject(id, object)
+    object = getattr(context, id)
     object.set_title(title)
     # set the valid_path, this cannot be done in the constructor because the context
     # is not known as the object is not inserted into the container.
     object.valid_path = object.getPhysicalPath()
     if not asset_only:
-        self.service_groups.addNormalGroup(group_name)
-    add_and_edit(self, id, REQUEST)
+        addGroupToService(context.service_groups, object)
+    add_and_edit(context, id, REQUEST)
     return ''
 
-def group_will_be_removed(group, event):        
+
+def manage_addGroup(*args, **kwargs):
+    """Add a Group.
+    """
+    return manage_addGroupUsingFactory(Group, *args, **kwargs)
+
+def group_will_be_removed(group, event):
+    """Unregister group when it's deleted.
+    """
     if group.isValid() and hasattr(group, 'service_groups'):
-        group.service_groups.removeNormalGroup(group._group_name)        
+        removeGroupFromService(group.service_groups, group)
+
+def addGroupToService(service, group):
+    """Register a group with the correct method.
+    """
+    
+    if interfaces.IGroup.providedBy(group):
+        service.addNormalGroup(group._group_name)
+    elif interfaces.IIPGroup.providedBy(group):
+        service.addIPGroup(group._group_name)
+    elif interfaces.IVirtualGroup.providedBy(group):
+        service.addVirtualGroup(group._group_name)
+    else:
+        raise ValueError, 'Unknown group while adding to the service'
+
+def removeGroupFromService(service, group):
+    """Remove a group with the correct method.
+    """
+    
+    if interfaces.IGroup.providedBy(group):
+        service.removeNormalGroup(group._group_name)
+    elif interfaces.IIPGroup.providedBy(group):
+        service.removeIPGroup(group._group_name)
+    elif interfaces.IVirtualGroup.providedBy(group):
+        service.removeVirtualGroup(group._group_name)
+    else:
+        raise ValueError, 'Unknown group while removing it from the service'
+

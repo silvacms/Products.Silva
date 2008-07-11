@@ -3,40 +3,24 @@
 # $Id: IPGroup.py,v 1.9 2006/01/25 18:13:30 faassen Exp $
 from zope.interface import implements
 
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from OFS.SimpleItem import SimpleItem
 # Silva
-from SilvaObject import SilvaObject
 import SilvaPermissions
-from Products.Silva import mangle
-# misc
-from helpers import add_and_edit
 
 from interfaces import IIPGroup
+from Group import BaseGroup, manage_addGroupUsingFactory
 
-class IPGroup(CatalogPathAware, SilvaObject, SimpleItem):
+class IPGroup(BaseGroup):
     """Silva IP Group"""
-    security = ClassSecurityInfo()
 
-    default_catalog = 'service_catalog'
-    meta_type = "Silva IP Group"
+    meta_type = "Silva IP Group"    
+    security = ClassSecurityInfo()
     
     implements(IIPGroup)
 
-    def __init__(self, id, group_name):
-        IPGroup.inheritedAttribute('__init__')(self, id)
-        self._group_name = group_name
-
-
-    def isValid(self):
-        """returns whether the group asset is valid
-
-            A group asset becomes invalid if it gets moved around ...
-        """
-        return (self.valid_path == self.getPhysicalPath())
+    manage_main = PageTemplateFile('www/ipGroupEdit', globals())
     
     # MANIPULATORS
     security.declareProtected(
@@ -90,28 +74,7 @@ class IPGroup(CatalogPathAware, SilvaObject, SimpleItem):
 
 InitializeClass(IPGroup)
 
-def ipgroup_will_be_removed(ipgroup, event):
-    if ipgroup.isValid() and hasattr(ipgroup, 'service_groups'):
-        ipgroup.service_groups.removeIPGroup(ipgroup._group_name)
-
-def manage_addIPGroup(self, id, title, group_name, asset_only=0,
-        REQUEST=None):
-    """Add a IP Group."""
-    if not asset_only:
-        if not mangle.Id(self, id).isValid():
-            return
-        if not hasattr(self, 'service_groups'):
-            raise AttributeError, "There is no service_groups"
-        if self.service_groups.isGroup(group_name):
-            raise ValueError, "There is already a group of that name."
-    object = IPGroup(id, group_name)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    # set the valid_path, this cannot be done in the constructor because the 
-    # context is not known as the object is not inserted into the container.
-    object.valid_path = object.getPhysicalPath()
-    if not asset_only:
-        self.service_groups.addIPGroup(group_name)
-    add_and_edit(self, id, REQUEST)
-    return ''
+def manage_addIPGroup(*args, **kwargs):
+    """Add a IP Group.
+    """
+    return manage_addGroupUsingFactory(IPGroup, *args, **kwargs)
