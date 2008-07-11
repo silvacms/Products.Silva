@@ -52,6 +52,7 @@ try:
 except ImportError:
     pass
 
+ZopeTestCase.installProduct('Groups')
 ZopeTestCase.installProduct('SilvaFind')
 ZopeTestCase.installProduct('SilvaMetadata')
 ZopeTestCase.installProduct('SilvaViews')
