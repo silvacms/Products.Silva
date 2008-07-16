@@ -32,7 +32,7 @@ class ImportResolver(etree.Resolver):
         if url.startswith("silvabase:"):
             return self.resolve_filename(self.import_dir + url[10:], context)
     
-class XSLTRendererBase(Acquisition.Implicit):
+class XSLTRendererBase:
 
     implements(IRenderer)
 
@@ -67,7 +67,7 @@ class XSLTRendererBase(Acquisition.Implicit):
         if self._stylesheet is None:
             f = open(self._stylesheet_path)
             parser = etree.XMLParser()
-            parser.resolvers.add(ImportResolver(self._import_dir))
+            #parser.resolvers.add(ImportResolver(self._import_dir))
             xslt_doc = etree.parse(f, parser)
             f.close()
             self._stylesheet = etree.XSLT(xslt_doc)
