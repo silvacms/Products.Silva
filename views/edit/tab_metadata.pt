@@ -13,7 +13,13 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
-  
+
+<metal:block fill-slot="script">
+  <script type="text/javascript"
+            tal:attributes="src here/reference.js/absolute_url">
+  </script>
+</metal:block>
+
 <metal:block metal:fill-slot="middleground">
   <metal:block use-macro="here/macro_middleground/macros/properties" />
 </metal:block>
