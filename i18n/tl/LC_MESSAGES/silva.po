@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
+"POT-Creation-Date: Tue Jul 29 18:36:23 2008\n"
 "PO-Revision-Date: 2008-02-08 15:59+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Tagalog <tl@li.org>\n"
@@ -39,20 +39,9 @@ msgstr ""
 msgid "Changed settings."
 msgstr ""
 
-#: /File.py:176 /views/edit/Container/docma_queue.pt:166
+#: /File.py:173 /views/edit/Container/docma_queue.pt:166
 #: /views/edit/Container/docma_queue.pt:191
 msgid "download"
-msgstr ""
-
-#: /File.py:47
-msgid ""
-"Any digital file can be uploaded as Silva content. \n"
-"       For instance large files such as pdf docs or mpegs can be placed in "
-"a\n"
-"       site. File objects have metadata as well. \n"
-"       <!-- Abstract base class. Depends on a _file attribute and various \n"
-"       methods in the concrete subclasses. (sorry) -->\n"
-"    "
 msgstr ""
 
 #: /Folder.py:326 /Folder.py:388
@@ -452,91 +441,90 @@ msgstr ""
 msgid "quota"
 msgstr ""
 
-#: /globals/accesskeys.pt:103
-msgid ""
-"${listing_body}<br /> p &nbsp; Select list for position number<br /> m "
-"&nbsp; move"
-msgstr ""
-
 #: /globals/accesskeys.pt:104
 msgid "Listing body"
 msgstr ""
 
-#: /globals/accesskeys.pt:109
+#: /globals/accesskeys.pt:105
 msgid ""
-"${listing_footer}<br /> a &nbsp; select all<br /> r &nbsp; rename<br /> d "
-"&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
-"paste<br /> g &nbsp; paste as ghost"
+"${listing_body}${br} p &nbsp; Select list for position number${br} m &nbsp; "
+"move"
 msgstr ""
 
 #: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
 msgid "Listing footer"
 msgstr ""
 
+#: /globals/accesskeys.pt:116
+msgid ""
+"${listing_footer}${br} a &nbsp; select all${br} r &nbsp; rename${br} d "
+"&nbsp; delete${br} x &nbsp; cut${br} c &nbsp; copy${br} v &nbsp; paste${br} "
+"g &nbsp; paste as ghost"
+msgstr ""
+
 #: /globals/accesskeys.pt:120
 msgid "Preview screen"
 msgstr ""
 
-#: /globals/accesskeys.pt:122
-msgid "; &nbsp; See public preview<br />"
+#: /globals/accesskeys.pt:123
+msgid "; &nbsp; See public preview${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:126
 msgid "Publish screen (folder)"
 msgstr ""
 
-#: /globals/accesskeys.pt:129
-msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
+#: /globals/accesskeys.pt:131
+msgid "${listing_header}${br} i &nbsp; import${br} e &nbsp; Export"
 msgstr ""
 
-#: /globals/accesskeys.pt:135
+#: /globals/accesskeys.pt:144
 msgid ""
-"${listing_footer}<br /> a &nbsp; select all<br /> n &nbsp; create new "
-"vesions<br /> j &nbsp; reject (request for approval)<br /> v &nbsp; revoke "
-"(request for approval)<br /> c &nbsp; close (public version)<br /> l &nbsp; "
-"approve for later<br /> u &nbsp; update settings<br /> p &nbsp; publish "
-"now<br />"
+"${listing_footer}${br} a &nbsp; select all${br} n &nbsp; create new vesions"
+"${br} j &nbsp; reject (request for approval)${br} v &nbsp; revoke (request "
+"for approval)${br} c &nbsp; close (public version)${br} l &nbsp; approve for "
+"later${br} u &nbsp; update settings${br} p &nbsp; publish now${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:147
 msgid "Add screen"
 msgstr ""
 
-#: /globals/accesskeys.pt:149
-msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
+#: /globals/accesskeys.pt:151
+msgid "c &nbsp; cancel${br} a &nbsp; add${br} e &nbsp; add and edit/enter"
 msgstr ""
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"
 msgstr ""
 
-#: /globals/accesskeys.pt:157
+#: /globals/accesskeys.pt:161
 msgid ""
-"( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
-"preview<br /> p &nbsp; publish now<br />"
-msgstr ""
-
-#: /globals/accesskeys.pt:165
-msgid ""
-"${kupu_editor}<br /> b &nbsp; bold<br /> i &nbsp; italic<br /> u &nbsp; "
-"underline<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # &nbsp; "
-"numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; definition "
-"list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; html source<br />"
+"( &nbsp; forms editor${br} ) &nbsp; Kupu editor${br} ; &nbsp; public preview"
+"${br} p &nbsp; publish now${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:166
 msgid "Kupu editor"
 msgstr ""
 
-#: /globals/accesskeys.pt:181
+#: /globals/accesskeys.pt:177
 msgid ""
-"${forms_editor}<br /> s &nbsp; save<br /> e &nbsp; save and exit<br /> i "
-"&nbsp; save and insert<br /> tab Use your tab key to edit without using the "
-"mouse. Shift-tab goes backwards."
+"${kupu_editor}${br} b &nbsp; bold${br} i &nbsp; italic${br} u &nbsp; "
+"underline${br} - &nbsp; subscript${br} + &nbsp; superscript${br} # &nbsp; "
+"numbered list${br} * &nbsp; bulleted list${br} = &nbsp; definition list${br} "
+"z &nbsp; undo${br} y &nbsp; redo${br} h &nbsp; html source${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:182
 msgid "Forms editor"
+msgstr ""
+
+#: /globals/accesskeys.pt:185
+msgid ""
+"${forms_editor}${br} s &nbsp; save${br} e &nbsp; save and exit${br} i &nbsp; "
+"save and insert${br} tab Use your tab key to edit without using the mouse. "
+"Shift-tab goes backwards."
 msgstr ""
 
 #: /globals/accesskeys.pt:189
@@ -549,7 +537,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
-#: /views/edit/VersionedContent/tab_status_macros.pt:336
+#: /views/edit/VersionedContent/tab_status_macros.pt:331
 #: /views/edit/Container/tab_edit_rename.pt:121
 msgid "access key: alt-r"
 msgstr ""
@@ -623,17 +611,16 @@ msgstr ""
 msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
 msgstr ""
 
-#: /globals/accesskeys.pt:232
-msgid ""
-"Managers can do the same and create a <a href=\"javascript:window.location."
-"pathname=(window.location.pathname +'/manage_main').replace(/\\/\\//,'/')\" "
-"name=\"manage\">manage...</a> bookmark."
+#: /globals/accesskeys.pt:233
+msgid "Managers can do the same and create a ${manage} bookmark."
 msgstr ""
 
-#: /globals/accesskeys.pt:236
-msgid ""
-"Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
-"rich</a> for this trick."
+#: /globals/accesskeys.pt:233
+msgid "manage..."
+msgstr ""
+
+#: /globals/accesskeys.pt:237
+msgid "Thanks to ${eth_zuerich} for this trick."
 msgstr ""
 
 #: /globals/accesskeys.pt:242
@@ -642,9 +629,9 @@ msgstr ""
 
 #: /globals/accesskeys.pt:244
 msgid ""
-"${tip_for_mozilla_users}<br /> Using the &#8220;Find As You Type&#8221; "
+"${tip_for_mozilla_users}${br} Using the &#8220;Find As You Type&#8221; "
 "feature will make keyboard navigation to hyperlinks &#8211; such as item "
-"names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
+"names &#8211; remarkably easy. See:${br} ${typeaheadfind_link}"
 msgstr ""
 
 #: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:81
@@ -653,7 +640,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:251
 msgid ""
-"The most up to date documentation can be found at:<br /> "
+"The most up to date documentation can be found at:${br} "
 "${silva_documentation_link}"
 msgstr ""
 
@@ -673,7 +660,7 @@ msgid "Feedback"
 msgstr ""
 
 #: /globals/accesskeys.pt:261
-msgid "<br /> ${contact}<br /> ${feedback} is welcome."
+msgid "${br} ${contact}${br} ${feedback} is welcome."
 msgstr ""
 
 #: /globals/accesskeys.pt:28
@@ -700,13 +687,11 @@ msgid "Save time, energy, and wrists by keying to your destination."
 msgstr ""
 
 #: /globals/accesskeys.pt:49
-msgid "see below"
+msgid "The most useful access keys are for screen navigation, ${see_below}."
 msgstr ""
 
 #: /globals/accesskeys.pt:49
-msgid ""
-"The most useful access keys are for screen navigation, <a title=\"x\" href="
-"\"#nav\">x</a>."
+msgid "see below"
 msgstr ""
 
 #: /globals/accesskeys.pt:56
@@ -717,64 +702,64 @@ msgstr ""
 msgid "The following access keys are available in every Silva screen."
 msgstr ""
 
-#: /globals/accesskeys.pt:62
-msgid ""
-"${general}<br /> t &nbsp; Jump to top of page<br /> b &nbsp; Jump to bottom "
-"of page<br /> / &nbsp; Jump to top of Silva (Silva icon)<br /> ? &nbsp; "
-"Access keys and shortcuts"
-msgstr ""
-
 #: /globals/accesskeys.pt:63
 msgid "General"
+msgstr ""
+
+#: /globals/accesskeys.pt:66
+msgid ""
+"${general}${br} t &nbsp; Jump to top of page${br} b &nbsp; Jump to bottom of "
+"page${br} / &nbsp; Jump to top of Silva (Silva icon)${br} ? &nbsp; Access "
+"keys and shortcuts"
 msgstr ""
 
 #: /globals/accesskeys.pt:69
 msgid "Changing screens with the tabs"
 msgstr ""
 
-#: /globals/accesskeys.pt:69
+#: /globals/accesskeys.pt:70
 msgid ""
-"${changing_screens_with_tabs}<br /> The tabs have numbered access keys, "
+"${changing_screens_with_tabs}${br}The tabs have numbered access keys, "
 "starting from one going up to five. You can navigate horizontally accross an "
 "item&#8217;s screens by using alt-1, alt-2, and so forth."
 msgstr ""
 
-#: /globals/accesskeys.pt:73
+#: /globals/accesskeys.pt:74
 msgid ""
-"Each tab has a toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" alt="
-"\"tree\" />, the tall tree on the left side. It takes you to the top of the "
-"current publication, within the same tab, or &#8216;vein&#8217;. The access "
-"key is the shift character of the corresponding number (on the English "
-"keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, "
-"alt-$, and alt-% (note that the characters resemble the number)."
+"Each tab has a toplink ${img}, the tall tree on the left side. It takes you "
+"to the top of the current publication, within the same tab, or &#8216;"
+"vein&#8217;. The access key is the shift character of the corresponding "
+"number (on the English keyboard, sorry if you have an international one). "
+"Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters "
+"resemble the number)."
 msgstr ""
 
-#: /globals/accesskeys.pt:76
+#: /globals/accesskeys.pt:77
 msgid ""
-"On the right of each tab is an uplink <img src=\"up_level.gif\" height=\"9\" "
-"width=\"9\" alt=\"bush\" />, a small tree that takes you up one level in the "
-"same vein. The access keys for the uplinks are the remaining numbers (add "
-"five to the access key for the tab). If you are in a screen with five tabs, "
-"the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less "
-"than five tabs, you still add five to get the uplink key."
-msgstr ""
-
-#: /globals/accesskeys.pt:80
-msgid "${footer_page_info_row}<br /> : &nbsp; See public page<br />"
+"On the right of each tab is an uplink ${img}, a small tree that takes you up "
+"one level in the same vein. The access keys for the uplinks are the "
+"remaining numbers (add five to the access key for the tab). If you are in a "
+"screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-"
+"0. If there are less than five tabs, you still add five to get the uplink "
+"key."
 msgstr ""
 
 #: /globals/accesskeys.pt:81
 msgid "Footer page info row"
 msgstr ""
 
-#: /globals/accesskeys.pt:85
-msgid ""
-"${footer_user_row}<br /> ~ &nbsp; User settings<br /> &nbsp;, &nbsp; Request "
-"access<br /> q &nbsp; Logout"
+#: /globals/accesskeys.pt:82
+msgid "${footer_page_info_row}${br} : &nbsp; See public page${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:86
 msgid "Footer user row"
+msgstr ""
+
+#: /globals/accesskeys.pt:88
+msgid ""
+"${footer_user_row}${br} ~ &nbsp; User settings${br} &nbsp;, &nbsp; Request "
+"access${br} q &nbsp; Logout"
 msgstr ""
 
 #: /globals/accesskeys.pt:9
@@ -785,14 +770,14 @@ msgstr ""
 msgid "Contents screen (folder)"
 msgstr ""
 
-#: /globals/accesskeys.pt:95
-msgid ""
-"${listing_header}<br /> n &nbsp; new<br /> s &nbsp; select list for a new "
-"object<br /> i &nbsp; import<br /> e &nbsp; export"
-msgstr ""
-
 #: /globals/accesskeys.pt:96 /globals/accesskeys.pt:130
 msgid "Listing header"
+msgstr ""
+
+#: /globals/accesskeys.pt:99
+msgid ""
+"${listing_header}${br} n &nbsp; new${br} s &nbsp; select list for a new "
+"object${br} i &nbsp; import${br} e &nbsp; export"
 msgstr ""
 
 #: /globals/copyright.pt:17 /globals/reference.pt:22
@@ -839,8 +824,8 @@ msgstr ""
 
 #: /globals/reference.pt:139
 msgid ""
-"<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
-"2007 Infrae. All rights reserved."
+"${br} ${br} ${silva_icon} ${silva_version}${br} &#xa9; Copyright 2001-2007 "
+"Infrae. All rights reserved."
 msgstr ""
 
 #: /globals/reference.pt:39
@@ -852,7 +837,7 @@ msgid "Credits"
 msgstr ""
 
 #: /globals/reference.pt:67
-msgid "Silva is developed by ${infrae} and many others. <br />"
+msgid "Silva is developed by ${infrae} and many others. ${br}"
 msgstr ""
 
 #: /globals/reference.pt:70
@@ -968,7 +953,7 @@ msgid "file"
 msgstr ""
 
 #: /views/add/File/form.form:68
-msgid "<b>Tip:</b> You don't have to fill in the id and title."
+msgid "Tip: You don't have to fill in the id and title."
 msgstr ""
 
 #: /views/add/Folder/form.form:59
@@ -1015,10 +1000,11 @@ msgstr ""
 msgid "Location of originating folder."
 msgstr ""
 
+# Default: "id"
 #: /views/add/Groups/add_submit.py:39
 msgid ""
 "There's already a Group with the name ${id} in this Silva\n"
-"        site.<br />In contrast to other Silva objects, Group IDs must be\n"
+"        site. In contrast to other Silva objects, Group IDs must be\n"
 "        unique within a Silva instance."
 msgstr ""
 
@@ -1030,8 +1016,8 @@ msgstr ""
 
 #: /views/add/Image/form.form:48
 msgid ""
-"Fill in a title. It&#8217;ll be used for the <abbr title=\"Alternative text"
-"\">ALT</abbr> text of the image."
+"Fill in a title. It&#8217;ll be used for the ALT (Alternative text) "
+"attribute of the image."
 msgstr ""
 
 #: /views/add/Link/form.form:63
@@ -1100,7 +1086,7 @@ msgstr ""
 #: /views/add/add_form.pt:150 /views/add/GhostFolder/add_form.pt:137
 #: /views/add/Ghost/add_form.pt:134 /views/edit/Asset/File/tab_edit.pt:97
 #: /views/edit/Asset/Image/tab_edit.pt:177
-#: /views/edit/VersionedContent/tab_status_macros.pt:418
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56
 #: /views/edit/Container/tab_edit_rename.pt:129
 msgid "access key: alt-c"
@@ -1160,52 +1146,56 @@ msgstr ""
 msgid ""
 "Sorry, strange characters are in the id. It should only\n"
 "        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; or \n"
-"        &#8216;.&#8217;<br />Spaces are not allowed in Internet addresses, \n"
+"        &#8216;.&#8217; Spaces are not allowed in Internet addresses, \n"
 "        and the id should start with a letter or digit."
 msgstr ""
 
+# Default: "prefix"
 #: /views/add/get_id_status_text.py:25
 msgid ""
-"Sorry, ids starting with ${prefix} are reserved for\n"
-"        internal use.<br />Please use another id."
+"Sorry, ids starting with ${prefix} are reserved for internal use. Please use "
+"another id."
 msgstr ""
 
+# Default: "id"
 #: /views/add/get_id_status_text.py:30
 msgid ""
-"Sorry, the id ${id} is reserved for internal use.<br />\n"
-"        Please use another id."
+"Sorry, the id ${id} is reserved for internal use. Please use another id."
 msgstr ""
 
+# Default: "id"
 #: /views/add/get_id_status_text.py:34
 msgid ""
-"There is already an object with the id ${id} in this \n"
-"        folder.<br />Please use a different one."
+"There is already an object with the id ${id} in this folder. Please use a "
+"different one."
 msgstr ""
 
+# Default: "id"
 #: /views/add/get_id_status_text.py:39
 msgid ""
-"There is already an asset with the id ${id} in this \n"
-"        folder.<br />Please use another id."
+"There is already an asset with the id ${id} in this folder. Please use "
+"another id."
 msgstr ""
 
+# Default: "id"
 #: /views/add/get_id_status_text.py:44
 msgid ""
-"Sorry, the id ${id} ends with invalid characters.<br />\n"
-"        Please use another id."
+"Sorry, the id ${id} ends with invalid characters. Please use another id."
 msgstr ""
 
-#: /views/add/get_id_status_text.py:49
+# Default: "id"
+#: /views/add/get_id_status_text.py:48
 msgid ""
-"Sorry, the id ${id} is already in use by a Zope object.<br />\n"
-"        Please use another id."
+"Sorry, the id ${id} is already in use by a Zope object. Please use another "
+"id."
 msgstr ""
 
-#: /views/add/get_id_status_text.py:55
+# Default: "status_code"
+#: /views/add/get_id_status_text.py:54
 msgid ""
-"(Internal Error): An invalid status ${status_code} occured \n"
-"    while checking the id ${id}.<br />Please contact the person "
-"responsible \n"
-"    for this Silva installation or file a bug report."
+"(Internal Error): An invalid status ${status_code} occured while checking "
+"the id ${id}. Please contact the person responsible for this Silva "
+"installation or file a bug report."
 msgstr ""
 
 #: /views/edit/Asset/File/form.form:30
@@ -1287,11 +1277,11 @@ msgid "User(s) ${removed} removed from group."
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/tab_edit.pt:119
-msgid "copy users from group(s)"
+msgid "transfer members from selected groups"
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/tab_edit.pt:119
-msgid "transfer members from selected groups"
+msgid "copy users from group(s)"
 msgstr ""
 
 #: /views/edit/Asset/Groups/Group/tab_edit.pt:23
@@ -1380,11 +1370,11 @@ msgid "add ip range"
 msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:153
-msgid "copy ips to ip group"
+msgid "transfer ip(s) to this ip group"
 msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:153
-msgid "transfer ip(s) to this ip group"
+msgid "copy ips to ip group"
 msgstr ""
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:22
@@ -1504,11 +1494,11 @@ msgid "predefined sizes"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:129
-msgid "50x50 pixel"
+msgid "50x50 pixels"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:129
-msgid "50x50 pixels"
+msgid "50x50 pixel"
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:139
@@ -2000,8 +1990,9 @@ msgstr ""
 msgid "added ${succeeded}"
 msgstr ""
 
+# Default: "failed"
 #: /views/edit/Container/import_archive_file.py:42
-msgid "<span class=\"warning\">could not add: ${failed}</span>"
+msgid "could not add: ${failed}"
 msgstr ""
 
 #: /views/edit/Container/import_archive_file.py:47
@@ -2037,9 +2028,10 @@ msgstr ""
 msgid "Approval on: ${ids}"
 msgstr ""
 
+# Default: "ids"
 #: /views/edit/Container/open_now.py:52
 #: /views/edit/Container/tab_status_approve.py:94
-msgid "<span class=\"error\">could not approve: ${ids}</span>"
+msgid "could not approve: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups.pt:107
@@ -2114,14 +2106,13 @@ msgstr ""
 msgid "Nothing was selected, so nothing was deleted."
 msgstr ""
 
+# Default: "deleted_ids"
 #: /views/edit/Container/tab_access_groups_delete.py:23
-msgid ""
-"Deleted ${deleted_ids}, <span class=\"error\">but could not delete "
-"${not_deleted_ids}.</span>"
+msgid "Deleted ${deleted_ids}, but could not delete ${not_deleted_ids}."
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups_delete.py:29
-#: /views/edit/Container/tab_edit_delete.py:36
+#: /views/edit/Container/tab_edit_delete.py:41
 msgid "Deleted ${deleted_ids}."
 msgstr ""
 
@@ -2234,11 +2225,11 @@ msgid "cut items: alt-x"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:511
-msgid "copy"
+msgid "copy items: alt-c"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:511
-msgid "copy items: alt-c"
+msgid "copy"
 msgstr ""
 
 #: /views/edit/Container/tab_edit.pt:528
@@ -2312,9 +2303,10 @@ msgstr ""
 msgid "Closed: ${ids}"
 msgstr ""
 
+# Default: "ids"
 #: /views/edit/Container/tab_edit_close.py:43
 #: /views/edit/Container/tab_status_close.py:52
-msgid "<span class=\"error\">could not close: ${ids}</span>"
+msgid "could not close: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_copy.py:16
@@ -2329,10 +2321,10 @@ msgstr ""
 msgid "Nothing was selected, so nothing was cut."
 msgstr ""
 
+# Default: "cut_ids"
 #: /views/edit/Container/tab_edit_cut.py:31
 msgid ""
-"Placed ${cut_ids} on clipboard for cutting, <span class=\"error\">but could "
-"not cut ${not_cut_ids}.</span>"
+"Placed ${cut_ids} on clipboard for cutting, but could not cut ${not_cut_ids}."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_cut.py:36
@@ -2343,15 +2335,15 @@ msgstr ""
 msgid "Could not place ${not_cut_ids} on clipboard for cutting."
 msgstr ""
 
+# Default: "deleted_ids"
 #: /views/edit/Container/tab_edit_delete.py:31
 msgid ""
-"Deleted ${deleted_ids}, <span class=\"error\">but could not delete "
-"${not_deleted_ids}. Probably there is a published version that must be "
-"closed, or an approved version that needs to be revoked. Change the status "
-"in the Publish screen (alt-5).</span>"
+"Deleted ${deleted_ids}, but could not delete ${not_deleted_ids}. Probably "
+"there is a published version that must be closed, or an approved version "
+"that needs to be revoked. Change the status in the Publish screen (alt-5)."
 msgstr ""
 
-#: /views/edit/Container/tab_edit_delete.py:40
+#: /views/edit/Container/tab_edit_delete.py:45
 msgid ""
 "Could not delete ${not_deleted_ids}. Possibly there is a published version, "
 "which must be closed before it can be deleted. Or, the document is approved "
@@ -2551,8 +2543,9 @@ msgstr ""
 msgid "Object(s) ${ids} moved"
 msgstr ""
 
+# Default: "ids"
 #: /views/edit/Container/tab_edit_move_to.py:45
-msgid ", <span class=\"error\">but could not move ${ids}</span>"
+msgid ", but could not move ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_move_to.py:51
@@ -2773,8 +2766,9 @@ msgstr ""
 msgid "Changed settings on: ${ids}"
 msgstr ""
 
+# Default: "ids"
 #: /views/edit/Container/tab_status_change_settings.py:109
-msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
+msgid "could not change settings on: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_change_settings.py:16
@@ -2974,9 +2968,10 @@ msgstr ""
 msgid "Request approval for: ${ids}"
 msgstr ""
 
+# Default: "ids"
 #: /views/edit/Container/tab_status_request_approval.py:92
 #: /views/edit/Container/tab_status_request_approval_now.py:86
-msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
+msgid "No request for approval on: ${ids}"
 msgstr ""
 
 #: /views/edit/Container/tab_status_revoke.py:16
@@ -3586,27 +3581,23 @@ msgstr ""
 msgid "add message on"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:302
+#: /views/edit/VersionedContent/tab_status_macros.pt:301
 msgid "rejection"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:305
-msgid "x x x"
-msgstr ""
-
-#: /views/edit/VersionedContent/tab_status_macros.pt:305
+#: /views/edit/VersionedContent/tab_status_macros.pt:302
 msgid "withdrawal"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:309
+#: /views/edit/VersionedContent/tab_status_macros.pt:304
 msgid "The message may be viewed by local users."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:328
+#: /views/edit/VersionedContent/tab_status_macros.pt:323
 msgid "reject approval request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:328
+#: /views/edit/VersionedContent/tab_status_macros.pt:323
 msgid "access key: alt-j"
 msgstr ""
 
@@ -3614,15 +3605,15 @@ msgstr ""
 msgid "Publication time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:336
+#: /views/edit/VersionedContent/tab_status_macros.pt:331
 msgid "withdraw approval request"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:369
+#: /views/edit/VersionedContent/tab_status_macros.pt:364
 msgid "If further editing is required, first revoke the approval."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:378
+#: /views/edit/VersionedContent/tab_status_macros.pt:373
 msgid "access key: alt-v"
 msgstr ""
 
@@ -3630,17 +3621,17 @@ msgstr ""
 msgid "Publication and expiration time of public version"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:402
+#: /views/edit/VersionedContent/tab_status_macros.pt:397
 msgid "manual close"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:409
+#: /views/edit/VersionedContent/tab_status_macros.pt:404
 msgid ""
 "If necessary, the published version of this content can be manually closed "
 "(taken offline). It will also be removed from the public index."
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status_macros.pt:418
+#: /views/edit/VersionedContent/tab_status_macros.pt:413
 msgid "close published version"
 msgstr ""
 
@@ -4002,8 +3993,8 @@ msgstr ""
 
 #: /views/edit/macro_view_metadata.pt:145
 #: /views/edit/VersionedContent/macro_tab_edit.pt:127
-#: /views/edit/VersionedContent/tab_status_macros.pt:360
-#: /views/edit/VersionedContent/tab_status_macros.pt:378
+#: /views/edit/VersionedContent/tab_status_macros.pt:355
+#: /views/edit/VersionedContent/tab_status_macros.pt:373
 msgid "revoke approval"
 msgstr ""
 
@@ -4051,11 +4042,11 @@ msgid "cancel the automatic save action: alt-c"
 msgstr ""
 
 #: /views/edit/promptWindow.pt:44
-msgid " save "
+msgid "save the document you were working on: alt-s"
 msgstr ""
 
 #: /views/edit/promptWindow.pt:44
-msgid "save the document you were working on: alt-s"
+msgid " save "
 msgstr ""
 
 #: /views/edit/save_metadata.py:15
@@ -4333,11 +4324,11 @@ msgid "Select a renderer to render this content."
 msgstr ""
 
 #: /views/edit/tab_settings.pt:153
-msgid "change renderer"
+msgid "change renderer: alt-c"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:153
-msgid "change renderer: alt-c"
+msgid "change renderer"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:175
@@ -4667,11 +4658,11 @@ msgid "Silva top: alt-/"
 msgstr ""
 
 #: /views/macro_tabs.pt:54
-msgid "&middot; manage..."
+msgid "Zope manage_main: alt-."
 msgstr ""
 
 #: /views/macro_tabs.pt:54
-msgid "Zope manage_main: alt-."
+msgid "&middot; manage..."
 msgstr ""
 
 #: /views/macro_tabs.pt:69 /views/macro_index.pt:225
