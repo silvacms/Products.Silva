@@ -116,12 +116,12 @@
     </td>
    </tr>
 
-   <div class="info" metal:fill-slot="right-column" i18n:translate="">
+   <div class="info" metal:fill-slot="right-column">
     <h3 i18n:translate="">
       <img tal:replace="structure icon" i18n:name="icon"/>
       AutoTOC
     </h3>
-    <p>An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector.</p>
+    <p i18n:translate="">An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector.</p>
    </div>
 
   </metal:use-macro>
