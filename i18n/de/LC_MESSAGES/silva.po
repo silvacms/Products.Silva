@@ -4,14 +4,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-04-27 21:22+0000\n"
-"Last-Translator: 123vier <Unknown>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-06-24 11:01+0000\n"
+"Last-Translator: Irene Fellner <irene.fellner@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: de\n"
 "Domain: silva\n"
@@ -20,6 +20,7 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 
 #: /AutoTOC.py:24
+#, fuzzy
 msgid ""
 "This is a special document type that automatically generates\n"
 "       a Table of Contents. Usually it's used as the 'index' document of a\n"
@@ -28,10 +29,17 @@ msgid ""
 "selection\n"
 "       of Silva content types including assets."
 msgstr ""
+"Das ist ein spezieller Typ eines Dokuments zur automatischen Erzeugung \n"
+"       eines Inhaltsverzeichnisses (TOC). Üblicherweise wird es als 'index'-"
+"Dokument eines\n"
+"       Folders verwendet. Dann zeigt der übergeordnete Folder ein TOC beim "
+"Zugriff an (z.B.\n"
+"       http://www.x.yz/silva/myFolder/). Der AutoTOC can jede Auswahl von\n"
+"       Silva Inhaltstypen inklusive Assets anzeigen."
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr "Keine Verbindung"
+msgstr "Nicht verbunden"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
@@ -204,7 +212,7 @@ msgstr ""
 
 #: /Publication.py:118
 msgid "You are overquota."
-msgstr ""
+msgstr "Sie haben Ihren maximalen Speicherplatz überschritten."
 
 #: /Publication.py:48
 msgid ""
@@ -384,11 +392,11 @@ msgstr "Vorgang abbrechen: alt-c"
 
 #: /browser/object_lookup.pt:452
 msgid "place reference to container..."
-msgstr ""
+msgstr "erstelle eine Referenz auf den Container ..."
 
 #: /browser/object_lookup.pt:452
 msgid "insert a reference to this container: alt-c"
-msgstr ""
+msgstr "Einfügen einer Referenz auf diesen Container: alt-c"
 
 #: /browser/viewerrole.py:44
 msgid "Minimum role to access has not changed"
@@ -509,7 +517,7 @@ msgstr ""
 
 #: /doc/silva-quota.xml:37
 msgid "quota"
-msgstr ""
+msgstr "Kontingent"
 
 #: /globals/accesskeys.pt:103
 msgid ""
@@ -1170,7 +1178,7 @@ msgstr "Erzeuge ${meta_type}"
 
 #: /views/add/GhostFolder/add_form.pt:78
 msgid "creation may take a while"
-msgstr ""
+msgstr "Erschafung kann einige Zeit in Anspruch nehmen"
 
 #: /views/add/GhostFolder/add_form.pt:78
 msgid ""
@@ -1249,7 +1257,7 @@ msgstr "Erster Eintrag"
 #: /views/edit/tab_subscriptions.pt:106
 #: /views/edit/Member/SimpleMember/tab_edit.pt:103
 msgid "* required"
-msgstr ""
+msgstr "* Pflichtfeld"
 
 #: /views/add/add_form.pt:130 /views/add/GhostFolder/add_form.pt:117
 #: /views/add/Ghost/add_form.pt:114
@@ -1428,7 +1436,7 @@ msgstr "Eingenschaften geändert: ${changed}"
 
 #: /views/edit/Asset/File/tab_edit.pt:17
 msgid "${icon} file info"
-msgstr ""
+msgstr "${icon} Datei-Info"
 
 #: /views/edit/Asset/File/tab_edit.pt:22
 msgid "file mime type"
@@ -1559,23 +1567,23 @@ msgstr "Bereich(e) ${removed} wurden aus der Gruppe entfernt."
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:108
 msgid "ip range${asterisk}"
-msgstr ""
+msgstr "IP-Bereich${asterisk}"
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:117
 msgid "Can be:"
-msgstr ""
+msgstr "Kann sein:"
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:118
 msgid "IP&nbsp;(like: 10.1.1.1),"
-msgstr ""
+msgstr "IP&nbsp;(z.B.: 10.1.1.1),"
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:119
 msgid "IP-IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or"
-msgstr ""
+msgstr "IP-IP&nbsp;(z.B.:&nbsp;10.1.1.1-10.1.1.255) oder"
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:120
 msgid "IP/Netmask&nbsp;(like:&nbsp;10.1.1.0/255.255.255.0)."
-msgstr ""
+msgstr "IP/Netzmaske&nbsp;(z.B.:&nbsp;10.1.1.0/255.255.255.0)."
 
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:128
 msgid "add an ip or an ip range"
@@ -1856,7 +1864,7 @@ msgstr "Dimensionen"
 
 #: /views/edit/Asset/Image/tab_edit.pt:55
 msgid "scaled to ${WxH} pixels"
-msgstr ""
+msgstr "skaliert auf ${WxH} Pixel"
 
 #: /views/edit/Asset/Image/tab_edit.pt:64
 msgid "original"
@@ -1954,7 +1962,7 @@ msgstr "Status von &#xab;${title}&#xbb;"
 
 #: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
 msgid "A ${type} automatically has a published state."
-msgstr ""
+msgstr "A ${type} hat automatisch ein Veröffentlichungsdatum."
 
 #: /views/edit/Asset/tab_subscriptions.pt:29
 #: /views/edit/Content/tab_subscriptions.pt:29
@@ -2449,7 +2457,7 @@ msgstr "ausgewählte Objekte verschieben nach"
 
 #: /views/edit/Container/tab_edit.pt:459
 msgid "position:"
-msgstr ""
+msgstr "Position"
 
 #: /views/edit/Container/tab_edit.pt:470
 msgid "end"
@@ -3113,11 +3121,11 @@ msgstr "Wenn nicht markiert, werden alle Versionen exportiert."
 
 #: /views/edit/Container/tab_status_export.pt:168
 msgid "select an export format"
-msgstr ""
+msgstr "Wähle ein Export-Format"
 
 #: /views/edit/Container/tab_status_export.pt:192
 msgid "Select the format which is going to used to export."
-msgstr ""
+msgstr "Wählen Sie das Format für den Export aus."
 
 #: /views/edit/Container/tab_status_export.pt:230
 msgid "export to Silva xml (.xml) ${or_pdf}"
@@ -3313,7 +3321,7 @@ msgstr "Nicht bisher :)"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:108
 msgid "save changes"
-msgstr ""
+msgstr "Änderungen Speichern"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:121
 msgid "${icon} AutoTOC"
@@ -3709,7 +3717,7 @@ msgstr "Die ausgewählten Versionen nebeneinander darstellen: alt-="
 
 #: /views/edit/VersionedContent/tab_status.pt:285
 msgid "${icon} document info"
-msgstr ""
+msgstr "${icon} Dokumenten Info"
 
 #: /views/edit/VersionedContent/tab_status.pt:292
 msgid "Content is a draft and never published"
@@ -4676,7 +4684,7 @@ msgstr "wechseln der Grafikschablone: alt-c"
 
 #: /views/edit/tab_settings.pt:175
 msgid "atom/rss feeds"
-msgstr ""
+msgstr "Atom/RSS Ticker"
 
 #: /views/edit/tab_settings.pt:183
 msgid "allow feeds"
@@ -4700,7 +4708,7 @@ msgstr "Ändern der Feed-Einstellungen: alt-f"
 
 #: /views/edit/tab_settings.pt:229
 msgid "used space"
-msgstr ""
+msgstr "verwendeter Platz"
 
 #: /views/edit/tab_settings.pt:236
 msgid "space used in this folder"
@@ -4802,11 +4810,11 @@ msgstr ""
 
 #: /views/edit/tab_subscriptions.pt:166
 msgid "This object can not be subscribed to."
-msgstr ""
+msgstr "Dieses Objekz kann nicht Aboniert werden"
 
 #: /views/edit/tab_subscriptions.pt:170
 msgid "This object can be subscribed to."
-msgstr ""
+msgstr "Dieses Objekt kann Aboniert werden"
 
 #: /views/edit/tab_subscriptions.pt:181
 msgid "Other subscriptions"
@@ -5105,7 +5113,7 @@ msgstr "An dieser Stelle eine Rolle beantragen"
 
 #: /views/public/request_roles.pt:43
 msgid "Please fill in the following fields."
-msgstr ""
+msgstr "Bitte die folgenden Felder ausfüllen."
 
 #: /views/public/request_roles.pt:48
 #: /views/edit/Member/SimpleMember/memberform.form:28
@@ -5270,23 +5278,17 @@ msgstr "zurück zu &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
-#~ msgid "Optional, but useful."
-#~ msgstr "Wahlweise, aber nützlich."
-
-#~ msgid "Edit Text Content"
-#~ msgstr "Bearbeiten des Textinhalts"
-
-#~ msgid "link url"
-#~ msgstr "Link Adresse"
-
-#~ msgid "change settings"
-#~ msgstr "Einstellungen ändern"
-
-#~ msgid "layout settings for &#xab;${title}&#xbb;"
-#~ msgstr "Erweiterungseinstellungen für &#xab;${title}&#xbb;"
-
-#~ msgid "layout settings"
-#~ msgstr "Layout Einstellungen"
+#~ msgid ""
+#~ "This is a special document that automagically displays a\n"
+#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
+#~ "index&#8217;\n"
+#~ "       document. In that case the parent folder shows a table of "
+#~ "contents\n"
+#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+#~ msgstr ""
+#~ "Zeigt automatisch ein Inhaltsverzeichnis an. Wenn es 'index' genannt "
+#~ "wird, stellt sich der übergeordnete Ordner in der öffentlichen Version "
+#~ "als Inhaltsverzeichnis dar."
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Version kann nicht bewilligt werden; nicht gestattet."
@@ -5475,6 +5477,12 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgid "request immediate approval for new versions: alt-q"
 #~ msgstr "Anfrage für eine sofortige Bestätigung einer neuen Version: alt-q"
 
+#~ msgid "full media export (.zip)"
+#~ msgstr "Full-Media Export (.zip)"
+
+#~ msgid "export zip"
+#~ msgstr "ZIP Export"
+
 #~ msgid "${id} of ${parent_id}"
 #~ msgstr "${id} von ${parent_id}"
 
@@ -5565,6 +5573,9 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgid "If this content should expire, set the time."
 #~ msgstr "Wenn dieser Inhalt verfallen soll, den Verfallszeitpunkt festlegen."
 
+#~ msgid "change settings"
+#~ msgstr "Einstellungen ändern"
+
 #~ msgid "access key: alt-m (some platforms)"
 #~ msgstr "Kurzwahl: alt-m (einige Plattformen)"
 
@@ -5603,6 +5614,12 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "No ${asset} in this folder."
 #~ msgstr "Kein ${asset} in diesem Ordner."
+
+#~ msgid "place reference..."
+#~ msgstr "Verweis setzen"
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "Verweis auf diese Anlage setzen: alt-p"
 
 #~ msgid "add a new item: alt-n"
 #~ msgstr "Neuen Eintrag hinzufügen: alt-n"
@@ -5717,6 +5734,12 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "${for_approved_version_of_title}"
 #~ msgstr "${für_bestätigte_Version_des_Titels}"
+
+#~ msgid "layout settings for &#xab;${title}&#xbb;"
+#~ msgstr "Erweiterungseinstellungen für &#xab;${title}&#xbb;"
+
+#~ msgid "layout settings"
+#~ msgstr "Layout Einstellungen"
 
 #~ msgid ""
 #~ "This Silva Folder can be converted to a Publication (may take awhile if "
@@ -5961,140 +5984,25 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "Nachricht zu diesem Thema ist:"
 
 #~ msgid ""
-#~ "This is a special document that automagically displays a\n"
-#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
-#~ "index&#8217;\n"
-#~ "       document. In that case the parent folder shows a table of "
-#~ "contents\n"
-#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
-#~ msgstr ""
-#~ "Zeigt automatisch ein Inhaltsverzeichnis an. Wenn es 'index' genannt "
-#~ "wird, stellt sich der übergeordnete Ordner in der öffentlichen Version "
-#~ "als Inhaltsverzeichnis dar."
-
-#~ msgid "insert a reference to this asset: alt-p"
-#~ msgstr "Verweis auf diese Anlage setzen: alt-p"
-
-#~ msgid "place reference..."
-#~ msgstr "Verweis setzen"
-
-#~ msgid "Kupu 1.4b1"
-#~ msgstr "Kupu 1.4b1"
-
-#~ msgid "save: alt-s"
-#~ msgstr "speichern: alt-s"
-
-#~ msgid "Bold: Access key (Alt or Ctrl) + B"
-#~ msgstr "Fettdruck: Tastenkombination (Alt oder Strg) + B"
-
-#~ msgid "Italic: Access key (Alt or Ctrl) + I"
-#~ msgstr "Kursiv: Tastenkombination (Alt oder Strg) + I"
-
-#~ msgid "Underline: Access key (Alt or Ctrl) + U"
-#~ msgstr "Unterstrichen: Tastenkombination (Alt oder Strg) + U"
-
-#~ msgid "Subscript: Access key (Alt or Ctrl) + -"
-#~ msgstr "Tiefgestellt: Tastenkombination (Alt oder Strg) + -"
-
-#~ msgid "Superscript: Access key (Alt or Ctrl) + +"
-#~ msgstr "Hochgestellt: Tastenkombination (Alt oder Strg) + B"
-
-#~ msgid "Numbered list: Access key (Alt or Ctrl) + #"
-#~ msgstr "Nummerierte Liste: Tastenkombination (Alt oder Strg) + #"
-
-#~ msgid "Unordered list: Access key (Alt or Ctrl) + *"
-#~ msgstr "Liste: Tastenkombination (Alt oder Strg) + *"
-
-#~ msgid "Definition list: Access key (Alt or Ctrl) + ="
-#~ msgstr "Beschreibungsliste: Tastenkombination (Alt oder Strg) + ="
-
-#~ msgid "Undo: Access key (Alt or Ctrl) + Z"
-#~ msgstr "Zurücknehmen: Tastenkombination (Alt oder Strg) + Z"
-
-#~ msgid "Redo: Access key (Alt or Ctrl) + Y"
-#~ msgstr "Zurücknehmen retour: Tastenkombination (Alt oder Strg) + Y"
-
-#~ msgid "get link reference..."
-#~ msgstr "Linkreferenz auswählen..."
-
-#~ msgid "link target"
-#~ msgstr "Zielfenster für Link"
-
-#~ msgid "same window"
-#~ msgstr "gleiches Fenster"
-
-#~ msgid "new window"
-#~ msgstr "neues Fenster"
-
-#~ msgid "custom target"
-#~ msgstr "benutzerdefiniertes Fenster"
-
-#~ msgid "add link"
-#~ msgstr "Link hinzufügen"
-
-#~ msgid "update"
-#~ msgstr "aktualisieren"
-
-#~ msgid "anchor/index item"
-#~ msgstr "Ankerpunkt/Index Eintrag"
-
-#~ msgid "anchor name"
-#~ msgstr "Name Ankerpunkt"
-
-#~ msgid "index title"
-#~ msgstr "Titel Indexeintrag"
-
-#~ msgid "add element"
-#~ msgstr "Element hinzufügen"
-
-#~ msgid "abbreviations and acronyms"
-#~ msgstr "Abkürzugen und Akronyme"
-
-#~ msgid "Choose the kind of html tag (abbr or acronym)."
-#~ msgstr "Wählen Sie einen Typ aus (Abkürzung oder Akronym)"
-
-#~ msgid "cleanup"
-#~ msgstr "aufräumen"
-
-#~ msgid "external source"
-#~ msgstr "externe Funktion"
-
-#~ msgid ""
-#~ "the external sources product is not installed. this tool is disabled."
-#~ msgstr ""
-#~ "Das Produkt für die externe Funktion ist nicht installiert. Dieses Tool "
-#~ "ist gesperrt."
-
-#~ msgid "No external sources found."
-#~ msgstr "Keine externe Funktion gefunden."
-
-#~ msgid "citation"
-#~ msgstr "Zitat"
-
-#~ msgid "table"
-#~ msgstr "Tabelle"
-
-#~ msgid "add column"
-#~ msgstr "Spalte einfügen"
-
-#~ msgid "add row"
-#~ msgstr "Zeile einfügen"
-
-#~ msgid "table of contents"
-#~ msgstr "Inhaltsverzeichnis"
-
-#~ msgid "typographical characters"
-#~ msgstr "Drucktechnische Zeichen"
-
-#~ msgid "full media export (.zip)"
-#~ msgstr "Full-Media Export (.zip)"
-
-#~ msgid "export zip"
-#~ msgstr "ZIP Export"
-
-#~ msgid ""
 #~ "An automatic table of contents is generated from the items in its "
 #~ "location (depth: ${depth}.)"
 #~ msgstr ""
 #~ "Ein Inhaltsverzeichnis wird automatisch aus den Einträgen hier erstellt "
 #~ "(Anzahl Ebenen: ${depth})."
+
+#~ msgid "maximum used space by sub-folder and sub-publication, in MB."
+#~ msgstr ""
+#~ "maximal genutzter Speicherplatz des Unterordners und "
+#~ "Unterveröffentlichung in MB."
+
+#~ msgid "Optional, but useful."
+#~ msgstr "Wahlweise, aber nützlich."
+
+#~ msgid "Edit Text Content"
+#~ msgstr "Bearbeiten des Textinhalts"
+
+#~ msgid "link url"
+#~ msgstr "Link Adresse"
+
+#~ msgid "(quota for this area set to ${quota} MB)"
+#~ msgstr "(Kontingent für diesen Bereich ist auf ${quota} MB gesetzt)"

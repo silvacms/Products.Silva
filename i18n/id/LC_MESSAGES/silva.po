@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-02-08 16:09+0000\n"
-"Last-Translator: thisfred <eric@infrae.com>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-05-24 23:52+0000\n"
+"Last-Translator: Mahyuddin Susanto <udienz@ubuntu.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
@@ -465,7 +465,7 @@ msgstr "di set secara otomatis."
 
 #: /doc/silva-extra.xml:618
 msgid "creator"
-msgstr ""
+msgstr "pembuat"
 
 #: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
@@ -1105,7 +1105,7 @@ msgstr "pesan"
 
 #: /views/add/File/form.form:24 /views/edit/Asset/upload_form.form:24
 msgid "file"
-msgstr ""
+msgstr "berkas"
 
 #: /views/add/File/form.form:68
 msgid "<b>Tip:</b> You don't have to fill in the id and title."
@@ -5040,22 +5040,3 @@ msgstr ""
 #: /views/render_form_errors.py:44
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
-
-#~ msgid ""
-#~ "This is a special document that automagically displays a\n"
-#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
-#~ "index&#8217;\n"
-#~ "       document. In that case the parent folder shows a table of "
-#~ "contents\n"
-#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
-#~ msgstr ""
-#~ "Ini adalah dokument khusus yang akan menampilkan secara otomatis\n"
-#~ "       daftar isi. Biasanya &#8217; dipakai sebagai &#8216;indeks&#8217;\n"
-#~ "       dokumen. Sehingga parent folder akan menampilkan daftar isi\n"
-#~ "       sewaktu diakses (contoh: http://www.x.yz/silva/myFolder/)."
-
-#~ msgid "insert a reference to this asset: alt-p"
-#~ msgstr "sisipkan reference sebagai aset: alt-p"
-
-#~ msgid "place reference..."
-#~ msgstr "tempatkan referensi..."

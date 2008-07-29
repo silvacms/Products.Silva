@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-02-08 16:09+0000\n"
-"Last-Translator: palace <miyazawa.satoshi@gmail.com>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-07-18 05:50+0000\n"
+"Last-Translator: higa43@gmail.com <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
+#, fuzzy
 msgid ""
 "This is a special document type that automatically generates\n"
 "       a Table of Contents. Usually it's used as the 'index' document of a\n"
@@ -26,6 +27,13 @@ msgid ""
 "selection\n"
 "       of Silva content types including assets."
 msgstr ""
+"これは特別なドキュメントタイプで目次を自動生成します。\n"
+"       通常、あるフォルダの'索引' ドキュメントとして使われます。\n"
+"       そして親のフォルダはアクセスされると(例http://www.x.yz/silva/"
+"myFolder/)\n"
+"       目次を表示します。 AutoTOC はアセットを含めSilviaのコンテンツタイプ"
+"の\n"
+"       どの組合せでも表示することができます。"
 
 #: /DocmaService.py:116
 msgid "Not connected"
@@ -522,9 +530,8 @@ msgid "Add screen"
 msgstr "画面追加"
 
 #: /globals/accesskeys.pt:149
-#, fuzzy
 msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
-msgstr "c &nbsp; 取り消し<br /> a &nbsp; 追加<br /> e &nbsp; 追加＋削除/enter"
+msgstr "c &nbsp; 取り消し<br /> a &nbsp; 追加<br /> e &nbsp; 追加＋編集/enter"
 
 #: /globals/accesskeys.pt:155
 msgid "Editor screen"

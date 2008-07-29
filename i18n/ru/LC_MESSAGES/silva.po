@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-04-10 10:00+0000\n"
-"Last-Translator: Lesha Ogonkov <Unknown>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-06-27 07:42+0000\n"
+"Last-Translator: Sezya <serega-ts@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
@@ -68,7 +68,6 @@ msgstr ""
 "различных \n"
 "\n"
 "       методов в конкретных под[суб?]классах. (извините) -->\n"
-"\n"
 "    "
 
 #: /Folder.py:326 /Folder.py:388
@@ -107,7 +106,6 @@ msgstr ""
 "Publish \n"
 "\n"
 "       screen.\n"
-"\n"
 "    "
 
 #: /Ghost.py:233
@@ -135,7 +133,6 @@ msgstr ""
 "       Призрак наследует свойства своего расположения (e.g. макет\n"
 "\n"
 "       и стили).\n"
-"\n"
 "    "
 
 #: /GhostFolder.py:125

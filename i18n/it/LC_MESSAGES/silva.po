@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-02-08 16:12+0000\n"
-"Last-Translator: Stefano Deponti <Unknown>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-05-12 19:41+0000\n"
+"Last-Translator: Nicola Piovesan <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Rosetta-Version: 0.1\n"
 
@@ -310,7 +310,7 @@ msgstr ""
 
 #: /browser/object_lookup.pt:156
 msgid "select"
-msgstr ""
+msgstr "Seleziona"
 
 #: /browser/object_lookup.pt:159
 msgid "view"
@@ -358,27 +358,29 @@ msgstr ""
 
 #: /doc/silva-content.xml:93
 msgid "short title"
-msgstr ""
+msgstr "breve titolo"
 
 #: /doc/silva-extra.xml:156
+#, fuzzy
 msgid "Description of content in this area."
-msgstr ""
+msgstr "Descrizione del contenuto in quest'area."
 
 #: /doc/silva-extra.xml:215
 msgid "language"
-msgstr ""
+msgstr "lingua"
 
 #: /doc/silva-extra.xml:262
+#, fuzzy
 msgid "Language of content in this area."
-msgstr ""
+msgstr "Lingua del contenuto in quest'area"
 
 #: /doc/silva-extra.xml:323
 msgid "comment"
-msgstr ""
+msgstr "commento"
 
 #: /doc/silva-extra.xml:324
 msgid "Internal comments."
-msgstr ""
+msgstr "commenti interni"
 
 #: /doc/silva-extra.xml:35
 msgid "subject"
@@ -398,7 +400,7 @@ msgstr ""
 
 #: /doc/silva-extra.xml:618
 msgid "creator"
-msgstr ""
+msgstr "creatore"
 
 #: /doc/silva-extra.xml:678
 msgid "User who last edited this content."
@@ -576,7 +578,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:198
 msgid "Notes"
-msgstr ""
+msgstr "Note"
 
 #: /globals/accesskeys.pt:202
 msgid ""
@@ -641,7 +643,7 @@ msgstr ""
 
 #: /globals/accesskeys.pt:242
 msgid "Tip for Mozilla/Netscape users"
-msgstr ""
+msgstr "Suggerimento per utenti Mozilla/Netscape"
 
 #: /globals/accesskeys.pt:244
 msgid ""
@@ -651,8 +653,9 @@ msgid ""
 msgstr ""
 
 #: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:81
+#, fuzzy
 msgid "Silva documentation"
-msgstr ""
+msgstr "Documentazione Silvia"
 
 #: /globals/accesskeys.pt:251
 msgid ""

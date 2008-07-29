@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-05-01 08:17+0000\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-05-10 17:28+0000\n"
 "Last-Translator: Mikael Hamre <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Rosetta-Version: 0.1\n"
 
@@ -123,11 +123,11 @@ msgstr ""
 
 #: /Image.py:408
 msgid "square"
-msgstr ""
+msgstr "kvadrat"
 
 #: /Image.py:410
 msgid "landscape"
-msgstr ""
+msgstr "landskap"
 
 #: /Image.py:411
 msgid "portrait"
@@ -196,11 +196,11 @@ msgstr ""
 
 #: /Version.py:209
 msgid "public"
-msgstr ""
+msgstr "publik"
 
 #: /Version.py:209
 msgid "pending"
-msgstr ""
+msgstr "väntar"
 
 #: /Version.py:209
 msgid "draft"
@@ -4906,45 +4906,3 @@ msgstr ""
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Kan inte godkänna versionen; saknar behörighet."
-
-#~ msgid "Kupu 1.4b1"
-#~ msgstr "Kapu 1.4b1"
-
-#~ msgid "save: alt-s"
-#~ msgstr "spara: alt-s"
-
-#~ msgid "new window"
-#~ msgstr "nytt fönster"
-
-#~ msgid "add link"
-#~ msgstr "lägg till länk"
-
-#~ msgid "update"
-#~ msgstr "uppdatera"
-
-#~ msgid "anchor name"
-#~ msgstr "författares namn"
-
-#~ msgid "index title"
-#~ msgstr "index titel"
-
-#~ msgid "add element"
-#~ msgstr "lägg till element"
-
-#~ msgid "cleanup"
-#~ msgstr "rensa"
-
-#~ msgid "external source"
-#~ msgstr "extern källa"
-
-#~ msgid "citation"
-#~ msgstr "citat"
-
-#~ msgid "table"
-#~ msgstr "tabell"
-
-#~ msgid "add column"
-#~ msgstr "lägg till kolumn"
-
-#~ msgid "add row"
-#~ msgstr "lägg till rad"

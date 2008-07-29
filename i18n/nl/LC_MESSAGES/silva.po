@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
 "PO-Revision-Date: 2008-02-08 17:12+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: nl\n"
 "Domain: silva\n"
@@ -5229,37 +5229,18 @@ msgstr "Terug naar &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Er zijn problemen met de volgende formuliervelden:"
 
-#~ msgid "Optional, but useful."
-#~ msgstr "Optioneel, maar nuttig."
-
-#~ msgid "Edit Text Content"
-#~ msgstr "Tekstinhoud bewerken"
-
-#~ msgid "day / month / year (hh:mm)"
-#~ msgstr "dag / maand / jaar (uu:mm)"
-
-#~ msgid "link url"
-#~ msgstr "link url"
-
-#~ msgid "change settings"
-#~ msgstr "instellingen veranderen"
-
-#~ msgid "date format: day / month / year hh:mm"
-#~ msgstr "datumformaat: dag / maand / jaar uu:mm"
-
-#~ msgid "broken"
-#~ msgstr "defect"
-
-#~ msgid "Check to provide an Atom/${RSS} feed from this container."
+#~ msgid ""
+#~ "This is a special document that automagically displays a\n"
+#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
+#~ "index&#8217;\n"
+#~ "       document. In that case the parent folder shows a table of "
+#~ "contents\n"
+#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
 #~ msgstr ""
-#~ "Aanvinken om een Atom/${RSS}-feed van deze container beschikbaar te "
-#~ "stellen."
-
-#~ msgid "layout settings for &#xab;${title}&#xbb;"
-#~ msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
-
-#~ msgid "layout settings"
-#~ msgstr "vormgevingsinstellingen"
+#~ "Dit object laat een inhoudsopgave zien. Het wordt normaal gesproken "
+#~ "gebruikt als &#8216;index&#8217; document. In dat geval laat de map  waar "
+#~ "het in zit een inhoudsopgave zien als die benaderd wordt. (bv. http://www."
+#~ "x.yz/silva/mijnMap/)."
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Kan versie niet goedkeuren; geen toestemming."
@@ -5455,6 +5436,12 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ msgid "request immediate approval for new versions: alt-q"
 #~ msgstr "direct goedkeuring vragen voor nieuwe versies: alt-q"
 
+#~ msgid "full media export (.zip)"
+#~ msgstr "volledige media exporteren (.zip)"
+
+#~ msgid "export zip"
+#~ msgstr "zipbestand exporteren"
+
 #~ msgid "${id} of ${parent_id}"
 #~ msgstr "${id} van ${parent_id}"
 
@@ -5542,6 +5529,9 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ msgid "If this content should expire, set the time."
 #~ msgstr "Stel een tijdstip in als deze inhoud moet verlopen."
 
+#~ msgid "change settings"
+#~ msgstr "instellingen veranderen"
+
 #~ msgid "access key: alt-m (some platforms)"
 #~ msgstr "sneltoets: alt-p (sommige platforms)"
 
@@ -5580,6 +5570,12 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 
 #~ msgid "No ${asset} in this folder."
 #~ msgstr "Geen ${asset} in deze folder."
+
+#~ msgid "place reference..."
+#~ msgstr "verwijzing plaatsen..."
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "een verwijzing naar dit asset invoegen: alt-p"
 
 #~ msgid "add a new item: alt-n"
 #~ msgstr "nieuw item toevoegen: alt-n"
@@ -5692,6 +5688,12 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 
 #~ msgid "${for_approved_version_of_title}"
 #~ msgstr "${for_approved_version_of_title}"
+
+#~ msgid "layout settings for &#xab;${title}&#xbb;"
+#~ msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
+
+#~ msgid "layout settings"
+#~ msgstr "vormgevingsinstellingen"
 
 #~ msgid ""
 #~ "This Silva Folder can be converted to a Publication (may take awhile if "
@@ -6028,172 +6030,26 @@ msgstr "Er zijn problemen met de volgende formuliervelden:"
 #~ "deze persoon bijvoorbeeld een lege afkeuring heeft verricht, is dit het "
 #~ "bericht van de aanvrager... Het laatste bericht aangaande deze kwestie is:"
 
-#~ msgid ""
-#~ "This is a special document that automagically displays a\n"
-#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
-#~ "index&#8217;\n"
-#~ "       document. In that case the parent folder shows a table of "
-#~ "contents\n"
-#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
-#~ msgstr ""
-#~ "Dit object laat een inhoudsopgave zien. Het wordt normaal gesproken "
-#~ "gebruikt als &#8216;index&#8217; document. In dat geval laat de map  waar "
-#~ "het in zit een inhoudsopgave zien als die benaderd wordt. (bv. http://www."
-#~ "x.yz/silva/mijnMap/)."
-
-#~ msgid "insert a reference to this asset: alt-p"
-#~ msgstr "een verwijzing naar dit asset invoegen: alt-p"
-
-#~ msgid "place reference..."
-#~ msgstr "verwijzing plaatsen..."
-
-#~ msgid "Kupu 1.4b1"
-#~ msgstr "Kupu 1.4b1"
-
 #~ msgid "save: alt-s"
 #~ msgstr "opslaan: alt-s"
-
-#~ msgid "Bold: Access key (Alt or Ctrl) + B"
-#~ msgstr "Vetgedrukt: Sneltoets (Alt of Ctrl) + B"
-
-#~ msgid "Italic: Access key (Alt or Ctrl) + I"
-#~ msgstr "Schuingedrukt: Sneltoets (Alt of Ctrl) + I"
-
-#~ msgid "Underline: Access key (Alt or Ctrl) + U"
-#~ msgstr "Onderstreept: Sneltoets (Alt of Ctrl) + U"
-
-#~ msgid "Subscript: Access key (Alt or Ctrl) + -"
-#~ msgstr "Subscript: Sneltoets (Alt of Ctrl) + -"
-
-#~ msgid "Superscript: Access key (Alt or Ctrl) + +"
-#~ msgstr "Superscript: Sneltoets (Alt of Ctrl) + +"
-
-#~ msgid "Numbered list: Access key (Alt or Ctrl) + #"
-#~ msgstr "Genummerde lijst: Sneltoets (Alt of Ctrl) + #"
-
-#~ msgid "Unordered list: Access key (Alt or Ctrl) + *"
-#~ msgstr "Ongeordende lijst: Sneltoets (Alt of Ctrl) + *"
-
-#~ msgid "Definition list: Access key (Alt or Ctrl) + ="
-#~ msgstr "Definitielijst: Sneltoets (Alt of Ctrl) + ="
-
-#~ msgid "Undo: Access key (Alt or Ctrl) + Z"
-#~ msgstr "Ongedaan maken: Sneltoets (Alt of Ctrl) + Z"
-
-#~ msgid "Redo: Access key (Alt or Ctrl) + Y"
-#~ msgstr "Overdoen: Sneltoets (Alt of Ctrl) + Y"
 
 #~ msgid "toggle_source_view"
 #~ msgstr "toggle_source_view"
 
-#~ msgid "list-disc"
-#~ msgstr "list-disc"
-
-#~ msgid "list-square"
-#~ msgstr "list-square"
-
-#~ msgid "list-circle"
-#~ msgstr "list-circle"
-
-#~ msgid "list-nobullet"
-#~ msgstr "list-nobullet"
-
 #~ msgid "list-decimal"
 #~ msgstr "list-decimal"
-
-#~ msgid "list-upperroman"
-#~ msgstr "list-upperroman"
-
-#~ msgid "list-lowerroman"
-#~ msgstr "list-lowerroman"
-
-#~ msgid "list-upperalpha"
-#~ msgstr "list-upperalpha"
-
-#~ msgid "list-loweralpha"
-#~ msgstr "list-loweralpha"
-
-#~ msgid "get link reference..."
-#~ msgstr "linkdoel opzoeken..."
-
-#~ msgid "link target"
-#~ msgstr "linkdoel"
-
-#~ msgid "same window"
-#~ msgstr "zelfde venster"
-
-#~ msgid "new window"
-#~ msgstr "nieuw venster"
-
-#~ msgid "custom target"
-#~ msgstr "zelfgemaakt doel"
-
-#~ msgid "add link"
-#~ msgstr "link toevoegen"
-
-#~ msgid "update"
-#~ msgstr "bijwerken"
-
-#~ msgid "anchor/index item"
-#~ msgstr "anker/inhoudsopgave-item"
-
-#~ msgid "anchor name"
-#~ msgstr "ankernaam"
-
-#~ msgid "index title"
-#~ msgstr "inhoudsopgavetitel"
-
-#~ msgid "add element"
-#~ msgstr "element toevoegen"
-
-#~ msgid "abbreviations and acronyms"
-#~ msgstr "afkortingen en acroniemen"
-
-#~ msgid "Choose the kind of html tag (abbr or acronym)."
-#~ msgstr "Kies het soort html-element (abbr of acronym)"
-
-#~ msgid "cleanup"
-#~ msgstr "opschonen"
-
-#~ msgid "external source"
-#~ msgstr "externe bron"
-
-#~ msgid ""
-#~ "the external sources product is not installed. this tool is disabled."
-#~ msgstr ""
-#~ "Het product 'SilvaExternalSources' is niet geïnstalleerd. Dit gereedschap "
-#~ "is uitgeschakeld."
-
-#~ msgid "No external sources found."
-#~ msgstr "Geen externe bronnen gevonden."
-
-#~ msgid "citation"
-#~ msgstr "citaat"
-
-#~ msgid "table"
-#~ msgstr "tabel"
-
-#~ msgid "add column"
-#~ msgstr "kolom toevoegen"
-
-#~ msgid "add row"
-#~ msgstr "rij toevoegen"
-
-#~ msgid "table of contents"
-#~ msgstr "inhoudsopgave"
 
 #~ msgid "typographical characters"
 #~ msgstr "typografische tekens"
 
-#~ msgid "full media export (.zip)"
-#~ msgstr "volledige media exporteren (.zip)"
+#~ msgid "Optional, but useful."
+#~ msgstr "Optioneel, maar nuttig."
 
-#~ msgid "export zip"
-#~ msgstr "zipbestand exporteren"
+#~ msgid "Edit Text Content"
+#~ msgstr "Tekstinhoud bewerken"
 
-#~ msgid ""
-#~ "An automatic table of contents is generated from the items in its "
-#~ "location (depth: ${depth}.)"
-#~ msgstr ""
-#~ "Een automatische inhoudsopgave wordt gegenereerd uit de items op dezelfde "
-#~ "locatie (diepteniveau: ${depth}.)"
+#~ msgid "link url"
+#~ msgstr "link url"
+
+#~ msgid "broken"
+#~ msgstr "defect"

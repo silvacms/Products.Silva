@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
 "PO-Revision-Date: 2008-04-09 15:31+0000\n"
 "Last-Translator: Ofer Weisglass <contact@weisglass.net>\n"
 "Language-Team: Ofer Weisglass <ofer@plone.org.il>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: he\n"
 "Domain: silva\n"
@@ -4900,21 +4900,6 @@ msgstr ""
 msgid "Sorry, there are problems with these form fields:"
 msgstr ""
 
-#~ msgid "Optional, but useful."
-#~ msgstr "אפשרות, אולם חיוני."
-
-#~ msgid "Edit Text Content"
-#~ msgstr "ערוך תוכן טקסט"
-
-#~ msgid "day / month / year (hh:mm)"
-#~ msgstr "יום / חודש/ שנה (hh:mm)"
-
-#~ msgid "change settings"
-#~ msgstr "שנה הגדרות"
-
-#~ msgid "broken"
-#~ msgstr "שבור"
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "לא יכול לאשר גרסה; לא מורשה."
 
@@ -4936,8 +4921,20 @@ msgstr ""
 #~ msgid "set timing"
 #~ msgstr "עדכן זמן"
 
+#~ msgid "full media export (.zip)"
+#~ msgstr "ייצוא מדיה מלא (.zip)"
+
+#~ msgid "export zip"
+#~ msgstr "יצא זיפ"
+
 #~ msgid "could not delete ${id}: ${error}"
 #~ msgstr "לא יכול למחוק ${id}: ${error}"
+
+#~ msgid "change settings"
+#~ msgstr "שנה הגדרות"
+
+#~ msgid "place reference..."
+#~ msgstr "מקם רפרנס..."
 
 #~ msgid "logout link"
 #~ msgstr "קישור התנתקות"
@@ -4990,14 +4987,26 @@ msgstr ""
 #~ msgid "editor updated"
 #~ msgstr "עורך עודכן"
 
-#~ msgid "place reference..."
-#~ msgstr "מקם רפרנס..."
+#~ msgid "save: alt-s"
+#~ msgstr "שמור: alt-s"
+
+#~ msgid "cleanup"
+#~ msgstr "נקיון"
+
+#~ msgid "external source"
+#~ msgstr "מקור חיצוני"
+
+#~ msgid "citation"
+#~ msgstr "קריטריון"
+
+#~ msgid "table"
+#~ msgstr "טבלה"
+
+#~ msgid "table of contents"
+#~ msgstr "תוכן עיניינים"
 
 #~ msgid "Kupu 1.4b1"
 #~ msgstr "1.4b1 קופו"
-
-#~ msgid "save: alt-s"
-#~ msgstr "שמור: alt-s"
 
 #~ msgid "link target"
 #~ msgstr "קישור מטרה"
@@ -5026,20 +5035,8 @@ msgstr ""
 #~ msgid "add element"
 #~ msgstr "הוסף אלמנט"
 
-#~ msgid "cleanup"
-#~ msgstr "נקיון"
-
-#~ msgid "external source"
-#~ msgstr "מקור חיצוני"
-
 #~ msgid "No external sources found."
 #~ msgstr "לא נמצאו מקורות חיצוניים."
-
-#~ msgid "citation"
-#~ msgstr "קריטריון"
-
-#~ msgid "table"
-#~ msgstr "טבלה"
 
 #~ msgid "add column"
 #~ msgstr "הוסף עמודה"
@@ -5047,11 +5044,14 @@ msgstr ""
 #~ msgid "add row"
 #~ msgstr "הוסף שורה"
 
-#~ msgid "table of contents"
-#~ msgstr "תוכן עיניינים"
+#~ msgid "day / month / year (hh:mm)"
+#~ msgstr "יום / חודש/ שנה (hh:mm)"
 
-#~ msgid "full media export (.zip)"
-#~ msgstr "ייצוא מדיה מלא (.zip)"
+#~ msgid "Optional, but useful."
+#~ msgstr "אפשרות, אולם חיוני."
 
-#~ msgid "export zip"
-#~ msgstr "יצא זיפ"
+#~ msgid "Edit Text Content"
+#~ msgstr "ערוך תוכן טקסט"
+
+#~ msgid "broken"
+#~ msgstr "שבור"

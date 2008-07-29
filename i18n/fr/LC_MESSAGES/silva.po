@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
-"PO-Revision-Date: 2008-04-11 07:46+0000\n"
-"Last-Translator: Sylvain Viollon <sylvain@infrae.com>\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"PO-Revision-Date: 2008-07-14 20:59+0000\n"
+"Last-Translator: TuniX12 <sedra12@gmail.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: fr\n"
 "Domain: silva\n"
@@ -31,7 +31,7 @@ msgstr ""
 
 #: /DocmaService.py:116
 msgid "Not connected"
-msgstr "Déconnecté"
+msgstr "Non connecté"
 
 #: /EmailMessageService.py:103
 msgid "Validation error(s)"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: /Publication.py:118
 msgid "You are overquota."
-msgstr ""
+msgstr "Vous avez dépassé votre quota."
 
 #: /Publication.py:48
 msgid ""
@@ -399,11 +399,11 @@ msgstr "annuler opération: alt-c"
 
 #: /browser/object_lookup.pt:452
 msgid "place reference to container..."
-msgstr ""
+msgstr "ajouter la référence au dossier ..."
 
 #: /browser/object_lookup.pt:452
 msgid "insert a reference to this container: alt-c"
-msgstr ""
+msgstr "ajouter une référence à ce dossier: alt-c"
 
 #: /browser/viewerrole.py:44
 msgid "Minimum role to access has not changed"
@@ -524,7 +524,7 @@ msgstr ""
 
 #: /doc/silva-quota.xml:37
 msgid "quota"
-msgstr ""
+msgstr "quota"
 
 #: /globals/accesskeys.pt:103
 msgid ""
@@ -1182,7 +1182,7 @@ msgstr "trouver le dossier auquel ce ghost doit faire référence&nbsp;: alt-r"
 #: /views/edit/VersionedContent/Ghost/tab_edit.pt:51
 #: /views/edit/Container/GhostFolder/tab_edit.pt:65
 msgid "reference..."
-msgstr "référence&nbsp;..."
+msgstr "référence..."
 
 #: /views/add/GhostFolder/form.form:50
 msgid "Location of originating folder."
@@ -1239,14 +1239,14 @@ msgstr "Quel type d'élément doit être ajouté aprés la création du dossier.
 
 #: /views/add/Publication/form.form:67
 msgid "First item"
-msgstr "Premier élément"
+msgstr "premier élément"
 
 #: /views/add/add_form.pt:122 /views/add/GhostFolder/add_form.pt:108
 #: /views/add/Ghost/add_form.pt:105 /views/edit/macro_edit_metadata.pt:158
 #: /views/edit/tab_subscriptions.pt:106
 #: /views/edit/Member/SimpleMember/tab_edit.pt:103
 msgid "* required"
-msgstr ""
+msgstr "* requis"
 
 #: /views/add/add_form.pt:130 /views/add/GhostFolder/add_form.pt:117
 #: /views/add/Ghost/add_form.pt:114
@@ -1262,7 +1262,7 @@ msgstr "raccourci: alt-e"
 #: /views/edit/Container/tab_access_groups.pt:136
 #: /views/edit/Member/SimpleMember/tab_edit.pt:131
 msgid "save"
-msgstr "enregistrer"
+msgstr "sauvegarder"
 
 #: /views/add/add_form.pt:141 /views/add/GhostFolder/add_form.pt:128
 #: /views/add/Ghost/add_form.pt:125 /views/public/subscriptor.pt:46
@@ -1460,11 +1460,11 @@ msgstr ""
 
 #: /views/edit/Asset/File/tab_edit.pt:97
 msgid "save text content"
-msgstr "enregistrer le texte du contenu"
+msgstr "sauvegarder le texte"
 
 #: /views/edit/Asset/File/text_edit_form.form:32
 msgid "Text Context"
-msgstr "Texte du contexte"
+msgstr "texte du contexte"
 
 #: /views/edit/Asset/Groups/Group/add_users_from_group_to_group.py:13
 msgid "No group(s) selected, so nothing to use to add users."
@@ -1730,7 +1730,7 @@ msgstr "75x75 pixels"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:139
 msgid "75x75 pixel"
-msgstr "100x100 pixels"
+msgstr "75x75 pixels"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:149
 msgid "100x100 pixels"
@@ -1750,7 +1750,7 @@ msgstr "250x250 pixel"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:170
 msgid "use coordinates..."
-msgstr "utiliser ces coordonnées&nbsp;..."
+msgstr "utiliser ces coordonnées..."
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:170
 msgid "alt-u"
@@ -1818,7 +1818,7 @@ msgstr "formater et échellonner"
 
 #: /views/edit/Asset/Image/tab_edit.pt:166
 msgid "set crop coordinates..."
-msgstr "fixer coordonnées de recadrage"
+msgstr "fixer coordonnées de recadrage..."
 
 #: /views/edit/Asset/Image/tab_edit.pt:166
 msgid "specify the center of the area to crop by clicking in the image: alt-o"
@@ -2167,7 +2167,7 @@ msgstr "recharger pour mise à jour de la liste d'attente: alt-r"
 
 #: /views/edit/Container/docma_queue.pt:48
 msgid "${r}efresh queue lists"
-msgstr ""
+msgstr "${r}afraichir la liste d'attente"
 
 #: /views/edit/Container/docma_queue.pt:50
 msgid "queue of items to process"
@@ -3097,11 +3097,11 @@ msgstr "Si décoché toutes les versions seront exportées."
 
 #: /views/edit/Container/tab_status_export.pt:168
 msgid "select an export format"
-msgstr ""
+msgstr "sélectionner un format d'exportation"
 
 #: /views/edit/Container/tab_status_export.pt:192
 msgid "Select the format which is going to used to export."
-msgstr ""
+msgstr "Sélectionner le format utilisé pour l'exportation."
 
 #: /views/edit/Container/tab_status_export.pt:230
 msgid "export to Silva xml (.xml) ${or_pdf}"
@@ -3297,7 +3297,7 @@ msgstr "Pas ecore :)"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:108
 msgid "save changes"
-msgstr ""
+msgstr "sauvegarder les modifications"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:121
 msgid "${icon} AutoTOC"
@@ -3334,7 +3334,7 @@ msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:26
 msgid "Note that ${warning}, so the list may be empty if nothing is published."
-msgstr ""
+msgstr "Attention ${warning}, la liste peut être vide si rien n'est publié."
 
 #: /views/edit/Content/Indexer/tab_edit.pt:27
 msgid ""
@@ -4182,7 +4182,7 @@ msgstr "jour / mois / année &nbsp;(23:59)"
 #: /views/edit/macro_edit_metadata.pt:167
 #, fuzzy
 msgid "&#8224; acquireable"
-msgstr "&#8224; s'acquirent"
+msgstr "&#8224; hérité"
 
 #: /views/edit/macro_edit_metadata.pt:43
 msgid "of &#xab;${title}&#xbb;"
@@ -4194,7 +4194,7 @@ msgstr ""
 
 #: /views/edit/macro_edit_metadata.pt:85
 msgid "acquired content"
-msgstr "contenu acquis"
+msgstr "valeur héritée"
 
 #: /views/edit/macro_groups_listing.pt:106
 msgid "select_groups"
@@ -4624,6 +4624,9 @@ msgid ""
 "The addables settings can only be changed on Silva Publications. A ${item} "
 "doesn&#8217;t have that capability."
 msgstr ""
+"Vous ne pouvez configurer la liste des types d'éléments que vous pouvez "
+"ajouter seulement sur les éléments publication. Les éléments ${item} ne "
+"disposent pas de cette capacité."
 
 #: /views/edit/tab_metadata.pt:107 /views/edit/tab_settings.pt:331
 msgid "for closed version of &#xab;${title}&#xbb;"
@@ -4656,11 +4659,11 @@ msgstr "choisir interpreteur pour ce contenu"
 
 #: /views/edit/tab_settings.pt:153
 msgid "change renderer"
-msgstr "change interpreteur"
+msgstr "changer interpreteur"
 
 #: /views/edit/tab_settings.pt:153
 msgid "change renderer: alt-c"
-msgstr "change interpreteur: alt-c"
+msgstr "changer interpreteur: alt-c"
 
 #: /views/edit/tab_settings.pt:175
 msgid "atom/rss feeds"
@@ -4688,7 +4691,7 @@ msgstr "changer les détails de fil: alt-f"
 
 #: /views/edit/tab_settings.pt:229
 msgid "used space"
-msgstr ""
+msgstr "espace utilisé"
 
 #: /views/edit/tab_settings.pt:236
 msgid "space used in this folder"
@@ -4721,11 +4724,11 @@ msgstr ""
 
 #: /views/edit/tab_settings.pt:76
 msgid "This Silva Folder can be converted to a Publication"
-msgstr "Ce dossier Silva peut être converti en une publication"
+msgstr "Ce dossier Silva peut être converti en une publication."
 
 #: /views/edit/tab_settings.pt:80
 msgid "This Silva Publication can be converted to a Silva Folder"
-msgstr "Cette publication Silva peut être converti en un dossier"
+msgstr "Cette publication Silva peut être converti en un dossier."
 
 #: /views/edit/tab_settings.pt:89
 msgid "convert to publication"
@@ -4788,11 +4791,11 @@ msgstr "S'abonner"
 
 #: /views/edit/tab_subscriptions.pt:166
 msgid "This object can not be subscribed to."
-msgstr ""
+msgstr "Cet élément ne supporte pas l'inscription."
 
 #: /views/edit/tab_subscriptions.pt:170
 msgid "This object can be subscribed to."
-msgstr ""
+msgstr "Cet élément supporte l'inscription."
 
 #: /views/edit/tab_subscriptions.pt:181
 msgid "Other subscriptions"
@@ -5260,36 +5263,6 @@ msgstr "Retourner vers &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
-#~ msgid "Optional, but useful."
-#~ msgstr "Facultatif, mais utile"
-
-#~ msgid "Edit Text Content"
-#~ msgstr "Éditer le texte du contenu"
-
-#~ msgid "day / month / year (hh:mm)"
-#~ msgstr "jour / mois / année (hh:mm)"
-
-#~ msgid "link url"
-#~ msgstr "lien url"
-
-#~ msgid "change settings"
-#~ msgstr "modifier les paramètres"
-
-#~ msgid "date format: day / month / year hh:mm"
-#~ msgstr "format de la date: jour / mois / année hh:mm"
-
-#~ msgid "broken"
-#~ msgstr "cassé"
-
-#~ msgid "Check to provide an Atom/${RSS} feed from this container."
-#~ msgstr "Fournir un flux Atom/${RSS} pour ce conteneur."
-
-#~ msgid "layout settings for &#xab;${title}&#xbb;"
-#~ msgstr "configuration héritage d'objets pour &#xab;${title}&#xbb;"
-
-#~ msgid "layout settings"
-#~ msgstr "paramètres de maquette"
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "Ne peut pas approuver version, non autorisé."
 
@@ -5492,6 +5465,12 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ msgid "export_pdf_accesskey"
 #~ msgstr "p"
 
+#~ msgid "full media export (.zip)"
+#~ msgstr "exportation complète -full media-(.zip)"
+
+#~ msgid "export zip"
+#~ msgstr "exporter zip"
+
 #~ msgid "${id} of ${parent_id}"
 #~ msgstr "${id} de ${parent_id}"
 
@@ -5616,6 +5595,12 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ msgid "No ${asset} in this folder."
 #~ msgstr "Aucun ${asset} dans ce dossier"
 
+#~ msgid "place reference..."
+#~ msgstr "insérer la référence..."
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "insérer une référence à cet élément: alt-p"
+
 #~ msgid "add a new item: alt-n"
 #~ msgstr "ajouter nouvel item: alt-n"
 
@@ -5726,6 +5711,12 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
 #~ msgid "${for_approved_version_of_title}"
 #~ msgstr "${for_approved_version_of_title}"
+
+#~ msgid "layout settings for &#xab;${title}&#xbb;"
+#~ msgstr "configuration héritage d'objets pour &#xab;${title}&#xbb;"
+
+#~ msgid "layout settings"
+#~ msgstr "paramètres de maquette"
 
 #~ msgid ""
 #~ "This Silva Folder can be converted to a Publication (may take awhile if "
@@ -6083,148 +6074,21 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 #~ "nécessaire . Les liens relatifs seprêtent à tout, c'est de la "
 #~ "responsabilité de l'auteur  de créer des liens valides."
 
-#~ msgid ""
-#~ "This is a special document that automagically displays a\n"
-#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
-#~ "index&#8217;\n"
-#~ "       document. In that case the parent folder shows a table of "
-#~ "contents\n"
-#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+#~ msgid "maximum used space by sub-folder and sub-publication, in MB."
 #~ msgstr ""
-#~ "Ceci est un modèle spécial qui génère automatiquement une table\n"
-#~ "       des matières. Habituellement, il est utilisé en tant que document\n"
-#~ "       “index”. Dans ce cas le dossier parent affiche la table des "
-#~ "matières\n"
-#~ "       lorsqu’on y accède (par ex. http://www.x.yz/silva/monDossier/)."
+#~ "espace maximum utilisé par les sous-dossier et sous-publication, en Mo."
 
-#~ msgid "insert a reference to this asset: alt-p"
-#~ msgstr "insérer une référence à cet élément: alt-p"
+#~ msgid "Optional, but useful."
+#~ msgstr "Facultatif, mais utile"
 
-#~ msgid "place reference..."
-#~ msgstr "insérer la référence..."
+#~ msgid "Edit Text Content"
+#~ msgstr "Éditer le texte du contenu"
 
-#~ msgid "Kupu 1.4b1"
-#~ msgstr "kupu 1.4b1"
+#~ msgid "link url"
+#~ msgstr "lien url"
 
-#~ msgid "save: alt-s"
-#~ msgstr "enregistrer: Alt+s"
+#~ msgid "broken"
+#~ msgstr "cassé"
 
-#~ msgid "Bold: Access key (Alt or Ctrl) + B"
-#~ msgstr "gras: Alt+B ou Ctrl+B"
-
-#~ msgid "Italic: Access key (Alt or Ctrl) + I"
-#~ msgstr "italique: Alt+I ou Ctrl+I"
-
-#~ msgid "Underline: Access key (Alt or Ctrl) + U"
-#~ msgstr "souligné: Alt+U ou Ctrl+U"
-
-#~ msgid "Numbered list: Access key (Alt or Ctrl) + #"
-#~ msgstr "Liste numérotée : Modificateur (Alt ou Ctrl) + #"
-
-#~ msgid "Definition list: Access key (Alt or Ctrl) + ="
-#~ msgstr "Liste des définition : Modificateur (Alt ou Ctrl) + ="
-
-#~ msgid "Undo: Access key (Alt or Ctrl) + Z"
-#~ msgstr "Annuler : Modificateur (Alt ou Ctrl) + Z"
-
-#~ msgid "Redo: Access key (Alt or Ctrl) + Y"
-#~ msgstr "Répéter : Modificateur (Alt ou Ctrl) + Y"
-
-#~ msgid "toggle_source_view"
-#~ msgstr "Basculer vers le source HTML"
-
-#~ msgid "list-disc"
-#~ msgstr "puce disque"
-
-#~ msgid "list-square"
-#~ msgstr "puce carrée"
-
-#~ msgid "list-circle"
-#~ msgstr "puce ronde"
-
-#~ msgid "list-nobullet"
-#~ msgstr "pas de puce"
-
-#~ msgid "get link reference..."
-#~ msgstr "obtenir la référence du lien..."
-
-#~ msgid "link target"
-#~ msgstr "destination du lien"
-
-#~ msgid "same window"
-#~ msgstr "même fenêtre"
-
-#~ msgid "new window"
-#~ msgstr "nouvelle fenêtre"
-
-#~ msgid "custom target"
-#~ msgstr "destination personnalisée"
-
-#~ msgid "add link"
-#~ msgstr "ajouter un lien"
-
-#~ msgid "update"
-#~ msgstr "mettre à jour"
-
-#~ msgid "anchor/index item"
-#~ msgstr "élément d'ancre ou d'index"
-
-#~ msgid "anchor name"
-#~ msgstr "Nom d'ancre"
-
-#~ msgid "index title"
-#~ msgstr "titre de l'index"
-
-#~ msgid "add element"
-#~ msgstr "ajouter un élément"
-
-#~ msgid "abbreviations and acronyms"
-#~ msgstr "abréviations et acronymes"
-
-#~ msgid "Choose the kind of html tag (abbr or acronym)."
-#~ msgstr "Sélectionner le type de tag HTML (abbr or acronym)."
-
-#~ msgid "cleanup"
-#~ msgstr "nettoyer"
-
-#~ msgid "external source"
-#~ msgstr "source externe"
-
-#~ msgid ""
-#~ "the external sources product is not installed. this tool is disabled."
-#~ msgstr ""
-#~ "Le product external sources n'est pas installé. Cet outil est désactivé."
-
-#~ msgid "No external sources found."
-#~ msgstr "Aucune source externe n'a été trouvée."
-
-#~ msgid "citation"
-#~ msgstr "citation"
-
-#~ msgid "table"
-#~ msgstr "tableau"
-
-#~ msgid "add column"
-#~ msgstr "ajouter une colonne"
-
-#~ msgid "add row"
-#~ msgstr "ajouter une ligne"
-
-#~ msgid "table of contents"
-#~ msgstr "table des matières"
-
-#~ msgid "typographical characters"
-#~ msgstr "caractères typographiques"
-
-#~ msgid "full media export (.zip)"
-#~ msgstr "exportation complète -full media-(.zip)"
-
-#~ msgid "export zip"
-#~ msgstr "exporter zip"
-
-#~ msgid ""
-#~ "An automatic table of contents is generated from the items in its "
-#~ "location (depth: ${depth}.)"
-#~ msgstr ""
-#~ "Une table des matières est automatiquement générée pour les éléments "
-#~ "situés à cet endroit (profondeur: ${depth}.)"
+#~ msgid "(quota for this area set to ${quota} MB)"
+#~ msgstr "(le quota est de ${quota} Mo pour cet emplacement)"

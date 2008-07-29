@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:04:59 2008\n"
+"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
 "PO-Revision-Date: 2008-02-08 16:13+0000\n"
 "Last-Translator: Formichelle <for1018@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:44+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /AutoTOC.py:24
@@ -5094,20 +5094,18 @@ msgstr "回到 &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "抱歉，這些表單欄位有問題。"
 
-#~ msgid "Optional, but useful."
-#~ msgstr "選項，但有用。"
-
-#~ msgid "link url"
-#~ msgstr "連結網址"
-
-#~ msgid "change settings"
-#~ msgstr "更改設定"
-
-#~ msgid "layout settings for &#xab;${title}&#xbb;"
-#~ msgstr "&#xab;${title}&#xbb; 的配置(layout) 設定"
-
-#~ msgid "layout settings"
-#~ msgstr "配置設定"
+#~ msgid ""
+#~ "This is a special document that automagically displays a\n"
+#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
+#~ "index&#8217;\n"
+#~ "       document. In that case the parent folder shows a table of "
+#~ "contents\n"
+#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+#~ msgstr ""
+#~ "這是一份特殊的文件，將會自動顥示目次。\n"
+#~ "        通常這個 ’ 會被當做 ‘index’ 文件。\n"
+#~ "        在這種情形之下，當存取資料時，上一層的目錄會顯示目次內容 （例如："
+#~ "http://www.x.yz/silva/myFolder/ ）"
 
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "無法驗證版本；因為權限不足。"
@@ -5284,6 +5282,12 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "request immediate approval for new versions: alt-q"
 #~ msgstr "直接同意新版本請求：alt-q"
 
+#~ msgid "full media export (.zip)"
+#~ msgstr "所有媒材都輸出（.zip）"
+
+#~ msgid "export zip"
+#~ msgstr "輸出壓縮檔"
+
 #~ msgid "${id} of ${parent_id}"
 #~ msgstr "${ids} 的  ${ids}"
 
@@ -5361,6 +5365,9 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "If this content should expire, set the time."
 #~ msgstr "若此內容應為逾期，請設定時間"
 
+#~ msgid "change settings"
+#~ msgstr "更改設定"
+
 #~ msgid "access key: alt-m (some platforms)"
 #~ msgstr "存取鍵:alt-m(某些平臺)"
 
@@ -5389,6 +5396,12 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "revert to previous"
 #~ msgstr "回復至先前版本"
+
+#~ msgid "place reference..."
+#~ msgstr "插置參考資源..."
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "在此頁插入參考資源：alt-p"
 
 #~ msgid ""
 #~ "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
@@ -5482,6 +5495,12 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ msgid "${for_approved_version_of_title}"
 #~ msgstr "${for_approved_version_of_title}"
 
+#~ msgid "layout settings for &#xab;${title}&#xbb;"
+#~ msgstr "&#xab;${title}&#xbb; 的配置(layout) 設定"
+
+#~ msgid "layout settings"
+#~ msgstr "配置設定"
+
 #~ msgid ""
 #~ "This Silva Folder can be converted to a Publication (may take awhile if "
 #~ "it&#8217;s large)."
@@ -5570,27 +5589,8 @@ msgstr "抱歉，這些表單欄位有問題。"
 #~ "將會檢查作為絕對路徑的url，並視需要加入'http://'。相對路徑範圍很廣，能讓作"
 #~ "者建立有效的url。"
 
-#~ msgid ""
-#~ "This is a special document that automagically displays a\n"
-#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
-#~ "index&#8217;\n"
-#~ "       document. In that case the parent folder shows a table of "
-#~ "contents\n"
-#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
-#~ msgstr ""
-#~ "這是一份特殊的文件，將會自動顥示目次。\n"
-#~ "        通常這個 ’ 會被當做 ‘index’ 文件。\n"
-#~ "        在這種情形之下，當存取資料時，上一層的目錄會顯示目次內容 （例如："
-#~ "http://www.x.yz/silva/myFolder/ ）"
+#~ msgid "Optional, but useful."
+#~ msgstr "選項，但有用。"
 
-#~ msgid "insert a reference to this asset: alt-p"
-#~ msgstr "在此頁插入參考資源：alt-p"
-
-#~ msgid "place reference..."
-#~ msgstr "插置參考資源..."
-
-#~ msgid "full media export (.zip)"
-#~ msgstr "所有媒材都輸出（.zip）"
-
-#~ msgid "export zip"
-#~ msgstr "輸出壓縮檔"
+#~ msgid "link url"
+#~ msgstr "連結網址"
