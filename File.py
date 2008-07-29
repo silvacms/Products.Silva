@@ -44,12 +44,9 @@ from Products.Silva.adapters.interfaces import IAssetData
 from interfaces import IFile, IAsset, IUpgrader
 
 class File(Asset):
-    __doc__ = _("""Any digital file can be uploaded as Silva content. 
+    __doc__ = """Any digital file can be uploaded as Silva content. 
        For instance large files such as pdf docs or mpegs can be placed in a
-       site. File objects have metadata as well. 
-       <!-- Abstract base class. Depends on a _file attribute and various 
-       methods in the concrete subclasses. (sorry) -->
-    """)
+       site. File objects have metadata as well."""
     security = ClassSecurityInfo()
     
     meta_type = "Silva File"
