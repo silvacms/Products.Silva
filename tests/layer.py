@@ -6,6 +6,8 @@ from zope.component import provideHandler
 
 from Acquisition import aq_base
 from Testing import ZopeTestCase
+from Testing.ZopeTestCase.layer import ZopeLiteLayer
+
 from AccessControl.SecurityManagement import (newSecurityManager,
                                               noSecurityManager)
 
@@ -52,7 +54,7 @@ def setupSilva(id='root', quiet=0):
     transaction.commit()
     ZopeTestCase.close(app)
 
-class SilvaZCMLLayer:
+class SilvaZCMLLayer(ZopeLiteLayer):
     @classmethod
     def setUp(cls):
         setDebugMode(1)
