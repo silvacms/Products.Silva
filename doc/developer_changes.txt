@@ -120,7 +120,7 @@ def initialize(context):
         )
 
 To hide this service from the ZMI add list, you add a special container_filter
-to registerClass (see docstring ofApp.ProductContext.registerClass):
+to registerClass (see docstring of App.ProductContext.registerClass):
 
 from Products.Silva.helpers import makeContainerFilter
 def initialize(context):
@@ -141,7 +141,7 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False)
 When zmi_addable is set to False, the registered content object does is filtered
 from the ZMI add list of all containers.  The zcml-based registrations, does this.
 
-The only_ousite_silva parameter is used to reverse the behavior such that the
+The only_outside_silva parameter is used to reverse the behavior such that the
 registered content object appears in ZMI add lists of non-Silva containers.
 This is used to register the Silva Root, since it doesn't make much sense to
 next Silva roots.
