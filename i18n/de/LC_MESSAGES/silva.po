@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
 "PO-Revision-Date: 2008-06-24 11:01+0000\n"
 "Last-Translator: Irene Fellner <irene.fellner@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -3327,11 +3327,11 @@ msgstr "Änderungen Speichern"
 msgid "${icon} AutoTOC"
 msgstr ""
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:121
+#: /views/edit/Content/AutoTOC/tab_edit.pt:124
 msgid ""
-"<h3>x</h3> <p>An Automatic Table Of Contents is generated from the items in "
-"its location, and includes all item types that are selected in the &#8216;"
-"types to list&#8217; selector.</p>"
+"An Automatic Table Of Contents is generated from the items in its location, "
+"and includes all item types that are selected in the &#8216;types to "
+"list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:18
@@ -3517,9 +3517,9 @@ msgstr "von die öffentliche Version von &#xab;${title}&#xbb;"
 msgid "Link changed"
 msgstr "Link geändert"
 
-#: /views/edit/VersionedContent/Link/tab_edit.pt:36
-msgid "<label for=\"url\"> link url </label>"
-msgstr ""
+#: /views/edit/VersionedContent/Link/tab_edit.pt:37
+msgid "link url"
+msgstr "Link Adresse"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56
 msgid "change link"
@@ -6000,9 +6000,6 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
 #~ msgid "Edit Text Content"
 #~ msgstr "Bearbeiten des Textinhalts"
-
-#~ msgid "link url"
-#~ msgstr "Link Adresse"
 
 #~ msgid "(quota for this area set to ${quota} MB)"
 #~ msgstr "(Kontingent für diesen Bereich ist auf ${quota} MB gesetzt)"

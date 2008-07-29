@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva trunk"
-"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
@@ -3034,8 +3034,8 @@ msgstr ""
 msgid "${icon} AutoTOC"
 msgstr ""
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:121
-msgid "<h3>x</h3> <p>An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector.</p>"
+#: /views/edit/Content/AutoTOC/tab_edit.pt:124
+msgid "An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:18
@@ -3211,8 +3211,8 @@ msgstr ""
 msgid "Link changed"
 msgstr ""
 
-#: /views/edit/VersionedContent/Link/tab_edit.pt:36
-msgid "<label for=\"url\"> link url </label>"
+#: /views/edit/VersionedContent/Link/tab_edit.pt:37
+msgid "link url"
 msgstr ""
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56

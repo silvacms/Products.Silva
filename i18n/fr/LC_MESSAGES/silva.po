@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
 "PO-Revision-Date: 2008-07-14 20:59+0000\n"
 "Last-Translator: TuniX12 <sedra12@gmail.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
@@ -3303,11 +3303,11 @@ msgstr "sauvegarder les modifications"
 msgid "${icon} AutoTOC"
 msgstr ""
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:121
+#: /views/edit/Content/AutoTOC/tab_edit.pt:124
 msgid ""
-"<h3>x</h3> <p>An Automatic Table Of Contents is generated from the items in "
-"its location, and includes all item types that are selected in the &#8216;"
-"types to list&#8217; selector.</p>"
+"An Automatic Table Of Contents is generated from the items in its location, "
+"and includes all item types that are selected in the &#8216;types to "
+"list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:18
@@ -3494,9 +3494,9 @@ msgstr "de la version publique de &#xab;${title}&#xbb;"
 msgid "Link changed"
 msgstr "Lien modifié"
 
-#: /views/edit/VersionedContent/Link/tab_edit.pt:36
-msgid "<label for=\"url\"> link url </label>"
-msgstr ""
+#: /views/edit/VersionedContent/Link/tab_edit.pt:37
+msgid "link url"
+msgstr "lien url"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56
 msgid "change link"
@@ -6083,9 +6083,6 @@ msgstr "Désolé, il y a quelques problèmes avec ces champs"
 
 #~ msgid "Edit Text Content"
 #~ msgstr "Éditer le texte du contenu"
-
-#~ msgid "link url"
-#~ msgstr "lien url"
 
 #~ msgid "broken"
 #~ msgstr "cassé"

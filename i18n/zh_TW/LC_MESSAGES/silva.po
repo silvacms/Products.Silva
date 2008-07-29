@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
 "PO-Revision-Date: 2008-02-08 16:13+0000\n"
 "Last-Translator: Formichelle <for1018@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
@@ -3189,11 +3189,11 @@ msgstr ""
 msgid "${icon} AutoTOC"
 msgstr ""
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:121
+#: /views/edit/Content/AutoTOC/tab_edit.pt:124
 msgid ""
-"<h3>x</h3> <p>An Automatic Table Of Contents is generated from the items in "
-"its location, and includes all item types that are selected in the &#8216;"
-"types to list&#8217; selector.</p>"
+"An Automatic Table Of Contents is generated from the items in its location, "
+"and includes all item types that are selected in the &#8216;types to "
+"list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:18
@@ -3376,9 +3376,9 @@ msgstr "的公開版本的&#xab;${title}&#xbb;"
 msgid "Link changed"
 msgstr "連結已改變"
 
-#: /views/edit/VersionedContent/Link/tab_edit.pt:36
-msgid "<label for=\"url\"> link url </label>"
-msgstr ""
+#: /views/edit/VersionedContent/Link/tab_edit.pt:37
+msgid "link url"
+msgstr "連結網址"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56
 msgid "change link"
@@ -5591,6 +5591,3 @@ msgstr "抱歉，這些表單欄位有問題。"
 
 #~ msgid "Optional, but useful."
 #~ msgstr "選項，但有用。"
-
-#~ msgid "link url"
-#~ msgstr "連結網址"

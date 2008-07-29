@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Jul 29 11:43:31 2008\n"
+"POT-Creation-Date: Tue Jul 29 14:47:30 2008\n"
 "PO-Revision-Date: 2008-07-23 03:33+0000\n"
 "Last-Translator: Marlon Cisternas Milla <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -3105,11 +3105,11 @@ msgstr "guardar cambios"
 msgid "${icon} AutoTOC"
 msgstr "${icon} AutoTOC"
 
-#: /views/edit/Content/AutoTOC/tab_edit.pt:121
+#: /views/edit/Content/AutoTOC/tab_edit.pt:124
 msgid ""
-"<h3>x</h3> <p>An Automatic Table Of Contents is generated from the items in "
-"its location, and includes all item types that are selected in the &#8216;"
-"types to list&#8217; selector.</p>"
+"An Automatic Table Of Contents is generated from the items in its location, "
+"and includes all item types that are selected in the &#8216;types to "
+"list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:18
@@ -3288,9 +3288,9 @@ msgstr ""
 msgid "Link changed"
 msgstr "Enlace cambiado"
 
-#: /views/edit/VersionedContent/Link/tab_edit.pt:36
-msgid "<label for=\"url\"> link url </label>"
-msgstr ""
+#: /views/edit/VersionedContent/Link/tab_edit.pt:37
+msgid "link url"
+msgstr "enlace url"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:56
 msgid "change link"
@@ -5000,6 +5000,3 @@ msgstr ""
 
 #~ msgid "Edit Text Content"
 #~ msgstr "Editar el Contenido del Texto"
-
-#~ msgid "link url"
-#~ msgstr "enlace url"
