@@ -65,7 +65,7 @@
             <default></default>
             <title>title</title>
             <truncate type="int">0</truncate>
-            <description>&lt;b&gt;Tip:&lt;/b&gt; You don't have to fill in the id and title.</description>
+            <description>Tip: You don't have to fill in the id and title.</description>
             <extra>id="object_title"</extra>
             <unicode>1</unicode>
           </values>

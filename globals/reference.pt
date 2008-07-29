@@ -64,7 +64,7 @@
 <h3 i18n:translate="">Credits</h3>
 
 <p style="line-height:1.5em;" i18n:translate="">
-  Silva is developed by <a href="http://www.infrae.com/" i18n:name="infrae">Infrae</a> and many others. <br />
+  Silva is developed by <a href="http://www.infrae.com/" i18n:name="infrae">Infrae</a> and many others. <br i18n:name="br" />
 </p>
 
 <h4 i18n:translate="">Infrae Silva crew</h4>
@@ -119,8 +119,8 @@
   Many thanks go to Hans Verster at the <span i18n:name="eur"><a href="http://www.eur.nl/">Erasmus University Rotterdam</a></span> for his vision and support.
 </p>
 <p i18n:translate="">
-  <br />
-  <br />
+  <br i18n:name="br" />
+  <br i18n:name="br" />
   <a href="http://www.infrae.com/products/silva" 
     title="Silva info: alt-i"
     accesskey="i"
@@ -136,7 +136,7 @@
       i18n:attributes="alt"
     />
   </a>
-  <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br />
+  <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br i18n:name="br" />
   &#xa9; Copyright 2001-2007 Infrae. All rights reserved.
 </p>
 

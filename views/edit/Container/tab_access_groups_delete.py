@@ -21,7 +21,7 @@ model.action_delete(groupids)
 if deleted_ids:
     if not_deleted_ids:
         message = _(
-            'Deleted ${deleted_ids}, <span class="error">but could not delete ${not_deleted_ids}.</span>',
+            'Deleted ${deleted_ids}, but could not delete ${not_deleted_ids}.',
             mapping={
             'deleted_ids': view.quotify_list(deleted_ids),
             'not_deleted_ids': view.quotify_list(not_deleted_ids)})

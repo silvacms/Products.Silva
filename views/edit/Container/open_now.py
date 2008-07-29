@@ -49,7 +49,7 @@ if approved_ids:
     msg.append(translate(message))
 
 if not_approved:    
-    message = _('<span class="error">could not approve: ${ids}</span>',
+    message = _('could not approve: ${ids}',
                 mapping={'ids': view.quotify_list_ext(not_approved)})
     msg.append(translate(message))
 

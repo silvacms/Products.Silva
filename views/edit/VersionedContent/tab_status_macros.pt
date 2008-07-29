@@ -295,16 +295,11 @@ description
 
 <tr class="odd">
 <td class="designator" style="width:33%">
-<label for="message" i18n:translate="">
-<tal:block i18n:translate="">
-add message on
+<label for="message">
+<tal:block i18n:translate="">add message on
 </tal:block>
-<tal:block condition="may_approve_content" i18n:translate="">
-rejection
-</tal:block>
-<tal:block condition="not: may_approve_content" i18n:translate="">
-withdrawal
-</tal:block>
+<tal:block condition="may_approve_content" i18n:translate="">rejection</tal:block>
+<tal:block condition="not: may_approve_content" i18n:translate="">withdrawal</tal:block>
 </label>
 <p i18n:translate="">
 The message may be viewed by local users.

@@ -74,7 +74,7 @@ screens by using alt-1, alt-2, and so forth.</p>
   Each tab has a toplink <img src="up_tree.gif" height="9" width="9" alt="tree" i18n:name="img"/>, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
 </p>
 <p i18n:translate="">
-  On the right of each tab is an uplink <img src="up_level.gif" height="9" width="9" alt="bush" i18n:name="" />, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
+  On the right of each tab is an uplink <img src="up_level.gif" height="9" width="9" alt="bush" i18n:name="img" />, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
 </p>
 <p i18n:translate="">
   <span i18n:name="footer_page_info_row">

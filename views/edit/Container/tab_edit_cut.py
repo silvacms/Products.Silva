@@ -28,7 +28,7 @@ model.action_cut(ids, context.REQUEST)
 
 if cut_ids:
     if not_cut_ids:
-        message = _('Placed ${cut_ids} on clipboard for cutting, <span class="error">but could not cut ${not_cut_ids}.</span>',
+        message = _('Placed ${cut_ids} on clipboard for cutting, but could not cut ${not_cut_ids}.',
                     mapping={'cut_ids': view.quotify_list(cut_ids),
                              'not_cut_ids': view.quotify_list(not_cut_ids)
             })

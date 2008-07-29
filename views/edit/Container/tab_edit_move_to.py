@@ -42,7 +42,7 @@ if result:
                 mapping={'ids': view.quotify_list(actives)})
     message = translate(message)
     if inactives:
-        message2 = _(', <span class="error">but could not move ${ids}</span>',
+        message2 = _(', but could not move ${ids}',
                      mapping={'ids': view.quotify_list(inactives)})
         message += translate(message2)
     model.sec_update_last_author_info()

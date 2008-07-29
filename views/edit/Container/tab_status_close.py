@@ -49,7 +49,7 @@ if closed_ids:
     msg.append(translate(message))
 
 if not_closed:
-    message = _('<span class="error">could not close: ${ids}</span>',
+    message = _('could not close: ${ids}',
                 mapping={'ids': view.quotify_list_ext(not_closed)})
     msg.append(translate(message))
 

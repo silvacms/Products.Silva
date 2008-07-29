@@ -37,7 +37,7 @@ if not id_check == id.OK:
 
 if groups_service.isGroup(str(id)):
     message=_("""There's already a Group with the name ${id} in this Silva
-        site.<br />In contrast to other Silva objects, Group IDs must be
+        site. In contrast to other Silva objects, Group IDs must be
         unique within a Silva instance.""", mapping={'id': view.quotify(id)})
     return model.edit['tab_access_groups'](
         message_type="error", 

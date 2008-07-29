@@ -45,7 +45,7 @@
             <default></default>
             <title>title</title>
             <truncate type="int">0</truncate>
-            <description>Fill in a title. It&amp;#8217;ll be used for the &lt;abbr title="Alternative text"&gt;ALT&lt;/abbr&gt; text of the image.</description>
+            <description>Fill in a title. It&amp;#8217;ll be used for the ALT (Alternative text) attribute of the image.</description>
             <extra></extra>
             <unicode>1</unicode>
           </values>

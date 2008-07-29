@@ -106,7 +106,7 @@ if changed_ids:
     msg.append(translate(message))
 
 if not_changed:
-    message = _('<span class="error">could not change settings on: ${ids}</span>',
+    message = _('could not change settings on: ${ids}',
                 mapping={'ids': view.quotify_list_ext(not_changed)})
     msg.append(translate(message))
 

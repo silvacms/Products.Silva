@@ -39,7 +39,7 @@ else:
         message_type='alert'
 
     if failed:
-        message = _('<span class="warning">could not add: ${failed}</span>',
+        message = _('could not add: ${failed}',
                     mapping={'failed': view.quotify_list(failed)})
         msg.append(translate(message))
     msg = ' '.join(msg)
