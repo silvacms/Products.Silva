@@ -157,7 +157,7 @@ class ContainerCleanupAdapter(CleanupAdapter):
             if adapter is not None:                                
                 if statistics['threshold'] > threshold:
                     print 'commit sub transaction'
-                    transaction.get().commit(1)
+                    transaction.get().commit()
                     self.context._p_jar.cacheGC()
                     statistics['threshold'] = 0
                 getattr(adapter, remove_method)(statistics, dt=dt)
