@@ -490,7 +490,7 @@ class UnknownContentHandler(SilvaBaseHandler):
                     'zexps/' + self.getData('zip_id')))
             # Commit subtransaction to be able to get to a valid
             # connection (the _p_jar attribute on the object)
-            transaction.get().commit(1)
+            transaction.get().commit()
             ob = self.parent()._p_jar.importFile(file)
             id = ob.id
             if hasattr(id, 'im_func'):
