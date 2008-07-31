@@ -5,10 +5,18 @@ Silva changes
 
   Silva 2.0.9 (unreleased)
 
+    Bugs fixed:
+
+      - Formulator lines fields no longer break when values have
+        quotes or unicode characters in them.
+
 
   Silva 2.0.8
 
     Bugs fixed:
+
+      - Formulator lines fields no longer break when values have
+        quotes or unicode characters in them.
 
       - Fixed mimetype checking in SilvaDocument to make kupu editing
         work in Firefox 3
