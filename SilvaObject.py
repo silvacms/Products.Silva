@@ -197,9 +197,6 @@ class SilvaObject(Security, ViewCode):
         return self.service_metadata.getMetadataValue(
             self, 'silva-content', 'maintitle')
 
-    def title(self):
-        return self.get_title()
-
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):

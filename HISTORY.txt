@@ -51,9 +51,6 @@ Silva changes
 
         Note: check encoding of output.
 
-      - #200507: ZMI titles now appear for Silva objects.  The title
-        is retrieved from the object's metadata.
-
       - Refactoring functional tests, built SilvaBrowser API for basic
         Silva functional tests.
 
