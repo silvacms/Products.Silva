@@ -156,7 +156,8 @@ class Publication(Folder.Folder):
     def to_xml(self, context):
         """Render object to XML.
         """
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         f = context.f
         f.write('<silva_publication id="%s">' % self.id)
@@ -259,9 +260,6 @@ def manage_addPublication(
 def xml_import_handler(object, node):
     """import publication"""
     
-    warn('Use silvaxml/xmlimport instead of import_handler', 
-         DeprecationWarning)
-
     def factory(object, id, title):
         object.manage_addProduct["Silva"].manage_addPublication(id, title, 0)
     

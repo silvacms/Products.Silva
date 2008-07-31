@@ -98,7 +98,8 @@ class File(Asset):
     def to_xml(self, context):
         """Overide from SilvaObject
         """
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         context.f.write(
             '<file id="%s" url=%s>%s</file>' % (

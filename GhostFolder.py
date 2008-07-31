@@ -333,7 +333,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'to_xml')
     def to_xml(self, context):
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         f = context.f
         f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (
@@ -406,9 +407,6 @@ def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     return ''
 
 def xml_import_handler(object, node):
-
-    warn('Use silvaxml/xmlimport instead of import_handler', 
-         DeprecationWarning)
 
     def _get_content_url(node):
         content_url = node.attributes.getNamedItem('content_url').nodeValue

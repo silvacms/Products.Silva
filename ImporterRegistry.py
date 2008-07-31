@@ -19,6 +19,9 @@ from.  the function should return the new object created.
 """
 from types import UnicodeType
 
+from warnings import warn
+
+
 DEFAULT_ENCODING = None
 
 def encode_key(key, encoding=DEFAULT_ENCODING):
@@ -49,6 +52,9 @@ class ImporterRegistry:
         """
         register an import function for a tag
         """
+        warn('Use silvaxml/xmlimport instead of the old import registry.'
+             ' Old xml import registry will be removed in Silva 2.2.', 
+             DeprecationWarning)
         key = encode_key(tag_name)
         self._import_handlers[key] = import_function
 
@@ -57,6 +63,9 @@ class ImporterRegistry:
         """
         register a function as to initialize objects after
         """
+        warn('Use silvaxml/xmlimport instead of the old import registry.'
+             ' Old xml import registry will be removed in Silva 2.2.', 
+             DeprecationWarning)
         if default and not tag_name:
             self._default_initializer.insert(priority, initialization_func)
             

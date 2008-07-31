@@ -253,7 +253,8 @@ class Ghost(CatalogedVersionedContent):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         if context.last_version == 1:
             version_id = self.get_next_version()

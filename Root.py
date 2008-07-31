@@ -142,7 +142,8 @@ class Root(Publication):
     def to_xml(self, context):
         """Render object to XML.
         """
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         f = context.f
         f.write('<silva_root id="%s">' % self.id)

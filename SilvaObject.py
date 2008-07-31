@@ -460,7 +460,8 @@ class SilvaObject(Security, ViewCode):
         in a subdirectory 'assets'.
         """
         warn('you should use export_content with zip as formater'
-             ' instead of get_zip', DeprecationWarning)
+             ' instead of get_zip. get_zip will be removed in Silva 2.2', 
+             DeprecationWarning)
         return self.export_content('zip', with_sub_publications, last_version)
 
 
@@ -505,7 +506,8 @@ class SilvaObject(Security, ViewCode):
         Note that you get a full document with a processing instruction.
         if you want to get "raw" xml, use the 'to_xml' machinery.
         """
-        warn('Use silvaxml/xmlexport instead of get_xml method', 
+        warn('Use silvaxml/xmlexport instead of get_xml.'
+             ' get_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         context = XMLExportContext()
         context.f = StringIO()
@@ -536,7 +538,8 @@ class SilvaObject(Security, ViewCode):
         Note that you get a full document with a processing instruction.
         if you want to get "raw" xml, use the 'to_xml' machinery.
         """
-        warn('Use silvaxml/xmlexport instead of get_xml_for_objects method', 
+        warn('Use silvaxml/xmlexport instead of get_xml_for_objects.'
+             ' get_xml_for_objects will be removed in Silva 2.2.', 
              DeprecationWarning)
         context = XMLExportContext()
         context.f = StringIO()
@@ -560,7 +563,8 @@ class SilvaObject(Security, ViewCode):
     def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)
         """
-        warn('Use silvaxml/xmlexport instead of to_xml method', 
+        warn('Use silvaxml/xmlexport instead of to_xml.'
+             ' to_xml will be removed in Silva 2.2.', 
              DeprecationWarning)
         context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
 
