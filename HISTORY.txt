@@ -288,6 +288,9 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
+      - Formulator lines fields no longer break when values have
+        quotes or unicode characters in them.
+
       - Message feedback from the pdf/word to text converters is once
         again presented to the user. (Was inadvertently lost in the
         Z2.10 merge)
