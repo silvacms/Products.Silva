@@ -25,15 +25,24 @@ function addNewContent(event) {
   var idcheckboxes = this.form['ids:list'];
   /* this will be blank if there are no items in the container */
   if (idcheckboxes) {
-    var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
-    for (var i=0; i < idcheckboxes.length; i++) {
-      if (idcheckboxes[i].checked) {
-        /* if the index item is checked, leave the position at zero, so the
-           new item will be added at position one (as listed in the contents tab)
-        */
-        if (checkboxListHasIndex && i>0) i-=1;
-	this.form['add_object_position'].value = i;
-        break;
+    if (idcheckboxes.length==null && 
+	idcheckboxes.id != 'index') {
+      if (idcheckboxes.checked) {/* there is only a single checkbox, 
+				  on the page, it isn't the
+			          index document, and it is checked*/
+	this.form['add_object_position'].value = 0;
+      }
+    } else {
+      var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
+      for (var i=0; i < idcheckboxes.length; i++) {
+	if (idcheckboxes[i].checked) {
+	  /* if the index item is checked, leave the position at zero, so the
+	     new item will be added at position one (as listed in the contents tab)
+	  */
+	  if (checkboxListHasIndex && i>0) i-=1;
+	  this.form['add_object_position'].value = i;
+	  break;
+	};
       };
     };
   };
