@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Revision: 1.13 $
 
+from warnings import warn
+
 from zope.interface import implements
 
 # python
@@ -46,6 +48,8 @@ class Link(CatalogedVersionedContent):
     def to_xml(self, context):
         """Render object to XML.
         """
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         f = context.f
 
         if context.last_version == 1:
@@ -116,6 +120,8 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 def xml_import_handler(object, node):
+    warn('Use silvaxml/xmlimport instead of import_handler', 
+         DeprecationWarning)
     id = get_xml_id(node)
     title = get_xml_title(node)
     url = ''

@@ -505,6 +505,8 @@ class SilvaObject(Security, ViewCode):
         Note that you get a full document with a processing instruction.
         if you want to get "raw" xml, use the 'to_xml' machinery.
         """
+        warn('Use silvaxml/xmlexport instead of get_xml method', 
+             DeprecationWarning)
         context = XMLExportContext()
         context.f = StringIO()
         context.with_sub_publications = with_sub_publications
@@ -534,6 +536,8 @@ class SilvaObject(Security, ViewCode):
         Note that you get a full document with a processing instruction.
         if you want to get "raw" xml, use the 'to_xml' machinery.
         """
+        warn('Use silvaxml/xmlexport instead of get_xml_for_objects method', 
+             DeprecationWarning)
         context = XMLExportContext()
         context.f = StringIO()
         context.with_sub_publications = with_sub_publications
@@ -556,13 +560,9 @@ class SilvaObject(Security, ViewCode):
     def to_xml(self, context):
         """Handle unknown objects. (override in subclasses)
         """
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'is_deletable')
-    def is_deletable(self):
-        """always deletable"""
-        return 1
 
     # WebDAV support
 

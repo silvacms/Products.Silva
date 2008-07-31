@@ -12,6 +12,9 @@ try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
+
+from warnings import warn
+
 # Zope
 from zope.app.container.interfaces import IObjectRemovedEvent
 from OFS import SimpleItem
@@ -95,6 +98,8 @@ class File(Asset):
     def to_xml(self, context):
         """Overide from SilvaObject
         """
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         context.f.write(
             '<file id="%s" url=%s>%s</file>' % (
             self.id, self.get_download_url(), self._title))

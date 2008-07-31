@@ -7,8 +7,8 @@ from cStringIO import StringIO
 from types import StringType, IntType
 from zipfile import ZipFile
 from cgi import escape
-from zope.i18n import translate
 
+from zope.i18n import translate
 from zope.interface import implements
 # Zope
 import OFS

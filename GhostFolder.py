@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id: GhostFolder.py,v 1.42 2006/01/24 16:14:12 faassen Exp $
 
+from warnings import warn
+
 from zope.interface import implements
 
 #zope
@@ -331,6 +333,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'to_xml')
     def to_xml(self, context):
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         f = context.f
         f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (
             self.getId(), self.get_haunted_url()))
@@ -402,6 +406,9 @@ def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     return ''
 
 def xml_import_handler(object, node):
+
+    warn('Use silvaxml/xmlimport instead of import_handler', 
+         DeprecationWarning)
 
     def _get_content_url(node):
         content_url = node.attributes.getNamedItem('content_url').nodeValue

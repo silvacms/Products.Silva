@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Revision: 1.97 $
 
+from warnings import warn
+
 from zope.interface import implements
 
 # Zope
@@ -140,6 +142,8 @@ class Root(Publication):
     def to_xml(self, context):
         """Render object to XML.
         """
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         f = context.f
         f.write('<silva_root id="%s">' % self.id)
 

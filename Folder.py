@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Revision: 1.180 $
 
+from warnings import warn
+
 from zope.interface import implements
 from zope.i18n import translate
 
@@ -808,6 +810,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     def to_xml(self, context):
         """Render object to XML.
         """
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         f = context.f
         f.write('<silva_folder id="%s">' % self.id)
         self._to_xml_helper(context)
@@ -927,6 +931,9 @@ def manage_addFolder(
 
 def xml_import_handler(object, node, factory=None):
     """Helper for importing folder objects into an other object"""
+
+    warn('Use silvaxml/xmlimport instead of import_handler', 
+         DeprecationWarning)
 
     def default_factory(object, id, title):
         object.manage_addProduct["Silva"].manage_addFolder(id, title, 0)

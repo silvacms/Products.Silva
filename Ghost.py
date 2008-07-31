@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Revision: 1.101 $
 
+from warnings import warn
+
 from zope.interface import implements, directlyProvidedBy, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserSkinType
 
@@ -251,6 +253,8 @@ class Ghost(CatalogedVersionedContent):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
+        warn('Use silvaxml/xmlexport instead of to_xml method', 
+             DeprecationWarning)
         if context.last_version == 1:
             version_id = self.get_next_version()
             if version_id is None:
