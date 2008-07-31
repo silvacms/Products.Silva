@@ -2317,53 +2317,25 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 extsource.appendChild(desc_el);
             }
   
-            for (var i=0; i < 
-                    this.responseXML.documentElement.childNodes.length; i++) {
-                var child = this.responseXML.documentElement.childNodes[i];
-                if (child.nodeName.toLowerCase() == 'parameter') {
-                    var key = child.getAttribute('key');
-                    var value = '';
-                    for (var j=0; j < child.childNodes.length; j++) {
-                        value += child.childNodes[j].nodeValue;
-                    };
-                    if (key == 'metatype') {
-                        metatype = value;
-                        continue;
-                    };
-                    // for presentation only change some stuff
-                    var displayvalue = value.toString();
-                    var attrkey = key;
-                    var strong = doc.createElement('strong');
-                    strong.appendChild(doc.createTextNode(key + ': '));
-                    extsource.appendChild(strong);
-                    if (child.getAttribute('type') == 'bool') {
-                    	value = (value == "True" ? 1 : 0);
-                    	attrkey = key + '__type__boolean';
-                    };
-                    if (child.getAttribute('type') == 'list') {
-                        var vallist = eval(value);
-                        attrkey = key + '__type__list';
-                        for (var k=0; k < vallist.length; k++) {
-                            var span = doc.createElement('span');
-                            span.setAttribute('key', attrkey);
-                            extsource.appendChild(span);
-                            var textel = doc.createTextNode(vallist[k]);
-                            span.appendChild(textel);
-                            if (k < vallist.length - 1) {
-                                extsource.appendChild(doc.createTextNode(', '));
-                            };
-                        };
-                    }
-                    else {
-                        var span = doc.createElement('span');
-                        span.setAttribute('key', attrkey);
-                        extsource.appendChild(span);
-                        var textel = doc.createTextNode(displayvalue);
-                        span.appendChild(textel);
-                    };
-                    extsource.appendChild(doc.createElement('br'));
-                };
-            };
+	    var params = rxml.getElementsByTagName("parameter");
+	    for (var i=0; i<params.length; i++) {
+	      var child = params[i];
+	      var key = child.getAttribute('id');
+	      var value = '';
+	      for (var j=0; j < child.childNodes.length; j++) {
+		value += child.childNodes[j].nodeValue;
+	      };
+	      // for presentation only change some stuff
+	      var attrkey = key;
+	      if (child.getAttribute('type') == 'list') {
+		attrkey = key + '__type__list';
+	      }
+	      else if (child.getAttribute('type') == 'bool') {
+		value = (value == "True" ? 1 : 0);
+		attrkey = key + '__type__boolean';
+	      };
+	      extsource.setAttribute(attrkey, value);
+	    };
             if (!currsource) {
                 object.editor.insertNodeAtSelection(extsource);
             } else {
