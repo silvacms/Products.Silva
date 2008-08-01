@@ -2318,6 +2318,8 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
             }
 
             var params = rxml.getElementsByTagName("parameter");
+            var pardiv = doc.createElement('div');
+            pardiv.setAttribute('class', 'parameters');
             for (var i=0; i < params.length; i++) {
                 var child = params[i];
                 var key = child.getAttribute('id');
@@ -2334,7 +2336,7 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 var attrkey = key;
                 var strong = doc.createElement('strong');
                 strong.appendChild(doc.createTextNode(key + ': '));
-                extsource.appendChild(strong);
+                pardiv.appendChild(strong);
                 if (child.getAttribute('type') == 'bool') {
                     value = (value == "True" ? 1 : 0);
                     attrkey = key + '__type__boolean';
@@ -2345,23 +2347,24 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                     for (var k=0; k < vallist.length; k++) {
                         var span = doc.createElement('span');
                         span.setAttribute('key', attrkey);
-                        extsource.appendChild(span);
+                        pardiv.appendChild(span);
                         var textel = doc.createTextNode(vallist[k]);
                         span.appendChild(textel);
                         if (k < vallist.length - 1) {
-                            extsource.appendChild(doc.createTextNode(', '));
+                            pardiv.appendChild(doc.createTextNode(', '));
                         };
                     };
                 }
                 else {
                     var span = doc.createElement('span');
                     span.setAttribute('key', attrkey);
-                    extsource.appendChild(span);
+                    pardiv.appendChild(span);
                     var textel = doc.createTextNode(displayvalue);
                     span.appendChild(textel);
                 };
-                extsource.appendChild(doc.createElement('br'));
+                pardiv.appendChild(doc.createElement('br'));
             };
+            extsource.appendChild(pardiv);
             if (!currsource) {
                 object.editor.insertNodeAtSelection(extsource);
             } else {
