@@ -5,7 +5,6 @@
 from zope.interface import implements
 # Python
 import os
-import string
 from types import StringTypes
 from cgi import escape
 try:
@@ -21,14 +20,12 @@ from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from mimetypes import guess_extension
 from helpers import add_and_edit, fix_content_type_header
 from converters import get_converter_for_mimetype
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 # Silva
 from Asset import Asset
-from Products.Silva import helpers
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade

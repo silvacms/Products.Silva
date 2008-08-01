@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # from Products.Silva.i18n import translate as _
 
 # from Products.Silva.adapters.interfaces import IViewerSecurity
@@ -5,11 +9,9 @@
 
 from Products.Silva.interfaces import IContent, IContainer, IAsset, \
      IPublishable, IGhostFolder
-from DateTime import DateTime
-from AccessControl import getSecurityManager
 from Products.Five import BrowserView
 from Acquisition import aq_base
-from Products.Silva import mangle, icon
+from Products.Silva import icon
 
 class ObjectLookup(BrowserView):
     """

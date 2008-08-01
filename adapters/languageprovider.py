@@ -2,9 +2,8 @@ from DateTime import DateTime
 # Zope
 from zope.interface import implements
 import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 
-from Products.Silva.interfaces import ISilvaObject
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 from Products.Silva import SilvaPermissions

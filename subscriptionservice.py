@@ -1,5 +1,7 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
+# $Id$
+
 # Python
 import re
 import urllib
@@ -11,7 +13,7 @@ from OFS.CopySupport import _cb_encode, _cb_decode
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.Formulator import Errors
+
 # Silva
 from Products.Silva import helpers
 from Products.Silva import SilvaPermissions

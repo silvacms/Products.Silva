@@ -1,32 +1,30 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.70 $
+# $Id$
 
 from warnings import warn
 
+# Zope 3
 from zope.interface import implements
 
-# Zope
+# Zope 2
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
+from zExceptions import BadRequest
+import transaction
+import Acquisition
+
 # Silva
 import Folder
 import SilvaPermissions
-import ContainerPolicy
-# misc
-from helpers import add_and_edit
 
-from Products.Silva.ImporterRegistry import get_importer, xml_import_helper, get_xml_id, get_xml_title
+from Products.Silva.helpers import add_and_edit
 from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
 from interfaces import IPublication, IRoot
 
-from zExceptions import BadRequest
-import transaction
-import Acquisition
 
 class OverQuotaException(BadRequest):
     """Exception triggered when you're overquota.

@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from Acquisition import aq_base
@@ -5,8 +9,7 @@ from Acquisition import aq_base
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
-from Products.Silva.interfaces import IVersionedContent, IContent, IContainer,\
-                    IAsset, IPublishable
+from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
 
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates

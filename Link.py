@@ -1,24 +1,25 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Id$
+
+import re
 
 from warnings import warn
 
+# Zope 3
 from zope.interface import implements
 
-# python
-import re
-# Zope
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
 # Silva
 from VersionedContent import CatalogedVersionedContent
 from Version import CatalogedVersion
 import SilvaPermissions
 from interfaces import IVersionedContent, IVersion
 import mangle
-from helpers import add_and_edit, translateCdata
+from helpers import translateCdata
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _

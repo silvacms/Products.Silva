@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # silva imports
 from zope.interface import implements
 from Products.Silva import upgrade

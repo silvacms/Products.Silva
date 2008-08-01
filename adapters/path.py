@@ -3,7 +3,7 @@ from urlparse import urlparse
 from zope.interface import implements
 from zope.publisher.interfaces.http import IHTTPRequest
 
-from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
+from AccessControl import ModuleSecurityInfo
 from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva.adapters import adapter

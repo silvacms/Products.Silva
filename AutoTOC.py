@@ -10,9 +10,6 @@ from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 from OFS.SimpleItem import SimpleItem
 
-# products
-from Products.ParsedXML.ParsedXML import ParsedXML
-
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions

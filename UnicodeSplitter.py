@@ -1,4 +1,7 @@
-from Products.ZCTextIndex.ISplitter import ISplitter
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from Products.ZCTextIndex.PipelineFactory import element_factory
 
 import re

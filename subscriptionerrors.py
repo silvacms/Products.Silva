@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from AccessControl import ModuleSecurityInfo, allow_module, allow_class
 
 # Jumping through security hoops to get the adapter

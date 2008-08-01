@@ -1,5 +1,4 @@
 import os
-import urllib
 from lxml import etree
 from StringIO import StringIO
 
@@ -8,7 +7,6 @@ from zope.interface import implements
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-import Acquisition
 
 # Silva
 from Products.Silva.transform.interfaces import IRenderer

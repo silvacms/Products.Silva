@@ -1,19 +1,16 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SilvaObject.py,v 1.124 2006/01/25 18:13:31 faassen Exp $
-
-# python
-from types import StringType
-import os
+# $Id$
 
 from warnings import warn
 
+# Zope 3
 from zope.i18n import translate
 from zope import component
 from zope import interface
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
-# Zope
+# Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
 from AccessControl import ClassSecurityInfo
@@ -29,10 +26,9 @@ import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 from Security import Security
 from ViewCode import ViewCode
-from interfaces import ISilvaObject, IContent, IPublishable, IAsset
+from interfaces import ISilvaObject, IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent, IFolder
-from Products.Silva import helpers
 from Products.Silva.utility import interfaces as utility_interfaces
 # Silva adapters
 from Products.Silva.adapters.renderable import getRenderableAdapter

@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Id$
 
 from zope.interface import implements
 from zope import interface
@@ -16,8 +16,7 @@ from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # silva
-from Products.Silva import SilvaPermissions
-from Products.Silva.interfaces import IContainerPolicy, IContainer
+from Products.Silva.interfaces import IContainerPolicy
 from Products.Silva.interfaces import IInvisibleService
 
 # XXX: can these "helper" classes for ordering be refactored in something

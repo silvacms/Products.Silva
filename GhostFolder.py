@@ -4,15 +4,13 @@
 
 from warnings import warn
 
+# Zope 3
 from zope.interface import implements
 
-#zope
-import OFS.Folder
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
-
 
 # silva
 from Products.Silva import Folder
@@ -21,12 +19,11 @@ from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Publishable import Publishable
-from Products.Silva.Versioning import VersioningError
 from Products.Silva.i18n import translate as _
 
 from Products.Silva.interfaces import \
-    IContainer, IContent, IAsset, IGhost, IPublishable, IVersionedContent, \
-    IPublication, ISilvaObject, IGhostFolder, IIcon, IGhostContent
+    IContainer, IContent, IGhost, IVersionedContent, \
+    IPublication, ISilvaObject, IGhostFolder, IGhostContent
     
 class Sync:
 

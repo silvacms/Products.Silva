@@ -1,14 +1,12 @@
 from StringIO import StringIO
 from zope.interface import implements
-
 # Zope
 import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
+from AccessControl import ClassSecurityInfo, allow_module
 # Silva
 from Products.Silva import interfaces as silva_interfaces
 # Silva Adapters
-from Products.Silva.adapters import adapter, interfaces, assetdata
-from Products.Silva.adapters import interfaces
+from Products.Silva.adapters import adapter, interfaces
 from Products.Silva import SilvaPermissions
 
 class ZipfileImportAdapter(adapter.Adapter):

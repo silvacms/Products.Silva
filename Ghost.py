@@ -1,18 +1,16 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.101 $
+# $Id$
 
 from warnings import warn
 
+# Zope 3
 from zope.interface import implements, directlyProvidedBy, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserSkinType
 
-# Zope
-from OFS import SimpleItem
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from DateTime import DateTime
 
 # Silva
 from VersionedContent import CatalogedVersionedContent
@@ -26,8 +24,7 @@ from helpers import add_and_edit
 import urlparse
 
 from interfaces import \
-    IVersionedContent, IContainer, IVersion, IContent, IGhost, \
-    IGhostContent, IIcon
+    IVersionedContent, IContainer, IContent, IGhost, IGhostContent
 
 class GhostBase:
     """baseclas for Ghosts (or Ghost versions if it's versioned)

@@ -1,16 +1,20 @@
-from zope.interface import implements
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
+# Zope 3
+from zope.interface import implements
+from zope.app.container.interfaces import IObjectRemovedEvent
+
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
 from DateTime import DateTime
-from zope.app.container.interfaces import IObjectRemovedEvent
 
+# Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva import helpers
 from Products.SilvaMetadata.Exceptions import BindingError
-from Products.SilvaViews.ViewRegistry import ViewAttribute
 
 from interfaces import IVersion
 

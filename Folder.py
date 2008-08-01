@@ -8,14 +8,11 @@ from zope.interface import implements
 from zope.i18n import translate
 
 # Zope
-from OFS import Folder, SimpleItem
+from OFS.Folder import Folder as BaseFolder
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
-from zExceptions import InternalError
-import transaction
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -23,33 +20,28 @@ from SilvaObject import SilvaObject
 from Publishable import Publishable
 import Copying
 import SilvaPermissions
-import ContainerPolicy
 import validate
 # misc
 import helpers
-import re
 import urllib
 from sys import exc_info
 
 from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
-from Products.Silva.File import file_factory
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.ParsedXML.ParsedXML import createDOMDocument
-from Products.ParsedXML.ExtraDOM import writeStream
 
 from adapters.interfaces import IContentImporter
 from interfaces import IPublishable, IContent, IGhost
-from interfaces import IVersionedContent, ISilvaObject, IAsset
+from interfaces import ISilvaObject, IAsset
 from interfaces import IContainer, IFolder, IPublication, IRoot
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
 
-class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
+class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
@@ -67,7 +59,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, Folder.Folder):
     object_type = 'container'
 
     # A hackish way to get a Silva tab in between the standard ZMI tabs
-    inherited_manage_options = Folder.Folder.manage_options
+    inherited_manage_options = BaseFolder.manage_options
     manage_options=(
         (inherited_manage_options[0], ) +
         ({'label':'Silva /edit...', 'action':'edit'}, ) +

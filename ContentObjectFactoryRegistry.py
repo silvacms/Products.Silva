@@ -1,4 +1,7 @@
-from Products.Silva.ExtensionRegistry import extensionRegistry
+# Copyright (c) 2003-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zExceptions import InternalError
 
 class ContentObjectFactoryRegistry:

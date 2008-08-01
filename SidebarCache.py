@@ -1,10 +1,12 @@
+# Copyright (c) 2003-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+# Zope 2
 from BTrees.OOBTree import OOBTree
 from OFS.SimpleItem import SimpleItem
-
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 class SidebarCache(SimpleItem):
     """The actual storage of the cache"""

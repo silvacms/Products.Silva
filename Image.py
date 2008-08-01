@@ -1,22 +1,19 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: Image.py,v 1.76 2006/01/25 18:13:30 faassen Exp $
+# $Id$
 # Python
-import re, string
+import re
 from cStringIO import StringIO
-from types import StringType, IntType
-from zipfile import ZipFile
+from types import IntType
 from cgi import escape
 
+# Zope 3
 from zope.i18n import translate
 from zope.interface import implements
-# Zope
+# Zope 2
 import OFS
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from DateTime import DateTime
-from Globals import package_home
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 from webdav.common import Conflict
@@ -26,8 +23,6 @@ import transaction
 import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle
-from Products.Silva import upgrade
-from Products.Silva import helpers
 from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAsset
 

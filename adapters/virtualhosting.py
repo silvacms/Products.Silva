@@ -2,19 +2,8 @@
 # See also LICENSE.txt
 # $Id: virtualhosting.py,v 1.8 2006/01/24 16:12:01 faassen Exp $
 #
-import Globals
-from Acquisition import aq_parent, aq_inner
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo,\
-     getSecurityManager
-from AccessControl.PermissionRole import rolesForPermissionOn
-from AccessControl.Permission import Permission
-from Products.Silva import SilvaPermissions
-from Products.Silva import roleinfo
-from Products.Silva import interfaces as silva_interfaces
-from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
 
-from DateTime import DateTime
+from Products.Silva.adapters import adapter
 
 class VirtualHostingAdapter(adapter.Adapter):
     """ Virtual Hosting adapter

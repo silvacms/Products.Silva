@@ -1,4 +1,3 @@
-import os
 
 # Silva
 from Products.Silva.transform.renderer.xsltrendererbase import XSLTRendererBase

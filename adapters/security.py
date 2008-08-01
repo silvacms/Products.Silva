@@ -6,8 +6,7 @@ from zope.interface import implements
 
 import Globals
 from Acquisition import aq_parent, aq_inner
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo,\
-     getSecurityManager
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
 from Products.Silva import SilvaPermissions

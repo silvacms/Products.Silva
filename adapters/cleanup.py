@@ -4,16 +4,12 @@
 #
 import Globals
 import transaction
-from Acquisition import aq_parent, aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from Products.Silva import SilvaPermissions
-from Products.Silva import roleinfo
 from Products.Silva import interfaces as silvaInterfaces
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
 
 from DateTime import DateTime
-from types import ListType
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.cleanup')
 

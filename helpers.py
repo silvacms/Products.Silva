@@ -1,19 +1,18 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Id$
+
 # Zope
 from zope.interface import implements
 from AccessControl import ModuleSecurityInfo
-from zope.app.container.interfaces import (IObjectRemovedEvent,
-                                           IObjectAddedEvent)
-# Silva 
-import SilvaPermissions
-from Products.Silva.interfaces import IUpgrader
-# python
-import string, re, urllib
-from cgi import escape
 
-from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
+# Silva 
+from Products.Silva.interfaces import IUpgrader
+
+# python
+import urllib
+
+from interfaces import ISilvaObject, IVersioning, IContainer
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 

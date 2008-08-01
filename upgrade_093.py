@@ -8,13 +8,11 @@ from zope.interface import implements
 # zope imports
 import zLOG
 from Globals import package_home
-from AccessControl import Owned
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer, IContent, IVersion, IVersionedContent
+from Products.Silva.interfaces import IUpgrader, IContainer, IVersionedContent
 from Products.Silva import upgrade
 from Products.Silva.adapters.interfaces import IViewerSecurity
-from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 

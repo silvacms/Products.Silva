@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # Silva
 from Products.Silva import interfaces
-from Products.Silva import SilvaPermissions
 from zope.interface import implements
 
 class Haunted(object):

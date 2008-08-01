@@ -1,34 +1,30 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.68 $
+# $Id$
 
-# Python
-from StringIO import StringIO
-
+# Zope 3
 from zope.interface import implements
+from zope.app.container.interfaces import IObjectRemovedEvent
 
-# Zope
+# Zope 2
 from OFS import Folder
 from OFS.interfaces import IObjectWillBeAddedEvent
-from zope.app.container.interfaces import IObjectRemovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
 from Persistence import Persistent
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
 # Silva
 import SilvaPermissions
 from Versioning import Versioning
 from Content import Content
-from Versioning import VersioningError
 import mangle
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
-from Products.Silva import helpers
 # Silva interfaces
 from interfaces import IVersionedContent, ICatalogedVersionedContent
 
-from webdav.common import PreconditionFailed, Conflict
+from webdav.common import PreconditionFailed
 from zExceptions import Forbidden
 
 class CachedData(Persistent):

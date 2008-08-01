@@ -6,7 +6,7 @@ from zope.component import adapts
 
 # Zope 2
 import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from AccessControl import ClassSecurityInfo
 
 # Silva
 from Products.Silva.adapters import adapter, interfaces

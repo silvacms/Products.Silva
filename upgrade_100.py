@@ -1,22 +1,8 @@
 from zope.interface import implements
 
-import string
-import re
-import os
-
-# zope imports
-import zLOG
-from Globals import package_home
-from AccessControl import Owned
-
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer, IContent, \
-        IVersion, IVersionedContent
+from Products.Silva.interfaces import IUpgrader
 from Products.Silva import upgrade
-from Products.Silva.adapters import security
-from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva.VersionedContent import VersionedContent
-from Products.SilvaMetadata.Exceptions import BindingError
 
 import zLOG
 import sys

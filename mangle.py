@@ -1,20 +1,20 @@
 # -*- coding: iso-8859-1 -*-
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: mangle.py,v 1.37 2006/01/24 16:14:13 faassen Exp $
+# $Id$
+
 # Python
 import string
 import re
 import cgi
-from types import StringType, UnicodeType, InstanceType
-import md5
+from types import StringType, UnicodeType
 
 # Zope
 from AccessControl import ModuleSecurityInfo
 from DateTime import DateTime as _DateTime
 
 # Silva
-from interfaces import ISilvaObject, IVersioning, IContainer, IAsset
+from interfaces import ISilvaObject, IAsset
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')

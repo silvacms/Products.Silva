@@ -1,5 +1,6 @@
 #Copyright (c) 2002-2008 Infrae. All rights reserved.
 #See also LICENSE.txt
+# $Id$
 """
 Purpose:
 
@@ -15,14 +16,12 @@ Purpose:
 
 $Id: Metadata.py,v 1.26 2006/01/24 16:14:12 faassen Exp $    
 """
-from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
 from Products.SilvaMetadata.Import import import_metadata
-from Products.SilvaMetadata.Access import registerAccessHandler, invokeAccessHandler
+from Products.SilvaMetadata.Access import registerAccessHandler
 from Products.SilvaMetadata.Access import default_accessor
 from Products.SilvaMetadata.Initialize import registerInitHandler
 from Products.SilvaMetadata import Binding
-from Products.Silva.Versioning import Versioning
 
 from interfaces import IVersionedContent
 

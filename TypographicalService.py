@@ -1,13 +1,14 @@
-#Copyright (c) 2002-2008 Infrae. All rights reserved.
-#See also LICENSE.txt
-#Zope
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.SimpleItem import SimpleItem
 
-#Silva
-from Products.Silva import mangle
+# Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 

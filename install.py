@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: install.py,v 1.119 2006/01/24 16:14:13 faassen Exp $
+# $Id$
 
 """Install for Silva Core
 """
@@ -9,8 +9,6 @@ import os
 
 # Zope
 from Globals import package_home
-import zLOG
-from OFS.Uninstalled import BrokenClass
 from DateTime import DateTime
 from OFS import Image
 from Products.ProxyIndex.ProxyIndex import RecordStyle
@@ -25,9 +23,7 @@ from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
-from Products.Silva.SimpleMembership import SimpleMemberService
 from Products.Silva import File
-from Products.Silva import assetregistry
 from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import TypographicalService

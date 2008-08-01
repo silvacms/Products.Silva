@@ -1,19 +1,20 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.53 $
+# $Id$
 
+# Zope 3
 from zope.interface import implements
 
-# Zope
+# Zope 2
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
-import ExtensionClass
+
 # Silva
 import SilvaPermissions
 from Products.Silva import mangle
 
-from interfaces import IVersioning, IPublishable
+from interfaces import IVersioning
 
 from Products.Silva.i18n import translate as _
 

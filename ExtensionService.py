@@ -13,7 +13,6 @@ import zLOG
 
 # Silva
 from helpers import add_and_edit
-import SilvaPermissions
 from ExtensionRegistry import extensionRegistry
 from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 import install

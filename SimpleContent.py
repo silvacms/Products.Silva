@@ -1,19 +1,20 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Id$
 
+# Zope 3
 from zope.interface import implements
 
-# Zope
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
+
 # Silva
-from Content import Content
-from interfaces import IContent
-import SilvaPermissions
-from helpers import add_and_edit
+from Products.Silva.Content import Content
+from Products.Silva.interfaces import IContent
+from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 
 icon="www/silvageneric.gif"

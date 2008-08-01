@@ -2,8 +2,6 @@
 import zLOG
 from zope import interface
 
-from Products.SilvaMetadata.Binding import BindingError
-
 from Products.Silva import mangle
 from Products.Silva.interfaces import IUpgrader, IInvisibleService
 from Products.Silva.adapters.interfaces import IIndexable

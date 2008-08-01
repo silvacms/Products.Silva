@@ -1,9 +1,9 @@
-
-# zope imports
-import zLOG
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 # silva imports
-from Products.Silva.interfaces import IVersionedContent, IUpgrader
+from Products.Silva.interfaces import IVersionedContent
 from Products.Silva import upgrade
 
 
@@ -131,11 +131,7 @@ def get_version_xml(obj, version):
     return s.getvalue().encode('UTF8')
 
 def convert_document_092(obj):
-    #print 'Converting document',  obj.id
-    from random import randrange
-    from string import lowercase
-    from DateTime import DateTime
-    
+    #print 'Converting document',  obj.id    
     from Products.SilvaDocument.Document import DocumentVersion
 
     for version in ['unapproved', 'approved', 'public', 'last_closed']:
