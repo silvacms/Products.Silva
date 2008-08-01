@@ -86,11 +86,12 @@ class File(Asset):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_download_url')
-    # XXX deprecated, method left for backwards compatibility
     def get_download_url(self):
         """Obtain the public URL the public could use to download this file
         """
-        # XXX print deprecated warning?
+        warn('Use absolute_url instead of get_download_url.'
+             ' get_download_url will be removed in Silva 2.2.', 
+             DeprecationWarning)
         return self.absolute_url()
 
     # Overide SilvaObject.to_xml().
@@ -156,11 +157,12 @@ class File(Asset):
         return self._index_html_helper(request)
     
     security.declareProtected(SilvaPermissions.View, 'download')
-    # XXX deprecated, method left for backwards compatibility
     def download(self, *args, **kw):
         """ view (download) file data.
         """
-        # XXX print deprecated warning?
+        warn('Use index_html instead of download.'
+             ' download will be removed in Silva 2.2.', 
+             DeprecationWarning)
         return self.index_html(*args, **kw)
 
     security.declareProtected(SilvaPermissions.View, 'tag')
@@ -189,9 +191,10 @@ class File(Asset):
             src, tooltip, self.id, named, self.get_title_or_id())
     
     security.declareProtected(SilvaPermissions.View, 'get_download_link')
-    # XXX deprecated, method left for backwards compatibility
     def get_download_link(self, *args, **kw):
-        # XXX print deprecated warning?
+        warn('Use tag instead of get_download_link.'
+             ' get_download_link will be removed in Silva 2.2.', 
+             DeprecationWarning)
         return self.tag(*args, **kw)
     
     # MODIFIERS
