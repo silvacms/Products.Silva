@@ -53,4 +53,15 @@ table td.align-right p, table th.align-right p {
   text-align: right;
 }
 
+/* external source dispay selectors */
+div.externalsource h4 {
+  margin-bottom:0;
+}
+div.externalsource p {
+  margin:0;
+}
+div.parameters {
+  display:none;
+}
+
 /* end cascade */
