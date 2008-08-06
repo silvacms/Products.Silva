@@ -2,13 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-from warnings import warn
-
 # Zope 3
 from zope.i18n import translate
 from zope import component
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
+
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
@@ -17,11 +16,11 @@ from zope.app.container.interfaces import IObjectMovedEvent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
-from StringIO import StringIO
 from App.Common import rfc1123_date
 # WebDAV
 from webdav.common import Conflict
 from zExceptions import MethodNotAllowed
+
 # Silva
 import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
@@ -460,17 +459,6 @@ class SilvaObject(Security, ViewCode):
         #    self.get_root().service_members.get_member(
         #        self.REQUEST.AUTHENTICATED_USER.getId())
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_zip')
-    def get_zip(self, with_sub_publications=0, last_version=0):
-        """Get Zipfile with XML-Document for object, and binary files
-        in a subdirectory 'assets'.
-        """
-        warn('you should use export_content with zip as formater'
-             ' instead of get_zip. get_zip will be removed in Silva 2.2', 
-             DeprecationWarning)
-        return self.export_content('zip', with_sub_publications, last_version)
-
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'export_content')
@@ -504,76 +492,6 @@ class SilvaObject(Security, ViewCode):
     def is_deletable(self):
         """always deletable"""
         return 1
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_xml')
-    def get_xml(self, with_sub_publications=0, last_version=0):
-        """Get XML-Document in UTF8-Encoding for object (recursively).
-
-        Note that you get a full document with a processing instruction.
-        if you want to get "raw" xml, use the 'to_xml' machinery.
-        """
-        warn('Use silvaxml/xmlexport instead of get_xml.'
-             ' get_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        context = XMLExportContext()
-        context.f = StringIO()
-        context.with_sub_publications = with_sub_publications
-        context.last_version = not not last_version
-        w = context.f.write
-        # construct xml and return UTF8-encoded string
-        w(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
-        w(u'<silva xmlns="%s" '
-            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'xsi:schemaLocation="%s %s" '
-            #'xml:base="%s" '
-
-            'silva_root="%s" >' % (self._xml_namespace,
-                self._xml_namespace, self._xml_schema,
-            #    self.absolute_url(),
-                self.getPhysicalRoot().absolute_url()))
-        self.to_xml(context)
-        w(u'</silva>')
-        result = context.f.getvalue()
-        return result.encode('UTF-8')
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_xml_for_objects')
-    def get_xml_for_objects(self, objects, with_sub_publications=0, last_version=0):
-        """Get XML-Document in UTF8-Encoding for a list of object references
-
-        Note that you get a full document with a processing instruction.
-        if you want to get "raw" xml, use the 'to_xml' machinery.
-        """
-        warn('Use silvaxml/xmlexport instead of get_xml_for_objects.'
-             ' get_xml_for_objects will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        context = XMLExportContext()
-        context.f = StringIO()
-        context.with_sub_publications = with_sub_publications
-        context.last_version = not not last_version
-        w = context.f.write
-        # construct xml and return UTF8-encoded string
-        w(u'<?xml version="1.0" encoding="UTF-8" ?>\n')
-        w(u'<silva xmlns="%s" '
-            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'xsi:schemaLocation="%s %s">' % (self._xml_namespace,
-                self._xml_namespace, self._xml_schema))
-        for obj in objects:
-            obj.to_xml(context)
-        w(u'</silva>')
-        result = context.f.getvalue()
-        return result.encode('UTF-8')
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Handle unknown objects. (override in subclasses)
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        context.f.write('<unknown id="%s">%s</unknown>' % (self.id, self.meta_type))
 
     # WebDAV support
 

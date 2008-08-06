@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Revision: 1.180 $
 
-from warnings import warn
-
 from zope.interface import implements
 from zope.i18n import translate
 
@@ -24,14 +22,9 @@ import validate
 # misc
 import helpers
 import urllib
-from sys import exc_info
 
-from Products.Silva.ImporterRegistry import get_importer, xml_import_helper
-from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
-from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.ParsedXML.ParsedXML import createDOMDocument
 
 from adapters.interfaces import IContentImporter
 from interfaces import IPublishable, IContent, IGhost
@@ -803,37 +796,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         """
         return Copying.resolve_ref(self.getPhysicalRoot(), ref)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Render object to XML.
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        f = context.f
-        f.write('<silva_folder id="%s">' % self.id)
-        self._to_xml_helper(context)
-        export_metadata(self, context)
-        f.write('</silva_folder>')
-
-    def _to_xml_helper(self, context):
-        if context.last_version:
-            title = self.get_title_editable()
-        else:
-            title = self.get_title()
-            
-        context.f.write('<title>%s</title>' % helpers.translateCdata(title))
-        default = self.get_default()
-        if default is not None:
-            default.to_xml(context)
-        for object in self.get_ordered_publishables():
-            if (IPublication.providedBy(object) and 
-                    not context.with_sub_publications):
-                continue
-            object.to_xml(context)
-        #for object in self.get_assets():
-        #    pass
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'xml_validate')
@@ -842,30 +804,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         """
         return validate.validate(xml)
     
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
-        'xml_import')
-    def xml_import(self, xml):
-        """Import XML"""
-        warn('Use silvaxml/xmlimport instead of xml_import.'
-             ' xml_import will be removed in Silva 2.2', 
-             DeprecationWarning)
-
-        dom = createDOMDocument(xml)
-        import_root = dom.documentElement
-        if import_root.nodeName == u'silva':
-            import_root = import_root.firstChild
-        while import_root:
-            # since some exceptions raised are strings or so, we're going to
-            # convert them to 'Exception' here
-            try:
-                xml_import_helper(self, import_root)
-            except Exception:
-                raise
-            except:
-                obj, info, tb = exc_info()
-                raise Exception, info, tb
-            import_root = import_root.nextSibling
-
     security.declarePublic('url_encode')
     def url_encode(self, string):
         """A wrapper for the urllib.quote function
@@ -931,31 +869,6 @@ def manage_addFolder(
         policy.createDefaultDocument(folder, title)
     helpers.add_and_edit(context, id, REQUEST)
     return ''
-
-def xml_import_handler(object, node, factory=None):
-    """Helper for importing folder objects into an other object"""
-
-    def default_factory(object, id, title):
-        object.manage_addProduct["Silva"].manage_addFolder(id, title, 0)
-    
-    id = get_xml_id(node)
-    title = get_xml_title(node)
-    id = str(mangle.Id(object, id).unique())
-    if factory is None:
-        factory = default_factory
-    assert callable(factory), "Factory is not callable"
-    factory(object, id, title)
-    newfolder = getattr(object, id)
-    for child in node.childNodes:
-        if get_importer(child.nodeName):
-            xml_import_helper(newfolder, child)
-        elif (child.nodeName != u'title' and 
-                hasattr(newfolder, 'set_%s' % child.nodeName) and 
-                child.childNodes[0].nodeValue):
-            getattr(newfolder, 'set_%s' % child.nodeName)(
-                                    child.childNodes[0].nodeValue)
-
-    return newfolder
 
 ## def object_will_be_moved(object, event):
 ##     if object != event.object:

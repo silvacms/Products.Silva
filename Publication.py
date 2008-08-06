@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from warnings import warn
-
 # Zope 3
 from zope.interface import implements
 
@@ -15,16 +13,12 @@ import transaction
 import Acquisition
 
 # Silva
-import Folder
-import SilvaPermissions
-
+from Products.Silva import Folder
+from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.Metadata import export_metadata
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-
-from interfaces import IPublication, IRoot
-
+from Products.Silva.interfaces import IPublication, IRoot
 
 from silva.core import conf
 
@@ -156,20 +150,6 @@ class Publication(Folder.Folder):
         return 0
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Render object to XML.
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        f = context.f
-        f.write('<silva_publication id="%s">' % self.id)
-        self._to_xml_helper(context)
-        export_metadata(self, context)
-        f.write('</silva_publication>')
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_publication')
     def get_silva_addables_allowed_in_publication(self):
         current = self
@@ -261,11 +241,4 @@ def manage_addPublication(
     add_and_edit(self, id, REQUEST)
     return ''
 
-def xml_import_handler(object, node):
-    """import publication"""
-    
-    def factory(object, id, title):
-        object.manage_addProduct["Silva"].manage_addPublication(id, title, 0)
-    
-    return Folder.xml_import_handler(object, node, factory=factory)
         

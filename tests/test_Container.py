@@ -305,27 +305,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(self.root.folder6.get_default())
         self.assertRaises(AttributeError, self.root.folder6.is_published)
 
-# XXX Test broke on sprout branch. Unable to find out why, but since sprout
-#     will obviate the need for this method of importing anyway, I didn't
-#     want to spend too much time on investigating.
-
-    def test_import_xml(self):
-        xml1 = """<?xml version="1.0" ?><silva><silva_publication id="test"><title>TestPub</title><silva_document id="index"><title>TestPub</title><doc><p>Content</p></doc></silva_document></silva_publication></silva>"""
-        xml2 = '<silva><silva_folder id="test2"><title>TestFolder</title></silva_folder></silva>' % DateTime('2002/10/16')
-
-        self.root.manage_addProduct['Silva'].manage_addFolder('test_folder', 'Test Folder')
-        folder = self.root.test_folder
-        folder.xml_import(xml1)
-
-        self.assert_(hasattr(folder, 'test'))
-        self.assertEquals(folder.test.get_title_editable(), 'TestPub')
-        self.assert_(hasattr(folder.test, 'index'))
-        self.assertEquals(folder.test.index.get_title_editable(), 'TestPub')
-        self.assert_(str(folder.test.index.get_editable().content.documentElement) == '<doc><p>Content</p></doc>')
-
-        folder.xml_import(xml2)
-
-        self.assert_(hasattr(folder, 'test2'))
 
     
 import unittest

@@ -46,7 +46,6 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
-    from Products.Silva.silvaxml import xmlexport, xmlimport
     # import FileSystemSite functionality
     # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension
@@ -62,7 +61,6 @@ def initialize(context):
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
-    from Products.Silva.ImporterRegistry import importer_registry
     from Products.Silva.ExtensionRegistry import extensionRegistry
 
     import UnicodeSplitter # To make the splitter register itself
@@ -76,21 +74,7 @@ def initialize(context):
         container_filter = makeContainerFilter(only_outside_silva=True)
         )
     registerTypeForMetadata(Root.Root.meta_type)
-        
-    # register xml import functions (old style XML importer)	 
-    # we let the xml import functionality of Publication handle any 	 
-    # root elements, since a Silva instance can not import another root
-    importer_registry.register_tag('silva_root', 	 
-                                   Publication.xml_import_handler)
-    importer_registry.register_tag('silva_publication', 	 
-                                   Publication.xml_import_handler) 	 
-    importer_registry.register_tag('silva_folder', 	 
-                                   Folder.xml_import_handler) 	 
-    importer_registry.register_tag('silva_ghostfolder', 	 
-                                   GhostFolder.xml_import_handler) 	 
-    importer_registry.register_tag('silva_link', 	 
-                                   Link.xml_import_handler)
-    
+            
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
@@ -134,6 +118,7 @@ try:
 except ImportError:
     pass
 else:
+    from OFS.Folder import Folder
     dirpath = os.path.dirname(ee.__file__)
     dtmlpath = '%s/manage_main' % dirpath
     Folder.manage_main = DTMLFile(dtmlpath, globals())
@@ -158,6 +143,8 @@ allow_module('Products.Silva.roleinfo')
 allow_module('Products.Silva.i18n')
 
 def initialize_icons():
+    from Products.Silva import icon, File, GhostFolder
+
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
         ('audio/x-aiff', 'file_aiff.png'),

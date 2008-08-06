@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
 # Python
 import os
 from types import StringTypes
@@ -12,11 +11,12 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-from warnings import warn
-
-# Zope
+# Zope 3
+from zope.interface import implements
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
+
+# Zope 2
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -25,6 +25,7 @@ from converters import get_converter_for_mimetype
 from webdav.WriteLockInterface import WriteLockInterface
 import OFS.interfaces
 import zLOG
+
 # Silva
 from Asset import Asset
 from Products.Silva import mangle
@@ -107,28 +108,6 @@ class File(Asset):
         # possibly strip out charset encoding
         return self._file.content_type.split(';')[0].strip()
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_download_url')
-    def get_download_url(self):
-        """Obtain the public URL the public could use to download this file
-        """
-        warn('Use absolute_url instead of get_download_url.'
-             ' get_download_url will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        return self.absolute_url()
-
-    # Overide SilvaObject.to_xml().
-    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'to_xml')
-    def to_xml(self, context):
-        """Overide from SilvaObject
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        context.f.write(
-            '<file id="%s" url=%s>%s</file>' % (
-            self.id, self.get_download_url(), self._title))
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                             'fulltext')
     def fulltext(self):
@@ -179,15 +158,6 @@ class File(Asset):
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
         return self._index_html_helper(request)
     
-    security.declareProtected(SilvaPermissions.View, 'download')
-    def download(self, *args, **kw):
-        """ view (download) file data.
-        """
-        warn('Use index_html instead of download.'
-             ' download will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        return self.index_html(*args, **kw)
-
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, **kw):
         """ return xhtml tag
@@ -212,14 +182,7 @@ class File(Asset):
         named = ' '.join(named)
         return '<a href="%s" title="%s %s" %s>%s</a>' % (
             src, tooltip, self.id, named, self.get_title_or_id())
-    
-    security.declareProtected(SilvaPermissions.View, 'get_download_link')
-    def get_download_link(self, *args, **kw):
-        warn('Use tag instead of get_download_link.'
-             ' get_download_link will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        return self.tag(*args, **kw)
-    
+        
     # MODIFIERS
 
     security.declareProtected(

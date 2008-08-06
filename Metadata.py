@@ -16,36 +16,15 @@ Purpose:
 
 $Id: Metadata.py,v 1.26 2006/01/24 16:14:12 faassen Exp $    
 """
-from Products.SilvaMetadata.Compatibility import getToolByName, getContentType
-from Products.SilvaMetadata.Import import import_metadata
+from Products.SilvaMetadata.Compatibility import getContentType
 from Products.SilvaMetadata.Access import registerAccessHandler
 from Products.SilvaMetadata.Access import default_accessor
 from Products.SilvaMetadata.Initialize import registerInitHandler
 from Products.SilvaMetadata import Binding
 
-from interfaces import IVersionedContent
 
 #################################
 ### handlers and thin wrappers for metadata
-
-def export_metadata(content, context):
-    out = context.f 
-    metadata_service = getToolByName(content, 'portal_metadata')
-    binding = metadata_service.getMetadata(content)
-    out.write( binding.renderXML() )
-    
-    return None
-
-def import_metadata_handler(container, content, node):
-    if IVersionedContent.providedBy(content):
-        # the current import code all seems to create an initial version
-        # of '0' on import
-        version = getattr(content, '0')
-        import_metadata(version, node)
-    else:
-        import_metadata(content, node)
-
-    return None
 
 def ghost_access_handler(tool, content_type, content):
     target_content = content.get_haunted_unrestricted()
@@ -69,16 +48,8 @@ def ghostfolder_access_handler(tool, content_type, content):
 ### registration
 
 def initialize_metadata():
-    register_import_initializers()
     register_access_handlers()
     register_initialize_handlers()
-
-def register_import_initializers():
-    """
-    integrate metadata importing with the silva imports
-    """
-    from Products.Silva.ImporterRegistry import register_initializer
-    register_initializer(import_metadata_handler, default=1)
 
 def register_access_handlers():
     """

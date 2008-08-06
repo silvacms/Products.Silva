@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id: GhostFolder.py,v 1.42 2006/01/24 16:14:12 faassen Exp $
 
-from warnings import warn
-
 # Zope 3
 from zope.interface import implements
 
@@ -329,20 +327,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
             marker)
         if annotations is marker:
             return
-        setattr(new_self, a_attr, annotations)
-
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'to_xml')
-    def to_xml(self, context):
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        f = context.f
-        f.write("<silva_ghostfolder id='%s' content_url='%s'>" % (
-            self.getId(), self.get_haunted_url()))
-        self._to_xml_helper(context)
-        f.write("</silva_ghostfolder>")
-    
+        setattr(new_self, a_attr, annotations)    
     
     # all this is for a nice side bar
     def is_transparent(self):
@@ -407,20 +392,3 @@ def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
     add_and_edit(dispatcher, id, REQUEST)
     return ''
 
-def xml_import_handler(object, node):
-
-    def _get_content_url(node):
-        content_url = node.attributes.getNamedItem('content_url').nodeValue
-        msg = "got %s, expected a unicode" % content_url
-        assert type(content_url) == type(u''), msg
-        return content_url.encode('us-ascii', 'ignore')
-    
-    def factory(object, id, title, content_url):
-        object.manage_addProduct['Silva'].manage_addGhostFolder(id,
-            content_url)
-    
-    content_url = _get_content_url(node)
-    f = lambda object, id, title, content_url=content_url: \
-        factory(object, id, title, content_url)
-    ghostfolder = Folder.xml_import_handler(object, node, factory=f)
-    return ghostfolder

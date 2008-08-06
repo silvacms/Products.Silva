@@ -4,8 +4,6 @@
 
 import re
 
-from warnings import warn
-
 # Zope 3
 from zope.interface import implements
 
@@ -14,15 +12,11 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
 # Silva
-from VersionedContent import CatalogedVersionedContent
-from Version import CatalogedVersion
-import SilvaPermissions
-from interfaces import IVersionedContent, IVersion
-import mangle
-from helpers import translateCdata
-from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
-from Products.Silva.Metadata import export_metadata
+from Products.Silva.VersionedContent import CatalogedVersionedContent
+from Products.Silva.Version import CatalogedVersion
+from Products.Silva.interfaces import IVersionedContent, IVersion
 from Products.Silva.i18n import translate as _
+from Products.Silva import SilvaPermissions
 
 # XXX taken from SilvaDocument/mixedcontentsupport.py
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
@@ -49,32 +43,6 @@ class Link(CatalogedVersionedContent):
         Link.inheritedAttribute('__init__')(self, id)
         self.id = id
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Render object to XML.
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        f = context.f
-
-        if context.last_version == 1:
-            version_id = self.get_next_version()
-            if version_id is None:
-                version_id = self.get_public_version()
-        else:
-            version_id = self.get_public_version()
-
-        if version_id is None:
-            return
-            
-        version = getattr(self, version_id)
-        f.write('<silva_link id="%s">' % self.id)
-        f.write('<title>%s</title>' % translateCdata(version.get_title()))
-        f.write('<url>%s</url>' % translateCdata(version.get_url()))
-        export_metadata(version, context)
-        f.write('</silva_link>')
 
 InitializeClass(Link)
 
@@ -126,21 +94,4 @@ class LinkVersion(CatalogedVersion):
 
 InitializeClass(LinkVersion)
 
-def xml_import_handler(object, node):
-    warn('Use silvaxml/xmlimport instead of import_handler', 
-         DeprecationWarning)
-    id = get_xml_id(node)
-    title = get_xml_title(node)
-    url = ''
-    for child in node.childNodes:
-        if child.nodeName == u'url':
-            url = child.childNodes[0].nodeValue;
-   
-    id = str(mangle.Id(object, id).unique())
-    object.manage_addProduct['Silva'].manage_addLink(id, title, url)
-    
-    newdoc = getattr(object, id)
-    newdoc.sec_update_last_author_info()
-    
-    return newdoc
 

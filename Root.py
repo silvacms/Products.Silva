@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from warnings import warn
+import os
 
 # Zope 3
 from zope.interface import implements
@@ -17,21 +17,18 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
 from DateTime import DateTime
 import transaction
+
 # Silva
-from Publication import Publication
-import SilvaPermissions
-import install
-# misc
-from helpers import add_and_edit
-import os
-
-from Products.Silva.Metadata import export_metadata
-
-from interfaces import IRoot, IInvisibleService
-
-icon="www/silva.png"
+from Products.Silva.Publication import Publication
+from Products.Silva.helpers import add_and_edit
+from Products.Silva.interfaces import IRoot, IInvisibleService
+from Products.Silva import SilvaPermissions
+from Products.Silva import install
 
 from silva.core import conf
+
+
+icon="www/silva.png"
 
 class DocumentationInstallationException(Exception):
     """Raised when a dependency is not installed when trying to install something"""
@@ -140,25 +137,6 @@ class Root(Publication):
         files.
         """
         return ()
-
-    # FIXME: Being deprecated, will be deleted in the near future
-    silva_root = get_root_url
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Render object to XML.
-        """
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        f = context.f
-        f.write('<silva_root id="%s">' % self.id)
-
-        self._to_xml_helper(context)
-        export_metadata(self, context)
-
-        f.write('</silva_root>')
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_publication')

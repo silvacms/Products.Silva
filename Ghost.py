@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from warnings import warn
-
 # Zope 3
 from zope.interface import implements, directlyProvidedBy, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserSkinType
@@ -254,26 +252,6 @@ class Ghost(CatalogedVersionedContent):
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)
     
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
-             DeprecationWarning)
-        if context.last_version == 1:
-            version_id = self.get_next_version()
-            if version_id is None:
-                version_id = self.get_public_version()
-        else:
-            version_id = self.get_public_version()
-        if version_id is None:
-            return
-        version = getattr(self, version_id)
-        content = version.get_haunted_unrestricted()
-        if content is None:
-            return
-        content.to_xml(context)
-
     def get_title_editable(self):
         """Get title for editable or previewable use
         """
