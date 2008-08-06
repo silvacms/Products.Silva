@@ -1,26 +1,27 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # silva imports
 import zLOG
-from zope.interface import implements
 from zExceptions import BadRequest
 from BTrees.Length import Length
-from Products.Silva import upgrade, upgrade_100
-from Products.Silva.interfaces import IUpgrader
+from Products.Silva.upgrade import BaseUpgrader, BaseRefreshAll
 
-def initialize():
-    upgrade.registry.registerUpgrader(
-        IndexUpgrader(), '1.5', 'Silva Root')
-    upgrade.registry.registerUpgrader(
-        PlacelessTranslationServiceDestroy(), '1.5', 'Silva Root')
-    upgrade.registry.registerUpgrader(
-        RemoveServiceLayout(), '1.5', 'Silva Root')
-    upgrade.registry.registerUpgrader(
-        upgrade_100.RefreshAll(), '1.5', 'Silva Root')
+#-----------------------------------------------------------------------------
+# 1.4.0 to 1.5.0
+#-----------------------------------------------------------------------------
+
+VERSION='1.5'
+
+class RefreshAll(BaseRefreshAll):
+    pass
+
+refreshAll = RefreshAll(VERSION, 'Silva Root', 40)
     
-class RemoveServiceLayout:
+class RemoveServiceLayout(BaseUpgrader):
     """Remove old-style never quite released ServiceLayout.
     """
-
-    implements(IUpgrader)
 
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -34,11 +35,11 @@ class RemoveServiceLayout:
 
         return silvaroot
 
-class PlacelessTranslationServiceDestroy:
+removeServiceLayout = RemoveServiceLayout(VERSION, 'Silva Root', 30)
+
+class PlacelessTranslationServiceDestroy(BaseUpgrader):
     """Destroy traces of PTS in Zope.
     """
-
-    implements(IUpgrader)
 
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -54,7 +55,9 @@ class PlacelessTranslationServiceDestroy:
                 'PlacelessTranslationService is already gone')
         return silvaroot
 
-class IndexUpgrader:
+placelessTranslationServiceDestroy = PlacelessTranslationServiceDestroy(VERSION, 'Silva Root', 20)
+
+class IndexUpgrader(BaseUpgrader):
     """Actually this should be in Zope itself, as it fixes a Zope 
        core issue.
 
@@ -68,9 +71,8 @@ class IndexUpgrader:
        This upgrader tries to solve this problem.
        """
 
-    implements(IUpgrader)
-    
-    def __init__(self, catalog_id='service_catalog'):
+    def __init__(self, version, meta_type, catalog_id='service_catalog'):
+        super(IndexUpgrader, self).__init__(version, meta_type)
         self._catalog_id = catalog_id
     
     def upgrade(self, silvaroot):
@@ -94,3 +96,5 @@ class IndexUpgrader:
             'Silva', zLOG.INFO, 'Upgrading index %s' % obj.id)
         obj._length = Length(len(obj._unindex))
         return obj
+
+indexUpgrader = IndexUpgrader(VERSION, 'Silva Root')

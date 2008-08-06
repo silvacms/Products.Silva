@@ -17,7 +17,6 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
             'silva_xslt',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
-        xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()

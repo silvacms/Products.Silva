@@ -6,12 +6,15 @@
 # XXX These asset adapters are a temporary solution and will not be
 # necessary once the assets get a consistent API
 
-from zope.interface import implements
-from Products.Silva.adapters import interfaces
+from grokcore import component
 
-class FileData(object):
-    
-    implements(interfaces.IAssetData)
+from Products.Silva.adapters import interfaces
+from Products.Silva import interfaces as silva_interfaces
+
+class FileData(component.Adapter):
+
+    component.context(silva_interfaces.IFile)
+    component.implements(interfaces.IAssetData)
 
     def __init__(self, context):
         self.context = context
@@ -30,16 +33,17 @@ class FileData(object):
         return self._getDataForFile(file)
 
 class FlashData(FileData):
-    
-    implements(interfaces.IAssetData)
 
+    component.context(silva_interfaces.IFlash)
+    
     def getData(self):
         file = self.context._flash
         return self._getDataForFile(file)
 
-class ImageData(object):
+class ImageData(component.Adapter):
 
-    implements(interfaces.IAssetData)
+    component.context(silva_interfaces.IImage)
+    component.implements(interfaces.IAssetData)
 
     def __init__(self, context):
         self.context = context

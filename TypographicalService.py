@@ -6,11 +6,13 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from OFS.SimpleItem import SimpleItem
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
+from Products.Silva.BaseService import SilvaService
+
+from silva.core import conf
 
 _default_typo_chars = ['&#x20AC;',
                        '&#x201A;',
@@ -27,7 +29,7 @@ _default_typo_chars = ['&#x20AC;',
                        '&#xA9;'
                        ]
 
-class TypographicalService(SimpleItem):
+class TypographicalService(SilvaService):
     """This service stores non-keyboard characters"""
     
     security = ClassSecurityInfo()
@@ -36,9 +38,14 @@ class TypographicalService(SimpleItem):
     manage_options = (
         {'label':'Edit',
          'action':'manage_main'},
-        ) + SimpleItem.manage_options
-    manage_main = manage_edit = PageTemplateFile('www/typoService_edit',globals(),
-                                                 __name__='manage_main')
+        ) + SilvaService.manage_options
+    manage_main = manage_edit = PageTemplateFile(
+        'www/typoService_edit', globals(),
+        __name__='manage_main')
+
+    conf.icon('www/typochars_service.png')
+    conf.factory('manage_addTypographicalServiceForm')
+    conf.factory('manage_addTypographicalService')
 
     def __init__(self,id,title):
         self.id = id

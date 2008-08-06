@@ -2,9 +2,9 @@
 # See also LICENSE.txt
 # $Id: security.py,v 1.10 2006/01/24 16:12:01 faassen Exp $
 #
+from grokcore import component
 from zope.interface import implements
 
-import Globals
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from AccessControl.PermissionRole import rolesForPermissionOn
@@ -18,8 +18,9 @@ from Products.Silva.adapters import interfaces
 from DateTime import DateTime
 from types import ListType
 
-class ViewerSecurityAdapter(object):
-    implements(interfaces.IViewerSecurity)
+class ViewerSecurityAdapter(component.Adapter):
+    component.context(silva_interfaces.ISilvaObject)
+    component.implements(interfaces.IViewerSecurity)
 
     def __init__(self, context):
         self.context = context
@@ -110,7 +111,5 @@ class LockAdapter(adapter.Adapter):
         current_user_id = getSecurityManager().getUser().getId()
         return user_id != current_user_id
 
-Globals.InitializeClass(LockAdapter)
-
 def getLockAdapter(context):
-    return LockAdapter(context).__of__(context)
+    return LockAdapter(context)

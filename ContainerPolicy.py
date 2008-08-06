@@ -11,13 +11,15 @@ from bisect import insort_right
 # zope
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from OFS.SimpleItem import SimpleItem
 from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # silva
 from Products.Silva.interfaces import IContainerPolicy
 from Products.Silva.interfaces import IInvisibleService
+from Products.Silva.BaseService import SilvaService
+
+from silva.core import conf
 
 # XXX: can these "helper" classes for ordering be refactored in something
 # more generic? See also ExtensionRegistry.Addable.
@@ -32,7 +34,7 @@ class _Policy:
             sort = cmp(self._name, other._name)
         return sort
 
-class ContainerPolicyRegistry(SimpleItem):
+class ContainerPolicyRegistry(SilvaService):
 
     security = ClassSecurityInfo()
     id = 'service_containerpolicy'
@@ -42,10 +44,13 @@ class ContainerPolicyRegistry(SimpleItem):
 
     manage_options = (
         {'label': 'Edit', 'action': 'manage_main'},
-        ) + SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/containerPolicyEdit.zpt', globals())
+
+    conf.icon('www/containerpolicy_service.png')
+    conf.factory('manage_addContainerPolicyRegistry')
 
     def __init__(self):
         self._policies = {}

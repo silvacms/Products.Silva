@@ -36,7 +36,7 @@ macro plateau
           query_string           query_string | string:;
           startpath              startpath | string:;
           query_string           python: test(startpath and query_string and ('startpath=' not in query_string), query_string + '&startpath=' + startpath, query_string);
-          vein_id                template_id | python: template.id;
+          vein_id                template_id | template/id;
           global vein_id         python: vein_id + test(query_string, '?' + query_string, '');
           edit                   python:test('@@' in vein_id, '/', '/edit/');
           up                     python:test('@@' in vein_id, '..', '../..');

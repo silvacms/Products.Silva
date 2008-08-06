@@ -1,17 +1,26 @@
+## Script (Python) "tab_edit_make_copy"
+##bind container=container
+##bind context=context
+##bind namespace=
+##bind script=script
+##bind subpath=traverse_subpath
+##parameters=
+##title=
+##
 from Products.Silva.i18n import translate as _
-model = context.REQUEST.model
-view = context
 
-#get the tab to return to, defaulting to tab_edit
-return_to_id = context.REQUEST.get('return_to','tab_edit')
-return_to = getattr(view,return_to_id,'tab_edit')
+request = context.REQUEST
+model = request.model
+
+return_to = request.get('return_to', 'tab_edit')
+view = model.edit[return_to]
 
 if not model.get_unapproved_version():
     # SHORTCUT: To allow approval of closed docs with no new version available,
     # first create a new version. This "shortcuts" the workflow.
     # See also edit/Container/tab_status_approve.py
     if model.is_version_published():
-        return return_to(
+        return view(
             message_type="error", 
             message=_("There is no unapproved version to approve."))
     model.create_copy()
@@ -26,4 +35,4 @@ if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
 
 
-return return_to(message_type="feedback", message=_("Version approved."))
+return view(message_type="feedback", message=_("Version approved."))

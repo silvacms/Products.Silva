@@ -1,33 +1,27 @@
-# silva imports
-import zLOG
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zope import interface
 
+# silva imports
+import zLOG
+
 from Products.Silva import mangle
-from Products.Silva.interfaces import IUpgrader, IInvisibleService
+from Products.Silva.interfaces import IInvisibleService
 from Products.Silva.adapters.interfaces import IIndexable
 from Products.Silva.interfaces import IVersionedContent, IRoot, ISilvaObject
 from Products.Silva.interfaces import IVersion
 from Products.Silva.adapters import version_management
+from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
 
-from Products.Silva import upgrade
+#-----------------------------------------------------------------------------
+# 1.5.0 to 1.6.0
+#-----------------------------------------------------------------------------
 
-def initialize():
-    upgrade.registry.registerUpgrader(
-        IndexerUpgrader(), '1.6', 'Silva Indexer')
-    upgrade.registry.registerUpgrader(
-        AutoTOCUpgrader(), '1.6', 'Silva AutoTOC')
-    upgrade.registry.registerUpgrader(
-        IndexItemUpgrader(), '1.6', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(
-        CatalogRefresher(), '1.6', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(
-        InvisibleMan(), '1.6', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(
-        LanguageMetadataLowerCaser(), '1.6', upgrade.AnyMetaType)
+VERSION='1.6'
     
-class IndexItemUpgrader:
-
-    interface.implements(IUpgrader)
+class IndexItemUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
         # <index name="foo" /> to
@@ -66,12 +60,11 @@ class IndexItemUpgrader:
         else:
             for child in node.childNodes:
                 self._upgrade_helper(child)
-    
-    
-class IndexerUpgrader:
 
-    interface.implements(IUpgrader)
+indexItemUpgrader = IndexItemUpgrader(VERSION, AnyMetaType, 10)
     
+class IndexerUpgrader(BaseUpgrader):
+
     def upgrade(self, indexer):
         zLOG.LOG(
             'Silva', zLOG.INFO, 
@@ -79,10 +72,10 @@ class IndexerUpgrader:
         indexer.update()
         return indexer
 
-class AutoTOCUpgrader:
+indexerUpgrader = IndexerUpgrader(VERSION, 'Silva Indexer')
 
-    interface.implements(IUpgrader)
-    
+class AutoTOCUpgrader(BaseUpgrader):
+
     def upgrade(self, autotoc):
         zLOG.LOG(
             'Silva', zLOG.INFO, 
@@ -91,9 +84,10 @@ class AutoTOCUpgrader:
             autotoc._toc_depth = -1
         return autotoc
 
-class CatalogRefresher:
+autoTOCUpgrader = AutoTOCUpgrader(VERSION, 'Silva AutoTOC')
+
+class CatalogRefresher(BaseUpgrader):
     """Refreshes the whole Silva catalog"""
-    interface.implements(IUpgrader)
 
     def upgrade(self, obj):
         if IRoot.providedBy(obj):
@@ -108,10 +102,11 @@ class CatalogRefresher:
                 obj.index_object()
         return obj
 
-class InvisibleMan:
+catalogRefresher = CatalogRefresher(VERSION, AnyMetaType, 20)
+
+class InvisibleMan(BaseUpgrader):
     """Makes Widget Registry services invisible by putting a marker
     interface on them."""
-    interface.implements(IUpgrader)
     
     names = ['service_doc_editor', 'service_doc_previewer',
              'service_doc_viewer',
@@ -134,10 +129,11 @@ class InvisibleMan:
                         interface.directlyProvidedBy(service))
         return obj
 
-class LanguageMetadataLowerCaser:
+invisibleMan = InvisibleMan(VERSION, AnyMetaType, 30)
+
+class LanguageMetadataLowerCaser(BaseUpgrader):
     """The metadata field language in silva-extra was incorrectly
     stored in uppercase in previous versions."""
-    interface.implements(IUpgrader)
 
     def upgrade(self, obj):
         metadata = {}
@@ -156,3 +152,5 @@ class LanguageMetadataLowerCaser:
             return obj
         binding.setValues('silva-extra', {'language': llang})
         return obj
+
+languageMetadataLowerCaser = LanguageMetadataLowerCaser(VERSION, AnyMetaType, 40)

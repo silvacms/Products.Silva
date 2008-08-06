@@ -10,14 +10,16 @@ from cgi import escape
 # Zope 3
 from zope.i18n import translate
 from zope.interface import implements
+import zope.app.container.interfaces
+
 # Zope 2
-import OFS
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from webdav.WriteLockInterface import WriteLockInterface
-import zLOG
 from webdav.common import Conflict
 import transaction
+import zLOG
+import OFS.interfaces
 
 # Silva
 import SilvaPermissions
@@ -41,6 +43,33 @@ except ImportError:
     pass
 
 from interfaces import IImage, IUpgrader
+
+from silva.core import conf
+
+# FIXME: Image and File Assets should be refactored - they share quite
+# some functionality which can be generalized.
+
+def manage_addImage(context, id, title, file=None, REQUEST=None):
+    """Add an Image."""
+    id = mangle.Id(context, id, file=file, interface=IAsset)
+    id.cook()
+    if not id.isValid():
+        return
+    id = str(id)
+    img = image_factory(context, id, None, file)
+    context._setObject(id, img)
+    img = getattr(context, id)
+    if file:
+        try:
+            img.set_image(file)
+        except ValueError:
+            # uploaded contents is not a proper image file
+            transaction.abort()
+            raise
+    img.set_title(title)
+
+    add_and_edit(context, id, REQUEST)
+    return img
 
 class Image(Asset):
     __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in 
@@ -71,6 +100,10 @@ class Image(Asset):
         'GIF': 'image/gif',
         'PNG': 'image/png',
     }
+
+    conf.priority(-3)
+    conf.icon('www/silvafile.png')
+    conf.factory('manage_addImage')
 
     def __init__(self, id):
         Image.inheritedAttribute('__init__')(self, id)
@@ -669,31 +702,6 @@ class Image(Asset):
 
 InitializeClass(Image)
 
-# FIXME: Image and File Assets should be refactored - they share quite
-# some functionality which can be generalized.
-
-def manage_addImage(context, id, title, file=None, REQUEST=None):
-    """Add an Image."""
-    id = mangle.Id(context, id, file=file, interface=IAsset)
-    id.cook()
-    if not id.isValid():
-        return
-    id = str(id)
-    img = image_factory(context, id, None, file)
-    context._setObject(id, img)
-    img = getattr(context, id)
-    if file:
-        try:
-            img.set_image(file)
-        except ValueError:
-            # uploaded contents is not a proper image file
-            transaction.abort()
-            raise
-    img.set_title(title)
-
-    add_and_edit(context, id, REQUEST)
-    return img
-
 class ImageStorageConverter:
 
     implements(IUpgrader)
@@ -745,6 +753,7 @@ contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
 
+@conf.subscribe(IImage, zope.app.container.interfaces.IObjectAddedEvent)
 def image_added(image, event):
     for id in ('hires_image', 'image', 'thumbnail_image'):
         img = getattr(image, id, None)
@@ -752,11 +761,13 @@ def image_added(image, event):
             continue
         img.id = id
 
+@conf.subscribe(IImage, OFS.interfaces.IObjectWillBeRemovedEvent)
 def image_will_be_removed(image, event):
     """explicitly remove the images"""
     for id in ('hires_image', 'image', 'thumbnail_image'):
         image._remove_image(id, set_none=0)
 
+@conf.subscribe(IImage, OFS.interfaces.IObjectClonedEvent)
 def image_cloned(image, event):
     "copy support"
     for id in ('image', 'hires_image', 'thumbnail_image'):

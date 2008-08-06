@@ -17,6 +17,8 @@ from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
+from silva.core import conf
+
 class AutoTOC(Content, SimpleItem):
     __doc__ = _("""This is a special document type that automatically generates
        a Table of Contents. Usually it's used as the 'index' document of a
@@ -28,6 +30,9 @@ class AutoTOC(Content, SimpleItem):
     meta_type = "Silva AutoTOC"
 
     implements(IAutoTOC)
+
+    conf.icon('www/autotoc.png')
+    conf.priority(0.2)
 
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id)

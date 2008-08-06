@@ -21,8 +21,11 @@ from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
 from Products.Silva.adapters import subscribable
 from Products.Silva.interfaces import IHaunted
+from Products.Silva.BaseService import SilvaService
 
-class SubscriptionService(Folder.Folder):
+from silva.core import conf
+
+class SubscriptionService(Folder.Folder, SilvaService):
     """Subscription Service
     """
     
@@ -34,6 +37,10 @@ class SubscriptionService(Folder.Folder):
         ({'label':'Edit', 'action':'manage_editSubscriptionServiceForm'}, ) +
         Folder.Folder.manage_options
         )
+
+    conf.icon('www/subscription_service.png')
+    conf.factory('manage_addSubscriptionServiceForm')
+    conf.factory('manage_addSubscriptionService')
 
     # subscriptions are disabled by default
     _enabled = False
@@ -311,8 +318,8 @@ manage_addSubscriptionServiceForm = PageTemplateFile(
     "www/subscriptionServiceAdd.pt", globals(), 
     __name__='manage_addSubscriptionServiceForm')
 
-def manage_addSubscriptionService(
-    context, id='service_subscriptions', title='', REQUEST=None):
+def manage_addSubscriptionService(context,
+       id='service_subscriptions', title='', REQUEST=None):
     """Add subscription service.
     """    
     service = SubscriptionService(id)

@@ -1,3 +1,8 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+from bisect import insort_right
 
 from zope.interface import implements
 # zope imports
@@ -6,39 +11,47 @@ import DateTime
 import transaction
 
 # silva imports
-from Products.Silva.interfaces import ISilvaObject, IContainer, IUpgrader
-from Products.Silva import mangle
+from Products.Silva.interfaces import IUpgrader
 
 threshold = 50
 
-class GeneralUpgrader:
-    """wrapper for upgrade functions"""
-    
-    implements(IUpgrader)
-
-    def __init__(self, upgrade_handler):
-        """constructor
-
-            upgrade_handler: function which actually does the upgrade
-                one argument: the object to be upgraded
-        """
-        self._upgrade_handler = upgrade_handler
-
-    def upgrade(self, obj):
-        new_object = self._upgrade_handler(obj)
-        if new_object:
-            return new_object
-        return obj
-   
-    def __repr__(self):
-        return "<GeneralUpgrader %r>" % self._upgrade_handler
-
 # marker for upgraders to be called for any object
-class AnyMetaType:
+class AnyMetaType(object):
     pass
+
 AnyMetaType = AnyMetaType()
 
-class UpgradeRegistry:
+class BaseUpgrader(object):
+    """All upgrader should inherit from this upgrader.
+    """
+
+    implements(IUpgrader)
+
+    def __init__(self, version, meta_type, priority=0):
+        self.version = version
+        self.meta_type = meta_type
+        self.priority = priority
+
+    def upgrade(self, obj):
+        raise NotImplementedError
+
+    def __cmp__(self, other):
+        sort = cmp(self.priority, other.priority)
+        if sort == 0:
+            sort = cmp(self.__class__.__name__,
+                       other.__class__.__name__)
+        return sort
+
+class BaseRefreshAll(BaseUpgrader):
+    " refresh all products "
+
+    def upgrade(self, root):
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        root.service_extensions.refresh_all()
+        return root
+
+
+class UpgradeRegistry(object):
     """Here people can register upgrade methods for their objects
     """
     
@@ -47,24 +60,17 @@ class UpgradeRegistry:
         self._setUp = {}
         self._tearDown = {}
     
-    def register(self, meta_type, upgrade_handler, version):
-        """Register a meta_type for upgrade.
-
-        The upgrade handler is called with the object as its only argument
-        when the upgrade script encounters an object of the specified
-        meta_type.
-        """
-        self.registerFunction(upgrade_handler, version, meta_type)
-
-    def registerFunction(self, function, version, meta_type):
-        upgrader = GeneralUpgrader(function)
-        self.registerUpgrader(upgrader, version, meta_type)
-        
-
-    def registerUpgrader(self, upgrader, version, meta_type):
+    def registerUpgrader(self, upgrader, version=None, meta_type=None):
         assert IUpgrader.providedBy(upgrader)
-        self.__registry.setdefault(version, {}).setdefault(meta_type, []).\
-            append(upgrader)
+        if not version:
+            version = upgrader.version
+        if not meta_type:
+            meta_type = upgrader.meta_type
+        if isinstance(meta_type, str) or meta_type is AnyMetaType:
+            meta_type = [meta_type,]
+        for type_ in meta_type:
+            registry = self.__registry.setdefault(version, {}).setdefault(type_, [])
+            insort_right(registry, upgrader)
         
     def registerSetUp(self, function, version):
         self._setUp.setdefault(version, []).append(function)
@@ -187,29 +193,4 @@ class UpgradeRegistry:
         return '.'.join([ str(i) for i in version ])
         
 registry = UpgradeRegistry()
-
-def check_reserved_ids(obj):
-    """Walk through the entire tree to find objects of which the id is not
-    allowed, and return a list of the urls of those objects
-    """
-    #print 'checking for reserved ids on', repr(obj)
-    object_list = obj.objectValues()
-    while object_list:
-        o = object_list[0]
-        del object_list[0]
-        if IContainer.providedBy(o):
-            object_list.extend(o.objectValues())
-        if not ISilvaObject.providedBy(o):
-            continue
-        old_id = o.getId()
-        id = mangle.Id(o.aq_parent, old_id, allow_dup=1)
-        if id.isValid():
-            continue
-        id.cook()
-        while not id.isValid():
-            id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
-        o.aq_parent.manage_renameObject(old_id, str(id))
-        zLOG.LOG("Silva", zLOG.INFO,
-            'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)),
-            'Location: %s' % o.absolute_url())
 

@@ -7,12 +7,13 @@ from warnings import warn
 # Zope 3
 from zope.i18n import translate
 from zope import component
-from zope import interface
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
+from OFS.interfaces import IObjectWillBeMovedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -26,18 +27,20 @@ import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 from Security import Security
 from ViewCode import ViewCode
-from interfaces import ISilvaObject, IPublishable, IAsset
+from interfaces import IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent, IFolder
 from Products.Silva.utility import interfaces as utility_interfaces
 # Silva adapters
 from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
-
+from Products.Silva.interfaces import ISilvaObject
 from Products.SilvaMetadata.Exceptions import BindingError
 
 from Products.Silva.i18n import translate as _
 
+from silva.core.conf.utils import getSilvaViewFor
+from silva.core import conf
 
 class XMLExportContext:
     """Simple context class used in XML export.
@@ -47,41 +50,41 @@ class XMLExportContext:
 class NoViewError(Exception):
     """no view defined"""
 
-class FrankenViewAttribute(ViewAttribute):
-    """A view attribute that switches skins and tries to look up Zope
-    3 views for fun and profit.
-
-    It enables skin switching, so that the 'bare bones' skin is active
-    when we look at preview pages.
+class Zope3ViewAttribute(ViewAttribute):
+    """A view attribute that tries to look up Zope 3 views for fun and
+    profit.
 
     It will also try to look up Zope 3 views and favour them, so that
     you can define e.g. 'tab_edit' for your content type and it will
     work.
     """
-    def __init__(self, view_type, default_method, skin=None):
-        ViewAttribute.__init__(self, view_type, default_method)
-        self._skin = skin
-
-    def _switch_skin(self):
-        if self._skin:
-            interface.directlyProvides(
-                self.REQUEST,
-                self._skin, interface.directlyProvidedBy(self.REQUEST))
-
-    def index_html(self):
-        """Make Zope happy"""
-        return ViewAttribute.index_html(self)
 
     def __getitem__(self, name):
-        """Make Zope happy"""
-        self._switch_skin()
-        context = self.aq_inner.aq_parent
+        """Lookup an adapter before to ask the view machinery.
+        """
+        context = self.aq_parent
         request = self.REQUEST
-        view = component.queryAdapter((context, request), name=name)
+        view = component.queryMultiAdapter((context, request), name=name)
         if view:
-            return view.__of__(self.context)()
+            return view.__of__(context)
         else:
-            return ViewAttribute.__getitem__(self, name)
+            # Default behaviour of ViewAttribute, but look at a Five
+            # views if the asked one doesn't exists.
+
+            request = self.REQUEST
+            request['model'] = model = self.aq_parent
+            
+            view = getSilvaViewFor(self, self._view_type, model)
+            method_on_view =  getattr(view, name, None)
+                
+            if method_on_view is None:
+                # "Method on view" does not exist: redirect to default method.
+                # XXX may cause endless redirection loop, if default does not exist.
+                response = request.RESPONSE
+                response.redirect('%s/%s/%s' % (
+                        model.absolute_url(), self._view_type, self._default_method))
+
+            return method_on_view
 
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
@@ -92,7 +95,7 @@ class SilvaObject(Security, ViewCode):
     _title = "No title yet"
 
     # allow edit view on this object
-    edit = ViewAttribute('edit', 'tab_edit')
+    edit = Zope3ViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'edit')
@@ -359,18 +362,26 @@ class SilvaObject(Security, ViewCode):
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'view_version')
     def view_version(self, view_type, version):
+        # No version
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.',
                     mapping={'meta_type': self.meta_type})
             return '<p>%s</p>' % translate(msg, context=self.REQUEST)
+
+        # Search for an XSLT renderer
         result = getRenderableAdapter(version).view()
         if result is not None:
             return result
+
         request = self.REQUEST
+        # Search for a five view
+        view = component.queryMultiAdapter((self, request), name=u'public_view')
+        if not (view is None):
+            return view(preview=(view_type == 'preview'))
+
+        # Fallback on a Silva view
         request.model = version
         request.other['model'] = version
-        
-        # Fallback on SilvaViews view
         try:
             view = self.service_view_registry.get_view(
                 view_type, version.meta_type)
@@ -473,7 +484,7 @@ class SilvaObject(Security, ViewCode):
         settings.setWithSubPublications(with_sub_publications)
         settings.setLastVersion(last_version)
 
-        utility = component.getUtility(utility_interfaces.IExportUtility)()
+        utility = component.getUtility(utility_interfaces.IExportUtility)
         exporter = utility.createContentExporter(self, export_format)
         return exporter.export(settings)
 
@@ -485,7 +496,7 @@ class SilvaObject(Security, ViewCode):
         context = self
         if ref:
             context =  self.resolve_ref(ref)
-        utility = component.getUtility(utility_interfaces.IExportUtility)()
+        utility = component.getUtility(utility_interfaces.IExportUtility)
         return utility.listContentExporter(context)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -607,6 +618,7 @@ class SilvaObject(Security, ViewCode):
 
 InitializeClass(SilvaObject)
 
+@conf.subscribe(ISilvaObject, IObjectMovedEvent)
 def object_moved(object, event):
     if object != event.object or IObjectRemovedEvent.providedBy(
         event) or IRoot.providedBy(object):
@@ -622,6 +634,7 @@ def object_moved(object, event):
     if not IVersionedContent.providedBy(object):
         object._set_creation_datetime()
 
+@conf.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
 def object_will_be_moved(object, event):
     if object != event.object or IObjectWillBeAddedEvent.providedBy(
         event) or IRoot.providedBy(object):

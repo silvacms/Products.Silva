@@ -1,20 +1,22 @@
-from zope.interface import implements
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+import sys
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader
-from Products.Silva import upgrade
+from Products.Silva.upgrade import BaseUpgrader, BaseRefreshAll
 
 import zLOG
-import sys
 
 #-----------------------------------------------------------------------------
 # 0.9.3 to 1.0.0
 #-----------------------------------------------------------------------------
 
-class ImageUpgrade:
-    """handle view registry beeing moved out of the core"""
+VERSION='1.0'
 
-    implements(IUpgrader)
+class ImageUpgrade(BaseUpgrader):
+    """handle view registry beeing moved out of the core"""
 
     def upgrade(self, image):
         if image.hires_image is None:
@@ -28,17 +30,11 @@ class ImageUpgrade:
                     ('Error upgrading image %s: %s - %s; the image object is '
                     'probably broken.') % (image.absolute_url(), exc, e))
         return image
+
+imageUpgrade = ImageUpgrade(VERSION, 'Silva Image')
             
-class RefreshAll:
-    " refresh all products "
+class RefreshAll(BaseRefreshAll):
+    pass
 
-    implements(IUpgrader)
-
-    def upgrade(self, root):
-        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
-        root.service_extensions.refresh_all()
-        return root
+refreshAll = RefreshAll(VERSION, 'Silva Root')
     
-def initialize():
-    upgrade.registry.registerUpgrader(ImageUpgrade(), '1.0', 'Silva Image')
-    upgrade.registry.registerUpgrader(RefreshAll(), '1.0', 'Silva Root')

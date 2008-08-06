@@ -1,10 +1,13 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 #python
 import sys, string, smtplib
 
 from zope.interface import implements
 
 # zope
-from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals, zLOG
@@ -12,17 +15,19 @@ import Globals, zLOG
 # silva
 import SilvaPermissions
 from helpers import add_and_edit
+from BaseService import SilvaService
 
 # other products
 from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
-from interfaces import IMessageService
+import interfaces
+from silva.core import conf
 
 from Products.Silva.i18n import translate as _
 
-class EmailMessageService(SimpleItem.SimpleItem):
+class EmailMessageService(SilvaService):
     """Simple implementation of IMemberMessageService that sends email
     messages.
     """
@@ -32,11 +37,11 @@ class EmailMessageService(SimpleItem.SimpleItem):
 
     security = ClassSecurityInfo()
 
-    implements(IMessageService)
+    implements(interfaces.IMessageService)
 
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
-        ) + SimpleItem.SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected('View management screens', 'manage_editForm')
     manage_editForm = PageTemplateFile(
@@ -44,6 +49,10 @@ class EmailMessageService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
+
+    conf.icon('www/message_service.png')
+    conf.factory('manage_addEmailMessageServiceForm')
+    conf.factory('manage_addEmailMessageService')
 
     def __init__(self, id, title):
         self.id = id

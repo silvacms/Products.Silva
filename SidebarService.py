@@ -1,14 +1,15 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: SidebarService.py,v 1.23 2006/01/24 16:14:12 faassen Exp $
+# $Id$
+
 # Zope
 from zope.interface import implements
-from OFS.SimpleItem import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva
 from SidebarCache import SidebarCache
+from BaseService import SilvaService
 import SilvaPermissions
 from helpers import add_and_edit
 # Silva adapters
@@ -16,7 +17,9 @@ from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
 from interfaces import ISidebarService
 
-class SidebarService(SimpleItem):
+from silva.core import conf
+
+class SidebarService(SilvaService):
     """Service for sidebar cache"""
 
     meta_type = 'Silva Sidebar Service'
@@ -30,7 +33,7 @@ class SidebarService(SimpleItem):
 
     manage_options = (
         {'label':'Edit', 'action':'manage_sidebarServiceEditTab'},
-        ) + SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected(
         'View management screens', 'manage_sidebarServiceEditTab')
@@ -38,9 +41,9 @@ class SidebarService(SimpleItem):
         'www/sidebarServiceEditTab', globals(), 
         __name__='manage_sidebarServiceEditTab')
 
-    def __init__(self, id, title):
-        self.id = id
-        self._title = title
+    conf.icon('www/sidebar_service.png')
+    conf.factory('manage_addSidebarServiceForm')
+    conf.factory('manage_addSidebarService')
 
     security.declareProtected(
         'View management screens', 'manage_sidebarServiceEdit')

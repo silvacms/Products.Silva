@@ -28,6 +28,8 @@ from Products.Silva.i18n import translate as _
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
+from silva.core import conf
+
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to include links to external
        sites &#8211; outside of Silva &#8211; in a Table of Contents. The
@@ -39,6 +41,9 @@ class Link(CatalogedVersionedContent):
     meta_type = "Silva Link"
 
     implements(IVersionedContent)
+
+    conf.icon('www/link.png')
+    conf.versionClass('LinkVersion')
 
     def __init__(self, id):
         Link.inheritedAttribute('__init__')(self, id)

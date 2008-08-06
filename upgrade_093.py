@@ -1,29 +1,31 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 import string
 import re
 import os
-
-from zope.interface import implements
 
 # zope imports
 import zLOG
 from Globals import package_home
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader, IContainer, IVersionedContent
-from Products.Silva import upgrade
+from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
+from Products.Silva.interfaces import ISilvaObject, IContainer, IVersionedContent
 from Products.Silva.adapters.interfaces import IViewerSecurity
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
+from Products.Silva import mangle
 
 #-----------------------------------------------------------------------------
 # 0.9.2 to 0.9.3
 #-----------------------------------------------------------------------------
 
-class MovedViewRegistry:
-    """handle view registry beeing moved out of the core"""
+VERSION='0.9.3'
 
-    implements(IUpgrader)
+class MovedViewRegistry(BaseUpgrader):
+    """handle view registry beeing moved out of the core"""
 
     def upgrade(self, root):
         svr = root.service_view_registry
@@ -34,17 +36,16 @@ class MovedViewRegistry:
         #    'service_view_registry had to be recreated.\n'
         #    "Be sure to 'refresh all' your extensions.\n")
         return root
-            
 
-class MovedDocument:
+modelViewRegistery = MovedViewRegistry(VERSION, 'Silva Root', 50) 
+
+class MovedDocument(BaseUpgrader):
     """handle moved silva document
 
         Silva Document was moved from core to a seperate package. This upgrader
         removes the objects in the silva root which were required by the
         core Silva Document.
     """
-
-    implements(IUpgrader)
 
     def upgrade(self, root):
         root.manage_delObjects(['service_widgets', 'service_editor',
@@ -59,8 +60,9 @@ class MovedDocument:
             'service_table_viewer'])
         return root
 
+movedDocument = MovedDocument(VERSION, 'Silva Root', 80)
             
-class UpgradeAccessRestriction:
+class UpgradeAccessRestriction(BaseUpgrader):
     """upgrade access restrction
 
         access restriction by ip address was a proof of concept and has been
@@ -71,8 +73,6 @@ class UpgradeAccessRestriction:
             XXX
 
     """
-
-    implements(IUpgrader)
 
     ACCESS_RESTRICTION_PROPERTY = 'access_restriction'
 
@@ -245,10 +245,9 @@ class UpgradeAccessRestriction:
         something = self.re_drop_escape.sub(lambda match: match.group(1), something )
         state.plist.append(something)
 
+upgradeAccessRestriction = UpgradeAccessRestriction(VERSION, AnyMetaType, 60)
 
-class UpgradeTime:
-
-    implements(IUpgrader)
+class UpgradeTime(BaseUpgrader):
 
     def upgrade(self, obj):
         try:
@@ -276,21 +275,22 @@ class UpgradeTime:
         binding.setValues('silva-extra', timings)
         return obj
 
-class SimpleMetadataUpgrade:
+upgradeTime = UpgradeTime(VERSION, AnyMetaType, 30)
+
+class SimpleMetadataUpgrade(BaseUpgrader):
     """simple metadata upgrade, meaning: remove old set, add new set
 
         NOTE: this doesn't handle severe changes to the set, i.e. removing
         or renaming fields. Adding should be fine though.
     """
 
-    implements(IUpgrader)
-
-    def __init__(self, name, filename):
+    def __init__(self, version, meta_type, name, filename):
         """constructor
 
             name: name in service_metadata
             filename: path to xml description of metadata set
         """
+        super(SimpleMetadataUpgrade, self).__init__(version, meta_type)
         self.name = name
         self.filename = filename
 
@@ -302,27 +302,29 @@ class SimpleMetadataUpgrade:
         collection.importSet(fh)
         return service_metadata
 
-class Reindex:
+xml_home = os.path.join(package_home(globals()), 'doc')
+simpleMetadataUpgradeExtra = SimpleMetadataUpgrade(VERSION, 'Advanced Metadata Tool', 'silva-extra', os.path.join(xml_home, 'silva-extra.xml'))
+simpleMetadataUpgradeContent = SimpleMetadataUpgrade(VERSION, 'Advanced Metadata Tool', 'silva-content', os.path.join(xml_home, 'silva-content.xml'))
 
-    implements(IUpgrader)
+class Reindex(BaseUpgrader):
 
     def upgrade(self, obj):
         if hasattr(obj.aq_base, 'reindex_object'):
             obj.reindex_object()
         return obj
 
-class PublicRenderingCacheFlusher:
+reindex = Reindex(VERSION, AnyMetaType, 70)
 
-    implements(IUpgrader)
+class PublicRenderingCacheFlusher(BaseUpgrader):
 
     def upgrade(self, obj):
         if isinstance(obj, VersionedContent):
             obj._clean_cache()
         return obj
 
-class GroupsService:
+publicRenderingCacheFlusher = PublicRenderingCacheFlusher(VERSION, AnyMetaType, 100)
 
-    implements(IUpgrader)
+class GroupsService(BaseUpgrader):
 
     def upgrade(self, obj):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade Groups Service ' + repr(obj))
@@ -332,12 +334,41 @@ class GroupsService:
             obj._iprange_to_group = {}
         return obj
 
-class BuryDemoObjectCorpses:
+groupsService = GroupsService(VERSION, 'Groups Service', 120)
+
+class CheckReservedIds(BaseUpgrader):
+
+    def upgrade(self, obj):
+        """Walk through the entire tree to find objects of which the id is not
+        allowed, and return a list of the urls of those objects
+        """
+        object_list = obj.objectValues()
+        while object_list:
+            o = object_list[0]
+            del object_list[0]
+            if IContainer.providedBy(o):
+                object_list.extend(o.objectValues())
+            if not ISilvaObject.providedBy(o):
+                continue
+            old_id = o.getId()
+            id = mangle.Id(o.aq_parent, old_id, allow_dup=1)
+            if id.isValid():
+                continue
+            id.cook()
+            while not id.isValid():
+                id = mangle.Id(o.aq_parent, 'renamed_%s' % id, allow_dup=0)
+            o.aq_parent.manage_renameObject(old_id, str(id))
+            zLOG.LOG("Silva", zLOG.INFO,
+                     'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)),
+                     'Location: %s' % o.absolute_url())
+
+checkReservedIds = CheckReservedIds(VERSION, 'Silva Root', 40)
+
+class BuryDemoObjectCorpses(BaseUpgrader):
     """
     This upgrades deletes all broken object which have been DemoObject
     instances before this class went away.
     """
-    implements(IUpgrader)
 
     def upgrade(self, obj):
         # upgrade containers only
@@ -355,11 +386,11 @@ class BuryDemoObjectCorpses:
             obj.manage_delObjects(broken_ids)
             # FIXME: how do we unindex broken object form the catalog?
         return obj
-                     
-class RefreshAll:
-    " refresh all products and installs SilvaDocument "
 
-    implements(IUpgrader)
+buryDemoObjectCorpses = BuryDemoObjectCorpses(VERSION, AnyMetaType, 90)
+                     
+class RefreshAll(BaseUpgrader):
+    " refresh all products and installs SilvaDocument "
 
     def upgrade(self, root):
         zLOG.LOG('Silva', zLOG.INFO, 'install SilvaDocument')
@@ -367,11 +398,11 @@ class RefreshAll:
         zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
         root.service_extensions.refresh_all()
         return root
-    
-class ClearEditorCache:
-    " Clear widget cache and other caches "
 
-    implements(IUpgrader)
+refreshAll = RefreshAll(VERSION, 'Silva Root', 130)
+    
+class ClearEditorCache(BaseUpgrader):
+    " Clear widget cache and other caches "
 
     def upgrade(self, root):
         editor_service = getattr(root, 'service_editor', None)
@@ -385,15 +416,15 @@ class ClearEditorCache:
                 'No Editor Service found to clear the cache of')        
         return root
 
-class CheckServiceMembers:
+clearEditorCache = ClearEditorCache(VERSION, 'Silva Root', 140)
+
+class CheckServiceMembers(BaseUpgrader):
     """ Set the '_allow_authentication_requests' attribute 
     on service_members if it isn't there yet.
     
     Copied from the upgrade_092 module
     """
     
-    implements(IUpgrader)
-
     def upgrade(self, root):        
         sm = getattr(root, 'service_members', None)
         if sm is not None:
@@ -405,11 +436,11 @@ class CheckServiceMembers:
                 sm._allow_authentication_requests = 0
         return root
 
-class SetAuthorInfoOnVersion:
+checkServiceMembers = CheckServiceMembers(VERSION, 'Silva Root', 150)
+
+class SetAuthorInfoOnVersion(BaseUpgrader):
     """ Reset author info to version object for VersionedContent objects
     """
-    
-    implements(IUpgrader)
     
     def upgrade(self, obj):
         if IVersionedContent.providedBy(obj):
@@ -433,13 +464,13 @@ class SetAuthorInfoOnVersion:
                     version._last_author_userid = getattr(obj, '_last_author_userid', None)
         return obj
 
-class RemoveOldMetadataIndexes:
+setAuthorInfoOnVersion = SetAuthorInfoOnVersion(VERSION, AnyMetaType, 20)
+
+class RemoveOldMetadataIndexes(BaseUpgrader):
     """Remove all unused indexes placed there by installing some older
         metadata sets, in those way too much fields got indexed.
     """
     
-    implements(IUpgrader)
-
     def upgrade(self, service_catalog):
         if service_catalog.id != 'service_catalog':
             return service_catalog
@@ -455,15 +486,15 @@ class RemoveOldMetadataIndexes:
                 service_catalog.delIndex(index)
                 
         return service_catalog
+
+removeOldMetadataIndexes = RemoveOldMetadataIndexes(VERSION, 'ZCatalog', 10)
     
-class SetTitleFromIndexOnContainer:
+class SetTitleFromIndexOnContainer(BaseUpgrader):
     """ Folder titles now are stored on the folder, 
     not on the index document. To fix this, we set the title of the 
     container to that of the index document, if it has one.
     """
     
-    implements(IUpgrader)
-
     def upgrade(self, container):
         if not IContainer.providedBy(container):
             print 'This container object does not implement IContainer! (%s)' % repr(container)
@@ -478,49 +509,7 @@ class SetTitleFromIndexOnContainer:
         except Exception, e:
             print 'Cannot set title on %s due to: %s' % (repr(container), e)
         return container
+
+setTitleFromIndexOnContainer = SetTitleFromIndexOnContainer(
+    VERSION, ['Silva Root', 'Silva Publication', 'Silva Folder'], 160)
     
-def initialize():
-    home = package_home(globals())
-    xml_home = os.path.join(home, 'doc')
-    metadata_upgardes = ['silva-extra', 'silva-content']
-    for set in metadata_upgardes:
-        up = SimpleMetadataUpgrade(set, os.path.join(xml_home, '%s.xml' % set))
-        upgrade.registry.registerUpgrader(up, '0.9.3',
-            'Advanced Metadata Tool')
-    upgrade.registry.registerUpgrader(RemoveOldMetadataIndexes(), '0.9.3',
-                                        'ZCatalog')
-    upgrade.registry.registerUpgrader(
-        SetAuthorInfoOnVersion(), '0.9.3', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(UpgradeTime(), '0.9.3',
-        upgrade.AnyMetaType)
-    upgrade.registry.registerFunction(upgrade.check_reserved_ids, '0.9.3',
-        'Silva Root') #upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(MovedViewRegistry(), '0.9.3',
-        'Silva Root')
-    upgrade.registry.registerUpgrader(UpgradeAccessRestriction(), '0.9.3',
-        upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(Reindex(), '0.9.3', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(MovedDocument(), '0.9.3', 'Silva Root')
-    upgrade.registry.registerUpgrader(BuryDemoObjectCorpses(), '0.9.3',
-                                      upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(PublicRenderingCacheFlusher(), '0.9.3',
-                                      upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(GroupsService(), '0.9.3',
-        'Groups Service')
-
-    # On the root, do an "all product refresh"
-    upgrade.registry.registerUpgrader(RefreshAll(), '0.9.3', 'Silva Root')
-
-    # On the root, clear caches
-    upgrade.registry.registerUpgrader(
-        ClearEditorCache(), '0.9.3', 'Silva Root')
-
-    # On the service_members double check the _allow_authentication_requests attrs.
-    upgrade.registry.registerUpgrader(
-        CheckServiceMembers(), '0.9.3', 'Silva Root')
-
-    for metatype in ['Silva Root', 'Silva Publication', 'Silva Folder']:
-        upgrade.registry.registerUpgrader(
-            SetTitleFromIndexOnContainer(), '0.9.3', metatype)
-
-    # as last action on the root, do an "all product refresh"

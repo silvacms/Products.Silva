@@ -451,6 +451,16 @@ def registerViews(reg):
                  ['edit', 'Container', 'GhostFolder'])
     reg.register('edit', 'Silva AutoTOC', 
                  ['edit', 'Content', 'AutoTOC'])
+    # five compatibility for edit
+    reg.register('edit', 'Five Asset',
+                 ['edit', 'Asset', 'FiveAsset'])
+    reg.register('edit', 'Five Container',
+                 ['edit', 'Container', 'FiveContainer'])
+    reg.register('edit', 'Five VersionedContent',
+                 ['edit', 'VersionedContent', 'FiveVersionedContent'])
+    reg.register('edit', 'Five Content',
+                 ['edit', 'Content', 'SimpleContent', 'FiveContent'])
+
     
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
@@ -475,6 +485,8 @@ def registerViews(reg):
     reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
     reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
+    # five compatibility for add
+    reg.register('add', 'Five Content', ['add', 'FiveContent'])
 
     # preview
     reg.register('preview', 'Silva Folder', ['public', 'Folder', 'preview'])

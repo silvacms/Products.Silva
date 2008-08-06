@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-# Silva
-import ContainerPolicy
 # registers fields
 from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
@@ -29,6 +27,13 @@ try:
 except ImportError:
     havePIL = 0
 
+
+# register this extension
+from silva.core import conf
+conf.extensionName('Silva')
+conf.extensionTitle('Silva Core')
+conf.extensionDepends(None)
+
 #----------------------------------------
 # Initialize subscription feature, part 1
 #----------------------------------------
@@ -51,27 +56,15 @@ def initialize(context):
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
     
-    from Products.Silva.silvaxml import xmlexport, xmlimport
-    from Products.Silva.transform.renderer import defaultregistration     
+    from Products.Silva.silvaxml import xmlexport
     
-    import Folder, Root
-    import Publication, Ghost, File, Link
-    import GhostFolder
+    import Root
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
     from Products.Silva.ImporterRegistry import importer_registry
     from Products.Silva.ExtensionRegistry import extensionRegistry
-    import ExtensionService
-    import RendererRegistryService
-    import SimpleMembership
-    import EmailMessageService
 
-    import TypographicalService
-
-    import DocmaService
-    import SidebarCache
-    import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
 
@@ -83,85 +76,7 @@ def initialize(context):
         container_filter = makeContainerFilter(only_outside_silva=True)
         )
     registerTypeForMetadata(Root.Root.meta_type)
-    
-    context.registerClass(
-        ExtensionService.ExtensionService,
-        constructors = (ExtensionService.manage_addExtensionService,),
-        icon = "www/extension_service.gif",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        RendererRegistryService.RendererRegistryService,
-        constructors = (RendererRegistryService.manage_addRendererRegistryServiceForm,
-                        RendererRegistryService.manage_addRendererRegistryService),
-        icon = 'www/renderer_service.png',
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        File.FilesService,
-        constructors = (File.manage_addFilesServiceForm,
-                        File.manage_addFilesService),
-        icon = "www/files_service.gif",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        SimpleMembership.SimpleMemberService,
-        constructors = (SimpleMembership.manage_addSimpleMemberServiceForm,
-                        SimpleMembership.manage_addSimpleMemberService),
-        icon = "www/members.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        SimpleMembership.SimpleMember,
-        constructors = (SimpleMembership.manage_addSimpleMemberForm,
-                        SimpleMembership.manage_addSimpleMember),
-        icon = "www/member.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        EmailMessageService.EmailMessageService,
-        constructors = (EmailMessageService.manage_addEmailMessageServiceForm,
-                        EmailMessageService.manage_addEmailMessageService),
-        icon = "www/message_service.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        DocmaService.DocmaService,
-        constructors = (DocmaService.manage_addDocmaServiceForm,
-                        DocmaService.manage_addDocmaService),
-        icon = "www/docma.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        SidebarService.SidebarService,
-        constructors = (SidebarService.manage_addSidebarServiceForm, 
-                        SidebarService.manage_addSidebarService),
-        icon = "www/sidebar_service.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        ContainerPolicy.ContainerPolicyRegistry,
-        constructors = (ContainerPolicy.manage_addContainerPolicyRegistry, ),
-        icon = "www/containerpolicy_service.png",
-        container_filter = makeContainerFilter()
-        )
-
-    context.registerClass(
-        TypographicalService.TypographicalService,
-        constructors = (TypographicalService.manage_addTypographicalServiceForm,
-                        TypographicalService.manage_addTypographicalService),
-        icon = "www/typochars_service.png",
-        container_filter = makeContainerFilter()
-        )
-    
+        
     # register xml import functions (old style XML importer)	 
     # we let the xml import functionality of Publication handle any 	 
     # root elements, since a Silva instance can not import another root
@@ -197,45 +112,14 @@ def initialize(context):
     #  register a special accessor for ghosts
     Metadata.initialize_metadata()
     initialize_icons()
-    initialize_upgrade()
 
     #------------------------------
     # Initialize the XML registries
     #------------------------------
     
     xmlexport.initializeXMLExportRegistry()
-    xmlimport.initializeXMLImportRegistry()
     
-    #-------------------------------------
-    # Initialize the Renderer Registration
-    #-------------------------------------
 
-    defaultregistration.registerDefaultRenderers()
-    
-    #----------------------------------------
-    # Initialize subscription feature, part 2
-    #----------------------------------------
-    from Products.Silva import subscriptionservice
-
-    #extensionRegistry.register(
-    #    'SilvaSubscriptions', 'Silva Subscriptions', context, [],
-    #    install, depends_on='Silva')
-
-    context.registerClass(
-        subscriptionservice.SubscriptionService,
-        constructors = (
-            subscriptionservice.manage_addSubscriptionServiceForm,
-            subscriptionservice.manage_addSubscriptionService),
-        icon = "www/subscription_service.png",
-        container_filter = makeContainerFilter()
-        )
-
-    #if MAILDROPHOST_AVAILABLE:
-    #    zLOG.LOG('Silva Subscriptions', zLOG.INFO, (
-    #        'The MaildropHost is available and could be used for mail delivery. '
-    #        'If the MaildropHost is indeed in use, please be sure to start '
-    #        'the seperate mail delivery process.'))
-    
 #------------------------------------------------------------------------------
 # External Editor support
 #------------------------------------------------------------------------------
@@ -261,6 +145,7 @@ def __allow_access_to_unprotected_subobjects__(name, value=None):
 
 from AccessControl import allow_module
 
+allow_module('Products.Silva.adapters.views')
 allow_module('Products.Silva.adapters.security')
 allow_module('Products.Silva.adapters.cleanup')
 allow_module('Products.Silva.adapters.renderable')
@@ -329,40 +214,6 @@ def initialize_icons():
     for klass, kind, icon_name in misc_icons:
         ri((klass, kind), 'www/%s' % icon_name, GhostFolder.__dict__)
 
-def initialize_upgrade():
-    # initialize all upgrades so they're available for doing partial upgrades
-    from Products.Silva import upgrade_092
-    upgrade_092.initialize()
-
-    from Products.Silva import upgrade_093
-    upgrade_093.initialize()
-
-    from Products.Silva import upgrade_100
-    upgrade_100.initialize()
-
-    from Products.Silva import upgrade_110
-    upgrade_110.initialize()
-    
-    from Products.Silva import upgrade_120
-    upgrade_120.initialize()
-
-    from Products.Silva import upgrade_130
-    upgrade_130.initialize()
-    
-    from Products.Silva import upgrade_140
-    upgrade_140.initialize()
-
-    from Products.Silva import upgrade_150
-    upgrade_150.initialize()
-
-    from Products.Silva import upgrade_160
-    upgrade_160.initialize()
-
-    from Products.Silva import upgrade_200
-    upgrade_200.initialize()
-
-    from Products.Silva import upgrade_210
-    upgrade_210.initialize()
 
 #------------------------------------------------------------------------------
 # Monkey patches

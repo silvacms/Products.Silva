@@ -1,4 +1,4 @@
-from zope.interface import Interface
+from zope.interface import Interface, Attribute
 
 class IRenderable(Interface):
     """I'm implemented by objects that can be rendered."""
@@ -25,6 +25,9 @@ class IXMLSource(Interface):
 
 class IRenderer(Interface):
     """I'm implemented by objects that can render other objects."""
+
+    meta_type = Attribute(u"Meta type rendered by this renderer")
+    title = Attribute(u"Name for the renderer")
 
     def render(obj):
         """Renders obj; returns the rendering as a string."""

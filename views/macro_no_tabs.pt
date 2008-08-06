@@ -8,7 +8,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    silvaview here;
+    silvaview nocall:here;
     model request/model;
     trigger model/security_trigger;
     icon python:silvaview.render_icon(model);
@@ -23,7 +23,7 @@
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;
 
-    mangle python:modules['Products'].Silva.mangle;
+    mangle modules/Products/Silva/mangle;
 ">
 <head>
   <tal:block replace="structure request/model/@@set_content_type_and_nocache" />

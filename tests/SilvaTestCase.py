@@ -1,6 +1,7 @@
-#
-# SilvaTestCase
-#
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 __version__ = '0.3.1'
 

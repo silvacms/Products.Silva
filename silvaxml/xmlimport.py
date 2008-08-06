@@ -10,34 +10,20 @@ from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder
 from Products.Silva.Publication import manage_addPublication
 from Products.Silva.Link import Link, LinkVersion
+from silva.core import conf as silvaconf
 from Products.Silva import mangle
 from DateTime import DateTime
 
 NS_URI = 'http://infrae.com/ns/silva'
 
-theXMLImporter = xmlimport.Importer()
+silvaconf.namespace(NS_URI)
 
-def initializeXMLImportRegistry():
-    """Initialize the global importer object.
-    """
-    importer = theXMLImporter
-    importer.registerHandler((NS_URI, 'silva'), SilvaExportRootHandler)
-    importer.registerHandler((NS_URI, 'folder'), FolderHandler)
-    importer.registerHandler((NS_URI, 'link'), LinkHandler)
-    importer.registerHandler((NS_URI, 'ghost'), GhostHandler)
-    importer.registerHandler((NS_URI, 'ghost_folder'), GhostFolderHandler)
-    importer.registerHandler((NS_URI, 'publication'), PublicationHandler)
-    importer.registerHandler((NS_URI, 'version'), VersionHandler)
-    importer.registerHandler((NS_URI, 'set'), SetHandler)
-    importer.registerHandler((NS_URI, 'file_asset'), FileHandler)
-    importer.registerHandler((NS_URI, 'image_asset'), ImageHandler)
-    importer.registerHandler((NS_URI, 'auto_toc'), AutoTOCHandler)
-    importer.registerHandler((NS_URI, 'indexer'), IndexerHandler)
-    importer.registerHandler(
-        (NS_URI, 'unknown_content'),
-        UnknownContentHandler)
+theXMLImporter = xmlimport.Importer()
     
 class SilvaBaseHandler(xmlimport.BaseHandler):
+
+    silvaconf.baseclass()
+
     def __init__(self, parent, parent_handler, settings=None, info=None):
         xmlimport.BaseHandler.__init__(
             self,
@@ -187,9 +173,13 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             return generateUniqueId(id, parent)
 
 class SilvaExportRootHandler(SilvaBaseHandler):
-    pass
+    
+    silvaconf.name('silva')
 
 class FolderHandler(SilvaBaseHandler):
+
+    silvaconf.name('folder')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
             parent = self.parent()
@@ -208,6 +198,9 @@ class FolderHandler(SilvaBaseHandler):
             self.storeMetadata()
 
 class PublicationHandler(SilvaBaseHandler):
+
+    silvaconf.name('publication')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
             id = str(attrs[(None, 'id')])
@@ -226,6 +219,9 @@ class PublicationHandler(SilvaBaseHandler):
             self.storeMetadata()
 
 class AutoTOCHandler(SilvaBaseHandler):
+
+    silvaconf.name('auto_toc')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'auto_toc'):
             id = str(attrs[(None, 'id')])
@@ -252,6 +248,9 @@ class AutoTOCHandler(SilvaBaseHandler):
             self.storeMetadata()
 
 class IndexerHandler(SilvaBaseHandler):
+
+    silvaconf.name('indexer')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'indexer'):
             id = str(attrs[(None, 'id')])
@@ -267,6 +266,9 @@ class IndexerHandler(SilvaBaseHandler):
             self._info.addIndexer(self.result())
             
 class VersionHandler(SilvaBaseHandler):
+
+    silvaconf.name('version')
+
     def getOverrides(self):
         return {
             (NS_URI, 'status'): StatusHandler,
@@ -286,6 +288,9 @@ class VersionHandler(SilvaBaseHandler):
             self.getData('status'))
 
 class SetHandler(SilvaBaseHandler):
+
+    silvaconf.name('set')
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'set'):
             self.parentHandler().setMetadataSet(attrs[(None, 'id')])
@@ -314,6 +319,9 @@ class SetHandler(SilvaBaseHandler):
         self._chars = None
         
 class GhostHandler(SilvaBaseHandler):
+
+    silvaconf.name('ghost')
+
     def getOverrides(self):
         return {
             (NS_URI, 'content'): GhostContentHandler
@@ -333,6 +341,7 @@ class GhostHandler(SilvaBaseHandler):
             self.result().indexVersions()
             
 class GhostContentHandler(SilvaBaseHandler):
+
     def getOverrides(self):
         return {
             (NS_URI, 'haunted_url'): HauntedUrlHandler,
@@ -353,6 +362,9 @@ class GhostContentHandler(SilvaBaseHandler):
             updateVersionCount(self)
 
 class GhostFolderHandler(SilvaBaseHandler):
+
+    silvaconf.name('ghost_folder')
+
     def getOverrides(self):
         return {
             (NS_URI, 'content'): GhostFolderContentHandler,
@@ -370,6 +382,7 @@ class GhostFolderHandler(SilvaBaseHandler):
             self._info.addSyncTarget(object)
         
 class GhostFolderContentHandler(SilvaBaseHandler):
+
     def getOverrides(self):
         return {
             (NS_URI, 'haunted_url'): HauntedUrlHandler,
@@ -377,14 +390,19 @@ class GhostFolderContentHandler(SilvaBaseHandler):
             }
 
 class NoopHandler(SilvaBaseHandler):
+
     def isElementAllowed(self, name):
         return False
     
 class HauntedUrlHandler(SilvaBaseHandler):
+
     def characters(self, chars):
         self.parent().set_haunted_url(chars)
 
 class LinkHandler(SilvaBaseHandler):
+
+    silvaconf.name('link')
+
     def getOverrides(self):
         return {
                 (NS_URI, 'content'): LinkContentHandler
@@ -403,6 +421,7 @@ class LinkHandler(SilvaBaseHandler):
             self.result().indexVersions()
             
 class LinkContentHandler(SilvaBaseHandler):
+
     def getOverrides(self):
         return {
             (NS_URI, 'url'): URLHandler
@@ -426,6 +445,9 @@ class LinkContentHandler(SilvaBaseHandler):
             self.storeWorkflow()
 
 class ImageHandler(SilvaBaseHandler):
+
+    silvaconf.name('image_asset')
+
     def getOverrides(self):
         return {
             (NS_URI, 'asset_id'): ZipIdHandler
@@ -457,6 +479,9 @@ class ImageHandler(SilvaBaseHandler):
                     web_crop)
             
 class FileHandler(SilvaBaseHandler):
+
+    silvaconf.name('file_asset')
+    
     def getOverrides(self):
         return {
             (NS_URI, 'asset_id'): ZipIdHandler
@@ -477,6 +502,9 @@ class FileHandler(SilvaBaseHandler):
             self.parent().manage_addProduct['Silva'].manage_addFile(uid, '', file)
             
 class UnknownContentHandler(SilvaBaseHandler):
+
+    silvaconf.name('unknown_content')
+
     def getOverrides(self):
         return {
             (NS_URI, 'zexp_id'): ZipIdHandler
@@ -529,7 +557,7 @@ class ImportSettings(xmlimport.BaseSettings):
     def replaceObjects(self):
         return self._replace_objects
             
-class ImportInfo:
+class ImportInfo(object):
     def __init__(self):
         self._asset_paths = {}
         self._zexp_paths = {}

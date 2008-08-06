@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import time
 
 import transaction
@@ -12,6 +17,9 @@ from AccessControl.SecurityManagement import (newSecurityManager,
                                               noSecurityManager)
 
 from zope.testing.cleanup import cleanUp as _cleanUp
+
+from Testing.ZopeTestCase.layer import ZopeLiteLayer
+
 
 def setDebugMode(mode):
     """Allows manual setting of Five's inspection of debug mode to
@@ -54,7 +62,9 @@ def setupSilva(id='root', quiet=0):
     transaction.commit()
     ZopeTestCase.close(app)
 
+
 class SilvaZCMLLayer(ZopeLiteLayer):
+
     @classmethod
     def setUp(cls):
         setDebugMode(1)

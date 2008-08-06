@@ -11,12 +11,15 @@ from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass
 from DateTime import DateTime
+from zope.app.container.interfaces import IObjectMovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.SilvaMetadata.Exceptions import BindingError
 
 from interfaces import IVersion
+
+from silva.core import conf
 
 class Version(SimpleItem):
 
@@ -212,6 +215,7 @@ def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
+@conf.subscribe(IVersion, IObjectMovedEvent)
 def version_moved(version, event):
     if version != event.object or IObjectRemovedEvent.providedBy(event):
         return

@@ -41,6 +41,9 @@ from interfaces import IContainer, IFolder, IPublication, IRoot
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
 
+import OFS.interfaces
+from silva.core import conf
+
 class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
@@ -57,6 +60,10 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     default_catalog = 'service_catalog'
 
     object_type = 'container'
+
+    conf.icon('www/silvafolder.gif')
+    conf.priority(-5)
+    conf.factory('manage_addFolder')
 
     # A hackish way to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = BaseFolder.manage_options
@@ -497,8 +504,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
             ISilvaObject.implementedBy(
             addable_dict['instance']) and
             not self.get_root().is_silva_addable_forbidden(
-            addable_dict['name']) and
-            self.service_view_registry.has_view('add', addable_dict['name'])
+            addable_dict['name'])
             )
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -956,8 +962,11 @@ def xml_import_handler(object, node, factory=None):
 ##         return
 ##     event.oldParent._invalidate_sidebar(object)
 
-
+@conf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
 def folder_moved_update_quota(obj, event):
+    """Event called on folder, when they are moved, we want to update
+    the quota on parents folders.
+    """
     if obj != event.object:
         return
     if IRoot.providedBy(obj):

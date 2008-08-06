@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.44 $
+# $Id$
 
 from zope.interface import implements
 # Python
@@ -16,13 +16,14 @@ from warnings import warn
 
 # Zope
 from zope.app.container.interfaces import IObjectRemovedEvent
-from OFS import SimpleItem
+from zope.app.container.interfaces import IObjectMovedEvent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from helpers import add_and_edit, fix_content_type_header
 from converters import get_converter_for_mimetype
 from webdav.WriteLockInterface import WriteLockInterface
+import OFS.interfaces
 import zLOG
 # Silva
 from Asset import Asset
@@ -30,6 +31,7 @@ from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
 from Products.Silva.i18n import translate as _
+from Products.Silva.BaseService import SilvaService
 from Products.Silva.ContentObjectFactoryRegistry import \
         contentObjectFactoryRegistry
 # Storages
@@ -43,6 +45,26 @@ except:                                          # available for import
 from Products.Silva.adapters.interfaces import IAssetData
 from interfaces import IFile, IAsset, IUpgrader
 
+from silva.core import conf
+
+def manage_addFile(self, id, title, file):
+    """Add a File
+    """
+
+    id = mangle.Id(self, id, file=file, interface=IAsset)
+    # try to rewrite the id to make it unique
+    id.cook()
+    id = str(id)
+    # the content type is a formality here, the factory expects
+    # it as an arg but doesn't actually use it
+    object = file_factory(self, id, 'application/unknown', file)
+
+    self._setObject(id, object)
+    object = getattr(self, id)
+    object.set_title(title)
+    object.set_file_data(file)
+    return object
+
 class File(Asset):
     __doc__ = """Any digital file can be uploaded as Silva content. 
        For instance large files such as pdf docs or mpegs can be placed in a
@@ -53,6 +75,10 @@ class File(Asset):
 
     __implements__ = (WriteLockInterface,)
     implements(IFile)
+
+    conf.priority(-3)
+    conf.icon('www/silvafile.png')
+    conf.factory('manage_addFile')
     
     def __init__(self, id):
         File.inheritedAttribute('__init__')(self, id)
@@ -272,7 +298,10 @@ InitializeClass(File)
 
 class ZODBFile(File):                                   
     """Silva File object, storage in Filesystem. Contains the OFS.Image.File
-    """       
+    """
+
+    conf.baseclass()
+    
     def __init__(self, id):
         ZODBFile.inheritedAttribute('__init__')(self, id)
         # Actual container of file data
@@ -302,6 +331,8 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
+    conf.baseclass()
+
     def __init__(self, id):
         FileSystemFile.inheritedAttribute('__init__')(self, id)        
         self._file = ExtFile(id)
@@ -321,23 +352,6 @@ class FileSystemFile(File):
         return data
 
 InitializeClass(FileSystemFile)
-
-def manage_addFile(self, id, title, file):
-    """Add a File
-    """
-    id = mangle.Id(self, id, file=file, interface=IAsset)
-    # try to rewrite the id to make it unique
-    id.cook()
-    id = str(id)
-    # the content type is a formality here, the factory expects
-    # it as an arg but doesn't actually use it
-    object = file_factory(self, id, 'application/unknown', file)
-
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    object.set_file_data(file)
-    return object
 
 def file_factory(self, id, content_type, file):
     """Add a File
@@ -366,14 +380,14 @@ def file_factory(self, id, content_type, file):
         object = ZODBFile(id)
     return object
 
-class FilesService(SimpleItem.SimpleItem):
+class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
 
     security = ClassSecurityInfo()
     
     manage_options = (
         {'label':'Edit', 'action':'manage_filesServiceEditForm'},
-        ) + SimpleItem.SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected('View management screens', 
         'manage_filesServiceEditForm')
@@ -383,6 +397,10 @@ class FilesService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_filesServiceEditForm # used by add_and_edit()
+
+    conf.icon('www/files_service.gif')
+    conf.factory('manage_addFilesServiceForm')
+    conf.factory('manage_addFilesService')
 
     def __init__(self, id, title, filesystem_storage_enabled=0):
         self.id = id
@@ -447,7 +465,8 @@ class FilesService(SimpleItem.SimpleItem):
 InitializeClass(FilesService)
 
 manage_addFilesServiceForm = PageTemplateFile(
-    "www/filesServiceAdd", globals(), __name__='manage_addFilesServiceForm')
+    "www/filesServiceAdd", globals(),
+    __name__='manage_addFilesServiceForm')
 
 class FileStorageConverter:
     
@@ -528,19 +547,25 @@ contentObjectFactoryRegistry.registerFactory(
     lambda id, ct, body: True,
     -1)
 
+@conf.subscribe(IFile, OFS.interfaces.IObjectClonedEvent) 
 def file_cloned(file, event):
     if object != event.object:
         return
+    # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterClone(file)
 
+@conf.subscribe(IFile, IObjectMovedEvent)
 def file_moved(file, event):
     if object != event.object or IObjectRemovedEvent.providedBy(event):
         return
     container = event.oldParent
+    # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterAdd(file, container)
-    
+
+@conf.subscribe(IFile, OFS.interfaces.IObjectWillBeRemovedEvent)
 def file_will_be_moved(file, event):
     if object != event.object:
         return
     container = event.oldParent
+    # XXX Check if we could re-run the event on the _file object
     file._file.manage_beforeDelete(file, container)

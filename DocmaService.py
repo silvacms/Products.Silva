@@ -1,18 +1,20 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: DocmaService.py,v 1.18 2006/01/25 18:13:30 faassen Exp $
+# $Id$
 
 # Python
 import xmlrpclib
 # Zope
 import Globals
 from AccessControl import Permissions, ClassSecurityInfo
-from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Products.Silva.BaseService import SilvaService
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.i18n import translate as _
 
-class Job:
+from silva.core import conf
+
+class Job(object):
     __allow_access_to_unprotected_subobjects__ = 1
     
     def __init__(self, id, format, description):
@@ -21,7 +23,7 @@ class Job:
         self.description = description
 
 
-class DocmaService(SimpleItem):
+class DocmaService(SilvaService):
 
     security = ClassSecurityInfo()
     meta_type = 'Docma Service'
@@ -29,7 +31,7 @@ class DocmaService(SimpleItem):
     manage_options = (
                       {'label': 'Edit', 'action': 'edit_tab'},
                       {'label': 'Info', 'action': 'info_tab'}
-                      ) + SimpleItem.manage_options
+                      ) + SilvaService.manage_options
 
     manage_main = edit_tab = PageTemplateFile('www/serviceDocmaEditTab',
                                               globals(), __name__='edit_tab')
@@ -38,6 +40,10 @@ class DocmaService(SimpleItem):
 
     for tab in ('manage_main', 'edit_tab', 'info_tab'):
         security.declareProtected('View management screens', tab)
+
+    conf.icon('www/docma.png')
+    conf.factory('manage_addDocmaServiceForm')
+    conf.factory('manage_addDocmaService')
 
     def __init__(self, id, title):
         self.id = id

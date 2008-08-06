@@ -1,12 +1,13 @@
 
-from zope.interface import implements
+from grokcore.component import implements, GlobalUtility
+
 from zope.component import getAdapter, getAdapters
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from Products.Silva.adapters.interfaces import IContentExporter, IDefaultContentExporter
 from Products.Silva.utility.interfaces import IExportUtility
 
-class ExportUtility(object):
+class ExportUtility(GlobalUtility):
     """Utility to manage export.
     """
 
@@ -15,9 +16,7 @@ class ExportUtility(object):
     def createContentExporter(self, context, name):
         """Create a content exporter.
         """
-        exporter = getAdapter(context, IContentExporter, name=name)
-        return exporter.__of__(context)
-
+        return getAdapter(context, IContentExporter, name=name)
 
     def listContentExporter(self, context):
         """List available exporter.

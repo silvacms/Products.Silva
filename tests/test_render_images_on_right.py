@@ -7,7 +7,7 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 xslt = True
 try: 	 
-    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+    from Products.Silva.transform.renderer.renderreg import getRendererRegistry
     from lxml import etree
 except ImportError:
     xslt = False
@@ -17,10 +17,17 @@ expected_html = '\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="head
 
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
+    def _get_renderer_images_on_right(self):
+        registry = getRendererRegistry()
+        silva_doc_renderers = registery.getRenerersForMetaType('Silva Document')
+        self.failUnless(len(silva_doc_renderers) != 0)
+        self.failUnless('Images on Right' in silva_doc_renderers)
+        return silva_doc_renderers['Images on Right']
+
     def test_implements_renderer_interface(self):
         if not xslt:
             return
-        images_on_right = ImagesOnRightRenderer()
+        images_on_right = self._get_renderer_images_on_right()
         try:
             verifyClass(IRenderer, ImagesOnRightRenderer)
         except (BrokenImplementation, DoesNotImplement,
@@ -46,7 +53,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         source_file.close()
         # XXX get a (which?) version
         obj = self.root.silva_xslt.test_document
-        images_on_right = ImagesOnRightRenderer()
+        images_on_right = self._get_renderer_images_on_right()
         self.assertEquals(images_on_right.render(obj), expected_html)
                                                        
     def test_error_handling(self):
@@ -56,10 +63,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
         class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):
-                ImagesOnRightRenderer.__init__(self)
-                self._stylesheet_path = os.path.join(
-                    directory,
-                    "data/images_to_the_right_broken.xslt")
+                super(BrokenImagesOnRightRenderer, self).__init__('data/images_to_the_right_broken.xslt', __file__)
 
         importfolder = self.add_folder(
             self.root,

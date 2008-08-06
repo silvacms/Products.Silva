@@ -3,22 +3,17 @@
 # $Id$
 
 # silva imports
-from zope.interface import implements
-from Products.Silva import upgrade
-from Products.Silva.interfaces import IUpgrader, ISilvaObject, IRoot
+from Products.Silva.interfaces import ISilvaObject, IRoot
+from Products.Silva.upgrade import BaseUpgrader
 import zLOG
 
-def initialize():
-    ## taking this upgrader out, until we can fix sec_clean_roles to
-    ## get around the get_valid_userids OverFlowError issue.
-    ## upgrade.registry.registerUpgrader(
-    ##     CleanRolesUpgrader(), '2.1', upgrade.AnyMetaType)
-    upgrade.registry.registerUpgrader(
-        AutoTOCUpgrader(), '2.1', 'Silva AutoTOC')
+#-----------------------------------------------------------------------------
+# 2.0.0 to 2.1.0
+#-----------------------------------------------------------------------------
 
-class AutoTOCUpgrader:
+VERSION='2.1'
 
-    implements(IUpgrader)
+class AutoTOCUpgrader(BaseUpgrader):
 
     def upgrade(self, autotoc):
         zLOG.LOG(
@@ -38,14 +33,20 @@ class AutoTOCUpgrader:
         autotoc.index_object()
         return autotoc
 
-## class CleanRolesUpgrader:
-##     """Calls sec_clean_roles on each ISilvaObject to remove any stale
-##        username->rolemappings (bug #100561)"""
-##     implements(IUpgrader)
+AutoTOCUpgrader = AutoTOCUpgrader(VERSION, 'Silva AutoTOC')
 
-##     def upgrade(self, obj):
-##         if IRoot.providedBy(obj):
-##             zLOG.LOG('Silva', zLOG.INFO, "Cleaning Stale Role Mappings: this may take some time")
-##         if ISilvaObject.providedBy(obj):
-##             obj.sec_clean_roles()
-##         return obj
+class CleanRolesUpgrader(BaseUpgrader):
+    """Calls sec_clean_roles on each ISilvaObject to remove any stale
+    username->rolemappings (bug #100561)"""
+
+    def upgrade(self, obj):
+         if IRoot.providedBy(obj):
+             zLOG.LOG('Silva', zLOG.INFO, "Cleaning Stale Role Mappings: this may take some time")
+         if ISilvaObject.providedBy(obj):
+             obj.sec_clean_roles()
+         return obj
+
+
+## taking this upgrader out, until we can fix sec_clean_roles to
+## get around the get_valid_userids OverFlowError issue.
+##cleanRolesUpgrader = CleanRolesUpgrader(VERSION, AnyMetaType)

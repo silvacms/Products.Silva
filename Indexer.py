@@ -18,6 +18,8 @@ from Products.Silva.adapters.interfaces import IIndexable
 
 from interfaces import IContent
 
+from silva.core import conf
+
 class Indexer(Content, SimpleItem):
     __doc__ = _("""Indexes can be created that function like an index in the 
        back of a book. References must first be marked by placing index 
@@ -31,6 +33,8 @@ class Indexer(Content, SimpleItem):
     meta_type = "Silva Indexer"
 
     implements(IContent)
+
+    conf.icon('www/silvaindexer.png')
 
     def __init__(self, id):
         Indexer.inheritedAttribute('__init__')(self, id)

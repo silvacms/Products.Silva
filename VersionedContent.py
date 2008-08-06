@@ -5,10 +5,12 @@
 # Zope 3
 from zope.interface import implements
 from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
 
 # Zope 2
 from OFS import Folder
 from OFS.interfaces import IObjectWillBeAddedEvent
+from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from DateTime import DateTime
@@ -26,6 +28,8 @@ from interfaces import IVersionedContent, ICatalogedVersionedContent
 
 from webdav.common import PreconditionFailed
 from zExceptions import Forbidden
+
+from silva.core import conf
 
 class CachedData(Persistent):
     """ Persistent cache container
@@ -46,6 +50,8 @@ class VersionedContent(Content, Versioning, Folder.Folder):
     # for backwards compatibilty - ugh.
     _cached_checked = {}
     _cached_data = {}
+
+    conf.baseclass()
 
     def __init__(self, id):
         """Initialize VersionedContent.
@@ -399,6 +405,8 @@ class CatalogedVersionedContent(VersionedContent):
     
     default_catalog = 'service_catalog'
 
+    conf.baseclass()
+
     def indexVersions(self):
         for version in self._get_indexable_versions():
             version.index_object()
@@ -436,11 +444,13 @@ class CatalogedVersionedContent(VersionedContent):
         
 InitializeClass(CatalogedVersionedContent)
 
+@conf.subscribe(ICatalogedVersionedContent, IObjectMovedEvent)
 def versionedcontent_moved(versionedcontent, event):
     if IObjectRemovedEvent.providedBy(event):
         return
     versionedcontent.indexVersions()
-
+    
+@conf.subscribe(ICatalogedVersionedContent, IObjectWillBeMovedEvent)
 def versionedcontent_will_be_moved(versionedcontent, event):
     if IObjectWillBeAddedEvent.providedBy(event):
         return

@@ -341,7 +341,7 @@ class ZexpProducer(SilvaBaseProducer):
             self.endElement('zexp_id')
             self.endElement('unknown_content')
     
-class SilvaExportRoot:
+class SilvaExportRoot(object):
     def __init__(self, exportable):
         self._exportable = exportable
         self._exportDateTime = DateTime()
@@ -407,7 +407,7 @@ class ExportSettings(xmlexport.BaseSettings):
     def externalRendering(self):
         return self._render_external
     
-class ExportInfo:
+class ExportInfo(object):
     def __init__(self):
         self._asset_paths = {}
         self._zexp_paths = {}

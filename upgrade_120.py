@@ -1,23 +1,23 @@
-from zope.interface import implements
-
-# zope imports
-import zLOG
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 # silva imports
-from Products.Silva.interfaces import IUpgrader
-from Products.Silva import upgrade
+from Products.Silva.upgrade import BaseUpgrader, BaseRefreshAll
+
+import zLOG
 
 #-----------------------------------------------------------------------------
-# 1.1 to 1.2
+# 1.1.0 to 1.2.0
 #-----------------------------------------------------------------------------
 
-class CatalogUpgrade:
+VERSION='1.2'
+
+class CatalogUpgrade(BaseUpgrader):
     """Call the setup_catalog method in the install module - this will
     make sure the catalog is there and has all of the necessary indeces, 
     without removing anything.
     """
-
-    implements(IUpgrader)
 
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -26,14 +26,15 @@ class CatalogUpgrade:
         from Products.Silva import install
         install.setup_catalog(silvaroot)
         return silvaroot
+
+catalogUpgrade = CatalogUpgrade(VERSION, 'Silva Root', 10)
+
     
-class ReindexHauntedPath:
+class ReindexHauntedPath(BaseUpgrader):
     """After the Catalog's indeces are updated, reindex the hauted_path
     index. This is to make sure existing Ghosts will work with the
     subscriptions feature - This reindexing is an expensive operation!
     """
-    
-    implements(IUpgrader)
     
     def upgrade(self, silvaroot):
         zLOG.LOG(
@@ -43,13 +44,13 @@ class ReindexHauntedPath:
         catalog.reindexIndex('haunted_path', None)
         return silvaroot
 
-class UpdateIndexers:
+reindexHauntedPath = ReindexHauntedPath(VERSION, 'Silva Root', 20)
+
+class UpdateIndexers(BaseUpgrader):
     """The indexers' implementation has changed. We need to trigger
     an update call on each instance to get the contained information
     up to date.
     """
-    
-    implements(IUpgrader)
     
     def upgrade(self, indexer):
         zLOG.LOG(
@@ -57,19 +58,14 @@ class UpdateIndexers:
             'Update index for %s' % '/'.join(indexer.getPhysicalPath()))
         indexer.update()
         return indexer
-    
-class RefreshAll:
-    " refresh all products "
 
-    implements(IUpgrader)
+updateIndexers = UpdateIndexers(VERSION, 'Silva Indexer')
 
-    def upgrade(self, root):
-        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
-        root.service_extensions.refresh_all()
-        return root
-    
-def initialize():
-    upgrade.registry.registerUpgrader(CatalogUpgrade(), '1.2', 'Silva Root')
-    upgrade.registry.registerUpgrader(ReindexHauntedPath(), '1.2', 'Silva Root')
-    upgrade.registry.registerUpgrader(UpdateIndexers(), '1.2', 'Silva Indexer')
-    upgrade.registry.registerUpgrader(RefreshAll(), '1.2', 'Silva Root')
+class RefreshAll(BaseRefreshAll):
+    pass
+
+refreshAll = RefreshAll(VERSION, 'Silva Root', 30)
+
+
+
+

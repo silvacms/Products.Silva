@@ -1,21 +1,9 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zope.interface import Interface, Attribute
 
-from AccessControl import ModuleSecurityInfo
-module_security = ModuleSecurityInfo('Products.Silva.interfaces')
-__allow_access_to_unprotected_subobjects__ = 1
-
-class IAccessManager(Interface):
-    """Mixin class for objects to request local roles on the object"""
-
-    def request_role(self, userid, role):
-        """Request a role on the current object and send an e-mail to the
-        editor/chiefeditor/manager"""
-
-    def allow_role(self, userid, role):
-        """Allows the role and send an e-mail to the user"""
-
-    def deny_role(self, userid, role):
-        """Denies the role and send an e-mail to the user"""
 
 class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
@@ -237,6 +225,8 @@ class ISilvaObject(ISecurity):
         """
         pass
 
+    # This should be only in a view code ?
+
     def implements_publishable():
         """This object implements IPublishable."""
 
@@ -262,6 +252,7 @@ class ISilvaObject(ISecurity):
         """Returns True if object is deletable right now
         """
 
+
 class IPublishable(Interface):
     # MANIPULATORS
 
@@ -277,6 +268,11 @@ class IPublishable(Interface):
         versioned content that is approved.
         """
         pass
+
+
+###############################################################
+### Container
+###############################################################
 
 class IContainer(ISilvaObject, IPublishable):
 
@@ -499,6 +495,10 @@ class IRoot(IPublication):
         """Returns true if meta_type should not show up in the SMI.
         """
 
+###############################################################
+### Content
+###############################################################
+
 class IContent(ISilvaObject, IPublishable):
     """An object that can be published directly and would appear
     in the table of contents. Can be ordered.
@@ -522,6 +522,15 @@ class IContent(ISilvaObject, IPublishable):
         PUBLIC
         """
         pass
+
+
+class IAutoTOC(IContent):
+    pass
+
+
+###############################################################
+### Versioned content
+###############################################################
 
 class IVersioning(Interface):
     """Can be mixed in with an object to support simple versioning.
@@ -818,8 +827,9 @@ class IVersion(Interface):
            neared version.
         """
 
-class RequiredParameterNotSetError(Exception):
-    pass
+###############################################################
+### Asset
+###############################################################
 
 class IAsset(ISilvaObject):
     """An object that does not appear in the publication's
@@ -896,109 +906,10 @@ class IFlash(IFile):
 class IImage(IAsset):
     """Marker interface for image assets.
     """
-    
-class IMember(Interface):
-    # ACCESSORS
-    def userid():
-        """Return unique id for member/username
-        """
 
-    def fullname():
-        """Return full name
-        """
-
-    def email():
-        """Return users's email address if known, None otherwise.
-        """
-
-    def departments():
-        """Return list of departments user is in, or None if no such information.
-        """
-
-    def extra(name):
-        """Return bit of extra information, keyed by name.
-        """
-
-    def is_approved():
-        """Return true if this member is approved. Unapproved members
-        may face restrictions on the Silva site.
-        """
-
-class IMemberService(Interface):
-    def extra():
-        """Return list of names of extra information.
-        """
-
-    def find_members(search_string):
-        """Return all users with a full name containing search string.
-        """
-
-    def is_user(userid):
-        """Return true if userid is indeed a known user.
-        """
-
-    def get_member(userid):
-        """Get member object for userid, or None if no such member object.
-        """
-
-    def get_cached_member(userid):
-        """Get memberobject which can be cached, or None if no such memberobject.
-        """
-
-    def allow_authentication_requests():
-        """Return true if authentication requests are allowed, false if not
-        """
-
-    def get_authentication_requests_url():
-        """Returns the url of the authentication_requests form
-        """
-
-    def get_extra_names():
-        """Return list of names of extra information.
-        """
-
-    def logout(came_from=None, REQUEST=None):
-        """Logout the current user.
-        """
-
-# there is also expected to be a 'Members' object that is traversable
-# to a Member object. Users can then modify information in the member
-# object (if they have the permissions to do so, but the user associated
-# with the member should do so)
-
-class IMessageService(Interface):
-
-    def send_message(from_memberid, to_memberid, subject, message):
-        """Send a message from one member to another.
-        """
-
-    def send_pending_messages():
-        """Send all pending messages.
-
-        This needs to be called at the end of a request otherwise any
-        messages pending may be lost.
-        """
-
-class ISidebarService(Interface):
-    def render(obj, tab_name):
-        """Returns the rendered PT
-
-        Checks whether the PT is already available cached, if so
-        renders the tab_name into it and returns it, if not renders
-        the full pagetemplate and stores that in the cache
-        """
-
-    def invalidate(obj):
-        """Invalidate the cache for a specific object
-        """
-
-
-class IContainerPolicy(Interface):
-    """Policy for container's default documents"""
-
-    def createDefaultDocument(container, title):
-        """create default document in given container"""
-
+###############################################################
+### Ghost
+###############################################################
 
 class IGhost(Interface):
     """Interface for ghosts (and ghost folders)"""
@@ -1022,121 +933,11 @@ class IGhostFolder(IGhost):
     """Marker interface for ghost folders"""
 
 
-class IIcon(Interface):
-    # XXX I don't like the name
+###############################################################
+### Group
+###############################################################
 
-    def getIconIdentifier():
-        """returns icon identifier
-
-            the icon registry should be able to return an icon from an icon
-            identifier
-        """
-
-class IUpgrader(Interface):
-    """interface for upgrade classes"""
-
-    def upgrade(anObject):
-        """upgrades object
-
-            during upgrade the object identity of the upgraded object may
-            change
-
-            returns object
-        """
-
-class ISubscribable(Interface):
-    """Subscribable interface
-    """
-    
-    def isSubscribable():
-        """Return True if the adapted object is actually subscribable,
-        False otherwise.
-        """
-        pass
-    
-    def subscribability():
-        """
-        """
-        pass
-    
-    def getSubscribedEmailaddresses():
-        """
-        """
-        pass
-    
-    def getSubscriptions():
-        """Return a list of ISubscription objects
-        """
-        pass
-    
-    def isValidSubscription(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid subscription request. False otherwise.
-        """
-        pass
-
-    def isValidCancellation(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid cancellation request. False otherwise.
-        """
-        pass
-    
-    def isSubscribed(emailaddress):
-        """Return True is the specified emailaddress is already subscribed
-        for the adapted object. False otherwise.
-        """
-        pass    
-
-    def setSubscribable(bool):
-        """Set the subscribability to True or False for the adapted object.
-        """
-        pass
-        
-    def subscribe(emailaddress):
-        """Subscribe emailaddress for adapted object.
-        """
-        pass
-    
-    def unsubscribe(emailaddress):
-        """Unsubscribe emailaddress for adapted object.
-        """
-        pass
-
-    def generateConfirmationToken(emailaddress):
-        """Generate a token used for the subscription/cancellation cycle.
-        """
-        pass
-
-class ISubscription(Interface):
-    """Subscription interface
-    """
-    
-    def emailaddress():
-        """Return emailaddress for the subscription.
-        """
-        pass
-        
-    def contentSubscribedTo():
-        """Return object for this subscription.
-        """
-        pass
-
-class IHaunted(Interface):
-    """Interface for haunted adapter
-    """
-    
-    def getHaunting():
-        """Return iterator of objects (ghosts) haunting the adapted object.
-        """
-        pass
-
-class IAutoTOC(IContent):
-    pass
-
-class IInvisibleService(Interface):
-    """Marker interface for services that want to be not visible in
-    the ZMI."""
-
+# XXX not really a content
 class IBaseGroup(ISilvaObject):
     """A group implementation.
     """
@@ -1156,5 +957,3 @@ class IIPGroup(IBaseGroup):
 class IVirtualGroup(IBaseGroup):
     """Virtual group.
     """
-
-    

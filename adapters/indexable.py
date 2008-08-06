@@ -1,10 +1,12 @@
-from zope.interface import implements
+
+from grokcore import component
+
+from Products.Silva import interfaces as silva_interfaces
 from Products.Silva.adapters import interfaces
 
-class IndexableAdapter(object):
-    """
-    """
-    implements(interfaces.IIndexable)
+class IndexableAdapter(component.Adapter):
+    component.context(silva_interfaces.ISilvaObject)
+    component.implements(interfaces.IIndexable)
 
     def __init__(self, context):
         self.context = context
@@ -19,6 +21,8 @@ class IndexableAdapter(object):
         return [] 
 
 class GhostIndexableAdapter(IndexableAdapter):
+    component.context(silva_interfaces.IGhost)
+    
     def getIndexes(self):
         if self.context == None:
             return []
@@ -32,6 +36,8 @@ class GhostIndexableAdapter(IndexableAdapter):
         return interfaces.IIndexable(haunted).getIndexes()
 
 class ContainerIndexableAdapter(IndexableAdapter):
+    component.context(silva_interfaces.IContainer)
+    
     def getIndexes(self):
         index = self.context.index
         return interfaces.IIndexable(index).getIndexes() 

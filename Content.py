@@ -12,8 +12,11 @@ from Publishable import Publishable
 import SilvaPermissions
 
 from interfaces import IContent
+from silva.core import conf
 
 class Content(Publishable, SilvaObject):
+
+    conf.baseclass()
 
     security = ClassSecurityInfo()
     
@@ -42,3 +45,4 @@ class Content(Publishable, SilvaObject):
         return self.absolute_url()
 
 InitializeClass(Content)
+

@@ -9,7 +9,9 @@ from zope.interface import implements
 
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
+from OFS.interfaces import IObjectWillBeMovedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
@@ -29,6 +31,8 @@ from interfaces import IRoot, IInvisibleService
 
 icon="www/silva.png"
 
+from silva.core import conf
+
 class DocumentationInstallationException(Exception):
     """Raised when a dependency is not installed when trying to install something"""
 
@@ -47,6 +51,8 @@ class Root(Publication):
         ({'label':'Services', 'action':'manage_services'},) +
         inherited_manage_options[1:]
         )
+
+    conf.baseclass()
 
     def __init__(self, id):
         Root.inheritedAttribute('__init__')(self, id)
@@ -349,10 +355,12 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
+@conf.subscribe(IRoot, IObjectMovedEvent)
 def root_moved(root, event):
     if not IObjectRemovedEvent.providedBy(event):
         root.index_object()
 
+@conf.subscribe(IRoot, IObjectWillBeMovedEvent)
 def root_will_be_moved(root, event):
     if not IObjectWillBeAddedEvent.providedBy(event):
         root.unindex_object()

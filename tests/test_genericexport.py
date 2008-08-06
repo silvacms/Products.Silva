@@ -85,11 +85,17 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
                          [(v.value, v.title) for v in voc],
                          "Test list specific exporter fails")
 
+        # Remove our test exporter
+        gsm.unregisterAdapter(DummyExporter,
+                              (interfaces_document.IDocument,),
+                              interfaces.IContentExporter,
+                              'dummy')
 
+        
     def test_exportUtility(self):
 
         # There is an utility which manage export feature
-        utility = getUtility(interfaces_utility.IExportUtility)()
+        utility = getUtility(interfaces_utility.IExportUtility)
         self.failUnless(verifyObject(interfaces_utility.IExportUtility, 
                                      utility),
                         "The export utility does not implement its interface correctly")

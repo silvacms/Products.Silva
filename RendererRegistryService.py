@@ -1,18 +1,19 @@
 # Zope
-from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
-# Zope
 from AccessControl import ClassSecurityInfo
 
 # Silva
 from Products.Silva.transform.rendererreg import getRendererRegistry
 import SilvaPermissions
 from helpers import add_and_edit
+from BaseService import SilvaService
+
+from silva.core import conf
 
 OLD_STYLE_RENDERER = 'Do not use new-style renderer'
 
-class RendererRegistryService(SimpleItem.SimpleItem):
+class RendererRegistryService(SilvaService):
     """An addable Zope product which registers information
     about content renderers."""
 
@@ -21,7 +22,7 @@ class RendererRegistryService(SimpleItem.SimpleItem):
     meta_type = "Silva Renderer Registry Service"
     manage_options = (
         {'label': 'Renderers', 'action': 'manage_renderers'},
-        ) + SimpleItem.SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected(
         'View management screens', 'manage_renderers')
@@ -30,6 +31,10 @@ class RendererRegistryService(SimpleItem.SimpleItem):
         __name__='manage_renderers')
         
     security = ClassSecurityInfo()
+
+    conf.icon('www/renderer_service.png')
+    conf.factory('manage_addRendererRegistryServiceForm')
+    conf.factory('manage_addRendererRegistryService')
 
     def __init__(self, id, title):
         self.id = id
@@ -146,7 +151,8 @@ class RendererRegistryService(SimpleItem.SimpleItem):
 InitializeClass(RendererRegistryService)
 
 manage_addRendererRegistryServiceForm = PageTemplateFile(
-    "www/rendererRegistryServiceAdd", globals())
+    "www/rendererRegistryServiceAdd", globals(),
+    __name__='manage_addRendererRegistryServiceForm')
 
 def manage_addRendererRegistryService(self, id, title="", REQUEST=None):
     """Add renderer registry service."""

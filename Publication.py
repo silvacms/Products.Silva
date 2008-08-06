@@ -26,6 +26,8 @@ from Products.Silva.i18n import translate as _
 from interfaces import IPublication, IRoot
 
 
+from silva.core import conf
+
 class OverQuotaException(BadRequest):
     """Exception triggered when you're overquota.
     """
@@ -61,6 +63,10 @@ class Publication(Folder.Folder):
     implements(IPublication)
 
     _addables_allowed_in_publication = None
+
+    conf.priority(-5)
+    conf.icon('www/silvapublication.gif')
+    conf.factory('manage_addPublication')
 
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(

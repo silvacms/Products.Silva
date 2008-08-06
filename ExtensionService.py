@@ -1,9 +1,8 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Id$
 
 # Zope
-from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -13,13 +12,14 @@ import zLOG
 
 # Silva
 from helpers import add_and_edit
+from BaseService import SilvaService
 from ExtensionRegistry import extensionRegistry
 from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 import install
-
+from silva.core import conf
 import os.path
 
-class ExtensionService(SimpleItem.SimpleItem):
+class ExtensionService(SilvaService):
     meta_type = 'Silva Extension Service'
 
     security = ClassSecurityInfo()
@@ -27,7 +27,7 @@ class ExtensionService(SimpleItem.SimpleItem):
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgradeForm'},
-        ) + SimpleItem.SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected('View management screens', 'manage_editForm')
     manage_editForm = PageTemplateFile(
@@ -41,6 +41,9 @@ class ExtensionService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
+
+    conf.icon('www/silva.png')
+    conf.factory('manage_addExtensionService')
 
     _quota_enabled = False
 
@@ -249,27 +252,27 @@ class ExtensionService(SimpleItem.SimpleItem):
 
     security.declareProtected('View management screens', 'get_version_info')
     def get_version_info(self, name):
-        mname = extensionRegistry.get_product_module_name(name)
-        product_info = self.unrestrictedTraverse('/Control_Panel/Products/' + mname)
-        return product_info.version
+        product = extensionRegistry.get_extension(name)
+        return product.version
         
     def get_installed_names(self):
         """Return installed extension names
         """
-        return [name for name in self.get_names()
-                if self.is_installed(name)]
+        return filter(self.is_installed, self.get_names())
 
     security.declareProtected('View management screens', 'get_description')
     def get_description(self, name):
         """Return description of extension
         """
-        return extensionRegistry.get_description(name)
+        product = extensionRegistry.get_extension(name)
+        return product.description
 
     security.declareProtected('View management screens', 'get_depends_on')
     def get_depends_on(self, name):
         """Return extension dependency
         """
-        return extensionRegistry.get_depends_on(name)
+        product = extensionRegistry.get_extension(name)
+        return product.depends
 
     security.declareProtected('View management screens', 'is_installed')
     def is_installed(self, name):

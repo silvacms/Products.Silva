@@ -1,34 +1,27 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from tempfile import TemporaryFile
 
-# Zope 3
-from zope.interface import implements
-from zope.component import adapts
+from grokcore import component
 
-# Zope 2
-import Globals
-from AccessControl import ClassSecurityInfo
-
-# Silva
-from Products.Silva.adapters import adapter, interfaces
+from Products.Silva.adapters import interfaces
 from Products.Silva import interfaces as silva_interfaces
-from Products.Silva import SilvaPermissions
 
 
-class ZipfileExportAdapter(adapter.Adapter):
+class ZipFileExportAdapter(component.Adapter):
     """ Adapter for silva objects to facilitate
     the export to zipfiles. 
     """
-
-    implements(interfaces.IDefaultContentExporter)
-    adapts(silva_interfaces.ISilvaObject)
     
-    security = ClassSecurityInfo()
-
+    component.context(silva_interfaces.ISilvaObject)
+    component.implements(interfaces.IDefaultContentExporter)
+    component.name('zip')
+    
     name = "Full Media (zip)"
     extension = "zip"
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'export')    
     def export(self, settings=None):
         from zipfile import ZipFile, ZIP_DEFLATED
         from Products.Silva.silvaxml import xmlexport
@@ -74,6 +67,6 @@ class ZipfileExportAdapter(adapter.Adapter):
         return value
     
         
-Globals.InitializeClass(ZipfileExportAdapter)
+
 
     

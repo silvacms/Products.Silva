@@ -52,7 +52,7 @@ editor
 <metal:macro define-macro="sidebar-column">
  <td class="left"
    tal:define="template_id string:tab_edit">
-   <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+   <metal:block use-macro="here/macro_vein_navigation/macros/vein" />
  </td>
 </metal:macro>
 
@@ -61,7 +61,7 @@ editor
 </tal:block>
 <metal:macro define-macro="main-title">
  <h2>
-  <img tal:replace="structure python:view.render_icon(model)" />
+  <img tal:replace="structure python:here.render_icon(model)" />
   <tal:repl replace="pretty_meta_type|model/meta_type" />
   &#xab;<tal:block content="model/get_title_or_id"/>&#xbb;
  </h2>

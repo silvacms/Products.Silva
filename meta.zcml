@@ -1,6 +1,29 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope">
+   xmlns="http://namespaces.zope.org/zope"
+   i18n_domain="silva">
+  
+  <!-- Silva permissions -->
+  <permission
+    id="silva.ReadSilvaContent"
+    title="Read Silva content"
+    />
 
-  <include package=".zcml" file="meta.zcml" />
+  <permission
+    id="silva.ChangeSilvaContent"
+    title="Change Silva content"
+    />
+
+  <permission
+    id="silva.ApproveSilvaContent"
+    title="Approve Silva content"
+    />
+
+  <permission
+    id="silva.ChangeSilvaAccess"
+    title="Change Silva access"
+    />
+
+  <include package="silva.core.conf" file="meta.zcml" />
+  <include package="silva.core.views" file="meta.zcml" />
 
 </configure>

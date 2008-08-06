@@ -1,15 +1,17 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# Silva
-from Products.Silva import interfaces
-from zope.interface import implements
+# $Id$
 
-class Haunted(object):
+from grokcore import component
+
+from Products.Silva import interfaces
+
+class Haunted(component.Adapter):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
     """
-    
-    implements(interfaces.IHaunted)
+    component.context(interfaces.IContent)
+    component.implements(interfaces.IHaunted)
     
     def __init__(self, context):
         self.context = context
@@ -28,6 +30,8 @@ class HauntedGhost(Haunted):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
     """
+    component.context(interfaces.IGhost)
+    
     def getHaunting(self):
         # Nothing to look for - Ghost cannot be haunted. Don't yield anything
         # XXX how to not yield anything??

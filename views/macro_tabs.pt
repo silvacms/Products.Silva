@@ -8,11 +8,11 @@
   i18n:domain="silva">
 <metal:block define-macro="tabs">
 <tal:block define="
-  tabs view/get_authorized_tabs;
+  tabs here/get_authorized_tabs;
   active_tab active_tab | nothing;
   selected_tab_id template/id;
   vein vein | nothing;
-  mangle python:modules['Products'].Silva.mangle;
+  mangle modules/Products/Silva/mangle;
 ">
 <!-- ______________ Breadcrumb space ______________ -->
   <div class="pathbar">
@@ -89,8 +89,9 @@
     ></a>
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
-      tab_info python:view.get_tab_info(item);
-      is_selected_tab python:tab_info['tab_id'] == template.id or item[1] == active_tab;
+      tab_info python:here.get_tab_info(item);
+      template_id template/id;
+      is_selected_tab python:tab_info['tab_id'] == template_id or item[1] == active_tab;
       top_key tab_info/toplink_accesskey | nothing;
       tab_key tab_info/tab_accesskey | nothing;
       up_key tab_info/uplink_accesskey | nothing;

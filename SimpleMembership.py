@@ -1,7 +1,6 @@
 from zope.interface import implements
 
 # zope
-from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals
@@ -12,17 +11,23 @@ from Security import Security
 from Membership import cloneMember, Member
 import SilvaPermissions
 from helpers import add_and_edit
+from BaseService import SilvaService, ZMIObject
 
-from interfaces import IMember, IMemberService
+import interfaces
+from silva.core import conf
 
-class SimpleMember(Member, Security, SimpleItem.SimpleItem):
+class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
 
-    implements(IMember)
+    implements(interfaces.IMember)
 
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Simple Member'
+
+    conf.icon('www/member.png')
+    conf.factory('manage_addSimpleMemberForm')
+    conf.factory('manage_addSimpleMember')
     
     def __init__(self, id):
         self.id = id
@@ -134,8 +139,8 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-class SimpleMemberService(SimpleItem.SimpleItem):
-    implements(IMemberService)
+class SimpleMemberService(SilvaService):
+    implements(interfaces.IMemberService)
 
     security = ClassSecurityInfo()
 
@@ -144,14 +149,19 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
-        ) + SimpleItem.SimpleItem.manage_options
+        ) + SilvaService.manage_options
 
     security.declareProtected('View management screens', 'manage_editForm')
     manage_editForm = PageTemplateFile(
-        'www/simpleMemberServiceEdit', globals(),  __name__='manage_editForm')
+        'www/simpleMemberServiceEdit', globals(),
+        __name__='manage_editForm')
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
+
+    conf.icon('www/members.png')
+    conf.factory('manage_addSimpleMemberServiceForm')
+    conf.factory('manage_addSimpleMemberService')
 
     def __init__(self, id):
         self.id = id

@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import os
 from lxml import etree
 from StringIO import StringIO
@@ -11,8 +15,9 @@ from Globals import InitializeClass
 # Silva
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.adapters import xmlsource
+from silva.core import conf as silvaconf
 
-class ErrorHandler:
+class ErrorHandler(object):
     def __init__(self):
         self._error_text = ""
 
@@ -30,12 +35,14 @@ class ImportResolver(etree.Resolver):
         if url.startswith("silvabase:"):
             return self.resolve_filename(self.import_dir + url[10:], context)
     
-class XSLTRendererBase:
+class XSLTRendererBase(object):
 
     implements(IRenderer)
 
     security = ClassSecurityInfo()
     security.declareObjectPublic()
+
+    silvaconf.baseclass()
 
     def __init__(self, path, file_context, import_context=__file__):
         """XSLT-based renderer.
