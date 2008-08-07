@@ -148,7 +148,8 @@ class ExtensionRegistry(object):
         else:
             path = resolve(installer.__module__).__file__
         for egg in pkg_resources.working_set:
-            if path.startswith(egg.location):
+            if (path.startswith(egg.location) and
+                path[len(egg.location)] == os.path.sep):
                 return egg
         return None
 
