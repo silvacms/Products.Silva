@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # Python
 import os
 import re
@@ -15,7 +19,8 @@ from Products.Silva.adapters import interfaces
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.adapters import archivefileimport, xmlsource
+from Products.Silva.adapters import archivefileimport
+from Products.Silva.transform.interfaces import IXMLSource
 from Products.Silva.Image import Image
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
@@ -202,8 +207,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         # without failure. This will test/prove that we *do* need to provide
         # an ExportInfo object to the exporter.exportToString() in the
         # xmlsource adapter.
-        adapted = xmlsource.getXMLSourceAdapter(testfolder)
-        self.assert_(adapted.getXML())
+        adapted = IXMLSource(testfolder)
+        self.assert_(adapted.getXML(external_rendering=True))
 
     def test_zip_export(self):
         from Products.Silva.Link import manage_addLink

@@ -79,13 +79,22 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
             self.endElement('set')
         self.endElement('metadata')
 
+# Constant to select which version you want for versioned content. Can
+# be set on settings.
+
+ALL_VERSION = object()
+PREVIEWABLE_VERSION = object()
+EDITABLE_VERSION = object()
+VIEWABLE_VERSION = object()
+
+
 class VersionedContentProducer(SilvaBaseProducer):
     """Base Class for all versioned content
     """
     def workflow(self):
         """Export the XML for the versioning workflow
         """
-        if not self.getSettings().workflow():
+        if not self.getSettings().workflow:
             return
         self.startElement('workflow')
         version = self.context.get_unapproved_version_data()
@@ -130,16 +139,21 @@ class VersionedContentProducer(SilvaBaseProducer):
     def versions(self):
         """Export the XML of the versions themselves.
         """
-        if self.getSettings().allVersions():
+        wanted = self.getSettings().version
+        if wanted is ALL_VERSION:
             vm = version_management.getVersionManagementAdapter(self.context)
             for version in vm.getVersions():
                 # getVersions will order by id - most recent last.
                 self.subsax(version)
         else:
-            # XXX handle single version export. Is previewable right? Is
-            # there a better method that is guaranteed to return a best
-            # guess version?
-            self.subsax(self.context.get_previewable())
+            if wanted is PREVIEWABLE_VERSION:
+                version = self.context.get_previewable()
+            elif wanted is EDITABLE_VERSION:
+                version = self.context.get_editable()
+            elif wanted is VIEWABLE_VERSION:
+                version = self.context.get_viewable()
+            if version:
+                self.subsax(version)
 
     def metadata(self):
         """Versioned Content has no metadata, the metadata is all on the
@@ -365,6 +379,8 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
              'silva_version': self.context.getSilvaProductVersion()})
         self.subsax(self.context.getExportable())
         self.endElement('silva')
+
+
         
 class ExportSettings(xmlexport.BaseSettings):
     def __init__(self, asDocument=True, outputEncoding='utf-8',
@@ -372,7 +388,7 @@ class ExportSettings(xmlexport.BaseSettings):
                  withSubPublications=True, otherContent=True):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
-        self._all_versions = allVersions
+        self._version = allVersions and ALL_VERSION or PREVIEWABLE_VERSION
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
         self._render_external = False
@@ -381,22 +397,22 @@ class ExportSettings(xmlexport.BaseSettings):
         self._with_sub_publications = with_sub_publications
         
     def setLastVersion(self, last_version):
-        self._all_versions = not last_version
+        self._version = last_version and PREVIEWABLE_VERSION or ALL_VERSION
+
+    def setVersion(self, version):
+        assert version in [ALL_VERSION, PREVIEWABLE_VERSION, EDITABLE_VERSION, VIEWABLE_VERSION]
+        self._version = version
 
     def setExternalRendering(self, external_rendering):
         self._render_external = external_rendering
-        
-        #     def setFullMedia():
-        #         self._fullmedia = 1
-        
-        #     def fullMediaExport():
-        #         return self._fullmedia
-        
+             
+    @property
     def workflow(self):
         return self._workflow
 
-    def allVersions(self):
-        return self._all_versions
+    @property
+    def version(self):
+        return self._version
 
     def withSubPublications(self):
         return self._with_sub_publications

@@ -13,7 +13,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
 # Silva
-from Products.Silva.transform.interfaces import IRenderer
+from Products.Silva.transform.interfaces import IRenderer, IXMLSource
 from Products.Silva.adapters import xmlsource
 from silva.core import conf as silvaconf
 
@@ -80,8 +80,7 @@ class XSLTRendererBase(object):
 
     security.declareProtected("View", "render")
     def render(self, obj):
-        source = xmlsource.getXMLSourceAdapter(obj)
-        source_xml = source.getXML()
+        source_xml = IXMLSource(obj).getXML(external_rendering=True)
 
         style = self.stylesheet()
         doc = etree.parse(StringIO(source_xml))

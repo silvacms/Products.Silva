@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zope.interface import Interface, Attribute
 
 class IRenderable(Interface):
@@ -20,7 +24,7 @@ class IRenderable(Interface):
 class IXMLSource(Interface):
     """I'm implemented by objects that use XML as their source content."""
 
-    def getXML():
+    def getXML(version=None, external_rendering=False):
         """Return the XML content."""
 
 class IRenderer(Interface):
