@@ -2,17 +2,15 @@
 # See also LICENSE.txt
 # $Id$
 
+# Python
+import urllib
+
 # Zope
 from zope.interface import implements
 from AccessControl import ModuleSecurityInfo
 
 # Silva 
-from Products.Silva.interfaces import IUpgrader
-
-# python
-import urllib
-
-from interfaces import ISilvaObject, IVersioning, IContainer
+from Products.Silva.interfaces import ISilvaObject, IVersioning, IContainer
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
@@ -77,7 +75,7 @@ def fix_content_type_header(uploaded_file):
 
 # this class used to be in SilvaDocument.upgrade, but was moved
 # here when Folder._to_folder_or_publication_helper began using it.
-class SwitchClass:
+class SwitchClass(object):
     """This class can be used to switch an instances class.
        This was used when SilvaDocument was moved to it's own
        product, to switch instances of SilvaDocument and Silva
@@ -91,8 +89,6 @@ class SwitchClass:
        This class conforms to the Silva upgrader API, in that you
        call class.upgrade(obj) to upgrade obj, and the upgraded
        obj is returned"""
-    
-    implements(IUpgrader)
 
     def __init__(self, new_class, args=(), kwargs={}):
         self.new_class = new_class
