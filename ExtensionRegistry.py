@@ -117,9 +117,17 @@ class EggExtension(BaseExtension):
                  depends=(u'Silva',)):
         super(EggExtension, self).__init__(name, install,
                                            description, depends)
-        # We assume that the name of this egg is the name
-        self._product = egg.key
+        # We assume that the name of this egg is the name of the python extension
+        if egg.project_name.startswith('Products.'):
+            self._product = egg.project_name.split('.', 1)[1]
+        else:
+            self._product = egg.project_name
+        self._module_name = egg.project_name
         self._version = egg.version
+
+    @property
+    def module_name(self):
+        return self._module_name
 
     
 class ExtensionRegistry(object):
