@@ -1,16 +1,19 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import os
 from zope.interface.verify import verifyClass
 from zope.interface.exceptions import BrokenImplementation, DoesNotImplement,\
      BrokenMethodImplementation
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
+
 from Products.Silva.transform.interfaces import IRenderer
-xslt = True
-try: 	 
-    from Products.Silva.transform.renderer.renderreg import getRendererRegistry
-    from lxml import etree
-except ImportError:
-    xslt = False
+from Products.Silva.transform.rendererreg import getRendererRegistry
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+
+from lxml import etree
 
 directory = os.path.dirname(__file__)
 expected_html = '\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top">\n      <a href="http://nohost/root/silva_xslt/bar.html">\n        <img src="http://nohost/root/silva_xslt/foo" />\n      </a>\n      <br />\n    </td>\n  </tr>\n</table>\n'
@@ -19,14 +22,12 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
     def _get_renderer_images_on_right(self):
         registry = getRendererRegistry()
-        silva_doc_renderers = registery.getRenerersForMetaType('Silva Document')
+        silva_doc_renderers = registry.getRenderersForMetaType('Silva Document')
         self.failUnless(len(silva_doc_renderers) != 0)
         self.failUnless('Images on Right' in silva_doc_renderers)
         return silva_doc_renderers['Images on Right']
 
     def test_implements_renderer_interface(self):
-        if not xslt:
-            return
         images_on_right = self._get_renderer_images_on_right()
         try:
             verifyClass(IRenderer, ImagesOnRightRenderer)
@@ -35,14 +36,11 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
             self.fail("ImagesOnRightRenderer does not implement IRenderer")
 
     def test_renders_images_on_right(self):
-        if not xslt:
-            return
         importfolder = self.add_folder(
             self.root,
             'silva_xslt',
             'This is a testfolder',
             policy_name='Silva AutoTOC')
-        xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
@@ -58,9 +56,6 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
                                                        
     def test_error_handling(self):
         
-        if not xslt:
-            return
-
         class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):
                 super(BrokenImagesOnRightRenderer, self).__init__('data/images_to_the_right_broken.xslt', __file__)
@@ -70,7 +65,6 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
             'silva_xslt',
             'This is a testfolder',
             policy_name='Silva AutoTOC')
-        xmlimport.initializeXMLImportRegistry()
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()

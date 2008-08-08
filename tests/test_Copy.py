@@ -1,17 +1,10 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-import SilvaTestCase
-from Testing import ZopeTestCase
 
-from Products.Silva import Folder, Root
 from DateTime import DateTime
 
-# manage_main hacks to copy succeeds
-# the original manage_main needs a request['URL1']
-# which is not set up in the test request
-#Root.Root.manage_main = lambda *foo, **bar: None
-#Folder.Folder.manage_main = lambda *foo, **bar: None
+import SilvaTestCase
 
 class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -159,20 +152,20 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
        # gotcha    
         self.root.folder4.ghost6.sec_update_last_author_info()        
         self.assertEquals(
-            ZopeTestCase.user_name,
+            SilvaTestCase.user_name,
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
         # copy ghost to folder 4 and check author
        # XXX maybe we should rename the user inbetween ?
         self.root.folder4.action_copy(['ghost6'], self.app.REQUEST)
         self.root.folder5.action_paste(self.app.REQUEST)
         self.assertEquals(
-            ZopeTestCase.user_name,
+            SilvaTestCase.user_name,
             self.root.folder5.ghost6.sec_get_last_author_info().fullname())
         # move ghost to root and check author        
         self.root.folder4.action_cut(['ghost6'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.assertEquals(
-            ZopeTestCase.user_name,
+            SilvaTestCase.user_name,
             self.root.ghost6.sec_get_last_author_info().fullname())
         
 
@@ -191,7 +184,6 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
        # 'copy2_of_doc1' according to Zope 2.7.4+, used to be
        # 'copy_of_copy_of_doc1'
         self.root.action_copy(['copy_of_doc1'], self.app.REQUEST)
-        from OFS.CopySupport import _cb_decode # HACK
         self.root.action_paste(self.app.REQUEST)
        # this fails in Zope < 2.7.4
         self.assert_(hasattr(self.root, 'copy2_of_doc1'))

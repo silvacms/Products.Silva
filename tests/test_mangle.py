@@ -1,14 +1,15 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mangle.py,v 1.14 2006/01/24 16:13:33 faassen Exp $
-from Testing import ZopeTestCase
-import SilvaTestCase
+# $Id$
 
-from ZPublisher.HTTPRequest import FileUpload, record
+# Silva
+from StringIO import StringIO
 
+# Zope 2
 from Products.Silva import mangle
 from Products.Silva.interfaces import IAsset
-from StringIO import StringIO
+
+import SilvaTestCase
 
 class MangleIdTest(SilvaTestCase.SilvaTestCase):
 

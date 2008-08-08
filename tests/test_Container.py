@@ -1,18 +1,16 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-import SilvaTestCase
 
+# Python
 from os.path import dirname, join
-from Products.Silva.interfaces import IContent
-from Products.Silva.interfaces import IVersionedContent
-from Products.Silva.interfaces import ISilvaObject
-from Products.Silva.Folder import Folder
-import Products.Silva.Folder
-from Products.Silva.SilvaObject import SilvaObject
-from Products.Silva.mangle import Id
-from Products.ParsedXML import ParsedXML
 from DateTime import DateTime
+
+# Silva
+from Products.Silva.interfaces import IVersionedContent, IContent
+from Products.Silva.mangle import Id
+
+import SilvaTestCase
 
 def _rotten_index_helper(folder):
     """ helper for test_rotten_index """

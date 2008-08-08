@@ -1,16 +1,18 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
-import SilvaTestCase
+# $Id$
 
-from Products.Silva.adapters import archivefileimport
-from AccessControl.SecurityManagement import newSecurityManager
-
-from Products.Silva import Image, File
-
-# Constructing some testable zipfile
+# Python
 import os
 from os.path import join
+
+# Silva
+from Products.Silva.adapters import archivefileimport
+from Products.Silva import Image, File
+
+import SilvaTestCase
+
+# Constructing some testable zipfile
 directory = os.path.dirname(__file__)
 zipfile1 = open(join(directory,'data','test1.zip'))
 zipfile2 = open(join(directory,'data','test2.zip'))

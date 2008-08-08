@@ -1,14 +1,13 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_silvaviews.py,v 1.5 2006/01/24 16:13:33 faassen Exp $
+# $Id$
+
 import os
 from Testing.ZopeTestCase import Functional
     
 import SilvaTestCase
-from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
 from Testing.ZopeTestCase import utils
 
-from StringIO import StringIO
 
 import DateTime
 now = DateTime.DateTime()

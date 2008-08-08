@@ -1,12 +1,16 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_image.py,v 1.8 2006/01/24 16:13:33 faassen Exp $
-import SilvaTestCase
+# $Id$
+
+# Python
+import os
+from StringIO import StringIO
+
+# Zope 2
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
 from Testing.ZopeTestCase import utils
-import os
 
-from StringIO import StringIO
+import SilvaTestCase
 
 test_path = os.path.dirname(__file__)
 
@@ -17,7 +21,6 @@ except ImportError:
 else:
     havePIL = 1
 
-from Products.Silva import Image
 
 from test_file import FileTest
 

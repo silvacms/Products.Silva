@@ -1,15 +1,17 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
+
+# Python
 from datetime import datetime, timedelta    
-    
-import SilvaTestCase
-from DateTime import DateTime
 from StringIO import StringIO
-from OFS.ObjectManager import BadRequest
+    
+from DateTime import DateTime
+
 from Products.Silva.Versioning import VersioningError
 from Products.Silva.adapters.version_management import getVersionManagementAdapter
-from Products.Silva.Versioning import VersioningError
+
+import SilvaTestCase
 
 now = DateTime()
 

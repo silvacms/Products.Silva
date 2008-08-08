@@ -4,7 +4,6 @@
 # $Id$
 
 import re, os.path
-import mimetypes
 from urllib2 import HTTPError
 from xml.dom import minidom
 

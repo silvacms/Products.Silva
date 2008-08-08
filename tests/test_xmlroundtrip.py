@@ -1,13 +1,12 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import os
-import xml.sax
-from xml.sax.handler import feature_namespaces
 from zope.component import getAdapter
 
 import SilvaTestCase
 from SilvaTestCase import transaction
-from Products.ParsedXML.ParsedXML import ParsedXML
-from Products.Silva import mangle
-from Products.SilvaMetadata.Compatibility import getToolByName
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.adapters import interfaces
 
@@ -15,9 +14,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_roundtrip(self):
         from StringIO import StringIO
         from Products.Silva.silvaxml import xmlexport
-        from Products.Silva.adapters import zipfileexport
-        from Products.Silva.Image import Image
-        from zipfile import ZipFile, BadZipfile
+        from zipfile import ZipFile
 
         directory = os.path.dirname(__file__)
 

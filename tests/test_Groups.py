@@ -1,8 +1,9 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
+
 import SilvaTestCase
-import Products.Silva.Group
+
 
 """1 add service group aftersetup
    2 check what is on the service group method

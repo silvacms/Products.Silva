@@ -3,22 +3,20 @@
 # See also LICENSE.txt
 # $Id$
 
+# Python
 import time
 
-import transaction
+# Zope 3
 import zope.component.eventtesting
 from zope.component import provideHandler
+from zope.testing.cleanup import cleanUp as _cleanUp
 
+# Zope 2
 from Acquisition import aq_base
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase.layer import ZopeLiteLayer
-
-from AccessControl.SecurityManagement import (newSecurityManager,
-                                              noSecurityManager)
-
-from zope.testing.cleanup import cleanUp as _cleanUp
-
-from Testing.ZopeTestCase.layer import ZopeLiteLayer
+from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager
+import transaction
 
 
 def setDebugMode(mode):

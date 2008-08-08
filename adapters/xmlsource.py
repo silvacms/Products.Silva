@@ -30,3 +30,9 @@ class XMLSourceAdapter(component.Adapter):
         return exporter.exportToString(exportRoot, settings, info)
 
     
+class XMLSourceVersionAdapter(XMLSourceAdapter):
+    """XMLSourceAdapter for content version.
+    """
+
+    component.context(silva_interfaces.IVersion)
+

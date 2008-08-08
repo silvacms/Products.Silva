@@ -1,19 +1,12 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
-import time
-import SilvaTestCase
+# $Id$
 
-from Products.Silva.interfaces import IContent
-from Products.Silva.interfaces import ISilvaObject
-from Products.Silva.Folder import Folder
-from Products.Silva.SilvaObject import SilvaObject
-from Products.ParsedXML import ParsedXML
+# Python
 from DateTime import DateTime
+import time
 
-from Products.Silva.Root import Root
-
-from Products.SilvaDocument.Document import Document, DocumentVersion
+import SilvaTestCase
 
 class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):

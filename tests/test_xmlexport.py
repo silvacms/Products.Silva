@@ -6,14 +6,14 @@
 import os
 import re
 from os.path import join
-from zipfile import ZipFile, BadZipfile
+from zipfile import ZipFile
 from zope.component import getAdapter
 
 import SilvaTestCase
 from SilvaTestCase import transaction
 # Zope
-from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
+
 # Silva
 from Products.Silva.adapters import interfaces
 from Products.Silva.Ghost import manage_addGhost

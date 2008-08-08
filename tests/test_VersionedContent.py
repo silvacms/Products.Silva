@@ -1,12 +1,16 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
-import SilvaTestCase
+# $Id$
 
+# Python
 import time
 from DateTime import DateTime
-from Products.SilvaDocument.Document import Document, DocumentVersion
+
+# Silva
+from Products.SilvaDocument.Document import Document
 from Products.Silva.SilvaObject import SilvaObject
+
+import SilvaTestCase
 
 # monkey patch for the SilvaObject.view
 not_viewable='Sorry, this document is not published yet.'

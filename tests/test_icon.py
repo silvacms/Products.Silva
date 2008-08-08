@@ -1,14 +1,18 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_icon.py,v 1.8 2006/01/24 16:13:33 faassen Exp $
-import SilvaTestCase
-from ZPublisher.HTTPRequest import FileUpload
-from Globals import ImageFile
+# $Id$
 
+# Python
 from StringIO import StringIO
+
+# Zope 2
+from ZPublisher.HTTPRequest import FileUpload
+
+# Silva
 from Products.Silva.icon import _IconRegistry
 from Products.Silva import Root
-from Products.Silva.interfaces import IAsset
+
+import SilvaTestCase
 
 class R:
     pass

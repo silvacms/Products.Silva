@@ -1,13 +1,14 @@
-import os
-import xml.sax
-from xml.sax.handler import feature_namespaces
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-import SilvaTestCase
-from Products.ParsedXML.ParsedXML import ParsedXML
-from Products.Silva import mangle
+import os
+from DateTime import DateTime
+
 from Products.Silva.silvaxml import xmlimport 
 from Products.Silva.interfaces import IGhost, IContainer
-from DateTime import DateTime
+
+import SilvaTestCase
 
 def testopen(path, rw):
     directory = os.path.dirname(__file__)

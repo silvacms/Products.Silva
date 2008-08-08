@@ -1,5 +1,10 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from FunctionalTestMixin import *
-from Products.Five.testbrowser import Browser
+import SilvaTestCase
 
 class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase,
                        MixinRoleContent, MixinNavigate):
@@ -30,6 +35,7 @@ class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         url = self.url()
         self.do_navigate(SilvaTestCase.user_manager, success, publish, url)
 
+import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(NavigateTestCase))

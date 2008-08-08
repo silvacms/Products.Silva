@@ -1,12 +1,12 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
-import SilvaTestCase
+# $Id$
 
+# Silva
 from Products.Silva import assetregistry
-from AccessControl.SecurityManagement import newSecurityManager
-
 from Products.SilvaDocument import Document
+
+import SilvaTestCase
 
 class AssetRegistryTestCase(SilvaTestCase.SilvaTestCase):
     # NOTE:

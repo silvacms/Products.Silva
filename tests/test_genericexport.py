@@ -1,3 +1,7 @@
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 """Test the generic export feature.
 """
 
@@ -5,16 +9,19 @@ __author__ ="sylvain@infrae.com"
 __format__ ="plaintext"
 __version__ ="$Id$"
 
-from zope.interface import implements, classImplementsOnly
+# Zope 3
+from zope.interface import implements
 from zope.interface.verify import verifyObject
 from zope.component import getGlobalSiteManager, getUtility
 from zope.component.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabulary
 
-import SilvaTestCase
+# Silva
 from Products.Silva.adapters import interfaces
 from Products.Silva.utility import interfaces as interfaces_utility
 from Products.SilvaDocument import interfaces as interfaces_document
+
+import SilvaTestCase
 
 class DummyExporter(object):
 
@@ -37,7 +44,6 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
         """Setup some default content.
         """
-        from Products.Silva.Link import manage_addLink
         testfolder = self.add_folder(
             self.root,
             'testfolder',

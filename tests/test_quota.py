@@ -2,18 +2,13 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface.verify import verifyObject
+# Python
+import os.path
 
-import SilvaTestCase
-from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
-from Testing.ZopeTestCase import utils
-
-from StringIO import StringIO
 
 from Products.Silva.tests.test_archivefileimport import ArchiveFileImport
-from Products.Silva.interfaces import IAsset
+import SilvaTestCase
 
-import os.path
 
 data_directory = os.path.join(os.path.dirname(__file__), 'data')
 zipfile1 = os.path.join(data_directory, 'test1.zip')

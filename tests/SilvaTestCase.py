@@ -46,12 +46,11 @@ ZopeTestCase.installProduct('FileSystemSite')
 ZopeTestCase.installProduct('ParsedXML')
 ZopeTestCase.installProduct('XMLWidgets')
 ZopeTestCase.installProduct('ProxyIndex')
-try:
+
+from Products.Silva import MAILDROPHOST_AVAILABLE
+if  MAILDROPHOST_AVAILABLE:
     # if available, it is installed by Silva.install.installSubscriptions
-    from Products.MaildropHost import MaildropHost
     ZopeTestCase.installProduct('MaildropHost')    
-except ImportError:
-    pass
 
 ZopeTestCase.installProduct('Groups')
 ZopeTestCase.installProduct('SilvaFind')
@@ -64,7 +63,6 @@ ZopeTestCase.installProduct('Silva')
 ZopeTestCase.installProduct('Five')
 
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
-from AccessControl.User import User
 
 from Products.Silva.tests import layer
 

@@ -1,12 +1,16 @@
-import SilvaTestCase
-from Products.Silva.transform.interfaces import IRendererRegistry
-from Products.Silva.RendererRegistryService import RendererRegistryService, OLD_STYLE_RENDERER
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+from Products.Silva.RendererRegistryService import OLD_STYLE_RENDERER
 xslt = True
 try: 	 
     from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
 except ImportError: 	
     print 'Error importing Silva renderers'
     xslt = False
+
+import SilvaTestCase
 
 class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
 

@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_fileservices.py,v 1.6 2006/01/24 16:13:33 faassen Exp $
+# $Id$
+
 import os
 import SilvaTestCase
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
@@ -8,7 +9,6 @@ from Testing.ZopeTestCase import utils
 
 from StringIO import StringIO
 
-from Products.Silva import File
 from Products.Silva.Image import havePIL
 
 try:
