@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import re, os.path
 import mimetypes
 from urllib2 import HTTPError
@@ -5,9 +10,17 @@ from xml.dom import minidom
 
 from Products.Five.testbrowser import Browser
 
+Z3C_CONTENTS = ['Silva Document',]
+
+# Define types of forms.
+SILVA_FORM = object()
+Z3CFORM_FORM = object()
+FORMLIB_FORM = object()
+
 class SilvaBrowser(object):
     def __init__(self):
         self.browser = Browser()
+        self.form_type = SILVA_FORM
 
     def go_back(self):
         return self.browser.goBack()
@@ -319,6 +332,12 @@ class SilvaBrowser(object):
         makes content of a specific type as a specific user, 
         with one or more fields filled in.
         """
+        # save form type, and set it if it's a known one
+        current_form_type = None
+        if content_type in Z3C_CONTENTS:
+            current_form_type = self.form_type
+            self.form_type = Z3CFORM_FORM
+
         fields_needed = self.content_type_fields[content_type]
         # do some testing to determine if needed fields are supplied
         assert fields_needed != None, 'unknown content type'
@@ -332,6 +351,9 @@ class SilvaBrowser(object):
         fields['id'] = id
         self.set_field(**fields)
         self.click_button_labeled('save')
+
+        if current_form_type:
+            self.form_type = current_form_type
     
     # map default field values to field names
     default_field_values = {
@@ -410,62 +432,86 @@ class SilvaBrowser(object):
         for field_name, field_value in kwargs.items():
             self.fields[field_name](self, field_value)
 
+    def get_field_id(self, name):
+        """
+        get the html for that field.
+        """
+        if self.form_type is SILVA_FORM:
+            if name in ['id', 'title']:
+                name = 'object_' + name
+            return 'field_' + name
+        if self.form_type is Z3CFORM_FORM:
+            return 'form.widgets.' + name
+        if self.form_type is FORMLIB_FORM:
+            raise NotImplementedError
+        raise NotImplementedError
+
     def set_id_field(self, id):
         """
         set the id field
         """
-        self.browser.getControl(name='field_object_id').value = id
+        name = self.get_field_id('id')
+        self.browser.getControl(name=name).value = id
 
     def set_title_field(self, title):
         """
         set the title field
         """
-        self.browser.getControl(name='field_object_title').value = title
+        name = self.get_field_id('title')
+        self.browser.getControl(name=name).value = title
         
     def set_policy_field(self, content_type='Silva Document'):
         """
         set the policy field
         """
-        self.browser.getControl(name='field_policy_name').value = [content_type]
+        name = self.get_field_id('policy_name')
+        self.browser.getControl(name=name).value = [content_type]
 
     def set_image_field(self, image):
         """
         set the image upload field
         """
-        self.browser.getControl(name='field_file').add_file(
-                                                   self.open_file(image),
-                                                   'image/jpg', image)
+        name = self.get_field_id('file')
+        self.browser.getControl(name=name).add_file(
+            self.open_file(image),
+            'image/jpg', image)
+
     def set_file_field(self, file):
         """
         set the file upload field
         """
-        self.browser.getControl(name='field_file').add_file(
-                                                   self.open_file(file),
-                                                   'text/plain', file)
+        name = self.get_field_id('file')
+        self.browser.getControl(name=name).add_file(
+            self.open_file(file),
+            'text/plain', file)
     
     def set_ghost_url_field(self, reference):
         """
         set the ghost url field
         """
-        self.browser.getControl(name='field_content_url').value = reference
+        name = self.get_field_id('content_url')
+        self.browser.getControl(name=name).value = reference
 
     def set_url_field(self, link_url):
         """
         set the url field
         """
-        self.browser.getControl(name='field_url').value = link_url
+        name = self.get_field_id('url')
+        self.browser.getControl(name=name).value = link_url
 
     def set_link_type_field(self, link_type):
         """
         set the Silva Link absolute/relative radio button
         """
-        self.browser.getControl(name='field_link_type').value = [link_type]
+        name = self.get_field_id('link_type')
+        self.browser.getControl(name=name).value = [link_type]
 
     def set_depth_field(self, depth):
         """
         set the depth field
         """
-        self.browser.getControl(name='field_depth').value = '-1'
+        name = self.get_field_id('depth')
+        self.browser.getControl(name=name).value = '-1'
     
     # existing content type fields
     fields = {

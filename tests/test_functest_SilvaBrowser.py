@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser
+from SilvaBrowser import SilvaBrowser, Z3CFORM_FORM
 
 class SilvaBrowserTest(SilvaFunctionalTestCase):
     """
@@ -70,6 +75,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('new...')
         self.failUnless(sb.get_addform_title() == 'create Silva Document')
         # fill in form fields
+        sb.form_type = Z3CFORM_FORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
@@ -114,6 +120,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('new...')
         self.failUnless(sb.get_addform_title() == 'create Silva Document')
         # fill in form fields
+        sb.form_type = Z3CFORM_FORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
