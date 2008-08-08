@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import os, re
 import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport, xmlexport
-from Products.Silva.adapters import xmlsource
+from Products.Silva.transform.interfaces import IXMLSource
 
 class XMLSourceTest(SilvaTestCase.SilvaTestCase):
     DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
@@ -39,7 +44,7 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
             exporter.exportToString(exportRoot, settings))
         self.assertEqual(
             expected_xml, self.genericize(
-            xmlsource.XMLSourceAdapter(obj).getXML()))
+            IXMLSource(obj).getXML()))
 
 import unittest
 def test_suite():
