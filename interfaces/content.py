@@ -397,8 +397,18 @@ class IContainer(ISilvaObject, IPublishable):
         pass
 
     def get_assets():
-        """Get a list of non-publishable objects in this folder.
-        (not in any order).
+        """Get a list of assets objects in this folder.  (not in any
+        fixed order).
+        
+        PUBLIC
+        """
+        pass
+
+    def get_non_publishables():
+        """Get a list of non-publishable objects in this folder. (not
+        in any fixed order) Includes assets, configuration objects and
+        anything else that is not a publishable.
+
         PUBLIC
         """
         pass
