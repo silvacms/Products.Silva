@@ -163,7 +163,7 @@ class Security(AccessManager):
                 item._sec_get_userids_deep_helper(l)
             for item in self.get_nonactive_publishables():
                 item._sec_get_userids_deep_helper(l)
-            for item in self.get_assets():
+            for item in self.get_non_publishables():
                 item._sec_get_userids_deep_helper(l)
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -350,7 +350,7 @@ class Security(AccessManager):
                 item._sec_get_downward_defined_userids_helper(d)
             for item in self.get_nonactive_publishables():
                 item._sec_get_downward_defined_userids_helper(d)
-            for item in self.get_assets():
+            for item in self.get_non_publishables():
                 item._sec_get_downward_defined_userids_helper(d)
 
     security.declareProtected(
@@ -435,7 +435,7 @@ class Security(AccessManager):
                 item._sec_get_downward_defined_groups_helper(d)
             for item in self.get_nonactive_publishables():
                 item._sec_get_downward_defined_groups_helper(d)
-            for item in self.get_assets():
+            for item in self.get_non_publishables():
                 item._sec_get_downward_defined_groups_helper(d)
 
     security.declareProtected(

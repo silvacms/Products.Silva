@@ -151,7 +151,7 @@
     default_document model/get_default;
     default_doc_list python: test(default_document, [default_document], []);
     publishables python: default_doc_list + model.get_ordered_publishables();
-    assets model/get_assets;
+    assets model/get_non_publishables;
    " >
   <thead>
     <tal:block replace="nothing">

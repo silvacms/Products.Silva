@@ -111,8 +111,8 @@ ______________ macro plateau: level navigation ______________
   silva_permissions  here/get_silva_permissions;
   default_document   model/get_default;
   default_doc_list   python: test(default_document, [default_document], []);
-  assets             model/get_assets;
-  items              python: default_doc_list + model.get_ordered_publishables() + model.get_assets();
+  assets             model/get_non_publishables;
+  items              python: default_doc_list + model.get_ordered_publishables() + model.get_non_publishables();
   container          model/aq_parent/get_container;
   container_url      string:${container/absolute_url};
   container_vein_url string:${container/absolute_url}/edit/$vein_id;

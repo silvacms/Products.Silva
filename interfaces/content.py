@@ -837,13 +837,19 @@ class IVersion(Interface):
            neared version.
         """
 
+class INonPublishable(ISilvaObject):
+    """An object that does not appear in the public view or table of
+    contents directly.
+    """
+    pass
+
 ###############################################################
 ### Asset
 ###############################################################
+    
 
-class IAsset(ISilvaObject):
-    """An object that does not appear in the publication's
-    table of content directly.
+class IAsset(INonPublishable):
+    """An Asset.
     """
 
     # MANIPULATORS
@@ -948,7 +954,7 @@ class IGhostFolder(IGhost):
 ###############################################################
 
 # XXX not really a content
-class IBaseGroup(ISilvaObject):
+class IBaseGroup(INonPublishable):
     """A group implementation.
     """
     

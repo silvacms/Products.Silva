@@ -658,6 +658,13 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
+    def get_non_publishables(self):
+        result = [
+            item for item in self.objectValues()
+            if INonPublishable.implementedBy(item)]
+        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
+        return result
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_other_content')
     def get_other_content(self):
