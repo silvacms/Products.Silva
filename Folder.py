@@ -472,8 +472,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
             meta_type = addable_dict['name']
             if allowed and meta_type not in allowed:
                 continue
-            if (self._is_silva_addable(addable_dict) and
-                addable_dict['instance']._is_allowed_in_publication):
+            if self._is_silva_addable(addable_dict):
                 # add the docstring to the dict so it is available 
                 # in pythonscripts
                 addable_dict['doc'] = addable_dict['instance'].__doc__
