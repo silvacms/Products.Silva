@@ -90,24 +90,11 @@ class SilvaObject(Security, ViewCode):
     """
     security = ClassSecurityInfo()
 
-    # FIXME: this is for backward compatibility with old objects
-    _title = "No title yet"
-
     # allow edit view on this object
     edit = Zope3ViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'edit')
-
-    # and public as well
-    public = ViewAttribute('public', 'render')
-
-    # whether the object should be shown in the addables-pulldown
-    _is_allowed_in_publication = 1
-
-    # location of the xml schema
-    _xml_namespace = "http://www.infrae.com/xml"
-    _xml_schema = "silva-0.9.3.xsd"
+        SilvaPermissions.ChangeSilvaContent, 'edit')
 
     def __init__(self, id):
         self.id = id
