@@ -3,7 +3,21 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1 (unreleased)
+  Silva 2.2
+
+    Features added:
+
+      - We (again) needed to be able to have objects other than
+        publishable content and assets, and so we finally decided to
+        not force everything to be an asset, but to create a new
+        interface INonPublishable (from which IAsset inherits) so we
+        can get all of the silva objects that are not publishable
+        content with one method that is not get_assets. get_assets
+        remains, but should now only be used to get all the assets
+        (i.e. files, images, etc.) in a folder. To get everything that
+        is not a publishable use get_non_publishables instead.
+
+  Silva 2.1
 
     Features added:
 
