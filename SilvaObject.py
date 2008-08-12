@@ -94,8 +94,11 @@ class SilvaObject(Security, ViewCode):
     edit = Zope3ViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'edit')
+        SilvaPermissions.ReadSilvaContent, 'edit')
 
+    # allow public view on this object
+    public = ViewAttribute('public', 'render')
+    
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
