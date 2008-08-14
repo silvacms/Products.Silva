@@ -3,7 +3,7 @@
   i18n:domain="silva">
 
 <metal:define-editor-macro define-macro="editor" 
-   tal:define="global maintitlecolspan string:2">
+   tal:define="global maintitlecolspan string:2;">
 
  <metal:use-editor-macro use-macro="here/macro_edit/macros/editor">
   <metal:fill-editor-slot fill-slot="main">
@@ -16,7 +16,7 @@
     </tal:block>
     <metal:block define-slot='title_metadata'>
     <tr class="top-controls">
-      <td colspan="2">
+      <td tal:attributes="colspan maintitlecolspan">
         <h3 i18n:translate="">
           characterization
         </h3>
@@ -51,6 +51,8 @@
             tal:condition="not:field/is_required">
             (optional)
           </p>
+          <p tal:condition="field/description" 
+             tal:content="field/description" />
         </td>
         <td class="field">
           <input tal:replace="structure python:field.render_from_request(request)" />
@@ -64,7 +66,7 @@
     <metal:fill-main-foot fill-slot="main-foot">
      <tr class="controls">
        <td class="align-right"
-         colspan="2">
+           tal:attributes="colspan maintitlecolspan">
          <input class="button"
            type="submit"
            name="submit:method"
