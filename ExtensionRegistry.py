@@ -261,12 +261,13 @@ class ExtensionRegistry(object):
         return self._extensions_order
 
     def get_extension(self, name):
-        return self._extensions[name]
+        return self._extensions.get(name, None)
 
     def is_installed(self, name, root):
-        if not self._extensions.has_key(name):
-            return False
-        return self._extensions[name].installer.is_installed(root)
+        extension = self.get_extension(name)
+        if extension:
+            return extension.installer.is_installed(root)
+        return False
 
     def get_name_for_class(self, class_):
         path = class_.__module__

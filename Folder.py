@@ -470,7 +470,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         allowed = self.get_silva_addables_allowed()
         for addable_dict in extensionRegistry.get_addables():
             meta_type = addable_dict['name']
-            if allowed and meta_type not in allowed:
+            if meta_type not in allowed:
                 continue
             if self._is_silva_addable(addable_dict):
                 # add the docstring to the dict so it is available 
@@ -491,12 +491,14 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         """Given a dictionary from filtered_meta_types, check whether this
         specifies a silva addable.
         """
+        if not (addable_dict.has_key('instance') and
+                ISilvaObject.implementedBy(addable_dict['instance'])):
+            return False
+                
+        root = self.get_root()
         return (
-            addable_dict.has_key('instance') and
-            ISilvaObject.implementedBy(
-            addable_dict['instance']) and
-            not self.get_root().is_silva_addable_forbidden(
-            addable_dict['name'])
+            not root.is_silva_addable_forbidden(addable_dict['name']) and
+            extensionRegistry.is_installed(addable_dict['product'], root)
             )
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
