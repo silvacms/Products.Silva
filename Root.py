@@ -6,12 +6,13 @@ import os
 
 # Zope 3
 from zope.interface import implements
+from zope.app.component.hooks import setSite
+from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
 
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
-from zope.app.container.interfaces import IObjectRemovedEvent
-from zope.app.container.interfaces import IObjectMovedEvent
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass, DTMLFile
@@ -25,7 +26,8 @@ from Products.Silva.interfaces import IRoot, IInvisibleService
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
-from silva.core import conf
+from five.localsitemanager import make_objectmanager_site
+from silva.core import conf as silvaconf
 
 
 icon="www/silva.png"
@@ -49,7 +51,7 @@ class Root(Publication):
         inherited_manage_options[1:]
         )
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def __init__(self, id):
         Root.inheritedAttribute('__init__')(self, id)
@@ -308,9 +310,9 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     """Add a Silva root."""
     # no id check possible or necessary, as this only happens rarely and the
     # Zope id check is fine
-    object = Root(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
+    root = Root(id)
+    self._setObject(id, root)
+    root = getattr(self, id)
     # transform title from whatever encoding it is in to unicode
     # we're assuming latin1 encoding. I guess this is not necessarily
     # correct in case the ZMI has been set to another encoding, but of course
@@ -319,26 +321,28 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # excessive
     title = unicode(title, 'latin1')
     # now set it all up
-    install.installFromScratch(object)
-    object.set_title(title)
+    make_objectmanager_site(root)
+    setSite(root)
+    install.installFromScratch(root)
+    root.set_title(title)
 
     if add_search:
         # install a silva find instance
-        object._installSilvaFindInstance()
+        root._installSilvaFindInstance()
         
     if add_docs:
         # install the user documentation .zexp
-        object._installDocumentation()
+        root._installDocumentation()
 
     add_and_edit(self, id, REQUEST)
     return ''
 
-@conf.subscribe(IRoot, IObjectMovedEvent)
+@silvaconf.subscribe(IRoot, IObjectMovedEvent)
 def root_moved(root, event):
     if not IObjectRemovedEvent.providedBy(event):
         root.index_object()
 
-@conf.subscribe(IRoot, IObjectWillBeMovedEvent)
+@silvaconf.subscribe(IRoot, IObjectWillBeMovedEvent)
 def root_will_be_moved(root, event):
     if not IObjectWillBeAddedEvent.providedBy(event):
         root.unindex_object()

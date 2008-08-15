@@ -9,6 +9,7 @@ from Testing import ZopeTestCase
 
 import transaction
 import zope.component.eventtesting
+from zope.app.component.hooks import setSite
 
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
@@ -152,6 +153,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 self.app.REQUEST.AUTHENTICATED_USER=\
                          self.app.acl_users.getUser(ZopeTestCase.user_name)
             zope.component.eventtesting.clearEvents()
+            setSite(self.silva)
             self.afterSetUp()
         except:
             self.beforeClose()
