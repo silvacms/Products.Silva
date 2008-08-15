@@ -4,12 +4,15 @@
 
 from zope.interface import Interface, Attribute
 
+class IZMIObject(Interface):
+    """An object in ZMI.
+    """
 
 class IInvisibleService(Interface):
     """Marker interface for services that want to be not visible in
     the ZMI."""
 
-class ISilvaService(Interface):
+class ISilvaService(IZMIObject):
     """Basic Silva service.
     """
 

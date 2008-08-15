@@ -12,6 +12,8 @@ class ZMIObject(SimpleItem.SimpleItem):
 
     conf.baseclass()
 
+    implements(interfaces.IZMIObject)
+
 class SilvaService(ZMIObject):
 
     implements(interfaces.ISilvaService)
