@@ -6,6 +6,7 @@ from zope.interface import implements
 from zope.configuration.name import resolve
 import Products
 
+from warnings import warn
 from bisect import insort_right
 
 import os.path
@@ -28,11 +29,12 @@ class Addable(object):
 
 class BaseExtension(object):
 
-    def __init__(self, name, install, description=None,
-                 depends=(u'Silva',)):        
+    def __init__(self, name, install, path,
+                 description=None, depends=(u'Silva',)):        
         self._name = name
         self._description = description
         self._install = install
+        self._module_name = path
 
         if depends and not (isinstance(depends, types.ListType) or
                             isinstance(depends, types.TupleType)):
@@ -50,7 +52,7 @@ class BaseExtension(object):
 
     @property
     def module_name(self):
-        return self._product
+        return self._module_name
 
     @property
     def module_directory(self):
@@ -90,17 +92,13 @@ class ProductExtension(BaseExtension):
 
     implements(interfaces.IExtension)
 
-    def __init__(self, name, install, description=None,
-                 depends=(u'Silva',)):
-        super(ProductExtension, self).__init__(name, install,
+    def __init__(self, name, install, path,
+                 description=None, depends=(u'Silva',)):
+        super(ProductExtension, self).__init__(name, install, path,
                                                description, depends)
-        install_name = install.__name__
-        assert install_name.startswith('Products.')
-        self._product = install_name.split('.')[1]
-
-        product = resolve('Products.%s' % self._product)
-        product_path = os.path.dirname(product.__file__)
-        self._version = open(os.path.join(product_path, 'version.txt')).read()
+        assert path.startswith('Products.')
+        self._product = path.split('.')[1]
+        self._version = open(os.path.join(self.module_directory, 'version.txt')).read()
 
     @property
     def module_name(self):
@@ -113,16 +111,16 @@ class EggExtension(BaseExtension):
 
     implements(interfaces.IExtension)
 
-    def __init__(self, egg, name, install, description=None,
-                 depends=(u'Silva',)):
-        super(EggExtension, self).__init__(name, install,
+    def __init__(self, egg, name, install, path, 
+                 description=None, depends=(u'Silva',)):
+        super(EggExtension, self).__init__(name, install, path,
                                            description, depends)
         # We assume that the name of this egg is the name of the python extension
-        if egg.project_name.startswith('Products.'):
-            self._product = egg.project_name.split('.', 1)[1]
+        if path.startswith('Products.'):
+            self._product = path.split('.', 1)[1]
         else:
-            self._product = egg.project_name
-        self._module_name = egg.project_name
+            self._product = path
+        self._module_name = path
         self._version = egg.version
 
     @property
@@ -142,36 +140,50 @@ class ExtensionRegistry(object):
 
     # MANIPULATORS
 
-    def isEgg(self, installer):
-        if isinstance(installer, types.ModuleType):
-            path = installer.__file__
+
+    def register(self, name, description, context, modules,
+                 install_module=None, module_path=None, depends_on=(u'Silva',)):
+
+        # Figure out which is the extension path.
+        path = None
+        assert not ((install_module is None) and (module_path is None))
+        if module_path:
+            path = resolve(module_path).__file__
+        elif isinstance(install_module, types.ModuleType):
+            # Installer is a module install.py which HAVE TO BE in the
+            # extension package.
+            path = install_module.__file__
+            module_path = '.'.join(install_module.__name__.split('.')[:-1])
         else:
-            path = resolve(installer.__module__).__file__
+            # Installer is a class in the __init__.py of the extension.
+            path = resolve(install_module.__module__).__file__
+            module_path = install_module.__module__
+
+        # Search throught eggs to see if extension is an egg.
+        ext = None
         for egg in pkg_resources.working_set:
             if (path.startswith(egg.location) and
                 path[len(egg.location)] == os.path.sep):
-                return egg
-        return None
+                ext = EggExtension(egg, name, install_module, module_path, description, depends_on)
+                break
 
-    def register(self, name, description, context, modules,
-                 install_module, depends_on=(u'Silva',)):
-
-        egg = self.isEgg(install_module)
-        if egg is None:
-            ext = ProductExtension(name, install_module, description, depends_on)
-        else:
-            ext = EggExtension(egg, name, install_module, description, depends_on)
+        # Otherwise, that's a product.
+        if ext is None:
+            ext = ProductExtension(name, install_module, module_path, description, depends_on)
 
         self._extensions[ext.name] = ext
         self._extensions_by_module[ext.module_name] = ext
         
-        # try to order based on dependencies
+        # Try to order based on dependencies
         self._orderExtensions()
 
         for module in modules:
             self.registerClass(context, module)
 
     def registerClass(self, context, module):
+        warn('You should use either ZCML or Grok to register your new classes'
+             ' registerClass is going to disappear.', 
+             DeprecationWarning)
         # We assume the class name to be identical to the module name
         classname = module.__name__.split('.')[-1]
         klass = getattr(module, classname)
