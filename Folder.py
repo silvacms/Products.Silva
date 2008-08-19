@@ -28,7 +28,7 @@ from Products.Silva.i18n import translate as _
 
 from adapters.interfaces import IContentImporter
 from interfaces import IPublishable, IContent, IGhost
-from interfaces import ISilvaObject, IAsset
+from interfaces import ISilvaObject, IAsset, INonPublishable
 from interfaces import IContainer, IFolder, IPublication, IRoot
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
