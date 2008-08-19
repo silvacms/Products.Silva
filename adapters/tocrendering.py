@@ -90,11 +90,13 @@ class TOCRenderingAdapter(adapter.Adapter):
                     display_desc_flag=False, sort_order="silva",
                     show_types=['Silva Document', 'Silva Publication', 'Silva Folder'],
                     show_icon=False):
-        if isinstance(append_to_url,StringType):
-            if append_to_url[0] != '/':
-                append_to_url = '/' + append_to_url
-        else:
-            append_to_url = ''
+        #if isinstance(append_to_url,StringType):
+        #    if append_to_url[0] != '/':
+        #        append_to_url = '/' + append_to_url
+        #else:
+
+        # XXX I don't known the exact purpose of append to url, but this should be empty.
+        append_to_url = ''
 
         #func is either a generator function that returns the public items
         #or all items to render in this TOC.  The functions use yields

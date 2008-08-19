@@ -7,16 +7,21 @@ from zope.i18n import translate
 from zope import component
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
+from zope.traversing.browser import absoluteURL
+from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
+from zope.interface import alsoProvides
 
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
-from zope.app.container.interfaces import IObjectRemovedEvent
-from zope.app.container.interfaces import IObjectMovedEvent
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
 from Globals import InitializeClass
 from DateTime import DateTime
 from App.Common import rfc1123_date
+
+from Products.Five import BrowserView
+
 # WebDAV
 from webdav.common import Conflict
 from zExceptions import MethodNotAllowed
@@ -30,6 +35,7 @@ from interfaces import IPublishable, IAsset
 from interfaces import IContent, IContainer, IPublication, IRoot
 from interfaces import IVersioning, IVersionedContent, IFolder
 from Products.Silva.utility import interfaces as utility_interfaces
+
 # Silva adapters
 from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
@@ -37,6 +43,8 @@ from Products.Silva.interfaces import ISilvaObject
 from Products.SilvaMetadata.Exceptions import BindingError
 
 from Products.Silva.i18n import translate as _
+
+from Products.SilvaLayout.interfaces import IPreviewLayer
 
 from silva.core.conf.utils import getSilvaViewFor
 from silva.core import conf
@@ -105,6 +113,11 @@ class SilvaObject(Security, ViewCode):
         
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
+
+    # test
+
+    def absolute_url(self, relative=None):
+        return absoluteURL(self, self.REQUEST)
 
     # MANIPULATORS
 
@@ -324,12 +337,11 @@ class SilvaObject(Security, ViewCode):
 
         If this is no previewable, should return something indicating this.
         """
-        content = self.get_previewable()
-        try:
-            return self.view_version('preview', content)
-        except NoViewError:
-            # fallback to public 'render' script if no preview available
-            return self.view_version('public', content)
+        # XXX Should be a view
+        # XXX Only keep for compatibility
+        if not IPreviewLayer.providedBy(self.REQUEST):
+            alsoProvides(self.REQUEST, IPreviewLayer)
+        return self.view_version()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'public_preview')
@@ -338,6 +350,29 @@ class SilvaObject(Security, ViewCode):
 
         By default this does the same as preview, but can be overridden.
         """
+
+        # Be sure that nothing is cached by the browser.
+
+        REQUEST = self.REQUEST
+        
+        response = REQUEST.RESPONSE
+        headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
+                    ('Last-Modified', 
+                        DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
+                    ('Cache-Control', 'no-cache, must-revalidate'),
+                    ('Cache-Control', 'post-check=0, pre-check=0'),
+                    ('Pragma', 'no-cache'),
+                    ]
+
+        placed = []
+        for key, value in headers:
+            if key not in placed:
+                response.setHeader(key, value)
+                placed.append(key)
+            else:
+                response.addHeader(key, value)
+
+
         return self.preview()
         
     security.declareProtected(SilvaPermissions.View, 'view')
@@ -345,12 +380,25 @@ class SilvaObject(Security, ViewCode):
         """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
-        content = self.get_viewable()
-        return self.view_version('public', content)
+        return self.view_version()
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'view_version')
-    def view_version(self, view_type, version):
+    def view_version(self):
+
+        # XXX Should be a view.
+        version = None
+        view_type = 'public'
+        if IPreviewLayer.providedBy(self.REQUEST):
+            manager = getSecurityManager()
+            if not manager.checkPermission(SilvaPermissions.ReadSilvaContent, self):
+                raise Unauthorized
+            ## Have to check permission here.
+            version = self.get_previewable()
+            view_type = 'preview'
+        if version is None:
+            version = self.get_viewable()
+
         # No version
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.',

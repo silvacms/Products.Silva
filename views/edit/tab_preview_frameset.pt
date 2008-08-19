@@ -38,6 +38,6 @@ function onloadResizeTopFrame() {
  <frame id="preview_frame_top" scrolling="no"
    tal:attributes="src python:'%s/edit/tab_preview_frame_top?message=%s&message_type=%s'%(model.absolute_url(),message or '',message_type or '')" />
  <frame id="preview_frame_bottom"
-   tal:attributes="src string:${request/model/absolute_url}/preview_html" />
+   tal:attributes="src request/model/@@absolute_url/preview" />
 </frameset>
 </html>

@@ -21,8 +21,12 @@ import SilvaPermissions
 from Versioning import Versioning
 from Content import Content
 import mangle
+
+from Products.SilvaLayout.interfaces import IPreviewLayer
+
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
+
 # Silva interfaces
 from interfaces import IVersionedContent, ICatalogedVersionedContent
 
@@ -192,37 +196,6 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             return None # There is no public document
         return getattr(self, version_id)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'public_preview')
-    def public_preview(self):
-        """Override public preview to add back and publish now button.
-        """
-
-        REQUEST = self.REQUEST
-        
-        # have to make sure the clients don't cache the public preview page
-        # because of the back button
-        # XXX copied from view/set_cache_headers.py, loading stuff from the
-        # views is somewhat messy... but perhaps i should have done that 
-        # anyway?
-        response = REQUEST.RESPONSE
-        headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-                    ('Last-Modified', 
-                        DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
-                    ('Cache-Control', 'no-cache, must-revalidate'),
-                    ('Cache-Control', 'post-check=0, pre-check=0'),
-                    ('Pragma', 'no-cache'),
-                    ]
-
-        placed = []
-        for key, value in headers:
-            if key not in placed:
-                response.setHeader(key, value)
-                placed.append(key)
-            else:
-                response.addHeader(key, value)
-                
-        return self.preview()
     
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):
@@ -234,6 +207,10 @@ class VersionedContent(Content, Versioning, Folder.Folder):
         if self.REQUEST.other.get('suppress_title'):
             return VersionedContent.inheritedAttribute('view')(self)
         
+        if IPreviewLayer.providedBy(self.REQUEST):
+            # Preview, don't pay attention to the cache.
+            return VersionedContent.inheritedAttribute('view')(self)
+
         adapter = getVirtualHostingAdapter(self)
         cache_key = ('public', adapter.getVirtualHostKey())
         data = self._get_cached_data(cache_key)

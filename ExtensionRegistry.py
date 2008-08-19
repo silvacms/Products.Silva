@@ -152,12 +152,12 @@ class ExtensionRegistry(object):
         elif isinstance(install_module, types.ModuleType):
             # Installer is a module install.py which HAVE TO BE in the
             # extension package.
-            path = install_module.__file__
             module_path = '.'.join(install_module.__name__.split('.')[:-1])
+            path = install_module.__file__
         else:
             # Installer is a class in the __init__.py of the extension.
-            path = resolve(install_module.__module__).__file__
             module_path = install_module.__module__
+            path = resolve(module_path).__file__
 
         # Search throught eggs to see if extension is an egg.
         ext = None
