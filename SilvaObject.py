@@ -412,9 +412,9 @@ class SilvaObject(Security, ViewCode):
 
         request = self.REQUEST
         # Search for a five view
-        view = component.queryMultiAdapter((self, request), name=u'public_view')
+        view = component.queryMultiAdapter((self, request), name=u'content.html')
         if not (view is None):
-            return view(preview=(view_type == 'preview'))
+            return view()
 
         # Fallback on a Silva view
         request.model = version
