@@ -17,7 +17,8 @@ from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
-from silva.core import conf
+from silva.core.views import views as silvaviews
+from silva.core import conf as silvaconf
 
 class AutoTOC(Content, SimpleItem):
     __doc__ = _("""This is a special document type that automatically generates
@@ -31,8 +32,8 @@ class AutoTOC(Content, SimpleItem):
 
     implements(IAutoTOC)
 
-    conf.icon('www/autotoc.png')
-    conf.priority(0.2)
+    silvaconf.icon('www/autotoc.png')
+    silvaconf.priority(0.2)
 
     def __init__(self, id):
         AutoTOC.inheritedAttribute('__init__')(self, id)
@@ -123,20 +124,24 @@ class AutoTOC(Content, SimpleItem):
     def set_sort_order(self, order):
         self._sort_order = order
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'render_tree')
-    def render_tree(self, public=1,append_to_url=None):
-        """Get adapter to render this autotoc's tree"""
-        adapter = tocrendering.getTOCRenderingAdapter(self)
-        return adapter.render_tree(public,
-                                   append_to_url,
-                                   toc_depth=self.toc_depth(),
-                                   display_desc_flag=self.display_desc_flag(),
-                                   sort_order=self.sort_order(),
-                                   show_types=self.get_local_types(),
-                                   show_icon=self.show_icon())
 
 InitializeClass(AutoTOC)
+
+
+class AutoTOCView(silvaviews.View):
+
+    silvaconf.context(IAutoTOC)
+
+    def render(self):
+        # The following adapters should be merged with the current view.
+        toc = self.context
+        adapter = tocrendering.getTOCRenderingAdapter(toc)
+        return adapter.render_tree(toc_depth=toc.toc_depth(),
+                                   display_desc_flag=toc.display_desc_flag(),
+                                   sort_order=toc.sort_order(),
+                                   show_types=toc.get_local_types(),
+                                   show_icon=toc.show_icon())
+
 
 class AutoTOCPolicy(Persistent):
 

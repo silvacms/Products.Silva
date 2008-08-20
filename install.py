@@ -473,7 +473,6 @@ def registerViews(reg):
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva AutoTOC', ['public', 'AutoTOC', 'view'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -496,7 +495,6 @@ def registerViews(reg):
     reg.register('preview', 'Silva Link Version', ['public', 'Link', 'preview'])
     reg.register('preview', 'Silva Image', ['public', 'Image', 'preview'])
     reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
-    reg.register('preview', 'Silva AutoTOC', ['public', 'AutoTOC', 'preview'])
 
 def registerGroupsViews(reg):
     """Register groups views on registry.

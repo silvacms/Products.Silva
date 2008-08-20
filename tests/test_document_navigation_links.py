@@ -293,14 +293,14 @@ class AutoTocDepthTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_autotoc_infinite_depth(self):
         # Without any restrictions, the toc should give us all levels:
-        html = self.root.autotoc.render_tree()
+        html = self.root.autotoc.restrictedTraverse('content.html')()
         for level in self.levels:
             self.assert_(self.get_anchor_for('folder%s' % level) in html)
 
     def test_autotoc_all_depths(self):
         for level in self.levels:
             self.root.autotoc.set_toc_depth(level)
-            html = self.root.autotoc.render_tree()
+            html = self.root.autotoc.restrictedTraverse('content.html')()
             # Check that all levels that should be there, are there
             for l in range(1, level+2):
                 self.assert_(self.get_anchor_for('folder%s' % level) in html)

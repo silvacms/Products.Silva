@@ -5,6 +5,7 @@ import Globals
 #silva
 from Products.Silva.adapters import adapter
 from Products.Silva import interfaces
+from Products.SilvaLayout.interfaces import IPreviewLayer
 
 #python
 from types import StringType
@@ -50,11 +51,11 @@ class TOCRenderingAdapter(adapter.Adapter):
         return items
     
 
-    def _get_tree_iterator(self, container, indent=0, toc_depth=-1,sort_order='silva',show_types=['Silva Document','Silva Folder', 'Silva Publication']):
+    def _get_tree_iterator(self, container, indent=0, toc_depth=-1, sort_order='silva', show_types=['Silva Document','Silva Folder', 'Silva Publication']):
         """yield for every element in this toc
         The 'depth' argument limits the number of levels, defaults to unlimited
         """
-        items = self._get_container_items(container,sort_order,show_types)
+        items = self._get_container_items(container, sort_order, show_types)
 
         for (name,item) in items:
             if indent and name == 'index': #include the containers index
@@ -70,7 +71,7 @@ class TOCRenderingAdapter(adapter.Adapter):
 
     def _get_public_tree_iterator(self, container, indent=0, include_non_transparent_containers=0, toc_depth=-1,sort_order='silva',show_types=['Silva Document','Silva Folder', 'Silva Publication']):
         toc_filter = self.context.service_toc_filter
-        items = self._get_container_items(container,sort_order,show_types)
+        items = self._get_container_items(container, sort_order, show_types)
         for (name,item) in items:
             if not (item.is_published() or interfaces.IAsset.providedBy(item)) or \
                    (indent and name=='index'):
@@ -86,17 +87,13 @@ class TOCRenderingAdapter(adapter.Adapter):
                                                    include_non_transparent_containers,toc_depth=toc_depth,sort_order=sort_order,show_types=show_types):
                     yield (dep,o)
 
-    def render_tree(self, public=1, append_to_url=None, toc_depth=-1,
-                    display_desc_flag=False, sort_order="silva",
+    def render_tree(self, toc_depth=-1, display_desc_flag=False, sort_order="silva",
                     show_types=['Silva Document', 'Silva Publication', 'Silva Folder'],
                     show_icon=False):
-        #if isinstance(append_to_url,StringType):
-        #    if append_to_url[0] != '/':
-        #        append_to_url = '/' + append_to_url
-        #else:
 
-        # XXX I don't known the exact purpose of append to url, but this should be empty.
-        append_to_url = ''
+
+        # This should be a view ...
+        public = not IPreviewLayer.providedBy(self.context.REQUEST)
 
         #func is either a generator function that returns the public items
         #or all items to render in this TOC.  The functions use yields
@@ -104,13 +101,13 @@ class TOCRenderingAdapter(adapter.Adapter):
         #is only iterated through once.
         func = public and self._get_public_tree_iterator or self._get_tree_iterator
         html = []
-        a_templ = '<a href="%s%s">%s</a>'
+        a_templ = '<a href="%s">%s</a>'
 
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
         depth = 0
         item = None
-        for (depth,item) in func(container=self.context,toc_depth=toc_depth,sort_order=sort_order,show_types=show_types):
+        for (depth,item) in func(container=self.context, toc_depth=toc_depth, sort_order=sort_order, show_types=show_types):
             pd = prev_depth[-1]
             if pd < depth: #down one level
                 html.append('<ul class="toc">')
@@ -127,7 +124,6 @@ class TOCRenderingAdapter(adapter.Adapter):
             title = (public and item.get_title() or item.get_title_editable()) or item.id
             html.append(a_templ%(
                 item.absolute_url(),
-                append_to_url,
                 escape(title)))
             if display_desc_flag:
                 v = public and item.get_viewable() or item.get_previewable()
