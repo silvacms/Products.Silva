@@ -663,7 +663,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     def get_non_publishables(self):
         result = [
             item for item in self.objectValues()
-            if INonPublishable.implementedBy(item)]
+            if INonPublishable.providedBy(item)]
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
