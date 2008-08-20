@@ -32,47 +32,35 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         form1.getControl(name='install_layout:method').click()
         self.failUnless('Default layout code installed' in sb.browser.contents)
 
-        # uninstall SilvaDocument
-        form2 = sb.browser.getForm(index=2)
-        input_hidden = form2.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaDocument')
-        form2.getControl(name='uninstall:method').click()
-        self.failUnless('SilvaDocument uninstalled' in sb.browser.contents)
+        # Test to uninstall/reinstall already installed extensions.
+        for extension in ['SilvaDocument',  'SilvaFind']:
+            # uninstall it
+            form = sb.browser.getForm(name=extension)
+            input_hidden = form.getControl(name='name')
+            self.assertEquals(input_hidden.value, extension)
+            form.getControl(name='uninstall:method').click()
+            self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
         
-        # install Silva Documents
-        form2 = sb.browser.getForm(index=2)
-        input_hidden = form2.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaDocument')
-        form2.getControl(name='install:method').click()
-        self.failUnless('SilvaDocument installed' in sb.browser.contents)
+            # install it
+            form = sb.browser.getForm(name=extension)
+            form.getControl(name='install:method').click()
+            self.failUnless(('%s installed' % extension) in sb.browser.contents)
 
-        # uninstall SilvaFind
-        form3 = sb.browser.getForm(index=3)
-        input_hidden = form3.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaFind')
-        form3.getControl(name='uninstall:method').click()
-        self.failUnless('SilvaFind uninstalled' in sb.browser.contents)
 
-        # install SilvaFind
-        form3 = sb.browser.getForm(index=3)
-        input_hidden = form3.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaFind')
-        form3.getControl(name='install:method').click()
-        self.failUnless('SilvaFind installed' in sb.browser.contents)
+        # Test to install/deinstall non-installed extensions.
+        for extension in ['SilvaExternalSources',]:
+            # install it
+            form = sb.browser.getForm(name=extension)
+            input_hidden = form.getControl(name='name')
+            self.assertEquals(input_hidden.value, extension)
+            form.getControl(name='install:method').click()
+            self.failUnless(('%s installed' % extension) in sb.browser.contents)
 
-        # install SilvaExternalSources
-        form4 = sb.browser.getForm(index=4)
-        input_hidden = form4.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaExternalSources')
-        form4.getControl(name='install:method').click()
-        self.failUnless('SilvaExternalSources installed' in sb.browser.contents)
+            # uninstall it
+            form = sb.browser.getForm(name=extension)
+            form.getControl(name='uninstall:method').click()
+            self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
 
-        # uninstall SilvaExternalSources
-        form4 = sb.browser.getForm(index=4)
-        input_hidden = form4.getControl(name='name')
-        self.assertEquals(input_hidden.value, 'SilvaExternalSources')
-        form4.getControl(name='uninstall:method').click()
-        self.failUnless('SilvaExternalSources uninstalled' in sb.browser.contents)
 
         # get back to the smi
         sb.go('http://nohost/root/manage_workspace')
