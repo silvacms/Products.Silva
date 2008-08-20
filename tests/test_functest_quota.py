@@ -67,10 +67,11 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         """Set the quota value, and expect a reply or an error.
         """
         self.sb.browser.getControl(name='silva-quota.quota:record').value = quota
-        self.sb.browser.getControl(name='save_metadata:method').click()
+        # There is several save metadata button, but they should all do the same.
+        self.sb.browser.getControl(name='save_metadata:method', index=0).click()
         if not (expected_quota is None):
             msg = self.quota_report % expected_quota
-            self.failUnless(msg in self.sb.browser.contents)
+            self.failUnless(msg in self.sb.browser.contents, 'No message "%s" in browser.' % msg)
         if expect_error:
             self.failUnless(self.quota_error in self.sb.browser.contents)
         else:
