@@ -1,14 +1,22 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.40 $
+# $Id$
+
 import SilvaTestCase
 
 from Products.Silva import SilvaPermissions
+from Products.SilvaLayout.interfaces import IPreviewLayer
 
 from DateTime import DateTime
 from Products.Silva.Ghost import GhostVersion
 
+from zope.interface import noLongerProvides
 from zope.i18n import translate
+
+
+def resetPreview(content):
+    if IPreviewLayer.providedBy(content.REQUEST):
+        noLongerProvides(content.REQUEST, IPreviewLayer)
 
 class GhostTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Ghost object.
@@ -43,8 +51,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
             translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
+            
         # approve version of thing we point to
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
         self.doc1.approve_version()
@@ -54,6 +64,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
             translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
         # this should publish doc1
@@ -61,6 +72,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=0, doc=1
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
         # publish ghost version
@@ -70,6 +82,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost=1, doc=1
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.view())
             
@@ -77,9 +90,10 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.create_copy()
         self.doc1.set_title('Doc1 1')
 
-        # shouldn't affect what we're ghosting
-        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
+        # the preview got the new version, but the published stay the same.
+        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.view())
 
@@ -89,6 +103,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # now we're ghosting the version 1
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.view())
 
@@ -102,6 +117,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assertEquals(u'This ghost is broken. (/root/doc2)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.view())
 
@@ -111,6 +127,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.view())
         
@@ -121,6 +138,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
                           ghost.preview())
+        resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
                           ghost.view())
 
@@ -132,6 +150,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost.approve_version()
         self.assertEquals('This ghost is broken. (/root/doc3)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals("This 'ghost' document is broken. Please inform the"
             " site administrator.", translate(ghost.view()))
         
@@ -154,6 +173,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # ghost should say 'This ghost is broken'
         self.assertEquals('This ghost is broken. (/root/doc1)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         # issue 41: test get_haunted_url; should catch KeyError
         # and return original inserted url
         self.assertEquals('/root/doc1',
@@ -211,21 +231,25 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assertEquals('This ghost is broken. (/root/does_not_exist)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals(GhostVersion.LINK_VOID,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/folder4')
         self.assertEquals('This ghost is broken. (/root/folder4)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals(GhostVersion.LINK_FOLDER,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/ghost1')
         self.assertEquals('This ghost is broken. (/root/ghost1)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals(GhostVersion.LINK_GHOST,
                           ghost.get_editable().get_link_status())
         ghost.get_editable().set_haunted_url('/root/image6')
         self.assertEquals('This ghost is broken. (/root/image6)',
                           translate(ghost.preview()))
+        resetPreview(ghost)
         self.assertEquals(GhostVersion.LINK_NO_CONTENT,
             ghost.get_editable().get_link_status())
 
