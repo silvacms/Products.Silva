@@ -63,6 +63,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     manage_options=(
         (inherited_manage_options[0], ) +
         ({'label':'Silva /edit...', 'action':'edit'}, ) +
+        ({'label':'Customization', 'action':'manage_customization'}, ) +
         inherited_manage_options[1:]
         )
 

@@ -8,7 +8,7 @@ from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
 
 # Zope 2
-from OFS import Folder
+from OFS.Folder import Folder as BaseFolder
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -42,7 +42,7 @@ class CachedData(Persistent):
         self.data = data
         self.datetime = datetime
 
-class VersionedContent(Content, Versioning, Folder.Folder):
+class VersionedContent(Content, Versioning, BaseFolder):
     security = ClassSecurityInfo()
 
     # there is always at least a single version to start with,
@@ -66,6 +66,14 @@ class VersionedContent(Content, Versioning, Folder.Folder):
             self, id)
         self._cached_data = {}
         self._cached_checked = {}
+
+    # A hackish way to get a Silva tab in between the standard ZMI tabs
+    inherited_manage_options = BaseFolder.manage_options
+    manage_options=(
+        (inherited_manage_options[0], ) +
+        ({'label':'Customization', 'action':'manage_customization'}, ) +
+        inherited_manage_options[1:]
+        )
     
     # MANIPULATORS
     

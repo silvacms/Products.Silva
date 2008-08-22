@@ -7,13 +7,18 @@
 # Python
 import os
 
-# Zope
+# Zope 3
+from zope import interface
+from zope.app.intid.interfaces import IIntIds
+
+from five.intid.intid import OFSIntIds
+
+# Zope 2
 from Globals import package_home
 from DateTime import DateTime
 from OFS import Image
 from Products.ProxyIndex.ProxyIndex import RecordStyle
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager import manage_addAcceleratedHTTPCacheManager
-from zope import interface
 
 # sibling
 from Products.Silva.interfaces import IInvisibleService
@@ -75,6 +80,7 @@ def add_fss_directory_view(obj, name, base, *args):
     manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
+    configureIntIds(root)
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
@@ -85,6 +91,18 @@ def installFromScratch(root):
     installSilvaDocument(root)
     installSilvaFind(root)
     installSilvaLayout(root)
+
+
+def configureIntIds(root):
+    # Add an IntIDs should be one of the first things to do (so others
+    # objects register themself after)
+
+    root._setObject('service_ids', OFSIntIds())
+    service = getattr(root, 'service_ids')
+    interface.alsoProvides(service, IInvisibleService)
+    sm = root.getSiteManager()
+    sm.registerUtility(service, IIntIds)
+
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
