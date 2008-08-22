@@ -39,7 +39,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
             manage_addImage, 'testimage', 'Test Image', image_file)
 
     def _getimage_test(self):
-        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',
@@ -76,7 +76,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self._getimage_test()
 
     def _test_index_html(self):
-        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',
@@ -141,7 +141,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         return s
 
     def test_getCropBox(self):
-        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage(
@@ -154,7 +154,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assert_(cropbox is not None)
 
     def test_copy_image(self):
-        image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
+        image_file = open(test_path + '/data/photo.tif', 'rb')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',

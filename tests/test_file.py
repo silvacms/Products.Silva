@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_file.py,v 1.7 2006/01/24 16:13:33 faassen Exp $
+# $Id$
+
 import os
 import SilvaTestCase
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
@@ -32,8 +33,7 @@ class FileTest(SilvaTestCase.SilvaTestCase):
 
     def _test_file(self):
         directory = os.path.dirname(__file__)
-        file_handle = open(os.path.join(directory,
-                                        'test_image_data/photo.tif'), 'rb')
+        file_handle = open(os.path.join(directory, 'data/photo.tif'), 'rb')
         file_data = file_handle.read()
         file_handle.seek(0)
         self.root.manage_addProduct['Silva'].manage_addFile('testfile',

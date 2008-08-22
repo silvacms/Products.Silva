@@ -51,16 +51,16 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         return utils.makerequest(app, request_out)
 
     def _test_file(self, id, context):
-        file_handle = testopen('test_image_data/photo.tif', 'rb')
+        file_handle = testopen('data/photo.tif', 'rb')
         context.manage_addProduct['Silva'].manage_addFile(
             id, 'Test File', file_handle)
         file_handle.close()
 
     def _test_image(self, id, context):
         if havePIL:
-            file_handle = testopen('test_image_data/photo.tif', 'rb')
+            file_handle = testopen('data/photo.tif', 'rb')
         else:
-            file_handle = testopen('test_image_data/silva.png', 'rb')
+            file_handle = testopen('data/silva.png', 'rb')
         context.manage_addProduct['Silva'].manage_addImage(
             id, 'Test Image', file_handle)
         file_handle.close()

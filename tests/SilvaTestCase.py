@@ -62,6 +62,8 @@ if ZopeTestCase.hasProduct('SilvaExternalSources'):
 ZopeTestCase.installProduct('SilvaDocument')
 ZopeTestCase.installProduct('Silva')
 ZopeTestCase.installProduct('Five')
+ZopeTestCase.installPackage('silva.core.views')
+ZopeTestCase.installPackage('silva.core.layout')
 
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 
