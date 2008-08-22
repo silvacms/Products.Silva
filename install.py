@@ -80,6 +80,7 @@ def add_fss_directory_view(obj, name, base, *args):
     manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
+    configureIntIds(root)
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
@@ -90,8 +91,6 @@ def installFromScratch(root):
     installSilvaDocument(root)
     installSilvaFind(root)
     installSilvaLayout(root)
-
-    configureIntIds(root)
 
 
 def configureIntIds(root):

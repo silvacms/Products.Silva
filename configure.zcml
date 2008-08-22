@@ -18,4 +18,16 @@
   <!-- Grok Silva -->
   <grok:grok package="." />
   
+  <!-- Prevent FileSystemSite to broke everything -->
+  <interface
+     interface="Products.FileSystemSite.interfaces.IDirectoryView"
+     type="five.intid.interfaces.IIntIdIgnoredInterfaces"
+     />
+
+  <interface
+     interface="Products.FileSystemSite.interfaces.IFSObject"
+     type="five.intid.interfaces.IIntIdIgnoredInterfaces"
+     />
+
+
 </configure>
