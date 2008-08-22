@@ -80,7 +80,6 @@ def add_fss_directory_view(obj, name, base, *args):
     manage_addDirectoryView(obj, path, name)
 
 def installFromScratch(root):
-    configureIntIds(root)
     configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
@@ -92,6 +91,8 @@ def installFromScratch(root):
     installSilvaFind(root)
     installSilvaLayout(root)
 
+    configureIntIds(root)
+
 
 def configureIntIds(root):
     # Add an IntIDs should be one of the first things to do (so others
@@ -102,7 +103,6 @@ def configureIntIds(root):
     interface.alsoProvides(service, IInvisibleService)
     sm = root.getSiteManager()
     sm.registerUtility(service, IIntIds)
-
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):

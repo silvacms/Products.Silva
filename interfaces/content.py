@@ -3,7 +3,7 @@
 # $Id$
 
 from zope.interface import Interface, Attribute
-from silva.core.layout.interfaces import ISilvaCustomizable
+from silva.core.layout.interfaces import ICustomizable
 
 class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
@@ -132,7 +132,7 @@ class ISecurity(Interface):
         object.
         """
 
-class ISilvaObject(ISecurity, ISilvaCustomizable):
+class ISilvaObject(ISecurity, ICustomizable):
     """Interface that should be supported by all Silva objects.
     """
     # MANIPULATORS
