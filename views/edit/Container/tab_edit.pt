@@ -7,7 +7,6 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global vein string:contents;"
   i18n:domain="silva">
 
 <tal:def define="
@@ -31,7 +30,8 @@
  <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
 
 <metal:fill fill-slot="sidebar">
- <td class="left">
+ <td class="left"
+    tal:define="global vein string:contents;">
   <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
    <metal:fill-slot fill-slot="sidebar">
     <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
