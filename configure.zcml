@@ -8,6 +8,9 @@
   <!-- i18n -->
   <i18n:registerTranslations directory="i18n" />
 
+  <!-- Include dependancy -->
+  <include package="five.localsitemanager" />
+  <include package="five.intid" />
   <include package="silva.core.conf" />
   <include package="silva.core.views" />
   <include package=".browser" />
