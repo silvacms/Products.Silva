@@ -78,7 +78,7 @@ class IExtensionRegistry(Interface):
         """Return the extension name to which belongs this class.
         """
 
-    def get_addable():
+    def get_addables():
         """Return all addables content.
         """
 
