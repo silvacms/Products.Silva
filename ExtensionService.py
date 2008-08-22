@@ -10,6 +10,7 @@ from Globals import InitializeClass
 from Globals import package_home
 from DateTime import DateTime
 import zLOG
+import transaction
 
 # Silva
 from helpers import add_and_edit
@@ -150,14 +151,23 @@ class ExtensionService(SimpleItem.SimpleItem):
     def _reindex(self, obj):
         """Reindex a silva object or version.
         """
+        for i, object_to_index in enumerate(self._get_objects_to_reindex(obj)):
+            if i and i % 500 == 0:
+                transaction.get().commit()
+            object_to_index.index_object()
+
+    def _get_objects_to_reindex(self, obj):
+        """A generator to lazily get all the objects that need to be
+        reindexed."""
         if ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
-            obj.index_object()
+            yield obj
         elif IVersion.providedBy(obj) and getattr(obj, 'index_object', None):
             if obj.version_status() != 'last_closed' and obj.version_status(
                 ) != 'closed' :
-                obj.index_object()
+                yield obj
         for child in obj.objectValues():
-            self._reindex(child)
+            for obj in self._get_objects_to_reindex(child):
+                yield obj
 
     security.declareProtected('View management screens',
                               'disable_quota_subsystem')
