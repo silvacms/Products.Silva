@@ -107,8 +107,7 @@
       <th i18n:translate="">
         aspect
       </th>
-      <th style="width:50%;"
-        i18n:translate="">
+      <th i18n:translate="">
         content
       </th>
     </tr>

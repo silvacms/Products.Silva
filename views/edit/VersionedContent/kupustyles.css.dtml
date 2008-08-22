@@ -369,22 +369,22 @@ div.kupu-properties-item-innerdiv {
  border-bottom: 1px solid #cc0000;
 }
 
-#kupu-toolbox-image-link-settings {
-  margin: 0.2em 0;
-  padding: 0.3em 0;
+/* used in image toolbox */
+
+#kupu-toolbox-image-link-settings fieldset {
+  padding:0.2em;
+  margin-top:0.2em;
+}
+
+#kupu-toolbox-image-link-settings legend {
+  color:#333;
+  font-size:110%;
+  padding-left:0;
+  border-bottom:1px solid #559999;
+}
+
+#kupu-toolbox-image-link-settings label.select {
+  line-height:160%;
 }
 
 </dtml-let>
-
-/* used in image toolbox */
-fieldset {
-  border:1px solid #678;
-  width:auto;
-}
-legend {
-  color:#333;
-  font-size:110%;
-}
-label.select {
-  line-height:160%;
-}
