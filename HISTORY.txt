@@ -186,6 +186,12 @@ Silva changes
 
     Bugs Fixed:
 
+      - Rebuilding the catalog sometimes ran out of memory, since it
+        was done in one huge transaction. Added a generator to lazily
+        get objects to reindex, and then commit after every 500
+        objects. The exact number might need tweaking. (I suspect 500
+        is on the conservative side.)
+
       - Took out the sec_clean_roles method in Security.py: it was
         used nowhere, and it broke with anything other than standard
         zope acl_users, because it called the non API
