@@ -9,8 +9,14 @@ Silva changes
 
       - Remove style tags in html that are inserted by copy/pasting
         from word documents on Firefox 3
-      - Formulator lines fields no longer break when values have
-        quotes or unicode characters in them.
+
+    Bugfixes ported from 2.1 branch:
+
+      - Rebuilding the catalog sometimes ran out of memory, since it
+        was done in one huge transaction. Added a generator to lazily
+        get objects to reindex, and then commit after every 500
+        objects. The exact number might need tweaking. (I suspect 500
+        is on the conservative side.)
 
 
   Silva 2.0.8
