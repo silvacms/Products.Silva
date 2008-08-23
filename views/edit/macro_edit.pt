@@ -25,14 +25,13 @@ two-col-layout
     * main-head
       -- for text or controls within the <thead>
     * main-body
-      -- the stuff in the <tbody>
+      -- the stuff in the tbody
     * main-foot
       -- controls and such in the <tfoot>
   * main-extra
     -- more stuff / extra data and controls below the main controls table
   * right-column (only on three-col-layout!)
-    -- usually this has "info" about the content
-editor
+    -- usually this has "info" about the content editor
   * metatype_css
     -- stylesheets for meta type
   * refresher
@@ -157,7 +156,10 @@ editor
  </table>
 </metal:two-col-layout>
 
-<metal:editor define-macro="editor">
+<metal:editor define-macro="editor"
+  tal:define="
+    model request/model;
+    vein python:model.implements_container() and 'contents' or 'edit'">
  <metal:use use-macro="here/macro_index/macros/master">
   <metal:fill-slot fill-slot="metatype_css">
    <metal:block define-slot="metatype_css" />
