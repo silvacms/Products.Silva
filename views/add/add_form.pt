@@ -98,7 +98,7 @@
       python:(metatype == 'Silva Image' and field.id == 'object_title')
       or (metatype == 'Silva File' and field.id == 'file')
       ">
-    <tr class="inter-controls">
+    <tr class="top-controls">
       <td colspan="2">
         <h3>optional field<tal:plural condition="python:metatype != 'Silva Image'">s</tal:plural></h3>
       </td>
