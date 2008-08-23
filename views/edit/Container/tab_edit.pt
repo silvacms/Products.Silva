@@ -30,8 +30,7 @@
  <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
 
 <metal:fill fill-slot="sidebar">
- <td class="left"
-    tal:define="global vein string:contents;">
+ <td class="left">
   <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
    <metal:fill-slot fill-slot="sidebar">
     <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />

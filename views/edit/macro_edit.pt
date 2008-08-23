@@ -158,7 +158,9 @@ editor
 </metal:two-col-layout>
 
 <metal:editor define-macro="editor"
-  tal:define="vein string:edit;">
+  tal:define="
+    model request/model;
+    vein python:model.implements_container() and 'contents' or 'edit'">
  <metal:use use-macro="here/macro_index/macros/master">
   <metal:fill-slot fill-slot="metatype_css">
    <metal:block define-slot="metatype_css" />
