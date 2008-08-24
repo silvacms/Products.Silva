@@ -157,6 +157,10 @@
         </td>
       </tr>
       <tal:def define="displayformats python:request['model'].export_content_format(refs[0])">
+        <tal:comment replace="nothing">
+          <!-- If there's only one export format (thus only one radio button)
+            use a hidden field instead so users don't have to puzzle about it -->
+        </tal:comment>
         <tal:if condition="python:len(displayformats) == 1">
           <tal:repeat repeat="format displayformats">
             <input type="hidden"
