@@ -899,6 +899,9 @@ table.listing td.field {
   padding-top:0.2em;
   padding-right:0.4em;
 }
+table.listing td.field p {
+  margin-top:0.2em;
+}
 
 /* _______ pseudo form button selectors, matches transporter button style _______ */
 

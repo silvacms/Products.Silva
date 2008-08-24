@@ -162,7 +162,7 @@
             by a Silva full media export.
           </p>
         </td>
-        <td class="field">
+        <td class="field align-right">
           <input type="file"
             id="importfile"
             name="importfile"
@@ -183,7 +183,7 @@
             of a zip file with Assets.
           </p>
         </td>
-        <td class="field">
+        <td class="field align-right">
           <input class="store"
             type="text"
             id="title"
@@ -205,7 +205,7 @@
             adding Silva Folders.
           </p>
         </td>
-        <td class="field">
+        <td class="field align-right">
           <input class="min"
             type="checkbox"
             id="recreate_dirs"
@@ -227,7 +227,7 @@
             published).
           </p>
         </td>
-        <td class="field">
+        <td class="field align-right">
           <input class="min"
             type="checkbox"
             id="replace_content"
