@@ -114,7 +114,7 @@
     </thead>
     <tbody>
       <tr>
-        <th width="50%"
+        <th width="33%"
           i18n:translate="">
           options
         </th>
@@ -129,7 +129,11 @@
             include sub publications?
           </label>
         </td>
-        <td class="field">
+        <td class="field align-right">
+          <p style="float:left"
+            i18n:translate="">
+            Check to export an entire branch of the site. 
+          </p>
           <input class="min"
             type="checkbox"
             id="with_sub_publications"
@@ -143,11 +147,12 @@
             i18n:translate="">
             export only newest versions?
           </label>
-          <p i18n:translate="">
+        </td>
+        <td class="field align-right">
+          <p style="float:left"
+            i18n:translate="">
             If not checked all versions are exported.
           </p>
-        </td>
-        <td>
           <input class="min"
             type="checkbox"
             name="export_last_version"
@@ -179,26 +184,28 @@
               i18n:translate="">
               select an export format
             </span>
+          </td>
+          <td class="field">
+            <div style="float:right">
+              <tal:repeat repeat="format displayformats">
+                <input class="min"
+                  type="radio"
+                  name="export_format"
+                  tal:attributes="
+                    id string:export_format_${format/value};
+                    checked python:repeat['format'].start;
+                    value format/value"
+                />
+                <label tal:content="format/title"
+                  tal:attributes="for string:export_format_${format/value}">
+                  Name
+                </label>
+                <br />
+              </tal:repeat>
+            </div>
             <p i18n:translate="">
               Select the format which is going to used to export.
             </p>
-          </td>
-          <td>
-            <tal:repeat repeat="format displayformats">
-              <input class="min"
-                type="radio"
-                name="export_format"
-                tal:attributes="
-                  id string:export_format_${format/value};
-                  checked python:repeat['format'].start;
-                  value format/value"
-              />
-              <label tal:content="format/title"
-                tal:attributes="for string:export_format_${format/value}">
-                Name
-              </label>
-              <br />
-            </tal:repeat>
           </td>
         </tr>
       </tal:def>
