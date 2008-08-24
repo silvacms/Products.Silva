@@ -162,7 +162,7 @@
             by a Silva full media export.
           </p>
         </td>
-        <td class="field align-right">
+        <td class="field">
           <input type="file"
             id="importfile"
             name="importfile"
