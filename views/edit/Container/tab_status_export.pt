@@ -87,7 +87,7 @@
     <thead>
       <tr>
         <td class="top"
-          colspan="3">
+          colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure icon" />
             <tal:block i18n:translate="">export from
@@ -96,7 +96,7 @@
         </td>
       </tr>
       <tr class="top-controls">
-        <td colspan="3">
+        <td colspan="2">
           <a class="transporter"
             style="float: right;"
             href="tab_edit_import"
@@ -112,44 +112,40 @@
         </td>
       </tr>
     </thead>
-  
     <tbody>
       <tr>
-        <th width="30%" class="align-right"
+        <th width="50%"
           i18n:translate="">
           options
         </th>
-        <th>
-        </th>
         <th i18n:translate="">
-          note
+          setting
         </th>
-      </tr>
-  
+      </tr>  
       <tr class="odd">
-        <td class="align-right">
+        <td class="designator">
           <label for="with_sub_publications"
             i18n:translate="">
             include sub publications?
           </label>
         </td>
-        <td>
+        <td class="field">
           <input class="min"
             type="checkbox"
-            name="with_sub_publications"
             id="with_sub_publications"
+            name="with_sub_publications"
           />
         </td>
-        <td>
-        </td>
       </tr>
-  
       <tr class="even">
-        <td class="align-right">
+        <td class="designator">
           <label for="export_last_version"
             i18n:translate="">
             export only newest versions?
           </label>
+          <p i18n:translate="">
+            If not checked all versions are exported.
+          </p>
         </td>
         <td>
           <input class="min"
@@ -159,46 +155,40 @@
             checked="checked"
           />
         </td>
-        <td i18n:translate="">
-          If not checked all versions are exported.
-        </td>
       </tr>
-
      <tr class="odd">
-        <td class="align-right"
+        <td class="designator">
+          <span class="matchlabel"
             i18n:translate="">
-          select an export format
+            select an export format
+          </span>
+          <p i18n:translate="">
+            Select the format which is going to used to export.
+          </p>
         </td>
         <td>
           <tal:repeat repeat="format python:request['model'].export_content_format(refs[0])">
             <input class="min"
-                   type="radio"
-                   name="export_format"
-                   id="#"
-                   value="#"
-                   checked="#"
-                   tal:attributes="id string:export_format_${format/value};
-                                   checked python:repeat['format'].start;
-                                   value format/value"
-                   />
-            <label for="#"
-                   tal:attributes="for string:export_format_${format/value}"
-                   tal:content="format/title">
+              type="radio"
+              name="export_format"
+              tal:attributes="
+                id string:export_format_${format/value};
+                checked python:repeat['format'].start;
+                value format/value"
+            />
+            <label tal:content="format/title"
+              tal:attributes="for string:export_format_${format/value}">
               Name
             </label>
             <br />
           </tal:repeat>
         </td>
-        <td i18n:translate="">
-          Select the format which is going to used to export.
-        </td>
       </tr>
     </tbody>
-  
     <tfoot>
       <tr class="controls">
         <td class="align-right"
-          colspan="3">
+          colspan="2">
           <input class="button"
             type="submit"
             name="download_fullmedia_selected:method"

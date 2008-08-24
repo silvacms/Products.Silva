@@ -64,7 +64,7 @@
         </td>
       </tr>
       <tr class="top-controls">
-        <td colspan="3">
+        <td colspan="2">
           <a class="transporter"
             style="float: right;"
             href="tab_status_export"
@@ -72,7 +72,7 @@
             accesskey="e"
             i18n:attributes="title"
             i18n:translate="">
-            export
+            export...
           </a>
           <h3 i18n:translate="">
             import silva xml
@@ -80,43 +80,37 @@
         </td>
       </tr>
     </thead>
-
     <tbody>
       <tr>
-        <th class="align-right"
-          width="15%"
+        <th width="50%"
           i18n:translate="">
           element
         </th>
         <th i18n:translate="">
           content
         </th>
-        <th width="40%"
-          i18n:translate="">
-          note
-        </th>
       </tr>
-
       <tr class="odd">
-        <td class="align-right">
-          <span i18n:translate="">file to upload</span><span class="warning">*</span>
+        <td class="designator">
+          <label for="importfile"
+            i18n:translate="">file to upload</label><span class="warning">*</span>
+          <p i18n:translate="">
+            Locate an XML file to import (must be valid Silva XML).
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input type="file"
+            id="importfile"
             name="importfile"
-            size="40"
+            size="45"
             title="browse for a file on your disk"
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="">
-          Locate an XML file to import (must be valid Silva XML).
-        </td>
       </tr>
-
       <tr class="controls">
         <td class="align-right"
-          colspan="3">
+          colspan="2">
           <input class="button"
             type="submit"
             value="import"
@@ -142,108 +136,110 @@
         ______________ vein + title row ______________
       </tr>
       <tr class="top-controls">
-        <td colspan="3">
+        <td colspan="2">
           <h3 i18n:translate="">
             import and extract zip archive
           </h3>
         </td>
       </tr>
     </thead>
-
     <tbody>
       <tr>
-        <th class="align-right"
-          width="15%"
+        <th width="50%"
           i18n:translate="">
           element
         </th>
         <th i18n:translate="">
           content
         </th>
-        <th width="40%"
-          i18n:translate="">
-          note
-        </th>
       </tr>
-
       <tr class="odd">
-        <td class="align-right">
-          <span i18n:translate="">file to upload</span><span class="warning">*</span>
+        <td class="designator">
+          <label for="importfile"
+            i18n:translate="">file to upload</label><span class="warning">*</span>
+          <p i18n:translate="">
+            Locate a zip file containing Assets or a zip file created
+            by a Silva full media export.
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input type="file"
+            id="importfile"
             name="importfile"
-            size="40"
+            size="45"
             title="browse for a file on your disk"
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="">
-          Locate a zip file containing Assets or a zip file created
-          by a Silva full media export.
-        </td>
       </tr>
-
       <tr class="even">
-        <td class="align-right">
-          <span i18n:translate="">
+        <td class="designator">
+          <label for="importfile"
+            i18n:translate="">
             title for assets
-          </span>
+          </label>
+          <p i18n:translate="">
+            Set a title for all Assets created from the contents
+            of a zip file with Assets.
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input class="store"
             type="text"
+            id="title"
             name="title"
             size="40"
             title="Optional title for all assets"
             i18n:attributes="title"
           />
         </td>
-        <td i18n:translate="">
-          Set a title for all Assets created from the contents
-          of a zip file with Assets.
-        </td>
       </tr>
-
       <tr class="odd">
-        <td class="align-right">
-          <span i18n:translate="">
+        <td class="designator">
+          <label for="recreate_dirs"
+            i18n:translate="">
             subdirectories
-          </span>
+          </label>
+          <p i18n:translate="">
+            Recreate the subdirectory structure of a zip file with Assets by
+            adding Silva Folders.
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input class="min"
             type="checkbox"
+            id="recreate_dirs"
             name="recreate_dirs"
             checked="checked"
           />
         </td>
-        <td i18n:translate="">
-          Recreate the subdirectory structure of a zip file with Assets by
-          adding Silva Folders.
-        </td>
       </tr>
+
       <tr class="even">
-        <td class="align-right">
-          <span i18n:translate="">
+        <td class="designator">
+          <label for="replace_content"
+            i18n:translate="">
             replace content
-          </span>
+          </label>
+          <p i18n:translate="">
+            Replace Content Objects with the Objects from the import when
+            they have the same ids (Note: they will be replaced *even* when
+            published).
+          </p>
         </td>
-        <td>
+        <td class="field">
           <input class="min"
             type="checkbox"
+            id="replace_content"
             name="replace_content"
             checked="checked"
           />
         </td>
-        <td i18n:translate="">
-          Replace Content Objects with the Objects from the import when
-          they have the same ids (Note: they will be replaced *even* when
-          published).
-        </td> </tr>
+      </tr>
+
       <tr class="controls">
         <td class="align-right"
-          colspan="3">
+          colspan="2">
           <input class="button"
             type="submit"
             value="import zip"
