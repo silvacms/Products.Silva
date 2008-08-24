@@ -896,7 +896,8 @@ table.listing tr:hover td.field p {
 }
 
 table.listing td.field {
-  vertical-align:middle;
+  padding-top:0.2em;
+  padding-right:0.4em;
 }
 
 /* _______ pseudo form button selectors, matches transporter button style _______ */
