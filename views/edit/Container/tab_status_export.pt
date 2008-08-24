@@ -156,34 +156,53 @@
           />
         </td>
       </tr>
-     <tr class="odd">
-        <td class="designator">
-          <span class="matchlabel"
-            i18n:translate="">
-            select an export format
-          </span>
-          <p i18n:translate="">
-            Select the format which is going to used to export.
-          </p>
-        </td>
-        <td>
-          <tal:repeat repeat="format python:request['model'].export_content_format(refs[0])">
-            <input class="min"
-              type="radio"
+      <tal:def define="displayformats python:request['model'].export_content_format(refs[0])">
+        <tal:comment replace="nothing">
+          <!-- If there's only one export format (thus only one radio button)
+            use a hidden field instead so users don't have to puzzle about it -->
+        </tal:comment>
+        <tal:if condition="python:len(displayformats) == 1">
+          <tal:repeat repeat="format displayformats">
+            <input type="hidden"
               name="export_format"
               tal:attributes="
                 id string:export_format_${format/value};
                 checked python:repeat['format'].start;
                 value format/value"
             />
-            <label tal:content="format/title"
-              tal:attributes="for string:export_format_${format/value}">
-              Name
-            </label>
-            <br />
           </tal:repeat>
-        </td>
-      </tr>
+        </tal:if>
+        <tr class="odd"
+          tal:condition="python:len(displayformats) > 1">
+          <td class="designator">
+            <span class="matchlabel"
+              i18n:translate="">
+              select an export format
+            </span>
+            <p i18n:translate="">
+              Select the format which is going to used to export.
+            </p>
+          </td>
+          <td>
+            <tal:repeat repeat="format displayformats">
+              <input class="min"
+                type="radio"
+                name="export_format"
+                tal:attributes="
+                  id string:export_format_${format/value};
+                  checked python:repeat['format'].start;
+                  value format/value"
+              />
+              <label tal:content="format/title"
+                tal:attributes="for string:export_format_${format/value}">
+                Name
+              </label>
+              <br />
+            </tal:repeat>
+          </td>
+        </tr>
+      </tal:def>
+
     </tbody>
     <tfoot>
       <tr class="controls">
