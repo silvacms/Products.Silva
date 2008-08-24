@@ -1047,8 +1047,11 @@ input.closer:hover {
   background-color: #4a4aa7;
 }
 
-input[type="radio"],input[type="checkbox"] {
+input[type="radio"] {
   margin: 0 0.5em 0;
+}
+input[type="checkbox"] {
+  margin: 0 1px;
 }
 
 /* default stylers for classless buttons (either delete or make into shockers):
