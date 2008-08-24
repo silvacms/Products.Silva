@@ -875,8 +875,8 @@ th label {
 /* _______ field iterators _______ */
 
 table.listing td.designator {
-  padding-top:0.2em;
-  padding-bottom:0.2em;
+  padding-top:0.1em;
+  padding-bottom:0.1em;
 }
 table.listing td.designator label {
   font-size: 115%;
@@ -894,13 +894,9 @@ table.listing tr:hover td.designator ul:hover,
 table.listing tr:hover td.field p {
   color:#333;
 }
-
 table.listing td.field {
-  padding-top:0.2em;
+  padding-top:0.1em;
   padding-right:0.4em;
-}
-table.listing td.field p {
-  margin-top:0.2em;
 }
 
 /* _______ pseudo form button selectors, matches transporter button style _______ */
