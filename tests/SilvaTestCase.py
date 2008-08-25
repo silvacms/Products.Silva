@@ -37,35 +37,8 @@ user_author = 'author'
 user_reader = 'reader'
 user_dummy = 'dummy'
 
-ZopeTestCase.installProduct('ZCatalog')
-ZopeTestCase.installProduct('TemporaryFolder')
-ZopeTestCase.installProduct('ZCTextIndex')
-ZopeTestCase.installProduct('PythonScripts')
-ZopeTestCase.installProduct('PageTemplates')
-ZopeTestCase.installProduct('Formulator')
-ZopeTestCase.installProduct('FileSystemSite')
-ZopeTestCase.installProduct('ParsedXML')
-ZopeTestCase.installProduct('XMLWidgets')
-ZopeTestCase.installProduct('ProxyIndex')
-
-from Products.Silva import MAILDROPHOST_AVAILABLE
-if  MAILDROPHOST_AVAILABLE:
-    # if available, it is installed by Silva.install.installSubscriptions
-    ZopeTestCase.installProduct('MaildropHost')    
-
-ZopeTestCase.installProduct('Groups')
-ZopeTestCase.installProduct('SilvaFind')
-ZopeTestCase.installProduct('SilvaMetadata')
-ZopeTestCase.installProduct('SilvaViews')
-if ZopeTestCase.hasProduct('SilvaExternalSources'):
-    ZopeTestCase.installProduct('SilvaExternalSources')
-ZopeTestCase.installProduct('SilvaDocument')
-ZopeTestCase.installProduct('Silva')
-ZopeTestCase.installProduct('Five')
-ZopeTestCase.installPackage('silva.core.views')
-ZopeTestCase.installPackage('silva.core.layout')
-
-from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager, \
+    noSecurityManager, getSecurityManager
 
 from Products.Silva.tests import layer
 

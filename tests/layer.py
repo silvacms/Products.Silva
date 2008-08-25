@@ -15,8 +15,39 @@ from zope.testing.cleanup import cleanUp as _cleanUp
 from Acquisition import aq_base
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase.layer import ZopeLiteLayer
-from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager
+from AccessControl.SecurityManagement import newSecurityManager, \
+    noSecurityManager
 import transaction
+
+# Install Zope 2 Products
+
+ZopeTestCase.installProduct('ZCatalog')
+ZopeTestCase.installProduct('TemporaryFolder')
+ZopeTestCase.installProduct('ZCTextIndex')
+ZopeTestCase.installProduct('PythonScripts')
+ZopeTestCase.installProduct('PageTemplates')
+ZopeTestCase.installProduct('Formulator')
+ZopeTestCase.installProduct('FileSystemSite')
+ZopeTestCase.installProduct('ParsedXML')
+ZopeTestCase.installProduct('XMLWidgets')
+ZopeTestCase.installProduct('ProxyIndex')
+
+from Products.Silva import MAILDROPHOST_AVAILABLE
+if  MAILDROPHOST_AVAILABLE:
+    # if available, it is installed by Silva.install.installSubscriptions
+    ZopeTestCase.installProduct('MaildropHost')    
+
+ZopeTestCase.installProduct('Groups')
+ZopeTestCase.installProduct('SilvaFind')
+ZopeTestCase.installProduct('SilvaMetadata')
+ZopeTestCase.installProduct('SilvaViews')
+if ZopeTestCase.hasProduct('SilvaExternalSources'):
+    ZopeTestCase.installProduct('SilvaExternalSources')
+ZopeTestCase.installProduct('SilvaDocument')
+ZopeTestCase.installProduct('Silva')
+ZopeTestCase.installProduct('Five')
+ZopeTestCase.installPackage('silva.core.views')
+ZopeTestCase.installPackage('silva.core.layout')
 
 
 def setDebugMode(mode):
@@ -37,8 +68,6 @@ def setupSilvaRoot(app, id='root', quiet=0):
     '''Creates a Silva root.'''
     if not hasattr(aq_base(app), id):
         _start = time.time()
-        if not quiet:
-            ZopeTestCase._print('Adding Silva Root... ')
         uf = app.acl_users
         uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
         user = uf.getUserById('SilvaTestCase').__of__(uf)
