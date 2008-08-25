@@ -294,8 +294,8 @@ Silva changes
 
     Bugfixes ported from 2.0 branch
 
-      - html tags in parameters of external sources is no longer
-        double escaped on saving.
+      - html in parameters of external sources is no longer double
+        escaped on saving.
 
       - Formulator lines fields no longer break when values have
         quotes or unicode characters in them.
