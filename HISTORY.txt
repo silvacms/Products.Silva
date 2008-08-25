@@ -7,8 +7,8 @@ Silva changes
 
     Bugs fixed:
       
-      - html tags in parameters of external sources is no longer
-        double escaped on saving.
+      - html in parameters of external sources is no longer double
+        escaped on saving.
 
       - Remove style tags in html that are inserted by copy/pasting
         from word documents on Firefox 3
