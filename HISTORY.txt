@@ -28,6 +28,10 @@ Silva changes
         get objects to reindex, and then commit after every 500
         objects. The exact number might need tweaking. (I suspect 500
         is on the conservative side.)
+
+      - html in parameters of external sources is no longer double
+        escaped on saving.
+
     
   Silva 2.1
 

@@ -2337,10 +2337,6 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 var strong = doc.createElement('strong');
                 strong.appendChild(doc.createTextNode(key + ': '));
                 pardiv.appendChild(strong);
-                if (child.getAttribute('type') == 'bool') {
-                    value = (value == "True" ? 1 : 0);
-                    attrkey = key + '__type__boolean';
-                };
                 if (child.getAttribute('type') == 'list') {
                     var vallist = eval(value);
                     attrkey = key + '__type__list';
@@ -2356,6 +2352,10 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                     };
                 }
                 else {
+                    if (child.getAttribute('type') == 'bool') {
+                        value = (value == "1" ? 1 : 0);
+                        attrkey = key + '__type__boolean';
+                    }
                     var span = doc.createElement('span');
                     span.setAttribute('key', attrkey);
                     pardiv.appendChild(span);
