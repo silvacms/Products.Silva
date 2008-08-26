@@ -6,6 +6,10 @@
   You can grok your contents.
 
 
+  On a publication:
+
+    >>> grokkify('Products.Silva.tests.grok.contents_publication_fixture')
+
   A version content should have a versionClass defined:
 
     >>> grokkify('Products.Silva.tests.grok.contents_noversionclass_fixture')

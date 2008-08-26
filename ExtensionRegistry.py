@@ -6,6 +6,8 @@ from zope.interface import implements
 from zope.configuration.name import resolve
 import Products
 
+from silva.core.conf.registry import Registry
+
 from warnings import warn
 from bisect import insort_right
 
@@ -26,6 +28,7 @@ class Addable(object):
         if sort == 0:
             sort = cmp(self._meta_type['name'], other._meta_type['name'])
         return sort
+
 
 class BaseExtension(object):
 
@@ -128,7 +131,7 @@ class EggExtension(BaseExtension):
         return self._module_name
 
     
-class ExtensionRegistry(object):
+class ExtensionRegistry(Registry):
 
     implements(interfaces.IExtensionRegistry)
 

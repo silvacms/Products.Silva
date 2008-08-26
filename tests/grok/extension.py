@@ -5,6 +5,7 @@
 
     >>> from Products.Silva.interfaces import IExtensionInstaller
     >>> from Products.Silva.ExtensionRegistry import extensionRegistry
+    >>> import pdb ; pdb.set_trace()
 
   A extension is declared in __init__.py of a package:
 

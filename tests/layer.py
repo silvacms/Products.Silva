@@ -79,8 +79,6 @@ def setupSilvaRoot(app, id='root', quiet=0):
         root = app.root
         noSecurityManager()
         transaction.commit()
-        if not quiet:
-            ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
 
 def setupSilva(id='root', quiet=0):
     # Create a Silva site in the test (demo-) storage
@@ -90,7 +88,7 @@ def setupSilva(id='root', quiet=0):
     ZopeTestCase.close(app)
 
 
-class SilvaZCMLLayer(ZopeLiteLayer):
+class SilvaLayer(ZopeLiteLayer):
 
     @classmethod
     def setUp(cls):

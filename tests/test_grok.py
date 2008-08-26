@@ -13,7 +13,8 @@ from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder
 
 import five.grok.testing
 
-from Products.Silva.tests.layer import SilvaZCMLLayer
+from Products.Silva.tests.layer import SilvaLayer
+
 
 def getSilvaRoot():
     return getRootFolder().root
@@ -39,7 +40,7 @@ def suiteFromPackage(name):
                                       extraglobs=extraglobs,
                                       optionflags=doctest.ELLIPSIS + \
                                           doctest.NORMALIZE_WHITESPACE)
-        test.layer = SilvaZCMLLayer
+        test.layer = SilvaLayer
         suite.addTest(test)
     return suite
 

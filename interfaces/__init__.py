@@ -176,5 +176,6 @@ class IHaunted(Interface):
         pass
 
 from content import *
-from service import *
 from extension import *
+from registry import *
+from service import *

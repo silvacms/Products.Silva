@@ -3,7 +3,7 @@
 # $Id$
 
 from zope.interface import Interface, Attribute
-
+from registry import IRegistry
 
 class IExtension(Interface):
     """An extension to Silva.
@@ -41,7 +41,7 @@ class IExtensionInstaller(Interface):
         """
 
 
-class IExtensionRegistry(Interface):
+class IExtensionRegistry(IRegistry):
     """Silva extension registry.
     """
 

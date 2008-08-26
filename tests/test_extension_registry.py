@@ -8,6 +8,7 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.interfaces.extension import IExtensionRegistry, IExtension, IExtensionInstaller
 
 from silva.core.conf.installer import DefaultInstaller, SystemExtensionInstaller
+from silva.core.conf.registry import getRegistry
 
 import SilvaTestCase
 
@@ -15,6 +16,9 @@ import SilvaTestCase
 class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
     
     def test_registry(self):
+        # We can get the registry using the registry API
+        self.assertEquals(extensionRegistry, getRegistry('extensionregistry'))
+
         # Check that the registry implements it's interface
         self.failUnless(verifyObject(IExtensionRegistry, extensionRegistry))
 

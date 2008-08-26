@@ -43,7 +43,7 @@ from AccessControl.SecurityManagement import newSecurityManager, \
 from Products.Silva.tests import layer
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
-    layer = layer.SilvaZCMLLayer
+    layer = layer.SilvaLayer
 
     _configure_root = 1
 
