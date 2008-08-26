@@ -7,6 +7,7 @@ Silva changes
 
     Features added:
 
+      - Updated documentation, screen shots and content.
 
       - A quota subsystem has been added. It lets Managers set a quota
         on a publication (which can also be a virtual host
