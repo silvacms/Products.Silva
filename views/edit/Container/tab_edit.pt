@@ -23,9 +23,10 @@
     iterate string:odd;
     ct python: mangle.String.centeredTruncate;
     maintitlecolspan string:6;
+    vein string:contents;
    ">
-<metal:use-macro use-macro="here/macro_edit/macros/editor">
-
+<metal:use-macro use-macro="here/macro_edit/macros/editor"
+>
 <metal:fill-editor-slot fill-slot="main">
  <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
 
