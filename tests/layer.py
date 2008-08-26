@@ -64,26 +64,53 @@ def cleanUp():
     zcml._initialized = 0
 
 
-def setupSilvaRoot(app, id='root', quiet=0):
-    '''Creates a Silva root.'''
-    if not hasattr(aq_base(app), id):
-        _start = time.time()
-        uf = app.acl_users
-        uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
-        user = uf.getUserById('SilvaTestCase').__of__(uf)
-        newSecurityManager(None, user)
-        factory = app.manage_addProduct['TemporaryFolder']
-        factory.constructTemporaryFolder('temp_folder', '')
-        factory = app.manage_addProduct['Silva']
-        factory.manage_addRoot(id, '')
-        root = app.root
-        noSecurityManager()
-        transaction.commit()
+user_name = ZopeTestCase.user_name
+user_password = ZopeTestCase.user_password
 
-def setupSilva(id='root', quiet=0):
+# Default silva test user and password
+users = {
+    'manager': {'password': ZopeTestCase.user_password,
+                'role': 'Manager' },
+    'chiefeditor': {'password': ZopeTestCase.user_password,
+                    'role': 'ChiefEditor' },
+    'editor': {'password': ZopeTestCase.user_password,
+               'role': 'Editor' },
+    'author': {'password': ZopeTestCase.user_password,
+               'role': 'Author' },
+    'reader': {'password': ZopeTestCase.user_password,
+               'role': 'Reader' },
+    'dummy': {'password': ZopeTestCase.user_password,
+              'role': '' },
+}
+
+def setupRootUser(app):
+    """Creates the root user."""
+    uf = app.root.acl_users
+    # original
+    uf._doAddUser(user_name, user_password, ['ChiefEditor'], [])
+
+    for username, info in users.items():
+        uf._doAddUser(username, info['password'], [info['role']], [])
+
+def setupSilvaRoot(app):
+    """Creates a Silva root."""
+    _start = time.time()
+    uf = app.acl_users
+    uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
+    user = uf.getUserById('SilvaTestCase').__of__(uf)
+    newSecurityManager(None, user)
+    factory = app.manage_addProduct['TemporaryFolder']
+    factory.constructTemporaryFolder('temp_folder', '')
+    factory = app.manage_addProduct['Silva']
+    factory.manage_addRoot('root', '')
+    root = app.root
+    noSecurityManager()
+
+def setupSilva():
     # Create a Silva site in the test (demo-) storage
     app = ZopeTestCase.app()
-    setupSilvaRoot(app, id='root')
+    setupSilvaRoot(app)
+    setupRootUser(app)
     transaction.commit()
     ZopeTestCase.close(app)
 

@@ -14,12 +14,16 @@ from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder
 import five.grok.testing
 
 from Products.Silva.tests.layer import SilvaLayer
-
+from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 
 def getSilvaRoot():
     return getRootFolder().root
 
+def getSilvaBrowser():
+    return SilvaBrowser()
+
 extraglobs = {'getSilvaRoot': getSilvaRoot,
+              'getSilvaBrowser': getSilvaBrowser,
               'verifyObject': verifyObject,
               'grokkify': five.grok.testing.grok,}
 

@@ -11,24 +11,6 @@ import transaction
 import zope.component.eventtesting
 from zope.app.component.hooks import setSite
 
-user_name = ZopeTestCase.user_name
-user_password = ZopeTestCase.user_password
-
-# Default silva test user and password
-users = {
-    'manager': {'password': ZopeTestCase.user_password,
-                'role': 'Manager' },
-    'chiefeditor': {'password': ZopeTestCase.user_password,
-                    'role': 'ChiefEditor' },
-    'editor': {'password': ZopeTestCase.user_password,
-               'role': 'Editor' },
-    'author': {'password': ZopeTestCase.user_password,
-               'role': 'Author' },
-    'reader': {'password': ZopeTestCase.user_password,
-               'role': 'Reader' },
-    'dummy': {'password': ZopeTestCase.user_password,
-              'role': '' },
-}
 
 user_manager = 'manager'
 user_chiefeditor = 'chiefeditor'
@@ -40,12 +22,11 @@ user_dummy = 'dummy'
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager, getSecurityManager
 
-from Products.Silva.tests import layer
+from Products.Silva.tests.layer import SilvaLayer, user_name, \
+    user_password, users
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
-    layer = layer.SilvaLayer
-
-    _configure_root = 1
+    layer = SilvaLayer
 
     def get_users(self):
         return users.keys()
@@ -116,17 +97,16 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self.beforeSetUp()
         try:
             self.app = self._app()
+
             # Set up sessioning objects, this is not done by default...
             ZopeTestCase.utils.setupCoreSessions(self.app)
 
             self.silva = self.root = self.getRoot()
             self.catalog = self.silva.service_catalog
             self.root.temp_folder.session_data._reset()
-            if self._configure_root:
-                self._setupRootUser()
-                self.login()
-                self.app.REQUEST.AUTHENTICATED_USER=\
-                         self.app.acl_users.getUser(ZopeTestCase.user_name)
+            self.login()
+            self.app.REQUEST.AUTHENTICATED_USER=\
+                self.app.acl_users.getUser(ZopeTestCase.user_name)
             zope.component.eventtesting.clearEvents()
             setSite(self.silva)
             self.afterSetUp()
@@ -146,26 +126,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''Returns the app object for a test.'''
         return ZopeTestCase.app()
 
-    def _setupRootUser(self):
-        '''Creates the root user.'''
-        uf = self.root.acl_users
-        # original
-        uf._doAddUser(user_name, user_password, ['ChiefEditor'], [])
-
-        for username, info in users.items():
-           uf._doAddUser(username, info['password'], [info['role']], [])
-
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
         try:
-            if self._configure_root:
-                # This is paranoia mostly as the transaction
-                # should be aborted anyway...
-                try: self.root.acl_users._doDelUsers([user_name])
-                except: pass
-                try: self.root.Members._delObject(user_name)
-                except: pass
-                self.root.temp_folder.session_data._reset()
             if call_close_hook:
                 self.beforeClose()
         finally:
