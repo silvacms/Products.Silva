@@ -21,7 +21,9 @@
   We will be able to add that special publication:
 
     >>> browser.login(url=browser.smi_url())
-    >>> browser.get_addables_list()
+    (200, 'http://nohost/root/edit')
+    >>> 'My Publication' in browser.get_addables_list()
+    True
 
   A version content should have a versionClass defined:
 
