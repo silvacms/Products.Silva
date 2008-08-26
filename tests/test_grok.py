@@ -13,14 +13,15 @@ from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder
 
 import five.grok.testing
 
-from Products.Silva.tests.layer import SilvaLayer
+from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 
 def getSilvaRoot():
     return getRootFolder().root
 
 def getSilvaBrowser():
-    return SilvaBrowser()
+    return SilvaBrowser(doctest=True)
+
 
 extraglobs = {'getSilvaRoot': getSilvaRoot,
               'getSilvaBrowser': getSilvaBrowser,
@@ -41,6 +42,8 @@ def suiteFromPackage(name):
 
         dottedname = 'Products.Silva.tests.%s.%s' % (name, filename[:-3])
         test = FunctionalDocTestSuite(dottedname,
+                                      setUp=setUp,
+                                      tearDown=tearDown,
                                       extraglobs=extraglobs,
                                       optionflags=doctest.ELLIPSIS + \
                                           doctest.NORMALIZE_WHITESPACE)

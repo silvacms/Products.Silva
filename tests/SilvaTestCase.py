@@ -11,7 +11,6 @@ import transaction
 import zope.component.eventtesting
 from zope.app.component.hooks import setSite
 
-
 user_manager = 'manager'
 user_chiefeditor = 'chiefeditor'
 user_editor = 'editor'
@@ -23,7 +22,7 @@ from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager, getSecurityManager
 
 from Products.Silva.tests.layer import SilvaLayer, user_name, \
-    user_password, users
+    user_password, users, setUp, tearDown
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     layer = SilvaLayer
@@ -93,21 +92,15 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
            use the hooks instead.
         '''
         transaction.abort()
-        noSecurityManager()
         self.beforeSetUp()
         try:
             self.app = self._app()
-
-            # Set up sessioning objects, this is not done by default...
-            ZopeTestCase.utils.setupCoreSessions(self.app)
-
+            setUp(self)
             self.silva = self.root = self.getRoot()
             self.catalog = self.silva.service_catalog
-            self.root.temp_folder.session_data._reset()
             self.login()
             self.app.REQUEST.AUTHENTICATED_USER=\
                 self.app.acl_users.getUser(ZopeTestCase.user_name)
-            zope.component.eventtesting.clearEvents()
             setSite(self.silva)
             self.afterSetUp()
         except:

@@ -49,21 +49,6 @@ ZopeTestCase.installProduct('Five')
 ZopeTestCase.installPackage('silva.core.views')
 ZopeTestCase.installPackage('silva.core.layout')
 
-
-def setDebugMode(mode):
-    """Allows manual setting of Five's inspection of debug mode to
-    allow for zcml to fail meaningfully.
-    """
-    import Products.Five.fiveconfigure as fc
-    fc.debug_mode = mode
-
-def cleanUp():
-    """Clean up component architecture"""
-    _cleanUp()
-    import Products.Five.zcml as zcml
-    zcml._initialized = 0
-
-
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
 
@@ -83,8 +68,24 @@ users = {
               'role': '' },
 }
 
+
+def setDebugMode(mode):
+    """Allows manual setting of Five's inspection of debug mode to
+    allow for zcml to fail meaningfully.
+    """
+    import Products.Five.fiveconfigure as fc
+    fc.debug_mode = mode
+
+def cleanUp():
+    """Clean up component architecture.
+    """
+    _cleanUp()
+    import Products.Five.zcml as zcml
+    zcml._initialized = 0
+
 def setupRootUser(app):
-    """Creates the root user."""
+    """Creates all test users.
+    """
     uf = app.root.acl_users
     # original
     uf._doAddUser(user_name, user_password, ['ChiefEditor'], [])
@@ -93,21 +94,20 @@ def setupRootUser(app):
         uf._doAddUser(username, info['password'], [info['role']], [])
 
 def setupSilvaRoot(app):
-    """Creates a Silva root."""
+    """Creates a Silva root.
+    """
     _start = time.time()
     uf = app.acl_users
     uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
     user = uf.getUserById('SilvaTestCase').__of__(uf)
     newSecurityManager(None, user)
-    factory = app.manage_addProduct['TemporaryFolder']
-    factory.constructTemporaryFolder('temp_folder', '')
-    factory = app.manage_addProduct['Silva']
-    factory.manage_addRoot('root', '')
-    root = app.root
+    ZopeTestCase.utils.setupCoreSessions(app)
+    app.manage_addProduct['Silva'].manage_addRoot('root', '')
     noSecurityManager()
 
 def setupSilva():
-    # Create a Silva site in the test (demo-) storage
+    """Create a Silva site in the test (demo-) storage.
+    """
     app = ZopeTestCase.app()
     setupSilvaRoot(app)
     setupRootUser(app)
@@ -116,6 +116,8 @@ def setupSilva():
 
 
 class SilvaLayer(ZopeLiteLayer):
+    """Extend the ZopeLiteLayer to install a Silva instance.
+    """
 
     @classmethod
     def setUp(cls):
@@ -130,4 +132,19 @@ class SilvaLayer(ZopeLiteLayer):
     @classmethod
     def tearDown(cls):
         cleanUp()
+
+
+def setUp(test):
+    """Setup before each tests.
+    """
+    app = ZopeTestCase.app()
+    app.temp_folder.session_data._reset()
+    zope.component.eventtesting.clearEvents()
+
+def tearDown(test):
+    """Tear down after each tests.
+    """
+    noSecurityManager()
+
+
 

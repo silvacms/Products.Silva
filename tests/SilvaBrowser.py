@@ -17,9 +17,16 @@ Z3CFORM_FORM = object()
 FORMLIB_FORM = object()
 
 class SilvaBrowser(object):
-    def __init__(self):
-        self.browser = Browser()
+    def __init__(self, doctest=False):
+        self.__doctest = doctest
         self.form_type = SILVA_FORM
+        self._new_browser()
+
+    def _new_browser(self):
+        self.browser = Browser()
+        if self.__doctest:
+            self.browser.handleErrors = False
+            
 
     def go_back(self):
         return self.browser.goBack()
@@ -309,7 +316,7 @@ class SilvaBrowser(object):
         # raised. Because of this we always use a new Browser 
         # when logginf in
         url = url or self.get_root_url()
-        self.browser = Browser()
+        self._new_browser()
         self.browser.addHeader('Authorization', 'Basic %s:%s' % (
                           username, password))
         self.browser.addHeader('Accept-Language', 'en-US')
