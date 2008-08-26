@@ -41,7 +41,6 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
-    from Products.Silva.silvaxml import xmlexport, xmlimport
     # import FileSystemSite functionality
     # (use CMFCore if FileSystemSite is not installed)
     from Products.Silva.fssite import registerDirectory, registerFileExtension

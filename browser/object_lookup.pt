@@ -436,7 +436,7 @@
                         i18n:attributes="title;value"
                         onclick="window.close();return false;"
                       />
-<!-- placing references now happens automatically when the radio button is pressed
+<!-- XXX placing references now happens automatically when the radio button is pressed
                       <input class="button executor"
                         type="button"
                         name="place"
@@ -456,7 +456,7 @@
                         title="insert a reference to this container: alt-c"
                         accesskey="c"
                         onclick="window.reference.setReferenceFromElement(this); return false;"
-                        tal:condition="python: publishables or assets or default"
+                        tal:condition="python: not show_containers and (publishables or assets or default)"
                         i18n:attributes="title;value"
                         tal:attributes="lookup:path python:pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath,context.get_container()));
                                         lookup:id context/id;
