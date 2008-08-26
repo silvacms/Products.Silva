@@ -6,9 +6,22 @@
 import unittest
 from pkg_resources import resource_listdir
 
+from zope.interface.verify import verifyObject
 from zope.testing import doctest
+from Testing.ZopeTestCase import FunctionalDocTestSuite
+from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder
+
+import five.grok.testing
 
 from Products.Silva.tests.layer import SilvaZCMLLayer
+
+def getSilvaRoot():
+    return getRootFolder().root
+
+extraglobs = {'getSilvaRoot': getSilvaRoot,
+              'verifyObject': verifyObject,
+              'grokkify': five.grok.testing.grok,}
+
 
 def suiteFromPackage(name):
     files = resource_listdir(__name__, name)
@@ -22,9 +35,10 @@ def suiteFromPackage(name):
             continue
 
         dottedname = 'Products.Silva.tests.%s.%s' % (name, filename[:-3])
-        test = doctest.DocTestSuite(dottedname,
-                                    optionflags=doctest.ELLIPSIS + \
-                                        doctest.NORMALIZE_WHITESPACE)
+        test = FunctionalDocTestSuite(dottedname,
+                                      extraglobs=extraglobs,
+                                      optionflags=doctest.ELLIPSIS + \
+                                          doctest.NORMALIZE_WHITESPACE)
         test.layer = SilvaZCMLLayer
         suite.addTest(test)
     return suite

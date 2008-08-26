@@ -74,7 +74,7 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         # A system extension is always installed
         self.assertEqual(system_installer.is_installed(self.root), True)
 
-        # XXX Need to test default installer.
+        # Other test on installer are done with grok tests.
 
 
 import unittest
