@@ -382,7 +382,7 @@ def add_helper(root, id, info, add_func, default_if_existent=0, folder='layout')
     if default_if_existent and hasattr(root.aq_base, id):
         id = 'default_' + id
     text = read_file(filename, info, folder)
-    text = text.replace('{__silva_version__}', root.get_silva_software_version())
+    text = text.replace('{__silva_version__}', 'Silva %s' % root.get_silva_software_version())
     add_func(root, id, text)
 
 def pt_add_helper(root, id, text):
