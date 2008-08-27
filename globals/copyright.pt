@@ -65,7 +65,7 @@
   <li>Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a></li>
 </ul>
 <p style="line-height:1.5em;">
-  <span class="subhead" tal:content="here/get_silva_product_version" /><br />
+  <span class="subhead" tal:content="here/get_silva_software_version" /><br />
 </p>
 </div>
 

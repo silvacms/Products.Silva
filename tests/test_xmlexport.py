@@ -27,7 +27,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         return self.replace_datetimes(s)
 
     def get_version(self):
-        return self.root.get_silva_product_version()
+        return self.root.get_silva_software_version()
         
     def test_xml_folder_export(self):
         testfolder = self.add_folder(

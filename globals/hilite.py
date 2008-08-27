@@ -1,1 +1,1 @@
-return context.get_root().get_silva_product_version()
+return context.get_root().get_silva_software_version()

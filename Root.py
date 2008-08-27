@@ -176,8 +176,7 @@ class Root(Publication):
         else:
             return self._addables_forbidden.has_key(meta_type)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_software_version')
+    security.declarePublic('get_silva_software_version')
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
@@ -196,6 +195,9 @@ class Root(Publication):
     security.declarePublic('get_silva_product_version')
     def get_silva_product_version(self):
         """Returns the release version of the Product"""
+        warn('Use get_silva_software_version instead of get_silva_product_version.'
+             ' get_silva_product_version will be removed in Silva 2.2.', 
+             DeprecationWarning)
         return self.manage_addProduct['Silva'].version
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
