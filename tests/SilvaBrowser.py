@@ -23,7 +23,7 @@ class SilvaBrowser(object):
 
     def _new_browser(self):
         self.browser = Browser()
-        self.browser.handleErrors = False
+        #self.browser.handleErrors = False
 
     def go_back(self):
         return self.browser.goBack()
