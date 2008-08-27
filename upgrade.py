@@ -2,15 +2,17 @@
 # See also LICENSE.txt
 # $Id$
 
+# Python
 from bisect import insort_right
+from pkg_resources import parse_version
 
+# Zope
 from zope.interface import implements
-# zope imports
 import zLOG
 import DateTime
 import transaction
 
-# silva imports
+# Silva
 from Products.Silva.interfaces import IUpgrader
 
 threshold = 50
@@ -150,8 +152,8 @@ class UpgradeRegistry(object):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
             from_version, to_version))
         versions = self.__registry.keys()
-        versions.sort(lambda x, y: cmp(self._vers_str_to_int(x),
-            self._vers_str_to_int(y)))
+        versions.sort(lambda x, y: cmp(parse_version(x),
+                                       parse_version(y)))
             
         # XXX this code is confusing, but correct. We might want to redo
         # the whole version-registry-upgraders-shebang into something more
@@ -186,11 +188,6 @@ class UpgradeRegistry(object):
         for function in self._tearDown.get(version, []):
             function(root)
 
-    def _vers_str_to_int(self, version):
-        return tuple([ int(s) for s in version.split('.') ])
-
-    def _vers_int_to_str(self, version):
-        return '.'.join([ str(i) for i in version ])
         
 registry = UpgradeRegistry()
 

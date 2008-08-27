@@ -361,7 +361,7 @@ class SilvaExportRoot(object):
         self._exportDateTime = DateTime()
 
     def getSilvaProductVersion(self):
-        return self._exportable.get_root().get_silva_product_version()
+        return 'Silva %s' % self._exportable.get_root().get_silva_software_version()
     
     def getExportable(self):
         return self._exportable

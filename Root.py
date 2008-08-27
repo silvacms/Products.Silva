@@ -20,6 +20,7 @@ from DateTime import DateTime
 import transaction
 
 # Silva
+from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.interfaces import IRoot, IInvisibleService
@@ -162,12 +163,11 @@ class Root(Publication):
         else:
             return self._addables_forbidden.has_key(meta_type)
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_software_version')
+    security.declarePublic('get_silva_software_version')
     def get_silva_software_version(self):
         """The version of the Silva software.
         """
-        return '2.1'
+        return extensionRegistry.get_extension('Silva').version
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_content_version')
@@ -178,11 +178,6 @@ class Root(Publication):
         can be different in case the content was not yet updated.
         """
         return getattr(self, '_content_version', 'before 0.9.2')
-
-    security.declarePublic('get_silva_product_version')
-    def get_silva_product_version(self):
-        """Returns the release version of the Product"""
-        return self.manage_addProduct['Silva'].version
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'upgrade_silva')
