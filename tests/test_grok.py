@@ -8,8 +8,10 @@ from pkg_resources import resource_listdir
 
 from zope.interface.verify import verifyObject
 from zope.testing import doctest
-from Testing.ZopeTestCase import FunctionalDocTestSuite
-from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder
+
+from Testing import ZopeTestCase
+from AccessControl.SecurityManagement import newSecurityManager, \
+    noSecurityManager
 
 import five.grok.testing
 
@@ -17,13 +19,29 @@ from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 
 def getSilvaRoot():
-    return getRootFolder().root
+    """Get a Silva Root.
+    """
+    app = ZopeTestCase.app()
+    return app.root
 
 def getSilvaBrowser():
-    return SilvaBrowser(doctest=True)
+    """Create a Silva browser.
+    """
+    return SilvaBrowser()
+
+def logAsUser(root, username):
+    """Login as the given user.
+    """
+    if username is None:
+        noSecurityManager()
+    else:
+        uf = root.acl_users
+        user = uf.getUserById(username).__of__(uf)
+        newSecurityManager(None, user)
 
 
-extraglobs = {'getSilvaRoot': getSilvaRoot,
+extraglobs = {'logAsUser': logAsUser,
+              'getSilvaRoot': getSilvaRoot,
               'getSilvaBrowser': getSilvaBrowser,
               'verifyObject': verifyObject,
               'grokkify': five.grok.testing.grok,}
@@ -41,12 +59,13 @@ def suiteFromPackage(name):
             continue
 
         dottedname = 'Products.Silva.tests.%s.%s' % (name, filename[:-3])
-        test = FunctionalDocTestSuite(dottedname,
-                                      setUp=setUp,
-                                      tearDown=tearDown,
-                                      extraglobs=extraglobs,
-                                      optionflags=doctest.ELLIPSIS + \
-                                          doctest.NORMALIZE_WHITESPACE)
+        test = ZopeTestCase.FunctionalDocTestSuite(
+            dottedname,
+            setUp=setUp,
+            tearDown=tearDown,
+            extraglobs=extraglobs,
+            optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
+
         test.layer = SilvaLayer
         suite.addTest(test)
     return suite

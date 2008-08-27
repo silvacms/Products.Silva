@@ -17,16 +17,13 @@ Z3CFORM_FORM = object()
 FORMLIB_FORM = object()
 
 class SilvaBrowser(object):
-    def __init__(self, doctest=False):
-        self.__doctest = doctest
+    def __init__(self):
         self.form_type = SILVA_FORM
         self._new_browser()
 
     def _new_browser(self):
         self.browser = Browser()
-        if self.__doctest:
-            self.browser.handleErrors = False
-            
+        self.browser.handleErrors = False
 
     def go_back(self):
         return self.browser.goBack()
@@ -344,9 +341,9 @@ class SilvaBrowser(object):
             current_form_type = self.form_type
             self.form_type = Z3CFORM_FORM
 
-        fields_needed = self.content_type_fields[content_type]
+        fields_needed = self.content_type_fields.get(content_type, None)
         # do some testing to determine if needed fields are supplied
-        assert fields_needed != None, 'unknown content type'
+        assert fields_needed != None, 'Unknown Content Type'
         for field_name in fields_needed:
             if not fields.has_key(field_name):
                 raise ValueError('Missing field "%s" for "%s"' % (field_name,

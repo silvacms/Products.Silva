@@ -140,6 +140,7 @@ def setUp(test):
     app = ZopeTestCase.app()
     app.temp_folder.session_data._reset()
     zope.component.eventtesting.clearEvents()
+    ZopeTestCase.close(app)
 
 def tearDown(test):
     """Tear down after each tests.
