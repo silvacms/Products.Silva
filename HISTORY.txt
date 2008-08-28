@@ -40,6 +40,8 @@ Silva changes
       - fixed a bug in tab_edit.pt where a dynamic string was being
         i18n-ed.
 
+      - fixed a bug on tab_access.pt where a tal: was missing
+
   Silva 2.1
 
     Features added:
