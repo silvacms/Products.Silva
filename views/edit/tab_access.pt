@@ -397,7 +397,7 @@
                           group
                         </label>
                         <span class="warning" 
-                          condition="python: group not in group_service.listAllGroups()"
+                          tal:condition="python: group not in group_service.listAllGroups()"
                           i18n:translate="">
                           (broken group, not listed in Groups Service)
                         </span>
