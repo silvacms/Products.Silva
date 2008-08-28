@@ -176,8 +176,7 @@ window.onload_registry.register(function() {
             />
             <label
               tal:content="item_info/number"
-              tal:attributes="for item_info/item_id"
-              i18n:translate="">
+              tal:attributes="for item_info/item_id">
               # with index doc, starts at 0, else starts at 1
             </label>
           </td>
