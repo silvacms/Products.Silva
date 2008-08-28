@@ -7,13 +7,13 @@ Silva changes
 
     Bug fixes
 
-     - Correct unauthorized error when a chief editor/manager want to
-       use the access tab and he don't have any access in the Silva
-       root and the service members implements the use direct lookup
-       protocol.
+      - Correct unauthorized error when a chief editor/manager want to
+        use the access tab and he don't have any access in the Silva
+        root and the service members implements the use direct lookup
+        protocol.
 
-     - fixed a bug in tab_edit.pt where a dynamic string was being
-       i18n-ed.
+      - fixed a bug in tab_edit.pt where a dynamic string was being
+        i18n-ed.
 
   Silva 2.1
 
