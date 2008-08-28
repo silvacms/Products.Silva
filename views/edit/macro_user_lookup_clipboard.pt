@@ -36,7 +36,7 @@
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate=""
                     i18n:attributes="title"
-                    tal:condition="not:python:view.use_direct_lookup()">
+                    tal:condition="not:python:model.sec_can_find_users()">
                     lookup users...
                   </a>
                   <a class="transporter"
@@ -46,7 +46,7 @@
                     tal:attributes="href string:${model/absolute_url}/edit/lookup"
                     i18n:translate=""
                     i18n:attributes="title"
-                    tal:condition="python:view.use_direct_lookup()">
+                    tal:condition="python:model.sec_can_find_users()">
                     add users...
                   </a>
                 </metal:block>

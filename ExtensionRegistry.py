@@ -82,6 +82,7 @@ class BaseExtension(object):
         return self._depends
 
     def get_content(self):
+        # XXX Maybe rename that to get_content_types.
         result = []
         my_name = self.name
         for content in Products.meta_types:
