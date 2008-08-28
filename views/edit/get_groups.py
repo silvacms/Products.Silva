@@ -7,16 +7,10 @@
 ##parameters=
 ##title=
 ##
-view = context
 model = context.REQUEST.model
 
-groups = {}
-for group in model.sec_get_local_defined_groups():
-    groups[group] = group
-for group in model.sec_get_upward_defined_groups():
-    groups[group] = group
-
-groups = groups.keys()
+groups = model.sec_get_local_defined_groups()
+groups.extend(model.sec_get_upward_defined_groups())
 groups.sort()
 
 return groups
