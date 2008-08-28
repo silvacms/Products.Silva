@@ -3,6 +3,13 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.10
+
+    Bugs fixed:
+
+      - Unicode fix for SilvaExternalSources.
+
+
   Silva 2.0.9
 
     Bugs fixed:
