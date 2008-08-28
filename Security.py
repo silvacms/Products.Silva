@@ -226,7 +226,7 @@ class Security(AccessManager):
         """
         use_direct_lookup = getattr(self.service_members.aq_inner, 'use_direct_lookup', None)
         if use_direct_lookup is None:
-            return True
+            return False
         return use_direct_lookup()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
