@@ -218,6 +218,17 @@ class Security(AccessManager):
             members.append(member)
         return members
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'sec_can_find_users')
+    def sec_can_find_users(self):
+        """Tells if you can use sec_can_find_users. This method delegates to
+        service_members for security reasons.
+        """
+        use_direct_lookup = getattr(self.service_members.aq_inner, 'use_direct_lookup', None)
+        if use_direct_lookup is None:
+            return True
+        return use_direct_lookup()
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_member')  
     def sec_get_member(self, userid):

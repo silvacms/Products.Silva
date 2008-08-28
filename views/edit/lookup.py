@@ -13,7 +13,7 @@ if referer.endswith('/edit/'):
 
 session[key] = referer
 
-if not view.use_direct_lookup():
+if not model.sec_can_find_users():
     request.RESPONSE.redirect('%s/edit/lookup_ui' % model.absolute_url())
 else:
     request.RESPONSE.redirect('%s/edit/lookup_ui_direct' %
