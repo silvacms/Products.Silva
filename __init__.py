@@ -7,14 +7,6 @@ from Products.Silva import emaillinesfield, lookupwindowfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
 
-try:
-    # some people may have put Sprout in the Products directory
-    # rather then somewhere in the PYTHONPATH, this makes Silva
-    # import it
-    import Products.Sprout
-except ImportError:
-    pass
-
 #set havePIL here, so the Image add screen can determine
 #allowed image filetypes, which are different depending
 #on whether PIL is installed or not.  I don't like that
