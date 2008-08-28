@@ -91,16 +91,6 @@ available plugin index. Used by SilvaMetadata.
 
 http://www.infrae.com/download/ProxyIndex
 
-Sprout 0.8 (DCI)
-----------------
-
-Sprout is a pure-python library that can also be installed as a Zope
-product for convenience. It contains various support modules for
-Silva's new XML import/export system as well as the new forms editor
-parser.
-
-http://www.infrae.com/download/Sprout
-
 Kupu 1.4b1 (DI)
 ---------------
 
