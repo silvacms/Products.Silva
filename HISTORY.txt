@@ -3,6 +3,19 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.11
+
+    Bugs fixed:
+
+      - added logging to catalog rebuilds, because they can
+        potentially take a very long time.
+
+  Silva 2.0.10
+  
+    Bugs fixed:
+    
+      - unicode issue in external source parameters fixed.
+
   Silva 2.0.9
 
     Bugs fixed:
