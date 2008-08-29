@@ -40,6 +40,11 @@ Silva changes
       - fixed a bug in tab_edit.pt where a dynamic string was being
         i18n-ed.
 
+    Ported from 2.0 branch:
+
+      - added logging to catalog rebuilds, because they can
+        potentially take a very long time.
+
       - fixed a bug on tab_access.pt where a tal: was missing
 
   Silva 2.1
