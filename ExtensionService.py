@@ -9,8 +9,9 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Globals import package_home
 from DateTime import DateTime
-import zLOG
+from zExceptions import NotFound
 import transaction
+import zLOG
 
 # Silva
 from helpers import add_and_edit
@@ -28,6 +29,7 @@ class ExtensionService(SimpleItem.SimpleItem):
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgradeForm'},
+        {'label':'Partial catalog rebuilds', 'action':'manage_partialReindexForm'},
         ) + SimpleItem.SimpleItem.manage_options
 
     security.declareProtected('View management screens', 'manage_editForm')
@@ -38,6 +40,10 @@ class ExtensionService(SimpleItem.SimpleItem):
                                 'manage_partialUpgradeForm')
     manage_partialUpgradeForm = PageTemplateFile(
                     'www/extensionServicePartialUpgrades', globals(),  
+                    __name__='manage_editForm')
+
+    manage_partialReindexForm = PageTemplateFile(
+                    'www/extensionServicePartialReindex', globals(),  
                     __name__='manage_editForm')
 
     security.declareProtected('View management screens', 'manage_main')
@@ -147,10 +153,27 @@ class ExtensionService(SimpleItem.SimpleItem):
         zLOG.LOG(
             'Silva', zLOG.INFO, 
             'Cleared the catalog')
-        self._reindex(root)
+        self._index(root)
         return self.manage_main(manage_tabs_message = 	 
                                 'Catalog refreshed.')
 
+    security.declareProtected('View management screens', 'reindex_subtree')
+    def reindex_subtree(self, REQUEST):
+        """reindexes a subtree
+        """
+        if not REQUEST.has_key('path'):
+            return self.manage_partialReindexForm(manage_tabs_message=
+                "Catalog rebuild failed: missing arguments")
+        path = REQUEST['path']
+        try:
+            obj = self.unrestrictedTraverse(path)
+        except NotFound:
+            return self.manage_partialReindexForm(manage_tabs_message=
+                "Catalog rebuild failed: not a valid path")
+        self._reindex(obj)
+        return self.manage_main(manage_tabs_message = 	 
+                                'Partial catalog refreshed.')
+        
     def _reindex(self, obj):
         """Reindex a silva object or version.
         """
@@ -160,10 +183,24 @@ class ExtensionService(SimpleItem.SimpleItem):
                 zLOG.LOG(
                     'Silva', zLOG.INFO, 
                     '%s objects reindexed' % str(i))
-            object_to_index.index_object()
+            object_to_index.reindex_object()
         zLOG.LOG(
             'Silva', zLOG.INFO, 
             'Catalog rebuilt. Total of %s objects reindexed' % str(i))
+
+    def _index(self, obj):
+        """index silva objects or versions.
+        """
+        for i, object_to_index in enumerate(self._get_objects_to_reindex(obj)):
+            if i and i % 500 == 0:
+                transaction.get().commit()
+                zLOG.LOG(
+                    'Silva', zLOG.INFO, 
+                    '%s objects indexed' % str(i))
+            object_to_index.index_object()
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            'Catalog rebuilt. Total of %s objects indexed' % str(i))
 
 
     def _get_objects_to_reindex(self, obj):

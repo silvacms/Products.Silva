@@ -19,6 +19,9 @@ Silva changes
 
     Ported from 2.0 branch:
 
+      - added partial catalog rebuilding for better testing
+        possibilities on large sites.
+
       - added logging to catalog rebuilds, because they can
         potentially take a very long time.
 
