@@ -147,6 +147,9 @@ class ExtensionService(SilvaService):
         """
         root = self.aq_inner.aq_parent
         root.service_catalog.manage_catalogClear()
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            'Cleared the catalog')
         self._reindex(root)
         return self.manage_main(manage_tabs_message = 	 
                                 'Catalog refreshed.')
@@ -157,7 +160,13 @@ class ExtensionService(SilvaService):
         for i, object_to_index in enumerate(self._get_objects_to_reindex(obj)):
             if i and i % 500 == 0:
                 transaction.get().commit()
+                zLOG.LOG(
+                    'Silva', zLOG.INFO, 
+                    '%s objects reindexed' % str(i))
             object_to_index.index_object()
+        zLOG.LOG(
+            'Silva', zLOG.INFO, 
+            'Catalog rebuilt. Total of %s objects reindexed' % str(i))
 
     def _get_objects_to_reindex(self, obj):
         """A generator to lazily get all the objects that need to be
