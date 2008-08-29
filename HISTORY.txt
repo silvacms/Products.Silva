@@ -47,6 +47,10 @@ Silva changes
 
       - fixed a bug on tab_access.pt where a tal: was missing
 
+      - added logging to catalog rebuilds, because they can
+        potentially take a very long time.
+
+
   Silva 2.1
 
     Features added:
