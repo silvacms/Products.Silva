@@ -7,6 +7,9 @@ Silva changes
 
     Bugs fixed:
 
+      - added partial catalog rebuilding for better testing
+        possibilities on large sites.
+
       - added logging to catalog rebuilds, because they can
         potentially take a very long time.
 
