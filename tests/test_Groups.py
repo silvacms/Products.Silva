@@ -1,7 +1,6 @@
 # Copyright (c) 2003-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
-
 import SilvaTestCase
 
 
@@ -10,60 +9,55 @@ import SilvaTestCase
    try manage_addGroup to the service_group
 """
 
-class BaseGroupTestCase(SilvaTestCase.SilvaTestCase):
+class GroupTestCase(SilvaTestCase.SilvaTestCase):
+
+
     def afterSetUp(self):
-        self.silva.manage_addProduct['Groups'].manage_addGroupsService('service_groups', 'Groups Service')
+        factory = self.silva.manage_addProduct['Groups']
+        factory.manage_addGroupsService('service_groups', 'Groups Service')
 
-class GroupTestCase(BaseGroupTestCase):
-        
-    def test_create(self):
+    def group_test(self, factory_name, groupname='test_group1'):
         self.failUnless(hasattr(self.silva, 'service_groups'))
+        service_groups = self.silva.service_groups
+
         # make a group
-        self.silva.service_groups.manage_addProduct['Silva'].manage_addGroup('test_group1', 'test_group1', 'test_group1')
+        factory = service_groups.manage_addProduct['Silva']
+        getattr(factory, factory_name)(groupname, groupname, groupname)
+
         # check that isGroup works, and that the group exists
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), True)
+        self.failUnless(hasattr(service_groups, groupname))
+
+        self.assertEquals(service_groups.isGroup(groupname), True)
+        self.failUnless(groupname in service_groups.listAllGroups())
+
+        group = getattr(service_groups, groupname)
+        self.failUnless(group.isValid())
+
         # add a duplicate group
         self.assertRaises(ValueError,
-                         self.silva.service_groups.manage_addProduct['Silva'].manage_addGroup,
-                         'test_group1', 'test_group1', 'test_group1')
-        self.silva.service_groups.manage_delObjects(['test_group1'])
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), False)
+                          factory.manage_addProduct['Silva'].manage_addGroup,
+                          groupname, groupname, groupname)
 
-class IPGroupTestCase(BaseGroupTestCase):
+        # delete group
+        service_groups.manage_delObjects([groupname])
+        self.assertEquals(service_groups.isGroup(groupname), False)
 
-    def test_create(self):
-        self.failUnless(hasattr(self.silva, 'service_groups'))
-        # make a group
-        self.silva.service_groups.manage_addProduct['Silva'].manage_addIPGroup('test_group1', 'test_group1', 'test_group1')
-        # check that isGroup works, and that the group exists
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), True)
-        # add a duplicate group
-        self.assertRaises(ValueError,
-                         self.silva.service_groups.manage_addProduct['Silva'].manage_addGroup,
-                         'test_group1', 'test_group1', 'test_group1')
-        self.silva.service_groups.manage_delObjects(['test_group1'])
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), False)
 
-class VirtualGroupTestCase(BaseGroupTestCase):
+    def test_group(self):
+        self.group_test('manage_addGroup')
 
-    def test_create(self):
-        self.failUnless(hasattr(self.silva, 'service_groups'))
-        # make a group
-        self.silva.service_groups.manage_addProduct['Silva'].manage_addVirtualGroup('test_group1', 'test_group1', 'test_group1')
-        # check that isGroup works, and that the group exists
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), True)
-        # add a duplicate group
-        self.assertRaises(ValueError,
-                         self.silva.service_groups.manage_addProduct['Silva'].manage_addGroup,
-                         'test_group1', 'test_group1', 'test_group1')
-        self.silva.service_groups.manage_delObjects(['test_group1'])
-        self.assertEquals(self.silva.service_groups.isGroup('test_group1'), False)
+
+    def test_ipgroup(self):
+        self.group_test('manage_addIPGroup')
+
+
+    def test_virtualgroup(self):
+        self.group_test('manage_addVirtualGroup')
+
 
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(GroupTestCase))
-    suite.addTest(unittest.makeSuite(IPGroupTestCase))
-    suite.addTest(unittest.makeSuite(VirtualGroupTestCase))
     return suite
     

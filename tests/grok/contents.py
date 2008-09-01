@@ -46,11 +46,11 @@
 
 """
 
-
-from silva.core import conf as silvaconf
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva.helpers import add_and_edit
+
+from silva.core import conf as silvaconf
 
 class ArticleVersion(CatalogedVersion):
 
