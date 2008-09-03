@@ -542,3 +542,12 @@ class SilvaBrowser(object):
         'Silva Link':           ['id', 'title', 'link_url', 'link_type'],
         'Silva AutoTOC':        ['id', 'title', 'depth'],
     }
+
+
+    @property
+    def contents(self):
+        """
+        return contents of the browser.
+        """
+        return self.browser.contents
+
