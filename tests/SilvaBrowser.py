@@ -19,9 +19,9 @@ FORMLIB_FORM = object()
 class SilvaBrowser(object):
     def __init__(self):
         self.form_type = SILVA_FORM
-        self._new_browser()
+        self.new_browser()
 
-    def _new_browser(self):
+    def new_browser(self):
         self.browser = Browser()
         #self.browser.handleErrors = False
 
@@ -313,7 +313,7 @@ class SilvaBrowser(object):
         # raised. Because of this we always use a new Browser 
         # when logginf in
         url = url or self.get_root_url()
-        self._new_browser()
+        self.new_browser()
         self.browser.addHeader('Authorization', 'Basic %s:%s' % (
                           username, password))
         self.browser.addHeader('Accept-Language', 'en-US')

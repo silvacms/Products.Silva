@@ -45,37 +45,36 @@
 
   Since it's an extension, you can install it:
 
-    >>> root = getSilvaRoot()
-    >>> extensionRegistry.is_installed('SimpleTestExtension', root)
+    >>> extensionRegistry.is_installed('SimpleTestExtension', app.root)
     False
-    >>> extensionRegistry.install('SimpleTestExtension', root)
-    >>> extensionRegistry.is_installed('SimpleTestExtension', root)
+    >>> extensionRegistry.install('SimpleTestExtension', app.root)
+    >>> extensionRegistry.is_installed('SimpleTestExtension', app.root)
     True
 
   If you install an already installed extension, this should do nothing.
 
-    >>> extensionRegistry.install('SimpleTestExtension', root)
-    >>> extensionRegistry.is_installed('SimpleTestExtension', root)
+    >>> extensionRegistry.install('SimpleTestExtension', app.root)
+    >>> extensionRegistry.is_installed('SimpleTestExtension', app.root)
     True
 
   Actually, the extension interface is set on the service_extensions
   by the default installer to mark the extension as installed:
 
-    >>> extension_iface.providedBy(root.service_extensions)
+    >>> extension_iface.providedBy(app.root.service_extensions)
     True
 
   And you can uninstall it:
 
-    >>> extensionRegistry.uninstall('SimpleTestExtension', root)
-    >>> extensionRegistry.is_installed('SimpleTestExtension', root)
+    >>> extensionRegistry.uninstall('SimpleTestExtension', app.root)
+    >>> extensionRegistry.is_installed('SimpleTestExtension', app.root)
     False
-    >>> extension_iface.providedBy(root.service_extensions)
+    >>> extension_iface.providedBy(app.root.service_extensions)
     False
 
   And if you uninstall an uninstalled extension, this does nothing.
 
-    >>> extensionRegistry.uninstall('SimpleTestExtension', root)
-    >>> extensionRegistry.is_installed('SimpleTestExtension', root)
+    >>> extensionRegistry.uninstall('SimpleTestExtension', app.root)
+    >>> extensionRegistry.is_installed('SimpleTestExtension', app.root)
     False
 
 

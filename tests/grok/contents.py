@@ -5,9 +5,8 @@
 
     >>> from Products.Silva.ExtensionRegistry import extensionRegistry 
     >>> silva = extensionRegistry.get_extension('Silva')
-    >>> root = getSilvaRoot()
-    >>> browser = getSilvaBrowser()
-    >>> logAsUser(root, 'manager')
+    >>> browser = SilvaBrowser()
+    >>> logAsUser(app, 'manager')
 
   You can grok your contents. Since our test are in Silva, they will
   be registered for Silva here.
@@ -30,10 +29,10 @@
     True
     >>> 'My Article Version' in [content['name'] for content in silva.get_content()]
     True
-    >>> root.manage_addProduct['Silva'].manage_addMyArticle('myarticle', 'My demo article')
-    >>> root.myarticle
+    >>> app.root.manage_addProduct['Silva'].manage_addMyArticle('myarticle', 'My demo article')
+    >>> app.root.myarticle
     <My Article instance myarticle>
-    >>> root.myarticle.customCreation
+    >>> app.root.myarticle.customCreation
     True
   
   A versioned content should have a versionClass defined:

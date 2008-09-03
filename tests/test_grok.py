@@ -18,31 +18,20 @@ import five.grok.testing
 from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 
-def getSilvaRoot():
-    """Get a Silva Root.
-    """
-    app = ZopeTestCase.app()
-    return app.root
 
-def getSilvaBrowser():
-    """Create a Silva browser.
-    """
-    return SilvaBrowser()
-
-def logAsUser(root, username):
+def logAsUser(app, username):
     """Login as the given user.
     """
     if username is None:
         noSecurityManager()
     else:
-        uf = root.acl_users
+        uf = app.root.acl_users
         user = uf.getUserById(username).__of__(uf)
         newSecurityManager(None, user)
 
 
 extraglobs = {'logAsUser': logAsUser,
-              'getSilvaRoot': getSilvaRoot,
-              'getSilvaBrowser': getSilvaBrowser,
+              'SilvaBrowser': SilvaBrowser,
               'verifyObject': verifyObject,
               'grokkify': five.grok.testing.grok,}
 
