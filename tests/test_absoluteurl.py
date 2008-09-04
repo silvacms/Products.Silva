@@ -33,7 +33,7 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
         |-- publication
         |   `-- folder
         |       `-- doc2
-        `--pub3
+        `-- doc
         """
 
         self.publication = self.add_publication(self.root, 'publication', u'Test Publication')
