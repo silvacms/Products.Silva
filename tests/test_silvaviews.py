@@ -6,7 +6,6 @@ import os
 from Testing.ZopeTestCase import Functional
     
 import SilvaTestCase
-from Testing.ZopeTestCase import utils
 
 
 import DateTime
@@ -94,8 +93,6 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         /doc
         
         """
-        utils.setupCoreSessions(self.app)
-        
         self.publication = self.add_publication(self.root, 'publication', u'Test Publication')
         self.folder = self.add_folder(self.publication, 'folder', u'Test Folder')
         self.doc = self.add_document(self.root, 'doc', u'Test Document')
