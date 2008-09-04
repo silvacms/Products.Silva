@@ -11,8 +11,7 @@ from zope.component import getAdapter
 
 import SilvaTestCase
 from SilvaTestCase import transaction
-# Zope
-from DateTime import DateTime
+from Products.Silva.tests.helpers import publishObject
 
 # Silva
 from Products.Silva.adapters import interfaces
@@ -78,8 +77,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
-        testfolder2.test_link.set_unapproved_version_publication_datetime(DateTime() - 1)
-        testfolder2.test_link.approve_version()
+        publishObject(testfolder2.test_link)
         testfolder3 = self.add_folder(
             self.root,
             'testfolder3',

@@ -41,7 +41,8 @@ def manage_addMyFolder(self, id, title, REQUEST=None):
 
 
 class MyFolderView(silvaviews.View):
-    pass
+
+    silvaconf.context(MyFolder)
 
 
     
