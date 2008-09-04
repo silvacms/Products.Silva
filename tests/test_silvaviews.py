@@ -115,9 +115,10 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
 
     def test_publish_through_borked_edit_url(self):
         response = self.publish(path)
-        self.assertEquals(200, response.getStatus())
+        self.assertEquals(404, response.getStatus())
         # in a hypothetical situation where we'd have made the change,
         # we would've tested for 404.
+        # XXX Sylvain 03/09/2008 - It was before 200.
         
     def test_traverse_through_borked_edit_path(self):
         object = self.root.restrictedTraverse(path, None)

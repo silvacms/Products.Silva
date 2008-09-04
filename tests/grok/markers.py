@@ -45,8 +45,8 @@
     True
     >>> browser.go('http://localhost/root/folder/photo')
     (200, 'http://localhost/root/folder/photo')
-    >>> browser.contents
-    '<html><body>Photo !</body></html>'
+    >>> print browser.contents
+    <html><body>Photo !</body></html>
 
   And we can remove it:
 

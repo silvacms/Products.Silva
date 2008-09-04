@@ -32,14 +32,6 @@ class FileData(component.Adapter):
         file = self.context._file
         return self._getDataForFile(file)
 
-class FlashData(FileData):
-
-    component.context(silva_interfaces.IFlash)
-    
-    def getData(self):
-        file = self.context._flash
-        return self._getDataForFile(file)
-
 class ImageData(component.Adapter):
 
     component.context(silva_interfaces.IImage)

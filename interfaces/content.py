@@ -4,6 +4,7 @@
 
 from zope.interface import Interface, Attribute
 from silva.core.layout.interfaces import ICustomizable
+from grokcore.component.interfaces import IContext
 
 class ISecurity(Interface):
     """Can be mixed in with an object to support Silva security.
@@ -132,7 +133,7 @@ class ISecurity(Interface):
         object.
         """
 
-class ISilvaObject(ISecurity, ICustomizable):
+class ISilvaObject(IContext, ISecurity, ICustomizable):
     """Interface that should be supported by all Silva objects.
     """
     # MANIPULATORS
@@ -911,12 +912,6 @@ class IFile(IAsset):
         """
         pass
 
-# XXX just so we can register an adapter. SilvaFlashAsset should
-# start using this
-class IFlash(IFile):
-    """Marker interface for flash assets.
-    """
-    pass
 
 # XXX should be extended to non-marker status
 class IImage(IAsset):

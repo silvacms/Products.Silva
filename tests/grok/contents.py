@@ -74,7 +74,6 @@ def manage_addMyArticle(self, id, title, REQUEST=None):
     article = Article(id)
     self._setObject(id, article)
     article = getattr(self, id)
-    article.set_title(title)
     # For test only
     article.customCreation = True
     # As well we should create a version, and other stuff ...

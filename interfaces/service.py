@@ -3,8 +3,9 @@
 # $Id$
 
 from zope.interface import Interface, Attribute
+from grokcore.component.interfaces import IContext
 
-class IZMIObject(Interface):
+class IZMIObject(IContext):
     """An object in ZMI.
     """
 
