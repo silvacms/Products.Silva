@@ -5,18 +5,12 @@
 import SilvaTestCase
 
 from Products.Silva import SilvaPermissions
-from silva.core.views.interfaces import IPreviewLayer
-
-from DateTime import DateTime
 from Products.Silva.Ghost import GhostVersion
 
-from zope.interface import noLongerProvides
 from zope.i18n import translate
 
-
-def resetPreview(content):
-    if IPreviewLayer.providedBy(content.REQUEST):
-        noLongerProvides(content.REQUEST, IPreviewLayer)
+from Products.Silva.tests.helpers import resetPreview, \
+    approveObject, publishObject, publishApprovedObject
 
 class GhostTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Ghost object.
@@ -56,19 +50,18 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
             
         # approve version of thing we point to
-        self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
-        self.doc1.approve_version()
+        approveObject(self.doc1)
 
-        # since there is still no published version, preview and view return
-        # None
-        # ghost=0, doc=0
+        # since there is still no published version, preview and view
+        # return None ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
             translate(ghost.preview()))
         resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
         # this should publish doc1
-        self.doc1.set_approved_version_publication_datetime(DateTime() - 1)
+        publishApprovedObject(self.doc1)
+
         # ghost=0, doc=1
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.preview())
@@ -76,8 +69,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
         # publish ghost version
-        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
-        ghost.approve_version()
+        publishObject(ghost)
 
         # ghost=1, doc=1
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
@@ -97,8 +89,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.view())
 
-        self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
-        self.doc1.approve_version()
+        publishObject(self.doc1)
 
         # now we're ghosting the version 1
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
@@ -122,8 +113,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
                           ghost.view())
 
         # publish doc2
-        self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
-        self.doc2.approve_version()
+        publishObject(self.doc2)
 
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
                           ghost.preview())
@@ -133,8 +123,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         
 
         # approve ghost again
-        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
-        ghost.approve_version()
+        publishObject(ghost)
 
         self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
                           ghost.preview())
@@ -146,8 +135,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # version
         ghost.create_copy()
         ghost.get_editable().set_haunted_url('/root/doc3')
-        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
-        ghost.approve_version()
+        publishObject(ghost)
         self.assertEquals('This ghost is broken. (/root/doc3)',
                           translate(ghost.preview()))
         resetPreview(ghost)
@@ -182,12 +170,11 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
                          ghost.get_editable().get_link_status())
         
         # now make ghost point to doc2, and publish ghost and doc2
-        self.doc2.set_unapproved_version_publication_datetime(DateTime() - 1)
-        self.doc2.approve_version()
+        publishObject(self.doc2)
         ghost.create_copy()
         ghost.get_editable().set_haunted_url('/root/doc2')
-        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
-        ghost.approve_version()
+        publishObject(ghost)
+
         # now close & delete doc2
         self.doc2.close_version()
         self.root.action_delete(['doc2'])
@@ -205,14 +192,13 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
                                                               '/root/doc1')
         # need to publish doc1 first
-        self.root.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
-        self.root.doc1.approve_version()
+        publishObject(self.root.doc1)
         ghost = getattr(self.root, 'ghost1')
         # FIXME: should we be able to get title of unpublished document?
         self.assertEquals('Doc1', ghost.get_title_editable())
         # now publish ghost
-        ghost.set_unapproved_version_publication_datetime(DateTime() - 1)
-        ghost.approve_version()
+        publishObject(ghost)
+
         # should have title of whatever we're pointing at now
         self.assertEquals('Doc1', ghost.get_title())
         # now break link
@@ -280,8 +266,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # the ghost's documents are published on creation, so if we publish
         # the haunted document is_published() should return true
         doc = self.subdoc2
-        doc.set_unapproved_version_publication_datetime(DateTime())
-        doc.approve_version()
+        publishObject(doc)
 
         self.assert_(gfpub.is_published())
 

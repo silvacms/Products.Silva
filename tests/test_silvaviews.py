@@ -3,13 +3,10 @@
 # $Id$
 
 import os
-from Testing.ZopeTestCase import Functional
     
 import SilvaTestCase
 
-
-import DateTime
-now = DateTime.DateTime()
+from Products.Silva.tests.helpers import publishObject
 
 
 """
@@ -81,7 +78,7 @@ path_to_nonexisting_content = (
 #     '/index/edit/index/edit/index/edit/index/edit/index/edit'
      '/testimag')
  
-class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
+class SilvaViewsTest(SilvaTestCase.SilvaFunctionalTestCase):
 
     def afterSetUp(self):
         """Content tree:
@@ -97,10 +94,8 @@ class SilvaViewsTest(Functional, SilvaTestCase.SilvaTestCase):
         self.folder = self.add_folder(self.publication, 'folder', u'Test Folder')
         self.doc = self.add_document(self.root, 'doc', u'Test Document')
         self.doc2 = self.add_document(self.folder, 'doc2', u'Test Document 2')
-        self.doc.set_unapproved_version_publication_datetime(now)
-        self.doc.approve_version()
-        self.doc2.set_unapproved_version_publication_datetime(now)
-        self.doc2.approve_version()
+        publishObject(self.doc)
+        publishObject(self.doc2)
         
         image_file = open(os.path.join(directory, 'data/testimage.gif'), 'rb')
         image_data = image_file.read()
@@ -164,8 +159,7 @@ class SilvaViewsTest2(SilvaViewsTest):
         SilvaViewsTest.afterSetUp(self)
         # Add the extra content object
         self.doc3 = self.add_document(self.root, 'doc2', u'Test Document 3')
-        self.doc3.set_unapproved_version_publication_datetime(now)
-        self.doc3.approve_version()
+        publishObject(self.doc3)
 
     def test_publish_through_borked_edit_url(self):
         SilvaViewsTest.test_publish_through_borked_edit_url(self)

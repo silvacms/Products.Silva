@@ -2,26 +2,15 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import noLongerProvides, alsoProvides
 from zope.interface.verify import verifyObject
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope import component
 
+from Products.Silva.tests.helpers import enablePreview, resetPreview
+
 from silva.core.views.interfaces import ISilvaURL
-from silva.core.views.interfaces import IPreviewLayer
 
 import SilvaTestCase
-
-# Helpers, that we should put somewhere maybe
-
-def resetPreview(content):
-    if IPreviewLayer.providedBy(content.REQUEST):
-        noLongerProvides(content.REQUEST, IPreviewLayer)
-
-def enablePreview(content):
-    if not IPreviewLayer.providedBy(content.REQUEST):
-        alsoProvides(content.REQUEST, IPreviewLayer)
-
 
 class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
 
