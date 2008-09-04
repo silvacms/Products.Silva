@@ -22,7 +22,7 @@ from Versioning import Versioning
 from Content import Content
 import mangle
 
-from Products.SilvaLayout.interfaces import IPreviewLayer
+from silva.core.views.interfaces import IPreviewLayer
 
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter

@@ -5,7 +5,7 @@ import Globals
 #silva
 from Products.Silva.adapters import adapter
 from Products.Silva import interfaces
-from Products.SilvaLayout.interfaces import IPreviewLayer
+from silva.core.views.interfaces import IPreviewLayer
 
 #python
 from types import StringType

@@ -5,7 +5,7 @@
 import SilvaTestCase
 
 from Products.Silva import SilvaPermissions
-from Products.SilvaLayout.interfaces import IPreviewLayer
+from silva.core.views.interfaces import IPreviewLayer
 
 from DateTime import DateTime
 from Products.Silva.Ghost import GhostVersion

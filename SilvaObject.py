@@ -44,7 +44,7 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 from Products.Silva.i18n import translate as _
 
-from Products.SilvaLayout.interfaces import IPreviewLayer
+from silva.core.views.interfaces import IPreviewLayer
 
 from silva.core.conf.utils import getSilvaViewFor
 from silva.core import conf
