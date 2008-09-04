@@ -15,8 +15,9 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.path')
 
 import re
 
-frag_re = re.compile("([^\#]*)(\#.*)?")
+frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
 
+from zLOG import LOG,INFO
 class PathAdapter(adapter.Adapter):
     """adapter that contains some magic to convert HTTP paths to
         physical paths and back (respecting virtual hosting situations)
@@ -42,8 +43,11 @@ class PathAdapter(adapter.Adapter):
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
+        LOG('urlToPath',INFO,url + "|" + parameters+"|"+query)
         if not path.startswith('/'):
-            # try to retain fragment information...
+            # try to retain query and fragment information...
+            if query:
+                path += '?' + query
             if fragment:
                 path += '#' + fragment
             return path
@@ -56,7 +60,9 @@ class PathAdapter(adapter.Adapter):
         except ValueError:
             result = path
             
-        # try to retain fragment information..
+        # try to retain path and fragment information..
+        if query:
+            result += '?' + query
         if fragment:
             result += '#' + fragment
         return result
@@ -68,11 +74,12 @@ class PathAdapter(adapter.Adapter):
             root, unless the path is relative, then it just returns it
             as is 
         """
+        LOG('pathToUrl',INFO,path)
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
         if not path.startswith('/'):
-            # fragment information is in path so will automatically be
-            # passed along
+            # query and fragment information is in path so will
+            # automatically be passed along
             return path
         request = self.request
         #strip off fragment (#) or query before
@@ -80,12 +87,17 @@ class PathAdapter(adapter.Adapter):
         #get converted
         m = frag_re.search(path)
         path = m.group(1)
-        frag = m.group(2)
+        query = m.group(2)
+        frag = m.group(3)
         url = request.physicalPathToURL(path.split('/'))
-        scheme, netloc, path, parameters, query, fragment = urlparse(url)
+        scheme, netloc, path, parameters, nquery, fragment = urlparse(url)
         # try to retain fragment or query information
+        LOG('q',INFO,query)
+        if query:
+            path += query
         if frag:
             path += frag
+        LOG('finalpath',INFO,path)
         return path
 
 InitializeClass(PathAdapter)
