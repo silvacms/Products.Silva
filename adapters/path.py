@@ -88,6 +88,8 @@ class PathAdapter(adapter.Adapter):
         path = m.group(1)
         query = m.group(2)
         frag = m.group(3)
+        url = request.physicalPathToURL(path.split('/'))
+        path = urlparse(url)[2]
         # try to retain fragment or query information
         if query:
             path += query
