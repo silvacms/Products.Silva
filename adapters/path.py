@@ -74,7 +74,6 @@ class PathAdapter(adapter.Adapter):
             root, unless the path is relative, then it just returns it
             as is 
         """
-        LOG('pathToUrl',INFO,path)
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
         if not path.startswith('/'):
@@ -92,12 +91,10 @@ class PathAdapter(adapter.Adapter):
         url = request.physicalPathToURL(path.split('/'))
         scheme, netloc, path, parameters, nquery, fragment = urlparse(url)
         # try to retain fragment or query information
-        LOG('q',INFO,query)
         if query:
             path += query
         if frag:
             path += frag
-        LOG('finalpath',INFO,path)
         return path
 
 InitializeClass(PathAdapter)
