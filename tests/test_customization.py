@@ -4,6 +4,10 @@
 
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
+from zope.app.component.interfaces import ISite
+
+from zExceptions import BadRequest
+from five.localsitemanager import make_objectmanager_site
 
 from silva.core.layout.interfaces import ICustomizationService
 
@@ -11,9 +15,25 @@ import SilvaTestCase
 
 class CustomizationServiceTest(SilvaTestCase.SilvaTestCase):
 
+    def test_utility_only_in_local_site(self):
+        # A service_customization can be added only in a local site.
+        self.failUnless(ISite.providedBy(self.root))
+        self.publication = self.add_publication(self.root, 'publication', 'Publication')
+        self.failIf(ISite.providedBy(self.publication))
+        self.assertRaises(BadRequest, 
+                          self.publication.manage_addProduct['silva.core.layout'].manage_addCustomizationService,
+                          'service_customization')
+    
+        # Now our publication become a local site.
+        make_objectmanager_site(self.publication)
+        self.failUnless(ISite.providedBy(self.publication))
+        self.publication.manage_addProduct['silva.core.layout'].manage_addCustomizationService('service_customization')
+        self.failUnless(hasattr(self.publication, 'service_customization'))
+                          
+
     def test_utility(self):
-        # This utility is not added by default, we need to do it.
         self.root.manage_addProduct['silva.core.layout'].manage_addCustomizationService('service_customization')
+        self.failUnless(hasattr(self.root, 'service_customization'))
         
         # Now we can fetch it
         utility = getUtility(ICustomizationService)
