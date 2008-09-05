@@ -552,11 +552,11 @@ table.listing td.field-title {
 * the whole tablecell and don't have to focus the text
 */
 
-table#sortable tbody a {
+table#sortable tbody a, table.listing tbody a {
   display: block;
 }
 
-table#sortable a.icon img {
+table#sortable a.icon img, table.listing a.icon img {
   display: inline;
   float: left;
   margin-right: 0.5em;
