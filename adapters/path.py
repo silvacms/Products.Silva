@@ -17,7 +17,6 @@ import re
 
 frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
 
-from zLOG import LOG,INFO
 class PathAdapter(adapter.Adapter):
     """adapter that contains some magic to convert HTTP paths to
         physical paths and back (respecting virtual hosting situations)
@@ -43,7 +42,6 @@ class PathAdapter(adapter.Adapter):
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
-        LOG('urlToPath',INFO,url + "|" + parameters+"|"+query)
         if not path.startswith('/'):
             # try to retain query and fragment information...
             if query:
