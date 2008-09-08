@@ -22,6 +22,9 @@ Silva changes
     Bugs Fixed:
 
     Bugfixes ported from 2.1 branch:
+      - Make sure that pressing the tab key when inside the kupu editor 
+        will always perform the indent/outdent editor commands.
+        This was not working anymore on Firefox3)
 
       - Rebuilding the catalog sometimes ran out of memory, since it
         was done in one huge transaction. Added a generator to lazily
