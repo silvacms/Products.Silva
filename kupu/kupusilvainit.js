@@ -47,6 +47,22 @@ KupuEditor.prototype.afterInit = function() {
     // if we don't first focus the outer window, Mozilla won't show a cursor
     window.focus();
     this.getDocument().getWindow().focus();
+
+    // jasper@infrae.com: 2008-09-08,  FF3 Tab list re-ordering
+    // make sure that the indent/outdent commands are issued when
+    // the tab keys are pressed.
+    doc.addEventListener('keydown', function(event){
+        if (window.event) event = window.event;
+        if (event.keyCode == '9') {
+            if (event.shiftKey){
+                kupu.execCommand('outdent');
+            }else{
+                kupu.execCommand('indent');
+            }
+            event.preventDefault();
+        }
+    }, true);
+
 };
 
 function initSilvaKupu(iframe) {
