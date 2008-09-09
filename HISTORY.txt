@@ -22,6 +22,10 @@ Silva changes
     Bugs Fixed:
 
     Bugfixes ported from 2.1 branch:
+
+      - Silva Documents with code sources no longer lose the parameter
+        types of the codes source parameters on xmlexport.
+
       - Make sure that pressing the tab key when inside the kupu editor 
         will always perform the indent/outdent editor commands.
         This was not working anymore on Firefox3)
