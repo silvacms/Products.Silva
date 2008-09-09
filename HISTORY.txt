@@ -11,6 +11,11 @@ Silva changes
         will always perform the indent/outdent editor commands.
         This was not working anymore on Firefox3)
 
+    Backported from 2.1 branch:
+
+      - Silva Documents with code sources no longer lose the parameter
+        types of the codes source parameters on xmlexport.
+
   Silva 2.0.11
 
     Bugs fixed:
