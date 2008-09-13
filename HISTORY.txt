@@ -39,7 +39,10 @@ Silva changes
       - html in parameters of external sources is no longer double
         escaped on saving.
 
-      - Correct unauthorized error when a chief editor/manager want to
+      - fixed 263503: adding support for relative links with query parameters 
+        (e.g. /path/to/object?key=value)
+
+      - correct unauthorized error when a chief editor/manager want to
         use the access tab and he don't have any access in the Silva
         root and the service members implements the use direct lookup
         protocol.
