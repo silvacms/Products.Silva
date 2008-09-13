@@ -33,10 +33,8 @@ class TOCRenderingAdapter(adapter.Adapter):
             items = container.objectItems(show_types)
             #get_title could be blank, then use id
             items = [ (o[1].get_title() or o[1].id,o) for o in items ]
-            items.sort()
+            items.sort(reverse=(sort_order == "reversealpha"))
             items = [ o[1] for o in items ]
-            if sort_order == 'reversealpha':
-                items.reverse()
         elif sort_order=='silva': #determine silva sorting
             nonordered_items = [ i for i in container.objectItems(show_types) if i[0] not in container._ordered_ids ]
             ordered_items = [ (i,getattr(container.aq_explicit,i)) for i in container._ordered_ids  ]
@@ -44,10 +42,8 @@ class TOCRenderingAdapter(adapter.Adapter):
         else: # chronologically by modification date
             items = container.objectItems(show_types)
             items = [ (o[1].get_modification_datetime(),o) for o in items ]
-            items.sort()
+            items.sort(reverse=(sort_order.startswith('r')))
             items = [ o[1] for o in items ]
-            if sort_order.startswith('r'):
-                items.reverse()
         return items
     
 
@@ -58,7 +54,7 @@ class TOCRenderingAdapter(adapter.Adapter):
         items = self._get_container_items(container, sort_order, show_types)
 
         for (name,item) in items:
-            if indent and name == 'index': #include the containers index
+            if name == 'index': #do not include indexes
                 # default document should not be inserted
                 continue
             #preview doesn't obey toc_filters?
@@ -74,7 +70,7 @@ class TOCRenderingAdapter(adapter.Adapter):
         items = self._get_container_items(container, sort_order, show_types)
         for (name,item) in items:
             if not (item.is_published() or interfaces.IAsset.providedBy(item)) or \
-                   (indent and name=='index'):
+                   (name=='index'):
                 continue
             if toc_filter.filter(item):
                     continue
