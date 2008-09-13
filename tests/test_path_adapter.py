@@ -34,6 +34,9 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(utp('foo/index'), 'foo/index')
         self.assertEquals(utp('foo/index#anchor'), 'foo/index#anchor')
         self.assertEquals(utp('/index'), '/root/foo/index')
+        self.assertEquals(utp('/index?p=b'), '/root/foo/index?p=b')
+        self.assertEquals(utp('/index#anchor'), '/root/foo/index#anchor')
+        self.assertEquals(utp('/index?p=b#anchor'), '/root/foo/index?p=b#anchor')
         self.assertEquals(utp('http://foo.bar.com:80/index'), 
                                 '/root/foo/index')
         self.assertEquals(utp('http://foo.bar.com:80/index#anchor'), 
