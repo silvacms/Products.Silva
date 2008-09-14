@@ -21,6 +21,11 @@ Silva changes
 
     Bugs Fixed:
 
+      - Fixed 101827: lookup window was always displaying the new
+        'place reference to container...' button, even when containers
+        (specifically the container's meta type) wasn't in the
+        filter list for the lookup window
+
     Bugfixes ported from 2.1 branch:
 
       - Silva Documents with code sources no longer lose the parameter

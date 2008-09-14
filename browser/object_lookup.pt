@@ -83,7 +83,7 @@
                   publishables python: ret[1];
                   assets python: ret[2];
                   addable_types python: ret[3];
-                  show_containers python: ret[4];
+                  visible_containers python: ret[4];
                   default_in_publishables python:default_document and default_document in publishables;
                 ">
                 <thead>
@@ -206,7 +206,7 @@
                                 lookup:id id;
                                 lookup:title title;
                                 checked python:'/'.join(item.getPhysicalPath()) == selected_path;
-                                style python:item in show_containers and 'visibility:hidden' or nothing"/>
+                                style python:item in visible_containers and 'visibility:hidden' or nothing"/>
                             <label
                               tal:condition="default_in_publishables"
                               tal:content="repeat/item/index"
@@ -456,7 +456,7 @@
                         title="insert a reference to this container: alt-c"
                         accesskey="c"
                         onclick="window.reference.setReferenceFromElement(this); return false;"
-                        tal:condition="python: publishables or assets or default"
+                        tal:condition="python: view.displayContainerReferenceButton(filter)"
                         i18n:attributes="title;value"
                         tal:attributes="lookup:path python:pathadapter.pathToUrlPath(mangle.Path.fromObject(startpath,context.get_container()));
                                         lookup:id context/id;
