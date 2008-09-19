@@ -142,7 +142,7 @@ def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
                 interfaces.ISilvaLocalService.implementedBy(content):
             # Local services in local sites
             addable = True
-        elif interfaces.ISilvaObject.providedBy(object_manager):
+        elif interfaces.IContainer.providedBy(object_manager):
             if interfaces.ISilvaObject.implementedBy(content) or \
                     (interfaces.IZMIObject.implementedBy(content) and \
                      not interfaces.ISilvaService.implementedBy(content)):
