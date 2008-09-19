@@ -69,6 +69,22 @@
       i18n:attributes="title">
       <tal:i18n i18n:translate="">addables</tal:i18n><tal:if condition="not: selected">...</tal:if>
     </a>
+    <a title="activate local site feature"
+      accesskey="d"
+      tal:define="
+        link_id string:managelocalsite;
+        selected python:link_id == template.id;
+        class python:selected and 'selected' or nothing;
+        ispublication python: model.implements_publication();
+      "
+       tal:condition="ispublication"
+       tal:attributes="
+        href string:$url/edit/$link_id;
+        class class;
+      "
+      i18n:attributes="title">
+      <tal:i18n i18n:translate="">local site</tal:i18n><tal:if condition="not: selected">...</tal:if>
+    </a>
   </tal:if>
 </div>
 </metal:block>

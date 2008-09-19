@@ -58,21 +58,21 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     conf.priority(-5)
     conf.factory('manage_addFolder')
 
-    # A hackish way to get a Silva tab in between the standard ZMI tabs
-    inherited_manage_options = BaseFolder.manage_options
-    manage_options=(
-        (inherited_manage_options[0], ) +
-        ({'label':'Silva /edit...', 'action':'edit'}, ) +
-        ({'label':'Customization', 'action':'manage_customization'}, ) +
-        inherited_manage_options[1:]
-        )
-
+    @property
+    def manage_options(self):
+        # A hackish way to get a Silva tab in between the standard ZMI tabs
+        manage_options = (BaseFolder.manage_options[0], )
+        return manage_options + \
+            ({'label':'Silva /edit...', 'action':'edit'}, ) + \
+            ({'label':'Customization', 'action':'manage_customization'}, ) + \
+            BaseFolder.manage_options[1:]
+            
     _allow_feeds = False
 
     used_space = 0
 
     implements(IFolder)
-        
+
     def __init__(self, id):
         Folder.inheritedAttribute('__init__')(
             self, id)

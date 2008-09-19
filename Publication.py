@@ -7,7 +7,7 @@ from zope.interface import implements
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from Globals import InitializeClass, DTMLFile
 from zExceptions import BadRequest
 import transaction
 import Acquisition
@@ -18,9 +18,10 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IPublication, IRoot
+from Products.Silva.interfaces import IPublication, IRoot, ISiteManager
+from Products.Silva.interfaces import IInvisibleService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class OverQuotaException(BadRequest):
     """Exception triggered when you're overquota.
@@ -58,9 +59,30 @@ class Publication(Folder.Folder):
 
     _addables_allowed_in_publication = None
 
-    conf.priority(-5)
-    conf.icon('www/silvapublication.gif')
-    conf.factory('manage_addPublication')
+    silvaconf.priority(-5)
+    silvaconf.icon('www/silvapublication.gif')
+    silvaconf.factory('manage_addPublication')
+
+
+    @property
+    def manage_options(self):
+        # A hackish way to get a Silva tab in between the standard ZMI tabs
+        base_options = super(Publication, self).manage_options
+        manage_options = (base_options[0], )
+        if ISiteManager(self).isSite():
+            manage_options += ({'label':'Services', 'action':'manage_services'},)
+        return manage_options + base_options[1:]
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_main')
+    manage_main = DTMLFile(
+        'www/folderContents', globals())
+
+    security.declareProtected(SilvaPermissions.ViewManagementScreens,
+                              'manage_services')
+    manage_services = DTMLFile(
+        'www/folderServices', globals())
+
 
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(
@@ -122,6 +144,21 @@ class Publication(Folder.Folder):
 
         
     # ACCESSORS
+
+    security.declarePublic('objectItemsContents')
+    def objectItemsContents(self, spec=None):
+        """Don't display services by default in the Silva root.
+        """
+        return [item for item in Publication.inheritedAttribute('objectItems')(self)
+                if not item[0].startswith('service_')]
+
+    security.declarePublic('objectItemsServices')
+    def objectItemsServices(self, spec=None):
+        """Display services separately.
+        """
+        return [item for item in Publication.inheritedAttribute('objectItems')(self)
+                if item[0].startswith('service_')
+                and not IInvisibleService.providedBy(item[1])]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_current_quota')
@@ -226,18 +263,62 @@ class Publication(Folder.Folder):
 
 InitializeClass(Publication)
 
+from silva.core.views import views as silvaviews
+from five import grok
+
+class ManageLocalSite(silvaviews.SMIView):
+
+    silvaconf.require('zope2.ViewManagementScreens')
+    
+    def update(self):
+        self.manager = ISiteManager(self.context)
+        if 'makesite' in self.request.form:
+            self.manager.makeSite()
+        if 'unmakesite' in self.request.form:
+            self.manager.unmakeSite()
+
+    def isSite(self):
+        return self.manager.isSite()
+
+
+managelocalsite = grok.PageTemplate("""
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/@@standard_macros/page">
+  <body>
+    <div metal:fill-slot="body">
+      <form action="." tal:attributes="action request/URL" method="post"
+            enctype="multipart/form-data">        
+        <div class="row">
+          <div class="controls">
+            <input type="submit" value="Make site" name="makesite"
+                   i18n:attributes="value" tal:condition="not:realview/isSite" />
+            <input type="submit" value="Unmake site" name="unmakesite" 
+                   i18n:attributes="value" tal:condition="realview/isSite" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+""")
+
+
 def manage_addPublication(
     self, id, title, create_default=1, policy_name='None', REQUEST=None):
     """Add a Silva publication."""
     if not mangle.Id(self, id).isValid():
         return
-    object = Publication(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
+    publication = Publication(id)
+    self._setObject(id, publication)
+    publication = getattr(self, id)
+    publication.set_title(title)
     if create_default:
         policy = self.service_containerpolicy.getPolicy(policy_name)
-        policy.createDefaultDocument(object, title)
+        policy.createDefaultDocument(publication, title)
     add_and_edit(self, id, REQUEST)
     return ''
 

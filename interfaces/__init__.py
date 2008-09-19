@@ -175,6 +175,23 @@ class IHaunted(Interface):
         """
         pass
 
+
+class ISiteManager(Interface):
+    """Site Manager adapter.
+    """
+
+    def makeSite():
+        """Make the context become a local site.
+        """
+
+    def unmakeSite():
+        """Release the context of being a local site.
+        """
+
+    def isSite():
+        """Return true if the context is a local site.
+        """
+
 from content import *
 from extension import *
 from registry import *

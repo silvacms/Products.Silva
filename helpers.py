@@ -148,6 +148,11 @@ def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
                      not interfaces.ISilvaService.implementedBy(content)):
                 # Silva and ZMI content in Silva objects
                 addable = True
+        elif interfaces.IVersionedContent.providedBy(object_manager) and \
+                interfaces.IVersion.implementedBy(content):
+                # Let version been added in a versionned
+                # object. Should match the correct version of course ...
+                addable = True
         if only_outside_silva:
             return not addable
         return addable

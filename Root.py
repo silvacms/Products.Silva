@@ -23,11 +23,10 @@ import transaction
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.interfaces import IRoot, IInvisibleService
+from Products.Silva.interfaces import IRoot, IInvisibleService, ISiteManager
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
-from five.localsitemanager import make_objectmanager_site
 from silva.core import conf as silvaconf
 
 
@@ -45,13 +44,6 @@ class Root(Publication):
 
     implements(IRoot)
 
-    inherited_manage_options = Publication.manage_options
-    manage_options= (
-        (inherited_manage_options[0],) + # ({'label':'Contents', 'action':'manage_contents'},) +
-        ({'label':'Services', 'action':'manage_services'},) +
-        inherited_manage_options[1:]
-        )
-
     silvaconf.baseclass()
 
     def __init__(self, id):
@@ -60,16 +52,6 @@ class Root(Publication):
         self._content_version = self.get_silva_software_version()
 
     # MANIPULATORS
-
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_main')
-    manage_main = DTMLFile(
-        'www/folderContents', globals())
-
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_services')
-    manage_services = DTMLFile(
-        'www/folderServices', globals())
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
@@ -103,20 +85,6 @@ class Root(Publication):
         return [id for id in Root.inheritedAttribute('objectIds')(self)
                 if id.startswith('service_')]
 
-    security.declarePublic('objectItemsContents')
-    def objectItemsContents(self, spec=None):
-        """Don't display services by default in the Silva root.
-        """
-        return [item for item in Root.inheritedAttribute('objectItems')(self)
-                if not item[0].startswith('service_')]
-
-    security.declarePublic('objectItemsServices')
-    def objectItemsServices(self, spec=None):
-        """Display services separately.
-        """
-        return [item for item in Root.inheritedAttribute('objectItems')(self)
-                if item[0].startswith('service_')
-                and not IInvisibleService.providedBy(item[1])]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_root')
@@ -316,7 +284,7 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # excessive
     title = unicode(title, 'latin1')
     # now set it all up
-    make_objectmanager_site(root)
+    ISiteManager(root).makeSite()
     setSite(root)
     install.installFromScratch(root)
     root.set_title(title)
