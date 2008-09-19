@@ -7,10 +7,11 @@ import urllib
 
 # Zope
 from zope.interface import implements
+from zope.app.component.interfaces import ISite
 from AccessControl import ModuleSecurityInfo
 
 # Silva 
-from Products.Silva.interfaces import ISilvaObject, IVersioning, IContainer
+from Products.Silva import interfaces
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
@@ -34,22 +35,22 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
     """
-    if IVersioning.providedBy(object):
+    if interfaces.IVersioning.providedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
-    if IContainer.providedBy(object):
+    if interfaces.IContainer.providedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
     
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
     """
-    if IVersioning.providedBy(object):
+    if interfaces.IVersioning.providedBy(object):
         if object.is_version_approved():
             object.unapprove_version()
         if object.is_version_published():
             object.close_version()
-    if IContainer.providedBy(object):
+    if interfaces.IContainer.providedBy(object):
         default = object.get_default()
         if default:
             unapprove_close_helper(default)
@@ -119,11 +120,36 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
     def SilvaZCMLContainerFilter(object_manager, filter_addable=False):
         if filter_addable and not zmi_addable: return False;
         if only_outside_silva:
-            if not ISilvaObject.providedBy(object_manager):
+            if not interfaces.ISilvaObject.providedBy(object_manager):
                 return True
             return False
         else:
-            if ISilvaObject.providedBy(object_manager):
+            if interfaces.ISilvaObject.providedBy(object_manager):
                 return True
             return False
     return SilvaZCMLContainerFilter
+
+def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
+    def SilvaZMIFilter(object_manager, filter_addable=False):
+        if filter_addable and not zmi_addable: 
+            return False
+        addable = False
+        if interfaces.IRoot.providedBy(object_manager) and \
+                interfaces.ISilvaService.implementedBy(content):
+            # We add services in the root
+            addable = True
+        elif ISite.providedBy(object_manager) and \
+                interfaces.ISilvaLocalService.implementedBy(content):
+            # Local services in local sites
+            addable = True
+        elif interfaces.ISilvaObject.providedBy(object_manager):
+            if interfaces.ISilvaObject.implementedBy(content) or \
+                    (interfaces.IZMIObject.implementedBy(content) and \
+                     not interfaces.ISilvaService.implementedBy(content)):
+                # Silva and ZMI content in Silva objects
+                addable = True
+        if only_outside_silva:
+            return not addable
+        return addable
+    return SilvaZMIFilter
+        

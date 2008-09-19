@@ -17,6 +17,10 @@ class ISilvaService(IZMIObject):
     """Basic Silva service.
     """
 
+class ISilvaLocalService(ISilvaService):
+    """A Silva service which can be added in a local site.
+    """
+
 class IMemberService(ISilvaService):
     def extra():
         """Return list of names of extra information.
