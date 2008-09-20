@@ -1,4 +1,4 @@
-##parameters=content, category=''
+##parameters=content, category='', renderFromRequest=False
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.Silva.roleinfo import CHIEF_ROLES, READER_ROLES
 from Products.Silva.roleinfo import isEqualToOrGreaterThan
@@ -97,7 +97,14 @@ for set_name in set_names:
             
         if isEditable(set_name, element_name):
             element['isEditable'] = 1
-            element['render'] = renderEdit(set_name, element_name)
+            if renderFromRequest:
+                #this will happen if there was an error saving the SMI
+                #metadata form; pass in the request to renderEdit
+                #so that the clients input will be used and not the
+                #saved metadata
+                element['render'] = renderEdit(set_name, element_name, request)
+            else:
+                element['render'] = renderEdit(set_name, element_name)
         else:
             # show a field, when it is read-only *and not* acquired (since
             # it then is shown in the acquired content column anyway).

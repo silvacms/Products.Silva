@@ -21,6 +21,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - fixed 100856: add support in Bindings for rendering the 
+        edit views of elements with values from the request
+
       - Fixed 101827: lookup window was always displaying the new
         'place reference to container...' button, even when containers
         (specifically the container's meta type) wasn't in the

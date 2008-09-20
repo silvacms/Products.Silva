@@ -19,10 +19,10 @@
     name="form"
     tal:define="
       metadata_category category | string:;
-      binding python: view.get_metadata(content, category=metadata_category) or nothing;
+      form_errors options/form_errors | nothing;
+      binding python: view.get_metadata(content, category=metadata_category, renderFromRequest=not not form_errors) or nothing;
       setnames binding/setNames | nothing;
-      is_container request/model/implements_container | nothing;
-      form_errors options/form_errors | nothing;"
+      is_container request/model/implements_container | nothing;"
     tal:condition="python: content and setnames"
     tal:attributes="class python: template.id != 'tab_metadata' and 'sublisting' or nothing">
     <input type="hidden" name="returntotab" tal:attributes="value template/id"/>
