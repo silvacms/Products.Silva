@@ -13,9 +13,8 @@ if all_errors:
     # There were errors...
     type = 'error'
     msg = _(
-        'The data that was submitted did not validate properly '
-        '(you might want to use the browser back button to adjust '
-        'the form values).')
+        'The data that was submitted did not validate properly.  Please adjust '
+        'the form values and submit again.')
 else:
     type = 'feedback'
     msg = _('Metadata saved.')
