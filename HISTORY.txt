@@ -7,6 +7,58 @@ Silva changes
 
     Features added:
 
+      - Silva is shipped with eggs by default.
+
+      - Silva root became a Five local site. You can activate others
+        Five local site on publications. Afterwards, you will be able
+        to add 'local services' to these publications.
+
+      - Five (and grok) views are supported by default on content
+        types.
+
+      - Formlib support have been added. You can create add, edit
+        forms, and every others kind of SMI forms.
+
+      - Z3C Forms support have been added. You can to create add, edit
+        forms, and every others kind of SMI forms.
+
+      - A new service have been added: service_customization. It let
+        you customize layout-based templates. A customization marker
+        (ZMI Content) let you tag your content. After you can
+        customize a given template only for that marker.
+
+      - A ZMI tab called 'Customization' have been added on every
+        Silva content. It let mark this content with a customization
+        marker, which can be ZODB based, or file-system based.
+
+      - Preview have been refactored out to use a namespace
+        (++preview++) and a layer. You can now navigate through
+        preview versions. Specific preview detection code, request
+        tag, have been removed, now you can do
+        IPreviewLayer.provided(self.request) to known if you are in
+        preview mode or not.
+
+      - New skin based component have been added: content provider,
+        viewlet manager, and viewlet. You can defined Grok templates.
+
+      - Resources can be pushed in a static directory of a package
+        Python, like in Grok. You can use resourceinclude after to
+        include them directly in your skin.
+
+      - Installation of extension have been reviewed, now you can use
+        a default installer to install an extension which just add few
+        content types. You can after extend this installer.
+
+      - Grok is used to configure Silva content types, services, views
+        skins and forms.
+
+      - ExtensionRegistry have been re-implemented to support egg
+        extension. Metadata about these extensions are fetch from egg
+        metadata.
+
+      - Upgrade steps support now every complex revision number types
+        (2.2.4b1-dev34 for instance).
+
       - We (again) needed to be able to have objects other than
         publishable content and assets, and so we finally decided to
         not force everything to be an asset, but to create a new
