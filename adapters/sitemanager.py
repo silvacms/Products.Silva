@@ -13,7 +13,7 @@ from Products.Silva import interfaces
 
 class SiteManager(grok.Adapter):
 
-    grok.provides(interfaces.ISiteManager)
+    grok.implements(interfaces.ISiteManager)
     grok.context(interfaces.IPublication)
     grok.require('zope2.ViewManagementScreens')
 
@@ -25,6 +25,8 @@ class SiteManager(grok.Adapter):
     def unmakeSite(self):
         if not self.isSite():
             raise ValueError, 'Not a local site.'
+        if interfaces.IRoot.providedBy(self.context):
+            raise ValueError, "Can't disable local site on Silva Root."
         sm = ISite(self.context).getSiteManager()
         if list(sm.registeredAdapters()):
             raise ValueError, 'Still have registered adapters.'
