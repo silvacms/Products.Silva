@@ -41,8 +41,8 @@ class LookupWindowWidget(TextWidget):
         description='onclick handler implementation',
         default=default_onclick_handler,
         required=0,
-        width='20', 
-        height='3')
+        width='30', 
+        height='4')
     
     def render(self, field, key, value, request):
         widget = []
