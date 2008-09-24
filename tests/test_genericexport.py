@@ -60,16 +60,16 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
         voc = self.root.export_content_format()
         self.failUnless(verifyObject(IVocabulary, voc),
                         "List exporter doesn't return a vocabulary")
-        self.assertEqual([(u'zip', 'Full Media (zip)')],
-                         [(v.value, v.title) for v in voc],
-                         "Cannot list exporter")
+        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+                          (u'odt', 'Open Document (odt)')],
+                         [(v.value, v.title) for v in voc])
 
         # You can list them against a ref
         ref = self.root.create_ref(self.root.testdocument)
         voc = self.root.export_content_format(ref)
-        self.assertEqual([(u'zip', 'Full Media (zip)')],
-                         [(v.value, v.title) for v in voc],
-                         "Cannot list exporter using a ref")
+        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+                          (u'odt', 'Open Document (odt)')],
+                         [(v.value, v.title) for v in voc])
 
         # We can register exporter for specific content
         gsm = getGlobalSiteManager()
@@ -80,16 +80,16 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
 
         # Folder will stay unchanged
         voc = self.root.export_content_format()
-        self.assertEqual([(u'zip', 'Full Media (zip)')],
-                         [(v.value, v.title) for v in voc],
-                         "Test list specific exporter fails")
+        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+                          (u'odt', 'Open Document (odt)')],
+                         [(v.value, v.title) for v in voc])
 
         # But the exporter is available on document
         voc = self.root.testdocument.export_content_format()
         self.assertEqual([(u'zip', 'Full Media (zip)'),
-                          (u'dummy', 'Dummy Exporter')],
-                         [(v.value, v.title) for v in voc],
-                         "Test list specific exporter fails")
+                          (u'dummy', 'Dummy Exporter'),
+                          (u'odt', 'Open Document (odt)'),],
+                         [(v.value, v.title) for v in voc],)
 
         # Remove our test exporter
         gsm.unregisterAdapter(DummyExporter,
@@ -103,21 +103,19 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
         # There is an utility which manage export feature
         utility = getUtility(interfaces_utility.IExportUtility)
         self.failUnless(verifyObject(interfaces_utility.IExportUtility, 
-                                     utility),
-                        "The export utility does not implement its interface correctly")
+                                     utility),)
 
         # We have a function to list exporter (see test_listExport),
         # which return a vocabulary
         voc = utility.listContentExporter(self.root)
-        self.assertEqual([(u'zip', 'Full Media (zip)')],
-                         [(v.value, v.title) for v in voc],
-                         "Cannot list exporter")
+        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+                          (u'odt', 'Open Document (odt)'),],
+                         [(v.value, v.title) for v in voc],)
 
         # Add we can retrieve the default zip exporter
         zip_exporter = utility.createContentExporter(self.root, 'zip')
         self.failUnless(verifyObject(interfaces.IContentExporter,
-                                     zip_exporter),
-                        "Zip exporter is not a content exporter")
+                                     zip_exporter),)
 
         # A non-existant exporter give a lookup error error
         self.assertRaises(ComponentLookupError, 
