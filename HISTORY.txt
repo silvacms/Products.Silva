@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.0.13
+
+    Bugs fixed:
+
+      - Fixed tab key indent/outdent behavior on Internet explorer
+
   Silva 2.0.12
 
     Bugs fixed:
