@@ -51,17 +51,31 @@ KupuEditor.prototype.afterInit = function() {
     // jasper@infrae.com: 2008-09-08,  FF3 Tab list re-ordering
     // make sure that the indent/outdent commands are issued when
     // the tab keys are pressed.
-    doc.addEventListener('keydown', function(event){
-        if (window.event) event = window.event;
-        if (event.keyCode == '9') {
-            if (event.shiftKey){
-                kupu.execCommand('outdent');
-            }else{
-                kupu.execCommand('indent');
-            }
-            event.preventDefault();
-        }
-    }, true);
+    if (typeof doc.addEventListener == 'function'){
+        // standards complient browsesrs
+        doc.addEventListener('keydown', function(event){
+            if (event.keyCode == '9') {
+                if (event.shiftKey){
+                    kupu.execCommand('outdent');
+                }else{
+                    kupu.execCommand('indent');
+                }
+                event.preventDefault();
+                }
+            }, true);
+    } else {
+        // internet explorer and friends
+        doc.attachEvent('onkeydown', function(event){
+            if (event.keyCode == '9') {
+                if (event.shiftKey){
+                    kupu.execCommand('outdent');
+                }else{
+                    kupu.execCommand('indent');
+                }
+                event.returnValue = false;
+                }
+            });
+    }
 
 };
 
