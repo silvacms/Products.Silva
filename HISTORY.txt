@@ -73,6 +73,9 @@ Silva changes
 
     Bugs Fixed:
 
+      - fixed 274668: multiple query parameters on relative links
+        broke, because the ampersands were not properly escaped.
+
       - fixed 100856: add support in Bindings for rendering the 
         edit views of elements with values from the request
 
