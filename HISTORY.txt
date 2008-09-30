@@ -9,6 +9,11 @@ Silva changes
 
       - Fixed tab key indent/outdent behavior on Internet explorer
 
+    Backported from 2.1 branch:
+
+      - fixed 274668: multiple query parameters on relative links
+        broke, because the ampersands were not properly escaped.
+
   Silva 2.0.12
 
     Bugs fixed:
