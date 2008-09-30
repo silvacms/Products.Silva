@@ -7,8 +7,11 @@ Silva changes
 
     Bug fixes
 
-      - fixed 263503: adding support for relative links with query parameters 
-        (e.g. /path/to/object?key=value)
+      - fixed 274668: multiple query parameters on relative links
+        broke, because the ampersands were not properly escaped.
+
+      - fixed 263503: adding support for relative links with query
+        parameters (e.g. /path/to/object?key=value)
 
       - correct unauthorized error when a chief editor/manager want to
         use the access tab and he don't have any access in the Silva
