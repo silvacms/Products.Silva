@@ -2,18 +2,18 @@
 # See also LICENSE.txt
 # $Id$
 
-from grokcore import component
+from five import grok
 
-from Products.Silva import interfaces as silva_interfaces
+from Products.Silva import interfaces
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 
-class XMLSourceAdapter(component.Adapter):
+class XMLSourceAdapter(grok.Adapter):
     """Adapter for Silva objects to get their XML content.
     """
 
-    component.implements(IXMLSource)
-    component.context(silva_interfaces.ISilvaObject)
+    grok.implements(IXMLSource)
+    grok.context(interfaces.ISilvaObject)
 
     def getXML(self, 
                version=xmlexport.PREVIEWABLE_VERSION,
@@ -34,5 +34,6 @@ class XMLSourceVersionAdapter(XMLSourceAdapter):
     """XMLSourceAdapter for content version.
     """
 
-    component.context(silva_interfaces.IVersion)
+    grok.context(interfaces.IVersion)
+
 

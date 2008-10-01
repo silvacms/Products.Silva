@@ -22,7 +22,7 @@ from Products.Silva import SilvaPermissions
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to include links to external
@@ -36,8 +36,8 @@ class Link(CatalogedVersionedContent):
 
     implements(IVersionedContent)
 
-    conf.icon('www/link.png')
-    conf.versionClass('LinkVersion')
+    silvaconf.icon('www/link.png')
+    silvaconf.versionClass('LinkVersion')
 
     def __init__(self, id):
         Link.inheritedAttribute('__init__')(self, id)

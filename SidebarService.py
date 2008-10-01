@@ -17,7 +17,7 @@ from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
 from interfaces import ISidebarService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class SidebarService(SilvaService):
     """Service for sidebar cache"""
@@ -41,9 +41,9 @@ class SidebarService(SilvaService):
         'www/sidebarServiceEditTab', globals(), 
         __name__='manage_sidebarServiceEditTab')
 
-    conf.icon('www/sidebar_service.png')
-    conf.factory('manage_addSidebarServiceForm')
-    conf.factory('manage_addSidebarService')
+    silvaconf.icon('www/sidebar_service.png')
+    silvaconf.factory('manage_addSidebarServiceForm')
+    silvaconf.factory('manage_addSidebarService')
 
     security.declareProtected(
         'View management screens', 'manage_sidebarServiceEdit')

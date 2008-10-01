@@ -12,7 +12,7 @@ from Products.Silva.BaseService import SilvaService
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.i18n import translate as _
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Job(object):
     __allow_access_to_unprotected_subobjects__ = 1
@@ -41,9 +41,9 @@ class DocmaService(SilvaService):
     for tab in ('manage_main', 'edit_tab', 'info_tab'):
         security.declareProtected('View management screens', tab)
 
-    conf.icon('www/docma.png')
-    conf.factory('manage_addDocmaServiceForm')
-    conf.factory('manage_addDocmaService')
+    silvaconf.icon('www/docma.png')
+    silvaconf.factory('manage_addDocmaServiceForm')
+    silvaconf.factory('manage_addDocmaService')
 
     def __init__(self, id, title):
         self.id = id

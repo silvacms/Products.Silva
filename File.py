@@ -43,10 +43,10 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
-from Products.Silva.adapters.interfaces import IAssetData
-from interfaces import IFile, IAsset, IUpgrader
+from Products.Silva.interfaces import IAssetData
+from Products.Silva.interfaces import IFile, IAsset, IUpgrader
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 def manage_addFile(self, id, title, file):
     """Add a File
@@ -77,9 +77,9 @@ class File(Asset):
     __implements__ = (WriteLockInterface,)
     implements(IFile)
 
-    conf.priority(-3)
-    conf.icon('www/silvafile.png')
-    conf.factory('manage_addFile')
+    silvaconf.priority(-3)
+    silvaconf.icon('www/silvafile.png')
+    silvaconf.factory('manage_addFile')
     
     def __init__(self, id):
         File.inheritedAttribute('__init__')(self, id)
@@ -263,7 +263,7 @@ class ZODBFile(File):
     """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """
 
-    conf.baseclass()
+    silvaconf.baseclass()
     
     def __init__(self, id):
         ZODBFile.inheritedAttribute('__init__')(self, id)
@@ -294,7 +294,7 @@ class FileSystemFile(File):
     from the ExtFile Product - if available.
     """    
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def __init__(self, id):
         FileSystemFile.inheritedAttribute('__init__')(self, id)        
@@ -361,9 +361,9 @@ class FilesService(SilvaService):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_filesServiceEditForm # used by add_and_edit()
 
-    conf.icon('www/files_service.gif')
-    conf.factory('manage_addFilesServiceForm')
-    conf.factory('manage_addFilesService')
+    silvaconf.icon('www/files_service.gif')
+    silvaconf.factory('manage_addFilesServiceForm')
+    silvaconf.factory('manage_addFilesService')
 
     def __init__(self, id, title, filesystem_storage_enabled=0):
         self.id = id
@@ -510,14 +510,14 @@ contentObjectFactoryRegistry.registerFactory(
     lambda id, ct, body: True,
     -1)
 
-@conf.subscribe(IFile, OFS.interfaces.IObjectClonedEvent) 
+@silvaconf.subscribe(IFile, OFS.interfaces.IObjectClonedEvent) 
 def file_cloned(file, event):
     if object != event.object:
         return
     # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterClone(file)
 
-@conf.subscribe(IFile, IObjectMovedEvent)
+@silvaconf.subscribe(IFile, IObjectMovedEvent)
 def file_moved(file, event):
     if object != event.object or IObjectRemovedEvent.providedBy(event):
         return
@@ -525,7 +525,7 @@ def file_moved(file, event):
     # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterAdd(file, container)
 
-@conf.subscribe(IFile, OFS.interfaces.IObjectWillBeRemovedEvent)
+@silvaconf.subscribe(IFile, OFS.interfaces.IObjectWillBeRemovedEvent)
 def file_will_be_moved(file, event):
     if object != event.object:
         return

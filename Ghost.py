@@ -24,7 +24,7 @@ import urlparse
 from interfaces import \
     IVersionedContent, IContainer, IContent, IGhost, IGhostContent
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class GhostBase:
     """baseclas for Ghosts (or Ghost versions if it's versioned)
@@ -244,10 +244,10 @@ class Ghost(CatalogedVersionedContent):
 
     implements(IVersionedContent, IGhostContent)
 
-    conf.icon('www/silvaghost.gif')
-    conf.factory('manage_addGhost')
-    conf.versionClass('GhostVersion')
-    conf.versionFactory('manage_addGhostVersion')
+    silvaconf.icon('www/silvaghost.gif')
+    silvaconf.factory('manage_addGhost')
+    silvaconf.versionClass('GhostVersion')
+    silvaconf.versionFactory('manage_addGhostVersion')
     
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)

@@ -1,16 +1,14 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-from grokcore import component
+from five import grok
+from Products.Silva import interfaces
 
-from Products.Silva.adapters import interfaces
-from Products.Silva import interfaces as silva_interfaces
+class IndexableBase(grok.Adapter):
 
-class IndexableBase(component.Adapter):
-
-    component.context(silva_interfaces.IPublishable)
-    component.implements(interfaces.ICatalogIndexable)
-
-    def __init__(self, context):
-        self.context = context
+    grok.implements(interfaces.ICatalogIndexable)
+    grok.context(interfaces.IPublishable)
 
     def index(self):
         raise NotImplementedError
@@ -26,7 +24,7 @@ class VersionedContentIndexable(IndexableBase):
     """Index versioned content.
     """
 
-    component.context(silva_interfaces.IVersionedContent)
+    grok.context(interfaces.IVersionedContent)
     
     def index(self):
         self.context.indexVersions()
@@ -40,7 +38,7 @@ class SimpleIndexable(IndexableBase):
     and assets.
     """
 
-    component.context(silva_interfaces.IAsset)
+    grok.context(interfaces.IAsset)
     
     def index(self):
         self.context.index_object()

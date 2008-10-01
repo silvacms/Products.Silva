@@ -23,7 +23,7 @@ from Products.Silva.interfaces import \
     IContainer, IContent, IGhost, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IGhostContent
 
-from silva.core import conf
+from silva.core import conf as silvaconf
     
 class Sync:
 
@@ -147,8 +147,8 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         (None, None, SyncCopy),
     ]
         
-    conf.icon('www/silvaghostfolder.gif')
-    conf.factory('manage_addGhostFolder')
+    silvaconf.icon('www/silvaghostfolder.gif')
+    silvaconf.factory('manage_addGhostFolder')
 
     def __init__(self, id):
         GhostFolder.inheritedAttribute('__init__')(self, id)

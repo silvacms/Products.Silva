@@ -1,3 +1,10 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+"""This module contains interfaces declarations for adapters used in Silva.
+"""
+
 from zope.interface import Interface, Attribute
 
 class IViewerSecurity(Interface):
@@ -232,3 +239,55 @@ class IFeedEntry(Interface):
     def keywords():
         pass
         
+
+
+class IVirtualHosting(Interface):
+    """Access to virtual hosting information.
+    """
+
+    def getVirtualRootPhysicalPath(self):
+        """ Get the physical path of the object being the 
+        virtual host root.
+    
+        If there is no virtual hosting, return None
+        """
+
+    def getVirtualHostKey(self):
+        """ Get a key for the virtual host root.
+    
+        If there is no virtual hosting, return None.
+        """
+
+    def getVirtualRoot(self):
+        """ Get the virtual host root object.
+        """
+
+    def containsVirtualRoot(self):
+        """ Return true if object contains the current virtual host root.
+        """
+
+class ISiteManager(Interface):
+    """Site Manager adapter.
+    """
+
+    def makeSite():
+        """Make the context become a local site.
+        """
+
+    def unmakeSite():
+        """Release the context of being a local site.
+        """
+
+    def isSite():
+        """Return true if the context is a local site.
+        """
+
+
+class IHaunted(Interface):
+    """Interface for haunted adapter
+    """
+    
+    def getHaunting():
+        """Return iterator of objects (ghosts) haunting the adapted object.
+        """
+        pass

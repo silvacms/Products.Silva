@@ -3,7 +3,7 @@
 # $Revision: 1.6 $
 import SilvaTestCase
 
-from Products.Silva.adapters.interfaces import IViewerSecurity
+from Products.Silva.interfaces import IViewerSecurity
 from Products.Silva.adapters import security
 from AccessControl.SecurityManagement import newSecurityManager
 

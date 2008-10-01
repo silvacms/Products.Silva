@@ -21,10 +21,10 @@ except ImportError:
 
 
 # register this extension
-from silva.core import conf
-conf.extensionName('Silva')
-conf.extensionTitle('Silva Core')
-conf.extensionDepends(None)
+from silva.core import conf as silvaconf
+silvaconf.extensionName('Silva')
+silvaconf.extensionTitle('Silva Core')
+silvaconf.extensionDepends(None)
 
 #----------------------------------------
 # Initialize subscription feature, part 1

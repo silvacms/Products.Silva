@@ -14,11 +14,9 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva.i18n import translate as _
-from Products.Silva.adapters.interfaces import IIndexable
+from Products.Silva.interfaces import IIndexable, IContent
 
-from interfaces import IContent
-
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Indexer(Content, SimpleItem):
     __doc__ = _("""Indexes can be created that function like an index in the 
@@ -34,7 +32,7 @@ class Indexer(Content, SimpleItem):
 
     implements(IContent)
 
-    conf.icon('www/silvaindexer.png')
+    silvaconf.icon('www/silvaindexer.png')
 
     def __init__(self, id):
         Indexer.inheritedAttribute('__init__')(self, id)

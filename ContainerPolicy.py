@@ -19,7 +19,7 @@ from Products.Silva.interfaces import IContainerPolicy
 from Products.Silva.interfaces import IInvisibleService
 from Products.Silva.BaseService import SilvaService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 # XXX: can these "helper" classes for ordering be refactored in something
 # more generic? See also ExtensionRegistry.Addable.
@@ -49,8 +49,8 @@ class ContainerPolicyRegistry(SilvaService):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/containerPolicyEdit.zpt', globals())
 
-    conf.icon('www/containerpolicy_service.png')
-    conf.factory('manage_addContainerPolicyRegistry')
+    silvaconf.icon('www/containerpolicy_service.png')
+    silvaconf.factory('manage_addContainerPolicyRegistry')
 
     def __init__(self):
         self._policies = {}

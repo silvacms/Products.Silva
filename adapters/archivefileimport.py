@@ -16,7 +16,7 @@ import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 from zope import contenttype
 # Silva
-from Products.Silva import interfaces as silva_interfaces
+from Products.Silva import interfaces
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva import assetregistry
@@ -24,7 +24,6 @@ from Products.Silva import assetregistry
 from Products.Silva import File
 # Silva Adapters
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
 
 BadZipfile = zipfile.BadZipfile
 
@@ -95,7 +94,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         else:
             id = self._getUniqueId(
                 container, filename, file=extracted_file, 
-                interface=silva_interfaces.IAsset)
+                interface=interfaces.IAsset)
         return id
     
     def _getSilvaContainer(self, context, path, replace=0):
@@ -108,7 +107,7 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         return container
     
     def _addSilvaContainer(self, context, id):
-        IContainer = silva_interfaces.IContainer
+        IContainer = interfaces.IContainer
         
         idObj = mangle.Id(context, id, interface=IContainer, allow_dup=1)
         if not idObj.isValid():
@@ -146,7 +145,7 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.archivefileimport'
 module_security.declareProtected(
     SilvaPermissions.ChangeSilvaContent, 'getArchiveFileImportAdapter')
 def getArchiveFileImportAdapter(context):
-    if not silva_interfaces.IContainer.providedBy(context):
+    if not interfaces.IContainer.providedBy(context):
         # raise some exception here?
         return None
     return ArchiveFileImportAdapter(context).__of__(context)

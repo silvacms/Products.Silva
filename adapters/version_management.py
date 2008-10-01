@@ -7,7 +7,7 @@ from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters.interfaces import IVersionManagement
+from Products.Silva.interfaces.adapters import IVersionManagement
 from Products.Silva.interfaces import IVersion
 from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions

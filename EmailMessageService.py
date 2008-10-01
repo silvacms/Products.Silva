@@ -22,8 +22,8 @@ from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
-import interfaces
-from silva.core import conf
+from Products.Silva import interfaces
+from silva.core import conf as silvaconf
 
 from Products.Silva.i18n import translate as _
 
@@ -50,9 +50,9 @@ class EmailMessageService(SilvaService):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
 
-    conf.icon('www/message_service.png')
-    conf.factory('manage_addEmailMessageServiceForm')
-    conf.factory('manage_addEmailMessageService')
+    silvaconf.icon('www/message_service.png')
+    silvaconf.factory('manage_addEmailMessageServiceForm')
+    silvaconf.factory('manage_addEmailMessageService')
 
     def __init__(self, id, title):
         self.id = id

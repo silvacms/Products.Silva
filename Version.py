@@ -19,7 +19,7 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 from interfaces import IVersion
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Version(SimpleItem):
 
@@ -215,7 +215,7 @@ def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
-@conf.subscribe(IVersion, IObjectMovedEvent)
+@silvaconf.subscribe(IVersion, IObjectMovedEvent)
 def version_moved(version, event):
     if version != event.object or IObjectRemovedEvent.providedBy(event):
         return

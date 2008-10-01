@@ -4,7 +4,7 @@ import Globals
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Products.Silva import SilvaPermissions, interfaces
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters.interfaces import IAddables
+from Products.Silva.interfaces import IAddables
 
 class BaseAddablesAdapter(adapter.Adapter):
 

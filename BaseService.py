@@ -6,11 +6,11 @@ from zope.interface import implements
 from OFS import SimpleItem
 
 import interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class ZMIObject(SimpleItem.SimpleItem):
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     implements(interfaces.IZMIObject)
 
@@ -18,7 +18,7 @@ class SilvaService(ZMIObject):
 
     implements(interfaces.ISilvaService)
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def __init__(self, id, title):
         self.id = id

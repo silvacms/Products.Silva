@@ -23,7 +23,7 @@ from Products.Silva.adapters import subscribable
 from Products.Silva.interfaces import IHaunted
 from Products.Silva.BaseService import SilvaService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class SubscriptionService(Folder.Folder, SilvaService):
     """Subscription Service
@@ -38,9 +38,9 @@ class SubscriptionService(Folder.Folder, SilvaService):
         Folder.Folder.manage_options
         )
 
-    conf.icon('www/subscription_service.png')
-    conf.factory('manage_addSubscriptionServiceForm')
-    conf.factory('manage_addSubscriptionService')
+    silvaconf.icon('www/subscription_service.png')
+    silvaconf.factory('manage_addSubscriptionServiceForm')
+    silvaconf.factory('manage_addSubscriptionService')
 
     # subscriptions are disabled by default
     _enabled = False

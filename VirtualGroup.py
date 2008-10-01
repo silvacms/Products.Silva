@@ -11,7 +11,7 @@ import SilvaPermissions
 
 from Group import BaseGroup, manage_addGroupUsingFactory
 import interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class VirtualGroup(BaseGroup):
     """Silva Virtual Group"""
@@ -23,8 +23,8 @@ class VirtualGroup(BaseGroup):
 
     manage_main = PageTemplateFile('www/virtualGroupEdit', globals())
 
-    conf.icon('www/virtual_group.png')
-    conf.factory('manage_addVirtualGroup')
+    silvaconf.icon('www/virtual_group.png')
+    silvaconf.factory('manage_addVirtualGroup')
     
     # MANIPULATORS
     security.declareProtected(

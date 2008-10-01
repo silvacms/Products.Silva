@@ -26,16 +26,16 @@ import urllib
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
-from adapters.interfaces import IContentImporter
-from interfaces import IPublishable, IContent, IGhost
-from interfaces import ISilvaObject, IAsset, INonPublishable
-from interfaces import IContainer, IFolder, IPublication, IRoot
+from Products.Silva.interfaces import IContentImporter
+from Products.Silva.interfaces import IPublishable, IContent, IGhost
+from Products.Silva.interfaces import ISilvaObject, IAsset, INonPublishable
+from Products.Silva.interfaces import IContainer, IFolder, IPublication, IRoot
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed
 
 import OFS.interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
@@ -54,9 +54,9 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
 
     object_type = 'container'
 
-    conf.icon('www/silvafolder.gif')
-    conf.priority(-5)
-    conf.factory('manage_addFolder')
+    silvaconf.icon('www/silvafolder.gif')
+    silvaconf.priority(-5)
+    silvaconf.factory('manage_addFolder')
 
     @property
     def manage_options(self):
@@ -884,7 +884,7 @@ def manage_addFolder(
 ##         return
 ##     event.oldParent._invalidate_sidebar(object)
 
-@conf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
+@silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
 def folder_moved_update_quota(obj, event):
     """Event called on folder, when they are moved, we want to update
     the quota on parents folders.

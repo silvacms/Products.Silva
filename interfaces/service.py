@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+"""This module contains interfaces declaration for Silva services.
+"""
+
 from zope.interface import Interface, Attribute
 from grokcore.component.interfaces import IContext
 

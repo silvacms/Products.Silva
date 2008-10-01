@@ -1,3 +1,7 @@
+# Copyright (c) 2003-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # Zope
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
@@ -9,7 +13,7 @@ import SilvaPermissions
 from helpers import add_and_edit
 from BaseService import SilvaService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 OLD_STYLE_RENDERER = 'Do not use new-style renderer'
 
@@ -32,9 +36,9 @@ class RendererRegistryService(SilvaService):
         
     security = ClassSecurityInfo()
 
-    conf.icon('www/renderer_service.png')
-    conf.factory('manage_addRendererRegistryServiceForm')
-    conf.factory('manage_addRendererRegistryService')
+    silvaconf.icon('www/renderer_service.png')
+    silvaconf.factory('manage_addRendererRegistryServiceForm')
+    silvaconf.factory('manage_addRendererRegistryService')
 
     def __init__(self, id, title):
         self.id = id

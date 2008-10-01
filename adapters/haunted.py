@@ -2,20 +2,17 @@
 # See also LICENSE.txt
 # $Id$
 
-from grokcore import component
-
+from five import grok
 from Products.Silva import interfaces
 
-class Haunted(component.Adapter):
+class Haunted(grok.Adapter):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
     """
-    component.context(interfaces.IContent)
-    component.implements(interfaces.IHaunted)
-    
-    def __init__(self, context):
-        self.context = context
 
+    grok.implements(interfaces.IHaunted)
+    grok.context(interfaces.IContent)
+    
     def getHaunting(self):
         catalog = self.context.service_catalog
         query = {
@@ -30,11 +27,11 @@ class HauntedGhost(Haunted):
     """Adapted content for retrieving the 'iterator' of haunting 
     objects (Ghosts).
     """
-    component.context(interfaces.IGhost)
+    grok.context(interfaces.IGhost)
     
     def getHaunting(self):
         # Nothing to look for - Ghost cannot be haunted. Don't yield anything
         # XXX how to not yield anything??
-        for b in []:
+        if None:
             yield None
 

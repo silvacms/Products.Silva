@@ -18,7 +18,7 @@ import SilvaPermissions
 from helpers import add_and_edit
 
 import interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class BaseGroup(CatalogPathAware, SilvaObject, SimpleItem):
 
@@ -31,7 +31,7 @@ class BaseGroup(CatalogPathAware, SilvaObject, SimpleItem):
         {'label': 'Edit', 'action': 'manage_main'},
     ) + SimpleItem.manage_options
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def __init__(self, id, group_name):
         BaseGroup.inheritedAttribute('__init__')(self, id)
@@ -56,8 +56,8 @@ class Group(BaseGroup):
 
     manage_main = PageTemplateFile('www/groupEdit', globals())
 
-    conf.icon('www/group.png')
-    conf.factory('manage_addGroup')
+    silvaconf.icon('www/group.png')
+    silvaconf.factory('manage_addGroup')
 
     # MANIPULATORS
     security.declareProtected(
@@ -142,7 +142,7 @@ def manage_addGroup(*args, **kwargs):
     """
     return manage_addGroupUsingFactory(Group, *args, **kwargs)
 
-@conf.subscribe(interfaces.IBaseGroup, OFS.interfaces.IObjectWillBeRemovedEvent)
+@silvaconf.subscribe(interfaces.IBaseGroup, OFS.interfaces.IObjectWillBeRemovedEvent)
 def group_will_be_removed(group, event):
     """Unregister group when it's deleted.
     """

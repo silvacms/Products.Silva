@@ -26,7 +26,7 @@ import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IAsset
+from Products.Silva.interfaces import IAsset, IImage, IUpgrader
 
 # misc
 from helpers import add_and_edit, fix_content_type_header
@@ -42,9 +42,7 @@ try:
 except ImportError:
     pass
 
-from interfaces import IImage, IUpgrader
-
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 # FIXME: Image and File Assets should be refactored - they share quite
 # some functionality which can be generalized.
@@ -101,9 +99,9 @@ class Image(Asset):
         'PNG': 'image/png',
     }
 
-    conf.priority(-3)
-    conf.icon('www/silvafile.png')
-    conf.factory('manage_addImage')
+    silvaconf.priority(-3)
+    silvaconf.icon('www/silvafile.png')
+    silvaconf.factory('manage_addImage')
 
     def __init__(self, id):
         Image.inheritedAttribute('__init__')(self, id)
@@ -753,7 +751,7 @@ contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
 
-@conf.subscribe(IImage, zope.app.container.interfaces.IObjectAddedEvent)
+@silvaconf.subscribe(IImage, zope.app.container.interfaces.IObjectAddedEvent)
 def image_added(image, event):
     for id in ('hires_image', 'image', 'thumbnail_image'):
         img = getattr(image, id, None)
@@ -761,13 +759,13 @@ def image_added(image, event):
             continue
         img.id = id
 
-@conf.subscribe(IImage, OFS.interfaces.IObjectWillBeRemovedEvent)
+@silvaconf.subscribe(IImage, OFS.interfaces.IObjectWillBeRemovedEvent)
 def image_will_be_removed(image, event):
     """explicitly remove the images"""
     for id in ('hires_image', 'image', 'thumbnail_image'):
         image._remove_image(id, set_none=0)
 
-@conf.subscribe(IImage, OFS.interfaces.IObjectClonedEvent)
+@silvaconf.subscribe(IImage, OFS.interfaces.IObjectClonedEvent)
 def image_cloned(image, event):
     "copy support"
     for id in ('image', 'hires_image', 'thumbnail_image'):

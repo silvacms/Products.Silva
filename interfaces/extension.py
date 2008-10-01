@@ -2,6 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
+"""This module contains interfaces declaration for creating and
+managing Silva extensions.
+"""
+
 from zope.interface import Interface, Attribute
 from registry import IRegistry
 

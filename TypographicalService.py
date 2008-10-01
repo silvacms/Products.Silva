@@ -12,7 +12,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.BaseService import SilvaService
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 _default_typo_chars = ['&#x20AC;',
                        '&#x201A;',
@@ -43,9 +43,9 @@ class TypographicalService(SilvaService):
         'www/typoService_edit', globals(),
         __name__='manage_main')
 
-    conf.icon('www/typochars_service.png')
-    conf.factory('manage_addTypographicalServiceForm')
-    conf.factory('manage_addTypographicalService')
+    silvaconf.icon('www/typochars_service.png')
+    silvaconf.factory('manage_addTypographicalServiceForm')
+    silvaconf.factory('manage_addTypographicalService')
 
     def __init__(self,id,title):
         self.id = id

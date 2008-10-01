@@ -1,3 +1,7 @@
+# Copyright (c) 2003-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zope.interface import implements
 
 # zope
@@ -14,7 +18,7 @@ from helpers import add_and_edit
 from BaseService import SilvaService, ZMIObject
 
 import interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
@@ -25,9 +29,9 @@ class SimpleMember(Member, Security, ZMIObject):
 
     meta_type = 'Silva Simple Member'
 
-    conf.icon('www/member.png')
-    conf.factory('manage_addSimpleMemberForm')
-    conf.factory('manage_addSimpleMember')
+    silvaconf.icon('www/member.png')
+    silvaconf.factory('manage_addSimpleMemberForm')
+    silvaconf.factory('manage_addSimpleMember')
     
     def __init__(self, id):
         self.id = id
@@ -159,9 +163,9 @@ class SimpleMemberService(SilvaService):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
 
-    conf.icon('www/members.png')
-    conf.factory('manage_addSimpleMemberServiceForm')
-    conf.factory('manage_addSimpleMemberService')
+    silvaconf.icon('www/members.png')
+    silvaconf.factory('manage_addSimpleMemberServiceForm')
+    silvaconf.factory('manage_addSimpleMemberService')
 
     def __init__(self, id):
         self.id = id

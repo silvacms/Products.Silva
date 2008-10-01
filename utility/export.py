@@ -1,17 +1,20 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-from grokcore.component import implements, GlobalUtility
+from five import grok
 
 from zope.component import getAdapter, getAdapters
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
-from Products.Silva.adapters.interfaces import IContentExporter, IDefaultContentExporter
+from Products.Silva.interfaces.adapters import IContentExporter, IDefaultContentExporter
 from Products.Silva.utility.interfaces import IExportUtility
 
-class ExportUtility(GlobalUtility):
+class ExportUtility(grok.GlobalUtility):
     """Utility to manage export.
     """
 
-    implements(IExportUtility)
+    grok.implements(IExportUtility)
 
     def createContentExporter(self, context, name):
         """Create a content exporter.

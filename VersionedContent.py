@@ -33,7 +33,7 @@ from interfaces import IVersionedContent, ICatalogedVersionedContent
 from webdav.common import PreconditionFailed
 from zExceptions import Forbidden
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class CachedData(Persistent):
     """ Persistent cache container
@@ -55,7 +55,7 @@ class VersionedContent(Content, Versioning, BaseFolder):
     _cached_checked = {}
     _cached_data = {}
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def __init__(self, id):
         """Initialize VersionedContent.
@@ -390,7 +390,7 @@ class CatalogedVersionedContent(VersionedContent):
     
     default_catalog = 'service_catalog'
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     def indexVersions(self):
         for version in self._get_indexable_versions():
@@ -429,13 +429,13 @@ class CatalogedVersionedContent(VersionedContent):
         
 InitializeClass(CatalogedVersionedContent)
 
-@conf.subscribe(ICatalogedVersionedContent, IObjectMovedEvent)
+@silvaconf.subscribe(ICatalogedVersionedContent, IObjectMovedEvent)
 def versionedcontent_moved(versionedcontent, event):
     if IObjectRemovedEvent.providedBy(event):
         return
     versionedcontent.indexVersions()
     
-@conf.subscribe(ICatalogedVersionedContent, IObjectWillBeMovedEvent)
+@silvaconf.subscribe(ICatalogedVersionedContent, IObjectWillBeMovedEvent)
 def versionedcontent_will_be_moved(versionedcontent, event):
     if IObjectWillBeAddedEvent.providedBy(event):
         return

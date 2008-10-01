@@ -3,11 +3,17 @@
 # $Id: virtualhosting.py,v 1.8 2006/01/24 16:12:01 faassen Exp $
 #
 
-from Products.Silva.adapters import adapter
+from five import grok
+from Products.Silva.interfaces import IVirtualHosting, ISilvaObject
 
-class VirtualHostingAdapter(adapter.Adapter):
+# XXX should be a view ...
+
+class VirtualHostingAdapter(grok.Adapter):
     """ Virtual Hosting adapter
     """
+
+    grok.implements(IVirtualHosting)
+    grok.context(ISilvaObject)
     
     def getVirtualRootPhysicalPath(self):
         """ Get the physical path of the object being the 
@@ -50,7 +56,7 @@ class VirtualHostingAdapter(adapter.Adapter):
         return pathContains(object_path, root_path)
 
 def getVirtualHostingAdapter(context):
-    return VirtualHostingAdapter(context).__of__(context)
+    return IVirtualHosting(context)
     
 def pathContains(path1, path2):
     """ 

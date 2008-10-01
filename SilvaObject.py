@@ -47,7 +47,7 @@ from Products.Silva.i18n import translate as _
 from silva.core.views.interfaces import IPreviewLayer
 
 from silva.core.conf.utils import getSilvaViewFor
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class XMLExportContext:
     """Simple context class used in XML export.
@@ -574,7 +574,7 @@ class SilvaObject(Security, ViewCode):
 
 InitializeClass(SilvaObject)
 
-@conf.subscribe(ISilvaObject, IObjectMovedEvent)
+@silvaconf.subscribe(ISilvaObject, IObjectMovedEvent)
 def object_moved(object, event):
     if object != event.object or IObjectRemovedEvent.providedBy(
         event) or IRoot.providedBy(object):
@@ -590,7 +590,7 @@ def object_moved(object, event):
     if not IVersionedContent.providedBy(object):
         object._set_creation_datetime()
 
-@conf.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
+@silvaconf.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
 def object_will_be_moved(object, event):
     if object != event.object or IObjectWillBeAddedEvent.providedBy(
         event) or IRoot.providedBy(object):

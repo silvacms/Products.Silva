@@ -18,7 +18,7 @@ from BaseService import SilvaService
 from ExtensionRegistry import extensionRegistry
 from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 import install
-from silva.core import conf
+from silva.core import conf as silvaconf
 import os.path
 
 class ExtensionService(SilvaService):
@@ -48,8 +48,8 @@ class ExtensionService(SilvaService):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
 
-    conf.icon('www/silva.png')
-    conf.factory('manage_addExtensionService')
+    silvaconf.icon('www/silva.png')
+    silvaconf.factory('manage_addExtensionService')
 
     _quota_enabled = False
 

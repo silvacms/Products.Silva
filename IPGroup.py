@@ -11,7 +11,7 @@ import SilvaPermissions
 
 from Group import BaseGroup, manage_addGroupUsingFactory
 import interfaces
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class IPGroup(BaseGroup):
     """Silva IP Group"""
@@ -23,8 +23,8 @@ class IPGroup(BaseGroup):
 
     manage_main = PageTemplateFile('www/ipGroupEdit', globals())
 
-    conf.icon('www/ip_group.png')
-    conf.factory('manage_addIPGroup')
+    silvaconf.icon('www/ip_group.png')
+    silvaconf.factory('manage_addIPGroup')
     
     # MANIPULATORS
     security.declareProtected(

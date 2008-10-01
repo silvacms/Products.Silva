@@ -17,7 +17,7 @@ from zope.component.interfaces import ComponentLookupError
 from zope.schema.interfaces import IVocabulary
 
 # Silva
-from Products.Silva.adapters import interfaces
+from Products.Silva import interfaces
 from Products.Silva.utility import interfaces as interfaces_utility
 from Products.SilvaDocument import interfaces as interfaces_document
 

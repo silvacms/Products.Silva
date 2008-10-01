@@ -4,20 +4,19 @@
 
 from tempfile import TemporaryFile
 
-from grokcore import component
+from five import grok
 
-from Products.Silva.adapters import interfaces
-from Products.Silva import interfaces as silva_interfaces
+from Products.Silva import interfaces as interfaces
 
 
-class ZipFileExportAdapter(component.Adapter):
+class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the export to zipfiles. 
     """
     
-    component.context(silva_interfaces.ISilvaObject)
-    component.implements(interfaces.IDefaultContentExporter)
-    component.name('zip')
+    grok.implements(interfaces.IDefaultContentExporter)
+    grok.context(interfaces.ISilvaObject)
+    grok.name('zip')
     
     name = "Full Media (zip)"
     extension = "zip"

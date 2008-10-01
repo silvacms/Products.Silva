@@ -1,23 +1,17 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: assetdata.py,v 1.7 2006/01/24 16:12:01 faassen Exp $
-#
+# $Id$
 
 # XXX These asset adapters are a temporary solution and will not be
 # necessary once the assets get a consistent API
 
-from grokcore import component
+from five import grok
+from Products.Silva import interfaces 
 
-from Products.Silva.adapters import interfaces
-from Products.Silva import interfaces as silva_interfaces
+class FileData(grok.Adapter):
 
-class FileData(component.Adapter):
-
-    component.context(silva_interfaces.IFile)
-    component.implements(interfaces.IAssetData)
-
-    def __init__(self, context):
-        self.context = context
+    grok.implements(interfaces.IAssetData)
+    grok.context(interfaces.IFile)
 
     def _getDataForFile(self, file):
         if file.meta_type == 'File': # OFS.Image.File
@@ -32,13 +26,10 @@ class FileData(component.Adapter):
         file = self.context._file
         return self._getDataForFile(file)
 
-class ImageData(component.Adapter):
+class ImageData(grok.Adapter):
 
-    component.context(silva_interfaces.IImage)
-    component.implements(interfaces.IAssetData)
-
-    def __init__(self, context):
-        self.context = context
+    grok.implements(interfaces.IAssetData)
+    grok.context(interfaces.IImage)
 
     def getData(self):
         image = getattr(self.context, 'hires_image', None)

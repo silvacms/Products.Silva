@@ -3,12 +3,12 @@
 # $Id$
 
 from zope.interface import implements
+from zope.deprecation import deprecation
 from zope.configuration.name import resolve
 import Products
 
 from silva.core.conf.registry import Registry
 
-from warnings import warn
 from bisect import insort_right
 
 import os.path
@@ -184,10 +184,8 @@ class ExtensionRegistry(Registry):
         for module in modules:
             self.registerClass(context, module)
 
+    @deprecation.deprecate("You should use either ZCML or Grok to register your new classes.")
     def registerClass(self, context, module):
-        warn('You should use either ZCML or Grok to register your new classes'
-             ' registerClass is going to disappear.', 
-             DeprecationWarning)
         # We assume the class name to be identical to the module name
         classname = module.__name__.split('.')[-1]
         klass = getattr(module, classname)

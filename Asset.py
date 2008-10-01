@@ -18,7 +18,7 @@ import SilvaPermissions
 
 from interfaces import IAsset
 
-from silva.core import conf
+from silva.core import conf as silvaconf
 
 class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     implements(IAsset)
@@ -30,7 +30,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     object_type = 'asset'
     _old_size = 0               # Old size of the object.
 
-    conf.baseclass()
+    silvaconf.baseclass()
 
     # MANIPULATORS
 
@@ -107,7 +107,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
 
 InitializeClass(Asset)
 
-@conf.subscribe(IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
+@silvaconf.subscribe(IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
 def asset_moved_update_quota(obj, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.

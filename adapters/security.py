@@ -2,8 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from grokcore import component
-from zope.interface import implements
+from five import grok
 
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -11,24 +10,21 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from Products.Silva import interfaces as silva_interfaces
+from Products.Silva import interfaces
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
 
 from DateTime import DateTime
 from types import ListType
 
-class ViewerSecurityAdapter(component.Adapter):
-    component.context(silva_interfaces.ISilvaObject)
-    component.implements(interfaces.IViewerSecurity)
+class ViewerSecurityAdapter(grok.Adapter):
 
-    def __init__(self, context):
-        self.context = context
+    grok.implements(interfaces.IViewerSecurity)
+    grok.context(interfaces.ISilvaObject)
         
     def setAcquired(self):
         # if we're root, we can't set it to acquire, just give
         # everybody permission again
-        if silva_interfaces.IRoot.providedBy(self.context):
+        if interfaces.IRoot.providedBy(self.context):
             self.context.manage_permission(
                 SilvaPermissions.View,
                 roles=roleinfo.ALL_ROLES,
@@ -49,7 +45,7 @@ class ViewerSecurityAdapter(component.Adapter):
                 acquire=0)
 
     def isAcquired(self):
-        if (silva_interfaces.IRoot.providedBy(self.context) and
+        if (interfaces.IRoot.providedBy(self.context) and
             self.getMinimumRole() == 'Anonymous'):
             return 1
         # it's unbelievable, but that's the Zope API..
@@ -63,7 +59,7 @@ class ViewerSecurityAdapter(component.Adapter):
             SilvaPermissions.View, self.context)[0])
     
     def getMinimumRoleAbove(self):
-        if silva_interfaces.IRoot.providedBy(self.context):
+        if interfaces.IRoot.providedBy(self.context):
             return 'Anonymous'
         else:
             parent = aq_parent(aq_inner(self.context))
@@ -80,7 +76,8 @@ LOCK_DURATION = (1./24./60.)*20.
 # on the Security mixin.
 
 class LockAdapter(adapter.Adapter):
-    implements(interfaces.ILockable)
+
+    grok.implements(interfaces.ILockable)
         
     security = ClassSecurityInfo()
     
