@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+from zope import component
+
 import os
 import SilvaTestCase
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
@@ -40,7 +42,7 @@ class FileTest(SilvaTestCase.SilvaTestCase):
             'Test File', file_handle)
         file_handle.close()
         f = self.root.testfile
-        data = f.index_html()
+        data = component.queryMultiAdapter((f, f.REQUEST), name='index')()
         silva_data = self._get_req_data(data)
         self.assertEqual(file_data, silva_data, "Asset didn't return original data")
         

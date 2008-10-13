@@ -1,7 +1,12 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
-import SilvaTestCase
+# $Id$
+
+
+from zope.interface.verify import verifyObject
+
+from Products.Silva import interfaces
+from Products.Silva.tests import  SilvaTestCase
 
 class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
     """Test simple membership.
@@ -16,7 +21,11 @@ class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
         acl_users._addUser('beta', 'beta', 'beta', [], [])
         acl_users._addUser('gamma', 'gamma', 'gamma', [], [])
         acl_users._addUser('alpha2', 'alpha2', 'alpha2', [], [])
-    
+
+    def test_service(self):
+        self.failUnless(verifyObject(interfaces.IMemberService,
+                                     self.root.service_members))
+
     def test_is_user(self):
         service_members = self.root.service_members
         self.assert_(service_members.is_user('alpha'))
@@ -24,7 +33,7 @@ class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(service_members.is_user('gamma'))
         self.assert_(service_members.is_user('alpha2'))
         self.assert_(not service_members.is_user('delta'))
-        
+
     def test_get_member(self):
         service_members = self.root.service_members
         self.assertEquals(service_members.get_member('alpha').userid(), 'alpha')
@@ -43,7 +52,7 @@ class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
                       members[1].userid() == 'alpha2') or
                      (members[0].userid() == 'alpha2' and
                       members[1].userid() == 'alpha'))
-    
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

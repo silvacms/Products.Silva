@@ -25,12 +25,12 @@ class ISilvaLocalService(ISilvaService):
     """
 
 class IMemberService(ISilvaService):
-    def extra():
-        """Return list of names of extra information.
-        """
+    """Member service.
+    """
 
-    def find_members(search_string):
-        """Return all users with a full name containing search string.
+    def find_members(search_string, where=None):
+        """Return all users with a full name containing search string
+        at the given position.
         """
 
     def is_user(userid):
@@ -38,15 +38,18 @@ class IMemberService(ISilvaService):
         """
 
     def get_member(userid):
-        """Get member object for userid, or None if no such member object.
+        """Get member object for userid, or None if no such member
+        object.
         """
 
     def get_cached_member(userid):
-        """Get memberobject which can be cached, or None if no such memberobject.
+        """Get memberobject which can be cached, or None if no such
+        memberobject.
         """
 
     def allow_authentication_requests():
-        """Return true if authentication requests are allowed, false if not
+        """Return true if authentication requests are allowed, false
+        if not.
         """
 
     def get_authentication_requests_url():

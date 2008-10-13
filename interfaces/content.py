@@ -916,6 +916,14 @@ class IFile(IAsset):
         pass
 
 
+class IZODBFile(IFile):
+    """A file in ZODB.
+    """
+
+class IFileSystemFile(IFile):
+    """A file on the file system.
+    """
+
 # XXX should be extended to non-marker status
 class IImage(IAsset):
     """Marker interface for image assets.

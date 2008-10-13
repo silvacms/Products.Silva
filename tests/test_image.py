@@ -6,6 +6,8 @@
 import os
 from StringIO import StringIO
 
+from zope import component
+
 # Zope 2
 from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
 from Testing.ZopeTestCase import utils
@@ -89,7 +91,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         if not havePIL:
             return
 
-        data = image.index_html(request)
+        data = component.queryMultiAdapter((image, request), name='index')()
         if type(data) == type(''):
             it = StringIO(self._get_req_data(data))
         else:
@@ -99,7 +101,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals('JPEG', pil_image.format)
 
         request.QUERY_STRING = 'hires'
-        data = image.index_html(request)
+        data = component.queryMultiAdapter((image, request), name='index')()
         if type(data) == type(''):
             it = StringIO(self._get_req_data(data))
         else:
@@ -111,7 +113,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(image_data, it.read())
 
         request.QUERY_STRING = 'thumbnail'
-        data = image.index_html(request)
+        data = component.queryMultiAdapter((image, request), name='index')()
         if type(data) == type(''):
             it = StringIO(self._get_req_data(data))
         else:

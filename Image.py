@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
+
 # Python
 import re
 from cStringIO import StringIO
@@ -43,6 +44,7 @@ except ImportError:
     pass
 
 from silva.core import conf as silvaconf
+from silva.core.views import views as silvaviews
 
 # FIXME: Image and File Assets should be refactored - they share quite
 # some functionality which can be generalized.
@@ -104,36 +106,8 @@ class Image(Asset):
     silvaconf.factory('manage_addImage')
 
     def __init__(self, id):
-        Image.inheritedAttribute('__init__')(self, id)
+        super(Image, self).__init__(id)
         self.image = None # should create default
-
-    # commented this out to shut up a security warning. assuming this is safe
-    # as image is a full-blown zope object with its own security checks
-    #security.declareProtected(SilvaPermissions.AccessContentsInformation,
-    #                          'image')
-
-    security.declareProtected(SilvaPermissions.View, 'index_html')
-    def index_html(self, view_method=None, REQUEST=None):
-        """view image data
-
-        view_method: parameter is set by preview_html (for instance) but
-            ignored here.
-        """
-        img = None
-        if REQUEST is None:
-            REQUEST = self.REQUEST
-        RESPONSE = REQUEST.RESPONSE
-        # line below solves wuw issue144 (images no scaled in kupu)
-        # but it's to much of a performance hit
-        # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
-        query = REQUEST.QUERY_STRING
-        if query == 'hires':
-            img = self.hires_image
-        elif query == 'thumbnail':
-            img = self.thumbnail_image
-        if img is None:
-            img = self.image
-        return self._image_index_html(img, REQUEST, RESPONSE)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
@@ -697,8 +671,27 @@ class Image(Asset):
             kw['REQUEST'] = REQUEST
         return image.index_html(*args, **kw)
 
-
 InitializeClass(Image)
+
+
+class ImageView(silvaviews.Template):
+
+    silvaconf.context(Image)
+    silvaconf.require('zope2.View')
+    silvaconf.name('index')
+
+    def render(self):
+        # line below solves wuw issue144 (images no scaled in kupu)
+        # but it's to much of a performance hit
+        # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
+        query = self.request.QUERY_STRING
+        if query == 'hires':
+            img = self.context.hires_image
+        elif query == 'thumbnail':
+            img = self.context.thumbnail_image
+        else:
+            img = self.context.image
+        return self.context._image_index_html(img, self.request, self.response)
 
 class ImageStorageConverter:
 

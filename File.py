@@ -47,6 +47,7 @@ from Products.Silva.interfaces import IAssetData
 from Products.Silva.interfaces import IFile, IAsset, IUpgrader
 
 from silva.core import conf as silvaconf
+from silva.core.views import views as silvaviews
 
 def manage_addFile(self, id, title, file):
     """Add a File
@@ -81,8 +82,6 @@ class File(Asset):
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addFile')
     
-    def __init__(self, id):
-        File.inheritedAttribute('__init__')(self, id)
 
     # ACCESSORS
 
@@ -145,19 +144,7 @@ class File(Asset):
             return fulltextlist
         fulltextlist.append(fulltext)
         return fulltextlist
-    
-    security.declareProtected(SilvaPermissions.View, 'index_html')
-    def index_html(self, view_method=None):
-        """ view (download) file data
         
-        view_method: parameter is set by preview_html (for instance) but
-        ignored here.
-        """
-        request = self.REQUEST
-        request.RESPONSE.setHeader(
-            'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
-        return self._index_html_helper(request)
-    
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, **kw):
         """ return xhtml tag
@@ -266,7 +253,7 @@ class ZODBFile(File):
     silvaconf.baseclass()
     
     def __init__(self, id):
-        ZODBFile.inheritedAttribute('__init__')(self, id)
+        super(ZODBFile, self).__init__(id)
         # Actual container of file data
         self._file = Image.File(id, id, '')        
 
@@ -274,9 +261,6 @@ class ZODBFile(File):
         # ensure consistent mimetype assignment by deleting content-type header
         fix_content_type_header(file)
         self._file.manage_upload(file=file)
-
-    def _index_html_helper(self, REQUEST):
-        return self._file.index_html(REQUEST, REQUEST.RESPONSE) # parameters needed for OFS.File
 
     def get_text_content(self):
         if not self.can_edit_text():
@@ -289,6 +273,18 @@ class ZODBFile(File):
 
 InitializeClass(ZODBFile)
 
+class ZODBFileView(silvaviews.Template):
+
+    silvaconf.context(ZODBFile)
+    silvaconf.require('zope2.View')
+    silvaconf.name('index')
+
+    def render(self):
+        self.response.setHeader(
+            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+        return self.context._file.index_html(self.request, self.response)
+        
+
 class FileSystemFile(File):
     """Silva File object, storage in ZODB. Contains the ExtFile object
     from the ExtFile Product - if available.
@@ -297,16 +293,13 @@ class FileSystemFile(File):
     silvaconf.baseclass()
 
     def __init__(self, id):
-        FileSystemFile.inheritedAttribute('__init__')(self, id)        
+        super(FileSystemFile, self).__init__(id)        
         self._file = ExtFile(id)
 
     def _set_file_data_helper(self, file):
         # ensure consistent mimetype assignment by deleting content-type header
         fix_content_type_header(file)
         self._file.manage_file_upload(file=file)
-
-    def _index_html_helper(self, REQUEST):
-        return self._file.index_html(REQUEST=REQUEST)
 
     def get_text_content(self):
         if not self.can_edit_text():
@@ -315,6 +308,19 @@ class FileSystemFile(File):
         return data
 
 InitializeClass(FileSystemFile)
+
+
+class FileSystemFileView(silvaviews.Template):
+
+    silvaconf.context(FileSystemFile)
+    silvaconf.require('zope2.View')
+    silvaconf.name('index')
+
+    def render(self):
+        self.response.setHeader(
+            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+        return self.context._file.index_html(self.request)
+
 
 def file_factory(self, id, content_type, file):
     """Add a File
