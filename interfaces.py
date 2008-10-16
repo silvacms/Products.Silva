@@ -693,7 +693,7 @@ class IVersioning(Interface):
         """Get the earliest publication date of any version of this Content.
         Needed for rss/atom feeds.
         """
-    
+
     def get_public_version_publication_datetime():
         """Get the publication datetime of the public version.
         PUBLIC
@@ -783,7 +783,7 @@ class ICatalogedVersionedContent(IVersionedContent):
     def _get_indexable_versions():
         """Get all versions that need to be indexed by the catalog.
         """
-        
+
 class IVersion(Interface):
     """Version of a versioned object
     """
@@ -896,7 +896,7 @@ class IFlash(IFile):
 class IImage(IAsset):
     """Marker interface for image assets.
     """
-    
+
 class IMember(Interface):
     # ACCESSORS
     def userid():
@@ -925,12 +925,12 @@ class IMember(Interface):
         """
 
 class IMemberService(Interface):
-    def extra():
-        """Return list of names of extra information.
-        """
+    """Member service.
+    """
 
-    def find_members(search_string):
-        """Return all users with a full name containing search string.
+    def find_members(search_string, where=None):
+        """Return all users with a full name containing search string
+        available at the given point.
         """
 
     def is_user(userid):
@@ -938,19 +938,22 @@ class IMemberService(Interface):
         """
 
     def get_member(userid):
-        """Get member object for userid, or None if no such member object.
+        """Get member object for userid, or None if no such member
+        object.
         """
 
     def get_cached_member(userid):
-        """Get memberobject which can be cached, or None if no such memberobject.
+        """Get memberobject which can be cached, or None if no such
+        memberobject.
         """
 
     def allow_authentication_requests():
-        """Return true if authentication requests are allowed, false if not
+        """Return true if authentication requests are allowed, false
+        if not.
         """
 
     def get_authentication_requests_url():
-        """Returns the url of the authentication_requests form
+        """Returns the url of the authentication_requests form.
         """
 
     def get_extra_names():
@@ -1005,7 +1008,7 @@ class IGhost(Interface):
 
     def haunted_path():
         """return path to haunted objecy"""
-    
+
     def get_haunted_url():
         """return haunted object's url"""
 
@@ -1047,28 +1050,28 @@ class IUpgrader(Interface):
 class ISubscribable(Interface):
     """Subscribable interface
     """
-    
+
     def isSubscribable():
         """Return True if the adapted object is actually subscribable,
         False otherwise.
         """
         pass
-    
+
     def subscribability():
         """
         """
         pass
-    
+
     def getSubscribedEmailaddresses():
         """
         """
         pass
-    
+
     def getSubscriptions():
         """Return a list of ISubscription objects
         """
         pass
-    
+
     def isValidSubscription(emailaddress, token):
         """Return True is the specified emailaddress and token depict a
         valid subscription request. False otherwise.
@@ -1080,23 +1083,23 @@ class ISubscribable(Interface):
         valid cancellation request. False otherwise.
         """
         pass
-    
+
     def isSubscribed(emailaddress):
         """Return True is the specified emailaddress is already subscribed
         for the adapted object. False otherwise.
         """
-        pass    
+        pass
 
     def setSubscribable(bool):
         """Set the subscribability to True or False for the adapted object.
         """
         pass
-        
+
     def subscribe(emailaddress):
         """Subscribe emailaddress for adapted object.
         """
         pass
-    
+
     def unsubscribe(emailaddress):
         """Unsubscribe emailaddress for adapted object.
         """
@@ -1110,12 +1113,12 @@ class ISubscribable(Interface):
 class ISubscription(Interface):
     """Subscription interface
     """
-    
+
     def emailaddress():
         """Return emailaddress for the subscription.
         """
         pass
-        
+
     def contentSubscribedTo():
         """Return object for this subscription.
         """
@@ -1124,7 +1127,7 @@ class ISubscription(Interface):
 class IHaunted(Interface):
     """Interface for haunted adapter
     """
-    
+
     def getHaunting():
         """Return iterator of objects (ghosts) haunting the adapted object.
         """
@@ -1140,7 +1143,7 @@ class IInvisibleService(Interface):
 class IBaseGroup(ISilvaObject):
     """A group implementation.
     """
-    
+
     def isValid():
         """Returns whether the group asset is valid.
         """
@@ -1152,9 +1155,8 @@ class IGroup(IBaseGroup):
 class IIPGroup(IBaseGroup):
     """Group using IP as members.
     """
-    
+
 class IVirtualGroup(IBaseGroup):
     """Virtual group.
     """
 
-    

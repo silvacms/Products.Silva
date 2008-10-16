@@ -1,6 +1,6 @@
 from zope.interface import implements
 from Products.SilvaViews.ViewRegistry import ViewAttribute
-    
+
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 import Globals
@@ -12,7 +12,7 @@ from interfaces import IMember
 
 class Member(Persistent, Acquisition.Implicit):
     implements(IMember)
-    
+
     security = ClassSecurityInfo()
 
     # allow edit view on this object
@@ -23,7 +23,7 @@ class Member(Persistent, Acquisition.Implicit):
         self._fullname = fullname
         self._email = email
         self._approved = is_approved
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
     def userid(self):
@@ -58,13 +58,13 @@ class Member(Persistent, Acquisition.Implicit):
         """Extra information.
         """
         return None
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'editor')
     def editor(self):
         """Return the preferred editor"""
         return 'field_editor'
-    
+
 Globals.InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
@@ -81,8 +81,8 @@ class CachedMember(Persistent, Acquisition.Implicit):
         self._email = email
         self._is_approved = is_approved
         self._editor = editor
-        
-    security.declareProtected(SilvaPermissions.AccessContentsInformation, 
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
     def userid(self):
         """Returns the userid
@@ -117,18 +117,18 @@ class CachedMember(Persistent, Acquisition.Implicit):
         """
         # fall back on actual member object, don't cache
         return self.service_members.get_member(self.id).extra(name)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'editor')
     def editor(self):
         """Return the preferred editor"""
         return self._editor
-    
+
 class NoneMember(Persistent, Acquisition.Implicit):
     implements(IMember)
 
     security = ClassSecurityInfo()
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
     def userid(self):
@@ -142,14 +142,14 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """fullname
         """
         return 'unknown'
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'email')
     def email(self):
         """email
         """
         return None
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
@@ -169,7 +169,7 @@ class NoneMember(Persistent, Acquisition.Implicit):
     def editor(self):
         """Return the preferred editor"""
         return 'field_editor'
-    
+
 Globals.InitializeClass(NoneMember)
 
 noneMember = NoneMember()

@@ -232,3 +232,28 @@ class IFeedEntry(Interface):
     def keywords():
         pass
         
+
+class IVirtualHosting(Interface):
+    """Access to virtual hosting information.
+    """
+
+    def getVirtualRootPhysicalPath(self):
+        """ Get the physical path of the object being the virtual host
+        root.
+
+        If there is no virtual hosting, return None
+        """
+
+    def getVirtualHostKey(self):
+        """ Get a key for the virtual host root.
+
+        If there is no virtual hosting, return None.
+        """
+
+    def getVirtualRoot(self):
+        """ Get the virtual host root object.
+        """
+
+    def containsVirtualRoot(self):
+        """ Return true if object contains the current virtual host root.
+        """

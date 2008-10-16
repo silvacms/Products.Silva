@@ -23,7 +23,7 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Simple Member'
-    
+
     def __init__(self, id):
         self.id = id
         self._title = id
@@ -65,7 +65,7 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         """Approve the member"""
         self._is_approved = 1
         self._p_changed = 1
-    
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
@@ -98,12 +98,12 @@ class SimpleMember(Member, Security, SimpleItem.SimpleItem):
         return self._is_approved
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'extra') 
+                              'extra')
     def extra(self, name):
         """Not implemented for simple membership.
         """
         pass
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'editor')
     def editor(self):
@@ -128,9 +128,9 @@ manage_addSimpleMemberForm = PageTemplateFile(
 
 def manage_addSimpleMember(self, id, REQUEST=None):
     """Add a Simple Member."""
-    object = SimpleMember(id)
-    self._setObject(id, object)
-    object.sec_assign(id, 'ChiefEditor')
+    user = SimpleMember(id)
+    self._setObject(id, user)
+    user.sec_assign(id, 'ChiefEditor')
     add_and_edit(self, id, REQUEST)
     return ''
 
@@ -141,7 +141,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
 
     meta_type = 'Silva Simple Member Service'
     title = 'Silva Membership Service'
-    
+
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
         ) + SimpleItem.SimpleItem.manage_options
@@ -161,7 +161,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     # is central service..
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'find_members')
-    def find_members(self, search_string):
+    def find_members(self, search_string, where=None):
         # XXX: get_valid_userids is evil: will break with other user
         # folder implementations.
         userids = self.get_valid_userids()
@@ -200,7 +200,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_authentication_requests')
     def allow_authentication_requests(self):
-        return self._allow_authentication_requests 
+        return self._allow_authentication_requests
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_allow_authentication_requests')
@@ -214,7 +214,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
         """manage method to set allow_authentication_requests"""
         self.set_allow_authentication_requests(int(REQUEST['allow_authentication_requests']))
         return self.manage_editForm(manage_tabs_message='Changed settings')
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_authentication_requests_url')
     def get_authentication_requests_url(self):
@@ -227,7 +227,7 @@ class SimpleMemberService(SimpleItem.SimpleItem):
                               'get_extra_names')
     def get_extra_names(self):
         return []
-    
+
     security.declarePublic('logout')
     def logout(self, came_from=None, REQUEST=None):
         """Logout the user.

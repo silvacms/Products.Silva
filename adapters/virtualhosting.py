@@ -3,28 +3,35 @@
 # $Id: virtualhosting.py,v 1.8 2006/01/24 16:12:01 faassen Exp $
 #
 
+from Products.Silva.interfaces import ISilvaObject
+from Products.Silva.adapters.interfaces import IVirtualHosting
 from Products.Silva.adapters import adapter
+from zope.interface import implements
+from zope.component import adapts
 
 class VirtualHostingAdapter(adapter.Adapter):
     """ Virtual Hosting adapter
     """
-    
+
+    implements(IVirtualHosting)
+    adapts(ISilvaObject)
+
     def getVirtualRootPhysicalPath(self):
-        """ Get the physical path of the object being the 
+        """ Get the physical path of the object being the
         virtual host root.
-    
+
         If there is no virtual hosting, return None
         """
-        try:            
+        try:
             root_path = self.context.REQUEST['VirtualRootPhysicalPath']
         except (AttributeError, KeyError), err:
             root_path =  None
-        
-        return root_path    
+
+        return root_path
 
     def getVirtualHostKey(self):
         """ Get a key for the virtual host root.
-    
+
         If there is no virtual hosting, return None.
         """
         # See also OFS/Traversable.py, line 31
@@ -37,7 +44,7 @@ class VirtualHostingAdapter(adapter.Adapter):
         root_path = self.getVirtualRootPhysicalPath()
         if root_path is None:
             return None
-    
+
         return self.context.restrictedTraverse(root_path, None)
 
     def containsVirtualRoot(self):
@@ -51,9 +58,9 @@ class VirtualHostingAdapter(adapter.Adapter):
 
 def getVirtualHostingAdapter(context):
     return VirtualHostingAdapter(context).__of__(context)
-    
+
 def pathContains(path1, path2):
-    """ 
+    """
     """
     return path2[:len(path1)] == path1
-    
+
