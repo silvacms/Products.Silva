@@ -333,10 +333,9 @@
               You are seeing this message because the Silva Groups extension is installed on the file system, 
               but a Groups Service hasn't been added to this Silva instance. To install one, go to the 
               <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services"
-                tal:content="string:Silva Root in the ZMI"
-                i18n:name="silva_root_in_the_ZMI" i18n:translate="">Silva Root in the ZMI</a>,
+                i18n:name="silva_root_in_the_ZMI"><tal:block i18n:translate="">Silva Root in the ZMI</tal:block></a>,
               choose &#8220;Groups Service&#8221; from the add list and give it the id 
-              <code tal:content="string:service_groups" i18n:name="service_groups">service_groups</code>. 
+              <code i18n:name="service_groups">service_groups</code>. 
               No further configuration is necessary.</span>
           </div>
           <tal:block condition="group_service">
