@@ -86,7 +86,7 @@
   ><a class="manipulator"
     title="lookup users: alt-l"
     accesskey="l"
-    tal:attributes="href string:${context/absolute_url}/edit/lookup"
+    tal:attributes="href string:${model/absolute_url}/edit/lookup"
     i18n:translate=""
     i18n:attributes="title">
     lookup users...
