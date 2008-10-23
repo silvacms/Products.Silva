@@ -10,7 +10,7 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
-<metal:block define-macro="properties">
+<metal:def-properties define-macro="properties">
 <div class="middleground">
   <div style="float:right">
     <tal:def define="unapproved_version model/get_unapproved_version | nothing">
@@ -71,6 +71,29 @@
     </a>
   </tal:if>
 </div>
-</metal:block>
+</metal:def-properties>
+
+<metal:def-access define-macro="access">
+<div class="middleground">
+  <a class="manipulator"
+    title="external users: alt-e"
+    accesskey="e"
+    tal:attributes="href string:../@@tab_externalusers"
+    i18n:translate=""
+    i18n:attributes="title">
+    manage external users...
+  </a
+  ><a class="manipulator"
+    title="lookup users: alt-l"
+    accesskey="l"
+    tal:attributes="href string:${context/absolute_url}/edit/lookup"
+    i18n:translate=""
+    i18n:attributes="title">
+    lookup users...
+  </a>
+</div>
+</metal:def-access>
+
+
 
 </html>

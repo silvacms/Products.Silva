@@ -11,6 +11,11 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+
+<metal:fill-middleground metal:fill-slot="middleground">
+  <metal:use-access use-macro="here/macro_middleground/macros/access" />
+</metal:fill-middleground>
+
 <metal:block fill-slot="main"
   tal:define="
     model_is_container model/implements_container | nothing;
