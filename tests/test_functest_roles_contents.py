@@ -18,7 +18,6 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
         status, url = sb.select_delete_content(fields['id'])
         self.failIf(fields['id'] in sb.get_content_ids())
         sb.logout()
-        self.failUnless('You have been logged out' in sb.browser.contents)
 
     def test_silva_document(self):
         sb = SilvaBrowser()
@@ -97,7 +96,7 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
                                            url=None, id='test_autotoc',
                                            title='Test AutoTOC',
                                            depth='-1')
-    
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ContentTypeTestCase))

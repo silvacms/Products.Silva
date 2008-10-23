@@ -6,7 +6,7 @@ from SilvaBrowser import SilvaBrowser
 class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
     """ each role make each content type in a folder
     """
-    
+
     def create_content_and_logout(self, sb, content_type, username, url=None,
                                   **fields):
         """ make content type, logout
@@ -17,7 +17,6 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
         sb.make_content(content_type, **fields)
         self.failUnless(fields['id'] in sb.get_content_ids())
         sb.logout()
-        self.failUnless('You have been logged out' in sb.browser.contents)
         return fields['id']
 
     def create_content_delete_logout(self, sb, content_type, username,
@@ -34,7 +33,6 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
         status, url = sb.select_delete_content(fields['id'])
         self.failIf(fields['id'] in sb.get_content_ids())
         sb.logout()
-        self.failUnless('You have been logged out' in sb.browser.contents)
 
     def login_delete_logout(self, sb, username, existing_content, url=None):
         """ login, select existing content, delete, logout
@@ -43,7 +41,6 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
         sb.select_delete_content(existing_content)
         self.failIf(existing_content in sb.get_content_ids())
         sb.logout()
-        self.failUnless('You have been logged out' in sb.browser.contents)
 
     def test_silva_document_in_folder(self):
         sb = SilvaBrowser()
@@ -57,7 +54,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               id='test_document',
                                               title='Test document')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_folder_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -71,7 +68,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               title='Test folder',
                                               policy='Silva Document')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_publication_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -85,7 +82,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               title='Test publication',
                                               policy='Silva Document')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_image_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -99,7 +96,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               title='Test image',
                                               image='torvald.jpg')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_file_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -113,7 +110,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               title='Test file',
                                               file='test.txt')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_find_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -126,7 +123,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               id='test_find',
                                               title='Test find')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_ghost_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -139,7 +136,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               id='test_ghost',
                                               reference='index')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_indexer_in_folder(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -152,7 +149,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               id='test_indexer',
                                               title='Test indexer')
         self.login_delete_logout(sb, 'manager', existing_content)
-        
+
     def test_silva_link_in_folder(self):
         # toggle absolute
         sb = SilvaBrowser()

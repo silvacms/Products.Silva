@@ -48,7 +48,7 @@ ZopeTestCase.installProduct('ProxyIndex')
 try:
     # if available, it is installed by Silva.install.installSubscriptions
     from Products.MaildropHost import MaildropHost
-    ZopeTestCase.installProduct('MaildropHost')    
+    ZopeTestCase.installProduct('MaildropHost')
 except ImportError:
     pass
 
@@ -87,7 +87,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 return name
 
     def getRoot(self):
-        """Returns the silva root object, i.e. the "fixture root". 
+        """Returns the silva root object, i.e. the "fixture root".
            Override if you don't like the default.
         """
         return self.app.root
@@ -103,14 +103,14 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
            far and away the most useful hook.
         '''
         pass
-    
+
     def beforeTearDown(self):
         '''Called before tearDown() is executed.
            Note that tearDown() is not called if
            setUp() fails.
         '''
         pass
-    
+
     def afterClear(self):
         '''Called after the fixture has been cleared.
            Note that this is done during setUp() *and*
@@ -132,8 +132,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         transaction.abort()
 
-    def setUp(self):     
-        '''Sets up the fixture. Do not override, 
+    def setUp(self):
+        '''Sets up the fixture. Do not override,
            use the hooks instead.
         '''
         transaction.abort()
@@ -160,12 +160,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             raise
 
     def tearDown(self):
-        '''Tears down the fixture. Do not override, 
+        '''Tears down the fixture. Do not override,
            use the hooks instead.
         '''
         self.beforeTearDown()
         self._clear(1)
-        
+
     def _app(self):
         '''Returns the app object for a test.'''
         return ZopeTestCase.app()
@@ -200,7 +200,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _close(self):
         '''Closes the ZODB connection.'''
         ZopeTestCase.close(self.app)
-        
+
     def addObject(self, container, type_name, id, product='Silva',
             **kw):
         getattr(container.manage_addProduct[product],
@@ -214,7 +214,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def setRoles(self, roles, name=user_name):
         '''Changes the roles assigned to a user.'''
         uf = self.root.acl_users
-        uf._doChangeUser(name, None, roles, []) 
+        uf._doChangeUser(name, None, roles, [])
         if name == getSecurityManager().getUser().getId():
             self.login(name)
 
@@ -228,7 +228,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         context.manage_role(role, permissions)
 
     def installExtension(self, extension):
-        """Installs a Silva extension""" 
+        """Installs a Silva extension"""
         ZopeTestCase.installProduct(extension)
         self.getRoot().service_extensions.install(extension)
 
@@ -257,7 +257,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     def add_link(self, object, id, title, url):
         return self.addObject(object, 'Link', id, title=title, url=url)
-    
+
     def add_image(self, object, id, title, **kw):
         return self.addObject(object, 'Image', id, title=title, **kw)
 
@@ -277,4 +277,4 @@ class SilvaFunctionalTestCase(
     ZopeTestCase.FunctionalTestCase, SilvaTestCase):
     pass
 
-    
+

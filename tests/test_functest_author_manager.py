@@ -24,7 +24,7 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         status, url = sb.login('author', 'secret', sb.smi_url())
         sb.make_content('Silva Document', id='test_document',
                          title='Test document')
-        
+
         data = sb.get_content_data()
         self.assertEquals(data[1]['name'], u'Test document')
         sb.click_href_labeled('test_document')

@@ -28,7 +28,6 @@ class ManagerUserSettingsTestCase(SilvaFunctionalTestCase):
         # XXX js onclick to close!!!
         # so i just 'hard' logout via the zmi
         sb.logout()
-        self.failUnless('You have been logged out.' in sb.browser.contents)
 
 def test_suite():
     suite = unittest.TestSuite()
