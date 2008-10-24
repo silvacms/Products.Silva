@@ -14,23 +14,23 @@ class VirtualHostingAdapter(grok.Adapter):
 
     grok.implements(IVirtualHosting)
     grok.context(ISilvaObject)
-    
+
     def getVirtualRootPhysicalPath(self):
-        """ Get the physical path of the object being the 
+        """ Get the physical path of the object being the
         virtual host root.
-    
+
         If there is no virtual hosting, return None
         """
-        try:            
+        try:
             root_path = self.context.REQUEST['VirtualRootPhysicalPath']
         except (AttributeError, KeyError), err:
             root_path =  None
-        
-        return root_path    
+
+        return root_path
 
     def getVirtualHostKey(self):
         """ Get a key for the virtual host root.
-    
+
         If there is no virtual hosting, return None.
         """
         # See also OFS/Traversable.py, line 31
@@ -43,7 +43,7 @@ class VirtualHostingAdapter(grok.Adapter):
         root_path = self.getVirtualRootPhysicalPath()
         if root_path is None:
             return None
-    
+
         return self.context.restrictedTraverse(root_path, None)
 
     def containsVirtualRoot(self):
@@ -57,9 +57,9 @@ class VirtualHostingAdapter(grok.Adapter):
 
 def getVirtualHostingAdapter(context):
     return IVirtualHosting(context)
-    
+
 def pathContains(path1, path2):
-    """ 
+    """
     """
     return path2[:len(path1)] == path1
-    
+

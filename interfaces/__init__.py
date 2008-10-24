@@ -8,6 +8,7 @@ from AccessControl import ModuleSecurityInfo
 module_security = ModuleSecurityInfo('Products.Silva.interfaces')
 __allow_access_to_unprotected_subobjects__ = 1
 
+
 class IAccessManager(Interface):
     """Mixin class for objects to request local roles on the object"""
 
@@ -21,10 +22,11 @@ class IAccessManager(Interface):
     def deny_role(self, userid, role):
         """Denies the role and send an e-mail to the user"""
 
+
 class RequiredParameterNotSetError(Exception):
     pass
 
-    
+
 class IMember(Interface):
     # ACCESSORS
     def userid():
@@ -52,6 +54,7 @@ class IMember(Interface):
         may face restrictions on the Silva site.
         """
 
+
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member
 # object (if they have the permissions to do so, but the user associated
@@ -71,96 +74,34 @@ class IIcon(Interface):
     # XXX I don't like the name
 
     def getIconIdentifier():
-        """returns icon identifier
+        """Returns icon identifier.
 
-            the icon registry should be able to return an icon from an icon
-            identifier
+        The icon registry should be able to return an icon from an
+        icon identifier.
         """
+
 
 class IUpgrader(Interface):
-    """interface for upgrade classes"""
+    """Interface for upgrade classes.
+    """
 
     def upgrade(anObject):
-        """upgrades object
+        """Upgrades object
 
-            during upgrade the object identity of the upgraded object may
-            change
-
-            returns object
+        During upgrade the object identity of the upgraded object may
+        change.
         """
 
-class ISubscribable(Interface):
-    """Subscribable interface
-    """
-    
-    def isSubscribable():
-        """Return True if the adapted object is actually subscribable,
-        False otherwise.
-        """
-        pass
-    
-    def subscribability():
-        """
-        """
-        pass
-    
-    def getSubscribedEmailaddresses():
-        """
-        """
-        pass
-    
-    def getSubscriptions():
-        """Return a list of ISubscription objects
-        """
-        pass
-    
-    def isValidSubscription(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid subscription request. False otherwise.
-        """
-        pass
-
-    def isValidCancellation(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid cancellation request. False otherwise.
-        """
-        pass
-    
-    def isSubscribed(emailaddress):
-        """Return True is the specified emailaddress is already subscribed
-        for the adapted object. False otherwise.
-        """
-        pass    
-
-    def setSubscribable(bool):
-        """Set the subscribability to True or False for the adapted object.
-        """
-        pass
-        
-    def subscribe(emailaddress):
-        """Subscribe emailaddress for adapted object.
-        """
-        pass
-    
-    def unsubscribe(emailaddress):
-        """Unsubscribe emailaddress for adapted object.
-        """
-        pass
-
-    def generateConfirmationToken(emailaddress):
-        """Generate a token used for the subscription/cancellation cycle.
-        """
-        pass
 
 class ISubscription(Interface):
-    """Subscription interface
+    """Subscription interface.
     """
-    
+
     def emailaddress():
         """Return emailaddress for the subscription.
         """
         pass
-        
+
     def contentSubscribedTo():
         """Return object for this subscription.
         """

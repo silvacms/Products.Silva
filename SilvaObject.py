@@ -80,10 +80,10 @@ class Zope3ViewAttribute(ViewAttribute):
 
             request = self.REQUEST
             request['model'] = model = self.aq_parent
-            
+
             view = getSilvaViewFor(self, self._view_type, model)
             method_on_view =  getattr(view, name, None)
-                
+
             if method_on_view is None:
                 # "Method on view" does not exist: redirect to default method.
                 # XXX may cause endless redirection loop, if default does not exist.
@@ -106,11 +106,11 @@ class SilvaObject(Security, ViewCode):
 
     # allow public view on this object
     public = ViewAttribute('public', 'render')
-    
+
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
-        
+
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
@@ -172,7 +172,7 @@ class SilvaObject(Security, ViewCode):
         if renderer_name == '(Default)':
             renderer_name = None
         self.get_editable()._renderer_name = renderer_name
-            
+
     # ACCESSORS
 
     security.declareProtected(
@@ -326,11 +326,11 @@ class SilvaObject(Security, ViewCode):
         SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
     def get_renderer_name(self):
         """Get the name of the renderer selected for object.
-        
+
         Returns None if default is used.
         """
         return getattr(self, '_renderer_name', None)
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
         """Render this as preview with the public view.
@@ -354,10 +354,10 @@ class SilvaObject(Security, ViewCode):
         # Be sure that nothing is cached by the browser.
 
         REQUEST = self.REQUEST
-        
+
         response = REQUEST.RESPONSE
         headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-                    ('Last-Modified', 
+                    ('Last-Modified',
                         DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
                     ('Cache-Control', 'no-cache, must-revalidate'),
                     ('Cache-Control', 'post-check=0, pre-check=0'),
@@ -374,7 +374,7 @@ class SilvaObject(Security, ViewCode):
 
 
         return self.preview()
-        
+
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):
         """Render this with the public view. If there is no viewable,
@@ -437,7 +437,7 @@ class SilvaObject(Security, ViewCode):
                               'is_default')
     def is_default(self):
         """returns True if the SilvaObject is a default document
-        
+
             by default return False, overridden on Content where an actual
             check is done
         """
@@ -500,8 +500,8 @@ class SilvaObject(Security, ViewCode):
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'export_content')
-    def export_content(self, export_format, 
-                       with_sub_publications=0, 
+    def export_content(self, export_format,
+                       with_sub_publications=0,
                        last_version=0):
         """Export content using the exporter export_format.
         """
@@ -565,7 +565,7 @@ class SilvaObject(Security, ViewCode):
     # commented out to shut up security declaration.
     #security.declareProtected(SilvaPermissions.ReadSilvaContent,
     #                            'PROPFIND')
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PROPPATCH')
     def PROPPATCH(self):
@@ -584,7 +584,7 @@ def object_moved(object, event):
     if (IPublishable.providedBy(object) and not (
         IContent.providedBy(object) and object.is_default())):
         newParent._add_ordered_id(object)
-            
+
     if event.newName == 'index':
         newParent._invalidate_sidebar(newParent)
     if not IVersionedContent.providedBy(object):

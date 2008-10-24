@@ -42,9 +42,9 @@ class AcquisitionMethod(Acquisition.Explicit):
 
 
 class Publication(Folder.Folder):
-    __doc__ = _("""Publications are special folders. They function as the 
-       major organizing blocks of a Silva site. They are comparable to 
-       binders, and can contain folders, documents, and assets. 
+    __doc__ = _("""Publications are special folders. They function as the
+       major organizing blocks of a Silva site. They are comparable to
+       binders, and can contain folders, documents, and assets.
        Publications are opaque. They instill a threshold of view, showing
        only the contents of the current publication. This keeps the overview
        screens manageable. Publications have configuration settings that
@@ -52,7 +52,7 @@ class Publication(Folder.Folder):
        complex sites, sub-publications can be nested.
     """)
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva Publication"
 
     implements(IPublication)
@@ -87,14 +87,14 @@ class Publication(Folder.Folder):
     def __init__(self, id):
         Publication.inheritedAttribute('__init__')(
             self, id)
-    
+
     # MANIPULATORS
-    
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_silva_addables_allowed_in_publication')
     def set_silva_addables_allowed_in_publication(self, addables):
         self._addables_allowed_in_publication = addables
-    
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
     def to_folder(self):
@@ -142,7 +142,7 @@ class Publication(Folder.Folder):
                 REQUEST.close()
             raise OverQuotaException
 
-        
+
     # ACCESSORS
 
     security.declarePublic('objectItemsContents')
@@ -172,7 +172,7 @@ class Publication(Folder.Folder):
         except KeyError:        # This publication object doesn't have
                                 # this metadata set
             return self.aq_parent.get_current_quota()
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
     def get_publication(self):
@@ -180,7 +180,7 @@ class Publication(Folder.Folder):
         'nearest' Silva publication.
         """
         return self.aq_inner
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_transparent')
     def is_transparent(self):
@@ -204,7 +204,7 @@ class Publication(Folder.Folder):
                               'is_silva_addables_acquired')
     def is_silva_addables_acquired(self):
         return self._addables_allowed_in_publication is None
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_document_chapter_links')
     def get_document_chapter_links(self, depth=0):
@@ -212,7 +212,7 @@ class Publication(Folder.Folder):
 
         This will return chapter, section, subsection and subsubsection
         links in a dictionary.
-        
+
         These can be used by Mozilla in the accessibility toolbar.
         """
         types = ['chapter', 'section', 'subsection', 'subsubsection']
@@ -245,7 +245,7 @@ class Publication(Folder.Folder):
         contents = self._getOb(toc_id, None)
         if contents is not None and contents.is_published():
             result['contents'] = contents.absolute_url()
-   
+
         # get the index
         if index_id is None:
             indexers = self.objectValues(['Silva Indexer'])
@@ -258,7 +258,7 @@ class Publication(Folder.Folder):
 
         if index is not None and index.is_published():
             result['index'] = index.absolute_url()
-        
+
         return result
 
 InitializeClass(Publication)
@@ -269,7 +269,7 @@ from five import grok
 class ManageLocalSite(silvaviews.SMIView):
 
     silvaconf.require('zope2.ViewManagementScreens')
-    
+
     def update(self):
         self.manager = ISiteManager(self.context)
         if 'makesite' in self.request.form:
@@ -290,12 +290,12 @@ managelocalsite = grok.PageTemplate("""
   <body>
     <div metal:fill-slot="body">
       <form action="." tal:attributes="action request/URL" method="post"
-            enctype="multipart/form-data">        
+            enctype="multipart/form-data">
         <div class="row">
           <div class="controls">
             <input type="submit" value="Make site" name="makesite"
                    i18n:attributes="value" tal:condition="not:realview/isSite" />
-            <input type="submit" value="Unmake site" name="unmakesite" 
+            <input type="submit" value="Unmake site" name="unmakesite"
                    i18n:attributes="value" tal:condition="realview/isSite" />
           </div>
         </div>
@@ -322,4 +322,4 @@ def manage_addPublication(
     add_and_edit(self, id, REQUEST)
     return ''
 
-        
+

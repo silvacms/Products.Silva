@@ -13,24 +13,24 @@ class Headers(BrowserView):
         content_tags = self.set_content_type()
         cache_tags = self.set_nocache()
         return content_tags + '\n' + cache_tags
-        
+
     def set_content_type(self):
         """docstring
         """
         return self.set_headers([('Content-Type', 'text/html; charset=UTF-8')])
-    
+
     def set_nocache(self):
         """docstring
         """
         headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-            ('Last-Modified', 
+            ('Last-Modified',
                 DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
             ('Cache-Control', 'no-cache, must-revalidate'),
             ('Cache-Control', 'post-check=0, pre-check=0'),
             ('Pragma', 'no-cache'),
             ]
         return self.set_headers(headers)
-        
+
     def set_headers(self, headers):
         """docstring
         """
