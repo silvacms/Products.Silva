@@ -24,7 +24,7 @@ ACQUIRE_SUBSCRIBABILITY = 2
 
 from zope.interface import implements
 
-class Subscription:
+class Subscription(object):
 
     grok.implements(interfaces.ISubscription)
 
