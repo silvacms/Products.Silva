@@ -1,0 +1,10 @@
+<div class="middleground">
+  <div class="executor"
+       tal:condition="view/executors">
+    <tal:block tal:repeat="button view/executors"
+               tal:replace="structure button/render" />
+  </div>
+  <tal:block tal:repeat="button view/buttons"
+             tal:replace="structure button/render" />
+  &nbsp;
+</div>

@@ -77,10 +77,31 @@
   <adapter
      factory=".zipfileexport.ZipfileExportAdapter"
      provides=".interfaces.IContentExporter"
-     name="zip" />
+     name="zip"
+     />
 
   <adapter
      factory=".virtualhosting.VirtualHostingAdapter"
-     provides="Products.Silva.adapters.interfaces.IVirtualHosting" />
+     provides="Products.Silva.adapters.interfaces.IVirtualHosting"
+     />
+
+  <adapter
+     for="Products.Silva.interfaces.IContainer"
+     factory=".subscribable.Subscribable"
+     provides="Products.Silva.adapters.interfaces.ISubscribable"
+     />
+
+  <adapter
+     for="Products.Silva.interfaces.IVersionedContent"
+     factory=".subscribable.Subscribable"
+     provides="Products.Silva.adapters.interfaces.ISubscribable"
+     />
+
+  <adapter
+     for="Products.Silva.interfaces.IRoot"
+     factory=".subscribable.SubscribableRoot"
+     provides="Products.Silva.adapters.interfaces.ISubscribable"
+     />
+
 
 </configure>

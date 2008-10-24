@@ -1047,68 +1047,6 @@ class IUpgrader(Interface):
             returns object
         """
 
-class ISubscribable(Interface):
-    """Subscribable interface
-    """
-
-    def isSubscribable():
-        """Return True if the adapted object is actually subscribable,
-        False otherwise.
-        """
-        pass
-
-    def subscribability():
-        """
-        """
-        pass
-
-    def getSubscribedEmailaddresses():
-        """
-        """
-        pass
-
-    def getSubscriptions():
-        """Return a list of ISubscription objects
-        """
-        pass
-
-    def isValidSubscription(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid subscription request. False otherwise.
-        """
-        pass
-
-    def isValidCancellation(emailaddress, token):
-        """Return True is the specified emailaddress and token depict a
-        valid cancellation request. False otherwise.
-        """
-        pass
-
-    def isSubscribed(emailaddress):
-        """Return True is the specified emailaddress is already subscribed
-        for the adapted object. False otherwise.
-        """
-        pass
-
-    def setSubscribable(bool):
-        """Set the subscribability to True or False for the adapted object.
-        """
-        pass
-
-    def subscribe(emailaddress):
-        """Subscribe emailaddress for adapted object.
-        """
-        pass
-
-    def unsubscribe(emailaddress):
-        """Unsubscribe emailaddress for adapted object.
-        """
-        pass
-
-    def generateConfirmationToken(emailaddress):
-        """Generate a token used for the subscription/cancellation cycle.
-        """
-        pass
 
 class ISubscription(Interface):
     """Subscription interface

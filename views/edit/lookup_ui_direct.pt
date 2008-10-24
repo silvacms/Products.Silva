@@ -17,8 +17,15 @@
 <metal:block use-macro="here/macro_index/macros/master">
   <metal:block fill-slot="meta">
     <meta http-equiv="refresh"
-      tal:attributes="content string:900;; url=${model/absolute_url}/edit/tab_access" />
-</metal:block>
+          tal:attributes="content string:900;; url=${model/absolute_url}/edit/tab_access" />
+  </metal:block>
+
+  <metal:block metal:fill-slot="middleground">
+    <div class="middleground">
+      &nbsp;
+    </div>
+  </metal:block>
+
 <metal:block fill-slot="main"
   tal:define="
     no_entry string:-;

@@ -287,15 +287,19 @@ div.middleground a.selected {
 
 /* _______ middleground executor (publish now) _______ */
 
-div.middleground a.executor {
+div.middleground div.executor {
+  float: right;
+}
+
+div.middleground div.executor a {
   color: &dtml-executorFontColor;;
   background-color: &dtml-executorBackground;;
 }
-div.middleground a.executor:hover {
+div.middleground div.executor a:hover {
   color: #e5ffec;
   background-color: #538da3;
 }
-div.middleground a.executor:active {
+div.middleground div.executor a:active {
   color: #bfffd3;
   background-color: #64ABC8;
 }

@@ -1,0 +1,104 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  xmlns:five="http://namespaces.zope.org/five">
+
+  <browser:page
+     for="Products.Silva.interfaces.ISilvaObject"
+     name="tab_properties_extra"
+     class=".smi.PropertiesTab"
+     template="templates/tab_properties.pt"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:page
+     for="Products.Silva.interfaces.ISilvaObject"
+     name="tab_access_extra"
+     class=".smi.AccessTab"
+     template="templates/tab_access.pt"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:page
+     for="Products.Silva.interfaces.ISilvaObject"
+     name="tab_preview_extra"
+     class=".smi.PreviewTab"
+     template="templates/tab_preview.pt"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:viewletManager
+     name="smi.buttons"
+     for="Products.Silva.interfaces.ISilvaObject"
+     view=".interfaces.ISMITab"
+     class=".smi.SMIButtonViewletManager"
+     template="templates/smibuttonmanager.pt"
+     provides=".interfaces.ISMIButtonManager"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.addables"
+     for="Products.Silva.interfaces.IPublication"
+     view=".interfaces.IPropertiesTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.AddablesButton"
+     permission="silva.ChangeSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.settings"
+     for="Products.Silva.interfaces.ISilvaObject"
+     view=".interfaces.IPropertiesTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.SettingsButton"
+     permission="silva.ChangeSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.subscriptions"
+     for="Products.Silva.interfaces.ISilvaObject"
+     view=".interfaces.IPropertiesTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.SubscriptionButton"
+     permission="silva.ChangeSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.publish"
+     for="Products.Silva.interfaces.IVersionedContent"
+     view=".interfaces.IPropertiesTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.PublishNowButton"
+     permission="silva.ApproveSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.publish"
+     for="Products.Silva.interfaces.IVersionedContent"
+     view=".interfaces.IPreviewTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.PublishNowButton"
+     permission="silva.ApproveSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.lookupusers"
+     for="Products.Silva.interfaces.ISilvaObject"
+     view=".interfaces.IAccessTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_access.LookupUserButton"
+     permission="silva.ChangeSilvaAccess"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.groupadmin"
+     for="Products.Silva.interfaces.IContainer"
+     view=".interfaces.IAccessTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_access.GroupAdminButton"
+     permission="zope2.ManageUsers"
+     />
+
+
+</configure>

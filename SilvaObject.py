@@ -47,41 +47,26 @@ class XMLExportContext:
 class NoViewError(Exception):
     """no view defined"""
 
-class FrankenViewAttribute(ViewAttribute):
-    """A view attribute that switches skins and tries to look up Zope
-    3 views for fun and profit.
 
-    It enables skin switching, so that the 'bare bones' skin is active
-    when we look at preview pages.
+class Zope3ViewAttribute(ViewAttribute):
+    """A view attribute that tries to look up Zope 3 views for fun and
+    profit.
 
     It will also try to look up Zope 3 views and favour them, so that
     you can define e.g. 'tab_edit' for your content type and it will
     work.
     """
-    def __init__(self, view_type, default_method, skin=None):
-        ViewAttribute.__init__(self, view_type, default_method)
-        self._skin = skin
-
-    def _switch_skin(self):
-        if self._skin:
-            interface.directlyProvides(
-                self.REQUEST,
-                self._skin, interface.directlyProvidedBy(self.REQUEST))
-
-    def index_html(self):
-        """Make Zope happy"""
-        return ViewAttribute.index_html(self)
 
     def __getitem__(self, name):
-        """Make Zope happy"""
-        self._switch_skin()
-        context = self.aq_inner.aq_parent
+        """Lookup an adapter before to ask the view machinery.
+        """
+        context = self.aq_parent
         request = self.REQUEST
-        view = component.queryAdapter((context, request), name=name)
-        if view:
-            return view.__of__(self.context)()
-        else:
-            return ViewAttribute.__getitem__(self, name)
+        view = component.queryMultiAdapter((context, request), name=name)
+        if view is not None:
+            return view.__of__(context)
+        return ViewAttribute.__getitem__(self, name)
+
 
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
@@ -92,7 +77,7 @@ class SilvaObject(Security, ViewCode):
     _title = "No title yet"
 
     # allow edit view on this object
-    edit = ViewAttribute('edit', 'tab_edit')
+    edit = Zope3ViewAttribute('edit', 'tab_edit')
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'edit')

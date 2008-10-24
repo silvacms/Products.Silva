@@ -4,7 +4,7 @@ class IViewerSecurity(Interface):
     def setAcquired():
         """Set minimum viewer role restriction to acquire from above.
         """
-        
+
     def setMinimumRole(role):
         """Set the minimum (viewer) role needed for view permission here.
 
@@ -15,7 +15,7 @@ class IViewerSecurity(Interface):
     def isAcquired():
         """Check whether minimum role is acquired.
         """
-        
+
     def getMinimumRole():
         """Get the minimum role needed for view permission here.
         """
@@ -46,18 +46,18 @@ class IContentImporter(Interface):
 class IArchiveFileImporter(IContentImporter):
     def importArchive(archivefile, assettitle=None, recreatedirs=1, replace=0):
         """Import archive file
-        
+
         Use 'assettitle' for the title to set on all assets created
-        
+
         According to the recreatedirs setting, create a substructure of
         Silva Containers (probably Silva Folders) reflecting the structure
         of the archive file. This substructure will be created relative to
         the adapted context.
-        
+
         If replace is true, replace items with identical ids.
-        
+
         Return a tuple with the list of succeeded items and failed items
-        providing feedback on what archive contents have succesfully been 
+        providing feedback on what archive contents have succesfully been
         imported into Silva Assets and what contents have not.
         """
 
@@ -94,7 +94,7 @@ class IAssetData(Interface):
     def getData():
         """ Get actual data stored for this asset as calling index_html()
         for assets can have all kinds of unwanted side effects.
-        """        
+        """
 
 class IVersionManagement(Interface):
     def getVersionById(id):
@@ -116,9 +116,9 @@ class IVersionManagement(Interface):
             The current editable will become the last closed (last closed
             will move to closed list). If the published version will not be
             changed.
-            
+
             Raises AttributeError when version id is not available.
-            
+
             Raises VersioningError when 'editable' version is approved or
             in pending for approval.
         """
@@ -128,7 +128,7 @@ class IVersionManagement(Interface):
 
     def getVersions(sort_attribute='id'):
         """return a list of version objects
-        
+
             if sort_attribute resolves to False, no sorting is done,
             by default it sorts on id converted to int (so [0,1,2,3,...]
             instead of [0,1,10,2,3,...] if values < 20)
@@ -137,7 +137,7 @@ class IVersionManagement(Interface):
     def deleteVersion(id):
         """delete a version
 
-            can raise AttributeError when the version doesn't exist, 
+            can raise AttributeError when the version doesn't exist,
             VersioningError if the version is approved(XXX?) or published
         """
 
@@ -147,15 +147,15 @@ class IVersionManagement(Interface):
             can be called only by managers, and should be used with great care,
             since it can potentially remove interesting versions
         """
-    
+
 class IAddables(Interface):
 
     def getAddables():
         """return a list of Metatypes that are addable to this container."""
-        
+
     def setAddables(addables):
         """set the the Metatypes that are addable to this container."""
-            
+
 class IIndexable(Interface):
     def getTitle():
         """returns the title of the indexable."""
@@ -194,44 +194,44 @@ class ICatalogIndexable(Interface):
     def unindex():
         """Unindex an object.
         """
-        
+
     def reindex():
         """Reindex an object.
         """
 
-        
+
 class IFeedEntry(Interface):
-    """Interface for objects that can act like an item in a atom or rss 
+    """Interface for objects that can act like an item in a atom or rss
     feed.
     """
 
     def id():
         pass
-    
+
     def title():
         pass
-    
+
     def html_description():
         pass
 
     def description():
         pass
-    
+
     def url():
         pass
-    
+
     def authors():
         pass
-    
+
     def date_updated():
         pass
-    
+
     def date_published():
         pass
-    
+
     def keywords():
         pass
-        
+
 
 class IVirtualHosting(Interface):
     """Access to virtual hosting information.
@@ -257,3 +257,66 @@ class IVirtualHosting(Interface):
     def containsVirtualRoot(self):
         """ Return true if object contains the current virtual host root.
         """
+
+class ISubscribable(Interface):
+    """Subscribable interface
+    """
+
+    def isSubscribable():
+        """Return True if the adapted object is actually subscribable,
+        False otherwise.
+        """
+        pass
+
+    def subscribability():
+        """
+        """
+        pass
+
+    def getSubscribedEmailaddresses():
+        """
+        """
+        pass
+
+    def getSubscriptions():
+        """Return a list of ISubscription objects
+        """
+        pass
+
+    def isValidSubscription(emailaddress, token):
+        """Return True is the specified emailaddress and token depict a
+        valid subscription request. False otherwise.
+        """
+        pass
+
+    def isValidCancellation(emailaddress, token):
+        """Return True is the specified emailaddress and token depict a
+        valid cancellation request. False otherwise.
+        """
+        pass
+
+    def isSubscribed(emailaddress):
+        """Return True is the specified emailaddress is already subscribed
+        for the adapted object. False otherwise.
+        """
+        pass
+
+    def setSubscribable(bool):
+        """Set the subscribability to True or False for the adapted object.
+        """
+        pass
+
+    def subscribe(emailaddress):
+        """Subscribe emailaddress for adapted object.
+        """
+        pass
+
+    def unsubscribe(emailaddress):
+        """Unsubscribe emailaddress for adapted object.
+        """
+        pass
+
+    def generateConfirmationToken(emailaddress):
+        """Generate a token used for the subscription/cancellation cycle.
+        """
+        pass

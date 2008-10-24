@@ -70,23 +70,6 @@
         <table class="listing"
           style="margin-bottom:0em;">
           <thead>
-            <tr class="top-controls"
-              tal:define="model_is_container python: model.get_container() is model"
-              tal:condition="python: model_is_container and group_service">
-              <td>
-                <metal:block define-slot="groups_admin_action">
-                  <a class="transporter"
-                    style="float: right;"
-                    title="groups administration: alt-g"
-                    accesskey="g"
-                    tal:attributes="href string:${model/absolute_url}/edit/tab_access_groups"
-                    i18n:attributes="title"
-                    i18n:translate="">
-                    <u i18n:name="g">g</u>roups admin...
-                  </a>
-                </metal:block>
-              </td>
-            </tr>
             <tr class="inter-controls">
               <th style="font-size:90%"
                 tal:condition="groups"

@@ -1,0 +1,9 @@
+<tal:button i18n:domain="silva">
+  <a accesskey="#"
+     tal:attributes="title view/help;
+                     href string:${context/@@absolute_url}/edit/${view/tab};
+                     class python:view.selected and 'selected';
+                     accesskey view/accesskey;">
+    <span tal:replace="view/label" /><tal:selected tal:condition="not:view/selected">...</tal:selected>
+  </a>
+</tal:button>

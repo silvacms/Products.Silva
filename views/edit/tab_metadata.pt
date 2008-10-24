@@ -21,7 +21,8 @@
 </metal:block>
 
 <metal:block metal:fill-slot="middleground">
-  <metal:block use-macro="here/macro_middleground/macros/properties" />
+  <!-- <metal:block use-macro="here/macro_middleground/macros/properties" /> -->
+  <tal:buttons tal:replace="structure model/@@tab_properties_extra" />
 </metal:block>
 
 <metal:block fill-slot="main">
@@ -46,19 +47,19 @@
           Here we insert a metadata/property related view
         </span>
         <tal:block replace="structure model/@@additional_metadata"/>
-        
+
         <td class="main"
           tal:define="display_flag python:1;">
           <tal:block replace="nothing"> _______ edit editable version metadata _______ </tal:block>
           <tal:block condition="model/implements_versioning">
-            <tal:block 
+            <tal:block
               define="content model/get_editable | nothing;"
               condition="model/get_unapproved_version">
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
             </tal:block>
-            
+
             <tal:block replace="nothing"> _______ view previewable version metadata _______ </tal:block>
-            <tal:block 
+            <tal:block
               define="content model/get_previewable | nothing;"
               condition="model/get_approved_version">
               <metal:block use-macro="here/macro_view_metadata/macros/metadata">
@@ -73,9 +74,9 @@
                 </h2>
               </metal:block>
             </tal:block>
-            
+
             <tal:block replace="nothing"> _______ view public version metadata _______ </tal:block>
-            <tal:block 
+            <tal:block
               define="
                 content model/get_viewable | nothing;
                 display_flag python:0"
@@ -93,7 +94,7 @@
             </tal:block>
 
             <tal:block replace="nothing"> _______ view closed version metadata _______ </tal:block>
-            <tal:block 
+            <tal:block
               define="
                 content model/get_last_closed | nothing;
                 display_flag python:0"
@@ -110,7 +111,7 @@
               </metal:block>
             </tal:block>
           </tal:block>
-          
+
           <tal:block replace="nothing"> _______ edit single version metadata _______ </tal:block>
           <tal:block condition="not: model/implements_versioning">
             <tal:block define="content model">

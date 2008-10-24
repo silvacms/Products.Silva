@@ -65,38 +65,18 @@
 <metal:block use-macro="here/macro_tabs/macros/tabs" />
 
 <div class="workspace">
-<div class="middleground"
-  tal:condition="python:not (message or nofeedback)">
-  <div style="float:right"
-    tal:define="
-    permissions             view/get_silva_permissions;
-    versionmodel            python:model.implements_container() and model.get_default() or model;
-    unapproved_version      python:getattr(versionmodel,'get_unapproved_version',lambda: None)();
-    have_approve_permission permissions/ApproveSilvaContent | nothing;
-  ">
-   <a class="executor"
-      title="publish this document: alt-p"
-      accesskey="p"
-      tal:attributes="href string:${versionmodel/absolute_url}/edit/quick_publish?return_to=tab_preview"
-      i18n:translate=""
-      i18n:attributes="title"
-      tal:condition="python: unapproved_version and have_approve_permission">
-      publish&nbsp;now
-   </a>
-  </div>
-  &nbsp;
-</div>
+  <tal:buttons tal:replace="structure model/@@tab_preview_extra" />
 
-<tal:if condition="message">
-  <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
-    <span tal:replace="structure message">
-      message
-    </span>
-    <tal:block tal:condition="python:message_type == 'feedback'">
-      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-    </tal:block>
-  </div>
-</tal:if>
+  <tal:if condition="message">
+    <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+      <span tal:replace="structure message">
+        message
+      </span>
+      <tal:block tal:condition="python:message_type == 'feedback'">
+        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+      </tal:block>
+    </div>
+  </tal:if>
 
 <span tal:replace="nothing"> _______ closed notice _______ </span>
 <div class="fixed-feedback"

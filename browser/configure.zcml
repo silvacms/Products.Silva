@@ -1,4 +1,4 @@
-<configure 
+<configure
   xmlns="http://namespaces.zope.org/zope"
   xmlns:browser="http://namespaces.zope.org/browser"
   xmlns:five="http://namespaces.zope.org/five">
@@ -16,7 +16,7 @@
     name="minimum_role_submit"
     class=".viewerrole.ViewerRole"
     attribute="submitMinimumRole"
-    permission="silva.ChangeSilvaAccess" 
+    permission="silva.ChangeSilvaAccess"
   />
 
   <browser:page
@@ -24,7 +24,7 @@
     name="acquire_minimum_role_submit"
     class=".viewerrole.ViewerRole"
     attribute="submitAcquiredMinimumRole"
-    permission="silva.ChangeSilvaAccess" 
+    permission="silva.ChangeSilvaAccess"
   />
 
   <browser:page
@@ -32,7 +32,7 @@
     name="object_lookup"
     class=".lookup.ObjectLookup"
     template="object_lookup.pt"
-    permission="silva.ReadSilvaContent" 
+    permission="silva.ReadSilvaContent"
   />
 
   <browser:page
@@ -48,7 +48,7 @@
     class=".emptyaction.EmptyAction"
     permission="silva.ChangeSilvaContent"
   />
-  
+
   <browser:page
     for="Products.Silva.interfaces.ISilvaObject"
     name="additional_status_action"
@@ -78,7 +78,7 @@
     attribute="set_content_type"
     permission="zope2.View"
   />
-  
+
   <browser:page
     for="*"
     name="set_nocache"
@@ -86,7 +86,7 @@
     attribute="set_nocache"
     permission="zope2.View"
   />
-  
+
   <browser:page
     for="*"
     name="set_headers"
@@ -110,11 +110,13 @@
     permission="zope2.View"
     template="rss.pt"
   />
-  
+
   <browser:resourceDirectory
     name="silva_scripts"
     directory="scripts"
     permission="zope2.Public"
   />
-  
+
+  <include file="smi.zcml" />
+
 </configure>

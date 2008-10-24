@@ -15,11 +15,11 @@
 
 <!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">
-  
+
 <metal:block metal:fill-slot="middleground">
-  <metal:block use-macro="here/macro_middleground/macros/properties" />
+  <tal:buttons tal:replace="structure model/@@tab_properties_extra" />
 </metal:block>
-  
+
 <metal:block fill-slot="main">
 
   <table class="columns columns2">
@@ -36,7 +36,7 @@
           _____________________ main _____________________
         </tal:block>
         <td class="main">
-          <tal:block 
+          <tal:block
             define="content python: model.get_viewable() or model.get_previewable()"
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">

@@ -14,8 +14,9 @@
 
 <!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">
-  
+
 <metal:block metal:fill-slot="middleground">
+  <!-- FIXME: should delete that ? -->
   <div class="middleground">
     <a title="miscellaneous settings: alt-e"
       accesskey="e"
@@ -23,7 +24,7 @@
       i18n:attributes="title"
       i18n:translate=""
       >s<u i18n:name="e">e</u>ttings...
-    </a><tal:block condition="context/is_subscribable_content"><a 
+    </a><tal:block condition="context/is_subscribable_content"><a
       title="manage subscriptions: alt-u"
         accesskey="u"
         tal:attributes="href string:${url}/edit/tab_subscriptions"
@@ -33,7 +34,7 @@
     </tal:block>
   </div>
 </metal:block>
-  
+
 <metal:block fill-slot="main">
 
   <table class="columns columns2">
@@ -54,8 +55,8 @@
           _____________________ main _____________________
         </tal:block>
         <td class="main">
-          <tal:block 
-            define="content model" 
+          <tal:block
+            define="content model"
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title" i18n:translate="">

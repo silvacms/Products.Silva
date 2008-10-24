@@ -1,0 +1,3 @@
+<tal:tab>
+  <tal:replace tal:replace="structure provider:smi.buttons" />
+</tal:tab>
