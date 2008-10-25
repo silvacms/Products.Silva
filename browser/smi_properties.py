@@ -32,7 +32,7 @@ class SettingsButton(SMIButton):
     accesskey = 'e'
 
 
-class SubscriptionButton(SMIButton):
+class SubscriptionsButton(SMIButton):
 
     order = 110
 

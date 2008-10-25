@@ -60,7 +60,7 @@
      for="Products.Silva.interfaces.ISilvaObject"
      view=".interfaces.IPropertiesTab"
      manager=".interfaces.ISMIButtonManager"
-     class=".smi_properties.SubscriptionButton"
+     class=".smi_properties.SubscriptionsButton"
      permission="silva.ChangeSilvaContent"
      />
 
