@@ -6,5 +6,5 @@
                      accesskey view/accesskey;">
     <span tal:replace="view/label" /><tal:selected
       tal:condition="python:not view.selected and view.label != 'publish now'">...</tal:selected>
-  </a><tal:comment tal:replace="nothing">XXX: replace with generic condition for action buttons</tal:comment>
+  </a><tal:comment tal:replace="nothing">XXX: replace with a generic condition for action buttons</tal:comment>
 </tal:button>
