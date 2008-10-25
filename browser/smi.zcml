@@ -69,7 +69,7 @@
      for="Products.Silva.interfaces.IVersionedContent"
      view=".interfaces.IPropertiesTab"
      manager=".interfaces.ISMIButtonManager"
-     class=".smi_properties.PublishNowButton"
+     class=".smi_properties.PublishButton"
      permission="silva.ApproveSilvaContent"
      />
 
@@ -78,7 +78,7 @@
      for="Products.Silva.interfaces.IVersionedContent"
      view=".interfaces.IPreviewTab"
      manager=".interfaces.ISMIButtonManager"
-     class=".smi_properties.PublishNowButton"
+     class=".smi_properties.PublishButton"
      permission="silva.ApproveSilvaContent"
      />
 

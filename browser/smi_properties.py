@@ -45,7 +45,7 @@ class SubscriptionsButton(SMIButton):
         return ISubscribable(self.context, None) is not None
 
 
-class PublishNowButton(SMIButton):
+class PublishButton(SMIButton):
 
     implements(ISMIExecutorButton)
 
