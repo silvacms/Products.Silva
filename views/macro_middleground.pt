@@ -25,7 +25,8 @@
       </a>
     </tal:def>
   </div>
-  <a title="various settings: alt-e"
+  <a class="transporter"
+    title="various settings: alt-e"
     accesskey="e"
     tal:define="
       link_id string:tab_settings;
@@ -38,7 +39,8 @@
       "
     i18n:attributes="title">
     <tal:i18n i18n:translate="">settings</tal:i18n><tal:if condition="not: selected">...</tal:if>
-  </a><tal:if condition="may_approve_content"><a title="manage subscriptions: alt-u"
+  </a><tal:if condition="may_approve_content"><a class="transporter"
+      title="manage subscriptions: alt-u"
       accesskey="u"
       tal:define="
         link_id string:tab_subscriptions;
@@ -53,7 +55,8 @@
       i18n:attributes="title">
       <tal:i18n i18n:translate="">subscriptions</tal:i18n><tal:if condition="not: selected">...</tal:if>
     </a
-    ><a title="change the addables allowed in this publication: alt-d"
+    ><a class="transporter"
+      title="change the addables allowed in this publication: alt-d"
       accesskey="d"
       tal:define="
         link_id string:tab_addables;
@@ -75,25 +78,22 @@
 
 <metal:def-access define-macro="access">
 <div class="middleground">
-  <a class="manipulator"
-    title="external users: alt-e"
-    accesskey="e"
-    tal:attributes="href string:../@@tab_externalusers"
-    i18n:translate=""
-    i18n:attributes="title">
-    manage external users...
-  </a
-  ><a class="manipulator"
+<a class="transporter"
     title="lookup users: alt-l"
     accesskey="l"
     tal:attributes="href string:${model/absolute_url}/edit/lookup"
     i18n:translate=""
     i18n:attributes="title">
     lookup users...
+  </a><a class="transporter"
+    title="external users: alt-e"
+    accesskey="e"
+    tal:attributes="href string:../@@tab_externalusers"
+    i18n:translate=""
+    i18n:attributes="title">
+    external users...
   </a>
-</div>
+  </div>
 </metal:def-access>
-
-
 
 </html>

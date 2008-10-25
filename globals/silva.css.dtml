@@ -813,7 +813,7 @@ input[type="submit"] {
 }
 
 /* manipulator button style from which all others derive */
-input.button, button.button {
+input.button, button.button, input.manipulator {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-buttonBorder;;
@@ -916,6 +916,7 @@ a.transporter {
   background-repeat: repeat-x;
   font: &dtml-inputFont;;
   font-size: &dtml-pseudoButtonFontSize;;
+  line-height: 130%;
 }
 a.transporter:link {
   color: &dtml-transporterFontColor;;
@@ -992,12 +993,12 @@ select:focus, select:hover {
 /* _______ controls candy: hover/focus _______ */
 
 /* manipulator warm glow */
-input.button:hover, button.button:hover {
+input.button:hover, button.button:hover, input.manipulator:hover {
   border-color: #567;
   color: #e5fffe;
   background-color: #4a7f67;
 }
-input.button:focus, button.button:focus {
+input.button:focus, button.button:focus, input.manipulator:focus {
   border-color: #789;
   color: #bfffd3;
   background-color: #62A269;
