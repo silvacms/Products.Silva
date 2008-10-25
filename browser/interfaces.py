@@ -40,9 +40,9 @@ class ISMIButton(IViewlet):
         """
 
     label = Attribute("Label of the button")
-    tab = Attribute("Where do that button links to")
-    accesskey = Attribute("Access Key")
-    help = Attribute("Description of that tab")
+    tab = Attribute("Where does the button link to")
+    accesskey = Attribute("Access key")
+    help = Attribute("Description of the button")
 
 
 class ISMISpecialButton(Interface):
@@ -50,7 +50,7 @@ class ISMISpecialButton(Interface):
     """
 
 class ISMIExecutorButton(ISMIButton, ISMISpecialButton):
-    """This button execute an action.
+    """This button executes a special action.
     """
 
 
