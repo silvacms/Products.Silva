@@ -43,7 +43,7 @@ h2 {
 <metal:block fill-slot="middleground"
   tal:define="unapproved_version model/get_unapproved_version">
   <div class="middleground">
-    <div style="float:right">
+    <div class="executor">
       <tal:block define="
         permissions view/get_silva_permissions;
         have_approve_permission permissions/ApproveSilvaContent | nothing;">
@@ -54,7 +54,7 @@ h2 {
           i18n:translate=""
           i18n:attributes="title"
           tal:condition="python: unapproved_version and have_approve_permission">
-          publish&nbsp;now
+          publish now
         </a>
       </tal:block>
     </div>
