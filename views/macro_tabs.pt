@@ -66,18 +66,14 @@
 <!-- ______________ Matrix tabs ______________ -->
 <div class="tabs">
   <span tal:replace="nothing"><!-- _______ public link _______ --></span>
-  <a class="normal"
-    title="Leave Silva and view the public page: alt-:"
-    accesskey=":"
+  <a class="transportlet"
+    style="float:right"
+    title="Leave Silva and view the public page: alt-;"
+    accesskey=";"
     tal:attributes="href string:${model/absolute_url}"
     i18n:attributes="title"
     >
-      <img border="0"
-         width="16"
-         height="11"
-         tal:attributes="src string:$root_url/globals/pixel.gif;
-           alt string:spacer_image;"
-      />
+    view...
   </a>
   <span tal:replace="nothing"><!-- _______ help link _______ --></span>
   <a class="normal"

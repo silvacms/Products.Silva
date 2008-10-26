@@ -214,7 +214,32 @@ div.tabs a.normal {
   color: transparent;
   background: transparent;
 }
-/* public page link hover */
+/* public page link behaviors */
+
+div.tabs a.transportlet {
+  width: 6.5em;
+  padding-left:0.3em;
+}
+div.tabs a.transportlet:link {
+  color: &dtml-transporterFontColor;;
+  background-color: #57689B;
+}
+div.tabs a.transportlet:visited {
+  color: &dtml-transporterFontColor;;
+  background-color: #57689B;
+}
+div.tabs a.transportlet:hover {
+  border-color: #567;
+  color: #e5fffe;
+  background-color: #74748b;
+  text-decoration: none;
+}
+div.tabs a.transportlet:active {
+  border-color: #789;
+  color: #b3fffb;
+  background-color: #8d97c2;
+}
+
 div.tabs a.normal:hover {
   background-image: url(<dtml-var root_url>/globals/roadsign.gif);
   background-repeat: no-repeat;
@@ -286,6 +311,10 @@ div.middleground a.selected {
 }
 
 /* _______ middleground executor (publish now) _______ */
+
+div.middleground div.executor {
+  float: right;
+}
 
 div.middleground a.executor {
   color: &dtml-executorFontColor;;
@@ -552,11 +581,11 @@ table.listing td.field-title {
 * the whole tablecell and don't have to focus the text
 */
 
-table#sortable tbody a {
+table#sortable tbody a, table.listing tbody a {
   display: block;
 }
 
-table#sortable a.icon img {
+table#sortable a.icon img, table.listing a.icon img {
   display: inline;
   float: left;
   margin-right: 0.5em;
