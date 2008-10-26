@@ -12,7 +12,7 @@ class ManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         click properties tab (preview tab doesn't have a 'public view' link
         click public view
         click back
-        click publish now tab
+        click publish now
         click public view
         click back
         close test_document
@@ -32,7 +32,7 @@ class ManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         sb.browser.goBack()
         self.failUnless('settings...' in sb.browser.contents)
         self.failUnless('of &#xab;Test document&#xbb;' in sb.browser.contents)
-        status, url = sb.click_button_labeled('publish now...')
+        status, url = sb.click_button_labeled('publish now')
         self.failUnless(sb.get_status_feedback().startswith('Version approved.'))
         sb.click_href_labeled('view public version')
         sb.browser.goBack()
