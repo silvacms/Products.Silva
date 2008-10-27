@@ -60,6 +60,20 @@ div.tabs a.normal:visited {
   background-color: transparent;
 }
 
+div.tabs a.transportlet:link {
+  color:  &dtml-contentTabFontColor;;
+  background-color: &dtml-contentTabBackground;;
+}
+div.tabs a.transportlet:visited {
+  color:  &dtml-contentTabFontColor;;
+  background-color: &dtml-contentTabBackground;;
+}
+div.tabs a.transportlet:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+  text-decoration: none;
+}
 
 /* ___________________________________________________________ flow bar _____ */
 
