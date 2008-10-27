@@ -214,19 +214,20 @@ div.tabs a.normal {
   color: transparent;
   background: transparent;
 }
-/* public page link behaviors */
 
+/* view public page link behavior */
 div.tabs a.transportlet {
-  width: 6.5em;
-  padding-left:0.3em;
+  width: auto;
+  padding-right:1em;
+  padding-left:1.5em;
 }
 div.tabs a.transportlet:link {
   color: &dtml-transporterFontColor;;
-  background-color: #57689B;
+  background-color: #5370A6;
 }
 div.tabs a.transportlet:visited {
   color: &dtml-transporterFontColor;;
-  background-color: #57689B;
+  background-color: #5370A6;
 }
 div.tabs a.transportlet:hover {
   border-color: #567;
@@ -238,14 +239,6 @@ div.tabs a.transportlet:active {
   border-color: #789;
   color: #b3fffb;
   background-color: #8d97c2;
-}
-
-div.tabs a.normal:hover {
-  background-image: url(<dtml-var root_url>/globals/roadsign.gif);
-  background-repeat: no-repeat;
-  background-position: 6px 3px;
-  background-color: transparent;
-  text-decoration: none;
 }
 
 /* ____________________________________ flow bar _______ */

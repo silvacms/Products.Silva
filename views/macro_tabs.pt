@@ -71,6 +71,7 @@
     title="Leave Silva and view the public page: alt-;"
     accesskey=";"
     tal:attributes="href string:${model/absolute_url}"
+    i18n:translate=""
     i18n:attributes="title"
     >
     view...
@@ -109,7 +110,7 @@
       </a>
       <a tal:content="structure string:${tab_info/tab_name}"
         tal:attributes="href tab_info/tab_url;
-          class python:is_selected_tab and (active_tab and 'recede' or 'selected') or '';
+          class python:is_selected_tab and ((active_tab and active_tab != 'tab_preview') and 'recede' or 'selected') or '';
           title tab_info/tab_title;
           accesskey tab_key;"
           i18n:translate=""
