@@ -84,6 +84,10 @@ Silva changes
         (specifically the container's meta type) wasn't in the
         filter list for the lookup window
 
+      - Fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
+     
+      - Fix for list items nesting problem
+
     Bugfixes ported from 2.1 branch:
 
       - Silva Documents with code sources no longer lose the parameter
