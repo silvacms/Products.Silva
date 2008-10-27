@@ -23,6 +23,10 @@ Silva changes
 
       - fixed a bug on tab_access.pt where a tal: was missing.
 
+      - Fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
+     
+      - Fix for list items nesting problem
+
     Ported from 2.0 branch:
 
       - added partial catalog rebuilding for better testing
