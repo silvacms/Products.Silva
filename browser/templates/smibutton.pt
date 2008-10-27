@@ -4,7 +4,9 @@
                      href string:${context/@@absolute_url}/edit/${view/tab};
                      class python:view.selected and 'selected' or None;
                      accesskey view/accesskey;">
-    <span tal:replace="view/label" /><tal:selected
-      tal:condition="python:not view.selected and view.label != 'publish now'">...</tal:selected>
-  </a><tal:comment tal:replace="nothing">XXX: replace with a generic condition for action buttons</tal:comment>
+    <span tal:replace="view/label"
+          tal:condition="view/selected" />
+    <spam tal:replace="view/formatedLabel"
+          tal:condition="not:view/selected" />
+  </a>
 </tal:button>

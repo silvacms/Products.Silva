@@ -3,6 +3,7 @@
 # $Id$
 
 from zope.interface import implements
+from zope.i18n import translate
 from zope.cachedescriptors.property import CachedProperty
 
 from Products.Five import BrowserView
@@ -94,6 +95,11 @@ class SMIButton(ViewletBase):
     tab = None
     help = None
     accesskey = None
+
+    def formatedLabel(self):
+        if interfaces.ISMISpecialButton.providedBy(self):
+            return self.label
+        return translate(self.label, context=self.request) + '...'
 
     def available(self):
         return True
