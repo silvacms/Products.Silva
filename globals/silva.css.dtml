@@ -214,13 +214,37 @@ div.tabs a.normal {
   color: transparent;
   background: transparent;
 }
-/* public page link hover */
-div.tabs a.normal:hover {
-  background-image: url(<dtml-var root_url>/globals/roadsign.gif);
-  background-repeat: no-repeat;
-  background-position: 6px 3px;
-  background-color: transparent;
+
+/* view public page link behavior */
+div.tabs a.transportlet {
+  width: auto;
+  padding-right:1em;
+  padding-left:1.5em;
+}
+div.tabs a.transportlet:link {
+  color: &dtml-transporterFontColor;;
+  background-color: #5370A6;
+}
+div.tabs a.transportlet:visited {
+  color: &dtml-transporterFontColor;;
+  background-color: #5370A6;
+}
+div.tabs a.transportlet:hover {
+  border-color: #567;
+  color: #e5fffe;
+  background-color: #74748b;
   text-decoration: none;
+}
+div.tabs a.transportlet:active {
+  border-color: #789;
+  color: #b3fffb;
+  background-color: #8d97c2;
+}
+
+/* help (available as accesskey link) */
+div.tabs a.normal {
+  background-color: transparent; 	 
+  text-decoration: none; 	 
 }
 
 /* ____________________________________ flow bar _______ */
@@ -285,25 +309,11 @@ div.middleground a.selected {
   background-color: #b6d6f3;
 }
 
-/* _______ middleground executor (publish now) _______ */
+/* _______ middleground executor (action buttons) _______ */
 
 div.middleground div.executor {
   float: right;
 }
-
-div.middleground div.executor a {
-  color: &dtml-executorFontColor;;
-  background-color: &dtml-executorBackground;;
-}
-div.middleground div.executor a:hover {
-  color: #e5ffec;
-  background-color: #538da3;
-}
-div.middleground div.executor a:active {
-  color: #bfffd3;
-  background-color: #64ABC8;
-}
-
 
 /* ______________________________________ footer _______ */
 
