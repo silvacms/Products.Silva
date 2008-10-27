@@ -241,6 +241,12 @@ div.tabs a.transportlet:active {
   background-color: #8d97c2;
 }
 
+/* help (available as accesskey link) */
+div.tabs a.normal {
+  background-color: transparent; 	 
+  text-decoration: none; 	 
+}
+
 /* ____________________________________ flow bar _______ */
 
 div.flowbar {
@@ -303,25 +309,11 @@ div.middleground a.selected {
   background-color: #b6d6f3;
 }
 
-/* _______ middleground executor (publish now) _______ */
+/* _______ middleground executor (action buttons) _______ */
 
 div.middleground div.executor {
   float: right;
 }
-
-div.middleground a.executor {
-  color: &dtml-executorFontColor;;
-  background-color: &dtml-executorBackground;;
-}
-div.middleground a.executor:hover {
-  color: #e5ffec;
-  background-color: #538da3;
-}
-div.middleground a.executor:active {
-  color: #bfffd3;
-  background-color: #64ABC8;
-}
-
 
 /* ______________________________________ footer _______ */
 

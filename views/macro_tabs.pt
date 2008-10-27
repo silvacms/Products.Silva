@@ -104,9 +104,10 @@
         <img border="0"
            height="9"
            width="9"
-           tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url;
-             alt string:style_image;"
-        />
+           tal:attributes="
+             src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url;
+             alt string:style_image;
+        "/>
       </a>
       <a tal:content="structure string:${tab_info/tab_name}"
         tal:attributes="href tab_info/tab_url;
