@@ -241,12 +241,6 @@ div.tabs a.transportlet:active {
   background-color: #8d97c2;
 }
 
-/* help (available as accesskey link) */
-div.tabs a.normal {
-  background-color: transparent; 	 
-  text-decoration: none; 	 
-}
-
 /* ____________________________________ flow bar _______ */
 
 div.flowbar {
