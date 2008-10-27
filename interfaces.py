@@ -933,16 +933,16 @@ class IMemberService(Interface):
         available at the given point.
         """
 
-    def is_user(userid):
+    def is_user(userid, where=None):
         """Return true if userid is indeed a known user.
         """
 
-    def get_member(userid):
+    def get_member(userid, where=None):
         """Get member object for userid, or None if no such member
         object.
         """
 
-    def get_cached_member(userid):
+    def get_cached_member(userid, where=None):
         """Get memberobject which can be cached, or None if no such
         memberobject.
         """
