@@ -5,9 +5,15 @@
 
   <browser:page
      for="Products.Silva.interfaces.ISilvaObject"
+     name="tab_edit_extra"
+     class=".smi.EditTab"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:page
+     for="Products.Silva.interfaces.ISilvaObject"
      name="tab_properties_extra"
      class=".smi.PropertiesTab"
-     template="templates/tab_properties.pt"
      permission="silva.ReadSilvaContent"
      />
 
@@ -15,7 +21,6 @@
      for="Products.Silva.interfaces.ISilvaObject"
      name="tab_access_extra"
      class=".smi.AccessTab"
-     template="templates/tab_access.pt"
      permission="silva.ReadSilvaContent"
      />
 
@@ -23,7 +28,6 @@
      for="Products.Silva.interfaces.ISilvaObject"
      name="tab_preview_extra"
      class=".smi.PreviewTab"
-     template="templates/tab_preview.pt"
      permission="silva.ReadSilvaContent"
      />
 
@@ -77,6 +81,15 @@
      name="smi.buttons.publish"
      for="Products.Silva.interfaces.IVersionedContent"
      view=".interfaces.IPreviewTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_properties.PublishButton"
+     permission="silva.ApproveSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.publish"
+     for="Products.Silva.interfaces.IVersionedContent"
+     view=".interfaces.IEditTab"
      manager=".interfaces.ISMIButtonManager"
      class=".smi_properties.PublishButton"
      permission="silva.ApproveSilvaContent"

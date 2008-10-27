@@ -16,7 +16,21 @@ class SMITab(BrowserView):
     """A SMI tab.
     """
 
+    template = ViewPageTemplateFile('templates/tabsmi.pt')
+
     implements(interfaces.ISMITab)
+
+    def __call__(self):
+        return self.template()
+
+
+class EditTab(SMITab):
+    """Edit
+    """
+
+    implements(interfaces.IEditTab)
+
+    tab_name = 'tab_edit'
 
 
 class AccessTab(SMITab):
@@ -27,6 +41,7 @@ class AccessTab(SMITab):
 
     tab_name = 'tab_access'
 
+
 class PropertiesTab(SMITab):
     """Properties
     """
@@ -34,6 +49,7 @@ class PropertiesTab(SMITab):
     implements(interfaces.IPropertiesTab)
 
     tab_name = 'tab_metadata'
+
 
 class PreviewTab(SMITab):
     """Preview

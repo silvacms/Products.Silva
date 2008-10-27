@@ -15,21 +15,30 @@ class ISMITab(IBrowserView):
     tab_name = Attribute("Name of the current tab.")
 
 
+class IEditTab(ISMITab):
+    """Edit tab.
+    """
+
+
 class IAccessTab(ISMITab):
     """Access tab.
     """
+
 
 class IPropertiesTab(ISMITab):
     """Properties tab.
     """
 
+
 class IPreviewTab(ISMITab):
     """Preview tab.
     """
 
+
 class ISMIButtonManager(IViewletManager):
     """Where SMI button apprears.
     """
+
 
 class ISMIButton(IViewlet):
     """A button which appears at the top of the management tab.
@@ -48,6 +57,7 @@ class ISMIButton(IViewlet):
 class ISMISpecialButton(Interface):
     """A special button.
     """
+
 
 class ISMIExecutorButton(ISMIButton, ISMISpecialButton):
     """This button executes a special action.
