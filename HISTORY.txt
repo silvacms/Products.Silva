@@ -9,6 +9,10 @@ Silva changes
 
       - Fixed tab key indent/outdent behavior on Internet explorer
 
+      - Fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
+     
+      - Fix for list items nesting problem
+
     Backported from 2.1 branch:
 
       - fixed 274668: multiple query parameters on relative links
