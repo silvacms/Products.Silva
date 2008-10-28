@@ -309,6 +309,19 @@ div.middleground div.executor {
   float: right;
 }
 
+div.middleground div.executor a {
+  color: &dtml-executorFontColor;;
+  background-color: &dtml-executorBackground;;
+}
+div.middleground div.executor a:hover {
+  color: #e5ffec;
+  background-color: #538da3;
+}
+div.middleground div.executor a:active {
+  color: #bfffd3;
+  background-color: #64ABC8;
+}
+
 /* ______________________________________ footer _______ */
 
 div.footer {
@@ -318,8 +331,7 @@ div.footer {
   border-top: &dtml-shade60; 1px solid;
   border-bottom: none;
   color: &dtml-shade30;;
-  /*background: &dtml-listingTopBackground;;*/
-background-color:#C4D6E7;
+  background-color:#C4D6E7;
   font-size: 94%;
 }
 
