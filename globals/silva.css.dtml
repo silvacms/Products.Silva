@@ -204,6 +204,13 @@ div.tabs div.air {
   background-color: transparent;
 }
 
+/* view public page button */
+div.tabs a.transportlet {
+  width: auto;
+  padding-right:1em;
+  padding-left:1.5em;
+}
+
 /* help (available as accesskey link) */
 div.tabs a.normal {
   float: right;
@@ -213,32 +220,6 @@ div.tabs a.normal {
   border: none;
   color: transparent;
   background: transparent;
-}
-
-/* view public page link behavior */
-div.tabs a.transportlet {
-  width: auto;
-  padding-right:1em;
-  padding-left:1.5em;
-}
-div.tabs a.transportlet:link {
-  color: &dtml-transporterFontColor;;
-  background-color: #5370A6;
-}
-div.tabs a.transportlet:visited {
-  color: &dtml-transporterFontColor;;
-  background-color: #5370A6;
-}
-div.tabs a.transportlet:hover {
-  border-color: #567;
-  color: #e5fffe;
-  background-color: #74748b;
-  text-decoration: none;
-}
-div.tabs a.transportlet:active {
-  border-color: #789;
-  color: #b3fffb;
-  background-color: #8d97c2;
 }
 
 /* ____________________________________ flow bar _______ */
