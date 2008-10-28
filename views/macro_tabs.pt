@@ -68,7 +68,7 @@
   <span tal:replace="nothing"><!-- _______ public link _______ --></span>
   <a class="transportlet"
     style="float:right"
-    title="Leave Silva and view the public page: alt-:"
+    title="Leave Silva and view the public page: alt-;"
     accesskey=";"
     tal:attributes="href string:${model/absolute_url}"
     i18n:attributes="title"
@@ -102,9 +102,10 @@
         <img border="0"
            height="9"
            width="9"
-           tal:attributes="src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url;
-             alt string:style_image;"
-        />
+           tal:attributes="
+             src python:publication == model and '%s/globals/up_publication.gif' % root_url or '%s/globals/up_tree.gif' % root_url;
+             alt string:style_image;
+        "/>
       </a>
       <a tal:content="structure string:${tab_info/tab_name}"
         tal:attributes="href tab_info/tab_url;
