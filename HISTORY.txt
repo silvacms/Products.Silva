@@ -7,6 +7,8 @@ Silva changes
 
     Features added:
 
+      - Made the public page link in the tab space visible, styled as a tab.
+
       - Silva is shipped with eggs by default.
 
       - Silva root became a Five local site. You can activate others
