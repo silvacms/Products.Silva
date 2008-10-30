@@ -31,7 +31,7 @@ class SecurityError(Exception):
     """An error has been triggered by the security system.
     """
 
-class AuthorizedRoleAssignement(SecurityError):
+class UnauthorizedRoleAssignement(SecurityError):
     """This roles can be assigned.
     """
 
@@ -57,11 +57,11 @@ class Security(AccessManager):
         """
         member = self.sec_get_member(userid)
         if role not in member.allowed_roles():
-            raise AuthorizedRoleAssignement
+            raise UnauthorizedRoleAssignement
         # check whether we have permission to add Manager
         if (role == 'Manager' and
             not self.sec_have_management_rights()):
-            raise AuthorizedRoleAssignement
+            raise UnauthorizedRoleAssignement
         self.manage_addLocalRoles(userid, [role])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
