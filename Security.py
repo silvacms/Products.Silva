@@ -26,6 +26,15 @@ from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 
+
+class SecurityError(Exception):
+    """An error has been triggered by the security system.
+    """
+
+class AuthorizedRoleAssignement(SecurityError):
+    """This roles can be assigned.
+    """
+
 class Security(AccessManager):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
@@ -46,12 +55,13 @@ class Security(AccessManager):
     def sec_assign(self, userid, role):
         """Assign role to userid for this object.
         """
-        if role not in roleinfo.ASSIGNABLE_ROLES:
-            return
+        member = self.sec_get_member(userid)
+        if role not in member.allowed_roles():
+            raise AuthorizedRoleAssignement
         # check whether we have permission to add Manager
         if (role == 'Manager' and
             not self.sec_have_management_rights()):
-            return
+            raise AuthorizedRoleAssignement
         self.manage_addLocalRoles(userid, [role])
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,

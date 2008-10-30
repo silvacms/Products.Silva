@@ -20,11 +20,16 @@ if not userids:
 model = request.model
 #assigned = []
 for userid in userids:
-    model.sec_assign(userid, assign_role)
+    try:
+        model.sec_assign(userid, assign_role)
+    except:
+        # No feedback, can't have the exception with a lot of bad things.
+        # Stay silent until we got a better framework.
+        pass
     #assigned.append((userid, assign_role))
 
 #return view.tab_access(
-#    message_type="feedback", 
+#    message_type="feedback",
 #    message="Role(s) assigned") # for %s" % view.quotify_list_ext(assigned))
 
 # FIXME: do we need feedback?

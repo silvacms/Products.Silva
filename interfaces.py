@@ -924,6 +924,11 @@ class IMember(Interface):
         may face restrictions on the Silva site.
         """
 
+    def allowed_roles():
+        """Private method which return a list of roles that that user
+        can have.
+        """
+
 class IMemberService(Interface):
     """Member service.
     """

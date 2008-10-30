@@ -10,7 +10,11 @@ Silva changes
       - Made the public page link in the tab space visible, styled as
         a tab.
 
-      - User can to localized and only be defined for a sub-container.
+      - User types can select which roles they are allowed to be
+        attributed to.
+
+      - Users can to *localized* and only be defined for a
+        sub-container.
 
       - Middleground macro have been re-factored to a view, with
         actions on it as viewlets. Extensions can plug sub-screen on

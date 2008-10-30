@@ -31,7 +31,7 @@ class AccessManager:
             for ce in ces:
                 message = '\'%s\' has requested the %s role at this location:\n%s.\n\nGo to %s/edit/tab_access\nto process the request.' % (userid, role, self.aq_inner.absolute_url(), self.aq_inner.absolute_url())
                 self.service_messages.send_message(userid, ce, 'Access request', message)
-                
+
         self.service_messages.send_pending_messages()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,

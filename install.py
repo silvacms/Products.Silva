@@ -30,7 +30,7 @@ from Products.Silva import TypographicalService
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
-    
+
     obj         where the new directory-object will be accessible
     name        name of the new zope object
     base        dirname(base) is taken as the base for the following
@@ -44,7 +44,7 @@ def add_fss_directory_view(obj, name, base, *args):
     Note that the the resulting path (joined from base and *args) must be
     below an already registered FSS-path (i.e. you must have issued
     a 'registerDirectory' on the to-be-registered directory or on one
-    of its parents). 
+    of its parents).
 
     """
     from os.path import isdir, dirname, join, normpath, normcase
@@ -98,7 +98,7 @@ def install(root):
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
-    
+
     # also register views
     registerViews(root.service_view_registry)
 
@@ -115,15 +115,15 @@ def install(root):
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
-    
+
     # forbid adding group & virtualgroup from the SMI
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
     root.add_silva_addable_forbidden('Silva IP Group')
-    
+
     # add or update service metadata
     configureMetadata(root)
-    
+
     configureContainerPolicies(root)
 
     # install the renderer registry service
@@ -137,7 +137,7 @@ def install(root):
 
     # try to install Kupu
     installKupu(root)
-    
+
     installSubscriptions(root)
 
 def uninstall(root):
@@ -147,7 +147,7 @@ def uninstall(root):
         # XXX this can happen always if service_resources is
         # assumed to be just there in the future (like service_views)
         root.service_resources.manage_delObjects(['Silva'])
-       
+
 def is_installed(root):
     return hasattr(root.service_views, 'Silva')
 
@@ -156,7 +156,7 @@ def configureMetadata(root):
     from Products.Annotations.Extensions.SilvaInstall import install as install_annotations
     from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
     from Globals import package_home
-    
+
     # install annotations
     if not 'service_annotations' in root.objectIds():
         install_annotations(root)
@@ -164,11 +164,11 @@ def configureMetadata(root):
             root['service_annotations'],
             IInvisibleService,
             interface.directlyProvidedBy(root['service_annotations']))
-    
+
     # install metadata
-    if not 'service_metadata' in root.objectIds():    
+    if not 'service_metadata' in root.objectIds():
         install_metadata(root)
-    
+
     # load up the default metadata
     silva_home = package_home(globals())
     silva_docs = path.join(silva_home, 'doc')
@@ -181,12 +181,12 @@ def configureMetadata(root):
         collection.manage_delObjects(['silva-extra'])
 
     xml_file = path.join(silva_docs, 'silva-content.xml')
-    fh = open(xml_file, 'r')        
+    fh = open(xml_file, 'r')
     collection.importSet(fh)
 
     xml_file = path.join(silva_docs, 'silva-extra.xml')
     fh = open(xml_file, 'r')
-    collection.importSet(fh)    
+    collection.importSet(fh)
 
     setids = ('silva-content', 'silva-extra')
     types = ( 'Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
@@ -194,11 +194,11 @@ def configureMetadata(root):
               'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
               'Silva Link Version')
     root.service_metadata.addTypesMapping(types, setids)
-    
+
     types = ('Silva Ghost Folder', 'Silva Ghost Version')
     root.service_metadata.addTypesMapping(types, ('', ))
     root.service_metadata.initializeMetadata()
-            
+
 def configureProperties(root):
     """Configure properties on the root folder.
     XXX Probably we'll get rid of most properties in the future.
@@ -240,12 +240,12 @@ def configureMiscServices(root):
     """Set up some services which did not fit elsewhere """
     # add service_files if it doesn't exist
     if not hasattr(root, 'service_files'):
-        File.manage_addFilesService(root, 'service_files', 
-            'Silva Files Service')    
+        File.manage_addFilesService(root, 'service_files',
+            'Silva Files Service')
     # do the same for the sidebar service
     if not hasattr(root, 'service_sidebar'):
         root.manage_addProduct['Silva'] \
-            .manage_addSidebarService('service_sidebar', 
+            .manage_addSidebarService('service_sidebar',
             'Silva Content Tree Navigation')
     if not hasattr(root, 'service_toc_filter'):
         filter_service = TOCFilterService()
@@ -272,7 +272,7 @@ def configureSecurity(root):
     app.__ac_roles__ = tuple(roles)
 
     # now configure permissions
-    
+
     add_permissions = [
         'Add Documents, Images, and Files',
         'Add Silva Folders',
@@ -284,7 +284,7 @@ def configureSecurity(root):
         'Add Silva Files',
         'Add Silva AutoTOCs',
         ]
-    
+
     for add_permission in add_permissions:
         root.manage_permission(add_permission, roleinfo.AUTHOR_ROLES)
 
@@ -292,11 +292,11 @@ def configureSecurity(root):
     root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
     root.manage_permission('Add Silva IP Groups', roleinfo.CHIEF_ROLES)
-    
+
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)
     root.manage_permission('View', roleinfo.ALL_ROLES)
-  
+
     # person with viewer role can do anything that anonymous does + has
     # additional right to view when anonymous can't. This means zope
     # should fall back on permissions for anonymous in case viewer does
@@ -339,7 +339,7 @@ def configureSecurity(root):
 
 def configureLayout(root, default_if_existent=0):
     """Install common layout code into root.
-    If the default_if_existent argument is true, ids will be prefixed with 
+    If the default_if_existent argument is true, ids will be prefixed with
     default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
@@ -347,16 +347,16 @@ def configureLayout(root, default_if_existent=0):
                'copyright','head_inject']:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
-    for id in ['index_html.py', 'preview_html.py', 
+    for id in ['index_html.py', 'preview_html.py',
                'get_metadata_element.py', ]:
         add_helper(root, id, globals(), py_add_helper, default_if_existent)
-        
+
     add_helper(root, 'frontend.css', globals(),
                dtml_add_helper, default_if_existent)
 
     add_helper(root, 'print.css', globals(),
                dtml_add_helper, default_if_existent)
-    
+
 def configureMembership(root):
     """Install membership code into root.
     """
@@ -365,7 +365,7 @@ def configureMembership(root):
     if 'service_members' not in ids:
         root.manage_addProduct['Silva'].manage_addSimpleMemberService(
             'service_members')
-        
+
     if 'Members' not in ids:
         root.manage_addFolder('Members')
 
@@ -417,7 +417,7 @@ def fileobject_add_helper(context, id, text):
         getattr(context, id).update_data(text)
     else:
         Image.manage_addFile(context, id, text, content_type='text/plain')
-        
+
 def read_file(id, info, folder):
     filename = os.path.join(package_home(info), folder, id)
     f = open(filename, 'rb')
@@ -449,9 +449,9 @@ def registerViews(reg):
                  ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
                  ['edit', 'Container', 'GhostFolder'])
-    reg.register('edit', 'Silva AutoTOC', 
+    reg.register('edit', 'Silva AutoTOC',
                  ['edit', 'Content', 'AutoTOC'])
-    
+
     # public
     reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
     reg.register('public', 'Silva Publication', ['public', 'Folder', 'view'])
@@ -521,8 +521,8 @@ def unregisterViews(reg):
         reg.unregister('add', meta_type)
         reg.unregister('public', '%s Version' % meta_type)
     # preview
-    for meta_type in ['Silva Folder', 
-                        'Silva Publication', 
+    for meta_type in ['Silva Folder',
+                        'Silva Publication',
                         'Silva Root',
                         'Silva Image',
                         'Silva Ghost Folder',
@@ -532,7 +532,7 @@ def unregisterViews(reg):
     reg.unregister('edit', 'Silva Root')
     reg.unregister('public', 'Silva Root')
     reg.unregister('edit', 'Silva Simple Member')
-    # next line for hysterical reasons, should go away 
+    # next line for hysterical reasons, should go away
     reg.unregister('public', 'Silva Simple Member')
 
 class El:
@@ -552,12 +552,12 @@ def setup_catalog(silva_root):
     catalog = silva_root.service_catalog
     lexicon_id = 'silva_lexicon'
 
-    # Add lexicon with right splitter (Silva.UnicodeSplitter.Splitter 
+    # Add lexicon with right splitter (Silva.UnicodeSplitter.Splitter
     # registers under "Unicode Whitespace splitter")
     if not lexicon_id in catalog.objectIds():
         # XXX ugh, hardcoded dependency on names in ZCTextIndex
         catalog.manage_addProduct['ZCTextIndex'].manage_addLexicon(
-            lexicon_id, 
+            lexicon_id,
             elements=[
             El(group='Case Normalizer', name='Case Normalizer'),
             El(group='Stop Words', name=" Don't remove stop words"),
@@ -567,8 +567,8 @@ def setup_catalog(silva_root):
 
     existing_columns = catalog.schema()
     columns = [
-        'id', 
-        'meta_type', 
+        'id',
+        'meta_type',
         'silva_object_url',
         ]
 
@@ -582,7 +582,7 @@ def setup_catalog(silva_root):
         ('id', 'FieldIndex'),
         ('meta_type', 'FieldIndex'),
         ('path', 'PathIndex'),
-        ('fulltext', 'ZCTextIndex'),        
+        ('fulltext', 'ZCTextIndex'),
         ('version_status', 'FieldIndex'),
         ('haunted_path', 'FieldIndex'),
         ]
@@ -601,7 +601,7 @@ def setup_catalog(silva_root):
                 )
             catalog.addIndex(field_name, field_type, extra)
             continue
-        
+
         catalog.addIndex(field_name, field_type)
 
     # if the silva root has an index_object attribute, add it to the catalog
@@ -622,7 +622,7 @@ def installSilvaDocument(root):
     # see issue #536 and #611
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaDocument' not in extensionRegistry.get_names():
-        return 
+        return
     root.service_extensions.install('SilvaDocument')
     # create the demo content:
     root.sec_update_last_author_info()
@@ -634,34 +634,34 @@ def installSilvaDocument(root):
     version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc toc_depth="1" /></doc>')
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
-    
+
 def installSilvaLayout(root):
     # installs SilvaLayout if available
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaLayout' not in extensionRegistry.get_names():
-        return 
+        return
     root.service_extensions.install('SilvaLayout')
 
 def installSilvaFind(root):
     # installs Silva Find if available
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaFind' not in extensionRegistry.get_names():
-        return 
+        return
     root.service_extensions.install('SilvaFind')
 
 def installSubscriptions(root):
     # Setup infrastructure for subscriptions feature.
     if not 'service_subscriptions' in root.objectIds():
         subscriptionservice.manage_addSubscriptionService(root)
-    
+
     if not MAILHOST_ID in root.objectIds():
         if MAILDROPHOST_AVAILABLE:
-            from Products.MaildropHost import manage_addMaildropHost 
-            manage_addMaildropHost(root, MAILHOST_ID, 'Spool based mail delivery') 
+            from Products.MaildropHost import manage_addMaildropHost
+            manage_addMaildropHost(root, MAILHOST_ID, 'Spool based mail delivery')
         else:
-            from Products.MailHost.MailHost import manage_addMailHost 
-            manage_addMailHost(root, MAILHOST_ID, 'Mail Delivery Service') 
-    
+            from Products.MailHost.MailHost import manage_addMailHost
+            manage_addMailHost(root, MAILHOST_ID, 'Mail Delivery Service')
+
     for id in (
         'subscription_confirmation_template',
         'already_subscribed_template',
@@ -678,10 +678,10 @@ def installKupu(root):
         pass
     else:
         if not hasattr(root, 'service_kupu'):
-            add_fss_directory_view(root, 'service_kupu', 
+            add_fss_directory_view(root, 'service_kupu',
                                     kupu.__file__, 'common')
         if not hasattr(root, 'service_kupu_silva'):
-            add_fss_directory_view(root, 'service_kupu_silva', 
+            add_fss_directory_view(root, 'service_kupu_silva',
                                     __file__, 'kupu')
 
 if __name__ == '__main__':
