@@ -224,7 +224,7 @@ class Security(AccessManager):
         """
         # XXX this loop seems useless, why is it here? (maybe we need a copy?)
         members = []
-        for member in self.service_members.find_members(search_string, where=self):
+        for member in self.service_members.find_members(search_string, location=self):
             members.append(member)
         return members
 
@@ -245,7 +245,7 @@ class Security(AccessManager):
         """Get information for userid. This method delegates to
         service_members for security reasons.
         """
-        return self.service_members.get_cached_member(userid, where=self)
+        return self.service_members.get_cached_member(userid, location=self)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'sec_get_last_author_info')

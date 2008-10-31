@@ -933,21 +933,21 @@ class IMemberService(Interface):
     """Member service.
     """
 
-    def find_members(search_string, where=None):
+    def find_members(search_string, location=None):
         """Return all users with a full name containing search string
         available at the given point.
         """
 
-    def is_user(userid, where=None):
+    def is_user(userid, location=None):
         """Return true if userid is indeed a known user.
         """
 
-    def get_member(userid, where=None):
+    def get_member(userid, location=None):
         """Get member object for userid, or None if no such member
         object.
         """
 
-    def get_cached_member(userid, where=None):
+    def get_cached_member(userid, location=None):
         """Get memberobject which can be cached, or None if no such
         memberobject.
         """
