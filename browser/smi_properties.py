@@ -5,7 +5,6 @@
 from zope.interface import implements
 
 from Products.Silva.i18n import translate as _
-from Products.Silva import interfaces
 from Products.Silva.adapters.interfaces import ISubscribable
 
 from Products.Silva.browser.interfaces import ISMIExecutorButton
