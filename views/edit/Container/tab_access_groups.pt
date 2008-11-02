@@ -65,7 +65,7 @@
       </tr>
       <tr>
         <td class="top"
-          colspan="5">
+          colspan="2">
           <h2 tal:attributes="title string:id: ${model/id}">
             <img tal:replace="structure icon" />
             <tal:block i18n:translate="">
@@ -85,29 +85,30 @@
     </thead>
     <tbody>
       <tr class="even">
-        <td class="align-right"
-          width="10%">
-          <tal:block i18n:translate="">id</tal:block>
-          <span class="warning">*</span>
+        <td class="designator"
+          style="width:33%">
+          <label for="field_object_id">id</label><span class="warning">*</span>
+          <p i18n:translate="">
+            No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
+          </p>
         </td>
-        <td style="width: 50%;">
+        <td class="field">
           <input class="store"
+            id="field_object_id"
             type="text"
             value=""
             name="field_object_id"
             size="20"
           />
         </td>
-        <td i18n:translate="">
-          No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;
-        </td>
       </tr>
       <tr class="odd">
-        <td class="align-right">
-          <tal:block i18n:translate="">type</tal:block>
-          <span class="warning">*</span>
+        <td class="designator"
+          style="width:33%">
+          <label for="field_object_id"
+             i18n:translate="">type</label><span class="warning">*</span>
         </td>
-        <td>
+        <td class="field">
           <select class="store"
             name="meta_type">
             <option value="Silva Group" i18n:translate="">
@@ -122,14 +123,11 @@
             </option>
           </select>
         </td>
-        <td>
-          &nbsp;
-        </td>
       </tr>
     </tbody>
     <tfoot>
       <tr class="controls">
-        <td colspan="3">
+        <td colspan="2">
           <input class="button"
             style="float:right"
             type="submit"
