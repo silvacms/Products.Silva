@@ -164,7 +164,14 @@
 
     <tbody>
       <tr tal:condition="groups">
-        <th class="listing-left">
+        <th class="listing-left">&nbsp;
+          <img alt="select all"
+            border="0"
+            width="8"
+            height="8"
+            tal:attributes="src string:${root_url}/globals/checkselect.gif"
+            i18n:attributes="alt"
+          />
         </th>
         <th i18n:translate="">
           name
@@ -182,12 +189,14 @@
       <tal:repeat repeat="group groups">
         <tal:define define="iterate repeat/group/odd">
           <tr tal:attributes="class python:iterate and 'odd' or 'even'">
-            <td nowrap="1">
+            <td  class="listing-left">
               <input class="min"
                 type="checkbox"
                 name="groupids:list"
                 tal:attributes="value group/id;
               " />
+            </td>
+            <td>
               <a class="icon"
                 title="edit"
                 tal:attributes="
@@ -195,8 +204,6 @@
                   title group/meta_type">
                 <img tal:replace="structure python:view.render_icon(group)" />
               </a>
-            </td>
-            <td>
               <a class="published"
                 title="edit this group"
                 tal:attributes="href string:${group/absolute_url}/edit"
@@ -272,7 +279,14 @@
 
     <tbody>
       <tr tal:condition="groups">
-        <th class="listing-left">
+        <th class="listing-left">&nbsp;
+          <img alt="select all"
+            border="0"
+            width="8"
+            height="8"
+            tal:attributes="src string:${root_url}/globals/checkselect.gif"
+            i18n:attributes="alt"
+          />
         </th>
         <th i18n:translate="">
           name
@@ -296,15 +310,15 @@
                 name="groupids:list"
                 tal:attributes="value group/id;
               " />
+            </td>
+            <td>
               <a class="icon"
                 title="edit"
                 tal:attributes="
-                  href string:${group/absolute_url}/edit;
+                  href string:${group/absolute_url}/../edit/tab_access_groups;
                   title group/meta_type">
                 <img tal:replace="structure python:view.render_icon(group)" />
               </a>
-            </td>
-            <td>
               <a class="published"
                 title="edit this group"
                 tal:attributes="href string:${group/absolute_url}/edit"
