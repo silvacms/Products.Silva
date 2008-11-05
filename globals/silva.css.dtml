@@ -556,6 +556,10 @@ table.listing td.field-title {
 table#sortable tbody a, table.listing tbody a {
   display: block;
 }
+/* inline in designation descriptions */
+table.listing tbody p a {
+  display: inline;
+}
 
 table#sortable a.icon img, table.listing a.icon img {
   display: inline;
