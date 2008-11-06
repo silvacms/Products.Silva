@@ -7,6 +7,9 @@ Silva changes
 
     Features added:
 
+      - 101103: make addables functionality available within any type
+        of Container, not just Publications
+
       - Made the public page link in the tab space visible, styled as a tab.
 
       - Silva is shipped with eggs by default.

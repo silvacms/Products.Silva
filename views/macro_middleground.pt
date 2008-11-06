@@ -59,9 +59,9 @@
         link_id string:tab_addables;
         selected python:link_id == template.id;
         class python:selected and 'selected' or nothing;
-        ispublication python: model.implements_publication();
+        iscontainer python: model.implements_container();
       "
-        tal:condition="ispublication"
+        tal:condition="python:iscontainer"
       tal:attributes="
         href string:$url/edit/$link_id;
         class class;
