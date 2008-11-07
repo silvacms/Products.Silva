@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.1
+  Silva 2.1.2 (unreleased)
 
     Features added:
 
@@ -52,6 +52,11 @@ Silva changes
       - added logging to catalog rebuilds, because they can
         potentially take a very long time.
 
+  Silva 2.1.1 (2008-11-07)
+
+    Bugs Fixed:
+
+      - Fixed XSS bug in SilvaFind
 
   Silva 2.1
 
