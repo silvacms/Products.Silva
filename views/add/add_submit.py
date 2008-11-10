@@ -6,7 +6,7 @@ view = context
 REQUEST = context.REQUEST
 
 lookup_mode = REQUEST.get('lookup_mode', 0)
-return_url = REQUEST.get('return_url', '')
+return_url = mangle.unquote(REQUEST.get('return_url', ''))
 
 # if we cancelled, then go back to edit tab
 if REQUEST.has_key('add_cancel'):

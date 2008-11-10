@@ -3,9 +3,11 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.0.13
+  Silva 2.0.13 (unreleased)
 
     Bugs fixed:
+    
+      - Fixed return_url when adding content from the lookup window.
 
       - Fixed tab key indent/outdent behavior on Internet explorer
 
