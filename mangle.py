@@ -21,6 +21,13 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 __allow_access_to_unprotected_subobjects__ = 1
 
+def unquote(quoted):
+    """A very simplified urllib2 unquote, only handles ?, = and &"""
+    unquoted = quoted.replace(
+        '%3D', '=').replace('%26', '&').replace('%3F', '?')
+    return unquoted
+
+
 class _Marker:
     """A marker"""
     

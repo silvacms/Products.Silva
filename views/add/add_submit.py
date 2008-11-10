@@ -6,7 +6,7 @@ view = context
 REQUEST = context.REQUEST
 
 lookup_mode = REQUEST.get('lookup_mode', 0)
-return_url = REQUEST.get('return_url', '')
+return_url = mangle.unquote(REQUEST.get('return_url', ''))
 position = REQUEST.get('add_object_position', None)
 if position:
     try:
