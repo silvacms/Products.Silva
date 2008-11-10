@@ -41,7 +41,8 @@ class SubscriptionsButton(SMIButton):
     accesskey = "u"
 
     def available(self):
-        return ISubscribable(self.context, None) is not None
+        return (ISubscribable(self.context, None) is not None and
+                self.context.service_subscriptions.subscriptionsEnabled())
 
 
 class PublishButton(SMIButton):
