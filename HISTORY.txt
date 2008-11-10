@@ -46,6 +46,8 @@ Silva changes
 
     Ported from 2.0 branch:
 
+      - Fixed return_url when adding content from the lookup window.
+
       - added partial catalog rebuilding for better testing
         possibilities on large sites.
 
