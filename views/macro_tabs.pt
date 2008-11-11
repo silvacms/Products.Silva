@@ -10,9 +10,6 @@
 <tal:block define="
   tabs here/get_authorized_tabs;
   active_tab active_tab | nothing;
-  selected_tab_id template/id;
-  vein vein | nothing;
-  mangle modules/Products/Silva/mangle;
 ">
 <!-- ______________ Breadcrumb space ______________ -->
   <div class="pathbar">
@@ -87,7 +84,7 @@
     <tal:define define="
       tab_info python:here.get_tab_info(item);
       template_id template/id;
-      is_selected_tab python:tab_info['tab_id'] == template_id or item[1] == active_tab;
+      is_selected_tab python:tab_info['tab_id'] in [template_id, active_tab];
       top_key tab_info/toplink_accesskey | nothing;
       tab_key tab_info/tab_accesskey | nothing;
       up_key tab_info/uplink_accesskey | nothing;
