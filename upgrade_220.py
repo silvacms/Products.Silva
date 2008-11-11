@@ -48,6 +48,7 @@ class RootUpgrader(BaseUpgrader):
 
         # Refresh all products
         obj.service_extensions.refresh_all()
+        return obj
 
 RootUpgrader = RootUpgrader(VERSION, 'Silva Root')
 
