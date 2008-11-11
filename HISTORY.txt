@@ -76,12 +76,22 @@ Silva changes
 
     Features ported from 2.1 branch:
 
+      - User types can select which roles they are allowed to be
+        attributed to.
+
+      - Users can to *localized* and only be defined for a
+        sub-container.
+
+      - Middleground macro have been re-factored to a view, with
+        actions on it as viewlets. Extensions can plug sub-screen on
+        any tab now, without overriding any tab screen.
+
     Bugs Fixed:
 
       - fixed 274668: multiple query parameters on relative links
         broke, because the ampersands were not properly escaped.
 
-      - fixed 100856: add support in Bindings for rendering the 
+      - fixed 100856: add support in Bindings for rendering the
         edit views of elements with values from the request
 
       - Fixed 101827: lookup window was always displaying the new
@@ -89,8 +99,10 @@ Silva changes
         (specifically the container's meta type) wasn't in the
         filter list for the lookup window
 
-      - Fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
-     
+      - Fix for kupu in html transform from
+        lis.append(silva.li(el.convert(context))) to
+        lis.append(silva.li(silva.br(), el.convert(context)))
+
       - Fix for list items nesting problem
 
     Bugfixes ported from 2.1 branch:
@@ -98,7 +110,7 @@ Silva changes
       - Silva Documents with code sources no longer lose the parameter
         types of the codes source parameters on xmlexport.
 
-      - Make sure that pressing the tab key when inside the kupu editor 
+      - Make sure that pressing the tab key when inside the kupu editor
         will always perform the indent/outdent editor commands.
         This was not working anymore on Firefox3)
 
@@ -111,7 +123,7 @@ Silva changes
       - html in parameters of external sources is no longer double
         escaped on saving.
 
-      - fixed 263503: adding support for relative links with query parameters 
+      - fixed 263503: adding support for relative links with query parameters
         (e.g. /path/to/object?key=value)
 
       - correct unauthorized error when a chief editor/manager want to
@@ -336,7 +348,7 @@ Silva changes
 
       - When pdf/word conversion results in errors, the converted text
         is indexed anyway, if there is any.
-    
+
       - fixed attribute error in kupu editor of changed images
 
       - 101376: adding content with the same name as catalog indexes
@@ -344,10 +356,10 @@ Silva changes
         ids are now reserved ids.
 
       - 101780: worked around a ZCatalog bug which causes
-        containers to be unindexed twice when a parent 
+        containers to be unindexed twice when a parent
         container is removed.
 
-      - 101464: can't place headings inside list items in kupu 
+      - 101464: can't place headings inside list items in kupu
 
       - 101228: remove slide links from object lookup window, so that
         the full SMI cannot be loaded within it
@@ -375,7 +387,7 @@ Silva changes
 
       - fixed 101174: When an id is in use on the Zope level, inform
                       users accordingly
-      
+
       - Added True switch to Image.py tag method to escape double
         quotes.
 
@@ -463,17 +475,17 @@ Silva changes
         still were still called with the spurious 'title' arguments on
         some code paths.
 
-      - fixed WuW144: Images were not always shown correctly in kupu 
+      - fixed WuW144: Images were not always shown correctly in kupu
         when resized.
 
-      - fixed 158381: Group objects should be removable even if the 
+      - fixed 158381: Group objects should be removable even if the
         groups service isn't installed.
 
       - fixed 158384: can't add groups: title error issue
 
       - fixed 157010: anchors in links: # -> %23
 
-      - fixed wuw144: Incorrect caching of images. 
+      - fixed wuw144: Incorrect caching of images.
                       (was reverted in silva-2.0.3b1)
 
       - fixed 150809: sidebar cache not invalidated when folder
@@ -524,7 +536,7 @@ Silva changes
         Security.sec_get_all_roles() and all calls to it, which were
         passing in the current userid anyway.
 
-      - fixed "excessive recursion" error when users click 'new version' 
+      - fixed "excessive recursion" error when users click 'new version'
         to make a new copy of a silva document to edit then click the
         browser's back button and click 'new version' again.
 
