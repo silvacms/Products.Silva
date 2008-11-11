@@ -12,7 +12,7 @@
 
   <browser:page
      for="Products.Silva.interfaces.ISilvaObject"
-     name="tab_properties_extra"
+     name="tab_metadata_extra"
      class=".smi.PropertiesTab"
      permission="silva.ReadSilvaContent"
      />
