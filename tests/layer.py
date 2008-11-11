@@ -109,9 +109,10 @@ def setupSilva():
     """Create a Silva site in the test (demo-) storage.
     """
     app = ZopeTestCase.app()
-    setupSilvaRoot(app)
-    setupRootUser(app)
-    transaction.commit()
+    if not hasattr(app, 'root'):
+        setupSilvaRoot(app)
+        setupRootUser(app)
+        transaction.commit()
     ZopeTestCase.close(app)
 
 
@@ -133,6 +134,11 @@ class SilvaLayer(ZopeLiteLayer):
     def tearDown(cls):
         cleanUp()
 
+
+class SilvaFunctionalLayer(SilvaLayer):
+    """Separate test from functional tests (for the moment).
+    """
+    
 
 def setUp(test):
     """Setup before each tests.

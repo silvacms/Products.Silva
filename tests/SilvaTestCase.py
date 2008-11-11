@@ -21,7 +21,8 @@ user_dummy = 'dummy'
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager, getSecurityManager
 
-from Products.Silva.tests.layer import SilvaLayer, user_name, \
+from Products.Silva.tests.layer import SilvaLayer, SilvaFunctionalLayer
+from Products.Silva.tests.layer import user_name, \
     user_password, users, setUp, tearDown
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
@@ -205,8 +206,9 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def clear_events(self):
         zope.component.eventtesting.clearEvents()
 
-class SilvaFunctionalTestCase(
-    ZopeTestCase.FunctionalTestCase, SilvaTestCase):
-    pass
+class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
+    """Base class for functional tests.
+    """
 
+    layer = SilvaFunctionalLayer
     
