@@ -263,7 +263,7 @@ class Root(Publication):
                                                      'Search this site')
         self.search.sec_update_last_author_info()
 
-        
+
 InitializeClass(Root)
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
@@ -292,7 +292,7 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     if add_search:
         # install a silva find instance
         root._installSilvaFindInstance()
-        
+
     if add_docs:
         # install the user documentation .zexp
         root._installDocumentation()

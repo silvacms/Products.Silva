@@ -6,11 +6,10 @@
 import urllib
 
 # Zope
-from zope.interface import implements
 from zope.app.component.interfaces import ISite
 from AccessControl import ModuleSecurityInfo
 
-# Silva 
+# Silva
 from Products.Silva import interfaces
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
@@ -41,7 +40,7 @@ def unapprove_helper(object):
     if interfaces.IContainer.providedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
-    
+
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
     """
@@ -65,13 +64,13 @@ translateCdataAttr = _translateCdataAttr
 
 def fix_content_type_header(uploaded_file):
     """Deletes the content-type header on the uploaded_file.
-    
+
     This ensures consistent mimetype assignment for the Silva application
     since Zope will now fallback to the Python database for resolving
     a mimetype.
     """
     if hasattr(uploaded_file, 'headers'):
-        if uploaded_file.headers.has_key('content-type'):            
+        if uploaded_file.headers.has_key('content-type'):
             del uploaded_file.headers['content-type']
 
 # this class used to be in SilvaDocument.upgrade, but was moved
@@ -104,7 +103,7 @@ class SwitchClass(object):
         setattr(container, obj_id, new_obj)
         new_obj = getattr(container, obj_id)
         return new_obj
-   
+
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
 
@@ -131,7 +130,7 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
 
 def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
     def SilvaZMIFilter(object_manager, filter_addable=False):
-        if filter_addable and not zmi_addable: 
+        if filter_addable and not zmi_addable:
             return False
         addable = False
         if interfaces.IRoot.providedBy(object_manager) and \
@@ -157,4 +156,4 @@ def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
             return not addable
         return addable
     return SilvaZMIFilter
-        
+
