@@ -9,7 +9,6 @@
   i18n:domain="silva"
   tal:define="
     global   vein string:preview;
-    view     here;
     model    request/model;
     trigger  model/security_trigger;
     mangle   modules/Products/Silva/mangle;
@@ -39,7 +38,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:content="structure python: view.css_imports(['silva.css'])"
+  tal:content="structure python: here.css_imports(['silva.css'])"
 >
 @imports
 </style>
@@ -65,44 +64,25 @@
 <metal:block use-macro="here/macro_tabs/macros/tabs" />
 
 <div class="workspace">
-<div class="middleground"
-  tal:condition="python:not (message or nofeedback)">
-  <div style="float:right"
-    tal:define="
-    permissions             view/get_silva_permissions;
-    versionmodel            python:model.implements_container() and model.get_default() or model;
-    unapproved_version      python:getattr(versionmodel,'get_unapproved_version',lambda: None)();
-    have_approve_permission permissions/ApproveSilvaContent | nothing;
-  ">
-   <a class="executor"
-      title="publish this document: alt-p"
-      accesskey="p"
-      tal:attributes="href string:${versionmodel/absolute_url}/edit/quick_publish?return_to=tab_preview"
-      i18n:translate=""
-      i18n:attributes="title"
-      tal:condition="python: unapproved_version and have_approve_permission">
-      publish&nbsp;now
-   </a>
-  </div>
-  &nbsp;
-</div>
 
-<tal:if condition="message">
-  <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
-    <span tal:replace="structure message">
-      message
-    </span>
-    <tal:block tal:condition="python:message_type == 'feedback'">
-      &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-    </tal:block>
-  </div>
-</tal:if>
+  <tal:buttons tal:replace="structure model/@@tab_preview_extra" />
 
-<span tal:replace="nothing"> _______ closed notice _______ </span>
-<div class="fixed-feedback"
-  tal:condition="here/tab_preview_needs_feedback">
-  <span class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</span>
-</div>
+  <tal:if condition="message">
+    <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+      <span tal:replace="structure message">
+        message
+      </span>
+      <tal:block tal:condition="python:message_type == 'feedback'">
+        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+      </tal:block>
+    </div>
+  </tal:if>
+
+  <span tal:replace="nothing"> _______ closed notice _______ </span>
+  <div class="fixed-feedback"
+       tal:condition="here/tab_preview_needs_feedback">
+    <span class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</span>
+  </div>
 
 </div>
 </body>

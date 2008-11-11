@@ -7,8 +7,7 @@
 ##parameters=
 ##title=
 ##
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 from Products.Silva.adapters import version_management

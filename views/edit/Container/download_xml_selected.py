@@ -9,16 +9,15 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
-RESPONSE = view.REQUEST.RESPONSE
+request = context.REQUEST
+RESPONSE = context.REQUEST.RESPONSE
 model = request.model
 
 from DateTime import DateTime
 
 if not request.has_key('refs') or not request['refs']:
-    return view.tab_status(
-        message_type='error', 
+    return context.tab_status(
+        message_type='error',
         message=_('No items were selected, so no content will be exported'))
 
 objects = []

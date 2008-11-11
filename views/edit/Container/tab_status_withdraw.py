@@ -4,11 +4,10 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
         message=_('Nothing was selected, so no approval was withdrawn.'))
 
@@ -42,15 +41,15 @@ for ref in refs:
 if approved_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Withdrawn request for approval for: ${list}',
-                mapping={'list': view.quotify_list(approved_ids)})
+                mapping={'list': context.quotify_list(approved_ids)})
     msg.append(translate(message))
 
 if not_approved:
     message = _('Not withdrawn: ${list}',
-                mapping={'list': view.quotify_list_ext(not_approved)})
+                mapping={'list': context.quotify_list_ext(not_approved)})
     msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
 
-return view.tab_status(message_type='feedback', message=('<br />'.join(msg)) )
+return context.tab_status(message_type='feedback', message=('<br />'.join(msg)) )

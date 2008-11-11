@@ -3,10 +3,9 @@ from Products.Formulator.Errors import ValidationError, FormValidationError
 request = context.REQUEST
 catalog = context.service_catalog
 model = request.model
-view = context
 
 try:
-    result = view.search_form.validate_all_to_request(request)
+    result = context.search_form.validate_all_to_request(request)
 except FormValidationError, e:
     return None
 

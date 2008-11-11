@@ -247,9 +247,9 @@ class ViewCode:
                     infodict['public_version_expiration_datetime'] = str_datetime
         return ret
 
-    # this is a Python script that used to be located in the widgets dir of 
-    # SilvaDocument but had to be moved because of a change in Zope's 
-    # traversal machinery which made us have to switch from using 
+    # this is a Python script that used to be located in the widgets dir of
+    # SilvaDocument but had to be moved because of a change in Zope's
+    # traversal machinery which made us have to switch from using
     # 'restrictedTraverse' to 'unrestrictedTraverse'
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                                 'get_image')

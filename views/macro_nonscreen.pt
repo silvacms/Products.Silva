@@ -9,7 +9,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    icon python:view.render_icon(model);
+    icon python:here.render_icon(model);
     nix string:nix;
   "
   i18n:domain="silva">
@@ -30,9 +30,9 @@
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, vein_id, vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, vein_id, vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>

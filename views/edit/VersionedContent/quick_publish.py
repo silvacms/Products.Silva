@@ -21,7 +21,7 @@ if not model.get_unapproved_version():
     # See also edit/Container/tab_status_approve.py
     if model.is_version_published():
         return view(
-            message_type="error", 
+            message_type="error",
             message=_("There is no unapproved version to approve."))
     model.create_copy()
 

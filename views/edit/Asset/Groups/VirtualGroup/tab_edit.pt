@@ -98,7 +98,7 @@
             global group_meta_type string:Silva Group;
             global group_type nothing;
             ">
-            <metal:block use-macro="view/macro_groups_listing/macros/normal_groups_listing">
+            <metal:block use-macro="here/macro_groups_listing/macros/normal_groups_listing">
               <metal:block fill-slot="listing_actions">
                 <input class="button"
                   name="add_groups_to_virtualgroup:method"
@@ -118,7 +118,7 @@
             global group_meta_type string:Silva Virtual Group;
             global group_type string:virtual;
             ">
-            <metal:block use-macro="view/macro_groups_listing/macros/virtual_groups_listing">
+            <metal:block use-macro="here/macro_groups_listing/macros/virtual_groups_listing">
               <metal:block fill-slot="listing_actions">
                 <input class="button"
                   type="submit"

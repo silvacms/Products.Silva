@@ -28,7 +28,7 @@
 
   <metal:fill-slot fill-slot="message">
     <tal:block i18n:translate="">
-      A <span tal:replace="string:$type" i18n:name="type" /> automatically has a published state. 
+      A <span tal:replace="string:$type" i18n:name="type" /> automatically has a published state.
     </tal:block>
   </metal:fill-slot>
 

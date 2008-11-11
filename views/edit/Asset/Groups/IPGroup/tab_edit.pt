@@ -148,7 +148,7 @@
        global group_meta_type string:Silva IP Group;
        global group_type string:ip;
        ">
-    <metal:block use-macro="view/macro_groups_listing/macros/ip_groups_listing">
+    <metal:block use-macro="here/macro_groups_listing/macros/ip_groups_listing">
      <metal:block fill-slot="listing_actions">
            <input class="button"
              name="copy_ipranges_from_ipgroups:method"

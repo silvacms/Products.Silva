@@ -10,12 +10,11 @@
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 if not request.has_key('requests') or not request['requests']:
-    return view.tab_access(message_type='error', message=_('No requests selected'))
+    return context.tab_access(message_type='error', message=_('No requests selected'))
 
 messages = []
 for userid, role in [r.split('|') for r in request['requests']]:
@@ -26,4 +25,4 @@ for userid, role in [r.split('|') for r in request['requests']]:
 
 model.send_messages()
 
-return view.tab_access(message_type='feedback', message=', '.join(messages))
+return context.tab_access(message_type='feedback', message=', '.join(messages))

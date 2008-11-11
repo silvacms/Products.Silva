@@ -4,12 +4,11 @@ from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
 model = context.REQUEST.model
-view = context
 
 try:
-    result = view.form.validate_all(context.REQUEST)
+    result = context.form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return view.tab_edit(message_type="error", message=context.render_form_errors(e))
+    return context.tab_edit(message_type="error", message=context.render_form_errors(e))
 
 changed = []
 old_title = mangle.entities(model.get_title())
@@ -25,13 +24,13 @@ message = _('${old_title} to ${new_title}',
 changed.append(('title', translate(message)))
 
 # is this still in use?
-if (model.canScale() and 
-        result.has_key('web_format') and 
+if (model.canScale() and
+        result.has_key('web_format') and
         result.has_key('web_scaling')):
     model.set_web_presentation_properties(
         result['web_format'], result['web_scaling'])
-    
+
 message = _("Properties changed: ${changed}",
             mapping={'changed': context.quotify_list_ext(changed)})
-return view.tab_edit(message_type="feedback",
+return context.tab_edit(message_type="feedback",
     message=message)

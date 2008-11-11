@@ -53,7 +53,7 @@ if obj != root:
                             'uri': parent.absolute_url(),
                             'src': '%s/kupu_imagelibrary?path=%s' % (
                                         context.absolute_url(), path),
-                            'icon': '%s/%s' % (root.absolute_url(), 
+                            'icon': '%s/%s' % (root.absolute_url(),
                                         parent.icon),
                             'description': parent.get_title()}
     items.append(data)
@@ -68,7 +68,7 @@ for indent, child in obj.get_tree(0):
                 'icon': '%s/%s' % (root.absolute_url(), child.icon),
                 'description': child.get_title()}
         items.append(collection % data)
-        
+
 for child in obj.get_assets():
     if child.aq_inner.meta_type == 'Silva Image':
         data = {'id': '/'.join(child.getPhysicalPath()),

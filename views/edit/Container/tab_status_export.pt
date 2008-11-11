@@ -8,12 +8,11 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    view here;
     vein string:export;
     active_tab string:tab_status;
     parent_screen_name string:publish;
     refs request/refs | python:[request['model'].create_ref(request['model'])];
-    docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
+    docma_running python: hasattr(here, 'service_docma') and here.service_docma.try_connection_and_pw();
     "
   i18n:domain="silva">
 
@@ -30,9 +29,9 @@
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block>
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_status_export', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_status_export', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -233,7 +232,7 @@
   ____________________________ xml export + docma2pdf ____________________________
 </span>
 <form action="." enctype="multipart/form-data" method="post"
-  tal:condition="view/service_docmapdf | nothing">
+  tal:condition="here/service_docmapdf | nothing">
   <input type="hidden"
     name="refs"
     tal:attributes="value python: '||'.join(refs)" />
@@ -338,11 +337,11 @@
 <tal:condition condition="docma_running">
 
 <tal:define define="
-  global user view/REQUEST/AUTHENTICATED_USER;
+  global user here/REQUEST/AUTHENTICATED_USER;
   global userid user/getId;
-  global queue view/service_docma/get_queue;
+  global queue here/service_docma/get_queue;
   global qls python:len(queue) != 0;
-  global processingident view/service_docma/get_processing_ident;" />
+  global processingident here/service_docma/get_processing_ident;" />
 
 <form class="sublisting" action="." enctype="multipart/form-data" method="post">
   <input type="hidden"
@@ -478,7 +477,7 @@
             <option value="" i18n:translate="">
               none
             </option>
-            <tal:repeat repeat="template view/service_docma/get_templates">
+            <tal:repeat repeat="template here/service_docma/get_templates">
               <option tal:content="template"
                 tal:attributes="value template">
               </option>

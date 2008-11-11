@@ -16,16 +16,15 @@
 
 <metal:block use-macro="here/macro_index/macros/master">
 
-<metal:block metal:fill-slot="middleground">
-  <metal:block use-macro="here/macro_middleground/macros/properties" />
-</metal:block>
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
+  </metal:block>
 
 <metal:block fill-slot="main">
 <tal:block
   define="
-    global view here;
     global model request/model;
-    global fields python:view.tab_addables_form.get_fields();"
+    global fields python:here.tab_addables_form.get_fields();"
   condition="may_approve_content"
 >
 
@@ -40,9 +39,9 @@
           <tal:block replace="nothing">
             ______________ vein navigation ______________
           </tal:block >
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_addables', vein)" />
+              <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_addables', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
         </td>

@@ -9,14 +9,13 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
 model = context.REQUEST.model
 assign_role = assign_group_role
 
 if not assign_group_role or assign_role == 'None':
-    return view.tab_access(message_type="error", message=_("No role selected."))
+    return context.tab_access(message_type="error", message=_("No role selected."))
 if not groups:
-    return view.tab_access(message_type="error", message=_("No groups selected."))
+    return context.tab_access(message_type="error", message=_("No groups selected."))
 
 # get mapping object
 map = model.sec_get_or_create_groupsmapping()
@@ -27,7 +26,7 @@ for group in groups:
     assigned.append((group, assign_role))
 
 msg = _("Role(s) assigned for ${list}",
-        mapping={'list': view.quotify_list_ext(assigned)})
-return view.tab_access(
-    message_type="feedback", 
+        mapping={'list': context.quotify_list_ext(assigned)})
+return context.tab_access(
+    message_type="feedback",
     message=msg)

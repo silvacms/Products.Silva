@@ -263,11 +263,12 @@ class Publication(Folder.Folder):
 
 InitializeClass(Publication)
 
-from silva.core.views import views as silvaviews
+from silva.core.smi import smi as silvasmi
 from five import grok
 
-class ManageLocalSite(silvaviews.SMIView):
+class ManageLocalSite(silvasmi.PropertiesTab):
 
+    silvaconf.name('tab_localsite')
     silvaconf.require('zope2.ViewManagementScreens')
 
     def update(self):
@@ -286,17 +287,19 @@ managelocalsite = grok.PageTemplate("""
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/@@standard_macros/page">
+      metal:use-macro="context/@@standard_macros/page"
+      i18n:domain="silva">
   <body>
     <div metal:fill-slot="body">
       <form action="." tal:attributes="action request/URL" method="post"
             enctype="multipart/form-data">
+        <p>This let make this publication become a local site.</p>
         <div class="row">
           <div class="controls">
             <input type="submit" value="Make site" name="makesite"
-                   i18n:attributes="value" tal:condition="not:realview/isSite" />
+                   i18n:attributes="value" tal:condition="not:view/isSite" />
             <input type="submit" value="Unmake site" name="unmakesite"
-                   i18n:attributes="value" tal:condition="realview/isSite" />
+                   i18n:attributes="value" tal:condition="view/isSite" />
           </div>
         </div>
       </form>

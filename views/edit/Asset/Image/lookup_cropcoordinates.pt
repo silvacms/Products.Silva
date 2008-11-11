@@ -7,52 +7,52 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  tal:define="global vein string:contents; view here"
+  tal:define="global vein string:contents"
   i18n:domain="silva">
-  
+
   <metal:block use-macro="here/macro_no_tabs/macros/master">
     <metal:block fill-slot="extension_css">
 <style type="text/css">
   body {
   background: #91989b;
   }
-  
+
   #draggable {
   background-color: transparent;
   position: absolute;
   }
-  
+
   table {
   border: 1px dashed #73868c;
   background-color: white;
   FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
   -moz-opacity: 0.5;
   }
-  
+
   #dragbar, #additional_draggable {
   color: #73868c;
   text-align: center;
   cursor: move;
   }
-  
+
   #handle {
   cursor: se-resize;
   border-right: 3px solid #73868c;
   border-bottom: 3px solid #73868c;
-  margin: 0; 
+  margin: 0;
   padding: 0;
   }
-  
+
   #handle:active {
   border-right: 3px solid red;
   border-bottom: 3px solid red;
   }
-  
+
   ul {
   list-style: none;
   padding-left: 15px;
   }
-  
+
   a.button, a.button:link, a.button:visited {
   display: block;
   width: 10em;
@@ -64,7 +64,7 @@
   color: #e5fffe;
   background-color: #4a7f67;
   }
-  
+
   #ground {
   position: absolute;
   top: 350px;
@@ -82,7 +82,7 @@
   FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
   border: 1px dashed #73868c;
   }
- 
+
   table {
     border: 0;
     background-color: transparent;
@@ -96,9 +96,9 @@
     <metal:block fill-slot="main"
       tal:define="model python:request.model;">
       <div class="workspace">
-        
+
         <script type="text/javascript"
-          tal:attributes="src view/cropping.js/absolute_url">
+          tal:attributes="src here/cropping.js/absolute_url">
         </script>
 <script type="text/javascript">
   //<![CDATA[
@@ -113,16 +113,16 @@
 </script>
         <div class="info" style='width: 180px; top: 0px; left: 0px;
         position: absolute; '>
-          
+
           <h3 i18n:translate="">instructions</h3>
           <p i18n:translate="">
             Drag the window below to the image region which should be cropped.
             You can resize the window with the handle on the lower right
-            corner. If you're done, you can click the submit button below or 
+            corner. If you're done, you can click the submit button below or
             double click in the window to set your coordinates and close the
             cropping tool.
           </p>
-          
+
           <h3 i18n:translate="">predefined sizes</h3>
           <ul style="list-item-style: none">
             <li>
@@ -148,7 +148,7 @@
             <li>
               <a class="transporter button"
                 href="#"
-                onclick="setDraggableSize(100, 100)" 
+                onclick="setDraggableSize(100, 100)"
                 title="100x100 pixels"
                 i18n:attributes="title"
                 i18n:translate="">
@@ -158,7 +158,7 @@
             <li>
               <a class="transporter button"
                 href="#"
-                onclick="setDraggableSize(250, 250)" 
+                onclick="setDraggableSize(250, 250)"
                 title="250x250 pixels"
                 i18n:attributes="title"
                 i18n:translate="">
@@ -169,7 +169,7 @@
 
           <input class="button transporter"
             style="margin-left 0.2em"
-            type="button" 
+            type="button"
             onclick="cropper.insertCropCoords()"
             value="use coordinates..."
             title="alt-u"
@@ -182,17 +182,17 @@
           <div class="info" id="ground">
             <h3 i18n:translate="">drag window</h3>
           </div>
-          <div id="draggable" 
-            style="position: absolute; 
+          <div id="draggable"
+            style="position: absolute;
               min-width: 25px;
-              width: 150px; 
-              min-height: 25px; 
+              width: 150px;
+              min-height: 25px;
               height: 100px;
               top: 380px;
               left: 30px">
             <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td id="dragbar" 
+                  <td id="dragbar"
                     style="height: 20px; position: absolute;"
                     colspan="2"
                     onclick="this.blur()">
@@ -213,20 +213,20 @@
           <img src=""
             tal:attributes="src string:${model/absolute_url}/getImage?hires=1&webformat=1" />
         </div>
-        
+
 <script type="text/javascript">
   //<![CDATA[
 
-  cropper = new Cropper('draggable', 
-                          'dragbar', 
-                          'handle', 
-                          25, 
+  cropper = new Cropper('draggable',
+                          'dragbar',
+                          'handle',
+                          25,
                           25);
 
 //]]>
 </script>
       </div>
-       
+
     </metal:block>
   </metal:block>
 </html>

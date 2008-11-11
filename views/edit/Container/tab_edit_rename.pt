@@ -14,9 +14,9 @@
   i18n:domain="silva">
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
-  tal:define="objects view/REQUEST/ids">
+  tal:define="objects here/REQUEST/ids">
 
-<tal:if condition="python:view.REQUEST.has_key('ids')">
+<tal:if condition="python:here.REQUEST.has_key('ids')">
 <div class="focus-rectangle">
   <form action="tab_edit_rename_submit" method="post">
     <table class="listing">

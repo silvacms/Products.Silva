@@ -21,10 +21,10 @@
 
 <form action="request_roles_submit"
   method="post"
-  tal:define="global view here; global member python: view.service_members.get_member(view.REQUEST.AUTHENTICATED_USER.getId())">
+  tal:define="global member python: here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getId())">
 <input type="hidden"
   name="last_url"
-  tal:attributes="value view/REQUEST/last_url"
+  tal:attributes="value here/REQUEST/last_url"
 />
 <div style="width:24em;"
    tal:define="notice options/message | nothing">
@@ -56,7 +56,7 @@
 
   <p>
     <span i18n:translate="">Choose role(s) to request</span>:<br />
-    <tal:repeat repeat="role view/get_available_roles">
+    <tal:repeat repeat="role here/get_available_roles">
     <input class="min"
       type="checkbox"
       name="roles:list"

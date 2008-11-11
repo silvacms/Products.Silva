@@ -2,15 +2,14 @@ from Products.Silva.adapters import archivefileimport, zipfileimport
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 archive = request.get('importfile', None)
 if archive is None or not archive:
-    return view.tab_edit_import(
+    return context.tab_edit_import(
         message_type='error', message=_('Select a file for upload.'))
-        
+
 
 recreate = request.get('recreate_dirs', None)
 replace = request.get('replace_content', False)
@@ -31,18 +30,18 @@ except archivefileimport.BadZipfile, e:
 else:
     msg = []
     message_type='feedback'
-    if succeeded:  
+    if succeeded:
         message = _('added ${succeeded}',
-                    mapping={'succeeded': view.quotify_list(succeeded)})
+                    mapping={'succeeded': context.quotify_list(succeeded)})
         msg.append(translate(message))
     else:
         message_type='alert'
 
     if failed:
         message = _('could not add: ${failed}',
-                    mapping={'failed': view.quotify_list(failed)})
+                    mapping={'failed': context.quotify_list(failed)})
         msg.append(translate(message))
     msg = ' '.join(msg)
 
 message = _('Finished importing: ${msg}', mapping={'msg': msg})
-return view.tab_edit(message_type=message_type, message=message)
+return context.tab_edit(message_type=message_type, message=message)

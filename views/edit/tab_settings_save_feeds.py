@@ -2,7 +2,6 @@ from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
-view = context
 
 model.set_allow_feeds(False)
 if request.form.has_key('allow_feeds'):
@@ -11,4 +10,4 @@ if request.form.has_key('allow_feeds'):
 type = 'feedback'
 msg = _('Feed settings saved.')
 
-return view.tab_settings(message_type=type, message=msg)
+return context.tab_settings(message_type=type, message=msg)

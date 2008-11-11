@@ -7,8 +7,7 @@
 ##parameters=versionid
 ##title=Revoke approval of approved content
 ##
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 from Products.Silva.adapters.version_management import \
@@ -16,4 +15,4 @@ from Products.Silva.adapters.version_management import \
 adapter = getVersionManagementAdapter(model)
 version = adapter.getVersionById(request.version)
 
-return view.service_metadata.getMetadata(version)
+return context.service_metadata.getMetadata(version)

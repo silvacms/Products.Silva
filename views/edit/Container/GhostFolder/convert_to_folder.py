@@ -10,7 +10,6 @@
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 
 id = model.id
 parent = model.aq_parent

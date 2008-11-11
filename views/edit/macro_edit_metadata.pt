@@ -20,7 +20,7 @@
     tal:define="
       metadata_category category | string:;
       form_errors options/form_errors | nothing;
-      binding python: view.get_metadata(content, category=metadata_category, renderFromRequest=not not form_errors) or nothing;
+      binding python: here.get_metadata(content, category=metadata_category, renderFromRequest=not not form_errors) or nothing;
       setnames binding/setNames | nothing;
       is_container request/model/implements_container | nothing;"
     tal:condition="python: content and setnames"

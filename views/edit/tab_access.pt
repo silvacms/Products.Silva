@@ -11,11 +11,16 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_access_extra" />
+  </metal:block>
+
 <metal:block fill-slot="main"
   tal:define="
     model_is_container model/implements_container | nothing;
     groups_enabled model/sec_groups_enabled | nothing;
-    group_service view/service_groups | nothing;
+    group_service here/service_groups | nothing;
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
     silva_permissions here/get_silva_permissions;
@@ -31,9 +36,9 @@
         __________________ sidebar _________________
       </tal:block>
       <td class="left" rowspan="99">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_access', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -41,13 +46,13 @@
         __________________ main __________________
       </tal:block>
       <td class="main">
-        <tal:block replace="nothing"> 
-          ________________ user roles management ________________ 
+        <tal:block replace="nothing">
+          ________________ user roles management ________________
         </tal:block>
         <form name="user_roles_management" action="."
           method="post"
           tal:define="
-            members view/get_members;
+            members here/get_members;
             global revokeable_roles nothing;
             global revokeable_groups nothing">
           <table class="listing">
@@ -109,7 +114,7 @@
                   </td>
                   <td class="align-right">
                     <tal:block repeat="local python:model.sec_get_local_roles_for_userid(userid)">
-                      <label tal:content="local" 
+                      <label tal:content="local"
                         tal:attributes="for string:revoke_${local}-${userid}"
                         i18n:translate="">
                         local
@@ -126,7 +131,7 @@
                             value python:'%s||%s' % (userid, local);
                             id string:revoke_${local}-${userid};
                             disabled disable | nothing;
-                            " 
+                            "
                           /><br tal:condition="not:repeat/local/end" />
                     </tal:block>
                   </td>
@@ -179,7 +184,7 @@
             </tbody>
           </table>
         </form>
-        <tal:block replace="nothing"> 
+        <tal:block replace="nothing">
           ____________ pending roles management ____________
         </tal:block>
         <!-- Pending role request listing -->
@@ -222,7 +227,7 @@
                       tal:attributes="
                         value python: '|'.join(req);
                         id string:pending_${member/userid};" />
-                      <label tal:content="member/userid" 
+                      <label tal:content="member/userid"
                         tal:attributes="for string:pending_${member/userid}">
                         name
                       </label>
@@ -235,7 +240,7 @@
                   </td>
                 </tr>
               </tal:block>
-              <tal:block replace="nothing"> 
+              <tal:block replace="nothing">
                 <!-- shouldn't be needed, since the entire form is conditioned -->
               </tal:block>
               <tr class="even"
@@ -283,24 +288,24 @@
           </form>
         </tal:block>
       </td>
-      <td class="right">        
-        <tal:block replace="nothing"> 
+      <td class="right">
+        <tal:block replace="nothing">
           _______________ users clipboard ________________
         </tal:block>
-        <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+        <metal:block use-macro="here/macro_user_lookup_clipboard/macros/clipboard">
           <metal:block fill-slot="clipboard_actions">
             <select class="manipulator"
               style="float:left"
               name="assign_role"
               title="select a role to assign">
-              <option value="None" 
+              <option value="None"
                 i18n:translate="">
                 select role:
               </option>
-              <tal:block 
+              <tal:block
                 define="
                   preselected python: request.form.get('assign_role')">
-                <metal:block 
+                <metal:block
                   use-macro="
                     here/macro_role_options/macros/options" />
               </tal:block>
@@ -310,11 +315,11 @@
               name="access_assign_to_user:method"
               title="assign a local role to selected user(s)"
               type="submit"
-              value="assign" 
+              value="assign"
               i18n:attributes="title;value"
             />
           </metal:block>
-        </metal:block>          
+        </metal:block>
       </td>
     </tr>
     <tal:block replace="nothing">
@@ -330,12 +335,12 @@
               <span class="subhead">
                 <span class="warning" i18n:translate="">A Groups Service is not installed</span>
               </span><br /><span i18n:translate="">
-              You are seeing this message because the Silva Groups extension is installed on the file system, 
-              but a Groups Service hasn't been added to this Silva instance. To install one, go to the 
+              You are seeing this message because the Silva Groups extension is installed on the file system,
+              but a Groups Service hasn't been added to this Silva instance. To install one, go to the
               <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services"
                 i18n:name="silva_root_in_the_ZMI"><tal:block i18n:translate="">Silva Root in the ZMI</tal:block></a>,
-              choose &#8220;Groups Service&#8221; from the add list and give it the id 
-              <code i18n:name="service_groups">service_groups</code>. 
+              choose &#8220;Groups Service&#8221; from the add list and give it the id
+              <code i18n:name="service_groups">service_groups</code>.
               No further configuration is necessary.</span>
           </div>
           <tal:block condition="group_service">
@@ -348,7 +353,7 @@
                 cellpadding="5"
                 cellspacing="0"
                 style="empty-cells:show;"
-                tal:define="groups view/get_groups;">
+                tal:define="groups here/get_groups;">
                 <thead>
                   <tr>
                     <td class="top"
@@ -395,7 +400,7 @@
                           tal:attributes="for group">
                           group
                         </label>
-                        <span class="warning" 
+                        <span class="warning"
                           tal:condition="python: group not in group_service.listAllGroups()"
                           i18n:translate="">
                           (broken group, not listed in Groups Service)
@@ -410,7 +415,7 @@
                     </td>
                     <td class="align-right">
                       <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                        <label tal:content="local" 
+                        <label tal:content="local"
                           tal:attributes="for string:revoke_${group}">
                           local
                         </label>
@@ -445,7 +450,7 @@
                 <tr class="controls">
                   <td class="align-left"
                     colspan="2">
-                    <tal:block 
+                    <tal:block
                       define="preselected python: request.form.get('assign_group_role')"
                       condition="groups">
                       <select class="manipulator"
@@ -473,7 +478,7 @@
                       name="access_revoke_from_group:method"
                       title="revoke selected role(s) from selected group(s)"
                       type="submit"
-                      value="revoke role from group" 
+                      value="revoke role from group"
                       tal:condition="revokeable_groups"
                       i18n:attributes="title;value"
                     />
@@ -484,14 +489,14 @@
           </tal:block>
         </tal:block>
       </td>
-      <tal:block replace="nothing"> 
+      <tal:block replace="nothing">
         _______________ groups clipboard ________________
       </tal:block>
       <td class="right"
         style="padding-top:2em ! important;">
         <tal:condition condition="group_service">
           <tal:define define="global group_meta_type string:Silva Group">
-            <metal:block use-macro="view/macro_groups_listing/macros/all_groups_listing">
+            <metal:block use-macro="here/macro_groups_listing/macros/all_groups_listing">
               <metal:block fill-slot="listing_actions">
                 <select class="manipulator"
                   style="float:left"
@@ -501,7 +506,7 @@
                     i18n:translate="">
                     select role:
                   </option>
-                  <tal:block 
+                  <tal:block
                     define="preselected python: request.form.get('assign_group_role')">
                     <metal:block use-macro="here/macro_role_options/macros/options" />
                   </tal:block>
@@ -520,11 +525,11 @@
         </tal:condition>
       </td>
     </tr>
-    <tal:block replace="nothing"> 
+    <tal:block replace="nothing">
       _____________________ misc tools ______________________
     </tal:block>
     <tr>
-      <tal:block replace="nothing"> 
+      <tal:block replace="nothing">
         ___________ access restriction by role __________
       </tal:block>
       <td class="main"
@@ -532,13 +537,13 @@
         <form name="access_restrict_by_role" action=".."
           method="post"
           tal:define="
-            info model/@@get_viewer_role_info; 
+            info model/@@get_viewer_role_info;
             acquired info/acquired;
             selected_role info/selected_role;
             ">
           <table class="listing">
             <thead>
-              <tal:block replace="nothing"> 
+              <tal:block replace="nothing">
                 _____________ vein + title row ______________
               </tal:block>
               <tr>
@@ -551,7 +556,7 @@
                   </h2>
                 </td>
               </tr>
-              <tal:block replace="nothing"> 
+              <tal:block replace="nothing">
                 ______________ top controls row _____________
               </tal:block>
               <tr class="top-controls">
@@ -577,16 +582,16 @@
                     <tal:block condition="not: info/is_public"
                     i18n:translate=""
                     tal:content="selected_role">role</tal:block>
-                    <tal:block i18n:translate="" 
+                    <tal:block i18n:translate=""
                      condition="info/acquired">(acquired).</tal:block>
                   </i>
                 </td>
-                <td i18n:translate=""> 
+                <td i18n:translate="">
                   Setting an access restriction here affects objects on this and lower levels.
                 </td>
               </tr>
             </tbody>
-            <tal:block replace="nothing"> 
+            <tal:block replace="nothing">
               __________________ controls ___________________
             </tal:block>
             <tfoot>
@@ -595,7 +600,7 @@
                   <select class="manipulator"
                     style="float:left"
                     name="role"
-                    title="select a role to assign" 
+                    title="select a role to assign"
                     i18n:attributes="title">
                     <tal:block define="preselected selected_role">
                       <metal:plug use-macro="here/macro_role_options/macros/access_restriction_options" />
@@ -627,7 +632,7 @@
       <td class="right">
       </td>
     </tr>
-    <tal:comment replace="nothing"> _______ 
+    <tal:comment replace="nothing"> _______
       hack to fix a scaling problem for sites having very long sidebars, so the
       browser renders heights of the table cells according to their content,
       causing users to have to scroll to adjust groups or access restrictions;
@@ -656,9 +661,9 @@
         __________________ sidebar _________________
       </tal:block>
       <td class="left" rowspan="99">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_access', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -670,7 +675,7 @@
             tal:define="info model/@@get_viewer_role_info;
                         selected_role info/selected_role">
           <thead>
-            <tal:block replace="nothing"> 
+            <tal:block replace="nothing">
               _____________ vein + title row ______________
             </tal:block>
             <tr>
@@ -682,7 +687,7 @@
                 </h2>
               </td>
             </tr>
-            <tal:block replace="nothing"> 
+            <tal:block replace="nothing">
               ______________ top controls row _____________
             </tal:block>
             <tr class="top-controls">
@@ -711,7 +716,7 @@
                   <tal:block condition="info/acquired" i18n:translate="">(acquired).</tal:block>
                 </i>
               </td>
-              <td i18n:translate=""> 
+              <td i18n:translate="">
                 An access restriction here affects objects on this and lower levels.
               </td>
             </tr>
@@ -727,4 +732,4 @@
 </metal:block>
 </metal:block>
 </html>
-                    
+

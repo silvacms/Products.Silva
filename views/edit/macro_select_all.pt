@@ -38,10 +38,10 @@
   <script type="text/javascript"
     xml:space="preserve">
     <!--
-    
-    function toggleSelect(checkbox, id) 
+
+    function toggleSelect(checkbox, id)
     {
-      if (checkbox.checked) 
+      if (checkbox.checked)
       {
         for (i = 0; i < checkbox.form.elements.length; i++)
         {
@@ -53,7 +53,7 @@
         }
         //checkbox.form.selectButton.value = "Deselect all";
       }
-      else 
+      else
       {
         for (i = 0; i < checkbox.form.elements.length; i++)
         {

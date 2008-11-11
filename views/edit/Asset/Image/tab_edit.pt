@@ -13,7 +13,7 @@
 
  <metal:fill-slot fill-slot="info">
   <script type="text/javascript"
-    tal:attributes="src view/cropping.js/absolute_url">
+    tal:attributes="src here/cropping.js/absolute_url">
   </script>
   <div class="info">
     <h3 i18n:translate="">
@@ -131,7 +131,7 @@
           </td>
         </tr>
       </thead>
-      <tbody tal:define="fields view/scale_form/get_fields">
+      <tbody tal:define="fields here/scale_form/get_fields">
         <tr>
           <th width="33%"
             i18n:translate="">
@@ -188,7 +188,7 @@
     </table>
   </form>
 
-  <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
+  <metal:block use-macro="here/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
 
 </metal:use-macro>

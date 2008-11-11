@@ -10,6 +10,5 @@
 from Products.Silva.i18n import translate as _
 
 indexer = context.REQUEST.model
-view = context
 indexer.update()
-return view.tab_edit(message_type='feedback', message=_("Index updated"))
+return context.tab_edit(message_type='feedback', message=_("Index updated"))

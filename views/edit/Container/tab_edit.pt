@@ -31,9 +31,9 @@
 
 <metal:fill fill-slot="sidebar">
  <td class="left">
-  <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+  <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
    <metal:fill-slot fill-slot="sidebar">
-    <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
+    <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_edit', vein)" />
    </metal:fill-slot>
   </metal:use-macro>
  </td>
@@ -113,7 +113,7 @@ window.onload_registry.register(function() {
           onclick="toggleSelect(this, 'ids');"
           i18n:attributes="title"
         />
-        <label 
+        <label
           for="all_0"
           title="select all: alt-a"
           i18n:attributes="title"
@@ -336,13 +336,13 @@ window.onload_registry.register(function() {
             _______ icon + id cell _______
           </tal:block>
           <td style="white-space: nowrap">
-            <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+            <tal:block condition="python: hasattr(here, 'externalEditLink_')">
               <span style="float: right;"
                 tal:define="
                   id asset_info/asset_id;
                   asset context/?id"
                 tal:content="
-                  structure python: view.externalEditLink_(asset)"
+                  structure python: here.externalEditLink_(asset)"
               />
             </tal:block>
             <a class="icon"
@@ -421,7 +421,7 @@ window.onload_registry.register(function() {
     <tr tal:condition="python:(default_document or publishables or assets)">
       <th class="controls listing-left">
         <tal:def define="select_id string:ids">
-          <metal:use use-macro="view/macro_select_all/macros/select_all" />
+          <metal:use use-macro="here/macro_select_all/macros/select_all" />
         </tal:def>
       </th>
       <th class="controls"
@@ -568,7 +568,7 @@ window.onload_registry.register(function() {
             type="submit"
             i18n:attributes="value; title"
             tal:condition="python:editables or closed"
-          />  
+          />
           <input class="button closer"
             style="float:right"
             name="tab_edit_close:method"

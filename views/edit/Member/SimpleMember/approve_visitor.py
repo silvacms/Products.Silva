@@ -10,8 +10,7 @@
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 next_view = '%s/edit' % model.absolute_url()
 

@@ -1,9 +1,8 @@
-<tal:def 
+<tal:def
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   define="
     model request/model;
-    view here;
     title model/get_title;
 ">
 <h2 tal:content="python:title or default"
@@ -35,7 +34,7 @@
       <td tal:content="indexTitle">
         Term
       </td>
-      <td tal:content="structure python:view.render_links(indexTitle, indexEntry)">
+      <td tal:content="structure python:here.render_links(indexTitle, indexEntry)">
         Link
       </td>
     </tr>
@@ -46,7 +45,7 @@
     <tr>
       <td colspan="2"
         i18n:translate="">
-        No index items listed or found. 
+        No index items listed or found.
       </td>
     </tr>
   </tbody>

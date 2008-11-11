@@ -12,13 +12,12 @@ from Products.Silva.adapters.version_management import \
         getVersionManagementAdapter
 from zope.i18n import translate
 
-view = context
 request = context.REQUEST
 model = request.model
 adapter = getVersionManagementAdapter(model)
 
 if not request.has_key('versions'):
-    return view.tab_status(message_type="error", 
+    return context.tab_status(message_type="error",
                             message=_("No versions selected"))
 
 versions = request['versions']
@@ -28,9 +27,9 @@ if not same_type(versions, []):
     versions = [versions,]
 
 if len(versions) == len(adapter.getVersionIds()):
-    return view.tab_status(message_type="error", 
+    return context.tab_status(message_type="error",
                                 message=_("Can't delete all versions"))
-    
+
 result = adapter.deleteVersions(versions)
 
 messages = []
@@ -44,5 +43,5 @@ for id, error in result:
                 mapping={'id': id})
         messages.append('<span class="error">' + translate(msg) + '</span>')
 
-return view.tab_status(message_type="feedback", 
+return context.tab_status(message_type="feedback",
                         message=', '.join(messages).capitalize())

@@ -2,13 +2,12 @@ from Products.Silva.i18n import translate as _
 from Products.Formulator.Errors import FormValidationError
 
 model = context.REQUEST.model
-view = context
 
 try:
-    result = view.tab_status_form_author.validate_all(context.REQUEST)
+    result = context.tab_status_form_author.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return view.tab_status(
-        message_type="error", message=view.render_form_errors(e))
+    return context.tab_status(
+        message_type="error", message=context.render_form_errors(e))
 
 # check for status
 message=None
@@ -19,7 +18,7 @@ elif model.is_version_approval_requested():
 # no check for closed ...
 
 if message is not None:
-    return view.tab_status(message_type="error", message=message)
+    return context.tab_status(message_type="error", message=message)
 
 context.set_unapproved_version_publication_datetime(result['publish_datetime'])
 
@@ -33,5 +32,5 @@ model.request_version_approval(result['message'])
 
 if hasattr(model, 'service_messages'):
     model.service_messages.send_pending_messages()
-    
-return view.tab_status(message_type="feedback", message=_("Approval requested."))
+
+return context.tab_status(message_type="feedback", message=_("Approval requested."))

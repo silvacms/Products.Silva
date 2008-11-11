@@ -117,7 +117,7 @@ The last message regarding this issue is:
 </tr>
 
 <tr class="odd"
-  tal:define="field view/tab_status_form_author/message">
+  tal:define="field here/tab_status_form_author/message">
 <td class="designator" style="width:33%">
 <label for="message" i18n:translate="">message to editor</label>
 <p i18n:translate="">
@@ -207,7 +207,7 @@ publish closed version
 
 <metal:def define-macro="date_controls">
 <tr class="even"
-  tal:define="field view/tab_status_form_editor/publish_datetime">
+  tal:define="field here/tab_status_form_editor/publish_datetime">
 <td class="designator">
 <label tal:content="field/title"
   tal:attributes="for field/id"
@@ -227,7 +227,7 @@ content publish time
 </tr>
 
 <tr class="odd"
-  tal:define="field view/tab_status_form_editor/expiration_datetime">
+  tal:define="field here/tab_status_form_editor/expiration_datetime">
 <td class="designator" style="white-space: nowrap;">
 <label tal:content="field/title"
   tal:attributes="for field/id"

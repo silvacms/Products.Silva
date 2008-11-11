@@ -66,7 +66,7 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             return
         self.manage_delLocalRoles([userid])
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_revoke')
     def sec_revoke(self, userid, revoke_roles):
@@ -179,17 +179,17 @@ class Security(AccessManager):
             if userids:
                 result = []
                 for userid in userids:
-                    if (role in obj.sec_get_roles_for_userid(userid) and 
+                    if (role in obj.sec_get_roles_for_userid(userid) and
                             self.service_members.get_member(userid)):
                         result.append(userid)
                 if result:
                     return result
-                
+
             if IRoot.providedBy(obj):
                 break
             obj = obj.aq_parent
         return []
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_roles_for_userid')
     def sec_get_roles_for_userid(self, userid):
@@ -197,7 +197,7 @@ class Security(AccessManager):
         """
         return [role for role in self.get_local_roles_for_userid(userid)
                 if role in roleinfo.ASSIGNABLE_ROLES]
-    
+
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'sec_get_roles')
     def sec_get_roles(self):
@@ -214,7 +214,7 @@ class Security(AccessManager):
         """
         # XXX this loop seems useless, why is it here? (maybe we need a copy?)
         members = []
-        for member in self.service_members.find_members(search_string):
+        for member in self.service_members.find_members(search_string, location=self):
             members.append(member)
         return members
 
@@ -230,12 +230,12 @@ class Security(AccessManager):
         return use_direct_lookup()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'sec_get_member')  
+                              'sec_get_member')
     def sec_get_member(self, userid):
         """Get information for userid. This method delegates to
         service_members for security reasons.
         """
-        return self.service_members.get_cached_member(userid)
+        return self.service_members.get_cached_member(userid, location=self)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'sec_get_last_author_info')
@@ -245,18 +245,18 @@ class Security(AccessManager):
         # 1/15/08, containers now do have author info
         #if IContainer.providedBy(self):
         #    return noneMember.__of__(self)
-        
+
         # get cached author info (may be None)
         version = self.get_previewable()
         if version is None:
             return noneMember.__of__(self)
-        
+
         info = getattr(version, '_last_author_info', None)
         if info is None:
             return noneMember.__of__(self)
         else:
             return info.__of__(self)
-            
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):
@@ -275,7 +275,7 @@ class Security(AccessManager):
             if binding is None:
                 return
             now = DateTime()
-            binding.setValues('silva-extra', {'modificationtime': now})        
+            binding.setValues('silva-extra', {'modificationtime': now})
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_creator_info')
@@ -341,7 +341,7 @@ class Security(AccessManager):
                 roles[role] = 1
             parent = parent.aq_inner.aq_parent
         return roles.keys()
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_userids')
     def sec_get_downward_defined_userids(self):
@@ -368,7 +368,7 @@ class Security(AccessManager):
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_members_for_userids')
     def sec_get_members_for_userids(self, userids):
         d = {}
-        
+
         for userid in userids:
             d[userid] = self.sec_get_member(userid)
         return d
@@ -437,7 +437,7 @@ class Security(AccessManager):
         d = {}
         self._sec_get_downward_defined_groups_helper(d)
         return d.keys()
-    
+
     def _sec_get_downward_defined_groups_helper(self, d):
         for group in self.sec_get_local_defined_groups():
             d[group] = 1
@@ -455,7 +455,7 @@ class Security(AccessManager):
         """Return the groupmappings for this object.
         """
         return self.__ac_local_groups__
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_or_create_groupsmapping')
     def sec_get_or_create_groupsmapping(self):
@@ -490,5 +490,5 @@ class Security(AccessManager):
         is_manager = getSecurityManager().getUser().has_role(
             ['Manager'], object=self)
         return DevelopmentMode and is_manager
-    
+
 InitializeClass(Security)

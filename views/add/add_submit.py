@@ -2,7 +2,6 @@ from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 REQUEST = context.REQUEST
 
 lookup_mode = REQUEST.get('lookup_mode', 0)
@@ -20,18 +19,18 @@ if REQUEST.has_key('add_cancel'):
         if return_url:
             REQUEST.RESPONSE.redirect(return_url)
         else:
-            return view.object_lookup()
+            return context.object_lookup()
     else:
         return model.edit['tab_edit']()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
 try:
-    result = view.form.validate_all(REQUEST)
+    result = context.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return view.add_form(message_type="error",
-        message=view.render_form_errors(e))
+    return context.add_form(message_type="error",
+        message=context.render_form_errors(e))
 
 # get id and set up the mangler
 id = mangle.Id(model, result['object_id'])
@@ -50,8 +49,8 @@ id_check = id.validate()
 if id_check == id.OK:
     id = str(id)
 else:
-    return view.add_form(message_type="error",
-        message=view.get_id_status_text(id))
+    return context.add_form(message_type="error",
+        message=context.get_id_status_text(id))
 
 # process data in result and add using validation result
 object = context.add_submit_helper(model, id, title, result)
@@ -67,7 +66,7 @@ if lookup_mode:
     if return_url:
         REQUEST.RESPONSE.redirect(return_url)
     else:
-        return view.object_lookup()
+        return context.object_lookup()
 
 # now go to tab_edit in case of add and edit, back to container if not.
 
@@ -80,5 +79,5 @@ else:
         "Added ${meta_type} ${id}.",
         mapping={
         'meta_type': object.meta_type,
-        'id': view.quotify(id)})
+        'id': context.quotify(id)})
     return model.edit['tab_edit'](message_type="feedback", message=message)

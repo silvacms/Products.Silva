@@ -11,7 +11,6 @@ from zope.i18n import translate
 if same_type(id, ""):
     id = mangle.Id(id)
 
-view = context
 status_code = id.validate()
 
 if status_code == id.CONTAINS_BAD_CHARS:
@@ -24,30 +23,30 @@ elif status_code == id.RESERVED_PREFIX:
     prefix = str(id).split('_')[0]+'_'
     message = _("Sorry, ids starting with ${prefix} are reserved for "
                 "internal use. Please use another id.",
-                mapping={'prefix': view.quotify(prefix)})
+                mapping={'prefix': context.quotify(prefix)})
     return translate(message)
 elif status_code == id.RESERVED:
     message = _("Sorry, the id ${id} is reserved for internal use. "
-                "Please use another id.", mapping={'id': view.quotify(id)})
+                "Please use another id.", mapping={'id': context.quotify(id)})
     return translate(message)
 elif status_code == id.IN_USE_CONTENT:
     message = _("There is already an object with the id ${id} in this "
                 "folder. Please use a different one.",
-                mapping={'id': view.quotify(id)})
+                mapping={'id': context.quotify(id)})
     return translate(message)
 elif status_code == id.IN_USE_ASSET:
     message = _("There is already an asset with the id ${id} in this "
                 "folder. Please use another id.",
-                mapping={'id': view.quotify(id)})
+                mapping={'id': context.quotify(id)})
     return translate(message)
 elif status_code == id.RESERVED_POSTFIX:
     message = _("Sorry, the id ${id} ends with invalid characters. Please "
-                "use another id.", mapping={'id': view.quotify(id)})
+                "use another id.", mapping={'id': context.quotify(id)})
     return translate(message)
 elif status_code == id.IN_USE_ZOPE:
     message = _("Sorry, the id ${id} is already in use by a Zope object. "
                 "Please use another id.",
-                mapping={'id': view.quotify(id)})
+                mapping={'id': context.quotify(id)})
     return translate(message)
 
 # this should not happen
@@ -55,7 +54,7 @@ message = _("(Internal Error): An invalid status ${status_code} occured "
             "while checking the id ${id}. Please contact the person "
             "responsible for this Silva installation or file a bug report.""",
             mapping={
-                     'status_code': view.quotify(status_code),
-                     'id': view.quotify(id)})
+                     'status_code': context.quotify(status_code),
+                     'id': context.quotify(id)})
 
 return translate(message)

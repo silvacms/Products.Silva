@@ -4,23 +4,22 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
         message=_('Nothing was selected, so no settings were changed.'))
 
 try:
-    result = view.tab_status_form.validate_all_to_request(request)
+    result = context.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
-        message=view.render_form_errors(e),
+        message=context.render_form_errors(e),
         refs=refs)
 
 publish_datetime = result['publish_datetime']
@@ -30,7 +29,7 @@ clear_expiration_flag = result['clear_expiration']
 
 if not publish_datetime and not expiration_datetime \
         and not clear_expiration_flag and not publish_now_flag:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
         message=_('No publication nor expiration time nor any of the flags were set.'),
         refs=refs)
@@ -42,7 +41,7 @@ not_changed = []
 msg = []
 
 get_name = context.tab_status_get_name
-silva_permissions = view.get_silva_permissions()
+silva_permissions = context.get_silva_permissions()
 
 for ref in refs:
     obj = model.resolve_ref(ref)
@@ -102,12 +101,12 @@ for ref in refs:
 if changed_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Changed settings on: ${ids}',
-                mapping={'ids': view.quotify_list(changed_ids)})
+                mapping={'ids': context.quotify_list(changed_ids)})
     msg.append(translate(message))
 
 if not_changed:
     message = _('could not change settings on: ${ids}',
-                mapping={'ids': view.quotify_list_ext(not_changed)})
+                mapping={'ids': context.quotify_list_ext(not_changed)})
     msg.append(translate(message))
 
-return view.tab_status(message_type='feedback', message=(', '.join(msg)) )
+return context.tab_status(message_type='feedback', message=(', '.join(msg)) )

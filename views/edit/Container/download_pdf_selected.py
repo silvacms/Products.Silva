@@ -9,16 +9,15 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
-RESPONSE = view.REQUEST.RESPONSE
+request = context.REQUEST
+RESPONSE = context.REQUEST.RESPONSE
 model = request.model
-docmapdf = view.service_docmapdf
+docmapdf = context.service_docmapdf
 
 from DateTime import DateTime
 
 if not request.has_key('refs') or not request['refs']:
-    return view.tab_status(message_type='error', message=_('No items were selected, so no content will be exported'))
+    return context.tab_status(message_type='error', message=_('No items were selected, so no content will be exported'))
 
 objects = []
 for ref in request['refs'].split('||'):
@@ -29,6 +28,6 @@ xml_data = model.get_xml_for_objects(objects, with_sub_publications, export_last
 pdf_data = docmapdf.manage_generatePDF(xml_data, ss)
 filename = '%s_export_%s.pdf' % (model.id, DateTime().strftime('%Y-%m-%d'))
 RESPONSE.setHeader('content-type', 'application/pdf')
-RESPONSE.setHeader('content-disposition', 'attachment;filename=%s'%filename) 
+RESPONSE.setHeader('content-disposition', 'attachment;filename=%s'%filename)
 
 return pdf_data

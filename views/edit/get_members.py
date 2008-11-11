@@ -7,7 +7,6 @@
 ##parameters=
 ##title=
 ##
-view = context
 model = context.REQUEST.model
 #userids_to_members = model.sec_get_members_for_userids
 userid_to_member = model.sec_get_member

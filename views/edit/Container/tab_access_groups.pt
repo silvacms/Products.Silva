@@ -15,10 +15,16 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
-<metal:block fill-slot="script">
-  <script type="text/javascript"
-    tal:content="structure python:here.focus_editor('field_object_id')" />
-</metal:block>
+
+  <metal:block fill-slot="script">
+    <script type="text/javascript"
+            tal:content="structure python:here.focus_editor('field_object_id')" />
+  </metal:block>
+
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_access_extra" />
+  </metal:block>
+
 <metal:block fill-slot="main"
   tal:define="
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
@@ -32,9 +38,9 @@
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_groups', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_access_groups', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -150,7 +156,7 @@
   name="group_assets"
   action="tab_access_groups_delete"
   method="post"
-  tal:define="groups view/get_locally_defined_groups">
+  tal:define="groups here/get_locally_defined_groups">
   <table class="listing">
     <thead>
       <tr class="top-controls">
@@ -202,7 +208,7 @@
                 tal:attributes="
                   href string:${group/absolute_url}/edit;
                   title group/meta_type">
-                <img tal:replace="structure python:view.render_icon(group)" />
+                <img tal:replace="structure python:here.render_icon(group)" />
               </a>
               <a class="published"
                 title="edit this group"
@@ -266,7 +272,7 @@
 </form>
 
 
-  <table class="listing" tal:define="groups view/get_groups_defined_elsewhere">
+  <table class="listing" tal:define="groups here/get_groups_defined_elsewhere">
     <thead>
       <tr class="top-controls">
         <td colspan="5">
@@ -317,7 +323,7 @@
                 tal:attributes="
                   href string:${group/absolute_url}/../edit/tab_access_groups;
                   title group/meta_type">
-                <img tal:replace="structure python:view.render_icon(group)" />
+                <img tal:replace="structure python:here.render_icon(group)" />
               </a>
               <a class="published"
                 title="edit this group"

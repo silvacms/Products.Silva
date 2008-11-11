@@ -94,7 +94,7 @@
      <tal:block replace="nothing">
        ______________ user clipboard ______________
      </tal:block>
-     <metal:block use-macro="view/macro_user_lookup_clipboard/macros/clipboard">
+     <metal:block use-macro="here/macro_user_lookup_clipboard/macros/clipboard">
        <metal:block fill-slot="clipboard_actions">
          <input class="button"
            name="add_users_to_group:method"
@@ -114,7 +114,7 @@
        global group_meta_type string:Silva Group;
        global group_type string:user;
        ">
-       <metal:block use-macro="view/macro_groups_listing/macros/normal_groups_listing">
+       <metal:block use-macro="here/macro_groups_listing/macros/normal_groups_listing">
          <metal:block fill-slot="listing_actions">
            <input class="button"
              name="add_users_from_group_to_group:method"

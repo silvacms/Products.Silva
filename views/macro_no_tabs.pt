@@ -8,10 +8,9 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    silvaview nocall:here;
     model request/model;
     trigger model/security_trigger;
-    icon python:silvaview.render_icon(model);
+    icon python:here.render_icon(model);
 
     type model/meta_type;
     url model/absolute_url;
@@ -19,7 +18,7 @@
     root_url model/get_root_url;
     global publication model/get_publication;
     global containing_publication publication/../get_publication | publication;
-    silva_permissions silvaview/get_silva_permissions;
+    silva_permissions here/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content silva_permissions/ChangeSilvaContent | nothing;
 
@@ -37,7 +36,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:define="imports python: ['silva.css',]; m nocall: silvaview/css_imports"
+  tal:define="imports python: ['silva.css',]; m nocall: here/css_imports"
   tal:content="structure python: m(imports)"
 >
 @imports
@@ -51,9 +50,9 @@
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
-<script type="text/javascript" 
+<script type="text/javascript"
         tal:attributes="src here/helperscripts.js/absolute_url"></script>
-<script type="text/javascript" 
+<script type="text/javascript"
         tal:attributes="src here/handler_registry.js/absolute_url"></script>
 <metal:block define-slot="script" />
 </head>

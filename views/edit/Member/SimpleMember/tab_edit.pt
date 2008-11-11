@@ -10,12 +10,11 @@
 
 <metal:slot fill-slot="main"
   tal:define="
-    view here;
-    dummy view/security_trigger;
-    fields view/memberform/get_fields;
+    dummy here/security_trigger;
+    fields here/memberform/get_fields;
     message_type request/SESSION/message_type | nothing;
     message request/SESSION/message | nothing;
-    dummy view/clear_message;
+    dummy here/clear_message;
 ">
 
 <div class="feedback"

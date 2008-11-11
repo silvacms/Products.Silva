@@ -5,7 +5,6 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 now = DateTime()

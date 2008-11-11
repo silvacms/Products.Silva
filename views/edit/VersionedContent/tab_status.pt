@@ -12,7 +12,6 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main"
   tal:define="
-    view here;
     unapproved python:model.get_unapproved_version() is not None;
     request_pending python:unapproved and model.is_version_approval_requested();
     approved python:model.get_approved_version() is not None;
@@ -30,7 +29,7 @@
         <tal:block replace="nothing">
           _____________________ sidebar subtable _____________________
         </tal:block>
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+        <metal:block use-macro="here/macro_vein_navigation/macros/vein" />
       </td>
       <td class="main">
         <tal:block replace="nothing">
@@ -73,14 +72,14 @@
 
 <tbody>
 <span tal:replace="nothing"> _______ messages _______ </span>
-<div metal:use-macro="view/tab_status_macros/macros/messages">
+<div metal:use-macro="here/tab_status_macros/macros/messages">
   messages
 </div>
 
 <span tal:replace="nothing"> _______ Author requests approval _______ </span>
 <tal:if condition="python:not may_approve_content and unapproved and not request_pending"
   tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/request_approval">
+<div metal:use-macro="here/tab_status_macros/macros/request_approval">
   request approval section here
 </div>
 </tal:if>
@@ -88,7 +87,7 @@
 <span tal:replace="nothing"> _______ approved, Editor can change settings _______ </span>
 <tal:if condition="python:may_approve_content and approved"
   tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/approved_editor">
+<div metal:use-macro="here/tab_status_macros/macros/approved_editor">
   change settings section here
 </div>
 </tal:if>
@@ -100,7 +99,7 @@
 <span tal:replace="nothing"> _______ Editor considers approval _______ </span>
 <tal:if condition="python:may_approve_content and (unapproved or closed) and not approved"
   tal:omit-tag="">
-<metal:block use-macro="view/tab_status_macros/macros/approve_new">
+<metal:block use-macro="here/tab_status_macros/macros/approve_new">
   approval section here
 </metal:block>
 </tal:if>
@@ -108,7 +107,7 @@
 <span tal:replace="nothing"> _______ Author/Editor withdraws/rejects request for approval _______ </span>
 <tal:if condition="python:may_change_content and unapproved and request_pending"
   tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/withdraw_request_approval">
+<div metal:use-macro="here/tab_status_macros/macros/withdraw_request_approval">
   request approval section here
 </div>
 </tal:if>
@@ -116,7 +115,7 @@
 <span tal:replace="nothing"> _______ revoke approval _______ </span>
 <tal:if condition="python:may_change_content and approved"
   tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/revoke_approval">
+<div metal:use-macro="here/tab_status_macros/macros/revoke_approval">
   revoke approval section here
 </div>
 </tal:if>
@@ -124,7 +123,7 @@
 <span tal:replace="nothing"> _______ manual close _______ </span>
 <tal:if condition="python:may_approve_content and published"
   tal:omit-tag="">
-<div metal:use-macro="view/tab_status_macros/macros/manual_close">
+<div metal:use-macro="here/tab_status_macros/macros/manual_close">
 _______ manual close section here _______
 </div>
 </tal:if>
@@ -162,7 +161,7 @@ _______ manual close section here _______
     <tr>
       <th class="listing-left"
         tal:define="select_id string:versions">
-        <metal:plug use-macro="view/macro_select_all/macros/select_all" />
+        <metal:plug use-macro="here/macro_select_all/macros/select_all" />
       </th>
       <th width="10%" i18n:translate="">modification time</th>
       <th width="10%" i18n:translate="">publication time</th>
@@ -223,7 +222,7 @@ _______ manual close section here _______
     <tr tal:condition="python:len(versions) > 1">
       <th class="listing-left"
         tal:define="select_id string:versions">
-        <metal:plug use-macro="view/macro_select_all/macros/select_all" />
+        <metal:plug use-macro="here/macro_select_all/macros/select_all" />
       </th>
       <th class="listing-right"
         style="padding-right:0.6em"

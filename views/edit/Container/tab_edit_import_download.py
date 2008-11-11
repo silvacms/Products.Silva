@@ -9,13 +9,12 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
-response = view.REQUEST.RESPONSE
+request = context.REQUEST
+response = context.REQUEST.RESPONSE
 model = request.model
 
 if not request.has_key('storageid') or not request['storageid']:
-    return view.tab_edit_import(message_type='error', message=_('Select one or more items to download'))
+    return context.tab_edit_import(message_type='error', message=_('Select one or more items to download'))
 
 errors = []
 sid, doctype = request['storageid'].split('|')

@@ -11,7 +11,6 @@ from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
-view = context.tab_status
 
 is_rejection = request['rejection_status'] == 'true'
 
@@ -21,7 +20,7 @@ if not message is None:
 if not message:
     if is_rejection:
         message = ("Approval was rejected via the status screen "
-                   "(automatically generated message).") 
+                   "(automatically generated message).")
     else:
         message = ("Approval was withdrawn via the status screen. "
                    "(automatically generated message)")
@@ -29,15 +28,15 @@ if not message:
 
 if model.get_unapproved_version() is None:
     if model.get_public_version() is not None:
-        if view.get_silva_permissions()['ApproveSilvaContent']:
-            return view(message_type="error", message=_("This content is already public. You can close the current public version."))
+        if context.get_silva_permissions()['ApproveSilvaContent']:
+            return context.tab_status(message_type="error", message=_("This content is already public. You can close the current public version."))
         else:
-            return view(message_type="error", message=_("This content is already public."))
+            return context.tab_status(message_type="error", message=_("This content is already public."))
     else:
-        return view(message_type="error", message=_("This content is already approved. You can revoke the approval."))
+        return context.tab_status(message_type="error", message=_("This content is already approved. You can revoke the approval."))
 
 if not model.is_version_approval_requested():
-    return view(message_type="error", message=_("No request for approval is pending for this content."))
+    return context.tab_status(message_type="error", message=_("No request for approval is pending for this content."))
 
 
 if is_rejection:

@@ -17,7 +17,7 @@
   <tal:block
     define="
       metadata_category category | string:;
-      binding python: view.get_metadata(content, category=metadata_category) or nothing;
+      binding python: here.get_metadata(content, category=metadata_category) or nothing;
       setnames binding/setNames | nothing;
       is_container model/implements_container | nothing;
       is_versioned model/implements_versioning | nothing;

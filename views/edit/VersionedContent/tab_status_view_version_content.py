@@ -7,8 +7,7 @@
 ##parameters=
 ##title=Revoke approval of approved content
 ##
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 from Products.Silva.adapters.version_management import \

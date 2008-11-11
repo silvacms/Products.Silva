@@ -4,23 +4,22 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
         message=_('Nothing was selected, so no approval was requested.'))
 
 try:
-    result = view.tab_status_form.validate_all_to_request(request)
+    result = context.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(
+    return context.tab_status(
         message_type="error",
-        message=view.render_form_errors(e),
+        message=context.render_form_errors(e),
         refs=refs)
 
 publish_datetime = result['publish_datetime']
@@ -29,7 +28,7 @@ expiration_datetime = result['expiration_datetime']
 clear_expiration_flag = result['clear_expiration']
 
 #if not publish_now_flag and not publish_datetime:
-#    return view.tab_status(
+#    return context.tab_status(
 #        message_type="error",
 #        message=_("First set a publish time"))
 
@@ -85,15 +84,15 @@ for ref in refs:
 if approved_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Request approval for: ${ids}',
-                mapping={'ids': view.quotify_list(approved_ids)})
+                mapping={'ids': context.quotify_list(approved_ids)})
     msg.append(translate(message))
 
 if not_approved:
     message = _('No request for approval on: ${ids}',
-                mapping={'ids': view.quotify_list_ext(not_approved)})
+                mapping={'ids': context.quotify_list_ext(not_approved)})
     msg.append(translate(message))
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
 
-return view.tab_status(message_type='feedback', message=('<br />'.join(msg)), refs=no_date_refs)
+return context.tab_status(message_type='feedback', message=('<br />'.join(msg)), refs=no_date_refs)

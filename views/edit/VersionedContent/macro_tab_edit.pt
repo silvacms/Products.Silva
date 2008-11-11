@@ -40,27 +40,8 @@ h2 {
   <metal:block define-slot="script" />
 </metal:block>
 
-<metal:block fill-slot="middleground"
-  tal:define="unapproved_version model/get_unapproved_version">
-  <div class="middleground">
-    <div style="float:right">
-      <tal:block define="
-        permissions view/get_silva_permissions;
-        have_approve_permission permissions/ApproveSilvaContent | nothing;">
-        <a class="executor"
-          title="publish this document: alt-p"
-          accesskey="p"
-          tal:attributes="href string:${model/absolute_url}/edit/quick_publish?return_to=tab_edit"
-          i18n:translate=""
-          i18n:attributes="title"
-          tal:condition="python: unapproved_version and have_approve_permission">
-          publish&nbsp;now
-        </a>
-      </tal:block>
-    </div>
-    <metal:plug define-slot="editor_selection" />
-    &nbsp;
-  </div>
+<metal:block metal:fill-slot="middleground">
+  <tal:buttons tal:replace="structure model/@@tab_edit_extra" />
 </metal:block>
 
 <span tal:replace="nothing"> ______________ author may not edit: notify why ______________ </span>

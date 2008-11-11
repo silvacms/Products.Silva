@@ -8,7 +8,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    view here;
     model request/model;
     version options/version;
     version_name options/name;
@@ -26,7 +25,7 @@
         <td class="top"
           colspan="2">
           <h2 i18n:translate="">
-            <img tal:replace="structure python:view.render_icon(model)" i18n:name="icon" />
+            <img tal:replace="structure python:here.render_icon(model)" i18n:name="icon" />
             ghost of &#xab;<tal:block content="title" i18n:name="title" />&#xbb; (<tal:block content="version_name" i18n:name="version_name" /> version)
           </h2>
         </td>

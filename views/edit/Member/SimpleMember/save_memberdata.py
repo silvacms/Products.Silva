@@ -1,8 +1,7 @@
 from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 next_view = '%s/edit' % model.absolute_url()
@@ -10,12 +9,12 @@ request.SESSION['message_type'] = ''
 request.SESSION['message'] = ''
 from Products.Formulator.Errors import ValidationError, FormValidationError
 try:
-    result = view.memberform.validate_all(request)
+    result = context.memberform.validate_all(request)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
     request.SESSION['message_type'] = 'error'
-    request.SESSION['message'] = view.render_form_errors(e)
-    
+    request.SESSION['message'] = context.render_form_errors(e)
+
     return request.RESPONSE.redirect(next_view)
     #return context.redirect()
 
@@ -36,7 +35,7 @@ if result.has_key('editor'):
 
 if request.has_key('langsetting'):
     languageProvider = context.getLanguageProvider()
-    if (str(request['langsetting']) != 
+    if (str(request['langsetting']) !=
             str(languageProvider.getPreferredLanguage())):
         languageProvider.setPreferredLanguage(request['langsetting'])
         messages.append(translate(_('Language updated')))

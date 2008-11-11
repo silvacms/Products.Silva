@@ -4,23 +4,22 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 from Products.Formulator.Errors import FormValidationError
 
 # Check whether there's any checkboxes checked at all...
 if not refs:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
         message=_('Nothing was selected, so no new version was created.'))
 
 try:
-    result = view.tab_status_form.validate_all_to_request(request)
+    result = context.tab_status_form.validate_all_to_request(request)
 except FormValidationError, e:
-    return view.tab_status(
+    return context.tab_status(
         message_type='error',
-        message=view.render_form_errors(e),
+        message=context.render_form_errors(e),
         refs=refs)
 
 copied_ids = []
@@ -45,12 +44,12 @@ for ref in refs:
 if copied_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Created a new version for: ${ids}',
-                mapping={'ids': view.quotify_list(copied_ids)})
+                mapping={'ids': context.quotify_list(copied_ids)})
     msg.append(translate(message))
 
 if not_copied:
     message = _('could not create a new version for: ${ids}',
-                mapping={'ids': view.quotify_list_ext(not_copied)})
+                mapping={'ids': context.quotify_list_ext(not_copied)})
     msg.append('<span class="error">' + translate(message)  + '</span>')
 
-return view.tab_status(message_type='feedback', message=(', '.join(msg)) )
+return context.tab_status(message_type='feedback', message=(', '.join(msg)) )

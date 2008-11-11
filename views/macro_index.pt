@@ -11,7 +11,6 @@
     message_type view/status_type | options/message_type | request/message_type | nothing;
     message      view/status | options/message | request/message | nothing;
 
-    view    nocall:here;
     model   request/model;
     trigger model/security_trigger;
     mangle  modules/Products/Silva/mangle;
@@ -19,20 +18,20 @@
     type    model/meta_type;
     url     model/absolute_url;
     title   python: model.get_title_editable() or model.id;
-    icon    python:view.render_icon(model);
+    icon    python:here.render_icon(model);
 
     root_url model/get_root_url;
     global   publication model/get_publication;
     global   containing_publication publication/../get_publication | publication;
 
-    silva_permissions   view/get_silva_permissions;
+    silva_permissions   here/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;
 
     dummy  python: here.recordError(type, message);
     dummy  python: here.REQUEST.set('edit_mode', 1);
     dummy  python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
-    editor python: request.SESSION.get('editor', None) or view.service_members.get_member(user.getUserName()).editor();
+    editor python: request.SESSION.get('editor', None) or here.service_members.get_member(user.getUserName()).editor();
 
 ">
 
@@ -52,7 +51,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:content="structure python: view.css_imports(['silva.css'])"
+  tal:content="structure python: here.css_imports(['silva.css'])"
 >
 @imports
 </style>
@@ -203,8 +202,8 @@
 </span>
 <div class="footer"
   tal:define="
-    name  python: view.get_metadata_element('silva-extra', 'contactname');
-    email python: view.get_metadata_element('silva-extra', 'contactemail');
+    name  python: here.get_metadata_element('silva-extra', 'contactname');
+    email python: here.get_metadata_element('silva-extra', 'contactemail');
     ">
     <div style="float: left;">
       <tal:block i18n:translate="">contact:</tal:block>
@@ -278,7 +277,7 @@
   </a>
   <a title="Request an additional role in this location: alt-,"
     accesskey=","
-    tal:condition="view/service_members/allow_authentication_requests"
+    tal:condition="here/service_members/allow_authentication_requests"
     tal:attributes="href string:public/request_roles?last_url=$url/edit/${template/id}"
     i18n:attributes="title"
     i18n:translate="">

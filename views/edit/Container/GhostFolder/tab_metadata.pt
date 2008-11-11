@@ -14,7 +14,7 @@
 
 <!-- tab_metadata for Ghost objects -->
 <metal:block use-macro="here/macro_index/macros/master">
-  
+
 <metal:block metal:fill-slot="middleground">
   <div class="middleground">
     <a title="miscellaneous settings: alt-e"
@@ -23,7 +23,7 @@
       i18n:attributes="title"
       i18n:translate=""
       >s<u i18n:name="e">e</u>ttings...
-    </a><tal:block condition="context/is_subscribable_content"><a 
+    </a><tal:block condition="context/is_subscribable_content"><a
       title="manage subscriptions: alt-u"
         accesskey="u"
         tal:attributes="href string:${url}/edit/tab_subscriptions"
@@ -33,7 +33,7 @@
     </tal:block>
   </div>
 </metal:block>
-  
+
 <metal:block fill-slot="main">
 
   <table class="columns columns2">
@@ -43,9 +43,9 @@
           _____________________ sidebar _____________________
         </tal:block>
         <td class="left">
-          <metal:block use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:block use-macro="here/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_metadata', vein)" />
+              <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_metadata', vein)" />
             </metal:fill-slot>
           </metal:block>
         </td>
@@ -54,8 +54,8 @@
           _____________________ main _____________________
         </tal:block>
         <td class="main">
-          <tal:block 
-            define="content model" 
+          <tal:block
+            define="content model"
             condition="content">
             <metal:block use-macro="here/macro_view_metadata/macros/metadata">
               <h2 metal:fill-slot="table_title" i18n:translate="">

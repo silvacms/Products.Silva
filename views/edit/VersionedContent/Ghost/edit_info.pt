@@ -8,7 +8,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
-    view here;
     model request/model;
     root_url model/get_root_url;
     title model/get_title;
@@ -22,7 +21,7 @@
       </tal:block>
       <td class="left"
         tal:define="template_id string:tab_edit">
-        <metal:block use-macro="view/macro_vein_navigation/macros/vein" />
+        <metal:block use-macro="here/macro_vein_navigation/macros/vein" />
       </td>
 
       <tal:block replace="nothing">

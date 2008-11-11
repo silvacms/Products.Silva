@@ -8,8 +8,7 @@
 ##title=
 ##
 model = context.REQUEST.model
-view = context
 message_type, message = model.action_paste_to_ghost(context.REQUEST)
 
 model.sec_update_last_author_info()
-return view.tab_edit(message_type=message_type, message=message)
+return context.tab_edit(message_type=message_type, message=message)

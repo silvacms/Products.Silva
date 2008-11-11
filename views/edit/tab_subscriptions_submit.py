@@ -16,7 +16,7 @@ try:
 except FormValidationError, e:
     return context.tab_subscriptions(
         message_type='error', message=context.render_form_errors(e))
-        
+
 s = result['subscribable']
 adapter.setSubscribability(int(s))
 
@@ -26,6 +26,6 @@ for emailaddress in adapter.getSubscribedEmailaddresses():
 # then fill it with current setting
 for emailaddress in result['subscriptions']:
     adapter.subscribe(emailaddress)
-    
+
 return context.tab_subscriptions(
     message='Subscription settings saved', message_type='feedback')

@@ -15,7 +15,7 @@
     pagetemplates, and the i18nextract tools don't check for them),
     hence the Python script. The second problem is that the string
     contains non-ascii chars, and the script is written in a UTF-8
-    editor, so the string becomes a UTF-8 string, which the 
+    editor, so the string becomes a UTF-8 string, which the
     MessageIDFactory can't work with, hence the 'unicode()' call.
     Last but not least, if we'd just do:
 
@@ -23,12 +23,12 @@
         msg = _(unicode(s, 'UTF-8'))
 
     the i18nextract tool wouldn't be able to pick the string literal
-    from this script, hence the weird construction with mapping a 
+    from this script, hence the weird construction with mapping a
     lambda to _.
 """
 # import the messageidfactory, note that we *don't* map it to _ because
 # we need the _ name for our little scheme
-from Products.Silva.i18n import translate 
+from Products.Silva.i18n import translate
 
 # the lambda to have a _() call around the string literal
 _ = lambda x: x
@@ -43,6 +43,6 @@ msg = unicode(msg, 'UTF-8')
 msg = translate(msg,
                 mapping={'version_title': version_title})
 
-# return the interpolated messageid, translation will be done on 
+# return the interpolated messageid, translation will be done on
 # stringification
 return msg

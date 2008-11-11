@@ -10,7 +10,7 @@
   tal:define="
     global vein string:status;
     dummy python:context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;; charset=UTF-8');
-    " 
+    "
   i18n:domain="silva">
 <metal:block use-macro="here/layout_macro.html/macros/layout">
 
@@ -38,13 +38,12 @@
       tal:attributes="content email" />
   </tal:block>
 </metal:block>
-  
+
 <metal:block fill-slot="main"
   tal:define="
-    view here;
-    request view/REQUEST;
+    request here/REQUEST;
     model request/model;
-    content view/tab_status_view_version_content;
+    content here/tab_status_view_version_content;
 ">
 
 <tal:block replace="structure content" />

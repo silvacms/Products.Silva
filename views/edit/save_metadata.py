@@ -2,7 +2,6 @@ from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 model = request.model
-view = context
 ms = context.service_metadata
 
 editable = model.get_editable()
@@ -21,6 +20,6 @@ else:
     model.sec_update_last_author_info()
 
 templateid = request.form.get('returntotab', 'tab_metadata')
-method = getattr(view, templateid)
+method = getattr(context, templateid)
 return method(
     form_errors=all_errors, message_type=type, message=msg)

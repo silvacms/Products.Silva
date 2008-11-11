@@ -7,13 +7,12 @@
 ##parameters=
 ##title=
 ##
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 response = request.RESPONSE
 headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-            ('Last-Modified', 
+            ('Last-Modified',
                 DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
             ('Cache-Control', 'no-cache, must-revalidate'),
             ('Cache-Control', 'post-check=0, pre-check=0'),
@@ -42,7 +41,7 @@ return ('<html>\n'
         '<meta name="docref" content="%s" />\n'
         '</head>\n'
         '%s\n'
-        '</html>' % (model.get_title_editable(), 
+        '</html>' % (model.get_title_editable(),
                         getattr(context, 'frontend.css').absolute_url(),
                         getattr(context.globals, 'kupu.css').absolute_url(),
                         docref,

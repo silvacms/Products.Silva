@@ -10,10 +10,9 @@
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 
 if model.meta_type != 'Silva Publication':
-    return view.tab_edit(message_tye="error",
+    return context.tab_edit(message_tye="error",
                          message=_("Can only change Publications into Folders"))
 
 id = model.id

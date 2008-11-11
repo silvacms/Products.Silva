@@ -11,13 +11,12 @@ from Products.Formulator.Errors import ValidationError, FormValidationError
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 REQUEST = context.REQUEST
 
 try:
-    result = view.text_edit_form.validate_all(context.REQUEST)
+    result = context.text_edit_form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return view.tab_edit(message_type="error",
+    return context.tab_edit(message_type="error",
                          message=context.render_form_errors(e))
 
 text = result['text']

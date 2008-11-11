@@ -1,7 +1,6 @@
 request = context.REQUEST
 session = request.SESSION
 model = request.model
-view = context
 
 key = ('silva_lookup_referer', model.get_root_url())
 default_referer = '%s/edit/tab_access' % model.absolute_url()

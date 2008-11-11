@@ -15,9 +15,9 @@
 
 <metal:block use-macro="here/macro_index/macros/master">
 
-<metal:block metal:fill-slot="middleground">
-  <metal:block use-macro="here/macro_middleground/macros/properties" />
-</metal:block>
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
+  </metal:block>
 
 <metal:block fill-slot="main">
 <table class="columns columns3"
@@ -35,9 +35,9 @@
       </tal:block>
       <td class="left"
         tal:define="template_id string:tab_subscriptions">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_subscriptions', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_subscriptions', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>

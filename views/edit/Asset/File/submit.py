@@ -4,12 +4,11 @@ from Products.Silva.i18n import translate as _
 from zope.i18n import translate
 
 model = context.REQUEST.model
-view = context
 
 try:
-    result = view.form.validate_all(context.REQUEST)
+    result = context.form.validate_all(context.REQUEST)
 except FormValidationError, e:
-    return view.tab_edit(message_type="error",
+    return context.tab_edit(message_type="error",
         message=context.render_form_errors(e))
 
 changed = []
@@ -29,5 +28,5 @@ changed.append(('title', translate(message)))
 # XXX: I don't understand the FIXME message.
 message = _("Properties changed: ${changed}",
             mapping={'changed': context.quotify_list_ext(changed)})
-return view.tab_edit(message_type="feedback", 
+return context.tab_edit(message_type="feedback",
     message=message)

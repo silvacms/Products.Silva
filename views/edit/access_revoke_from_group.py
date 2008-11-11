@@ -9,14 +9,13 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
 request = context.REQUEST
 model = context.REQUEST.model
 
 revoke_roles = request.form.get('revoke_roles', None)
 if revoke_roles is None:
-    return view.tab_access(
-        message_type="error", 
+    return context.tab_access(
+        message_type="error",
         message=_("No roles to revoke selected."))
 
 def extract_groups_and_roles(in_list):
@@ -38,6 +37,6 @@ model.sec_cleanup_groupsmapping()
 
 msg = _("Role(s) revoked for ${list}",
         mapping={'list': context.quotify_list_ext(revoked)})
-return view.tab_access(
-    message_type="feedback", 
+return context.tab_access(
+    message_type="feedback",
     message=msg)

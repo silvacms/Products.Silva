@@ -69,7 +69,7 @@
     </tbody>
    </tal:cond>
    <tal:cond condition="model/is_editable_size">
-    <tbody tal:define="fields python:view.text_edit_form.get_fields()">
+    <tbody tal:define="fields python:here.text_edit_form.get_fields()">
       <tal:repeat repeat="field fields">
       <tal:define define="iterate repeat/field/odd">
       <tr>
@@ -109,7 +109,7 @@
   </table>
  </form>
  </tal:cond>
-  <metal:block use-macro="view/macro_asset_edit/macros/uploader" />
+  <metal:block use-macro="here/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
 
 </metal:block>

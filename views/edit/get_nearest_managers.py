@@ -8,5 +8,5 @@
 ##title=
 ##
 model = context.REQUEST.model
-return [model.sec_get_member(userid) for userid in          
+return [model.sec_get_member(userid) for userid in
         model.sec_get_nearest_of_role('Manager')]

@@ -20,20 +20,20 @@
 
 <metal:use-macro use-macro="here/macro_nonscreen/macros/shell">
 
-  <metal:fill-slot fill-slot="middlepass">
-    <metal:block use-macro="here/macro_middleground/macros/properties" />
-  </metal:fill-slot>
-  
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
+  </metal:block>
+
   <h2 metal:fill-slot="table_title">
     <img tal:replace="structure icon" />
     <tal:block i18n:translate="">manage subscriptions for &#xab;<tal:block content="title" i18n:name="title" />&#xbb;</tal:block>
   </h2>
-  
+
   <metal:fill-slot fill-slot="message">
     <tal:block i18n:translate="">
-      This <span tal:replace="vein" i18n:name="vein" /> screen doesn&#8217;t have settings, 
-      because it&#8217;s not possible to subscribe to a <span tal:replace="type" i18n:name="type"/>. 
-      Only documents that contain textual content, or folders that contain them, 
+      This <span tal:replace="vein" i18n:name="vein" /> screen doesn&#8217;t have settings,
+      because it&#8217;s not possible to subscribe to a <span tal:replace="type" i18n:name="type"/>.
+      Only documents that contain textual content, or folders that contain them,
       can be subscribed to.
     </tal:block>
   </metal:fill-slot>

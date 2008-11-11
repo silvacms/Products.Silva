@@ -35,9 +35,9 @@
 
 <metal:fill fill-slot="sidebar">
  <td class="left">
-  <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+  <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
    <metal:fill-slot fill-slot="sidebar">
-    <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit', vein)" />
+    <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_edit', vein)" />
    </metal:fill-slot>
   </metal:use-macro>
  </td>
@@ -260,7 +260,7 @@
               tal:attributes="
                 href python:here.get_editor_link(item);
                 title item/meta_type;">
-              <img tal:replace="structure python:view.render_icon(item)" />
+              <img tal:replace="structure python:here.render_icon(item)" />
             </a>
             <a class="blacklink"
               title="edit"
@@ -388,15 +388,15 @@
             _______ icon + id cell _______
           </tal:block>
           <td>
-            <tal:block condition="python: hasattr(view, 'externalEditLink_')">
+            <tal:block condition="python: hasattr(here, 'externalEditLink_')">
               <span style="float: right;"
-                tal:content="structure python: view.externalEditLink_(asset)" />
+                tal:content="structure python: here.externalEditLink_(asset)" />
             </tal:block>
             <a class="icon"
               tal:attributes="
                 href string:${asset_url}/edit/tab_edit;
                 title asset/meta_type;">
-              <img tal:replace="structure python:view.render_icon(asset)" />
+              <img tal:replace="structure python:here.render_icon(asset)" />
             </a>
             <a class="blacklink"
               href="asset"

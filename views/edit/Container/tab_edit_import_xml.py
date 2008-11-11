@@ -9,22 +9,21 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 if not request.has_key('importfile') or not request['importfile']:
-    return view.tab_edit_import(message_type='error', message=_('Select a file for upload.'))
+    return context.tab_edit_import(message_type='error', message=_('Select a file for upload.'))
 
 if not getattr( request['importfile'], 'filename', None):
-    return view.tab_edit_import(message_type="error", message=_("Empty or invalid file."))
+    return context.tab_edit_import(message_type="error", message=_("Empty or invalid file."))
 
 data = request['importfile'].read()
 
 if not model.xml_validate(data):
-    return view.tab_edit(message_type='error',
+    return context.tab_edit(message_type='error',
                          message=_('Data is not valid Silva XML'))
 
 model.xml_import(data)
 
-return view.tab_edit(message_type='feedback', message=_('Finished importing.'))
+return context.tab_edit(message_type='feedback', message=_('Finished importing.'))

@@ -27,7 +27,7 @@
 
    <metal:title_editor_slot define-slot="title_editor">
     <metal:fill-main-body fill-slot="main-body">
-     <tal:block define="fields view/form/get_fields">
+     <tal:block define="fields here/form/get_fields">
       <tr>
         <th width="33%"
           i18n:translate="">
@@ -113,7 +113,7 @@
         </td>
       </tr>
     </thead>
-    <tbody tal:define="fields python:view.upload_form.get_fields()">
+    <tbody tal:define="fields python:here.upload_form.get_fields()">
       <tr>
         <th width="33%"
           i18n:translate="">

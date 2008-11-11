@@ -3,7 +3,6 @@ from Products.Silva.interfaces import IAsset
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 REQUEST = context.REQUEST
 
 lookup_mode = REQUEST.get('lookup_mode', 0)
@@ -15,18 +14,18 @@ if REQUEST.has_key('add_cancel'):
         if return_url:
             REQUEST.RESPONSE.redirect(return_url)
         else:
-            return view.object_lookup()
+            return context.object_lookup()
     else:
-        return view.tab_edit()
+        return context.tab_edit()
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
 try:
-    result = view.form.validate_all(REQUEST)
+    result = context.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return view.add_form(message_type="error",
-        message=view.render_form_errors(e))
+    return context.add_form(message_type="error",
+        message=context.render_form_errors(e))
 
 id = mangle.Id(model, result['object_id'], file=result['file'],
     interface=IAsset)
@@ -34,14 +33,14 @@ file = result['file']
 
 # do some additional validation
 if not file or not getattr(file, 'filename', None):
-    return view.add_form(message_type="error",
+    return context.add_form(message_type="error",
         message=_("Empty or invalid file."))
 
 # if we don't have the right id, reject adding
 id_check = id.cook().validate()
 if id_check != id.OK:
-    return view.add_form(message_type="error",
-        message=view.get_id_status_text(id))
+    return context.add_form(message_type="error",
+        message=context.get_id_status_text(id))
 id = str(id)
 
 # try to cope with absence of title in form
@@ -52,12 +51,11 @@ else:
     title = ""
 
 # process data in result and add using validation result
-view = context
 
 try:
     model.manage_addProduct['Silva'].manage_addImage(id, title, file=file)
 except ValueError, e:
-    return view.add_form(message_type="error", message='Problem: %s' % e)
+    return context.add_form(message_type="error", message='Problem: %s' % e)
 object = getattr(model, id)
 
 # update last author info in new object
@@ -67,7 +65,7 @@ if lookup_mode:
     if return_url:
         REQUEST.RESPONSE.redirect(return_url)
     else:
-        return view.object_lookup()
+        return context.object_lookup()
 
 # now go to tab_edit in case of add and edit, back to container if not.
 if return_url:
@@ -78,7 +76,7 @@ else:
     message = _("Added ${meta_type} ${id}.",
                 mapping={
                     'meta_type': object.meta_type,
-                    'id': view.quotify(id)})
-    return view.tab_edit(
+                    'id': context.quotify(id)})
+    return context.tab_edit(
         message_type="feedback",
         message=message)

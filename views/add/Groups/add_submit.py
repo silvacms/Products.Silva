@@ -5,17 +5,16 @@ from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 REQUEST = context.REQUEST
 groups_service = context.service_groups
 
 # validate form
 from Products.Formulator.Errors import ValidationError, FormValidationError
 try:
-    result = view.form.validate_all(REQUEST)
+    result = context.form.validate_all(REQUEST)
 except FormValidationError, e:
     # in case of errors go back to add page and re-render form
-    return model.edit['tab_access_groups'](message_type="error", message=view.render_form_errors(e))
+    return model.edit['tab_access_groups'](message_type="error", message=context.render_form_errors(e))
 
 # get id and title from form, convert title to unicode
 id = mangle.Id(model, result['object_id'])
@@ -33,14 +32,14 @@ else:
 id_check = id.validate()
 if not id_check == id.OK:
     return model.edit['tab_access_groups'](message_type="error",
-        message=view.get_id_status_text(id))
+        message=context.get_id_status_text(id))
 
 if groups_service.isGroup(str(id)):
     message=_("""There's already a Group with the name ${id} in this Silva
         site. In contrast to other Silva objects, Group IDs must be
-        unique within a Silva instance.""", mapping={'id': view.quotify(id)})
+        unique within a Silva instance.""", mapping={'id': context.quotify(id)})
     return model.edit['tab_access_groups'](
-        message_type="error", 
+        message_type="error",
         message=message
         )
 
@@ -56,8 +55,8 @@ object.sec_update_last_author_info()
 if REQUEST.has_key('add_edit_submit'):
     REQUEST.RESPONSE.redirect(object.absolute_url() + '/edit/tab_edit')
 else:
-    message = _("Added ${meta_type} ${id}.",mapping={'meta_type': object.meta_type,'id': view.quotify(id)})
+    message = _("Added ${meta_type} ${id}.",mapping={'meta_type': object.meta_type,'id': context.quotify(id)})
     return model.edit['tab_access_groups'](
-        message_type="feedback", 
+        message_type="feedback",
         message=message
         )

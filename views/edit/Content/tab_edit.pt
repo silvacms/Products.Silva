@@ -16,7 +16,7 @@
 <metal:block fill-slot="main" tal:omit-tag="">
 
 <model tal:condition="model/get_editable"
-  tal:replace="structure view/edit">content</model>
+  tal:replace="structure context/edit">content</model>
 
 </metal:block>
 </metal:block>

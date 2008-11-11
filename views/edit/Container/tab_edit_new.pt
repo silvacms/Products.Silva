@@ -31,9 +31,9 @@
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >
-          <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
             <metal:fill-slot fill-slot="sidebar">
-              <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_new', vein)" />
+              <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_edit_new', vein)" />
             </metal:fill-slot>
           </metal:use-macro>
       </td>
@@ -64,7 +64,7 @@
     <tr class="top-controls">
       <td>
         <h3 i18n:translate="">
-          create an object 
+          create an object
         </h3>
       </td>
     </tr>
@@ -75,7 +75,7 @@
       <td>
         <p class="readable" i18n:translate="">
             Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the
-	        <a class="underline" 
+	        <a class="underline"
 	           href="http://www.infrae.com/products/silva/docs"
 	           i18n:name="silva_documentation">
              <tal:block i18n:translate="">Silva documentation</tal:block>
@@ -95,7 +95,7 @@
               style="padding-left:0.2em; padding-bottom: 0em ! important;"
               tal:attributes="
                 href python:addobject_url%addable['name'].replace(' ', '+');
-                title python: view.tab_edit_new_link_title(addable['name'])">
+                title python: here.tab_edit_new_link_title(addable['name'])">
               <span tal:replace="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']">object</span>
             </a>
           </div>

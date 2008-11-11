@@ -4,14 +4,13 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 
 # Check whether there's any checkboxes checked at all...
 if not ids:
-    return view.tab_edit(
-        message_type='error', 
+    return context.tab_edit(
+        message_type='error',
         message=_('Nothing was selected, so nothing was closed.'))
 
 closed_ids = []
@@ -36,12 +35,12 @@ for id in ids:
 if closed_ids:
     request.set('redisplay_timing_form', 0)
     message = _('Closed: ${ids}',
-                mapping={'ids': view.quotify_list(closed_ids)})
+                mapping={'ids': context.quotify_list(closed_ids)})
     msg.append(translate(message))
 
 if not_closed:
     message = _('could not close: ${ids}',
-                mapping={'ids': view.quotify_list_ext(not_closed)})
+                mapping={'ids': context.quotify_list_ext(not_closed)})
     msg.append(translate(message))
 
-return view.tab_edit(message_type='feedback', message=(', '.join(msg)) )
+return context.tab_edit(message_type='feedback', message=(', '.join(msg)) )

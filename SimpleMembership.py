@@ -175,7 +175,7 @@ class SimpleMemberService(SilvaService):
     # is central service..
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'find_members')
-    def find_members(self, search_string, where=None):
+    def find_members(self, search_string, location=None):
         # XXX: get_valid_userids is evil: will break with other user
         # folder implementations.
         userids = self.get_valid_userids()
@@ -187,15 +187,17 @@ class SimpleMemberService(SilvaService):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_user')
-    def is_user(self, userid):
+    def is_user(self, userid, location=None):
         # XXX: get_valid_userids is evil: will break with other user
         # folder implementations.
-        return userid in self.get_valid_userids()
+        if location is None:
+            location = self
+        return userid in location.get_valid_userids()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_member')
-    def get_member(self, userid):
-        if not self.is_user(userid):
+    def get_member(self, userid, location=None):
+        if not self.is_user(userid, location=None):
             return None
         # get member, add it if it doesn't exist yet
         members = self.Members.aq_inner.aq_explicit
@@ -207,9 +209,9 @@ class SimpleMemberService(SilvaService):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_cached_member')
-    def get_cached_member(self, userid):
+    def get_cached_member(self, userid, location=None):
         """Returns a cloned member object, which can be stored in the ZODB"""
-        return cloneMember(self.get_member(userid)).__of__(self)
+        return cloneMember(self.get_member(userid, location=location)).__of__(self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_authentication_requests')

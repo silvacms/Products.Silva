@@ -17,7 +17,7 @@ model = request.model
 is_rejection = request['rejection_status'] == 'true'
 if is_rejection:
     message = ("Approval was rejected via the edit screen "
-                "(automatically generated message).") 
+                "(automatically generated message).")
 else:
     message = ("Approval was withdrawn via the edit screen. "
                 "(automatically generated message)""")
@@ -25,20 +25,20 @@ else:
 
 if model.get_unapproved_version() is None:
     if model.get_public_version() is not None:
-        if view.get_silva_permissions()['ApproveSilvaContent']:
-            return view(message_type="error", 
+        if context.get_silva_permissions()['ApproveSilvaContent']:
+            return view(message_type="error",
                         message=_("This content is already public. You can "
                                     "close the current public version."))
         else:
-            return view(message_type="error", 
+            return view(message_type="error",
                         message=_("This content is already public."))
     else:
-        return view(message_type="error", 
+        return view(message_type="error",
                         message=_("This content is already approved. "
                                     "You can revoke the approval."))
 
 if not model.is_version_approval_requested():
-    return view(message_type="error", 
+    return view(message_type="error",
                     message=_("No request for approval is pending for "
                                 "this content."))
 

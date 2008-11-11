@@ -10,14 +10,13 @@
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
-view = context
 result = model.move_object_down(id)
 if result:
     message = _("Moved ${id} down.",
-                mapping={'id': view.quotify(id)})
+                mapping={'id': context.quotify(id)})
     model.sec_update_last_author_info()
-    return view.tab_edit(message_type="feedback", message=message)
+    return context.tab_edit(message_type="feedback", message=message)
 else:
     message = _("Could not move ${id} down.",
-                mapping={'id': view.quotify(id)})
-    return view.tab_edit(message_type="error", message=message)
+                mapping={'id': context.quotify(id)})
+    return context.tab_edit(message_type="error", message=message)

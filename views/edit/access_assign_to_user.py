@@ -10,12 +10,11 @@
 from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
-view = context
 if not assign_role or assign_role == 'None':
-    return view.tab_access(message_type="error", message=_("No role selected."))
+    return context.tab_access(message_type="error", message=_("No role selected."))
 
 if not userids:
-    return view.tab_access(message_type="error", message=_("No user(s) selected."))
+    return context.tab_access(message_type="error", message=_("No user(s) selected."))
 
 model = request.model
 #assigned = []
@@ -23,9 +22,9 @@ for userid in userids:
     model.sec_assign(userid, assign_role)
     #assigned.append((userid, assign_role))
 
-#return view.tab_access(
-#    message_type="feedback", 
-#    message="Role(s) assigned") # for %s" % view.quotify_list_ext(assigned))
+#return context.tab_access(
+#    message_type="feedback",
+#    message="Role(s) assigned") # for %s" % context.quotify_list_ext(assigned))
 
 # FIXME: do we need feedback?
 request.RESPONSE.redirect('%s/edit/tab_access' % model.absolute_url())

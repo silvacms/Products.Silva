@@ -33,9 +33,9 @@
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_status', vein)" />
+            <tal:plug replace="structure python: here.service_sidebar.render(model, 'tab_status', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -276,7 +276,7 @@
       <th class="listing-left"
         colspan="2">
         <tal:define define="select_id string:refs">
-          <metal:use use-macro="view/macro_select_all/macros/select_all" />
+          <metal:use use-macro="here/macro_select_all/macros/select_all" />
         </tal:define>
       </th>
       <th class="align-right"
@@ -303,10 +303,10 @@
           publish time
         </label>
         <tal:plug condition="redisplay_timing_form"
-          replace="structure python: view.tab_status_form.publish_datetime.render_from_request(request)"
+          replace="structure python: here.tab_status_form.publish_datetime.render_from_request(request)"
         />
         <tal:plug condition="not: redisplay_timing_form"
-          replace="structure python: view.tab_status_form.publish_datetime.render()"
+          replace="structure python: here.tab_status_form.publish_datetime.render()"
         />
         <tal:if condition="python: approveables or ((closeables or revokeables or rejectables or new_versionables) and may_approve_content)">
           &nbsp;
@@ -317,10 +317,10 @@
             expiration time
           </label>
           <tal:plug condition="redisplay_timing_form"
-            replace="structure python: view.tab_status_form.expiration_datetime.render_from_request(request)"
+            replace="structure python: here.tab_status_form.expiration_datetime.render_from_request(request)"
           />
           <tal:plug condition="not: redisplay_timing_form"
-            replace="structure python: view.tab_status_form.expiration_datetime.render()"
+            replace="structure python: here.tab_status_form.expiration_datetime.render()"
           />
         </tal:if>
         <tal:if condition="python: may_approve_content and expireables">
@@ -332,7 +332,7 @@
             i18n:translate="">
             clear&nbsp;expiration
           </label>
-          <field tal:replace="structure view/tab_status_form/clear_expiration/render" />
+          <field tal:replace="structure here/tab_status_form/clear_expiration/render" />
         </tal:if>
       </td>
     </tr>

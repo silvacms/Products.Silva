@@ -21,5 +21,5 @@ model.unapprove_version()
 if came_from_view == 'tab_edit_revoke_approval':
     request.RESPONSE.redirect('%s/edit/tab_edit' % (model.absolute_url()))
     return ''
-    
+
 return view(message_type="feedback", message=_("Revoked approval."))

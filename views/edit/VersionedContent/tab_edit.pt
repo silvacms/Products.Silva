@@ -19,13 +19,13 @@
 <metal:block use-macro="here/macro_tab_edit/macros/editor">
 
 <metal:block fill-slot="script">
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:attributes="src here/reference.js/absolute_url">
 </script>
 </metal:block>
 
 <metal:block fill-slot="editor_content">
-<tal:block replace="structure view/edit">Content</tal:block>
+<tal:block replace="structure here/edit">Content</tal:block>
 </metal:block>
 
 </metal:block>

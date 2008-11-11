@@ -9,17 +9,16 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 model.security_trigger()
 
 if not request.has_key('importfile') or not request['importfile']:
-    return view.tab_edit_import(message_type='error', message=_('Select a file for upload'))
+    return context.tab_edit_import(message_type='error', message=_('Select a file for upload'))
 
 if not request.has_key('email') or not request['email']:
-    return view.tab_edit_import(message_type='error', message=_('You must enter your e-mail address'))
+    return context.tab_edit_import(message_type='error', message=_('You must enter your e-mail address'))
 
 description = request['importfile'].filename
 if request.has_key('description') and request['description']:
@@ -31,4 +30,4 @@ ident, status = model.service_docma.word2silva(data, str(request.AUTHENTICATED_U
 
 message = _('Your job is ${status}. The id of your job is ${id}.',
             mapping={'status': status, 'id': ident})
-return view.tab_edit_import(message_type='feedback', message=message)
+return context.tab_edit_import(message_type='feedback', message=message)

@@ -10,7 +10,7 @@
   i18n:domain="silva">
 
 <metal:block define-macro="listings"
-  tal:define="finished_jobs python: view.service_docma.get_finished_jobs_for_userid(str(userid), format=format);">
+  tal:define="finished_jobs python: here.service_docma.get_finished_jobs_for_userid(str(userid), format=format);">
 
 <span tal:replace="nothing">
   _____________________ running job feedback _____________________
@@ -20,9 +20,9 @@
         <span i18n:translate="">current job</span>:
         <span tal:replace="processingident">#</span><br />
         <span i18n:translate="">owner</span>:
-        <span tal:replace="python: view.service_members.get_member(view.service_docma.get_ident_owner(processingident)).fullname()">owner</span><br />
+        <span tal:replace="python: here.service_members.get_member(here.service_docma.get_ident_owner(processingident)).fullname()">owner</span><br />
         <span i18n:translate="">description</span>:
-        <span tal:replace="python: view.service_docma.get_ident_description(processingident)">desc</span>
+        <span tal:replace="python: here.service_docma.get_ident_description(processingident)">desc</span>
   </div>
 </tal:condition>
 
@@ -90,18 +90,18 @@
             tal:content="job">
             job id
           </td>
-          <td tal:content="python: view.service_members.get_member(view.service_docma.get_ident_owner(job)).fullname()">
+          <td tal:content="python: here.service_members.get_member(here.service_docma.get_ident_owner(job)).fullname()">
             owner
           </td>
-          <td  tal:content="python: view.service_docma.get_ident_description(job)">
+          <td  tal:content="python: here.service_docma.get_ident_description(job)">
             description
           </td>
           <td i18n:translate="">
-            <span tal:content="python: view.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time" />
+            <span tal:content="python: here.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time" />
             &nbsp;seconds
           </td>
           <td class="align-right"
-            tal:content="python: view.service_docma.get_status(job)">
+            tal:content="python: here.service_docma.get_status(job)">
             status
           </td>
         </tr>
@@ -214,7 +214,7 @@
       <tr tal:condition="ls">
         <th class="controls listing-left"
           colspan="6">
-          <metal:block use-macro="view/macro_select_all/macros/select_all"/>
+          <metal:block use-macro="here/macro_select_all/macros/select_all"/>
         </th>
       </tr>
 

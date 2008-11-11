@@ -9,15 +9,14 @@
 ##
 from Products.Silva.i18n import translate as _
 
-view = context
-request = view.REQUEST
+request = context.REQUEST
 model = request.model
 
 # if we don't call security_trigger here, the script will be called twice and the job will be started twice
 model.security_trigger()
 
 if not request.has_key('refs') or not request['refs']:
-    return view.tab_status(message_type='error', message=_('No items were selected, so nothing is exported'))
+    return context.tab_status(message_type='error', message=_('No items were selected, so nothing is exported'))
 
 objects = []
 for ref in request['refs'].split('||'):
@@ -39,10 +38,10 @@ if request.has_key('description') and request['description']:
 data = model.get_xml_for_objects(objects, with_sub_publications, export_last_version)
 
 if not request['email']:
-    return view.tab_status(message_type='error', message=_('You have not entered your e-mail address'))
+    return context.tab_status(message_type='error', message=_('You have not entered your e-mail address'))
 
 ident, status = model.service_docma.silva2word(request['email'], data, request['template'], str(request.AUTHENTICATED_USER.getId()), description)
 
 msg = _('Your job is ${status}. The id of your job is ${job_id}.',
         mapping={'status': status, 'job_id': ident})
-return view.tab_status_export(message_type='feedback', message=msg)
+return context.tab_status_export(message_type='feedback', message=msg)

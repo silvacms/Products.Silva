@@ -4,7 +4,6 @@ from zope.i18n import translate
 
 request = context.REQUEST
 model = request.model
-view = context
 
 from DateTime import DateTime
 now = DateTime()
@@ -45,12 +44,12 @@ for obj in objects:
 
 if approved_ids:
     message = _('Approval on: ${ids}',
-                mapping={'ids': view.quotify_list(approved_ids)})
+                mapping={'ids': context.quotify_list(approved_ids)})
     msg.append(translate(message))
 
-if not_approved:    
+if not_approved:
     message = _('could not approve: ${ids}',
-                mapping={'ids': view.quotify_list_ext(not_approved)})
+                mapping={'ids': context.quotify_list_ext(not_approved)})
     msg.append(translate(message))
 
 if hasattr(context, 'service_messages'):

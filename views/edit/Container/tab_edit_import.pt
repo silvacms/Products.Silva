@@ -8,11 +8,10 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global view here;
     global vein string:import;
     global active_tab string:tab_edit;
     global parent_screen_name string:contents;
-    global docma_running python: hasattr(view, 'service_docma') and view.service_docma.try_connection_and_pw();
+    global docma_running python: hasattr(here, 'service_docma') and here.service_docma.try_connection_and_pw();
     global silva_permissions here/get_silva_permissions;
     "
   i18n:domain="silva">
@@ -20,9 +19,9 @@
 <metal:block use-macro="here/macro_index/macros/master">
 <metal:block fill-slot="main">
 
-<tal:condition condition="view/REQUEST/focus | nothing">
+<tal:condition condition="here/REQUEST/focus | nothing">
   <script language="JavaScript"
-    tal:content="string:document.location = 'tab_edit_import#${view/REQUEST/focus}';">
+    tal:content="string:document.location = 'tab_edit_import#${here/REQUEST/focus}';">
   </script>
 </tal:condition>
 
@@ -36,9 +35,9 @@
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_edit_import', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_edit_import', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -262,11 +261,11 @@
 <tal:condition condition="docma_running">
 
 <tal:define define="
-  global user view/REQUEST/AUTHENTICATED_USER;
+  global user here/REQUEST/AUTHENTICATED_USER;
   global userid user/getId;
-  global queue view/service_docma/get_queue;
+  global queue here/service_docma/get_queue;
   global qls python:len(queue) != 0;
-  global processingident view/service_docma/get_processing_ident;" />
+  global processingident here/service_docma/get_processing_ident;" />
 
 <form class="sublisting" action="." enctype="multipart/form-data" method="post">
   <table class="listing">

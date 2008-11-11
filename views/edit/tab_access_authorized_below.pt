@@ -22,9 +22,9 @@
         <tal:block replace="nothing">
           ______________ vein navigation ______________
         </tal:block >
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access_authorized_below', vein)" />
+            <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_access_authorized_below', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
 
@@ -69,7 +69,7 @@
           cols="60"
           rows="5"
           wrap="soft"
-          tal:content="view/tab_access_get_emails" />
+          tal:content="here/tab_access_get_emails" />
       </td>
     </tr>
   </tbody>
