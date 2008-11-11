@@ -206,6 +206,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def clear_events(self):
         zope.component.eventtesting.clearEvents()
 
+
 class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
     """Base class for functional tests.
     """

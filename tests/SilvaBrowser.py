@@ -90,8 +90,7 @@ class SilvaBrowser(object):
             return self.get_status_and_url()
 
     def click_tab_named(self, name):
-        """
-        click on a tab with a specific label
+        """click on a tab with a specific label
         """
         link = self.browser.getLink(name)
         link.click()
