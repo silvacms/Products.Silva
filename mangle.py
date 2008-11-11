@@ -21,6 +21,7 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 __allow_access_to_unprotected_subobjects__ = 1
 
+module_security.declarePublic('unquote')
 def unquote(quoted):
     """A very simplified urllib2 unquote, only handles ?, = and &"""
     unquoted = quoted.replace(
