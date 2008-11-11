@@ -17,7 +17,7 @@
 <metal:block use-macro="here/macro_index/macros/master">
 
 <metal:block metal:fill-slot="middleground">
-  <tal:buttons tal:replace="structure model/@@tab_properties_extra" />
+  <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
 </metal:block>
 
 <metal:block fill-slot="main">

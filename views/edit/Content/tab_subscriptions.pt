@@ -21,7 +21,7 @@
 <metal:use-macro use-macro="here/macro_nonscreen/macros/shell">
 
   <metal:fill-slot fill-slot="middlepass">
-    <tal:buttons tal:replace="structure model/@@tab_properties_extra" />
+    <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
   </metal:fill-slot>
 
   <h2 metal:fill-slot="table_title">
