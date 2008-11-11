@@ -46,8 +46,16 @@ class RootUpgrader(BaseUpgrader):
             if hasattr(obj.service_views, 'SilvaLayout'):
                 obj.service_views.manage_delObjects(['SilvaLayout'])
 
+        # Install ExternalSources, and setup cs_toc CS.
+        service_ext = obj.service_extension
+        if not service_ext.is_installed('SilvaExternalSources'):
+            service_ext.install('SilvaExternalSources')
+        if not hasattr(obj, 'cs_toc'):
+            toc = obj.service_codesources.manage_copyObjects(['cs_toc',])
+            obj.manage_pasteObjects(toc)
+
         # Refresh all products
-        obj.service_extensions.refresh_all()
+        service_ext.refresh_all()
         return obj
 
 RootUpgrader = RootUpgrader(VERSION, 'Silva Root')
