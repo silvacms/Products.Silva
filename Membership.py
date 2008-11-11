@@ -65,6 +65,10 @@ class Member(Persistent, Acquisition.Implicit):
         """Return the preferred editor"""
         return 'field_editor'
 
+    security.declarePrivate('allowed_roles')
+    def allowed_roles(self):
+        return []
+
 Globals.InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
@@ -75,12 +79,14 @@ class CachedMember(Persistent, Acquisition.Implicit):
 
     security = ClassSecurityInfo()
 
-    def __init__(self, userid, fullname, email, is_approved, editor):
+    def __init__(self, userid, fullname, email,
+                 is_approved, editor, allowed_roles):
         self.id = userid
         self._fullname = fullname
         self._email = email
         self._is_approved = is_approved
         self._editor = editor
+        self._allowed_roles = allowed_roles
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
@@ -123,6 +129,12 @@ class CachedMember(Persistent, Acquisition.Implicit):
     def editor(self):
         """Return the preferred editor"""
         return self._editor
+
+    security.declarePrivate('allowed_roles')
+    def allowed_roles(self):
+        """Return roles that that user can get"""
+        return self._allowed_roles
+
 
 class NoneMember(Persistent, Acquisition.Implicit):
     implements(IMember)
@@ -170,6 +182,12 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """Return the preferred editor"""
         return 'field_editor'
 
+
+    security.declarePrivate('allowed_roles')
+    def allowed_roles(self):
+        """Retune roles that that user can get"""
+        return []
+
 Globals.InitializeClass(NoneMember)
 
 noneMember = NoneMember()
@@ -181,4 +199,5 @@ def cloneMember(member):
                         fullname=member.fullname(),
                         email=member.email(),
                         is_approved=member.is_approved(),
-                        editor=member.editor())
+                        editor=member.editor(),
+                        allowed_roles=member.allowed_roles())

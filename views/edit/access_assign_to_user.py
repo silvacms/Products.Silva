@@ -19,7 +19,12 @@ if not userids:
 model = request.model
 #assigned = []
 for userid in userids:
-    model.sec_assign(userid, assign_role)
+    try:
+        model.sec_assign(userid, assign_role)
+    except:
+        # No feedback, can't have the exception with a lot of bad things.
+        # Stay silent until we got a better framework.
+        pass
     #assigned.append((userid, assign_role))
 
 #return context.tab_access(

@@ -54,6 +54,10 @@ class IMember(Interface):
         may face restrictions on the Silva site.
         """
 
+    def allowed_roles():
+        """Private method which return a list of roles that that user
+        can have.
+        """
 
 # there is also expected to be a 'Members' object that is traversable
 # to a Member object. Users can then modify information in the member

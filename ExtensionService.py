@@ -25,7 +25,7 @@ class ExtensionService(SilvaService):
     meta_type = 'Silva Extension Service'
 
     security = ClassSecurityInfo()
-    
+
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgradeForm'},
@@ -35,14 +35,14 @@ class ExtensionService(SilvaService):
     manage_editForm = PageTemplateFile(
         'www/extensionServiceEdit', globals(),  __name__='manage_editForm')
 
-    security.declareProtected('View management screens', 
+    security.declareProtected('View management screens',
                                 'manage_partialUpgradeForm')
     manage_partialUpgradeForm = PageTemplateFile(
-                    'www/extensionServicePartialUpgrades', globals(),  
+                    'www/extensionServicePartialUpgrades', globals(),
                     __name__='manage_editForm')
 
     manage_partialReindexForm = PageTemplateFile(
-                    'www/extensionServicePartialReindex', globals(),  
+                    'www/extensionServicePartialReindex', globals(),
                     __name__='manage_editForm')
 
     security.declareProtected('View management screens', 'manage_main')
@@ -58,7 +58,7 @@ class ExtensionService(SilvaService):
         self.title = title
         # Actually is the cache refresh datetime
         self._refresh_datetime = DateTime()
-        
+
     # MANIPULATORS
 
     security.declareProtected('View management screens', 'install')
@@ -68,7 +68,7 @@ class ExtensionService(SilvaService):
         root = self.aq_inner.aq_parent
         extensionRegistry.install(name, root)
         productsWithView = [
-            inst_name for inst_name in self.get_installed_names() 
+            inst_name for inst_name in self.get_installed_names()
             if inst_name in root.service_views.objectIds()]
         root.service_view_registry.set_trees(productsWithView)
         if REQUEST:
@@ -81,7 +81,7 @@ class ExtensionService(SilvaService):
         root = self.aq_inner.aq_parent
         extensionRegistry.uninstall(name, root)
         productsWithView = [
-            inst_name for inst_name in self.get_installed_names() 
+            inst_name for inst_name in self.get_installed_names()
             if inst_name in root.service_views.objectIds()]
         root.service_view_registry.set_trees(productsWithView)
         if REQUEST:
@@ -106,9 +106,9 @@ class ExtensionService(SilvaService):
         if REQUEST:
             return self.manage_main(manage_tabs_message=
                 'Silva and all installed extensions have been refreshed')
-                
+
     security.declareProtected('View management screens', 'refresh_caches')
-    def refresh_caches(self):        
+    def refresh_caches(self):
         """Refresh caches
         """
         self._refresh_datetime = DateTime()
@@ -142,7 +142,7 @@ class ExtensionService(SilvaService):
         """
         root = self.aq_inner.aq_parent
         install.configureLayout(root, 1)
-        return self.manage_main(manage_tabs_message = 	 
+        return self.manage_main(manage_tabs_message =
                                 'Default layout code installed')
 
     security.declareProtected('View management screens',
@@ -153,10 +153,10 @@ class ExtensionService(SilvaService):
         root = self.aq_inner.aq_parent
         root.service_catalog.manage_catalogClear()
         zLOG.LOG(
-            'Silva', zLOG.INFO, 
+            'Silva', zLOG.INFO,
             'Cleared the catalog')
         self._index(root)
-        return self.manage_main(manage_tabs_message = 	 
+        return self.manage_main(manage_tabs_message =
                                 'Catalog refreshed.')
 
     security.declareProtected('View management screens', 'reindex_subtree')
@@ -173,9 +173,9 @@ class ExtensionService(SilvaService):
             return self.manage_partialReindexForm(manage_tabs_message=
                 "Catalog rebuild failed: not a valid path")
         self._reindex(obj)
-        return self.manage_main(manage_tabs_message = 	 
+        return self.manage_main(manage_tabs_message =
                                 'Partial catalog refreshed.')
-        
+
     def _reindex(self, obj):
         """Reindex a silva object or version.
         """
@@ -183,11 +183,11 @@ class ExtensionService(SilvaService):
             if i and i % 500 == 0:
                 transaction.get().commit()
                 zLOG.LOG(
-                    'Silva', zLOG.INFO, 
+                    'Silva', zLOG.INFO,
                     '%s objects reindexed' % str(i))
             object_to_index.reindex_object()
         zLOG.LOG(
-            'Silva', zLOG.INFO, 
+            'Silva', zLOG.INFO,
             'Catalog rebuilt. Total of %s objects reindexed' % str(i))
 
     def _index(self, obj):
@@ -197,11 +197,11 @@ class ExtensionService(SilvaService):
             if i and i % 500 == 0:
                 transaction.get().commit()
                 zLOG.LOG(
-                    'Silva', zLOG.INFO, 
+                    'Silva', zLOG.INFO,
                     '%s objects indexed' % str(i))
             object_to_index.index_object()
         zLOG.LOG(
-            'Silva', zLOG.INFO, 
+            'Silva', zLOG.INFO,
             'Catalog rebuilt. Total of %s objects indexed' % str(i))
 
 
@@ -226,7 +226,7 @@ class ExtensionService(SilvaService):
         assert (self._quota_enabled)
 
         root = self.get_root()
-    
+
         # Disable metadata for quota
         collection = root.service_metadata.getCollection()
         if 'silva-quota' in collection.objectIds():
@@ -237,7 +237,7 @@ class ExtensionService(SilvaService):
 
         self._quota_enabled = False
         if REQUEST:
-            return self.manage_main(manage_tabs_message = 	 
+            return self.manage_main(manage_tabs_message =
                                     'Quota sub-system disabled.')
 
     security.declareProtected('View management screens',
@@ -246,9 +246,9 @@ class ExtensionService(SilvaService):
         """Enable quota sub-system.
         """
         assert (not self._quota_enabled)
-        
+
         root = self.get_root()
-    
+
         # Setup metadata for quota
         silva_home = package_home(globals())
         silva_docs = os.path.join(silva_home, 'doc')
@@ -256,10 +256,10 @@ class ExtensionService(SilvaService):
         collection = root.service_metadata.getCollection()
         if 'silva-quota' in collection.objectIds():
             collection.manage_delObjects(['silva-quota'])
-            
+
         xml_file = os.path.join(silva_docs, 'silva-quota.xml')
         fh = open(xml_file, 'r')
-        collection.importSet(fh)    
+        collection.importSet(fh)
 
         setids = ('silva-quota',)
         types = ('Silva Root', 'Silva Publication', )
@@ -281,7 +281,7 @@ class ExtensionService(SilvaService):
                                             # respect its interface.
                     path = '/'.join(item.getPhysicalPath())
                     klass = str(item.__class__)
-                    zLOG.LOG('Silva quota', zLOG.WARNING, 
+                    zLOG.LOG('Silva quota', zLOG.WARNING,
                              'bad asset object %s - %s' % (path, klass))
             return total
 
@@ -289,10 +289,10 @@ class ExtensionService(SilvaService):
         root.used_space = visitor(root)
         self._quota_enabled = True
         if REQUEST:
-            return self.manage_main(manage_tabs_message = 	 
+            return self.manage_main(manage_tabs_message =
                                     'Quota sub-system enabled.')
 
-        
+
     # ACCESSORS
 
     security.declareProtected('Access contents information',
@@ -310,7 +310,7 @@ class ExtensionService(SilvaService):
     def get_version_info(self, name):
         product = extensionRegistry.get_extension(name)
         return product.version
-        
+
     def get_installed_names(self):
         """Return installed extension names
         """
@@ -343,12 +343,12 @@ class ExtensionService(SilvaService):
         """Get datetime of last refresh.
         """
         return self._refresh_datetime
-    
+
 InitializeClass(ExtensionService)
 
 def manage_addExtensionService(self, id, title='', REQUEST=None):
     """Add extension service."""
-    object = ExtensionService(id, title)    
+    object = ExtensionService(id, title)
     self._setObject(id, object)
     object = getattr(self, id)
     add_and_edit(self, id, REQUEST)

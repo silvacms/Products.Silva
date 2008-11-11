@@ -14,6 +14,7 @@ from DateTime import DateTime
 from Security import Security
 from Membership import cloneMember, Member
 import SilvaPermissions
+import roleinfo
 from helpers import add_and_edit
 from BaseService import SilvaService, ZMIObject
 
@@ -45,6 +46,10 @@ class SimpleMember(Member, Security, ZMIObject):
                               'security_trigger')
     def security_trigger(self):
         pass
+
+    security.declarePrivate('allowed_roles')
+    def allowed_roles(self):
+        return roleinfo.ASSIGNABLE_ROLES
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_fullname')
@@ -139,7 +144,8 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     """Add a Simple Member."""
     user = SimpleMember(id)
     self._setObject(id, user)
-    user.sec_assign(id, 'ChiefEditor')
+    user = getattr(self, id)
+    user.manage_addLocalRoles(id, ['ChiefEditor'])
     add_and_edit(self, id, REQUEST)
     return ''
 
