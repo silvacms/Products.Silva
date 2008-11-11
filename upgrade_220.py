@@ -46,6 +46,9 @@ class RootUpgrader(BaseUpgrader):
             if hasattr(obj.service_views, 'SilvaLayout'):
                 obj.service_views.manage_delObjects(['SilvaLayout'])
 
+        # Refresh all products
+        obj.service_extensions.refresh_all()
+
 RootUpgrader = RootUpgrader(VERSION, 'Silva Root')
 
 class TOCElementUpgrader(BaseUpgrader):

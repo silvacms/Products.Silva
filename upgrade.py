@@ -48,7 +48,7 @@ class BaseRefreshAll(BaseUpgrader):
     " refresh all products "
 
     def upgrade(self, root):
-        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products') 
+        zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products')
         root.service_extensions.refresh_all()
         return root
 
@@ -56,12 +56,12 @@ class BaseRefreshAll(BaseUpgrader):
 class UpgradeRegistry(object):
     """Here people can register upgrade methods for their objects
     """
-    
+
     def __init__(self):
         self.__registry = {}
         self._setUp = {}
         self._tearDown = {}
-    
+
     def registerUpgrader(self, upgrader, version=None, meta_type=None):
         assert IUpgrader.providedBy(upgrader)
         if not version:
@@ -73,13 +73,13 @@ class UpgradeRegistry(object):
         for type_ in meta_type:
             registry = self.__registry.setdefault(version, {}).setdefault(type_, [])
             insort_right(registry, upgrader)
-        
+
     def registerSetUp(self, function, version):
         self._setUp.setdefault(version, []).append(function)
 
     def registerTearDown(self, function, version):
         self._tearDown.setdefault(version, []).append(function)
-        
+
     def getUpgraders(self, version, meta_type):
         """Return the registered upgrade_handlers of meta_type
         """
@@ -92,7 +92,7 @@ class UpgradeRegistry(object):
     def upgradeObject(self, obj, version):
         mt = obj.meta_type
         for upgrader in self.getUpgraders(version, mt):
-            zLOG.LOG('Silva', zLOG.BLATHER, 
+            zLOG.LOG('Silva', zLOG.BLATHER,
                 'Upgrading %s' % obj.absolute_url(),
                 'Upgrading with %r' % upgrader)
             # sometimes upgrade methods will replace objects, if so the
@@ -102,7 +102,7 @@ class UpgradeRegistry(object):
             assert obj is not None, "Upgrader %r seems to be broken, "\
                 "this is a bug." % (upgrader, )
         return obj
-        
+
     def upgradeTree(self, root, version):
         """upgrade a whole tree to version"""
         stats = {
@@ -112,7 +112,7 @@ class UpgradeRegistry(object):
             'endtime': None,
             'maxqueue' : 0,
             }
-        
+
         self.setUp(root, version)
         object_list = [root]
         try:
@@ -154,16 +154,16 @@ class UpgradeRegistry(object):
         versions = self.__registry.keys()
         versions.sort(lambda x, y: cmp(parse_version(x),
                                        parse_version(y)))
-            
+
         # XXX this code is confusing, but correct. We might want to redo
         # the whole version-registry-upgraders-shebang into something more
         # understandable.
-            
+
         try:
             version_index = versions.index(from_version)
         except ValueError:
             zLOG.LOG(
-                'Silva', zLOG.WARNING, 
+                'Silva', zLOG.WARNING,
                 ("Nothing can be done: there's no upgrader registered to "
                  "upgrade from %s to %s.") % (from_version, to_version)
                 )
@@ -179,15 +179,15 @@ class UpgradeRegistry(object):
             zLOG.LOG('Silva', zLOG.INFO, 'Upgrading to version %s.' % version)
             self.upgradeTree(root, version)
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade finished.')
-        
+
     def setUp(self, root, version):
         for function in self._setUp.get(version, []):
             function(root)
-    
+
     def tearDown(self, root, version):
         for function in self._tearDown.get(version, []):
             function(root)
 
-        
+
 registry = UpgradeRegistry()
 
