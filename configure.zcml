@@ -21,15 +21,47 @@
   <grok:grok package="." />
 
   <!-- Prevent FileSystemSite to broke everything -->
-  <interface
-     interface="Products.FileSystemSite.interfaces.IDirectoryView"
-     type="five.intid.interfaces.IIntIdIgnoredInterfaces"
+  <subscriber
+     handler="five.intid.unreferenceable.addIntIdSubscriber"
+     for="Products.FileSystemSite.interfaces.IDirectoryView
+          zope.app.container.interfaces.IObjectAddedEvent"
+     />
+  <subscriber
+     handler="five.intid.unreferenceable.removeIntIdSubscriber"
+     for="Products.FileSystemSite.interfaces.IDirectoryView
+          zope.app.container.interfaces.IObjectRemovedEvent"
+     />
+  <subscriber
+     handler="five.intid.unreferenceable.moveIntIdSubscriber"
+     for="Products.FileSystemSite.interfaces.IDirectoryView
+          zope.app.container.interfaces.IObjectMovedEvent"
+     />
+  <adapter
+     factory="five.intid.unreferenceable.KeyReferenceNever"
+     for="Products.FileSystemSite.interfaces.IDirectoryView"
+     trusted="y"
      />
 
-  <interface
-     interface="Products.FileSystemSite.interfaces.IFSObject"
-     type="five.intid.interfaces.IIntIdIgnoredInterfaces"
+  <!-- FSObject -->
+  <subscriber
+     handler="five.intid.unreferenceable.addIntIdSubscriber"
+     for="Products.FileSystemSite.FSObject.FSObject
+          zope.app.container.interfaces.IObjectAddedEvent"
      />
-
+  <subscriber
+     handler="five.intid.unreferenceable.removeIntIdSubscriber"
+     for="Products.FileSystemSite.FSObject.FSObject
+           zope.app.container.interfaces.IObjectRemovedEvent"
+     />
+  <subscriber
+     handler="five.intid.unreferenceable.moveIntIdSubscriber"
+     for="Products.FileSystemSite.FSObject.FSObject
+          zope.app.container.interfaces.IObjectMovedEvent"
+     />
+  <adapter
+     factory="five.intid.unreferenceable.KeyReferenceNever"
+     for="Products.FileSystemSite.FSObject.FSObject"
+     trusted="y"
+     />
 
 </configure>
