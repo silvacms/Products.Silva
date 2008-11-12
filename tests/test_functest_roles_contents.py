@@ -18,7 +18,6 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
         status, url = sb.select_delete_content(fields['id'])
         self.failIf(fields['id'] in sb.get_content_ids())
         sb.logout()
-        self.failUnless('You have been logged out' in sb.browser.contents)
 
     def test_silva_document(self):
         sb = SilvaBrowser()
