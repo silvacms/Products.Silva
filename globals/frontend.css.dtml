@@ -485,7 +485,7 @@ input[type="submit"]:hover, button[type="button"]:hover {
 }
 
 div.public a.transport {
-color:#D9F3F1; /* for more details in error page */
+  padding:0.5em 0; /* make a bigger link target for more details in error page */
 }
 
 /* ____________________________ preview publisher _______ */
