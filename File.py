@@ -139,6 +139,11 @@ class File(Asset):
         return fulltextlist
 
     security.declareProtected(
+        SilvaPermissions.View, 'get_download_url')
+    def get_download_url(self):
+        return self.absolute_url()
+
+    security.declareProtected(
         SilvaPermissions.View, 'tag')
     def tag(self, **kw):
         """ return xhtml tag
@@ -149,7 +154,7 @@ class File(Asset):
         will accept a 'css_class' argument that will be converted to
         'class' in the output tag to work around this.
         """
-        src = self.absolute_url()
+        src = self.get_download_url()
         title = self.get_title_or_id()
         named = []
         tooltip = unicode(_('download'))
@@ -175,11 +180,16 @@ class File(Asset):
         return self.get_content()
 
     def get_content(self):
+        fd = self.get_content_fd()
+        data = fd.read()
+        fd.close()
+        return data
+
+    def get_content_fd(self):
         raise NotImplementedError
 
     def content_type(self):
         return self._file.content_type
-
 
     # MODIFIERS
 
@@ -271,6 +281,9 @@ class ZODBFile(File):
             return data
         return str(data)
 
+    def get_content_fd(self):
+        return StringIO(self.get_content())
+
 InitializeClass(ZODBFile)
 
 
@@ -355,11 +368,8 @@ class BlobFile(File):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_text_content')
-    def get_content(self):
-        desc = self._file.open()
-        content = desc.read()
-        desc.close()
-        return content
+    def get_content_fd(self):
+        return self._file.open()
 
 
 InitializeClass(BlobFile)
@@ -398,21 +408,23 @@ class FileSystemFile(File):
 
     def __init__(self, id):
         super(FileSystemFile, self).__init__(id)
-        self._file = ExtFile(id)
+        self._file = ExtFile(id, redirect_default_view=1)
 
     def _set_file_data_helper(self, file):
         # ensure consistent mimetype assignment by deleting content-type header
         fix_content_type_header(file)
         self._file.manage_file_upload(file=file)
 
-    def get_content(self):
+    def get_content_fd(self):
         path = self.getFileSystemPath()
         if not os.path.isfile(path):
             path = self.getFileSystemPath()+ '.tmp'
-        fp = open(path, 'rb')
-        data = fp.read()
-        fp.close()
-        return data
+        return open(path, 'rb')
+
+    security.declareProtected(
+        SilvaPermissions.View, 'get_download_url')
+    def get_download_url(self):
+        return self.static_url()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')

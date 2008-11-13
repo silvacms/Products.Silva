@@ -67,4 +67,12 @@
   <utility component=".File.FileStorageTypeVocabulary"
            name="File Storage Type" />
 
+  <adapter
+    for="Products.Silva.interfaces.IImage
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    factory=".Image.ImagePublishTraverse"
+    provides="zope.publisher.interfaces.browser.IBrowserPublisher"
+    />
+
+
 </configure>

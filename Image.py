@@ -25,7 +25,7 @@ import OFS.interfaces
 # Silva
 import SilvaPermissions
 from Asset import Asset
-from Products.Silva import mangle
+from Products.Silva import mangle, interfaces
 from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAsset, IImage, IUpgrader
 
@@ -88,6 +88,7 @@ class Image(Asset):
 
     thumbnail_size = 120
 
+    image = None
     hires_image = None
     thumbnail_image = None
     web_scale = '100%'
@@ -105,9 +106,6 @@ class Image(Asset):
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addImage')
 
-    def __init__(self, id):
-        super(Image, self).__init__(id)
-        self.image = None # should create default
 
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """sets format and scaling for web presentation
@@ -149,11 +147,7 @@ class Image(Asset):
     def set_image(self, file):
         """Set the image object.
         """
-        if self.hires_image is not None:
-            self.hires_image.manage_beforeDelete(self.hires_image, self)
-        ct = file.headers.get('Content-Type', None)
-        self._image_factory('hires_image', file, ct)
-        self._set_redirect(self.hires_image)
+        self._image_factory('hires_image', file)
         format = self.getFormat()
         if format in self.web_formats:
             self.web_format = format
@@ -267,20 +261,13 @@ class Image(Asset):
             img = self.image
         if img is None:
             return (0, 0)
-        width, height = img.width, img.height
-        if img.meta_type == 'ExtImage':
-            width = width()
-            height = height()
-            if (width, height) == (0, 0):
-                width = height = None
-        if not (isinstance(width, IntType) and isinstance(height, IntType)):
-            try:
-                width, height = self._get_dimensions_from_image_data(img)
-            except TypeError:
-                return (0, 0)
-            if img.meta_type == 'Image':
-                img.width = width
-                img.height = height
+        try:
+            width, height = self._get_dimensions_from_image_data(img)
+        except TypeError:
+            return (0, 0)
+#         if img.meta_type == 'Image':
+#             img.width = width
+#             img.height = height
         return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
@@ -314,7 +301,7 @@ class Image(Asset):
         if REQUEST is not None:
             return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
         else:
-            return self._get_image_data(image).read()
+            return image.get_content()
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
@@ -378,10 +365,7 @@ class Image(Asset):
         'getFileSystemPath')
     def getFileSystemPath(self):
         """return path on filesystem for containing image"""
-        image = self.hires_image
-        if image.meta_type == 'ExtImage':
-            return image.get_filename()
-        return None
+        return self.hires_image.getFileSystemPath()
 
     security.declareProtected(SilvaPermissions.View, 'getOrientation')
     def getOrientation(self):
@@ -434,12 +418,12 @@ class Image(Asset):
 
     def get_file_size(self):
         if self.hires_image:
-            return self.hires_image.get_size()
+            return self.hires_image.get_file_size()
         return 0
 
     security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
     def get_scaled_file_size(self):
-        return self.image.get_size()
+        return self.image.get_file_size()
 
     ##########
     ## private
@@ -454,7 +438,7 @@ class Image(Asset):
             raise ValueError, "No PIL installed."
         if img is None:
             img = self.image
-        image_reference = self._get_image_data(img)
+        image_reference = img.get_content_fd()
         try:
             image = PIL.Image.open(image_reference)
         except IOError, e:
@@ -527,43 +511,14 @@ class Image(Asset):
             pil_image = pil_image.convert("RGB")
         return pil_image
 
-    def _image_factory(self, id, file, content_type):
-        repository = self._useFSStorage()
-        image = getattr(self, id, None)
-        created = 0
-        title = self.get_title()
-        if not repository:
-            image = OFS.Image.Image(id, title, file,
-                content_type=content_type)
-            created = 1
-        else:
-            if image is not None and image.meta_type != 'ExtImage':
-                self._remove_image(id)
-                image = None
-            if image is None:
-                image = ExtImage(self.getId())
-                created = 1
-                image = image.__of__(self)
-            # self.getId() is used to get a `normal' file name. We restore
-            # it later to get the a working absolute_url()
-            image.id = self.getId()
-            file.seek(0)
-            # ensure consistent mimetype assignment by deleting content-type header
-            fix_content_type_header(file)
-            image.manage_file_upload(file, content_type=content_type)
-            image = image.aq_base
-            # set the actual id (so that absolute_url works)
-            image.id = id
-        # assert we "know" the image type and can do something with it:
-        self.getDimensions(image)
-        if created:
-            old_img = getattr(self, id, None)
-            if old_img is not None:
-                old_img.manage_beforeDelete(image, self)
-        setattr(self, id, image)
-        if created:
-            image.manage_afterAdd(image, self)
-        return image
+    def _image_factory(self, id, file, content_type=None):
+        new_image = self.service_files.newFile(id)
+        if content_type:
+            new_image.set_content_type(content_type)
+        new_image.set_file_data(file)
+
+        setattr(self, id, new_image)
+        return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
         img_src = self.absolute_url()
@@ -575,16 +530,10 @@ class Image(Asset):
             img_src += '?thumbnail'
         else:
             image = self.image
-        if self._is_static_mode(image):
+        if interfaces.IFileSystemFile.providedBy(image):
             # apache rewrite in effect
             img_src = image.static_url()
         return image, img_src
-
-    def _is_static_mode(self, image):
-        if image.meta_type == 'Image':
-            return 0
-        assert image.meta_type == 'ExtImage'
-        return image.static_mode()
 
     def _set_redirect(self, image, to=1):
         if image.meta_type == 'ExtImage':
@@ -594,13 +543,12 @@ class Image(Asset):
         image = getattr(self, id, None)
         if image is None:
             return
-        image.manage_beforeDelete(self.image, self)
         if set_none:
             setattr(self, id, None)
 
     def _image_is_hires(self):
         return (self.image is not None and
-            self.image.aq_base is self.hires_image.aq_base)
+                self.image.aq_base is self.hires_image.aq_base)
 
     def _get_dimensions_from_image_data(self, img):
         """return width, heigth computed from image's data
@@ -619,53 +567,32 @@ class Image(Asset):
                 raise ValueError, "Could not identify image type."
         return w, h
 
-    def _get_image_data(self, img):
-        """return file like object of image's data"""
-        if img.meta_type == 'Image': #OFS.Image.Image
-            image_reference = StringIO(str(img.data))
-        else:
-            image_reference = img._get_fsname(img.get_filename())
-            image_reference = open(image_reference, 'rb')
-        return image_reference
-
-    def _image_index_html(self, image, REQUEST, RESPONSE):
-        args = ()
-        kw = {}
-        if image.meta_type == 'Image':
-            # ExtFile and OFS.Image have different signature
-            args = (REQUEST, RESPONSE)
-        else:
-            kw['REQUEST'] = REQUEST
-        return image.index_html(*args, **kw)
-
 InitializeClass(Image)
 
 
-class ImageView(silvaviews.Template):
+from silva.core.views.traverser import SilvaPublishTraverse
 
-    silvaconf.context(Image)
-    silvaconf.require('zope2.View')
-    silvaconf.name('index')
+class ImagePublishTraverse(SilvaPublishTraverse):
 
-    def render(self):
-        # line below solves wuw issue144 (images no scaled in kupu)
-        # but it's to much of a performance hit
-        # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
-        query = self.request.QUERY_STRING
-        if query == 'hires':
-            img = self.context.hires_image
-        elif query == 'thumbnail':
-            img = self.context.thumbnail_image
-        else:
-            img = self.context.image
-        return self.context._image_index_html(img, self.request, self.response)
+    def browserDefault(self, request):
+        # We don't want to lookup five views if we have other than a
+        # GET or POST request.
+        object, method = super(ImagePublishTraverse, self).browserDefault(request)
+        if request.method == 'GET':
+            query = request.QUERY_STRING
+            if query == 'hires':
+                img = self.context.hires_image
+            elif query == 'thumbnail':
+                img = self.context.thumbnail_image
+            else:
+                img = self.context.image
+            return img, method
+        return object, method
+
 
 class ImageStorageConverter(object):
 
     implements(IUpgrader)
-
-    def __init__(self, context):
-        self.context = context
 
     def upgrade(self, asset):
         assert asset.meta_type == 'Silva Image'

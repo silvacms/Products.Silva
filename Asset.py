@@ -16,7 +16,7 @@ import zLOG
 from SilvaObject import SilvaObject
 import SilvaPermissions
 
-from interfaces import IAsset
+from interfaces import IAsset, IContainer
 
 from silva.core import conf as silvaconf
 
@@ -50,13 +50,18 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'update_quota')
     def update_quota(self):
+        service_extension = getattr(self, 'service_extensions', None)
+        if not service_extension:
+            return
         if not self.service_extensions.get_quota_subsystem_status():
             return
 
         new_size = self.get_file_size()
         delta = new_size - self._old_size
-        self.aq_parent.update_quota(delta)
-        self._old_size = new_size
+        parent = self.aq_parent
+        if IContainer.providedBy(parent):
+            self.aq_parent.update_quota(delta)
+            self._old_size = new_size
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'reset_quota')
@@ -79,7 +84,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     def get_navigation_links(self):
         """
         Create a dictionary with top, up, first, previous, next, last links.
-        
+
         This can be used by Mozilla in the accessibility toolbar.
         """
         return {}
@@ -103,7 +108,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
 
     def get_mime_type(self):
         raise NotImplementedError
-        
+
 
 InitializeClass(Asset)
 
@@ -112,7 +117,7 @@ def asset_moved_update_quota(obj, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.
     """
-    
+
     if obj != event.object:
         return
 
@@ -132,7 +137,7 @@ def asset_moved_update_quota(obj, event):
                                                   # interface.
         path = '/'.join(obj.getPhysicalPath())
         klass = str(obj.__class__)
-        zLOG.LOG('Silva quota', zLOG.WARNING, 
+        zLOG.LOG('Silva quota', zLOG.WARNING,
                  'bad asset object %s - %s' % (path, klass))
         return
     if not size:
