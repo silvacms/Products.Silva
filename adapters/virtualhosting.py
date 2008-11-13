@@ -46,6 +46,14 @@ class VirtualHostingAdapter(grok.Adapter):
 
         return self.context.restrictedTraverse(root_path, None)
 
+    def getSilvaOrVirtualRoot(self):
+        """ Get either the virtual host root object, or the silva root.
+        """
+        root = self.getVirtualRoot()
+        if root is None:
+            return self.context.get_root()
+        return root
+
     def containsVirtualRoot(self):
         """ Return true if object contains the current virtual host root.
         """

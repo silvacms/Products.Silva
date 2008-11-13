@@ -269,24 +269,28 @@ class IVirtualHosting(Interface):
     """Access to virtual hosting information.
     """
 
-    def getVirtualRootPhysicalPath(self):
+    def getVirtualRootPhysicalPath():
         """ Get the physical path of the object being the virtual host
         root.
 
         If there is no virtual hosting, return None
         """
 
-    def getVirtualHostKey(self):
+    def getVirtualHostKey():
         """ Get a key for the virtual host root.
 
         If there is no virtual hosting, return None.
         """
 
-    def getVirtualRoot(self):
+    def getVirtualRoot():
         """ Get the virtual host root object.
         """
 
-    def containsVirtualRoot(self):
+    def getSilvaOrVirtualRoot():
+        """ Get either the virtual host root object, or the silva root.
+        """
+
+    def containsVirtualRoot():
         """ Return true if object contains the current virtual host root.
         """
 
