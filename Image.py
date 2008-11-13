@@ -72,7 +72,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     return img
 
 class Image(Asset):
-    __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in 
+    __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in
        documents, or used as viewable assets.
     """)
     security = ClassSecurityInfo()
@@ -109,18 +109,6 @@ class Image(Asset):
         super(Image, self).__init__(id)
         self.image = None # should create default
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_title')
-    def set_title(self, title):
-        """Set the title of the silva object.
-        Overrides SilvaObject set_title() to accomodate the OFS.Image.Image
-        title attribute - which in turn is used in the tag() method.
-        """
-        self._title = title # legacy I guess
-        Image.inheritedAttribute('set_title')(self, title)
-        if self.image:
-            self.image.title = self.get_title()
-
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """sets format and scaling for web presentation
 
@@ -156,17 +144,14 @@ class Image(Asset):
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_image')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_image')
     def set_image(self, file):
         """Set the image object.
         """
         if self.hires_image is not None:
             self.hires_image.manage_beforeDelete(self.hires_image, self)
-        try:
-            ct = file.headers.get('Content-Type')
-        except AttributeError:
-            ct = None
+        ct = file.headers.get('Content-Type', None)
         self._image_factory('hires_image', file, ct)
         self._set_redirect(self.hires_image)
         format = self.getFormat()
@@ -175,8 +160,8 @@ class Image(Asset):
         self._createDerivedImages()
         self.update_quota()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'set_zope_image')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_zope_image')
     def set_zope_image(self, zope_img):
         """Set the image object with zope image.
         """
@@ -401,14 +386,7 @@ class Image(Asset):
     security.declareProtected(SilvaPermissions.View, 'getOrientation')
     def getOrientation(self):
         """ returns Image orientation (string) """
-        width, height = self.getDimensions()
-        # XXX i18n - are we sure this is only displayed, and not used as a
-        # classname or anything?
-        if width == height:
-            return _("square")
-        elif width > height:
-            return _("landscape")
-        return _("portrait")
+        return _(self.getOrientationClass())
 
     security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
     def getOrientationClass(self):
@@ -417,8 +395,6 @@ class Image(Asset):
             untranslated string that can be used as class name
         """
         width, height = self.getDimensions()
-        # XXX i18n - are we sure this is only displayed, and not used as a
-        # classname or anything?
         if width == height:
             return "square"
         elif width > height:
@@ -509,7 +485,7 @@ class Image(Asset):
             self.image = self.hires_image
             # it is possible that the image was thumbnailed before,
             # we must make sure that the modification time of this image
-            # is later then the tumbnailed image. 
+            # is later then the tumbnailed image.
             # To do this we make zope commit the object to the database again
             self.image._p_changed = True
             return
@@ -588,15 +564,6 @@ class Image(Asset):
         if created:
             image.manage_afterAdd(image, self)
         return image
-
-    def _useFSStorage(self):
-        """return true if we should store images on the filesystem"""
-        service_files = getattr(self, 'service_files', None)
-        msg = 'There is no service_files. Refresh your Silva root.'
-        assert service_files is not None, msg
-        if service_files.useFSStorage():
-            return True
-        return False
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
         img_src = self.absolute_url()
@@ -693,9 +660,12 @@ class ImageView(silvaviews.Template):
             img = self.context.image
         return self.context._image_index_html(img, self.request, self.response)
 
-class ImageStorageConverter:
+class ImageStorageConverter(object):
 
     implements(IUpgrader)
+
+    def __init__(self, context):
+        self.context = context
 
     def upgrade(self, asset):
         assert asset.meta_type == 'Silva Image'

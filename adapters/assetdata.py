@@ -6,25 +6,15 @@
 # necessary once the assets get a consistent API
 
 from five import grok
-from Products.Silva import interfaces 
+from Products.Silva import interfaces
 
 class FileData(grok.Adapter):
 
     grok.implements(interfaces.IAssetData)
     grok.context(interfaces.IFile)
 
-    def _getDataForFile(self, file):
-        if file.meta_type == 'File': # OFS.Image.File
-            return str(file.data)
-        elif file.meta_type == 'ExtFile': # ExtFile.ExtFile.ExtFile
-            ref = file._get_fsname(file.get_filename())
-            return open(ref, 'rb').read()
-        else:
-            return None
-    
     def getData(self):
-        file = self.context._file
-        return self._getDataForFile(file)
+        return self.context.get_content()
 
 class ImageData(grok.Adapter):
 
@@ -44,4 +34,4 @@ class ImageData(grok.Adapter):
             return open(ref, 'rb').read()
         else:
             return None
-             
+

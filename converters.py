@@ -13,14 +13,14 @@ def execute(cmd):
     return err, data
 
 PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[0].startswith('pdftotext')
-WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[0].startswith('antiword') 
+WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[0].startswith('antiword')
 
 
 def get_converter_for_mimetype(mimetype):
     converter = {
         'text/plain': TextConverter,
         'application/pdf':PDFConverter,
-        'application/msword':WordConverter 
+        'application/msword':WordConverter
     }.get(mimetype)
 
     if converter is None:
@@ -68,7 +68,7 @@ class PDFConverter(object):
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
-            request.form['message'] = """File uploaded succesfully. 
+            request.form['message'] = """File uploaded succesfully.
             <br /><span class="error">
             The uploaded file does not appear to be a valid PDF file:
             <br /><br />%s

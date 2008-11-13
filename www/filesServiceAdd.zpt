@@ -36,7 +36,7 @@ Version of this file: $Revision: 1.7 $
         </td>
         <td align="left" valign="top">
           <div class="form-element">
-            <input class="form-element" type="submit" name="submit_add" value=" Add " i18n:attributes="value" /> 
+            <input class="form-element" type="submit" name="submit_add" value=" Add " i18n:attributes="value" />
             <input class="form-element" type="submit" name="submit_edit" value=" Add and Edit " i18n:attributes="value" />
           </div>
         </td>

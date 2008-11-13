@@ -62,4 +62,9 @@
      trusted="y"
      />
 
+  <!-- Vocabularies -->
+
+  <utility component=".File.FileStorageTypeVocabulary"
+           name="File Storage Type" />
+
 </configure>

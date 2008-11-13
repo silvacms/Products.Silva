@@ -403,7 +403,7 @@ class IContainer(ISilvaObject, IPublishable):
     def get_assets():
         """Get a list of assets objects in this folder.  (not in any
         fixed order).
-        
+
         PUBLIC
         """
         pass
@@ -716,7 +716,7 @@ class IVersioning(Interface):
         """Get the earliest publication date of any version of this Content.
         Needed for rss/atom feeds.
         """
-    
+
     def get_public_version_publication_datetime():
         """Get the publication datetime of the public version.
         PUBLIC
@@ -806,7 +806,7 @@ class ICatalogedVersionedContent(IVersionedContent):
     def _get_indexable_versions():
         """Get all versions that need to be indexed by the catalog.
         """
-        
+
 class IVersion(Interface):
     """Version of a versioned object
     """
@@ -850,7 +850,7 @@ class INonPublishable(ISilvaObject):
 ###############################################################
 ### Asset
 ###############################################################
-    
+
 
 class IAsset(INonPublishable):
     """An Asset.
@@ -892,7 +892,7 @@ class IFile(IAsset):
     """
     # MANIPULATORS
 
-    def set_file_data(self, file):
+    def set_file_data(file):
         """Re-upload data for this file object. It will change the
         content_type, however id, _title, etc. will not change.
         """
@@ -901,14 +901,14 @@ class IFile(IAsset):
     # ACCESSORS
 
 
-    def get_download_url(self):
+    def get_download_url():
         """Obtain the public URL the public could use to download this file
         PUBLIC
         """
         pass
 
     def get_download_link(
-        self, title_attr='', name_attr='', class_attr='', style_attr=''):
+        title_attr='', name_attr='', class_attr='', style_attr=''):
         """Obtain a complete HTML hyperlink by which the public can download
         this file.
         PUBLIC
@@ -916,12 +916,20 @@ class IFile(IAsset):
         pass
 
 
-class IZODBFile(IFile):
+class IZopeFile(IFile):
+    """A file which is in fact a sub-file object.
+    """
+
+class IZODBFile(IZopeFile):
     """A file in ZODB.
     """
 
-class IFileSystemFile(IFile):
+class IFileSystemFile(IZopeFile):
     """A file on the file system.
+    """
+
+class IBlobFile(IFile):
+    """A file as a blob.
     """
 
 # XXX should be extended to non-marker status
@@ -938,7 +946,7 @@ class IGhost(Interface):
 
     def haunted_path():
         """return path to haunted objecy"""
-    
+
     def get_haunted_url():
         """return haunted object's url"""
 
@@ -963,7 +971,7 @@ class IGhostFolder(IGhost):
 class IBaseGroup(INonPublishable):
     """A group implementation.
     """
-    
+
     def isValid():
         """Returns whether the group asset is valid.
         """
@@ -975,7 +983,7 @@ class IGroup(IBaseGroup):
 class IIPGroup(IBaseGroup):
     """Group using IP as members.
     """
-    
+
 class IVirtualGroup(IBaseGroup):
     """Virtual group.
     """

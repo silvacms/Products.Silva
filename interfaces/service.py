@@ -5,6 +5,9 @@
 """This module contains interfaces declaration for Silva services.
 """
 
+from Products.Silva.i18n import translate as _
+
+from zope import schema
 from zope.interface import Interface, Attribute
 from grokcore.component.interfaces import IContext
 
@@ -78,6 +81,7 @@ class IMessageService(ISilvaService):
         """
 
 class ISidebarService(ISilvaService):
+
     def render(obj, tab_name):
         """Returns the rendered PT
 
@@ -89,3 +93,10 @@ class ISidebarService(ISilvaService):
     def invalidate(obj):
         """Invalidate the cache for a specific object
         """
+
+class IFilesService(ISilvaService):
+
+    storage = schema.Choice(title=_(u"Files Storage"),
+                            description=_(u"Method used to store files"),
+                            required=True,
+                            vocabulary="File Storage Type")

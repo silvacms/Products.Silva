@@ -12,9 +12,15 @@ except ImportError:
     from StringIO import StringIO
 
 # Zope 3
-from zope.interface import implements
+from zope.interface import implements, directlyProvides
+from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.schema.fieldproperty import FieldProperty
+from ZODB import blob
+
+from five import grok
 
 # Zope 2
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -39,15 +45,18 @@ from Products.Silva.ContentObjectFactoryRegistry import \
 from OFS import Image                            # For ZODB storage
 try:                                             #
     from Products.ExtFile.ExtFile import ExtFile # For Filesystem storage;
-    FILESYSTEM_STORAGE_AVAILABLE = 1             # try to see if it is 
+    FILESYSTEM_STORAGE_AVAILABLE = 1             # try to see if it is
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
 from Products.Silva.interfaces import IAssetData
-from Products.Silva.interfaces import IFile, IAsset, IUpgrader
+from Products.Silva.interfaces import IAsset, IUpgrader
+from Products.Silva import interfaces
 
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
+
+CHUNK_SIZE = 4092
 
 def manage_addFile(self, id, title, file):
     """Add a File
@@ -68,20 +77,20 @@ def manage_addFile(self, id, title, file):
     return object
 
 class File(Asset):
-    __doc__ = """Any digital file can be uploaded as Silva content. 
+    __doc__ = """Any digital file can be uploaded as Silva content.
        For instance large files such as pdf docs or mpegs can be placed in a
        site. File objects have metadata as well."""
     security = ClassSecurityInfo()
-    
+
     meta_type = "Silva File"
 
     __implements__ = (WriteLockInterface,)
-    implements(IFile)
+    implements(interfaces.IFile)
 
     silvaconf.priority(-3)
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addFile')
-    
+
 
     # ACCESSORS
 
@@ -91,7 +100,7 @@ class File(Asset):
         """Object's id is filename
         """
         return self.id
-    
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_file_size')
     def get_file_size(self):
@@ -105,37 +114,21 @@ class File(Asset):
         """
         """
         # possibly strip out charset encoding
-        return self._file.content_type.split(';')[0].strip()
+        return self.content_type().split(';')[0].strip()
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                            'fulltext')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
-        """Return the content of this object without any markup"""
+        """Return the content of this object without any markup
+        """
 
-        mimetype = self.get_mime_type()   
+        mimetype = self.get_mime_type()
         converter = get_converter_for_mimetype(mimetype)
         fulltextlist = [self.get_title()]
         if converter is None:
             return fulltextlist
 
-        file_data = ''
-        if hasattr(self._file, 'data'):
-            # sometimes, data is a str, sometimes
-            # it is a OFS.Image.Pdata object.
-            # the line below makes sure we're
-            # dealing with strings.
-            file_data = str(self._file.data)
-        else:
-            # this is an extfile
-            path = self.getFileSystemPath()
-            if not os.path.isfile(path):
-                path = self.getFileSystemPath()+ '.tmp'
-            fp = open(path, 'rb')
-            try:
-                file_data = fp.read()
-            finally:
-                fp.close()
-
+        file_data = self.get_content()
         fulltext = None
         if file_data:
             fulltext = converter.convert(file_data, self.REQUEST)
@@ -144,11 +137,12 @@ class File(Asset):
             return fulltextlist
         fulltextlist.append(fulltext)
         return fulltextlist
-        
-    security.declareProtected(SilvaPermissions.View, 'tag')
+
+    security.declareProtected(
+        SilvaPermissions.View, 'tag')
     def tag(self, **kw):
         """ return xhtml tag
-        
+
         Since 'class' is a Python reserved word, it cannot be passed in
         directly in keyword arguments which is a problem if you are
         trying to use 'tag()' to include a CSS class. The tag() method
@@ -159,17 +153,34 @@ class File(Asset):
         title = self.get_title_or_id()
         named = []
         tooltip = unicode(_('download'))
-        
+
         if kw.has_key('css_class'):
             kw['class'] = kw['css_class']
             del kw['css_class']
-        
+
         for name, value in kw.items():
             named.append('%s="%s"' % (escape(name), escape(value)))
         named = ' '.join(named)
         return '<a href="%s" title="%s %s" %s>%s</a>' % (
             src, tooltip, self.id, named, self.get_title_or_id())
-        
+
+
+    def is_editable_size(self):
+        #size is editable if it is less than 150 KB
+        return not self.get_file_size() > 153600
+
+    def get_text_content(self):
+        if not self.can_edit_text():
+            raise TypeError("Content of Silva File is not text")
+        return self.get_content()
+
+    def get_content(self):
+        raise NotImplementedError
+
+    def content_type(self):
+        return self._file.content_type
+
+
     # MODIFIERS
 
     security.declareProtected(
@@ -178,8 +189,8 @@ class File(Asset):
         """Set data in _file object
         """
         self._p_changed = 1
-        self._set_file_data_helper(file)        
-        
+        self._set_file_data_helper(file)
+
         if hasattr(self._file, 'data') and str(self._file.data)[:5] == '%PDF-':
             # force pdf content type if header is correct pdf file
             # Extfile does this in its _get_content_type method..
@@ -189,23 +200,15 @@ class File(Asset):
         self.reindex_object()
         self.update_quota()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'getFileSystemPath')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
     def getFileSystemPath(self):
-        """return path on filesystem for containing image"""
-        f = self._file
-        if isinstance(f, Image.File):
-            return None
-        # full path from /:
-        return f.get_filename()
-        # this would be relative to repository:
-        return '/'.join(f.filename)
+        """Return path on filesystem for containing File"""
+        return None
 
     def manage_FTPget(self, *args, **kwargs):
         return self._file.manage_FTPget(*args, **kwargs)
 
-    def content_type(self):
-        return self._file.content_type
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PUT')
@@ -218,7 +221,7 @@ class File(Asset):
         """
         # should this set the content-disposition header,
         # like the "index_html" does?
-        return self._file.HEAD(REQUEST, RESPONSE)        
+        return self._file.HEAD(REQUEST, RESPONSE)
 
     # checks where the mime type is text/* or javascript, and whether
     #   this file is a ZODB file. (editing is only supported with ZODB files)
@@ -230,10 +233,8 @@ class File(Asset):
             #that last one (get_text_content), is so only ZODBFiles are used
             return True
 
-    def is_editable_size(self):
-        #size is editable if it is less than 150 KB
-        size = self.get_file_size()
-        return not size > 153600
+    def set_content_type(self, content_type):
+        self._file.content_type = content_type
 
     def set_text_file_data(self, datastr):
         ct = self._file.content_type
@@ -246,32 +247,32 @@ class File(Asset):
 InitializeClass(File)
 
 
-class ZODBFile(File):                                   
+class ZODBFile(File):
     """Silva File object, storage in Filesystem. Contains the OFS.Image.File
     """
 
+    implements(interfaces.IZODBFile)
+
     silvaconf.baseclass()
-    
+
     def __init__(self, id):
         super(ZODBFile, self).__init__(id)
         # Actual container of file data
-        self._file = Image.File(id, id, '')        
+        self._file = Image.File(id, id, '')
 
     def _set_file_data_helper(self, file):
         # ensure consistent mimetype assignment by deleting content-type header
         fix_content_type_header(file)
         self._file.manage_upload(file=file)
 
-    def get_text_content(self):
-        if not self.can_edit_text():
-            raise TypeError("Content of Silva File is not text")
+    def get_content(self):
         data = self._file.data
         if isinstance(data, StringTypes):
             return data
-        else:
-            raise TypeError("Text content of Silva File is not a string")
+        return str(data)
 
 InitializeClass(ZODBFile)
+
 
 class ZODBFileView(silvaviews.Template):
 
@@ -283,17 +284,120 @@ class ZODBFileView(silvaviews.Template):
         self.response.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
         return self.context._file.index_html(self.request, self.response)
-        
+
+
+class BlobFile(File):
+    """Silva File object, storage using blobs.
+    """
+
+    implements(interfaces.IBlobFile)
+
+    silvaconf.baseclass()
+    security = ClassSecurityInfo()
+
+    def __init__(self, id):
+        super(BlobFile, self).__init__(id)
+        self._file = blob.Blob()
+        self._content_type = 'application/octet-stream'
+
+    def _set_content_type(self, file, content_type=None):
+        headers = getattr(file, 'headers', None)
+        if headers and headers.has_key('content-type'):
+            content_type = headers['content-type']
+        self._content_type = content_type
+
+    # MODIFIERS
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_file_data')
+    def set_file_data(self, file):
+        self._set_content_type(file, 'application/octet-stream')
+        desc = self._file.open('w')
+        data = file.read(CHUNK_SIZE)
+        while data:
+            desc.write(data)
+            data = file.read(CHUNK_SIZE)
+        desc.close()
+        self.reindex_object()
+        self.update_quota()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
+    def set_text_file_data(self, filestr):
+        desc = self._file.open('w')
+        desc.write(filestr)
+        desc.close()
+        self.reindex_object()
+        self.update_quota()
+
+    def set_content_type(self, content_type):
+        self._content_type = content_type
+
+    # ACCESSORS
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_file_size')
+    def get_file_size(self):
+        """Get the size of the file as it will be downloaded.
+        """
+        desc = self._file.open()
+        desc.seek(0, 2)
+        size = desc.tell()
+        desc.close()
+        return size
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'content_type')
+    def content_type(self):
+        """
+        """
+        return self._content_type
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_text_content')
+    def get_content(self):
+        desc = self._file.open()
+        content = desc.read()
+        desc.close()
+        return content
+
+
+InitializeClass(BlobFile)
+
+class BlobFileView(silvaviews.Template):
+
+    silvaconf.context(BlobFile)
+    silvaconf.require('zope2.View')
+    silvaconf.name('index')
+
+    def render(self):
+        self.response.setHeader(
+            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+        self.response.setHeader(
+            'Content-Type', self.context.content_type())
+        self.response.setHeader(
+            'Accept-Ranges', None)
+        desc = self._file.open()
+        data = desc.read(CHUNK_SIZE)
+        while data:
+            self.response.write(data)
+            data = desc.read(CHUNK_SIZE)
+        desc.close()
+        return ''
+
 
 class FileSystemFile(File):
     """Silva File object, storage in ZODB. Contains the ExtFile object
     from the ExtFile Product - if available.
-    """    
+    """
+
+    implements(interfaces.IFileSystemFile)
 
     silvaconf.baseclass()
+    security = ClassSecurityInfo()
 
     def __init__(self, id):
-        super(FileSystemFile, self).__init__(id)        
+        super(FileSystemFile, self).__init__(id)
         self._file = ExtFile(id)
 
     def _set_file_data_helper(self, file):
@@ -301,11 +405,23 @@ class FileSystemFile(File):
         fix_content_type_header(file)
         self._file.manage_file_upload(file=file)
 
-    def get_text_content(self):
-        if not self.can_edit_text():
-            raise TypeError("Content of Silva File is not text")
-        data = self._file.index_html()
+    def get_content(self):
+        path = self.getFileSystemPath()
+        if not os.path.isfile(path):
+            path = self.getFileSystemPath()+ '.tmp'
+        fp = open(path, 'rb')
+        data = fp.read()
+        fp.close()
         return data
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
+    def getFileSystemPath(self):
+        """return path on filesystem for containing image"""
+        # full path from /:
+        return self._file.get_filename()
+        # this would be relative to repository:
+        return '/'.join(self._file.filename)
 
 InitializeClass(FileSystemFile)
 
@@ -322,10 +438,20 @@ class FileSystemFileView(silvaviews.Template):
         return self.context._file.index_html(self.request)
 
 
+def FileStorageTypeVocabulary(context):
+    terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
+             SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
+    if FILESYSTEM_STORAGE_AVAILABLE:
+        terms += [SimpleTerm(value=FileSystemFile, title='FileSystem File', token='FileSystemFile'),]
+    return SimpleVocabulary(terms)
+
+directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
+
+
 def file_factory(self, id, content_type, file):
     """Add a File
     """
-    # if this gets called by the contentObjectFactoryRegistry, the last 
+    # if this gets called by the contentObjectFactoryRegistry, the last
     # argument will be a string
     # XXX is this useful? do we use 'file' at all (what would 'mangle' want
     # with it?)
@@ -335,195 +461,113 @@ def file_factory(self, id, content_type, file):
         file = f
     id = mangle.Id(self, id, file=file, interface=IAsset)
     if not id.isValid():
-        return 
+        return
     id = str(id)
 
     # Switch storage type:
     service_files = getattr(self, 'service_files', None)
     assert service_files is not None, \
                         ("There is no service_files. "
-                            "Refresh your silva root.")
-    if service_files.useFSStorage():        
-        object = FileSystemFile(id)
-    else:
-        object = ZODBFile(id)
-    return object
+                         "Refresh your silva root.")
+    return service_files.newFile(id)
 
 class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
 
+    implements(interfaces.IFilesService)
     security = ClassSecurityInfo()
-    
+
+    storage = FieldProperty(interfaces.IFilesService['storage'])
+
     manage_options = (
-        {'label':'Edit', 'action':'manage_filesServiceEditForm'},
+        {'label':'Edit', 'action':'manage_filesservice'},
         ) + SilvaService.manage_options
-
-    security.declareProtected('View management screens', 
-        'manage_filesServiceEditForm')
-    manage_filesServiceEditForm = PageTemplateFile(
-        'www/filesServiceEdit', globals(),  
-        __name__='manage_filesServiceEditForm')
-
-    security.declareProtected('View management screens', 'manage_main')
-    manage_main = manage_filesServiceEditForm # used by add_and_edit()
 
     silvaconf.icon('www/files_service.gif')
     silvaconf.factory('manage_addFilesServiceForm')
     silvaconf.factory('manage_addFilesService')
 
-    def __init__(self, id, title, filesystem_storage_enabled=0):
-        self.id = id
-        self.title = title
-        self._filesystem_storage_enabled = filesystem_storage_enabled
 
-    # ACCESSORS
-    
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'is_filesystem_storage_available')
-    def is_filesystem_storage_available(self):
-        """is_filesystem_storage_available
-        """
-        return FILESYSTEM_STORAGE_AVAILABLE 
-    
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'filesystem_storage_enabled')
-    def filesystem_storage_enabled(self):
-        """filesystem_storage_enabled
-        """
-        return self._filesystem_storage_enabled
+    security.declarePrivate('newFile')
+    def newFile(self, id):
+        if self.storage is None:
+            return ZODBFile(id)
+        return self.storage(id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'useFSStorage')
-    def useFSStorage(self):
-        return (self.is_filesystem_storage_available() and 
-            self.filesystem_storage_enabled())
-    
-    security.declarePublic('cookPath')
-    def cookPath(self, path):
-        "call cook path"
-        return cookPath(path)
-
-    # MANIPULATORS
-    security.declareProtected('View management screens', 
-        'manage_filesServiceEdit')
-    def manage_filesServiceEdit(self, title='', filesystem_storage_enabled=0,
-                                REQUEST=None):
-        """Sets storage type/path for this site.
-        """
-        self.title = title
-        self._filesystem_storage_enabled = filesystem_storage_enabled
-        if REQUEST is not None:
-            return self.manage_filesServiceEditForm(
-                manage_tabs_message='Settings Changed')
-
-    security.declareProtected(
-        'View management screens', 'manage_convertStorage')
-    def manage_convertStorage(self, REQUEST=None):
-        """converts images and files to be stored like set in files service"""
-        from Products.Silva.Image import ImageStorageConverter
-        upg = upgrade.UpgradeRegistry()
-        upg.registerUpgrader(
-            StorageConverterHelper(self.aq_parent), '0.1', upgrade.AnyMetaType)
-        upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
-        upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
-        upg.upgradeTree(self.aq_parent, '0.1')
-        if REQUEST is not None:
-            return self.manage_filesServiceEditForm(manage_tabs_message=(
-                'Silva Files and Images converted. See Zope log for details.'))
 
 InitializeClass(FilesService)
+
 
 manage_addFilesServiceForm = PageTemplateFile(
     "www/filesServiceAdd", globals(),
     __name__='manage_addFilesServiceForm')
 
-class FileStorageConverter:
-    
-    implements(IUpgrader)
-    
-    def upgrade(self, context):
-        adapted = IAssetData(context)
-        # XXX not sure this makes sense after adapter conversion..
-        if adapted is None:
-            return context
-        data = adapted.getData()
-        data = StringIO(data)
-        id = context.id
-        title = context.get_title()
-        files_service = context.service_files
-        if files_service.useFSStorage():
-            fileobject = FileSystemFile(id)
-        else:
-            fileobject = ZODBFile(id)
-        del context.__dict__['_file']
-        fileobject.__dict__.update(context.__dict__)
-        container = context.aq_parent
-        setattr(container, id, fileobject)
-        fileobject = getattr(container, id)
-        fileobject.set_file_data(data)
+
+from zope.formlib import form
+
+class FileServiceManagementView(grok.EditForm, silvaviews.ZMIView):
+
+    silvaconf.require('zope2.ViewManagementScreens')
+    silvaconf.name('manage_filesservice')
+    silvaconf.context(FilesService)
+
+    form_fields = grok.Fields(interfaces.IFilesService)
+    actions = grok.EditForm.actions + form.Actions(
+        form.Action('Convert all files', success='action_convert'))
+
+    def action_convert(self, action, data):
+        parent = self.context.aq_inner.aq_parent
+        upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
+        #upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
+        upg.upgradeTree(parent, '0.1')
+        self.status = 'Silva Files and Images converted. See Zope log for details.'
+
+class FileStorageConverter(object):
+
+    implements(interfaces.IUpgrader)
+
+    def upgrade(self, old_file):
+        if not interfaces.IFile.providedBy(old_file):
+            return old_file
+        data = old_file.get_content()
+        id = old_file.id
+        title = old_file.get_title()
+        content_type = old_file.content_type()
+
+        new_file = old_file.service_files.newFile(id)
+        container = old_file.aq_parent
+        setattr(container, id, new_file)
+        new_file = getattr(container, id)
+        new_file.set_title(title)
+        new_file.set_text_file_data(data)
+        new_file.set_content_type(content_type)
+
         zLOG.LOG(
-            'Silva', zLOG.INFO, "File %s migrated" % '/'.join(fileobject.getPhysicalPath())) 
-        return fileobject
+            'Silva', zLOG.INFO, "File %s migrated" % '/'.join(new_file.getPhysicalPath()))
+        return new_file
 
-class StorageConverterHelper:
-    
-    implements(IUpgrader)
-    
-    def __init__(self, initialcontext):
-        self.initialcontext = initialcontext
-
-    def upgrade(self, context):
-        if context is self.initialcontext:
-            return context
-        # Check if context is a container-like object.
-        # If the context contains a 'service_files' object
-        # return a Dummy which will stop the conversion for
-        # this subtree.
-        # If not, just return the context to let conversion continue
-        if hasattr(context.aq_base, 'objectIds'):
-            if 'service_files' in context.objectIds():
-                dummy = _dummy()
-                dummy.aq_base = _dummy()
-                return dummy
-        return context
-    
-class _dummy:
-    pass
-    
-def manage_addFilesService(self, id, title='', filesystem_storage_enabled=0,
-                           REQUEST=None):    
-    """Add files service."""
-    object = FilesService(id, title, filesystem_storage_enabled)
-    self._setObject(id, object)
-    object = getattr(self, id)
+def manage_addFilesService(self, id, title='', REQUEST=None):
+    """Add files service.
+    """
+    service = FilesService(id, title)
+    self._setObject(id, service)
     add_and_edit(self, id, REQUEST)
-    return '' #object.manage_filesServiceEditForm()
-
-def cookPath(path):
-    bad_dirs = ['', '.', '..']
-    path_items = []
-    while 1:
-        path, item = os.path.split(path)
-        if item not in bad_dirs:
-            path_items.append(item)
-        if path in ('', '/'):
-            break
-    path_items.reverse()        
-    return tuple(path_items)
+    return ''
 
 contentObjectFactoryRegistry.registerFactory(
     file_factory,
     lambda id, ct, body: True,
     -1)
 
-@silvaconf.subscribe(IFile, OFS.interfaces.IObjectClonedEvent) 
+@silvaconf.subscribe(interfaces.IZopeFile, OFS.interfaces.IObjectClonedEvent)
 def file_cloned(file, event):
     if object != event.object:
         return
     # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterClone(file)
 
-@silvaconf.subscribe(IFile, IObjectMovedEvent)
+@silvaconf.subscribe(interfaces.IZopeFile, IObjectMovedEvent)
 def file_moved(file, event):
     if object != event.object or IObjectRemovedEvent.providedBy(event):
         return
@@ -531,7 +575,7 @@ def file_moved(file, event):
     # XXX Check if we could re-run the event on the _file object
     file._file.manage_afterAdd(file, container)
 
-@silvaconf.subscribe(IFile, OFS.interfaces.IObjectWillBeRemovedEvent)
+@silvaconf.subscribe(interfaces.IZopeFile, OFS.interfaces.IObjectWillBeRemovedEvent)
 def file_will_be_moved(file, event):
     if object != event.object:
         return
