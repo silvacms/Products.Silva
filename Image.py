@@ -552,24 +552,17 @@ class ImageStorageConverter(object):
     def upgrade(self, image):
         if not interfaces.IImage.providedBy(image):
             return
-        self._convert_image(image, 'hires_image')
+        file = image.hires_image
+        if file is None:
+            return
+        ct = file.get_mime_type()
+        data = file.get_content_fd()
+        image._image_factory('hires_image', data, ct)
         image._createDerivedImages()
         zLOG.LOG(
             'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(image.getPhysicalPath()))
         return image
 
-    def _restore_image(self, asset, id):
-        image = getattr(asset, id, None)
-        if image is None:
-            return
-        if image.meta_type == 'Image':
-            data = StringIO(str(image.data))
-        elif image.meta_type == 'ExtImage':
-            data = open(image.get_fsname(), 'rb')
-        else:
-            raise RuntimeError, 'Invalid asset at %s' % asset.absolute_url()
-        ct = image.getContentType()
-        asset._image_factory(id, data, ct)
 
 # Register Image factory for image mimetypes
 import mimetypes

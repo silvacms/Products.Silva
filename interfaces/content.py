@@ -923,15 +923,11 @@ class IFile(IAsset):
         pass
 
 
-class IZopeFile(IFile):
-    """A file which is in fact a sub-file object.
-    """
-
-class IZODBFile(IZopeFile):
+class IZODBFile(IFile):
     """A file in ZODB.
     """
 
-class IFileSystemFile(IZopeFile):
+class IFileSystemFile(IFile):
     """A file on the file system.
     """
 

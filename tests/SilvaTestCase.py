@@ -7,13 +7,16 @@ __version__ = '0.3.1'
 
 from Testing.ZopeTestCase import utils, connections, sandbox, ZopeLite
 from Testing import ZopeTestCase
+from ZODB.blob import BlobStorage
 from ZODB.DemoStorage import DemoStorage
 import ZODB
 
 from StringIO import StringIO
 
+import tempfile, shutil
 import transaction
 import zope.component.eventtesting
+from zope.interface import Interface
 from zope.app.component.hooks import setSite
 
 user_manager = 'manager'
@@ -30,8 +33,15 @@ import helpers
 from layer import SilvaLayer, SilvaFunctionalLayer
 from layer import user_name, user_password, users, setUp, tearDown
 
-class SilvaTestCase(ZopeTestCase.ZopeTestCase):
+
+class ISilvaTestBlobs(Interface):
+    """This test needs blobs.
+    """
+
+class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
     layer = SilvaLayer
+
+    _blob_dir = None
 
     def get_users(self):
         return users.keys()
@@ -122,8 +132,21 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         self._clear(1)
 
     def _app(self):
-        '''Returns the app object for a test.'''
-        return ZopeTestCase.app()
+        """Returns the app object for a test.
+        """
+        # Testing sucks and defined a STUPID quota of 1Mo. Change it
+        # to 32Mo. Add support for blob tests as well.
+        import Zope2
+        storage = DemoStorage(base=Zope2.DB._storage, quota=1<<25)
+        connection = ZODB.DB(storage).open()
+        if ISilvaTestBlobs.providedBy(self):
+            self._blob_dir = tempfile.mkdtemp('-blobs')
+            connection = ZODB.DB(BlobStorage(self._blob_dir, connection._storage)).open()
+        app = ZopeLite.app(connection)
+        sandbox.AppZapper().set(app)
+        app = utils.makerequest(app)
+        connections.register(app)
+        return app
 
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
@@ -137,7 +160,10 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     def _close(self):
         '''Closes the ZODB connection.'''
-        ZopeTestCase.close(self.app)
+        super(SilvaTestCase, self)._close()
+        if self._blob_dir:
+            shutil.rmtree(self._blob_dir)
+            self._blob_dir = None
 
     def addObject(self, container, type_name, id, product='Silva',
             **kw):
@@ -217,7 +243,7 @@ class SilvaFileTestCase(SilvaTestCase):
     """
 
     def _app(self):
-        app = ZopeTestCase.ZopeTestCase._app(self)
+        app = super(SilvaFileTestCase, self)._app()
         app = app.aq_base
         request_out = self.request_out = StringIO()
         return utils.makerequest(app, request_out)
@@ -243,16 +269,4 @@ class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
 
     layer = SilvaFunctionalLayer
 
-    def _app(self):
-        """Returns the app object for a test.
-        """
-        # Testing sucks and defined a STUPID quota of 1Mo. Change it to 32Mo.
-        import Zope2
-        storage = DemoStorage(base=Zope2.DB._storage, quota=1<<25)
-        db = ZODB.DB(storage)
-        app = ZopeLite.app(db.open())
-        sandbox.AppZapper().set(app)
-        app = utils.makerequest(app)
-        connections.register(app)
-        return app
 

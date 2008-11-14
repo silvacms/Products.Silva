@@ -11,8 +11,6 @@ from cStringIO import StringIO
 # Zope 3
 from zope.interface import implements, directlyProvides
 from zope.app.schema.vocabulary import IVocabularyFactory
-from zope.app.container.interfaces import IObjectRemovedEvent
-from zope.app.container.interfaces import IObjectMovedEvent
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.fieldproperty import FieldProperty
 from ZODB import blob
@@ -26,18 +24,18 @@ from Globals import InitializeClass
 from helpers import add_and_edit, fix_content_type_header
 from converters import get_converter_for_mimetype
 from webdav.WriteLockInterface import WriteLockInterface
-import OFS.interfaces
 import zLOG
 
 # Silva
-from Asset import Asset
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
 from Products.Silva.i18n import translate as _
+from Products.Silva.Asset import Asset
 from Products.Silva.BaseService import SilvaService
 from Products.Silva.ContentObjectFactoryRegistry import \
         contentObjectFactoryRegistry
+from Products.Silva.Image import ImageStorageConverter
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -513,7 +511,7 @@ manage_addFilesServiceForm = PageTemplateFile(
 
 from zope.formlib import form
 
-class FileServiceManagementView(grok.EditForm, silvaviews.ZMIView):
+class FileServiceManagementView(silvaviews.ZMIEditForm):
 
     silvaconf.require('zope2.ViewManagementScreens')
     silvaconf.name('manage_filesservice')
@@ -523,13 +521,45 @@ class FileServiceManagementView(grok.EditForm, silvaviews.ZMIView):
     actions = grok.EditForm.actions + form.Actions(
         form.Action('Convert all files', success='action_convert'))
 
-    def action_convert(self, action, data):
-        parent = self.context.aq_inner.aq_parent
+    def convert(self):
+        parent = self.context.get_publication()
         upg = upgrade.UpgradeRegistry()
+        upg.registerUpgrader(
+            StorageConverterHelper(parent), '0.1', upgrade.AnyMetaType)
         upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
-        #upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
+        upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
         upg.upgradeTree(parent, '0.1')
+
+    def action_convert(self, action, data):
+        self.convert()
         self.status = 'Silva Files and Images converted. See Zope log for details.'
+
+
+class StorageConverterHelper(object):
+    """The purpose of this converter is to stop convertion if there is
+    an another configuration.
+    """
+
+    implements(interfaces.IUpgrader)
+
+    def __init__(self, publication):
+        self.startpoint = publication
+
+    def upgrade(self, context):
+        if context is self.startpoint:
+            return context
+
+        if interfaces.IContainer.providedBy(context):
+            if 'service_files' in context.objectIds():
+                dummy = ConversionBlocker()
+                dummy.aq_base = ConversionBlocker()
+                return dummy
+        return context
+
+
+class ConversionBlocker(object):
+    pass
+
 
 class FileStorageConverter(object):
 
@@ -538,7 +568,7 @@ class FileStorageConverter(object):
     def upgrade(self, old_file):
         if not interfaces.IFile.providedBy(old_file):
             return old_file
-        data = old_file.get_content()
+        data = old_file.get_content_fd()
         id = old_file.id
         title = old_file.get_title()
         content_type = old_file.content_type()
@@ -548,7 +578,7 @@ class FileStorageConverter(object):
         setattr(container, id, new_file)
         new_file = getattr(container, id)
         new_file.set_title(title)
-        new_file.set_text_file_data(data)
+        new_file.set_file_data(data)
         new_file.set_content_type(content_type)
 
         zLOG.LOG(
@@ -567,26 +597,3 @@ contentObjectFactoryRegistry.registerFactory(
     file_factory,
     lambda id, ct, body: True,
     -1)
-
-@silvaconf.subscribe(interfaces.IZopeFile, OFS.interfaces.IObjectClonedEvent)
-def file_cloned(file, event):
-    if object != event.object:
-        return
-    # XXX Check if we could re-run the event on the _file object
-    file._file.manage_afterClone(file)
-
-@silvaconf.subscribe(interfaces.IZopeFile, IObjectMovedEvent)
-def file_moved(file, event):
-    if object != event.object or IObjectRemovedEvent.providedBy(event):
-        return
-    container = event.oldParent
-    # XXX Check if we could re-run the event on the _file object
-    file._file.manage_afterAdd(file, container)
-
-@silvaconf.subscribe(interfaces.IZopeFile, OFS.interfaces.IObjectWillBeRemovedEvent)
-def file_will_be_moved(file, event):
-    if object != event.object:
-        return
-    container = event.oldParent
-    # XXX Check if we could re-run the event on the _file object
-    file._file.manage_beforeDelete(file, container)

@@ -2,18 +2,22 @@
 # See also LICENSE.txt
 # $Id$
 
+from zope import component
+from zope.interface import implements
 from zope.interface.verify import verifyObject
 
 import helpers
 import SilvaTestCase
 
+from Products.Silva import File
 from Products.Silva import interfaces
 from Products.Silva.Image import havePIL
 from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
 
-# NOTE: these tests should all pass regardless of the availability of ExtFile
 
 class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
+
+    implements(SilvaTestCase.ISilvaTestBlobs)
 
     def afterSetUp(self):
         """
@@ -49,43 +53,59 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
             id, 'Test Image', file_handle)
         file_handle.close()
 
+    def isZODBImage(self, image):
+        self.isZODBFile(image.hires_image)
+
+    def isZODBFile(self, file):
+        self.failUnless(interfaces.IZODBFile.providedBy(file))
+
+    def isBlobImage(self, image):
+        self.isBlobFile(image.hires_image)
+
+    def isBlobFile(self, file):
+        self.failUnless(interfaces.IBlobFile.providedBy(file))
+
     def test_service(self):
-        self.failUnless(verifyObject(interfaces.IFilesService, self.root.service_files))
+        self.failUnless(verifyObject(interfaces.IFilesService,
+                                     self.root.service_files))
+
+        self.root.service_files.storage = File.ZODBFile
+        file = self.root.service_files.newFile('test')
+        self.isZODBFile(file)
+        self.root.service_files.storage = File.BlobFile
+        file = self.root.service_files.newFile('test')
+        self.isBlobFile(file)
 
     def test_manage_convertStorage(self):
-        # by default we use ZODB storage
+        # By default we use ZODB storage
+        self.root.service_files.storage = File.ZODBFile
+
         self.add_test_image('testimage', self.root)
         self.add_test_image('testimage', self.root.folder1)
         self.add_test_image('testimage', self.root.folder1.folder1in1)
-        self.add_test_image('testimage', self.root.folder2)
         self.add_test_file('testfile', self.root)
         self.add_test_file('testfile', self.root.folder1.folder1in1)
-        self.assertEqual(self.root.testimage.image.meta_type, 'Image')
-        self.assertEqual(
-            self.root.folder1.testimage.image.meta_type, 'Image')
-        self.assertEqual(
-            self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
-        self.assertEqual(
-            self.root.folder2.testimage.image.meta_type, 'Image')
-        self.assertEqual(
-            self.root.folder2.testimage.image.meta_type, 'Image')
-        self.assertEqual(
-            self.root.testfile._file.meta_type, 'File')
-        self.assertEqual(
-            self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
-        if FILESYSTEM_STORAGE_AVAILABLE:
-            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
-            self.root.folder1.folder1in1.service_files.manage_convertStorage()
-            self.assertEqual(
-                self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
-            self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
-            self.root.folder1.folder1in1.service_files.manage_convertStorage()
-            self.assertEqual(
-                self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
-            self.assertEqual(
-                self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
+
+        self.isZODBImage(self.root.testimage)
+        self.isZODBImage(self.root.folder1.testimage)
+        self.isZODBImage(self.root.folder1.folder1in1.testimage)
+
+        self.isZODBFile(self.root.testfile)
+        self.isZODBFile(self.root.folder1.folder1in1.testfile)
+
+        # Convert to Blobs
+        self.root.service_files.storage = File.BlobFile
+        form = component.getMultiAdapter((self.root.service_files, self.root.REQUEST),
+                                         name='manage_filesservice')
+        form.convert()
+
+        self.isBlobImage(self.root.testimage)
+        self.isBlobImage(self.root.folder1.testimage)
+        self.isZODBImage(self.root.folder1.folder1in1.testimage)
+
+        self.isBlobFile(self.root.testfile)
+        self.isZODBFile(self.root.folder1.folder1in1.testfile)
+
 
 import unittest
 def test_suite():
