@@ -3,18 +3,19 @@
 # $Id$
 
 # Python
-import os
 from StringIO import StringIO
 
+# Zope 3
 from zope import component
+from zope.interface.verify import verifyObject
 
-# Zope 2
-from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
-from Testing.ZopeTestCase import utils
+from Products.Silva import interfaces
+from Products.Silva import File
+
+from Products.Five.testbrowser import Browser
 
 import SilvaTestCase
-
-test_path = os.path.dirname(__file__)
+import helpers
 
 try:
     import PIL
@@ -23,33 +24,32 @@ except ImportError:
 else:
     havePIL = 1
 
+class ImageTestHelper(object):
 
-from test_file import FileTest
-
-class ImageTest(SilvaTestCase.SilvaTestCase):
-
-    def _app(self):
-        app = ZopeTestCase._app(self)
-        app = app.aq_base
-        request_out = self.request_out = StringIO()
-        return utils.makerequest(app, request_out)
-
-    def test_imageformat(self):
-        image_file = StringIO('invalid-image-format')
-
-        self.assertRaises(ValueError, self.root.manage_addProduct['Silva'].\
-            manage_addImage, 'testimage', 'Test Image', image_file)
-
-    def _getimage_test(self):
-        image_file = open(test_path + '/data/photo.tif', 'rb')
+    def add_test_image(self):
+        image_file = helpers.openTestFile('photo.tif')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage('testimage',
             'Test Image', image_file)
         image_file.close()
-        image = self.root.testimage
-        image.set_web_presentation_properties('JPEG', '100x100', '')
+        return self.root.testimage, image_data
 
+class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
+
+    def test_badimage(self):
+        image_file = StringIO('invalid-image-format')
+        self.assertRaises(ValueError, self.root.manage_addProduct['Silva'].\
+            manage_addImage, 'badimage', 'Bad Image', image_file)
+
+    def _test_image(self):
+        image, image_data = self.add_test_image()
+
+        self.failUnless(verifyObject(interfaces.IImage, image))
+        self.assertEquals(image.getFormat(), 'TIFF')
+        self.assertEquals(image.getDimensions(), (960, 1280))
+        self.assertEquals(str(image.getOrientation()), "portrait")
+        image.set_web_presentation_properties('JPEG', '100x100', '')
         self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
 
         if not havePIL:
@@ -68,109 +68,72 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
+        assetdata = interfaces.IAssetData(image)
+        self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
+        self.assertEquals(image_data, assetdata.getData())
 
-    def test_getImage_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0)
-        self._getimage_test()
+    def test_image_blob(self):
+        self.root.service_files.storage = File.BlobFile
+        self._test_image()
 
-    def test_getImage_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1)
-        self._getimage_test()
+    def test_image_zodb_default(self):
+        if self.root.service_files.storage is None:
+            self._test_image()
 
-    def _test_index_html(self):
-        image_file = open(test_path + '/data/photo.tif', 'rb')
-        image_data = image_file.read()
-        image_file.seek(0)
-        self.root.manage_addProduct['Silva'].manage_addImage('testimage',
-            'Test Image', image_file)
-        image_file.close()
-        image = self.root.testimage
-        image.set_web_presentation_properties('JPEG', '100x100', '')
-        request = self.root.REQUEST
+    def test_image_zodb(self):
+        self.root.service_files.storage = File.ZODBFile
+        self._test_image()
 
+    def test_image_extfile(self):
+        if File.FILESYSTEM_STORAGE_AVAILABLE:
+            self.root.service_files.storage = File.FileSystemFile
+            self._test_image()
+
+    def test_getcropbox(self):
         if not havePIL:
             return
-
-        data = component.queryMultiAdapter((image, request), name='index')()
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
-        self.assertEquals((100, 100), pil_image.size)
-        self.assertEquals('JPEG', pil_image.format)
-
-        request.QUERY_STRING = 'hires'
-        data = component.queryMultiAdapter((image, request), name='index')()
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
-        self.assertEquals((960, 1280), pil_image.size)
-        self.assertEquals('TIFF', pil_image.format)
-        it.seek(0)
-        self.assertEquals(image_data, it.read())
-
-        request.QUERY_STRING = 'thumbnail'
-        data = component.queryMultiAdapter((image, request), name='index')()
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
-        w, h = pil_image.size
-        self.assert_(w == 120 or h == 120)
-        self.assertEquals('JPEG', pil_image.format)
-
-    def test_index_html_extifile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1)
-        self._test_index_html()
-
-    def test_index_html_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0)
-        self._test_index_html()
-
-    def _get_req_data(self, data):
-        if data:
-            s = data
-        else:
-            s = self.request_out.getvalue()
-            self.request_out.seek(0)
-            self.request_out.truncate()
-        if s.startswith('Status: 200'):
-            s = s[s.find('\n\n')+2:]
-        return s
-
-    def test_getCropBox(self):
-        image_file = open(test_path + '/data/photo.tif', 'rb')
-        image_data = image_file.read()
-        image_file.seek(0)
-        self.root.manage_addProduct['Silva'].manage_addImage(
-            'testimage', 'Test Image', image_file)
-        image_file.close()
-        image = self.root.testimage
-        if not havePIL:
-            return
+        image, _ = self.add_test_image()
         cropbox = image.getCropBox(crop="242x379-392x479")
         self.assert_(cropbox is not None)
 
     def test_copy_image(self):
-        image_file = open(test_path + '/data/photo.tif', 'rb')
-        image_data = image_file.read()
-        image_file.seek(0)
-        self.root.manage_addProduct['Silva'].manage_addImage('testimage',
-            'Test Image', image_file)
-        image_file.close()
+        image, _ = self.add_test_image()
         self.root.action_copy(['testimage'], self.app.REQUEST)
         # now do the paste action
         self.root.action_paste(self.app.REQUEST)
-        # should have a copy now with same title
-        #self.assertEquals('Doc1', self.root.copy_of_doc1.get_title_editable())
+
+
+class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase, ImageTestHelper):
+
+    def test_view(self):
+        image, image_data = self.add_test_image()
+        image.set_web_presentation_properties('JPEG', '100x100', '')
+        browser = Browser()
+
+        browser.open('http://localhost/root/testimage')
+        pil_image = PIL.Image.open(StringIO(browser.contents))
+        self.assertEquals((100, 100), pil_image.size)
+        self.assertEquals('JPEG', pil_image.format)
+
+        if not havePIL:
+            return
+
+        # Of course this is too big for a Browser.
+        # browser.open('http://localhost/root/testimage?hires')
+        # pil_image = PIL.Image.open(StringIO(browser.contents))
+        # self.assertEquals((960, 1280), pil_image.size)
+        # self.assertEquals('TIFF', pil_image.format)
+        # self.assertEquals(image_data, browser.contents)
+
+        browser.open('http://localhost/root/testimage?thumbnail')
+        pil_image = PIL.Image.open(StringIO(browser.contents))
+        self.assertEquals((90, 120), pil_image.size)
+        self.assertEquals('JPEG', pil_image.format)
+
 
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(FileTest))
     suite.addTest(unittest.makeSuite(ImageTest))
+    suite.addTest(unittest.makeSuite(ImageFunctionalTest))
     return suite

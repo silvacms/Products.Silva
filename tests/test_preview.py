@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.tests.helpers import enablePreview, resetPreview
 from Products.Silva.tests.helpers import publishObject
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 from Products.Silva.tests import SilvaTestCase

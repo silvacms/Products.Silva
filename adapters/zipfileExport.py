@@ -11,13 +11,13 @@ from Products.Silva import interfaces as interfaces
 
 class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
-    the export to zipfiles. 
+    the export to zipfiles.
     """
-    
+
     grok.implements(interfaces.IDefaultContentExporter)
     grok.context(interfaces.ISilvaObject)
     grok.name('zip')
-    
+
     name = "Full Media (zip)"
     extension = "zip"
 
@@ -35,10 +35,10 @@ class ZipFileExportAdapter(grok.Adapter):
         exportRoot = xmlexport.SilvaExportRoot(self.context)
 
         archive.writestr(
-            'silva.xml', 
+            'silva.xml',
             exporter.exportToString(exportRoot, settings, info)
             )
-        
+
         # process data from the export, i.e. export binaries
         for path, id in info.getAssetPaths():
             asset = self.context.restrictedTraverse(path)
@@ -64,8 +64,8 @@ class ZipFileExportAdapter(grok.Adapter):
         value = tempFile.read()
         tempFile.close()
         return value
-    
-        
 
 
-    
+
+
+

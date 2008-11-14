@@ -213,21 +213,6 @@ class ISilvaObject(IContext, ISecurity, ICustomizable):
         """
         pass
 
-    def is_cacheable():
-        """Return true if the public view of this object can be safely cached.
-        This means the public view should not contain any dynamically
-        generated content.
-        """
-
-    def get_xml():
-        """Render this object as XML, return as string in UTF-8 encoding.
-        """
-        pass
-
-    def to_xml(f):
-        """Render this object as XML, write unicode to fileobject f.
-        """
-        pass
 
     # This should be only in a view code ?
 
@@ -523,6 +508,12 @@ class IContent(ISilvaObject, IPublishable):
         PUBLIC
         """
         pass
+
+    def is_cacheable():
+        """Return true if the public view of this object can be safely cached.
+        This means the public view should not contain any dynamically
+        generated content.
+        """
 
     def content_url():
         """Used by acquisition to get the URL of the containing content object.
@@ -898,20 +889,36 @@ class IFile(IAsset):
         """
         pass
 
-    # ACCESSORS
-
-
-    def get_download_url():
-        """Obtain the public URL the public could use to download this file
-        PUBLIC
+    def set_text_file_data(datastr):
+        """Set content of the file from the given string.
         """
         pass
 
-    def get_download_link(
-        title_attr='', name_attr='', class_attr='', style_attr=''):
-        """Obtain a complete HTML hyperlink by which the public can download
-        this file.
-        PUBLIC
+    # ACCESSORS
+
+    def tag(**kw):
+        """Generate a tag to download file content.
+        """
+        pass
+
+    def get_text_content():
+        """Return the text content of the file or TypesError is it's
+        not a text file.
+        """
+        pass
+
+    def get_content():
+        """Return the content of the file in any cases.
+        """
+        pass
+
+    def get_content_fd():
+        """Return a file descriptor to access the content of the file.
+        """
+
+    def get_download_url():
+        """Obtain the public URL the public could use to download this
+        file. Typically it's the URL used in ``tag``.
         """
         pass
 
@@ -932,10 +939,47 @@ class IBlobFile(IFile):
     """A file as a blob.
     """
 
-# XXX should be extended to non-marker status
 class IImage(IAsset):
-    """Marker interface for image assets.
+    """Images.
     """
+
+    def set_image(file):
+        """Set the image object.
+        """
+
+    def set_web_presentation_properties(web_format, web_scale, web_crop):
+        """Sets format and scaling for web presentation.
+
+        web_format (str): either JPEG or PNG (or whatever other format
+        makes sense, must be recognised by PIL).
+        web_scale (str): WidthXHeight or nn.n%.
+        web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping.
+
+        Raises ValueError if web_scale cannot be parsed.
+
+        Automaticaly updates cached web presentation image.
+        """
+
+    def getOrientation():
+        """Returns translated Image orientation (string).
+        """
+
+    def getDimensions(img=None):
+        """Returns width, heigt of (hi res) image.
+
+        Raises ValueError if there is no way of determining the dimenstions,
+        Return 0, 0 if there is no image,
+        Returns width, height otherwise.
+        """
+
+    def getFormat():
+        """Returns image format.
+        """
+
+    def getImage(hires=1, webformat=0):
+        """Return image data.
+        """
+
 
 ###############################################################
 ### Ghost

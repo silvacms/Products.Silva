@@ -5,6 +5,7 @@
 from zope.interface import noLongerProvides, alsoProvides
 from silva.core.views.interfaces import IPreviewLayer
 
+import os.path
 import DateTime
 
 def resetPreview(content):
@@ -40,3 +41,10 @@ def publishApprovedObject(obj):
     """
     now = DateTime.DateTime()
     obj.set_approved_version_publication_datetime(now - 10)
+
+
+def openTestFile(path, mode='rb'):
+    """Open the given test file.
+    """
+    directory = os.path.join(os.path.dirname(__file__), 'data')
+    return open(os.path.join(directory, path), mode)

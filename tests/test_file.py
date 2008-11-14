@@ -3,73 +3,55 @@
 # $Id$
 
 from zope import component
+from zope.interface.verify import verifyObject
 
-import os
 import SilvaTestCase
-from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
-from Testing.ZopeTestCase import utils
+import helpers
 
-from StringIO import StringIO
-
+from Products.Silva import interfaces
 from Products.Silva import File
 
-class FileTest(SilvaTestCase.SilvaTestCase):
-    
-    def _app(self):
-        app = ZopeTestCase._app(self)
-        app = app.aq_base
-        request_out = self.request_out = StringIO()
-        return utils.makerequest(app, request_out)
-   
-   
-    def test_cookpath(self):
-        self.assertEqual(File.cookPath("foo/bar/baz"), ('foo', 'bar', 'baz'))
-        self.assertEqual(File.cookPath("/foo/bar/baz"), ('foo', 'bar', 'baz'))
-        self.assertEqual(File.cookPath("foo/../bar/baz"), 
-            ('foo', 'bar', 'baz'))
-        self.assertEqual(File.cookPath("foo/bar//baz"), 
-            ('foo', 'bar', 'baz'))
-        self.assertEqual(File.cookPath("foo/bar/./baz"), 
-            ('foo', 'bar', 'baz'))
-   
+class FileTest(SilvaTestCase.SilvaFileTestCase):
 
     def _test_file(self):
-        directory = os.path.dirname(__file__)
-        file_handle = open(os.path.join(directory, 'data/photo.tif'), 'rb')
+        file_handle = helpers.openTestFile('photo.tif')
         file_data = file_handle.read()
+        file_size = file_handle.tell()
         file_handle.seek(0)
         self.root.manage_addProduct['Silva'].manage_addFile('testfile',
             'Test File', file_handle)
         file_handle.close()
-        f = self.root.testfile
-        data = component.queryMultiAdapter((f, f.REQUEST), name='index')()
-        silva_data = self._get_req_data(data)
-        self.assertEqual(file_data, silva_data, "Asset didn't return original data")
-        
-       
-    def test_file_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1)
-        self._test_file()
-    
-    def test_file_zodb(self):
-        self.root.service_files.manage_filesServiceEdit('', 0)
-        self._test_file()
-    
+        file = self.root.testfile
+        self.failUnless(verifyObject(interfaces.IAsset, file))
+        self.failUnless(verifyObject(interfaces.IFile, file))
+        self.assertEqual(file_size, file.get_file_size())
 
-    def _get_req_data(self, data):
-        if data:
-            if hasattr(data, 'next'):
-                s = data._stream.read()
-            else:
-                s = data
-        else:
-            s = self.request_out.getvalue()
-            self.request_out.seek(0)
-            self.request_out.truncate()
-        if s.startswith('Status: 200'):
-            s = s[s.find('\n\n')+2:]
-        return s
-   
+        data = component.queryMultiAdapter((file, file.REQUEST), name='index')()
+        self.assertEqual(file_data, self.get_request_data(data))
+
+        assetdata = interfaces.IAssetData(file)
+        self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
+        self.assertEquals(file_data, assetdata.getData())
+
+
+    def test_file_blob(self):
+        self.root.service_files.storage = File.BlobFile
+        self._test_file()
+
+    def test_file_zodb_default(self):
+        if self.root.service_files.storage is None:
+            self._test_file()
+
+    def test_file_zodb(self):
+        self.root.service_files.storage = File.ZODBFile
+        self._test_file()
+
+    def test_file_extfile(self):
+        if File.FILESYSTEM_STORAGE_AVAILABLE:
+            self.root.service_files.storage = File.FileSystemFile
+            self._test_file()
+
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

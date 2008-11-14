@@ -1,6 +1,6 @@
 # Copyright (c) 2005-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision$
 import SilvaTestCase
 
 from Products.Silva.adapters import path

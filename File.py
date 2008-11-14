@@ -6,10 +6,7 @@
 import os
 from types import StringTypes
 from cgi import escape
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from cStringIO import StringIO
 
 # Zope 3
 from zope.interface import implements, directlyProvides
@@ -49,8 +46,7 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
-from Products.Silva.interfaces import IAssetData
-from Products.Silva.interfaces import IAsset, IUpgrader
+from Products.Silva.interfaces import IAsset
 from Products.Silva import interfaces
 
 from silva.core import conf as silvaconf
@@ -387,7 +383,7 @@ class BlobFileView(silvaviews.Template):
             'Content-Type', self.context.content_type())
         self.response.setHeader(
             'Accept-Ranges', None)
-        desc = self._file.open()
+        desc = self.context.get_content_fd()
         data = desc.read(CHUNK_SIZE)
         while data:
             self.response.write(data)

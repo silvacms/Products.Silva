@@ -31,7 +31,7 @@ def unquote(quoted):
 
 class _Marker:
     """A marker"""
-    
+
 _marker = _Marker()
 
 module_security.declarePublic('Id')
@@ -44,27 +44,27 @@ class Id:
             if mangle.Id(myId).isValid():
                 ...
             myId = mangle.Id(myId).new()
-    """ 
+    """
     __allow_access_to_unprotected_subobjects__ = 1
 
     OK = 0
     CONTAINS_BAD_CHARS = 1
     # id has a reserved prefix
     RESERVED_PREFIX = 2
-    # id is "used internally" which either means this id would 
+    # id is "used internally" which either means this id would
     # shadowing some non-silva attribute, or is in the list of disallowed ids anyway
     RESERVED = 3
     IN_USE_CONTENT = 4
     IN_USE_ASSET = 5
     RESERVED_POSTFIX = 6
     IN_USE_ZOPE = 7
-    
-    
+
+
     # does only match strings containig valid chars
     _valid_id = re.compile(r'^[a-zA-Z0-9][a-zA-Z0-9_\.\-]*$')
     # finds postfixing number
     _number_postfix = re.compile(r'^(.*?)([0-9]+)$')
-    
+
     # sequence of all reserved prefixes (before the first '_')
     _reserved_prefixes = (
         'aq',
@@ -130,7 +130,7 @@ class Id:
             maybe_id: the id (str) to be mangled
             allow_dup: if true an already existing id will be valid aswell
             file: file like object, allows to generate an id from it's filename
-            instance: addtional tests for interfaces implemented by this 
+            instance: addtional tests for interfaces implemented by this
                 instance will be processed
             interface: an interface, additional tests regarding this interface
                 will be processed
@@ -155,7 +155,7 @@ class Id:
 
     def cook(self):
         """makes the id valid
-        
+
             strips all not allowed characters from id, or if id is None uses
             file.filename for guessing a id
 
@@ -178,12 +178,12 @@ class Id:
     def isValid(self):
         """returns true if id is valid, false otherwise"""
         return self.validate() == self.OK
-       
+
     def validate(self):
         if self._validation_result is None:
             self._validation_result = self._validate()
         return self._validation_result
-    
+
     def _validate(self):
         """ test if the given id is valid, returning a status code
             about its validity or reason of invalidity
@@ -202,7 +202,7 @@ class Id:
 
         if maybe_id in self._reserved_ids:
             return self.RESERVED
-        
+
         if self._instance is not None:
             for interface, prefixes in \
                     self._reserved_ids_for_interface.items():
@@ -227,7 +227,7 @@ class Id:
                 # else it must be a content object (?)
                 return self.IN_USE_CONTENT
 
-            # check if object with this id is acquired; if not, it cannot be 
+            # check if object with this id is acquired; if not, it cannot be
             # allowed
             attr2 = getattr(folder.aq_base, maybe_id, _marker)
             if attr2 is not _marker:
@@ -244,7 +244,7 @@ class Id:
             if not hasattr(attr, 'meta_type'):
                 # not a zope object (guessing ...)
                 return self.RESERVED
-        
+
         return self.OK
 
     def new(self):
@@ -252,7 +252,7 @@ class Id:
 
             if old_id ends with a number, the number is increased, otherwise 2,
             3, 4, ... is appended until the id is available
-            
+
             returns self
             raises ValueError if id is not valid
         """
@@ -280,20 +280,20 @@ class Id:
         while self._maybe_id in used_ids:
             self.new()
         return self
-            
+
     def __str__(self):
         return self._maybe_id
 
 class _Path:
     """mangle path
-    
+
         i.e. /foo/bar, /foo/bar/baz -> baz
-    
+
         SINGLETON
     """
-    
+
     __allow_access_to_unprotected_subobjects__ = 1
-    
+
     def __call__(self, base_path, item_path):
         """mangle path"""
         i = 0
@@ -305,10 +305,10 @@ class _Path:
         if not absolute:
             item_path = item_path[len(base_path):]
         return item_path
-    
+
     def fromObject(self, obj_context, obj):
         """return mangled path from object's context and object
-        
+
             obj_context: str (path) or list
             obj: instance
 
@@ -355,16 +355,16 @@ class _Path:
         """strip 'foo/./bar' to 'foo/bar'"""
         path = [ e for e in path if e != '.' ]
         return path
-        
-        
+
+
 
 module_security.declarePublic('Path')
 Path = _Path()
-        
+
 
 class _Entities:
     """escape entities"""
-    
+
     def __call__(self, text):
         """return text with &, >, < and " escaped by their html entities"""
         return cgi.escape(text, 1)
@@ -374,12 +374,12 @@ entities = _Entities()
 
 module_security.declarePublic('DateTime')
 class DateTime:
-    
+
     __allow_access_to_unprotected_subobjects__ = 1
-    
+
     def __init__(self, dt):
         self._dt = dt
-    
+
     def toStr(self):
         dt = self._dt
         if dt is None:
@@ -393,13 +393,13 @@ class DateTime:
         if dt is None:
             return ''
         return "%02d-%02d-%04d" % (dt.day(), dt.month(), dt.year())
-    
+
     def toDateStr(self):
         dt = self._dt
         if dt is None:
             return ''
         return "%02d %s %s" % (dt.day(), dt.aMonth().lower(), dt.yy())
-    
+
     def toShortStr(self):
         dt = self._dt
         if dt is None:
@@ -431,12 +431,12 @@ class Now(DateTime):
     def __init__(self):
         self._dt = _DateTime()
 
-    
+
 class _List:
     """list mangler"""
 
     __allow_access_to_unprotected_subobjects__ = 1
-    
+
     def __call__(self, elements):
         if not elements:
             return ''
@@ -500,7 +500,7 @@ class _String:
         if len(text) < max_length:
             return text
         return '%s...' % text[:(max_length - 3)]
-    
+
     def centeredTruncate(self, text, max_length):
         if len(text) < max_length:
             return text

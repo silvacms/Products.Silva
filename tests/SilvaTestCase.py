@@ -5,7 +5,12 @@
 
 __version__ = '0.3.1'
 
+from Testing.ZopeTestCase import utils, connections, sandbox, ZopeLite
 from Testing import ZopeTestCase
+from ZODB.DemoStorage import DemoStorage
+import ZODB
+
+from StringIO import StringIO
 
 import transaction
 import zope.component.eventtesting
@@ -21,9 +26,9 @@ user_dummy = 'dummy'
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager, getSecurityManager
 
-from Products.Silva.tests.layer import SilvaLayer, SilvaFunctionalLayer
-from Products.Silva.tests.layer import user_name, \
-    user_password, users, setUp, tearDown
+import helpers
+from layer import SilvaLayer, SilvaFunctionalLayer
+from layer import user_name, user_password, users, setUp, tearDown
 
 class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     layer = SilvaLayer
@@ -43,7 +48,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
                 return name
 
     def getRoot(self):
-        """Returns the silva root object, i.e. the "fixture root". 
+        """Returns the silva root object, i.e. the "fixture root".
            Override if you don't like the default.
         """
         return self.app.root
@@ -59,14 +64,14 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
            far and away the most useful hook.
         '''
         pass
-    
+
     def beforeTearDown(self):
         '''Called before tearDown() is executed.
            Note that tearDown() is not called if
            setUp() fails.
         '''
         pass
-    
+
     def afterClear(self):
         '''Called after the fixture has been cleared.
            Note that this is done during setUp() *and*
@@ -88,8 +93,8 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         '''
         transaction.abort()
 
-    def setUp(self):     
-        '''Sets up the fixture. Do not override, 
+    def setUp(self):
+        '''Sets up the fixture. Do not override,
            use the hooks instead.
         '''
         transaction.abort()
@@ -110,12 +115,12 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
             raise
 
     def tearDown(self):
-        '''Tears down the fixture. Do not override, 
+        '''Tears down the fixture. Do not override,
            use the hooks instead.
         '''
         self.beforeTearDown()
         self._clear(1)
-        
+
     def _app(self):
         '''Returns the app object for a test.'''
         return ZopeTestCase.app()
@@ -133,7 +138,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def _close(self):
         '''Closes the ZODB connection.'''
         ZopeTestCase.close(self.app)
-        
+
     def addObject(self, container, type_name, id, product='Silva',
             **kw):
         getattr(container.manage_addProduct[product],
@@ -147,7 +152,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
     def setRoles(self, roles, name=user_name):
         '''Changes the roles assigned to a user.'''
         uf = self.root.acl_users
-        uf._doChangeUser(name, None, roles, []) 
+        uf._doChangeUser(name, None, roles, [])
         if name == getSecurityManager().getUser().getId():
             self.login(name)
 
@@ -161,7 +166,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         context.manage_role(role, permissions)
 
     def installExtension(self, extension):
-        """Installs a Silva extension""" 
+        """Installs a Silva extension"""
         ZopeTestCase.installProduct(extension)
         self.getRoot().service_extensions.install(extension)
 
@@ -190,7 +195,7 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
 
     def add_link(self, object, id, title, url):
         return self.addObject(object, 'Link', id, title=title, url=url)
-    
+
     def add_image(self, object, id, title, **kw):
         return self.addObject(object, 'Image', id, title=title, **kw)
 
@@ -207,9 +212,47 @@ class SilvaTestCase(ZopeTestCase.ZopeTestCase):
         zope.component.eventtesting.clearEvents()
 
 
+class SilvaFileTestCase(SilvaTestCase):
+    """Test case which keep the result of the request (to test files).
+    """
+
+    def _app(self):
+        app = ZopeTestCase.ZopeTestCase._app(self)
+        app = app.aq_base
+        request_out = self.request_out = StringIO()
+        return utils.makerequest(app, request_out)
+
+    def get_request_data(self, data):
+        if data:
+            if hasattr(data, 'next'):
+                s = data._stream.read()
+            else:
+                s = data
+        else:
+            s = self.request_out.getvalue()
+            self.request_out.seek(0)
+            self.request_out.truncate()
+        if s.startswith('Status: 200'):
+            s = s[s.find('\n\n')+2:]
+        return s
+
+
 class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
     """Base class for functional tests.
     """
 
     layer = SilvaFunctionalLayer
-    
+
+    def _app(self):
+        """Returns the app object for a test.
+        """
+        # Testing sucks and defined a STUPID quota of 1Mo. Change it to 32Mo.
+        import Zope2
+        storage = DemoStorage(base=Zope2.DB._storage, quota=1<<25)
+        db = ZODB.DB(storage)
+        app = ZopeLite.app(db.open())
+        sandbox.AppZapper().set(app)
+        app = utils.makerequest(app)
+        connections.register(app)
+        return app
+

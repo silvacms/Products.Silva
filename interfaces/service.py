@@ -94,7 +94,7 @@ class ISidebarService(ISilvaService):
         """Invalidate the cache for a specific object
         """
 
-class IFilesService(ISilvaService):
+class IFilesService(ISilvaLocalService):
 
     storage = schema.Choice(title=_(u"Files Storage"),
                             description=_(u"Method used to store files"),

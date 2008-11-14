@@ -2,33 +2,23 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
+from zope.interface.verify import verifyObject
+
+import helpers
 import SilvaTestCase
-from Testing.ZopeTestCase.ZopeTestCase import ZopeTestCase
-from Testing.ZopeTestCase import utils
 
-from StringIO import StringIO
-
+from Products.Silva import interfaces
 from Products.Silva.Image import havePIL
+from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
 
-try:
-    from Products import ExtFile
-    WITH_EXTFILE = True
-except ImportError, e:
-    WITH_EXTFILE = False
-    
 # NOTE: these tests should all pass regardless of the availability of ExtFile
 
-def testopen(path, rw):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
+class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
 
-class FileServicesTest(SilvaTestCase.SilvaTestCase):
-    
     def afterSetUp(self):
         """
         Test content structure:
-        
+
         root/service_files (by default)
         root/folder1
         root/folder1/folder1in1
@@ -43,129 +33,33 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         folder1in1in1 = self.add_folder(folder1in1, 'folder1in1in1', 'Folder 1 in 1 in 1')
         folder1in1.manage_addProduct['Silva'].manage_addFilesService(
             'service_files', 'Other Files Service')
-    
-    def _app(self):
-        app = ZopeTestCase._app(self)
-        app = app.aq_base
-        request_out = self.request_out = StringIO()
-        return utils.makerequest(app, request_out)
 
-    def _test_file(self, id, context):
-        file_handle = testopen('data/photo.tif', 'rb')
+    def add_test_file(self, id, context):
+        file_handle = helpers.openTestFile('photo.tif')
         context.manage_addProduct['Silva'].manage_addFile(
             id, 'Test File', file_handle)
         file_handle.close()
 
-    def _test_image(self, id, context):
+    def add_test_image(self, id, context):
         if havePIL:
-            file_handle = testopen('data/photo.tif', 'rb')
+            file_handle = helpers.openTestFile('photo.tif')
         else:
-            file_handle = testopen('data/silva.png', 'rb')
+            file_handle = helpers.openTestFile('silva.png')
         context.manage_addProduct['Silva'].manage_addImage(
             id, 'Test Image', file_handle)
         file_handle.close()
-            
-    def _get_req_data(self, data):
-        if data:
-            s = data
-        else:
-            s = self.request_out.getvalue()
-            self.request_out.seek(0)
-            self.request_out.truncate()
-        if s.startswith('Status: 200'):
-            s = s[s.find('\n\n')+2:]
-        return s
-    
-    def test_file_extfile(self):
-        self.root.service_files.manage_filesServiceEdit('', 1)
-        self.assertEqual(
-            self.root.service_files.useFSStorage(), WITH_EXTFILE)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), False)
-        self._test_file('testfile', self.root)
-        self._test_file('testfile', self.root.folder2)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
-        self.assertEqual(
-            self.root.service_files.useFSStorage(), WITH_EXTFILE)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), WITH_EXTFILE)
-        self._test_file('testfile', self.root.folder1.folder1in1)
-        self._test_file('testfile', self.root.folder1.folder1in1.folder1in1in1)        
-    
-    def test_file_zodb_implicitly(self):
-        # By default fs storage is not enabled, so test that
-        self.assertEqual(self.root.service_files.useFSStorage(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), False)
-        self._test_file('testfile', self.root)
-        self._test_file('testfile', self.root.folder2)
-        self.assertEqual(self.root.service_files.useFSStorage(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), False)
-        self._test_file('testfile', self.root.folder1.folder1in1)
-        self._test_file('testfile', self.root.folder1.folder1in1.folder1in1in1)        
 
-    def test_file_zodb_explicitly(self):
-        # Explicitly disable fs storage
-        self.root.service_files.manage_filesServiceEdit('', 0)
-        self.assertEqual(self.root.service_files.useFSStorage(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), False)
-        self._test_file('testfile', self.root)
-        self._test_file('testfile', self.root.folder2)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
-        self.assertEqual(self.root.service_files.useFSStorage(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.useFSStorage(), False)
-        self._test_file('testfile', self.root.folder1.folder1in1)
-        self._test_file('testfile', self.root.folder1.folder1in1.folder1in1in1)        
-        
-    def test_is_filesystem_storage_available(self):
-        self.assertEqual(
-            self.root.service_files.is_filesystem_storage_available(), 
-            WITH_EXTFILE)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.is_filesystem_storage_available(), 
-            WITH_EXTFILE)
-
-    def test_filesystem_storage_enabled(self):
-        # By default fs storage is not enabled, so test that
-        self.assertEqual(
-            self.root.service_files.filesystem_storage_enabled(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
-            False)
-        # Then enable it
-        self.root.service_files.manage_filesServiceEdit('', 1)
-        self.assertEqual(
-            self.root.service_files.filesystem_storage_enabled(), True)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
-            False)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
-            True)
-        # Explicitly disable fs storage
-        self.root.service_files.manage_filesServiceEdit('', 0)
-        self.assertEqual(
-            self.root.service_files.filesystem_storage_enabled(), False)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
-            True)
-        self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 0)
-        self.assertEqual(
-            self.root.folder1.folder1in1.service_files.filesystem_storage_enabled(),
-            False)
+    def test_service(self):
+        self.failUnless(verifyObject(interfaces.IFilesService, self.root.service_files))
 
     def test_manage_convertStorage(self):
         # by default we use ZODB storage
-        self._test_image('testimage', self.root)
-        self._test_image('testimage', self.root.folder1)
-        self._test_image('testimage', self.root.folder1.folder1in1)       
-        self._test_image('testimage', self.root.folder2)
-        self._test_file('testfile', self.root)
-        self._test_file('testfile', self.root.folder1.folder1in1)
+        self.add_test_image('testimage', self.root)
+        self.add_test_image('testimage', self.root.folder1)
+        self.add_test_image('testimage', self.root.folder1.folder1in1)
+        self.add_test_image('testimage', self.root.folder2)
+        self.add_test_file('testfile', self.root)
+        self.add_test_file('testfile', self.root.folder1.folder1in1)
         self.assertEqual(self.root.testimage.image.meta_type, 'Image')
         self.assertEqual(
             self.root.folder1.testimage.image.meta_type, 'Image')
@@ -179,20 +73,7 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
             self.root.testfile._file.meta_type, 'File')
         self.assertEqual(
             self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
-        if WITH_EXTFILE:
-        ##    self.root.service_files.manage_filesServiceEdit('', 1)
-        ##    self.root.service_files.manage_convertStorage()
-        ##     self.assertEqual(self.root.testimage.image.meta_type, 'ExtImage')
-        ##     self.assertEqual(
-        ##         self.root.folder1.testimage.image.meta_type, 'ExtImage')
-        ##     self.assertEqual(
-        ##         self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
-        ##     self.assertEqual(
-        ##         self.root.folder2.testimage.image.meta_type, 'ExtImage')
-        ##     self.assertEqual(
-        ##         self.root.testfile._file.meta_type, 'ExtFile')
-        ##     self.assertEqual(
-        ##         self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
+        if FILESYSTEM_STORAGE_AVAILABLE:
             self.root.folder1.folder1in1.service_files.manage_filesServiceEdit('', 1)
             self.root.folder1.folder1in1.service_files.manage_convertStorage()
             self.assertEqual(
@@ -205,21 +86,7 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
                 self.root.folder1.folder1in1.testimage.image.meta_type, 'Image')
             self.assertEqual(
                 self.root.folder1.folder1in1.testfile._file.meta_type, 'File')
-            
-            ## self.root.service_files.manage_filesServiceEdit('', 0)
-            ## self.root.service_files.manage_convertStorage()
-            ## self.assertEqual(self.root.testimage.image.meta_type, 'Image')
-            ## self.assertEqual(
-            ##     self.root.folder1.testimage.image.meta_type, 'Image')
-            ## self.assertEqual(
-            ##     self.root.folder1.folder1in1.testimage.image.meta_type, 'ExtImage')
-            ## self.assertEqual(
-            ##     self.root.folder2.testimage.image.meta_type, 'Image')
-            ## self.assertEqual(
-            ##     self.root.testfile._file.meta_type, 'File')
-            ## self.assertEqual(
-            ##     self.root.folder1.folder1in1.testfile._file.meta_type, 'ExtFile')
-        
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

@@ -27,7 +27,7 @@ class SilvaBrowser(object):
 
     def go_back(self):
         return self.browser.goBack()
-    
+
     def click_button_labeled(self, value_name):
         """
         click on a button or psuedo button (an href) with a specific label
@@ -40,7 +40,7 @@ class SilvaBrowser(object):
         button = None
         # get middleground psuedo buttons
         if button is None and 'class="middleground"' in self.browser.contents:
-            # no button found yet, check if there are anchors in 
+            # no button found yet, check if there are anchors in
             # the middleground div that match value_name
             # they sort of look like buttons too, right..
             doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
@@ -74,10 +74,10 @@ class SilvaBrowser(object):
     def click_href_labeled(self, value_name):
         """
         click on a link with a specific label
-        """ 
+        """
         if 'logout' in value_name:
             # logout always results in a 401 error, login window. since
-            # you can't access the popup, i accept that a logout is, an href 
+            # you can't access the popup, i accept that a logout is, an href
             # value_name that has logout in it, and clicking the link there is
             # a 401 HTTPError
             try:
@@ -94,7 +94,7 @@ class SilvaBrowser(object):
         """
         link = self.browser.getLink(name)
         link.click()
-    
+
     def get_addables_list(self):
         """
         return a list of addable meta_types
@@ -195,7 +195,7 @@ class SilvaBrowser(object):
         """
         href = self.browser.getLink(value_name)
         return href
-    
+
     def get_listing_h2(self):
         """
         return the content type and name of the <h2> in the listing table
@@ -215,7 +215,7 @@ class SilvaBrowser(object):
                     for h2 in h2s:
                         text = self.html2text(h2.toxml())
                         return text
-                    
+
     def get_status_and_url(self):
         """
         return status and url of current page
@@ -280,7 +280,7 @@ class SilvaBrowser(object):
 
     def go(self, url):
         """
-        same as browser.open, but handles http exceptions, and returns http 
+        same as browser.open, but handles http exceptions, and returns http
         status and url tuple
         """
         try:
@@ -295,7 +295,7 @@ class SilvaBrowser(object):
 
     def html2text(self, htmlstring):
         """
-        return children of an html element, stripping out child elements, 
+        return children of an html element, stripping out child elements,
         and normalizing text nodes
         """
         # replace all text within <> with an empty string
@@ -309,7 +309,7 @@ class SilvaBrowser(object):
         login to the smi
         """
         # it seems the Browser object gets confused if 401's are
-        # raised. Because of this we always use a new Browser 
+        # raised. Because of this we always use a new Browser
         # when logginf in
         url = url or self.get_root_url()
         self.new_browser()
@@ -331,7 +331,7 @@ class SilvaBrowser(object):
 
     def make_content(self, content_type, url=None, **fields):
         """
-        makes content of a specific type as a specific user, 
+        makes content of a specific type as a specific user,
         with one or more fields filled in.
         """
         # save form type, and set it if it's a known one
@@ -356,7 +356,7 @@ class SilvaBrowser(object):
 
         if current_form_type:
             self.form_type = current_form_type
-    
+
     # map default field values to field names
     default_field_values = {
         'id':           'test_object',
@@ -378,7 +378,7 @@ class SilvaBrowser(object):
             fields[field_name] = self.default_field_values[field_name]
 
         return self.make_content(content_type, **fields)
-        
+
     def open_file(self, filename):
         """
         format the path to data/ for test files
@@ -400,7 +400,7 @@ class SilvaBrowser(object):
         # with js
         ids = [item['id'] for item in data]
         self.browser.getControl(name='ids:list').value = ids
-        
+
     def select_content(self, content_id):
         """
         toggle a content item checkbox
@@ -461,7 +461,7 @@ class SilvaBrowser(object):
         """
         name = self.get_field_id('title')
         self.browser.getControl(name=name).value = title
-        
+
     def set_policy_field(self, content_type='Silva Document'):
         """
         set the policy field
@@ -486,7 +486,7 @@ class SilvaBrowser(object):
         self.browser.getControl(name=name).add_file(
             self.open_file(file),
             'text/plain', file)
-    
+
     def set_ghost_url_field(self, reference):
         """
         set the ghost url field
@@ -514,7 +514,7 @@ class SilvaBrowser(object):
         """
         name = self.get_field_id('depth')
         self.browser.getControl(name=name).value = '-1'
-    
+
     # existing content type fields
     fields = {
         'id':           set_id_field,

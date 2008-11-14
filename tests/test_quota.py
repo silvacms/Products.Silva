@@ -4,8 +4,9 @@
 
 # Python
 import os.path
+from zope.interface.verify import verifyObject
 
-
+from Products.Silva import interfaces
 from Products.Silva.tests.test_archivefileimport import ArchiveFileImport
 import SilvaTestCase
 
@@ -30,7 +31,7 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
 
     def _enable_quota(self):
         self.root.service_extensions.enable_quota_subsystem()
-        
+
     def test_quota(self):
         """Test the quota system.
         Content structure:
@@ -48,7 +49,7 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         folder1 = self.add_folder(pub1, 'folder1', 'Folder 1')
         pub2 = self.add_publication(folder1, 'pub2', 'Publication 2')
         pub3 = self.add_publication(folder1, 'pub3', 'Publication 3')
-        
+
         # By default, the quota is 0
         self.assertEqual(pub1.get_current_quota(), 0)
         self.assertEqual(pub3.get_current_quota(), 0)
@@ -84,9 +85,9 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assertEqual(subfolder1.used_space, 0)
 
         # Add a file
-        zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File', 
+        zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File',
                              file=open(zipfile2))
-        #verifyObject(IAsset, zip1)
+        verifyObject(interfaces.IAsset, zip1)
         zip2_size = fileSize(zipfile2)
         self.assertEqual(zip1.get_file_size(), zip2_size)
         # And check used space
@@ -102,9 +103,9 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assertEqual(folder2.used_space, 0)
 
         # Add an image
-        image1 = self.add_image(folder2, 'image1.jpg', 'Image File', 
+        image1 = self.add_image(folder2, 'image1.jpg', 'Image File',
                                 file=open(imagefile2))
-        #verifyObject(IAsset, image1)
+        verifyObject(interfaces.IAsset, image1)
         image2_size = fileSize(imagefile2)
         self.assertEqual(image1.get_file_size(), image2_size)
         # And check used space
@@ -186,15 +187,15 @@ class QuotaTest(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assertEqual(s_ext.get_quota_subsystem_status(), True)
         s_ext.disable_quota_subsystem()
         self.assertEqual(s_ext.get_quota_subsystem_status(), False)
-   
+
         # Create some content
         folder1 = self.add_folder(root, 'folder1', 'FooFolder 1')
         folder2 = self.add_folder(root, 'folder2', 'FooFolder 2')
         subfolder1 = self.add_folder(folder1, 'subfolder', 'Sub FooFolder')
-        zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File', 
+        zip1 = self.add_file(subfolder1, 'zipfile1.zip', 'Zip File',
                              file=open(zipfile1))
         zip1_size = fileSize(zipfile1)
-        image1 = self.add_image(folder2, 'image1.jpg', 'Image File', 
+        image1 = self.add_image(folder2, 'image1.jpg', 'Image File',
                                 file=open(imagefile1))
         image1_size = fileSize(imagefile1)
 

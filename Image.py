@@ -5,7 +5,6 @@
 # Python
 import re
 from cStringIO import StringIO
-from types import IntType
 from cgi import escape
 
 # Zope 3
@@ -27,10 +26,10 @@ import SilvaPermissions
 from Asset import Asset
 from Products.Silva import mangle, interfaces
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IAsset, IImage, IUpgrader
+from Products.Silva.interfaces import IAsset
 
 # misc
-from helpers import add_and_edit, fix_content_type_header
+from helpers import add_and_edit
 
 try:
     import PIL.Image
@@ -38,25 +37,14 @@ try:
 except ImportError:
     havePIL = 0
 
-try:
-    from Products.ExtFile.ExtImage import ExtImage
-except ImportError:
-    pass
-
 from silva.core import conf as silvaconf
-from silva.core.views import views as silvaviews
 
-# FIXME: Image and File Assets should be refactored - they share quite
-# some functionality which can be generalized.
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
-    """Add an Image."""
-    id = mangle.Id(context, id, file=file, interface=IAsset)
-    id.cook()
-    if not id.isValid():
-        return
-    id = str(id)
+    """Add an Image.
+    """
     img = image_factory(context, id, None, file)
+    id = img.id
     context._setObject(id, img)
     img = getattr(context, id)
     if file:
@@ -67,7 +55,6 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
             transaction.abort()
             raise
     img.set_title(title)
-
     add_and_edit(context, id, REQUEST)
     return img
 
@@ -80,7 +67,7 @@ class Image(Asset):
     meta_type = "Silva Image"
 
     __implements__ = (WriteLockInterface,)
-    implements(IImage)
+    implements(interfaces.IImage)
 
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
@@ -108,17 +95,16 @@ class Image(Asset):
 
 
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
-        """sets format and scaling for web presentation
+        """Sets format and scaling for web presentation.
 
-            web_format (str): either JPEG or PNG (or whatever other format
-                makes sense, must be recognised by PIL)
-            web_scale (str): WidthXHeight or nn.n%
-            web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping
+        web_format (str): either JPEG or PNG (or whatever other format
+        makes sense, must be recognised by PIL).
+        web_scale (str): WidthXHeight or nn.n%.
+        web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping.
 
-            raises ValueError if web_scale cannot be parsed.
+        Raises ValueError if web_scale cannot be parsed.
 
-            automaticaly updates cached web presentation image
-
+        Automaticaly updates cached web presentation image.
         """
         update_cache = 0
         if self.hires_image is None:
@@ -153,14 +139,6 @@ class Image(Asset):
             self.web_format = format
         self._createDerivedImages()
         self.update_quota()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_zope_image')
-    def set_zope_image(self, zope_img):
-        """Set the image object with zope image.
-        """
-        self.hires_image = zope_img
-        self._createDerivedImages()
 
     security.declareProtected(SilvaPermissions.View, 'getCanonicalWebScale')
     def getCanonicalWebScale(self, scale=None):
@@ -248,12 +226,11 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
-        """returns width, heigt of (hi res) image
+        """Returns width, heigt of (hi res) image.
 
-            raises ValueError if there is no way of determining the dimenstions
-            return 0, 0 if there is no image
-            returns width, height otherwise
-
+        Raises ValueError if there is no way of determining the dimenstions,
+        Return 0, 0 if there is no image,
+        Returns width, height otherwise.
         """
         if img is None:
             img = self.hires_image
@@ -265,24 +242,23 @@ class Image(Asset):
             width, height = self._get_dimensions_from_image_data(img)
         except TypeError:
             return (0, 0)
-#         if img.meta_type == 'Image':
-#             img.width = width
-#             img.height = height
         return width, height
 
     security.declareProtected(SilvaPermissions.View, 'getFormat')
     def getFormat(self):
-        """returns image format (PIL identifier) or unknown if there is no PIL
+        """Returns image format.
         """
-        try:
+        if havePIL:
             return self._getPILImage(self.hires_image).format
-        except ValueError:
-            # XXX i18n - should this be translated?
-            return 'unknown'
+        ct, w, h = OFS.Image.getImageInfo(self.hires_image.get_content())
+        if not ct:
+            raise ValueError, "Unknown format"
+        return ct.split('/')[1].upper()
 
     security.declareProtected(SilvaPermissions.View, 'getImage')
-    def getImage(self, hires=1, webformat=0, REQUEST=None):
-        """return image"""
+    def getImage(self, hires=1, webformat=0):
+        """Return image data.
+        """
         if hires and not webformat:
             image = self.hires_image
         elif not hires and webformat:
@@ -292,16 +268,11 @@ class Image(Asset):
             pil_image = self._prepareWebFormat(pil_image)
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
-            del(pil_image)
-            image = OFS.Image.Image(
-                'custom_image', self.get_title(), image_data)
+            return image_data.getvalue()
         elif not hires and not webformat:
             raise ValueError, ("Low resolution image in original format is "
-                                    "not supported")
-        if REQUEST is not None:
-            return self._image_index_html(image, REQUEST, REQUEST.RESPONSE)
-        else:
-            return image.get_content()
+                               "not supported")
+        return image.get_content()
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
@@ -328,7 +299,7 @@ class Image(Asset):
         return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
             img_src, width, height, escape(title, 1), named)
 
-    security.declareProtected(SilvaPermissions.View, 'tag')
+    security.declareProtected(SilvaPermissions.View, 'url')
     def url(self, hires=0, thumbnail=0):
         "return url of image"
         image, img_src = self._get_image_and_src(hires, thumbnail)
@@ -369,7 +340,8 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'getOrientation')
     def getOrientation(self):
-        """ returns Image orientation (string) """
+        """Returns translated Image orientation (string).
+        """
         return _(self.getOrientationClass())
 
     security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
@@ -464,8 +436,6 @@ class Image(Asset):
         if cropbox:
             image = image.crop(cropbox)
         if self.web_scale == '100%':
-            if self.image is not None and not self._image_is_hires():
-                self._remove_image('image')
             self.image = self.hires_image
             # it is possible that the image was thumbnailed before,
             # we must make sure that the modification time of this image
@@ -477,8 +447,8 @@ class Image(Asset):
         image = self._prepareWebFormat(image)
         image.save(web_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
+        web_image_data.seek(0)
         self._image_factory('image', web_image_data, ct)
-        self._set_redirect(self.image)
 
     def _createThumbnail(self):
         try:
@@ -502,6 +472,7 @@ class Image(Asset):
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
         ct = self._web2ct[self.web_format]
+        thumb_data.seek(0)
         self._image_factory('thumbnail_image', thumb_data, ct)
 
     def _prepareWebFormat(self, pil_image):
@@ -513,9 +484,9 @@ class Image(Asset):
 
     def _image_factory(self, id, file, content_type=None):
         new_image = self.service_files.newFile(id)
+        new_image.set_file_data(file)
         if content_type:
             new_image.set_content_type(content_type)
-        new_image.set_file_data(file)
 
         setattr(self, id, new_image)
         return new_image
@@ -535,17 +506,6 @@ class Image(Asset):
             img_src = image.static_url()
         return image, img_src
 
-    def _set_redirect(self, image, to=1):
-        if image.meta_type == 'ExtImage':
-            image.redirect_default_view = to
-
-    def _remove_image(self, id, set_none=1):
-        image = getattr(self, id, None)
-        if image is None:
-            return
-        if set_none:
-            setattr(self, id, None)
-
     def _image_is_hires(self):
         return (self.image is not None and
                 self.image.aq_base is self.hires_image.aq_base)
@@ -556,15 +516,10 @@ class Image(Asset):
             raises ValueError if the dimensions could not be determined
         """
         if havePIL:
-            pil_image = self._getPILImage(img)
-            w, h = pil_image.size
-        else:
-            data_handle = self._get_image_data(img)
-            data = data_handle.read()
-            data_handle.close()
-            ct, w, h = OFS.Image.getImageInfo(data)
-            if w <= 0 or h <= 0:
-                raise ValueError, "Could not identify image type."
+            return self._getPILImage(img).size
+        ct, w, h = OFS.Image.getImageInfo(img.get_content())
+        if w <= 0 or h <= 0:
+            raise ValueError, "Could not identify image type."
         return w, h
 
 InitializeClass(Image)
@@ -592,15 +547,16 @@ class ImagePublishTraverse(SilvaPublishTraverse):
 
 class ImageStorageConverter(object):
 
-    implements(IUpgrader)
+    implements(interfaces.IUpgrader)
 
-    def upgrade(self, asset):
-        assert asset.meta_type == 'Silva Image'
-        self._restore_image(asset, 'hires_image')
-        asset._createDerivedImages()
+    def upgrade(self, image):
+        if not interfaces.IImage.providedBy(image):
+            return
+        self._convert_image(image, 'hires_image')
+        image._createDerivedImages()
         zLOG.LOG(
-            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(asset.getPhysicalPath()))
-        return asset
+            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(image.getPhysicalPath()))
+        return image
 
     def _restore_image(self, asset, id):
         image = getattr(asset, id, None)
@@ -641,7 +597,7 @@ contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
 
-@silvaconf.subscribe(IImage, zope.app.container.interfaces.IObjectAddedEvent)
+@silvaconf.subscribe(interfaces.IImage, zope.app.container.interfaces.IObjectAddedEvent)
 def image_added(image, event):
     for id in ('hires_image', 'image', 'thumbnail_image'):
         img = getattr(image, id, None)
@@ -649,13 +605,7 @@ def image_added(image, event):
             continue
         img.id = id
 
-@silvaconf.subscribe(IImage, OFS.interfaces.IObjectWillBeRemovedEvent)
-def image_will_be_removed(image, event):
-    """explicitly remove the images"""
-    for id in ('hires_image', 'image', 'thumbnail_image'):
-        image._remove_image(id, set_none=0)
-
-@silvaconf.subscribe(IImage, OFS.interfaces.IObjectClonedEvent)
+@silvaconf.subscribe(interfaces.IImage, OFS.interfaces.IObjectClonedEvent)
 def image_cloned(image, event):
     "copy support"
     for id in ('image', 'hires_image', 'thumbnail_image'):

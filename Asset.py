@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Id$
 # Zope
 from zope.interface import implements
 
@@ -14,14 +14,13 @@ import zLOG
 
 # Silva
 from SilvaObject import SilvaObject
-import SilvaPermissions
-
-from interfaces import IAsset, IContainer
+from Products.Silva import SilvaPermissions
+from Products.Silva import interfaces
 
 from silva.core import conf as silvaconf
 
 class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
-    implements(IAsset)
+    implements(interfaces.IAsset)
 
     security = ClassSecurityInfo()
 
@@ -50,17 +49,18 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'update_quota')
     def update_quota(self):
+        # XXX Should use utility
         service_extension = getattr(self, 'service_extensions', None)
         if not service_extension:
             return
         if not self.service_extensions.get_quota_subsystem_status():
             return
 
-        new_size = self.get_file_size()
-        delta = new_size - self._old_size
         parent = self.aq_parent
-        if IContainer.providedBy(parent):
-            self.aq_parent.update_quota(delta)
+        if not interfaces.IImage.providedBy(parent):
+            new_size = self.get_file_size()
+            delta = new_size - self._old_size
+            parent.update_quota(delta)
             self._old_size = new_size
 
     security.declareProtected(
@@ -112,7 +112,7 @@ class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
 
 InitializeClass(Asset)
 
-@silvaconf.subscribe(IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
+@silvaconf.subscribe(interfaces.IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
 def asset_moved_update_quota(obj, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.

@@ -12,7 +12,7 @@ from zope.component import provideHandler
 from zope.testing.cleanup import cleanUp as _cleanUp
 
 # Zope 2
-from Acquisition import aq_base
+from ZODB.DemoStorage import DemoStorage
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase.layer import ZopeLiteLayer
 from AccessControl.SecurityManagement import newSecurityManager, \
@@ -35,7 +35,7 @@ ZopeTestCase.installProduct('ProxyIndex')
 from Products.Silva import MAILDROPHOST_AVAILABLE
 if  MAILDROPHOST_AVAILABLE:
     # if available, it is installed by Silva.install.installSubscriptions
-    ZopeTestCase.installProduct('MaildropHost')    
+    ZopeTestCase.installProduct('MaildropHost')
 
 ZopeTestCase.installProduct('Groups')
 ZopeTestCase.installProduct('SilvaFind')
@@ -138,7 +138,7 @@ class SilvaLayer(ZopeLiteLayer):
 class SilvaFunctionalLayer(SilvaLayer):
     """Separate test from functional tests (for the moment).
     """
-    
+
 
 def setUp(test):
     """Setup before each tests.
