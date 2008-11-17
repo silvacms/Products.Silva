@@ -6,6 +6,10 @@
 from zope.app.component.hooks import setSite
 
 from Products.SilvaLayout.install import resetMetadata # Should be in Silva ?
+import OFS.Image
+
+# python
+from cStringIO import StringIO
 
 # silva imports
 from Products.Silva.install import configureIntIds
@@ -13,6 +17,9 @@ from Products.Silva.interfaces import IVersionedContent, ISiteManager
 from Products.Silva.upgrade import BaseUpgrader
 from Products.Silva.adapters import version_management
 import zLOG
+
+
+
 
 #-----------------------------------------------------------------------------
 # 2.1.0 to 2.2.0a1
@@ -59,6 +66,37 @@ class RootUpgrader(BaseUpgrader):
         return obj
 
 RootUpgrader = RootUpgrader(VERSION, 'Silva Root')
+
+
+class ImagesUpgrader(BaseUpgrader):
+
+    def upgrade(self, obj):
+        # Add stuff here
+        data = None
+        hires_image = obj.hires_image
+        if hires_image.meta_type == 'Image':
+            data = StringIO(str(hires_image.data))
+        elif hires_image.meta_type == 'Ext Image':
+            filename = hires_image._get_fsname(hires_image.get_filename())
+            data = open(filename, 'rb')
+        elif hires_image.meta_type == 'Silva File':
+            # Already converted ?
+            return obj
+        else:
+            raise ValueError, "Unknown mimetype"
+        ct, _, _ = OFS.Image.getImageInfo(self.hires_image.get_content())
+        if not ct:
+            raise ValueError, "Impossible to detect mimetype"
+        obj._image_factory('hires_image', data, ct)
+        obj._createDerivedImages()
+        data.close()
+        zLOG.LOG(
+            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(image.getPhysicalPath()))
+        return obj
+
+
+ImagesUpgraer = ImagesUpgrader(VERSION, 'Silva Image')
+
 
 class TOCElementUpgrader(BaseUpgrader):
 
