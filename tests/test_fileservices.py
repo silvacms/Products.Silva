@@ -93,10 +93,13 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
         self.isZODBFile(self.root.testfile)
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
-        # Convert to Blobs
-        self.root.service_files.storage = File.BlobFile
+        image_data = self.root.testimage.getImage(hires=1)
+        file_data = self.root.testfile.get_content()
         form = component.getMultiAdapter((self.root.service_files, self.root.REQUEST),
                                          name='manage_filesservice')
+
+        # Convert to Blobs
+        self.root.service_files.storage = File.BlobFile
         form.convert()
 
         self.isBlobImage(self.root.testimage)
@@ -105,6 +108,27 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
 
         self.isBlobFile(self.root.testfile)
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
+
+        converted_image_data = self.root.testimage.getImage(hires=1)
+        self.assertEquals(image_data, converted_image_data)
+        converted_file_data = self.root.testfile.get_content()
+        self.assertEquals(file_data, converted_file_data)
+
+        # Convert back to ZODB
+        self.root.service_files.storage = File.ZODBFile
+        form.convert()
+
+        self.isZODBImage(self.root.testimage)
+        self.isZODBImage(self.root.folder1.testimage)
+        self.isZODBImage(self.root.folder1.folder1in1.testimage)
+
+        self.isZODBFile(self.root.testfile)
+        self.isZODBFile(self.root.folder1.folder1in1.testfile)
+
+        converted_image_data = self.root.testimage.getImage(hires=1)
+        self.assertEquals(image_data, converted_image_data)
+        converted_file_data = self.root.testfile.get_content()
+        self.assertEquals(file_data, converted_file_data)
 
 
 import unittest
