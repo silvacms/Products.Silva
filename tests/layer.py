@@ -14,40 +14,48 @@ from zope.testing.cleanup import cleanUp as _cleanUp
 # Zope 2
 from ZODB.DemoStorage import DemoStorage
 from Testing import ZopeTestCase
+from Testing.ZopeTestCase import installProduct, hasProduct
 from Testing.ZopeTestCase.layer import ZopeLiteLayer
+from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager
 import transaction
 
+
+@ZopeLiteLayerSetup
+def installPackage(name):
+    """We need to overrides that because a nice Plone developer
+    funk-up ZopeLite.
+    """
+    ZopeTestCase.installPackage(name)
+
 # Install Zope 2 Products
 
-ZopeTestCase.installProduct('ZCatalog')
-ZopeTestCase.installProduct('TemporaryFolder')
-ZopeTestCase.installProduct('ZCTextIndex')
-ZopeTestCase.installProduct('PythonScripts')
-ZopeTestCase.installProduct('PageTemplates')
-ZopeTestCase.installProduct('Formulator')
-ZopeTestCase.installProduct('FileSystemSite')
-ZopeTestCase.installProduct('ParsedXML')
-ZopeTestCase.installProduct('XMLWidgets')
-ZopeTestCase.installProduct('ProxyIndex')
-
-from Products.Silva import MAILDROPHOST_AVAILABLE
-if  MAILDROPHOST_AVAILABLE:
-    # if available, it is installed by Silva.install.installSubscriptions
-    ZopeTestCase.installProduct('MaildropHost')
-
-ZopeTestCase.installProduct('Groups')
-ZopeTestCase.installProduct('SilvaFind')
-ZopeTestCase.installProduct('SilvaMetadata')
-ZopeTestCase.installProduct('SilvaViews')
-if ZopeTestCase.hasProduct('SilvaExternalSources'):
-    ZopeTestCase.installProduct('SilvaExternalSources')
-ZopeTestCase.installProduct('SilvaDocument')
-ZopeTestCase.installProduct('Silva')
-ZopeTestCase.installProduct('Five')
-ZopeTestCase.installPackage('silva.core.views')
-ZopeTestCase.installPackage('silva.core.layout')
+installProduct('ZCatalog')
+installProduct('TemporaryFolder')
+installProduct('ZCTextIndex')
+installProduct('PythonScripts')
+installProduct('PageTemplates')
+installProduct('Formulator')
+installProduct('FileSystemSite')
+installProduct('ParsedXML')
+installProduct('XMLWidgets')
+installProduct('ProxyIndex')
+if hasProduct('MaildropHost'):
+    installProduct('MaildropHost')
+if hasProduct('ExtFile'):
+    installProduct('ExtFile')
+installProduct('Groups')
+installProduct('SilvaFind')
+installProduct('SilvaMetadata')
+installProduct('SilvaViews')
+if hasProduct('SilvaExternalSources'):
+    installProduct('SilvaExternalSources')
+installProduct('SilvaDocument')
+installProduct('Silva')
+installProduct('Five')
+installPackage('silva.core.views')
+installPackage('silva.core.layout')
 
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
