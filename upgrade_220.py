@@ -100,8 +100,8 @@ class ImagesUpgrader(BaseUpgrader):
         obj._image_factory('hires_image', data, ct)
         obj._createDerivedImages()
         data.close()
-        zLOG.LOG(
-            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(image.getPhysicalPath()))
+        zLOG.LOG('Silva', zLOG.INFO,
+                 "Image %s upgraded" % '/'.join(obj.getPhysicalPath()))
         return obj
 
 
