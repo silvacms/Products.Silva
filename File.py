@@ -23,6 +23,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from helpers import add_and_edit, fix_content_type_header
 from converters import get_converter_for_mimetype
+from webdav.common import rfc1123_date
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 
@@ -379,6 +380,8 @@ class BlobFileView(silvaviews.Template):
             'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
             'Content-Type', self.context.content_type())
+        self.response.setHeader(
+            'Last-Modified', rfc1123_date(self.context.get_modification_datetime()))
         self.response.setHeader(
             'Accept-Ranges', None)
         desc = self.context.get_content_fd()
