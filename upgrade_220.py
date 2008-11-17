@@ -55,7 +55,7 @@ class RootUpgrader(BaseUpgrader):
                 obj.service_views.manage_delObjects(['SilvaLayout'])
 
         # Install ExternalSources, and setup cs_toc CS.
-        service_ext = obj.service_extension
+        service_ext = obj.service_extensions
         if not service_ext.is_installed('SilvaExternalSources'):
             service_ext.install('SilvaExternalSources')
         if not hasattr(obj, 'cs_toc'):
@@ -92,7 +92,7 @@ class ImagesUpgrader(BaseUpgrader):
             return obj
         else:
             raise ValueError, "Unknown mimetype"
-        ct, _, _ = OFS.Image.getImageInfo(self.hires_image.get_content())
+        ct, _, _ = OFS.Image.getImageInfo(hires_image.get_content())
         if not ct:
             raise ValueError, "Impossible to detect mimetype"
         obj._image_factory('hires_image', data, ct)
