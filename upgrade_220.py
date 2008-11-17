@@ -16,6 +16,7 @@ from Products.Silva.install import configureIntIds
 from Products.Silva.interfaces import IVersionedContent, ISiteManager
 from Products.Silva.upgrade import BaseUpgrader
 from Products.Silva.adapters import version_management
+from Products.Silva.File import FileSystemFile
 import zLOG
 
 
@@ -60,6 +61,13 @@ class RootUpgrader(BaseUpgrader):
         if not hasattr(obj, 'cs_toc'):
             toc = obj.service_codesources.manage_copyObjects(['cs_toc',])
             obj.manage_pasteObjects(toc)
+
+        # Update service_files settings
+        service_files = obj.service_files
+        if hasattr(service_files, '_filesystem_storage_enabled'):
+            if service_files._filesystem_storage_enabled:
+                service_files.storage = FileSystemFile
+            delattr(service_files , '_filesystem_storage_enabled')
 
         # Refresh all products
         service_ext.refresh_all()
