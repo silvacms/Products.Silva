@@ -92,7 +92,9 @@ class ImagesUpgrader(BaseUpgrader):
             return obj
         else:
             raise ValueError, "Unknown mimetype"
-        ct, _, _ = OFS.Image.getImageInfo(hires_image.get_content())
+        full_data = data.read()
+        data.seek(0)
+        ct, _, _ = OFS.Image.getImageInfo(full_data)
         if not ct:
             raise ValueError, "Impossible to detect mimetype"
         obj._image_factory('hires_image', data, ct)
