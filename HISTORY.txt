@@ -7,6 +7,11 @@ Silva changes
 
     Features added:
 
+      - 261569: the new toc features made available in 2.1 are now accessible
+        within documents by using the TOC code source (id: cs_toc).  This is 
+        part of service_codesources, and is copied into the Silva Root when
+        SilvaExternalSources is installed.
+
       - 101103: make addables functionality available within any type
         of Container, not just Publications
 
