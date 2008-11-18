@@ -29,15 +29,15 @@ see images_to_the_right.xslt::
   xmlns:silva="http://infrae.com/ns/silva"
   xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
   version="1.0">
-  
+
  <!--
   An example of an alternative stylesheet for rendering Silva Documents.
   The above namespaces should not be changed. They could be added to for
   those who have extended Silva Document XML and used their own namespace.
   -->
-  
 
- <!--  
+
+ <!--
   This import gets the document with
   the normal renderers for all the xml elements that can occur in a
   Silva Document. These renderers are then overridden in this file.
@@ -46,13 +46,13 @@ see images_to_the_right.xslt::
 
   <xsl:import href="silvabase:doc_elements.xslt"/>
 
- <!-- 
+ <!--
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing
-  everything else. The match="/" matches the document element of the 
+  everything else. The match="/" matches the document element of the
   Silva xml (usually <silva>) and starts to build the html from there.
   -->
-  
+
   <xsl:template match="/">
     <table>
       <tr>
@@ -70,7 +70,7 @@ see images_to_the_right.xslt::
   Nothing special needs to be done with silva_document or content for our
   purposes here but it could for your own renderer.
   -->
-  
+
   <xsl:template match="silva:silva_document">
     <xsl:apply-templates />
   </xsl:template>
@@ -88,7 +88,7 @@ see images_to_the_right.xslt::
   </xsl:template>
 
  <!--
-  The metadata is ignored, except for the title. You can access all 
+  The metadata is ignored, except for the title. You can access all
   metadata fields here in the same manner.
   -->
 
@@ -119,7 +119,7 @@ see images_to_the_right.xslt::
       <img src="{@path}" />
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="doc:table" mode="images">
   </xsl:template>
 
@@ -128,10 +128,10 @@ see images_to_the_right.xslt::
   cell, all text() nodes are ignored, and the images are shown, as
   links if they have a link attribute, as plain images, if not.
   -->
-  
+
   <xsl:template match="text()" mode="images">
   </xsl:template>
-    
+
 
   <xsl:template match="doc:image[@link]" mode="images">
     <a href="{@link}">
@@ -147,11 +147,11 @@ see images_to_the_right.xslt::
  <!--
   These are all the overrides needed, but one could quite easily pick
   certain elements and override them to render them differently. I would
-  start with copying the xsl:template for the element from 
+  start with copying the xsl:template for the element from
   doc_elements.xslt to your own stylesheet, and modify it there until
-  it does what you want. 
+  it does what you want.
   -->
-  
+
  </xsl:stylesheet>
 
 (To see how the normal rendering is done with XSLT, have a look at
@@ -164,9 +164,9 @@ future versions of Silva, when new elements may be added.
 
 The best and cleanest way to add new renderers, is to register them from
 an extension. That way you can upgrade Silva itself while leaving your
-custom renderers intact. See the SilvaRendererDemo Extension 
+custom renderers intact. See the SilvaRendererDemo Extension
 (http://cvs.infrae.com/SilvaRendererDemo/) for an example extension
-that registers two such renderers. The amount of code that has 
+that registers two such renderers. The amount of code that has
 to be written is very minimal.
 
 
@@ -204,9 +204,9 @@ from Products.Silva.transform.rendererreg import getRendererRegistry
 for your own renderer and modify the initialize method to register it::
 
   def initialize(context):
-    
+
       reg = getRendererRegistry()
-    
+
       reg.registerRenderer(
           'Silva Document',
           'Demo Document Renderer',
@@ -233,7 +233,7 @@ published.
 All content that has renderers registered for it can also be
 explicitly selected not use the new-style renderer but the "old" Silva
 system instead. This can be selected by using 'Do not use new-style
-renderer'. 
+renderer'.
 
 Finally, the default option is set to '(Default)'. This instructs the
 system to use the global policy for this content object. The default

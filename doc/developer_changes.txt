@@ -21,20 +21,20 @@ and a custom resolver will figure out where to find the file.
 VersionedContent revert_to_previous
 -----------------------------------
 
-The revert_to_previous macro in views/edit/VersionedContent/tab_status_macros 
+The revert_to_previous macro in views/edit/VersionedContent/tab_status_macros
 has been removed because it is no longer used.  You now use the 'manage
 versions' table on the status screen.  The API call for this functionality
-has also been removed. Make sure to update any extensions so that no 
+has also been removed. Make sure to update any extensions so that no
 reference to revert_to_previous or it's API is used.
 
 Edit tabs of content objects
 ----------------------------
 
-The edit tab framework has been refactored.  The old model was to define an 
+The edit tab framework has been refactored.  The old model was to define an
 "edit" script that renders the main content/controls of the content object.
 This was ineffecient as it caused a lot of code duplication (and non-standard
-methods), as well as a number of variable redefinitions.  The "edit" script 
-method has been deprecated in Silva 2.1.  This is to ease transition of 
+methods), as well as a number of variable redefinitions.  The "edit" script
+method has been deprecated in Silva 2.1.  This is to ease transition of
 content objects into the new method.
 
 The new method is much easier to use, and takes advantage of metal macros
@@ -45,14 +45,14 @@ converting the code to the primary macro in "views/macro_edit", and then
 using one of the layout macros.
 
 There is a primary macros in "macro_edit", "editor", and two layout macros:
-editor-three-col and editor-two-col, for three and two column layouts, 
-respectively.  Read the comments at the top of this file to see the slots 
+editor-three-col and editor-two-col, for three and two column layouts,
+respectively.  Read the comments at the top of this file to see the slots
 that can be overridden for the content object.
 
 VersionedContent types are a bit more challenging.  They use an intermediate
 macro which manages the "version" stuff in the tab.  For VersionedContent
-types that don't use kupu (e.g. Ghost, Link), 
-views/edit/VersionedContent/macro_tab_edit/macros/editor is used.  The 
+types that don't use kupu (e.g. Ghost, Link),
+views/edit/VersionedContent/macro_tab_edit/macros/editor is used.  The
 "editable" view of the tab (i.e. when the content isn't closed or only published)
 is defined by filling in the "editor_content" slot of the editor macro.  Either
 of the layout macros in "views/macro_edit" may be used.
@@ -71,8 +71,8 @@ The ZMI add list has always been incredibly cluttered.  This affects
 users new to Silva, as they're presented many different Silva content
 types when all they want is the "Silva Root", and all of the others won't work
 outside of a Silva Root.  Also, many Silva content types should only be
-added through the SMI.  This can create confusion when these types are added 
-from the ZMI, then fail to work.  This also creates clutter for site 
+added through the SMI.  This can create confusion when these types are added
+from the ZMI, then fail to work.  This also creates clutter for site
 administrators who need to search for a "Silva Code Source" amongst this large
 list of items that aren't ever applicable.
 
@@ -81,11 +81,11 @@ types are already setup to do this.  From Silva 2.1 on, the ZMI add list is
 now "clutter free".
 
 There are two types of Silva content objects, and there two ways to eliminate
-them from the ZMI.  The first method is used for content types that are 
+them from the ZMI.  The first method is used for content types that are
 registered through the Silva zcml extension (i.e. <silva:content> and
-<silva:versionedcontent>).  Both directives have the new boolean attribute 
-"zmi_addable", which controls whether the content object will appear in the 
-ZMI add list.  
+<silva:versionedcontent>).  Both directives have the new boolean attribute
+"zmi_addable", which controls whether the content object will appear in the
+ZMI add list.
 
 Here's an example for a content object that you want to have available in the ZMI
 add list:
@@ -98,18 +98,18 @@ add list:
   />
 
 The zmi_addable attribute is "false" by default, so it can be omitted from
-content (or versionedcontent) registration if you want the content omitted 
+content (or versionedcontent) registration if you want the content omitted
 from the ZMI add list.
 
 Note: even if zmi_addable is "true", the content will not appear in the
-ZMI add list of containers that aren't Silva objects (i.e. implement 
+ZMI add list of containers that aren't Silva objects (i.e. implement
 ISilvaObject).
 
-The second method is for objects that are registered via __init__.py.  
-Commonly, these objects are Silva services or Silva External Sources (e.g. 
+The second method is for objects that are registered via __init__.py.
+Commonly, these objects are Silva services or Silva External Sources (e.g.
 Code Sources).  The intent of hiding these from the ZMI add list is to hide
 these from the add list of containers that are not Silva objects, and/or outside
-the Silva Root (i.e. implement ISilvaObject).  A typical service is 
+the Silva Root (i.e. implement ISilvaObject).  A typical service is
 registered like this:
 
 def initialize(context):
@@ -157,9 +157,9 @@ in favor of events. A Simple example::
 
   Silva 1.6:
 
-  def manage_afterAdd(self, item, container): 
+  def manage_afterAdd(self, item, container):
     # do your stuff here
-    
+
   Silva 2.0:
 
     in your configure.zcml:
@@ -167,20 +167,20 @@ in favor of events. A Simple example::
       <subscriber
         for=".interfaces.IYourInterface
           zope.app.container.interfaces.IObjectMovedEvent"
-        handler=".YourContentClassModule.object_moved" 
+        handler=".YourContentClassModule.object_moved"
       />
 
     in YourContentClassModule.py
 
       def object_moved(object, event):
-          # these lines do some checks because of the way the zope events 
-          # work: 
+          # these lines do some checks because of the way the zope events
+          # work:
           # 1) If a folder is moved, the moved event is triggered for
-          # all its sub objects. In this example we do not want to handle only 
+          # all its sub objects. In this example we do not want to handle only
           # the event for the object itself.
-          # 
+          #
           # 2) the events subclass from eachother, which means, for instance,
-          # that move handlers are triggered for remove events too. We do not 
+          # that move handlers are triggered for remove events too. We do not
           # want to handle those here in this example.
 
           if object != event.object or IObjectRemovedEvent.providedBy(
@@ -205,7 +205,7 @@ This has changed to read like this::
   msg = _('the ${a} is ${b}', mapping={'a': 'cow', 'b': 'large'})
 
 ``set_mapping`` doesn't work anymore.
-  
+
 From 1.5 to 1.6
 ===============
 
@@ -285,7 +285,7 @@ require calling 'make silvamacros' in kupu/silva.
 
 An additional change made is that the FileSystemSite directories that used to
 be called 'kupu' and 'kupu_silva' (residing in the Silva root) are now called
-'service_kupu' and 'service_kupu_silva'. This will break existing Silva 
+'service_kupu' and 'service_kupu_silva'. This will break existing Silva
 extensions that implement a custom Kupu edit view. Make sure to update any
 URLs pointing to those objects in your extensions.
 
@@ -327,7 +327,7 @@ you probably can remove its use from the codebase entirely (the list
 would always be empty).
 
 activate(), deactivate()
-~~~~~~~~~~~~~~~~~~~~~~~~      
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 This method disappeared. It wasn't possible to deactive from the user
 interface before, and now it stopped being possible from code.
@@ -359,13 +359,13 @@ interfaces using the `implements` class annotation::
   from zope.interface import implements
 
   ...
- 
+
   class Foo:
       implements(IFoo)
 
 You can check whether an instance provides an interface (i.e. whether
 its class implements an interface or the interface directly provides
-an interface) using `providedBy` (in Zope 2 this used to be 
+an interface) using `providedBy` (in Zope 2 this used to be
 'isImplementedBy')::
 
   IFoo.providedBy(instance)
@@ -454,13 +454,13 @@ Here's an example of some ZCML registrations::
     provides=".interfaces.IIndexable"
     factory=".indexable.GhostIndexableAdapter"
     />
-  
+
   <adapter
     for="Products.Silva.interfaces.IContainer"
     provides=".interfaces.IIndexable"
     factory=".indexable.ContainerIndexableAdapter"
     />
-  
+
   <adapter
     for="Products.Silva.interfaces.ISilvaObject"
     provides=".interfaces.IIndexable"
@@ -563,7 +563,7 @@ From 1.0 to 1.1
 * XSLT support for document renderers. While this shouldn't break
   existing code, it opens up new possibilities for extension
   writers. You can register your own XSLT templates with Silva that
-  handle content rendering. Read doc/xslt_renderers_howto.txt for more   
+  handle content rendering. Read doc/xslt_renderers_howto.txt for more
   information
 
 * new parser in forms-based editor. The existing parser for bold,

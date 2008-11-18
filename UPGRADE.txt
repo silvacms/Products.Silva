@@ -2,25 +2,13 @@
 Upgrading Silva
 ===============
 
-Meta
-----
-
-Copyright (c) 2002-2008 Infrae. All rights reserved.  See also
-LICENSE.txt
-
-Valid for:  Silva 2.0.x
-Author:     Martijn Faassen, Jan-Wijbrand Kolman
-Email:      faassen@infrae.com, jw@infrae.com
-CVS:        $Revision: 1.61 $
-
 Introduction
 ------------
 
 This document contains generic upgrade instructions for minor and
 major version upgrades of Silva. For information about particular
 upgrade issues please read the ``Upgrade issues``_ section of this
-document. Reading this is strongly recommended! If you still run into
-trouble, please consult TROUBLESHOOTING.txt.
+document. Reading this is strongly recommended!
 
 Upgrades
 ========
@@ -31,7 +19,7 @@ Minor upgrades
 If you are upgrading Silva minor versions (1.1.1 to 1.1.2 for
 instance), you shouldn't need to do anything special; just install the
 updated Silva Products (the ``-all`` distribution) and restart
-Zope. 
+Zope.
 
 Note that it is a good idea to remove the previous versions of the
 Products before you install the new ones, even for small upgrades.
@@ -115,7 +103,7 @@ Apart from the regular 'upgrade' step, you'll have to upgrade to Zope
 2.7.8, as this is now the recommended Zope version. This Silva version will
 no longer work properly with Zope-2.7.7.
 
-A field has been added to the silva-extra metadata-set. To ensure that 
+A field has been added to the silva-extra metadata-set. To ensure that
 existing content keeps working, go to service_metdata in services, remove
 the silva-extra metadataset, go to service extensions and click refresh
 on Silva.
@@ -301,9 +289,6 @@ Especially there have been reports of an "AttributeError" with an
 error value of "__hash__" after upgrading which seemed to be caused by
 this failure to remove previous versions.
 
-Please remove (or move away) any old installation of Silva (and its
-companion products, see PRODUCTS.txt for a list) before unpacking the
-new version in your Products directory to avoid any problems.
 
 
 

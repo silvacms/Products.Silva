@@ -1,39 +1,28 @@
-Copyright (c) 2002-2008 Infrae. All rights reserved.
-See also LICENSE.txt
-
-Meta::
-  
-  Valid for:  Silva 2.0.x
-  Author:     Martijn Faassen
-  Email:      faassen@infrae.com
-  CVS:        $Revision: 1.5 $
-
-=======================
 Silva maintenance guide
 =======================
 
-This document contains information about maintaining a Silva instance. Its
-target are system administrators. For information about installing Silva,
-see INSTALL.txt. For information about non-maintenance issues, see
-TROUBLESHOOTING.txt.
+This document contains information about maintaining a Silva
+instance. Its target are system administrators. For information about
+installing Silva, see INSTALL.txt.
 
 Solving version bloat
 ---------------------
 
-Each time a user creates a new version of any VersionedContent object (e.g.
-Silva Document) a new Version object is created inside that object. This can
-potentially result in a large number of Version objects getting stored in
-the ZODB, and since rather than diffs the whole contents of a Version is
-copied when a new Version is created, this might add up to a firm amount of
-disk space used.
+Each time a user creates a new version of any VersionedContent object
+(e.g.  Silva Document) a new Version object is created inside that
+object. This can potentially result in a large number of Version
+objects getting stored in the ZODB, and since rather than diffs the
+whole contents of a Version is copied when a new Version is created,
+this might add up to a firm amount of disk space used.
 
-Since version 1.2 Silva provides functionality to remove Version objects
-from VersionedContent, but the interface is not very useful if you have a
-large setup and want to get rid of all unused Versions, so there is some
-additional functionality available, in the form of an adapter (so part of
-the API, not directly callable) to clean up all older versions at once. To
-trigger this functionality, you will have to write a Python script (on the
-Silva root, from the ZMI) with the following contents:
+Since version 1.2 Silva provides functionality to remove Version
+objects from VersionedContent, but the interface is not very useful if
+you have a large setup and want to get rid of all unused Versions, so
+there is some additional functionality available, in the form of an
+adapter (so part of the API, not directly callable) to clean up all
+older versions at once. To trigger this functionality, you will have
+to write a Python script (on the Silva root, from the ZMI) with the
+following contents::
 
   from Products.Silva.adapters.cleanup import getCleanupVersionsAdapter
   root = context.get_root()
@@ -42,29 +31,31 @@ Silva root, from the ZMI) with the following contents:
 
   return '\n'.join(['%s: %s' % items for items in result.items()])
 
-When called (note that it requires Manager permissions) it will traverse the
-full Silva tree to find versions other than the current editable, approved,
-published or last closed ones of each VersionedContent object and remove them.
-Note that this can take a LOT of time to execute.
+When called (note that it requires Manager permissions) it will
+traverse the full Silva tree to find versions other than the current
+editable, approved, published or last closed ones of each
+VersionedContent object and remove them.  Note that this can take a
+LOT of time to execute.
 
 Triggering publication and expiration
 -------------------------------------
 
-The Silva application is HTTP based, and doesn't have a scheduling system to
-trigger maintenance scripts out-of-the-box, which makes that scheduling
-tasks is impossible. HTTP applications generally only do anything if there's
-an HTTP request, so maintenance tasks are usually ran on HTTP requests too.
-For certain tasks, this can lead to problems, for instance consider the 
-following issue with Silva's workflow:
+The Silva application is HTTP based, and doesn't have a scheduling
+system to trigger maintenance scripts out-of-the-box, which makes that
+scheduling tasks is impossible. HTTP applications generally only do
+anything if there's an HTTP request, so maintenance tasks are usually
+ran on HTTP requests too.  For certain tasks, this can lead to
+problems, for instance consider the following issue with Silva's
+workflow:
 
-When a document is approved and the publication date has passed, the document
-is not yet published, since this requires an HTTP request to the document to 
-get triggered. This means that the status of certain documents may not always
-be up-to-date, which for certain bits of functionality (e.g. searching) might
-have incorrect results.
+When a document is approved and the publication date has passed, the
+document is not yet published, since this requires an HTTP request to
+the document to get triggered. This means that the status of certain
+documents may not always be up-to-date, which for certain bits of
+functionality (e.g. searching) might have incorrect results.
 
 To solve this problem, you can call an external URL from a cron (or similar)
-application:
+application::
 
   http://localhost/silva/status_update
 

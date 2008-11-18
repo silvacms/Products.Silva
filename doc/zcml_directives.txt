@@ -11,7 +11,7 @@ This document was created with the intent of providing an easier to use
 zcml reference.  For more information, see the interfaces in
 Products/Silva/zcml/directives.py
 
-There are currently three Silva zcml directives, silva:extension, 
+There are currently three Silva zcml directives, silva:extension,
 silva:content and silva:versionedcontent.  The silva:versionedcontent directive
 extends silva:content, and so all attributes of silva:content are available
 to silva:versionedcontent.
@@ -20,7 +20,7 @@ silva:extension
 ---------------
 
 This directive is used to register a Silva extension.  A Silva extension is a
-Zope 2 product, so this directive would be placed in that product's 
+Zope 2 product, so this directive would be placed in that product's
 configure.zcml file.
 
  attributes:
@@ -28,7 +28,7 @@ configure.zcml file.
  * name - the name of the extension, which is identical to the name of the
    product directory.
 
- * title - the title of the extension.  This is the title or the brief 
+ * title - the title of the extension.  This is the title or the brief
    description of the extension and will appear in the extensions service.
 
  * depends - a space-separated list of other Silva extensions this extension
@@ -79,6 +79,6 @@ available in this one, so only the new attributes will be listed below.
 
  * version_factory - optional - like content_factory, this attribute
    points to a custom old-style (Zope2 / pre Silva-2.0) manage_addContentVersion
-   function. This can be disregarded if your content type can use the default 
+   function. This can be disregarded if your content type can use the default
    factory method (which most content types can.)
-   
+
