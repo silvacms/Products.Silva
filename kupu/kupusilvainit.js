@@ -220,7 +220,7 @@ function initSilvaKupu(iframe) {
     kupu.registerTool('dltool', dltool);
 
     var toctool = new SilvaTocTool(
-        'kupu-toolbox-toc-depth', 'kupu-toc-add-button', 'kupu-toc-del-button',
+        'kupu-toolbox-toc-depth', 'kupu-toc-del-button',
         'kupu-toolbox-toc', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('toctool', toctool);
     

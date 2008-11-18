@@ -368,11 +368,11 @@
                 <td>
                   <table width="100%" border="0" cellspacing="0">
                     <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
+                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-name"/></td>
                     </tr>
                     <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns="http://www.w3.org/1999/xhtml" tal:omit-tag="" i18n:translate="">index title</span></a></td>
+                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
                       <td><input class="store" type="text" id="kupu-index-title"/></td>
                     </tr>
                   </table>
@@ -669,6 +669,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">table of contents</h1>
 
       <div class="kupu-tooltray">
+        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "table of contents" element has been deprecated and will be removed in a later version of Silva.  Use the TOC external source instead.</p>
         <form name="kupu_toc_form" onsubmit="return false;">
           <select id="kupu-toolbox-toc-depth">
             <option value="1">1 level</option>
@@ -682,7 +683,7 @@
             <option value="9">9 levels</option>
             <option value="-1">unlimited</option>
           </select>
-          <input class="button" type="button" value="add element" id="kupu-toc-add-button" i18n:attributes="value"/>
+          
           <input class="button remover" type="button" value="remove" id="kupu-toc-del-button" i18n:attributes="value"/>
         </form>
       </div>

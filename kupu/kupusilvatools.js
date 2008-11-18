@@ -1437,9 +1437,8 @@ SilvaIndexTool.prototype.createContextMenuElements = function(selNode, event) {
     };
 };
 
-function SilvaTocTool(depthselectid, addbuttonid, delbuttonid, toolboxid, plainclass, activeclass) {
+function SilvaTocTool(depthselectid, delbuttonid, toolboxid, plainclass, activeclass) {
     this.depthselect = getFromSelector(depthselectid);
-    this.addbutton = getFromSelector(addbuttonid);
     this.delbutton = getFromSelector(delbuttonid);
     this.toolbox = getFromSelector(toolboxid);
     this.plainclass = plainclass;
@@ -1451,7 +1450,6 @@ SilvaTocTool.prototype = new KupuTool;
 
 SilvaTocTool.prototype.initialize = function(editor) {
     this.editor = editor;
-    addEventHandler(this.addbutton, 'click', this.addOrUpdateToc, this);
     addEventHandler(this.depthselect, 'change', this.updateToc, this);
     addEventHandler(this.delbutton, 'click', this.deleteToc, this);
     addEventHandler(editor.getInnerDocument(), 'keypress', this.handleKeyPressOnToc, this);
@@ -1502,7 +1500,6 @@ SilvaTocTool.prototype.updateState = function(selNode, event) {
     if (toc) {
         var depth = toc.getAttribute('toc_depth');
         selectSelectItem(this.depthselect, depth);
-        this.addbutton.style.display = 'none';
         this.delbutton.style.display = 'inline';
         this._inside_toc = true;
         if (this.toolbox) {
@@ -1514,7 +1511,6 @@ SilvaTocTool.prototype.updateState = function(selNode, event) {
     } else {
         this.depthselect.selectedIndex = 0;
         this.delbutton.style.display = 'none';
-        this.addbutton.style.display = 'inline';
         this._inside_toc = false;
         if (this.toolbox) {
             this.toolbox.className = this.plainclass;
@@ -1536,14 +1532,17 @@ SilvaTocTool.prototype.addOrUpdateToc = function(event, depth) {
         };
         toc.appendChild(doc.createTextNode(toctext));
     } else {
-        // create a new toc
+      /* no more new tocs, toc should now be created via the TOC
+         external source */
+      alert("The TOC element has been deprecated and will be removed in a later release of Silva.  Use the TOC external source to add a 'Table of Contents' element to this document");
+      /*// create a new toc
         var div = doc.createElement('div');
         div.setAttribute('toc_depth', depth);
         div.setAttribute('is_toc', 1);
         div.className = 'toc';
         var text = doc.createTextNode(toctext);
         div.appendChild(text);
-        this.editor.insertNodeAtSelection(div);
+        this.editor.insertNodeAtSelection(div);*/
     };
     this.editor.content_changed = true;
 };
