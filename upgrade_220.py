@@ -46,7 +46,7 @@ class RootUpgrader(BaseUpgrader):
             ism.makeSite()
             setSite(obj)
 
-        if not hasattr(root, 'service_ids'):
+        if not hasattr(obj, 'service_ids'):
             configureIntIds(obj)
 
         reg = obj.service_view_registry
