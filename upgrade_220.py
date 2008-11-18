@@ -3,8 +3,10 @@
 # $Id$
 
 # zope
+from zope.app.component.interfaces import ISite
 from zope.app.component.hooks import setSite
 
+from Products.Five.site.interfaces import IFiveSiteManager
 from Products.SilvaLayout.install import resetMetadata # Should be in Silva ?
 import OFS.Image
 
@@ -31,12 +33,21 @@ VERSION='2.2a1'
 class RootUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
+        # If it's a Five site manager disable it first.
+        if ISite.providedBy(obj):
+            sm = obj.getSiteManager()
+            if IFiveSiteManager.providedBy(sm):
+                from Products.Five.site.localsite import disableLocalSiteHook
+                disableLocalSiteHook(obj)
+
         # Activate local site, add an intid service.
         ism = ISiteManager(obj)
         if not ism.isSite():
             ism.makeSite()
             setSite(obj)
-        configureIntIds(obj)
+
+        if not hasattr(root, 'service_ids'):
+            configureIntIds(obj)
 
         reg = obj.service_view_registry
 
