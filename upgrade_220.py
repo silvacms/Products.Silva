@@ -59,6 +59,9 @@ class RootUpgrader(BaseUpgrader):
         reg.unregister('add', 'Silva Document')
         reg.unregister('preview', 'Silva Document Version')
 
+        # Delete unused Silva views
+        reg.unregister('public', 'Silva AutoTOC')
+
         # Clean SilvaLayout mess
         if hasattr(obj, "__silva_layout_installed__"):
             if 'silva-layout-vhost-root' in obj.service_metadata.getCollection().getMetadataSets():
