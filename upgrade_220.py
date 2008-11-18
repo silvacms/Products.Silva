@@ -97,6 +97,11 @@ class ImagesUpgrader(BaseUpgrader):
         # Add stuff here
         data = None
         hires_image = obj.hires_image
+        if hires_image is None:
+            hires_image = obj.image
+        if hires_image is None:
+            # Can't do anything
+            return obj
         if hires_image.meta_type == 'Image':
             data = StringIO(str(hires_image.data))
         elif hires_image.meta_type == 'ExtImage':
