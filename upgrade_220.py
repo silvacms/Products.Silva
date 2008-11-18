@@ -32,22 +32,26 @@ class RootUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
         # Activate local site, add an intid service.
-        ISiteManager(obj).makeSite()
-        setSite(obj)
+        ism = ISiteManager(obj)
+        if not ism.isSite():
+            ism.makeSite()
+            setSite(obj)
         configureIntIds(obj)
 
         reg = obj.service_view_registry
 
         # Delete unused Silva Document service
-        obj.manage_delObjects(['service_doc_previewer', 'service_nlist_previewer',])
-        obj.manage_delObjects(['service_sub_previewer',])
+        for s in ['service_doc_previewer', 'service_nlist_previewer','service_sub_previewer',]:
+            if hasattr(obj, s):
+                obj.manage_delObjects([s,])
         reg.unregister('public', 'Silva Document Version')
         reg.unregister('add', 'Silva Document')
         reg.unregister('preview', 'Silva Document Version')
 
         # Clean SilvaLayout mess
         if hasattr(obj, "__silva_layout_installed__"):
-            resetMetadata(obj, ['silva-layout-vhost-root'])
+            if 'silva-layout-vhost-root' in obj.service_metadata.getCollection().getMetadataSets():
+                resetMetadata(obj, ['silva-layout-vhost-root'])
             reg.unregister('edit', 'LayoutConfiguration')
             reg.unregister('public', 'LayoutConfiguration')
             reg.unregister('add', 'LayoutConfiguration')
@@ -111,9 +115,6 @@ ImagesUpgraer = ImagesUpgrader(VERSION, 'Silva Image')
 class TOCElementUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            'Upgrading TOC Elements in: %s' % ('/'.join(obj.getPhysicalPath())))
         if IVersionedContent.providedBy(obj):
             vm = version_management.getVersionManagementAdapter(obj)
             for version in vm.getVersions():
@@ -125,6 +126,10 @@ class TOCElementUpgrader(BaseUpgrader):
 
     def _upgrade_helper(self, obj, doc_el):
         tocs = doc_el.getElementsByTagName('toc')
+        if tocs:
+            zLOG.LOG(
+                'Silva', zLOG.INFO,
+                'Upgrading TOC Elements in: %s' % ('/'.join(obj.getPhysicalPath())))
         path = '/'.join(obj.get_container().getPhysicalPath())
         for t in tocs:
             depth = t.getAttribute('toc_depth')

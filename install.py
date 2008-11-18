@@ -96,7 +96,9 @@ def installFromScratch(root):
 def configureIntIds(root):
     # Add an IntIDs should be one of the first things to do (so others
     # objects register themself after)
-
+    if hasattr(root, 'service_ids'):
+        #the intid service has already been setup
+        return
     root._setObject('service_ids', OFSIntIds())
     service = getattr(root, 'service_ids')
     interface.alsoProvides(service, IInvisibleService)
