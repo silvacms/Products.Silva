@@ -14,7 +14,7 @@ from cStringIO import StringIO
 # silva imports
 from Products.Silva.install import configureIntIds
 from Products.Silva.interfaces import IVersionedContent, ISiteManager
-from Products.Silva.upgrade import BaseUpgrader
+from Products.Silva.upgrade import BaseUpgrader,AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
 import zLOG
@@ -210,6 +210,5 @@ class TOCElementUpgrader(BaseUpgrader):
 
             t.parentNode.replaceChild(cs,t)
 
-
-TOCElementUpgrader = TOCElementUpgrader(VERSION, 'Silva Document')
+TOCElementUpgrader = TOCElementUpgrader(VERSION, AnyMetaType)
 ###also needed for news and agenda items

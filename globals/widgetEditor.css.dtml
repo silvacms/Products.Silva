@@ -58,8 +58,10 @@ table.listing td.invisible {
   border: none ! important;
 }
 
-td.invisible a {
+table.listing td.invisible a {
   text-decoration : underline;
+  /* override the display: block in silva.css */
+  display: inline;
 }
 
 
