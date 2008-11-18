@@ -10,7 +10,9 @@ from OFS.Folder import Folder as BaseFolder
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
+from OFS.Uninstalled import BrokenClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -642,7 +644,8 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')
     def get_ordered_publishables(self):
-        return map(self._getOb, self._ordered_ids)
+        return filter(lambda o: not isinstance(o, BrokenClass),
+                      map(self._getOb, self._ordered_ids))
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_asset_types')
