@@ -45,7 +45,7 @@ class AutoTOC(Content, SimpleItem):
         #possible values: 'silva', 'alpha', 'reversealpha', 'chronmod', 'rchronmod'
         self._sort_order = 'silva'
         self._show_icon = False
-        
+
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
@@ -61,7 +61,7 @@ class AutoTOC(Content, SimpleItem):
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'can_set_title')
-    def can_set_title(self):        
+    def can_set_title(self):
         """always settable"""
         # XXX: we badly need Publishable type objects to behave right.
         return 1
@@ -69,7 +69,7 @@ class AutoTOC(Content, SimpleItem):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_toc_depth')
     def set_toc_depth(self, depth):
         self._toc_depth = depth
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'toc_depth')
     def toc_depth(self):
@@ -77,7 +77,7 @@ class AutoTOC(Content, SimpleItem):
         if not hasattr(self, '_toc_depth'):
             self._toc_depth = -1
         return self._toc_depth
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'get_silva_types')
     def get_silva_types(self):
         st = self.get_silva_addables_allowed_in_publication()
