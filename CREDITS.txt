@@ -18,6 +18,7 @@ Infrae Silva team:
   Daniel Nouri <daniel@infrae.com>
   Jasper Op de Coul <jasper@infrae.com>
   Wim Boucqueart <wim@infrae.com>
+  Sylvain Viollon <sylvain@infrae.com>
   Torvald de Boskat <torvald@infrae.com>
 
 External developers:
@@ -27,7 +28,7 @@ External developers:
   Joachim Schmitz <js@aixtraware.de>
   Clemens Klein-Robbenhaar <robbenhaar@espresto.com>
   Alexander Limi <alexander@limi.net>
-  Holger Krekel <hpk@trillke.net>    
+  Holger Krekel <hpk@trillke.net>
   Jan Smith <jan@curpheymedia.com>
   Brad Bollenbach <bradb@bbnet.ca>
   Roman Joost <roman@bromeco.de>
