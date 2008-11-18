@@ -51,6 +51,7 @@ class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
         self.assertEquals(str(image.getOrientation()), "portrait")
         image.set_web_presentation_properties('JPEG', '100x100', '')
         self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
+        self.failUnless(image.tag() is not None)
 
         if not havePIL:
             return

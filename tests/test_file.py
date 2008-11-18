@@ -13,7 +13,7 @@ from Products.Silva import File
 
 class FileTest(SilvaTestCase.SilvaFileTestCase):
 
-    def _test_file(self, full_view=True):
+    def _test_file(self):
         file_handle = helpers.openTestFile('photo.tif')
         file_data = file_handle.read()
         file_size = file_handle.tell()
@@ -25,10 +25,11 @@ class FileTest(SilvaTestCase.SilvaFileTestCase):
         self.failUnless(verifyObject(interfaces.IAsset, file))
         self.failUnless(verifyObject(interfaces.IFile, file))
         self.assertEqual(file_size, file.get_file_size())
+        self.failUnless(file.get_download_url() is not None)
+        self.failUnless(file.tag() is not None)
 
         data = component.queryMultiAdapter((file, file.REQUEST), name='index')()
-        if full_view is True:
-            self.assertEqual(file_data, self.get_request_data(data))
+        self.assertEqual(file_data, self.get_request_data(data))
 
         assetdata = interfaces.IAssetData(file)
         self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
@@ -50,7 +51,7 @@ class FileTest(SilvaTestCase.SilvaFileTestCase):
     def test_file_extfile(self):
         if File.FILESYSTEM_STORAGE_AVAILABLE:
             self.root.service_files.storage = File.FileSystemFile
-            self._test_file(False)
+            self._test_file()
 
 
 import unittest

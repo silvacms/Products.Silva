@@ -421,7 +421,7 @@ class FileSystemFile(File):
     security.declareProtected(
         SilvaPermissions.View, 'get_download_url')
     def get_download_url(self):
-        return self.static_url()
+        return self._file.static_url()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
@@ -444,7 +444,7 @@ class FileSystemFileView(silvaviews.Template):
     def render(self):
         self.response.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
-        return self.context._file.index_html(self.request)
+        return self.context._file.index_html(REQUEST=self.request, RESPONSE=self.response)
 
 
 def FileStorageTypeVocabulary(context):

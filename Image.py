@@ -503,7 +503,7 @@ class Image(Asset):
             image = self.image
         if interfaces.IFileSystemFile.providedBy(image):
             # apache rewrite in effect
-            img_src = image.static_url()
+            img_src = image.get_download_url()
         return image, img_src
 
     def _image_is_hires(self):

@@ -942,6 +942,7 @@ class IImage(IAsset):
     def set_image(file):
         """Set the image object.
         """
+        pass
 
     def set_web_presentation_properties(web_format, web_scale, web_crop):
         """Sets format and scaling for web presentation.
@@ -955,10 +956,17 @@ class IImage(IAsset):
 
         Automaticaly updates cached web presentation image.
         """
+        pass
+
+    def tag(hires=0, thumbnail=0, **kw):
+        """Generate a image tag.
+        """
+        pass
 
     def getOrientation():
         """Returns translated Image orientation (string).
         """
+        pass
 
     def getDimensions(img=None):
         """Returns width, heigt of (hi res) image.
@@ -967,14 +975,17 @@ class IImage(IAsset):
         Return 0, 0 if there is no image,
         Returns width, height otherwise.
         """
+        pass
 
     def getFormat():
         """Returns image format.
         """
+        pass
 
     def getImage(hires=1, webformat=0):
         """Return image data.
         """
+        pass
 
 
 ###############################################################
