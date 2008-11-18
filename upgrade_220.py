@@ -99,7 +99,7 @@ class ImagesUpgrader(BaseUpgrader):
         hires_image = obj.hires_image
         if hires_image.meta_type == 'Image':
             data = StringIO(str(hires_image.data))
-        elif hires_image.meta_type == 'Ext Image':
+        elif hires_image.meta_type == 'ExtImage':
             filename = hires_image._get_fsname(hires_image.get_filename())
             data = open(filename, 'rb')
         elif hires_image.meta_type == 'Silva File':
