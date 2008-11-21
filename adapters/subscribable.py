@@ -1,5 +1,6 @@
 # Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
+# $Id$
 
 # Python
 import md5
@@ -7,6 +8,7 @@ import time, datetime
 
 # Zope 2
 import Globals
+import Acquisition
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, allow_module
 from BTrees.OOBTree import OOBTree
 
@@ -38,7 +40,7 @@ class Subscription(object):
     def contentSubscribedTo(self):
         return self._contentsubscribedto
 
-class Subscribable(grok.Adapter):
+class Subscribable(Acquisition.Explicit, grok.Adapter):
     """Subscribable adapters potentially subscribable content and container
     Silva objects and encapsulates the necessary API for
     handling subscriptions.
@@ -46,6 +48,7 @@ class Subscribable(grok.Adapter):
 
     grok.context(interfaces.IVersionedContent)
     grok.implements(interfaces.ISubscribable)
+    grok.provides(interfaces.ISubscribable)
 
     security = ClassSecurityInfo()
 
@@ -110,7 +113,7 @@ class Subscribable(grok.Adapter):
             # Keep a marker for the object with explicit subscribability set.
             marker = len(subscribables)
         # Use aq_inner first, to unwrap the adapter-containment.
-        parent = self.context.aq_parent
+        parent = self.context.aq_inner.aq_parent
         subscr = getSubscribable(parent)
         return subscr._buildSubscribablesList(subscribables, marker)
 
@@ -229,4 +232,7 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.subscribable')
 module_security.declareProtected(
     SilvaPermissions.ApproveSilvaContent, 'getSubscribable')
 def getSubscribable(context):
-    return interfaces.ISubscribable(context, None)
+    adapter = interfaces.ISubscribable(context, None)
+    if adapter is not None:
+        return adapter.__of__(context)
+    return None
