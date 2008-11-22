@@ -18,8 +18,9 @@
 ** silva table styles
 **   various table-like layouts
 ** form controls
-**   preview publisher
-**   subscription forms
+** subscription forms
+** login/openid forms
+** various selectors
 ** css2 selectors
 */
 
@@ -484,20 +485,6 @@ input[type="submit"]:hover, button[type="button"]:hover {
   background-color: #f7f8f9;
 }
 
-div.public a.transport {
-  padding:0.5em 0; /* make a bigger link target for more details in error page */
-}
-
-/* ____________________________ preview publisher _______ */
-
-div.publisher {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-
 /* ____________________________ subscription forms _______ */
 
 div.subscriptionform, div.cancellationform {
@@ -525,7 +512,7 @@ div.backlink {
   margin-top: 1.5em;
 }
 
-/* _________________________________________________ login/openid forms _____ */ 
+/* ____________________________ login/openid forms _____ */ 
 
 div.access label {
   display:block;
@@ -554,6 +541,19 @@ table.access {
 
 table.access input {
   margin-top:0.5em;
+}
+
+/* ____________________________ various selectors _______ */
+
+/* render a bigger link target for more details in the error page */
+div.public a.transport {
+  padding:0.5em 0; 
+}
+
+/* lose the bullets in the search results ul */
+div.searchresults ul {
+  list-style-type:none;
+  padding-left:0;
 }
 
 /* _____________________________________________________ CSS2 selectors _____ */ 
