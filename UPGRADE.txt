@@ -72,6 +72,22 @@ Steps to take during a major Silva upgrade:
   retrieves files cached by the browser from a previous version of
   Silva. Clearing the browser cache should help.
 
+Upgrading from Silva 2.1 to Silva 2.2
+----------------------
+
+The "table of contents" element in kupu and the forms-based editor
+has been deprecated, in favor of a table of contents codesource.  
+An upgrader for Silva 2.2 content upgrade converts any and all TOC
+elements in silvaxml into this code source.  For large silva sites,
+this upgrader may cause the Silva 2.2 content upgrade to take a long
+time.  As always during upgrades, be sure to disable access to
+silva sites!
+
+Upgrading from Silva 2.0 to Silva 2.1
+-------------------------------------
+
+Zope 2.11.1 or later is required to run Silva 2.1
+
 Upgrading from Silva 1.6 to Silva 2.0
 -------------------------------------
 

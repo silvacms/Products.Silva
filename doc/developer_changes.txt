@@ -9,6 +9,17 @@ Please refer to the Silva developer documentation:
 
   http://docs.infrae.com/silva/index.html
 
+Important upgrade note
+----------------------
+
+The "table of contents" element in kupu and the forms-based editor
+has been deprecated, in favor of a table of contents codesource.  
+There is an upgrader for Silva 2.2 which converts any and all TOC
+elements in silvaxml into this code source.  For large silva sites,
+this upgrader may cause the Silva 2.2 content upgrade to take a long
+time.  As always during upgrades, be sure to disable access to
+silva sites!
+
 
 From 2.0 to 2.1
 ===============
