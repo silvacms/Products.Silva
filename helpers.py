@@ -4,17 +4,14 @@
 
 # Zope
 from zope.interface import implements
-from AccessControl import ModuleSecurityInfo
+from Products.MailHost.MailHost import _encode, _mungeHeaders
 
-# Silva 
-from Products.Silva.interfaces import IUpgrader
+# Silva
+from Products.Silva.interfaces import IUpgrader, IContainer
+from Products.Silva.interfaces import ISilvaObject, IVersioning
 
-# python
+# Python
 import urllib
-
-from interfaces import ISilvaObject, IVersioning, IContainer
-
-module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
 def add_and_edit(self, id, REQUEST, screen='manage_main'):
     """Helper function to point to the object's management screen if
@@ -33,6 +30,7 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
     else:
         REQUEST.RESPONSE.redirect(u+'/manage_main')
 
+
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
     """
@@ -42,7 +40,8 @@ def unapprove_helper(object):
     if IContainer.providedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
-    
+
+
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
     """
@@ -58,22 +57,25 @@ def unapprove_close_helper(object):
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
 
+
 # this is a bit of a hack; using implementation details of ParsedXML..
 from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAttr
 
 translateCdata = _translateCdata
 translateCdataAttr = _translateCdataAttr
 
+
 def fix_content_type_header(uploaded_file):
     """Deletes the content-type header on the uploaded_file.
-    
+
     This ensures consistent mimetype assignment for the Silva application
     since Zope will now fallback to the Python database for resolving
     a mimetype.
     """
     if hasattr(uploaded_file, 'headers'):
-        if uploaded_file.headers.has_key('content-type'):            
+        if uploaded_file.headers.has_key('content-type'):
             del uploaded_file.headers['content-type']
+
 
 # this class used to be in SilvaDocument.upgrade, but was moved
 # here when Folder._to_folder_or_publication_helper began using it.
@@ -91,7 +93,7 @@ class SwitchClass:
        This class conforms to the Silva upgrader API, in that you
        call class.upgrade(obj) to upgrade obj, and the upgraded
        obj is returned"""
-    
+
     implements(IUpgrader)
 
     def __init__(self, new_class, args=(), kwargs={}):
@@ -107,9 +109,10 @@ class SwitchClass:
         setattr(container, obj_id, new_obj)
         new_obj = getattr(container, obj_id)
         return new_obj
-   
+
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
+
 
 #make a container_filter.  See doc/developer_changes for more info
 # basically, this returns a closure that can be used for a container filter

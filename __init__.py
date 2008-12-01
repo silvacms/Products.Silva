@@ -37,7 +37,7 @@ try:
     MAILDROPHOST_AVAILABLE = True
 except ImportError:
     MAILDROPHOST_AVAILABLE = False
-    
+
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
@@ -49,10 +49,10 @@ def initialize(context):
     from Products.Silva.fssite import FSPageTemplate
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
-    
+
     from Products.Silva.silvaxml import xmlexport, xmlimport
-    from Products.Silva.transform.renderer import defaultregistration     
-    
+    from Products.Silva.transform.renderer import defaultregistration
+
     import Folder, Root
     import Publication, Ghost, File, Link
     import GhostFolder
@@ -82,7 +82,7 @@ def initialize(context):
         container_filter = makeContainerFilter(only_outside_silva=True)
         )
     registerTypeForMetadata(Root.Root.meta_type)
-    
+
     context.registerClass(
         ExtensionService.ExtensionService,
         constructors = (ExtensionService.manage_addExtensionService,),
@@ -140,7 +140,7 @@ def initialize(context):
 
     context.registerClass(
         SidebarService.SidebarService,
-        constructors = (SidebarService.manage_addSidebarServiceForm, 
+        constructors = (SidebarService.manage_addSidebarServiceForm,
                         SidebarService.manage_addSidebarService),
         icon = "www/sidebar_service.png",
         container_filter = makeContainerFilter()
@@ -160,21 +160,21 @@ def initialize(context):
         icon = "www/typochars_service.png",
         container_filter = makeContainerFilter()
         )
-    
-    # register xml import functions (old style XML importer)	 
-    # we let the xml import functionality of Publication handle any 	 
+
+    # register xml import functions (old style XML importer)
+    # we let the xml import functionality of Publication handle any
     # root elements, since a Silva instance can not import another root
-    importer_registry.register_tag('silva_root', 	 
+    importer_registry.register_tag('silva_root',
                                    Publication.xml_import_handler)
-    importer_registry.register_tag('silva_publication', 	 
-                                   Publication.xml_import_handler) 	 
-    importer_registry.register_tag('silva_folder', 	 
-                                   Folder.xml_import_handler) 	 
-    importer_registry.register_tag('silva_ghostfolder', 	 
-                                   GhostFolder.xml_import_handler) 	 
-    importer_registry.register_tag('silva_link', 	 
+    importer_registry.register_tag('silva_publication',
+                                   Publication.xml_import_handler)
+    importer_registry.register_tag('silva_folder',
+                                   Folder.xml_import_handler)
+    importer_registry.register_tag('silva_ghostfolder',
+                                   GhostFolder.xml_import_handler)
+    importer_registry.register_tag('silva_link',
                                    Link.xml_import_handler)
-    
+
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
@@ -201,16 +201,16 @@ def initialize(context):
     #------------------------------
     # Initialize the XML registries
     #------------------------------
-    
+
     xmlexport.initializeXMLExportRegistry()
     xmlimport.initializeXMLImportRegistry()
-    
+
     #-------------------------------------
     # Initialize the Renderer Registration
     #-------------------------------------
 
     defaultregistration.registerDefaultRenderers()
-    
+
     #----------------------------------------
     # Initialize subscription feature, part 2
     #----------------------------------------
@@ -234,7 +234,7 @@ def initialize(context):
     #        'The MaildropHost is available and could be used for mail delivery. '
     #        'If the MaildropHost is indeed in use, please be sure to start '
     #        'the seperate mail delivery process.'))
-    
+
 #------------------------------------------------------------------------------
 # External Editor support
 #------------------------------------------------------------------------------
@@ -255,7 +255,7 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch', 'adapters', 
+    return name in ('mangle', 'batch', 'adapters',
                         'version_management', 'path')
 
 from AccessControl import allow_module
@@ -270,6 +270,7 @@ allow_module('Products.Silva.adapters.zipfileimport')
 allow_module('Products.Silva.adapters.path')
 allow_module('Products.Silva.roleinfo')
 allow_module('Products.Silva.i18n')
+allow_module('Products.Silva.mail')
 
 def initialize_icons():
     mimeicons = [
@@ -341,13 +342,13 @@ def initialize_upgrade():
 
     from Products.Silva import upgrade_110
     upgrade_110.initialize()
-    
+
     from Products.Silva import upgrade_120
     upgrade_120.initialize()
 
     from Products.Silva import upgrade_130
     upgrade_130.initialize()
-    
+
     from Products.Silva import upgrade_140
     upgrade_140.initialize()
 

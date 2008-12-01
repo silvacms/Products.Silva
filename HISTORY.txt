@@ -7,6 +7,10 @@ Silva changes
 
     Features added:
 
+      - Add a function sendmail which can send mail using Mailhost and
+        Maildrophost in Zope 2.11 (otherwise Maildrophost is broken in
+        Zope 2.11).
+
       - Made the public page link in the tab space visible, styled as
         a tab.
 
