@@ -8,7 +8,7 @@ from Products.MailHost.MailHost import _encode, _mungeHeaders
 
 module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
-module_security.declareProtected('View', 'sendmail')
+module_security.declareProtected('Use mailhost services', 'sendmail')
 def sendmail(mh, message, mto=None, mfrom=None, subject=None):
     """Send a fraking mail, should work with regular Zope Mailhost,
     and MaildropHost.
