@@ -34,7 +34,7 @@ try:
     MAILDROPHOST_AVAILABLE = True
 except ImportError:
     MAILDROPHOST_AVAILABLE = False
-    
+
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
@@ -46,9 +46,9 @@ def initialize(context):
     from Products.Silva.fssite import FSPageTemplate
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
-    
+
     from Products.Silva.silvaxml import xmlexport
-    
+
     import Root
     import install
     import helpers # to execute the module_permission statements
@@ -66,7 +66,7 @@ def initialize(context):
         container_filter = makeContainerFilter(only_outside_silva=True)
         )
     registerTypeForMetadata(Root.Root.meta_type)
-            
+
     # register the FileSystemSite directories
     registerDirectory('views', globals())
     registerDirectory('resources', globals())
@@ -92,9 +92,9 @@ def initialize(context):
     #------------------------------
     # Initialize the XML registries
     #------------------------------
-    
+
     xmlexport.initializeXMLExportRegistry()
-    
+
 
 #------------------------------------------------------------------------------
 # External Editor support
@@ -117,7 +117,7 @@ else:
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch', 'adapters', 
+    return name in ('mangle', 'batch', 'adapters',
                         'version_management', 'path')
 
 from AccessControl import allow_module
@@ -133,6 +133,7 @@ allow_module('Products.Silva.adapters.zipfileimport')
 allow_module('Products.Silva.adapters.path')
 allow_module('Products.Silva.roleinfo')
 allow_module('Products.Silva.i18n')
+allow_module('Products.Silva.mail')
 
 def initialize_icons():
     from Products.Silva import icon, File, GhostFolder

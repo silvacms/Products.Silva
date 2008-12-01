@@ -7,12 +7,10 @@ import urllib
 
 # Zope
 from zope.app.component.interfaces import ISite
-from AccessControl import ModuleSecurityInfo
 
 # Silva
 from Products.Silva import interfaces
 
-module_security =  ModuleSecurityInfo('Products.Silva.helpers')
 
 def add_and_edit(self, id, REQUEST, screen='manage_main'):
     """Helper function to point to the object's management screen if
@@ -31,6 +29,7 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
     else:
         REQUEST.RESPONSE.redirect(u+'/manage_main')
 
+
 def unapprove_helper(object):
     """Unapprove object and anything unapprovable contained by it.
     """
@@ -40,6 +39,7 @@ def unapprove_helper(object):
     if interfaces.IContainer.providedBy(object):
         for item in object.get_ordered_publishables():
             unapprove_helper(item)
+
 
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable contained by it.
@@ -56,11 +56,13 @@ def unapprove_close_helper(object):
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
 
+
 # this is a bit of a hack; using implementation details of ParsedXML..
 from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAttr
 
 translateCdata = _translateCdata
 translateCdataAttr = _translateCdataAttr
+
 
 def fix_content_type_header(uploaded_file):
     """Deletes the content-type header on the uploaded_file.
@@ -72,6 +74,7 @@ def fix_content_type_header(uploaded_file):
     if hasattr(uploaded_file, 'headers'):
         if uploaded_file.headers.has_key('content-type'):
             del uploaded_file.headers['content-type']
+
 
 # this class used to be in SilvaDocument.upgrade, but was moved
 # here when Folder._to_folder_or_publication_helper began using it.
@@ -107,6 +110,7 @@ class SwitchClass(object):
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
 
+
 #make a container_filter.  See doc/developer_changes for more info
 # basically, this returns a closure that can be used for a container filter
 # for a content type during product registration.  This closure then
@@ -127,6 +131,7 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
                 return True
             return False
     return SilvaZCMLContainerFilter
+
 
 def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
     def SilvaZMIFilter(object_manager, filter_addable=False):
