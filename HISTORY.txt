@@ -3,13 +3,19 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.1 (unreleased)
+  Silva 2.1.1b3 (2008-12-02)
 
     Features added:
 
       - Add a function sendmail which can send mail using Mailhost and
         Maildrophost in Zope 2.11 (otherwise Maildrophost is broken in
         Zope 2.11).
+
+
+  Silva 2.1.1b2
+
+    Features added:
+
 
       - Made the public page link in the tab space visible, styled as
         a tab.
