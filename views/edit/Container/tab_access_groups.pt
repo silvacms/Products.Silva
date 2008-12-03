@@ -105,11 +105,12 @@
       <tr class="odd">
         <td class="designator"
           style="width:33%">
-          <label for="field_object_id"
+          <label for="meta_type"
              i18n:translate="">type</label><span class="warning">*</span>
         </td>
         <td class="field">
           <select class="store"
+            id="meta_type"
             name="meta_type">
             <option value="Silva Group" i18n:translate="">
               Group: a group defined by a list of users
