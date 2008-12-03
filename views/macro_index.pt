@@ -8,6 +8,8 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
+    message_type view/status_type | options/message_type | request/message_type | nothing;
+    message      view/status | options/message | request/message | nothing;
     view    here;
     model   request/model;
     trigger model/security_trigger;
@@ -25,9 +27,6 @@
     silva_permissions   view/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;
-
-    message_type options/message_type | request/message_type | nothing;
-    message      options/message | request/message | nothing;
 
     dummy  python: here.recordError(type, message);
     dummy  python: here.REQUEST.set('edit_mode', 1);

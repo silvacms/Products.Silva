@@ -7,7 +7,8 @@ Silva changes
 
     Features added:
 
-      - ...
+      - Back-port changes from 2.2 to let Five views/forms to set
+        status message.
 
   Silva 2.1.1b3 (2008-12-02)
 
