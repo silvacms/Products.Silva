@@ -102,7 +102,10 @@
                         id fullname;
                     "/>
                     <label tal:content="fullname"
-                      tal:attributes="for fullname">
+                      tal:attributes="
+                        for fullname;
+                        style python:'@' in userid and 'color:#0c824c' or nothing;
+                      ">
                       username
                     </label>
                   </td>
