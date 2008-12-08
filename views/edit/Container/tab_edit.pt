@@ -236,17 +236,18 @@ window.onload_registry.register(function() {
           <tal:block replace="nothing">
             _______ author / publish downlink cell _______
           </tal:block>
-          <td style="white-space:nowrap">
+          <td style="white-space:nowrap"
+              tal:define="is_clickable python:item_info['is_versioned_content'] or item_info['is_container']">
             <a class="blacklink"
               title="publish"
-              tal:condition="python:item_info['is_versioned_content'] or item_info['is_container']"
+              tal:condition="is_clickable"
               tal:attributes="href string:${item_info/item_url}/edit/tab_status"
               tal:content="structure item_info/last_author"
               i18n:attributes="title">
               authorname
             </a>
             <span
-              tal:condition="item_info/is_content"
+              tal:condition="python:item_info['is_content'] and not is_clickable"
               tal:replace="item_info/last_author">
                 authorname
             </span>
