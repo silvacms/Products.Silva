@@ -10,6 +10,11 @@ Silva changes
       - Back-port changes from 2.2 to let Five views/forms to set
         status message.
 
+    Bug fixes
+
+      - fixed Container/tab_edit.pt to only show one author for
+        objects that are containers and content
+
   Silva 2.1.1b3 (2008-12-02)
 
     Features added:
