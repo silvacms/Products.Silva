@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.1 (unreleased)
+  Silva 2.1.1b4 (2008-12-09)
 
     Features added:
 
