@@ -20,10 +20,8 @@
           tal:attributes="content string:900;; url=${model/absolute_url}/edit/tab_access" />
   </metal:block>
 
-  <metal:block metal:fill-slot="middleground">
-    <div class="middleground">
-      &nbsp;
-    </div>
+  <metal:block fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_access_extra" />
   </metal:block>
 
 <metal:block fill-slot="main"
