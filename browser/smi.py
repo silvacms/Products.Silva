@@ -42,6 +42,11 @@ class AccessTab(SMITab):
     tab_name = 'tab_access'
 
 
+class GroupEditTab(AccessTab):
+
+    implements(interfaces.IGroupEditTab)
+
+
 class PropertiesTab(SMITab):
     """Properties
     """
@@ -122,6 +127,8 @@ class SMIButton(ViewletBase):
 
     @property
     def selected(self):
+        # XXX hack  for the moment.  Should have something  nicer when
+        # every view will be a real view.
         return self.request.URL.endswith(self.tab)
 
     def render(self):

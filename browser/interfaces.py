@@ -25,6 +25,11 @@ class IAccessTab(ISMITab):
     """
 
 
+class IGroupEditTab(IAccessTab):
+    """Group edit tab.
+    """
+
+
 class IPropertiesTab(ISMITab):
     """Properties tab.
     """

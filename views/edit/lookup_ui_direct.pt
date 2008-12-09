@@ -40,29 +40,16 @@
 <table class="columns">
   <tbody>
     <tr>
-      <td class="left">
 
-        <span tal:replace="nothing">
-          ______________ previous screen transport ______________
-        </span>
-        <table class="listing">
-          <thead>
-            <tr>
-              <td class="parent">
-                <a href="parent screen"
-                  title="return to previous screen: alt-k"
-                  accesskey="k"
-                  tal:attributes="href here/lookup_back_link"
-                  i18n:attributes="title"
-                  >
-                  <div class="transport-border" i18n:translate="">
-                    bac<u i18n:name="k">k</u>...
-                  </div>
-                </a>
-              </td>
-            </tr>
-          </thead>
-        </table>
+      <tal:block replace="nothing">
+        __________________ sidebar _________________
+      </tal:block>
+      <td class="left" rowspan="99">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:block replace="structure python: view.service_sidebar.render(model, 'tab_access', vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
       </td>
 
       <tal:block replace="nothing">

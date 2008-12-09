@@ -13,7 +13,12 @@ Silva changes
       - Display icons of members in tab_access, the user lookup
         screen, and group edition.
 
+      - Add feedback on role assignement in tab_access.
+
     Bug fixes
+
+      - Re-factor lookup screen design to be consistent with Silva
+        SMI.
 
       - fixed Container/tab_edit.pt to only show one author for
         objects that are containers and content

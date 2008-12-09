@@ -8,7 +8,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global vein string:Groups;
+    global vein string:groups;
     global active_tab string:tab_access;
     global parent_screen_name string:access;
     "

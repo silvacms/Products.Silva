@@ -31,6 +31,13 @@ class LookupUserButton(SMIButton):
     accesskey = 'l'
 
     @property
+    def selected(self):
+        # XXX hack  for the moment.  Should have something  nicer when
+        # every view will be a real view.
+        path = self.request.PATH_TRANSLATED.split('/')
+        return path[-1].startswith('lookup_ui')
+
+    @property
     def label(self):
         if self.context.sec_can_find_users():
             return _(u"add users")

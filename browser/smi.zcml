@@ -11,6 +11,13 @@
      />
 
   <browser:page
+     for="Products.Silva.interfaces.IGroup"
+     name="tab_access_extra"
+     class=".smi.GroupEditTab"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <browser:page
      for="Products.Silva.interfaces.ISilvaObject"
      name="tab_metadata_extra"
      class=".smi.PropertiesTab"
@@ -47,6 +54,24 @@
      view=".interfaces.IPropertiesTab"
      manager=".interfaces.ISMIButtonManager"
      class=".smi_properties.AddablesButton"
+     permission="silva.ChangeSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.kupueditor"
+     for="Products.SilvaDocument.interfaces.IDocument"
+     view=".interfaces.IEditTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_edit.KupuEditorButton"
+     permission="silva.ChangeSilvaContent"
+     />
+
+  <browser:viewlet
+     name="smi.buttons.formeditor"
+     for="Products.SilvaDocument.interfaces.IDocument"
+     view=".interfaces.IEditTab"
+     manager=".interfaces.ISMIButtonManager"
+     class=".smi_edit.FormsEditorButton"
      permission="silva.ChangeSilvaContent"
      />
 
