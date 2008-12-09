@@ -10,6 +10,9 @@ Silva changes
       - Back-port changes from 2.2 to let Five views/forms to set
         status message.
 
+      - Display icons of members in tab_access, the user lookup
+        screen, and group edition.
+
     Bug fixes
 
       - fixed Container/tab_edit.pt to only show one author for

@@ -80,13 +80,15 @@ class CachedMember(Persistent, Acquisition.Implicit):
     security = ClassSecurityInfo()
 
     def __init__(self, userid, fullname, email,
-                 is_approved, editor, allowed_roles):
+                 is_approved, editor, allowed_roles,
+                 meta_type='Silva Simple Member'):
         self.id = userid
         self._fullname = fullname
         self._email = email
         self._is_approved = is_approved
         self._editor = editor
         self._allowed_roles = allowed_roles
+        self._meta_type = meta_type
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'userid')
@@ -134,6 +136,12 @@ class CachedMember(Persistent, Acquisition.Implicit):
     def allowed_roles(self):
         """Return roles that that user can get"""
         return self._allowed_roles
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'meta_type')
+    def meta_type(self):
+        """Return meta_type of user object."""
+        return self._meta_type
 
 
 class NoneMember(Persistent, Acquisition.Implicit):
@@ -187,6 +195,13 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """Retune roles that that user can get"""
         return []
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'meta_type')
+    def meta_type(self):
+        """Return meta_type of user object."""
+        return "Silva Simple Member"
+
+
 
 Globals.InitializeClass(NoneMember)
 
@@ -200,4 +215,5 @@ def cloneMember(member):
                         email=member.email(),
                         is_approved=member.is_approved(),
                         editor=member.editor(),
-                        allowed_roles=member.allowed_roles())
+                        allowed_roles=member.allowed_roles(),
+                        meta_type=member.meta_type)

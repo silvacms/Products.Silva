@@ -22,7 +22,7 @@ class _IconRegistry:
 
     def __init__(self):
         self._icon_mapping = {}
-    
+
     def getIcon(self, object):
         if IGhostContent.providedBy(object):
             version = object.getLastVersion()
@@ -39,7 +39,7 @@ class _IconRegistry:
                     kind = 'folder'
             else:
                 kind = 'link_broken'
-            identifier = ('ghostfolder', kind)      
+            identifier = ('ghostfolder', kind)
         elif IFile.providedBy(object):
             identifier = ('mime_type', object.get_mime_type())
         elif ISilvaObject.providedBy(object):
@@ -78,7 +78,7 @@ class _IconRegistry:
             raise RegistryError, msg
         getattr(OFS.misc_.misc_, product)[name] = icon
         self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
-            
+
     def _get_module_from_context(self, context):
         name = context['__name__']
         name_parts = name.split('.')

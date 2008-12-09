@@ -100,12 +100,12 @@
                       tal:attributes="
                         value userid;
                         id fullname;
-                    "/>
+                        "/>
+                    <tal:icon
+                       tal:define="user_meta member/meta_type"
+                       tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
                     <label tal:content="fullname"
-                      tal:attributes="
-                        for fullname;
-                        style python:'@' in userid and 'color:#0c824c' or nothing;
-                      ">
+                           tal:attributes="for fullname;">
                       username
                     </label>
                   </td>
