@@ -9,6 +9,7 @@ from zope.interface import implements
 from zope.app.component.hooks import setSite
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
+from five import grok
 
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -32,8 +33,16 @@ from silva.core import conf as silvaconf
 
 icon="www/silva.png"
 
+
 class DocumentationInstallationException(Exception):
     """Raised when a dependency is not installed when trying to install something"""
+
+
+class SilvaGlobals(grok.DirectoryResource):
+    # This export the globals directory using Zope 3 technology.
+    grok.path('globals')
+    grok.name('silva.globals')
+
 
 class Root(Publication):
     """Root of Silva site.

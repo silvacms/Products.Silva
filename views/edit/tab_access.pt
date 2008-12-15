@@ -95,14 +95,15 @@
                   tal:attributes="class python: iterate and 'odd' or 'even'">
                   <td class="align-left">
                     <input class="min"
-                      type="checkbox"
-                      name="userids:list"
-                      tal:attributes="
-                        value userid;
-                        id fullname;
-                    "/>
+                           type="checkbox"
+                           name="userids:list"
+                           tal:attributes="value userid;
+                                           id fullname;"/>
+                    <tal:icon
+                       tal:define="user_meta member/meta_type"
+                       tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
                     <label tal:content="fullname"
-                      tal:attributes="for fullname">
+                           tal:attributes="for fullname">
                       username
                     </label>
                   </td>

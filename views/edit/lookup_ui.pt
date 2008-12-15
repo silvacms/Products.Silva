@@ -75,7 +75,8 @@
                     <img tal:replace="structure python:here.render_icon(model)" />
                     <tal:block i18n:translate="">
                       user lookup at
-                      &#xab;<span tal:content="string:${model/get_title_or_id_editable}" i18n:name="title_or_id" />&#xbb;
+                      &#xab;<span tal:content="string:${model/get_title_or_id_editable}"
+                                  i18n:name="title_or_id" />&#xbb;
                     </tal:block>
                   </h2>
                 </td>
@@ -94,7 +95,7 @@
                 <td class="designator"
                   style="width:33%">
                   <label for="name"
-                  i18n:translate="">name (or part of name)</label>
+                         i18n:translate="">name (or part of name)</label>
                 </td>
                 <td class="field">
                   <input class="store"
@@ -163,16 +164,18 @@
                   tal:attributes="class python:iterate and 'odd' or 'even';">
                   <td>
                     <input class="min"
-                      type="checkbox"
-                      name="userids:list"
-                      tal:attributes="
-                        value member/userid;
-                        id member/userid" />
-                    <label style="text-transform:none"
-                      tal:content="member/fullname"
-                      tal:attributes="for member/userid">
-                      username
-                    </label>
+                           type="checkbox"
+                           name="userids:list"
+                           tal:attributes="value member/userid;
+                                           id member/userid" />
+                    <tal:icon
+                       tal:define="user_meta member/meta_type"
+                       tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
+                     <label style="text-transform:none"
+                            tal:content="member/fullname"
+                            tal:attributes="for member/userid">
+                       username
+                     </label>
                   </td>
                   <td>
                     <span tal:replace="member/email | no_entry" />

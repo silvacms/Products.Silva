@@ -11,6 +11,9 @@ Ported from Silva 2.1
   Maildrophost in Zope 2.11 (otherwise Maildrophost is broken in Zope
   2.11).
 
+- Display icons of members in tab_access, the user lookup screen, and
+  group edition.
+
 Bug fix
 ~~~~~~~
 

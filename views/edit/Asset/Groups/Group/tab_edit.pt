@@ -47,17 +47,17 @@
           tal:attributes="class python: iterate and 'odd' or 'even'">
           <td>
             <input class="min"
-              type="checkbox"
-              name="userids:list"
-              tal:attributes="
-                value member/userid;
-                id member/userid"
-            />
-              &nbsp;
-              <label tal:content="member/fullname"
-                tal:attributes="for member/userid">
-                username
-              </label>
+                   type="checkbox"
+                   name="userids:list"
+                   tal:attributes="value member/userid;
+                                   id member/userid" />
+            <tal:icon
+               tal:define="user_meta member/meta_type"
+               tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
+            <label tal:content="member/fullname"
+                   tal:attributes="for member/userid">
+              Member
+            </label>
           </td>
         </tr>
       </tal:block>
