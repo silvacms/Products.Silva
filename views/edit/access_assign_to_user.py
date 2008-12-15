@@ -17,19 +17,29 @@ if not userids:
     return context.tab_access(message_type="error", message=_("No user(s) selected."))
 
 model = request.model
-#assigned = []
+assigned = []
+failed = []
 for userid in userids:
     try:
         model.sec_assign(userid, assign_role)
     except:
-        # No feedback, can't have the exception with a lot of bad things.
-        # Stay silent until we got a better framework.
-        pass
-    #assigned.append((userid, assign_role))
+        failed.append(userid)
+    else:
+        assigned.append(userid)
 
-#return context.tab_access(
-#    message_type="feedback",
-#    message="Role(s) assigned") # for %s" % context.quotify_list_ext(assigned))
+if assigned:
+    if failed:
+        return context.tab_access(
+            message_type="error",
+            message=_("Role(s) assigned for ${good_users} but failed to assign for ${bad_users}.",
+                      mapping=dict(good_users=context.quotify_list(assigned),
+                                   bad_users=context.quotify_list(failed))))
+    return context.tab_access(
+        message_type="feedback",
+        message=_("Role(s) assigned for ${users}.",
+                  mapping=dict(users=context.quotify_list(assigned))))
 
-# FIXME: do we need feedback?
-request.RESPONSE.redirect('%s/edit/tab_access' % model.absolute_url())
+return context.tab_access(
+    message_type="error",
+    message=_("No role have been assigned for ${users}.",
+              mapping=dict(users=context.quotify_list(failed))))

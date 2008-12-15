@@ -9,11 +9,16 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
   tal:define="
+    vein string:edit;
     active_tab string:../../edit/tab_access_groups;
     parent_screen_name string:groups;
-    has_access here/has_change_access_permission;"
->
+    has_access here/has_change_access_permission;">
 <metal:block use-macro="here/macro_edit/macros/editor">
+
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_access_extra" />
+  </metal:block>
+
  <metal:fill-editor-slot fill-slot="main">
   <metal:use-macro use-macro="here/macro_edit/macros/three-col-layout">
 
