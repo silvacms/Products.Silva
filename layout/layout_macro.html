@@ -18,8 +18,13 @@
   <!-- Begin metatags -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="generator" content="Silva" />
+<metal:skipmetadata define-slot="skipmetadata">
+  <tal:comment replace="nothing">
+  <!-- Turn on metadata tags as needed by moving them out of the tal:skip into this slot.
+       This slot should be overridden by error pages in authenticated areas of a site. -->
+  </tal:comment>
+</metal:skipmetadata>
 <tal:skip replace="nothing">
-<!-- Turn these on as needed by moving them out of the tal:skip -->
   <meta name="subject"
     tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
     tal:condition="subject"
@@ -56,7 +61,7 @@
   <tal:if condition="python:surround[link] != '..'">
   <link tal:condition="python:surround[link] or None"
     tal:attributes="
-    rel link; 
+    rel link;
     href python:surround[link].absolute_url() + (surround[link].get_container() == surround[link] and '/' or '')"
     />
   </tal:if>
@@ -91,7 +96,7 @@
 <!-- Start header slot -->
 <div class="header">
   <a class="icon"
-    href="http://www.infrae.com/products/silva" 
+    href="http://www.infrae.com/products/silva"
     title="Silva info on the Infrae site: alt-i"
     accesskey="i"
     i18n:attributes="title"
@@ -103,7 +108,7 @@
   <!-- Begin top_navigation slot -->
   <span class="breadcrumb"
      style="display:block;">
-    <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag=""> 
+    <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag="">
       <a tal:content="python: item.get_short_title() or item.get_title_or_id()"
         tal:attributes="href item/absolute_url">Name</a>
     <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>

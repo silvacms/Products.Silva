@@ -131,6 +131,9 @@
 <title metal:fill-slot="title">
   404 &ndash; Resource not found
 </title>
+<metal:block fill-slot="skipmetadata">
+  <!-- skip metadata if not found -->
+</metal:block>
 <!-- default stylesheet, remove if custom layout exists -->
 <metal:block fill-slot="style">
   <!-- Start style slot -->
