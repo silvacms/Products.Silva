@@ -29,18 +29,22 @@ class TOCRenderingAdapter(adapter.Adapter):
     #      Folder._get_public_tree_helper
 
     def _get_container_items(self, container, sort_order, show_types):
+        items = container.objectItems(show_types)
         if sort_order in ('alpha','reversealpha'):
-            items = container.objectItems(show_types)
             #get_title could be blank, then use id
             items = [ (o[1].get_title() or o[1].id,o) for o in items ]
             items.sort(reverse=(sort_order == "reversealpha"))
             items = [ o[1] for o in items ]
         elif sort_order=='silva': #determine silva sorting
-            nonordered_items = [ i for i in container.objectItems(show_types) if i[0] not in container._ordered_ids ]
-            ordered_items = [ (i,getattr(container.aq_explicit,i)) for i in container._ordered_ids  ]
+            nonordered_items = []
+            ordered_items = []
+            for i in items:
+                if i[0] not in container._ordered_ids:
+                    nonordered_items.append(i)
+                else:
+                    ordered_items.append(i)
             items = ordered_items + nonordered_items
         else: # chronologically by modification date
-            items = container.objectItems(show_types)
             items = [ (o[1].get_modification_datetime(),o) for o in items ]
             items.sort(reverse=(sort_order.startswith('r')))
             items = [ o[1] for o in items ]

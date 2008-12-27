@@ -7,6 +7,10 @@ Silva 2.2a2 (unreleased)
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Fixed 310589: Silva AutoTOC ignores "types to list" setting 
+  when using silva sort order.
+
+
 - Add a function sendmail which can send mail using Mailhost and
   Maildrophost in Zope 2.11 (otherwise Maildrophost is broken in Zope
   2.11).
