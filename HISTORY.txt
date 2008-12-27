@@ -5,8 +5,15 @@ Silva changes
   
   Silva 2.1.2 (unreleased)      
 
+    Bug fixes
+
+      - Fixed 310589: Silva AutoTOC ignores "types to list" setting 
+        when using silva sort order.
+
   Silva 2.1.1 (2008-12-17)
 
+    Bug fixes
+  
       - Fixed broken test
 
   Silva 2.1.1b4 (2008-12-09)
