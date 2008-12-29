@@ -216,7 +216,8 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">citation</h1>
 
       <div class="kupu-tooltray">
-        <form name="kupu-citation-form">
+        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "citation" element has been deprecated and will be removed in a later version of Silva.  Use the "citation" external source instead.</p>
+        <form name="kupu-citation-form" id="kupu-citation-form">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
@@ -442,6 +443,7 @@
           <select id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" 
             tal:define="sources here/get_available_sources;
               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
+	    <option value="">Select Source</option>
             <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="value id;

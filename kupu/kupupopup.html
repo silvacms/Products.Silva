@@ -32,7 +32,7 @@
 	var kupuui = null;
 	function startKupu() {
 	    var frame = getFromSelector('kupu-editor'); 
-	    kupu = initSilvaKupu(frame); 
+	    kupu = initSilvaPopupKupu(frame); 
 	    kupuui = kupu.getTool('ui'); 
 	    kupu.initialize();
 	};
@@ -193,10 +193,6 @@
   
     <div class="kupu-fulleditor">
       
-    <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusaveonpart.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusaveonpart.js"> </script>
-  
-    <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupucontextmenu.js" tal:attributes="src string:${root_url}/service_kupu/kupucontextmenu.js"> </script>
-  
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
     
         <tr>
@@ -211,18 +207,18 @@
     </span>
   
     <select id="kupu-tb-styles" onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
-      <optgroup label="heading styles">
+      <optgroup label="paragraph">
+        <option value="P|normal">plain</option>
+        <option value="P|lead">lead</option>
+        <option value="P|annotation">annotation</option>
+      </optgroup>
+      <optgroup label="heading">
         <option value="H2">title</option>
         <option value="H3">heading</option>
         <option value="H4">sub</option>
         <option value="H5">subsub</option>
         <option value="H6">paragraph</option>
         <option value="H6|sub">subparagraph</option>
-      </optgroup>
-      <optgroup label="paragraph styles">
-        <option value="P|normal">plain</option>
-        <option value="P|lead">lead</option>
-        <option value="P|annotation">annotation</option>
       </optgroup>
       <option value="PRE">preformatted</option>
     </select>
@@ -287,7 +283,7 @@
           <td valign="top">
             
     <div class="kupu-editorframe">
-      <iframe id="kupu-editor" class="kupu-editor-iframe" width="99%" frameborder="0" src="kupu_content" scrolling="auto" charset="UTF-8">
+      <iframe id="kupu-editor" class="kupu-editor-iframe" width="99%" frameborder="0" src="kupu_popup_iframe" scrolling="auto" charset="UTF-8">
       </iframe>
     </div>
     <textarea class="kupu-editor-textarea" id="kupu-editor-textarea"> </textarea>
@@ -298,37 +294,6 @@
             
     <div class="kupu-toolboxes" id="kupu-toolboxes">
       
-    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox not-collapsible" id="kupu-toolbox-comment" tal:define="comment python:here.service_metadata.getMetadataValue(request['model'].get_editable(),'silva-extra','comment',acquire=0)" tal:condition="comment">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">comment</h1>
-
-      <div class="kupu-tooltray fixed-alert" style="padding-left:0.4em; border-bottom-style:none;">
-      <div class="kupu-comment-content" tal:content="structure python:comment.replace('\n','&lt;br /&gt;')"/>
-      </div>
-
-    </div>
-  
-    <div class="kupu-toolbox" id="kupu-toolbox-properties">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">properties</h1>
-
-      <div class="kupu-tooltray" style="padding:0">
-        <form name="kupu-properties-form" id="kupu-properties-form">
-          <table width="99%" cellpadding="0" cellspacing="0" border="0">
-            <tr id="propsrow">
-              <td valign="top">
-                name
-              </td>
-              <td valign="top">
-                input
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>
-
-    </div>
-  
     <div class="kupu-toolbox" id="kupu-toolbox-links">
       <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: '/'.join(container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path);             }, '${container/absolute_url}',             '', true, '');;         }       "/>
 
@@ -525,46 +490,6 @@
     </div>
   
 
-    <div class="kupu-toolbox" id="kupu-toolbox-citation">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">citation</h1>
-
-      <div class="kupu-tooltray">
-        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "citation" element has been deprecated and will be removed in a later version of Silva.  Use the "citation" external source instead.</p>
-        <form name="kupu-citation-form" id="kupu-citation-form">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td>
-                  <table width="100%" border="0" cellspacing="0">
-                    <tr>
-                      <td class="titlecell">author</td>
-                      <td><input class="store" type="text" id="kupu-citation-authorinput"/></td>
-                    </tr>
-                    <tr>
-                      <td class="titlecell">source</td>
-                      <td><input class="store" type="text" id="kupu-citation-sourceinput"/></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="button" class="button" value="add element" id="kupu-citation-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-citation-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-citation-deletebutton" i18n:attributes="value"/>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-
-      </div>
-
-    </div>
-
-  
-
     <div class="kupu-toolbox" id="kupu-toolbox-tables">
     
 
@@ -664,33 +589,6 @@
     </div>
     
       </div>
-
-  
-    <div class="kupu-toolbox" id="kupu-toolbox-toc">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">table of contents</h1>
-
-      <div class="kupu-tooltray">
-        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "table of contents" element has been deprecated and will be removed in a later version of Silva.  Use the TOC external source instead.</p>
-        <form name="kupu_toc_form" onsubmit="return false;">
-          <select id="kupu-toolbox-toc-depth">
-            <option value="1">1 level</option>
-            <option value="2">2 levels</option>
-            <option value="3">3 levels</option>
-            <option value="4">4 levels</option>
-            <option value="5">5 levels</option>
-            <option value="6">6 levels</option>
-            <option value="7">7 levels</option>
-            <option value="8">8 levels</option>
-            <option value="9">9 levels</option>
-            <option value="-1">unlimited</option>
-          </select>
-          
-          <input class="button remover" type="button" value="remove" id="kupu-toc-del-button" i18n:attributes="value"/>
-        </form>
-      </div>
-
-    </div>
 
   
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">

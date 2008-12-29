@@ -4,6 +4,25 @@ Silva changes
 Silva 2.2a2 (unreleased)
 ------------------------
 
+New Features
+~~~~~~~~~~~~
+
+- A New "Kupu Popup" formulator field.  This field is for htlm content
+  and pops up a "popup kupu" to provide easy wysiwyg editing.
+
+- External Source Tool: the select external source drop-down
+  now has "Select Item" as the first option, rather than the
+  ES at the top of the list.  This cleans up the interface a bit.
+
+Bugs Fixed
+~~~~~~~~~~
+
+- External Source Tool: the title now reverts back to "external
+  source" when the tool is reset
+
+- External Source Tool: removing an external source (via the
+  remove button) now resets the tool
+
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 

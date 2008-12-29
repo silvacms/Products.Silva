@@ -3,7 +3,7 @@
 # $Id$
 
 # registers fields
-from Products.Silva import emaillinesfield, lookupwindowfield
+from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
 

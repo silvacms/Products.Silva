@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="    here python: context.edit;"
+>
+
+<metal:block use-macro="python: context.edit['macro_no_tabs'].macros['master']">
+ <link type="text/css" rel="stylesheet"
+   metal:fill-slot="extension_css" 
+   tal:attributes="href here/kupustyles.css/absolute_url" />
+
+ <metal:block fill-slot="script">
+  <script type="text/javascript" 
+    tal:attributes="src here/reference.js/absolute_url">
+  </script>
+  <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/jsincludes" />
+  <script type="text/javascript">
+   onload_registry.register(function() {
+      var settings = window.kupu_popup_ui_init_settings;
+      var doc = window.document;
+      /* hide buttons */
+      var buttons = settings[0];
+      for (var i=0; i < buttons.length; i++) {
+        var bname = buttons[i];
+        var b = doc.getElementById(bname);
+        b.style.display = 'none';
+      }
+      /* hide tools */
+      var toolboxes = settings[2];
+      for (var i=0; i < toolboxes.length; i++) {
+        var tname = toolboxes[i];
+        var t = doc.getElementById(tname);
+        t.style.display = 'none';
+      }
+      /* hide text styles */
+      var styles = settings[1];
+      var tbstyles = doc.getElementById('kupu-tb-styles');
+      for (var i=0; i < styles.length; i++) {
+        for (var j=0; j < tbstyles.options.length; j++) {
+          if (tbstyles.options[j].value == styles[i]) {
+            tbstyles.options[j].parentNode.removeChild(tbstyles.options[j])
+             /*tbstyles.options[j].style.display='none';*/
+            break;
+          }
+        }
+      }
+      var optgroups = tbstyles.getElementsByTagName('optgroup');
+      var i = 0;
+      while (1) {
+        if (optgroups.length == 0 || i >= optgroups.length) break;
+        var optgroup = optgroups[i];
+        var items = optgroup.getElementsByTagName('option');
+        if (items.length == 0) {
+          optgroup.parentNode.removeChild(optgroup);
+        } else {
+          i++;
+        }
+      }
+      /* re-select the first visible option and trigger the onchange,
+         as the first option may have changed (i.e. been removed) */
+      var thiswindow = window;
+      tbstyles.onchange();
+   });
+  </script>
+</metal:block>
+
+<metal:fill fill-slot="main"
+   tal:define="silva_permissions context/edit/get_silva_permissions;">
+  <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/body" />
+ </metal:fill>
+
+</metal:block>
+</html>

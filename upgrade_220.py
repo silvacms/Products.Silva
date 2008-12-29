@@ -21,8 +21,9 @@ from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
 import zLOG
 
-
-
+# For translating author/source/citation
+from Products.SilvaDocument.transform.Transformer import EditorTransformer
+from Products.SilvaDocument.transform.base import Context
 
 #-----------------------------------------------------------------------------
 # 2.1.0 to 2.2.0a1
@@ -72,13 +73,16 @@ class RootUpgrader(BaseUpgrader):
             if hasattr(obj.service_views, 'SilvaLayout'):
                 obj.service_views.manage_delObjects(['SilvaLayout'])
 
-        # Install ExternalSources, and setup cs_toc CS.
+        # Install ExternalSources, and setup cs_toc and cs_citation CS's.
         service_ext = obj.service_extensions
         if not service_ext.is_installed('SilvaExternalSources'):
             service_ext.install('SilvaExternalSources')
         if not hasattr(obj, 'cs_toc'):
             toc = obj.service_codesources.manage_copyObjects(['cs_toc',])
             obj.manage_pasteObjects(toc)
+        if not hasattr(obj, 'cs_citation'):
+            cit = obj.service_codesources.manage_copyObjects(['cs_citation',])
+            obj.manage_pasteObjects(cit)
 
         # Update service_files settings
         service_files = obj.service_files
@@ -131,8 +135,10 @@ class ImagesUpgrader(BaseUpgrader):
 ImagesUpgraer = ImagesUpgrader(VERSION, 'Silva Image')
 
 
-class TOCElementUpgrader(BaseUpgrader):
-
+class SilvaXMLUpgrader(BaseUpgrader):
+    '''Upgrades all SilvaXML (documents), converting
+       <toc> elements to cs_toc sources and
+       <citation> elements to cs_citation sources'''
     def upgrade(self, obj):
         if IVersionedContent.providedBy(obj):
             vm = version_management.getVersionManagementAdapter(obj)
@@ -140,10 +146,57 @@ class TOCElementUpgrader(BaseUpgrader):
                 if hasattr(version, 'content'):
                     dom = version.content
                     if hasattr(dom, 'documentElement'):
-                        self._upgrade_helper(obj, dom.documentElement)
+                        self._upgrade_tocs(obj, dom.documentElement)
+                        self._upgrade_citations(obj, dom.documentElement)
         return obj
 
-    def _upgrade_helper(self, obj, doc_el):
+    def _upgrade_citations(self, obj, doc_el):
+        cites = doc_el.getElementsByTagName('cite')
+        if cites:
+            zLOG.LOG(
+                'Silva', zLOG.INFO,
+                'Upgrading CITE Elements in: %s' % ('/'.join(obj.getPhysicalPath())))
+        for c in cites:
+            author = source = ''
+            citation = []
+            #html isn't currently allowed in author, source, so
+            # we don't need to "sanity" check them!
+            for node in c.childNodes:
+                if node.nodeType == node.ELEMENT_NODE:
+                    if node.nodeName == 'author':
+                        author = node.firstChild.writeStream().getvalue().replace('&lt;','<')
+                    elif node.nodeName == 'source':
+                        source = node.firstChild.writeStream().getvalue().replace('&lt;','<')
+                    else:
+                        citation.append(node.writeStream().getvalue().replace('&lt;','<'))
+                else:
+                    citation.append(node.writeStream().getvalue().replace('&lt;','<'))
+            citation = ''.join(citation)
+
+            cs = doc_el.createElement('source')
+            cs.setAttribute('id','cs_citation')
+
+            p = doc_el.createElement('parameter')
+            p.setAttribute('type','string')
+            p.setAttribute('key','source')
+            p.appendChild(doc_el.createTextNode(source))
+            cs.appendChild(p)
+
+            p = doc_el.createElement('parameter')
+            p.setAttribute('type','string')
+            p.setAttribute('key','author')
+            p.appendChild(doc_el.createTextNode(author))
+            cs.appendChild(p)
+
+            p = doc_el.createElement('parameter')
+            p.setAttribute('type','string')
+            p.setAttribute('key','citation')
+            p.appendChild(doc_el.createTextNode(citation))
+            cs.appendChild(p)
+
+            c.parentNode.replaceChild(cs,c)
+
+    def _upgrade_tocs(self, obj, doc_el):
         tocs = doc_el.getElementsByTagName('toc')
         if tocs:
             zLOG.LOG(
@@ -234,5 +287,4 @@ class TOCElementUpgrader(BaseUpgrader):
 
             t.parentNode.replaceChild(cs,t)
 
-TOCElementUpgrader = TOCElementUpgrader(VERSION, AnyMetaType)
-###also needed for news and agenda items
+SilvaXMLUpgrader = SilvaXMLUpgrader(VERSION, AnyMetaType)

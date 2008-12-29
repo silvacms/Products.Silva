@@ -38,6 +38,7 @@ h2 {
 
 <metal:block fill-slot="script">
   <metal:block define-slot="script" />
+  <script type="text/javascript" tal:attributes="src context/popupkupu.js/absolute_url"></script>
 </metal:block>
 
 <metal:block metal:fill-slot="middleground">

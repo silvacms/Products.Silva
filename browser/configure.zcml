@@ -37,6 +37,19 @@
 
   <browser:page
     for="Products.Silva.interfaces.ISilvaObject"
+    name="kupu_popup_window"
+    template="kupu_popup_window.pt"
+    permission="silva.ChangeSilvaContent" 
+  />    
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
+    name="kupu_popup_iframe"
+    template="kupu_popup_iframe.pt"
+    permission="silva.ChangeSilvaContent" 
+  />    
+
+  <browser:page
+    for="Products.Silva.interfaces.ISilvaObject"
     name="sidebar"
     class=".lookup.SidebarView"
     permission="silva.ReadSilvaContent"

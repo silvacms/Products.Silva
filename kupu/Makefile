@@ -15,10 +15,14 @@ XSL_DEBUG = --param debug true\(\)
 XSLTPROC_PARAMS = --nonet --novalid --xinclude
 XSL_FILE = ../../kupu/make.xsl
 
-all: clean silvamacros
+all: clean silvamacros popup
 
 silvamacros:
 	$(XSLTPROC) $(XSLTPROC_PARAMS) -o kupumacros.html $(XSL_FILE) dist.kupu
 
 clean:
-	rm -f kupumacros.html
+	rm -f kupumacros.html kupupopup.html
+
+popup:
+	$(XSLTPROC) $(XSLTPROC_PARAMS) -o kupupopup.html $(XSL_FILE) dist-popup.kupu
+

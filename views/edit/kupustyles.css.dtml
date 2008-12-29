@@ -383,8 +383,27 @@ div.kupu-properties-item-innerdiv {
   border-bottom:1px solid #559999;
 }
 
-#kupu-toolbox-image-link-settings label.select {
+#kupu-toolbox-image-edit label.select {
   line-height:160%;
+}
+
+.kupupopuptextarea {
+display: none;
+}
+.kupupopupeditbutton {
+float: right;
+}
+.kupupopupcontentbox {
+border: 1px dotted #555;
+min-height: 2em;
+margin-bottom: 1px;
+padding: 1px 2px;
+}
+.kupupopupcontentbox p {
+ margin: 2px 0;
+}
+.kupupopupeditlink {
+display: block;
 }
 
 </dtml-let>
