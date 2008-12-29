@@ -7,7 +7,7 @@ Silva 2.2a2 (unreleased)
 New Features
 ~~~~~~~~~~~~
 
-- A New "Kupu Popup" formulator field.  This field is for htlm content
+- A New "Kupu Popup" formulator field.  This field is for html content
   and pops up a "popup kupu" to provide easy wysiwyg editing.
 
 - External Source Tool: the select external source drop-down
