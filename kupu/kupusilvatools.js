@@ -2611,18 +2611,9 @@ SilvaKupuUI.prototype.updateState = function(selNode) {
 };
 
 SilvaKupuUI.prototype.setTextStyle = function(style) {
-    /* parse the argument into a type and classname part
-
-    generate a block element accordingly 
+/* parse the argument into a type and classname part
+   generate a block element accordingly 
 */
-// XXX somehow this method always gets called twice... I would
-// really like to know why, but can't find it right now and don't
-// have time for a full investigation, so fiddle-fixed it this
-// way. Needless to say this needs some investigation at some point...
-if (this._cancel_update) {
-    this._cancel_update = false;
-    return;
-};
 
     var classname = "";
     var eltype = style;
@@ -2648,7 +2639,6 @@ if (this._cancel_update) {
         el.className = classname;
         el.setAttribute('silva_type', classname);
     };
-    this._cancel_update = true;
     this.editor.content_changed = true;
     this.editor.updateState();
     this.editor.getDocument().getWindow().focus();

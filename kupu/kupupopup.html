@@ -206,19 +206,19 @@
       <button type="button" class="kupu-logo" title="Kupu 1.4b1" i18n:attributes="title" accesskey="k" onclick="window.open('http://kupu.oscom.org');">&#160;</button>
     </span>
   
-    <select id="kupu-tb-styles" onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
-      <optgroup label="paragraph">
-        <option value="P|normal">plain</option>
-        <option value="P|lead">lead</option>
-        <option value="P|annotation">annotation</option>
-      </optgroup>
-      <optgroup label="heading">
+    <select id="kupu-tb-styles">
+      <optgroup label="heading styles">
         <option value="H2">title</option>
         <option value="H3">heading</option>
         <option value="H4">sub</option>
         <option value="H5">subsub</option>
         <option value="H6">paragraph</option>
         <option value="H6|sub">subparagraph</option>
+      </optgroup>
+      <optgroup label="paragraph styles">
+        <option value="P|normal">plain</option>
+        <option value="P|lead">lead</option>
+        <option value="P|annotation">annotation</option>
       </optgroup>
       <option value="PRE">preformatted</option>
     </select>

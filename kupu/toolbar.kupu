@@ -7,8 +7,7 @@
     >
 
   <kupu:part name="select-styles">
-    <select id="kupu-tb-styles"
-            onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
+    <select id="kupu-tb-styles">
       <optgroup label="heading styles">
         <option value="H2">title</option>
         <option value="H3">heading</option>
