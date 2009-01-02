@@ -2286,16 +2286,19 @@ SilvaExternalSourceTool.prototype._showFormInWindow = function _showFormInWindow
     this._opened_edit_window = true;
     var lpos = (screen.width - 760) / 2;
     var tpos = (screen.height - 500) / 2;
-    var win = window.open("about:blank", "extFormWindow", "toolbar=no," + 
+    var win = window.open("about:blank",
+        "extFormWindow", "toolbar=no," + 
         "status=no,scrollbars=yes,resizable=yes," + 
         "width=760,height=500,left=" + lpos + 
         ",top=" + tpos);
     this._extFormWindowOpened = true;
+    var loadme = function() {
     var doc = win.document;
-    //var body = doc.getElementsByTagName('body')[0];
     doc.open();
     doc.write(responseText);
     doc.close();
+    }
+    addEventHandler(win, 'load', loadme, this)
 };
 
 SilvaExternalSourceTool.prototype._addExternalSourceIfValidated = 
