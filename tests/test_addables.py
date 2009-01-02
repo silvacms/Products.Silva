@@ -14,10 +14,10 @@ class OldAddablesTestCase(SilvaTestCase.SilvaTestCase):
         
     def test_get_addables(self):
         addables = ['Silva Image']
-        self.publication.set_silva_addables_allowed_in_publication(addables)
+        self.publication.set_silva_addables_allowed_in_container(addables)
         self.assertEquals(
             ['Silva Image'], 
-            self.publication.get_silva_addables_allowed_in_publication()
+            self.publication.get_silva_addables_allowed_in_container()
             )
 
 class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
@@ -30,6 +30,13 @@ class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
             create_default=0,
             policy_name='None'
             )
+        self.folder = self.add_folder(
+            self.publication, 
+            'test_folder', 
+            'Test Folder', 
+            create_default=0,
+            policy_name='None'
+            )
 
     def test_root_adapter(self):
         adapter = getAddablesAdapter(self.root)
@@ -39,29 +46,20 @@ class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
             adapter.getAddables()
             )
         
-    def test_publication_adapter(self):
+    def test_container_adapter(self):
         getAddablesAdapter(self.root).setAddables(['Silva Publication'])
-        addables = ['Silva Image']
+        addables = ['Silva Folder']
         adapter = getAddablesAdapter(self.publication)
         adapter.setAddables(addables)
         self.assertEquals(
-            ['Silva Image'], 
+            ['Silva Folder'], 
             adapter.getAddables()
             )
-        
-    def test_folder_adapter(self):
-        self.folder = self.add_folder(
-            self.publication, 
-            'test_folder', 
-            'Test Folder', 
-            create_default=0,
-            policy_name='None'
-            )
-        adapter = getAddablesAdapter(self.folder)
-        adapter.setAddables(['Silva Image'])
+        folderAdapter = getAddablesAdapter(self.folder)
+        folderAdapter.setAddables(['Silva Image'])
         self.assertEquals(
-            ['Silva Image'], 
-            adapter.getAddables()
+            ['Silva Image']
+            folderAdapter.getAddables()
             )
         
 import unittest

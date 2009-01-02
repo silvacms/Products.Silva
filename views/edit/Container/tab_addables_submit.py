@@ -37,10 +37,10 @@ if will_be_acquired and currently_acquired:
 # now update the settings (if we have to)
 if will_be_acquired:
     changed_metadata.append(('acquire setting'))
-    model.set_silva_addables_allowed_in_publication(None)
+    model.set_silva_addables_allowed_in_container(None)
 else:
     changed_metadata.append(('list of allowed addables'))
-    model.set_silva_addables_allowed_in_publication(addables)
+    model.set_silva_addables_allowed_in_container(addables)
 
 message = _("Addable settings changed for: ${changed_metadata}",
             mapping={'changed_metadata': context.quotify_list(changed_metadata)

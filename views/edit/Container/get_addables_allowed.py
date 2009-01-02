@@ -9,4 +9,4 @@
 ##
 model = context.REQUEST.model
 
-return model.get_silva_addables_allowed_in_publication()
+return model.get_silva_addables_allowed_in_container()

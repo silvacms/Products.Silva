@@ -119,11 +119,13 @@ class Root(Publication):
         return ()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed_in_publication')
-    def get_silva_addables_allowed_in_publication(self):
+                              'get_silva_addables_allowed_in_container')
+    def get_silva_addables_allowed_in_container(self):
         # allow everything in silva by default, unless things are restricted
         # explicitly
-        addables = self._addables_allowed_in_publication
+        if not hasattr(self,'_addables_allowed_in_container'):
+            self._addables_allowed_in_container = None
+        addables = self._addables_allowed_in_container
         if addables is None:
             return self.get_silva_addables_all()
         else:

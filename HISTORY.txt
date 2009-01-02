@@ -14,6 +14,11 @@ New Features
   now has "Select Item" as the first option, rather than the
   ES at the top of the list.  This cleans up the interface a bit.
 
+- 101103: allowed addables functionality is now moved to Silva
+  Folders.  Any IContainer extending Products.Silva.Folder can
+  now have addables settings.  NOTE: the allowed_addables API
+  has also changed
+
 Bugs Fixed
 ~~~~~~~~~~
 
@@ -22,6 +27,9 @@ Bugs Fixed
 
 - External Source Tool: removing an external source (via the
   remove button) now resets the tool
+
+- Added condition in Container/tab_edit for objects that are both
+  containers and content to show only one author name.
 
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
@@ -36,12 +44,6 @@ Ported from Silva 2.1
 
 - Display icons of members in tab_access, the user lookup screen, and
   group edition.
-
-Bug fix
-~~~~~~~
-
-- Added condition in Container/tab_edit for objects that are both
-  containers and content to show only one author name.
 
 Silva 2.2a1 (2008-11-18)
 ------------------------

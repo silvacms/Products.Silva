@@ -80,7 +80,7 @@ class AutoTOC(Content, SimpleItem):
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'get_silva_types')
     def get_silva_types(self):
-        st = self.get_silva_addables_allowed_in_publication()
+        st = self.get_silva_addables_allowed_in_container()
         return st
 
     security.declareProtected(SilvaPermissions.View, 'get_local_types')

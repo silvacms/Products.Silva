@@ -4,6 +4,7 @@
 
 from zope.interface import implements
 from zope.i18n import translate
+from zope.deprecation import deprecation
 
 # Zope
 from OFS.Folder import Folder as BaseFolder
@@ -79,6 +80,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         Folder.inheritedAttribute('__init__')(
             self, id)
         self._ordered_ids = []
+        self._addables_allowed_in_container = None
 
     #overridden from ObjectManager, so that additional filtering
     #can be done to remove those objects that aren't zmi-addable
@@ -111,6 +113,19 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
     # MANIPULATORS
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_silva_addables_allowed_in_container')
+    def set_silva_addables_allowed_in_container(self, addables):
+        self._addables_allowed_in_container = addables
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_silva_addables_allowed_in_publication')
+    @deprecation.deprecate("""The set_silva_addables_allowed_in_publication
+      method has been deprecated and should be replaced by
+      set_silva_addables_allowed_in_container. The allowed addables api has
+      been moved from publications to containers in general.""")
+    def set_silva_addables_allowed_in_publication(self, addables):
+        return self.set_silva_addables_allowed_in_container(addables)
 
     security.declarePrivate('titleMutationTrigger')
     def titleMutationTrigger(self):
@@ -450,6 +465,33 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
 
     # ACCESSORS
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_addables_allowed_in_container')
+    def get_silva_addables_allowed_in_container(self):
+        current = self
+        root = self.get_root()
+        while 1:
+            if IContainer.providedBy(current):
+                addables = current._addables_allowed_in_container
+                if addables is not None:
+                    return addables
+            if current == root:
+                return self.get_silva_addables_all()
+            current = current.aq_parent
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_addables_allowed_in_publication')
+    @deprecation.deprecate("""The get_silva_addables_allowed_in_publication
+      method has been deprecated and should be replaced by
+      get_silva_addables_allowed_in_container. The allowed addables api has
+      been moved from publications to containers in general.""")
+    def get_silva_addables_allowed_in_publication(self):
+        return self.get_silva_addables_allowed_in_container()
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'is_silva_addables_acquired')
+    def is_silva_addables_acquired(self):
+        return self._addables_allowed_in_container is None
+    
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -508,7 +550,7 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
                               'get_silva_addables_allowed')
     def get_silva_addables_allowed(self):
         secman = getSecurityManager()
-        addables = self.get_silva_addables_allowed_in_publication()
+        addables = self.get_silva_addables_allowed_in_container()
         allowed = [name for name in addables if secman.checkPermission('Add %ss' % name, self)]
         return allowed
 

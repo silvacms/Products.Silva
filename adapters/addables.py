@@ -37,27 +37,26 @@ class AddablesAdapter(BaseAddablesAdapter):
     def setAddables(self, addables):
         """set the the Metatypes that are addable to this container."""
         self.context.__addables__ = addables
+Globals.InitializeClass(AddablesAdapter)
         
-class PublicationAddablesAdapter(BaseAddablesAdapter):
+class ContainerAddablesAdapter(BaseAddablesAdapter):
 
     security = ClassSecurityInfo()
 
     def _getCurrentAddables(self):
-        return self.context._addables_allowed_in_publication
+        return self.context._addables_allowed_in_container
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'setAddables')
     def setAddables(self, addables):
         """set the the Metatypes that are addable to this container."""
-        self.context.set_silva_addables_allowed_in_publication(addables)
-        
-class RootAddablesAdapter(BaseAddablesAdapter):
+        self.context.set_silva_addables_allowed_in_container(addables)
+Globals.InitializeClass(ContainerAddablesAdapter)
+
+class RootAddablesAdapter(ContainerAddablesAdapter):
 
     security = ClassSecurityInfo()
 
-    def _getCurrentAddables(self):
-        return self.context._addables_allowed_in_publication
-    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getAddables')
     def getAddables(self):
@@ -66,14 +65,8 @@ class RootAddablesAdapter(BaseAddablesAdapter):
         if addables is not None:
             return addables
         return self.get_silva_addables_all()
-        
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'setAddables')
-    def setAddables(self, addables):
-        """set the the Metatypes that are addable to this container."""
-        self.context.set_silva_addables_allowed_in_publication(addables)
-        
-Globals.InitializeClass(AddablesAdapter)
+Globals.InitializeClass(RootAddablesAdapter)
+
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.addables')
 
@@ -82,7 +75,7 @@ module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
 def getAddablesAdapter(context):
     if interfaces.IRoot.providedBy(context):
         return RootAddablesAdapter(context).__of__(context)
-    elif interfaces.IPublication.providedBy(context):
+    elif interfaces.IContainer.providedBy(context):
         return PublicationAddablesAdapter(context).__of__(context)
     else:
         return AddablesAdapter(context).__of__(context)

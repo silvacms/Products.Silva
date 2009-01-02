@@ -15,7 +15,7 @@ from cStringIO import StringIO
 
 # silva imports
 from Products.Silva.install import configureIntIds
-from Products.Silva.interfaces import IVersionedContent, ISiteManager
+from Products.Silva.interfaces import IVersionedContent, ISiteManager, IContainer, IPublication
 from Products.Silva.upgrade import BaseUpgrader,AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
@@ -26,10 +26,21 @@ from Products.SilvaDocument.transform.Transformer import EditorTransformer
 from Products.SilvaDocument.transform.base import Context
 
 #-----------------------------------------------------------------------------
-# 2.1.0 to 2.2.0a1
+# 2.1.0 to 2.2.0a2
 #-----------------------------------------------------------------------------
 
-VERSION='2.2a1'
+VERSION='2.2a2'
+
+class AllowedAddablesUpgrader(BaseUpgrader):
+    def upgrade(self, obj):
+        if IContainer.providedBy(obj):
+            if hasattr(obj,'_addables_allowed_in_publication'):
+                obj._addables_allowed_in_container = obj._addables_allowed_in_publication
+                del obj._addables_allowed_in_publication
+            elif not hasattr(obj, '_addables_allowed_in_container'):
+                obj._addables_allowed_in_container = None
+        return obj
+AllowedAddablesUpgrader = AllowedAddablesUpgrader(VERSION, AnyMetaType)
 
 class RootUpgrader(BaseUpgrader):
 

@@ -57,8 +57,6 @@ class Publication(Folder.Folder):
 
     implements(IPublication)
 
-    _addables_allowed_in_publication = None
-
     silvaconf.priority(-5)
     silvaconf.icon('www/silvapublication.gif')
     silvaconf.factory('manage_addPublication')
@@ -89,11 +87,6 @@ class Publication(Folder.Folder):
             self, id)
 
     # MANIPULATORS
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'set_silva_addables_allowed_in_publication')
-    def set_silva_addables_allowed_in_publication(self, addables):
-        self._addables_allowed_in_publication = addables
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_folder')
@@ -185,25 +178,6 @@ class Publication(Folder.Folder):
                               'is_transparent')
     def is_transparent(self):
         return 0
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed_in_publication')
-    def get_silva_addables_allowed_in_publication(self):
-        current = self
-        root = self.get_root()
-        while 1:
-            if IPublication.providedBy(current):
-                addables = current._addables_allowed_in_publication
-                if addables is not None:
-                    return addables
-            if current == root:
-                return self.get_silva_addables_all()
-            current = current.aq_parent
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_silva_addables_acquired')
-    def is_silva_addables_acquired(self):
-        return self._addables_allowed_in_publication is None
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_document_chapter_links')
