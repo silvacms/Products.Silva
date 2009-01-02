@@ -16,6 +16,5 @@
    }
   </script>
  </head>
- <body onload="load_document()">
- </body>
+ <body onload="load_document()"></body>
 </html>

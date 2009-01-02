@@ -127,8 +127,7 @@ class KupuPopupWidget(Widget):
         val += render_element("div",
                              id=key + "content",
                              css_class="kupupopupcontentbox",
-                             contents=value or '&nbsp;'
-                             )
+                             contents=value)
         val += render_element("textarea",
                               name=key,
                               id=key,

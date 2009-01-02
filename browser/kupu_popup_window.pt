@@ -23,7 +23,7 @@
   <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/jsincludes" />
   <script type="text/javascript">
    onload_registry.register(function() {
-      var settings = window.kupu_popup_ui_init_settings;
+      var settings = window.opener.kupu_settings;
       var doc = window.document;
       /* hide buttons */
       var buttons = settings[0];
@@ -46,7 +46,6 @@
         for (var j=0; j < tbstyles.options.length; j++) {
           if (tbstyles.options[j].value == styles[i]) {
             tbstyles.options[j].parentNode.removeChild(tbstyles.options[j])
-             /*tbstyles.options[j].style.display='none';*/
             break;
           }
         }
@@ -65,8 +64,20 @@
       }
       /* re-select the first visible option and trigger the onchange,
          as the first option may have changed (i.e. been removed) */
-      var thiswindow = window;
-      tbstyles.onchange();
+      /* this may change the the text style of the block where the 
+        cursor is, so ONLY do this if the document is empty! */
+      var htmlbody = kupu.getHTMLBody()
+      /* in IE htmlbody is an empty string, but in FF3 htmlbody
+         is a <br>.  Go figure */
+      if (htmlbody == unescape('%3Cbr%3E') || htmlbody == '') {
+        if (document.createEvent) {
+          var changeEvent =   document.createEvent('HTMLEvents');
+          changeEvent.initEvent('change',true,true)
+          tbstyles.dispatchEvent(changeEvent);
+        } else if (tbstyles.fireEvent) {
+          tbstyles.fireEvent('onchange');
+        }
+      }
    });
   </script>
 </metal:block>

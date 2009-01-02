@@ -5,16 +5,14 @@ function openPopupKupu(contentbaseid,buttons,textstyles,toolboxes) {
     var toppos = (screen.height - winheight) / 2;
     var winname = 'kupu_popup_window' + contentbaseid;
     var winurl = '../@@kupu_popup_window?content_id='+contentbaseid + 'content';
-    var win = window.open('about:blank', 
+    var win = window.open('about:blank',
                            winname,
                            'toolbar=yes,status=yes,scrollbars=yes,' +
                            'resizable=yes,width=' + winwidth +
                            ',height=' + winheight +
                            ',left=' + leftpos + ',top=' + toppos);
-    /* store the popup kupu settings and the save callback in the new
-       window */
-    win.kupu_popup_ui_init_settings = [buttons,textstyles,toolboxes];
-    win.save_callback = function(content) {
+    window.kupu_settings = [buttons,textstyles,toolboxes];
+    window.save_callback = function(content) {
         document.getElementById(contentbaseid+'content').innerHTML = content;
         ta = document.getElementById(contentbaseid);
         ta.value = content;

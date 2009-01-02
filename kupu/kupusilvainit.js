@@ -651,6 +651,6 @@ function saveKupuPopup(editor) {
     editor.logMessage(_("Cleanup done, sending back to opening window"));
     var to_caller = contents.substring(contents.search('<body>')+6,
         contents.search('</body>'));
-    window.save_callback(to_caller);
+    window.opener.save_callback(to_caller);
     window.close();
 };
