@@ -7,6 +7,9 @@ Silva changes
 
     Bug fixes
 
+      - Fixed Internet Explorer 7 kupu issue triggered when clicking the 
+  	unordered list button.
+
       - Fixed 310589: Silva AutoTOC ignores "types to list" setting 
         when using silva sort order.
 
