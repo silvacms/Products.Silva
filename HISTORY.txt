@@ -22,6 +22,9 @@ New Features
 Bugs Fixed
 ~~~~~~~~~~
 
+- Fixed Internet Explorer 7 kupu issue triggered when clicking the 
+  unordered list button. 
+
 - External Source Tool: the title now reverts back to "external
   source" when the tool is reset
 
