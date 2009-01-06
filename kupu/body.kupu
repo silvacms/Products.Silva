@@ -31,7 +31,7 @@
             <kupu:define-slot name="fulleditor-frame" />
           </td>
     
-          <td style="width: 23em;" valign="top">
+          <td valign="top" width="270">
             <kupu:define-slot name="fulleditor-toolboxes" />
           </td>
         </tr>
