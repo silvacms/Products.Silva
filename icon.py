@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2008 Infrae. All rights reserved.
+# Copyright (c) 2003-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: icon.py,v 1.14 2006/02/01 13:44:32 faassen Exp $
 

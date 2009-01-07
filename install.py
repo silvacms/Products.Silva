@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: install.py,v 1.119 2006/01/24 16:14:13 faassen Exp $
 

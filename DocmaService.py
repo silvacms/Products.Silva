@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: DocmaService.py,v 1.18 2006/01/25 18:13:30 faassen Exp $
 
