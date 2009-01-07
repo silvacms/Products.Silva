@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id: test_file.py,v 1.7 2006/01/24 16:13:33 faassen Exp $
 import os
