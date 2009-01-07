@@ -137,7 +137,7 @@
     />
   </a>
   <span class="subhead" tal:content="here/get_silva_product_version" i18n:name="silva_version"/><br />
-  &#xa9; Copyright 2001-2007 Infrae. All rights reserved.
+  &#xa9; Copyright 2001-2009 Infrae. All rights reserved.
 </p>
 
 </div>
