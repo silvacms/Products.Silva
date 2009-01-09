@@ -1,16 +1,21 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from zExceptions import NotFound
-from Products.Silva.adapters.interfaces import IFeedEntry
+from Products.Silva.interfaces import IFeedEntry
 from Products.Five import BrowserView
 
 class ContainerFeedView(BrowserView):
     """Base class for feed representation."""
+
     def __call__(self):
         if not self.context.allow_feeds():
-            raise NotFound()            
+            raise NotFound()
         self.request.RESPONSE.setHeader(
             'Content-Type', 'text/xml;charset=UTF-8')
         return super(ContainerFeedView, self).__call__(self)
-        
+
     def get_data(self):
         """ prepare the data needed by a feed
         """
@@ -40,5 +45,5 @@ class ContainerFeedView(BrowserView):
             'authors': [ms.getMetadataValue(
                 self.context, 'silva-extra', 'creator')],
             'date_updated': date_updated,
-            'entries': feed 
+            'entries': feed
             }
