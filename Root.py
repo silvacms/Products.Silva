@@ -16,7 +16,7 @@ from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass
 from DateTime import DateTime
 import transaction
 
@@ -24,7 +24,7 @@ import transaction
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.interfaces import IRoot, IInvisibleService, ISiteManager
+from Products.Silva.interfaces import IRoot, ISiteManager
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 

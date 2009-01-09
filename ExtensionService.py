@@ -7,12 +7,10 @@ from zope import interface, schema
 from five import grok
 
 # Zope 2
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Globals import package_home
 from DateTime import DateTime
-from zExceptions import NotFound
 import transaction
 import zLOG
 
@@ -38,13 +36,8 @@ class ExtensionService(SilvaService):
     manage_options = (
         {'label':'Extensions', 'action':'manage_extensions'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgrade'},
+        {'label':'Partial reindex', 'action':'manage_partialReindex'},
         ) + SilvaService.manage_options
-
-    manage_partialReindexForm = PageTemplateFile(
-                    'www/extensionServicePartialReindex', globals(),
-                    __name__='manage_editForm')
-
-    security.declareProtected('View management screens', 'manage_main')
 
     silvaconf.icon('www/silva.png')
     silvaconf.factory('manage_addExtensionService')
@@ -157,22 +150,14 @@ class ExtensionService(SilvaService):
         if status:
             return 'Catalog refreshed'
 
-    security.declareProtected('View management screens', 'reindex_subtree')
-    def reindex_subtree(self, REQUEST):
+    security.declareProtected('View management screens',
+                              'reindex_subtree')
+    def reindex_subtree(self, path):
         """reindexes a subtree
         """
-        if not REQUEST.has_key('path'):
-            return self.manage_partialReindexForm(manage_tabs_message=
-                "Catalog rebuild failed: missing arguments")
-        path = REQUEST['path']
-        try:
-            obj = self.unrestrictedTraverse(path)
-        except NotFound:
-            return self.manage_partialReindexForm(manage_tabs_message=
-                "Catalog rebuild failed: not a valid path")
+        root = self.get_root()
+        obj = root.unrestrictedTraverse(str(path))
         self._reindex(obj)
-        return self.manage_main(manage_tabs_message =
-                                'Partial catalog refreshed.')
 
     def _reindex(self, obj):
         """Reindex a silva object or version.
@@ -354,7 +339,34 @@ class PartialUpgradesForm(silvaviews.ZMIForm):
     def action_upgrade(self, path, version):
         root = self.context.get_root()
         root.upgrade_silva_object(version, path)
-        self.status = _(u"Content upgrade succeeded. See event log for details.")
+        self.status = _(u"Content upgrade succeeded. See event log for details")
+
+
+class IPartialReindex(interface.Interface):
+    """Information needed to partially reindex a site.
+    """
+
+    path = schema.TextLine(
+        title=_(u"Absolute path to reindex"),
+        required=True)
+
+
+class PartialReindexForm(silvaviews.ZMIForm):
+
+    silvaconf.name('manage_partialReindex')
+
+    form_fields = grok.Fields(IPartialReindex)
+    description = _(u"Reindex a subtree of the site in the Silva Catalog."
+                    u"For big trees this may take a long time.")
+
+    @grok.action(_("Reindex"))
+    def action_reindex(self, path):
+        try:
+            self.context.reindex_subtree(path)
+        except KeyError:
+            self.status = _(u"Invalid path")
+        else:
+            self.status = _(u"Partial catalog refreshed")
 
 
 class ManageExtensions(silvaviews.ZMIView):

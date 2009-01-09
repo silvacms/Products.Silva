@@ -20,8 +20,6 @@ from Globals import InitializeClass
 from DateTime import DateTime
 from App.Common import rfc1123_date
 
-from Products.Five import BrowserView
-
 # WebDAV
 from webdav.common import Conflict
 from zExceptions import MethodNotAllowed

@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
 
 from AccessControl import ModuleSecurityInfo
 module_security = ModuleSecurityInfo('Products.Silva.interfaces')

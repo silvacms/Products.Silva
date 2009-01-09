@@ -8,7 +8,7 @@
 from Products.Silva.i18n import translate as _
 
 from zope import schema
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
 from grokcore.component.interfaces import IContext
 
 class IZMIObject(IContext):

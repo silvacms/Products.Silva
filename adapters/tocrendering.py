@@ -1,14 +1,15 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+# Zope
 import AccessControl
-#zope
 import Globals
 
-#silva
+# Silva
 from Products.Silva.adapters import adapter
 from Products.Silva import interfaces
 from silva.core.views.interfaces import IPreviewLayer
-
-#python
-from types import StringType
 
 module_security = AccessControl.ModuleSecurityInfo('Products.Silva.adapters.tocrendering')
 
@@ -49,7 +50,7 @@ class TOCRenderingAdapter(adapter.Adapter):
             items.sort(reverse=(sort_order.startswith('r')))
             items = [ o[1] for o in items ]
         return items
-    
+
 
     def _get_tree_iterator(self, container, indent=0, toc_depth=-1, sort_order='silva', show_types=['Silva Document','Silva Folder', 'Silva Publication']):
         """yield for every element in this toc
@@ -139,7 +140,7 @@ class TOCRenderingAdapter(adapter.Adapter):
                 html.append('</li></ul>')
                 depth -= 1
         return '\n'.join(html)
-    
+
 Globals.InitializeClass(TOCRenderingAdapter)
 
 def __allow_access_to_unprotected_subobjects__(name,value=None):

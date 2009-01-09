@@ -15,15 +15,12 @@ from cStringIO import StringIO
 
 # silva imports
 from Products.Silva.install import configureIntIds
-from Products.Silva.interfaces import IVersionedContent, ISiteManager, IContainer, IPublication
+from Products.Silva.interfaces import IVersionedContent, ISiteManager, IContainer
 from Products.Silva.upgrade import BaseUpgrader,AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
 import zLOG
 
-# For translating author/source/citation
-from Products.SilvaDocument.transform.Transformer import EditorTransformer
-from Products.SilvaDocument.transform.base import Context
 
 #-----------------------------------------------------------------------------
 # 2.1.0 to 2.2.0a1

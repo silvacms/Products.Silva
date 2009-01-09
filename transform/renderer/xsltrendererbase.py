@@ -14,7 +14,6 @@ from Globals import InitializeClass
 
 # Silva
 from Products.Silva.transform.interfaces import IRenderer, IXMLSource
-from Products.Silva.adapters import xmlsource
 from silva.core import conf as silvaconf
 
 class ErrorHandler(object):
@@ -30,11 +29,11 @@ class ErrorHandler(object):
 class ImportResolver(etree.Resolver):
     def __init__(self, import_dir):
         self.import_dir = import_dir
-        
+
     def resolve(self, url, id, context):
         if url.startswith("silvabase:"):
             return self.resolve_filename(self.import_dir + url[10:], context)
-    
+
 class XSLTRendererBase(object):
 
     implements(IRenderer)
@@ -89,7 +88,7 @@ class XSLTRendererBase(object):
         doctypestring = '<!DOCTYPE'
         if result_string.startswith(doctypestring):
             result_string = result_string[result_string.find('>')+1:]
-            
+
         return result_string
 
     security.declareProtected("View", "render")

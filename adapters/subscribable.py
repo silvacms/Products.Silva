@@ -24,7 +24,6 @@ NOT_SUBSCRIBABLE = 0
 SUBSCRIBABLE = 1
 ACQUIRE_SUBSCRIBABILITY = 2
 
-from zope.interface import implements
 
 class Subscription(object):
 
