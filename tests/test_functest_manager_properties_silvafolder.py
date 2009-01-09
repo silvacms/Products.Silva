@@ -38,25 +38,10 @@ class ManagerPropertiesSilvaFolderTestCase(SilvaFunctionalTestCase):
         sb.go(sb.smi_url())
         sb.select_delete_content('test_folder')
         sb.click_href_labeled('logout')
-        
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ManagerPropertiesSilvaFolderTestCase))
     return suite
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+

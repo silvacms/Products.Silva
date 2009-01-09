@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
@@ -17,8 +22,7 @@ class ManagerPropertiesSilvaDocTestCase(SilvaFunctionalTestCase):
         # login
         status, url = sb.login('manager', 'secret', sb.smi_url())
         self.assertEquals(status, 200)
-        sb.make_content('Silva Document', id='test_document',
-                                          title='Test document')
+        sb.make_content('Silva Document', id='test_document', title='Test document')
         self.failUnless('test_document' in sb.get_content_ids())
         # click into the silva document
         sb.click_href_labeled('test_document')
@@ -29,8 +33,8 @@ class ManagerPropertiesSilvaDocTestCase(SilvaFunctionalTestCase):
                           'http://nohost/root/test_document/edit/tab_metadata')
         tab_name = sb.get_middleground_buttons('settings...')
         self.failUnless(tab_name, 'settings...')
-        
-        ## fill fields 
+
+        ## fill fields
         sb.browser.getControl(name='silva-content.maintitle:record').value = 'test content€ new'
         sb.browser.getControl(name='silva-content.shorttitle:record').value = 'test content€ shorttitle'
         sb.browser.getControl(name='save_metadata:method', index=0).click()
@@ -64,9 +68,9 @@ class ManagerPropertiesSilvaDocTestCase(SilvaFunctionalTestCase):
         self.failIf('test_document' in data)
         status, url = sb.click_href_labeled('logout')
         self.assertEquals(status, 401)
-        
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ManagerPropertiesSilvaDocTestCase))
     return suite
-        
+

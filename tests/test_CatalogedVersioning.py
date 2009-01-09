@@ -13,19 +13,19 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.add_document(self.root, 'test','Test')
         self.service_catalog = self.root.service_catalog
         self.test = self.root.test
-    
+
     def _objects_to_paths(self, objects):
         result = []
         for object in objects:
             result.append('/'.join(object.getPhysicalPath()))
         return result
-    
+
     def assertInCatalog(self, objects, **kw):
         self.assertInCatalogByPath(self._objects_to_paths(objects), **kw)
 
     def assertNotInCatalog(self, objects, **kw):
         self.assertNotInCatalogByPath(self._objects_to_paths(objects), **kw)
-    
+
     def assertInCatalogByPath(self, search_paths, **kw):
         result = self.service_catalog.searchResults(**kw)
         paths = [entry.getPath() for entry in result]
@@ -43,14 +43,13 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
     def assertCatalogEmptyResult(self, **kw):
         result = self.service_catalog.searchResults(**kw)
         # only result that should exist is root and maybe its index document
-        sd_installed = 'SilvaDocument' in self.root.service_extensions.\
-            get_installed_names()
+        sd_installed = self.root.service_extensions.is_installed('SilvaDocument')
         expeceted_items = 1
         if sd_installed:
             expeceted_items = 2
         self.assertEquals(len(result), expeceted_items,
             'Catalog results where none expected.')
-            
+
     def test_add(self):
         version = self.test.get_editable()
         self.assertInCatalog([version])
@@ -91,12 +90,12 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.test.close_version()
         self.assertEquals('last_closed', new_version.version_status())
         self.assertEquals('closed', version.version_status())
-        self.assertNotInCatalog([version], version_status='closed')     
+        self.assertNotInCatalog([version], version_status='closed')
 
     def test_periodic_workflow_update(self):
         version = self.test.get_editable()
         now = DateTime()
-        # There's probably a better way: I set the publication time to 
+        # There's probably a better way: I set the publication time to
         # approx. 5 seconds from now...
         self.test.set_unapproved_version_publication_datetime(now + 0.00005)
         # and the expiration to about 10 seconds from now...
@@ -106,7 +105,7 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(0, not not version.is_version_published())
         # ..after 5 seconds the version should be published.
         time.sleep(5)
-        self.root.status_update()        
+        self.root.status_update()
         self.assertEquals(0, not not version.is_version_approved())
         self.assertEquals(1, not not version.is_version_published())
         # ..after 10 seconds the version should be closed again.
@@ -116,8 +115,8 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(0, not not version.is_version_published())
         self.assertEquals(version.id, self.test.get_last_closed_version())
         self.assertNotInCatalog([version], version_status='approved')
-        self.assertNotInCatalog([version], version_status='public')        
-        
+        self.assertNotInCatalog([version], version_status='public')
+
     def test_move(self):
         version = self.test.get_editable()
         self.assertInCatalog([self.test.get_editable()])
@@ -130,7 +129,7 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
         self.root.action_delete(['test'])
         self.assertNotInCatalogByPath(['/root/test/0'])
         self.assertCatalogEmptyResult()
-        
+
 
 import unittest
 def test_suite():

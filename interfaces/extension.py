@@ -28,6 +28,12 @@ class IExtension(Interface):
         """
 
 
+class ISystemExtension(IExtension):
+    """A system extension can't be un-installed and is used by the
+    system.
+    """
+    pass
+
 class IExtensionInstaller(Interface):
     """A Silva extension installer.
     """
@@ -55,11 +61,11 @@ class IExtensionRegistry(IRegistry):
                  depends_on=(u'Silva',)):
         """Register a new extension.
         """
-        
+
     def install(name, root):
         """Install this extension to the given Silva root.
         """
-     
+
     def uninstall(name, root):
         """Uninstall this extension from the given Silva root.
         """

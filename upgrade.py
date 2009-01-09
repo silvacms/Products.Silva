@@ -53,6 +53,23 @@ class BaseRefreshAll(BaseUpgrader):
         return root
 
 
+def get_version_index(wanted_version, version_list):
+    """Return the index of the version in the list.
+    """
+    try:
+        dev_index = wanted_version.index('dev')
+        wanted_version = wanted_version[:dev_index]
+    except ValueError:
+        # It's not a development version everything is ok.
+        pass
+    wanted_version = parse_version(wanted_version)
+    for index, version in enumerate(version_list):
+        if wanted_version <= parse_version(version):
+            return index + 1
+    # Version outside of scope.
+    raise ValueError
+
+
 class UpgradeRegistry(object):
     """Here people can register upgrade methods for their objects
     """
@@ -154,15 +171,14 @@ class UpgradeRegistry(object):
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
             from_version, to_version))
         versions = self.__registry.keys()
-        versions.sort(lambda x, y: cmp(parse_version(x),
-                                       parse_version(y)))
+        versions.sort(lambda x, y: cmp(parse_version(x), parse_version(y)))
 
         # XXX this code is confusing, but correct. We might want to redo
         # the whole version-registry-upgraders-shebang into something more
         # understandable.
-
         try:
-            version_index = versions.index(from_version)
+            version_start_index = get_version_index(from_version, versions)
+            version_end_index = get_version_index(to_version, versions)
         except ValueError:
             zLOG.LOG(
                 'Silva', zLOG.WARNING,
@@ -170,11 +186,7 @@ class UpgradeRegistry(object):
                  "upgrade from %s to %s.") % (from_version, to_version)
                 )
             return
-        else:
-            upgrade_chain = [ v
-                for (v, i) in zip(versions, range(len(versions)))
-                if i > version_index
-                ]
+        upgrade_chain = versions[version_start_index:version_end_index]
         if not upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Nothing needs to be done.')
         for version in upgrade_chain:

@@ -21,7 +21,7 @@ from Products.ProxyIndex.ProxyIndex import RecordStyle
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager import manage_addAcceleratedHTTPCacheManager
 
 # sibling
-from Products.Silva.interfaces import IInvisibleService
+from Products.Silva.interfaces import IInvisibleService, IRoot
 from Products.Silva.fssite import manage_addDirectoryView
 from Products.Silva.fssite import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
@@ -165,7 +165,7 @@ def uninstall(root):
         root.service_resources.manage_delObjects(['Silva'])
 
 def is_installed(root):
-    return hasattr(root.service_views, 'Silva')
+    return IRoot.providedBy(root)
 
 def configureMetadata(root):
     from os import path

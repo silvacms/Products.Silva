@@ -20,7 +20,7 @@ class ViewerSecurityAdapter(grok.Adapter):
 
     grok.implements(interfaces.IViewerSecurity)
     grok.context(interfaces.ISilvaObject)
-        
+
     def setAcquired(self):
         # if we're root, we can't set it to acquire, just give
         # everybody permission again
@@ -34,7 +34,7 @@ class ViewerSecurityAdapter(grok.Adapter):
                 SilvaPermissions.View,
                 roles=(),
                 acquire=1)
-    
+
     def setMinimumRole(self, role):
         if role == 'Anonymous':
             self.setAcquired()
@@ -51,13 +51,13 @@ class ViewerSecurityAdapter(grok.Adapter):
         # it's unbelievable, but that's the Zope API..
         p = Permission(SilvaPermissions.View, (), self.context)
         return type(p.getRoles(default=[])) is ListType
-                
+
     def getMinimumRole(self):
         # XXX this only works if rolesForPermissionOn returns roles
         # in definition order..
         return str(rolesForPermissionOn(
             SilvaPermissions.View, self.context)[0])
-    
+
     def getMinimumRoleAbove(self):
         if interfaces.IRoot.providedBy(self.context):
             return 'Anonymous'
@@ -78,9 +78,9 @@ LOCK_DURATION = (1./24./60.)*20.
 class LockAdapter(adapter.Adapter):
 
     grok.implements(interfaces.ILockable)
-        
+
     security = ClassSecurityInfo()
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'createLock')
     def createLock(self):

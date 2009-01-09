@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import SilvaTestCase
 from Products.Silva.adapters.addables import getAddablesAdapter
 
@@ -5,35 +10,35 @@ class OldAddablesTestCase(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
         self.publication = self.add_publication(
-            self.root, 
-            'test_publication', 
-            'Test Publication', 
+            self.root,
+            'test_publication',
+            'Test Publication',
             create_default=0,
             policy_name='None'
             )
-        
+
     def test_get_addables(self):
         addables = ['Silva Image']
         self.publication.set_silva_addables_allowed_in_container(addables)
         self.assertEquals(
-            ['Silva Image'], 
+            ['Silva Image'],
             self.publication.get_silva_addables_allowed_in_container()
             )
 
 class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
-    
+
     def afterSetUp(self):
         self.publication = self.add_publication(
-            self.root, 
-            'test_publication', 
-            'Test Publication', 
+            self.root,
+            'test_publication',
+            'Test Publication',
             create_default=0,
             policy_name='None'
             )
         self.folder = self.add_folder(
-            self.publication, 
-            'test_folder', 
-            'Test Folder', 
+            self.publication,
+            'test_folder',
+            'Test Folder',
             create_default=0,
             policy_name='None'
             )
@@ -42,26 +47,26 @@ class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
         adapter = getAddablesAdapter(self.root)
         adapter.setAddables(['Silva Publication'])
         self.assertEquals(
-            ['Silva Publication'], 
+            ['Silva Publication'],
             adapter.getAddables()
             )
-        
+
     def test_container_adapter(self):
         getAddablesAdapter(self.root).setAddables(['Silva Publication'])
         addables = ['Silva Folder']
         adapter = getAddablesAdapter(self.publication)
         adapter.setAddables(addables)
         self.assertEquals(
-            ['Silva Folder'], 
+            ['Silva Folder'],
             adapter.getAddables()
             )
         folderAdapter = getAddablesAdapter(self.folder)
         folderAdapter.setAddables(['Silva Image'])
         self.assertEquals(
-            ['Silva Image']
+            ['Silva Image'],
             folderAdapter.getAddables()
             )
-        
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

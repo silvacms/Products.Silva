@@ -248,12 +248,7 @@ class Root(Publication):
                               'manage_installDocumentation')
     def manage_installDocumentation(self):
         """Install user docs into the root, called from service_extensions"""
-        message = 'Documentation installed'
-        try:
-            self._installDocumentation()
-        except DocumentationInstallationException, e:
-            message = e
-        return self.service_extensions.manage_main(manage_tabs_message=message)
+        self._installDocumentation()
 
     def _installDocumentation(self):
         """Install user documentation into the root"""
@@ -266,6 +261,7 @@ class Root(Publication):
         zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'rb')
         importer.importFromZip(self, zipfile)
         zipfile.close()
+
     def _installSilvaFindInstance(self):
         """Install a SilvaFind instance in the siteroot"""
 

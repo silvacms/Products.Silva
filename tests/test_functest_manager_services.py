@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
@@ -29,7 +34,7 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         form1 = sb.browser.getForm(index=1)
         input_hidden = form1.getControl(name='name')
         self.assertEquals(input_hidden.value, 'Silva')
-        form1.getControl(name='install_layout:method').click()
+        form1.getControl(name='install_layout').click()
         self.failUnless('Default layout code installed' in sb.browser.contents)
 
         # Test to uninstall/reinstall already installed extensions.
@@ -38,12 +43,12 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
             form = sb.browser.getForm(name=extension)
             input_hidden = form.getControl(name='name')
             self.assertEquals(input_hidden.value, extension)
-            form.getControl(name='uninstall:method').click()
+            form.getControl(name='uninstall').click()
             self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
-        
+
             # install it
             form = sb.browser.getForm(name=extension)
-            form.getControl(name='install:method').click()
+            form.getControl(name='install').click()
             self.failUnless(('%s installed' % extension) in sb.browser.contents)
 
 
@@ -53,12 +58,12 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
             form = sb.browser.getForm(name=extension)
             input_hidden = form.getControl(name='name')
             self.assertEquals(input_hidden.value, extension)
-            form.getControl(name='install:method').click()
+            form.getControl(name='install').click()
             self.failUnless(('%s installed' % extension) in sb.browser.contents)
 
             # uninstall it
             form = sb.browser.getForm(name=extension)
-            form.getControl(name='uninstall:method').click()
+            form.getControl(name='uninstall').click()
             self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
 
 

@@ -1,16 +1,19 @@
-from zope.interface import implements
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+from five import grok
 
 import Globals
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Products.Silva import SilvaPermissions, interfaces
-from Products.Silva.adapters import adapter
-from Products.Silva.interfaces import IAddables
 
-class BaseAddablesAdapter(adapter.Adapter):
+class BaseAddablesAdapter(grok.Adapter):
 
-    implements(IAddables)
+    grok.implements(interfaces.IAddables)
+    grok.baseclass()
+
     security = ClassSecurityInfo()
-    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getAddables')
     def getAddables(self):
@@ -19,33 +22,37 @@ class BaseAddablesAdapter(adapter.Adapter):
         if addables is not None:
             return addables
         return getAddablesAdapter(self.context.aq_parent).getAddables()
-    
+
 class AddablesAdapter(BaseAddablesAdapter):
 
+    grok.context(interfaces.ISilvaObject)
+
     security = ClassSecurityInfo()
-    
+
     def __init__(self, context):
-        BaseAddablesAdapter.__init__(self, context)
+        super(AddablesAdapter, self).__init__(context)
         if not hasattr(self.context, '__addables__'):
             self.context.__addables__ = []
 
     def _getCurrentAddables(self):
         return self.context.__addables__
-    
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'setAddables')
     def setAddables(self, addables):
         """set the the Metatypes that are addable to this container."""
         self.context.__addables__ = addables
 Globals.InitializeClass(AddablesAdapter)
-        
+
 class ContainerAddablesAdapter(BaseAddablesAdapter):
+
+    grok.context(interfaces.IContainer)
 
     security = ClassSecurityInfo()
 
     def _getCurrentAddables(self):
         return self.context._addables_allowed_in_container
-        
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'setAddables')
     def setAddables(self, addables):
@@ -55,8 +62,9 @@ Globals.InitializeClass(ContainerAddablesAdapter)
 
 class RootAddablesAdapter(ContainerAddablesAdapter):
 
-    security = ClassSecurityInfo()
+    grok.context(interfaces.IRoot)
 
+    security = ClassSecurityInfo()
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'getAddables')
     def getAddables(self):
@@ -69,13 +77,7 @@ Globals.InitializeClass(RootAddablesAdapter)
 
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.addables')
-
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                  'getAddablesAdapter')
+                                 'getAddablesAdapter')
 def getAddablesAdapter(context):
-    if interfaces.IRoot.providedBy(context):
-        return RootAddablesAdapter(context).__of__(context)
-    elif interfaces.IContainer.providedBy(context):
-        return PublicationAddablesAdapter(context).__of__(context)
-    else:
-        return AddablesAdapter(context).__of__(context)
+    return interfaces.IAddables(context)

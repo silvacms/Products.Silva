@@ -290,7 +290,7 @@
   
           </td>
     
-          <td valign="top" width="270">
+          <td style="width: 23em;" valign="top">
             
     <div class="kupu-toolboxes" id="kupu-toolboxes">
       
@@ -472,9 +472,9 @@
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="value id;                                         title object/description" tal:content="python:object.get_title() or id"/>
               </tal:block>
-            </tal:block> 
+            </tal:block>
           </select>
-          <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:'SilvaExternalSources' in here.service_extensions.get_installed_names() and '1' or '0'"/>
+          <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:here.service_extensions.is_installed('SilvaExternalSources')"/>
           <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">the external sources product is not installed.  this tool is disabled.</div>
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton"/>
           <input class="button canceler" type="button" value="cancel" id="kupu-extsource-cancelbutton"/>
@@ -592,7 +592,7 @@
 
   
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">
-    
+
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
       <div class="kupu-tooltray">
        <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" define="ts here/service_typo_chars|nothing">

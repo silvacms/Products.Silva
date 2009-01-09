@@ -8,7 +8,7 @@ from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
 
 class ManagerScenarioOneTestCase(SilvaFunctionalTestCase):
-                                 
+
     """
         login manager
         select test_document
@@ -28,8 +28,7 @@ class ManagerScenarioOneTestCase(SilvaFunctionalTestCase):
     def test_manager_scenario_one(self):
         sb = SilvaBrowser()
         sb.login('manager', 'secret', sb.smi_url())
-        sb.make_content('Silva Document', id='test_document',
-                                          title='Test document')
+        sb.make_content('Silva Document', id='test_document', title='Test document')
         sb.click_href_labeled('test_document')
         sb.click_tab_named('properties')
         sb.click_href_labeled('view public version')

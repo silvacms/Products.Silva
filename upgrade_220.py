@@ -26,21 +26,10 @@ from Products.SilvaDocument.transform.Transformer import EditorTransformer
 from Products.SilvaDocument.transform.base import Context
 
 #-----------------------------------------------------------------------------
-# 2.1.0 to 2.2.0a2
+# 2.1.0 to 2.2.0a1
 #-----------------------------------------------------------------------------
 
-VERSION='2.2a2'
-
-class AllowedAddablesUpgrader(BaseUpgrader):
-    def upgrade(self, obj):
-        if IContainer.providedBy(obj):
-            if hasattr(obj,'_addables_allowed_in_publication'):
-                obj._addables_allowed_in_container = obj._addables_allowed_in_publication
-                del obj._addables_allowed_in_publication
-            elif not hasattr(obj, '_addables_allowed_in_container'):
-                obj._addables_allowed_in_container = None
-        return obj
-AllowedAddablesUpgrader = AllowedAddablesUpgrader(VERSION, AnyMetaType)
+VERSION_A1='2.2a1'
 
 class RootUpgrader(BaseUpgrader):
 
@@ -106,7 +95,7 @@ class RootUpgrader(BaseUpgrader):
         service_ext.refresh_all()
         return obj
 
-RootUpgrader = RootUpgrader(VERSION, 'Silva Root')
+RootUpgrader = RootUpgrader(VERSION_A1, 'Silva Root')
 
 
 class ImagesUpgrader(BaseUpgrader):
@@ -143,7 +132,7 @@ class ImagesUpgrader(BaseUpgrader):
         return obj
 
 
-ImagesUpgraer = ImagesUpgrader(VERSION, 'Silva Image')
+ImagesUpgraer = ImagesUpgrader(VERSION_A1, 'Silva Image')
 
 
 class SilvaXMLUpgrader(BaseUpgrader):
@@ -298,4 +287,23 @@ class SilvaXMLUpgrader(BaseUpgrader):
 
             t.parentNode.replaceChild(cs,t)
 
-SilvaXMLUpgrader = SilvaXMLUpgrader(VERSION, AnyMetaType)
+SilvaXMLUpgrader = SilvaXMLUpgrader(VERSION_A1, AnyMetaType)
+
+
+#-----------------------------------------------------------------------------
+# 2.2.0a1 to 2.2.0a2
+#-----------------------------------------------------------------------------
+
+VERSION_A2='2.2a2'
+
+class AllowedAddablesUpgrader(BaseUpgrader):
+
+    def upgrade(self, obj):
+        if IContainer.providedBy(obj):
+            if hasattr(obj,'_addables_allowed_in_publication'):
+                obj._addables_allowed_in_container = obj._addables_allowed_in_publication
+                del obj._addables_allowed_in_publication
+            elif not hasattr(obj, '_addables_allowed_in_container'):
+                obj._addables_allowed_in_container = None
+        return obj
+AllowedAddablesUpgrader = AllowedAddablesUpgrader(VERSION_A2, AnyMetaType)

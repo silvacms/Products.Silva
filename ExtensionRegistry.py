@@ -22,7 +22,7 @@ class Addable(object):
     def __init__(self, meta_type, priority=0.0):
         self._meta_type = meta_type
         self.priority = priority
-        
+
     def __cmp__(self, other):
         sort = cmp(self.priority, other.priority)
         if sort == 0:
@@ -33,7 +33,7 @@ class Addable(object):
 class BaseExtension(object):
 
     def __init__(self, name, install, path,
-                 description=None, depends=(u'Silva',)):        
+                 description=None, depends=(u'Silva',)):
         self._name = name
         self._description = description
         self._install = install
@@ -42,7 +42,7 @@ class BaseExtension(object):
         if depends and not (isinstance(depends, types.ListType) or
                             isinstance(depends, types.TupleType)):
             depends = (depends,)
-        
+
         self._depends = depends
 
     @property
@@ -60,11 +60,11 @@ class BaseExtension(object):
     @property
     def module_directory(self):
         return os.path.dirname(self.module.__file__)
-    
+
     @property
     def module(self):
         return resolve(self.module_name)
-    
+
     @property
     def version(self):
         return self._version
@@ -115,7 +115,7 @@ class EggExtension(BaseExtension):
 
     implements(interfaces.IExtension)
 
-    def __init__(self, egg, name, install, path, 
+    def __init__(self, egg, name, install, path,
                  description=None, depends=(u'Silva',)):
         super(EggExtension, self).__init__(name, install, path,
                                            description, depends)
@@ -131,7 +131,7 @@ class EggExtension(BaseExtension):
     def module_name(self):
         return self._module_name
 
-    
+
 class ExtensionRegistry(Registry):
 
     implements(interfaces.IExtensionRegistry)
@@ -177,7 +177,7 @@ class ExtensionRegistry(Registry):
 
         self._extensions[ext.name] = ext
         self._extensions_by_module[ext.module_name] = ext
-        
+
         # Try to order based on dependencies
         self._orderExtensions()
 
@@ -225,7 +225,7 @@ class ExtensionRegistry(Registry):
                     del(self._silva_addables[i])
                     break
             self.addAddable(meta_type, priority)
-   
+
     def addAddable(self, meta_type, priority):
         """Allow adding an addable to silva without using the
         registerClass shortcut method.
@@ -235,7 +235,7 @@ class ExtensionRegistry(Registry):
             if mt_dict['name'] == meta_type:
                 insort_right(self._silva_addables, Addable(mt_dict,
                      priority))
-        
+
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
         """
@@ -247,10 +247,10 @@ class ExtensionRegistry(Registry):
                 continue
             for do in value.depends:
                 depends_on_mapping.setdefault(do, []).append(value.name)
-       
+
         # if depends_on is None, this should be first in the list
         added = depends_on_mapping.get(None, [])
-       
+
         # now add them to the list and get dependencies in turn
         result = []
         while added:
@@ -265,7 +265,7 @@ class ExtensionRegistry(Registry):
 
     def install(self, name, root):
         self._extensions[name].installer.install(root)
-     
+
     def uninstall(self, name, root):
         self._extensions[name].installer.uninstall(root)
 

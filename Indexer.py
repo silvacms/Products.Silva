@@ -19,11 +19,11 @@ from Products.Silva.interfaces import IIndexable, IContent
 from silva.core import conf as silvaconf
 
 class Indexer(Content, SimpleItem):
-    __doc__ = _("""Indexes can be created that function like an index in the 
-       back of a book. References must first be marked by placing index 
-       codes in text (these codes will also export to print formats). 
-       Indexers cascade downwards, indexing all index items in the current 
-       and underlying folders and publications (note that it only indexes 
+    __doc__ = _("""Indexes can be created that function like an index in the
+       back of a book. References must first be marked by placing index
+       codes in text (these codes will also export to print formats).
+       Indexers cascade downwards, indexing all index items in the current
+       and underlying folders and publications (note that it only indexes
        documents that are published).
     """)
     security = ClassSecurityInfo()
@@ -44,13 +44,13 @@ class Indexer(Content, SimpleItem):
                               'getIndexNames')
     def getIndexNames(self):
         """Returns a list of all index entry names in the index, sorted
-        alphabetically. 
+        alphabetically.
         """
         result = [(item.lower(), item) for item in self._index.keys()]
         result.sort()
         result = [second for first, second in result]
         return result
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'getIndexEntry')
     def getIndexEntry(self, indexTitle):
@@ -64,7 +64,7 @@ class Indexer(Content, SimpleItem):
         result = [
             (title, path, name) for title_lowercase, title, path, name in result]
         return result
-    
+
     def _getIndexables(self):
         """Returns all indexables from the container containing this
         Indexer object, including and its subcontainers
@@ -81,7 +81,7 @@ class Indexer(Content, SimpleItem):
                               'update')
     def update(self):
         """Update the index.
-        """      
+        """
         result = {}
         # get tree of all subobjects
         for object in self._getIndexables():

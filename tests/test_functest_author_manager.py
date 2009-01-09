@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
@@ -24,7 +29,7 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         status, url = sb.login('author', 'secret', sb.smi_url())
         sb.make_content('Silva Document', id='test_document',
                          title='Test document')
-        
+
         data = sb.get_content_data()
         self.assertEquals(data[1]['name'], u'Test document')
         sb.click_href_labeled('test_document')

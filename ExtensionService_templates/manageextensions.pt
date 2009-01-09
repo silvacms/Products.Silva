@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/@@standard_macros/page"
+      i18n:domain="silva">
+  <body>
+    <div metal:fill-slot="body">
+
+      <div style="margin-left:1em">
+
+        <div class="system-msg"
+             i18n:translate=""
+             tal:condition="view/status"
+             tal:content="view/status">
+          Form status summary
+        </div>
+
+        <h2 i18n:translate="">
+          Configure Silva Extension Products
+        </h2>
+
+        <h3 i18n:translate="">General actions</h3>
+        <form action="#" method="post"
+              tal:define="root context/get_root"
+              tal:attributes="action request/URL">
+          <input type="submit" name="refresh_all" value="refresh all"
+                 i18n:attributes="value"/>
+          <input type="submit" name="install_documentation" value="install documentation"
+                 tal:condition="python:context.is_installed('SilvaDocument') and not hasattr(context, 'silva_docs_2_1')"
+                 i18n:attributes="value"/>
+          <input type="submit" name="refresh_catalog" value="rebuild catalog"
+                 i18n:attributes="value"/>
+          <input type="submit" name="disable_quota_subsystem" value="disable quota subsystem"
+                 tal:condition="context/get_quota_subsystem_status"
+                 i18n:attributes="value"/>
+          <input type="submit" name="enable_quota_subsystem" value="enable quota subsystem"
+                 tal:condition="not:context/get_quota_subsystem_status"
+                 i18n:attributes="value"/>
+          <input type="submit" name="upgrade_all" value="upgrade content"
+                 onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;"
+                 i18n:attributes="value" />
+          <br />
+          <br />
+          <span class="std-text">
+            (Software - <span tal:replace="root/get_silva_software_version">version</span> /
+            Content - <span tal:replace="root/get_silva_content_version">version</span>)
+          </span>
+        </form>
+      </div>
+
+      <tal:extension
+         tal:define="root context/get_root"
+         tal:repeat="extension view/extensions">
+        <div tal:define="is_installed python:extension.installer.is_installed(root);
+                         bg_color python:is_installed and  'White' or 'LightGrey'"
+             tal:attributes="style string:width:70%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
+          <div style="float:right; width:40%;">
+            <h4 class="form-title"
+                style="margin: 0">Dependencies</h4>
+            <ul tal:define="dependencies extension/depends"
+                style="padding-left: 0;list-style-position:inside;margin-top:0;">
+              <li class="list-item"
+                  tal:repeat="dependency dependencies">
+                <span tal:content="dependency" />
+              </li>
+              <li class="list-item"
+                  tal:condition="not:dependencies">None</li>
+            </ul>
+          </div>
+
+          <h3 style="margin: 0 0 0.5ex;" tal:content="extension/description" />
+          <p style="margin: 0 0 1ex;" tal:content="extension/version"/>
+
+          <form action="#" name="#" method="post" style="margin-bottom: 0;"
+                tal:define="name extension/name"
+                tal:attributes="name name;
+                                action request/URL">
+            <input type="hidden" name="name"
+                   tal:attributes="value name" />
+            <tal:cond tal:condition="python:name != 'Silva'">
+              <input type="submit"
+                     tal:define="method python:is_installed and 'uninstall' or 'install'"
+                     tal:attributes="name method;
+                                     value python:is_installed and 'deactivate' or 'activate';"
+                     i18n:attributes="value" />
+              <input type="submit" name="refresh" value="refresh"
+                     tal:condition="is_installed"
+                     i18n:attributes="value" />
+            </tal:cond>
+            <tal:cond tal:condition="python:name == 'Silva'">
+              <ul>
+                <li tal:repeat="system_ext view/system_extensions">
+                  <span tal:replace="system_ext/name" /> (<span tal:replace="system_ext/version" />)
+                </li>
+              </ul>
+              <input type="submit" name="refresh" value="refresh"
+                     i18n:attributes="value"/>
+              <input type="submit" name="install_layout" value="install default layout"
+                     i18n:attributes="value"/>
+            </tal:cond>
+          </form>
+        </div>
+      </tal:extension>
+
+    </div>
+  </body>
+</html>
