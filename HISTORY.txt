@@ -1,7 +1,7 @@
 Silva changes
 =============
 
-Silva 2.2a2 (unreleased)
+Silva 2.2a2 (2009-01-12)
 ------------------------
 
 New Features
