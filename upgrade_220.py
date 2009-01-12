@@ -129,7 +129,7 @@ class ImagesUpgrader(BaseUpgrader):
         return obj
 
 
-ImagesUpgraer = ImagesUpgrader(VERSION_A1, 'Silva Image')
+ImagesUpgrader = ImagesUpgrader(VERSION_A1, 'Silva Image')
 
 
 class SilvaXMLUpgrader(BaseUpgrader):
