@@ -1,5 +1,5 @@
 import unittest
-from SilvaBrowser import SilvaBrowser
+from SilvaBrowser import SilvaBrowser, SILVA_FORM, Z3FORM_FORM
 from SilvaTestCase import SilvaFunctionalTestCase
 
 class ContentTypeTestCase(SilvaFunctionalTestCase):
@@ -21,6 +21,7 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
 
     def test_silva_document(self):
         sb = SilvaBrowser()
+        sb.form_type = Z3CFOM_FORM
         for username in ['manager', 'chiefeditor', 'editor', 'author']:
             self.create_content_and_delete(sb, 'Silva Document', username,
                                            url=None, id='test_document',
@@ -55,10 +56,12 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
                                            file='test.txt')
     def test_silva_find(self):
         sb = SilvaBrowser()
+        sb.form_type = Z3CFOM_FORM
         for username in ['manager','chiefeditor', 'editor']:
             self.create_content_and_delete(sb, 'Silva Find', username,
                                            url=None, id='test_find',
                                            title='Test find')
+
     def test_silva_ghost(self):
         sb = SilvaBrowser()
         for username in ['manager','chiefeditor', 'editor', 'author']:

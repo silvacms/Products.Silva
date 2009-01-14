@@ -1,7 +1,7 @@
 import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser
+from SilvaBrowser import SilvaBrowser, Z3CFORM_FORM
 
 class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
     """ each role make each content type in a publication
@@ -68,7 +68,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               title='Test folder',
                                               policy='Silva Document')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_publication_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -82,7 +82,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               title='Test publication',
                                               policy='Silva Document')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_image_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -96,7 +96,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               title='Test image',
                                               image='torvald.jpg')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_file_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -110,20 +110,21 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               title='Test file',
                                               file='test.txt')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_find_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
                                 sb, 'Silva Publication', 'manager', url=None,
                                 id='test_publication1', title='Test publication 1',
                                 policy='Silva Document')
+        sb.form_type = Z3CFORM_FORM
         for username in ['manager', 'chiefeditor', 'editor']:
             self.create_content_delete_logout(sb, 'Silva Find', username,
                                               existing_content, url=None,
                                               id='test_find',
                                               title='Test find')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_ghost_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -136,7 +137,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               id='test_ghost',
                                               reference='index')
         self.login_delete_logout(sb, 'manager', existing_content)
-    
+
     def test_silva_indexer_in_publication(self):
         sb = SilvaBrowser()
         existing_content = self.create_content_and_logout(
@@ -149,7 +150,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               id='test_indexer',
                                               title='Test indexer')
         self.login_delete_logout(sb, 'manager', existing_content)
-        
+
     def test_silva_link_in_publication(self):
         # toggle absolute
         sb = SilvaBrowser()
