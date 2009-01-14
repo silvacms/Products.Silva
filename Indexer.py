@@ -14,8 +14,10 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IIndexable, IContent
+from Products.Silva.interfaces import IIndexable, IIndexer
 
+from silva.core.views import views as silvaviews
+from silva.core.views import z3cforms as silvaz3cforms
 from silva.core import conf as silvaconf
 
 class Indexer(Content, SimpleItem):
@@ -29,9 +31,7 @@ class Indexer(Content, SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Indexer"
-
-    implements(IContent)
-
+    implements(IIndexer)
     silvaconf.icon('www/silvaindexer.png')
 
     def __init__(self, id):
@@ -110,3 +110,31 @@ class Indexer(Content, SimpleItem):
 
 InitializeClass(Indexer)
 
+
+class IndexerAddForm(silvaz3cforms.AddForm):
+    """Add form for Silva indexer.
+    """
+
+    silvaconf.name(u"Silva Indexer")
+
+
+class IndexerView(silvaviews.View):
+    """View on indexer objects.
+    """
+
+    silvaconf.context(IIndexer)
+
+
+    def render_links(self, links):
+        result = []
+        for title, path, name in links:
+            # XXX: This is sub-optimal
+            obj = self.context.restrictedTraverse(path, None)
+            if obj is not None:
+                url = obj.absolute_url()
+            else:
+                url = '#'
+            result.append(
+                '<a class="indexer" href="%s#%s">%s</a>' % (
+                    url, name, title))
+        return '<br />'.join(result)

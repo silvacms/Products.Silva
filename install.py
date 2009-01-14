@@ -487,7 +487,6 @@ def registerViews(reg):
     reg.register('public', 'Silva Link Version', ['public', 'Link'])
     reg.register('public', 'Silva Image', ['public', 'Image', 'view'])
     reg.register('public', 'Silva File', ['public', 'File'])
-    reg.register('public', 'Silva Indexer', ['public', 'Indexer'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
 
     # add
@@ -497,7 +496,6 @@ def registerViews(reg):
     reg.register('add', 'Silva Link', ['add', 'Link'])
     reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva File', ['add', 'File'])
-    reg.register('add', 'Silva Indexer', ['add', 'Indexer'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
     reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
     # five compatibility for add

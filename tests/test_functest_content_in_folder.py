@@ -1,7 +1,7 @@
 import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser, Z3CFORM_FORM
+from SilvaBrowser import SilvaBrowser
 
 class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
     """ each role make each content type in a folder
@@ -117,7 +117,6 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                 sb, 'Silva Folder', 'manager', url=None,
                                 id='test_folder1', title='Test folder 1',
                                 policy='Silva Document')
-        sb.form_type = Z3CFORM_FORM
         for username in ['manager', 'chiefeditor', 'editor']:
             self.create_content_delete_logout(sb, 'Silva Find', username,
                                               existing_content, url=None,

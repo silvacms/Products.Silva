@@ -532,6 +532,25 @@ class IAutoTOC(IContent):
     pass
 
 
+class IIndexer(IContent):
+    """Index object.
+    """
+
+    def getIndexNames():
+        """Returns a list of all index entry names in the index, sorted
+        alphabetically.
+        """
+
+    def getIndexEntry(indexTitle):
+        """Returns a list of (title, path) tuples for an entry name in the
+        index, sorted alphabetically on title
+        """
+
+    def update():
+        """Update the index.
+        """
+
+
 ###############################################################
 ### Versioned content
 ###############################################################
