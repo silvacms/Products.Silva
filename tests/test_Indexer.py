@@ -1,17 +1,23 @@
 # Copyright (c) 2003-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id $
+
+from zope.app.intid.interfaces import IIntIds
+from zope.component import getUtility
+from zope.interface.verify import verifyObject
+
 import SilvaTestCase
 from DateTime import DateTime
 
 from Products.Silva import Ghost
+from Products.Silva.interfaces import IIndexer
 
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
-                                                                                
+
     def afterSetUp(self):
         self.pub = pub = self.add_folder(
             self.root, 'pub', 'Publication')
-        
+
         self.toghost  = toghost = self.add_document(
             self.root, 'toghost', 'To be Haunted')
         self.gamma  = gamma = self.add_document(self.pub, 'gamma', 'Gamma')
@@ -37,13 +43,13 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
 
         # add a folder with an indexable index document
         self.subfolder = subfolder =  self.add_folder(
-            self.pub, 'folder_with_index_doc', 
+            self.pub, 'folder_with_index_doc',
             'Folder with indexable index document',
             policy_name='Silva Document')
 
         # also add a folder with a not indexable index document
         self.subfolder_autotoc = subfolder_autotoc = self.add_folder(
-            subfolder, 'folder_with_autotoc', 
+            subfolder, 'folder_with_autotoc',
             'Folder with AutoTOC index document',
             policy_name='Silva AutoTOC')
 
@@ -121,40 +127,45 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             'indexer', 'Title')
         self.indexer = self.pub.indexer
         self.indexer.update()
-        
+
+    def test_indexer(self):
+        verifyObject(IIndexer, self.indexer)
+
     def test_getIndexNames(self):
         self.assertEquals(
             ['A', 'a', 'b', 'c', 'f', 'g', 'ghost', 'subfolder'],
             self.indexer.getIndexNames())
 
     def test_getIndexEntry(self):
+        resolver = getUtility(IIntIds).register
         expected = [
-            (u'Alpha', ('', 'root', 'pub', 'alpha'), u'a'), 
-            (u'Gamma', ('', 'root', 'pub', 'gamma'), u'a')]
+            (u'Alpha', resolver(self.alpha), u'a'),
+            (u'Gamma', resolver(self.gamma), u'a')]
         self.assertEquals(expected, self.indexer.getIndexEntry('a'))
-    
-    def test_getAllIndexEntries(self):
-        expected = {}
-        expected['a'] = [('Alpha', ('', 'root', 'pub', 'alpha'), u'a'),
-                        ('Gamma', ('', 'root', 'pub', 'gamma'), u'a')]
-        expected['A'] = [(u'Alpha Capital A', ('', 'root', 'pub', 'Alpha'), u'A')]
-        expected['b'] = [(u'Beta', ('', 'root', 'pub', 'beta'), u'b')]
-        expected['c'] = [(u'Kappa', ('', 'root', 'pub', 'kappa'), u'c')]
-        expected['f'] = [(u'Folder to Ghost', ('', 'root', 'pub', 'ghostfolder'), u'f')]
-        expected['g'] = [(u'Barrr', ('', 'root', 'pub', 'ghostfolder', 'bar'), u'g')]
-        
-        expected['ghost'] = [(u'To be Haunted', ('', 'root', 'pub', 'ghost'), u'ghost')]
-        
 
-        expected['subfolder'] = [(u'Folder with indexable index document', 
-                                 ('', 'root', 'pub', 'folder_with_index_doc'), u'subfolder')]
- 
+    def test_getAllIndexEntries(self):
+        resolver = getUtility(IIntIds).register
+        expected = {}
+        expected['a'] = [('Alpha', resolver(self.alpha), u'a'),
+                        ('Gamma', resolver(self.gamma), u'a')]
+        expected['A'] = [(u'Alpha Capital A', resolver(self.Alpha), u'A')]
+        expected['b'] = [(u'Beta', resolver(self.beta), u'b')]
+        expected['c'] = [(u'Kappa', resolver(self.kappa), u'c')]
+        expected['f'] = [(u'Folder to Ghost', resolver(self.ghostfolder), u'f')]
+        expected['g'] = [(u'Barrr', resolver(self.ghostfolder.bar), u'g')]
+
+        expected['ghost'] = [(u'To be Haunted', resolver(self.ghost), u'ghost')]
+
+
+        expected['subfolder'] = [(u'Folder with indexable index document',
+                                 resolver(self.subfolder), u'subfolder')]
+
         result =  self.indexer.getIndexNames()
         self.assertEquals(len(expected), len(result))
         for indexName in result:
             self.assertEquals(expected[indexName],
-                self.indexer.getIndexEntry(indexName))
-    
+                              self.indexer.getIndexEntry(indexName))
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

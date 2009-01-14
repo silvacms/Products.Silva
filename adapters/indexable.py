@@ -12,7 +12,7 @@ class IndexableAdapter(grok.Adapter):
 
     def __init__(self, context):
         self.context = context
-        
+
     def getTitle(self):
         return self.context.get_title()
 
@@ -20,12 +20,12 @@ class IndexableAdapter(grok.Adapter):
         return self.context.getPhysicalPath()
 
     def getIndexes(self):
-        return [] 
+        return []
 
 class GhostIndexableAdapter(IndexableAdapter):
 
     grok.context(interfaces.IGhost)
-    
+
     def getIndexes(self):
         if self.context == None:
             return []
@@ -41,7 +41,7 @@ class GhostIndexableAdapter(IndexableAdapter):
 class ContainerIndexableAdapter(IndexableAdapter):
 
     grok.context(interfaces.IContainer)
-    
+
     def getIndexes(self):
         index = self.context.index
-        return interfaces.IIndexable(index).getIndexes() 
+        return interfaces.IIndexable(index).getIndexes()

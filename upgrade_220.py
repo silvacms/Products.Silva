@@ -304,3 +304,21 @@ class AllowedAddablesUpgrader(BaseUpgrader):
                 obj._addables_allowed_in_container = None
         return obj
 AllowedAddablesUpgrader = AllowedAddablesUpgrader(VERSION_A2, AnyMetaType)
+
+#-----------------------------------------------------------------------------
+# 2.2.0a2 to 2.2.0b1
+#-----------------------------------------------------------------------------
+
+VERSION_B1='2.2b1'
+
+
+class UpdateIndexerUpgrader(BaseUpgrader):
+    """Update Silva Indexer obj which uses now an id to objects and
+    not the path (moving/renaming tolerant).
+    """
+
+    def upgrade(self, obj):
+        obj.update()
+        return obj
+
+UpdateIndexerUpgrader = UpdateIndexerUpgrader(VERSION_B1, 'Silva Indexer')

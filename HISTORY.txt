@@ -4,7 +4,9 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
-- ..
+- Silva Indexer now store an id to objects, this makes indexes more
+  resistant to object renaming/moving. The preview of Indexer have
+  been fixed as well.
 
 Silva 2.2a2 (2009-01-12)
 ------------------------
@@ -27,14 +29,14 @@ New Features
 Bugs Fixed
 ~~~~~~~~~~
 
-- Fixed Internet Explorer 7 kupu issue triggered when clicking the 
-  unordered list button. 
+- Fixed Internet Explorer 7 kupu issue triggered when clicking the
+  unordered list button.
 
 - External Source Tool: the title now reverts back to "external
   source" when the tool is reset
 
-- External Source Tool: removing an external source (via the
-  remove button) now resets the tool
+- External Source Tool: removing an external source (via the remove
+  button) now resets the tool
 
 - Added condition in Container/tab_edit for objects that are both
   containers and content to show only one author name.
@@ -42,8 +44,8 @@ Bugs Fixed
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Fixed 310589: Silva AutoTOC ignores "types to list" setting 
-  when using silva sort order.
+- Fixed 310589: Silva AutoTOC ignores "types to list" setting when
+  using silva sort order.
 
 
 - Add a function sendmail which can send mail using Mailhost and

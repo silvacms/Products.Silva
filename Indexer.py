@@ -2,10 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-# Zope 2
+# Zope 3
+from zope.app.intid.interfaces import IIntIds
+from zope.component import getUtility
 from zope.interface import implements
 
-# Zope 3
+# Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
@@ -35,9 +37,9 @@ class Indexer(Content, SimpleItem):
     silvaconf.icon('www/silvaindexer.png')
 
     def __init__(self, id):
-        Indexer.inheritedAttribute('__init__')(self, id)
+        super(Indexer, self).__init__(id)
         # index format:
-        # {index_name: (obj_path, obj_title),}
+        # {index_name: (obj_id, obj_title),}
         self._index = {}
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -83,6 +85,7 @@ class Indexer(Content, SimpleItem):
         """Update the index.
         """
         result = {}
+        resolver = getUtility(IIntIds)
         # get tree of all subobjects
         for object in self._getIndexables():
             indexable = IIndexable(object)
@@ -91,15 +94,21 @@ class Indexer(Content, SimpleItem):
                 continue
 
             title = indexable.getTitle()
-            path = indexable.getPath()
+            obj_id = resolver.register(object)
             for indexName, indexTitle in indexes:
-                result.setdefault(indexTitle, {})[path] = (indexName, title)
+                result.setdefault(indexTitle, {})[obj_id] = (indexName, title)
         self._index = result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_deletable')
     def is_deletable(self):
         """always deletable"""
+        return 1
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_cacheable')
+    def is_cacheable(self):
+        """always cacheable"""
         return 1
 
     security.declareProtected(
@@ -124,12 +133,14 @@ class IndexerView(silvaviews.View):
 
     silvaconf.context(IIndexer)
 
+    def update(self):
+        self.resolver = getUtility(IIntIds)
 
     def render_links(self, links):
         result = []
-        for title, path, name in links:
+        for title, id, name in links:
             # XXX: This is sub-optimal
-            obj = self.context.restrictedTraverse(path, None)
+            obj = self.resolver.getObject(id)
             if obj is not None:
                 url = obj.absolute_url()
             else:
