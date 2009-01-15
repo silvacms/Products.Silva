@@ -163,7 +163,7 @@ div.kupu-tb select:hover {
 }
 
 div.kupu-toolbox, div.kupu-toolbox-active {
-  background: #cedae8;
+  background: beige;
   margin-top: 0;
   margin-bottom: 0;
 }
