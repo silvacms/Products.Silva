@@ -260,7 +260,7 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
     def canBeALocalSite(self):
         return not self.manager.isSite()
 
-    @button.buttonAndHandler(_("Make site"),
+    @button.buttonAndHandler(_("make site"),
                              name="make_site",
                              condition=lambda form: form.canBeALocalSite())
     def action_make_site(self, action):
