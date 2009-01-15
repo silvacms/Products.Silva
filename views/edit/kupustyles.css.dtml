@@ -169,7 +169,7 @@ div.kupu-toolbox, div.kupu-toolbox-active {
 }
 
 div.kupu-toolbox-active {
-  background: #d6efff;
+  background: beige;
   color: red;
 }
 
