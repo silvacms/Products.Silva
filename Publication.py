@@ -3,6 +3,7 @@
 # $Id$
 
 # Zope 3
+from zope.cachedescriptors.property import CachedProperty
 from zope.interface import implements
 
 # Zope 2
@@ -237,51 +238,52 @@ class Publication(Folder.Folder):
 
 InitializeClass(Publication)
 
+from silva.core.views import z3cforms as silvaz3cforms
 from silva.core.smi import smi as silvasmi
-from five import grok
+from z3c.form import button
 
-class ManageLocalSite(silvasmi.PropertiesTab):
+class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
 
     silvaconf.name('tab_localsite')
     silvaconf.require('zope2.ViewManagementScreens')
+    implements(silvaz3cforms.INoCancelButton)
 
-    def update(self):
-        self.manager = ISiteManager(self.context)
-        if 'makesite' in self.request.form:
+    label = _(u"Local site")
+    description = _(u"You can enable/disable here a local site. By being a local site, "
+                    u"you will be able to add local service to that publication."
+                    u"Those services will applies only for elements below that publication.")
+
+    @CachedProperty
+    def manager(self):
+        return ISiteManager(self.context)
+
+    def canBeALocalSite(self):
+        return not self.manager.isSite()
+
+    @button.buttonAndHandler(_("Make site"),
+                             name="make_site",
+                             condition=lambda form: form.canBeALocalSite())
+    def action_make_site(self, action):
+        try:
             self.manager.makeSite()
-        if 'unmakesite' in self.request.form:
-            self.manager.unmakeSite()
+        except ValueError, e:
+            self.formErrorsMessage = e
+        else:
+            self.status = _("Local site activated.")
 
-    def isSite(self):
-        return self.manager.isSite()
+    def canBeNormalAgain(self):
+        return self.manager.isSite() and not IRoot.providedBy(self.context)
 
-
-managelocalsite = grok.PageTemplate("""
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/@@standard_macros/page"
-      i18n:domain="silva">
-  <body>
-    <div metal:fill-slot="body">
-      <form action="." tal:attributes="action request/URL" method="post"
-            enctype="multipart/form-data">
-        <p>This let make this publication become a local site.</p>
-        <div class="row">
-          <div class="controls">
-            <input type="submit" value="Make site" name="makesite"
-                   i18n:attributes="value" tal:condition="not:view/isSite" />
-            <input type="submit" value="Unmake site" name="unmakesite"
-                   i18n:attributes="value" tal:condition="view/isSite" />
-          </div>
-        </div>
-      </form>
-    </div>
-  </body>
-</html>
-
-""")
+    @button.buttonAndHandler(_("Delete site"),
+                             name="delete_site",
+                             condition=lambda form: form.canBeNormalAgain())
+    def action_delete_site(self, action):
+        try:
+            self.manager.deleteSite()
+        except ValueError, e:
+            self.formErrorsMessage = e
+        else:
+            self.status = _("No longer a local site.")
 
 
 def manage_addPublication(

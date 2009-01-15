@@ -367,7 +367,7 @@ class ISiteManager(Interface):
         """Make the context become a local site.
         """
 
-    def unmakeSite():
+    def deleteSite():
         """Release the context of being a local site.
         """
 

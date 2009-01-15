@@ -22,7 +22,7 @@ class SiteManager(grok.Adapter):
             raise ValueError, 'Already a local site.'
         make_objectmanager_site(self.context)
 
-    def unmakeSite(self):
+    def deleteSite(self):
         if not self.isSite():
             raise ValueError, 'Not a local site.'
         if interfaces.IRoot.providedBy(self.context):

@@ -15,11 +15,11 @@ class LocalSiteTest(SilvaTestCase.SilvaTestCase):
         # ISiteManager is an adapter on publication to manage local sites.
         manager = ISiteManager(self.root)
         self.failUnless(verifyObject(ISiteManager, manager))
-        
+
         # By default the root is a local site
         self.failUnless(manager.isSite())
         # And you can't disable it/play with it
-        self.assertRaises(ValueError, manager.unmakeSite)
+        self.assertRaises(ValueError, manager.deleteSite)
         self.assertRaises(ValueError, manager.makeSite)
 
     def test_localsite_on_publication(self):
@@ -33,7 +33,7 @@ class LocalSiteTest(SilvaTestCase.SilvaTestCase):
         # It's not a local site by default.
         self.failIf(manager.isSite())
         # So we can't disable it.
-        self.assertRaises(ValueError, manager.unmakeSite)
+        self.assertRaises(ValueError, manager.deleteSite)
         # But we can enable it.
         manager.makeSite()
         self.failUnless(manager.isSite())
@@ -47,9 +47,9 @@ class LocalSiteTest(SilvaTestCase.SilvaTestCase):
         self.root.publication.manage_delObjects(['service_customization',])
 
         # And disable it.
-        manager.unmakeSite()
+        manager.deleteSite()
         self.failIf(manager.isSite())
-        self.assertRaises(ValueError, manager.unmakeSite)
+        self.assertRaises(ValueError, manager.deleteSite)
 
     def test_localsite_on_invalid_content(self):
         # Create a document
@@ -63,7 +63,7 @@ class LocalSiteTest(SilvaTestCase.SilvaTestCase):
         # Can't be a local site.
         manager = component.queryAdapter(self.root.folder, ISiteManager)
         self.assertEqual(manager, None)
-        
+
 
 
 import unittest
