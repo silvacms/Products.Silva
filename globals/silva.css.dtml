@@ -556,7 +556,8 @@ table.listing td.field-title {
 table#sortable tbody a, table.listing tbody a {
   display: block;
 }
-/* inline in designation descriptions, new screen headings */
+/* make inline in body, row, designation descriptions, new screen headings */
+table.listing tbody.unblock a, table.listing tr.unblock a,
 table.listing tbody p a, table.listing tbody div.subhead a {
   display: inline;
 }
@@ -814,7 +815,7 @@ input[type="submit"] {
 }
 
 /* manipulator button style from which all others derive */
-input.button, button.button {
+input.button, button.button, input.manipulator {
   margin: &dtml-buttonMargin;;
   padding: &dtml-buttonPadding;;
   border: &dtml-buttonBorder;;
@@ -993,12 +994,12 @@ select:focus, select:hover {
 /* _______ controls candy: hover/focus _______ */
 
 /* manipulator warm glow */
-input.button:hover, button.button:hover {
+input.button:hover, button.button:hover, input.manipulator:hover {
   border-color: #567;
   color: #e5fffe;
   background-color: #4a7f67;
 }
-input.button:focus, button.button:focus {
+input.button:focus, button.button:focus, input.manipulator:focus {
   border-color: #789;
   color: #bfffd3;
   background-color: #62A269;
@@ -1070,7 +1071,7 @@ input[type="submit"]:focus, input[type="button"]:focus {
 /* ________________________________________________ info + clipboard _______ */
 
 div.info {
-  margin: 0;
+  margin: -1px 0 0;
   padding: 0.2em 0.4em 0.4em;
   border: &dtml-listingBorder;;
   color: &dtml-inputFontColor;;
