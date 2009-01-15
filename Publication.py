@@ -249,9 +249,9 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
     implements(silvaz3cforms.INoCancelButton)
 
     label = _(u"Local site")
-    description = _(u"You can enable/disable here a local site. By being a local site, "
-                    u"you will be able to add local service to that publication."
-                    u"Those services will applies only for elements below that publication.")
+    description = _(u"Here you can enable/disable a local site (or subsite). By making a "
+                    u"local site, you will be able to add local services to the publication. "
+                    u"Those services will only affect elements inside that publication.")
 
     @CachedProperty
     def manager(self):
