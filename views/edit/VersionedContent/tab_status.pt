@@ -142,7 +142,7 @@ _______ manual close section here _______
 <input type="hidden"
   name="refs:list"
   tal:attributes="value python: request['model'].create_ref(request['model'])" />
-<table class="listing" id="sortable" tal:condition="may_change_content">
+<table class="listing" tal:condition="may_change_content">
   <thead>
     <tr>
       <td class="top" colspan="6">

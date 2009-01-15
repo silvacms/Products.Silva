@@ -552,25 +552,20 @@ table.listing td.field-title {
 * create a displayed block of the links, because then you can click on
 * the whole tablecell and don't have to focus the text
 */
-
-table#sortable tbody a, table.listing tbody a {
+table.listing tbody a {
   display: block;
 }
-/* make inline in body, row, designation descriptions, new screen headings */
-table.listing tbody.unblock a, table.listing tr.unblock a,
-table.listing tbody p a, table.listing tbody div.subhead a {
+/* make inline in designation descriptions, new screen headings, and 
+   optionally in tbody, row with unblock class */
+table.listing tbody p a, table.listing tbody div.subhead a,
+table.listing tbody.unblock a, table.listing tr.unblock a {
   display: inline;
 }
 
-table#sortable a.icon img, table.listing a.icon img {
+table.listing a.icon img {
   display: inline;
   float: left;
   margin-right: 0.5em;
-}
-
-/* reset the margin for the up/down arrows */
-table#sortable td.listing-right img {
-  margin: 0;
 }
 
 /* __________________________ sidebar navigation _______ */

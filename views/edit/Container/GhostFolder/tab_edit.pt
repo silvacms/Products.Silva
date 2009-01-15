@@ -146,7 +146,6 @@
 </tal:block>
 <metal:fillextra fill-slot="main-extra">
 <table class="listing"
-  id="sortable"
   tal:define="
     default_document model/get_default;
     default_doc_list python: test(default_document, [default_document], []);
