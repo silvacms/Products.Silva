@@ -83,10 +83,6 @@ class Publication(Folder.Folder):
         'www/folderServices', globals())
 
 
-    def __init__(self, id):
-        Publication.inheritedAttribute('__init__')(
-            self, id)
-
     # MANIPULATORS
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -143,14 +139,14 @@ class Publication(Folder.Folder):
     def objectItemsContents(self, spec=None):
         """Don't display services by default in the Silva root.
         """
-        return [item for item in Publication.inheritedAttribute('objectItems')(self)
+        return [item for item in super(Publication, self).objectItems()
                 if not item[0].startswith('service_')]
 
     security.declarePublic('objectItemsServices')
     def objectItemsServices(self, spec=None):
         """Display services separately.
         """
-        return [item for item in Publication.inheritedAttribute('objectItems')(self)
+        return [item for item in super(Publication, self).objectItems()
                 if item[0].startswith('service_')
                 and not IInvisibleService.providedBy(item[1])]
 
