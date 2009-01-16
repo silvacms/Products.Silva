@@ -254,7 +254,7 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
         return ISiteManager(self.context)
 
     def canBeALocalSite(self):
-        return not self.manager.isSite()
+        return IPublication.providedBy(self.context) and not self.manager.isSite()
 
     @button.buttonAndHandler(_("make site"),
                              name="make_site",
@@ -270,7 +270,8 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
             self.status = _("Local site activated.")
 
     def canBeNormalAgain(self):
-        return self.manager.isSite() and not IRoot.providedBy(self.context)
+        return IPublication.providedBy(self.context) and self.manager.isSite() and \
+            not IRoot.providedBy(self.context)
 
     @button.buttonAndHandler(_("delete site"),
                              name="delete_site",
