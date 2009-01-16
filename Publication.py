@@ -263,22 +263,26 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
         try:
             self.manager.makeSite()
         except ValueError, e:
-            self.formErrorsMessage = e
+            self.status_type = 'error'
+            self.status = e
         else:
+            self.updateActions()
             self.status = _("Local site activated.")
 
     def canBeNormalAgain(self):
         return self.manager.isSite() and not IRoot.providedBy(self.context)
 
-    @button.buttonAndHandler(_("Delete site"),
+    @button.buttonAndHandler(_("delete site"),
                              name="delete_site",
                              condition=lambda form: form.canBeNormalAgain())
     def action_delete_site(self, action):
         try:
             self.manager.deleteSite()
         except ValueError, e:
-            self.formErrorsMessage = e
+            self.status_type = 'error'
+            self.status = e
         else:
+            self.updateActions()
             self.status = _("No longer a local site.")
 
 
