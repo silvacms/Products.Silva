@@ -256,7 +256,7 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
     def canBeALocalSite(self):
         return IPublication.providedBy(self.context) and not self.manager.isSite()
 
-    @button.buttonAndHandler(_("make site"),
+    @button.buttonAndHandler(_("make local site"),
                              name="make_site",
                              condition=lambda form: form.canBeALocalSite())
     def action_make_site(self, action):
@@ -273,7 +273,7 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
         return IPublication.providedBy(self.context) and self.manager.isSite() and \
             not IRoot.providedBy(self.context)
 
-    @button.buttonAndHandler(_("delete site"),
+    @button.buttonAndHandler(_("remove local site"),
                              name="delete_site",
                              condition=lambda form: form.canBeNormalAgain())
     def action_delete_site(self, action):
@@ -284,7 +284,7 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
             self.status = e
         else:
             self.updateActions()
-            self.status = _("No longer a local site.")
+            self.status = _("Local site deactivated.")
 
 
 def manage_addPublication(
