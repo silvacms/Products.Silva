@@ -7,6 +7,7 @@ import re, os.path
 from urllib2 import HTTPError
 from xml.dom import minidom
 
+from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
 Z3C_CONTENTS = ['Silva Document', 'Silva Indexer', 'Silva Find',]
@@ -28,9 +29,14 @@ class SilvaBrowser(object):
     def go_back(self):
         return self.browser.goBack()
 
-    def click_button_labeled(self, value_name):
+    def click_control_labeled(self, value_name):
+        """Click on the real button called value_name
         """
-        click on a button or psuedo button (an href) with a specific label
+        self.browser.getControl(value_name).click()
+
+    def click_button_labeled(self, value_name):
+        """Click on a button or pseudo button (an href) with a
+        specific label.
         """
         # for some reason the browser object does not expose
         # enough input and form info, however we can reach what
@@ -38,7 +44,7 @@ class SilvaBrowser(object):
         # private (no underscore) this is maybe not too bad...
 
         button = None
-        # get middleground psuedo buttons
+        # get middleground pseudo buttons
         if button is None and 'class="middleground"' in self.browser.contents:
             # no button found yet, check if there are anchors in
             # the middleground div that match value_name
@@ -72,8 +78,7 @@ class SilvaBrowser(object):
         return self.get_status_and_url()
 
     def click_href_labeled(self, value_name):
-        """
-        click on a link with a specific label
+        """Click on a link with a specific label
         """
         if 'logout' in value_name:
             # logout always results in a 401 error, login window. since
@@ -217,16 +222,14 @@ class SilvaBrowser(object):
                         return text
 
     def get_status_and_url(self):
-        """
-        return status and url of current page
+        """Return status and url of current page
         """
         status = self.browser.headers.getheader('Status')
         status = int(status.split(' ')[0])
         return (status, self.browser.url)
 
     def get_status_feedback(self):
-        """
-        return the status message in the page, or an empty string
+        """Return the status message in the page, or an empty string
         """
         div = '<div class="fixed-feedback">'
         start = self.browser.contents.find(div)
@@ -236,9 +239,8 @@ class SilvaBrowser(object):
         end = self.browser.contents.find('</div>', start)
         return self.browser.contents[start:end].strip()
 
-    def get_tabs_named(self, value_name):
-        """
-        get a tab with a specific label
+    def get_tabs(self):
+        """Get all tabs on the page
         """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         divs = doc.getElementsByTagName('div')
@@ -247,13 +249,16 @@ class SilvaBrowser(object):
                 continue
             anchors = div.getElementsByTagName('a')
             for anchor in anchors:
-                tab_name = self.html2text(anchor.toxml())
-                if tab_name == value_name:
-                    return tab_name
+                yield self.html2text(anchor.toxml())
 
-    def get_middleground_buttons(self, value_name):
+    def get_tab_named(self, value_name):
+        """Get a tab with a specific label.
         """
-        return a specific button from the middleground navigation
+        tabs = list(self.get_tabs())
+        return value_name in tabs and value_name or None
+
+    def get_middleground_buttons(self):
+        """Get all middleground buttons on the page.
         """
         doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         divs = doc.getElementsByTagName('div')
@@ -262,26 +267,27 @@ class SilvaBrowser(object):
                 continue
             anchors = div.getElementsByTagName('a')
             for anchor in anchors:
-                tab_name = self.html2text(anchor.toxml())
-                if tab_name == value_name:
-                    return tab_name
+                yield self.html2text(anchor.toxml())
+
+    def get_middleground_button_named(self, value_name):
+        """Get a middleground button from the page with a specific name.
+        """
+        buttons = list(self.get_middleground_buttons())
+        return value_name in buttons and value_name or None
 
     def get_url(self):
-        """
-        return the current url
+        """Return the current URL
         """
         return self.browser.url
 
     def get_root_url(self):
-        """
-        return the zmi root url
+        """Return the ZMI root URL
         """
         return 'http://nohost/root'
 
     def go(self, url):
-        """
-        same as browser.open, but handles http exceptions, and returns http
-        status and url tuple
+        """Same as browser.open, but handles http exceptions, and returns http
+        status and url tuple.
         """
         try:
             self.browser.open(str(url))
@@ -294,8 +300,7 @@ class SilvaBrowser(object):
         return self.get_status_and_url()
 
     def html2text(self, htmlstring):
-        """
-        return children of an html element, stripping out child elements,
+        """Return children of an html element, stripping out child elements,
         and normalizing text nodes
         """
         # replace all text within <> with an empty string
@@ -305,8 +310,7 @@ class SilvaBrowser(object):
         return text.strip()
 
     def login(self, username='manager', password='secret', url=None):
-        """
-        login to the smi
+        """Authentificate.
         """
         # it seems the Browser object gets confused if 401's are
         # raised. Because of this we always use a new Browser
@@ -319,8 +323,7 @@ class SilvaBrowser(object):
         return self.go(url)
 
     def logout(self, url=None):
-        """
-        logout of the zmi
+        """Logout
         """
         url = url or self.get_root_url()
         url = '%s/manage_zmi_logout' % url
@@ -330,9 +333,8 @@ class SilvaBrowser(object):
             return (err.code, None)
 
     def make_content(self, content_type, url=None, **fields):
-        """
-        makes content of a specific type as a specific user,
-        with one or more fields filled in.
+        """Makes content of a specific type, with one or more fields
+        filled in.
         """
         # save form type, and set it if it's a known one
         current_form_type = None
@@ -383,8 +385,7 @@ class SilvaBrowser(object):
         """
         format the path to data/ for test files
         """
-        name = os.path.dirname(__file__)
-        return open(name + '/data/' + filename)
+        return openTestFile(filename)
 
     def select_addable(self, meta_type):
         """

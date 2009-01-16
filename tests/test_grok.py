@@ -15,7 +15,7 @@ from AccessControl.SecurityManagement import newSecurityManager, \
 
 import five.grok.testing
 
-from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
+from Products.Silva.tests.layer import SilvaGrokLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
 
 
@@ -55,7 +55,7 @@ def suiteFromPackage(name):
             extraglobs=extraglobs,
             optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
 
-        test.layer = SilvaLayer
+        test.layer = SilvaGrokLayer
         suite.addTest(test)
     return suite
 

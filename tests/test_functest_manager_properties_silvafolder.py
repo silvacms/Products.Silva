@@ -20,7 +20,7 @@ class ManagerPropertiesSilvaFolderTestCase(SilvaFunctionalTestCase):
         self.assertEquals(sb.browser.url,
                           'http://nohost/root/test_folder/edit/tab_edit')
         sb.click_tab_named('properties')
-        tab_name = sb.get_middleground_buttons('settings...')
+        tab_name = sb.get_middleground_button_named('settings...')
         self.assertEquals(tab_name, 'settings...')
         sb.click_tab_named('settings...')
         self.assertEquals(sb.browser.url,

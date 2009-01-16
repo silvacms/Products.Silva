@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase

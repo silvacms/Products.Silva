@@ -24,7 +24,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # goto edit page
         status, url = sb.go(sb.smi_url())
         self.assertEquals(status, 401)
-        # besides the 401, url will be None, 
+        # besides the 401, url will be None,
         # since we didn't go anywhere
         self.assertEquals(url, None)
         # login fake user
@@ -36,7 +36,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
         self.assertEquals(status, 401)
-        
+
     def test_delete_published_content(self):
         # login
         sb = SilvaBrowser()
@@ -61,7 +61,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
         self.assertEquals(status, 401)
-    
+
     def test_get_all_content(self):
         # login
         sb = SilvaBrowser()
@@ -135,7 +135,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
         self.assertEquals(status, 401)
-       
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SilvaBrowserTest))

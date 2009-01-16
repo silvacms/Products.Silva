@@ -150,6 +150,11 @@ class SilvaFunctionalLayer(SilvaLayer):
     """
 
 
+class SilvaGrokLayer(SilvaLayer):
+    """Separate Grok test from regular Silva ones.
+    """
+
+
 def setUp(test):
     """Setup before each tests.
     """

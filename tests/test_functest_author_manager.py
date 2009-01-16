@@ -33,7 +33,7 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         data = sb.get_content_data()
         self.assertEquals(data[1]['name'], u'Test document')
         sb.click_href_labeled('test_document')
-        tab_name = sb.get_tabs_named('editor')
+        tab_name = sb.get_tab_named('editor')
         self.failUnless(tab_name in sb.browser.contents)
         sb.click_tab_named('preview')
         self.assertEquals(sb.browser.url,
@@ -41,7 +41,7 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         sb.logout()
         status, url = sb.login('manager', 'secret', sb.smi_url())
         sb.click_href_labeled('test_document')
-        tab_name = sb.get_tabs_named('editor')
+        tab_name = sb.get_tab_named('editor')
         self.failUnless(tab_name in sb.browser.contents)
         sb.click_tab_named('preview')
         # get the url of the top frame, then click the button labeled publish now

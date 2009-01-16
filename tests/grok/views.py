@@ -45,4 +45,4 @@ class MyFolderView(silvaviews.View):
     silvaconf.context(MyFolder)
 
 
-    
+
