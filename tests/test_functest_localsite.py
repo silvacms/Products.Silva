@@ -26,13 +26,13 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser.click_href_labeled('local site...')
         self.assertEquals(browser.get_url(),
                           'http://nohost/root/pub/edit/tab_localsite')
-        browser.click_control_labeled("make site")
+        browser.click_control_labeled("make local site")
         feedback = browser.get_status_feedback()
         self.failUnless(feedback.startswith('Local site activated.'))
         # TODO: check new tab Services in ZMI
-        browser.click_control_labeled("delete site")
+        browser.click_control_labeled("remove local site")
         feedback = browser.get_status_feedback()
-        self.failUnless(feedback.startswith('No longer a local site.'))
+        self.failUnless(feedback.startswith('Local site deactivated.'))
 
     def test_localsite_still_in_use(self):
         """We test to disable a local site but it's in use.
@@ -40,17 +40,17 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser = SilvaBrowser()
         browser.login('manager',
                       url='http://nohost/root/pub/edit/tab_localsite')
-        browser.click_control_labeled("make site")
+        browser.click_control_labeled("make local site")
         feedback = browser.get_status_feedback()
         self.failUnless(feedback.startswith('Local site activated.'))
         self.root.pub.manage_addProduct['silva.core.layout'].manage_addCustomizationService('service_customization')
-        browser.click_control_labeled("delete site")
+        browser.click_control_labeled("remove local site")
         self.assertEquals(browser.get_alert_feedback(),
                           'Still have registered utilities.')
         self.root.pub.manage_delObjects(['service_customization',])
-        browser.click_control_labeled("delete site")
+        browser.click_control_labeled("remove local site")
         feedback = browser.get_status_feedback()
-        self.failUnless(feedback.startswith('No longer a local site.'))
+        self.failUnless(feedback.startswith('Local site deactivated.'))
 
     def test_localsite_no_publication(self):
         """We should not have a local site ... buttons for Silva Root
