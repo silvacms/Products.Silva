@@ -60,7 +60,7 @@ contentTabBackgroundSelected:string=#b3d4bf
 contentTabFontColor:string=#d9f3e2
 
 listingTopBackground:string=#456
-listingTopHeadingColor:string=#D6EAFF
+listingTopHeadingColor:string=#d6eaff
 
 listingTopControlsBackground:string=#567
 listingTopControlsHeadingColor:string=#d0e4f6
