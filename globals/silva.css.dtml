@@ -38,8 +38,8 @@ http://developer.yahoo.net/yui/license.txt
 version: 2.6.0
 */
 html{color:#000;background:#fff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}
-<dtml-with stylesheet_properties>
 /* end yui reset */
+<dtml-with stylesheet_properties>
 
 html {
   background-color: #9ab;
@@ -498,7 +498,7 @@ table.listing td.top img {
   vertical-align: top;
 }
 
-/* subhead cell */
+/* _______ subhead cells _______ */
 table.listing tr.top-controls h3 {
   margin: 0.1em 0.3em 0.2em;
   padding: 0;
@@ -506,11 +506,12 @@ table.listing tr.top-controls h3 {
   line-height: 100%;
 }
 
-/* subsubhead cell */
 table.listing tr.inter-controls h3 {
   margin: 0em 0.3em 0.1em;
   color: #dbe9f7;
 }
+
+/* _______ flanking cells _______ */
 
 table.listing td.listing-left {
   padding: 0 0.3em 0 0.2em;
@@ -521,6 +522,7 @@ table.listing td.listing-right {
   padding: 0 0 0 0.2em;
   white-space: nowrap;
 }
+
 /* deprecated, use designator
 table.listing td.field-title {
   text-align: right;
@@ -714,7 +716,6 @@ form.sublisting {
   margin: 0 7px;
 }
 
-
 /* ________________________________________________ form definitions _______ */
 
 input {
@@ -793,7 +794,7 @@ input.button, button.button, input.manipulator {
   cursor: &dtml-buttonCursor;;
 }
 
-/* used in conflict situations where public view css wins */
+/* used in conflict situations where public view css would win */
 button.button { 
   font: &dtml-inputFont;;
 }
@@ -1521,8 +1522,7 @@ div.listingbar .previous {
   float:left;
   clear:left;
   margin-left:0.2em;
-  margin-bottom:0.3em;
-  
+  margin-bottom:0.3em;  
 }
 
 /* style is a filter */
