@@ -4,6 +4,12 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- Added sup and sub selectors to frontend.css to keep superscript and
+  subscript better aligned.
+
+- Added the YUI reset.css to silva.css and refactored accordingly, 
+  removing 50 lines or so. 
+
 - Silva Indexer now store an id to objects, this makes indexes more
   resistant to object renaming/moving. The preview of Indexer have
   been fixed as well.
