@@ -180,6 +180,14 @@ pre {
   font-size: 120%;
 }
 
+sup {
+  vertical-align:text-top;
+}
+
+sub {
+  vertical-align:text-bottom;
+}
+
 
 /* __________________________________________ silva specific typography _____ */
 
