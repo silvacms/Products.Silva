@@ -130,13 +130,12 @@ h5 {
 
 h6 {
   margin-bottom: 0.1em;
-  color: #454545;
+  color: #676767;
   font-size: 105%;
 }
 
-h6.minor, h6.sub {
-  margin-bottom: 0;
-  color: #676767;
+h6.minor {
+  color: #454545;
   font-size: 100%;
 }
 
@@ -179,6 +178,14 @@ pre {
   color: #444466;
   background-color: transparent;
   font-size: 120%;
+}
+
+sup {
+  vertical-align:text-top;
+}
+
+sub {
+  vertical-align:text-bottom;
 }
 
 
