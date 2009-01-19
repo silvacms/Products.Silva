@@ -13,15 +13,12 @@ import DateTime
 import transaction
 
 # Silva
-from Products.Silva.interfaces import IUpgrader
+from Products.Silva.interfaces import IUpgrader, IUpgradeRegistry
 
 threshold = 50
 
 # marker for upgraders to be called for any object
-class AnyMetaType(object):
-    pass
-
-AnyMetaType = AnyMetaType()
+AnyMetaType = object()
 
 class BaseUpgrader(object):
     """All upgrader should inherit from this upgrader.
@@ -44,8 +41,10 @@ class BaseUpgrader(object):
                        other.__class__.__name__)
         return sort
 
+
 class BaseRefreshAll(BaseUpgrader):
-    " refresh all products "
+    """Refresh all products.
+    """
 
     def upgrade(self, root):
         zLOG.LOG('Silva', zLOG.INFO, 'refresh all installed products')
@@ -53,7 +52,7 @@ class BaseRefreshAll(BaseUpgrader):
         return root
 
 
-def get_version_index(wanted_version, version_list):
+def get_version_index(version_list, wanted_version):
     """Return the index of the version in the list.
     """
     try:
@@ -64,15 +63,30 @@ def get_version_index(wanted_version, version_list):
         pass
     wanted_version = parse_version(wanted_version)
     for index, version in enumerate(version_list):
-        if wanted_version <= parse_version(version):
+        parsed_version = parse_version(version)
+        if wanted_version < parsed_version:
+            return index
+        elif wanted_version == parsed_version:
             return index + 1
-    # Version outside of scope.
-    raise ValueError
+    # Version outside of scope, return the last upgrader.
+    return index + 1
+
+
+def get_upgrade_chain(versions, from_version, to_version):
+    """Return a list of version to upgrade to when upgrading from to
+    to version.
+    """
+    versions.sort(lambda x, y: cmp(parse_version(x), parse_version(y)))
+    version_start_index = get_version_index(versions, from_version)
+    version_end_index = get_version_index(versions, to_version)
+    return versions[version_start_index:version_end_index]
 
 
 class UpgradeRegistry(object):
     """Here people can register upgrade methods for their objects
     """
+
+    implements(IUpgradeRegistry)
 
     def __init__(self):
         self.__registry = {}
@@ -170,23 +184,8 @@ class UpgradeRegistry(object):
         root.service_extensions.refresh_all()
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
             from_version, to_version))
-        versions = self.__registry.keys()
-        versions.sort(lambda x, y: cmp(parse_version(x), parse_version(y)))
-
-        # XXX this code is confusing, but correct. We might want to redo
-        # the whole version-registry-upgraders-shebang into something more
-        # understandable.
-        try:
-            version_start_index = get_version_index(from_version, versions)
-            version_end_index = get_version_index(to_version, versions)
-        except ValueError:
-            zLOG.LOG(
-                'Silva', zLOG.WARNING,
-                ("Nothing can be done: there's no upgrader registered to "
-                 "upgrade from %s to %s.") % (from_version, to_version)
-                )
-            return
-        upgrade_chain = versions[version_start_index:version_end_index]
+        upgrade_chain = get_upgrade_chain(self.__registry.keys(),
+                                          from_version, to_version)
         if not upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Nothing needs to be done.')
         for version in upgrade_chain:
