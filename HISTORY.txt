@@ -7,6 +7,9 @@ Silva changes
 
     Bug fixes
 
+      - Added sup and sub selectors to frontend.css to keep superscript and
+        subscript better aligned.
+
       - Removed the sortable css id/class from templates, js, and stylesheets. 
         This triggered some link problems with listing links that rendered 
         as blocks instead of inline. Could've used the id but extensions may
