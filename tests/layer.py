@@ -48,6 +48,7 @@ if hasProduct('ExtFile'):
 installProduct('Groups')
 installProduct('SilvaFind')
 installProduct('SilvaMetadata')
+installProduct('SilvaLayout')
 installProduct('SilvaViews')
 if hasProduct('SilvaExternalSources'):
     installProduct('SilvaExternalSources')
