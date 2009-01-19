@@ -130,12 +130,12 @@ h5 {
 
 h6 {
   margin-bottom: 0.1em;
-  color: #676767;
+  color: #454545;
   font-size: 105%;
 }
 
-h6.minor {
-  color: #454545;
+h6.minor, h6.sub /* in kupu*/ {
+  color: #676767;
   font-size: 100%;
 }
 
