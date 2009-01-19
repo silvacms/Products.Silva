@@ -2,20 +2,30 @@
 # See also LICENSE.txt
 # $Id$
 
+# Python
+from os.path import basename
+
+# Zope 3
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
 from zope.app.component.interfaces import ISite
 
+# Zope 2
 from zExceptions import BadRequest
 from five.localsitemanager import make_objectmanager_site
 
-from silva.core.layout.interfaces import ICustomizationService, IViewManager
-from Products.Silva.interfaces import IFolder, IContainer
+# Silva
+from silva.core.layout.interfaces import ICustomizationService, \
+    IViewManager, IViewInfo
 from silva.core.layout.porto.interfaces import IPortoSkin, IPorto
+from Products.Silva.interfaces import IFolder, IContainer
 
 import SilvaTestCase
 
-class CustomizationServiceTest(SilvaTestCase.SilvaTestCase):
+
+class CustomizationServiceTestCase(SilvaTestCase.SilvaTestCase):
+    """Test service customization setup and methods.
+    """
 
     def afterSetUp(self):
         factory = self.root.manage_addProduct['silva.core.layout']
@@ -101,16 +111,91 @@ class CustomizationServiceTest(SilvaTestCase.SilvaTestCase):
 
     def test_view_manager(self):
         # We are going to create a folder, and a document
-        self.add_document(self.root, 'document', 'document')
-        self.add_folder(self.root, 'folder', 'folder')
-
-        manager = IViewManager(self.root.service_customization)
+        utility = getUtility(ICustomizationService)
+        manager = IViewManager(utility)
         self.failUnless(verifyObject(IViewManager, manager))
 
+
+class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
+    """Test ViewEntry lookup and objects.
+    """
+
+    def afterSetUp(self):
+        factory = self.root.manage_addProduct['silva.core.layout']
+        factory.manage_addCustomizationService('service_customization')
+        self.utility = getUtility(ICustomizationService)
+
+    def test_grok_template(self):
+        signature = "zope.interface.Interface:index.html:None:" \
+            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.layout.porto.interfaces.IPorto"
+        manager = IViewManager(self.utility)
+        view = manager.from_signature(signature)
+        self.failIf(view is None)
+        self.failUnless(verifyObject(IViewInfo, view))
+        self.assertEqual(view.type_, 'Grok Page Template')
+        self.assertEqual(view.name, 'index.html')
+        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
+        self.assertEqual(view.layer, 'silva.core.layout.porto.interfaces.IPorto')
+        self.assertEqual(basename(view.template), 'maintemplate.pt')
+        self.assertEqual(view.origin, None)
+        self.assertEqual(manager.get_signature(view), signature)
+
+    def test_five_template(self):
+        signature = "zope.interface.Interface:object_lookup:None:" \
+            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "zope.publisher.interfaces.browser.IDefaultBrowserLayer"
+        manager = IViewManager(self.utility)
+        view = manager.from_signature(signature)
+        self.failIf(view is None)
+        self.failUnless(verifyObject(IViewInfo, view))
+        self.assertEqual(view.type_, 'Five Page Template')
+        self.assertEqual(view.name, 'object_lookup')
+        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
+        self.assertEqual(view.layer, 'zope.publisher.interfaces.browser.IDefaultBrowserLayer')
+        self.assertEqual(basename(view.template), 'object_lookup.pt')
+        self.assertEqual(view.origin, None)
+        self.assertEqual(manager.get_signature(view), signature)
+
+    def test_grok_content_provider(self):
+        signature = "zope.viewlet.interfaces.IViewletManager:footer:None:" \
+            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.layout.porto.interfaces.IPorto:" \
+            "zope.publisher.interfaces.browser.IBrowserView"
+        manager = IViewManager(self.utility)
+        view = manager.from_signature(signature)
+        self.failIf(view is None)
+        self.failUnless(verifyObject(IViewInfo, view))
+        self.assertEqual(view.type_, 'Grok Content Provider')
+        self.assertEqual(view.name, 'footer')
+        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
+        self.assertEqual(view.layer, 'silva.core.layout.porto.interfaces.IPorto')
+        self.assertEqual(basename(view.template), 'footer.pt')
+        self.assertEqual(view.origin, None)
+        self.assertEqual(manager.get_signature(view), signature)
+
+    def test_grok_viewlet(self):
+        signature = "zope.viewlet.interfaces.IViewlet:settingsbutton:None:" \
+            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.layout.interfaces.ISMILayer:" \
+            "silva.core.smi.smi.PropertiesTab:" \
+            "silva.core.smi.smi.SMIMiddleGroundManager"
+        manager = IViewManager(self.utility)
+        view = manager.from_signature(signature)
+        self.failIf(view is None)
+        self.failUnless(verifyObject(IViewInfo, view))
+        self.assertEqual(view.type_, 'Grok Viewlet')
+        self.assertEqual(view.name, 'settingsbutton')
+        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
+        self.assertEqual(view.layer, 'silva.core.layout.interfaces.ISMILayer')
+        self.assertEqual(basename(view.template), 'smibutton.pt')
+        self.assertEqual(view.origin, None)
+        self.assertEqual(manager.get_signature(view), signature)
 
 
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CustomizationServiceTest))
+    suite.addTest(unittest.makeSuite(CustomizationServiceTestCase))
+    suite.addTest(unittest.makeSuite(ViewEntryTestCase))
     return suite
