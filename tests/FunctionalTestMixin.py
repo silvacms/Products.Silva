@@ -3,10 +3,16 @@
 # See also LICENSE.txt
 # $Id$
 
-import re, os.path
-import SilvaTestCase
+# Python
 from urllib2 import HTTPError
+import re, os.path
+
+# Zope
 from Products.Five.testbrowser import Browser
+
+# Silva
+from helpers import openTestFile
+import SilvaTestCase
 
 # Expected state of creation
 fail_login = object()
@@ -32,19 +38,17 @@ access.append('restrict access to users with a specific role')
 publish.append('publish')
 publish.append('publishing actions')
 
-def openFile(filename):
-    name = os.path.dirname(__file__)
-    return open(name + '/data/' + filename)
 
 class BaseMixin(object):
      def setUpMixin(self):
         """Set up method for test mixin class
         """
-        pass 
+        pass
+
 
 class MixinLoginLogout(BaseMixin):
     """ Test login and  logout in the Silva SMI for specific roles """
-    
+
     def do_login(self, browser, url, username, password):
         """ Login to a url with username and password"""
         # make sure we can not use the edit page if we're not logged in
@@ -60,7 +64,7 @@ class MixinLoginLogout(BaseMixin):
         browser.addHeader('Accept-Language', 'en-US')
         browser.open(url)
         self.assertEquals(url, browser.url)
-    
+
     def do_logout(self, browser):
         # now, let's log out again..
         root_url = self.getRoot().absolute_url()
@@ -74,7 +78,7 @@ class MixinLoginLogout(BaseMixin):
 
 
 class MixinFieldParameters(BaseMixin):
-    
+
     def fill_create_file_fields(self, browser):
         self.fill_create_title_field(browser)
         self.fill_create_file_field(browser)
@@ -82,7 +86,7 @@ class MixinFieldParameters(BaseMixin):
     def fill_create_image_fields(self, browser):
         self.fill_create_title_field(browser)
         self.fill_create_image_field(browser)
-        
+
     def fill_create_link_fields(self, browser):
         self.fill_create_title_field(browser)
         self.fill_create_url_field(browser)
@@ -93,7 +97,7 @@ class MixinFieldParameters(BaseMixin):
         browser.getControl(name='field_depth').value = '-1'
 
     def fill_create_file_field(self, browser):
-        browser.getControl(name='field_file').add_file(openFile('test.txt'), 'text/plain', 'test.txt')
+        browser.getControl(name='field_file').add_file(openTestFile('test.txt'), 'text/plain', 'test.txt')
 
     def fill_create_folderish_field(self, browser):
         self.fill_create_title_field(browser)
@@ -101,20 +105,20 @@ class MixinFieldParameters(BaseMixin):
 
     def fill_create_ghost_url_field(self, browser):
         browser.getControl(name='field_content_url').value = 'index'
-        
+
     def fill_create_image_field(self, browser):
-        browser.getControl(name='field_file').add_file(openFile('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
-        
+        browser.getControl(name='field_file').add_file(openTestFile('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
+
     def fill_create_link_type_field(self, browser):
         browser.getControl(name='field_link_type').value = ['absolute']
 
     def fill_create_properties_title_field(self, browser):
         browser.getControl(name='silva-content.maintitle:record').value = 'test content€'
-        
+
     def fill_create_title_field(self, browser):
         browser.getControl(name='field_object_title').value = 'test content€'
         # other unicode characters to choose from '€ ‚ ‘ ’ „ “ ” « » — – · ©'
-        
+
     #def fill_create_title_field2(self, browser):
     #    browser.getControl(name='field_object_title').value = 'test content2'
 
@@ -162,7 +166,7 @@ class MixinRoleContent(MixinLoginLogout):
             self.failUnless(content_type in meta_type.options,
                             "Content type '%s' is not included as meta_type"
                             % content_type)
-            # Create the content 
+            # Create the content
             browser.getControl(name='meta_type').value = [content_type]
             browser.getControl(name='add_object:method').click()
             browser.getControl(name='field_object_id').value = item_id
@@ -183,7 +187,7 @@ class MixinRoleContent(MixinLoginLogout):
     def do_make_content(self, user_name, content_type, creator, result, base=None, delete=True):
         """
             this method takes a role, logs the user (role) in, selects a content
-            type, makes the content type, then deletes the content type, and 
+            type, makes the content type, then deletes the content type, and
             then logs the user out
         """
         browser = Browser()
@@ -237,7 +241,7 @@ class MixinNavigate(MixinLoginLogout):
         self.failUnless(tab_properties[1] in browser.contents,
                         "title attribute '%s' is not included in browser "
                          "content" % tab_properties[1])
-    
+
     def zmi_link_builder(self):
         return
 
@@ -250,12 +254,12 @@ class MixinNavigate(MixinLoginLogout):
         tab_link.append('%s' % tab_name)
         tab_link = '/'.join(tab_link)
         return tab_link
-    
+
     def content_link_builder(self, content, tab_name=None):
         """
             build content tab_edit link
             http://nohost/root/test_content/edit/tab_edit
-        """ 
+        """
         url = self.root_url
         content_link = url.split('/')
         if tab_name:
@@ -267,7 +271,7 @@ class MixinNavigate(MixinLoginLogout):
             content_link.insert(4, content)
             content_link = '/'.join(content_link)
         return content_link
-        
+
     def get_form_submit(self, browser, base_url, test_condition, form_name,
                         submit_value):
         """
@@ -324,7 +328,7 @@ class MixinNavigate(MixinLoginLogout):
         self.failUnless(test_condition in browser.contents, "test "
                         "condition '%s' is not included in browser content"
                         % test_condition)
-    
+
     def click_tab_name(self, browser, base_url, test_condition, tab_name):
         """
             use this to click around the root level of the smi
