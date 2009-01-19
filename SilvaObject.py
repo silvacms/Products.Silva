@@ -5,6 +5,7 @@
 # Zope 3
 from zope.i18n import translate
 from zope import component
+from zope.publisher.browser import applySkin
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.traversing.browser import absoluteURL
@@ -43,6 +44,7 @@ from Products.SilvaMetadata.Exceptions import BindingError
 from Products.Silva.i18n import translate as _
 
 from silva.core.views.interfaces import IPreviewLayer
+from silva.core.layout.interfaces import ISMILayer
 
 from silva.core.conf.utils import getSilvaViewFor
 from silva.core import conf as silvaconf
@@ -50,10 +52,12 @@ from silva.core import conf as silvaconf
 class XMLExportContext:
     """Simple context class used in XML export.
     """
-    pass
+
 
 class NoViewError(Exception):
-    """no view defined"""
+    """No view defined.
+    """
+
 
 class Zope3ViewAttribute(ViewAttribute):
     """A view attribute that tries to look up Zope 3 views for fun and
@@ -69,6 +73,7 @@ class Zope3ViewAttribute(ViewAttribute):
         """
         context = self.aq_parent
         request = self.REQUEST
+        applySkin(request, ISMILayer)
         view = component.queryMultiAdapter((context, request), name=name)
         if view:
             return view.__of__(context)
@@ -90,6 +95,7 @@ class Zope3ViewAttribute(ViewAttribute):
                         model.absolute_url(), self._view_type, self._default_method))
 
             return method_on_view
+
 
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
