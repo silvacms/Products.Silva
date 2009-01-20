@@ -228,6 +228,9 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
     def add_file(self, object, id, title, **kw):
         return self.addObject(object, 'File', id, title=title, **kw)
 
+    def add_find(self, object, id, title):
+        return self.addObject(object, 'SilvaFind', id, title=title, product='SilvaFind')
+
     def get_events(self, event_type=None, filter=None):
         """Return events that were fired since the beginning of the
         test, which includes events fired in the `afterSetUp` method.
