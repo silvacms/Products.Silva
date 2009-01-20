@@ -251,7 +251,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
             p = doc_el.createElement('parameter')
             p.setAttribute('type','boolean')
             p.setAttribute('key','display_headings')
-            p.appendChild(doc_el.createTextNode('1'))
+            p.appendChild(doc_el.createTextNode('0'))
             cs.appendChild(p)
 
             p = doc_el.createElement('parameter')
@@ -273,7 +273,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
             p = doc_el.createElement('parameter')
             p.setAttribute('type','boolean')
             p.setAttribute('key','link_headings')
-            p.appendChild(doc_el.createTextNode('1'))
+            p.appendChild(doc_el.createTextNode('0'))
             cs.appendChild(p)
 
             p = doc_el.createElement('parameter')
