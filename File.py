@@ -45,13 +45,17 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
+from Products.Silva.magic import MagicGuess
 from Products.Silva.interfaces import IAsset
 from Products.Silva import interfaces
 
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
 
+
 CHUNK_SIZE = 4092
+DEFAULT_MIMETYPE = 'application/octet-stream'
+MAGIC = MagicGuess()
 
 def manage_addFile(self, id, title, file):
     """Add a File
@@ -63,7 +67,7 @@ def manage_addFile(self, id, title, file):
     id = str(id)
     # the content type is a formality here, the factory expects
     # it as an arg but doesn't actually use it
-    object = file_factory(self, id, 'application/unknown', file)
+    object = file_factory(self, id, DEFAULT_MIMETYPE, file)
 
     self._setObject(id, object)
     object = getattr(self, id)
@@ -195,13 +199,6 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)
-
-        if hasattr(self._file, 'data') and str(self._file.data)[:5] == '%PDF-':
-            # force pdf content type if header is correct pdf file
-            # Extfile does this in its _get_content_type method..
-            self._file.content_type = 'application/pdf'
-        if self._file.content_type == 'text/plain':
-            self._file.content_type = 'text/plain; charset=utf-8'
         self.reindex_object()
         self.update_quota()
 
@@ -228,14 +225,11 @@ class File(Asset):
         # like the "index_html" does?
         return self._file.HEAD(REQUEST, RESPONSE)
 
-    # checks where the mime type is text/* or javascript, and whether
-    #   this file is a ZODB file. (editing is only supported with ZODB files)
+    # checks where the mime type is text/* or javascript
     def can_edit_text(self):
         mt = self.get_mime_type()
         if ((mt.startswith('text/') and mt != 'text/rtf') or \
-           mt in ('application/x-javascript',)) \
-           and hasattr(self.aq_explicit,'get_text_content'):
-            #that last one (get_text_content), is so only ZODBFiles are used
+                mt in ('application/x-javascript',)):
             return True
 
     def set_content_type(self, content_type):
@@ -266,9 +260,14 @@ class ZODBFile(File):
         self._file = Image.File(id, id, '')
 
     def _set_file_data_helper(self, file):
-        # ensure consistent mimetype assignment by deleting content-type header
-        fix_content_type_header(file)
-        self._file.manage_upload(file=file)
+        data, size = self._file._read_data(file)
+        id  = getattr(file, 'filename', self.id)
+        content_type = MAGIC.guess(id=id,
+                                   buffer=hasattr(data, 'data') and data.data or data,
+                                   default=DEFAULT_MIMETYPE)
+        self._file.update_data(data, content_type, size)
+        if self._file.content_type == 'text/plain':
+            self._file.content_type = 'text/plain; charset=utf-8'
 
     def get_content(self):
         data = self._file.data
@@ -306,26 +305,28 @@ class BlobFile(File):
     def __init__(self, id):
         super(BlobFile, self).__init__(id)
         self._file = blob.Blob()
-        self._content_type = 'application/octet-stream'
+        self._content_type = DEFAULT_MIMETYPE
 
     def _set_content_type(self, file, content_type=None):
-        headers = getattr(file, 'headers', None)
-        if headers and headers.has_key('content-type'):
-            content_type = headers['content-type']
-        self._content_type = content_type
+        id  = getattr(file, 'filename', self.id)
+        self._content_type = MAGIC.guess(id=id,
+                                         filename=self._file._current_filename(),
+                                         default=content_type)
+        if self._content_type == 'text/plain':
+            self._content_type = 'text/plain; charset=utf-8'
 
     # MODIFIERS
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_file_data')
     def set_file_data(self, file):
-        self._set_content_type(file, 'application/octet-stream')
         desc = self._file.open('w')
         data = file.read(CHUNK_SIZE)
         while data:
             desc.write(data)
             data = file.read(CHUNK_SIZE)
         desc.close()
+        self._set_content_type(file, DEFAULT_MIMETYPE)
         self.reindex_object()
         self.update_quota()
 
@@ -407,16 +408,21 @@ class FileSystemFile(File):
         super(FileSystemFile, self).__init__(id)
         self._file = ExtFile(id, redirect_default_view=1)
 
+    def _get_filename(self):
+        path = self._file.get_filename()
+        if not os.path.isfile(path):
+            path += '.tmp'
+        return path
+
     def _set_file_data_helper(self, file):
-        # ensure consistent mimetype assignment by deleting content-type header
+        # XXX fix that's
         fix_content_type_header(file)
         self._file.manage_file_upload(file=file)
+        if self._file.content_type == 'text/plain':
+            self._file.content_type = 'text/plain; charset=utf-8'
 
     def get_content_fd(self):
-        path = self.getFileSystemPath()
-        if not os.path.isfile(path):
-            path = self.getFileSystemPath()+ '.tmp'
-        return open(path, 'rb')
+        return open(self._get_filename(), 'rb')
 
     security.declareProtected(
         SilvaPermissions.View, 'get_download_url')
@@ -429,8 +435,6 @@ class FileSystemFile(File):
         """return path on filesystem for containing image"""
         # full path from /:
         return self._file.get_filename()
-        # this would be relative to repository:
-        return '/'.join(self._file.filename)
 
 InitializeClass(FileSystemFile)
 
@@ -462,12 +466,6 @@ def file_factory(self, id, content_type, file):
     """
     # if this gets called by the contentObjectFactoryRegistry, the last
     # argument will be a string
-    # XXX is this useful? do we use 'file' at all (what would 'mangle' want
-    # with it?)
-    if type(file) in (str, unicode):
-        f = StringIO()
-        f.write(file)
-        file = f
     id = mangle.Id(self, id, file=file, interface=IAsset)
     if not id.isValid():
         return

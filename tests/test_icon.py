@@ -34,26 +34,26 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
         upload = FileUpload(fields)
         self.silva.manage_addProduct['Silva'].manage_addFile('datafile',
             'data file', upload)
-    
+
     def test_registry(self):
         self.assertEquals(self.silva.fileasset.get_mime_type(),
             'application/pdf')
         r = _IconRegistry()
-        
+
         r.registerIcon(('meta_type', 'Silva Root'),
             'www/members.png', Root.__dict__)
-        r.registerIcon(('mime_type', 'application/octet-stream'),
+        r.registerIcon(('mime_type', 'text/plain'),
             'www/silvafile.png', Root.__dict__)
         r.registerIcon(('mime_type', 'application/pdf'),
             'www/user.png', Root.__dict__)
-            
+
         icon = r.getIcon(self.silva)
         self.assertEquals(icon, 'misc_/Silva/members.png')
         icon = r.getIcon(self.silva.fileasset)
         self.assertEquals(icon, 'misc_/Silva/user.png')
         icon = r.getIcon(self.silva.datafile)
         self.assertEquals(icon, 'misc_/Silva/silvafile.png')
-        
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
