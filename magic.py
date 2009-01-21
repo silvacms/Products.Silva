@@ -5,7 +5,6 @@
 import os.path
 import mimetypes
 
-
 class IdGuess(object):
 
     def __init__(self, *kw):
@@ -94,7 +93,7 @@ try:
 
             return magic_file(self.cookie, filename)
 
-except OSError, ImportError:
+except (OSError, ImportError):
 
     class MagicGuess(IdGuess):
 
