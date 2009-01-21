@@ -3,11 +3,7 @@
 # $Id$
 
 import os.path
-import ctypes
-import ctypes.util
 import mimetypes
-
-from ctypes import c_char_p, c_int, c_size_t, c_void_p
 
 
 class IdGuess(object):
@@ -33,6 +29,10 @@ class IdGuess(object):
         return None
 
 try:
+
+    import ctypes
+    import ctypes.util
+    from ctypes import c_char_p, c_int, c_size_t, c_void_p
 
     class MagicException(Exception):
         pass
@@ -94,7 +94,7 @@ try:
 
             return magic_file(self.cookie, filename)
 
-except OSError:
+except OSError, ImportError:
 
     class MagicGuess(IdGuess):
 
