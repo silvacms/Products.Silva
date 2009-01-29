@@ -459,7 +459,7 @@
           <input class="button" type="button" value="update" id="kupu-extsource-updatebutton" />
           <input class="button remover" type="button" value="remove" id="kupu-extsource-delbutton" />
           <div id="kupu-extsource-nosourcestext" style="display: none" i18n:translate="">
-            No external sources found.
+            No External Sources are available in this area of the site.
           </div>
         </form>
 
