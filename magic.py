@@ -100,7 +100,7 @@ except (OSError, ImportError):
         def buffer(self, buf):
             if str(buf)[:5] == '%PDF-':
                 return 'application/pdf'
-            elif s.startswith('<?xml'):
+            elif buf.startswith('<?xml'):
                 return 'text/xml'
             return 'application/octet-stream'
 

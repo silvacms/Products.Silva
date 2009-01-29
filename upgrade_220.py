@@ -298,10 +298,10 @@ class AllowedAddablesUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
         if IContainer.providedBy(obj):
-            if hasattr(obj,'_addables_allowed_in_publication'):
+            if hasattr(obj.aq_explicit,'_addables_allowed_in_publication'):
                 obj._addables_allowed_in_container = obj._addables_allowed_in_publication
                 del obj._addables_allowed_in_publication
-            elif not hasattr(obj, '_addables_allowed_in_container'):
+            elif not hasattr(obj.aq_explicit, '_addables_allowed_in_container'):
                 obj._addables_allowed_in_container = None
         return obj
 AllowedAddablesUpgrader = AllowedAddablesUpgrader(VERSION_A2, AnyMetaType)
