@@ -1975,7 +1975,7 @@ this.delbutton = getFromSelector(delbuttonid);
 this.toolbox = getFromSelector(toolboxid);
 this.plainclass = plainclass;
 this.activeclass = activeclass;
-this.is_enabled = getFromSelector(isenabledid).value=='1';
+this.is_enabled = getFromSelector(isenabledid).value=='True';
 this.disabled_text = getFromSelector(disabledtextid);
 this.nosources_text = getFromSelector(nosourcestextid);
 this.nosources = false;
