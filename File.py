@@ -519,7 +519,7 @@ class FileServiceManagementView(silvaviews.ZMIEditForm):
     silvaconf.context(FilesService)
 
     form_fields = grok.Fields(interfaces.IFilesService)
-    actions = grok.EditForm.actions + form.Actions(
+    actions =  form.Actions(silvaviews.ZMIEditForm.handle_edit_action,
         form.Action('Convert all files', success='action_convert'))
 
     def convert(self):
