@@ -106,5 +106,5 @@ except (OSError, ImportError):
 
         def file(self, filename):
             fd = open(filename)
-            return self.buffer(read(fd, 5))
+            return self.buffer(fd.read(5))
 

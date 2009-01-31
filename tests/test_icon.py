@@ -44,6 +44,8 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
             'www/members.png', Root.__dict__)
         r.registerIcon(('mime_type', 'text/plain'),
             'www/silvafile.png', Root.__dict__)
+        r.registerIcon(('mime_type', 'application/octet-stream'),
+            'www/silvafile.png', Root.__dict__)
         r.registerIcon(('mime_type', 'application/pdf'),
             'www/user.png', Root.__dict__)
 
