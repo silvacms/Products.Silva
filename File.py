@@ -448,7 +448,8 @@ class FileSystemFileView(silvaviews.Template):
     def render(self):
         self.response.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
-        return self.context._file.index_html(REQUEST=self.request, RESPONSE=self.response)
+        return self.context._file.index_html(
+            REQUEST=self.request, RESPONSE=self.response)
 
 
 def FileStorageTypeVocabulary(context):
