@@ -6,6 +6,7 @@
 from zope.i18n import translate
 from zope import component
 from zope.publisher.browser import applySkin
+from zope.publisher.interfaces import INotFound
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.traversing.browser import absoluteURL
@@ -45,6 +46,7 @@ from Products.Silva.i18n import translate as _
 
 from silva.core.views.interfaces import IPreviewLayer
 from silva.core.layout.interfaces import ISMILayer
+from silva.core.layout.utils import queryMultiAdapterWithInterface
 
 from silva.core.conf.utils import getSilvaViewFor
 from silva.core import conf as silvaconf
@@ -118,10 +120,20 @@ class SilvaObject(Security, ViewCode):
     def __repr__(self):
         return "<%s instance %s>" % (self.meta_type, self.id)
 
-    # test
-
+    # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.
     def absolute_url(self, relative=None):
         return absoluteURL(self, self.REQUEST)
+
+    # Query for an error page. We redefine it to have a correct object
+    # as context, and not an interface ... which does not make code
+    # really reusable.
+    def standard_error_message(self, **kwargs):
+        request = self.REQUEST
+        page = queryMultiAdapterWithInterface(
+            (INotFound, request,), self, name='error.html')
+        if page is not None:
+            return page.__of__(self)()
+        return self.aq_parent.standard_error_message()
 
     # MANIPULATORS
 
