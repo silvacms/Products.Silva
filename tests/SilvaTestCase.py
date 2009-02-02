@@ -3,8 +3,6 @@
 # See also LICENSE.txt
 # $Id$
 
-__version__ = '0.3.1'
-
 from Testing.ZopeTestCase import utils, connections, sandbox, ZopeLite
 from Testing import ZopeTestCase
 from ZODB.blob import BlobStorage
@@ -141,7 +139,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         connection = ZODB.DB(storage).open()
         if ISilvaTestBlobs.providedBy(self):
             self._blob_dir = tempfile.mkdtemp('-blobs')
-            connection = ZODB.DB(BlobStorage(self._blob_dir, connection._storage)).open()
+            connection = ZODB.DB(BlobStorage(
+                    self._blob_dir, connection._storage)).open()
         app = ZopeLite.app(connection)
         sandbox.AppZapper().set(app)
         app = utils.makerequest(app)
