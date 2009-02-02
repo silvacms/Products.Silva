@@ -6,13 +6,12 @@
 from zope.i18n import translate
 from zope import component
 from zope.publisher.browser import applySkin
-from zope.publisher.interfaces import INotFound
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.traversing.browser import absoluteURL
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
-from zope.interface import alsoProvides
+from zope.interface import alsoProvides, providedBy
 
 # Zope 2
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -90,11 +89,14 @@ class Zope3ViewAttribute(ViewAttribute):
             method_on_view =  getattr(view, name, None)
 
             if method_on_view is None:
-                # "Method on view" does not exist: redirect to default method.
-                # XXX may cause endless redirection loop, if default does not exist.
+                # "Method on view" does not exist: redirect to default
+                # method.  XXX may cause endless redirection loop, if
+                # default does not exist.
                 response = request.RESPONSE
                 response.redirect('%s/%s/%s' % (
-                        model.absolute_url(), self._view_type, self._default_method))
+                        model.absolute_url(),
+                        self._view_type,
+                        self._default_method))
 
             return method_on_view
 
@@ -129,10 +131,12 @@ class SilvaObject(Security, ViewCode):
     # really reusable.
     def standard_error_message(self, **kwargs):
         request = self.REQUEST
-        page = queryMultiAdapterWithInterface(
-            (INotFound, request,), self, name='error.html')
-        if page is not None:
-            return page.__of__(self)()
+        error = kwargs.get('error_value', None)
+        if error:
+            page = queryMultiAdapterWithInterface(
+                (providedBy(error), request,), self, name='error.html')
+            if page is not None:
+                return page.__of__(self)()
         return self.aq_parent.standard_error_message()
 
     # MANIPULATORS
