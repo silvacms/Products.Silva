@@ -12,6 +12,29 @@ from zope.app.component.interfaces import ISite
 from Products.Silva import interfaces
 
 
+def register_service(self, id, service, interface):
+    """Set and register the service id, using interface.
+    """
+    site = self.Destination()
+    if not ISite.providedBy(site):
+        raise BadRequest, "A service can only be created in a local site"
+    site._setObject(id, service)
+    service = getattr(site, id)
+    sm = site.getSiteManager()
+    sm.registerUtility(service, interface)
+    return service
+
+
+def unregister_service(service, interface):
+    """Unregister the service using the given interface.
+    """
+    site = service.aq_parent
+    if not ISite.providedBy(site):
+        raise ValueError, "Service parent is not a site."
+    sm = ISite(site).getSiteManager()
+    sm.unregisterUtility(service, interface)
+
+
 def add_and_edit(self, id, REQUEST, screen='manage_main'):
     """Helper function to point to the object's management screen if
     'Add and Edit' button is pressed.
