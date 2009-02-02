@@ -194,7 +194,8 @@ class Image(Asset):
             return None
         m = self.re_box.match(crop)
         if m is None:
-            msg = _("'${crop} is not a valid crop identifier", mapping={'crop': crop})
+            msg = _("'${crop} is not a valid crop identifier",
+                    mapping={'crop': crop})
             msg = translate(msg)
             raise ValueError, msg
         x1 = int(m.group(1))
@@ -220,7 +221,8 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            msg = _("'${crop}' defines an impossible cropping", mapping={'crop': crop})
+            msg = _("'${crop}' defines an impossible cropping",
+                    mapping={'crop': crop})
             msg = translate(msg)
             raise ValueError, msg
         return (x1, y1, x2, y2)
@@ -371,23 +373,8 @@ class Image(Asset):
         file = REQUEST['BODYFILE']
         length = REQUEST['CONTENT_LENGTH']
         if int(length) == 0:
-            print 'bailing out'
             raise Conflict, 'Zope bug prevents creation of empty images'
         self.set_image(file)
-
-    def HEAD(self, REQUEST, RESPONSE):
-        """ forward the request to the underlying image object
-        """
-        # XXX: copy & paste from "index_html"
-        img = None
-        query = REQUEST.QUERY_STRING
-        if query == 'hires':
-            img = self.hires_image
-        elif query == 'thumbnail':
-            img = self.thumbnail_image
-        if img is None:
-            img = self.image
-        return img.HEAD(REQUEST, RESPONSE)
 
     def get_file_size(self):
         if self.hires_image:
@@ -531,9 +518,10 @@ class ImagePublishTraverse(SilvaPublishTraverse):
 
     def browserDefault(self, request):
         # We don't want to lookup five views if we have other than a
-        # GET or POST request.
-        object, method = super(ImagePublishTraverse, self).browserDefault(request)
-        if request.method == 'GET':
+        # GET or HEAD request, but delegate to the sub-object.
+        object, method = super(
+            ImagePublishTraverse, self).browserDefault(request)
+        if request.method in ('GET', 'HEAD',):
             query = request.QUERY_STRING
             if query == 'hires':
                 img = self.context.hires_image
