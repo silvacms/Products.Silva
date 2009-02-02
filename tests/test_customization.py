@@ -34,7 +34,8 @@ class CustomizationServiceTestCase(SilvaTestCase.SilvaTestCase):
     def test_utility_only_in_local_site(self):
         # A service_customization can be added only in a local site.
         self.failUnless(ISite.providedBy(self.root))
-        self.publication = self.add_publication(self.root, 'publication', 'Publication')
+        self.publication = self.add_publication(
+            self.root, 'publication', 'Publication')
         self.failIf(ISite.providedBy(self.publication))
         factory = self.publication.manage_addProduct['silva.core.layout']
         self.assertRaises(BadRequest,

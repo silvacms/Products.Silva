@@ -7,6 +7,7 @@ import urllib
 
 # Zope
 from zope.app.component.interfaces import ISite
+from zExceptions import BadRequest
 
 # Silva
 from Products.Silva import interfaces
@@ -15,9 +16,12 @@ from Products.Silva import interfaces
 def register_service(self, id, service, interface):
     """Set and register the service id, using interface.
     """
-    site = self.Destination()
-    if not ISite.providedBy(site):
-        raise BadRequest, "A service can only be created in a local site"
+    if not ISite.providedBy(self.aq_base):
+        site = self.Destination()
+        if not ISite.providedBy(site):
+            raise BadRequest, "A service can only be created in a local site"
+    else:
+        site = self
     site._setObject(id, service)
     service = getattr(site, id)
     sm = site.getSiteManager()

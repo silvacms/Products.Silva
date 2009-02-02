@@ -6,13 +6,13 @@ from zope import component
 from zope.interface import implements
 from zope.interface.verify import verifyObject
 
-import helpers
-import SilvaTestCase
+from zExceptions import BadRequest
 
 from Products.Silva import File
 from Products.Silva import interfaces
 from Products.Silva.Image import havePIL
 from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
+from Products.Silva.tests import helpers, SilvaTestCase
 
 
 class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
@@ -33,8 +33,13 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
         root = self.root = self.getRoot()
         folder1 = self.add_folder(root, 'folder1', 'Folder 1')
         folder2 = self.add_folder(root, 'folder2', 'Folder 2')
-        folder1in1 = self.add_folder(folder1, 'folder1in1', 'Folder 1 in 1')
-        folder1in1in1 = self.add_folder(folder1in1, 'folder1in1in1', 'Folder 1 in 1 in 1')
+        folder1in1 = self.add_publication(
+            folder1, 'folder1in1', 'Folder 1 in 1')
+        folder1in1in1 = self.add_folder(
+            folder1in1, 'folder1in1in1', 'Folder 1 in 1 in 1')
+        # We can only add a new service in a site
+        manager = interfaces.ISiteManager(folder1in1)
+        manager.makeSite()
         folder1in1.manage_addProduct['Silva'].manage_addFilesService(
             'service_files', 'Other Files Service')
 
@@ -66,15 +71,23 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
         self.failUnless(interfaces.IBlobFile.providedBy(file))
 
     def test_service(self):
-        self.failUnless(verifyObject(interfaces.IFilesService,
-                                     self.root.service_files))
+        service = component.getUtility(interfaces.IFilesService)
+        self.assertEquals(self.root.service_files, service)
+        self.failUnless(
+            verifyObject(interfaces.IFilesService, service))
 
-        self.root.service_files.storage = File.ZODBFile
-        file = self.root.service_files.newFile('test')
+        service.storage = File.ZODBFile
+        file = service.newFile('test')
         self.isZODBFile(file)
-        self.root.service_files.storage = File.BlobFile
-        file = self.root.service_files.newFile('test')
+
+        service.storage = File.BlobFile
+        file = service.newFile('test')
         self.isBlobFile(file)
+
+        factory = self.root.folder1.manage_addProduct['Silva']
+        self.assertRaises(BadRequest,
+                          factory.manage_addFilesService,
+                          'service_files')
 
     def test_manage_convertStorage(self):
         # By default we use ZODB storage
@@ -95,8 +108,9 @@ class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
 
         image_data = self.root.testimage.getImage(hires=1)
         file_data = self.root.testfile.get_content()
-        form = component.getMultiAdapter((self.root.service_files, self.root.REQUEST),
-                                         name='manage_filesservice')
+        form = component.getMultiAdapter(
+            (self.root.service_files, self.root.REQUEST),
+            name='manage_filesservice')
 
         # Convert to Blobs
         self.root.service_files.storage = File.BlobFile

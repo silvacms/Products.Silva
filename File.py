@@ -9,7 +9,9 @@ from cgi import escape
 from cStringIO import StringIO
 
 # Zope 3
+from zope import component
 from zope.interface import implements, directlyProvides
+from zope.app.component.interfaces import ISite
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.schema.fieldproperty import FieldProperty
@@ -21,8 +23,7 @@ from five import grok
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from helpers import add_and_edit, fix_content_type_header
-from converters import get_converter_for_mimetype
+from OFS.interfaces import IObjectWillBeRemovedEvent
 from webdav.common import rfc1123_date
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
@@ -35,8 +36,12 @@ from Products.Silva.i18n import translate as _
 from Products.Silva.Asset import Asset
 from Products.Silva.BaseService import SilvaService
 from Products.Silva.ContentObjectFactoryRegistry import \
-        contentObjectFactoryRegistry
+    contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
+from Products.Silva.helpers import add_and_edit, fix_content_type_header, \
+    register_service, unregister_service
+from Products.Silva.converters import get_converter_for_mimetype
+
 # Storages
 from OFS import Image                            # For ZODB storage
 try:                                             #
@@ -262,9 +267,10 @@ class ZODBFile(File):
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
         id  = getattr(file, 'filename', self.id)
-        content_type = MAGIC.guess(id=id,
-                                   buffer=hasattr(data, 'data') and data.data or data,
-                                   default=DEFAULT_MIMETYPE)
+        content_type = MAGIC.guess(
+            id=id,
+            buffer=hasattr(data, 'data') and data.data or data,
+            default=DEFAULT_MIMETYPE)
         self._file.update_data(data, content_type, size)
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
@@ -289,7 +295,8 @@ class ZODBFileView(silvaviews.Template):
 
     def render(self):
         self.response.setHeader(
-            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+            'Content-Disposition',
+            'inline;filename=%s' % (self.context.get_filename()))
         return self.context._file.index_html(self.request, self.response)
 
 
@@ -309,9 +316,10 @@ class BlobFile(File):
 
     def _set_content_type(self, file, content_type=None):
         id  = getattr(file, 'filename', self.id)
-        self._content_type = MAGIC.guess(id=id,
-                                         filename=self._file._current_filename(),
-                                         default=content_type)
+        self._content_type = MAGIC.guess(
+            id=id,
+            filename=self._file._current_filename(),
+            default=content_type)
         if self._content_type == 'text/plain':
             self._content_type = 'text/plain; charset=utf-8'
 
@@ -378,11 +386,13 @@ class BlobFileView(silvaviews.Template):
 
     def render(self):
         self.response.setHeader(
-            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+            'Content-Disposition',
+            'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
             'Content-Type', self.context.content_type())
         self.response.setHeader(
-            'Last-Modified', rfc1123_date(self.context.get_modification_datetime()))
+            'Last-Modified',
+            rfc1123_date(self.context.get_modification_datetime()))
         self.response.setHeader(
             'Accept-Ranges', None)
         desc = self.context.get_content_fd()
@@ -447,7 +457,8 @@ class FileSystemFileView(silvaviews.Template):
 
     def render(self):
         self.response.setHeader(
-            'Content-Disposition', 'inline;filename=%s' % (self.context.get_filename()))
+            'Content-Disposition',
+            'inline;filename=%s' % (self.context.get_filename()))
         return self.context._file.index_html(
             REQUEST=self.request, RESPONSE=self.response)
 
@@ -463,7 +474,7 @@ directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 
 def file_factory(self, id, content_type, file):
-    """Add a File
+    """Add a File.
     """
     # if this gets called by the contentObjectFactoryRegistry, the last
     # argument will be a string
@@ -472,15 +483,15 @@ def file_factory(self, id, content_type, file):
         return
     id = str(id)
 
-    # Switch storage type:
-    service_files = getattr(self, 'service_files', None)
-    assert service_files is not None, \
-                        ("There is no service_files. "
-                         "Refresh your silva root.")
+    service_files = component.getUtility(interfaces.IFilesService)
     return service_files.newFile(id)
+
 
 class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
+    silvaconf.icon('www/files_service.gif')
+    silvaconf.factory('manage_addFilesServiceForm')
+    silvaconf.factory('manage_addFilesService')
 
     implements(interfaces.IFilesService)
     security = ClassSecurityInfo()
@@ -490,11 +501,6 @@ class FilesService(SilvaService):
     manage_options = (
         {'label':'Edit', 'action':'manage_filesservice'},
         ) + SilvaService.manage_options
-
-    silvaconf.icon('www/files_service.gif')
-    silvaconf.factory('manage_addFilesServiceForm')
-    silvaconf.factory('manage_addFilesService')
-
 
     security.declarePrivate('newFile')
     def newFile(self, id):
@@ -551,11 +557,12 @@ class StorageConverterHelper(object):
         if context is self.startpoint:
             return context
 
-        if interfaces.IContainer.providedBy(context):
-            if 'service_files' in context.objectIds():
-                dummy = ConversionBlocker()
-                dummy.aq_base = ConversionBlocker()
-                return dummy
+        if ISite.providedBy(context):
+            for obj in context.objectValues():
+                if interfaces.IFilesService.providedBy(obj):
+                    dummy = ConversionBlocker()
+                    dummy.aq_base = ConversionBlocker()
+                    return dummy
         return context
 
 
@@ -584,16 +591,23 @@ class FileStorageConverter(object):
         new_file.set_content_type(content_type)
 
         zLOG.LOG(
-            'Silva', zLOG.INFO, "File %s migrated" % '/'.join(new_file.getPhysicalPath()))
+            'Silva', zLOG.INFO,
+            "File %s migrated" % '/'.join(new_file.getPhysicalPath()))
         return new_file
 
-def manage_addFilesService(self, id, title='', REQUEST=None):
+def manage_addFilesService(self, id, title=None, REQUEST=None):
     """Add files service.
     """
+    if title is None:
+        title = id
     service = FilesService(id, title)
-    self._setObject(id, service)
+    register_service(self, id, service, interfaces.IFilesService)
     add_and_edit(self, id, REQUEST)
     return ''
+
+@silvaconf.subscribe(interfaces.IFilesService, IObjectWillBeRemovedEvent)
+def unregisterFileService(service, event):
+    unregister_service(service, interfaces.IFilesService)
 
 contentObjectFactoryRegistry.registerFactory(
     file_factory,

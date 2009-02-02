@@ -145,7 +145,8 @@ def install(root):
     # install the renderer registry service
     if not hasattr(root, 'service_renderer_registry'):
         root.manage_addProduct['Silva'].manage_addRendererRegistryService(
-            'service_renderer_registry', 'Silva Renderer Registry Configuration')
+            'service_renderer_registry',
+            'Silva Renderer Registry Configuration')
 
     #install the typochars service
     if not hasattr(root,'service_typo_chars'):
@@ -359,8 +360,8 @@ def configureLayout(root, default_if_existent=0):
     default_ if the id already exists in the root.
     """
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
-               'standard_error_message', 'standard_unauthorized_message',
-               'copyright','head_inject']:
+               'default_standard_error_message', 'copyright', 'head_inject',
+               'standard_unauthorized_message',]:
         add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py',

@@ -323,3 +323,15 @@ class UpdateIndexerUpgrader(BaseUpgrader):
         return obj
 
 UpdateIndexerUpgrader = UpdateIndexerUpgrader(VERSION_B1, 'Silva Indexer')
+
+class SecondRootUpgrader(BaseUpgrader):
+    """Change standard_error_message to default_standard_error_message.
+    """
+
+    def upgrade(self, obj):
+        obj._setObject(
+            'default_standard_error_message',
+            obj.__dict__['standard_error_message'])
+        del obj.__dict__['standard_error_message']
+
+SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')

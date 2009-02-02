@@ -8,6 +8,7 @@ from cStringIO import StringIO
 from cgi import escape
 
 # Zope 3
+from zope import component
 from zope.i18n import translate
 from zope.interface import implements
 import zope.app.container.interfaces
@@ -22,14 +23,13 @@ import zLOG
 import OFS.interfaces
 
 # Silva
-import SilvaPermissions
-from Asset import Asset
-from Products.Silva import mangle, interfaces
+from Products.Silva import mangle, interfaces, SilvaPermissions
+from Products.Silva.Asset import Asset
 from Products.Silva.i18n import translate as _
 from Products.Silva.interfaces import IAsset
 
 # misc
-from helpers import add_and_edit
+from Products.Silva.helpers import add_and_edit
 
 try:
     import PIL.Image
@@ -37,6 +37,7 @@ try:
 except ImportError:
     havePIL = 0
 
+from silva.core.views.traverser import SilvaPublishTraverse
 from silva.core import conf as silvaconf
 
 
@@ -483,7 +484,8 @@ class Image(Asset):
         return pil_image
 
     def _image_factory(self, id, file, content_type=None):
-        new_image = self.service_files.newFile(id)
+        service_files = component.getUtility(interfaces.IFilesService)
+        new_image = service_files.newFile(id)
         new_image.set_file_data(file)
         if content_type:
             new_image.set_content_type(content_type)
@@ -525,8 +527,6 @@ class Image(Asset):
 InitializeClass(Image)
 
 
-from silva.core.views.traverser import SilvaPublishTraverse
-
 class ImagePublishTraverse(SilvaPublishTraverse):
 
     def browserDefault(self, request):
@@ -544,7 +544,6 @@ class ImagePublishTraverse(SilvaPublishTraverse):
             return img, method
         return object, method
 
-
 class ImageStorageConverter(object):
 
     implements(interfaces.IUpgrader)
@@ -560,23 +559,24 @@ class ImageStorageConverter(object):
         image._image_factory('hires_image', data, ct)
         image._createDerivedImages()
         zLOG.LOG(
-            'Silva', zLOG.INFO, "Image %s migrated" % '/'.join(image.getPhysicalPath()))
+            'Silva', zLOG.INFO,
+            "Image %s migrated" % '/'.join(image.getPhysicalPath()))
         return image
 
 
 # Register Image factory for image mimetypes
 import mimetypes
 from Products.Silva import assetregistry
+from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 
 mt = mimetypes.types_map.values()
 mt  = [mt for mt in mt if mt.startswith('image')]
 assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
 
-from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 
 def image_factory(self, id, content_type, body):
     """Create an Image."""
-    id = mangle.Id(self, id, interface=IAsset)
+    id = mangle.Id(self, id, interface=interfaces.IAsset)
     if not id.isValid():
         return
     id = str(id)
@@ -590,7 +590,8 @@ contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
 
-@silvaconf.subscribe(interfaces.IImage, zope.app.container.interfaces.IObjectAddedEvent)
+@silvaconf.subscribe(
+    interfaces.IImage, zope.app.container.interfaces.IObjectAddedEvent)
 def image_added(image, event):
     for id in ('hires_image', 'image', 'thumbnail_image'):
         img = getattr(image, id, None)
@@ -598,7 +599,8 @@ def image_added(image, event):
             continue
         img.id = id
 
-@silvaconf.subscribe(interfaces.IImage, OFS.interfaces.IObjectClonedEvent)
+@silvaconf.subscribe(
+    interfaces.IImage, OFS.interfaces.IObjectClonedEvent)
 def image_cloned(image, event):
     "copy support"
     for id in ('image', 'hires_image', 'thumbnail_image'):

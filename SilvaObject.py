@@ -137,7 +137,7 @@ class SilvaObject(Security, ViewCode):
                 (providedBy(error), request,), self, name='error.html')
             if page is not None:
                 return page.__of__(self)()
-        return self.aq_parent.standard_error_message()
+        return self.default_standard_error_message()
 
     # MANIPULATORS
 
