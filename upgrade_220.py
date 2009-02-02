@@ -14,11 +14,12 @@ import OFS.Image
 from cStringIO import StringIO
 
 # silva imports
+from Products.Silva import interfaces
 from Products.Silva.install import configureIntIds
-from Products.Silva.interfaces import IVersionedContent, ISiteManager, IContainer
-from Products.Silva.upgrade import BaseUpgrader,AnyMetaType
+from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
+from Products.SilvaExternalSources.interfaces import ICodeSourceService
 import zLOG
 
 
@@ -39,7 +40,7 @@ class RootUpgrader(BaseUpgrader):
                 disableLocalSiteHook(obj)
 
         # Activate local site, add an intid service.
-        ism = ISiteManager(obj)
+        ism = interfaces.ISiteManager(obj)
         if not ism.isSite():
             ism.makeSite()
             setSite(obj)
@@ -137,7 +138,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
        <toc> elements to cs_toc sources and
        <citation> elements to cs_citation sources'''
     def upgrade(self, obj):
-        if IVersionedContent.providedBy(obj):
+        if interfaces.IVersionedContent.providedBy(obj):
             vm = version_management.getVersionManagementAdapter(obj)
             for version in vm.getVersions():
                 if hasattr(version, 'content'):
@@ -297,7 +298,7 @@ VERSION_A2='2.2a2'
 class AllowedAddablesUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
-        if IContainer.providedBy(obj):
+        if interfaces.IContainer.providedBy(obj):
             if hasattr(obj.aq_explicit,'_addables_allowed_in_publication'):
                 obj._addables_allowed_in_container = obj._addables_allowed_in_publication
                 del obj._addables_allowed_in_publication
@@ -333,5 +334,9 @@ class SecondRootUpgrader(BaseUpgrader):
             'default_standard_error_message',
             obj.__dict__['standard_error_message'])
         del obj.__dict__['standard_error_message']
+        # Register service_files and others
+        sm = obj.getSiteManager()
+        sm.registerUtility(obj.service_files, interfaces.IFilesService)
+        sm.registerUtility(obj.service_codesources, ICodeSourceService)
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
