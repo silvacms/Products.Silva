@@ -2,29 +2,32 @@ Copyright (c) 2002-2009 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
-  
-  Silva 2.1.2 (unreleased)      
+
+  Silva 2.1.2 (unreleased)
 
     Bug fixes
 
       - Added sup and sub selectors to frontend.css to keep superscript and
         subscript better aligned.
 
-      - Removed the sortable css id/class from templates, js, and stylesheets. 
-        This triggered some link problems with listing links that rendered 
+      - Removed the sortable css id/class from templates, js, and stylesheets.
+        This triggered some link problems with listing links that rendered
         as blocks instead of inline. Could've used the id but extensions may
-        not have it, so added an unblock class to be used in a tbody or tr.      
+        not have it, so added an unblock class to be used in a tbody or tr.
 
-      - Fixed Internet Explorer 7 kupu issue triggered when clicking the 
+      - Fixed Internet Explorer 7 kupu issue triggered when clicking the
         unordered list button.
 
-      - Fixed 310589: Silva AutoTOC ignores "types to list" setting 
+      - Fixed 310589: Silva AutoTOC ignores "types to list" setting
         when using silva sort order.
+
+      - Fix broken subscription service when using MaildropHost (use
+        new sendmail function).
 
   Silva 2.1.1 (2008-12-17)
 
     Bug fixes
-  
+
       - Fixed broken test
 
   Silva 2.1.1b4 (2008-12-09)
