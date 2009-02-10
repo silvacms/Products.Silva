@@ -5774,8 +5774,9 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ "Der Belegschaft der ${eth_zuerich} für ihre Anmerkungen, Beiträge und "
 #~ "Verbesserungen."
 
-#~ msgid "save + enter"
-#~ msgstr "Speichern + Betreten"
+#: /views/add/GhostFolder/add_form.pt:126 /views/add/add_form.pt:138
+msgid "save + enter"
+msgstr "Speichern + Betreten"
 
 #~ msgid "properties of"
 #~ msgstr "Eigenschaften von"

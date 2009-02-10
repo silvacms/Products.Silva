@@ -125,17 +125,30 @@
     </tr>
     <tr class="controls">
       <td colspan="2">
-        <tal:if condition="python: not lookup_mode" >
-        <input class="button"
-          style="float:right"
-          type="submit"
-          name="add_edit_submit"
-          value="save + edit"
-          title="access key: alt-e"
-          accesskey="e"
-          tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
-          i18n:attributes="value;title"
-        />
+        <tal:if condition="python: not lookup_mode">
+          <tal:block condition="python: here.id == 'Folder' or
+				        here.id == 'Publication'">
+	    <input class="button"
+              style="float:right"
+	      type="submit"
+              name="add_edit_submit"
+              value="save + enter"
+              title="access key: alt-e"
+              accesskey="e"
+	      i18n:attributes="value;title"
+            />
+	  </tal:block>
+          <tal:block condition="python: here.id not in ('Folder', 'Publication')">
+	    <input class="button"
+              style="float:right"
+	      type="submit"
+              name="add_edit_submit"
+              value="save + edit"
+              title="access key: alt-e"
+              accesskey="e"
+	      i18n:attributes="value;title"
+            />
+	  </tal:block>
         </tal:if>
         <input class="button"
           style="float:right"
