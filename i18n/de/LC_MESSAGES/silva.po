@@ -5166,6 +5166,10 @@ msgstr "zurück zu &#xab;${title_or_id}&#xbb;"
 msgid "Sorry, there are problems with these form fields:"
 msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 
+#: /views/add/GhostFolder/add_form.pt:126 /views/add/add_form.pt:138
+msgid "save + enter"
+msgstr "Speichern + Betreten"
+
 #~ msgid ""
 #~ "This is a special document that automagically displays a\n"
 #~ "       table of contents. Usually it&#8217;s used as an &#8216;"
@@ -5773,9 +5777,6 @@ msgstr "Es sind Probleme mit den folgenden Formularfeldern aufgetreten:"
 #~ msgstr ""
 #~ "Der Belegschaft der ${eth_zuerich} für ihre Anmerkungen, Beiträge und "
 #~ "Verbesserungen."
-
-#~ msgid "save + enter"
-#~ msgstr "Speichern + Betreten"
 
 #~ msgid "properties of"
 #~ msgstr "Eigenschaften von"
