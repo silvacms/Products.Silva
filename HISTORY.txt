@@ -26,6 +26,10 @@ Silva 2.2b1 (unreleased)
 - Fix bug on service subscription when using MaildropHost with Zope
   2.11+.
 
+- Fix a race condition on the sidebar in SMI, which makes make two
+  request on the server, creating from times to times a ConflictError
+  or ReadConflictError.
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 

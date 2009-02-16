@@ -34,8 +34,7 @@
       i18n:attributes="title">
       <img tal:replace="structure python:here.render_icon(model.get_publication())" />
     </a>
-    <div class="normal"
-      tal:attributes="onclick string:javascript:window.location='${publication/absolute_url}/edit/{__vein_id__}'">
+    <div class="normal">
       <a class="blacklink"
         href="top"
         title="up to top of publication"
@@ -83,8 +82,7 @@
         i18n:attributes="title">
         <img tal:replace="structure python:here.render_icon(item)" />
       </a>
-      <div class="normal"
-        tal:attributes="onclick string:javascript:window.location='${vein_url}'">
+      <div class="normal">
         <a class="blacklink"
           tal:attributes="
             href string:${vein_url};
