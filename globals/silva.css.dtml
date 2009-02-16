@@ -1360,6 +1360,9 @@ a:hover {
 }
 
 /* blacklink selectors */
+a.blacklink {
+  line-height: 16px;
+}
 a.blacklink:link {
   color: #333;
   text-decoration: none;
