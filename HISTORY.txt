@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.1.2b3 (unreleased)
+
+    Bug fixes
+
+      - ...
+
   Silva 2.1.2b2 (2009-02-17)
 
     Bug fixes
