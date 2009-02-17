@@ -338,6 +338,8 @@ class PartialUpgradesForm(silvaviews.ZMIForm):
     @grok.action(_("Upgrade"))
     def action_upgrade(self, path, version):
         root = self.context.get_root()
+        #path is unicode; it needs to either be a string, or split
+        path = path.encode('utf-8')
         root.upgrade_silva_object(version, path)
         self.status = _(u"Content upgrade succeeded. See event log for details")
 
