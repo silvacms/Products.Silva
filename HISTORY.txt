@@ -7,7 +7,7 @@ Silva changes
 
     Bug fixes
 
-      - ...
+      - Fix an  another race condition  on the sidebar.
 
   Silva 2.1.2b2 (2009-02-17)
 
