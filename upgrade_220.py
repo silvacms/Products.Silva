@@ -333,10 +333,11 @@ class SecondRootUpgrader(BaseUpgrader):
         obj._setObject(
             'default_standard_error_message',
             obj.__dict__['standard_error_message'])
-        del obj.__dict__['standard_error_message']
+        obj._delObject('standard_error_message')
         # Register service_files and others
         sm = obj.getSiteManager()
         sm.registerUtility(obj.service_files, interfaces.IFilesService)
         sm.registerUtility(obj.service_codesources, ICodeSourceService)
+        return obj
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
