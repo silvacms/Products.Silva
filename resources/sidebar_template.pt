@@ -7,7 +7,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
-  tal:define="    
+  tal:define="
     model           request/model;
     publication     model;
     tree            publication/get_container_tree;
@@ -16,13 +16,13 @@
 
 
 
-<tr tal:replace="nothing"> 
-  ______________ stack publication row ______________ 
+<tr tal:replace="nothing">
+  ______________ stack publication row ______________
 </tr>
 <tr>
   <td class="{__class__}"
     style="border-top:none;">
-    <a class="right slide-links" 
+    <a class="right slide-links"
       title="slide to the publish screen"
       tal:attributes="href string:${publication/absolute_url}/edit/tab_status"
       i18n:attributes="title">
@@ -61,7 +61,7 @@
         item_url string:${item/absolute_url};
         vein_url string:${item_url}/edit/{__vein_id__};
         title    item/get_short_title_editable">
-      <a class="right slide-links" 
+      <a class="right slide-links"
         title="slide to the publish screen"
         tal:attributes="href string:${item_url}/edit/tab_status"
         i18n:attributes="title">
