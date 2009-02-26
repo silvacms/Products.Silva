@@ -7,7 +7,7 @@ Silva changes
 
     Bug fixes
 
-      - ...
+      - Fix errors on the XSLT renderer.
 
   Silva 2.1.2b3 (2009-02-20)
 
