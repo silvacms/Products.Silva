@@ -1,6 +1,7 @@
 import os
 from lxml import etree
 from StringIO import StringIO
+import threading
 
 from zope.interface import implements
 
@@ -25,11 +26,11 @@ class ErrorHandler:
 class ImportResolver(etree.Resolver):
     def __init__(self, import_dir):
         self.import_dir = import_dir
-        
+
     def resolve(self, url, id, context):
         if url.startswith("silvabase:"):
             return self.resolve_filename(self.import_dir + url[10:], context)
-    
+
 class XSLTRendererBase:
 
     implements(IRenderer)
@@ -58,18 +59,19 @@ class XSLTRendererBase:
         self._stylesheet_path = os.path.join(path_context, path)
         self._stylesheet_dir = path_context
         self._import_dir = import_dir
-        self._stylesheet = None
         self._error_handler = ErrorHandler()
+        # we store stylesheets in a thread-local storage
+        self._local = threading.local()
 
     def stylesheet(self):
-        if self._stylesheet is None:
+        if not hasattr(self._local, 'stylesheet'):
             f = open(self._stylesheet_path)
             parser = etree.XMLParser()
             parser.resolvers.add(ImportResolver(self._import_dir))
             xslt_doc = etree.parse(f, parser)
             f.close()
-            self._stylesheet = etree.XSLT(xslt_doc)
-        return self._stylesheet
+            self._local.stylesheet = etree.XSLT(xslt_doc)
+        return self._local.stylesheet
 
     security.declareProtected("View", "render")
     def render(self, obj):
@@ -83,7 +85,7 @@ class XSLTRendererBase:
         doctypestring = '<!DOCTYPE'
         if result_string.startswith(doctypestring):
             result_string = result_string[result_string.find('>')+1:]
-            
+
         return result_string
 
 InitializeClass(XSLTRendererBase)
