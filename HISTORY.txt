@@ -6,7 +6,10 @@ Silva changes
 
   Silva 2.1.2b5 (unreleased)
 
-      - ...
+    Bug fixes
+
+      - Refactor all the SidebarCache service. Remove cache objects
+        from temporary container, use GenericCache when available.
 
   Silva 2.1.2b4 (2009-02-26)
 

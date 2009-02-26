@@ -69,7 +69,6 @@ def initialize(context):
     import TypographicalService
 
     import DocmaService
-    import SidebarCache
     import SidebarService
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
