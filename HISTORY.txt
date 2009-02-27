@@ -11,6 +11,10 @@ Silva changes
       - Refactor all the SidebarCache service. Remove cache objects
         from temporary container, use GenericCache when available.
 
+      - Remove the 'edit_mode' and 'editor' variable from
+        macro_index. They are just required for SilvaDocument, and
+        where triggering ConflictErrors.
+
   Silva 2.1.2b4 (2009-02-26)
 
     Bug fixes
