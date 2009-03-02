@@ -264,9 +264,9 @@ class Image(Asset):
 
     security.declareProtected(SilvaPermissions.View, 'getDimensions')
     def getDimensions(self, img=None):
-        """returns width, heigt of (hi res) image
+        """returns width, height of (hi res) image
 
-            raises ValueError if there is no way of determining the dimenstions
+            raises ValueError if there is no way of determining the dimensions
             return 0, 0 if there is no image
             returns width, height otherwise
 
