@@ -10,6 +10,7 @@
 <tal:block define="
   tabs view/get_authorized_tabs;
   active_tab active_tab | nothing;
+  screen_id screen_id | template/id;
   selected_tab_id template/id;
   vein vein | nothing;
   mangle python:modules['Products'].Silva.mangle;
@@ -42,7 +43,7 @@
     <a name="top"> </a>
     <tal:block tal:repeat="item python:model.get_breadcrumbs(ignore_index=None)">
       <a tal:content="python: item.get_short_title_editable() or item.id"
-        tal:attributes="href string:${item/absolute_url}/edit/${template/id}">
+        tal:attributes="href string:${item/absolute_url}/edit/${screen_id}">
         name
       </a>
       <tal:block tal:condition="not:repeat/item/end">
