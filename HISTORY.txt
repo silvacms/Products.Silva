@@ -15,7 +15,8 @@ Silva changes
         macro_index. They are just required for SilvaDocument, and
         where triggering ConflictErrors.
 
-      - Crop fix from the 2.0 branch for croppping images 
+      - Fix for a bug and improvement of the code for scaling and
+        cropping images.
 
   Silva 2.1.2b4 (2009-02-26)
 
