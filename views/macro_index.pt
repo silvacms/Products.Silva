@@ -29,10 +29,6 @@
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;
 
     dummy  python: here.recordError(type, message);
-    dummy  python: here.REQUEST.set('edit_mode', 1);
-    dummy  python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
-    editor python: request.SESSION.get('editor', None) or here.service_members.get_member(user.getUserName()).editor();
-
 ">
 
 <head>
