@@ -19,9 +19,10 @@
     global   containing_publication publication/../get_publication | publication;
     message_type options/message_type | request/message_type | nothing;
     message  options/message | request/message | nothing;
+    screen_id string:tab_preview;
     global   nofeedback nofeedback | nothing;
     global   active_tab string:tab_preview;
-">
+    ">
 
 <head>
   <tal:block replace="structure request/model/@@set_content_type_and_nocache" />
