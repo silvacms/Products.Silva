@@ -418,9 +418,6 @@ class Image(Asset):
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
-        
-        if self.image is not None:
-            self._remove_image('image')
 
         cropbox = self.getCropBox()
         if cropbox:
@@ -435,7 +432,6 @@ class Image(Asset):
         image.save(new_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
         self._image_factory('image', new_image_data, ct)
-        self._set_redirect(self.image)
 
 
     def _createThumbnail(self):
