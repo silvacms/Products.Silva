@@ -405,38 +405,38 @@ class Image(Asset):
             raise ValueError, e
         return image
 
+
     def _createDerivedImages(self):
         self._createWebPresentation()
         self._createThumbnail()
 
+
     def _createWebPresentation(self):
-        width, height = self.getCanonicalWebScale()
-        cropbox = self.getCropBox()
         try:
             image = self._getPILImage(self.hires_image)
         except ValueError:
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
-        if self.image is not None and self._image_is_hires():
-            self.image = None
-        web_image_data = StringIO()
+        
+        if self.image is not None:
+            self._remove_image('image')
+
+        cropbox = self.getCropBox()
         if cropbox:
             image = image.crop(cropbox)
-        if self.web_scale == '100%':
-            self.image = self.hires_image
-            # it is possible that the image was thumbnailed before,
-            # we must make sure that the modification time of this image
-            # is later then the tumbnailed image.
-            # To do this we make zope commit the object to the database again
-            self.image._p_changed = True
-            return
-        image = image.resize((width, height), PIL.Image.ANTIALIAS)
+
+        if self.web_scale != '100%':
+            width, height = self.getCanonicalWebScale()
+            image = image.resize((width, height), PIL.Image.ANTIALIAS)
+
+        new_image_data = StringIO()
         image = self._prepareWebFormat(image)
-        image.save(web_image_data, self.web_format)
+        image.save(new_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
-        web_image_data.seek(0)
-        self._image_factory('image', web_image_data, ct)
+        self._image_factory('image', new_image_data, ct)
+        self._set_redirect(self.image)
+
 
     def _createThumbnail(self):
         try:
