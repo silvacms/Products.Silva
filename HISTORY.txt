@@ -4,6 +4,9 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- Fix from the 2.1 branch for a bug and improvement of the code for
+  scaling and cropping images.
+
 - Added sup and sub selectors to frontend.css to keep superscript and
   subscript better aligned.
 
