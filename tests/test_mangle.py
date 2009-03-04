@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from unittest
+import unittest
 from Testing import ZopeTestCase
 import SilvaTestCase
 
@@ -90,12 +90,15 @@ class MangleTest(unittest.TestCase):
 
     def test_unquote(self):
         self.assertEquals(
-            mange.unquote('Hello %3D Hell %26 o %3F'), 'Hello = Hell & o ?')
+            mangle.unquote('Hello %3D Hell %26 o %3F'), 'Hello = Hell & o ?')
 
     def test_urlencode(self):
         self.assertEquals(
-            mange.urlencode('http://google.com', q='world', s=12),
-            "bleu")
+            mangle.urlencode('http://google.com', q='world', s=12),
+            'http://google.com?q=world&s=12')
+        self.assertEquals(
+            mangle.urlencode('http://google.com'),
+            'http://google.com')
 
     def test_path(self):
         test_cases = [

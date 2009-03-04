@@ -37,7 +37,7 @@ def urlencode(base_url, **parameters):
     """Encode an url and it's parameters.
     """
     url = base_url
-    if parmeters:
+    if parameters:
         url += '?' + urllib.urlencode(parameters)
     return url
 
