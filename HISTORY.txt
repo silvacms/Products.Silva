@@ -8,6 +8,8 @@ Silva changes
 
     Bug fixes
 
+      - Redirect to the nearest publication when login out from SMI.
+
       - Refactor all the SidebarCache service. Remove cache objects
         from temporary container, use GenericCache when available.
 
