@@ -257,7 +257,7 @@
       title="Logout of Silva: alt-q"
       i18n:translate=""
       i18n:attributes="title"
-      tal:attributes="href python:mangle.urlencode(model.absolute_url() + '/service_members/logout', came_form=publication.absolute_url())">
+      tal:attributes="href python:mangle.urlencode(model.absolute_url() + '/service_members/logout', came_from=publication.absolute_url())">
       logout
       <tal:block tal:condition="here/get_user_role"
         i18n:name="role"
