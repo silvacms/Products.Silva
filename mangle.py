@@ -7,6 +7,7 @@
 import string
 import re
 import cgi
+import urllib
 from types import StringType, UnicodeType
 
 # Zope
@@ -21,21 +22,33 @@ module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
 __allow_access_to_unprotected_subobjects__ = 1
 
+
 module_security.declarePublic('unquote')
 def unquote(quoted):
-    """A very simplified urllib2 unquote, only handles ?, = and &"""
+    """A very simplified urllib2 unquote, only handles ?, = and &
+    """
     unquoted = quoted.replace(
         '%3D', '=').replace('%26', '&').replace('%3F', '?')
     return unquoted
 
 
-class _Marker:
+module_security.declarePublic('urlencode')
+def urlencode(base_url, **parameters):
+    """Encode an url and it's parameters.
+    """
+    url = base_url
+    if parameters:
+        url += '?' + urllib.urlencode(parameters)
+    return url
+
+
+class _Marker(object):
     """A marker"""
 
 _marker = _Marker()
 
 module_security.declarePublic('Id')
-class Id:
+class Id(object):
     """silva id mangler
 
         usage:
@@ -284,7 +297,7 @@ class Id:
     def __str__(self):
         return self._maybe_id
 
-class _Path:
+class _Path(object):
     """mangle path
 
         i.e. /foo/bar, /foo/bar/baz -> baz
@@ -362,7 +375,7 @@ module_security.declarePublic('Path')
 Path = _Path()
 
 
-class _Entities:
+class _Entities(object):
     """escape entities"""
 
     def __call__(self, text):
@@ -373,7 +386,7 @@ module_security.declarePublic('entities')
 entities = _Entities()
 
 module_security.declarePublic('DateTime')
-class DateTime:
+class DateTime(object):
 
     __allow_access_to_unprotected_subobjects__ = 1
 
@@ -432,7 +445,7 @@ class Now(DateTime):
         self._dt = _DateTime()
 
 
-class _List:
+class _List(object):
     """list mangler"""
 
     __allow_access_to_unprotected_subobjects__ = 1
@@ -448,7 +461,7 @@ module_security.declarePublic('List')
 List = _List()
 
 
-class _Bytes:
+class _Bytes(object):
     """convert size to a human readable format
     size: int, size of a file in bytes
     returns str, like '8.2M'
@@ -478,7 +491,7 @@ class _Bytes:
 module_security.declarePublic('Bytes')
 Bytes = _Bytes()
 
-class _String:
+class _String(object):
     """ string manipulations and conversions
     """
 
