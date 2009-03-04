@@ -36,6 +36,9 @@ Silva 2.2b1 (unreleased)
 
 - Fix breadcrumb on tab_preview.
 
+- Logout link redirect you to the nearest publication (with PAS at
+  least).
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 
