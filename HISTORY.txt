@@ -19,6 +19,10 @@ Silva changes
 
       - Fix for a bug and improvement of the code for scaling and
         cropping images.
+    
+    Bug fixes ported from trunk (Silva 2.2)
+
+      - Improved/fixed the support for complex lists in kupu
 
   Silva 2.1.2b4 (2009-02-26)
 

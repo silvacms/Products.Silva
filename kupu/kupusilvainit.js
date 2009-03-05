@@ -100,32 +100,23 @@ KupuEditor.prototype.afterInit = function() {
     // jasper@infrae.com: 2008-09-08,  FF3 Tab list re-ordering
     // make sure that the indent/outdent commands are issued when
     // the tab keys are pressed.
-    if (typeof doc.addEventListener == 'function'){
-        // standards complient browsesrs
-        doc.addEventListener('keydown', function(event){
-            if (event.keyCode == '9') {
-                if (event.shiftKey){
-                    kupu.execCommand('outdent');
-                }else{
-                    kupu.execCommand('indent');
-                }
+    var tabbing_handler = function(event){
+        if (window.event) event = window.event;
+        if (event.keyCode == '9') {
+            if (event.shiftKey)
+                kupu.execCommand('outdent');
+            else
+                kupu.execCommand('indent');
+            if (event.preventDefault) /* standard event model */
                 event.preventDefault();
-                }
-            }, true);
-    } else {
-        // internet explorer and friends
-        doc.attachEvent('onkeydown', function(event){
-            if (event.keyCode == '9') {
-                if (event.shiftKey){
-                    kupu.execCommand('outdent');
-                }else{
-                    kupu.execCommand('indent');
-                }
-                event.returnValue = false;
-                }
-            });
+            return false; /* for IE */
+        }
     }
-
+    if (doc.addEventListener) {
+        doc.addEventListener('keydown', tabbing_handler, true);
+    } else if (doc.attachEvent) {
+        doc.attachEvent('onkeydown', tabbing_handler);
+    };
 };
 
 function initSilvaKupu(iframe) {
