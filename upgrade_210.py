@@ -35,6 +35,18 @@ class AutoTOCUpgrader(BaseUpgrader):
 
 AutoTOCUpgrader = AutoTOCUpgrader(VERSION, 'Silva AutoTOC')
 
+
+class DocumentUpgrader(BaseUpgrader):
+    """Upgrade.
+    """
+
+    def upgrade(self, obj):
+        obj._clean_cache()
+        return obj
+
+DocumentUpgrader = DocumentUpgrader(VERSION, 'Silva Document')
+
+
 class CleanRolesUpgrader(BaseUpgrader):
     """Calls sec_clean_roles on each ISilvaObject to remove any stale
     username->rolemappings (bug #100561)"""
