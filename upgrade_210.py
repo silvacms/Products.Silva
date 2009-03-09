@@ -15,6 +15,8 @@ def initialize():
     ##     CleanRolesUpgrader(), '2.1', upgrade.AnyMetaType)
     upgrade.registry.registerUpgrader(
         AutoTOCUpgrader(), '2.1', 'Silva AutoTOC')
+    upgrade.registry.registerUpgrader(
+        DocumentUpgrader(), '2.1', 'Silva Document')
 
 class AutoTOCUpgrader:
 
@@ -37,6 +39,16 @@ class AutoTOCUpgrader:
             autotoc._show_icon = False
         autotoc.index_object()
         return autotoc
+
+
+class DocumentUpgrader:
+
+    implements(IUpgrader)
+
+    def upgrade(self, doc):
+        doc._clean_cache()
+        return doc
+
 
 ## class CleanRolesUpgrader:
 ##     """Calls sec_clean_roles on each ISilvaObject to remove any stale

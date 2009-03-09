@@ -8,6 +8,10 @@ Silva changes
 
     Bug fixes
 
+      - Add a document upgrader to clean rendering caches of
+        document. Cache were not refreshed after a new version of a
+        document is published on some platforms.
+
   Silva 2.1.2 (2009-03-05)
 
     Bug fixes
