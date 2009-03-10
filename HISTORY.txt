@@ -7,6 +7,11 @@ Silva changes
   Silva 2.1.3 (unreleased)
 
     Bug fixes
+    
+      - Take out extra newline in test xslt string.
+
+      - Add a new URL_PATTERN to SilvaDocument mixedcontentsupport.py
+        to return a correct path (see test_mixincontentsupport.py).
 
       - Add a document upgrader to clean rendering caches of
         document. Cache were not refreshed after a new version of a
