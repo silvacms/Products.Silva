@@ -7,6 +7,10 @@ Silva changes
 
       - ...
 
+    Ported from Silva Trunk (2.2b1)
+
+      - LinesFields in external sources would not be saved in kupu if they
+        were empty.
 
   Silva 2.1.3b1 (2009-03-12)
 

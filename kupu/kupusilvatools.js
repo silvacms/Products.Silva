@@ -2340,16 +2340,25 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
                 if (child.getAttribute('type') == 'list') {
                     var vallist = eval(value);
                     attrkey = key + '__type__list';
-                    for (var k=0; k < vallist.length; k++) {
+                    if (vallist.length == 0) {
+                      var span = doc.createElement('span');
+                      span.setAttribute('key', attrkey);
+                      pardiv.appendChild(span);
+                      var textel = doc.createTextNode('');
+                      span.appendChild(textel);
+                    }
+                    else {
+                      for (var k=0; k < vallist.length; k++) {
                         var span = doc.createElement('span');
                         span.setAttribute('key', attrkey);
                         pardiv.appendChild(span);
                         var textel = doc.createTextNode(vallist[k]);
                         span.appendChild(textel);
                         if (k < vallist.length - 1) {
-                            pardiv.appendChild(doc.createTextNode(', '));
+                          pardiv.appendChild(doc.createTextNode(', '));
                         };
-                    };
+                      };
+                    }
                 }
                 else {
                     if (child.getAttribute('type') == 'bool') {
