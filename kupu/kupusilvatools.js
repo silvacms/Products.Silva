@@ -2089,6 +2089,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
     var selNode = this.editor.getSelectedNode();
     var div = this.getNearestExternalSource(selNode);
     var doc = this.editor.getInnerDocument();
+    /* 13=enter; 9=tab; 39=rightarrow */
     if (keyCode == 13 || keyCode == 9 || keyCode == 39) {
         if (div.nextSibling) {
             var selection = this.editor.getSelection();
@@ -2105,7 +2106,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
             this.editor.content_changed = true;
         };
         this._insideExternalSource = false;
-    } else if (keyCode == 8) {
+    } else if (keyCode == 8) { /* 8=backspace */
         var selectnode = div.nextSibling;
         if (!selectnode) {
             selectnode = doc.createElement('p');
@@ -2361,16 +2362,25 @@ if (this.readyState == 4) {
         if (child.getAttribute('type') == 'list') {
             var vallist = eval(value);
             attrkey = key + '__type__list';
-            for (var k=0; k < vallist.length; k++) {
+            if (vallist.length == 0) {
+              var span = doc.createElement('span');
+              span.setAttribute('key', attrkey);
+              pardiv.appendChild(span);
+              var textel = doc.createTextNode('');
+              span.appendChild(textel);
+            }
+            else {
+              for (var k=0; k < vallist.length; k++) {
                 var span = doc.createElement('span');
                 span.setAttribute('key', attrkey);
                 pardiv.appendChild(span);
                 var textel = doc.createTextNode(vallist[k]);
                 span.appendChild(textel);
                 if (k < vallist.length - 1) {
-                    pardiv.appendChild(doc.createTextNode(', '));
+                  pardiv.appendChild(doc.createTextNode(', '));
                 };
-            };
+              };
+            }
         }
         else {
             if (child.getAttribute('type') == 'bool') {

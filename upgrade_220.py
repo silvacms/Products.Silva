@@ -330,10 +330,11 @@ class SecondRootUpgrader(BaseUpgrader):
     """
 
     def upgrade(self, obj):
-        obj._setObject(
-            'default_standard_error_message',
-            obj.__dict__['standard_error_message'])
-        obj._delObject('standard_error_message')
+        if obj.__dict__.has_key('standard_error_message'):
+            obj._setObject(
+                'default_standard_error_message',
+                obj.__dict__['standard_error_message'])
+            obj._delObject('standard_error_message')
         # Register service_files and others
         sm = obj.getSiteManager()
         sm.registerUtility(obj.service_files, interfaces.IFilesService)
