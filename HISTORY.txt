@@ -12,6 +12,9 @@ Silva changes
       - LinesFields in external sources would not be saved in kupu if they
         were empty.
 
+      - zip files generated in MACOSX can now be imported -- the skips meta
+        information directories are now skipped (__MACOSX and .DS_Store)
+
   Silva 2.1.3b1 (2009-03-12)
 
     Bug fixes
