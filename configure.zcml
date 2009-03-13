@@ -9,6 +9,7 @@
   <i18n:registerTranslations directory="i18n" />
 
   <!-- Include dependancy -->
+  <include package="zope.annotation" />
   <include package="five.localsitemanager" />
   <include package="five.intid" />
   <include package="silva.core.layout" />

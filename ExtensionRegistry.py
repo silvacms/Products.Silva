@@ -184,7 +184,8 @@ class ExtensionRegistry(Registry):
         for module in modules:
             self.registerClass(context, module)
 
-    @deprecation.deprecate("You should use either ZCML or Grok to register your new classes.")
+    @deprecation.deprecate(
+        "You should use either ZCML or Grok to register your new classes.")
     def registerClass(self, context, module):
         # We assume the class name to be identical to the module name
         classname = module.__name__.split('.')[-1]

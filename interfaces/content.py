@@ -6,6 +6,7 @@
 """
 
 from zope.interface import Interface, Attribute
+from zope.annotation import IAttributeAnnotatable
 from silva.core.layout.interfaces import ICustomizable
 from grokcore.component.interfaces import IContext
 
@@ -136,7 +137,7 @@ class ISecurity(Interface):
         object.
         """
 
-class ISilvaObject(IContext, ISecurity, ICustomizable):
+class ISilvaObject(IContext, IAttributeAnnotatable, ISecurity, ICustomizable):
     """Interface that should be supported by all Silva objects.
     """
     # MANIPULATORS
@@ -816,7 +817,7 @@ class ICatalogedVersionedContent(IVersionedContent):
         """Get all versions that need to be indexed by the catalog.
         """
 
-class IVersion(Interface):
+class IVersion(IAttributeAnnotatable):
     """Version of a versioned object
     """
 

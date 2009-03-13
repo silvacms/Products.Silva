@@ -170,21 +170,12 @@ def is_installed(root):
 
 def configureMetadata(root):
     from os import path
-    from Products.Annotations.Extensions.SilvaInstall import install as install_annotations
-    from Products.SilvaMetadata.Extensions.SilvaInstall import install as install_metadata
     from Globals import package_home
-
-    # install annotations
-    if not 'service_annotations' in root.objectIds():
-        install_annotations(root)
-        interface.directlyProvides(
-            root['service_annotations'],
-            IInvisibleService,
-            interface.directlyProvidedBy(root['service_annotations']))
 
     # install metadata
     if not 'service_metadata' in root.objectIds():
-        install_metadata(root)
+        factory = root.manage_addProduct['SilvaMetadata']
+        factory.manage_addMetadataTool('service_metadata')
 
     # load up the default metadata
     silva_home = package_home(globals())

@@ -1,5 +1,4 @@
 ##parameters=content, category='', renderFromRequest=False
-from Products.SilvaMetadata.Exceptions import BindingError
 from Products.Silva.roleinfo import CHIEF_ROLES, READER_ROLES
 from Products.Silva.roleinfo import isEqualToOrGreaterThan
 
@@ -30,11 +29,7 @@ if content is None:
 
 ms = context.service_metadata
 
-try:
-    binding = ms.getMetadata(content)
-except BindingError, be:
-    # No binding found..
-    return None
+binding = ms.getMetadata(content)
 if binding is None:
     return None
 
@@ -74,7 +69,7 @@ pt_binding['setNames'] = []
 for set_name in set_names:
     if not isAllowed(set_name):
         continue # skip this set - it's not allowed
-    
+
     pt_binding['setNames'].append(set_name)
     pt_binding[set_name] = set = {}
     set['setTitle'] = binding.getSet(set_name).getTitle() or set_name
@@ -94,7 +89,7 @@ for set_name in set_names:
             element['isAcquired'] = 1
         else:
             element['isAcquired'] = 0
-            
+
         if isEditable(set_name, element_name):
             element['isEditable'] = 1
             if renderFromRequest:
