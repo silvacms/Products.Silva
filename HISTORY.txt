@@ -42,6 +42,9 @@ Silva 2.2b1 (unreleased)
 - LinesFields in external sources would not be saved in kupu if they
   were empty.
 
+- zip files generated in MACOSX can now be imported -- the skips meta
+  information directories are now skipped (__MACOSX and .DS_Store)
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 

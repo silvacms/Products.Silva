@@ -5,6 +5,7 @@
 # Python
 import os.path
 import zipfile
+import re
 try:
     from cStringIO import StringIO
 except:
@@ -57,6 +58,10 @@ class ArchiveFileImportAdapter(adapter.Adapter):
                 # Its a directory entry
                 continue
             
+            if re.match("^__MACOSX", path) or re.match(".*\.DS_Store$", filename):
+                # It's meta information from a Mac archive, and we don't need it
+                continue
+
             if recreatedirs and path:
                 dirs = path.split('/')
                 container = self._getSilvaContainer(
