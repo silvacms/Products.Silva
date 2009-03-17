@@ -5,7 +5,9 @@ Silva changes
 
   Silva 2.1.3b1 (unreleased)
 
-      - ...
+    Bug fixes
+
+      - Fix an invalid syntax in webdav support.
 
     Ported from Silva Trunk (2.2b1)
 
@@ -18,7 +20,7 @@ Silva changes
   Silva 2.1.3b1 (2009-03-12)
 
     Bug fixes
-    
+
       - Take out extra newline in test xslt string.
 
       - Add a new URL_PATTERN to SilvaDocument mixedcontentsupport.py
