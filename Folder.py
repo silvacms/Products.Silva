@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.180 $
+# $Revision$
 
 from zope.interface import implements
 from zope.i18n import translate
@@ -892,18 +892,11 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
     security.declarePrivate('PUT_factory')
     def PUT_factory(self, name, content_type, body):
         """WebDAV PUT - create a sub object"""
-        ret = None
-        ct = content_type
-        # XXX nastyness galore! our dear Zope throws in a stringified dict
-        # sometimes...
-        try:
-            ct = eval(content_type)['Content-Type']
-        except NameError:
-            pass
 
         # use the contentObjectFactoryRegistry (what a name!) to get
         # an object (if possible, else an InternalError will get raised)
-        object = contentObjectFactoryRegistry.getObjectFor(self, name, ct, body)
+        object = contentObjectFactoryRegistry.getObjectFor(
+            self, name, content_type, body)
         return object
 
 InitializeClass(Folder)
