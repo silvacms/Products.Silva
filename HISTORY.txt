@@ -7,7 +7,9 @@ Silva changes
 
     Bug fixes
 
-      - Fix an invalid syntax in webdav support.
+      - Fixex an invalid syntax in webdav support.
+      - Fixed an issue in Kupu, where text got 'title' style instead
+        of 'plain'.
 
     Ported from Silva Trunk (2.2b1)
 
