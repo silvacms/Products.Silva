@@ -6,16 +6,20 @@ Silva changes
   Silva 2.0.13 (unreleased)
 
     Bugs fixed:
-    
+
       - Fixed return_url when adding content from the lookup window.
 
       - Fixed tab key indent/outdent behavior on Internet explorer
 
-      - Fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
-     
+      - Fix for kupu in html transform from:
+        lis.append(silva.li(el.convert(context))) to
+        lis.append(silva.li(silva.br(), el.convert(context)))
+
       - Fix for list items nesting problem
 
     Backported from 2.1 branch:
+
+      - Fix an invalid syntax in webdav support.
 
       - fixed 274668: multiple query parameters on relative links
         broke, because the ampersands were not properly escaped.
@@ -24,7 +28,7 @@ Silva changes
 
     Bugs fixed:
 
-      - Make sure that pressing the tab key when inside the kupu editor 
+      - Make sure that pressing the tab key when inside the kupu editor
         will always perform the indent/outdent editor commands.
         This was not working anymore on Firefox3)
 
@@ -44,15 +48,15 @@ Silva changes
         potentially take a very long time.
 
   Silva 2.0.10
-  
+
     Bugs fixed:
-    
+
       - unicode issue in external source parameters fixed.
 
   Silva 2.0.9
 
     Bugs fixed:
-      
+
       - html in parameters of external sources is no longer double
         escaped on saving.
 
@@ -82,7 +86,7 @@ Silva changes
         standards compliant browser.
 
       - 238341: frontend.css.dtml is css valid now.
-    
+
       - When SMTP errors occur while sending notification, we log
         them, but no longer hold up the publication/approval process.
 
@@ -90,7 +94,7 @@ Silva changes
         is indexed anyway, if there is any.
 
   Silva 2.0.7
-  
+
     Backported from trunk:
 
       - Don't add add a silva find instance by default, instead make
@@ -201,21 +205,21 @@ Silva changes
   Silva 2.0.4
 
     Features Added:
- 
+
       - added 2 feed icons in /globals, see http://feedicons.com
 
     Bugs Fixed:
 
       - Image cropping was not shown correctly when after resizing the image
-        was resized back to 100% 
-    
+        was resized back to 100%
+
       - In SilvaDocument2.0.4: When images are scaled in kupu they are
         shown with correct size after a save action. This is accomplished by
         setting width and height attributes on the image. The image itself
-        is still cached, but can be refreshed with a force reload in 
+        is still cached, but can be refreshed with a force reload in
         the browser.
 
-      - the properties tool in kupu wasn't functional with 
+      - the properties tool in kupu wasn't functional with
         SilvaNewsNetwork 2.6 (unreleased)
 
       - Ghosts and Ghostfolders no longer show editable titles in the rename
@@ -225,17 +229,17 @@ Silva changes
 
     Bugs Fixed:
 
-      - Commented out the no-cache line in Image.py that was added 
+      - Commented out the no-cache line in Image.py that was added
         because of wuw issue 144 (image not scaling in kupu), it was
-        to big of a performance hit. Although zope returns 
-        304 NOT MODIFIED headers if possible, it still sends the 
+        to big of a performance hit. Although zope returns
+        304 NOT MODIFIED headers if possible, it still sends the
         images at least once, the first time.
 
       - fixed a bug where clicking on the title of a code source in
         a document, then attempting to save the parameters raised a
         "code course cannot be in a header" error
 
-      - Images in documents that were set to 'link to hires' from 
+      - Images in documents that were set to 'link to hires' from
         kupu were rendered as <url_to_image>?hires?hires
 
       - on rare occasions, the external source tool in kupu wouldn't
@@ -248,16 +252,16 @@ Silva changes
 
       - fixed 158384: can't add groups: title error issue
 
-      - fixed 101174: When an id is in use on the Zope level, inform 
+      - fixed 101174: When an id is in use on the Zope level, inform
                       users accordingly
 
       - fixed 157010: anchors in links: # -> %23
 
-      - fixed "excessive recursion" error when users click 'new version' 
+      - fixed "excessive recursion" error when users click 'new version'
         to make a new copy of a silva document to edit then click the
         browser's back button and click 'new version' again.
 
-      - fixed 158381: Group objects should be removable even if the 
+      - fixed 158381: Group objects should be removable even if the
         groups service isn't installed.
 
       - adjusted the description in the add form of links, since that
@@ -271,7 +275,7 @@ Silva changes
 
       - fixed 150809: sidebar cache not invalidated when folder
         removed
-    
+
       - creationdate is once again set on versioned content.
 
       - The lookup window allowed one to add content and assets to
@@ -359,7 +363,7 @@ Silva changes
       - XHTML compliance improvements
 
     Bugs Fixed:
-      
+
       - fixed 156921: Escaping image title strings.
 
       - Added True switch to Image.py tag method to escape double quotes.
