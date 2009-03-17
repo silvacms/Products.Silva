@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision$
+# $Id$
 
 from zope.interface import implements
 from zope.i18n import translate
