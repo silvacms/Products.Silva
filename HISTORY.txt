@@ -1,3 +1,6 @@
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+
 Silva changes
 =============
 
@@ -5,6 +8,9 @@ Silva 2.2b1 (unreleased)
 ------------------------
 
 - Fix an invalid syntax in webdav support.
+
+- Fixed an issue in Kupu, where text got 'title' style instead
+  of 'plain'.
 
 - Fix from the 2.1 branch for a bug and improvement of the code for
   scaling and cropping images.
