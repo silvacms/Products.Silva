@@ -15,7 +15,7 @@ from AccessControl import ModuleSecurityInfo
 from DateTime import DateTime as _DateTime
 
 # Silva
-from interfaces import ISilvaObject, IAsset
+from silva.core.interfaces import ISilvaObject, IAsset
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')

@@ -7,7 +7,8 @@ from five import grok
 from zope.component import getAdapter, getAdapters
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
-from Products.Silva.interfaces.adapters import IContentExporter, IDefaultContentExporter
+from silva.core.interfaces.adapters import IContentExporter, \
+    IDefaultContentExporter
 from Products.Silva.utility.interfaces import IExportUtility
 
 class ExportUtility(grok.GlobalUtility):

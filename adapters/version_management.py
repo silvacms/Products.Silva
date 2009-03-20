@@ -7,8 +7,8 @@ from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
-from Products.Silva.interfaces.adapters import IVersionManagement
-from Products.Silva.interfaces import IVersion
+from silva.core.interfaces.adapters import IVersionManagement
+from silva.core.interfaces import IVersion
 from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
@@ -19,7 +19,7 @@ module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management
 
 class VersionManagementAdapter(adapter.Adapter):
     """Adapter to manage Silva versions"""
-    
+
     implements(IVersionManagement)
     security = ClassSecurityInfo()
 
@@ -58,15 +58,15 @@ class VersionManagementAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersions')
     def getVersions(self, sort_attribute='id'):
-        objects = [o for o in self.context.objectValues() if 
+        objects = [o for o in self.context.objectValues() if
                     IVersion.providedBy(o)]
         if sort_attribute == 'id':
             objects.sort(lambda a, b: cmp(int(a.id), int(b.id)))
         elif sort_attribute:
             objects.sort(
-                lambda a, b: 
+                lambda a, b:
                     cmp(
-                        getattr(a, sort_attribute), 
+                        getattr(a, sort_attribute),
                         getattr(b, sort_attribute)
                     )
                 )
@@ -81,7 +81,7 @@ class VersionManagementAdapter(adapter.Adapter):
         approved_version = self.getApprovedVersion()
         if approved_version is not None:
             raise VersioningError, _('No unapproved version available')
-            
+
         current_version = self.getUnapprovedVersion()
         # move the current editable version to _previous_versions
         if current_version is not None:
@@ -89,8 +89,8 @@ class VersionManagementAdapter(adapter.Adapter):
             status = self.getVersionStatus(current_version_id)
             if status in ('pending', 'approved'):
                 raise VersioningError, _('No unapproved version available')
-            
-            version_tuple = self.context._unapproved_version 
+
+            version_tuple = self.context._unapproved_version
             if self.context._previous_versions is None:
                 self.context._previous_versions = []
             self.context._previous_versions.append(version_tuple)
@@ -105,7 +105,7 @@ class VersionManagementAdapter(adapter.Adapter):
                                 'deleteVersions')
     def deleteVersions(self, ids):
         """Delete a number of versions
-        
+
             If all versions are selected, a VersioningError is raised, apart
             from that this will try to delete as much as possible and return
             a list of tuples (id, errorstring) (where errorstring is None for
@@ -153,7 +153,7 @@ class VersionManagementAdapter(adapter.Adapter):
         if public is not None and public.id in version_ids:
             version_ids.remove(public.id)
         return version_ids
-    
+
     security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'deleteOldVersions')
     def deleteOldVersions(self, number_to_keep=0):
@@ -180,14 +180,14 @@ class VersionManagementAdapter(adapter.Adapter):
                 break
             index = version_ids.index(id)
 
-        delete_ids = []            
+        delete_ids = []
         if index is not None:
             delete_ids = version_ids[:index]
         self.context.manage_delObjects(delete_ids)
-        
+
         if number_to_keep is not None:
             self.deleteOldVersions(number_to_keep)
-            
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionModificationTime')
     def getVersionModificationTime(self, versionid):
@@ -195,20 +195,20 @@ class VersionManagementAdapter(adapter.Adapter):
         return self.context.service_metadata.getMetadataValue(
             version, 'silva-extra', 'modificationtime')
 
-    # XXX currently the following 2 methods have a very non-optimal 
+    # XXX currently the following 2 methods have a very non-optimal
     # implementation, hopefully in the future we can change the underlying
     # Versioning and VersionedContent layers and store these times on the
     # version objects rather then on the VersionedContent
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionPublicationTime')
     def getVersionPublicationTime(self, versionid):
-        if (self.context._unapproved_version[0] is not None and 
+        if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
             return self.context._unapproved_version[1]
         elif (self.context._approved_version[0] is not None and
                 self.context._approved_version[0] == versionid):
             return self.context._approved_version[1]
-        elif (self.context._public_version[0] is not None and 
+        elif (self.context._public_version[0] is not None and
                 self.context._public_version[0] == versionid):
             return self.context._public_version[1]
         else:
@@ -220,13 +220,13 @@ class VersionManagementAdapter(adapter.Adapter):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionExpirationTime')
     def getVersionExpirationTime(self, versionid):
-        if (self.context._unapproved_version[0] is not None and 
+        if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
             return self.context._unapproved_version[2]
         elif (self.context._approved_version[0] is not None and
                 self.context._approved_version[0] == versionid):
             return self.context._approved_version[2]
-        elif (self.context._public_version[0] is not None and 
+        elif (self.context._public_version[0] is not None and
                 self.context._public_version[0] == versionid):
             return self.context._public_version[2]
         else:
@@ -244,7 +244,7 @@ class VersionManagementAdapter(adapter.Adapter):
             return noneMember.__of__(self.context)
         else:
             return info.__of__(self.context)
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'getVersionCreatorInfo')
     def getVersionCreatorInfo(self, versionid):
@@ -265,7 +265,7 @@ class VersionManagementAdapter(adapter.Adapter):
                 last_closed
                 closed
         """
-        if (self.context._unapproved_version[0] is not None and 
+        if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
             if self.context.is_version_approval_requested():
                 return 'pending'
@@ -274,7 +274,7 @@ class VersionManagementAdapter(adapter.Adapter):
         elif (self.context._approved_version[0] is not None and
                 self.context._approved_version[0] == versionid):
             return 'approved'
-        elif (self.context._public_version[0] is not None and 
+        elif (self.context._public_version[0] is not None and
                 self.context._public_version[0] == versionid):
             return 'published'
         else:
@@ -290,7 +290,7 @@ class VersionManagementAdapter(adapter.Adapter):
 
     def _createUniqueId(self):
         return self.context.get_new_version_id()
-    
+
 Globals.InitializeClass(VersionManagementAdapter)
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
@@ -300,4 +300,4 @@ module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getVersionManagementAdapter')
 def getVersionManagementAdapter(context):
     return VersionManagementAdapter(context).__of__(context)
-    
+

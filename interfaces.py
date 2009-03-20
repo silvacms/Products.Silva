@@ -3,6 +3,4 @@
 # $Id$
 
 import zope.deprecation
-zope.deprecation.moved('silva.core.interfaces.adapters', 'Silva 2.3')
-
-
+zope.deprecation.moved('silva.core.interfaces', 'Silva 2.3')
