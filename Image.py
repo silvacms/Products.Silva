@@ -429,7 +429,12 @@ class Image(Asset):
 
         new_image_data = StringIO()
         image = self._prepareWebFormat(image)
-        image.save(new_image_data, self.web_format)
+        try:
+            image.save(new_image_data, self.web_format)
+        except IOError, e:
+            # Transformation failed. We just raise ValueError and it
+            # will behave like if you don't have PIL.
+            raise ValueError, e.args
         ct = self._web2ct[self.web_format]
         self._image_factory('image', new_image_data, ct)
 
