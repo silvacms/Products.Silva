@@ -402,7 +402,7 @@ class Image(Asset):
         try:
             image = PIL.Image.open(image_reference)
         except IOError, e:
-            raise ValueError, e
+            raise ValueError, e.args[1]
         return image
 
 
@@ -434,7 +434,7 @@ class Image(Asset):
         except IOError, e:
             # Transformation failed. We just raise ValueError and it
             # will behave like if you don't have PIL.
-            raise ValueError, e.args
+            raise ValueError, e.args[1]
         ct = self._web2ct[self.web_format]
         self._image_factory('image', new_image_data, ct)
 
