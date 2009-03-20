@@ -37,16 +37,11 @@
           <td class="top" colspan="4">
             <h2 metal:define-slot="table_title">
               <img tal:replace="structure icon" />
-              <tal:block i18n:translate="">properties</tal:block>
-              <tal:block condition="model/implements_container"
-                i18n:translate="">
-                  of &#xab;<tal:block content="string:${title}"
-                  i18n:name="title" />&#xbb;
+              <tal:block i18n:translate="">
+                properties of &#xab;
+                <tal:title content="title" i18n:name="title" />
+                &#xbb;
               </tal:block>
-              <tal:block condition="not: model/implements_container"
-                i18n:translate="">
-                  of &#xab;<tal:block content="string:${title}"
-                  i18n:name="title" /></tal:block>&#xbb;
             </h2>
           </td>
         </tr>
