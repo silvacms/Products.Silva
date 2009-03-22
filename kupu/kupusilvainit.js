@@ -83,6 +83,20 @@ KupuEditor.prototype.afterInit = function() {
                     next = next.getElementsByTagName('li')[0];
                 };
             };
+            /* if it's an external source, activate
+               the ES tool */
+            if (next.nodeName.toLowerCase() == 'div' && next.className == 'externalsource') {
+                estool = kupu.getTool('extsourcetool');
+                if (estool) estool.updateState(next);
+            };
+    /* add an empty 'p' at the end of the body.  This enables content to be 
+       added to the end of a doc when the last element in the doc is a table 
+       or an external source. This will get stripped out when the doc is saved.
+       */
+    var blank = doc.createElement('p');
+    blank.appendChild(doc.createTextNode('\xa0'));
+    body.appendChild(blank);
+    
             selection.selectNodeContents(next);
             selection.collapse();
             break;
@@ -102,11 +116,16 @@ KupuEditor.prototype.afterInit = function() {
     // the tab keys are pressed.
     var tabbing_handler = function(event){
         if (window.event) event = window.event;
+        /* if inside an external source, ignore 
+	   the tab */
         if (event.keyCode == '9') {
-            if (event.shiftKey)
-                kupu.execCommand('outdent');
-            else
-                kupu.execCommand('indent');
+    	    estool = kupu.getTool('extsourcetool');
+	    if (!(estool && estool._insideExternalSource)) {
+                if (event.shiftKey)
+                    kupu.execCommand('outdent');
+                else
+                    kupu.execCommand('indent');
+	    }
             if (event.preventDefault) /* standard event model */
                 event.preventDefault();
             return false; /* for IE */

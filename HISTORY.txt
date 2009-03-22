@@ -5,7 +5,16 @@ Silva changes
 
   Silva 2.1.3b3 (unreleased)
 
-      - ...
+    Ported from Silva Trunk (2.2b1)
+
+      - improve keyboard navigability in kupu around external sources:
+        left,right in an ES moves cursor up
+        enter in an ES inserts a new paragraph after and moves cursor
+        down, right, tab in an es moves cursor down
+  
+      - if an ES is the first element in a document, activate the ES
+        tool when kupu initializes, and ignore the tab key when in an
+        external source.
 
   Silva 2.1.3b2 (2009-03-20)
 
