@@ -2089,36 +2089,57 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
     var selNode = this.editor.getSelectedNode();
     var div = this.getNearestExternalSource(selNode);
     var doc = this.editor.getInnerDocument();
-    /* 13=enter; 9=tab; 39=rightarrow */
-    if (keyCode == 13 || keyCode == 9 || keyCode == 39) {
-        if (div.nextSibling) {
-            var selection = this.editor.getSelection();
-            selection.selectNodeContents(div.nextSibling);
-            selection.collapse();
+    var selection = this.editor.getSelection();
+    var collapseToEnd = false;
+    var sel;
+    /* 13=enter -- add a new paragraph after*/
+    if (keyCode == 13) {
+        sel = doc.createElement('p');
+        sel.appendChild(doc.createTextNode('\xa0'));
+        if (!div.nextSibling) {
+            div.parentNode.appendChild(sel);
         } else {
-            var p = doc.createElement('p');
-            var nbsp = doc.createTextNode('\xa0');
-            p.appendChild(nbsp);
-            div.parentNode.appendChild(p);
-            var selection = this.editor.getSelection();
-            selection.selectNodeContents(p);
-            selection.collapse();
+            div.parentNode.insertBefore(sel,div.nextSibling);
+        }
+        this.editor.content_changed = true;
+        this._insideExternalSource = false;
+    } else if (keyCode == 9 || keyCode == 39 || keyCode == 40) {
+        /* 9=tab; 39=right; 40=down; */
+        if (div.nextSibling) { 
+            sel = div.nextSibling;
+        } else {
+            sel = doc.createElement('p');
+            sel.appendChild(doc.createTextNode('\xa0'));
+            div.parentNode.appendChild(sel);
             this.editor.content_changed = true;
         };
         this._insideExternalSource = false;
+    } else if (keyCode == 37 || keyCode == 38) { 
+        /* 37 = leftarrow, 38 = uparrow */
+        sel = div.previousSibling;
+        if (!sel) {
+            sel = doc.createElement('p');
+            sel.appendChild(doc.createTextNode('\xa0'));
+            div.parentNode.insertBefore(sel,div);
+            this.editor.content_changed = true;
+        }
+        collapseToEnd = true;
+        this._insideExternalSource = false;
     } else if (keyCode == 8) { /* 8=backspace */
-        var selectnode = div.nextSibling;
-        if (!selectnode) {
-            selectnode = doc.createElement('p');
-            selectnode.appendChild(doc.createTextNode('\xa0'));
-            doc.appendChild(selectnode);
+        sel = div.nextSibling;
+        if (!sel) {
+            sel = doc.createElement('p');
+            sel.appendChild(doc.createTextNode('\xa0'));
+            doc.appendChild(sel);
         };
-        var selection = this.editor.getSelection();
-        selection.selectNodeContents(selectnode);
         div.parentNode.removeChild(div);
-        selection.collapse();
         this.editor.content_changed = true;
+        this._insideExternalSource = false;
     };
+    if (sel) {
+        selection.selectNodeContents(sel);
+        selection.collapse(collapseToEnd);
+    }
     if (event.preventDefault) {
         event.preventDefault();
     } else {

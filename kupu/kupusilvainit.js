@@ -85,12 +85,26 @@ KupuEditor.prototype.afterInit = function() {
             };
             selection.selectNodeContents(next);
             selection.collapse();
+            /* if it's an external source, activate
+               the ES tool */
+            if (next.nodeName.toLowerCase() == 'div' && next.className == 'externalsource') {
+                estool = kupu.getTool('extsourcetool');
+                if (estool) estool.updateState(next);
+            };
             break;
         } else if (h.nodeType == 1) {
             break;
         };
     };
 
+    /* add an empty 'p' at the end of the body.  This enables content to be 
+       added to the end of a doc when the last element in the doc is a table 
+       or an external source. This will get stripped out when the doc is saved.
+       */
+    var blank = doc.createElement('p');
+    blank.appendChild(doc.createTextNode('\xa0'));
+    body.appendChild(blank);
+    
     this.registerFilter(new fixupNestedListFilter());
 
     // if we don't first focus the outer window, Mozilla won't show a cursor
@@ -102,6 +116,12 @@ KupuEditor.prototype.afterInit = function() {
     // the tab keys are pressed.
     var tabbing_handler = function(event){
         if (window.event) event = window.event;
+        /* if inside an external source, ignore 
+           the tab */
+        estool = kupu.getTool('extsourcetool');
+        if (estool && estool._insideExternalSource) {
+            return false;
+        }
         if (event.keyCode == '9') {
             if (event.shiftKey)
                 kupu.execCommand('outdent');

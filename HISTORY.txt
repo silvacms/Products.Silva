@@ -7,6 +7,15 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- improve keyboard navigability in kupu around external sources:
+  left,right in an ES moves cursor up
+  enter in an ES inserts a new paragraph after and moves cursor
+  down, right, tab in an es moves cursor down
+  
+- if an ES is the first element in a document, activate the ES
+  tool when kupu initializes, and ignore the tab key when in an
+  external source.
+
 - Fix an invalid syntax in webdav support.
 
 - Fixed an issue in Kupu, where text got 'title' style instead
