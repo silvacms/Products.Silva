@@ -4,6 +4,10 @@ Silva changes
 
   Silva 1.6.4 (unreleased)
 
+    Bugs fixed:
+
+      - Fix an invalid syntax error in webdav support.
+
 
   Silva 1.6.3
 
