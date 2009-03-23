@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import AccessControl
 #zope
 import Globals
@@ -38,13 +42,18 @@ class TOCRenderingAdapter(adapter.Adapter):
                 items.sort()
             items = [ o[1] for o in items ]
         elif sort_order=='silva': #determine silva sorting
+            ordered_ids = set(container._ordered_ids)
             nonordered_items = []
-            ordered_items = []
+            items_to_order = []
             for i in items:
-                if i[0] not in container._ordered_ids:
+                if i[0] not in ordered_ids:
                     nonordered_items.append(i)
                 else:
-                    ordered_items.append(i)
+                    items_to_order.append(i)
+            items_to_order = dict(items_to_order)
+            ordered_items = filter(lambda (x, y): y is not None,
+                                   map(lambda x: (x, items_to_order.get(x, None)),
+                                       container._ordered_ids))
             items = ordered_items + nonordered_items
         else: # chronologically by modification date
             items = [ (o[1].get_modification_datetime(),o) for o in items ]

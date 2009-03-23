@@ -5,7 +5,9 @@ Silva changes
 
   Silva 2.1.3b3 (unreleased)
 
-    Ported from Silva Trunk (2.2b1)
+    Bug fixes
+
+      - Fix element order in TOC rendering when the silva order is checked.
 
       - CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
         create a new empty paragraph below the table.  This feature
@@ -25,7 +27,8 @@ Silva changes
 
     Bug fixes
 
-      - Fixex an invalid syntax in webdav support.
+      - Fix an invalid syntax in webdav support.
+
       - Fixed an issue in Kupu, where text got 'title' style instead
         of 'plain'.
 
