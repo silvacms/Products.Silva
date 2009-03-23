@@ -7,6 +7,11 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
+  create a new empty paragraph below the table.  This feature
+  is to improve editing ability when a table is adjacent to an
+  external source or another table
+
 - improve keyboard navigability in kupu around external sources:
   left,right in an ES moves cursor up
   enter in an ES inserts a new paragraph after and moves cursor
