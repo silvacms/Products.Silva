@@ -89,15 +89,7 @@ KupuEditor.prototype.afterInit = function() {
                 estool = kupu.getTool('extsourcetool');
                 if (estool) estool.updateState(next);
             };
-    /* add an empty 'p' at the end of the body.  This enables content to be 
-       added to the end of a doc when the last element in the doc is a table 
-       or an external source. This will get stripped out when the doc is saved.
-       */
-    var blank = doc.createElement('p');
-    blank.appendChild(doc.createTextNode('\xa0'));
-    body.appendChild(blank);
-    
-            selection.selectNodeContents(next);
+	    selection.selectNodeContents(next);
             selection.collapse();
             break;
         } else if (h.nodeType == 1) {
@@ -107,6 +99,14 @@ KupuEditor.prototype.afterInit = function() {
     
     this.registerFilter(new fixupNestedListFilter());
 
+    /* add an empty 'p' at the end of the body.  This enables content to be 
+       added to the end of a doc when the last element in the doc is a table 
+       or an external source. This will get stripped out when the doc is saved.
+       */
+    var blank = doc.createElement('p');
+    blank.appendChild(doc.createTextNode('\xa0'));
+    body.appendChild(blank);
+    
     // if we don't first focus the outer window, Mozilla won't show a cursor
     window.focus();
     this.getDocument().getWindow().focus();
@@ -118,8 +118,6 @@ KupuEditor.prototype.afterInit = function() {
         if (window.event) event = window.event;
         /* if inside an external source, ignore 
 	   the tab */
-	   var keyCode = event.keyCode;
-	  //debugger;
         if (event.keyCode == '9') {
 	    var estool = kupu.getTool('extsourcetool');
 	    if (!(estool && estool._insideExternalSource)) {
@@ -137,6 +135,29 @@ KupuEditor.prototype.afterInit = function() {
         doc.addEventListener('keydown', tabbing_handler, true);
     } else if (doc.attachEvent) {
         doc.attachEvent('onkeydown', tabbing_handler);
+    };
+    
+    var table_spacing_handler = function(event) {
+	if (window.event) event = window.event;
+	/* if shift+ctrl+enter is pressed while inside a
+	    table, add a new paragraph at the end */
+	if (event.keyCode == 13 && event.ctrlKey && event.shiftKey) {
+	    var selNode = kupu.getSelectedNode();
+	    var table = kupu.getNearestParentOfType(selNode,'table');
+	    if (table) {
+		var sel = doc.createElement('p');
+		sel.appendChild(doc.createTextNode('\xa0'));
+		table.parentNode.insertBefore(sel,table.nextSibling)
+		var selection = kupu.getSelection();
+		selection.selectNodeContents(sel);
+		selection.collapse()
+	    }
+	}
+    }
+    if (doc.addEventListener) {
+        doc.addEventListener('keydown', table_spacing_handler, true);
+    } else if (doc.attachEvent) {
+        doc.attachEvent('onkeydown', table_spacing_handler);
     };
 };
 

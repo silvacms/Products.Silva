@@ -1059,6 +1059,7 @@ SilvaTableToolBox.prototype.updateState = function(selNode) {
         this.addtablediv.style.display = "block";
         this.alignselect.selectedIndex = 0;
         this.classselect.selectedIndex = 0;
+    alert(	this.classselect.style.display);
         if (this.toolboxel) {
             this.toolboxel.className = this.plainclass;
         };
@@ -2078,7 +2079,6 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
     var doc = this.editor.getInnerDocument();
     var selection = this.editor.getSelection();
     var sel;
-    //debugger;
     /* 13=enter -- add a new paragraph after*/
     if (keyCode == 13) {
         sel = doc.createElement('p');
@@ -2094,7 +2094,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
         /* 9=tab; 39=right; 40=down; */
         if (div.nextSibling) { 
             sel = div.nextSibling;
-         } else {
+         } else {n
             sel = doc.createElement('p');
             sel.appendChild(doc.createTextNode('\xa0'));
             div.parentNode.appendChild(sel);
