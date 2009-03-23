@@ -2078,6 +2078,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
     var doc = this.editor.getInnerDocument();
     var selection = this.editor.getSelection();
     var sel;
+    //debugger;
     /* 13=enter -- add a new paragraph after*/
     if (keyCode == 13) {
         sel = doc.createElement('p');
@@ -2125,6 +2126,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
     if (sel) {
         selection.selectNodeContents(sel);
         selection.collapse();
+    }
+    if (sel && sel.nodeName.toLowerCase() == 'div' && sel.className == 'externalsource') {
+	this.updateState(sel);
     }
     if (event.preventDefault) {
         event.preventDefault();

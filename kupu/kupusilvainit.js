@@ -118,8 +118,10 @@ KupuEditor.prototype.afterInit = function() {
         if (window.event) event = window.event;
         /* if inside an external source, ignore 
 	   the tab */
+	   var keyCode = event.keyCode;
+	  //debugger;
         if (event.keyCode == '9') {
-    	    estool = kupu.getTool('extsourcetool');
+	    var estool = kupu.getTool('extsourcetool');
 	    if (!(estool && estool._insideExternalSource)) {
                 if (event.shiftKey)
                     kupu.execCommand('outdent');
