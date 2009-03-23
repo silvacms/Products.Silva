@@ -2140,6 +2140,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
         selection.selectNodeContents(sel);
         selection.collapse(collapseToEnd);
     }
+    if (sel && sel.nodeName.toLowerCase() == 'div' && sel.className == 'externalsource') {
+       this.updateState(sel);
+    }
     if (event.preventDefault) {
         event.preventDefault();
     } else {

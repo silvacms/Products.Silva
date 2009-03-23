@@ -116,17 +116,16 @@ KupuEditor.prototype.afterInit = function() {
     // the tab keys are pressed.
     var tabbing_handler = function(event){
         if (window.event) event = window.event;
-        /* if inside an external source, ignore 
-           the tab */
-        estool = kupu.getTool('extsourcetool');
-        if (estool && estool._insideExternalSource) {
-            return false;
-        }
         if (event.keyCode == '9') {
-            if (event.shiftKey)
-                kupu.execCommand('outdent');
-            else
-                kupu.execCommand('indent');
+            /* if inside an external source, ignore 
+                the tab */
+            var estool = kupu.getTool('extsourcetool');
+            if (!(estool && estool._insideExternalSource)) {
+                if (event.shiftKey)
+                    kupu.execCommand('outdent');
+                else
+                    kupu.execCommand('indent');
+            }
             if (event.preventDefault) /* standard event model */
                 event.preventDefault();
             return false; /* for IE */
