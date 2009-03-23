@@ -4,6 +4,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  1.5.13
+
+    Bugs fixed
+
+      - fix in invalid syntax in webdav support (ported from 2.1)
+
   1.5.12
 
     Bugs Fixed
@@ -19,7 +25,7 @@ Silva changes
       - With a base tag in the layout template the publisher form in
         public preview 404's. The form now has a constructed action
         instead of a point.
-        
+
         This will work for sites that don't define a base tag too
         (issue1705).
 
