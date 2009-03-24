@@ -10,7 +10,7 @@ import SilvaTestCase
 from DateTime import DateTime
 
 from Products.Silva import Ghost
-from Products.Silva.interfaces import IIndexer
+from silva.core.interfaces import IIndexer
 
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -22,9 +22,11 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.root, 'toghost', 'To be Haunted')
         self.gamma  = gamma = self.add_document(self.pub, 'gamma', 'Gamma')
         self.alpha = alpha = self.add_document(self.pub, 'alpha', 'Alpha')
-        self.Alpha = Alpha = self.add_document(self.pub, 'Alpha', 'Alpha Capital A')
+        self.Alpha = Alpha = self.add_document(
+            self.pub, 'Alpha', 'Alpha Capital A')
         self.beta = beta = self.add_document(self.pub, 'beta', 'Beta')
-        self.Beta = Beta = self.add_document(self.pub, 'Beta', 'Beta Capital B')
+        self.Beta = Beta = self.add_document(
+            self.pub, 'Beta', 'Beta Capital B')
         self.kappa = kappa = self.add_document(self.pub, 'kappa', 'Kappa')
         self.ghost = ghost = self.add_ghost(
             self.pub, 'ghost', '/'.join(toghost.getPhysicalPath()))

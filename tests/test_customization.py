@@ -18,7 +18,7 @@ from five.localsitemanager import make_objectmanager_site
 from silva.core.layout.interfaces import ICustomizationService, \
     IViewManager, IViewInfo
 from silva.core.layout.porto.interfaces import IPortoSkin, IPorto
-from Products.Silva.interfaces import IFolder, IContainer
+from silva.core.interfaces.content import IFolder, IContainer
 
 import SilvaTestCase
 
@@ -61,28 +61,32 @@ class CustomizationServiceTestCase(SilvaTestCase.SilvaTestCase):
         utility = getUtility(ICustomizationService)
 
         # We can list availables interfaces
-        someDefaultInterfaces =  [u'Products.Silva.interfaces.content.IAsset',
-                                  u'Products.Silva.interfaces.content.IContainer',
-                                  u'Products.Silva.interfaces.content.IContent',
-                                  u'Products.Silva.interfaces.content.IFile',
-                                  u'Products.Silva.interfaces.content.IFolder',
-                                  u'Products.Silva.interfaces.content.IGroup',
-                                  u'Products.Silva.interfaces.content.IPublication',
-                                  u'Products.Silva.interfaces.content.IRoot',
-                                  u'Products.Silva.interfaces.content.ISilvaObject',
-                                  u'Products.Silva.interfaces.content.IVersionedContent',
-                                  u'Products.SilvaDocument.interfaces.IDocument',
-                                  u'silva.core.layout.interfaces.ICustomizableMarker',
-                                  u'silva.core.layout.interfaces.ICustomizableTag']
+        someDefaultInterfaces =  [
+            u'silva.core.interfaces.content.IAsset',
+            u'silva.core.interfaces.content.IContainer',
+            u'silva.core.interfaces.content.IContent',
+            u'silva.core.interfaces.content.IFile',
+            u'silva.core.interfaces.content.IFolder',
+            u'silva.core.interfaces.content.IGroup',
+            u'silva.core.interfaces.content.IPublication',
+            u'silva.core.interfaces.content.IRoot',
+            u'silva.core.interfaces.content.ISilvaObject',
+            u'silva.core.interfaces.content.IVersionedContent',
+            u'Products.SilvaDocument.interfaces.IDocument',
+            u'silva.core.layout.interfaces.ICustomizableMarker',
+            u'silva.core.layout.interfaces.ICustomizableTag']
+
         foundInterfaces = utility.availablesInterfaces()
         for iface in someDefaultInterfaces:
             self.failUnless(iface in foundInterfaces)
 
         # We can restrain it to a sub set
-        containerDefaultInterfaces = [u'Products.Silva.interfaces.content.IContainer',
-                                      u'Products.Silva.interfaces.content.IFolder',
-                                      u'Products.Silva.interfaces.content.IPublication',
-                                      u'Products.Silva.interfaces.content.IRoot',]
+        containerDefaultInterfaces = [
+            u'silva.core.interfaces.content.IContainer',
+            u'silva.core.interfaces.content.IFolder',
+            u'silva.core.interfaces.content.IPublication',
+            u'silva.core.interfaces.content.IRoot',]
+
         foundInterfaces = utility.availablesInterfaces(base=IContainer)
         for iface in containerDefaultInterfaces:
             self.failUnless(iface in foundInterfaces)
@@ -92,20 +96,24 @@ class CustomizationServiceTestCase(SilvaTestCase.SilvaTestCase):
         utility = getUtility(ICustomizationService)
 
         # Same goes for layers
-        someDefaultLayers = [u'Products.SilvaLayout.browser.silvadefault.skin.ISilvaDefault',
-                             u'Products.SilvaLayout.browser.silvalegacy.skin.ISilvaLegacy',
-                             u'silva.core.layout.interfaces.ISMILayer',
-                             u'silva.core.layout.interfaces.ISilvaLayer',
-                             u'silva.core.layout.porto.interfaces.IPorto',
-                             u'silva.core.layout.porto.interfaces.IPortoWithCSS',
-                             u'zope.publisher.interfaces.browser.IDefaultBrowserLayer']
+        someDefaultLayers = [
+            u'Products.SilvaLayout.browser.silvadefault.skin.ISilvaDefault',
+            u'Products.SilvaLayout.browser.silvalegacy.skin.ISilvaLegacy',
+            u'silva.core.layout.interfaces.ISMILayer',
+            u'silva.core.layout.interfaces.ISilvaLayer',
+            u'silva.core.layout.porto.interfaces.IPorto',
+            u'silva.core.layout.porto.interfaces.IPortoWithCSS',
+            u'zope.publisher.interfaces.browser.IDefaultBrowserLayer']
+
         foundLayers = utility.availablesLayers()
         for iface in someDefaultLayers:
             self.failUnless(iface in foundLayers)
 
         # We can restrain it to a sub set
-        silvaNewStyleLayers = [u'silva.core.layout.porto.interfaces.IPorto',
-                               u'silva.core.layout.porto.interfaces.IPortoWithCSS',]
+        silvaNewStyleLayers = [
+            u'silva.core.layout.porto.interfaces.IPorto',
+            u'silva.core.layout.porto.interfaces.IPortoWithCSS',]
+
         foundLayers = utility.availablesLayers(base=IPorto)
         for iface in silvaNewStyleLayers:
             self.failUnless(iface in foundLayers)
@@ -128,7 +136,7 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_grok_template(self):
         signature = "zope.interface.Interface:index.html:None:" \
-            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.interfaces.content.ISilvaObject:" \
             "silva.core.layout.porto.interfaces.IPorto"
         manager = IViewManager(self.utility)
         view = manager.from_signature(signature)
@@ -136,15 +144,19 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IViewInfo, view))
         self.assertEqual(view.type_, 'Grok Page Template')
         self.assertEqual(view.name, 'index.html')
-        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
-        self.assertEqual(view.layer, 'silva.core.layout.porto.interfaces.IPorto')
+        self.assertEqual(
+            view.for_,
+            'silva.core.interfaces.content.ISilvaObject')
+        self.assertEqual(
+            view.layer,
+            'silva.core.layout.porto.interfaces.IPorto')
         self.assertEqual(basename(view.template), 'maintemplate.pt')
         self.assertEqual(view.origin, None)
         self.assertEqual(manager.get_signature(view), signature)
 
     def test_five_template(self):
         signature = "zope.interface.Interface:object_lookup:None:" \
-            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.interfaces.content.ISilvaObject:" \
             "zope.publisher.interfaces.browser.IDefaultBrowserLayer"
         manager = IViewManager(self.utility)
         view = manager.from_signature(signature)
@@ -152,15 +164,19 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IViewInfo, view))
         self.assertEqual(view.type_, 'Five Page Template')
         self.assertEqual(view.name, 'object_lookup')
-        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
-        self.assertEqual(view.layer, 'zope.publisher.interfaces.browser.IDefaultBrowserLayer')
+        self.assertEqual(
+            view.for_,
+            'silva.core.interfaces.content.ISilvaObject')
+        self.assertEqual(
+            view.layer,
+            'zope.publisher.interfaces.browser.IDefaultBrowserLayer')
         self.assertEqual(basename(view.template), 'object_lookup.pt')
         self.assertEqual(view.origin, None)
         self.assertEqual(manager.get_signature(view), signature)
 
     def test_grok_content_provider(self):
         signature = "zope.viewlet.interfaces.IViewletManager:footer:None:" \
-            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.interfaces.content.ISilvaObject:" \
             "silva.core.layout.porto.interfaces.IPorto:" \
             "zope.publisher.interfaces.browser.IBrowserView"
         manager = IViewManager(self.utility)
@@ -169,15 +185,19 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IViewInfo, view))
         self.assertEqual(view.type_, 'Grok Content Provider')
         self.assertEqual(view.name, 'footer')
-        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
-        self.assertEqual(view.layer, 'silva.core.layout.porto.interfaces.IPorto')
+        self.assertEqual(
+            view.for_,
+            'silva.core.interfaces.content.ISilvaObject')
+        self.assertEqual(
+            view.layer,
+            'silva.core.layout.porto.interfaces.IPorto')
         self.assertEqual(basename(view.template), 'footer.pt')
         self.assertEqual(view.origin, None)
         self.assertEqual(manager.get_signature(view), signature)
 
     def test_grok_viewlet(self):
         signature = "zope.viewlet.interfaces.IViewlet:settingsbutton:None:" \
-            "Products.Silva.interfaces.content.ISilvaObject:" \
+            "silva.core.interfaces.content.ISilvaObject:" \
             "silva.core.layout.interfaces.ISMILayer:" \
             "silva.core.smi.smi.PropertiesTab:" \
             "silva.core.smi.smi.SMIMiddleGroundManager"
@@ -187,7 +207,9 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IViewInfo, view))
         self.assertEqual(view.type_, 'Grok Viewlet')
         self.assertEqual(view.name, 'settingsbutton')
-        self.assertEqual(view.for_, 'Products.Silva.interfaces.content.ISilvaObject')
+        self.assertEqual(
+            view.for_,
+            'silva.core.interfaces.content.ISilvaObject')
         self.assertEqual(view.layer, 'silva.core.layout.interfaces.ISMILayer')
         self.assertEqual(basename(view.template), 'smibutton.pt')
         self.assertEqual(view.origin, None)

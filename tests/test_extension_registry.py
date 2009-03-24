@@ -5,7 +5,8 @@
 from zope.interface.verify import verifyObject
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva.interfaces.extension import IExtensionRegistry, IExtension, IExtensionInstaller
+from silva.core.interfaces.extension import IExtensionRegistry, \
+    IExtension, IExtensionInstaller
 
 from silva.core.conf.installer import DefaultInstaller, SystemExtensionInstaller
 from silva.core.conf.registry import getRegistry
@@ -14,7 +15,7 @@ import SilvaTestCase
 
 
 class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
-    
+
     def test_registry(self):
         # We can get the registry using the registry API
         self.assertEquals(extensionRegistry, getRegistry('extensionregistry'))
@@ -26,12 +27,17 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.failUnless('SilvaDocument' in extensionRegistry.get_names())
 
         # Test is_installed.
-        self.assertEquals(extensionRegistry.is_installed('SilvaDocument', self.root), True)
-        self.assertEquals(extensionRegistry.is_installed('SilvaExternalSources', self.root), False)
+        self.assertEquals(
+            extensionRegistry.is_installed('SilvaDocument', self.root), True)
+        self.assertEquals(
+            extensionRegistry.is_installed('SilvaExternalSources', self.root),
+            False)
 
         # Test get_name_for_class.
         from Products.SilvaDocument.Document import Document
-        self.assertEquals(extensionRegistry.get_name_for_class(Document), 'SilvaDocument')
+        self.assertEquals(
+            extensionRegistry.get_name_for_class(Document),
+            'SilvaDocument')
         from Products.Silva.Link import Link
         self.assertEquals(extensionRegistry.get_name_for_class(Link), 'Silva')
         from urllib import URLopener
@@ -52,14 +58,16 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(extension.description, 'Silva Document')
         self.assertEqual(extension.product, 'SilvaDocument')
         self.assertEqual(extension.module_name, 'Products.SilvaDocument')
-        
+
         contents = extension.get_content()
         self.assertEqual([c['name'] for c in extension.get_content()],
-                         ['Silva Document', 'Silva Document Version', 
-                          'Silva Editor Support Service', 'Silva CodeSource Charset Service'])
+                         ['Silva Document', 'Silva Document Version',
+                          'Silva Editor Support Service',
+                          'Silva CodeSource Charset Service'])
         self.assertEqual([c['product'] for c in extension.get_content()],
-                         ['SilvaDocument', 'SilvaDocument', 'SilvaDocument', 'SilvaDocument'])
-        
+                         ['SilvaDocument', 'SilvaDocument', 'SilvaDocument',
+                          'SilvaDocument'])
+
         # After, an egg.
         extension = extensionRegistry.get_extension('silva.core.layout')
         self.assertNotEqual(extension, None)
@@ -69,7 +77,7 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(extension.description, 'Silva Core Layout')
         self.assertEqual(extension.product, 'silva.core.layout')
         self.assertEqual(extension.module_name, 'silva.core.layout')
-        
+
 
     def test_installer(self):
         # First system extension installer.

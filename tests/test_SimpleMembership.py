@@ -5,7 +5,7 @@
 
 from zope.interface.verify import verifyObject
 
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.tests import  SilvaTestCase
 
 class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
