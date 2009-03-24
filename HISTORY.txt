@@ -2,7 +2,7 @@ Copyright (c) 2002-2009 Infrae. All rights reserved.
 See also LICENSE.txt
 Silva changes
 
-  Silva 1.6.4 (unreleased)
+  Silva 1.6.4 (2009/03/24)
 
     Bugs fixed:
 
