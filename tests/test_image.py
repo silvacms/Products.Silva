@@ -9,7 +9,7 @@ from StringIO import StringIO
 from zope import component
 from zope.interface.verify import verifyObject
 
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva import File
 
 from Products.Five.testbrowser import Browser
@@ -24,6 +24,7 @@ except ImportError:
 else:
     havePIL = 1
 
+
 class ImageTestHelper(object):
 
     def add_test_image(self):
@@ -35,7 +36,8 @@ class ImageTestHelper(object):
         image_file.close()
         return self.root.testimage, image_data
 
-class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
+
+class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
 
     def test_badimage(self):
         image_file = StringIO('invalid-image-format')
@@ -104,7 +106,8 @@ class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
         self.root.action_paste(self.app.REQUEST)
 
 
-class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase, ImageTestHelper):
+class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
+                          ImageTestHelper):
 
     def test_view(self):
         image, image_data = self.add_test_image()

@@ -51,9 +51,8 @@ except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
 from Products.Silva.magic import MagicGuess
-from Products.Silva.interfaces import IAsset
-from Products.Silva import interfaces
 
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
 
@@ -66,7 +65,7 @@ def manage_addFile(self, id, title, file):
     """Add a File
     """
 
-    id = mangle.Id(self, id, file=file, interface=IAsset)
+    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
     # try to rewrite the id to make it unique
     id.cook()
     id = str(id)
@@ -478,7 +477,7 @@ def file_factory(self, id, content_type, file):
     """
     # if this gets called by the contentObjectFactoryRegistry, the last
     # argument will be a string
-    id = mangle.Id(self, id, file=file, interface=IAsset)
+    id = mangle.Id(self, id, file=file, interface=interfacesIAsset)
     if not id.isValid():
         return
     id = str(id)

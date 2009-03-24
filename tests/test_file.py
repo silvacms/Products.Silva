@@ -8,7 +8,7 @@ from zope.interface.verify import verifyObject
 import SilvaTestCase
 import helpers
 
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva import File
 
 class FileTest(SilvaTestCase.SilvaFileTestCase):

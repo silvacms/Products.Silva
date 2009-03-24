@@ -23,10 +23,9 @@ import zLOG
 import OFS.interfaces
 
 # Silva
-from Products.Silva import mangle, interfaces, SilvaPermissions
+from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IAsset
 
 # misc
 from Products.Silva.helpers import add_and_edit
@@ -38,6 +37,7 @@ except ImportError:
     havePIL = 0
 
 from silva.core.views.traverser import SilvaPublishTraverse
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 
@@ -402,7 +402,7 @@ class Image(Asset):
         try:
             image = PIL.Image.open(image_reference)
         except IOError, e:
-            raise ValueError, e.args[1]
+            raise ValueError, e.args[-1]
         return image
 
 
@@ -436,6 +436,7 @@ class Image(Asset):
             # will behave like if you don't have PIL.
             raise ValueError, e.args[1]
         ct = self._web2ct[self.web_format]
+        new_image_data.seek(0)
         self._image_factory('image', new_image_data, ct)
 
 
