@@ -17,7 +17,6 @@ from five.intid.intid import OFSIntIds
 from Globals import package_home
 from DateTime import DateTime
 from OFS import Image
-from Products.ProxyIndex.ProxyIndex import RecordStyle
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager import manage_addAcceleratedHTTPCacheManager
 
 # sibling
@@ -175,7 +174,8 @@ def configureMetadata(root):
     # install metadata
     if not 'service_metadata' in root.objectIds():
         factory = root.manage_addProduct['SilvaMetadata']
-        factory.manage_addMetadataTool('service_metadata')
+        factory.manage_addMetadataTool(
+            'service_metadata', 'Silva Service Metadata')
 
     # load up the default metadata
     silva_home = package_home(globals())
@@ -551,78 +551,20 @@ def unregisterViews(reg):
     # next line for hysterical reasons, should go away
     reg.unregister('public', 'Silva Simple Member')
 
-class El:
-    """Helper class to initialize the catalog lexicon
-    """
-    def __init__(self, **kw):
-        self.__dict__.update(kw)
 
 def setup_catalog(silva_root):
     """Sets up the ZCatalog
     """
     # See if catalog exists, if not create one
     if not hasattr(silva_root, 'service_catalog'):
-        silva_root.manage_addProduct['ZCatalog'].manage_addZCatalog(
+        factory = silva_root.manage_addProduct['SilvaMetadata']
+        factory.manage_addCatalogService(
             'service_catalog', 'Silva Service Catalog')
-
-    catalog = silva_root.service_catalog
-    lexicon_id = 'silva_lexicon'
-
-    # Add lexicon with right splitter (Silva.UnicodeSplitter.Splitter
-    # registers under "Unicode Whitespace splitter")
-    if not lexicon_id in catalog.objectIds():
-        # XXX ugh, hardcoded dependency on names in ZCTextIndex
-        catalog.manage_addProduct['ZCTextIndex'].manage_addLexicon(
-            lexicon_id,
-            elements=[
-            El(group='Case Normalizer', name='Case Normalizer'),
-            El(group='Stop Words', name=" Don't remove stop words"),
-            El(group='Word Splitter', name="Unicode Whitespace splitter"),
-            ]
-            )
-
-    existing_columns = catalog.schema()
-    columns = [
-        'id',
-        'meta_type',
-        'silva_object_url',
-        ]
-
-    for column_name in columns:
-        if column_name in existing_columns:
-            continue
-        catalog.addColumn(column_name)
-
-    existing_indexes = catalog.indexes()
-    indexes = [
-        ('id', 'FieldIndex'),
-        ('meta_type', 'FieldIndex'),
-        ('path', 'PathIndex'),
-        ('fulltext', 'ZCTextIndex'),
-        ('version_status', 'FieldIndex'),
-        ('haunted_path', 'FieldIndex'),
-        ]
-
-    for field_name, field_type in indexes:
-        if field_name in existing_indexes:
-            continue
-
-        # special handling for argument passing to zctextindex
-        # ranking algorithm used is best for larger text body / query size ratios
-        if field_type == 'ZCTextIndex':
-            extra = RecordStyle(
-                {'doc_attr':field_name,
-                 'lexicon_id':'silva_lexicon',
-                 'index_type':'Okapi BM25 Rank'}
-                )
-            catalog.addIndex(field_name, field_type, extra)
-            continue
-
-        catalog.addIndex(field_name, field_type)
 
     # if the silva root has an index_object attribute, add it to the catalog
     if hasattr(silva_root, 'index_object'):
         silva_root.index_object()
+
 
 def configureContainerPolicies(root):
     # create container policy registry
@@ -673,10 +615,12 @@ def installSubscriptions(root):
     if not MAILHOST_ID in root.objectIds():
         if MAILDROPHOST_AVAILABLE:
             from Products.MaildropHost import manage_addMaildropHost
-            manage_addMaildropHost(root, MAILHOST_ID, 'Spool based mail delivery')
+            manage_addMaildropHost(root, MAILHOST_ID,
+                                   'Spool based mail delivery')
         else:
             from Products.MailHost.MailHost import manage_addMailHost
-            manage_addMailHost(root, MAILHOST_ID, 'Mail Delivery Service')
+            manage_addMailHost(root, MAILHOST_ID,
+                               'Mail Delivery Service')
 
     for id in (
         'subscription_confirmation_template',

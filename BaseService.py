@@ -8,11 +8,13 @@ from OFS import SimpleItem
 import interfaces
 from silva.core import conf as silvaconf
 
+
 class ZMIObject(SimpleItem.SimpleItem):
 
     silvaconf.baseclass()
 
     implements(interfaces.IZMIObject)
+
 
 class SilvaService(ZMIObject):
 
