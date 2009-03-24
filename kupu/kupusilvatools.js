@@ -1059,7 +1059,6 @@ SilvaTableToolBox.prototype.updateState = function(selNode) {
         this.addtablediv.style.display = "block";
         this.alignselect.selectedIndex = 0;
         this.classselect.selectedIndex = 0;
-    alert(	this.classselect.style.display);
         if (this.toolboxel) {
             this.toolboxel.className = this.plainclass;
         };
