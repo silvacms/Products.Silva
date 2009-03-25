@@ -477,7 +477,7 @@ def file_factory(self, id, content_type, file):
     """
     # if this gets called by the contentObjectFactoryRegistry, the last
     # argument will be a string
-    id = mangle.Id(self, id, file=file, interface=interfacesIAsset)
+    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
     if not id.isValid():
         return
     id = str(id)
