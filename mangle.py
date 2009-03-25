@@ -65,7 +65,8 @@ class Id(object):
     # id has a reserved prefix
     RESERVED_PREFIX = 2
     # id is "used internally" which either means this id would
-    # shadowing some non-silva attribute, or is in the list of disallowed ids anyway
+    # shadowing some non-silva attribute, or is in the list of
+    # disallowed ids anyway
     RESERVED = 3
     IN_USE_CONTENT = 4
     IN_USE_ASSET = 5
@@ -87,7 +88,8 @@ class Id(object):
         'set',
         )
 
-    # all reserved/internally used ids. (This list is most probably incomplete)
+    # all reserved/internally used ids. (This list is most probably
+    # incomplete)
     _reserved_ids = (
         'Members',
         'REQUEST',
@@ -149,6 +151,8 @@ class Id(object):
                 will be processed
         """
         orig_id = maybe_id
+        if maybe_id is None:
+            maybe_id = ""
         if type(maybe_id) == StringType:
             try:
                 maybe_id = unicode(maybe_id, 'utf-8')

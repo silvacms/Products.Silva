@@ -486,7 +486,6 @@ def registerViews(reg):
     reg.register('add', 'Silva Publication', ['add', 'Publication'])
     reg.register('add', 'Silva Ghost', ['add', 'Ghost'])
     reg.register('add', 'Silva Link', ['add', 'Link'])
-    reg.register('add', 'Silva Image', ['add', 'Image'])
     reg.register('add', 'Silva File', ['add', 'File'])
     reg.register('add', 'Silva Ghost Folder', ['add', 'GhostFolder'])
     reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])

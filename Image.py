@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -8,9 +9,9 @@ from cStringIO import StringIO
 from cgi import escape
 
 # Zope 3
-from zope import component
+from zope import component, schema
 from zope.i18n import translate
-from zope.interface import implements
+from zope.interface import implements, Interface
 import zope.app.container.interfaces
 
 # Zope 2
@@ -36,15 +37,20 @@ try:
 except ImportError:
     havePIL = 0
 
+from silva.core.views import z3cforms as silvaz3cforms
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.core import interfaces
 from silva.core import conf as silvaconf
+from silva.core.conf import schema as silvaschema
+from z3c.form import field
 
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image.
     """
     img = image_factory(context, id, None, file)
+    if img is None:
+        return None
     id = img.id
     context._setObject(id, img)
     img = getattr(context, id)
@@ -58,6 +64,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     img.set_title(title)
     add_and_edit(context, id, REQUEST)
     return img
+
 
 class Image(Asset):
     __doc__ = _("""Web graphics (gif, jpg, png) can be uploaded and inserted in
@@ -151,7 +158,8 @@ class Image(Asset):
             m = self.re_percentage.match(scale)
             if m is None:
                 msg = _("'${scale}' is not a valid scale identifier. "
-                            "Probably a percent symbol is missing.", mapping={'scale': scale})
+                        "Probably a percent symbol is missing.",
+                        mapping={'scale': scale})
                 msg = translate(msg)
                 raise ValueError, msg
             cropbox = self.getCropBox()
@@ -170,7 +178,8 @@ class Image(Asset):
             height = m.group(2)
             if width == height == '*':
                 msg = _("'${scale} is not a valid scale identifier. "
-                            "At least one number is required.", mapping={'scale': scale})
+                        "At least one number is required.",
+                        mapping={'scale': scale})
                 msg = translate(msg)
                 raise ValueError, msg
             if width == '*':
@@ -255,7 +264,7 @@ class Image(Asset):
             return self._getPILImage(self.hires_image).format
         ct, w, h = OFS.Image.getImageInfo(self.hires_image.get_content())
         if not ct:
-            raise ValueError, "Unknown format"
+            raise ValueError, _(u"Unknown image format.")
         return ct.split('/')[1].upper()
 
     security.declareProtected(SilvaPermissions.View, 'getImage')
@@ -273,8 +282,8 @@ class Image(Asset):
             pil_image.save(image_data, self.web_format)
             return image_data.getvalue()
         elif not hires and not webformat:
-            raise ValueError, ("Low resolution image in original format is "
-                               "not supported")
+            raise ValueError, _(u"Low resolution image in original format is "
+                                u"not supported")
         return image.get_content()
 
     security.declareProtected(SilvaPermissions.View, 'tag')
@@ -395,7 +404,7 @@ class Image(Asset):
             raise ValueError if image could not be identified
         """
         if not havePIL:
-            raise ValueError, "No PIL installed."
+            raise ValueError, _(u"No PIL installed.")
         if img is None:
             img = self.image
         image_reference = img.get_content_fd()
@@ -510,7 +519,7 @@ class Image(Asset):
             return self._getPILImage(img).size
         ct, w, h = OFS.Image.getImageInfo(img.get_content())
         if w <= 0 or h <= 0:
-            raise ValueError, "Could not identify image type."
+            raise ValueError, _(u"Could not identify image type.")
         return w, h
 
 InitializeClass(Image)
@@ -554,6 +563,33 @@ class ImageStorageConverter(object):
         return image
 
 
+class IImageAddFields(Interface):
+
+    id = silvaschema.ID(
+        title=_(u"id"),
+        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        required=False)
+    image = silvaschema.Bytes(title=_(u"image"), required=True)
+    title = schema.TextLine(
+        title=_(u"title"),
+        description=_(u"Fill in a title. It will be used for the ALT (Alternative text) attribute of the image"),
+        required=True)
+
+
+class ImageAddForm(silvaz3cforms.AddForm):
+    """Add form for a document.
+    """
+
+    silvaconf.context(interfaces.IImage)
+    silvaconf.name(u'Silva Image')
+    fields = field.Fields(IImageAddFields)
+
+    def create(self, data):
+        factory = self.context.manage_addProduct['Silva']
+        return factory.manage_addImage(
+            data['id'], data['title'], file=data['image'])
+
+
 # Register Image factory for image mimetypes
 import mimetypes
 from Products.Silva import assetregistry
@@ -565,20 +601,24 @@ assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
 
 
 def image_factory(self, id, content_type, body):
-    """Create an Image."""
-    id = mangle.Id(self, id, interface=interfaces.IAsset)
+    """Create an Image.
+    """
+    id = mangle.Id(self, id, file=body, interface=interfaces.IAsset)
+    id.cook()
     if not id.isValid():
-        return
-    id = str(id)
-    img = Image(id).__of__(self)
+        return None
+    img = Image(str(id)).__of__(self)
     return img
+
 
 def _should_create_image(id, content_type, body):
     return content_type.startswith('image/')
 
+
 contentObjectFactoryRegistry.registerFactory(
     image_factory,
     _should_create_image)
+
 
 @silvaconf.subscribe(
     interfaces.IImage, zope.app.container.interfaces.IObjectAddedEvent)
@@ -588,6 +628,7 @@ def image_added(image, event):
         if img is None:
             continue
         img.id = id
+
 
 @silvaconf.subscribe(
     interfaces.IImage, OFS.interfaces.IObjectClonedEvent)
