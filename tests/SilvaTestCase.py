@@ -15,7 +15,6 @@ import tempfile, shutil
 import transaction
 import zope.component.eventtesting
 from zope.interface import Interface
-from zope.app.component.hooks import setSite
 
 user_manager = 'manager'
 user_chiefeditor = 'chiefeditor'
@@ -115,7 +114,6 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
             self.login()
             self.app.REQUEST.AUTHENTICATED_USER=\
                 self.app.acl_users.getUser(ZopeTestCase.user_name)
-            setSite(self.silva)
             self.afterSetUp()
         except:
             self.beforeClose()
@@ -153,8 +151,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
             if call_close_hook:
                 self.beforeClose()
         finally:
+            tearDown(self)
             self._close()
-            self.logout()
             self.afterClear()
 
     def _close(self):

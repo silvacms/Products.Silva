@@ -8,6 +8,7 @@ import time
 
 # Zope 3
 import zope.component.eventtesting
+from zope.app.component.hooks import setSite
 from zope.component import provideHandler
 from zope.testing.cleanup import cleanUp as _cleanUp
 
@@ -154,14 +155,18 @@ class SilvaFunctionalLayer(SilvaLayer):
 def setUp(test):
     """Setup before each tests.
     """
-    app = ZopeTestCase.app()
+
+    assert(hasattr(test, 'app'))
+    app = test.app
     app.temp_folder.session_data._reset()
     zope.component.eventtesting.clearEvents()
-    ZopeTestCase.close(app)
+    setSite(app.root)
+
 
 def tearDown(test):
     """Tear down after each tests.
     """
+    setSite()
     noSecurityManager()
 
 
