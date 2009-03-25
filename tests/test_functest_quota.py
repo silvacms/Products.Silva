@@ -98,10 +98,15 @@ class QuotaTestCase(SilvaFunctionalTestCase):
 
         self.failUnless('Silva /edit...' in self.sb.browser.contents)
         self.sb.click_href_labeled('Services')
-        self.assertEquals(self.sb.get_url(),'http://nohost/root/manage_services')
+        self.assertEquals(
+            self.sb.get_url(),
+            'http://nohost/root/manage_services')
         self.sb.click_href_labeled('Services')
-        self.assertEquals(self.sb.get_url(),'http://nohost/root/manage_services')
-        self.sb.click_href_labeled('service_extensions (Silva Product and Extension Configuration)')
+        self.assertEquals(
+            self.sb.get_url(),
+            'http://nohost/root/manage_services')
+        self.sb.click_href_labeled(
+            'service_extensions (Silva Product and Extension Configuration)')
         self.failUnless('Silva Services' in self.sb.browser.contents)
         self.sb.click_button_labeled('enable quota subsystem')
         self.failUnless('Quota sub-system enabled' in self.sb.browser.contents)
@@ -192,11 +197,12 @@ class QuotaTestCase(SilvaFunctionalTestCase):
 
         self.sb.make_content('Silva File', id='quota_test', title='q test',
                              file='docs_export_2008-06-11.odt')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva File'))
 
 
-        # try to get the size of the added file in order to see if it's really here
-        # check changes
+        # try to get the size of the added file in order to see if
+        # it's really here check changes
 
         self.sb.click_href_labeled('test')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva File'))
@@ -220,33 +226,41 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         # create a folder, called folder1
         self.sb.make_content('Silva Folder', id='folder1', title='Folder 1',
                              policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Folder'))
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva Folder'))
         self.sb.click_href_labeled('folder1')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
 
         # create a publication inside of folder1, called publication1
-        self.sb.make_content('Silva Publication', id='publication1', title='Publication 1',
-                             policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Publication'))
+        self.sb.make_content(
+            'Silva Publication', id='publication1', title='Publication 1',
+            policy='Silva Document')
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva Publication'))
         self.sb.click_href_labeled('publication1')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Publication'))
+        self.failUnless(
+            self.sb.get_listing_h2().startswith('Silva Publication'))
 
         # create a folder inside of publication1, called folder2
         self.sb.make_content('Silva Folder', id='folder2', title='Folder 2',
                              policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Folder'))
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva Folder'))
         self.sb.click_href_labeled('folder2')
         self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
 
         # add a publication
-        self.sb.make_content('Silva Publication', id='publication2', title='Publication 2',
+        self.sb.make_content(
+            'Silva Publication', id='publication2', title='Publication 2',
                              policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Publication'))
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva Publication'))
 
         # add a file
         self.sb.make_content('Silva File', id='file1', title='File 1',
-                                      file='docs_export_2008-06-11.odt')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva File'))
+                             file='docs_export_2008-06-11.odt')
+        self.failUnless(
+            self.sb.get_status_feedback().startswith('Added Silva File'))
 
         # go back to publication 1
         self.sb.browser.getLink('Publication 1').click()
