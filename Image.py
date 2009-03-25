@@ -28,15 +28,6 @@ from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
 from Products.Silva.i18n import translate as _
 
-# misc
-from Products.Silva.helpers import add_and_edit
-
-try:
-    import PIL.Image
-    havePIL = 1
-except ImportError:
-    havePIL = 0
-
 from silva.core.views import z3cforms as silvaz3cforms
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.core import interfaces
@@ -44,26 +35,31 @@ from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
 from z3c.form import field
 
+try:
+    import PIL.Image
+    havePIL = 1
+except ImportError:
+    havePIL = 0
+
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image.
     """
-    img = image_factory(context, id, None, file)
-    if img is None:
+    image_obj = image_factory(context, id, None, file)
+    if image_obj is None:
         return None
-    id = img.id
-    context._setObject(id, img)
-    img = getattr(context, id)
+    id = image_obj.id
+    context._setObject(id, image_obj)
+    image_obj = getattr(context, id)
     if file:
         try:
-            img.set_image(file)
+            image_obj.set_image(file)
         except ValueError:
             # uploaded contents is not a proper image file
             transaction.abort()
             raise
-    img.set_title(title)
-    add_and_edit(context, id, REQUEST)
-    return img
+    image_obj.set_title(title)
+    return image_obj
 
 
 class Image(Asset):
@@ -572,12 +568,12 @@ class IImageAddFields(Interface):
     image = silvaschema.Bytes(title=_(u"image"), required=True)
     title = schema.TextLine(
         title=_(u"title"),
-        description=_(u"Fill in a title. It will be used for the ALT (Alternative text) attribute of the image"),
+        description=_(u"Fill in a title. It will be used for the ALT (Alternative text) attribute of the image."),
         required=True)
 
 
 class ImageAddForm(silvaz3cforms.AddForm):
-    """Add form for a document.
+    """Add form for an image.
     """
 
     silvaconf.context(interfaces.IImage)

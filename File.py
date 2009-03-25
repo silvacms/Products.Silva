@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -9,8 +10,8 @@ from cgi import escape
 from cStringIO import StringIO
 
 # Zope 3
-from zope import component
-from zope.interface import implements, directlyProvides
+from zope import component, schema
+from zope.interface import implements, Interface, directlyProvides
 from zope.app.component.interfaces import ISite
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
@@ -55,29 +56,32 @@ from Products.Silva.magic import MagicGuess
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
+from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.conf import schema as silvaschema
+from z3c.form import field
 
 
 CHUNK_SIZE = 4092
 DEFAULT_MIMETYPE = 'application/octet-stream'
 MAGIC = MagicGuess()
 
-def manage_addFile(self, id, title, file):
+
+def manage_addFile(self, id, title=None, file=None):
     """Add a File
     """
 
-    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
-    # try to rewrite the id to make it unique
-    id.cook()
-    id = str(id)
-    # the content type is a formality here, the factory expects
-    # it as an arg but doesn't actually use it
-    object = file_factory(self, id, DEFAULT_MIMETYPE, file)
+    file_obj = file_factory(self, id, DEFAULT_MIMETYPE, file)
+    if file_obj is None:
+        return None
+    id = file_obj.id
+    self._setObject(id, file_obj)
+    file_obj = getattr(self, id)
+    if file:
+        file_obj.set_file_data(file)
+    if title:
+        file_obj.set_title(title)
+    return file_obj
 
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.set_title(title)
-    object.set_file_data(file)
-    return object
 
 class File(Asset):
     __doc__ = """Any digital file can be uploaded as Silva content.
@@ -466,24 +470,51 @@ def FileStorageTypeVocabulary(context):
     terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
              SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
     if FILESYSTEM_STORAGE_AVAILABLE:
-        terms += [SimpleTerm(value=FileSystemFile, title='FileSystem File', token='FileSystemFile'),]
+        terms += [SimpleTerm(value=FileSystemFile,
+                             title='FileSystem File',
+                             token='FileSystemFile'),]
     return SimpleVocabulary(terms)
 
 directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 
-def file_factory(self, id, content_type, file):
-    """Add a File.
-    """
-    # if this gets called by the contentObjectFactoryRegistry, the last
-    # argument will be a string
-    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
-    if not id.isValid():
-        return
-    id = str(id)
+class IFileAddFields(Interface):
 
+    file = silvaschema.Bytes(title=_(u"file"), required=True)
+    id = silvaschema.ID(
+        title=_(u"id"),
+        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        required=False)
+    title = schema.TextLine(
+        title=_(u"title"),
+        description=_(u"Tip: You don't have to fill in the id and title."),
+        required=False)
+
+
+class FileAddForm(silvaz3cforms.AddForm):
+    """Add form for a file.
+    """
+
+    silvaconf.context(interfaces.IFile)
+    silvaconf.name(u'Silva File')
+    fields = field.Fields(IFileAddFields)
+
+    def create(self, data):
+        factory = self.context.manage_addProduct['Silva']
+        return factory.manage_addFile(
+            data['id'], data['title'], data['file'])
+
+
+def file_factory(self, id, content_type, file):
+    """Create a File.
+    """
+
+    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
+    id.cook()
+    if not id.isValid():
+        return None
     service_files = component.getUtility(interfaces.IFilesService)
-    return service_files.newFile(id)
+    return service_files.newFile(str(id))
 
 
 class FilesService(SilvaService):
