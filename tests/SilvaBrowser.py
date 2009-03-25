@@ -10,7 +10,9 @@ from xml.dom import minidom
 from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
-Z3C_CONTENTS = ['Silva Document', 'Silva Indexer', 'Silva Find',]
+Z3C_CONTENTS = ['Silva Document',
+                'Silva Indexer', 'Silva Find',
+                'Silva File', 'Silva Image']
 
 # Define types of forms.
 SILVA_FORM = object()

@@ -561,15 +561,15 @@ class ImageStorageConverter(object):
 
 class IImageAddFields(Interface):
 
-    id = silvaschema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
-        required=False)
-    image = silvaschema.Bytes(title=_(u"image"), required=True)
+    file = silvaschema.Bytes(title=_(u"image"), required=True)
     title = schema.TextLine(
         title=_(u"title"),
         description=_(u"Fill in a title. It will be used for the ALT (Alternative text) attribute of the image."),
         required=True)
+    id = silvaschema.ID(
+        title=_(u"id"),
+        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        required=False)
 
 
 class ImageAddForm(silvaz3cforms.AddForm):
@@ -580,10 +580,10 @@ class ImageAddForm(silvaz3cforms.AddForm):
     silvaconf.name(u'Silva Image')
     fields = field.Fields(IImageAddFields)
 
-    def create(self, data):
-        factory = self.context.manage_addProduct['Silva']
+    def create(self, parent, data):
+        factory = parent.manage_addProduct['Silva']
         return factory.manage_addImage(
-            data['id'], data['title'], file=data['image'])
+            data['id'], data['title'], file=data['file'])
 
 
 # Register Image factory for image mimetypes

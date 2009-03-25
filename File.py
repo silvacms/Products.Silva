@@ -499,8 +499,8 @@ class FileAddForm(silvaz3cforms.AddForm):
     silvaconf.name(u'Silva File')
     fields = field.Fields(IFileAddFields)
 
-    def create(self, data):
-        factory = self.context.manage_addProduct['Silva']
+    def create(self, parent, data):
+        factory = parent.manage_addProduct['Silva']
         return factory.manage_addFile(
             data['id'], data['title'], data['file'])
 
