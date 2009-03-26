@@ -4,6 +4,7 @@
 
 # Zope 3
 from zope.interface import implements
+from zope.annotation.interfaces import IAnnotations
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -19,13 +20,13 @@ from Products.Silva import mangle
 from Products.Silva.Publishable import Publishable
 from Products.Silva.i18n import translate as _
 
-from Products.Silva.interfaces import \
+from silva.core.interfaces import \
     IContainer, IContent, IGhost, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IGhostContent
 
 from silva.core import conf as silvaconf
-    
-class Sync:
+
+class Sync(object):
 
     def __init__(self, gf, h_container, h_ob, g_container, g_ob):
         self.h_container = h_container
@@ -77,7 +78,7 @@ class SyncContainer(Sync):
 
     def _do_update(self):
         pass
-        
+
 
 class SyncGhost(Sync):
 
@@ -99,7 +100,7 @@ class SyncGhost(Sync):
     def _get_content_url(self):
         return  self.h_ob.get_haunted_url()
 
-    
+
 class SyncContent(SyncGhost):
 
     def _get_content_url(self):
@@ -107,24 +108,24 @@ class SyncContent(SyncGhost):
 
 
 class SyncCopy(Sync):
-    # this is anything else -- copy it. We cannot check if it was 
+    # this is anything else -- copy it. We cannot check if it was
     # modified and if copying is really necessary.
 
     def _do_update(self):
         assert self.g_ob is not None
         self.g_container.manage_delObjects([self.h_id])
         self.create()
-    
+
     def _do_create(self):
         g_ob_new = self.h_ob._getCopy(self.g_container)
         self.g_container._setObject(self.h_id, g_ob_new)
 
 
 class GhostFolder(GhostBase, Publishable, Folder.Folder):
-    __doc__ = _("""Ghost Folders are similar to Ghosts, but instead of being a 
-       placeholder for a document, they create placeholders and/or copies of all 
-       the contents of the &#8216;original&#8217; folder. The advantage of Ghost 
-       Folders is the contents stay in sync with the original, by manual or 
+    __doc__ = _("""Ghost Folders are similar to Ghosts, but instead of being a
+       placeholder for a document, they create placeholders and/or copies of all
+       the contents of the &#8216;original&#8217; folder. The advantage of Ghost
+       Folders is the contents stay in sync with the original, by manual or
        automatic resyncing. Note that when a folder is
        ghosted, assets &#8211; such as Images and Files &#8211; are copied
        (physically duplicated) while documents are ghosted.""")
@@ -132,10 +133,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
     meta_type = 'Silva Ghost Folder'
 
     implements(IContainer, IGhostFolder)
-    
+
     security = ClassSecurityInfo()
 
-    # sync map... (haunted objects interface, ghost objects interface, 
+    # sync map... (haunted objects interface, ghost objects interface,
     #   update/create class)
     # order is important, i.e. interfaces are checked in this order
     # I wonder if this needs to be pluggable, i.e. if third party components
@@ -146,16 +147,16 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         (IContent, IGhostContent, SyncContent),
         (None, None, SyncCopy),
     ]
-        
+
     silvaconf.icon('www/silvaghostfolder.gif')
     silvaconf.factory('manage_addGhostFolder')
 
     def __init__(self, id):
-        GhostFolder.inheritedAttribute('__init__')(self, id)
+        super(GhostFolder, self).__init__(id)
         self._content_path = None
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
         """title comes from haunted object
         """
@@ -176,19 +177,19 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         object_list = self._haunt_diff(haunted, ghost)
         upd = SyncContainer(self, None, haunted, None, self)
         updaters = [upd]
-        
-       
+
+
         while object_list:
             # breadth first search
             h_container, h_id, g_container, g_id = object_list[0]
             del(object_list[0])
             if h_id is None:
-                # object was removed from haunted, so just remove it and 
+                # object was removed from haunted, so just remove it and
                 # continue
                 g_container.manage_delObjects([g_id])
                 continue
             h_ob = h_container._getOb(h_id)
-            
+
             if g_id is None:
                 # object was added to haunted
                 g_ob = None
@@ -196,7 +197,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 # object is there but may have changed
                 g_ob = g_container._getOb(g_id)
             g_ob_new = None
-            
+
             for h_if, g_if, update_class in self._sync_map:
                 if h_if and not h_if.providedBy(h_ob):
                     continue
@@ -216,14 +217,14 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 updaters.append(uc)
                 g_ob_new = uc.update()
                 break
-            
+
             msg = "no updater was called for %r" % ((self, h_container, h_ob, g_container, g_ob), )
             assert g_ob_new is not None, msg
             if IContainer.providedBy(h_ob):
                 object_list.extend(self._haunt_diff(h_ob, g_ob_new))
         for updater in updaters:
             updater.finish()
-        
+
         self._publish_ghosts()
         self._invalidate_sidebar(self)
 
@@ -232,10 +233,10 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
 
             haunted: IContainer, container to be haunted
             ghost: IContainer, ghost
-        
+
             returns list of tuple:
             [(haunted, h_id, ghost, g_id)]
-            whereby 
+            whereby
                 h_id is the haunted object's id or None if a ghost exists but
                     no object to be haunted
                 g_id is the ghost's id or None if the ghost doesn't exist but
@@ -312,7 +313,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         """replace self with a folder"""
         new_self = self._to_folder_or_publication_helper(to_folder=0)
         self._copy_annotations_from_haunted(new_self)
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_folder')
     def to_folder(self):
@@ -321,14 +322,11 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         self._copy_annotations_from_haunted(new_self)
 
     def _copy_annotations_from_haunted(self, new_self):
-        marker = []
-        a_attr = '_portal_annotations_'
-        annotations = getattr(self.get_haunted_unrestricted().aq_base, a_attr,
-            marker)
-        if annotations is marker:
-            return
-        setattr(new_self, a_attr, annotations)    
-    
+        src = IAnnotations(self.get_haunted_unrestricted())
+        dst = IAnnotations(new_self)
+        for key in src.keys():
+            dst[key] = src[key]
+
     # all this is for a nice side bar
     def is_transparent(self):
         """show in subtree? depends on haunted object"""
@@ -336,7 +334,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         if IContainer.providedBy(content):
             return content.is_transparent()
         return 0
-    
+
     def get_publication(self):
         """returns self if haunted object is a publication"""
         content = self.get_haunted_unrestricted()
@@ -368,17 +366,17 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
                 object.set_unapproved_version_publication_datetime(
                     DateTime())
                 object.approve_version()
-                    
+
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
     def is_published(self):
         return Folder.Folder.is_published(self)
-                    
+
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhostFolder(id,
             content_url)
 
-       
+
 InitializeClass(GhostFolder)
 
 def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):

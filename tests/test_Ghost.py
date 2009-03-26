@@ -7,16 +7,20 @@ import SilvaTestCase
 from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostVersion
 
+from zope.interface.verify import verifyObject
 from zope.i18n import translate
 
 from Products.Silva.tests.helpers import resetPreview, \
     approveObject, publishObject, publishApprovedObject
 
+from silva.core import interfaces as silvainterfaces
+
+
 class GhostTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Ghost object.
     """
     def afterSetUp(self):
-        
+
         # register silva document
         self.setPermissions([SilvaPermissions.ReadSilvaContent])
         self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
@@ -37,9 +41,9 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_ghost(self):
         self.add_ghost(self.root, 'ghost1', '/root/doc1')
-    
+
         # testing call cases of published (1) and non published (0)
-        
+
         ghost = getattr(self.root, 'ghost1')
         # there is no version published at all there
         # ghost=0, doc=0
@@ -48,7 +52,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
-            
+
         # approve version of thing we point to
         approveObject(self.doc1)
 
@@ -77,7 +81,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
                           ghost.view())
-            
+
         # make new version of doc1 ('1')
         self.doc1.create_copy()
         self.doc1.set_title('Doc1 1')
@@ -120,7 +124,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         resetPreview(ghost)
         self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
                           ghost.view())
-        
+
 
         # approve ghost again
         publishObject(ghost)
@@ -141,17 +145,17 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         resetPreview(ghost)
         self.assertEquals("This 'ghost' document is broken. Please inform the"
             " site administrator.", translate(ghost.view()))
-        
+
         # since the version isn't published is_published() should return
         # false
         self.assert_(not ghost.is_published())
-        
+
     def test_broken_link1(self):
         # add a ghost
         self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
                                                               '/root/doc1/')
         ghost = getattr(self.root, 'ghost1')
-        
+
         # issue 41: test if get_haunted_url works now
         self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
         self.assertEquals(None, ghost.get_editable().get_link_status())
@@ -168,7 +172,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
                           ghost.get_previewable().get_haunted_url())
         self.assertEqual(GhostVersion.LINK_VOID,
                          ghost.get_editable().get_link_status())
-        
+
         # now make ghost point to doc2, and publish ghost and doc2
         publishObject(self.doc2)
         ghost.create_copy()
@@ -258,7 +262,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         gfpub.haunt()
 
-        # the publication's 'subdoc2' document is not published, so the ghost 
+        # the publication's 'subdoc2' document is not published, so the ghost
         # folder should say it's not published either no matter what the
         # status of the contained ghost that points to the doc
         self.assert_(not gfpub.is_published())
@@ -277,7 +281,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
         self.assert_(not gfpub.is_published())
 
-        
+
     def test_ghostfolder_topub(self):
         gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
                                content_url='/root/publication5')
@@ -296,17 +300,13 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_circular_links(self):
         # add some content in a tree
-        self.root.manage_addProduct['Silva'].manage_addFolder(
-            'f', 'F')
+        self.add_folder(self.root, 'f', 'F')
         f = self.root.f
-        f.manage_addProduct['Silva'].manage_addFolder(
-            'g', 'G')
+        self.add_folder(f, 'g', 'G')
         g = self.root.f.g
-        g.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'foo', 'Foo')
+        self.add_document(g, 'foo', 'Foo')
         doc = g.foo
-        self.root.manage_addProduct['Silva'].manage_addFolder(
-            'h', 'H')
+        self.add_folder(self.root, 'h', 'H')
         # add a non-circular ghost folder
         self.root.manage_addProduct['Silva'].manage_addGhostFolder(
             'gf1',
@@ -353,7 +353,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         ghost = self.root.ghost1
         self.assertEqual(ghost.get_modification_datetime(),
                          self.doc1.get_modification_datetime())
-        
+
         # Let's delete the haunted object;
         # `get_modification_datetime` should still work
         self.root.manage_delObjects(['doc1'])
