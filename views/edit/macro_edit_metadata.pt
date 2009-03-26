@@ -38,9 +38,7 @@
             <h2 metal:define-slot="table_title">
               <img tal:replace="structure icon" />
               <tal:block i18n:translate="">
-                properties of &#xab;
-                <tal:title content="title" i18n:name="title" />
-                &#xbb;
+                properties of &#xab;<tal:title content="title" i18n:name="title" />&#xbb;
               </tal:block>
             </h2>
           </td>
