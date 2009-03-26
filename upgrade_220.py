@@ -14,12 +14,15 @@ import OFS.Image
 from cStringIO import StringIO
 
 # silva imports
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.install import configureIntIds
 from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
 from Products.SilvaExternalSources.interfaces import ICodeSourceService
+from Products.SilvaMetadata.interfaces import IMetadataService, \
+    ICatalogService
+from Products.SilvaMetadata.CatalogTool import CatalogService
 import zLOG
 
 
@@ -51,7 +54,9 @@ class RootUpgrader(BaseUpgrader):
         reg = obj.service_view_registry
 
         # Delete unused Silva Document service
-        for s in ['service_doc_previewer', 'service_nlist_previewer','service_sub_previewer',]:
+        for s in ['service_doc_previewer',
+                  'service_nlist_previewer',
+                  'service_sub_previewer',]:
             if hasattr(obj, s):
                 obj.manage_delObjects([s,])
         reg.unregister('public', 'Silva Document Version')
@@ -339,6 +344,9 @@ class SecondRootUpgrader(BaseUpgrader):
         sm = obj.getSiteManager()
         sm.registerUtility(obj.service_files, interfaces.IFilesService)
         sm.registerUtility(obj.service_codesources, ICodeSourceService)
+        sm.registerUtility(obj.service_metadata, IMetadataService)
+        obj.service_catalog.__class__ = CatalogService
+        sm.registerUtility(obj.service_catalog, ICatalogService)
         return obj
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
