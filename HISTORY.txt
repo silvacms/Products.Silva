@@ -7,7 +7,11 @@ Silva changes
 
     Bug fixes
 
-      - Fix element order in TOC rendering when the silva order is checked.
+      - Fix element order in TOC rendering when the silva order is
+        checked.
+
+      - Silva Links are displayed by default TOC kupu objects (like
+        they used to be).
 
       - CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
         create a new empty paragraph below the table.  This feature
@@ -68,7 +72,7 @@ Silva changes
 
       - Fix for a bug and improvement of the code for scaling and
         cropping images.
-    
+
     Bug fixes ported from trunk (Silva 2.2)
 
       - Improved/fixed the support for complex lists in kupu
