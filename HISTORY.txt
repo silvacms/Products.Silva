@@ -7,6 +7,12 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- Indexer, File and Image use Z3C forms as add forms.
+
+- Interfaces have moved in silva.core.interfaces.
+
+- Silva Link are displayed by default in Kupu TOCs.
+
 - CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
   create a new empty paragraph below the table.  This feature
   is to improve editing ability when a table is adjacent to an
@@ -16,7 +22,7 @@ Silva 2.2b1 (unreleased)
   left,right in an ES moves cursor up
   enter in an ES inserts a new paragraph after and moves cursor
   down, right, tab in an es moves cursor down
-  
+
 - if an ES is the first element in a document, activate the ES
   tool when kupu initializes, and ignore the tab key when in an
   external source.
@@ -126,7 +132,10 @@ Features added
   the Silva Root when SilvaExternalSources is installed.
 
 - 101103: make addables functionality available within any type of
-  Container, not just Publications
+  Container, not just Publications.
+
+- Blob storage is supported for files. The files service have been
+  revisited as a Zope 3 component.
 
 - Made the public page link in the tab space visible, styled as a tab.
 
