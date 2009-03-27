@@ -5,9 +5,11 @@
 # zope
 from zope.app.component.interfaces import ISite
 from zope.app.component.hooks import setSite
+from zope.annotation.interfaces import IAnnotations
 
 from Products.Five.site.interfaces import IFiveSiteManager
 from Products.SilvaLayout.install import resetMetadata # Should be in Silva ?
+from Acquisition import aq_base
 import OFS.Image
 
 # python
@@ -343,10 +345,30 @@ class SecondRootUpgrader(BaseUpgrader):
         # Register service_files and others
         sm = obj.getSiteManager()
         sm.registerUtility(obj.service_files, interfaces.IFilesService)
-        sm.registerUtility(obj.service_codesources, ICodeSourceService)
+        if hasattr(obj, 'service_codesources'):
+            # We should have it however ...
+            sm.registerUtility(obj.service_codesources, ICodeSourceService)
         sm.registerUtility(obj.service_metadata, IMetadataService)
         obj.service_catalog.__class__ = CatalogService
         sm.registerUtility(obj.service_catalog, ICatalogService)
+        obj.manage_delObjects(['service_annotations',])
         return obj
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
+
+class MetadataUpgrader(BaseUpgrader):
+    """Migrate metadata information.
+    """
+
+    def upgrade(self, obj):
+        old_annotations = getattr(aq_base(obj), '_portal_annotations_', None)
+        if old_annotations is not None:
+            zLOG.LOG(
+                'Silva', zLOG.INFO,
+                'Upgrading metadata: %s' % ('/'.join(obj.getPhysicalPath())))
+            new_annotations = IAnnotations(aq_base(obj))
+            for key in old_annotations.keys():
+                new_annotations[key] = old_annotations[key]
+        return obj
+
+MetadataUpgrader = MetadataUpgrader(VERSION_B1, AnyMetaType)

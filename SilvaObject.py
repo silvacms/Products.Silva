@@ -411,7 +411,8 @@ class SilvaObject(Security, ViewCode):
         view_type = 'public'
         if IPreviewLayer.providedBy(self.REQUEST):
             manager = getSecurityManager()
-            if not manager.checkPermission(SilvaPermissions.ReadSilvaContent, self):
+            if not manager.checkPermission(
+                SilvaPermissions.ReadSilvaContent, self):
                 raise Unauthorized
             ## Have to check permission here.
             version = self.get_previewable()
@@ -432,7 +433,8 @@ class SilvaObject(Security, ViewCode):
 
         request = self.REQUEST
         # Search for a five view
-        view = component.queryMultiAdapter((self, request), name=u'content.html')
+        view = component.queryMultiAdapter(
+            (self, request), name=u'content.html')
         if not (view is None):
             return view()
 
@@ -558,7 +560,7 @@ class SilvaObject(Security, ViewCode):
         """ assumes the content type is text/html;
             override HEAD for classes where this is wrong!
         """
-        mod_time = rfc1123_date ( self.get_modification_datetime() )
+        mod_time = rfc1123_date(self.get_modification_datetime())
         RESPONSE.setHeader('Content-Type', 'text/html')
         RESPONSE.setHeader('Last-Modified', mod_time)
 

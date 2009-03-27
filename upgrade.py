@@ -13,7 +13,7 @@ import DateTime
 import transaction
 
 # Silva
-from Products.Silva.interfaces import IUpgrader, IUpgradeRegistry
+from silva.core.interfaces import IUpgrader, IUpgradeRegistry, IRoot
 
 threshold = 50
 
@@ -136,7 +136,7 @@ class UpgradeRegistry(object):
                 "this is a bug." % (upgrader, )
         return obj
 
-    def upgradeTree(self, root, version):
+    def upgradeTree(self, root, version, ignore_root=False):
         """upgrade a whole tree to version"""
         stats = {
             'total': 0,
@@ -154,7 +154,8 @@ class UpgradeRegistry(object):
                 del object_list[-1]
                 # print 'Upgrading object', o.absolute_url(), '(still
                 # %s objects to go)' % len(object_list)
-                o = self.upgradeObject(o, version)
+                if not (ignore_root and IRoot.providedBy(o)):
+                    o = self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
                         #print '#### Skip the Parsed XML object'
@@ -180,8 +181,6 @@ class UpgradeRegistry(object):
             pass
 
     def upgrade(self, root, from_version, to_version):
-        zLOG.LOG('Silva', zLOG.INFO, 'Refreshing all installed extensions.')
-        root.service_extensions.refresh_all()
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrading content from %s to %s.' % (
             from_version, to_version))
         upgrade_chain = get_upgrade_chain(self.__registry.keys(),
@@ -189,8 +188,12 @@ class UpgradeRegistry(object):
         if not upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Nothing needs to be done.')
         for version in upgrade_chain:
+            self.upgradeObject(root, version)
+        zLOG.LOG('Silva', zLOG.INFO, 'Refreshing all installed extensions.')
+        root.service_extensions.refresh_all()
+        for version in upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Upgrading to version %s.' % version)
-            self.upgradeTree(root, version)
+            self.upgradeTree(root, version, ignore_root=True)
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade finished.')
 
     def setUp(self, root, version):

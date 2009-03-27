@@ -17,10 +17,11 @@ from five.intid.intid import OFSIntIds
 from Globals import package_home
 from DateTime import DateTime
 from OFS import Image
-from Products.StandardCacheManagers.AcceleratedHTTPCacheManager import manage_addAcceleratedHTTPCacheManager
+from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
+    import manage_addAcceleratedHTTPCacheManager
 
 # sibling
-from Products.Silva.interfaces import IInvisibleService, IRoot
+from silva.core.interfaces import IInvisibleService, IRoot
 from Products.Silva.fssite import manage_addDirectoryView
 from Products.Silva.fssite import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy

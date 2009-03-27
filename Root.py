@@ -24,10 +24,10 @@ import transaction
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.interfaces import IRoot, ISiteManager
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
+from silva.core.interfaces import IRoot, ISiteManager
 from silva.core import conf as silvaconf
 
 
@@ -35,7 +35,9 @@ icon="www/silva.png"
 
 
 class DocumentationInstallationException(Exception):
-    """Raised when a dependency is not installed when trying to install something"""
+    """Raised when a dependency is not installed when trying to
+    install something.
+    """
 
 
 class SilvaGlobals(grok.DirectoryResource):
@@ -56,7 +58,7 @@ class Root(Publication):
     silvaconf.baseclass()
 
     def __init__(self, id):
-        Root.inheritedAttribute('__init__')(self, id)
+        super(Root, self).__init__(id)
         # if we add a new root, version starts out as the software version
         self._content_version = self.get_silva_software_version()
 
