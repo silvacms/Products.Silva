@@ -136,7 +136,7 @@ class UpgradeRegistry(object):
                 "this is a bug." % (upgrader, )
         return obj
 
-    def upgradeTree(self, root, version, ignore_root=False):
+    def upgradeTree(self, root, version):
         """upgrade a whole tree to version"""
         stats = {
             'total': 0,
@@ -154,8 +154,7 @@ class UpgradeRegistry(object):
                 del object_list[-1]
                 # print 'Upgrading object', o.absolute_url(), '(still
                 # %s objects to go)' % len(object_list)
-                if not (ignore_root and IRoot.providedBy(o)):
-                    o = self.upgradeObject(o, version)
+                o = self.upgradeObject(o, version)
                 if hasattr(o.aq_base, 'objectValues'):
                     if o.meta_type == "Parsed XML":
                         #print '#### Skip the Parsed XML object'
@@ -187,13 +186,11 @@ class UpgradeRegistry(object):
                                           from_version, to_version)
         if not upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Nothing needs to be done.')
-        for version in upgrade_chain:
-            self.upgradeObject(root, version)
         zLOG.LOG('Silva', zLOG.INFO, 'Refreshing all installed extensions.')
         root.service_extensions.refresh_all()
         for version in upgrade_chain:
             zLOG.LOG('Silva', zLOG.INFO, 'Upgrading to version %s.' % version)
-            self.upgradeTree(root, version, ignore_root=True)
+            self.upgradeTree(root, version)
         zLOG.LOG('Silva', zLOG.INFO, 'Upgrade finished.')
 
     def setUp(self, root, version):
