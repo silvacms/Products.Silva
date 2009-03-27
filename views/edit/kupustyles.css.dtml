@@ -38,18 +38,19 @@ div.kupu-tb {
   border-top: none; 
 }
 
-#kupu-tb-buttons button {
+#kupu-tb-buttons button, .kupu-button {
   color: red;
   border: 1px solid #333;
+  background-color: #cedae8;
 }
 
-#kupu-tb-buttons button:hover {
+#kupu-tb-buttons button:hover, .kupu-button:hover {
   cursor: default;
   border: 1px solid #6bb591;
+  background-color: #b3d4bf;
 }
 
-#kupu-tb-buttons button:active {
-  border: 1px solid;
+#kupu-tb-buttons button:active, .kupu-button:active {
   border: 1px solid #6bb591;
 }
 
@@ -58,71 +59,108 @@ div.kupu-tb {
   margin-right: 2px;
 }
 
-#kupu-tb-buttons button {
+#kupu-tb-buttons button, .kupu-button {
   margin-top: 0;
   margin-left: 0;
   height: 24px;
   width: 24px;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
-#kupu-tb-buttons button:hover {
+#kupu-tb-buttons button:hover, .kupu-button:hover {
   cursor: pointer;
 }
 
 #kupu-tb-buttons button.kupu-logo {
-  border: none;
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/kupu_icon.gif");
+ border: none;
+ background-color: #607080;
 }
 
-span.kupu-tb-buttongroup button.kupu-spellchecker {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/text-check.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-spellchecker:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/text-check.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-save {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/save.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-save:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/save.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-logo {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/kupu_icon.gif"); background-color: transparent;}
-span.kupu-tb-buttongroup button.kupu-logo:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/kupu_icon.gif");}
-
-span.kupu-tb-buttongroup button.kupu-bold {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-bold:hover, span.kupu-tb-buttongroup button.kupu-bold-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-italic {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-italic:hover, span.kupu-tb-buttongroup button.kupu-italic-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-underline {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-underline:hover, span.kupu-tb-buttongroup button.kupu-underline-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png"); background-color: beige;}
-
-span.kupu-tb-buttongroup button.kupu-subscript {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-subscript:hover, span.kupu-tb-buttongroup button.kupu-subscript-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-superscript {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-superscript:hover, span.kupu-tb-buttongroup button.kupu-superscript-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png"); background-color: beige;}
+span.kupu-tb-buttongroup button.kupu-spellchecker {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/text-check.png");
+}
+span.kupu-tb-buttongroup button.kupu-save {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/save.png");
+ }
+span.kupu-tb-buttongroup button.kupu-bold {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png");
+}
+span.kupu-tb-buttongroup button.kupu-bold-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png");
+ background-color: #b3d4bf;
+}
+span.kupu-tb-buttongroup button.kupu-italic {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png");
+}
+span.kupu-tb-buttongroup button.kupu-italic-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png");
+ background-color: #b3d4bf;
+}
+span.kupu-tb-buttongroup button.kupu-underline {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png");
+}
+span.kupu-tb-buttongroup button.kupu-underline-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png");
+ background-color: #b3d4bf;
+}
+span.kupu-tb-buttongroup button.kupu-subscript {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png");
+}
+span.kupu-tb-buttongroup button.kupu-subscript-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png");
+ background-color: #b3d4bf;
+}
+span.kupu-tb-buttongroup button.kupu-superscript {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png");
+}
+span.kupu-tb-buttongroup button.kupu-superscript-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png");
+ background-color: #b3d4bf;
+}
 
 span.kupu-tb-buttongroup button.kupu-hilitecolor {display: none;}
 span.kupu-tb-buttongroup button.kupu-forecolor {display: none;}
-
 span.kupu-tb-buttongroup button.kupu-inserthorizontalrule {display: none;}
-
 span.kupu-tb-buttongroup button.kupu-justifycenter {display: none;}
 span.kupu-tb-buttongroup button.kupu-justifyleft {display: none;}
 span.kupu-tb-buttongroup button.kupu-justifyright {display: none;}
-
 span.kupu-tb-buttongroup button.kupu-indent {display: none;}
 span.kupu-tb-buttongroup button.kupu-outdent {display: none;}
 
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/unordered-list.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/unordered-list.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/ordered-list.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertorderedlist:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/ordered-list.png"); background-color: beige;}
+span.kupu-tb-buttongroup button.kupu-insertunorderedlist {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/unordered-list.png");
+}
+span.kupu-tb-buttongroup button.kupu-insertorderedlist {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/ordered-list.png");
+}
 
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/definitionlist.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/definitionlist.png"); background-color: beige;}
+span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/definitionlist.png");
+}
 
-span.kupu-tb-buttongroup button.kupu-undo {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/undo.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-undo:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/undo.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-redo {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/redo.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-redo:hover {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/redo.png"); background-color: beige;}
+span.kupu-tb-buttongroup button.kupu-undo {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/undo.png");
+}
+span.kupu-tb-buttongroup button.kupu-redo {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/redo.png");
+}
 
-span.kupu-tb-buttongroup button.kupu-source {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/view-source.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-source {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/view-source.png");
+}
 
-span.kupu-tb-buttongroup button.kupu-hyperlink {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png"); background-color: #cedae8;}
-span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png"); background-color: beige;}
-span.kupu-tb-buttongroup button.kupu-image {background-image: url("<dtml-var root_url>/service_kupu/kupuimages/image.png"); background-color: #cedae8;}
+span.kupu-tb-buttongroup button.kupu-hyperlink {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png");
+}
+span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png");
+ background-color: #b3d4bf;
+}
+span.kupu-tb-buttongroup button.kupu-image {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/image.png");
+}
 
 div.kupu-tb select {
   color : #333767;
@@ -134,6 +172,20 @@ div.kupu-tb select {
 div.kupu-tb select:hover, div.kupu-tb select:focus {
   background-color: #b3d4bf;
 }
+
+/** for buttons in the toolboxes **/
+#kupu-toolboxes button.kupu-button {
+ height: 20px;
+ padding: 0px;
+}
+
+.kupu-link-reference-table {
+ width: 100%;
+}
+.kupu-link-reference-table td {
+ white-space: nowrap;
+}
+/** end buttons in the toolboxes **/
 
 #kupu-editor {
   height: 580px;

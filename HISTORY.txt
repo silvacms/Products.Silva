@@ -7,6 +7,17 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- Added an optional 'edit link reference' button to the 
+  reference lookup window formulator widget.  Clicking this
+  button on a valid silva reference will open up that reference's
+  edit tab in a new window.
+
+- changed presentation lookupwindow widget displays in
+  kupu.  The link tools lookup widget has the new 'button with
+  image' style for the get button, an edit reference button, and
+  these buttons are displayed to the left and right (resp.) of the
+  input field.
+
 - Indexer, File and Image use Z3C forms as add forms.
 
 - Interfaces have moved in silva.core.interfaces.

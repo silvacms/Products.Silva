@@ -338,8 +338,13 @@
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-          <input type="button" class="button transporter" onclick="getLink(); return false;" value="get link reference..." i18n:attributes="value"/>
-          <input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/><br/>
+         <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+	     <tr>
+	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" onclick="getLink();return false;" title="get link reference..." i18n:attributes="value"><img xmlns:tal="http://xml.zope.org/namespaces/tal" tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
+	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
+	      <td width="24"><button xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+             </tr>
+	    </table>
           <span i18n:translate="">link target</span>
           <select id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>

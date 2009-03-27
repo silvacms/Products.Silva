@@ -799,22 +799,22 @@ button.button {
   font: &dtml-inputFont;;
 }
 
-input.transporter {
+input.transporter, button.transporter {
   color: &dtml-transporterFontColor;;
   background-color: &dtml-transporterBackground;;
 }
 
-input.executor {
+input.executor, button.executor {
   color: &dtml-executorFontColor;;
   background-color: &dtml-executorBackground;;
 }
 
-input.remover, input.warning {
+input.remover, input.warning, button.remover, button.warning {
   color: &dtml-removerFontColor;;
   background-color: &dtml-removerBackground;;
 }
 
-input.canceler {
+input.canceler, button.canceler {
   color: &dtml-cancelerFontColor;;
   background-color: &dtml-cancelerBackground;;
 }
