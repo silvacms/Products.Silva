@@ -9,9 +9,8 @@ import urllib
 from zope.app.component.interfaces import ISite
 from zExceptions import BadRequest
 
-# Silva
-from Products.Silva import interfaces
-
+# Silva core
+from silva.core import interfaces
 
 def register_service(self, id, service, interface):
     """Set and register the service id, using interface.

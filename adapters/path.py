@@ -7,7 +7,8 @@ from AccessControl import ModuleSecurityInfo
 from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva.adapters import adapter
-from Products.Silva.interfaces.adapters import IPath
+
+from silva.core.interfaces.adapters import IPath
 
 from ZPublisher.HTTPRequest import HTTPRequest
 

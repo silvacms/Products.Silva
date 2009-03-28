@@ -12,7 +12,7 @@ from Globals import Persistent
 import SilvaPermissions
 import Acquisition
 
-from interfaces import IMember
+from silva.core.interfaces import IMember
 
 class Member(Persistent, Acquisition.Implicit):
     implements(IMember)

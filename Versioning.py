@@ -14,7 +14,7 @@ from Globals import InitializeClass
 import SilvaPermissions
 from Products.Silva import mangle
 
-from interfaces import IVersioning
+from silva.core.interfaces import IVersioning
 
 from Products.Silva.i18n import translate as _
 
