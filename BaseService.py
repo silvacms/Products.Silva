@@ -5,7 +5,7 @@
 from zope.interface import implements
 from OFS import SimpleItem
 
-import interfaces
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 

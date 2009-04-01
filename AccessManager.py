@@ -4,7 +4,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 import SilvaPermissions
 
-from interfaces import IAccessManager
+from silva.core.interfaces import IAccessManager
 
 class AccessManager:
     """Mixin class for objects to request local roles on the object"""

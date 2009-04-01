@@ -15,8 +15,8 @@ from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # silva
-from Products.Silva.interfaces import IContainerPolicy
-from Products.Silva.interfaces import IInvisibleService
+from silva.core.interfaces import IContainerPolicy
+from silva.core.interfaces import IInvisibleService
 from Products.Silva.BaseService import SilvaService
 
 from silva.core import conf as silvaconf
