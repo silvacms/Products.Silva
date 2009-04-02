@@ -16,6 +16,7 @@ import SilvaTestCase
 directory = os.path.dirname(__file__)
 zipfile1 = open(join(directory,'data','test1.zip'))
 zipfile2 = open(join(directory,'data','test2.zip'))
+zipfile3 = open(join(directory,'data','test3.zip'))
 
 
 """
@@ -39,6 +40,16 @@ Test file 'test2.zip' structure:
   Clock.swf
   image1.jpg
   sound1.mp3
+
+Test file 'test3.zip' structure:
+
+  imgs
+  |--c16.png
+  |--c17.png
+  |--.DS_Store
+
+  __MACOSX
+  |--[various files]
 """
 
 class ArchiveFileImport(object):
@@ -142,6 +153,17 @@ class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
         self.assert_(isinstance(folder['image1.jpg'], Image.Image))
         self.assert_(isinstance(folder['sound1.mp3'], File.File))
         self.assert_(isinstance(folder['Clock.swf'], File.File))
+
+    def test_importArchiveMacOSX(self):
+        folder = self.add_folder(self.root, 'foo', 'FooFolder')
+        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
+        succeeded, failed = adapter.importArchive(zipfile3)
+        self.assertTrue(folder['imgs']['c16.png'])
+        self.assertTrue(folder['imgs']['c17.png'])
+        self.assertTrue(isinstance(folder['imgs']['c16.png'], Image.Image))
+        self.assertTrue(isinstance(folder['imgs']['c17.png'], Image.Image))
+        self.assertTrue(folder.unrestrictedTraverse('imgs/.DS_Store',None)==None)
+        self.assertTrue(folder.unrestrictedTraverse('__MACOSX',None)==None)
         
 import unittest
 def test_suite():
