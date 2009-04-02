@@ -428,7 +428,7 @@ table.listing tr.controls td {
 }
 
 /* cycle text color in listing rows */
-table.listing tr.odd td {
+table.listing tr.odd {
   background: &dtml-listingOddBackground;;
 }
 table.listing tr.even td {

@@ -64,6 +64,10 @@ table.listing td.invisible a {
   display: inline;
 }
 
+table.listing th a {
+  display: inline;
+}
+
 
 /* ______________ silva table styles ______________ */
 /* _______ these are duplicated in frontend.css for overriding ______ */
