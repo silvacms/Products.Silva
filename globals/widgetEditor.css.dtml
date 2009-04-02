@@ -58,8 +58,13 @@ table.listing td.invisible {
   border: none ! important;
 }
 
-td.invisible a {
+table.listing td.invisible a {
   text-decoration : underline;
+  display: inline;
+}
+
+table.listing th a {
+  display: inline;
 }
 
 
