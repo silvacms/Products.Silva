@@ -1,4 +1,3 @@
-<dtml-let root_url="get_root_url()" last_modified="_.DateTime()-14" expires="_.DateTime()+7">
 /*
 ** _______ Silva stylesheet ___________________________________________________
 **
@@ -38,7 +37,7 @@ body {
   padding: 0;
   color: &dtml-mainFontColor;;
   background-color: #9ab;
-  background-image: url(<dtml-var root_url>/globals/skyrise.gif);
+  background-image: url(skyrise.gif);
   background-repeat: repeat-x;
   font: &dtml-mainFont;;
 }
@@ -56,7 +55,7 @@ div.pathbar {
   border: none;
   padding: 0em 4px 0.2em 22px;
   color: &dtml-shade36;;
-  background-image: url(<dtml-var root_url>/globals/skylight.gif);
+  background-image: url(skylight.gif);
   background-repeat: repeat-x;
   background-color: &dtml-pathBarBackground;;
   font-size: 90%;
@@ -107,7 +106,7 @@ div.tabs {
   border-width: 1px;
   border-style: none none solid none;
   border-bottom-color: #BCC2CA;
-  background-image: url(<dtml-var root_url>/globals/skyrise.gif);
+  background-image: url(skyrise.gif);
   background-repeat: repeat-x;
   background-color: &dtml-mainTabBackdrop;;
 }
@@ -126,7 +125,7 @@ div.tabs a {
   border-bottom-color: &dtml-shade50;;
   color: &dtml-mainTabFontColor;;
   background: &dtml-mainTabBackground;;
-  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-image: url(reflection.png);
   background-position: top left;
   background-repeat: repeat-x;
   text-align: center;
@@ -240,7 +239,7 @@ div.middleground {
   padding: 0;
   border-bottom: 1px solid #657;
   background-color: #8797ab;
-  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-image: url(reflection.png);
   background-position: top left;
   background-repeat: repeat-x;
   line-height:130%;
@@ -252,7 +251,7 @@ div.middleground a {
   padding: 0em 2em 0.1em;
   border: &dtml-buttonBorder;;
   border-style: &dtml-buttonBorderStyle;;
-  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-image: url(reflection.png);
   background-position: top left;
   background-repeat: repeat-x;
   text-align: center;
@@ -715,13 +714,13 @@ table.listing a.navicon {
 }
 
 table.listing a.left:hover {
-  background-image: url(<dtml-var root_url>/globals/slideleft.gif);
+  background-image: url(slideleft.gif);
   background-color: transparent;
   text-decoration: none;
 }
 
 table.listing a.right:hover {
-  background-image: url(<dtml-var root_url>/globals/slideright.gif);
+  background-image: url(slideright.gif);
   background-color: transparent;
   text-decoration: none;
 }
@@ -822,7 +821,7 @@ input.button, button.button, input.manipulator {
   border-style: &dtml-buttonBorderStyle;;
   color: &dtml-manipulatorFontColor;;
   background-color: &dtml-manipulatorBackground;;
-  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-image: url(reflection.png);
   background-position: top left;
   background-repeat: repeat-x;
   cursor: &dtml-buttonCursor;;
@@ -913,7 +912,7 @@ a.transporter {
   padding: &dtml-pseudoButtonPadding;;
   border: &dtml-buttonBorder;;
   border-style: &dtml-buttonBorderStyle;;
-  background-image: url(<dtml-var root_url>/globals/reflection.png);
+  background-image: url(reflection.png);
   background-position: top left;
   background-repeat: repeat-x;
   font: &dtml-inputFont;;
@@ -1275,8 +1274,6 @@ a {
 }
 
 </dtml-with>
-</dtml-let>
-
 
 /* ___________________________________________ Silva specific styles _______ */
 

@@ -3,11 +3,15 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.4b1 (unreleased)
+  Silva 2.1.4b2 (unreleased)
 
     Bug fixes
 
-      - cleanup edge case in kupu transforms (SilvaDocument) where nested
+      - Remove absolute urls in SMI CSS. This CSS is included using
+        import, so asolute path are not required. This might break as
+        well with strange Apache rewrite rules.
+
+      - Cleanup edge case in kupu transforms (SilvaDocument) where nested
         lists can cause bare <br> tags to be stored in the silvaxml; this 
         raises errors when rendering with the widgets-based renderer
 
