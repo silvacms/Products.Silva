@@ -7,7 +7,9 @@ Silva changes
 
     Bug fixes
 
-      - ...
+      - cleanup edge case in kupu transforms (SilvaDocument) where nested
+        lists can cause bare <br> tags to be stored in the silvaxml; this 
+        raises errors when rendering with the widgets-based renderer
 
   Silva 2.1.3 (2009-03-26)
 
