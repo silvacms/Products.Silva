@@ -84,6 +84,13 @@ Silva 2.2b1 (unreleased)
 - zip files generated in MACOSX can now be imported -- the skips meta
   information directories are now skipped (__MACOSX and .DS_Store)
 
+Ported from Silva 2.1.4b1
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- cleanup edge case in kupu transforms (SilvaDocument) where nested
+  lists can cause bare <br> tags to be stored in the silvaxml; this 
+  raises errors when rendering with the widgets-based renderer
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 
