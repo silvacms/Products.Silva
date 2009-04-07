@@ -53,29 +53,6 @@ function fixupNestedListFilter() {
       li = saved_lis.pop();
     }
     
-    /* now check for lists (ul,ol) that have other lists (ul,ol) as 
-       children.  These sibling lists need to be placed inside an adjacent
-       sibling, or the contents of the list should be promoted */
-    var lists = htmlnode.getElementsByTagName('ul');
-    var empty = new Array();
-    for (var i=lists.length-1; i>=0; i--) {
-	var list = lists[i];
-	var parentName = list.parentNode.nodeName;
-	if (parentName == 'ul' || parentName == 'ol') {
-	    while(list.hasChildNodes()) {
-		list.parentNode.insertBefore(list.childNodes[0], list);
-	    }
-	    empty.push(list);
-	}
-    }
-    var empty_list = empty.pop();
-    while(empty_list) {
-	if (empty_list.parentNode) {
-	    empty_list.parentNode.removeChild(empty_list);
-	}
-	empty_list = empty.pop()
-    }
-    
     return htmlnode;
   }
 }
