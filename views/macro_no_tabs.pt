@@ -51,7 +51,7 @@
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
 <script type="text/javascript"
-        tal:attributes="src here/helperscripts.js/absolute_url"></script>
+        tal:attributes="src string:${root_url}/++resource++silva_scripts/helperscripts.js"></script>
 <script type="text/javascript"
         tal:attributes="src string:${root_url}/++resource++silva_scripts/handler_registry.js"></script>
 <script type="text/javascript" 
