@@ -93,4 +93,40 @@ this.reference = new function() {
         */
         return reference_lib.current_handler;
     };
+    this.editReference = function(fieldname,url) {  
+    /* NOTE: this functionality currently only works within
+       kupu, since it relies on kupu's AJAX abstraction
+       (that's actually in sarissa.js) */
+        var field = document.getElementById(fieldname);
+        if (!field) {
+          field = document.getElementsByName(fieldname)[0];
+        }
+        var value = field.value;
+        var ref = value.replace(/\s/g,'');
+        if (ref == '') {
+            return false;
+        }
+        var request = new XMLHttpRequest();
+        var resolveurl = url + '/resolve_and_redirect_editor?loc='+ref;
+        request.open('GET', resolveurl+'&checkonly=y', true);
+        var callback = new ContextFixer(function() {
+                if (request.readyState == 4) {
+                    if (request.status.toString() == '200') {
+                        /* if not IE, it is possible to get the *real*
+                           window width/height.  use 90% of that for the
+                           dimensions, or fall back to 800x600 */
+                        w = window.outerWidth?window.outerWidth * 0.9 : 800;
+                        h = window.outerHeight?window.outerHeight * 0.9 : 600;
+                        openPopup(resolveurl,w,h);
+                        return;
+                    } else {
+                        /* all other cases raise an alert */
+                        alert('Reference "' + value + '" is not a valid relative silva reference.  The quick edit interface only works for valid relative silva references');
+                    };
+                };
+            }, this);
+        request.onreadystatechange = callback.execute;
+        request.send('');
+        return false;
+    }
 }();

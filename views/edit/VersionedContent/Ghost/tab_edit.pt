@@ -14,12 +14,6 @@
 ">
 <metal:use-macro use-macro="here/macro_tab_edit/macros/editor">
 
-<metal:block fill-slot="script">
-<script type="text/javascript"
-  tal:attributes="src here/reference.js/absolute_url">
-</script>
-</metal:block>
-
 <metal:editorcontent fill-slot="editor_content">
  <tal:def define="
     version     python:model.get_editable();

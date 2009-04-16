@@ -18,8 +18,7 @@
 
  <metal:block fill-slot="script">
   <script type="text/javascript" 
-    tal:attributes="src here/reference.js/absolute_url">
-  </script>
+    tal:attributes="src  string:${root_url}/++resource++silva_scripts/reference.js"></script>
   <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/jsincludes" />
   <script type="text/javascript">
    onload_registry.register(function() {

@@ -362,7 +362,7 @@ class MetadataUpgrader(BaseUpgrader):
 
     def upgrade(self, obj):
         if not (interfaces.ISilvaObject.providedBy(obj) or
-                interfaces.IVersion.provided(obj)):
+                interfaces.IVersion.providedBy(obj)):
             return
         old_annotations = getattr(aq_base(obj), '_portal_annotations_', None)
         if old_annotations is not None:

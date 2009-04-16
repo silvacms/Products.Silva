@@ -14,12 +14,6 @@
 
 <metal:block use-macro="here/macro_index/macros/master">
 
-<metal:block fill-slot="script">
-  <script type="text/javascript"
-            tal:attributes="src here/reference.js/absolute_url">
-  </script>
-</metal:block>
-
 <metal:block metal:fill-slot="middleground">
   <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
 </metal:block>
