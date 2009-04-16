@@ -27,7 +27,6 @@
 .slide-links { visibility: hidden; }
     </style>
     <metal:block fill-slot="script">
-      <script type="text/javascript" tal:attributes="src string:${root_url}/++resource++silva_scripts/reference.js"></script>
       <script type="text/javascript">
 
         window.onload_registry.register(

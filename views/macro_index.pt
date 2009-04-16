@@ -78,7 +78,7 @@
 <script type="text/javascript"
         tal:attributes="src here/helperscripts.js/absolute_url"></script>
 <script type="text/javascript"
-        tal:attributes="src here/handler_registry.js/absolute_url"></script>
+        tal:attributes="src string:${root_url}/++resource++silva_scripts/handler_registry.js"></script>
 <script type="text/javascript"
         tal:attributes="src  string:${root_url}/++resource++silva_scripts/reference.js"></script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
