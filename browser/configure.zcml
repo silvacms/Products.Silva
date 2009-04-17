@@ -125,7 +125,7 @@
   />
   
   <browser:resourceDirectory
-    name="silva_scripts"
+    name="Silva.browser.scripts"
     directory="scripts"
     permission="zope2.Public"
   />
