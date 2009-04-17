@@ -280,7 +280,7 @@
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span tal:omit-tag="" i18n:translate="">title</span></a></td>
                       <td><input class="store" type="text" id="kupu-abbr-title" /></td>
                     </tr>
-                    <tr id="kupu-abbr-radiorow">
+                    <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span tal:omit-tag="" i18n:translate="">type</span></a></td>
                       <td>
                         <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" />abbreviation</label>

@@ -7,6 +7,10 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- It is now possible to switch between abbreviations and
+  acronyms in kupu by selecting the appropriate radio button
+  and clicking 'update'
+
 - Added an optional 'edit link reference' button to the 
   reference lookup window formulator widget.  Clicking this
   button on a valid silva reference will open up that reference's

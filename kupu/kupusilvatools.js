@@ -1624,20 +1624,19 @@ SilvaTocTool.prototype.getTocText = function(depth) {
     return toctext;
 };
 
-function SilvaAbbrTool(abbrradioid, acronymradioid, radiocontainerid, titleinputid,
+function SilvaAbbrTool(abbrradioid, acronymradioid, titleinputid,
     addbuttonid, updatebuttonid, delbuttonid,
     toolboxid, plainclass, activeclass) {
-/* tool to manage Abbreviation elements */
-this.abbrradio = getFromSelector(abbrradioid);
-this.acronymradio = getFromSelector(acronymradioid);
-this.radiocontainer = getFromSelector(radiocontainerid);
-this.titleinput = getFromSelector(titleinputid);
-this.addbutton = getFromSelector(addbuttonid);
-this.updatebutton = getFromSelector(updatebuttonid);
-this.delbutton = getFromSelector(delbuttonid);
-this.toolbox = getFromSelector(toolboxid);
-this.plainclass = plainclass;
-this.activeclass = activeclass;
+    /* tool to manage Abbreviation elements */
+    this.abbrradio = getFromSelector(abbrradioid);
+    this.acronymradio = getFromSelector(acronymradioid);
+    this.titleinput = getFromSelector(titleinputid);
+    this.addbutton = getFromSelector(addbuttonid);
+    this.updatebutton = getFromSelector(updatebuttonid);
+    this.delbutton = getFromSelector(delbuttonid);
+    this.toolbox = getFromSelector(toolboxid);
+    this.plainclass = plainclass;
+    this.activeclass = activeclass;
 };
 
 SilvaAbbrTool.prototype = new KupuTool;
@@ -1659,7 +1658,13 @@ SilvaAbbrTool.prototype.updateState = function(selNode, event) {
         this.updatebutton.style.display = 'inline';
         this.delbutton.style.display = 'inline';
         this.titleinput.value = element.getAttribute('title');
-        this.radiocontainer.style.display = 'none';
+        if (element.nodeName.toLowerCase() == 'abbr') {
+            this.abbrradio.checked = true;
+            this.acronymradio.checked = false;
+        } else {
+            this.abbrradio.checked = false;
+            this.acronymradio.checked = true;
+        }
         if (this.toolbox) {
             if (this.toolbox.open_handler) {
                 this.toolbox.open_handler();
@@ -1671,11 +1676,8 @@ SilvaAbbrTool.prototype.updateState = function(selNode, event) {
         this.updatebutton.style.display = 'none';
         this.delbutton.style.display = 'none';
         this.titleinput.value = '';
-        if (this.editor.getBrowserName() == 'IE' || this.radiocontainer.nodeName.toLowerCase() != 'tr') {
-            this.radiocontainer.style.display = 'block';
-        } else {
-            this.radiocontainer.style.display = 'table-row';
-        };
+        this.abbrradio.checked = true;
+        this.acronymradio.checked = false;
         if (this.toolbox) {
             this.toolbox.className = this.plainclass;
         };
@@ -1701,6 +1703,7 @@ SilvaAbbrTool.prototype.addElement = function() {
     var selNode = this.editor.getSelectedNode();
     if (this.getNearestAbbrAcronym(selNode)) {
         this.editor.logMessage('Can not nest abbr and acronym elements');
+        this.editor.getDocument().getWindow().focus();
         return;
     };
     var element = doc.createElement(type);
@@ -1733,12 +1736,24 @@ SilvaAbbrTool.prototype.updateElement = function() {
     var element = this.getNearestAbbrAcronym(selNode);
     if (!element) {
         this.editor.logMessage('Not inside an abbr or acronym element!', 1);
+        this.editor.getDocument().getWindow().focus();
         return;
     };
+    seltype = this.acronymradio.checked ? 'acronym' : 'abbr';
+    if (element.nodeName.toLowerCase() != seltype) {
+        var doc = this.editor.getInnerDocument();
+        newNode = doc.createElement(seltype);
+        while (element.hasChildNodes()) {
+            newNode.appendChild(element.childNodes[0]);
+        }
+        element.parentNode.replaceChild(newNode,element);
+        element = newNode;
+    }
     var title = this.titleinput.value;
     element.setAttribute('title', title);
     this.editor.content_changed = true;
     this.editor.logMessage('Updated ' + element.nodeName.toLowerCase() + ' element');
+    this.editor.getDocument().getWindow().focus();
 };
 
 SilvaAbbrTool.prototype.deleteElement = function() {
@@ -1746,15 +1761,17 @@ SilvaAbbrTool.prototype.deleteElement = function() {
     var element = this.getNearestAbbrAcronym(selNode);
     if (!element) {
         this.editor.logMessage('Not inside an abbr or acronym element!', 1);
+        this.editor.getDocument().getWindow().focus();
         return;
     };
     element.parentNode.removeChild(element);
     this.editor.content_changed = true;
     this.editor.logMessage('Deleted ' + element.nodeName.toLowerCase() + ' deleted');
+    this.editor.getDocument().getWindow().focus();
 };
 
 function SilvaCommentsTool(toolboxid) {
-    /* tool to manage Abbreviation elements */
+    /* tool to manage editor comments */
     this.toolbox = getFromSelector(toolboxid);
     if (this.toolbox) {
         this.tooltray = this.toolbox.getElementsByTagName("div")[0];
@@ -2066,7 +2083,7 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode) {
         span.appendChild(document.createTextNode('es \xab' + title + '\xbb'));
         heading.replaceChild(span, heading.firstChild);
         /* if the tool is collapsed, uncollapse it */
-         var toolbody = getFromSelector('#' + this.toolbox.id + ' div.kupu-tooltray');
+            var toolbody = getFromSelector('#' + this.toolbox.id + ' div.kupu-tooltray');
         if (toolbody) {
             if (toolbody.style.display=='none') {
                 toolbody.style.display='block';
@@ -2141,7 +2158,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
         selection.collapse(collapseToEnd);
     }
     if (sel && sel.nodeName.toLowerCase() == 'div' && sel.className == 'externalsource') {
-       this.updateState(sel);
+        this.updateState(sel);
     }
     if (event.preventDefault) {
         event.preventDefault();
@@ -2198,7 +2215,7 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // get the appropriate form and display it
     if (!this._editing) {
         /* the 0 position is 'select source' and
-           not a valid option */
+            not a valid option */
         if (this.idselect.selectedIndex == 0) {
             return;
         }
@@ -2387,23 +2404,23 @@ if (this.readyState == 4) {
             var vallist = eval(value);
             attrkey = key + '__type__list';
             if (vallist.length == 0) {
-              var span = doc.createElement('span');
-              span.setAttribute('key', attrkey);
-              pardiv.appendChild(span);
-              var textel = doc.createTextNode('');
-              span.appendChild(textel);
-            }
-            else {
-              for (var k=0; k < vallist.length; k++) {
                 var span = doc.createElement('span');
                 span.setAttribute('key', attrkey);
                 pardiv.appendChild(span);
-                var textel = doc.createTextNode(vallist[k]);
+                var textel = doc.createTextNode('');
                 span.appendChild(textel);
-                if (k < vallist.length - 1) {
-                  pardiv.appendChild(doc.createTextNode(', '));
+            }
+            else {
+                for (var k=0; k < vallist.length; k++) {
+                    var span = doc.createElement('span');
+                    span.setAttribute('key', attrkey);
+                    pardiv.appendChild(span);
+                    var textel = doc.createTextNode(vallist[k]);
+                    span.appendChild(textel);
+                    if (k < vallist.length - 1) {
+                        pardiv.appendChild(doc.createTextNode(', '));
+                    };
                 };
-              };
             }
         }
         else {
@@ -2649,7 +2666,7 @@ SilvaKupuUI.prototype.updateState = function(selNode) {
 
 SilvaKupuUI.prototype.setTextStyle = function(style) {
 /* parse the argument into a type and classname part
-   generate a block element accordingly 
+    generate a block element accordingly 
 */
 
     var classname = "";
