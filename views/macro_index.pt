@@ -76,11 +76,11 @@
 <metal:block define-slot="refresher" />
 <tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
 <script type="text/javascript"
-        tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/helperscripts.js"></script>
+        tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/helperscripts.js"></script>
 <script type="text/javascript"
-        tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/handler_registry.js"></script>
+        tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/handler_registry.js"></script>
 <script type="text/javascript"
-        tal:attributes="src  string:${root_url}/++resource++Silva.browser.scripts/reference.js"></script>
+        tal:attributes="src  string:${root_url}/++resource++Products.Silva.browser.scripts/reference.js"></script>
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
 <tal:block tal:replace="nothing"> _______ rel navigation_______ </tal:block>

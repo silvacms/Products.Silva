@@ -51,11 +51,11 @@
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
 <script type="text/javascript"
-        tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/helperscripts.js"></script>
+        tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/helperscripts.js"></script>
 <script type="text/javascript"
-        tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/handler_registry.js"></script>
+        tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/handler_registry.js"></script>
 <script type="text/javascript" 
-        tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/reference.js"></script>
+        tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/reference.js"></script>
 <metal:block define-slot="script" />
 </head>
 <body onload="window.onload_registry.callHandlers()">

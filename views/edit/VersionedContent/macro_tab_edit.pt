@@ -38,7 +38,7 @@ h2 {
 
 <metal:block fill-slot="script">
   <metal:block define-slot="script" />
-  <script type="text/javascript" tal:attributes="src string:${root_url}/++resource++Silva.browser.scripts/popupkupu.js"></script>
+  <script type="text/javascript" tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/popupkupu.js"></script>
 </metal:block>
 
 <metal:block metal:fill-slot="middleground">
