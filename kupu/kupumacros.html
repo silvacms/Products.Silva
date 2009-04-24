@@ -329,9 +329,9 @@
 
     </div>
   
-    <div class="kupu-toolbox" id="kupu-toolbox-links">
-      <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: '/'.join(container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path);             }, '${container/absolute_url}',             '', true, '');;         }       "/>
-
+    <div class="kupu-toolbox" id="kupu-toolbox-links"
+       tal:define="model_container model/get_container">
+      <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="folder_context python: '/'.join(model_container.getPhysicalPath())" tal:content="string:         function getLink() {           reference.getReference(             function(path, id, title) {               kupu.getTool('linktool').createLink(path,null,null,null,title);             }, '${model_container/absolute_url}',             '', true, '');;         }       "/>
       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
       <div class="kupu-tooltray">
@@ -342,7 +342,7 @@
 	     <tr>
 	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" onclick="getLink();return false;" title="get link reference..." i18n:attributes="value"><img xmlns:tal="http://xml.zope.org/namespaces/tal" tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
 	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-	      <td width="24"><button xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+	      <td width="24"><button xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
              </tr>
 	    </table>
           <span i18n:translate="">link target</span>
