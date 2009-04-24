@@ -124,10 +124,4 @@
     template="rss.pt"
   />
   
-  <browser:resourceDirectory
-    name="Silva.browser.scripts"
-    directory="scripts"
-    permission="zope2.Public"
-  />
-  
 </configure>
