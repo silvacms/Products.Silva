@@ -1,24 +1,107 @@
 from urlparse import urlparse
 
+# Zope 3
 from zope.interface import implements
 from zope.publisher.interfaces.http import IHTTPRequest
 
 from AccessControl import ModuleSecurityInfo
 from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
-from Products.Silva.adapters import adapter
 
+from silva.core import conf as silvaconf
+from silva.core.conf import component
+from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.adapters import IPath
-
-from ZPublisher.HTTPRequest import HTTPRequest
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.path')
 
 import re
 
 frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+_url_match = re.compile(URL_PATTERN)
 
-class PathAdapter(adapter.Adapter):
+class SilvaPathAdapter(component.Adapter):
+    """Adapter to unify the conversion of zope paths to Url Paths
+       between the xml-based and widgets-based renderers"""
+    silvaconf.context(ISilvaObject)
+    implements(IPath)
+    
+    def pathToUrl(self, path):
+        """ Translate a zope path to a Url."""
+        """ this was previously _linkHelper / rewriteUrl """
+        """ what sorts of links do we need:
+         1) absolute url
+         2) query
+         3) bookmark
+         4) relative path within the same container
+         5) relative path within a child of the same container
+         6) path with the same root, different container
+         virtualhosting:
+         7) (same as 4)
+         8) (same as 5)
+         9) path within silva, different vhost
+         
+         given:
+         /silva/
+               /rootc/
+                     /doc
+                     /next
+                     /c/
+                       /cdoc
+        A link in /silva/rootc/c/cdoc to /silva/rootc/next will be stored as /silva/rootc/next
+           and publicly rendered as /silva/rootc/next
+        -- this is fine in the nonvhosting context
+        A link in /silva/rootc/next to /silva/rootc/c/cdoc will be stored as c/cdoc (relative)
+           and publicly rendered as c/cdoc
+        -- this is also find in both contexts (nonvosted, vhosted)
+        
+        -- reasons for using absolute_url:
+           -- think: saving a relative path to an object only accessible
+              through acquisition (is this bad)? -- absoluteurl will
+              cleanup the path
+           -- to add on the ++preview++ layer, so absolute urls automatically 
+              stay within that layer
+         """
+        # If path is empty (can it be?), just return it
+        if path == '':
+            return path
+        # If it is a url already, return it:
+        if _url_match.match(path):
+            return path
+        # Is it simply a query or anchor fragment? If so, return it
+        if path[0] in ['?', '#']:
+            return path
+        # It is not an URL, query or anchor, so treat it as a path.
+        # If it is a relative path, treat is as such:
+        if not path.startswith('/'):
+            container = self.context
+            return self._convertPath(container.absolute_url() + '/' + path)
+        # If it is an absolute path, try to traverse it to
+        # a Zope/Silva object and get the URL for that.
+        splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
+        obj = self.context.restrictedTraverse(splitpath, None)
+        if obj is None:
+            # Was not found, maybe the link is broken, but maybe it's just 
+            # due to virtual hosting situations or whatever.
+            return self._convertPath(path)
+        if hasattr(obj.aq_base, 'absolute_url'):
+            # There are some cases where the object we find 
+            # does not have the absolute_url method.
+            return obj.absolute_url()
+        # In all other cases:
+        return self._convertPath(path)
+    
+    def _convertPath(self, path):
+        """if it's not an absolute url, run it through the
+          IPath adapter on the REQUEST to take into account
+          virtual hosting situations"""
+        if urlparse(path)[0]:
+            return path
+        pad = IPath(self.context.REQUEST)
+        return pad.pathToUrlPath(path)
+
+class PathAdapter(component.Adapter):
     """adapter that contains some magic to convert HTTP paths to
         physical paths and back (respecting virtual hosting situations)
         
@@ -27,7 +110,9 @@ class PathAdapter(adapter.Adapter):
         obviously acquisition can not be used
     """
 
+    silvaconf.context(IHTTPRequest)
     implements(IPath)
+
     __allow_access_to_unprotected_subobjects__ = True
 
     def __init__(self, request):
@@ -95,7 +180,6 @@ class PathAdapter(adapter.Adapter):
         if frag:
             path += frag
         return path
-
 InitializeClass(PathAdapter)
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
