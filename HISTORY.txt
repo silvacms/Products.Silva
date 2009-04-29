@@ -7,7 +7,7 @@ Silva changes
 
     Bug fixes
 
-      - ...
+      - Fixing SilvaFind in documentation
 
   Silva 2.1.4b2 (2009-04-23)
 
