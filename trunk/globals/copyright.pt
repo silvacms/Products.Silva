@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  lang="en" 
+  xml:lang="en">
+<head>
+  <title>Silva Copyright</title>
+  <!-- Links to favicon and stylesheet -->
+  <link rel="shortcut icon" href="globals/favicon.ico" />
+  <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../" title="Up one level" />
+</head>
+
+<body>
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();"
+  title="access key: alt-b"
+  accesskey="b"
+  i18n:attributes="title"
+  i18n:translate=""
+  >
+  back
+</a>
+<div class="public">
+<h2 style="margin-top:2em;">
+  <a href="http://www.infrae.com/products/silva"
+    title="Silva info: alt-s"
+    accesskey="s"
+    i18n:attributes="title"
+    >
+    <img width="32"
+      height="32"
+      border="0" alt="Silva" 
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" 
+    /></a>
+  &nbsp;Silva
+</h2>
+
+<h3>Copyright</h3>
+
+<p style="line-height:1.5em;">
+  &#xa9; Copyright 2001-2009 Infrae. All rights reserved.
+</p>
+
+<h4>Creators</h4>
+<p style="line-height:1.5em;">
+  Silva is developed by <a href="http://www.infrae.com/">Infrae</a>.
+</p>
+<p>
+  Copyright is incomplete without mentioning the countless contributions of external developers. A partial list:
+</p>
+<ul class="square"
+  style="margin-top:0; padding-left:1.4em; line-height:1.5em;">
+  <li>All the developers at <a href="http://www.ethz.ch/">ETH Z&uuml;rich</a></li>
+  <li>Godefroid Chapelle from <a href="http://www.bubblenet.be/">BubbleNet.be</a></li>
+  <li>Clemens Klein-Robbenhaar</li>
+  <li>Holger Krekel from many things, including <a href="http://codespeak.net/pypy/">pypy.org</a></li>
+  <li>Alexander Limi from <a href="http://www.plonesolutions.com/">Plone Solutions</a></li>
+  <li>Joachim Schmitz from <a href="http://www.aixtraware.de/">Aixtraware</a></li>
+  <li>Itamar Shtull-Trauring from <a href="http://www.zoteca.com/">Zoteca</a></li>
+  <li>Kapil Thangavelu</li>
+  <li>Philipp von Weitershausen</li>
+  <li>Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a></li>
+</ul>
+<p style="line-height:1.5em;">
+  <span class="subhead">Silva <span tal:replace="here/get_silva_software_version" /></span><br />
+</p>
+</div>
+
+</body>
+</html>

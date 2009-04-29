@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  <title></title>
+  <name>form</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>scale</i18n>
+  
+  <groups>
+    <group>
+      <title>web presentation</title>
+      <fields>
+
+      <field><id>web_format</id> <type>RadioField</type>
+        <values>
+          <hidden type="int">0</hidden>
+          <css_class></css_class>
+          <external_validator></external_validator>
+          <required type="int">1</required>
+          <items type="list">[('jpg', 'JPEG'), ('png', 'PNG'), ('gif', 'GIF')]</items>
+          <default></default>
+          <title>web format</title>
+          <first_item type="int">1</first_item>
+          <alternate_name></alternate_name>
+          <unicode type="int">0</unicode>
+          <description>Image format for web.</description>
+          <orientation>horizontal</orientation>
+        </values>
+        <tales>
+          <default>python: form.REQUEST.model.getWebFormat() or 'JPEG'</default>
+        </tales>
+        <messages>
+          <message name="external_validator_failed" >Sorry, the form content failed validation.</message>
+          <message name="required_not_found" >Input is required but no input given.</message>
+          <message name="unknown_selection" >You selected an item that was not in the list.</message>
+        </messages>
+      </field>
+      <field><id>web_scaling</id> <type>StringField</type>
+        <values>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <required type="int">1</required>
+          <css_class>store</css_class>
+          <default>100%</default>
+          <title>scaling</title>
+          <alternate_name></alternate_name>
+          <unicode type="int">0</unicode>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">18</display_width>
+          <extra></extra>
+          <truncate type="int">0</truncate>
+          <description>
+	  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%).</description>
+          <unicode>1</unicode>
+        </values>
+        <tales>
+          <default>python: form.REQUEST.model.getWebScale() or '100%'</default>
+          <extra>string: id="field_${field/id}"</extra>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">Sorry, the form content failed validation.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      <field><id>web_crop</id> <type>StringField</type>
+        <values>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <required type="int">0</required>
+          <css_class>store</css_class>
+          <default></default>
+          <title>cropping</title>
+          <alternate_name></alternate_name>
+          <unicode type="int">0</unicode>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">18</display_width>
+          <extra>id="web_crop"</extra>
+          <truncate type="int">0</truncate>
+          <description>
+              Image cropping for web: use the &amp;#8216;set crop coordinates&amp;#8217; button, or enter X1xY1-X2xY2 to define the cropping box.
+          </description>
+          <unicode>1</unicode>
+        </values>
+        <tales>
+          <default>python: form.REQUEST.model.getWebCrop()</default>
+          <extra>string: id="field_${field/id}"</extra>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">Sorry, the form content failed validation.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

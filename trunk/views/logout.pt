@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+<head>
+  <title i18n:translate="">
+    logout
+  </title>
+  <meta 
+    http-equiv="refresh"
+    tal:define="
+      model request/model | here;
+      "
+    tal:attributes="
+      content string:5;; url=${model/absolute_url}/manage_zmi_logout"
+  />
+  <link href="globals/favicon.ico"
+    rel="shortcut icon"
+  />
+  <link href="globals/silva.css"
+    rel="stylesheet"
+  />
+  <link href="globals/frontend.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+<!--__________________________ feedback start _________________________-->
+
+  <div style="margin:2em;">
+    <div class="feedback"
+      style="width:55%">
+      <span i18n:translate="">To <tal:block i18n:name="actually"><strong i18n:translate="">actually</strong></tal:block> logout, wait 5 seconds or hit this</span>
+      <a href="/manage_zmi_logout"
+        title="accesskey: alt-l"
+        accesskey="l"
+        tal:attributes="href string:${request/model/absolute_url}/manage_zmi_logout"
+        i18n:attributes="title"
+        i18n:translate="">logout link.</a>
+      <br />
+        <span i18n:translate="">When the login dialog appears, choose <tal:block i18n:name="Cancel"><strong i18n:translate="">"Cancel"</strong></tal:block>.</span>
+    </div>
+  </div>
+<!--            __________________________ feedback ends __________________________            -->
+</body>
+</html>

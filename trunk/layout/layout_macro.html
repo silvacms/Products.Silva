@@ -1,0 +1,143 @@
+<!-- _______ {__silva_version__} _______ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  metal:define-macro="layout"
+  tal:define="lang python: here.get_metadata_element('silva-extra', 'language') or nothing"
+  tal:attributes="
+    lang lang;
+    xml:lang lang;
+">
+
+<head metal:define-slot="head">
+  <title metal:define-slot="title"
+    tal:content="here/get_title_or_id">doc title</title>
+  <base tal:attributes="href here/absolute_url" />
+  <!-- Begin metatags -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Silva" />
+<metal:skipmetadata define-slot="skipmetadata">
+  <tal:comment replace="nothing">
+  <!-- Turn on metadata tags as needed by moving them out of the tal:skip into this slot.
+       This slot should be overridden by error pages in authenticated areas of a site. -->
+  </tal:comment>
+</metal:skipmetadata>
+<tal:skip replace="nothing">
+  <meta name="subject"
+    tal:define="subject python: here.get_metadata_element('silva-extra', 'subject') or nothing"
+    tal:condition="subject"
+    tal:attributes="content subject" />
+  <meta name="description"
+    tal:define="description python: here.get_metadata_element('silva-extra', 'content_description') or nothing"
+    tal:condition="description"
+    tal:attributes="content description" />
+  <meta name="keywords"
+    tal:define="keywords python: here.get_metadata_element('silva-extra', 'keywords') or nothing"
+    tal:condition="keywords"
+    tal:attributes="content keywords" />
+  <meta name="contact.name"
+    tal:define="name python: here.get_metadata_element('silva-extra', 'contactname') or nothing"
+    tal:condition="name"
+    tal:attributes="content name" />
+  <meta name="contact.email"
+    tal:define="email python: here.get_metadata_element('silva-extra', 'contactemail') or nothing"
+    tal:condition="email"
+    tal:attributes="content email" />
+</tal:skip>
+  <meta metal:define-slot="meta" tal:omit-tag="" />
+  <!-- End metatags -->
+  <!-- Start related links -->
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/frontend.png/absolute_url | nothing" />
+<tal:skip replace="nothing">
+<!-- Turn these on as needed by moving them out of the tal:skip -->
+  <!-- Access navigation links -->
+  <tal:block define="surround here/get_document_navigation_links | nothing">
+  <tal:loop repeat="link surround/keys">
+  <tal:if condition="python:surround[link] != '..'">
+  <link tal:condition="python:surround[link] or None"
+    tal:attributes="
+    rel link;
+    href python:surround[link].absolute_url() + (surround[link].get_container() == surround[link] and '/' or '')"
+    />
+  </tal:if>
+  </tal:loop>
+  <link rel="up" tal:condition="python:surround.has_key('up')" tal:attributes="href surround/up" />
+  </tal:block>
+  <!-- End access navigation links -->
+  <link rel="copyright" title="Copyright"
+    tal:attributes="href here/copyright/absolute_url | nothing" />
+</tal:skip>
+  <!-- End related links -->
+  <!-- Begin stylesheets -->
+  <link rel="stylesheet" type="text/css" media="all"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <link rel="stylesheet" type="text/css" media="print"
+    tal:attributes="href here/print.css/absolute_url | nothing" />
+  <link metal:define-slot="style" tal:omit-tag="" />
+  <!-- End stylesheets -->
+  <!-- Injector for content-specific css/js inclusion -->
+  <link tal:replace="structure here/head_inject | nothing" />
+  <!-- Start javascript -->
+  <script metal:define-slot="script" type="text/javascript"
+    tal:replace="nothing">
+    <!-- script slot -->
+  </script>
+  <!-- End javascript -->
+</head>
+
+<body metal:define-slot="body">
+
+<metal:slot define-slot="header">
+<!-- Start header slot -->
+<div class="header">
+  <a class="icon"
+    href="http://www.infrae.com/products/silva"
+    title="Silva info on the Infrae site: alt-i"
+    accesskey="i"
+    i18n:attributes="title"
+    >
+    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
+  </a>
+  <metal:slot define-slot="top_navigation">
+  <!-- Begin top_navigation slot -->
+  <span class="breadcrumb"
+     style="display:block;">
+    <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag="">
+      <a tal:content="python: item.get_short_title() or item.get_title_or_id()"
+        tal:attributes="href item/absolute_url">Name</a>
+    <span tal:condition="not:repeat/item/end" tal:omit-tag="">&middot;</span></span>
+  </span>
+  <!-- End top_navigation slot -->
+  </metal:slot>
+</div>
+<!-- End header slot -->
+</metal:slot>
+
+<metal:slot define-slot="table_of_contents">
+<!-- Table of contents slot -->
+</metal:slot>
+
+<div class="public">
+<span tal:replace="nothing"> _______ content area, here the XML is rendered to HTML _______ </span>
+<metal:slot define-slot="main">
+<!-- Start Silva content -->
+<tal:insert define="view_method options/view_method"
+  content="structure python:getattr(here, view_method)()">
+  <!-- this comment gets replaced by the Silva document content -->
+</tal:insert>
+<!-- End Silva content -->
+</metal:slot>
+</div>
+
+<metal:slot define-slot="footer">
+<!-- Footer slot -->
+</metal:slot>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!--
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+Version of this file: $Id: containerPolicyEdit.zpt,v 1.7 2006/01/24 16:14:13 faassen Exp $
+-->
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+<h4 tal:define="root here/get_root | nothing" 
+    tal:condition="python:root==here.aq_parent">
+	<a href="../manage_services">Silva Services</a>
+</h4>
+<h3 i18n:translate="">
+    Container Policies
+</h3>
+<ul>
+    <li tal:repeat="policy here/listPolicies"
+        tal:content="policy">
+        None
+        </li>
+</ul>
+
+        
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
+

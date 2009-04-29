@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global vein string:new;
+    global active_tab string:tab_edit;
+    global parent_screen_name string:contents;
+    position request/add_object_position|nothing;
+    addobject_url python:'add_object?meta_type=%s' + (position is not nothing and '&add_object_position='+str(position) or '')"
+    tal:omit-tag=""
+  i18n:domain="silva">
+<metal:block use-macro="here/macro_index/macros/master">
+<metal:block fill-slot="main">
+
+<tal:block define="
+  global objects python:model.get_tree();
+  dummy model/security_trigger;" />
+
+<table class="columns columns3">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left">
+        <tal:block replace="nothing">
+          ______________ vein navigation ______________
+        </tal:block >
+          <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
+            <metal:fill-slot fill-slot="sidebar">
+              <tal:block replace="structure python: here.service_sidebar.render(model, 'tab_edit_new', vein)" />
+            </metal:fill-slot>
+          </metal:use-macro>
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+
+<table class="listing">
+  <thead>
+    <tr tal:replace="nothing">
+      ______________ vein + title row ______________
+    </tr>
+    <tr>
+      <td class="top">
+        <h2>
+          <img tal:replace="structure icon" />
+            &#xab;<tal:block content="title" />&#xbb;
+        </h2>
+      </td>
+    </tr>
+
+    <tr tal:replace="nothing">
+      ______________ top controls row ______________
+    </tr>
+    <tr class="top-controls">
+      <td>
+        <h3 i18n:translate="">
+          create an object
+        </h3>
+      </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr class="even">
+      <td>
+        <p class="readable" i18n:translate="">
+            Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the
+	        <a class="underline"
+	           href="http://www.infrae.com/products/silva/docs"
+	           i18n:name="silva_documentation">
+             <tal:block i18n:translate="">Silva documentation</tal:block>
+          </a>.
+        </p>
+       <br />
+      </td>
+    </tr>
+
+    <tr tal:replace="nothing"> ______________ listing iteration ______________ </tr>
+    <tal:repeat repeat="addable model/get_silva_addables">
+      <tr class="even">
+        <td>
+          <div class="subhead">
+            <img tal:replace="structure python:here.render_icon_by_meta_type(addable['name'])" />
+            <a class="published"
+              style="padding-left:0.2em; padding-bottom: 0em ! important;"
+              tal:attributes="
+                href python:addobject_url%addable['name'].replace(' ', '+');
+                title python: here.tab_edit_new_link_title(addable['name'])">
+              <span tal:replace="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']">object</span>
+            </a>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="even"
+        valign="top">
+        <td style="padding-left: 2.6em;">
+          <p class="readable"
+            style="margin-top:0;"
+            tal:condition="python: addable.has_key('instance')"
+            tal:content="structure addable/doc">
+            Description lorem ipsum dolor....
+          </p>
+        </td>
+      </tr>
+    </tal:repeat>
+
+    <tr class="even"
+      tal:condition="not:may_change_content">
+       <td colspan="2">
+         <p i18n:translate="">
+           Sorry, you're not authorized to add anything in this location.
+         </p>
+       </td>
+    </tr>
+  </tbody>
+</table>
+
+
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ right column _____________________
+      </tal:block>
+      <td class="right">
+        &nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</metal:block>
+</metal:block>
+</html>

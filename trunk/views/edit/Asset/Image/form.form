@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  <title></title>
+  <name>form</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>form</i18n>
+  
+  <groups>
+    <group>
+      <title>default</title>
+      <fields>
+
+      <field><id>image_title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <display_width type="int">41</display_width>
+          <unicode type="int">1</unicode>
+          <max_length></max_length>
+          <external_validator></external_validator>
+          <display_maxwidth></display_maxwidth>
+          <required type="int">1</required>
+          <css_class>store</css_class>
+          <default></default>
+          <title>title</title>
+          <truncate type="int">0</truncate>
+          <description></description>
+        </values>
+        <tales>
+          <default>python:form.REQUEST.model.get_title()</default>
+          <extra>string:id="${field/id}"</extra>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">Sorry, the form content failed validation.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

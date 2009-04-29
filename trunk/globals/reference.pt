@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+>
+
+<head>
+  <title i18n:translate="">Silva Reference</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+    tal:define="dummy python:request.RESPONSE.setHeader('Content-Type','text/html;; charset=UTF-8')" />
+  <!-- Links to favicon and stylesheet -->
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../../edit" title="Up one level" />
+  <link rel="copyright" href="copyright" title="Silva copyright info" />
+</head>
+
+<body>
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-b"
+  accesskey="b"
+  
+  i18n:attributes="title"
+  i18n:translate="">
+  back
+</a>
+<div class="public">
+<h2 style="margin-top:2em;">
+  <a href="http://www.infrae.com/products/silva" 
+    title="Silva info: alt-s"
+    accesskey="s"
+    i18n:attributes="title">
+    <img width="32" height="32" border="0" alt="Silva icon"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" /></a>
+      &nbsp;<tal:block i18n:translate=""><span i18n:name="Silva">Silva</span> &#8211; independent content management</tal:block>
+</h2>
+
+<div class="citation"
+  style="margin:2em 0; padding:0 1em 0.3em 1em; border-width:3px; border-style:double; border-color:#6873a5">
+  <!--  XXX: i18n impossible? Maybe find some definitions in english-dutch dictionaries?-->
+  <dl>
+    <dt>
+      From WordNet (r) 1.6 [wn]:
+    </dt>
+    <dd>
+      silva<br />
+      n : the forest trees growing in a country or region [syn: {sylva}]<br /><br />
+    </dd>
+    <dt>
+      From Webster's Revised Unabridged Dictionary (1913) [web1913]:
+    </dt>
+    <dd>
+      Silva \Sil"va\, n.; pl. E. {Silvas}, L. {Silvae}. [L., properly, a wood, forest.] [Written also {sylva}.] (Bot.)<br />
+      (a) The forest trees of a region or country, considered collectively.<br />
+      (b) A description or history of the forest trees of a country.
+    </dd>
+  </dl>
+</div>
+
+<h3 i18n:translate="">Credits</h3>
+
+<p style="line-height:1.5em;" i18n:translate="">
+  Silva is developed by <a href="http://www.infrae.com/" i18n:name="infrae">Infrae</a> and many others. <br i18n:name="br" />
+</p>
+
+<h4 i18n:translate="">Infrae Silva crew</h4>
+
+<p style="line-height:1.5em;">
+  Kit Blake<br />
+  Eric Casteleijn<br />
+  Torvald de Boskat<br />
+  Wim Boucquaert<br />
+  Daniel Nouri<br />
+  Jasper Op de Coul<br />
+</p>
+
+<h4 i18n:translate="">Silva alumni</h4>
+
+<p style="line-height:1.5em;">
+  Martijn Faassen<br />
+  Jan-Wijbrand Kolman<br />
+  Guido Wesdorp<br />
+  Guido Goldstein<br />
+  Walco van Loon<br />
+</p>
+
+<h4 i18n:translate="">External developers</h4>
+
+<p style="line-height:1.5em;">
+  Godefroid Chapelle from <a href="http://www.bubblenet.be/">BubbleNet.be</a><br />
+  Clemens Klein-Robbenhaar<br />
+  Holger Krekel from many things, including <a href="http://codespeak.net/pypy/">pypy.org</a><br />
+  Alexander Limi from <a href="http://www.plonesolutions.com/">Plone Solutions</a><br />
+  Joachim Schmitz from <a href="http://www.aixtraware.de/">Aixtraware</a><br />
+  Itamar Shtull-Trauring from <a href="http://www.zoteca.com/">Zoteca</a><br />
+  Kapil Thangavelu<br />
+  Philipp von Weitershausen<br />
+  Christian Zagrodnick (and others) from <a href="http://www.gocept.com/">gocept</a><br />
+  Roman Joost<br />
+  Ofer Weisglass<br />
+  Benno Luthiger from <a href="http://www.ethz.ch/">ETH Zurich</a><br />
+  Marc Petitmermet from <a href="http://www.mat.ethz.ch/">ETH Zurich Department of Materials</a><br />
+  Andy Altepeter from <a href="http://www.bethel.edu/">Bethel University</a><br />
+</p>
+  
+<h4 i18n:translate="">Thanks to....</h4>
+
+<p i18n:translate="">
+  The people at <span i18n:name="eth_zuerich"><a href="http://www.ethz.ch/">ETH Zurich</a></span> for their feedback, contributions, and innovation.
+</p>
+<p i18n:translate="">
+  Jan Smith at <span i18n:name="ozzope"><a href="http://ozzope.org">ozzope.org</a></span> for advice, hosting the documentation wiki, and her tutorials.
+</p>
+<p i18n:translate="">
+  Many thanks go to Hans Verster at the <span i18n:name="eur"><a href="http://www.eur.nl/">Erasmus University Rotterdam</a></span> for his vision and support.
+</p>
+<p i18n:translate="">
+  <br i18n:name="br" />
+  <br i18n:name="br" />
+  <a href="http://www.infrae.com/products/silva" 
+    title="Silva info: alt-i"
+    accesskey="i"
+    i18n:attributes="title"
+    i18n:name="silva_icon"
+    >
+    <img style="float:right; margin-top:1.3em;"
+      src="powered_by.png" 
+      width="64"
+      height="16"
+      border="0"
+      alt="Silva site"
+      i18n:attributes="alt"
+    />
+  </a>
+  <span class="subhead">Silva <span tal:replace="here/get_silva_software_version" i18n:name="silva_version"/></span><br i18n:name="br" />
+  &#xa9; Copyright 2001-2009 Infrae. All rights reserved.
+</p>
+
+</div>
+
+</body>
+</html>

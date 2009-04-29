@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<metal:define-macro define-macro="editor">
+<metal:use-macro metal:use-macro="here/macro_index/macros/master">
+
+<metal:fill-slot fill-slot="metatype_css">
+<tal:condition condition="python: not model.get_unapproved_version() and model.implements_versioned_content() and not model.meta_type == 'Silva Ghost'">
+<link rel="stylesheet"
+  type="text/css"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
+/>
+<style type="text/css">
+div.public {
+  margin: 12px 16px 10px 16px;
+  padding: 0.3em 1em 0.7em;
+  border: 1px solid #789;
+  background-color: #e3ecf7;}
+h2 {
+  margin-top: 0.3em;
+}
+</style>
+</tal:condition>
+<metal:block define-slot="editor_css" />
+</metal:fill-slot>
+
+<metal:block fill-slot="refresher">
+  <metal:block define-slot="editor_refresher" />
+</metal:block>
+
+<metal:block fill-slot="script">
+  <metal:block define-slot="script" />
+  <script type="text/javascript" tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/popupkupu.js"></script>
+</metal:block>
+
+<metal:block metal:fill-slot="middleground">
+  <tal:buttons tal:replace="structure model/@@tab_edit_extra" />
+</metal:block>
+
+<span tal:replace="nothing"> ______________ author may not edit: notify why ______________ </span>
+<metal:fill-slot fill-slot="notice"
+  tal:define="
+    is_locked model/sec_is_locked;
+    request_pending python:model.is_version_approval_requested();
+    unapproved_version model/get_unapproved_version;
+  ">
+<span tal:replace="nothing"> _______ simultaneous edit lock _______ </span>
+<tal:condition condition="python:unapproved_version and is_locked">
+  <div class="fixed-feedback"
+    style="padding:0">
+    <form action="tab_edit_break_lock" method="post">
+      <input class="button remover"
+        type="submit"
+        value="break lock"
+        title="Somebody else just edited this item, unlock it: alt-u"
+        accesskey="u"
+        i18n:attributes="value;title"
+      />
+      <span class="warning">
+        <tal:block i18n:translate="">
+          <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> This object is already being edited by another user,
+          and is temporarily locked.
+        </tal:block>
+      </span>
+    </form>
+  </div>
+</tal:condition>
+
+<span tal:replace="nothing"> _______ make changes in a new version _______ </span>
+<tal:condition condition="python: not model.get_next_version()">
+  <div class="fixed-feedback"
+    style="padding:0">
+    <form action="tab_edit_make_copy" method="post">
+      <tal:note replace="nothing"> _ do not change the value attribute _ </tal:note>
+      <input type="hidden"
+        name="came_from_view"
+        tal:attributes="value template/id"
+      />
+      <button class="button"
+        type="submit"
+        title="work on a new version while the previous one stays online: alt-n"
+        accesskey="n"
+        i18n:attributes="title"
+        i18n:translate="">
+        new version
+      </button>
+      <span class="warning"
+        i18n:translate="">
+        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> there is already a published or closed version of this
+        content. Changes can only be made in a new version.
+      </span>
+    </form>
+  </div>
+</tal:condition>
+
+<span tal:replace="nothing"> _______ make changes after revoking approval _______ </span>
+<tal:condition condition="python: model.get_approved_version()">
+  <div class="fixed-feedback"
+    style="padding:0">
+    <form action="tab_edit_revoke_approval" method="post">
+      <button class="button"
+        type="submit"
+        title="'first un-approve' this item in order to edit: alt-r"
+        accesskey="r"
+        i18n:attributes="title"
+        i18n:translate="">
+        revoke approval
+      </button>
+      <tal:i18n i18n:translate="">
+        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version is approved but not yet public. In order to make changes you need to first revoke the approval.
+      </tal:i18n>
+    </form>
+  </div>
+</tal:condition>
+
+<span tal:replace="nothing"> _______ make changes after withdraw approval request _______ </span>
+<tal:condition condition="python:model.is_version_approval_requested()">
+  <div class="fixed-feedback"
+    style="padding:0">
+    <form action="tab_edit_withdraw" method="post">
+      <input type="hidden" name="rejection_status" tal:attributes="value python:test(may_approve_content, 'true', 'false')" />
+      <input type="hidden" name="tab_name" value="edit" />
+      <button class="button"
+        type="submit"
+        title="withdraw a request for approval in order to edit: alt-w"
+        accesskey="w"
+        i18n:attributes="title"
+        i18n:translate="">
+        withdraw request
+      </button>
+      <tal:i18n i18n:translate="">
+        <strong i18n:name="note"><tal:block i18n:translate="">Note:</tal:block></strong> this version has an request for approval pending. In order to make changes you need to first withdraw the pending request.
+      </tal:i18n>
+    </form>
+  </div>
+</tal:condition>
+
+</metal:fill-slot>
+
+<span tal:replace="nothing"> ______________ author may edit ______________ </span>
+<metal:fill-slot fill-slot="main"
+  tal:define="
+    is_locked model/sec_is_locked;
+    request_pending python:model.is_version_approval_requested();
+    unapproved_version model/get_unapproved_version;
+  ">
+<span tal:replace="nothing"> _________ show editor ____ </span>
+<tal:block condition="python:unapproved_version and not request_pending and not is_locked">
+  <metal:block define-slot="editor_content" />
+</tal:block>
+<span tal:replace="nothing"> _________ or preview document ____ </span>
+<tal:block condition="python:not model.get_unapproved_version() and model.implements_versioned_content() and not model.meta_type == 'Silva Ghost'">
+  <div class="public"
+    tal:content="structure model/preview">
+    <!-- this text is replaced by Silva content -->
+  </div>
+</tal:block>
+<span tal:replace="nothing"> _________ or show ghost info ____ </span>
+<div tal:condition="not:unapproved_version"
+  tal:replace="structure here/edit_info | nothing" />
+</metal:fill-slot>
+
+<tal:note replace="nothing">if feedback is not desired percolate signal upwards</tal:note>
+<metal:fill fill-slot="editorcheck">
+  <metal:plug define-slot="editorcheck" />
+  <tal:set define="global nofeedback nofeedback | nothing" />
+</metal:fill>
+
+</metal:use-macro>
+</metal:define-macro>
+</html>

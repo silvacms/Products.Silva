@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global vein string:add;
+    global active_tab string:tab_edit;
+    global lookup_mode request/lookup_mode | python:0;
+    global return_url request/return_url | python:'';
+    global use_macro python: (lookup_mode and [here.macro_no_tabs] or [here.macro_index])[0]"
+  i18n:domain="silva">
+
+<metal:block metal:use-macro="use_macro/macros/master">
+<metal:block fill-slot="main"
+  tal:define="metatype request/meta_type">
+<script type="text/javascript"
+  tal:define="focusfield python:metatype == 'Silva Image' and 'field_object_title' or 'field_object_id'"
+  tal:content="structure python:here.focus_editor(focusfield)" />
+
+<div class="focus-rectangle">
+<form method="post"
+  action="add_object_submit"
+  name="focusbox"
+  enctype="multipart/form-data">
+<input type="hidden" name="meta_type"
+  tal:attributes="value metatype" />
+<input type="hidden" name="lookup_mode:int" value="0"
+  tal:attributes="value lookup_mode" />
+<input type="hidden"
+  name="return_url"
+  tal:attributes="value return_url"
+/>
+<input name="add_object_position" type="hidden" 
+  tal:condition="request/add_object_position|nothing"
+  tal:attributes="value request/add_object_position|nothing" />
+<table class="listing">
+  <thead>
+    <tr>
+      <td class="top"
+        colspan="3">
+      <h2>
+        <img tal:replace="structure python:context.render_icon_by_meta_type(metatype)" />
+        <tal:block condition="python:metatype == 'Silva Image' or metatype == 'Silva File'" i18n:translate="">
+          upload
+          <tal:block replace="metatype"
+            i18n:name="meta_type" />
+        </tal:block>
+        <tal:block condition="python:not (metatype == 'Silva Image' or metatype == 'Silva File')" i18n:translate="">
+          create
+          <tal:block replace="python: metatype == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or metatype"
+            i18n:name="TOC_or_meta_type" />
+        </tal:block>
+      </h2>
+      </td>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr>
+      <th style="width:33%"
+        i18n:translate="">
+        aspect
+      </th>
+      <th i18n:translate="">
+        content
+      </th>
+    </tr>
+    <tal:repeat repeat="field here/form/get_fields">
+    <tal:define define="iterate repeat/field/odd">
+    <tr tal:attributes="class python:iterate and 'odd' or 'even'">
+      <td class="designator">
+        <label tal:content="structure field/title"
+          tal:attributes="
+            for field/id;
+            accesskey python:field.id == 'file' and 'f' or nothing;
+          ">
+          title
+        </label><span class="warning"
+          tal:condition="field/is_required">*</span>
+        <p tal:define="note field/description"
+          tal:condition="python:note != 'False'"
+          tal:content="structure note"
+          i18n:translate="">
+          note
+        </p>
+      </td>
+      <td class="field">
+        <input tal:replace="structure python:field.render_from_request(request)" />
+      </td>
+    </tr>
+    <tal:comment replace="nothing"> _______ insert subhead for images and files _______ </tal:comment>
+    <tal:if condition="
+      python:(metatype == 'Silva Image' and field.id == 'object_title')
+      or (metatype == 'Silva File' and field.id == 'file')
+      ">
+    <tr class="inter-controls">
+      <td colspan="2">
+        <h3>optional field<tal:plural condition="python:metatype != 'Silva Image'">s</tal:plural></h3>
+      </td>
+    </tr>
+    <tr>
+      <th i18n:translate="">
+        aspect
+      </th>
+      <th i18n:translate="">
+        content
+      </th>
+    </tr>
+    </tal:if>
+    </tal:define>
+    </tal:repeat>
+  </tbody>
+  
+  <tfoot>
+    <tr>
+      <th i18n:translate="">
+        * required
+      </th>
+      <th>&nbsp;</th>
+    </tr>
+    <tr class="controls">
+      <td colspan="2">
+        <tal:if condition="python: not lookup_mode" >
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="add_edit_submit"
+          value="save + edit"
+          title="access key: alt-e"
+          accesskey="e"
+          tal:attributes="value python:test(here.id in ('Folder','Publication'), 'save + enter', 'save + edit')"
+          i18n:attributes="value;title"
+        />
+        </tal:if>
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="add_submit"
+          value="save"
+          title="access key: alt-s"
+          accesskey="s"
+          i18n:attributes="value;title"
+        />
+        <input class="button canceler"
+          style="float:left"
+          type="submit"
+          name="add_cancel"
+          value="cancel"
+          title="access key: alt-c"
+          accesskey="c"
+          i18n:attributes="value;title;"
+        />
+      </td>
+    </tr>
+  </tfoot>
+</table>
+</form>
+
+</metal:block>
+</metal:block>
+</html>

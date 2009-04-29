@@ -1,0 +1,7 @@
+[server]
+host = 127.0.0.1
+http_port = 8080
+dav_port = 9080
+manager_username = Manager
+manager_password = Manager
+basepath = /silva_dav

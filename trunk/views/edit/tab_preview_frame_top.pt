@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  tal:define="
+    global   vein string:preview;
+    model    request/model;
+    trigger  model/security_trigger;
+    mangle   modules/Products/Silva/mangle;
+    url      model/absolute_url;
+    title    python: model.get_title_editable() or model.id;
+    root_url model/get_root_url;
+    global   publication model/get_publication;
+    global   containing_publication publication/../get_publication | publication;
+    message_type options/message_type | request/message_type | nothing;
+    message  options/message | request/message | nothing;
+    screen_id string:tab_preview;
+    global   nofeedback nofeedback | nothing;
+    global   active_tab string:tab_preview;
+    ">
+
+<head>
+  <tal:block replace="structure request/model/@@set_content_type_and_nocache" />
+<title>
+  <tal:block content="title">title</tal:block> &#8211;
+  <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
+</title>
+<tal:block replace="nothing"> _______ base tag to handle Five methods with .. _______ </tal:block>
+<base tal:attributes="href string:${model/absolute_url}/edit/" target="_parent" />
+<link rel="shortcut icon"
+  tal:attributes="href string:$root_url/globals/silvacon.ico"
+/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style media="all"
+  type="text/css"
+  xml:space="preserve"
+  tal:content="structure python: here.css_imports(['silva.css'])"
+>
+@imports
+</style>
+<link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
+<link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title" />
+<link href="globals/silvaContentStyle.css"
+  rel="stylesheet"
+  type="text/css"
+  tal:condition="python: not model.implements_container()"
+  tal:attributes="href string:$root_url/globals/silvaContentStyle.css"
+/>
+<tal:ie6fixstart replace="structure string:&lt;!--[if IE 6]&gt;" />
+     <style type="text/css" media="all"
+	    tal:condition="exists:string:$root_url/globals/ie6fixes.css"
+            tal:content="string:@import url($root_url/globals/ie6fixes.css);">
+     </style>
+<tal:ie6fixend replace="structure string:&lt;![endif]--&gt;" />
+
+</head>
+
+<body>
+
+<metal:block use-macro="here/macro_tabs/macros/tabs" />
+
+<div class="workspace">
+
+  <tal:buttons tal:replace="structure model/@@tab_preview_extra" />
+
+  <tal:if condition="message">
+    <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
+      <span tal:replace="structure message">
+        message
+      </span>
+      <tal:block tal:condition="python:message_type == 'feedback'">
+        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
+      </tal:block>
+    </div>
+  </tal:if>
+
+  <span tal:replace="nothing"> _______ closed notice _______ </span>
+  <div class="fixed-feedback"
+       tal:condition="here/tab_preview_needs_feedback">
+    <span class="warning" i18n:translate="">This is a closed version. You see it, but the public won't!</span>
+  </div>
+
+</div>
+</body>
+</html>

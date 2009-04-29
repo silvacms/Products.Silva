@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<tal:block define="here request/model;">
+<metal:block use-macro="request/model/layout_macro.html/macros/layout">
+<metal:block fill-slot="main">
+<tal:block
+  define="
+    dummy python:context.REQUEST.RESPONSE.setHeader('Content-Type', 'text/html;; charset=UTF-8');
+    model request/model;
+    title model/get_title;
+    show_form options/show_form | python: True;
+    feedback options/message | nothing;
+    message_type options/message_type | nothing;
+    warning python:message_type == 'warning' and message_type or nothing;
+    subscr_emailaddress options/subscr_emailaddress | nothing;
+    cancel_emailaddress options/cancel_emailaddress | nothing;
+    path python: '/'.join(model.getPhysicalPath());"
+  i18n:domain="silva"
+  >
+  <div class="feedback"
+    tal:condition="feedback">
+    <span tal:content="feedback"
+      tal:attributes="class warning | nothing"
+      tal:omit-tag="not:warning"
+      i18n:translate="">
+      feedback message
+    </span>
+  </div>
+  <tal:block condition="show_form">
+    <div class="subscriptionform">
+      <form method="post" name="form" enctype="multipart/form-data"
+        tal:attributes="action string:${here/absolute_url}/public/subscription_request">
+        <h3 class="heading" i18n:translate="">
+          Subscribe to
+          &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+        </h3>
+        <p class="p" i18n:translate="">
+          Fill in your email address if you want to receive email
+          notifications whenever a new version of this page or its
+          subdocuments becomes available.
+        </p>
+        <span i18n:translate="">email address</span><span class="warning">*</span>
+        <input type="hidden" name="path" tal:attributes="value path"/>
+        <input type="text" name="emailaddress" size="30"
+          tal:attributes="value subscr_emailaddress"
+        />
+        <input class="control"
+          type="submit"
+          value="subscribe"
+          title="access key: alt-s"
+          accesskey="s"
+          i18n:attributes="title;value"
+        />
+      </form>
+    </div>
+    <div class="cancellationform">
+      <form method="post" name="form" enctype="multipart/form-data"
+        tal:attributes="action string:${here/absolute_url}/public/cancellation_request">
+        <h3 class="heading" i18n:translate="">
+          Unsubscribe from
+          &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+        </h3>
+        <p class="p" i18n:translate="">
+          Fill in your email address if you want to unsubscribe
+          from email notifications for this page and its subdocuments.
+        </p>
+        <span i18n:translate="">email address</span><span class="warning">*</span>
+        <input type="hidden" name="path" tal:attributes="value path"/>
+        <input type="text" name="emailaddress" size="30"
+          tal:attributes="value cancel_emailaddress"
+        />
+        <input class="control"
+          type="submit"
+          value="unsubscribe"
+          title="access key: alt-u"
+          accesskey="u"
+          i18n:attributes="title;value"
+        />
+      </form>
+    </div>
+  </tal:block>
+  <div class="backlink">
+    <a tal:attributes="href model/absolute_url" i18n:translate="">
+      Return to
+      &#xab;<tal:block i18n:name="title_or_id" content="model/get_title_or_id" />&#xbb;
+    </a>
+  </div>
+</tal:block>
+</metal:block>
+</metal:block>
+</tal:block>

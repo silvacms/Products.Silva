@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global vein string:editor;
+    "
+  i18n:domain="silva">
+
+<!-- Use of this is deprecated and will be removed in a later Silva
+     release (perhaps 2.2).  Please use views/edit/macro_edit instead,
+     and see developer_changes.txt for more info -->
+
+<metal:block use-macro="here/macro_tab_edit/macros/editor">
+
+<metal:block fill-slot="editor_content">
+<tal:block replace="structure here/edit">Content</tal:block>
+</metal:block>
+
+</metal:block>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<head>
+  <title i18n:translate="">Silva help</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" 
+    tal:define="dummy python:request.RESPONSE.setHeader('Content-Type','text/html;; charset=UTF-8')" />
+  <link rel="shortcut icon"
+    tal:attributes="href here/globals/favicon.ico/absolute_url | nothing" />
+  <link rel="stylesheet" href="frontend.css" type="text/css" />
+  <link rel="up" href="../edit" title="Up one level" />
+</head>
+
+<body>
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-r"
+  accesskey="r"
+  i18n:attributes="title"
+  i18n:translate="">
+  return
+</a>
+<div class="header">
+  <a class="icon"
+    href="http://www.infrae.com/products/silva" 
+    title="Silva info: alt-i"
+    accesskey="i"
+    i18n:attributes="title">
+    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
+      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
+  </a>
+</div>
+
+<div class="public" style="padding-top:0.5em;">
+<h2 i18n:translate="">
+  Silva access keys
+</h2>
+
+<ul class="square"
+  style="padding-left:1.4em;">
+  <li i18n:translate=""> The access key on your machine may be &#8216;alt&#8217;. On a Mac
+  it&#8217;s &#8216;ctrl&#8217;.  </li>
+  <li i18n:translate=""> Hover over the link or button and a tooltip will popup with the
+  access key.  </li>
+  <li i18n:translate=""> The most useful access keys are for screen navigation, <span i18n:name="see_below"><a
+    title="Save time, energy, and wrists by keying to your destination."
+    href="#nav"
+    i18n:attributes="title"
+    i18n:translate="">see below</a></span>.</li>
+</ul>
+  
+<h3 i18n:translate="">Global keys that are always available</h3>
+
+<p i18n:translate="">
+  The following access keys are available in every Silva screen.
+</p>
+<p i18n:translate="">
+  <span i18n:name="general">
+    <span class="subhead" i18n:translate="">General</span></span><br i18n:name="br" />
+  t &nbsp; Jump to top of page<br i18n:name="br" />
+  b &nbsp; Jump to bottom of page<br i18n:name="br" />
+  / &nbsp; Jump to top of Silva (Silva icon)<br i18n:name="br" />
+  ? &nbsp; Access keys and shortcuts
+</p>
+<p i18n:translate=""><span i18n:name="changing_screens_with_tabs"><span class="subhead"><a name="nav" i18n:translate="">Changing screens with the
+  tabs</a></span></span><br i18n:name="br" />The tabs have numbered access keys, starting from
+one going up to five. You can navigate horizontally accross an item&#8217;s
+screens by using alt-1, alt-2, and so forth.</p>
+<p i18n:translate="">
+  Each tab has a toplink <img src="up_tree.gif" height="9" width="9" alt="tree" i18n:name="img"/>, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number).
+</p>
+<p i18n:translate="">
+  On the right of each tab is an uplink <img src="up_level.gif" height="9" width="9" alt="bush" i18n:name="img" />, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are  in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key.
+</p>
+<p i18n:translate="">
+  <span i18n:name="footer_page_info_row">
+    <span class="subhead" i18n:translate="">Footer page info row</span></span><br i18n:name="br" />
+  : &nbsp; See public page<br i18n:name="br" />
+</p>
+<p i18n:translate="">
+  <span i18n:name="footer_user_row">
+    <span class="subhead" i18n:translate="">Footer user row</span></span><br i18n:name="br" />
+  ~ &nbsp; User settings<br i18n:name="br" />
+  &nbsp;, &nbsp; Request access<br i18n:name="br" />
+  q &nbsp; Logout
+</p>
+
+<h3 i18n:translate="">Contents screen (folder)</h3>
+
+<p i18n:translate="">
+  <span i18n:name="listing_header">
+    <span class="subhead" i18n:translate="">Listing header</span></span><br i18n:name="br" />
+  n &nbsp; new<br i18n:name="br" />
+  s &nbsp; select list for a new object<br i18n:name="br" />
+  i &nbsp; import<br i18n:name="br" />
+  e &nbsp; export
+</p>
+<p i18n:translate="">
+  <span i18n:name="listing_body">
+    <span class="subhead" i18n:translate="">Listing body</span></span><br i18n:name="br" />
+  p &nbsp; Select list for position number<br i18n:name="br" />
+  m &nbsp; move
+</p>
+<p i18n:translate="">
+  <span i18n:name="listing_footer">
+    <span class="subhead" i18n:translate="">Listing footer</span></span><br i18n:name="br" />
+  a &nbsp; select all<br i18n:name="br" />
+  r &nbsp; rename<br i18n:name="br" />
+  d &nbsp; delete<br i18n:name="br" />
+  x &nbsp; cut<br i18n:name="br" />
+  c &nbsp; copy<br i18n:name="br" />
+  v &nbsp; paste<br i18n:name="br" />
+  g &nbsp; paste as ghost
+</p>
+
+<h3 i18n:translate="">Preview screen</h3>
+
+<p i18n:translate="">
+  ; &nbsp; See public preview<br i18n:name="br" />
+</p>
+
+<h3 i18n:translate="">Publish screen (folder)</h3>
+
+<p i18n:translate="">
+  <span i18n:name="listing_header">
+    <span class="subhead" i18n:translate="">Listing header</span></span><br i18n:name="br" />
+  i &nbsp; import<br i18n:name="br" />
+  e &nbsp; Export 
+</p>
+<p i18n:translate="">
+  <span i18n:name="listing_footer">
+    <span class="subhead" i18n:translate="">Listing footer</span></span><br i18n:name="br" />
+  a &nbsp; select all<br i18n:name="br" />
+  n &nbsp; create new vesions<br i18n:name="br" />
+  j &nbsp; reject (request for approval)<br i18n:name="br" />
+  v &nbsp; revoke (request for approval)<br i18n:name="br" />
+  c &nbsp; close (public version)<br i18n:name="br" />
+  l &nbsp; approve for later<br i18n:name="br" />
+  u &nbsp; update settings<br i18n:name="br" />
+  p &nbsp; publish now<br i18n:name="br" />
+</p>
+
+<h3 i18n:translate="">Add screen</h3>
+
+<p i18n:translate="">
+  c &nbsp; cancel<br i18n:name="br" />
+  a &nbsp; add<br i18n:name="br" />
+  e &nbsp; add and edit/enter
+</p>
+
+<h3 i18n:translate="">Editor screen</h3>
+
+<p i18n:translate="">
+  ( &nbsp; forms editor<br i18n:name="br" />
+  ) &nbsp; Kupu editor<br i18n:name="br" />
+  ; &nbsp; public preview<br i18n:name="br" />
+  p &nbsp; publish now<br i18n:name="br" />
+</p>
+
+<p i18n:translate="">
+  <span i18n:name="kupu_editor">
+    <span class="subhead" i18n:translate="">Kupu editor</span></span><br i18n:name="br" />
+  b &nbsp; bold<br i18n:name="br" />
+  i &nbsp; italic<br i18n:name="br" />
+  u &nbsp; underline<br i18n:name="br" />
+  - &nbsp; subscript<br i18n:name="br" />
+  + &nbsp; superscript<br i18n:name="br" />
+  # &nbsp; numbered list<br i18n:name="br" />
+  * &nbsp; bulleted list<br i18n:name="br" />
+  = &nbsp; definition list<br i18n:name="br" />
+  z &nbsp; undo<br i18n:name="br" />
+  y &nbsp; redo<br i18n:name="br" />
+  h &nbsp; html source<br i18n:name="br" />
+</p>
+
+<p i18n:translate="">
+  <span i18n:name="forms_editor">
+    <span class="subhead" i18n:translate="">Forms editor</span></span><br i18n:name="br" />
+  s &nbsp; save<br i18n:name="br" />
+  e &nbsp; save and exit<br i18n:name="br" />
+  i &nbsp; save and insert<br i18n:name="br" />
+  tab Use your tab key to edit without using the mouse. Shift-tab goes backwards.
+</p>
+
+<h3 i18n:translate="">Other screens</h3>
+
+<p i18n:translate="">
+The Properties, Access, and Publish screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip. 
+</p>
+<p i18n:translate="">
+If there are two buttons with the same name, the access key for the second is usually the first letter of the second word (e.g. for &#8220;get image reference&#8221; and &#8220;get link reference&#8221;, the access keys are &#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are multiples of the same button, in which case only the first has an access key.
+</p>
+
+<h4 i18n:translate="">Notes</h4>
+
+<ul class="square"
+  style="padding-left:1.4em;">
+  <li i18n:translate="">
+    Some access keys can conflict with browser menus. However the key works if the focus is in the page (a form element is active or just click in the page).
+  </li>
+  <li i18n:translate="">
+    Mozilla and Internet Explorer handle access keys for hyperlinks differently. Mozilla initiates the action (same as clicking the link), whereas Explorer just highlights the link, and then you have to hit return to activate it. Both browsers treat form buttons the same, initiating the action immediately.
+  </li>
+  <li i18n:translate="">
+    Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward. On the Mac, command-left arrow and command-right arrow do this.
+  </li>
+</ul>
+<p i18n:translate="">
+  If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface.
+</p>
+
+<h4 i18n:translate="">
+  Tip: one click editing
+</h4>
+
+<p i18n:translate="">
+  When viewing a public Silva page, switching to the SMI is is easiest if
+  there's a bookmark on your toolbar. Add a bookmark with the following
+  javascript: 
+</p>
+<pre>javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')</pre>
+<p i18n:translate="">
+  Or, save this link &#8211; <span i18n:name="silva_edit"><a
+  href="javascript:window.location.pathname=(window.location.pathname +'/edit').replace(/\/\//,'/')" i18n:translate="">Silva edit</a></span> 
+  &#8211; as a bookmark.
+</p>
+
+<p i18n:translate="">
+  Managers can do the same and create a <span i18n:name="manage"><a href="javascript:window.location.pathname=(window.location.pathname +'/manage_main').replace(/\/\//,'/')" i18n:translate="">manage...</a></span> bookmark.
+</p>
+
+<p i18n:translate="">
+  Thanks to <a href="http://www.ethz.ch/" i18n:name="eth_zuerich">ETH Z&uuml;rich</a> for this trick.
+</p>
+
+<p i18n:translate="">
+  <span i18n:name="tip_for_mozilla_users">
+    <span class="subhead" i18n:translate="">Tip for Mozilla/Netscape users</span></span><br i18n:name="br" />
+  Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as item names &#8211; remarkably easy. See:<br i18n:name="br" />
+  <a href="http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html" i18n:name="typeaheadfind_link">http://www.mozilla.org/projects/ui/accessibility/typeaheadfind.html</a>
+</p>
+
+<h2 style="margin-top:1.4em;" i18n:translate="">Silva documentation</h2>
+
+<p i18n:translate="">
+  The most up to date documentation can be found at:<br i18n:name="br" />
+  <a href="http://www.infrae.com/products/silva/docs" i18n:name="silva_documentation_link">http://www.infrae.com/products/silva/docs</a>
+</p>
+<p i18n:translate="">
+  The technical documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.).
+</p>
+
+<p i18n:translate="">
+  <br i18n:name="br" />
+  <span i18n:name="contact">
+    <span class="subhead" i18n:translate="">Contact</span></span><br i18n:name="br" />
+    <span i18n:name="feedback"><a href="mailto:docs@infrae.com" i18n:translate="">Feedback</a></span> is welcome.
+</p>
+
+</div>
+
+<a style="float:right;margin:0.7em 1em;"
+  href="javascript:history.back();" 
+  title="access key: alt-r"
+  accesskey="r"
+  i18n:attributes="title"
+  i18n:translate="">
+  return
+  </a>
+
+</body>
+</html>

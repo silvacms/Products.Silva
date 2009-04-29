@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<metal:block define-macro="listings"
+  tal:define="finished_jobs python: here.service_docma.get_finished_jobs_for_userid(str(userid), format=format);">
+
+<span tal:replace="nothing">
+  _____________________ running job feedback _____________________
+</span>
+<tal:condition condition="python: processingident != 0">
+  <div class="feedback">
+        <span i18n:translate="">current job</span>:
+        <span tal:replace="processingident">#</span><br />
+        <span i18n:translate="">owner</span>:
+        <span tal:replace="python: here.service_members.get_member(here.service_docma.get_ident_owner(processingident)).fullname()">owner</span><br />
+        <span i18n:translate="">description</span>:
+        <span tal:replace="python: here.service_docma.get_ident_description(processingident)">desc</span>
+  </div>
+</tal:condition>
+
+
+<span tal:replace="nothing">
+  _____________________ processing table  _____________________
+</span>
+<a href="queue" />
+<form action="." enctype="multipart/form-data" method="post"
+  tal:condition="docma_running">
+  <table class="listing">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="5">
+          <a class="transporter"
+            style="float: right;"
+            title="reload to update the queue lists: alt-r"
+            accesskey="r"
+            tal:attributes="href string:${model/absolute_url}/edit/${template/id}"
+            i18n:attributes="title"
+            i18n:translate=""
+          >
+            <u i18n:name="r">r</u>efresh queue lists
+          </a>
+          <h3 i18n:translate="">
+            queue of items to process
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tal:block condition="nothing">
+        ______________ docma queue ______________
+      </tal:block>
+      <tr tal:condition="qls">
+        <th class="align-right"
+          width="4%"
+          i18n:translate="">
+          job id
+        </th>
+        <th width="15%"
+          i18n:translate="">
+          job owner
+        </th>
+        <th
+          i18n:translate="">
+          description
+        </th>
+        <th width="15%"
+          i18n:translate="">
+          estimated time
+        </th>
+        <th class="align-right"
+          width="10%"
+          i18n:translate="">
+          status
+        </th>
+      </tr>
+
+      <tal:repeat repeat="job queue">
+        <tr tal:define="iterate repeat/job/odd;"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td class="align-right"
+            tal:content="job">
+            job id
+          </td>
+          <td tal:content="python: here.service_members.get_member(here.service_docma.get_ident_owner(job)).fullname()">
+            owner
+          </td>
+          <td  tal:content="python: here.service_docma.get_ident_description(job)">
+            description
+          </td>
+          <td i18n:translate="">
+            <span tal:content="python: here.service_docma.get_estimated_time_for_ident(job)" i18n:name="estimated_time" />
+            &nbsp;seconds
+          </td>
+          <td class="align-right"
+            tal:content="python: here.service_docma.get_status(job)">
+            status
+          </td>
+        </tr>
+      </tal:repeat>
+
+      <tr class="even"
+        tal:condition="not: qls">
+        <td colspan="5"
+          i18n:translate="">
+          There are no jobs in the queue.
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr class="controls">
+        <td colspan="5">
+       </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+
+<span tal:condition="nothing">
+  _____________________ finished jobs _____________________
+</span>
+
+<form action="."
+  method="post"
+  name="finishedJobQueue">
+
+  <table class="listing"
+    tal:define="ls python: len(finished_jobs) != 0">
+    <thead>
+      <tr class="top-controls">
+        <td colspan="4">
+          <h3 i18n:translate="">
+            list of processed items
+            <tal:condition condition="python: format is not None" i18n:name="format">
+              (<tal:replace replace="python:here.getDocmaFormatName(format)" />)
+            </tal:condition>
+          </h3>
+        </td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr tal:condition="ls">
+        <th class="align-right"
+          width="4%"
+          i18n:translate="">
+          job id
+        </th>
+        <th width="15%"
+          i18n:translate="">
+          type
+        </th>
+        <th i18n:translate="">
+          description
+        </th>
+        <th class="align-right"
+          width="10%"
+          i18n:translate="">
+          download
+        </th>
+      </tr>
+
+      <tal:repeat repeat="job finished_jobs">
+        <tr tal:define="iterate repeat/job/odd;"
+          tal:condition="python: format == job.format"
+          tal:attributes="class python: iterate and 'odd' or 'even'">
+          <td class="listing-left">
+            <input class="min"
+              name="storageids:list"
+              type="checkbox"
+              tal:attributes="value python: '%s|%s' % (job.id, job.format)" />
+            <span tal:content="job/id">job id</span>
+          </td>
+          <td tal:content="python:here.getDocmaFormatName(format)">
+            format
+          </td>
+          <td tal:content="job/description">
+            description
+          </td>
+          <td class="align-right">
+            <a href="#"
+              tal:attributes="href python:'tab_edit_import_download?storageid=%s|%s' % (job.id, job.format)"
+              i18n:translate="">
+              download
+            </a>
+          </td>
+        </tr>
+      </tal:repeat>
+
+      <tr class="even"
+        tal:condition="not:ls">
+        <td align="left"
+          colspan="4"
+          i18n:translate="">
+          There are no processed jobs.
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tal:block replace="nothing">
+        ______________ select all row ______________
+      </tal:block>
+      <tr tal:condition="ls">
+        <th class="controls listing-left"
+          colspan="6">
+          <metal:block use-macro="here/macro_select_all/macros/select_all"/>
+        </th>
+      </tr>
+
+      <tr class="controls">
+        <td class="align-right"
+          colspan="4">
+          <tal:condition condition="ls">
+            <span replace="nothing">
+              <!-- controls are for the import screen, slot is only used in export -->
+            </span>
+            <div notal:condition="may_change_content"
+              metal:define-slot="manipulators">
+              <input class="button remover"
+                accesskey="x"
+                name="tab_edit_import_delete:method"
+                onclick="return confirm('Really remove?')"
+                title="there's no undo: alt-x"
+                type="submit"
+                value="remove"
+                i18n:attributes="value;title"
+              />
+              <input class="button"
+                accesskey="m"
+                name="tab_edit_import_import_and_delete:method"
+                title="import to the current location and remove from the list: alt-m"
+                type="submit"
+                value="import and remove"
+                i18n:attributes="value;title" />
+              <input class="button"
+                accesskey="p"
+                name="tab_edit_import_w2s:method"
+                title="import to the current location: alt-p"
+                type="submit"
+                value="import"
+                i18n:attributes="value;title" />
+            </div>
+          </tal:condition>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+</metal:block>
+
+</html>

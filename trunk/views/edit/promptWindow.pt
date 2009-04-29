@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+    xml:lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    xmlns:notal="http://www.infrae.com/silva/notal"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    metal:use-macro="here/macro_no_tabs/macros/master"
+    i18n:domain="silva">
+
+<metal:fill-slot fill-slot="main">
+
+<form>
+  <table class="listing"
+    style="margin-bottom:0;">
+    <tbody>
+      <tr class="top-controls">
+        <td class="align-left"
+          colspan="2">
+          <h3 i18n:translate="">
+            session timeout
+          </h3>
+        </td>
+      </tr>
+      <tr class="even">
+        <td class="feedback"
+          colspan="2"
+          i18n:translate="">
+          In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually.
+        </td>
+      </tr>
+      <tr class="controls">
+        <td>
+          <input class="button canceler"
+            type="button"
+            value="cancel"
+            title="cancel the automatic save action: alt-c"
+            accesskey="c"
+            onclick="window.close()"
+            i18n:attributes="value;title"
+          />
+        <td class="align-right">
+          <input class="button"
+            type="button"
+            value=" save "
+            title="save the document you were working on: alt-s"
+            accesskey="s"
+            onclick="window.opener.saveHelper(); window.close()"
+            i18n:attributes="value;title"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+</metal:fill-slot>
+</html>

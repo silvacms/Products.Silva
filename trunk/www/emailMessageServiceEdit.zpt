@@ -1,0 +1,39 @@
+<!--
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+Version of this file: $Revision: 1.10 $
+-->
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<h4><a href="../manage_services">Silva Services</a></h4>
+                                                                                                                                                                              
+<h2 i18n:translate="">Silva Email Message Service</h2>
+
+<form action="manage_edit" method="post">
+<table cellspacing="0" cellpadding="2" border="0">
+  <tr tal:repeat="field here/edit_form/get_fields">
+    <td align="left" valign="top" class="form-label" 
+        tal:content="python:field.get_value('title')">
+      Field title:
+    </td>
+    <td align="left" valign="top" 
+        tal:content="structure python:field.render(getattr(here, field.id)())">
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;
+    </td>
+    <td align="left" valign="top">
+      <input class="form-element" type="submit" 
+              i18n:attributes="value" 
+              value=" Change Settings " />
+    </td>
+  </tr>
+</table>
+</form>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

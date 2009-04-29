@@ -1,0 +1,92 @@
+<html metal:use-macro="here/layout_macro.html/macros/layout"
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  >
+<head>
+  <title i18n:translate="">membership</title>
+</head>
+<body>
+
+<metal:block fill-slot="main">
+<tal:block define="dummy python:here.REQUEST.model.security_trigger()"
+  condition="python: hasattr(here, 'service_members') and here.service_members.allow_authentication_requests()">
+
+<h2 i18n:translate="">membership</h2>
+
+<form action="request_roles_submit"
+  method="post"
+  tal:define="global member python: here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getId())">
+<input type="hidden"
+  name="last_url"
+  tal:attributes="value here/REQUEST/last_url"
+/>
+<div style="width:24em;"
+   tal:define="notice options/message | nothing">
+  <h3 i18n:translate="">
+    Request roles at this location
+  </h3>
+  <!-- __________________________ feedback _________________________ -->
+  <p tal:condition="notice">
+    <span class="error"
+      tal:content="structure notice">
+      message
+    </span>
+    <br /><br />
+  </p>
+  <tal:condition condition="python: not member.email() or not member.fullname()">
+    <p tal:condition="not: notice" i18n:translate="">
+        Please fill in the following fields.
+    </p>
+    <br /><br />
+    <p>
+      <span i18n:translate="">full name</span>:<br />
+      <input type="text" name="fullname" style="width: 100%;"
+        tal:attributes="value member/fullname" /><br /><br />
+      <span i18n:translate="">e-mail address</span>:<br />
+      <input type="text" name="email" style="width: 100%;"
+        tal:attributes="value member/email" /><br /><br />
+    </p>
+  </tal:condition>
+
+  <p>
+    <span i18n:translate="">Choose role(s) to request</span>:<br />
+    <tal:repeat repeat="role here/get_available_roles">
+    <input class="min"
+      type="checkbox"
+      name="roles:list"
+      tal:attributes="
+        value role;
+        id role;
+    " />
+    <label tal:attributes="for role"
+      tal:content="role">
+      Role
+    </label><br />
+    </tal:repeat>
+  </p>
+  <input class="button"
+    style="float:right;"
+    type="submit"
+    value=" Send request "
+    title="Send request for role: alt-s"
+    accesskey="s"
+    i18n:attributes="value;title"
+  />
+</div>
+</form>
+
+</tal:block>
+
+<tal:block condition="python: not hasattr(here, 'service_members') or not here.service_members.allow_authentication_requests()">
+  <span i18n:translate="">This site does not allow requests for roles</span>.
+</tal:block>
+
+</metal:block>
+</body>
+</html>

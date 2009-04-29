@@ -1,0 +1,64 @@
+<metal:block define-macro="options">
+  <tal:block define="
+    preselected preselected | nothing;
+    i_am_manager i_am_manager | silva_permissions/ChangeSilvaViewRegistry | nothing;
+    managers_only_options managers_only_options | python: ('Manager', 'ChiefEditor');
+    optgroups python: here.macro_role_options_roles()['local_roles'];
+      "
+    >
+    <optgroup
+      tal:repeat="
+        optgroup optgroups/keys"
+      tal:attributes="
+        label optgroup"
+      i18n:attributes="label"
+      >
+      <tal:block
+        tal:repeat="
+          option optgroups/?optgroup"
+        >
+        <option
+          i18n:translate=""
+          tal:condition="
+            python: i_am_manager or option not in managers_only_options"
+          tal:content="
+            option"
+          tal:attributes="
+            value option;
+            selected python: option == preselected and 'selected' or nothing;
+            "
+        />
+      </tal:block>
+    </optgroup>
+  </tal:block>
+</metal:block>
+
+<metal:block define-macro="access_restriction_options">
+  <tal:block define="
+    preselected preselected | nothing;
+    optgroups python: here.macro_role_options_roles()['ar_roles'];
+    "
+    >
+    <optgroup
+      tal:repeat="
+        optgroup optgroups/keys"
+      tal:attributes="
+        label optgroup"
+      i18n:attributes="label"
+      >
+      <tal:block
+        tal:repeat="
+          option optgroups/?optgroup"
+        >
+        <option
+          i18n:translate=""
+          tal:content="option"
+          tal:attributes="
+            value option;
+            selected python: option == preselected and 'selected' or nothing;
+            "
+        />
+      </tal:block>
+    </optgroup>
+  </tal:block>
+</metal:block>

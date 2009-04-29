@@ -1,0 +1,150 @@
+<dtml-let last_modified="_.DateTime()-14" expires="_.DateTime()+7" >
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Content-Type', 'text/css' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Last-Modified', last_modified.toZone('GMT').rfc822() )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Cache-Control', 'max-age=36000, must-revalidate' )">
+<dtml-call "REQUEST.RESPONSE.setHeader( 'Expires', expires.toZone('GMT').rfc822() )" >
+</dtml-let>
+
+/* This style sheet contains specific styles for Content views */
+
+<dtml-with stylesheet_properties>
+
+/* _________________________________________________________ matrix nav _____ */
+
+div.tabs a {
+  background-color: &dtml-contentTabBackground;;
+}
+
+div.tabs a:visited {
+  color:  &dtml-contentTabFontColor;;
+  background-color: &dtml-contentTabBackground;;
+}
+
+div.tabs a.selected {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.selected:visited {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.left:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.right:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.recede {
+  border-bottom: 1px #8b939b solid;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: &dtml-contentTabBackgroundRecede;;
+}
+
+div.tabs a.recede:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+}
+
+div.tabs a.normal:visited {
+  background-color: transparent;
+}
+
+div.tabs a.transportlet:link {
+  color:  &dtml-contentTabFontColor;;
+  background-color: &dtml-contentTabBackground;;
+}
+div.tabs a.transportlet:visited {
+  color:  &dtml-contentTabFontColor;;
+  background-color: &dtml-contentTabBackground;;
+}
+div.tabs a.transportlet:hover {
+  border-bottom-color: &dtml-contentTabBackgroundSelected;;
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: &dtml-contentTabBackgroundSelected;;
+  text-decoration: none;
+}
+
+/* ___________________________________________________________ flow bar _____ */
+
+div.flowbar {
+  border-top: 3px solid &dtml-contentTabBackgroundSelected;;
+}
+
+
+/* _______________________________________________________ middleground _____ */
+
+div.middleground {
+  background-color: #779D8A;
+}
+
+div.middleground a.selected {
+  /* The selected tab. There's only one  */
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: #a7d4b6;
+}
+
+div.middleground a.selected:visited {
+  color: &dtml-mainTabFontColorSelected;;
+  background-color: #a7d4b6;
+}
+
+
+/* ______________________________________________________ sidebar stack _____ */
+
+td.selected {
+  background: #ddece6;
+}
+
+td.unselected {
+  border-top-color: #c0d5ce;
+  border-bottom-color: #c0d5ce;
+  background: #c0d5ce;
+}
+
+td.unselected:hover {
+  background-color: #d4e9e7;
+}
+
+
+/* ______________________________________________ content listing table _____ */
+
+table.listing td.top h2 {
+  color: &dtml-listingTopHeadingColorContent;;
+}
+
+table.listing tr.top-controls h3 {
+  color: &dtml-listingTopControlsHeadingColorContent;;
+}
+/*
+table.listing td.top img {
+border-color:&dtml-listingTopHeadingColorContent;;
+background-color:&dtml-listingTopHeadingColorContent;;
+}
+*/
+
+/* _____________________________________________________________ footer _____ */
+
+div.footer {
+  background-color: &dtml-listingTopHeadingColorContent;;
+}
+
+
+/* _______________________________________________________________ misc _____ */
+
+a.index-element {
+  background-color:#efe4ad ! important;
+}
+
+
+</dtml-with>

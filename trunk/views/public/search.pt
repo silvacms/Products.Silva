@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<tal:block define="here request/model;">
+<metal:block use-macro="request/model/layout_macro.html/macros/layout">
+  <head>
+    <title metal:fill-slot="title" i18n:translate="">Search</title>
+  </head>
+  <body>
+    <metal:block fill-slot="main">
+    <metal:block define-macro="search">
+      <form method="post" name="form"
+        tal:define="
+          icon python:here.render_icon(here)"
+        tal:attributes="action string:${here/absolute_url}/public/search_results">
+        <table class="silvatable" cellspacing="0" cellpadding="3">
+          <thead>
+            <tal:block replace="nothing">
+              ______________ vein + title row ______________
+            </tal:block>
+            <tr>
+              <td class="top"
+                colspan="3">
+                <h2>
+                  <img tal:replace="structure icon" />
+                  <span i18n:translate="">Search</span> &#xAB;<tal:block content="here/get_title_or_id" />&#xbb;
+                </h2>
+              </td>
+            </tr>
+            <tal:block replace="nothing">
+              ______________ top controls row ______________
+            </tal:block>
+            <tr class="top-controls">
+              <td colspan="3">
+                <h3 i18n:translate=""
+                  metal:define-slot="feedback">
+                  Search interface
+                </h3>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody tal:define="fields here/public/search_form/get_fields">
+            <tr>
+              <th class="align-left" width="20%" i18n:translate="">
+                Element
+              </th>
+              <th class="align-left" i18n:translate="">
+                Content
+              </th>
+              <th class="align-left" width="40%" i18n:translate="">
+                Note
+              </th>
+            </tr>
+
+            <tal:repeat repeat="field fields">
+              <tal:define define="iterate repeat/field/odd">
+                <tr tal:attributes="class python:iterate and 'even' or 'odd'">
+                  <td class="field-title">
+                    <span tal:replace="python:field['title']">
+                      Title</span><span class="warning"
+                      tal:condition="python:field.is_required()">*</span>
+                  </td>
+                  <td>
+                    <input tal:replace="structure python:field.render_from_request(request)" />
+                  </td>
+                  <td>
+                    <span tal:replace="structure python:field.get_value('description')">
+                      comments here (field description)
+                    </span>&nbsp;
+                  </td>
+                </tr>
+              </tal:define>
+            </tal:repeat>
+          </tbody>
+
+          <tfoot>
+            <tr class="controls">
+              <td>
+              </td>
+              <td colspan="2">
+                <input class="button"
+                  type="submit"
+                  value="Search"
+                  title="access key: alt-s"
+                  accesskey="f"
+                  i18n:attributes="value;title"
+                />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+
+    </metal:block>
+    </metal:block>
+  </body>
+</metal:block>
+</tal:block>

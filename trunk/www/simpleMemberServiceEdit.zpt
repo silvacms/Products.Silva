@@ -1,0 +1,41 @@
+<!--
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+Version of this file: $Revision: 1.7 $
+-->
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<h2>
+  Manage Simple MemberService
+</h2>
+
+<form action="." method="post" class="form-text">
+
+<table width="500">
+  <tr>
+    <td valign="top" width="300">
+      <div class="form-label">Allow membership requests on this site:</div>
+      <div class="form-element">
+        <input type="radio" name="allow_authentication_requests" value="0" tal:attributes="checked python: test(here.allow_authentication_requests(), '', 'CHECKED')" />No<br />
+        <input type="radio" name="allow_authentication_requests" value="1" tal:attributes="checked python: test(here.allow_authentication_requests(), 'CHECKED', '')" />Yes<br />
+      </div>
+    </td>
+    <td class="form-text" valign="top">
+      When set to 'Yes', a user will be presented a link to request roles on an object if he/she fails to authenticate. The requests will be e-mailed to the (nearest) ChiefEditor(s), who can then allow or deny the role to that user in the access tab of the object.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <input type="submit" name="manage_allowAuthenticationRequests:method" value="Change Settings" class="form-element" />
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

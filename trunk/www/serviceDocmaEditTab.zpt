@@ -1,0 +1,47 @@
+<!--
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+Version of this file: $Revision: 1.8 $
+-->
+<tal:define define="global view here;
+                    global conn_and_pw view/try_connection_and_pw;
+                    global status python: test(conn_and_pw, 'connected', 'not connected');
+                    " />
+
+<span tal:replace="structure here/manage_page_header">Header</span>
+
+<span tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</span>
+
+<div class="system-msg">
+<span tal:condition="conn_and_pw">Status: connected</span>
+<span tal:condition="not:conn_and_pw">Status: not connected</span>
+</div>
+
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<div class="form-title">Docma service settings</div><br />
+<form method="post" action="." enctype="multipart/form-data">
+<div class="form-text">DocmaServer host name or IP address:</div>
+<input type="text" class="form-element" name="host" tal:attributes="value view/host" /><br /><br />
+<div class="form-text">Port:</div>
+<input type="text" class="form-element" name="port" tal:attributes="value view/port" /><br /><br />
+<div class="form-text">Password:</div>
+<input type="text" class="form-element" name="password" tal:attributes="value view/password" /><br /><br />
+<tal:block condition="conn_and_pw">
+<div class="form-text">Word templates:</div>
+<select class="form-element" name="template" tal:define="templates view/get_templates">
+<tal:repeat repeat="template templates">
+<option tal:attributes="value template" tal:content="template"></option>
+</tal:repeat>
+</select>
+<input type="submit" value="Delete" name="manage_delete_template:method" class="form-element" />
+<br /><br />
+<div class="form-text">Add template:</div>
+<input type="file" class="form-element" name="new_template" />
+<br /><br />
+</tal:block>
+<input type="submit" value="Submit" name="manage_update_settings:method" class="form-element" />
+</form>
+
+<span tal:replace="structure here/manage_page_footer">Footer</span>

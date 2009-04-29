@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+_______ macro vein _______
+_______ renders the uplinks cap and navigation stack _______
+_______ used in almost every screen except user lookup _______
+
+TOC
+---
+macro vein
+  slot sidebar
+  slot plateau
+macro plateau
+
+<metal:define-macro define-macro="vein">
+<table class="listing"
+  cellspacing="0"
+  style="border-collapse:separate; margin-top:-1px;">
+  <thead>
+    <tr>
+      <th class="top"
+        tal:define="
+          model_is_root          python: model.implements_root();
+          publication            model/get_publication;
+          publication_is_root    python: model.get_publication() == model.get_root();
+          containing_publication publication/../get_publication | publication;
+          query_string           python: request.get('QUERY_STRING');
+          query_string           query_string | string:;
+          startpath              startpath | string:;
+          query_string           python: test(startpath and query_string and ('startpath=' not in query_string), query_string + '&startpath=' + startpath, query_string);
+          vein_id                template_id | template/id;
+          global vein_id         python: vein_id + test(query_string, '?' + query_string, '');
+          edit                   python:test('@@' in vein_id, '/', '/edit/');
+          up                     python:test('@@' in vein_id, '..', '../..');
+          ">
+        <a class="up"
+          title="up one level: alt-]"
+          accesskey="]"
+          tal:condition="not: model_is_root"
+          tal:attributes="href string:${up}${edit}$vein_id"
+          i18n:attributes="title">
+          <img width="9"
+            height="9"
+            border="0"
+            alt="up one level: alt-]"
+            i18n:attributes="alt"
+            tal:attributes="src string:$root_url/globals/up_level.gif" />
+        </a>
+        <a class="top"
+          title="up to containing publication: alt-["
+          accesskey="["
+          i18n:attributes="title"
+          tal:condition="not: model_is_root"
+          tal:attributes="href python: publication_is_root and (publication.absolute_url() + edit + vein_id) or (containing_publication.absolute_url() + edit + vein_id)">
+          <img width="9"
+            height="9"
+            border="0"
+            alt="up to containing publication: alt-["
+            i18n:attributes="alt"
+            tal:attributes="src python: publication_is_root and ('%s/globals/up_tree.gif' % root_url) or ('%s/globals/up_publication.gif' % root_url)" />
+        </a>
+        <a class="normal"
+          title="reload screen"
+          tal:content="vein"
+          tal:attributes="href vein_id"
+          i18n:translate=""
+          i18n:attributes="title">
+          vein
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tal:block replace="nothing">
+      _____________________ vein navigation stack _____________________
+    </tal:block>
+    <tal:block replace="nothing">
+      ______________ sidebar for containers ______________
+    </tal:block>
+    <tal:block condition="python: model.implements_container()">
+      <metal:define-slot define-slot="sidebar">
+        cached container sidebar inserted with template variables
+      </metal:define-slot>
+    </tal:block>
+    <tal:block replace="nothing">
+      ______________ sidebar for content items ______________
+    </tal:block>
+    <tal:condition condition="not:model/implements_container">
+      <metal:block use-macro="here/macro_vein_navigation/macros/plateau">
+        current level sidebar inserted
+      </metal:block>
+    </tal:condition>
+  </tbody>
+</table>
+</metal:define-macro>
+
+
+______________ macro plateau: level navigation ______________
+
+<metal:define-macro define-macro="plateau">
+<tal:define define="
+  objects            python:model.get_tree(0);
+  silva_permissions  here/get_silva_permissions;
+  default_document   model/get_default;
+  default_doc_list   python: test(default_document, [default_document], []);
+  assets             model/get_non_publishables;
+  items              python: default_doc_list + model.get_ordered_publishables() + model.get_non_publishables();
+  container          model/aq_parent/get_container;
+  container_url      string:${container/absolute_url};
+  container_vein_url string:${container/absolute_url}/edit/$vein_id;
+  ">
+
+<tr tal:replace="nothing">
+  _______ subheading row _______
+</tr>
+<tr tal:define="gentype python:model.meta_type.startswith('Silva ') and model.meta_type[6:].lower() or model.meta_type">
+  <th class="subth">
+    <tal:block i18n:translate=""><tal:block replace="string:$gentype" i18n:name="" /></tal:block>
+    <tal:block i18n:translate="">siblings</tal:block>
+  </th>
+</tr>
+<tr tal:replace="nothing">
+  _______ level container row _______
+</tr>
+<tr>
+  <td class="unselected"
+    style="border-top:none; padding-left:1px ! important;">
+    <div class="normal">
+      <a class="right"
+        title="slide to the publish screen"
+        tal:attributes="href string:$container_url/edit/tab_status"
+        i18n:attributes="title">
+        &nbsp;
+      </a>
+      <a class="navicon"
+        title="slide to the contents screen"
+        tal:attributes="href string:$container_url/edit;"
+        i18n:attributes="title">
+        <img tal:replace="structure python:here.render_icon(model.get_container())" />
+      </a>
+      <a class="blacklink"
+        href="top"
+        tal:content="python: container.get_short_title_editable() == '' and container.id or container.get_short_title_editable()"
+        i18n:attributes="title"
+        tal:attributes="
+          href  container_vein_url;
+          title string:id: ${container/id};
+        ">
+        container
+      </a>
+    </div>
+  </td>
+</tr>
+
+<tal:block replace="nothing">
+  _______ default + item listing _______
+</tal:block>
+<tal:repeat
+  repeat="item items">
+  <tal:define define="
+    is_default    python: item is default_document;
+    item_url      item/absolute_url;
+    item_vein_url string:$item_url/edit/$vein_id;
+    status_style  python:item.get_object_status()[1];
+    location      python: model.id == item.id and 'selected' or 'unselected';
+  ">
+
+<tr>
+  <td tal:attributes="class location"
+    tal:define="title item/get_short_title_editable">
+    <a class="right"
+      title="slide to the publish screen"
+      tal:condition="python:item.implements_versioning() or item.implements_container()"
+      tal:attributes="href string:$item_url/edit/tab_status"
+      i18n:attributes="title">
+      &nbsp;
+    </a>
+    <a class="left"
+      title="slide to the contents screen"
+      tal:attributes="href string:$item_url/edit"
+      i18n:attributes="title">
+      &nbsp;
+    </a>
+    <a class="navicon"
+      tal:attributes="
+        href  string:$item_vein_url;
+        title item/meta_type;
+      ">
+      <img tal:replace="structure python:here.render_icon(item)" />
+    </a>
+    <div class="normal"
+      tal:attributes="
+        style   string:padding-left:8px;">
+      <a tal:attributes="
+        href  item_vein_url;
+        class status_style;
+        title string:id: ${item/id};
+      ">
+        <em tal:condition="is_default" i18n:translate="">index:</em>
+        <span tal:replace="python: item.get_short_title_editable() == '' and item.id or item.get_short_title_editable()">
+          title
+        </span>
+      </a>
+    </div>
+  </td>
+</tr>
+<tr class="controls"
+  tal:condition="repeat/item/end">
+  <td style="border-top:1px solid #abc">
+  </td>
+</tr>
+
+  </tal:define>
+</tal:repeat>
+
+  </tal:define>
+</metal:define-macro>
+</html>

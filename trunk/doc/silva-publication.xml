@@ -1,0 +1,34 @@
+<metadata_set id="silva-publication" ns_uri="http://infrae.com/namespaces/metadata/silva-publication" ns_prefix="silva-publication">
+<title></title>
+<description></description>
+<i18n_domain>silva</i18n_domain>
+<metadata_element id="defaultdocument_policy">
+   <index_type>KeywordIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>ListField</field_type>
+   <acquire_p>0</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+       <value key="title" type="str" value="Default Document Policy" />
+       <value key="size" type="int" value="1" />
+       <value key="required" type="int" value="0" />
+   </field_values>
+   <field_tales>
+        <value key="items">python:form.get_root().service_containerpolicy.listPolicies()</value>
+   </field_tales>
+   <field_messages>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+</metadata_set>

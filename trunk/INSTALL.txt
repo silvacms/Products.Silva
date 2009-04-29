@@ -1,0 +1,6 @@
+Installation
+============
+
+Please refer to the documentation online:
+
+  http://docs.infrae.com/silva/buildout.html

@@ -1,0 +1,603 @@
+================================
+Developer level changes in Silva
+================================
+
+From 2.1 to 2.2
+===============
+
+Please refer to the Silva developer documentation:
+
+  http://docs.infrae.com/silva/index.html
+
+Important upgrade note
+----------------------
+
+The "table of contents" element in kupu and the forms-based editor
+has been deprecated, in favor of a table of contents codesource.  
+There is an upgrader for Silva 2.2 which converts any and all TOC
+elements in silvaxml into this code source.  For large silva sites,
+this upgrader may cause the Silva 2.2 content upgrade to take a long
+time.  As always during upgrades, be sure to disable access to
+silva sites!
+
+
+From 2.0 to 2.1
+===============
+
+Custom XSLT renderers
+---------------------
+
+We switched to lxml instead of libxslt for the xslt transformations,
+giving us more pythonic ways to handle xml and xslt. We also got rid
+of the ugly string interpolation hack that was necessary to import
+doc_elements.xslt from Silva in an extension that defines its own xslt
+stylesheets. From now on use:
+
+<xsl:import href="silvabase:doc_elements.xslt"/>
+
+and a custom resolver will figure out where to find the file.
+
+VersionedContent revert_to_previous
+-----------------------------------
+
+The revert_to_previous macro in views/edit/VersionedContent/tab_status_macros
+has been removed because it is no longer used.  You now use the 'manage
+versions' table on the status screen.  The API call for this functionality
+has also been removed. Make sure to update any extensions so that no
+reference to revert_to_previous or it's API is used.
+
+Edit tabs of content objects
+----------------------------
+
+The edit tab framework has been refactored.  The old model was to define an
+"edit" script that renders the main content/controls of the content object.
+This was ineffecient as it caused a lot of code duplication (and non-standard
+methods), as well as a number of variable redefinitions.  The "edit" script
+method has been deprecated in Silva 2.1.  This is to ease transition of
+content objects into the new method.
+
+The new method is much easier to use, and takes advantage of metal macros
+to reduce code duplication, standardize rendering methods, and virtually
+eliminate variable redefinitions.  Converting a content object's edit tab from
+"edit" to the new method involves renaming the edit template to "tab_edit.pt",
+converting the code to the primary macro in "views/macro_edit", and then
+using one of the layout macros.
+
+There is a primary macros in "macro_edit", "editor", and two layout macros:
+editor-three-col and editor-two-col, for three and two column layouts,
+respectively.  Read the comments at the top of this file to see the slots
+that can be overridden for the content object.
+
+VersionedContent types are a bit more challenging.  They use an intermediate
+macro which manages the "version" stuff in the tab.  For VersionedContent
+types that don't use kupu (e.g. Ghost, Link),
+views/edit/VersionedContent/macro_tab_edit/macros/editor is used.  The
+"editable" view of the tab (i.e. when the content isn't closed or only published)
+is defined by filling in the "editor_content" slot of the editor macro.  Either
+of the layout macros in "views/macro_edit" may be used.
+
+To ease the conversion, stepping through a comparable content types 'edit' tab
+is recommended.  Use the following to determine a recommented comparable type:
+content type is   | look here
+IContainer        | Container/Folder/tab_edit.pt
+IContent	  | Content/(Indexer|AutoTOC)/tab_edit.pt
+IVersionedContent | VersionedContent/Link/tab_edit.pt
+
+Removing Silva Content Types from the ZMI Add List
+--------------------------------------------------
+
+The ZMI add list has always been incredibly cluttered.  This affects
+users new to Silva, as they're presented many different Silva content
+types when all they want is the "Silva Root", and all of the others won't work
+outside of a Silva Root.  Also, many Silva content types should only be
+added through the SMI.  This can create confusion when these types are added
+from the ZMI, then fail to work.  This also creates clutter for site
+administrators who need to search for a "Silva Code Source" amongst this large
+list of items that aren't ever applicable.
+
+Silva 2.1 provides a facility to eliminate this clutter.  The core Silva content
+types are already setup to do this.  From Silva 2.1 on, the ZMI add list is
+now "clutter free".
+
+There are two types of Silva content objects, and there two ways to eliminate
+them from the ZMI.  The first method is used for content types that are
+registered through the Silva zcml extension (i.e. <silva:content> and
+<silva:versionedcontent>).  Both directives have the new boolean attribute
+"zmi_addable", which controls whether the content object will appear in the
+ZMI add list.
+
+Here's an example for a content object that you want to have available in the ZMI
+add list:
+
+<silva:content
+  extension_name="MySilvaExtension"
+  content=".content.MyType"
+  icon="icon.png"
+  zmi_addable="true"
+  />
+
+The zmi_addable attribute is "false" by default, so it can be omitted from
+content (or versionedcontent) registration if you want the content omitted
+from the ZMI add list.
+
+Note: even if zmi_addable is "true", the content will not appear in the
+ZMI add list of containers that aren't Silva objects (i.e. implement
+ISilvaObject).
+
+The second method is for objects that are registered via __init__.py.
+Commonly, these objects are Silva services or Silva External Sources (e.g.
+Code Sources).  The intent of hiding these from the ZMI add list is to hide
+these from the add list of containers that are not Silva objects, and/or outside
+the Silva Root (i.e. implement ISilvaObject).  A typical service is
+registered like this:
+
+def initialize(context):
+    context.registerClass(
+        ExtensionService.ExtensionService,
+        constructors = (ExtensionService.manage_addExtensionService,),
+        icon = "www/extension_service.gif"
+        )
+
+To hide this service from the ZMI add list, you add a special container_filter
+to registerClass (see docstring of App.ProductContext.registerClass):
+
+from Products.Silva.helpers import makeContainerFilter
+def initialize(context):
+    context.registerClass(
+        ExtensionService.ExtensionService,
+        constructors = (ExtensionService.manage_addExtensionService,),
+        icon = "www/extension_service.gif",
+        container_filter = makeContainerFilter()
+        )
+
+The makeContainerFilter function returns a container filter that will:
+1) filter the item for containers that aren't ISilvaObjects
+2) display the item for containers that are ISilvaObjects
+
+This function's signature is the following:
+def makeContainerFilter(zmi_addable=True, only_outside_silva=False)
+
+When zmi_addable is set to False, the registered content object does is filtered
+from the ZMI add list of all containers.  The zcml-based registrations, does this.
+
+The only_outside_silva parameter is used to reverse the behavior such that the
+registered content object appears in ZMI add lists of non-Silva containers.
+This is used to register the Silva Root, since it doesn't make much sense to
+next Silva roots.
+
+From 1.6 to 2.0
+===============
+
+Events instead of manage_afterAdd and manage_beforeDelete
+---------------------------------------------------------
+
+Zope 2.9 has deprecated manage_afterFoo and manage_beforeFoo methods
+in favor of events. A Simple example::
+
+  Silva 1.6:
+
+  def manage_afterAdd(self, item, container):
+    # do your stuff here
+
+  Silva 2.0:
+
+    in your configure.zcml:
+
+      <subscriber
+        for=".interfaces.IYourInterface
+          zope.app.container.interfaces.IObjectMovedEvent"
+        handler=".YourContentClassModule.object_moved"
+      />
+
+    in YourContentClassModule.py
+
+      def object_moved(object, event):
+          # these lines do some checks because of the way the zope events
+          # work:
+          # 1) If a folder is moved, the moved event is triggered for
+          # all its sub objects. In this example we do not want to handle only
+          # the event for the object itself.
+          #
+          # 2) the events subclass from eachother, which means, for instance,
+          # that move handlers are triggered for remove events too. We do not
+          # want to handle those here in this example.
+
+          if object != event.object or IObjectRemovedEvent.providedBy(
+              event) or IRoot.providedBy(object):
+              return
+          # do your stuff here
+
+See Silva itself for more involved examples.
+
+
+Different way of creating message ids for i18n
+----------------------------------------------
+
+Previously message ids for i18n which need interpolated values were
+created like this::
+
+  msg = _('the ${a} is ${b}')
+  msg.set_mapping({'a': 'cow', 'b': 'large'})
+
+This has changed to read like this::
+
+  msg = _('the ${a} is ${b}', mapping={'a': 'cow', 'b': 'large'})
+
+``set_mapping`` doesn't work anymore.
+
+From 1.5 to 1.6
+===============
+
+More efficient method to get metadata values
+--------------------------------------------
+
+There is a new method on the metadata service to get values from the
+metdata system in a vastly more efficient way.
+
+Where you used to get a binding for the object, and then ask the binding
+for a metadata value in a particular metadata set, like so:
+
+  binding = self.service_metadata.getMetadata(object)
+  value = binding.get('set_id', 'element_id')
+
+we've now implemented a method that can by-pass the binding, and that seems
+to give a nice performance boost:
+
+  value = self.service_metadata.getMetadataValue(
+      object, 'set_id', 'element_id')
+
+This should be used everywhere it's possible to do so, at least in the
+public views. Notable exceptions are: If you are doing something more than
+just getting a value from the metadata system, for instance setting
+metadata, you might just as well get the binding.
+
+(This was actually in 1.5 already, but never advertised before.)
+
+ZCML for extension registration
+-------------------------------
+
+Silva extensions and content types are now registered through ZCML
+instead of in __init__.py. For the time being, __init__.py based
+registration will continue to work, but the ZCML approach makes things
+much easier.  For details read doc/extension.txt.
+
+The ZCML directives normally work without you having to specify your
+own "manage_add" factory anymore - this is automatically
+generated. Some facilities exist however to support this for backwards
+compatibility.
+
+For details on the options available for the ZCML directives, read
+zcml/interfaces.py. These schemas describe the options to the
+directives.
+
+The Silva core as well as Silva Document now use ZCML to register
+themselves and their content types. You can read the configure.zcml
+file in these products for example code.
+
+no more 'title' argument for versions
+-------------------------------------
+
+The base classes in Version, namely Version and CatalogedVersion, have
+been changed so they do not expect a 'title' argument anymore; the
+only argument needed is an 'id'. This means that if you subclass from
+Version or CatalogedVersion you will probably need to change your
+constructor so it doesn't pass a title anymore to the superclass.
+
+This change has been made because the 'title' argument to the version
+has not been in use for a long time.
+
+Kupu
+----
+
+When switching to Kupu 1.4 (currently unreleased) we decided to make some
+changes in the way Silva uses it: instead of having a 'silva' directory inside
+the Kupu package containing Silva-speficic Kupu code, there's now a 'kupu'
+directory in the Silva core package. This should make it easier to release
+Silva seperately from Kupu, since most of the required changes for Silva can
+be done in Silva itself, so hopefully a lot of times a change in Silva's Kupu
+will only require a Silva release, not a Kupu one.
+
+This means that changes on Silva tools and template should now be done inside
+that new directory, and also that creating the 'kupumacros.html' file should
+be done from there: calling 'make' in Silva/kupu will result in what used to
+require calling 'make silvamacros' in kupu/silva.
+
+An additional change made is that the FileSystemSite directories that used to
+be called 'kupu' and 'kupu_silva' (residing in the Silva root) are now called
+'service_kupu' and 'service_kupu_silva'. This will break existing Silva
+extensions that implement a custom Kupu edit view. Make sure to update any
+URLs pointing to those objects in your extensions.
+
+removed activation API
+----------------------
+
+Silva contained an old set of APIs dealing with activation and
+deactivation of content. This was not in use anymore in the Silva UI
+for a long time, but the APIs still existed. These have been cleaned
+up. It's possible your code still uses these APIs. Here's a list of
+the methods that disappeared and what to do to adjust your code.
+
+is_active()
+~~~~~~~~~~~
+
+If this is a check in an `if` clause, remove this from the
+expression. If is the the only check in an `if` clause, remove the
+`if` part and let the main block always be executed (dedent it).
+
+can_deactivate()
+~~~~~~~~~~~~~~~~
+
+If you use this in an `if` clause, remove this from the expression. If
+it is the only check in the `if` clause, remove the `if` part and let
+the main block always be executed (dedent it).
+
+can_approve()
+~~~~~~~~~~~~~
+
+If you use this in an `if` clause, remove this from the expression. If
+it is the only check in the `if` clause, remove the `if` part and let
+the main block always be executed (dedent it).
+
+get_nonactive_publishables()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The notion of non-active publishables is gone, so if you were using it
+you probably can remove its use from the codebase entirely (the list
+would always be empty).
+
+activate(), deactivate()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This method disappeared. It wasn't possible to deactive from the user
+interface before, and now it stopped being possible from code.
+
+From 1.4 to 1.5
+===============
+
+Five
+----
+
+Zope 2.8 includes a significant portion of Zope 3, and includes Five. Silva
+does need a later version of Five than included with Zope 2.8 however,
+namely Five 1.2, which can be easily installed as a product and which
+ships with the Five tarball.
+
+Zope 3 interfaces
+-----------------
+
+Silva now uses Zope 3 interfaces throughout, instead of Zope 2 interfaces.
+
+If you use interfaces in your own code, import the `Interface` base class like
+this::
+
+  from zope.interface import Interface
+
+Instead of using `__implements__`, state that your class implements
+interfaces using the `implements` class annotation::
+
+  from zope.interface import implements
+
+  ...
+
+  class Foo:
+      implements(IFoo)
+
+You can check whether an instance provides an interface (i.e. whether
+its class implements an interface or the interface directly provides
+an interface) using `providedBy` (in Zope 2 this used to be
+'isImplementedBy')::
+
+  IFoo.providedBy(instance)
+
+In the rare case you want to check whether a *class* implements an
+interface (i.e. whether its instances will provide that interface), you
+use `implementedBy` (this used to be `isImplementedByInstancesOf` in
+Zope 2)::
+
+  IFoo.implementedBy(some_class)
+
+Five-based i18n
+---------------
+
+Silva now uses Zope 3 based i18n infrastructure, and
+PlacelessTranslationService is not in use anymore.
+
+All the translations of a product (such as `Silva`, `SilvaDocument`,
+etc) are now in a directory, i18n which is registered in that
+product's `configure.zcml` with the following simple directive::
+
+    <!-- i18n -->
+  <i18n:registerTranslations directory="i18n" />
+
+The i18n directory has the following structure::
+
+* a `.pot` file, such as `silva.pot`
+
+* an `__init__.py` file.
+
+* for each language, a subdirectory, such as `de`.
+
+This language subdirectory follows a standard pattern derives from the
+standard `gettext` tool. It contains a single subdirectory called
+`LC_MESSAGES`. This directory contains a `.po` file and a `.mo` file,
+such as `silva.mo` and `silva.po`.
+
+The `.mo` file is a compiled version of the `.po` file. Zope only
+consults the `.mo` files when looking for translations, so be sure to
+update the `.mo` file whenever you change the `.po` file. You can do
+this (on linux) with the standard `msgfmt` tool, with a command like
+this::
+
+  msgfmt silva.po -o silva.mo
+
+Zope 3 will likely evolve ways to make the generation of `.mo` files
+more automatic in the future and Silva will follow.
+
+Translating in Python code
+--------------------------
+
+Normally your i18n-ed code will just mark up page templates with
+i18n:translate, or return a message id (_('Something') to the page
+template. The page template will then take care of looking up
+translation and doing any interpolation.
+
+Sometimes you want to explicitly force translation (and interpolation)
+from Python code, for instance when your Python code is generating a
+snippet of HTML. Before Silva 1.5, this was done by calling
+`unicode()` on the message id. This doesn't work anymore, and has
+been replaced by something more explicit. Instead, you do the following::
+
+  from zope.i18n import translate
+
+which is also legal in Python scripts. And then in your code::
+
+  text = translate(msg_id)
+
+This forces translation and interpolation to happen directly,
+returning the translated string. Whenever you see interpolation
+characters such as ${foo} in the Silva UI, you know you probably have
+a missing `translate()` call in there; replace the `unicode()` call
+with a `translate()` call.
+
+Zope 3 adapters
+---------------
+
+Quite a few adapters in the `adapters` directory have been converted
+to use Zope 3 patterns. That is, Silva looks them up by interface now
+in the standard Zope 3 pattern. They also get registered through ZCML.
+
+Here's an example of some ZCML registrations::
+
+  <adapter
+    for="Products.Silva.interfaces.IGhost"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.GhostIndexableAdapter"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.IContainer"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.ContainerIndexableAdapter"
+    />
+
+  <adapter
+    for="Products.Silva.interfaces.ISilvaObject"
+    provides=".interfaces.IIndexable"
+    factory=".indexable.IndexableAdapter"
+    />
+
+And here's how you look it up in Python code::
+
+  indexable = IIndexable(my_content_object)
+
+You can then call methods on 'indexable'; to see which methods exist
+you can consult `adapters/interfaces.py`.
+
+From 1.3 to 1.4
+===============
+
+* For running the unit tests, ZopeTestCase 0.9.8 is now required.
+
+From 1.2 to 1.3
+===============
+
+* Metadata sets can have a 'category' property. This property can be used
+  to define special purpose metadata sets. This is used now for the
+  tab_settings SMI screen and the tab_metadata.
+
+* The minimal_role and category properties are exported and imported
+  to/from the XML metadata set definitions.
+
+* setValuesFromRequest now uses Formulator to validate user input. This
+  solves the infamous 'checkbox' problem.
+
+* MetadataTool.setMetadataValues() has been removed.
+
+From 1.1 to 1.2
+===============
+
+* the 'action_paste' and 'action_paste_to_ghost' methods on Folder have
+  a new signature, instead of returning a list of messages it now returns
+  (message_type, messages) where message_type can be 'feedback' and 'error'
+  and messages is the list that used to be returned.
+
+* tab_edit for VersionedContent views has changed to make use of a new
+  macro, ``macro_tab_edit/macros/editor``, instead of
+  ``macro_index/macros/master`` directly. ``macro_tab_edit`` does use
+  ``macro_index`` indirectly.
+
+  A default tab_edit is supplied in VersionedContent
+  views. SilvaDocument however overrides this with its own tab_edit.
+  You can also do in your own product.
+
+  The following slots are available in ``macro_tab_edit/macros/editor``:
+
+    * editor_css - add in editor-specific CSS stylesheets.
+
+    * editor_refresher - a slot to put in special refreshing code for
+      editors that are sensitive to Zope session timeouts, such as the
+      forms editor.
+
+    * editor_selection - add extra fields above the main editor content area
+      to allow the user to switch editors, such as between kupu and the
+      forms editor.
+
+    * editor_content - the main editor content area, showing for instance
+      the forms editor or kupu.
+
+* The public view directory layout changed due to some change in the way
+  we register views. For some functionality on the VersionManagementAdapter,
+  we needed to get a rendered version, which wasn't allowed the way the views
+  were previously set up (fetching the version happened in the render scripts,
+  each script would render a specific version).
+
+  Changes:
+
+    * instead of registering a 'public' view for VersionedContent
+      objects, they are now registered for Version objects.
+
+    * instead of 2 scripts 'render_view' and 'render_preview' only
+      'render' is called for both view and preview, if you want to
+      make a distinction between the two, you can register a new
+      view_type called 'preview' to another subdirectory and place a
+      'render' script in that, the general pattern is that if you want
+      to use only 1 script you place it directly in the
+      'public/<meta_type>' directory, if you want to have seperate
+      scripts for view and preview, create a 'view' and 'preview'
+      directory in that dir ('public/<meta_type>/view' and
+      'public/<meta_type>/preview')
+
+    * the 'model' variable in the render script does not point to the
+      VersionedContent object anymore, but instead it refers to the
+      Version object (of course it still refers to the object itself
+      in case the object is not of a versioned type)
+
+From 1.0 to 1.1
+===============
+
+* The previously deprecated method 'archive_file_import' on Folder.py and
+  the ImportArchive module have been removed. Code that depended on this
+  should be rewritten to use the archivefileimport adapter.
+
+* XSLT support for document renderers. While this shouldn't break
+  existing code, it opens up new possibilities for extension
+  writers. You can register your own XSLT templates with Silva that
+  handle content rendering. Read doc/xslt_renderers_howto.txt for more
+  information
+
+* new parser in forms-based editor. The existing parser for bold,
+  italic and the like in the forms based editor has been scrapped and
+  replaced with a parser that uses a simple HTML subset. The new
+  parser should be more predictable for authors and a lot
+  faster. Developers who have written their own widgets-based editors
+  may need to modify code. If you already use the Silva-1.0
+  infrastructure for finding the parser, the changes should be minimal
+  and be limited to the UI, however. The Silva-1.0 pattern is::
+
+    supp = context.editorsupport.getMixedContentSupport(model, node)
+    supp.parse(text)
+
+* new method on Folder objects, get_public_tree_all().  Returns a list
+  of all published content objects (including containers) below this
+  object (not including this object itself), including non-transparent
+  containers like publications.

@@ -1,0 +1,39 @@
+<!--
+Copyright (c) 2002-2009 Infrae. All rights reserved.
+See also LICENSE.txt
+$Id: serviceRendererRegistryDefaultRenderersEdit.zpt,v 1.7 2006/01/24 16:14:13 faassen Exp $
+-->
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<h3>Manage Default Renderers</h3>
+
+<form action="manage_editDefaultRenderers" method="post">
+  <table>
+    <tr tal:repeat="meta_type here/getRegisteredMetaTypes">
+      <td><b tal:content="meta_type">Content Type</b></td>
+      <td>
+        <select tal:attributes="name python:meta_type.replace(' ', '_')">
+          <option
+           tal:repeat="renderer_name python:here.getRendererNamesForMetaType(meta_type)"
+           tal:content="renderer_name"
+           tal:attributes="selected python:here.getDefaultRendererNameForMetaType(meta_type) == renderer_name">
+            Selected renderer
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" name="save_changes" value="Save Changes"/>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

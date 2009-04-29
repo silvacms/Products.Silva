@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+
+<metal:block define-macro="clipboard">
+  <div class="info"
+    style="padding-bottom:0;">
+    <metal:block define-macro="clipboard_no_style">
+      <form action="."
+        method="post"
+        tal:define="
+          clipboard_members python: here.lookup_get_selection().keys();
+          dummy python: clipboard_members.sort()"
+        >
+        <h3 style="margin-top:0">
+          <img tal:replace="structure python:here.render_icon_by_meta_type('Silva Simple Member')" />
+          <tal:block i18n:translate="">user clipboard</tal:block>
+        </h3>
+        <table class="listing"
+          style="margin-bottom:0.5em;">
+          <thead>
+            <tr class="top-controls">
+              <td>
+                <metal:block define-slot="clipboard_lookup_action">
+                </metal:block>
+              </td>
+            </tr>
+            <tr class="inter-controls"
+              tal:condition="clipboard_members">
+              <th style="font-size:90%"
+                i18n:translate="">
+                ctrl-click to multi-select
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr valign="top">
+              <td style="padding: 0 0 0.5em 0;">
+                <select class="clipboard"
+                  multiple="multiple"
+                  name="userids:list"
+                  size="10">
+                  <tal:block condition="clipboard_members">
+                    <option class="disabled"
+                      disabled="disabled"
+                      value="None"
+                      i18n:translate="">
+                      select users:
+                    </option>
+                    <tal:block repeat="userid clipboard_members">
+                      <option value="userid"
+                         tal:define="member python: model.sec_get_member(userid);"
+                        tal:content="member/fullname"
+                        tal:attributes="value member/userid;">
+                        User
+                      </option>
+                    </tal:block>
+                  </tal:block>
+                  <option class="disabled"
+                    disabled="disabled"
+                    value="None"
+                    tal:condition="not:clipboard_members"
+                    i18n:translate="">
+                    No users on clipboard
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="controls">
+              <td>
+                <tal:block condition="clipboard_members">
+                  <metal:block define-slot="clipboard_actions" />
+                </tal:block>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+    </metal:block>
+  </div>
+</metal:block>
+
+</html>

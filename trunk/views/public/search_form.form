@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<form>
+  <title></title>
+  <name>silva_search</name>
+  <action></action>
+  <enctype></enctype>
+  <method>POST</method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>public_search_form</i18n>
+
+  <groups>
+    <group>
+      <title>default</title>
+      <fields>
+        <field><id>fulltext</id> <type>StringField</type>
+          <values>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <display_width type="int">20</display_width>
+            <unicode type="int">0</unicode>
+            <max_length></max_length>
+            <external_validator></external_validator>
+            <display_maxwidth></display_maxwidth>
+            <required type="int">0</required>
+            <css_class></css_class>
+            <default></default>
+            <title>Content</title>
+            <truncate type="int">0</truncate>
+            <description>
+              Use an asterix ('*') for wildcard.
+            </description>
+            <whitespace_preserve type="int">0</whitespace_preserve>
+            <extra></extra>
+          </values>
+          <tales>
+          </tales>
+          <messages>
+            <message name="external_validator_failed">The input failed the external validator.</message>
+            <message name="required_not_found">Input is required but no input given.</message>
+            <message name="too_long">Too much input was given.</message>
+          </messages>
+        </field>
+        <field><id>maintitle</id> <type>StringField</type>
+          <values>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <display_width type="int">20</display_width>
+            <unicode type="int">0</unicode>
+            <max_length></max_length>
+            <external_validator></external_validator>
+            <display_maxwidth></display_maxwidth>
+            <required type="int">0</required>
+            <css_class></css_class>
+            <default></default>
+            <title>Title</title>
+            <truncate type="int">0</truncate>
+            <description>
+            </description>
+            <whitespace_preserve type="int">0</whitespace_preserve>
+            <extra></extra>
+          </values>
+          <tales>
+          </tales>
+          <messages>
+            <message name="external_validator_failed">The input failed the external validator.</message>
+            <message name="required_not_found">Input is required but no input given.</message>
+            <message name="too_long">Too much input was given.</message>
+          </messages>
+        </field>
+        <field><id>search_subtree</id> <type>CheckBoxField</type>
+          <values>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <css_class></css_class>
+            <default type="int">1</default>
+            <title>Subtree only</title>
+            <description>
+              Check to restrict search to this content's subtree.
+            </description>
+            <external_validator></external_validator>
+            <extra>id="search_subtree"</extra>
+          </values>
+          <tales>
+          </tales>
+        </field>
+        <field><id>metatype</id> <type>MultiListField</type>
+          <values>
+            <size type="int">5</size>
+            <alternate_name></alternate_name>
+            <hidden type="int">0</hidden>
+            <unicode type="int">0</unicode>
+            <items type="list">[]</items>
+            <view_separator>
+            </view_separator>
+            <external_validator></external_validator>
+            <required type="int">0</required>
+            <css_class></css_class>
+            <default type="list">[]</default>
+            <title>Content type</title>
+            <description>
+              Select (multiple using ctrl-key) object type(s) to search in. 
+              If none is selected, all types are searched.
+            </description>
+            <extra></extra>
+          </values>
+          <tales>            
+            <items>python: form.REQUEST.model.service_catalog.uniqueValuesFor('meta_type')</items>
+          </tales>
+          <messages>
+            <message name="external_validator_failed">The input failed the external validator.</message>
+            <message name="required_not_found">Input is required but no input given.</message>
+            <message name="unknown_selection">You selected an item that was not in the list.</message>
+          </messages>
+        </field>
+      </fields>
+    </group>
+  </groups>
+</form>

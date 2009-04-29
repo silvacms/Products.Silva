@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:notal="http://www.infrae.com/silva/notal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva"
+  >
+
+  <!-- start of 4 Funky macro definitions to reuse the listing -->
+<metal:block define-macro="normal_groups_listing">
+  <tal:block define="groups here/service_groups/listNormalGroups | nothing">
+    <metal:block use-macro="here/macro_groups_listing/macros/listing">
+      <metal:block fill-slot="actions" >
+        <metal:block define-slot="listing_actions" />
+      </metal:block>
+    </metal:block>
+  </tal:block>
+</metal:block>
+
+<metal:block define-macro="virtual_groups_listing">
+  <tal:block define="groups here/service_groups/listVirtualGroups | nothing">
+    <metal:block use-macro="here/macro_groups_listing/macros/listing">
+      <metal:block fill-slot="actions" >
+        <metal:block define-slot="listing_actions" />
+      </metal:block>
+    </metal:block>
+  </tal:block>
+</metal:block>
+
+<metal:block define-macro="ip_groups_listing">
+  <tal:block define="groups here/service_groups/listIPGroups | nothing">
+    <metal:block use-macro="here/macro_groups_listing/macros/listing">
+      <metal:block fill-slot="actions" >
+        <metal:block define-slot="listing_actions" />
+      </metal:block>
+    </metal:block>
+  </tal:block>
+</metal:block>
+
+<metal:block define-macro="all_groups_listing">
+  <tal:block define="groups here/service_groups/listAllGroups | nothing">
+    <metal:block use-macro="here/macro_groups_listing/macros/listing">
+      <metal:block fill-slot="actions" >
+        <metal:block define-slot="listing_actions" />
+      </metal:block>
+    </metal:block>
+  </tal:block>
+</metal:block>
+<!-- end of 4 Funky macro definitions to reuse the listing -->
+
+<!-- actual macro where layout is done -->
+<!-- this form deliberately has no submit buttons; filled in in slots -->
+<metal:block define-macro="listing">
+  <div class="info">
+    <metal:block define-macro="listing_no_style">
+      <form action="."
+        method="post">
+        <h3 style="margin-top:0">
+          <img tal:replace="structure python:here.render_icon_by_meta_type(group_meta_type)" />
+          <tal:block i18n:translate="">
+          existing
+          <span tal:content="structure group_type | nothing"
+            i18n:name="type">type</span> groups
+          </tal:block>
+        </h3>
+        <table class="listing"
+          style="margin-bottom:0em;">
+          <thead>
+            <tr class="inter-controls">
+              <th style="font-size:90%"
+                tal:condition="groups"
+                i18n:translate="">
+                ctrl-click to multi-select
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr valign="top">
+              <td style="padding: 0 0 0.5em 0;">
+                <select class="clipboard"
+                  multiple="multiple"
+                  name="groups:list"
+                  size="10">
+                  <tal:block condition="groups">
+                    <option class="disabled"
+                      disabled="disabled"
+                      value="None"
+                      i18n:translate="select_groups">
+                      select groups:
+                    </option>
+                    <option
+                      tal:repeat="group groups"
+                      tal:content="group"
+                      tal:attributes="value group">
+                      group
+                    </option>
+                  </tal:block>
+                  <option class="disabled"
+                    tal:condition="not:groups"
+                    i18n:translate="no_groups_available">
+                    No groups available
+                  </option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="controls"
+              tal:condition="groups">
+              <td>
+                <metal:block define-slot="actions" />
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+    </metal:block>
+  </div>
+</metal:block>
+</html>

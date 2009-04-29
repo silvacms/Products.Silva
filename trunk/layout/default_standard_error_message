@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<tal:block define="error_type options/error_type | nothing;
+                    error_value options/error_value | nothing;
+                    message_type options/message_type | nothing;
+                    message options/message | nothing;
+                    allow_authentication_requests here/service_members/allow_authentication_requests | nothing;
+                    mangle python:modules['Products'].Silva.mangle;">
+<tal:block condition="python: error_type != 'NotFound'">
+<html>
+  <head>
+    <link rel="stylesheet"
+      tal:attributes="href here/globals/silva.css/absolute_url | nothing" />
+    <link rel="stylesheet"
+      tal:attributes="href here/globals/frontend.css/absolute_url | nothing" />
+    <title>Message from server</title>
+  </head>
+  <body>
+    <tal:block condition="message_type">
+      <div class="feedback"
+        tal:condition="python:message_type == 'feedback'">
+        <span tal:replace="structure message" />&nbsp;&nbsp;(<span tal:replace="python:mangle.Now().toStr()">datetime</span>)
+      </div>
+      <div class="alert" tal:condition="python:message_type == 'error'">
+        <span class="error" tal:content="structure message" />
+      </div>
+    </tal:block>
+
+    <tal:block condition="python: error_type == 'Unauthorized'">
+
+     <!-- unauthorized, allow registration -->
+     <div class="public" tal:condition="allow_authentication_requests">
+      <br />
+      <h2>Membership system</h2>
+      <p class="readable">
+        Sorry, this page is only available to visitors with proper credentials.      </p>
+      <div class="readable"
+        tal:condition="here/service_members/get_authentication_requests_url">
+        <p>
+          You're welcome to apply for membership (it's a three field form). Your request will be sent to the responsible person who will grant (or possibly deny) access. Then you'll be informed via email.
+        </p>
+        <span class="subhead">
+          <a href="become_visitor"
+            tal:attributes="href string:service_resources/${here/service_members/get_authentication_requests_url}?last_url=${here/absolute_url}">
+          Become a visitor to the site
+          </a><br /></span>
+          As a visitor, you can view certain items that anonymous users are not allowed to see.
+      </div>
+      <br /><br />
+      <h3>Visitor options</h3>
+      <span class="subhead"><a tal:attributes="href string:${here/REQUEST/model/absolute_url}/public/request_roles?last_url=${here/absolute_url}">Request a role which allows access to this location</a>
+      <br /></span>
+      Note that you must first have visitor rights to apply for roles.
+      <br /><br />
+      <span class="subhead">
+        <a tal:attributes="href request/URL0">Try logging in again....</a><br /><br />
+      </span>
+     </div>
+
+     <!-- unauthorized, don't allow registration -->
+     <div class="info" tal:condition="not:allow_authentication_requests">
+      <div class="public">
+       <h2>Login required</h2>
+       <p>
+        Sorry, this page is only available to visitors with proper credentials.
+        <br /><br />
+        <span class="subhead">
+          <a tal:attributes="href request/URL0">Try logging in again....</a><br /><br />
+        </span>
+       </p>
+      </div>
+     </div>
+    </tal:block>
+
+  <tal:condition condition="python: error_type != 'Unauthorized'">
+    <div class="public">
+      <br /><br />
+      <h2>System problem</h2>
+      <p>
+        Something went wrong. Please use your back button to return to the previous page.
+        Sorry for the irritation.
+        <br /><br />
+      </p>
+
+      <h4>Error Type: <span class="error" tal:content="structure error_type|string:unknown">error_type</span></h4>
+      <h4>Error Value: <span class="error" tal:content="structure error_value|string:unknown"></span></h4>
+      <h4>Error info</h4>
+      Path: <span class="error" tal:content="request/PATH_INFO|string:unknown">error</span> <br />
+      URL: <span class="error" tal:content="request/SERVER_URL|string:unknown" /><span class="error" tal:content="request/PATH_INFO|string:unknown" /><span tal:replace="request/QUERY_STRING|string:unknown" />
+      <br /><br />
+
+      <table class="listing"
+        tal:condition="python:user.has_role(['Manager'], object=None)">
+        <thead style="border: none">
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:0;">
+              <a class="transport"
+                href="/error_log/manage_main"
+                title="see the error log"
+                accesskey="m"
+                i18n:attributes="title"
+                i18n:translate=""
+                >
+                more details....
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Client</h3>
+      Browser: <span class="error" tal:content="request/HTTP_USER_AGENT|string:unknown">error</span><br />
+      Remote address: <span class="error" tal:content="request/REMOTE_ADDR|string:unknown">error</span><br />
+      Remote identity: <span class="error" tal:content="request/REMOTE_IDENT|string:unknown">error</span><br />
+
+      <h4>Linked from</h4>
+      <span class="error" tal:content="request/HTTP_REFERER|string:unknown">error</span>
+      <br />
+    </div>
+  </tal:condition>
+  </body>
+</html>
+</tal:block>
+
+<tal:block tal:condition="python: error_type == 'NotFound'">
+<!-- _____________________ 404 error message  _____________________ -->
+<!-- _____________________ {__silva_version__} __________________ -->
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+<head>
+<title metal:fill-slot="title">
+  404 &ndash; Resource not found
+</title>
+<metal:block fill-slot="skipmetadata">
+  <!-- skip metadata if not found -->
+</metal:block>
+<!-- default stylesheet, remove if custom layout exists -->
+<metal:block fill-slot="style">
+  <!-- Start style slot -->
+  <link rel="stylesheet" type="text/css"
+    tal:attributes="href here/frontend.css/absolute_url | nothing" />
+  <!-- End style slot -->
+</metal:block>
+</head>
+
+<body>
+<!-- _____________________ main slot  _____________________ -->
+<div metal:fill-slot="main">
+  <h2>404 &ndash; Resource not found</h2>
+  <p>
+    <acronym title="Uniform Resource Locator">URL</acronym>:
+    <span tal:replace="request/URL0|string:unknown">url</span>
+  </p>
+  <p>
+    The resource you are looking for is not or no longer available.<br />
+    Please check your request for typing errors and retry.
+  </p>
+</div>
+</body>
+</html>
+</tal:block>
+</tal:block>

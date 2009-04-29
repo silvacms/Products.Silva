@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- {__silva_version__} -->
+<html metal:use-macro="here/layout_macro.html/macros/layout">
+
+Use this template to customize the layout that is defined in layout_macro.html.
+A number of 'fill-slots' are provided that can be used to override slots in the
+layout_macro. Activate by removing the 'no' from 'nometal'. None of the slots
+are active in a default installation. The following slots are available:
+head
+  title
+  meta
+  style
+  script
+body
+  header
+    top_navigation
+  table_of_contents
+  main
+  footer
+
+<head nometal:fill-slot="head">
+<title nometal:fill-slot="title"><!-- customize html title --></title>
+<nometal:slot fill-slot="meta"><!-- add custom meta tags --></nometal:slot>
+<nometal:slot fill-slot="style"><!-- define custom stylesheet --></nometal:slot>
+<script nometal:fill-slot="script" type="text/javascript"><!-- add custom scripts --></script>
+</head>
+
+<body nometal:fill-slot="body">
+
+<!-- begin header slot -->
+<div nometal:fill-slot="header" tal:omit-tag="">
+  <div nometal:fill-slot="top_navigation" tal:omit-tag=""></div>
+</div>
+<!-- end header slot -->
+<div nometal:fill-slot="table_of_contents" tal:omit-tag=""><!-- table of contents slot --></div>
+<div nometal:fill-slot="main" tal:omit-tag=""><!-- slot in custom content --></div>
+<div nometal:fill-slot="footer" tal:omit-tag=""><!-- page footer slot --></div>
+
+</body>
+</html>

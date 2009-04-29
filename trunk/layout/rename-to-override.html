@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<!-- {__silva_version__} -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Local override</title>
+<link rel="stylesheet" href="frontend.css" type="text/css"
+  tal:attributes="href here/frontend.css/absolute_url" />
+</head>
+<body>
+  <div class="public">
+    <h2>This is a local override.</h2>
+    <h3>This template is not acquired by subcontent.</h3>
+    <p>
+      You can copy the code from content.html into this file if you wish to
+      override only certain aspects in this location.
+    </p>
+    <p>
+      If you wish to override all aspects, copy the code from content.html into
+      this file, check the "Expand macros when editing" checkbox, and save.
+      Then you can strip out the metal and create a custom 'sub-home page'.
+    </p>
+    <tal:block replace="nothing">Example how to use Silva content in this override"</tal:block>
+    <div
+      tal-example:define="view_method options/view_method"
+      tal-example:content="structure python:getattr(here, view_method)()">
+      Local content appears here...
+    </div>
+  </div>
+</body>
+</html>

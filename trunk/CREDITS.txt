@@ -1,0 +1,66 @@
+Credits
+=======
+
+Silva is developed by Infrae (http://www.infrae.com).
+
+Infrae Silva team
+-----------------
+
+Martijn Faassen <faassen@infrae.com>
+Kit Blake <kitblake@infrae.com>
+Eric Casteleijn <eric@infrae.com>
+Daniel Nouri <daniel@infrae.com>
+Jasper Op de Coul <jasper@infrae.com>
+Wim Boucqueart <wim@infrae.com>
+Sylvain Viollon <sylvain@infrae.com>
+Torvald de Boskat <torvald@infrae.com>
+
+External developers
+-------------------
+
+Christian Zagrodnick <cz@gocept.com>
+Godefroid Chapelle <gotcha@swing.be>
+Joachim Schmitz <js@aixtraware.de>
+Clemens Klein-Robbenhaar <robbenhaar@espresto.com>
+Alexander Limi <alexander@limi.net>
+Holger Krekel <hpk@trillke.net>
+Jan Smith <jan@curpheymedia.com>
+Brad Bollenbach <bradb@bbnet.ca>
+Roman Joost <roman@bromeco.de>
+Andy Altepeter <aaltepet@altepeter.net>
+Tim Heap <Timothy.Heap@ext.jrc.it>
+
+Ext-Infrae Silva developers
+---------------------------
+
+Jan-Wijbrand Kolman <jw@infrae.com>
+Guido Wesdorp <guido@infrae.com>
+Guido Goldstein <gst@infrae.com>
+Walco van Loon <walco@infrae.com>
+
+French translation
+------------------
+
+José Joaquim Pombar <pombar.joaquin@wanadoo.fr>
+
+German translation
+------------------
+
+Joachim Breitner, Marc Petitmermet, Marion Neuhold, lwilbrandt
+
+Hebrew translation
+------------------
+
+Ofer Weisglass <ofer@plone.org.il>
+
+Thanks to
+---------
+
+Thanks to the Vienna University of Economics and Business
+Administration for their support in building the XSLT feature.
+
+The people at ETH in Zurich for their feedback and support and
+examples.
+
+Many thanks go to Hans Verster <verster@daz.eur.nl> at the Erasmus
+University Rotterdam for his vision and support.

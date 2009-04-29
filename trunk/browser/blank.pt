@@ -1,0 +1,2 @@
+<html metal:use-macro="context/@@standard_macros/layout">
+</html>
