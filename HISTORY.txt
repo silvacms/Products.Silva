@@ -9,6 +9,8 @@ Silva changes
 
       - Fixing SilvaFind in documentation
 
+      - Fix annoying popup when using kupu and safari
+
   Silva 2.1.4b2 (2009-04-23)
 
     Bug fixes
