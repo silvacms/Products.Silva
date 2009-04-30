@@ -7,6 +7,8 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- Fix annoying popup when using kupu in safari
+
 - It is now possible to switch between abbreviations and
   acronyms in kupu by selecting the appropriate radio button
   and clicking 'update'

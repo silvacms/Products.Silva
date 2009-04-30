@@ -27,7 +27,11 @@ class SilvaPathAdapter(component.Adapter):
     silvaconf.context(ISilvaObject)
     implements(IPath)
     
-    def pathToUrl(self, path):
+    def urlToPath(self, url):
+        """convert a HTTP URL to a Zope path"""
+        raise NotImplemented #(yet)
+
+    def pathToUrlPath(self, path):
         """ Translate a zope path to a Url."""
         """ this was previously _linkHelper / rewriteUrl """
         """ what sorts of links do we need:
