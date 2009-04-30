@@ -26,8 +26,11 @@ function saveOnPart(event) {
       if(event.preventDefault){
 	event.preventDefault();
       }
-      return false;
+      /* this appears in safari, IE prints "false", and FF nothing but the
+         standard dialog */
+      return "If you press OK, your changes will be lost.";
     };
   }
-  return true;
+  /* don't return true, false, or any value, here.  Safari will print out
+     the string representation in the dialog box */
 };
