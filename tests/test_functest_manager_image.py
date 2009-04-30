@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase

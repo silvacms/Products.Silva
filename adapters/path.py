@@ -75,7 +75,7 @@ class SilvaPathAdapter(component.Adapter):
         # It is not an URL, query or anchor, so treat it as a path.
         # If it is a relative path, treat is as such:
         if not path.startswith('/'):
-            container = self.context
+            container = self.context.get_container()
             return self._convertPath(container.absolute_url() + '/' + path)
         # If it is an absolute path, try to traverse it to
         # a Zope/Silva object and get the URL for that.
