@@ -93,7 +93,7 @@ try:
 
             return magic_file(self.cookie, filename)
 
-except (OSError, ImportError):
+except (OSError, ImportError, AttributeError):
 
     class MagicGuess(IdGuess):
 
