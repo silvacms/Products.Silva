@@ -7,6 +7,9 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- exceptions raised during the upgrade process will now 
+  include the object causing the error in the traceback.
+
 - Fix annoying popup when using kupu in safari
 
 - It is now possible to switch between abbreviations and
