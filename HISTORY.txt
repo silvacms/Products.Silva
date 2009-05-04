@@ -5,6 +5,13 @@ Silva changes
 
   Silva 2.1.4 (unreleased)
 
+  
+    New features
+    
+      - exceptions raised during the upgrade process
+        will now include the object causing the error
+        in the traceback.
+
     Bug fixes
 
       - Fixing SilvaFind in documentation

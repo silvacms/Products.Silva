@@ -90,6 +90,7 @@ class UpgradeRegistry:
             # sometimes upgrade methods will replace objects, if so the
             # new object should be returned so that can be used for the rest
             # of the upgrade chain instead of the old (probably deleted) one
+            __traceback_supplement__ = (UpgraderTracebackSupplement, self, obj, upgrader)
             obj = upgrader.upgrade(obj)
             assert obj is not None, "Upgrader %r seems to be broken, "\
                 "this is a bug." % (upgrader, )
@@ -213,3 +214,25 @@ def check_reserved_ids(obj):
             'Invalid id %s found. Renamed to %s' % (repr(old_id), repr(id)),
             'Location: %s' % o.absolute_url())
 
+class UpgraderTracebackSupplement(object):
+    """Implementation of zope.exceptions.ITracebackSupplement,
+       to amend the traceback during upgrades so that object
+       information is present.  Inspiration from 
+       zope.tales.tales.TALESTracebackSupplement"""
+
+    def __init__(self, context, obj, upgrader):
+        self.context = context
+        self.obj = obj
+        self.upgrader = upgrader
+    
+    def getInfo(self, as_html=0):
+        import pprint
+        data = {"object":self.obj,
+                "object_path":'/'.join(self.obj.getPhysicalPath()),
+                "upgrader":self.upgrader}
+        s = pprint.pformat(data)
+        if not as_html:
+            return '   - Object Info:\n      %s' % s.replace('\n', '\n      ')
+        else:
+            from cgi import escape
+            return '<b>Names:</b><pre>%s</pre>'%(escape(s))
