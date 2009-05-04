@@ -351,7 +351,8 @@ class SecondRootUpgrader(BaseUpgrader):
         sm.registerUtility(obj.service_metadata, IMetadataService)
         obj.service_catalog.__class__ = CatalogService
         sm.registerUtility(obj.service_catalog, ICatalogService)
-        obj.manage_delObjects(['service_annotations',])
+        if hasattr(obj.aq_explicit, 'service_annotations'):
+            obj.manage_delObjects(['service_annotations',])
         return obj
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
@@ -363,7 +364,7 @@ class MetadataUpgrader(BaseUpgrader):
     def upgrade(self, obj):
         if not (interfaces.ISilvaObject.providedBy(obj) or
                 interfaces.IVersion.providedBy(obj)):
-            return
+            return obj
         old_annotations = getattr(aq_base(obj), '_portal_annotations_', None)
         if old_annotations is not None:
             zLOG.LOG(
