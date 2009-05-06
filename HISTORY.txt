@@ -93,6 +93,14 @@ Silva 2.2b1 (unreleased)
 - zip files generated in MACOSX can now be imported -- the skips meta
   information directories are now skipped (__MACOSX and .DS_Store)
 
+Ported from Silva 2.1.4
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- sec_get_all_roles, in addition to looking up the roles
+  the authenticated user has in this context, can also
+  get the roles of an arbitrary user (by passing in the
+  userid)
+
 Ported from Silva 2.1.4b1
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
