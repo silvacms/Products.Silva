@@ -13,6 +13,9 @@ Silva changes
         in the traceback.
 
     Bug fixes
+    
+      - the tocrendering adapter now shows all silva publishable
+        types by default
 
       - Fixing SilvaFind in documentation
 
