@@ -315,12 +315,15 @@ class Security(AccessManager):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_all_roles')
-    def sec_get_all_roles(self):
-        """Returns all roles the currently logged in user has in this
-        context"""
+    def sec_get_all_roles(self, userid=None):
+        """Returns all roles the user has in this context.  If userid is None, then
+           return all roles for the currently logged in user."""
         roles = []
+        if not userid:
+            userid = getSecurityManager().getUser().getId()
+        user = self.acl_users.getUser(userid)
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
-            if self.REQUEST.AUTHENTICATED_USER.has_role(role, self):
+            if user.has_role(role, self):
                 roles.append(role)
         return roles
 

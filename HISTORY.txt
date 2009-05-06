@@ -11,6 +11,11 @@ Silva changes
       - exceptions raised during the upgrade process
         will now include the object causing the error
         in the traceback.
+        
+      - sec_get_all_roles, in addition to looking up the roles
+        the authenticated user has in this context, can also
+        get the roles of an arbitrary user (by passing in the
+        userid)
 
     Bug fixes
     
