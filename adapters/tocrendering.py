@@ -11,11 +11,23 @@ from Products.Silva.adapters import adapter
 from Products.Silva import interfaces
 from silva.core.views.interfaces import IPreviewLayer
 
-DEFAULT_SHOW_TYPES = ['Silva Document', 'Silva Link',
-                      'Silva Folder', 'Silva Publication',]
 module_security = AccessControl.ModuleSecurityInfo(
     'Products.Silva.adapters.tocrendering')
 
+_marker = None
+default_show_types = None
+def compute_default_show_types():
+    global default_show_types
+    if default_show_types:
+        return default_show_types
+    mts = Products.meta_types
+    defaults = []
+    for mt in mts:
+        if mt.has_key('instance') and \
+           interfaces.IPublishable.implementedBy(mt['instance']):
+            defaults.append(mt['name'])
+    default_show_types = defaults
+    return defaults
 
 def escape(thestring):
     thestring = thestring.replace('&','&amp;')
@@ -59,10 +71,13 @@ class TOCRenderingAdapter(adapter.Adapter):
 
     def _get_tree_iterator(
         self, container, indent=0, toc_depth=-1, sort_order='silva',
-        show_types=DEFAULT_SHOW_TYPES):
+        show_types=_marker):
         """Yield for every element in this toc.  The 'depth' argument
         limits the number of levels, defaults to unlimited.
         """
+        if show_types == _marker:
+            show_types = compute_default_show_types()
+
         items = self._get_container_items(container, sort_order, show_types)
 
         for (name,item) in items:
@@ -79,7 +94,10 @@ class TOCRenderingAdapter(adapter.Adapter):
 
     def _get_public_tree_iterator(
         self, container, indent=0, include_non_transparent_containers=0,
-        toc_depth=-1, sort_order='silva', show_types=DEFAULT_SHOW_TYPES):
+        toc_depth=-1, sort_order='silva', show_types=_marker):
+        if show_types == _marker:
+            show_types = compute_default_show_types()
+
         toc_filter = self.context.service_toc_filter
         items = self._get_container_items(container, sort_order, show_types)
         for (name,item) in items:
@@ -99,8 +117,11 @@ class TOCRenderingAdapter(adapter.Adapter):
                     yield (dep,o)
 
     def render_tree(self, toc_depth=-1, display_desc_flag=False,
-                    sort_order="silva", show_types=DEFAULT_SHOW_TYPES,
+                    sort_order="silva", show_types=_marker,
                     show_icon=False):
+
+        if show_types == _marker:
+            show_types = compute_default_show_types()
 
         # This should be a view ...
         public = not IPreviewLayer.providedBy(self.context.REQUEST)
