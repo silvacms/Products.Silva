@@ -5,6 +5,7 @@
 # Zope
 import AccessControl
 import Globals
+import Products
 
 # Silva
 from Products.Silva.adapters import adapter
@@ -174,7 +175,7 @@ class TOCRenderingAdapter(adapter.Adapter):
 Globals.InitializeClass(TOCRenderingAdapter)
 
 def __allow_access_to_unprotected_subobjects__(name,value=None):
-    return name in ('getTOCRenderingAdapter')
+    return name in ('getTOCRenderingAdapter','compute_default_show_types')
 
 #NOTE: can pass in any Silva object.  If object isn't a container
 #      this will acquire the nearest container

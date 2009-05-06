@@ -229,11 +229,14 @@ class SilvaXMLUpgrader(BaseUpgrader):
             p.appendChild(doc_el.createTextNode('0'))
             cs.appendChild(p)
 
-            p = doc_el.createElement('parameter')
-            p.setAttribute('type','list')
-            p.setAttribute('key','toc_types')
-            p.appendChild(doc_el.createTextNode("['Silva Document','Silva Folder','Silva Publication']"))
-            cs.appendChild(p)
+            #don't add this parameter, instead let silva
+            # use the default value, which is to show
+            # all publishable types
+            #p = doc_el.createElement('parameter')
+            #p.setAttribute('type','list')
+            #p.setAttribute('key','toc_types')
+            #p.appendChild(doc_el.createTextNode("['Silva Document','Silva Folder','Silva Publication']"))
+            #cs.appendChild(p)
 
             p = doc_el.createElement('parameter')
             p.setAttribute('type','string')
