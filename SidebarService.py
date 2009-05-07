@@ -97,8 +97,10 @@ class SidebarService(SimpleItem):
         if abs_urls is None:
             return
         for abs_url in abs_urls:
-            del cache.sidebar_cache[abs_url]
-        del cache.path_mapping[ph_path]
+            if abs_url in cache.sidebar_cache:
+                del cache.sidebar_cache[abs_url]
+        if ph_path in cache.path_mapping:
+            del cache.path_mapping[ph_path]
 
     def _render_template(self, pub):
         """Actually render the pagetemplate

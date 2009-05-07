@@ -5,26 +5,29 @@ Silva changes
 
   Silva 2.1.4 (unreleased)
 
-  
+
     New features
-    
+
       - exceptions raised during the upgrade process
         will now include the object causing the error
         in the traceback.
-        
+
       - sec_get_all_roles, in addition to looking up the roles
         the authenticated user has in this context, can also
         get the roles of an arbitrary user (by passing in the
-        userid)
+        userid).
 
     Bug fixes
-    
-      - the tocrendering adapter now shows all silva publishable
-        types by default
 
-      - Fixing SilvaFind in documentation
+      - The tocrendering adapter now shows all silva publishable
+        types by default.
 
-      - Fix annoying popup when using kupu and safari
+      - Fixing SilvaFind in documentation.
+
+      - Fix annoying popup when using kupu and safari.
+
+      - Fix some error when invalidating the SMI sidebar cache.
+
 
   Silva 2.1.4b2 (2009-04-23)
 
@@ -35,7 +38,7 @@ Silva changes
         well with strange Apache rewrite rules.
 
       - Cleanup edge case in kupu transforms (SilvaDocument) where nested
-        lists can cause bare <br> tags to be stored in the silvaxml; this 
+        lists can cause bare <br> tags to be stored in the silvaxml; this
         raises errors when rendering with the widgets-based renderer
 
   Silva 2.1.3 (2009-03-26)
