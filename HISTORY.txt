@@ -8,7 +8,7 @@ Silva changes
 
     New features
 
-      - exceptions raised during the upgrade process
+      - Exceptions raised during the upgrade process
         will now include the object causing the error
         in the traceback.
 
@@ -16,6 +16,10 @@ Silva changes
         the authenticated user has in this context, can also
         get the roles of an arbitrary user (by passing in the
         userid).
+
+      - Set two differents on Asset to prevent them to maintain a
+        different cache for each user. That will force each user to
+        authenticate if needed to access to the resource.
 
     Bug fixes
 

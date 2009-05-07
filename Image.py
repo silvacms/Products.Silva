@@ -12,7 +12,7 @@ from zope.i18n import translate
 from zope.interface import implements
 # Zope 2
 import OFS
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
@@ -89,9 +89,12 @@ class Image(Asset):
             ignored here.
         """
         img = None
+        username = getSecurityManager().getUser().getUserName()
         if REQUEST is None:
             REQUEST = self.REQUEST
         RESPONSE = REQUEST.RESPONSE
+        RESPONSE.setHeader('Vary', 'X-Silva-User')
+        RESPONSE.setHeader('X-Silva-User', username)
         # line below solves wuw issue144 (images no scaled in kupu)
         # but it's to much of a performance hit
         # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')

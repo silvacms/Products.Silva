@@ -18,7 +18,7 @@ from warnings import warn
 from zope.app.container.interfaces import IObjectRemovedEvent
 from OFS import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from helpers import add_and_edit, fix_content_type_header
 from converters import get_converter_for_mimetype
@@ -148,7 +148,13 @@ class File(Asset):
         view_method: parameter is set by preview_html (for instance) but
         ignored here.
         """
+
+        username = getSecurityManager().getUser().getUserName()
         request = self.REQUEST
+        request.RESPONSE.setHeader(
+            'Vary', 'X-Silva-User')
+        request.RESPONSE.setHeader(
+            'X-Silva-User', username)
         request.RESPONSE.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
         return self._index_html_helper(request)
