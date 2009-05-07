@@ -7,6 +7,12 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+- fixed bug #109007: wrong last author of published document in 
+  properties tab.  The silva-extra last-author field's TALES now
+  passes in the version to sec_get_last_author_info.  This requires
+  a change to the metadata, which will happen during the extension 
+  refresh phase of the silva upgrade
+
 - exceptions raised during the upgrade process will now 
   include the object causing the error in the traceback.
 

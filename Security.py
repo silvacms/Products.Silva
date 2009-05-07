@@ -10,6 +10,7 @@ from Products.Silva import roleinfo
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 from Products.Silva.AccessManager import AccessManager
+from Products.Silva.interfaces import IVersion
 
 # Groups
 try:
@@ -249,16 +250,23 @@ class Security(AccessManager):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'sec_get_last_author_info')
-    def sec_get_last_author_info(self):
-        """Get the info of the last author (this is a IMember object)
+    def sec_get_last_author_info(self, version=None):
+        """Get the info of the last author of the
+           passed in version (this is a IMember object)
+           if version is none, get the info for the
+           previewable version.
         """
-        # 1/15/08, containers now do have author info
-        #if IContainer.providedBy(self):
-        #    return noneMember.__of__(self)
-
+        #the version parameter was added to support
+        # getting the last author info for the correct
+        # version in the silva-extra metadata
+        # (this was always returning the previewable
+        # version's info, even if the version in question
+        # was the published or closed version
+        
         # get cached author info (may be None)
-        version = self.get_previewable()
-        if version is None:
+        if not version:
+            version = self.get_previewable()
+        if not (version and IVersion.providedBy(version)):
             return noneMember.__of__(self)
 
         info = getattr(version, '_last_author_info', None)
