@@ -15,7 +15,7 @@ from helpers import add_and_edit
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
-from interfaces import ISidebarService
+from silva.core.interfaces import ISidebarService
 
 from silva.core import conf as silvaconf
 

@@ -21,8 +21,8 @@ from adapters.path import PathAdapter
 from helpers import add_and_edit
 import urlparse
 
-from interfaces import \
-    IVersionedContent, IContainer, IContent, IGhost, IGhostContent
+from silva.core.interfaces import (IVersionedContent, IContainer,
+                                   IContent, IGhost, IGhostContent)
 
 from silva.core import conf as silvaconf
 

@@ -6,7 +6,8 @@ from five import grok
 
 import Globals
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
-from Products.Silva import SilvaPermissions, interfaces
+from Products.Silva import SilvaPermissions
+from silva.core import interfaces
 
 class BaseAddablesAdapter(grok.Adapter):
 
