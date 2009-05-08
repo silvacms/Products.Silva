@@ -43,6 +43,8 @@ except:                                          # available for import
 from Products.Silva.adapters.interfaces import IAssetData
 from interfaces import IFile, IAsset, IUpgrader
 
+import md5
+
 class File(Asset):
     __doc__ = """Any digital file can be uploaded as Silva content. 
        For instance large files such as pdf docs or mpegs can be placed in a
@@ -154,7 +156,7 @@ class File(Asset):
         request.RESPONSE.setHeader(
             'Vary', 'X-Silva-User')
         request.RESPONSE.setHeader(
-            'X-Silva-User', username)
+            'X-Silva-User', md5.md5(username).hexdigest())
         request.RESPONSE.setHeader(
             'Content-Disposition', 'inline;filename=%s' % (self.get_filename()))
         return self._index_html_helper(request)

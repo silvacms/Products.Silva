@@ -322,6 +322,8 @@ class Security(AccessManager):
         if not userid:
             userid = getSecurityManager().getUser().getId()
         user = self.acl_users.getUser(userid)
+        if user is None:
+            user = self.REQUEST.AUTHENTICATED_USER
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
             if user.has_role(role, self):
                 roles.append(role)

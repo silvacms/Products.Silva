@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 # Python
-import re
+import re, md5
 from cStringIO import StringIO
 from types import IntType
 from cgi import escape
@@ -94,7 +94,7 @@ class Image(Asset):
             REQUEST = self.REQUEST
         RESPONSE = REQUEST.RESPONSE
         RESPONSE.setHeader('Vary', 'X-Silva-User')
-        RESPONSE.setHeader('X-Silva-User', username)
+        RESPONSE.setHeader('X-Silva-User', md5.md5(username).hexdigest())
         # line below solves wuw issue144 (images no scaled in kupu)
         # but it's to much of a performance hit
         # RESPONSE.setHeader('Cache-Control', 'no-cache, must-revalidate')
