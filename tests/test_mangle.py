@@ -10,7 +10,7 @@ from StringIO import StringIO
 
 # Zope 2
 from Products.Silva import mangle
-from Products.Silva.interfaces import IAsset
+from silva.core.interfaces import IAsset
 
 import SilvaTestCase
 

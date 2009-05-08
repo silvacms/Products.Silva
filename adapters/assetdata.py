@@ -3,7 +3,7 @@
 # $Id$
 
 from five import grok
-from Products.Silva import interfaces
+from silva.core import interfaces
 
 class FileData(grok.Adapter):
 

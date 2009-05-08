@@ -29,10 +29,10 @@ import urllib
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
 
-from Products.Silva.interfaces import IContentImporter
-from Products.Silva.interfaces import IPublishable, IContent, IGhost
-from Products.Silva.interfaces import ISilvaObject, IAsset, INonPublishable
-from Products.Silva.interfaces import IContainer, IFolder, IPublication, IRoot
+from silva.core.interfaces import (IContentImporter,
+                                   IPublishable, IContent, IGhost,
+                                   ISilvaObject, IAsset, INonPublishable,
+                                   IContainer, IFolder, IPublication, IRoot)
 
 from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 from zExceptions import Forbidden, MethodNotAllowed

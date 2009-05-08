@@ -9,7 +9,7 @@ from zope.interface.verify import verifyObject
 from zExceptions import BadRequest
 
 from Products.Silva import File
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.Image import havePIL
 from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
 from Products.Silva.tests import helpers, SilvaTestCase

@@ -7,7 +7,7 @@ import SilvaTestCase
 from zope.interface.verify import verifyObject
 from zope import component
 
-from Products.Silva.interfaces import ISiteManager
+from silva.core.interfaces import ISiteManager
 
 class LocalSiteTest(SilvaTestCase.SilvaTestCase):
 

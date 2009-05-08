@@ -20,8 +20,9 @@ from Products.Silva.BaseService import SilvaService
 from Products.Silva.Root import DocumentationInstallationException
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.i18n import translate as _
-from Products.Silva import interfaces
-from Products.Silva.interfaces import ISilvaObject, IVersion, IContainer, IAsset
+from silva.core import interfaces
+from silva.core.interfaces import (ISilvaObject, IVersion, 
+                                       IContainer, IAsset)
 from Products.Silva import install
 
 from silva.core.views import views as silvaviews

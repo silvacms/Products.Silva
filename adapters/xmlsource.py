@@ -4,7 +4,7 @@
 
 from five import grok
 
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 

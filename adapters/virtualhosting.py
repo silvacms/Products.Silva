@@ -4,7 +4,7 @@
 #
 
 from five import grok
-from Products.Silva.interfaces import IVirtualHosting, ISilvaObject
+from silva.core.interfaces import IVirtualHosting, ISilvaObject
 
 # XXX should be a view ...
 

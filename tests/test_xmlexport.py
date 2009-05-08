@@ -14,7 +14,7 @@ from SilvaTestCase import transaction
 from Products.Silva.tests.helpers import publishObject
 
 # Silva
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport

@@ -19,8 +19,8 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IPublication, IRoot, ISiteManager
-from Products.Silva.interfaces import IInvisibleService
+from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
+                                   IInvisibleService)
 
 from silva.core import conf as silvaconf
 

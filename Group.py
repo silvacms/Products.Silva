@@ -17,7 +17,7 @@ import SilvaPermissions
 # misc
 from helpers import add_and_edit
 
-import interfaces
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 class BaseGroup(CatalogPathAware, SilvaObject, SimpleItem):

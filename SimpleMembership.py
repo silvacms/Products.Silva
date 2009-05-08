@@ -18,7 +18,7 @@ import roleinfo
 from helpers import add_and_edit
 from BaseService import SilvaService, ZMIObject
 
-import interfaces
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 class SimpleMember(Member, Security, ZMIObject):

@@ -3,7 +3,7 @@
 # $Id$
 
 from zExceptions import NotFound
-from Products.Silva.interfaces import IFeedEntry
+from silva.core.interfaces import IFeedEntry
 from Products.Five import BrowserView
 
 class ContainerFeedView(BrowserView):

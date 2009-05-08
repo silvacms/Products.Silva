@@ -4,7 +4,7 @@
 
 from Products.Silva.i18n import translate as _
 
-from Products.Silva.interfaces import IViewerSecurity
+from silva.core.interfaces import IViewerSecurity
 from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
 from Products.Five import BrowserView

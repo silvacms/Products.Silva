@@ -8,10 +8,9 @@ from zope import interface
 import zLOG
 
 from Products.Silva import mangle
-from Products.Silva.interfaces import IInvisibleService
-from Products.Silva.adapters.interfaces import IIndexable
-from Products.Silva.interfaces import IVersionedContent, IRoot, ISilvaObject
-from Products.Silva.interfaces import IVersion
+from silva.core.interfaces.adapters import IIndexable
+from silva.core.interfaces import (IVersionedContent, IRoot, ISilvaObject,
+                                   IVersion, IInvisibleService)
 from Products.Silva.adapters import version_management
 from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
 

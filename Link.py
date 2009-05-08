@@ -14,7 +14,7 @@ from Globals import InitializeClass
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
-from Products.Silva.interfaces import IVersionedContent, IVersion
+from silva.core.interfaces import IVersionedContent, IVersion
 from Products.Silva.i18n import translate as _
 from Products.Silva import SilvaPermissions
 

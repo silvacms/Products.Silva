@@ -14,7 +14,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 from Products.Silva.i18n import translate as _
-from Products.Silva.interfaces import IAutoTOC, IContainerPolicy
+from silva.core.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
 from silva.core.views import views as silvaviews

@@ -7,7 +7,7 @@ from os.path import dirname, join
 from DateTime import DateTime
 
 # Silva
-from Products.Silva.interfaces import IVersionedContent, IContent
+from silva.core.interfaces import IVersionedContent, IContent
 from Products.Silva.mangle import Id
 
 import SilvaTestCase

@@ -17,7 +17,7 @@ from zope.app.container.interfaces import IObjectMovedEvent
 from Products.Silva import SilvaPermissions
 from Products.SilvaMetadata.Exceptions import BindingError
 
-from interfaces import IVersion
+from silva.core.interfaces import IVersion
 
 from silva.core import conf as silvaconf
 

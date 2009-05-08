@@ -70,7 +70,7 @@
            name="File Storage Type" />
 
   <adapter
-    for="Products.Silva.interfaces.IImage
+    for="silva.core.interfaces.IImage
          zope.publisher.interfaces.browser.IBrowserRequest"
     factory=".Image.ImagePublishTraverse"
     provides="zope.publisher.interfaces.browser.IBrowserPublisher"
@@ -79,7 +79,7 @@
   <!-- lookup window edit button support -->
 
   <browser:page
-    for="Products.Silva.interfaces.ISilvaObject"
+    for="silva.core.interfaces.ISilvaObject"
     name="resolve_and_redirect_editor"
     class=".lookupwindowfield.EditButtonRedirector"
     permission="silva.ReadSilvaContent"

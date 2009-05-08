@@ -6,7 +6,7 @@ import Globals
 import transaction
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from Products.Silva import SilvaPermissions
-from Products.Silva import interfaces as silvaInterfaces
+from silva.core import interfaces as silvaInterfaces
 from Products.Silva.adapters import adapter
 
 from DateTime import DateTime

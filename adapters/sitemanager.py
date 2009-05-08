@@ -9,7 +9,7 @@ from zope.app.component.hooks import clearSite
 from zope.app.component.interfaces import ISite
 
 from Products.Five.site.localsite import disableLocalSiteHook
-from Products.Silva import interfaces
+from silva.core import interfaces
 
 class SiteManager(grok.Adapter):
 

@@ -10,7 +10,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import SilvaPermissions
 
 from Group import BaseGroup, manage_addGroupUsingFactory
-import interfaces
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 class IPGroup(BaseGroup):

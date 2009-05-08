@@ -30,15 +30,15 @@ import SilvaPermissions
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 from Security import Security
 from ViewCode import ViewCode
-from interfaces import IPublishable, IAsset
-from interfaces import IContent, IContainer, IPublication, IRoot
-from interfaces import IVersioning, IVersionedContent, IFolder
 from Products.Silva.utility import interfaces as utility_interfaces
+
+from silva.core.interfaces import (ISilvaObject, IPublishable, IAsset,
+                                   IContent, IContainer, IPublication, IRoot,
+                                   IVersioning, IVersionedContent, IFolder)
 
 # Silva adapters
 from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
-from Products.Silva.interfaces import ISilvaObject
 from Products.SilvaMetadata.Exceptions import BindingError
 
 from Products.Silva.i18n import translate as _

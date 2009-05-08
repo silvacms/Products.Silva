@@ -3,7 +3,7 @@
 # $Id$
 """
 
-    >>> from Products.Silva.interfaces import IExtensionInstaller
+    >>> from silva.core.interfaces import IExtensionInstaller
     >>> from Products.Silva.ExtensionRegistry import extensionRegistry
 
   A extension is declared in __init__.py of a package:

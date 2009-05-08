@@ -8,7 +8,7 @@ from unittest import TestCase
 from zope.interface.verify import verifyObject
 
 # Silva
-from Products.Silva.interfaces import IUpgradeRegistry
+from silva.core.interfaces import IUpgradeRegistry
 from Products.Silva import upgrade
 
 import SilvaTestCase

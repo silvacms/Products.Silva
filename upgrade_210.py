@@ -3,7 +3,7 @@
 # $Id$
 
 # silva imports
-from Products.Silva.interfaces import ISilvaObject, IRoot
+from silva.core.interfaces import ISilvaObject, IRoot
 from Products.Silva.upgrade import BaseUpgrader
 import zLOG
 

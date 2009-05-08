@@ -8,7 +8,7 @@ from zope.component import getAdapter
 import SilvaTestCase
 from SilvaTestCase import transaction
 from Products.Silva.silvaxml import xmlimport
-from Products.Silva import interfaces
+from silva.core import interfaces
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_roundtrip(self):

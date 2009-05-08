@@ -9,7 +9,7 @@ from Acquisition import aq_base
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
-from Products.Silva.interfaces import IVersionedContent, IContent, IContainer
+from silva.core.interfaces import IVersionedContent, IContent, IContainer
 
 class ViewCode:
     """A mixin to expose view specific code to the pagetemplates

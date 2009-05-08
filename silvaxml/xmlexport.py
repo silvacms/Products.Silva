@@ -6,7 +6,7 @@ from StringIO import StringIO
 from sprout.saxext import xmlexport
 from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
-from Products.Silva.interfaces import IPublication
+from silva.core.interfaces import IPublication
 from Products.Silva.adapters import version_management
 
 NS_SILVA = 'http://infrae.com/ns/silva'

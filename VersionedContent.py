@@ -28,7 +28,7 @@ from silva.core.views.interfaces import IPreviewLayer
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 # Silva interfaces
-from interfaces import IVersionedContent, ICatalogedVersionedContent
+from silva.core.interfaces import IVersionedContent, ICatalogedVersionedContent
 
 from webdav.common import PreconditionFailed
 from zExceptions import Forbidden

@@ -12,8 +12,8 @@ from Globals import package_home
 
 # silva imports
 from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
-from Products.Silva.interfaces import ISilvaObject, IContainer, IVersionedContent
-from Products.Silva.adapters.interfaces import IViewerSecurity
+from silva.core.interfaces import ISilvaObject, IContainer, IVersionedContent
+from silva.core.interfaces.adapters import IViewerSecurity
 from Products.Silva.VersionedContent import VersionedContent
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.Silva import mangle

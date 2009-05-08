@@ -5,7 +5,7 @@ import SilvaTestCase
 
 from DateTime import DateTime
 from Products.Silva import Ghost
-from Products.Silva.interfaces import IHaunted
+from silva.core.interfaces import IHaunted
 
 class HauntedTestCase(SilvaTestCase.SilvaTestCase):
     """Test the Haunted adapter.

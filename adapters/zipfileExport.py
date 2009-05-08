@@ -6,8 +6,7 @@ from tempfile import TemporaryFile
 
 from five import grok
 
-from Products.Silva import interfaces as interfaces
-
+from silva.core import interfaces
 
 class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate

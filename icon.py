@@ -12,8 +12,8 @@ import Globals
 import OFS.misc_
 
 # Silva
-from Products.Silva.interfaces import IFile, ISilvaObject
-from Products.Silva.interfaces import IGhostContent, IGhostFolder
+from silva.core.interfaces import (IFile, ISilvaObject,
+                                       IGhostContent, IGhostFolder)
 
 class RegistryError(Exception):
     """thrown on any error in registry"""

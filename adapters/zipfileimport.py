@@ -4,7 +4,7 @@ from zope.interface import implements
 import Globals
 from AccessControl import ClassSecurityInfo, allow_module
 # Silva
-from Products.Silva import interfaces as silva_interfaces
+from silva.core import interfaces as silva_interfaces
 # Silva Adapters
 from Products.Silva.adapters import adapter, interfaces
 from Products.Silva import SilvaPermissions

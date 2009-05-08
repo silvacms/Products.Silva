@@ -4,7 +4,7 @@
 from OFS.SimpleItem import SimpleItem
 from zope import interface
 
-from Products.Silva.interfaces import IInvisibleService
+from silva.core.interfaces import IInvisibleService
 
 _filters = []
 

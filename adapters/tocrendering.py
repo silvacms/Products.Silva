@@ -9,7 +9,7 @@ import Products
 
 # Silva
 from Products.Silva.adapters import adapter
-from Products.Silva import interfaces
+from silva.core import interfaces
 from silva.core.views.interfaces import IPreviewLayer
 
 module_security = AccessControl.ModuleSecurityInfo(

@@ -13,7 +13,7 @@ from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, allow_module
 from BTrees.OOBTree import OOBTree
 
 # Silva
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva import SilvaPermissions
 
 from five import grok

@@ -22,7 +22,7 @@ from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
-from Products.Silva import interfaces
+from silva.core import interfaces
 from silva.core import conf as silvaconf
 
 from Products.Silva.i18n import translate as _

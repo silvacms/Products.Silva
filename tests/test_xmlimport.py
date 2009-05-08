@@ -6,7 +6,7 @@ import os
 from DateTime import DateTime
 
 from Products.Silva.silvaxml import xmlimport 
-from Products.Silva.interfaces import IGhost, IContainer
+from silva.core.interfaces import IGhost, IContainer
 
 import SilvaTestCase
 

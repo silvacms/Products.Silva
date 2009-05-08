@@ -4,7 +4,7 @@
 
 from AccessControl import ModuleSecurityInfo
 from Products.Silva import SilvaPermissions
-from Products.Silva.interfaces import ISilvaObject
+from silva.core.interfaces import ISilvaObject
 
 from zope.component.interfaces import IFactory
 from zope.component import queryUtility

@@ -10,7 +10,7 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva.adapters import adapter
 
 from DateTime import DateTime

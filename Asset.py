@@ -15,7 +15,7 @@ import zLOG
 # Silva
 from SilvaObject import SilvaObject
 from Products.Silva import SilvaPermissions
-from Products.Silva import interfaces
+from silva.core import interfaces
 
 from silva.core import conf as silvaconf
 

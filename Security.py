@@ -10,7 +10,7 @@ from Products.Silva import roleinfo
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 from Products.Silva.AccessManager import AccessManager
-from Products.Silva.interfaces import IVersion
+from silva.core.interfaces import IVersion
 
 # Groups
 try:
@@ -21,7 +21,7 @@ try:
 except ImportError:
     groups_enabled = 0
 
-from interfaces import IContainer, IRoot
+from silva.core.interfaces import IContainer, IRoot
 
 from Products.SilvaMetadata.Exceptions import BindingError
 

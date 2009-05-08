@@ -17,7 +17,7 @@ import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 from zope import contenttype
 # Silva
-from Products.Silva import interfaces
+from silva.core import interfaces
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.Silva import assetregistry

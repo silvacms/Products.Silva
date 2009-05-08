@@ -15,7 +15,7 @@ import os.path
 import pkg_resources
 import types
 import icon
-import interfaces
+from silva.core import interfaces
 
 class Addable(object):
 

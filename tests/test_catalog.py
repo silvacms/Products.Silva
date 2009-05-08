@@ -1,7 +1,7 @@
 import SilvaTestCase
 from DateTime import DateTime 
 
-from Products.Silva.interfaces import IVersion
+from silva.core.interfaces import IVersion
         
 class CatalogTestCase(SilvaTestCase.SilvaTestCase):
 

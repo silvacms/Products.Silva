@@ -21,7 +21,7 @@ from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
 from Products.Silva.adapters import subscribable
 from Products.Silva.mail import sendmail
-from Products.Silva.interfaces import IHaunted
+from silva.core.interfaces import IHaunted
 from Products.Silva.BaseService import SilvaService
 
 from silva.core import conf as silvaconf

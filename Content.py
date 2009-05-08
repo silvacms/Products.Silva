@@ -12,7 +12,7 @@ from SilvaObject import SilvaObject
 from Publishable import Publishable
 import SilvaPermissions
 
-from interfaces import IContent
+from silva.core.interfaces import IContent
 from silva.core import conf as silvaconf
 
 class Content(Publishable, SilvaObject):

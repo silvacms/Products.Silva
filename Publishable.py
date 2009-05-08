@@ -12,8 +12,8 @@ from Globals import InitializeClass
 # Silva 
 import SilvaPermissions
 
-from interfaces import IPublishable, IContent, IVersioning, IContainer
-from interfaces import IPublication
+from silva.core.interfaces import (IPublishable, IContent, IVersioning, 
+                                   IContainer, IPublication)
 
 class Publishable:
     """Mixin class that can be provided to implement the Publishable

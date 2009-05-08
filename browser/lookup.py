@@ -4,11 +4,11 @@
 
 # from Products.Silva.i18n import translate as _
 
-# from Products.Silva.adapters.interfaces import IViewerSecurity
+# from silva.core.interfaces.adapters import IViewerSecurity
 # from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
-from Products.Silva.interfaces import IContent, IContainer, IAsset, \
-     IPublishable, IGhostFolder
+from silva.core.interfaces import (IContent, IContainer, IAsset,
+                                   IPublishable, IGhostFolder)
 from Products.Five import BrowserView
 from Acquisition import aq_base
 from Products.Silva import icon
