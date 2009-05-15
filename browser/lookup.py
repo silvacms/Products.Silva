@@ -7,17 +7,58 @@
 # from silva.core.interfaces.adapters import IViewerSecurity
 # from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
+from urlparse import urlparse
+import re
+
 from silva.core.interfaces import (IContent, IContainer, IAsset,
-                                   IPublishable, IGhostFolder)
+                                   IPublishable, IGhostFolder, ISilvaObject)
 from Products.Five import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Acquisition import aq_base
+from zExceptions import Redirect
 from Products.Silva import icon
+
+strip_poss_re = re.compile('\&?possible_container=[^\&]*')
+repl_sel_path_re = re.compile('(\&?selected_path=)[^\&]*')
 
 class ObjectLookup(BrowserView):
     """
     View that allows browsing and searching for objects.
     """
-
+    render_lookup = ViewPageTemplateFile('object_lookup.pt')
+    def __call__(self):
+        psp = self.request.get('possible_container',None)
+        if psp:
+            scheme, netloc, ppath, parameters, query, fragment = urlparse(psp)
+            if not (scheme or netloc) and ppath:
+                #we don't need to un-vhost the path, since the path
+                # is traversed to (removing the vhosting)
+                obj = self.context.restrictedTraverse(ppath,None)
+                if obj and ISilvaObject.providedBy(obj):
+                    sel_path = None
+                    if not IContainer.providedBy(obj):
+                        sel_path = '/'.join(obj.getPhysicalPath())
+                        obj = obj.get_container()
+                    #compute absolute url, add query string, redirect
+                    # if obj was originally not a container, add to
+                    # query string the selected_path
+                    url = obj.absolute_url() + '/@@object_lookup?'
+                    qs = strip_poss_re.sub('',self.request['QUERY_STRING'])
+                    if sel_path:
+                        if qs.find('selected_path') > -1:
+                            qs = repl_sel_path_re.sub(r'\1%s'%sel_path,qs)
+                        else:
+                            qs += '&selected_path=%s'%sel_path
+                    if qs.find('startpath') == -1:
+                        #XXX I think we only want to set startpath if it isn't
+                        #    already set?
+                        qs += '&startpath=%s'%'/'.join(self.context.getPhysicalPath())
+                    url += qs
+                    
+                    self.request.RESPONSE.redirect(url,lock=1)
+                    raise Redirect(url)
+        return self.render_lookup()
+    
     def renderIcon(self, obj=None, meta_type='Unknown'):
         """Gets the icon for the object and wraps that in an image tag
         """

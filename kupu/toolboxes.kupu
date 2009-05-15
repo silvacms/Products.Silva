@@ -65,17 +65,17 @@
   <kupu:part name="links">
     <div class="kupu-toolbox" id="kupu-toolbox-links"
        tal:define="model_container model/get_container">
-      <script type="text/javascript" tal:define="folder_context python: '/'.join(model_container.getPhysicalPath())" tal:content="string:
-        function getLink() {
-          reference.getReference(
-            function(path, id, title) {
-              kupu.getTool('linktool').createLink(path,null,null,null,title);
-            }, '${model_container/absolute_url}',
-            '', true, '');;
-        }
-      "></script>
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
+      <script type="text/javascript">
+        function getLink(container_url) {
+	  var linktool = kupu.getTool('linktool');
+	  reference.getReference(
+	    function(path, id, title) {
+	      linktool.createLink(path,null,null,null,title);
+	    },
+	    container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
+	}	
+       </script>
+       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
       <div class="kupu-tooltray">
         <div id="kupu-toolbox-addlink"> </div>
@@ -85,7 +85,7 @@
 	        cellpadding="0" cellspacing="0">
 	     <tr>
 	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" 
-	         onclick="getLink();return false;"
+	         tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;"
                  title="get link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" /></button></td>
 	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"
 	      /></td>

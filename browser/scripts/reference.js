@@ -8,13 +8,17 @@ this.reference = new function() {
 
     this.current_handler = undefined;
 
-        this.getReference = function(handler, startpath, filter, show_add, selected_path) {
+        this.getReference = function(handler, startpath, filter, show_add, 
+                                        selected_path, possible_container) {
         /* open the reference lookup window 
         
             when the user has selected an item, handler will be called
             with 4 arguments, path (a relative or absolute HTTP path to
             the item), id (the id of the item) and title (the title of
-            the item)
+            the item),
+            possible_container is a string that may or may not be a
+            path to silva content.  If the lookupwindow can resolve the
+            path, it is displayed instead.
         */
         reference_lib.setHandler(handler);
         var level = null;
@@ -29,7 +33,9 @@ this.reference = new function() {
         var win = window.open(startpath + 
                               '/@@object_lookup?filter=' + filter + '&' +
                               'show_add=' + (show_add ? '1' : '0') + '&' +
-                              'selected_path=' + selected_path, winname,
+                              'selected_path=' + selected_path + '&' + 
+                              'possible_container=' + 
+                              encodeURI(possible_container), winname,
                               'toolbar=yes,status=yes,scrollbars=yes,' +
                               'resizable=yes,width=' + winwidth +
                               ',height=' + winheight +

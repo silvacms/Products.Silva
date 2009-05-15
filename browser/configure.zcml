@@ -31,7 +31,6 @@
     for="silva.core.interfaces.ISilvaObject"
     name="object_lookup"
     class=".lookup.ObjectLookup"
-    template="object_lookup.pt"
     permission="silva.ReadSilvaContent" 
   />
 
