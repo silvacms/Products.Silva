@@ -7,6 +7,19 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
+New Features
+~~~~~~~~~~~~
+
+- #237103: link tool lookup window should open to link reference's container
+  If the lookup window is opened for an existing relative link that can be 
+  resolved to a silva object, the reference window opens with that silva
+  object's container.  The object within the container that is that was specified
+  in the link is selected in the lookupwindow.  If the link is to a container,
+  however, the lookup window is opened showing the containers contents.
+
+Bug Fixes
+~~~~~~~~~
+
 - fixed bug #109007: wrong last author of published document in 
   properties tab.  The silva-extra last-author field's TALES now
   passes in the version to sec_get_last_author_info.  This requires
