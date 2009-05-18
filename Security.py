@@ -266,7 +266,7 @@ class Security(AccessManager):
         # get cached author info (may be None)
         if not version:
             version = self.get_previewable()
-        if not (version and IVersion.providedBy(version)):
+        if not (version or IVersion.providedBy(self)):
             return noneMember.__of__(self)
 
         info = getattr(version, '_last_author_info', None)
