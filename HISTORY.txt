@@ -16,6 +16,12 @@ New Features
   object's container.  The object within the container that is that was specified
   in the link is selected in the lookupwindow.  If the link is to a container,
   however, the lookup window is opened showing the containers contents.
+- Installers now actually can utilize a def refresh(root) function.  Previously,
+  all extension refreshes were an uninstall/install combo, which isn't always
+  suitable (think service_<extension> with local customizations).  For module-based
+  installers (e.g. Product/install.py) a function, "def refresh(root)" which will
+  be called if present.  grok class-based installers (extending silva.core.conf.\
+  installer.DefaultInstaller) have a method "def refresh(self, root)".
 
 Bug Fixes
 ~~~~~~~~~

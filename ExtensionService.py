@@ -82,10 +82,10 @@ class ExtensionService(SilvaService):
 
     security.declareProtected('View management screens', 'refresh')
     def refresh(self, name, status=None):
-        """Refresh (uninstall/install) extension.
+        """Refresh  extension.  
         """
-        self.uninstall(name)
-        self.install(name)
+        root = self.get_root()
+        extensionRegistry.refresh(name,root)
         self.refresh_caches()
         if status:
             return '%s refreshed' % name
