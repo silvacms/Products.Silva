@@ -167,7 +167,7 @@
 <span tal:replace="nothing">
 <!-- _______ white space + jump to top _______ -->
 </span>
-<div style="float:left; width:16px">
+<div style="float:left; clear:left; width:16px">
   <a title="jump to top: alt-t"
     tal:attributes="href string:$url/edit/${template/id}#top"
     i18n:attributes="title">
@@ -180,7 +180,7 @@
     />
   </a>
 </div>
-<div style="float:right; text-align:right; width:16px">
+<div style="float:right; clear:right; text-align:right; width:16px">
   <a title="jump to top: alt-t"
     accesskey="t"
     tal:attributes="href string:$url/edit/${template/id}#top"
