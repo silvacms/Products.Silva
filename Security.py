@@ -328,8 +328,9 @@ class Security(AccessManager):
            return all roles for the currently logged in user."""
         roles = []
         if not userid:
-            userid = getSecurityManager().getUser().getId()
-        user = self.acl_users.getUser(userid)
+            user = getSecurityManager().getUser()
+        else:
+            user = self.acl_users.getUser(userid)
         for role in roleinfo.ASSIGNABLE_ROLES[:]:
             if user.has_role(role, self):
                 roles.append(role)
