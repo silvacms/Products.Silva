@@ -7,6 +7,11 @@ Silva changes
 
     Bug fixes
 
+      - fix an issue in the subscription service when, on the status
+        tab of versioned content, the 'publish now' button is pressed
+        with an expiration date < publication date AND the subscription
+        service is enabled
+    
   Silva 2.1.4 (2009-05-08)
 
     New features
