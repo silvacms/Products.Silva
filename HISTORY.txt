@@ -118,8 +118,16 @@ Bug Fixes
 - zip files generated in MACOSX can now be imported -- the skips meta
   information directories are now skipped (__MACOSX and .DS_Store)
 
+Ported from Silva 2.1.5
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- fix an issue in the subscription service when, on the status
+  tab of versioned content, the 'publish now' button is pressed
+  with an expiration date < publication date AND the subscription
+  service is enabled
+
 Ported from Silva 2.1.4
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 - sec_get_all_roles, in addition to looking up the roles
   the authenticated user has in this context, can also

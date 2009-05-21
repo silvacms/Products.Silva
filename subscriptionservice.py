@@ -206,6 +206,11 @@ class SubscriptionService(Folder.Folder, SilvaService):
     def sendPublishNotification(self, content):
         if not self._enabled:
             return
+        if not content.get_viewable():
+            #content isn't published.  How could this method be called then?
+            # on the status tab, if you set the expiration to an earlier date
+            # than the publication date.
+            return
         # first send notification for content
         self._sendNotificationEmail(content)
         # now send email for potential haunting ghosts
