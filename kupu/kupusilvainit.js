@@ -58,6 +58,7 @@ function fixupNestedListFilter() {
 
 // XXX Port this to the default dist?
 KupuEditor.prototype.afterInit = function() {
+
     // select the line after the first heading, if the document is correctly
     // formatted
     this.getDocument().getWindow().focus();
@@ -85,12 +86,7 @@ KupuEditor.prototype.afterInit = function() {
             };
             selection.selectNodeContents(next);
             selection.collapse();
-            /* if it's an external source, activate
-               the ES tool */
-            if (next.nodeName.toLowerCase() == 'div' && next.className == 'externalsource') {
-                estool = kupu.getTool('extsourcetool');
-                if (estool) estool.updateState(next);
-            };
+	    this.updateState(); /* activate tools */
             break;
         } else if (h.nodeType == 1) {
             break;
@@ -321,7 +317,7 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-image-align', 'kupu-toolbox-image-alt', 
         'kupu-toolbox-images', 'kupu-toolbox',
         'kupu-toolbox-active', 'kupu-toolbox-image-edit-button',
-        'kupu-toolbox-image-link-cont');
+        'kupu-toolbox-image-link-cont', 'kupu-toolbox-image-resize');
     kupu.registerTool('imagetool', imagetool);
 
     var tabletool = new SilvaTableTool(); 

@@ -122,5 +122,13 @@
     permission="zope2.View"
     template="rss.pt"
   />
-  
+
+  <!-- view for resizing images from kupu -->
+  <browser:page
+     for="Products.Silva.interfaces.IImage"
+     name="resize_image_from_kupu"
+     class=".image.resize_image_from_kupu"
+     permission="silva.ChangeSilvaContent"
+     />
+
 </configure>

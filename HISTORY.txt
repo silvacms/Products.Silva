@@ -10,32 +10,28 @@ Silva 2.2b1 (unreleased)
 New Features
 ~~~~~~~~~~~~
 
+- kupu support for image resizing: this can be done by dragging the
+  handlebars around the selected image.  When the image size changes,
+  a button appears in the image tool 'confirm resize'.  This button
+  needs to be clicked in order to really resize the image.  If the image
+  looses focus before the resize has been confirmed, a confirmation
+  dialog is popped up asking for confirmation.  Note that this feature
+  resizes the web format of the image, which affects ALL documents
+  that use this image!  This has been tested in IE7 and FF3.
+
 - #237103: link tool lookup window should open to link reference's container
   If the lookup window is opened for an existing relative link that can be 
   resolved to a silva object, the reference window opens with that silva
   object's container.  The object within the container that is that was specified
   in the link is selected in the lookupwindow.  If the link is to a container,
   however, the lookup window is opened showing the containers contents.
+
 - Installers now actually can utilize a def refresh(root) function.  Previously,
   all extension refreshes were an uninstall/install combo, which isn't always
   suitable (think service_<extension> with local customizations).  For module-based
   installers (e.g. Product/install.py) a function, "def refresh(root)" which will
   be called if present.  grok class-based installers (extending silva.core.conf.\
   installer.DefaultInstaller) have a method "def refresh(self, root)".
-
-Bug Fixes
-~~~~~~~~~
-
-- fixed bug #109007: wrong last author of published document in 
-  properties tab.  The silva-extra last-author field's TALES now
-  passes in the version to sec_get_last_author_info.  This requires
-  a change to the metadata, which will happen during the extension 
-  refresh phase of the silva upgrade
-
-- exceptions raised during the upgrade process will now 
-  include the object causing the error in the traceback.
-
-- Fix annoying popup when using kupu in safari
 
 - It is now possible to switch between abbreviations and
   acronyms in kupu by selecting the appropriate radio button
@@ -52,12 +48,6 @@ Bug Fixes
   these buttons are displayed to the left and right (resp.) of the
   input field.
 
-- Indexer, File and Image use Z3C forms as add forms.
-
-- Interfaces have moved in silva.core.interfaces.
-
-- Silva Link are displayed by default in Kupu TOCs.
-
 - CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
   create a new empty paragraph below the table.  This feature
   is to improve editing ability when a table is adjacent to an
@@ -68,9 +58,29 @@ Bug Fixes
   enter in an ES inserts a new paragraph after and moves cursor
   down, right, tab in an es moves cursor down
 
-- if an ES is the first element in a document, activate the ES
-  tool when kupu initializes, and ignore the tab key when in an
-  external source.
+- kupu update's state on load, so the relevant toolbox(es) will
+  be activated if the first content in the document should have
+  an active toolbox (e.g. image, external source)
+
+Bug Fixes
+~~~~~~~~~
+
+- fixed bug #109007: wrong last author of published document in 
+  properties tab.  The silva-extra last-author field's TALES now
+  passes in the version to sec_get_last_author_info.  This requires
+  a change to the metadata, which will happen during the extension 
+  refresh phase of the silva upgrade
+
+- exceptions raised during the upgrade process will now 
+  include the object causing the error in the traceback.
+
+- Fix annoying popup when using kupu in safari
+
+- Indexer, File and Image use Z3C forms as add forms.
+
+- Interfaces have moved in silva.core.interfaces.
+
+- Silva Link are displayed by default in Kupu TOCs.
 
 - Fix an invalid syntax in webdav support.
 

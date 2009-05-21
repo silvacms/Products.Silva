@@ -187,26 +187,27 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
 };
 
 function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid, 
-    hireslinkcheckboxid, linkinputid, 
-    alignselectid, titleinputid, toolboxid, plainclass, 
-    activeclass, editimagebuttonid, linktocontainerid,
-    linksettingscontainerid) {
-/* Silva specific image tool */
-this.editel = getFromSelector(editelid);
-this.editimagebutton = getFromSelector(editimagebuttonid);
-this.urlinput = getFromSelector(urlinputid);
-this.targetselect = getFromSelector(targetselectid);
-this.targetinput = getFromSelector(targetinputid);
-this.hireslinkcheckbox = getFromSelector(hireslinkcheckboxid);
-this.linkinput = getFromSelector(linkinputid);
-this.alignselect = getFromSelector(alignselectid);
-this.titleinput = getFromSelector(titleinputid);
-this.toolboxel = getFromSelector(toolboxid);
-this.linktocontainer = getFromSelector(linktocontainerid);
-this.plainclass = plainclass;
-this.activeclass = activeclass;
+                        hireslinkcheckboxid, linkinputid, 
+                        alignselectid, titleinputid, toolboxid, plainclass, 
+                        activeclass, editimagebuttonid, linktocontainerid,
+                        resizebuttonid) {
+    /* Silva specific image tool */
+    this.editel = getFromSelector(editelid);
+    this.editimagebutton = getFromSelector(editimagebuttonid);
+    this.urlinput = getFromSelector(urlinputid);
+    this.targetselect = getFromSelector(targetselectid);
+    this.targetinput = getFromSelector(targetinputid);
+    this.hireslinkcheckbox = getFromSelector(hireslinkcheckboxid);
+    this.linkinput = getFromSelector(linkinputid);
+    this.alignselect = getFromSelector(alignselectid);
+    this.titleinput = getFromSelector(titleinputid);
+    this.toolboxel = getFromSelector(toolboxid);
+    this.linktocontainer = getFromSelector(linktocontainerid);
+    this.resizebutton = getFromSelector(resizebuttonid);
+    this.plainclass = plainclass;
+    this.activeclass = activeclass;
+    this.resizePollingInterval = null;
 }
-
 SilvaImageTool.prototype = new ImageTool;
 
 SilvaImageTool.prototype.initialize = function(editor) {
@@ -219,8 +220,10 @@ SilvaImageTool.prototype.initialize = function(editor) {
     addEventHandler(this.linkinput, 'change', this.setLink, this);
     addEventHandler(this.alignselect, 'change', this.setAlign, this);
     addEventHandler(this.titleinput, 'change', this.setTitle, this);
+    addEventHandler(this.resizebutton, 'click', this.finalizeResizeImage, this);
     this.editimagebutton.style.display = 'none';
     this.targetinput.style.display = 'none';
+    this.resizebutton.style.display = 'none';
     this.editor.logMessage('Image tool initialized');
 };
 
@@ -243,6 +246,12 @@ SilvaImageTool.prototype.selectTargetHandler = function(event) {
 SilvaImageTool.prototype.updateState = function(selNode, event) {
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
+         /* the rest of the image tool was originally designed to 
+	    getNearestparentOfType(img), but the 'confirm resizing'
+	    feature needs to know what image was active, after is it
+	    no longer selected.  So store it as a property of the image
+	    tool */
+	this.image = image;
         this.editel.style.display = 'block';
         this.editimagebutton.style.display = 'inline';
         var src = image.getAttribute('silva_src');
@@ -300,6 +309,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
         };
         this.titleinput.value = title;
         selectSelectItem(this.alignselect, align);
+	this.startResizePolling(image);
     } else {
         this.editel.style.display = 'none';
         this.editimagebutton.style.display = 'none';
@@ -311,8 +321,82 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
         this.targetselect.selectedIndex = 0;
         this.targetinput.value = '';
         this.targetinput.style.display = 'none';
+	if (this.resizebutton.style.display != 'none' && this.image) {
+	    /* image has been resized, so prompt user to
+	       confirm resizing */
+	    if (confirm("Image has been resized in kupu, but not confirmed.  Really resize?")) {
+	      this.finalizeResizeImage();
+	    }
+	}
+	this.stopResizePolling();
+	this.image = null;
+	this.resizebutton.style.display='none';
     };
 };
+
+SilvaImageTool.prototype.finalizeResizeImage = function() {
+  this.stopResizePolling(); /* pause polling during resize */ 
+  var image = this.image;
+  if (!image) {
+    this.editor.logMessage('No image selected!  unable to resize');
+    return;
+  }
+  var width = image.style.width.replace(/px/,'');
+  var height = image.style.height.replace(/px/,'');
+  
+  var _finalizeResizeImageCallback = function(object, image, width, height) {
+    if (request.readyState == 4) {
+      if (request.status != '200') {
+	if (request.status == '500') {
+	  alert('error on server.  body returned:\n' +
+	         request.responseText);
+	}
+      }
+      var finish = function(object) {
+        /* The width/height styles (style attribute) cannot be removed
+	   immediately after repointing the src to the resized image,
+	   or the screen will flicker, so do it onload */
+        image.onload = "this.removeAttribute('style')";
+        image.src = tmpimg.src;
+        object.editor.content_changed = true;
+	object.resizebutton.style.display='none';
+        object.editor.updateState();
+        object.editor.focusDocument();
+      }
+      var tmpimg = new Image();
+      addEventHandler(tmpimg, 'load', finish, this, object);
+      /* add the dimensions on to the src url, to bypass browser
+         caching.  This is OK, because every image (even newly created
+	 ones) have a silva_src attribute, which is used when saving */
+      tmpimg.src = image.src.replace(/\?.*/,'') + '?'+width+'x'+height;
+    }
+  }
+  var url = image.src.replace(/\?.*/,'') + '/@@resize_image_from_kupu?width='+width+'&height='+height;
+  var request = new XMLHttpRequest();
+  request.open('GET',url, true);
+  var callback = new ContextFixer(_finalizeResizeImageCallback, request, this, image, width, height);
+  request.onreadystatechange = callback.execute;
+  request.send(null);
+  this.startResizePolling(image);
+}
+
+SilvaImageTool.prototype.startResizePolling = function(image) {
+  if (this.resizePollingInterval) return;
+  var image_style = [image.style.width, image.style.height];
+  var self = this;
+  function polling() {
+    var newstyle = [image.style.width, image.style.height];
+    if (!(image_style[0]==newstyle[0] && image_style[1]==newstyle[1])) {
+	self.resizebutton.style.display='inline';
+	image_style = newstyle;
+    }
+  }
+  this.resizePollingInterval = setInterval(polling, 300);
+}
+SilvaImageTool.prototype.stopResizePolling = function() {
+  clearInterval(this.resizePollingInterval);
+  this.resizePollingInterval = null;
+}
 
 SilvaImageTool.prototype.createImage = function(url, alttext, imgclass) {
     /* create an image */
