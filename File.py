@@ -290,7 +290,7 @@ class ZODBFile(File):
 InitializeClass(ZODBFile)
 
 
-class ZODBFileView(silvaviews.Template):
+class ZODBFileView(silvaviews.View):
 
     silvaconf.context(ZODBFile)
     silvaconf.require('zope2.View')
@@ -381,7 +381,7 @@ class BlobFile(File):
 
 InitializeClass(BlobFile)
 
-class BlobFileView(silvaviews.Template):
+class BlobFileView(silvaviews.View):
 
     silvaconf.context(BlobFile)
     silvaconf.require('zope2.View')
@@ -452,7 +452,7 @@ class FileSystemFile(File):
 InitializeClass(FileSystemFile)
 
 
-class FileSystemFileView(silvaviews.Template):
+class FileSystemFileView(silvaviews.View):
 
     silvaconf.context(FileSystemFile)
     silvaconf.require('zope2.View')
