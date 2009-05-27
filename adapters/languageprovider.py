@@ -5,7 +5,7 @@ import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 
 from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
+from silva.core.interfaces.adapters import ILanguageProvider
 from Products.Silva import SilvaPermissions
 
 from Products.Silva.i18n import translate as _
@@ -18,7 +18,7 @@ from zope.publisher.browser import BrowserLanguages
 class LanguageProvider(adapter.Adapter):
     """
     """
-    implements(interfaces.ILanguageProvider)
+    implements(ILanguageProvider)
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(SilvaPermissions.ReadSilvaContent)
