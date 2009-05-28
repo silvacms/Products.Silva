@@ -150,12 +150,12 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEqual(
             view.layer,
             'silva.core.layout.porto.interfaces.IPorto')
-        self.assertEqual(basename(view.template), 'maintemplate.pt')
+        self.assertEqual(view.template, None)
         self.assertEqual(view.origin, None)
         self.assertEqual(manager.get_signature(view), signature)
 
     def test_five_template(self):
-        signature = "zope.interface.Interface:object_lookup:None:" \
+        signature = "zope.interface.Interface:five_template:None:" \
             "silva.core.interfaces.content.ISilvaObject:" \
             "zope.publisher.interfaces.browser.IDefaultBrowserLayer"
         manager = IViewManager(self.utility)
@@ -163,14 +163,14 @@ class ViewEntryTestCase(SilvaTestCase.SilvaTestCase):
         self.failIf(view is None)
         self.failUnless(verifyObject(IViewInfo, view))
         self.assertEqual(view.type_, 'Five Page Template')
-        self.assertEqual(view.name, 'object_lookup')
+        self.assertEqual(view.name, 'five_template')
         self.assertEqual(
             view.for_,
             'silva.core.interfaces.content.ISilvaObject')
         self.assertEqual(
             view.layer,
             'zope.publisher.interfaces.browser.IDefaultBrowserLayer')
-        self.assertEqual(basename(view.template), 'object_lookup.pt')
+        self.assertEqual(basename(view.template), 'smi_template.pt')
         self.assertEqual(view.origin, None)
         self.assertEqual(manager.get_signature(view), signature)
 
