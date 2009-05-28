@@ -26,7 +26,7 @@
     >>> from Products.Silva.tests.grok.markers import IPhotoFolderTag
     >>> manager = IMarkManager(folder)
     >>> manager.availablesMarkers
-    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag', 
+    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     []
@@ -53,10 +53,10 @@
     >>> manager.removeMarker(u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
 
   It won't exists anymore:
- 
+
     >>> manager = IMarkManager(folder)
     >>> manager.availablesMarkers
-    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag', 
+    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     []
@@ -66,13 +66,13 @@
     (404, None)
 
 
-  And we remove our marker from the ZCA so others tests don't fail. 
+  And we remove our marker from the ZCA so others tests don't fail.
   XXX We have to found something better than that:
 
     >>> from zope.component import getGlobalSiteManager
     >>> from silva.core.layout.interfaces import ICustomizableType
     >>> sm = getGlobalSiteManager()
-    >>> sm.unregisterUtility(IPhotoFolderTag, ICustomizableType, 
+    >>> sm.unregisterUtility(IPhotoFolderTag, ICustomizableType,
     ...                      u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
     True
 
@@ -87,8 +87,12 @@ class IPhotoFolderTag(ICustomizableTag):
     """
 
 
-class Photo(silvaviews.Template):
+# We could have used a template. But it needs a layout. So instead we
+# define a view, and set a name. In normal use-case you would use a
+# template with a layout.
+class Photo(silvaviews.View):
 
+    silvaconf.name('photo')
     silvaconf.context(IPhotoFolderTag)
 
     def render(self):
