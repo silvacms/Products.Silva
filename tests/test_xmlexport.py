@@ -22,17 +22,8 @@ from Products.Silva.adapters import archivefileimport
 from Products.Silva.transform.interfaces import IXMLSource
 from Products.Silva.Image import Image
 
-class SetTestCase(SilvaTestCase.SilvaTestCase):
-    DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-    def replace_datetimes(self, s):
-        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
-
-    def genericize(self, s):
-        return self.replace_datetimes(s)
-
-    def get_version(self):
-        return 'Silva %s' % self.root.get_silva_software_version()
-        
+class XMLExportMixin:
+            
     def get_namespaces(self):
         # this is needed because we don't know the namespaces registered
         # with the exported.  These are dynamic and depend on the extensions
@@ -49,6 +40,19 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             nss.append('xmlns:%s="%s"'%(prefix,uri))
         return ' '.join(nss)
     
+
+
+class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
+    DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+    def replace_datetimes(self, s):
+        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
+
+    def genericize(self, s):
+        return self.replace_datetimes(s)
+
+    def get_version(self):
+        return 'Silva %s' % self.root.get_silva_software_version()
+
     def test_xml_folder_export(self):
         testfolder = self.add_folder(
             self.root,
