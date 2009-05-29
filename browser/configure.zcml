@@ -1,131 +1,131 @@
-<configure 
-  xmlns="http://namespaces.zope.org/zope"
-  xmlns:browser="http://namespaces.zope.org/browser"
-  xmlns:five="http://namespaces.zope.org/five">
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:five="http://namespaces.zope.org/five">
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="get_viewer_role_info"
-    class=".viewerrole.ViewerRole"
-    attribute="getViewerRoleInfo"
-    permission="silva.ReadSilvaContent"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="get_viewer_role_info"
+     class=".viewerrole.ViewerRole"
+     attribute="getViewerRoleInfo"
+     permission="silva.ReadSilvaContent"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="minimum_role_submit"
-    class=".viewerrole.ViewerRole"
-    attribute="submitMinimumRole"
-    permission="silva.ChangeSilvaAccess" 
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="minimum_role_submit"
+     class=".viewerrole.ViewerRole"
+     attribute="submitMinimumRole"
+     permission="silva.ChangeSilvaAccess"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="acquire_minimum_role_submit"
-    class=".viewerrole.ViewerRole"
-    attribute="submitAcquiredMinimumRole"
-    permission="silva.ChangeSilvaAccess" 
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="acquire_minimum_role_submit"
+     class=".viewerrole.ViewerRole"
+     attribute="submitAcquiredMinimumRole"
+     permission="silva.ChangeSilvaAccess"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="object_lookup"
-    class=".lookup.ObjectLookup"
-    permission="silva.ReadSilvaContent" 
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="object_lookup"
+     class=".lookup.ObjectLookup"
+     permission="silva.ReadSilvaContent"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="kupu_popup_window"
-    template="kupu_popup_window.pt"
-    permission="silva.ChangeSilvaContent" 
-  />    
+     for="silva.core.interfaces.ISilvaObject"
+     name="kupu_popup_window"
+     template="kupu_popup_window.pt"
+     permission="silva.ChangeSilvaContent"
+     />
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="kupu_popup_iframe"
-    template="kupu_popup_iframe.pt"
-    permission="silva.ChangeSilvaContent" 
-  />    
+     for="silva.core.interfaces.ISilvaObject"
+     name="kupu_popup_iframe"
+     template="kupu_popup_iframe.pt"
+     permission="silva.ChangeSilvaContent"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="sidebar"
-    class=".lookup.SidebarView"
-    permission="silva.ReadSilvaContent"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="sidebar"
+     class=".lookup.SidebarView"
+     permission="silva.ReadSilvaContent"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="additional_export_action"
-    class=".emptyaction.EmptyAction"
-    permission="silva.ChangeSilvaContent"
-  />
-  
-  <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="additional_status_action"
-    class=".emptyaction.EmptyAction"
-    permission="silva.ChangeSilvaContent"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="additional_export_action"
+     class=".emptyaction.EmptyAction"
+     permission="silva.ChangeSilvaContent"
+     />
 
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="additional_metadata"
-    class=".emptyaction.EmptyAction"
-    permission="silva.ChangeSilvaContent"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="additional_status_action"
+     class=".emptyaction.EmptyAction"
+     permission="silva.ChangeSilvaContent"
+     />
 
   <browser:page
-    for="*"
-    name="set_content_type_and_nocache"
-    class="Products.Silva.browser.headers.Headers"
-    attribute="set_content_type_and_nocache"
-    permission="zope2.View"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="additional_metadata"
+     class=".emptyaction.EmptyAction"
+     permission="silva.ChangeSilvaContent"
+     />
 
   <browser:page
-    for="*"
-    name="set_content_type"
-    class="Products.Silva.browser.headers.Headers"
-    attribute="set_content_type"
-    permission="zope2.View"
-  />
-  
-  <browser:page
-    for="*"
-    name="set_nocache"
-    class="Products.Silva.browser.headers.Headers"
-    attribute="set_nocache"
-    permission="zope2.View"
-  />
-  
-  <browser:page
-    for="*"
-    name="set_headers"
-    class="Products.Silva.browser.headers.Headers"
-    attribute="set_headers"
-    permission="zope2.View"
-  />
+     for="*"
+     name="set_content_type_and_nocache"
+     class="Products.Silva.browser.headers.Headers"
+     attribute="set_content_type_and_nocache"
+     permission="zope2.View"
+     />
 
   <browser:page
-    name="atom.xml"
-    for="silva.core.interfaces.IContainer"
-    class="Products.Silva.browser.feed.ContainerFeedView"
-    permission="zope2.View"
-    template="atom.pt"
-  />
+     for="*"
+     name="set_content_type"
+     class="Products.Silva.browser.headers.Headers"
+     attribute="set_content_type"
+     permission="zope2.View"
+     />
 
   <browser:page
-    name="rss.xml"
-    for="silva.core.interfaces.IContainer"
-    class="Products.Silva.browser.feed.ContainerFeedView"
-    permission="zope2.View"
-    template="rss.pt"
-  />
+     for="*"
+     name="set_nocache"
+     class="Products.Silva.browser.headers.Headers"
+     attribute="set_nocache"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="*"
+     name="set_headers"
+     class="Products.Silva.browser.headers.Headers"
+     attribute="set_headers"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     name="atom.xml"
+     for="silva.core.interfaces.IContainer"
+     class="Products.Silva.browser.feed.ContainerFeedView"
+     permission="zope2.View"
+     template="atom.pt"
+     />
+
+  <browser:page
+     name="rss.xml"
+     for="silva.core.interfaces.IContainer"
+     class="Products.Silva.browser.feed.ContainerFeedView"
+     permission="zope2.View"
+     template="rss.pt"
+     />
 
   <!-- view for resizing images from kupu -->
   <browser:page
-     for="Products.Silva.interfaces.IImage"
+     for="silva.core.interfaces.IImage"
      name="resize_image_from_kupu"
      class=".image.resize_image_from_kupu"
      permission="silva.ChangeSilvaContent"
