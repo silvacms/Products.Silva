@@ -41,6 +41,9 @@
 >
 @imports
 </style>
+<link rel="stylesheet" type="text/css" 
+  tal:condition="exists:context/local-smi-styles.css"
+  tal:attributes="href context/local-smi-styles.css/absolute_url" />
 <tal:ie6fixstart replace="structure string:&lt;!--[if IE 6]&gt;" />
      <style type="text/css" media="all"
 	    tal:condition="exists:string:$root_url/globals/ie6fixes.css"

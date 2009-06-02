@@ -10,6 +10,12 @@ Silva 2.2b1 (unreleased)
 New Features
 ~~~~~~~~~~~~
 
+- per request on silva-general, it is now possible to override the
+  SMI look&feel using CSS.  Place a file anywhere within the silva hierarchy
+  with the id 'local-smi-styles.css', and it will be included in the
+  silva management interface.  This is the last stylesheet loaded, so it
+  has full control over the look of the smi.
+
 - kupu support for image resizing: this can be done by dragging the
   handlebars around the selected image.  When the image size changes,
   a button appears in the image tool 'confirm resize'.  This button
