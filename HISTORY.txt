@@ -1,161 +1,5 @@
-Copyright (c) 2002-2009 Infrae. All rights reserved.
-See also LICENSE.txt
-
 Silva changes
 =============
-
-Silva 2.2b1 (unreleased)
-------------------------
-
-New Features
-~~~~~~~~~~~~
-
-- per request on silva-general, it is now possible to override the
-  SMI look&feel using CSS.  Place a file anywhere within the silva hierarchy
-  with the id 'local-smi-styles.css', and it will be included in the
-  silva management interface.  This is the last stylesheet loaded, so it
-  has full control over the look of the smi.
-
-- kupu support for image resizing: this can be done by dragging the
-  handlebars around the selected image.  When the image size changes,
-  a button appears in the image tool 'confirm resize'.  This button
-  needs to be clicked in order to really resize the image.  If the image
-  looses focus before the resize has been confirmed, a confirmation
-  dialog is popped up asking for confirmation.  Note that this feature
-  resizes the web format of the image, which affects ALL documents
-  that use this image!  This has been tested in IE7 and FF3.
-
-- #237103: link tool lookup window should open to link reference's container
-  If the lookup window is opened for an existing relative link that can be 
-  resolved to a silva object, the reference window opens with that silva
-  object's container.  The object within the container that is that was specified
-  in the link is selected in the lookupwindow.  If the link is to a container,
-  however, the lookup window is opened showing the containers contents.
-
-- Installers now actually can utilize a def refresh(root) function.  Previously,
-  all extension refreshes were an uninstall/install combo, which isn't always
-  suitable (think service_<extension> with local customizations).  For module-based
-  installers (e.g. Product/install.py) a function, "def refresh(root)" which will
-  be called if present.  grok class-based installers (extending silva.core.conf.\
-  installer.DefaultInstaller) have a method "def refresh(self, root)".
-
-- It is now possible to switch between abbreviations and
-  acronyms in kupu by selecting the appropriate radio button
-  and clicking 'update'
-
-- Added an optional 'edit link reference' button to the 
-  reference lookup window formulator widget.  Clicking this
-  button on a valid silva reference will open up that reference's
-  edit tab in a new window.
-
-- changed presentation lookupwindow widget displays in
-  kupu.  The link tools lookup widget has the new 'button with
-  image' style for the get button, an edit reference button, and
-  these buttons are displayed to the left and right (resp.) of the
-  input field.
-
-- CTRL+SHIFT+ENTER in kupu while the cursor is in a table will
-  create a new empty paragraph below the table.  This feature
-  is to improve editing ability when a table is adjacent to an
-  external source or another table
-
-- improve keyboard navigability in kupu around external sources:
-  left,right in an ES moves cursor up
-  enter in an ES inserts a new paragraph after and moves cursor
-  down, right, tab in an es moves cursor down
-
-- kupu update's state on load, so the relevant toolbox(es) will
-  be activated if the first content in the document should have
-  an active toolbox (e.g. image, external source)
-
-Bug Fixes
-~~~~~~~~~
-
-- fixed bug #109007: wrong last author of published document in 
-  properties tab.  The silva-extra last-author field's TALES now
-  passes in the version to sec_get_last_author_info.  This requires
-  a change to the metadata, which will happen during the extension 
-  refresh phase of the silva upgrade
-
-- exceptions raised during the upgrade process will now 
-  include the object causing the error in the traceback.
-
-- Fix annoying popup when using kupu in safari
-
-- Indexer, File and Image use Z3C forms as add forms.
-
-- Interfaces have moved in silva.core.interfaces.
-
-- Silva Link are displayed by default in Kupu TOCs.
-
-- Fix an invalid syntax in webdav support.
-
-- Fixed an issue in Kupu, where text got 'title' style instead
-  of 'plain'.
-
-- Fix from the 2.1 branch for a bug and improvement of the code for
-  scaling and cropping images.
-
-- Added sup and sub selectors to frontend.css to keep superscript and
-  subscript better aligned.
-
-- Added the YUI reset.css to silva.css and refactored accordingly,
-  removing 50 lines or so.
-
-- Removed the sortable css id/class from templates, js, and
-  stylesheets.  This triggered some link problems with listing links
-  that rendered as blocks instead of inline. Could've used the id but
-  extensions may not have it, so added an unblock class to be used in
-  a tbody or tr.
-
-- Silva Indexer now store an id to objects, this makes indexes more
-  resistant to object renaming/moving. The preview of Indexer have
-  been fixed as well.
-
-- Add support for new silva.core.layout to customize error messages
-  (unauthorized, 404, errors)...
-
-- Fix bug on service subscription when using MaildropHost with Zope
-  2.11+.
-
-- Fix a race condition on the sidebar in SMI, which makes make two
-  request on the server, creating from times to times a ConflictError
-  or ReadConflictError. Fix other SMI code which was triggering
-  ConflictError as well.
-
-- Fix breadcrumb on tab_preview.
-
-- Logout link redirect you to the nearest publication (with PAS at
-  least).
-
-- LinesFields in external sources would not be saved in kupu if they
-  were empty.
-
-- zip files generated in MACOSX can now be imported -- the skips meta
-  information directories are now skipped (__MACOSX and .DS_Store)
-
-Ported from Silva 2.1.5
-~~~~~~~~~~~~~~~~~~~~~~~
-
-- fix an issue in the subscription service when, on the status
-  tab of versioned content, the 'publish now' button is pressed
-  with an expiration date < publication date AND the subscription
-  service is enabled
-
-Ported from Silva 2.1.4
-~~~~~~~~~~~~~~~~~~~~~~~
-
-- sec_get_all_roles, in addition to looking up the roles
-  the authenticated user has in this context, can also
-  get the roles of an arbitrary user (by passing in the
-  userid)
-
-Ported from Silva 2.1.4b1
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-- cleanup edge case in kupu transforms (SilvaDocument) where nested
-  lists can cause bare <br> tags to be stored in the silvaxml; this 
-  raises errors when rendering with the widgets-based renderer
 
 Silva 2.2a2 (2009-01-12)
 ------------------------
@@ -178,14 +22,14 @@ New Features
 Bugs Fixed
 ~~~~~~~~~~
 
-- Fixed Internet Explorer 7 kupu issue triggered when clicking the
-  unordered list button.
+- Fixed Internet Explorer 7 kupu issue triggered when clicking the 
+  unordered list button. 
 
 - External Source Tool: the title now reverts back to "external
   source" when the tool is reset
 
-- External Source Tool: removing an external source (via the remove
-  button) now resets the tool
+- External Source Tool: removing an external source (via the
+  remove button) now resets the tool
 
 - Added condition in Container/tab_edit for objects that are both
   containers and content to show only one author name.
@@ -193,8 +37,11 @@ Bugs Fixed
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Fixed 310589: Silva AutoTOC ignores "types to list" setting when
-  using silva sort order.
+- Fixed some formatting issues with buttons in the tab editor for
+  containers.
+
+- Fixed 310589: Silva AutoTOC ignores "types to list" setting 
+  when using silva sort order.
 
 
 - Add a function sendmail which can send mail using Mailhost and
@@ -216,10 +63,7 @@ Features added
   the Silva Root when SilvaExternalSources is installed.
 
 - 101103: make addables functionality available within any type of
-  Container, not just Publications.
-
-- Blob storage is supported for files. The files service have been
-  revisited as a Zope 3 component.
+  Container, not just Publications
 
 - Made the public page link in the tab space visible, styled as a tab.
 
