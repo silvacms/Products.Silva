@@ -67,7 +67,6 @@ class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
         manage_options = (BaseFolder.manage_options[0], )
         return manage_options + \
             ({'label':'Silva /edit...', 'action':'edit'}, ) + \
-            ({'label':'Customization', 'action':'manage_customization'}, ) + \
             BaseFolder.manage_options[1:]
 
     _allow_feeds = False
