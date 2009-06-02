@@ -315,7 +315,7 @@
 	     <tr>
 	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
 	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
              </tr>
 	    </table>
           <span i18n:translate="">link target</span>
@@ -410,6 +410,7 @@
             <input type="text" id="kupu-toolbox-image-alt" style="width: 96%"/><br/>
 	    </fieldset>
           <input type="button" class="button" value="update image"/>
+          <input type="button" class="button executor" name="kupu-toolbox-image-resize" id="kupu-toolbox-image-resize" i18n:attributes="value" value="confirm resize"/>
         </div>
       </form>
     </div>

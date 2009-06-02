@@ -92,7 +92,7 @@
 	      <td 
 	        width="24"><button class="kupu-button kupu-link-reference button transporter"
 		 tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')"
-                 title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" /></button></td>
+                 title="edit linked reference..." i18n:attributes="title"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" /></button></td>
              </tr>
 	    </table>
           <span i18n:translate="">link target</span>

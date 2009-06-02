@@ -94,7 +94,7 @@ class Image(Asset):
     }
 
     silvaconf.priority(-3)
-    silvaconf.icon('www/silvafile.png')
+    silvaconf.icon('www/silvaimage.gif')
     silvaconf.factory('manage_addImage')
 
 
