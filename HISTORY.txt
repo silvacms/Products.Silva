@@ -7,6 +7,9 @@ Silva changes
 
     Bug fixes
 
+      - fix some formatting issues with buttons in the edit tab for
+        containers
+
       - fix an issue in the subscription service when, on the status
         tab of versioned content, the 'publish now' button is pressed
         with an expiration date < publication date AND the subscription

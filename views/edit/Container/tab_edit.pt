@@ -479,7 +479,7 @@ window.onload_registry.register(function() {
             accesskey="o"
             i18n:attributes="title"
           ></label>
-          <input class="button"
+          <input class="button manipulator"
             style="float:left"
             name="tab_edit_move_to:method"
             type="submit"
@@ -497,7 +497,7 @@ window.onload_registry.register(function() {
             accesskey="r"
             i18n:attributes="value;title"
           />
-          <input class="button"
+          <input class="button manipulator"
             style="float:left"
             name="tab_edit_cut:method"
             type="submit"
@@ -508,7 +508,7 @@ window.onload_registry.register(function() {
           />
         </tal:if>
         <tal:if condition="python:(default_document or publishables or assets)">
-          <input class="button"
+          <input class="button manipulator"
             style="float:left"
             name="tab_edit_copy:method"
             type="submit"
@@ -525,7 +525,7 @@ window.onload_registry.register(function() {
             the clipboard though). ______________
           </tal:block>
           <tal:if condition="python:request.has_key('__cp') and request['__cp'] is not None">
-            <input class="button"
+            <input class="button manipulator"
               style="float:left"
               name="tab_edit_paste:method"
               type="submit"
@@ -534,7 +534,7 @@ window.onload_registry.register(function() {
               accesskey="v"
               i18n:attributes="value;title"
             />
-            <input class="button"
+            <input class="button manipulator"
               style="float:left"
               name="tab_edit_paste_to_ghost:method"
               type="submit"
