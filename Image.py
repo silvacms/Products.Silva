@@ -315,7 +315,7 @@ class Image(Asset):
             image = self.image
         elif hires and webformat:
             pil_image = self._getPILImage(self.hires_image)
-            pil_image = self._prepareWebFormat(pil_image)
+            is_changed, pil_image = self._prepareWebFormat(pil_image)
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
             del(pil_image)
@@ -494,20 +494,36 @@ class Image(Asset):
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
-        
+
+        changed = False
         if self.image is not None:
             self._remove_image('image')
 
+        # First, do we want to crop it.
         cropbox = self.getCropBox()
         if cropbox:
             image = image.crop(cropbox)
+            changed = True
 
+        # Second, do we scale.
         if self.web_scale != '100%':
             width, height = self.getCanonicalWebScale()
             image = image.resize((width, height), PIL.Image.ANTIALIAS)
+            changed = True
+
+        # Get ride of strange format (non-RGB)
+        is_changed, image = self._prepareWebFormat(image)
+        changed = changed or is_changed
+
+        # Reset old image if nothing happend, making it sure it's
+        # still the newest: if you do a thumbmail and revert it we
+        # want to have the lastest time on the OFS/ExtFile Image.
+        if not changed:
+            self.image = self.hires_image
+            self.image._p_changed = True
+            return
 
         new_image_data = StringIO()
-        image = self._prepareWebFormat(image)
         image.save(new_image_data, self.web_format)
         ct = self._web2ct[self.web_format]
         self._image_factory('image', new_image_data, ct)
@@ -531,7 +547,7 @@ class Image(Asset):
                 return
             else:
                 raise
-        thumb = self._prepareWebFormat(thumb)
+        is_changed, thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
         ct = self._web2ct[self.web_format]
@@ -540,9 +556,9 @@ class Image(Asset):
     def _prepareWebFormat(self, pil_image):
         """converts image's mode if necessary"""
 
-        if pil_image.mode != 'RGB' and self.web_format == 'JPEG':
-            pil_image = pil_image.convert("RGB")
-        return pil_image
+        if not pil_image.mode.startswith('RGB') and self.web_format == 'JPEG':
+            return True, pil_image.convert("RGB")
+        return False, pil_image
 
     def _image_factory(self, id, file, content_type):
         repository = self._useFSStorage()
