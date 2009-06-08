@@ -521,12 +521,11 @@ class Image(Asset):
         if not changed:
             self.image = self.hires_image
             self.image._p_changed = True
-            return
-
-        new_image_data = StringIO()
-        image.save(new_image_data, self.web_format)
-        ct = self._web2ct[self.web_format]
-        self._image_factory('image', new_image_data, ct)
+        else:
+            new_image_data = StringIO()
+            image.save(new_image_data, self.web_format)
+            ct = self._web2ct[self.web_format]
+            self._image_factory('image', new_image_data, ct)
         self._set_redirect(self.image)
 
     def _createThumbnail(self):
