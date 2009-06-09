@@ -5,7 +5,10 @@ Silva changes
 
   Silva 2.1.5b2 (unreleased)
 
-      - ...
+    Bug fixes
+
+      - Add a traverser to a non-existant view on RessourceDirectory
+        to get a 404 instead of an error.
 
   Silva 2.1.5b1 (2009-06-04)
 
