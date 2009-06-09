@@ -207,18 +207,28 @@
           </select>
 	    <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
             <legend>link settings</legend>
-            <label for="kupu-toolbox-image-link-checkbox-hires">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" checked="checked"/>&#160;high resolution version<br/>
+            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">high resolution version</label><br/>
             <div id="kupu-toolbox-image-link-cont">
-              <label for="kupu-toolbox-image-link">link to:</label> <input type="button" class="button transporter" onclick="imageToolGetLinkReference()" value="get link reference..."/><br/>
-              <input type="text" id="kupu-toolbox-image-link" style="width:96%"/>
+             <label for="kupu-toolbox-image-link" i18n:translate="" style="float:left;padding-right: 1px;">link to:</label> 
+             <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="width: 225px">
+ 	      <tr>
+	       <td width="24"><button class="kupu-button kupu-link-reference button transporter" 
+                 title="get link reference..."  tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt" /></button></td>
+	       <td><input type="text" id="kupu-toolbox-image-link" style="width:98%" title="link target" i18n:attributes="title" /></td>
+	       <td width="24"><button class="kupu-button kupu-link-reference button transporter"
+                 title="edit link reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt" /></button></td>
+	      </tr>
+	     </table>
             </div>
             <label class="select" for="kupu-toolbox-image-target">link target:</label>
             <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
-              <option value="_self">same window</option>
-              <option value="_blank">new window</option>
-              <option value="input">custom target</option>
+             <option value="_self" i18n:translate="">same window</option>
+             <option value="_blank" i18n:translate="">new window</option>
+             <option value="_parent" i18n:translate="">parent</option>
+             <option value="_top" i18n:translate="">top</option>
+             <option value="input" i18n:translate="">custom target</option>
             </select><br/>
-            <input type="text" id="kupu-toolbox-image-target-input" style="width:96%; display: none"/>
+            <input type="text" id="kupu-toolbox-image-target-input" title="custom link target" i18n:attributes="title" style="width:96%; display: none"/>
             &#160;<label for="kupu-toolbox-image-alt">tooltip</label><br/>
             <input type="text" id="kupu-toolbox-image-alt" style="width: 96%"/><br/>
 	    </fieldset>
