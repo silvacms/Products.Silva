@@ -316,8 +316,9 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-image-link',
         'kupu-toolbox-image-align', 'kupu-toolbox-image-alt', 
         'kupu-toolbox-images', 'kupu-toolbox',
-        'kupu-toolbox-active', 'kupu-toolbox-image-edit-button',
-        'kupu-toolbox-image-link-cont', 'kupu-toolbox-image-resize');
+        'kupu-toolbox-active',        'kupu-toolbox-image-link-cont', 'kupu-toolbox-image-resize',
+	'kupu-toolbox-image-add-button'
+	);
     kupu.registerTool('imagetool', imagetool);
 
     var tabletool = new SilvaTableTool(); 

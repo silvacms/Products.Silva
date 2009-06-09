@@ -189,11 +189,10 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
 function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid, 
                         hireslinkcheckboxid, linkinputid, 
                         alignselectid, titleinputid, toolboxid, plainclass, 
-                        activeclass, editimagebuttonid, linktocontainerid,
-                        resizebuttonid) {
+                        activeclass, linktocontainerid, resizebuttonid,
+			addbuttonid) {
     /* Silva specific image tool */
     this.editel = getFromSelector(editelid);
-    this.editimagebutton = getFromSelector(editimagebuttonid);
     this.urlinput = getFromSelector(urlinputid);
     this.targetselect = getFromSelector(targetselectid);
     this.targetinput = getFromSelector(targetinputid);
@@ -207,6 +206,7 @@ function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid,
     this.plainclass = plainclass;
     this.activeclass = activeclass;
     this.resizePollingInterval = null;
+    this.addbutton = getFromSelector(addbuttonid);
 }
 SilvaImageTool.prototype = new ImageTool;
 
@@ -221,7 +221,6 @@ SilvaImageTool.prototype.initialize = function(editor) {
     addEventHandler(this.alignselect, 'change', this.setAlign, this);
     addEventHandler(this.titleinput, 'change', this.setTitle, this);
     addEventHandler(this.resizebutton, 'click', this.finalizeResizeImage, this);
-    this.editimagebutton.style.display = 'none';
     this.targetinput.style.display = 'none';
     this.resizebutton.style.display = 'none';
     this.editor.logMessage('Image tool initialized');
@@ -253,7 +252,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
 	    tool */
 	this.image = image;
         this.editel.style.display = 'block';
-        this.editimagebutton.style.display = 'inline';
+	this.addbutton.style.display = 'none';
         var src = image.getAttribute('silva_src');
         if (!src) {
             src = image.getAttribute('src');
@@ -311,8 +310,8 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
         selectSelectItem(this.alignselect, align);
 	this.startResizePolling(image);
     } else {
+	this.addbutton.style.display = 'inline';
         this.editel.style.display = 'none';
-        this.editimagebutton.style.display = 'none';
         this.urlinput.value = '';
         this.titleinput.value = '';
         if (this.toolboxel) {

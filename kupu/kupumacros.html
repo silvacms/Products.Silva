@@ -348,9 +348,9 @@
         <form name="kupu_link_form" onsubmit="return false;">
          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
 	     <tr>
-	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
+	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
 	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
              </tr>
 	    </table>
           <span i18n:translate="">link target</span>
@@ -406,18 +406,23 @@
 
   
 
-    <div class="kupu-toolbox" id="kupu-toolbox-images">
+    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-images" tal:define="model_container model/get_container">
 
-    <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" tal:define="container model/get_container; folder_context python: container" tal:content="string:       function getImage() {         reference.getReference(           function(path, id, title) {             var imgtool = kupu.getTool('imagetool');             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${folder_context/absolute_url}',           'Silva Image', true, '');;       }       function imageToolGetLinkReference() {         reference.getReference(           function(path, id, title) {             imgtool = kupu.getTool('imagetool');             imgtool.linkinput.value = path;             imgtool.setLink();           }, '${folder_context/absolute_url}',           '', true, '');;       }     "/>
+    <script type="text/javascript" tal:content="string:       function getImage() {         reference.getReference(           function(path, id, title) {             var imgtool = kupu.getTool('imagetool');             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${model_container/absolute_url}',           'Silva Image', true, '');;       }       function imageToolGetLinkReference() {         reference.getReference(           function(path, id, title) {             imgtool = kupu.getTool('imagetool');             imgtool.linkinput.value = path;             imgtool.setLink();           }, '${model_container/absolute_url}',           '', true, '');;       }     "/>
 
     <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
 
     <div class="kupu-tooltray">
-      <form xmlns:tal="http://xml.zope.org/namespaces/tal" name="kupu_image_form" onsubmit="return false" tal:define="container model/get_container">
-        <input type="button" class="button transporter" onclick="getImage()" value="get image reference..."/>
-        <input type="button" class="button transporter" value="edit image..." id="kupu-toolbox-image-edit-button" tal:attributes="onclick string:window.open('${container/absolute_url}/' + getFromSelector('kupu-toolbox-image-src').value + '/edit')"/>
+      <form name="kupu_image_form" onsubmit="return false">
+        <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
-          <input type="text" id="kupu-toolbox-image-src" style="width:98%" title="image source"/>
+          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+	  <tr>
+	   <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
+	   <td><input type="text" id="kupu-toolbox-image-src" style="width:98%" title="image source" i18n:attributes="title"/></td>
+	   <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
+	  </tr>
+	  </table>
           <label class="select" for="kupu-toolbox-image-align">image alignment:</label>
           <select id="kupu-toolbox-image-align">
             <option value="default">default</option>
