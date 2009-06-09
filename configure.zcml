@@ -234,7 +234,7 @@
      />
      
 
-  <!-- merde -->
+  <!-- fixes -->
 
   <adapter
     for="Products.Five.browser.resource.DirectoryResource
