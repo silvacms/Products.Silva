@@ -1,3 +1,6 @@
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 def allow_translate():
     """Allow the importing and use of the zope.i18n.translate function
@@ -18,8 +21,25 @@ def fixupCatalogPathAwareness():
     def manage_beforeDelete(self, item, container):
         self.unindex_object()
     CatalogPathAware.manage_beforeDelete = manage_beforeDelete
-    
+
 def patch_all():
     # perform all patches
     allow_translate()
     fixupCatalogPathAwareness()
+
+
+from ZPublisher.BaseRequest import DefaultPublishTraverse
+from Acquisition import Explicit
+
+class NotFoundIndex(Explicit):
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+
+class ResourceDirectoryTraverse(DefaultPublishTraverse):
+
+    def browserDefault(self, request):
+        return NotFoundIndex(self.context, request), ('index',)
+

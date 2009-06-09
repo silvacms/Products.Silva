@@ -233,5 +233,16 @@
      handler=".Folder.folder_moved_update_quota"
      />
      
+
+  <!-- merde -->
+
+  <adapter
+    for="Products.Five.browser.resource.DirectoryResource
+         zope.publisher.interfaces.browser.IBrowserRequest"
+    factory=".monkey.ResourceDirectoryTraverse"
+    provides="zope.publisher.interfaces.browser.IBrowserPublisher"
+    />
+
+
   
 </configure>
