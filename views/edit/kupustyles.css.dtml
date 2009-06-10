@@ -188,10 +188,10 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 }
 
 #kupu-toolboxes button.kupu-link-reference {
-width:20px;
-height:16px;
-border:none;
-background-color:transparent;
+  width: 20px;
+  height: 16px;
+  border: none;
+  background-color: transparent;
 }
 /** end buttons in the toolboxes **/
 
