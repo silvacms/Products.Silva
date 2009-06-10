@@ -4,7 +4,6 @@
   xml:lang="en"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
@@ -225,8 +224,7 @@
             <span replace="nothing">
               <!-- controls are for the import screen, slot is only used in export -->
             </span>
-            <div notal:condition="may_change_content"
-              metal:define-slot="manipulators">
+            <div metal:define-slot="manipulators">
               <input class="button remover"
                 accesskey="x"
                 name="tab_edit_import_delete:method"
