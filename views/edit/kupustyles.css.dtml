@@ -182,8 +182,16 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 .kupu-link-reference-table {
  width: 100%;
 }
+
 .kupu-link-reference-table td {
  white-space: nowrap;
+}
+
+#kupu-toolboxes button.kupu-link-reference {
+width:20px;
+height:16px;
+border:none;
+background-color:transparent;
 }
 /** end buttons in the toolboxes **/
 
@@ -308,7 +316,6 @@ table#kupu-toolbox-addtable {
 table#kupu-toolbox-edittable {
   display: none;
 }
-
 
 div#kupu-colorchooser {
   position: absolute;

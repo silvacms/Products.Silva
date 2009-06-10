@@ -346,13 +346,13 @@
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-         <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-	     <tr>
-	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
-	      <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-	      <td width="24"><button class="kupu-button kupu-link-reference button transporter" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
-             </tr>
-	    </table>
+          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="22"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
+              <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
+              <td width="24" align="right" id="kupu-link-editbutton"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+            </tr>
+          </table>
           <span i18n:translate="">link target</span>
           <select id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>
