@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
-  ns="http://infrae.com/ns/silva"
-  xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
-  xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra">
+  ns="http://infrae.com/namespace/silva"
+  xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+  xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra">
   <start>
     <element name="silva">
       <!-- The starting point for the export/import. Can be 

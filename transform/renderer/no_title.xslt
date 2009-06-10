@@ -2,9 +2,9 @@
 <xsl:stylesheet
   exclude-result-prefixes="doc silva silva-content silva-extra"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:doc="http://infrae.com/ns/silva_document"
-  xmlns:silva="http://infrae.com/ns/silva"
-  xmlns:silva-content="http://infrae.com/namespaces/metadata/silva"
+  xmlns:doc="http://infrae.com/namespace/silva-document"
+  xmlns:silva="http://infrae.com/namespace/silva"
+  xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
   version="1.0">
   <xsl:import href="silvabase:doc_elements.xslt"/>
   <xsl:output 

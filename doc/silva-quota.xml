@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<metadata_set id="silva-quota" ns_uri="http://infrae.com/namespaces/metadata/silva-quota" ns_prefix="silva-quota">
+<metadata_set id="silva-quota" ns_uri="http://infrae.com/namespace/metadata/silva-quota" ns_prefix="silva-quota">
 <title>Silva Quota</title>
 <category>settings</category>
 <description></description>

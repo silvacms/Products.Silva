@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:doc="http://infrae.com/ns/silva_document"
+         xmlns:doc="http://infrae.com/namespace/silva-document"
          xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <start>
     <ref name="document" />

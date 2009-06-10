@@ -14,7 +14,7 @@
 // metadata fields should be editable with the property editor (needs to
 // be moved to somewhere in Silva or something?)
 EDITABLE_METADATA = {
-    'http://infrae.com/namespaces/metadata/silva-news': 
+    'http://infrae.com/namespace/metadata/silva-news-network': 
     [['subjects', 'checkbox', 1, 'subjects'],
         ['target_audiences', 'checkbox', 1, 'target audiences'],
         ['start_datetime', 'datetime', 1, 'start date/time (dmy)'],
