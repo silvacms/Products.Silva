@@ -203,7 +203,7 @@
             <tr>
               <td width="22"><button class="kupu-button kupu-link-reference" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
               <td><input type="text" id="kupu-toolbox-image-link" style="width:98%" title="link target" i18n:attributes="title"/></td>
-              <td width="24" align="right"><button class="kupu-button kupu-link-reference" title="edit link reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
+              <td width="24" align="right"><button class="kupu-button kupu-link-reference" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
            </tr>
           </table>
           </div>
