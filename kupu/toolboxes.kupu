@@ -85,7 +85,7 @@
             <tr>
               <td width="22"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16"/></button></td>
               <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-              <td width="24" align="right" id="kupu-link-editbutton"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
+              <td width="24" align="right" id="kupu-link-editbutton"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
             </tr>
           </table>
           <span i18n:translate="">link target:</span>
