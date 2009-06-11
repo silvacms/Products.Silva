@@ -1,7 +1,5 @@
-
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="kupu">
 
-  
     <head>
       <metal:block xmlns:metal="http://xml.zope.org/namespaces/metal" define-macro="jsincludes">
       
@@ -19,23 +17,17 @@
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kuputoolcollapser.js" tal:attributes="src string:${root_url}/service_kupu/kuputoolcollapser.js"> </script>
 
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusilvatools.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvatools.js"> </script>
-  
-      
-  
-      
-  
-      
       
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusilvainit.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvainit.js"> </script>
     <script type="text/javascript">
-	var kupu = null;
-	var kupuui = null;
-	function startKupu() {
-	    var frame = getFromSelector('kupu-editor'); 
-	    kupu = initSilvaKupu(frame); 
-	    kupuui = kupu.getTool('ui'); 
-	    kupu.initialize();
-	};
+        var kupu = null;
+        var kupuui = null;
+        function startKupu() {
+            var frame = getFromSelector('kupu-editor'); 
+            kupu = initSilvaKupu(frame); 
+            kupuui = kupu.getTool('ui'); 
+            kupu.initialize();
+        };
         // register the function to the unload registry
         window.onload_registry.register(startKupu);
     </script>
@@ -332,13 +324,13 @@
     <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-links" tal:define="model_container model/get_container">
       <script type="text/javascript">
         function getLink(container_url) {
-	  var linktool = kupu.getTool('linktool');
-	  reference.getReference(
-	    function(path, id, title) {
-	      linktool.createLink(path,null,null,null,title);
-	    },
-	    container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
-	}	
+          var linktool = kupu.getTool('linktool');
+          reference.getReference(
+            function(path, id, title) {
+              linktool.createLink(path,null,null,null,title);
+            },
+            container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
+        }        
        </script>
        <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
@@ -353,7 +345,7 @@
               <td width="24" align="right" id="kupu-link-editbutton"><button class="kupu-button kupu-link-reference" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit link reference..." i18n:attributes="value"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16"/></button></td>
             </tr>
           </table>
-          <span i18n:translate="">link target</span>
+          <span i18n:translate="">link target:</span>
           <select id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>
             <option value="_blank" i18n:translate="">new window</option>
@@ -368,7 +360,7 @@
         </form>
       </div>
     </div>
-  
+
     <div class="kupu-toolbox" id="kupu-toolbox-indexes">
 
       <h1 class="kupu-toolbox-heading" i18n:translate="">anchor/index item</h1>
@@ -417,12 +409,12 @@
         <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
           <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-	  <tr>
-	   <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
-	   <td><input type="text" id="kupu-toolbox-image-src" style="width:98%" title="image source" i18n:attributes="title"/></td>
-	   <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
-	  </tr>
-	  </table>
+            <tr>
+              <td width="22"><button class="kupu-button kupu-link-reference" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
+              <td><input type="text" id="kupu-toolbox-image-src" style="width:98%" title="image source" i18n:attributes="title"/></td>
+              <td width="24" align="right"><button class="kupu-button kupu-link-reference" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
+            </tr>
+          </table>
           <label class="select" for="kupu-toolbox-image-align">image alignment:</label>
           <select id="kupu-toolbox-image-align">
             <option value="default">default</option>
@@ -432,31 +424,30 @@
             <option value="float-left">float left</option>
             <option value="float-right">float right</option>
           </select>
-	    <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
-            <legend>link settings</legend>
-            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">high resolution version</label><br/>
-            <div id="kupu-toolbox-image-link-cont">
-             <label for="kupu-toolbox-image-link" i18n:translate="" style="float:left;padding-right: 1px;">link to:</label> 
-             <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="width: 225px">
- 	      <tr>
-	       <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
-	       <td><input type="text" id="kupu-toolbox-image-link" style="width:98%" title="link target" i18n:attributes="title"/></td>
-	       <td width="24"><button class="kupu-button kupu-link-reference button transporter" title="edit link reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
-	      </tr>
-	     </table>
-            </div>
-            <label class="select" for="kupu-toolbox-image-target">link target:</label>
-            <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
-             <option value="_self" i18n:translate="">same window</option>
-             <option value="_blank" i18n:translate="">new window</option>
-             <option value="_parent" i18n:translate="">parent</option>
-             <option value="_top" i18n:translate="">top</option>
-             <option value="input" i18n:translate="">custom target</option>
-            </select><br/>
-            <input type="text" id="kupu-toolbox-image-target-input" title="custom link target" i18n:attributes="title" style="width:96%; display: none"/>
-            &#160;<label for="kupu-toolbox-image-alt">tooltip</label><br/>
-            <input type="text" id="kupu-toolbox-image-alt" style="width: 96%"/><br/>
-	    </fieldset>
+          <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
+          <legend>link settings</legend>
+          <div id="kupu-toolbox-image-link-cont">
+          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="margin-top:0.2em">
+            <tr>
+              <td width="22"><button class="kupu-button kupu-link-reference" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"><img tal:attributes="src context/globals/system-search.png/absolute_url" width="16" height="16" alt="looking glass" i18n:attributes="alt"/></button></td>
+              <td><input type="text" id="kupu-toolbox-image-link" style="width:98%" title="link target" i18n:attributes="title"/></td>
+              <td width="24" align="right"><button class="kupu-button kupu-link-reference" title="edit link reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"><img tal:attributes="src context/globals/edit-find.png/absolute_url" width="16" height="16" alt="looking glass over a document" i18n:attributes="alt"/></button></td>
+           </tr>
+          </table>
+          </div>
+          <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to high resolution version</label><br/>
+          <label class="select" for="kupu-toolbox-image-target">link target:</label>
+          <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
+           <option value="_self" i18n:translate="">same window</option>
+           <option value="_blank" i18n:translate="">new window</option>
+           <option value="_parent" i18n:translate="">parent</option>
+           <option value="_top" i18n:translate="">top</option>
+           <option value="input" i18n:translate="">custom target</option>
+          </select><br/>
+          <input type="text" id="kupu-toolbox-image-target-input" title="custom link target" i18n:attributes="title" style="width:96%; display: none"/>
+          <label for="kupu-toolbox-image-alt">tooltip</label><br/>
+          <input type="text" id="kupu-toolbox-image-alt" style="width: 96%"/><br/>
+          </fieldset>
           <input type="button" class="button" value="update image"/>
           <input type="button" class="button executor" name="kupu-toolbox-image-resize" id="kupu-toolbox-image-resize" i18n:attributes="value" value="confirm resize"/>
         </div>
@@ -529,7 +520,7 @@
 
         <form name="kupu_extsource_form" onsubmit="return false">
           <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
-	    <option value="">Select Source</option>
+            <option value="">Select Source</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="value id;                                         title object/description" tal:content="python:object.get_title() or id"/>
