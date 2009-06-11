@@ -68,6 +68,11 @@ class RootUpgrader(BaseUpgrader):
         # Delete unused Silva views
         reg.unregister('public', 'Silva AutoTOC')
 
+        # Install ExternalSources
+        service_ext = obj.service_extensions
+        if not service_ext.is_installed('SilvaExternalSources'):
+            service_ext.install('SilvaExternalSources')
+
         # Clean SilvaLayout mess
         if hasattr(obj, "__silva_layout_installed__"):
             if 'silva-layout-vhost-root' in obj.service_metadata.getCollection().getMetadataSets():
@@ -77,17 +82,6 @@ class RootUpgrader(BaseUpgrader):
             reg.unregister('add', 'LayoutConfiguration')
             if hasattr(obj.service_views, 'SilvaLayout'):
                 obj.service_views.manage_delObjects(['SilvaLayout'])
-
-        # Install ExternalSources, and setup cs_toc and cs_citation CS's.
-        service_ext = obj.service_extensions
-        if not service_ext.is_installed('SilvaExternalSources'):
-            service_ext.install('SilvaExternalSources')
-        if not hasattr(obj, 'cs_toc'):
-            toc = obj.service_codesources.manage_copyObjects(['cs_toc',])
-            obj.manage_pasteObjects(toc)
-        if not hasattr(obj, 'cs_citation'):
-            cit = obj.service_codesources.manage_copyObjects(['cs_citation',])
-            obj.manage_pasteObjects(cit)
 
         # Update service_files settings
         service_files = obj.service_files
@@ -139,6 +133,12 @@ class ImagesUpgrader(BaseUpgrader):
 
 ImagesUpgrader = ImagesUpgrader(VERSION_A1, 'Silva Image')
 
+
+#-----------------------------------------------------------------------------
+# 2.2.0a1 to 2.2.0a2
+#-----------------------------------------------------------------------------
+
+VERSION_A2='2.2a2'
 
 class SilvaXMLUpgrader(BaseUpgrader):
     '''Upgrades all SilvaXML (documents), converting
@@ -296,14 +296,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
 
             t.parentNode.replaceChild(cs,t)
 
-SilvaXMLUpgrader = SilvaXMLUpgrader(VERSION_A1, AnyMetaType)
-
-
-#-----------------------------------------------------------------------------
-# 2.2.0a1 to 2.2.0a2
-#-----------------------------------------------------------------------------
-
-VERSION_A2='2.2a2'
+SilvaXMLUpgrader = SilvaXMLUpgrader(VERSION_A2, AnyMetaType)
 
 class AllowedAddablesUpgrader(BaseUpgrader):
 
@@ -356,9 +349,43 @@ class SecondRootUpgrader(BaseUpgrader):
         sm.registerUtility(obj.service_catalog, ICatalogService)
         if hasattr(obj.aq_explicit, 'service_annotations'):
             obj.manage_delObjects(['service_annotations',])
+
+        # Setup the cs_toc and cs_citation CS's.
+        service_ext = obj.service_extensions
+        if not service_ext.is_installed('SilvaExternalSources'):
+            service_ext.install('SilvaExternalSources')
+        if not hasattr(obj, 'cs_toc'):
+            toc = obj.service_codesources.manage_copyObjects(['cs_toc',])
+            obj.manage_pasteObjects(toc)
+        if not hasattr(obj, 'cs_citation'):
+            cit = obj.service_codesources.manage_copyObjects(['cs_citation',])
+            obj.manage_pasteObjects(cit)
+        
         return obj
 
 SecondRootUpgrader = SecondRootUpgrader(VERSION_B1, 'Silva Root')
+
+new_ns_mappings = {'http://infrae.com/ns/silva-news-network': 'http://infrae.com/namespace/silva-news-network',
+              'http://infrae.com/ns/silva': 'http://infrae.com/namespace/silva',
+              'http://infrae.com/ns/silva_document': 'http://infrae.com/namespace/silva-document',
+              'http://infrae.com/namespaces/metadata/silva': 'http://infrae.com/namespace/silva-content',              'http://infrae.com/namespaces/metadata/silva-extra': 'http://infrae.com/namespace/silva-extra',
+              'http://infrae.com/namespaces/metadata/snn-np-settings':'http://infrae.com/namespace/metadata/snn-np-settings',
+              'http://infrae.com/namespaces/metadata/silva-layout':'http://infrae.com/namespace/metadata/silva-layout'}
+
+class MetadataSetUpgrader(BaseUpgrader):
+    """Update the namespaces of existing metadata sets
+       NOTE: this 'may' not be needed, since I think the metadata sets
+       _are_ reinstalled during the refresh, but we do it here
+       for good measure"""
+    def upgrade(self, obj):
+        sm = obj.service_metadata
+        sets = sm.getCollection().getMetadataSets()
+        for s in sets:
+            prefix,uri = s.getNamespace()
+            if new_ns_mapping.has_key(uri):
+                s.setNamespace(new_ns_mapping[uri], prefix)
+            
+MetadataSetUpgrader = MetadataSetUpgrader(VERSION_B1, 'Silva Root')    
 
 class MetadataUpgrader(BaseUpgrader):
     """Migrate metadata information.
@@ -377,5 +404,4 @@ class MetadataUpgrader(BaseUpgrader):
             for key in old_annotations.keys():
                 new_annotations[key] = old_annotations[key]
         return obj
-
 MetadataUpgrader = MetadataUpgrader(VERSION_B1, AnyMetaType)
