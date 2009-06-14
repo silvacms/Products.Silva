@@ -520,7 +520,7 @@
 
         <form name="kupu_extsource_form" onsubmit="return false">
           <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
-            <option value="">Select Source</option>
+            <option value="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="value id;                                         title object/description" tal:content="python:object.get_title() or id"/>
