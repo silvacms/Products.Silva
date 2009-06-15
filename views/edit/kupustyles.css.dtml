@@ -186,12 +186,27 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 .kupu-link-reference-table td {
  white-space: nowrap;
 }
+.kupu-link-reference-table td.buttoncell {
+ width: 21px;
+}
+
+.kupu-link-reference-table button.kupu-link-lookupbutton {
+  background-image: url("<dtml-var root_url>/globals/system-search.png");
+}
+.kupu-link-reference-table button.kupu-link-editbutton {
+  background-image: url("<dtml-var root_url>/globals/edit-find.png");
+  display: none;
+}
 
 #kupu-toolboxes button.kupu-link-reference {
   width: 20px;
-  height: 16px;
-  border: none;
+  margin-right: 1px;
+  overflow: visible;
+/*  border: none;*/
   background-color: transparent;
+}
+#kupu-toolboxes button.kupu-link-reference:hover {
+  background-color: #b3d4bf;
 }
 /** end buttons in the toolboxes **/
 
@@ -292,7 +307,7 @@ div.kupu-tooltray input.button, div.kupu-tooltray input.transport {
 }
 /* improves problem with long values in string inputs in IE 7 */ 
 div.kupu-tooltray input.store {
-  overflow: visible;
+   overflow: visible;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 

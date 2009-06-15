@@ -159,21 +159,15 @@ class ReferenceLookupWindowWidget(LookupWindowWidget):
 
     def render(self, field, key, value, request):
         widget = []
-        widget.append('<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0"><tr><td width="24">')
+        widget.append('<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0"><tr><td class="buttoncell">')
         widget.append(
             render_element(
                 'button',
                 name=key + '_button',
-                css_class="kupu-button kupu-link-reference button transporter",
+                css_class="kupu-button kupu-link-reference kupu-link-lookupbutton",
                 title=field.get_value('button_label') or 'get reference...',
                 onclick="%s;return false;" % self._onclick_handler(field, key),
-                contents=render_element(
-                    'img',
-                    width='16',
-                    height='16',
-                    src='/silva/globals/system-search.png'
-                    )
-            )
+                contents=' ')
         )
         widget.append('</td><td>')
         widget.append(
@@ -188,7 +182,7 @@ class ReferenceLookupWindowWidget(LookupWindowWidget):
                 extra=field.get_value('extra')))
         widget.append('</td>')
         if field.get_value('show_edit_button'):
-            widget.append('<td width="24">')
+            widget.append('<td class="buttoncell">')
             url = ''
             request = getattr(field, 'REQUEST', None)
             if request:
@@ -202,15 +196,11 @@ class ReferenceLookupWindowWidget(LookupWindowWidget):
                 render_element(
                     'button',
                     name=key + '_editbutton',
-                    css_class="kupu-button kupu-link-reference button transporter",
+                    css_class="kupu-button kupu-link-reference kupu-link-editbutton",
+                    style="display: inline",
                     title='edit...',
                     onclick="reference.editReference('%s','%s');return false;"%(key,url),
-                    contents=render_element(
-                        'img',
-                        width='16',
-                        height='16',
-                        src='/silva/globals/edit-find.png'
-                    )
+                    contents=' '
                 )
             )
             widget.append('</td>')

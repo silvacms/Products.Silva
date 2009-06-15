@@ -75,6 +75,8 @@ function SilvaLinkToolBox(inputid, targetselectid, targetinputid,
 /* create and edit links */
 
     this.input = getFromSelector(inputid);
+    var inputtable = this.input.parentNode.parentNode;
+    this.inputeditbutton = inputtable.getElementsByTagName('button')[1];
     this.targetselect = getFromSelector(targetselectid);
     this.targetinput = getFromSelector(targetinputid);
     this.addbutton = getFromSelector(addbuttonid);
@@ -141,6 +143,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                     };
                 };
                 this.input.value = href;
+		this.inputeditbutton.style.display="inline";
+		this.inputeditbutton.parentNode.style.width="42px";
                 var target = currnode.getAttribute('target');
                 if (!target) {
                     this.targetselect.selectedIndex = 0;
@@ -184,6 +188,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
         this.toolboxel.className = this.plainclass;
     };
     this.input.value = '';
+    this.inputeditbutton.style.display="none";
+    this.inputeditbutton.parentNode.style.width="21px";
 };
 
 function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid, 
@@ -194,10 +200,14 @@ function SilvaImageTool(editelid, urlinputid, targetselectid, targetinputid,
     /* Silva specific image tool */
     this.editel = getFromSelector(editelid);
     this.urlinput = getFromSelector(urlinputid);
+    var urltable = this.urlinput.parentNode.parentNode;
+    this.urlinputeditbutton = urltable.getElementsByTagName('button')[1];
     this.targetselect = getFromSelector(targetselectid);
     this.targetinput = getFromSelector(targetinputid);
     this.hireslinkcheckbox = getFromSelector(hireslinkcheckboxid);
     this.linkinput = getFromSelector(linkinputid);
+    var linktable = this.linkinput.parentNode.parentNode;
+    this.linkinputeditbutton = linktable.getElementsByTagName('button')[1];
     this.alignselect = getFromSelector(alignselectid);
     this.titleinput = getFromSelector(titleinputid);
     this.toolboxel = getFromSelector(toolboxid);
@@ -224,6 +234,10 @@ SilvaImageTool.prototype.initialize = function(editor) {
     this.targetinput.style.display = 'none';
     this.resizebutton.style.display = 'none';
     this.editor.logMessage('Image tool initialized');
+    /* this edit button cell is actually always displayed, as the
+       urlinput will always be filled in if it is visible */
+    this.urlinputeditbutton.style.display='inline';
+    this.urlinputeditbutton.parentNode.style.width='42px';
 };
 
 SilvaImageTool.prototype.createContextMenuElements = function(selNode, event) {
@@ -286,11 +300,15 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             var link = image.getAttribute('link');
             this.hireslinkcheckbox.checked = false;
             this.linkinput.value = link == null ? '' : link;
+	    this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
+	    this.linkinputeditbutton.parentNode.style.width = !link ? '21px' : '42px';
         } else {
             this.hireslinkcheckbox.checked = 'checked';
             this.linktocontainer.style.display = 'none';
             this.linkinput.value = '';
             this.linkinput.disabled = 'disabled';
+	    this.linkinputeditbutton.style.display = 'none';
+	    this.linkinputeditbutton.parentNode.style.width = '21px';
         };
         if (this.toolboxel) {
             if (this.toolboxel.open_handler) {
@@ -457,6 +475,8 @@ SilvaImageTool.prototype.setHires = function() {
         image.removeAttribute('link');
         this.linkinput.value = '';
         this.linkinput.disabled = 'disabled';
+        this.linkinputeditbutton.style.display = 'none';
+        this.linkinputeditbutton.parentNode.style.width = '21px';
         this.linktocontainer.style.display = 'none';
     } else {
         image.setAttribute('link_to_hires', '0');
@@ -477,6 +497,8 @@ SilvaImageTool.prototype.setLink = function() {
     };
     image.setAttribute('link', link);
     image.setAttribute('link_to_hires', '0');
+    this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
+    this.linkinputeditbutton.parentNode.style.width = !link ? '21px' : '42px';
     this.editor.content_changed = true;
 };
 
