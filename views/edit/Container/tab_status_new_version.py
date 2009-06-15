@@ -26,20 +26,19 @@ copied_ids = []
 not_copied = []
 msg = []
 
-get_name = context.tab_status_get_name
-
+objects = []
 for ref in refs:
     obj = model.resolve_ref(ref)
-    if obj is None:
-        continue
-    if not obj.implements_versioning():
-        not_copied.append((get_name(obj), _('not applicable')))
-        continue
+    if obj:
+        objects.append(obj)
+
+def action(obj, fullPath, argv):
     if obj.get_next_version():
-        not_copied.append((get_name(obj), _('already has a next version')))
-        continue
+        return (False, (fullPath, _('already has a next version')))
     obj.create_copy()
-    copied_ids.append(get_name(obj))
+    return (True, fullPath)
+
+[copied_ids,not_copied,dummy] = context.do_publishing_action(objects,action=action)
 
 if copied_ids:
     request.set('redisplay_timing_form', 0)

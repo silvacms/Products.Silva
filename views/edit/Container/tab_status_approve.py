@@ -22,11 +22,6 @@ except FormValidationError, e:
         message=context.render_form_errors(e),
         refs=refs)
 
-publish_datetime = result['publish_datetime']
-publish_now_flag = result['publish_now_flag']
-expiration_datetime = result['expiration_datetime']
-clear_expiration_flag = result['clear_expiration']
-
 #if not publish_now_flag and not publish_datetime:
 #    return context.tab_status(
 #        message_type='error',
@@ -36,21 +31,20 @@ now = DateTime()
 
 approved_ids = []
 not_approved = []
-msg = []
 no_date_refs = []
+msg = []
 
-get_name = context.tab_status_get_name
-
+objects = []
 for ref in refs:
     obj = model.resolve_ref(ref)
-    if obj is None:
-        continue
-    if not obj.implements_versioning():
-        not_approved.append((get_name(obj), _('not applicable')))
-        continue
+    if obj:
+        objects.append(obj)
+
+def action(obj,fullPath,argv):
+    (publish_datetime, publish_now_flag, expiration_datetime, clear_expiration_flag) = argv
+    
     if obj.is_version_approved():
-        not_approved.append((get_name(obj), _('version already approved')))
-        continue
+        return (False, (fullPath, _('version already approved')))
     if ((publish_now_flag or publish_datetime) and
             not obj.get_unapproved_version()):
     # SHORTCUT: To allow approval of closed docs with no new version available,
@@ -61,8 +55,7 @@ for ref in refs:
     #    not_approved.append((get_name(obj), _('no unapproved version available')))
     #    continue
         if obj.is_version_published():
-            not_approved.append((get_name(obj), _('version already public')))
-            continue
+            return (False, (fullPath, _('version already public')))
         obj.create_copy()
     # publish
     if publish_now_flag:
@@ -71,9 +64,7 @@ for ref in refs:
         obj.set_unapproved_version_publication_datetime(publish_datetime)
     elif not obj.get_unapproved_version_publication_datetime():
         # no date set, neither on unapproved version nor in tab_status form
-        not_approved.append((get_name(obj), _('no publication time was set')))
-        no_date_refs.append(ref)
-        continue
+        return (False, (fullPath, _('no publication time was set'), context.create_ref(obj)))
     # expire
     if clear_expiration_flag:
         obj.set_unapproved_version_expiration_datetime(None)
@@ -81,7 +72,9 @@ for ref in refs:
         obj.set_unapproved_version_expiration_datetime(expiration_datetime)
 
     obj.approve_version()
-    approved_ids.append(get_name(obj))
+    return (True, fullPath)
+
+[approved_ids,not_approved,no_date_refs] = context.do_publishing_action(objects,action=action,argv=[result['publish_datetime'],result['publish_now_flag'],result['expiration_datetime'],result['clear_expiration']])
 
 if approved_ids:
     request.set('redisplay_timing_form', 0)
@@ -89,10 +82,10 @@ if approved_ids:
                 mapping={'ids': context.quotify_list(approved_ids)})
     msg.append(translate(message))
 
-if not_approved:
+if not_approved:    
     message = _('could not approve: ${ids}',
                 mapping={'ids': context.quotify_list_ext(not_approved)})
-    msg.append(translate(message))
+    msg.append("<span class='error'>" + translate(message) + "</span>")
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()

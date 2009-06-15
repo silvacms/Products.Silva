@@ -26,20 +26,19 @@ revoked_ids = []
 not_revoked = []
 msg = []
 
-get_name = context.tab_status_get_name
-
+objects = []
 for ref in refs:
     obj = model.resolve_ref(ref)
-    if obj is None:
-        continue
-    if not obj.implements_versioning():
-        not_revoked.append((get_name(obj), _('not applicable')))
-        continue
+    if obj:
+        objects.append(obj)
+
+def action(obj, fullPath, argv):
     if not obj.is_version_approved():
-        not_revoked.append((get_name(obj), _('it\'s not approved, or it\'s already published')))
-        continue
+        return (False, (fullPath, _('it\'s not approved, or it\'s already published')))
     obj.unapprove_version()
-    revoked_ids.append(get_name(obj))
+    return (True, fullPath)
+
+[revoked_ids,not_revoked, dummy] = context.do_publishing_action(objects,action=action)
 
 if revoked_ids:
     request.set('redisplay_timing_form', 0)
@@ -48,7 +47,7 @@ if revoked_ids:
     msg.append(translate(message))
 
 if not_revoked:
-    message = _('Could not revoke approval of: ${ids}',
+    message = _('could not revoke approval of: ${ids}',
                 mapping={'ids': context.quotify_list_ext(not_revoked)})
     msg.append('<span class="error">' + translate(message) + '</span>')
 

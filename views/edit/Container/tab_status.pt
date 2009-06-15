@@ -14,6 +14,7 @@
 <form action="."
   method="post"
   name="silvaObjects"
+  id="silvaObjectsPermissions"
   tal:define="
     objects model/get_processed_status_tree;
     refs options/refs | python: [];
@@ -44,7 +45,94 @@
         _____________________ main _____________________
       </tal:block>
       <td class="main">
+      <div style="display:none;" i18n:translate="" id="update-action-message">There are publications selected to have their publication and/or expiration times updated. Are you sure you want to update all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="new-version-action-message">There are publications selected to create new versions. Are you sure you want to create new versions of all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="close-action-message">There are publications selected to be closed and the contents are visible. Are you sure you want to close all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="publish-action-message">There are publications selected to be published and the contents are not visible. Are you sure you want to publish all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="reject-action-message">There are publications selected to have their request for approval rejected. Are you sure you want to reject approval for all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="revoke-action-message">There are publications selected to have their approval of approved versions withdrawn. Are you sure you want to withdraw approval for all the contents of these publications?</div>
 
+<script type="text/javascript">
+<!--
+
+Array.prototype.contains = function(obj) {
+  var i = this.length;
+  while (i--) {
+    if (this[i] == obj) {
+      return true;
+    }
+  }
+  return false;
+}
+
+var publications = new Array();
+function selectAllBelowLevel(start) {
+  var currentIndent = start.parentNode.parentNode.getElementsByTagName("div")[0].style.marginLeft.replace("px","");
+  var inputs = document.getElementById("silvaObjectsPermissions").getElementsByTagName("input");
+
+  var atCorrectLevel = false;
+
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].id == "all_0" || inputs[i].type != "checkbox") {
+      continue;
+    }
+    else if (inputs[i].id == "all_1") {
+      break;
+    }
+
+    if (atCorrectLevel) {
+      if (inputs[i].parentNode.parentNode.getElementsByTagName("div")[0].style.marginLeft.replace("px","") > currentIndent) {
+        var onclick = "" + inputs[i].onclick;
+        inputs[i].checked = start.checked;
+        inputs[i].disabled = start.checked;
+
+        if (onclick.match(/.*dummyPublication.*/)) {
+          if (!publications.contains(inputs[i])) {
+            publications.push(inputs[i]);
+          }
+        }
+      }
+      else {
+        break;
+      }
+    }
+    else if (start == inputs[i]) {
+      atCorrectLevel = true;
+    }
+  }
+}
+
+function dummyPublication(selection) {
+  if (!publications.contains(selection)) {
+    publications.push(selection);
+  }
+}
+
+function verifyChange(msg) {
+  var confirmChange = false;
+
+  //See if we need to prompt the user about publication changes
+  for (var i = 0; i < publications.length; i++) {
+    if (publications[i].checked) {
+      confirmChange = true;
+    }
+  }
+
+  var change = true;
+  if (confirmChange) {
+    publish = confirm(msg);
+  }
+
+  for (var i = 0; i < publications.length; i++) {
+    if (publications[i].checked) {
+      publications[i].checked = publish;
+    }
+  }
+
+}
+
+//-->
+</script>
 <table class="listing">
   <thead>
     <tal:block replace="nothing">
@@ -125,6 +213,7 @@
         tal:define="
           iterate repeat/obj/odd;
           is_container obj/implements_container | nothing;
+          is_publication obj/implements_publication | nothing;
           indent_depth python: '%spx' % str(obj['indent'] * 10);
           obj_url obj/absolute_url;
           state obj/status_style | nothing;
@@ -147,6 +236,7 @@
             tal:attributes="
               value ref;
               checked python: ref in refs and 'checked' or nothing;
+              onclick python: is_container and not is_publication and 'selectAllBelowLevel(this)' or is_publication and 'dummyPublication(this)' or nothing;
               "
           />
         </td>
@@ -349,6 +439,7 @@
           title="publish new versions: alt-p"
           accesskey="p"
           type="submit"
+          onclick="verifyChange(document.getElementById('publish-action-message').innerHTML)"
           i18n:attributes="value; title"
           tal:condition="python: approveables or rejectables or republishables"
         />
@@ -359,6 +450,7 @@
           value="approve for future"
           title="approve new versions for publication at a later date: alt-o"
           accesskey="o"
+          onclick="verifyChange(document.getElementById('publish-action-message').innerHTML)"
           tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title"
         />
@@ -369,6 +461,7 @@
           value="update timing"
           title="change publish and expiration times: alt-u"
           accesskey="u"
+          onclick="verifyChange(document.getElementById('update-action-message').innerHTML)"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
           i18n:attributes="value;title"
         />
@@ -380,6 +473,7 @@
             value="reject"
             title="reject pending request for approval: alt-j"
             accesskey="j"
+            onclick="verifyChange(document.getElementById('reject-action-message').innerHTML)"
             tal:condition="rejectables"
             i18n:attributes="value;title"
           />
@@ -390,6 +484,7 @@
             value="revoke"
             title="withdraw approval of approved versions: alt-v"
             accesskey="v"
+            onclick="verifyChange(document.getElementById('revoke-action-message').innerHTML)"
             tal:condition="revokeables"
             i18n:attributes="value;title"
           />
@@ -400,6 +495,7 @@
             value="close"
             title="close published items: alt-c"
             accesskey="c"
+            onclick="verifyChange(document.getElementById('close-action-message').innerHTML)"
             tal:condition="python:closeables and may_approve_content"
             i18n:attributes="value;title"
           />
@@ -410,6 +506,7 @@
             value="new version"
             title="create new versions of published docs: alt-n"
             accesskey="n"
+            onclick="verifyChange(document.getElementById('new-version-action-message').innerHTML)"
             tal:condition="new_versionables"
             i18n:attributes="value;title"
           />

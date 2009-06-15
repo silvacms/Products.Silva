@@ -219,12 +219,16 @@ class ViewCode:
             infodict['implements_container'] = obj.implements_container()
 
             infodict['implements_versioning'] = obj.implements_versioning()
+
+            infodict['implements_publication'] = obj.implements_publication()
+
+            infodict['ref'] = self.create_ref(obj)
+            
             if infodict['implements_versioning']:
                 status, style, public_status = obj.get_object_status()
                 infodict['status'] = status
                 infodict['status_style'] = style
                 infodict['public_status'] = public_status
-                infodict['ref'] = self.create_ref(obj)
 
                 datetime = obj.get_next_version_publication_datetime()
                 if datetime:

@@ -45,11 +45,11 @@ if approved_ids:
     msg.append(translate(message))
 
 if not_approved:
-    message = _('Not withdrawn: ${list}',
+    message = _('not withdrawn: ${list}',
                 mapping={'list': context.quotify_list_ext(not_approved)})
     msg.append('<span class="error">' + translate(message) + '</span>')
 
 if hasattr(context, 'service_messages'):
     context.service_messages.send_pending_messages()
 
-return context.tab_status(message_type='feedback', message=('<br />'.join(msg)) )
+return context.tab_status(message_type='feedback', message=(', '.join(msg)) )
