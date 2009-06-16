@@ -15,6 +15,15 @@ New Features
 
 - A New "Kupu Popup" formulator field.  This field is for html content
   and pops up a "popup kupu" to provide easy wysiwyg editing.
+  
+- Redesigned link and image tools: the link and image reference fields
+  now have an icon button for the 'get reference' functionality -- saving 
+  toolbox space -- and when a reference is present an 'edit linked reference'
+  button.  When clicked for a valid silva reference, this opens up a new window
+  to the edit tab of the reference.
+  
+- The link tool's input field converts to a text area when it has the focus
+  to allow for easier editing of long link references.
 
 - External Source Tool: the select external source drop-down
   now has "Select Item" as the first option, rather than the

@@ -208,6 +208,9 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 #kupu-toolboxes button.kupu-link-reference:hover {
   background-color: #b3d4bf;
 }
+.kupu-link-reference-table textarea {
+ display: none;
+}
 /** end buttons in the toolboxes **/
 
 #kupu-editor {

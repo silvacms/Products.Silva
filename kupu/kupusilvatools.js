@@ -75,6 +75,11 @@ function SilvaLinkToolBox(inputid, targetselectid, targetinputid,
 /* create and edit links */
 
     this.input = getFromSelector(inputid);
+    this.inputTA = document.createElement('textarea');
+    this.inputTA.className='store';
+    this.inputTA.cols="30";
+    this.inputTA.rows="2";
+    this.input.parentNode.appendChild(this.inputTA);
     var inputtable = this.input.parentNode.parentNode;
     this.inputeditbutton = inputtable.getElementsByTagName('button')[1];
     this.targetselect = getFromSelector(targetselectid);
@@ -97,9 +102,25 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
     addEventHandler(this.addbutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.delbutton, 'click', this.tool.deleteLink, this);
+    addEventHandler(this.input, 'focus', this.inputFocusHandler, this);
+    addEventHandler(this.inputTA, 'blur', this.inputFocusHandler, this);
     this.targetinput.style.display = 'none';
     this.editor.logMessage('Link tool initialized');
 };
+
+
+SilvaLinkToolBox.prototype.inputFocusHandler = function(event) {
+    if (this.input.style.display == 'none') {
+	this.input.value = this.inputTA.value;
+	this.input.style.display = 'inline';
+	this.inputTA.style.display = 'none';
+    } else {
+	this.input.style.display = 'none';
+	this.inputTA.value = this.input.value;
+	this.inputTA.style.display = 'inline';
+	this.inputTA.focus();
+    }
+}
 
 SilvaLinkToolBox.prototype.selectTargetHandler = function(event) {
     var select = this.targetselect;
@@ -143,6 +164,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                     };
                 };
                 this.input.value = href;
+		this.inputTA.value = href;
 		this.inputeditbutton.style.display="inline";
 		this.inputeditbutton.parentNode.style.width="42px";
                 var target = currnode.getAttribute('target');
@@ -188,6 +210,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
         this.toolboxel.className = this.plainclass;
     };
     this.input.value = '';
+    this.inputTA.value = '';
     this.inputeditbutton.style.display="none";
     this.inputeditbutton.parentNode.style.width="21px";
 };
