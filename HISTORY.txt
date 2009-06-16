@@ -7,9 +7,11 @@ Silva 2.2a2 (2009-01-12)
 New Features
 ~~~~~~~~~~~~
 
-- When publishing, selecting a folder or publication will cause
-  the action to be applied to all items contained in the folder
-  or publication.
+- Recursive publishing actions: on the publish tab it is now possible
+  to select containers.  If a folder is selected (which is transparent)
+  all subobjects are also selected.  Publication types may also be selected.
+  All publishing actions will now be applied to all items contained in the
+  selected containers, and recursively all items within publications.
 
 - A New "Kupu Popup" formulator field.  This field is for html content
   and pops up a "popup kupu" to provide easy wysiwyg editing.
