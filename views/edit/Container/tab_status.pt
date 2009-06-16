@@ -109,26 +109,13 @@ function dummyPublication(selection) {
 }
 
 function verifyChange(msg) {
-  var confirmChange = false;
-
   //See if we need to prompt the user about publication changes
   for (var i = 0; i < publications.length; i++) {
     if (publications[i].checked) {
-      confirmChange = true;
+      return confirm(msg)
     }
   }
-
-  var change = true;
-  if (confirmChange) {
-    publish = confirm(msg);
-  }
-
-  for (var i = 0; i < publications.length; i++) {
-    if (publications[i].checked) {
-      publications[i].checked = publish;
-    }
-  }
-
+  return true;
 }
 
 //-->
@@ -439,7 +426,7 @@ function verifyChange(msg) {
           title="publish new versions: alt-p"
           accesskey="p"
           type="submit"
-          onclick="verifyChange(document.getElementById('publish-action-message').innerHTML)"
+          onclick="return verifyChange(document.getElementById('publish-action-message').innerHTML)"
           i18n:attributes="value; title"
           tal:condition="python: approveables or rejectables or republishables"
         />
@@ -450,7 +437,7 @@ function verifyChange(msg) {
           value="approve for future"
           title="approve new versions for publication at a later date: alt-o"
           accesskey="o"
-          onclick="verifyChange(document.getElementById('publish-action-message').innerHTML)"
+          onclick="return verifyChange(document.getElementById('publish-action-message').innerHTML)"
           tal:condition="python: approveables or rejectables or republishables"
           i18n:attributes="value;title"
         />
@@ -461,7 +448,7 @@ function verifyChange(msg) {
           value="update timing"
           title="change publish and expiration times: alt-u"
           accesskey="u"
-          onclick="verifyChange(document.getElementById('update-action-message').innerHTML)"
+          onclick="return verifyChange(document.getElementById('update-action-message').innerHTML)"
           tal:condition="python: approveables or closeables or revokeables or rejectables"
           i18n:attributes="value;title"
         />
@@ -473,7 +460,7 @@ function verifyChange(msg) {
             value="reject"
             title="reject pending request for approval: alt-j"
             accesskey="j"
-            onclick="verifyChange(document.getElementById('reject-action-message').innerHTML)"
+            onclick="return verifyChange(document.getElementById('reject-action-message').innerHTML)"
             tal:condition="rejectables"
             i18n:attributes="value;title"
           />
@@ -484,7 +471,7 @@ function verifyChange(msg) {
             value="revoke"
             title="withdraw approval of approved versions: alt-v"
             accesskey="v"
-            onclick="verifyChange(document.getElementById('revoke-action-message').innerHTML)"
+            onclick="return verifyChange(document.getElementById('revoke-action-message').innerHTML)"
             tal:condition="revokeables"
             i18n:attributes="value;title"
           />
@@ -495,7 +482,7 @@ function verifyChange(msg) {
             value="close"
             title="close published items: alt-c"
             accesskey="c"
-            onclick="verifyChange(document.getElementById('close-action-message').innerHTML)"
+            onclick="return verifyChange(document.getElementById('close-action-message').innerHTML)"
             tal:condition="python:closeables and may_approve_content"
             i18n:attributes="value;title"
           />
@@ -506,7 +493,7 @@ function verifyChange(msg) {
             value="new version"
             title="create new versions of published docs: alt-n"
             accesskey="n"
-            onclick="verifyChange(document.getElementById('new-version-action-message').innerHTML)"
+            onclick="return verifyChange(document.getElementById('new-version-action-message').innerHTML)"
             tal:condition="new_versionables"
             i18n:attributes="value;title"
           />
