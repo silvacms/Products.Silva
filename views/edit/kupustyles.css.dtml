@@ -188,6 +188,7 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 }
 .kupu-link-reference-table td.buttoncell {
  width: 21px;
+ vertical-align: top;
 }
 
 .kupu-link-reference-table button.kupu-link-lookupbutton {
