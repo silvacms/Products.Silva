@@ -47,8 +47,8 @@
       <td class="main">
       <div style="display:none;" i18n:translate="" id="update-action-message">There are publications selected to have their publication and/or expiration times updated. Are you sure you want to update all the contents of these publications?</div>
       <div style="display:none;" i18n:translate="" id="new-version-action-message">There are publications selected to create new versions. Are you sure you want to create new versions of all the contents of these publications?</div>
-      <div style="display:none;" i18n:translate="" id="close-action-message">There are publications selected to be closed and the contents are visible. Are you sure you want to close all the contents of these publications?</div>
-      <div style="display:none;" i18n:translate="" id="publish-action-message">There are publications selected to be published and the contents are not visible. Are you sure you want to publish all the contents of these publications?</div>
+      <div style="display:none;" i18n:translate="" id="close-action-message">You have selected one or more publication(s) to close.  All items within the selected publication(s) will be closed.  Do you wish to continue?</div>
+      <div style="display:none;" i18n:translate="" id="publish-action-message">You have selected one or more publication(s) to publish.  All items within the selected publication(s) will be published.  Do you wish to continue?</div>
       <div style="display:none;" i18n:translate="" id="reject-action-message">There are publications selected to have their request for approval rejected. Are you sure you want to reject approval for all the contents of these publications?</div>
       <div style="display:none;" i18n:translate="" id="revoke-action-message">There are publications selected to have their approval of approved versions withdrawn. Are you sure you want to withdraw approval for all the contents of these publications?</div>
 
