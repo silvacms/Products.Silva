@@ -37,6 +37,11 @@ if not file or not getattr(file, 'filename', None):
     return view.add_form(message_type="error",
         message="Empty or invalid file.")
 
+if not ('.' in file.filename):
+    return view.tab_edit(
+        message_type="error",
+        message=_("Please upload a file with an correct extension."))
+
 # if we don't have the right id, reject adding
 id_check = id.cook().validate()
 if id_check != id.OK:

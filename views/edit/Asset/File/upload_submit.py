@@ -27,6 +27,11 @@ if not file or not getattr(file,'filename',None):
         message=_("Empty or invalid file.")
         )
 
+if not ('.' in file.filename):
+    return view.tab_edit(
+        message_type="error",
+        message=_("Please upload a file with an correct extension."))
+
 model.sec_update_last_author_info()
 model.set_file_data(file)
 
