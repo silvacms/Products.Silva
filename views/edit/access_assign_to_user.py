@@ -41,5 +41,5 @@ if assigned:
 
 return context.tab_access(
     message_type="error",
-    message=_("No role have been assigned for ${users}.",
+    message=_("No role has been assigned to ${users}.",
               mapping=dict(users=context.quotify_list(failed))))
