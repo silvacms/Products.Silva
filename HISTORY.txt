@@ -52,6 +52,9 @@ Bugs Fixed
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Fixed issues with unicode characters in href value of links in 
+  Silva Documents.
+
 - Fixed some formatting issues with buttons in the tab editor for
   containers.
 
