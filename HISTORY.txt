@@ -7,6 +7,8 @@ Silva changes
 
     Bug fixes
 
+      - Get reference button did not work for a Ghost folder.
+
       - Add a traverser to a non-existant view on RessourceDirectory
         to get a 404 instead of an error.
 
