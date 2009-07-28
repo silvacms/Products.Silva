@@ -24,14 +24,14 @@
 ">
 <metal:use-macro use-macro="here/macro_edit/macros/editor">
 
+<metal:block fill-slot="script">
+<script type="text/javascript" 
+  tal:attributes="src here/reference.js/absolute_url">
+</script>
+</metal:block>
+
 <metal:fill-editor-slot fill-slot="main">
  <metal:use-macro use-macro="here/macro_edit/macros/two-col-layout">
-
-<metal:block fill-slot="script">
-  <script type="text/javascript"
-    tal:attributes="src here/reference.js/absolute_url">
-  </script>
-</metal:block>
 
 <metal:fill fill-slot="sidebar">
  <td class="left">
