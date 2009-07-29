@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.5b2 (unreleased)
+  Silva 2.1.5 (2009-07-29)
 
     Bug fixes
 
@@ -11,6 +11,13 @@ Silva changes
 
       - Add a traverser to a non-existant view on RessourceDirectory
         to get a 404 instead of an error.
+
+      - Discard CodeSource parameter which are unknown in SilvaDocument
+        when saving/rendering a document in kupu.
+
+      - Check for file extension when uploading a file: you can only
+        upload a file which have an extension.
+
 
   Silva 2.1.5b1 (2009-06-04)
 
