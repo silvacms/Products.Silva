@@ -1,6 +1,15 @@
 Silva changes
 =============
 
+Silva 2.2b1 (unreleased)
+------------------------
+
+Bugs Fixed
+~~~~~~~~~~
+
+- Errors when attempting to upload interlaced PNGs are now caught and
+  displayed to the user.
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 
