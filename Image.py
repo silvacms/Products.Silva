@@ -541,9 +541,7 @@ class Image(Asset):
             thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
         except IOError, exc_err:
             if str(exc_err.args[0]) == "cannot read interlaced PNG files":
-                self.thumbnail_image = None
-                del exc_err
-                return
+                raise ValueError, str(exc_err)
             else:
                 raise
         is_changed, thumb = self._prepareWebFormat(thumb)

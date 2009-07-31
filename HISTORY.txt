@@ -5,7 +5,10 @@ Silva changes
 
   Silva 2.1.6 (unreleased)
 
-      - ...
+    Bug fixes
+
+      - Errors when attempting to create thumbnails from interlaced
+        PNGs are now displayed to the user.
 
   Silva 2.1.5 (2009-07-29)
 
