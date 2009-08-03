@@ -15,6 +15,9 @@ Bugs Fixed
   2.2 has removed the link type.  Now there is only one type of link, and it is the
   authors responsibility to ensure it is a valid relative or absolute link.
 
+- For a possible security issue the "served by host foo" comment was removed
+  from macro_index.pt
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 
