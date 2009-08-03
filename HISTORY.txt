@@ -9,6 +9,10 @@ Silva changes
 
       - Errors when attempting to create thumbnails from interlaced
         PNGs are now displayed to the user.
+        
+      - launchpad 400019: Silva Link: allow editing of relative / 
+        absolute property.  The Silva Link edit tab now allow editing
+        of this property
 
   Silva 2.1.5 (2009-07-29)
 

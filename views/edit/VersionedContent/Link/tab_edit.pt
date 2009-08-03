@@ -47,6 +47,27 @@
           />
         </td>
       </tr>
+      <tr class="odd">
+        <td class="designator">
+          <label for="url" i18n:translate="">
+            link type
+          </label>
+        </td>
+        <td class="field" tal:define="lt python:model.get_editable().get_link_type()">
+          <input class="store"
+            type="radio"
+            name="link_type"
+            id="abs_link"
+            value="absolute"
+            tal:attributes="checked python:lt=='absolute' and 'checked' or nothing" /><label for="abs_link">absolute</label><br />
+          <input class="store"
+            type="radio"
+            name="link_type"
+            id="rel_link"
+            value="relative"
+            tal:attributes="checked python:lt=='relative' and 'checked' or nothing" /><label for="rel_link">relative</label>
+        </td>
+      </tr>
   </metal:fillbody>
 
   <metal:fillfoot fill-slot="main-foot">

@@ -91,6 +91,10 @@ class LinkVersion(CatalogedVersion):
     def get_url(self):
         return self._url
 
+    security.declareProtected(SilvaPermissions.View, 'get_link_type')
+    def get_link_type(self):
+        return self._link_type
+
     security.declareProtected(SilvaPermissions.View, 'redirect')
     def redirect(self, view_type='public'):
         request = self.REQUEST
@@ -118,6 +122,14 @@ class LinkVersion(CatalogedVersion):
         if self._link_type == 'absolute' and not self.is_valid_url(url):
             url = 'http://' + url
         self._url = url
+        
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_link_type')
+    def set_link_type(self, lt):
+        if lt=='absolute':
+            self._link_type = 'absolute'
+        else:
+            self._link_type = 'relative'
 
 InitializeClass(LinkVersion)
 
