@@ -18,10 +18,6 @@ from silva.core.interfaces import IVersionedContent, IVersion
 from Products.Silva.i18n import translate as _
 from Products.Silva import SilvaPermissions
 
-# XXX taken from SilvaDocument/mixedcontentsupport.py
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
-_url_match = re.compile(URL_PATTERN)
-
 from silva.core import conf as silvaconf
 
 class Link(CatalogedVersionedContent):
@@ -53,11 +49,8 @@ class LinkVersion(CatalogedVersion):
 
     implements(IVersion)
 
-    _link_type = 'absolute'
-    
-    def __init__(self, id, url, link_type='absolute'):
+    def __init__(self, id, url):
         LinkVersion.inheritedAttribute('__init__')(self, id)
-        self._link_type = link_type
         self.set_url(url)
         
     security.declareProtected(SilvaPermissions.View, 'get_url')
@@ -77,19 +70,10 @@ class LinkVersion(CatalogedVersion):
             response.redirect(self._url)
             return ""
         
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'is_valid_url')
-    def is_valid_url(self, url):
-        if _url_match.match(url):
-            return True
-        return False
-        
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        if self._link_type == 'absolute' and not self.is_valid_url(url):
-            url = 'http://' + url
         self._url = url
 
 InitializeClass(LinkVersion)

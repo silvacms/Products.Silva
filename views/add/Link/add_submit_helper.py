@@ -8,10 +8,8 @@
 ##title=
 ##
 url = result['url']
-link_type = result['link_type']
 model.manage_addProduct['Silva'].manage_addLink(
     id, 
     title, 
-    url, 
-    link_type=link_type)
+    url)
 return getattr(model, id)

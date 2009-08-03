@@ -10,6 +10,11 @@ Bugs Fixed
 - Errors when attempting to upload interlaced PNGs are now caught and
   displayed to the user.
 
+- launchpad #400019: Silva Link: allow editing of relative / absolute property,
+  or get rid of it altogether.  Silva 2.1 allowed editing of this property.  Silva
+  2.2 has removed the link type.  Now there is only one type of link, and it is the
+  authors responsibility to ensure it is a valid relative or absolute link.
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 

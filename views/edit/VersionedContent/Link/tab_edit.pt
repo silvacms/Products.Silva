@@ -63,7 +63,16 @@
         </td>
       </tr>
   </metal:fillfoot>
- </metal:use-macro>
+  
+   <div class="info" metal:fill-slot="right-column">
+    <h3 i18n:translate="">
+      <img tal:replace="structure icon" i18n:name="icon"/>
+      Link
+    </h3>
+    <p i18n:translate="">A Link's public view redirects the user agent to the value of the "link url" property.  This property is not modified in any way during rendering, and it is the authors responsibility to provide valid urls.  Both relative and absolute links are supported.</p>
+   </div>
+
+   </metal:use-macro>
 </metal:editorcontent>
 
 </metal:use-macro>
