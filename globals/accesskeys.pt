@@ -272,5 +272,7 @@ If there are two buttons with the same name, the access key for the second is us
   return
   </a>
 
+<tal:block replace="structure string:<!-- served by ${request/HTTP_HOST} -->" />
+
 </body>
 </html>
