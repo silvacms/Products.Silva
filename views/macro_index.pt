@@ -289,7 +289,5 @@
 </span>
 </div>
 
-<tal:block replace="structure string:<!-- served by ${request/HTTP_HOST} -->" />
-
 </body>
 </html>
