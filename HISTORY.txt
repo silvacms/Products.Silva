@@ -14,6 +14,9 @@ Silva changes
         absolute property.  The Silva Link edit tab now allow editing
         of this property
 
+      - ported form the trunk. A possible security issue, the "served by host foo" comment
+        was removed from macro_index.pt.
+
   Silva 2.1.5 (2009-07-29)
 
     Bug fixes
