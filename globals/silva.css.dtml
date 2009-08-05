@@ -769,7 +769,6 @@ textarea {
 
 input.store, textarea.store {
   width: 99%;
-  !width: 94%; /* IE6 hack */
 }
 
 select {
@@ -780,11 +779,6 @@ select {
   font: &dtml-inputFont;;
   font-size: 95%;
   vertical-align: top;
-}
-
-select.store {
-  width: 100%;
-  !width: 95%; /* IE6 hack */
 }
 
 select.manipulator {
