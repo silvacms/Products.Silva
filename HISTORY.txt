@@ -3,7 +3,7 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.6 (unreleased)
+  Silva 2.1.6 (2009-08-05)
 
     Bug fixes
 
@@ -16,6 +16,12 @@ Silva changes
 
       - ported form the trunk. A possible security issue, the "served by host foo" comment
         was removed from macro_index.pt.
+
+      - removing with on the table class selector in the kupu toolbar
+        so it is visible now in IE7
+
+      - updating the table structure and css for the table class
+        selector in the kupu toolbox so everything is aligned evenly
 
   Silva 2.1.5 (2009-07-29)
 
