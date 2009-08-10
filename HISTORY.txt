@@ -5,14 +5,19 @@ Silva changes
 
   Silva 2.1.7 (unreleased)
 
+    Bug fixes
+
+      - Add a content-type for BMP images.
+
+
   Silva 2.1.6 (2009-08-05)
 
     Bug fixes
 
       - Errors when attempting to create thumbnails from interlaced
         PNGs are now displayed to the user.
-        
-      - launchpad 400019: Silva Link: allow editing of relative / 
+
+      - launchpad 400019: Silva Link: allow editing of relative /
         absolute property.  The Silva Link edit tab now allow editing
         of this property
 
@@ -52,7 +57,7 @@ Silva changes
         tab of versioned content, the 'publish now' button is pressed
         with an expiration date < publication date AND the subscription
         service is enabled
-    
+
   Silva 2.1.4 (2009-05-08)
 
     New features
