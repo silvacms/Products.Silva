@@ -41,7 +41,6 @@ function unescape_string(s) {
 };
  
 window._ = function _(msgid, interpolations) {
-    console.log('msgid: ' + escape_string(msgid));
     var ret = msgidmapping[escape_string(msgid)];
     if (ret === undefined) {
         ret = msgid;
@@ -63,7 +62,6 @@ function initialize_i18n() {
             .childNodes[0].nodeValue;
         var translation = messages[i].getElementsByTagName('translation')[0]
             .childNodes[0].nodeValue;
-        console.log(id);
         msgidmapping[id] = translation;
     };
 };
