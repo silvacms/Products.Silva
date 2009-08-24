@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: kupu trunk"
-"POT-Creation-Date: Mon Aug 24 16:03:57 2009\n"
+"POT-Creation-Date: Mon Aug 24 17:23:22 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
@@ -12,6 +12,57 @@ msgstr ""
 
 #: /kupumacros.html:210
 msgid "Kupu 1.4b1"
+msgstr ""
+
+#: /kupumacros.html:214
+msgid "paragraph styles"
+msgstr ""
+
+#: /kupumacros.html:215
+#: /kupumacros.html:638
+msgid "plain"
+msgstr ""
+
+#: /kupumacros.html:216
+msgid "lead"
+msgstr ""
+
+#: /kupumacros.html:217
+msgid "annotation"
+msgstr ""
+
+#: /kupumacros.html:219
+msgid "heading styles"
+msgstr ""
+
+#: /kupumacros.html:220
+#: /kupumacros.html:513
+msgid "title"
+msgstr ""
+
+#: /kupumacros.html:221
+#: /kupumacros.html:658
+msgid "heading"
+msgstr ""
+
+#: /kupumacros.html:222
+msgid "sub"
+msgstr ""
+
+#: /kupumacros.html:223
+msgid "subsub"
+msgstr ""
+
+#: /kupumacros.html:224
+msgid "paragraph"
+msgstr ""
+
+#: /kupumacros.html:225
+msgid "subparagraph"
+msgstr ""
+
+#: /kupumacros.html:227
+msgid "preformatted"
 msgstr ""
 
 #: /kupumacros.html:231
@@ -172,11 +223,20 @@ msgstr ""
 msgid "properties"
 msgstr ""
 
+#: /kupumacros.html:378
+msgid "name"
+msgstr ""
+
+#: /kupumacros.html:381
+msgid "input"
+msgstr ""
+
 #: /kupumacros.html:394
 msgid "link"
 msgstr ""
 
 #: /kupumacros.html:400
+#: /kupumacros.html:480
 msgid "get link reference..."
 msgstr ""
 
@@ -185,10 +245,12 @@ msgid "link target"
 msgstr ""
 
 #: /kupumacros.html:404
+#: /kupumacros.html:485
 msgid "same window"
 msgstr ""
 
 #: /kupumacros.html:405
+#: /kupumacros.html:486
 msgid "new window"
 msgstr ""
 
@@ -201,6 +263,7 @@ msgid "top"
 msgstr ""
 
 #: /kupumacros.html:408
+#: /kupumacros.html:487
 msgid "custom target"
 msgstr ""
 
@@ -211,6 +274,7 @@ msgstr ""
 #: /kupumacros.html:412
 #: /kupumacros.html:443
 #: /kupumacros.html:529
+#: /kupumacros.html:574
 #: /kupumacros.html:611
 #: /kupumacros.html:705
 msgid "update"
@@ -219,6 +283,7 @@ msgstr ""
 #: /kupumacros.html:413
 #: /kupumacros.html:444
 #: /kupumacros.html:530
+#: /kupumacros.html:575
 #: /kupumacros.html:612
 #: /kupumacros.html:687
 #: /kupumacros.html:694
@@ -235,8 +300,16 @@ msgstr ""
 msgid "anchor name"
 msgstr ""
 
+#: /kupumacros.html:430
+msgid "Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore."
+msgstr ""
+
 #: /kupumacros.html:434
 msgid "index title"
+msgstr ""
+
+#: /kupumacros.html:434
+msgid "If this anchor is also an index item, enter a title for the link in the Indexer."
 msgstr ""
 
 #: /kupumacros.html:442
@@ -250,12 +323,81 @@ msgstr ""
 msgid "image"
 msgstr ""
 
+#: /kupumacros.html:463
+msgid "get image reference..."
+msgstr ""
+
+#: /kupumacros.html:464
+msgid "edit image..."
+msgstr ""
+
+#: /kupumacros.html:466
+msgid "image source"
+msgstr ""
+
+#: /kupumacros.html:467
+msgid "image alignment:"
+msgstr ""
+
+#: /kupumacros.html:469
+msgid "default"
+msgstr ""
+
+#: /kupumacros.html:470
+msgid "align left"
+msgstr ""
+
+#: /kupumacros.html:471
+msgid "align center"
+msgstr ""
+
+#: /kupumacros.html:472
+msgid "align right"
+msgstr ""
+
+#: /kupumacros.html:473
+msgid "float left"
+msgstr ""
+
+#: /kupumacros.html:474
+msgid "float right"
+msgstr ""
+
+#: /kupumacros.html:477
+msgid "link settings"
+msgstr ""
+
+#: /kupumacros.html:478
+msgid "&#160;high resolution version"
+msgstr ""
+
+#: /kupumacros.html:478
+msgid "hires"
+msgstr ""
+
+#: /kupumacros.html:478
+#: /kupumacros.html:480
+msgid "link to:"
+msgstr ""
+
+#: /kupumacros.html:483
+msgid "link target:"
+msgstr ""
+
+#: /kupumacros.html:490
+msgid "tooltip"
+msgstr ""
+
+#: /kupumacros.html:493
+msgid "update image"
+msgstr ""
+
 #: /kupumacros.html:503
 msgid "abbreviations and acronyms"
 msgstr ""
 
 #: /kupumacros.html:513
-msgid "title"
+msgid "Enter the text of the tooltip that will appear when a user hovers over the element with the cursor."
 msgstr ""
 
 #: /kupumacros.html:517
@@ -271,12 +413,28 @@ msgstr ""
 msgid "cleanup"
 msgstr ""
 
+#: /kupumacros.html:549
+msgid "perform"
+msgstr ""
+
 #: /kupumacros.html:555
 msgid "external source"
 msgstr ""
 
+#: /kupumacros.html:563
+msgid "For more info hover over the items in the list"
+msgstr ""
+
 #: /kupumacros.html:571
 msgid "The external sources product is not installed. This tool is disabled."
+msgstr ""
+
+#: /kupumacros.html:572
+msgid "add external source"
+msgstr ""
+
+#: /kupumacros.html:573
+msgid "cancel"
 msgstr ""
 
 #: /kupumacros.html:576
@@ -287,12 +445,81 @@ msgstr ""
 msgid "citation"
 msgstr ""
 
+#: /kupumacros.html:598
+msgid "author"
+msgstr ""
+
+#: /kupumacros.html:602
+msgid "source"
+msgstr ""
+
 #: /kupumacros.html:628
+#: /kupumacros.html:697
 msgid "table"
+msgstr ""
+
+#: /kupumacros.html:635
+msgid "table class"
+msgstr ""
+
+#: /kupumacros.html:639
+msgid "list"
+msgstr ""
+
+#: /kupumacros.html:640
+msgid "grid"
+msgstr ""
+
+#: /kupumacros.html:641
+msgid "datagrid"
+msgstr ""
+
+#: /kupumacros.html:650
+msgid "rows"
+msgstr ""
+
+#: /kupumacros.html:654
+msgid "columns"
+msgstr ""
+
+#: /kupumacros.html:661
+msgid "create header"
+msgstr ""
+
+#: /kupumacros.html:665
+msgid "add table"
+msgstr ""
+
+#: /kupumacros.html:670
+msgid "column align"
+msgstr ""
+
+#: /kupumacros.html:673
+msgid "left"
+msgstr ""
+
+#: /kupumacros.html:674
+msgid "center"
+msgstr ""
+
+#: /kupumacros.html:675
+msgid "right"
+msgstr ""
+
+#: /kupumacros.html:680
+msgid "column widths"
+msgstr ""
+
+#: /kupumacros.html:684
+msgid "column"
 msgstr ""
 
 #: /kupumacros.html:686
 msgid "add column"
+msgstr ""
+
+#: /kupumacros.html:691
+msgid "row"
 msgstr ""
 
 #: /kupumacros.html:693
@@ -303,11 +530,55 @@ msgstr ""
 msgid "table of contents"
 msgstr ""
 
+#: /kupumacros.html:727
+msgid "1 level"
+msgstr ""
+
+#: /kupumacros.html:728
+msgid "2 levels"
+msgstr ""
+
+#: /kupumacros.html:729
+msgid "3 levels"
+msgstr ""
+
+#: /kupumacros.html:730
+msgid "4 levels"
+msgstr ""
+
+#: /kupumacros.html:731
+msgid "5 levels"
+msgstr ""
+
+#: /kupumacros.html:732
+msgid "6 levels"
+msgstr ""
+
+#: /kupumacros.html:733
+msgid "7 levels"
+msgstr ""
+
+#: /kupumacros.html:734
+msgid "8 levels"
+msgstr ""
+
+#: /kupumacros.html:735
+msgid "9 levels"
+msgstr ""
+
+#: /kupumacros.html:736
+msgid "unlimited"
+msgstr ""
+
 #: /kupumacros.html:748
 msgid "typographical characters"
 msgstr ""
 
 #: /kupumacros.html:760
 msgid "save"
+msgstr ""
+
+#: /kupumacros.html:764
+msgid "save document"
 msgstr ""
 

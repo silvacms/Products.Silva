@@ -9,20 +9,20 @@
   <kupu:part name="select-styles">
     <select id="kupu-tb-styles"
             onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
-      <optgroup label="paragraph styles">
-        <option value="P|normal">plain</option>
-        <option value="P|lead">lead</option>
-        <option value="P|annotation">annotation</option>
+      <optgroup i18n:attributes="label" label="paragraph styles">
+        <option i18n:translate="" value="P|normal">plain</option>
+        <option i18n:translate="" value="P|lead">lead</option>
+        <option i18n:translate="" value="P|annotation">annotation</option>
       </optgroup>
-      <optgroup label="heading styles">
-        <option value="H2">title</option>
-        <option value="H3">heading</option>
-        <option value="H4">sub</option>
-        <option value="H5">subsub</option>
-        <option value="H6">paragraph</option>
-        <option value="H6|sub">subparagraph</option>
+      <optgroup i18n:attributes="label" label="heading styles">
+        <option i18n:translate="" value="H2">title</option>
+        <option i18n:translate="" value="H3">heading</option>
+        <option i18n:translate="" value="H4">sub</option>
+        <option i18n:translate="" value="H5">subsub</option>
+        <option i18n:translate="" value="H6">paragraph</option>
+        <option i18n:translate="" value="H6|sub">subparagraph</option>
       </optgroup>
-      <option value="PRE">preformatted</option>
+      <option i18n:translate="" value="PRE">preformatted</option>
     </select>
   </kupu:part>
 
