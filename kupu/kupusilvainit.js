@@ -12,6 +12,63 @@
 
 /* SEE kupu/doc/EXTENDING.txt RE: contentfilters,
    and kupucontentfilters.js for examples */
+
+var msgidmapping = {};
+
+function escape_string(s) {
+    /* escapes quotes and special chars (\n, \a, \r, \t, etc.)
+
+        adds double slashes
+    */
+    // XXX any more that need escaping?
+    s = s.replace(/\\/g, '\\\\');
+    s = s.replace(/\n/g, '\\n');
+    s = s.replace(/\r/g, '\\r');
+    s = s.replace(/\t/g, '\\t');
+    s = s.replace(/'/g, "\\'");
+    s = s.replace(/"/g, '\\"');
+    return s;
+};
+
+function unescape_string(s) {
+    s = s.replace(/\\n/g, '\n');
+    s = s.replace(/\\r/g, '\r');
+    s = s.replace(/\\t/g, '\t');
+    s = s.replace(/\\"/g, '"');
+    s = s.replace(/\\'/g, "'");
+    s = s.replace(/\\/g, '');
+    return s;
+};
+ 
+window._ = function _(msgid, interpolations) {
+    console.log('msgid: ' + escape_string(msgid));
+    var ret = msgidmapping[escape_string(msgid)];
+    if (ret === undefined) {
+        ret = msgid;
+    };
+    if (interpolations) {
+        for (var attr in interpolations) {
+            var reg = new RegExp('${' + attr + '}', 'g');
+            ret = ret.replace(reg, interpolations[attr]);
+        };
+    };
+    return unescape_string(ret);
+};
+
+function initialize_i18n() {
+    var i18nblock = document.getElementById('kupui18nblock');
+    var messages = i18nblock.getElementsByTagName('message');
+    for (var i=0; i < messages.length; i++) {
+        var id = messages[i].getElementsByTagName('id')[0]
+            .childNodes[0].nodeValue;
+        var translation = messages[i].getElementsByTagName('translation')[0]
+            .childNodes[0].nodeValue;
+        console.log(id);
+        msgidmapping[id] = translation;
+    };
+};
+
+
 function fixupNestedListFilter() {
   this.initialize = function(editor) {
     this.editor = editor;
@@ -165,6 +222,10 @@ KupuEditor.prototype.afterInit = function() {
 function initSilvaKupu(iframe) {
     // first we create a logger
     var l = new DummyLogger();
+
+    // initialize the internationalization machinery, this needs to be done
+    // early so that other init code can display translated strings
+    initialize_i18n();
 
     // now some config values
     var conf = loadDictFromXML(document, 'kupuconfig');

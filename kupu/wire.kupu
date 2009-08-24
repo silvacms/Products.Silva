@@ -47,6 +47,7 @@
   </kupu:fill-slot>
 
   <kupu:fill-slot name="fulleditor-frame">
+    <kupu:insert-part feature="i18n" part="i18nblock" />
     <kupu:insert-part feature="body" part="editorframe" />
   </kupu:fill-slot>
 
