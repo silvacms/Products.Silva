@@ -177,8 +177,8 @@ msgid ""
 "to save your changes and leave the editor."
 msgstr ""
 "U verlaat de editor. Wilt u de wijzigingen opslaan?\\n\\nKies OK om de "
-"wijzigingen op te slaan en de editor te verlaten, Cancel om de wijzigingen "
-"niet op te slaan."
+"wijzigingen op te slaan en de editor te verlaten, Annuleren om de "
+"wijzigingen niet op te slaan."
 
 #: /kupumacros.html:308 /kupupopup.html:304
 msgid "Copy"
