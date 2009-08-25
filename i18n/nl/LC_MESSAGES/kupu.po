@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kupu trunkPOT-Creation-Date: Mon Aug 24 16:03:57 2009\n"
+"POT-Creation-Date: Mon Aug 24 17:23:22 2009\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generated-By: zope/app/translation_files/extract.py\n"
+
+#: /kupumacros.html:210
+msgid "Kupu 1.4b1"
+msgstr ""
+
+#: /kupumacros.html:214
+msgid "paragraph styles"
+msgstr "paragraafstijlen"
+
+#: /kupumacros.html:215 /kupumacros.html:638
+msgid "plain"
+msgstr "normaal"
+
+#: /kupumacros.html:216
+msgid "lead"
+msgstr ""
+
+#: /kupumacros.html:217
+msgid "annotation"
+msgstr "annotatie"
+
+#: /kupumacros.html:219
+msgid "heading styles"
+msgstr "kopstijlen"
+
+#: /kupumacros.html:220 /kupumacros.html:513
+msgid "title"
+msgstr "titel"
+
+#: /kupumacros.html:221 /kupumacros.html:658
+msgid "heading"
+msgstr "kop"
+
+#: /kupumacros.html:222
+msgid "sub"
+msgstr ""
+
+#: /kupumacros.html:223
+msgid "subsub"
+msgstr ""
+
+#: /kupumacros.html:224
+msgid "paragraph"
+msgstr "paragraaf"
+
+#: /kupumacros.html:225
+msgid "subparagraph"
+msgstr "subparagraaf"
+
+#: /kupumacros.html:227
+msgid "preformatted"
+msgstr ""
+
+#: /kupumacros.html:231
+msgid "save: alt-s"
+msgstr "opslaan: alt-s"
+
+#: /kupumacros.html:235
+msgid "Bold: Access key (Alt or Ctrl) + B"
+msgstr "Vet: toegangstoets (Alt of Ctrl) + B"
+
+#: /kupumacros.html:236
+msgid "Italic: Access key (Alt or Ctrl) + I"
+msgstr "Schuin: toegangstoets (Alt of Ctrl) + I"
+
+#: /kupumacros.html:237
+msgid "Underline: Access key (Alt or Ctrl) + U"
+msgstr "Onderstreept: toegangstoets (Alt of Ctrl) + U"
+
+#: /kupumacros.html:241
+msgid "Subscript: Access key (Alt or Ctrl) + -"
+msgstr "Subscript: toegangstoets (Alt of Ctrl) + -"
+
+#: /kupumacros.html:242
+msgid "Superscript: Access key (Alt or Ctrl) + +"
+msgstr "Superscript: toegangstoets (Alt of Ctrl) + +"
+
+#: /kupumacros.html:247
+msgid "Numbered list: Access key (Alt or Ctrl) + #"
+msgstr "Genummerde lijst: toegangstoets (Alt of Ctrl) + #"
+
+#: /kupumacros.html:248
+msgid "Unordered list: Access key (Alt or Ctrl) + *"
+msgstr "Ongeordende lijst: toegangstoets (Alt of Ctrl) + *"
+
+#: /kupumacros.html:253
+msgid "Definition list: Access key (Alt or Ctrl) + ="
+msgstr "Definitielijst: toegangstoets (Alt of Ctrl) + ="
+
+#: /kupumacros.html:257
+msgid "Undo: Access key (Alt or Ctrl) + Z"
+msgstr "Ongedaan maken: toegangstoets (Alt of Ctrl) + Z"
+
+#: /kupumacros.html:258
+msgid "Redo: Access key (Alt or Ctrl) + Y"
+msgstr "Opnieuw: toegangstoets (Alt of Ctrl) + Y"
+
+# Default: "Switch between visual editor and HTML view"
+#: /kupumacros.html:262
+msgid "toggle_source_view"
+msgstr "Schakel tussen visuele editor en HTML view"
+
+# Default: "&#9679;"
+#: /kupumacros.html:268
+msgid "list-disc"
+msgstr ""
+
+# Default: "&#9632;"
+#: /kupumacros.html:269
+msgid "list-square"
+msgstr ""
+
+# Default: "&#9675;"
+#: /kupumacros.html:270
+msgid "list-circle"
+msgstr ""
+
+# Default: "no bullet"
+#: /kupumacros.html:271
+msgid "list-nobullet"
+msgstr ""
+
+# Default: "1"
+#: /kupumacros.html:274
+msgid "list-decimal"
+msgstr ""
+
+# Default: "I"
+#: /kupumacros.html:275
+msgid "list-upperroman"
+msgstr ""
+
+# Default: "i"
+#: /kupumacros.html:276
+msgid "list-lowerroman"
+msgstr ""
+
+# Default: "A"
+#: /kupumacros.html:277
+msgid "list-upperalpha"
+msgstr ""
+
+# Default: "a"
+#: /kupumacros.html:278
+msgid "list-loweralpha"
+msgstr ""
+
+#: /kupumacros.html:292
+msgid "Image inserted"
+msgstr "Plaatje toegevoegd"
+
+#: /kupumacros.html:296
+msgid "click to fold"
+msgstr "klik om te sluiten"
+
+#: /kupumacros.html:300
+msgid "click to unfold"
+msgstr "klik om te openen"
+
+#: /kupumacros.html:304
+msgid ""
+"You are leaving the editor. Do you want to save your changes?\\n\\nClick OK "
+"to save your changes and leave the editor."
+msgstr ""
+"U verlaat de editor. Wilt u de wijzigingen opslaan?\\n\\nKies OK om de "
+"wijzigingen op te slaan en de editor te verlaten, Cancel om de wijzigingen "
+"niet op te slaan."
+
+#: /kupumacros.html:308
+msgid "Copy"
+msgstr "Kopi&euml;ren"
+
+#: /kupumacros.html:312
+msgid "Paste"
+msgstr "Plakken"
+
+#: /kupumacros.html:316
+msgid "Cut"
+msgstr "Knippen"
+
+#: /kupumacros.html:320
+msgid "Recursion detected when counting column position"
+msgstr "Recursie gedectecteerd bij het tellen van de kolompositie"
+
+#: /kupumacros.html:324
+msgid "Editor initialized"
+msgstr "Editor geinitializeerd"
+
+#: /kupumacros.html:328
+msgid "Please wait while saving document..."
+msgstr "Document opslaan, even geduld..."
+
+#: /kupumacros.html:332
+msgid ""
+"Error saving your data.\\nResponse status: ${status}.\\nCheck your server "
+"log for more information."
+msgstr ""
+"Fout bij het wegschrijven van uw data.\\nHTTP response status: ${status}."
+"\\nBekijk de server log voor meer informatie."
+
+#: /kupumacros.html:336
+msgid "Error saving document"
+msgstr "Fout bij het wegschrijven van uw document"
+
+#: /kupumacros.html:340
+msgid "Document saved"
+msgstr "Document opgeslagen"
+
+#: /kupumacros.html:344
+msgid "Error placing back selection"
+msgstr "Fout bij het terugplaatsen van de selectie"
+
+#: /kupumacros.html:362
+msgid "comment"
+msgstr "commentaar"
+
+#: /kupumacros.html:372
+msgid "properties"
+msgstr "eigenschappen"
+
+#: /kupumacros.html:378
+msgid "name"
+msgstr "naam"
+
+#: /kupumacros.html:381
+msgid "input"
+msgstr ""
+
+#: /kupumacros.html:394
+msgid "link"
+msgstr "koppeling"
+
+#: /kupumacros.html:400 /kupumacros.html:480
+msgid "get link reference..."
+msgstr "zoek koppelingsdoel..."
+
+#: /kupumacros.html:402
+msgid "link target"
+msgstr "koppelingsdoel"
+
+#: /kupumacros.html:404 /kupumacros.html:485
+msgid "same window"
+msgstr "zelfde venster"
+
+#: /kupumacros.html:405 /kupumacros.html:486
+msgid "new window"
+msgstr "nieuw venster"
+
+#: /kupumacros.html:406
+msgid "parent"
+msgstr ""
+
+#: /kupumacros.html:407
+msgid "top"
+msgstr ""
+
+#: /kupumacros.html:408 /kupumacros.html:487
+msgid "custom target"
+msgstr "aangepast doel"
+
+#: /kupumacros.html:411
+msgid "add link"
+msgstr "koppeling toevoegen"
+
+#: /kupumacros.html:412 /kupumacros.html:443 /kupumacros.html:529
+#: /kupumacros.html:574 /kupumacros.html:611 /kupumacros.html:705
+msgid "update"
+msgstr "verversen"
+
+#: /kupumacros.html:413 /kupumacros.html:444 /kupumacros.html:530
+#: /kupumacros.html:575 /kupumacros.html:612 /kupumacros.html:687
+#: /kupumacros.html:694 /kupumacros.html:700 /kupumacros.html:739
+msgid "remove"
+msgstr "verwijderen"
+
+#: /kupumacros.html:420
+msgid "anchor/index item"
+msgstr ""
+
+#: /kupumacros.html:430
+msgid "anchor name"
+msgstr "anchor naam"
+
+#: /kupumacros.html:430
+msgid ""
+"Enter the name of an anchor. Do not use spaces, special characters, or any "
+"punctuation other than a hyphen or underscore."
+msgstr "Voer de naam van een anchor in. Gebruik geen spaties of vreemde tekens anders dan een underscore."
+
+#: /kupumacros.html:434
+msgid "index title"
+msgstr "index titel"
+
+#: /kupumacros.html:434
+msgid ""
+"If this anchor is also an index item, enter a title for the link in the "
+"Indexer."
+msgstr "Als dit anchor ook een index item is, voer een titel in voor de link in de Indexer."
+
+#: /kupumacros.html:442 /kupumacros.html:528 /kupumacros.html:610
+#: /kupumacros.html:738
+msgid "add element"
+msgstr "element toevoegen"
+
+#: /kupumacros.html:459
+msgid "image"
+msgstr "plaatje"
+
+#: /kupumacros.html:463
+msgid "get image reference..."
+msgstr "zoek plaatjesdoel..."
+
+#: /kupumacros.html:464
+msgid "edit image..."
+msgstr "wijzig plaatje..."
+
+#: /kupumacros.html:466
+msgid "image source"
+msgstr "plaatjesbron"
+
+#: /kupumacros.html:467
+msgid "image alignment:"
+msgstr "uitlijning plaatje:"
+
+#: /kupumacros.html:469
+msgid "default"
+msgstr "standaard"
+
+#: /kupumacros.html:470
+msgid "align left"
+msgstr "links uitlijnen"
+
+#: /kupumacros.html:471
+msgid "align center"
+msgstr "midden uitlijnen"
+
+#: /kupumacros.html:472
+msgid "align right"
+msgstr "rechts uitlijnen"
+
+#: /kupumacros.html:473
+msgid "float left"
+msgstr "float links"
+
+#: /kupumacros.html:474
+msgid "float right"
+msgstr "float rechts"
+
+#: /kupumacros.html:477
+msgid "link settings"
+msgstr "link instellingen"
+
+#: /kupumacros.html:478
+msgid "&#160;high resolution version"
+msgstr "&#160;versie met hoge resolutie"
+
+#: /kupumacros.html:478
+msgid "hires"
+msgstr ""
+
+#: /kupumacros.html:478 /kupumacros.html:480
+msgid "link to:"
+msgstr "link naar:"
+
+#: /kupumacros.html:483
+msgid "link target:"
+msgstr "link doel:"
+
+#: /kupumacros.html:490
+msgid "tooltip"
+msgstr ""
+
+#: /kupumacros.html:493
+msgid "update image"
+msgstr "plaatje verversen"
+
+#: /kupumacros.html:503
+msgid "abbreviations and acronyms"
+msgstr "afkortingen"
+
+#: /kupumacros.html:513
+msgid ""
+"Enter the text of the tooltip that will appear when a user hovers over the "
+"element with the cursor."
+msgstr "Voer de tekst in voor de tooltip die verschijnt wanneer een gebruiker de cursor over het element beweegt."
+
+#: /kupumacros.html:517
+msgid "Choose the kind of html tag (abbr or acronym)."
+msgstr "Kies een HTML tag type (abbr of acronym)"
+
+#: /kupumacros.html:517
+msgid "type"
+msgstr ""
+
+#: /kupumacros.html:544 /kupumacros.html:699
+msgid "cleanup"
+msgstr "opschonen"
+
+#: /kupumacros.html:549
+msgid "perform"
+msgstr "uitvoeren"
+
+#: /kupumacros.html:555
+msgid "external source"
+msgstr ""
+
+#: /kupumacros.html:563
+msgid "For more info hover over the items in the list"
+msgstr "Voor meer informatie, beweeg de cursor over de elementen in de lijst"
+
+#: /kupumacros.html:571
+msgid "The external sources product is not installed. This tool is disabled."
+msgstr ""
+"Het 'external sources' product is niet geinstalleerd. Deze tool is uitgezet."
+
+#: /kupumacros.html:572
+msgid "add external source"
+msgstr "voeg external source toe"
+
+#: /kupumacros.html:573
+msgid "cancel"
+msgstr "annuleren"
+
+#: /kupumacros.html:576
+msgid "No external sources found."
+msgstr "Geen 'external source' objecten gevonden."
+
+#: /kupumacros.html:588
+msgid "citation"
+msgstr "citaat"
+
+#: /kupumacros.html:598
+msgid "author"
+msgstr "auteur"
+
+#: /kupumacros.html:602
+msgid "source"
+msgstr "bron"
+
+#: /kupumacros.html:628 /kupumacros.html:697
+msgid "table"
+msgstr "tabel"
+
+#: /kupumacros.html:635
+msgid "table class"
+msgstr "tabel class"
+
+#: /kupumacros.html:639
+msgid "list"
+msgstr "lijst"
+
+#: /kupumacros.html:640
+msgid "grid"
+msgstr ""
+
+#: /kupumacros.html:641
+msgid "datagrid"
+msgstr ""
+
+#: /kupumacros.html:650
+msgid "rows"
+msgstr "rijen"
+
+#: /kupumacros.html:654
+msgid "columns"
+msgstr "kolommen"
+
+#: /kupumacros.html:661
+msgid "create header"
+msgstr "kop aanmaken"
+
+#: /kupumacros.html:665
+msgid "add table"
+msgstr "tabel toevoegen"
+
+#: /kupumacros.html:670
+msgid "column align"
+msgstr "kolom uitlijnen"
+
+#: /kupumacros.html:673
+msgid "left"
+msgstr "links"
+
+#: /kupumacros.html:674
+msgid "center"
+msgstr "midden"
+
+#: /kupumacros.html:675
+msgid "right"
+msgstr "rechts"
+
+#: /kupumacros.html:680
+msgid "column widths"
+msgstr "kolombreedtes"
+
+#: /kupumacros.html:684
+msgid "column"
+msgstr "kolom"
+
+#: /kupumacros.html:686
+msgid "add column"
+msgstr "kolom toevoegen"
+
+#: /kupumacros.html:691
+msgid "row"
+msgstr "rij"
+
+#: /kupumacros.html:693
+msgid "add row"
+msgstr "rij toevoegen"
+
+#: /kupumacros.html:722
+msgid "table of contents"
+msgstr "inhoudsopgave"
+
+#: /kupumacros.html:727
+msgid "1 level"
+msgstr "1 niveau"
+
+#: /kupumacros.html:728
+msgid "2 levels"
+msgstr "2 niveaus"
+
+#: /kupumacros.html:729
+msgid "3 levels"
+msgstr "3 niveaus"
+
+#: /kupumacros.html:730
+msgid "4 levels"
+msgstr "4 niveaus"
+
+#: /kupumacros.html:731
+msgid "5 levels"
+msgstr "5 niveaus"
+
+#: /kupumacros.html:732
+msgid "6 levels"
+msgstr "6 niveaus"
+
+#: /kupumacros.html:733
+msgid "7 levels"
+msgstr "7 niveaus"
+
+#: /kupumacros.html:734
+msgid "8 levels"
+msgstr "8 niveaus"
+
+#: /kupumacros.html:735
+msgid "9 levels"
+msgstr "9 niveaus"
+
+#: /kupumacros.html:736
+msgid "unlimited"
+msgstr "ongelimiteerd"
+
+#: /kupumacros.html:748
+msgid "typographical characters"
+msgstr "typografische karakters"
+
+#: /kupumacros.html:760
+msgid "save"
+msgstr "opslaan"
+
+#: /kupumacros.html:764
+msgid "save document"
+msgstr "document opslaan"
