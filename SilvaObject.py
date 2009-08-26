@@ -71,6 +71,8 @@ class Zope3ViewAttribute(ViewAttribute):
 class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
     """
+    interface.implements(ISilvaObject)
+
     security = ClassSecurityInfo()
 
     # FIXME: this is for backward compatibility with old objects

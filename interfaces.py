@@ -503,6 +503,11 @@ class IContent(ISilvaObject, IPublishable):
     """An object that can be published directly and would appear
     in the table of contents. Can be ordered.
     """
+
+    def get_viewable():
+        """Return the viewable version of the content.
+        """
+
     # ACCESSORS
     def get_content():
         """Used by acquisition to get the nearest containing content object.

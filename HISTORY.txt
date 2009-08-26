@@ -10,6 +10,7 @@ Silva changes
       - Add a content-type for BMP images.
       - The user clipboard 'remove user' button now returns to the
         correct add user form.
+      - Fix tocfilter if somehow non Silva object go through it.
 
   Silva 2.1.6 (2009-08-05)
 
