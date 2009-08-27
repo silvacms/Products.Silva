@@ -198,6 +198,18 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
   background-image: url("<dtml-var root_url>/globals/edit-find.png");
   display: none;
 }
+.kupu-link-reference-table button.kupu-link-addadditional {
+  background-image: url("<dtml-var root_url>/globals/list-add.png");
+}
+.kupu-link-reference-table button.kupu-link-removebutton {
+  background-image: url("<dtml-var root_url>/globals/list-remove.png");
+}
+.kupu-link-reference-table button.kupu-link-addadditional {
+  background-image: url("<dtml-var root_url>/globals/list-add.png");
+}
+.kupu-link-reference-table button.kupu-link-removebutton {
+  background-image: url("<dtml-var root_url>/globals/list-remove.png");
+}
 
 #kupu-toolboxes button.kupu-link-reference {
   width: 20px;

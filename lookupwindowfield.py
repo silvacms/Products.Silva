@@ -3,6 +3,11 @@
 
 """
 Thank you Samuel, for having the brilliant idea!
+
+NOTE:  The reference lookup window field and the
+ lookup window field are now exactly the same.  
+ These are kept for backwards compatibility, but
+ both can be used to the same effect.
 """
 
 from urllib import quote
@@ -12,6 +17,7 @@ from Products.Formulator.StandardFields import StringField
 from Products.Formulator.Validator import StringValidator
 from Products.Formulator.Widget import render_element,TextWidget
 from Products.Silva.adapters.path import getPathAdapter
+import re
 
 from Products.Five import BrowserView
 from urlparse import urlparse
@@ -54,62 +60,211 @@ class EditButtonRedirector(BrowserView):
                 return "redirecting"
         raise BadRequest("Invalid location.  Target must be a Silva Object in order to edit")
 
-        
-        
-
 class LookupWindowValidator(StringValidator):
     
-    def validate(self, field, key, REQUEST):
-        # XXX no real validation at the moment
-        return StringValidator.validate(self, field, key, REQUEST)
+    message_names = StringValidator.message_names +\
+                  ['exceeded_maxrows', 'required_not_met']
 
-class ReferenceLookupWindowValidator(StringValidator):
+    exceeded_maxrows = 'Too many references.'
+    required_not_met = 'Not enough references.'
+
     def validate(self, field, key, REQUEST):
         pad = getPathAdapter(REQUEST)
-        value = StringValidator.validate(self, field, key, REQUEST)
-        return pad.urlToPath(value)
+        keymatch = re.compile(r'^%s\d*?$'%key)
+        keys = []
+        ret = []
+        for k in REQUEST.form.keys():
+            if keymatch.match(k):
+                keys.append(k)
+        #the keys need to be in order
+        keys.sort()
+        for k in keys:
+            ret.append(pad.urlToPath(StringValidator.validate(self, field, k, REQUEST)))
+        maxrows = field.get_value('max_rows')
+        if maxrows > 0 and len(ret) > maxrows:
+            self.raise_error('exceeded_maxrows',field)
+        reqrows = field.get_value('required_rows')
+        if reqrows > 0 and len(ret) < reqrows:
+            self.raise_error('required_not_met',field)
+        return ', '.join(ret)
     
 class LookupWindowWidget(TextWidget):
     
-    property_names = TextWidget.property_names  + ['onclick']
+    property_names = TextWidget.property_names  + ['onclick','button_label','show_edit_button','show_add_remove','max_rows','required_rows']
     
-    default_onclick_handler = """reference.getReference(
+    default_onclick_handler = """{
+var myid = this.getAttribute('id').replace(/_button/,'');
+reference.getReference(
     function(path, id, title) {
-        document.getElementsByName('%(field_id)s')[0].value = path;;
-        }, '%(url)s', '', true, '%(selected_path)s')
+        document.getElementById(myid).value = path;;
+        }, '%(url)s', '', true, '%(selected_path)s')}
         """
     
     onclick = fields.TextAreaField(
-        'onclick', 
+        'onclick',
         title='Onclick', 
         description='onclick handler implementation',
         default=default_onclick_handler,
         required=0,
-        width='20', 
-        height='3')
+        width='40', 
+        height='4')
     
+    button_label = fields.StringField(
+        'button_label',
+        title='Label for get reference button',
+        description='The title for the get reference button',
+        default='get reference...',
+        required=0)
+    
+    show_edit_button = fields.CheckBoxField(
+        'show_edit_button', 
+        title='Show edit reference button', 
+        description="Adds an 'Edit Reference' button to the widget.  When clicked, this will open a new window and redirect to the edit tab for the reference, if it is a valid Silva relative reference.  NOTE: only works in kupu.",
+        required=0,
+        default="")
+
+    show_add_remove = fields.CheckBoxField(
+        'show_add_remove', 
+        title='Show add / remove reference buttons', 
+        description="Adds an 'add reference' button to the bottom of this widget and 'remove reference' buttons next to each reference row in the widget.  Only references greater than the number required have the 'remove reference' button.",
+        required=0,
+        default=True)
+
+    max_rows = fields.IntegerField(
+        'max_rows',
+        title='Maximum Rows',
+        description=(
+            "The maximum number of rows allowed for this LookupWindowField."
+            " It will not be possible to add more rows beyond this number, and"
+            " this is also validated on the server side."),
+        default=1,
+        required=True)
+
+    required_rows = fields.IntegerField(
+        'required_rows',
+        title='Required Rows',
+        description=(
+            "The minimum number of references required for this LookupWindowField."
+            " If not set to 0, this essentially makes the field required. [ 0 disables this property ]"
+            " This is validated on the server side."),
+        default=0,
+        required=True)
+
     def render(self, field, key, value, request):
+        ret = ['<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">']
+        values = value.split(', ')
+        reqrows = field.get_value('required_rows')
+        if reqrows > 0 and reqrows > len(values):
+            #somehow the number of required rows exceeds the number of values, so
+            # add some more rows
+            values.extend(['' for i in range(len(values),reqrows) ])
+        for i,v in enumerate(values):
+            ret.extend(self._render_helper(field, key, v, request, str(i)))
+        if field.get_value('show_add_remove'):
+            ret.append('<tr><td colspan="3">')
+            maxrows = field.get_value('max_rows')
+            ret.append(render_element(
+                'button',
+                id=key + '_addbutton',
+                name=key + '_addbutton',
+                css_class='kupu-button kupu-link-reference kupu-link-addadditional',
+                title='add additional reference...',
+                onclick="addRowToReferenceLookupWidget(this, %s); return false;"%maxrows,
+                contents=' ')
+                       )
+            ret.append('</td></tr>')
+        ret.append('</table>')
+        return ''.join(ret)
+
+    def _render_helper(self, field, key, value, request, index):
         widget = []
+        value = getPathAdapter(field.REQUEST).pathToUrlPath(value)
+        show_edit = field.get_value('show_edit_button')
+        show_add_remove = field.get_value('show_add_remove')
+        reqrows = field.get_value('required_rows')
+        editid = '%s_editbutton%s'%(key,index)
+        onclick = self._onclick_handler(field, key + index)
+        buttoncellstyle=''
+        if show_edit:
+            onclick += ";document.getElementById(this.getAttribute('id').replace(/_button/,'_editbutton')).style.display='inline';this.parentNode.style.width='42px';"
+            if value:
+                buttoncellstyle=" style='width:42px'"
+                                                                                    
+        widget.append('<tr><td class="buttoncell"%s>'%buttoncellstyle)
         widget.append(
             render_element(
-                'input', 
-                type='button', 
-                name=key + '_button', 
-                css_class='button transporter',
-                style='margin-left:0',
-                value='get reference...',
-                extra='onclick="%s"' % self._onclick_handler(field, key)))
+                'button',
+                name='%s_button%s'%(key,index),
+                id='%s_button%s'%(key,index),
+                css_class="kupu-button kupu-link-reference kupu-link-lookupbutton",
+                title=field.get_value('button_label') or 'get reference...',
+                onclick="%s;return false;" % onclick,
+                contents=' ')
+        )
+        if show_edit:
+            url = ''
+            request = getattr(field, 'REQUEST', None)
+            if request:
+                model = getattr(request, 'model', None)
+                if model and request.has_key('docref'):
+                    # we're in an ExternalSource, use the document in which it is
+                    # placed instead of the source as the model
+                    url = model.resolve_ref(
+                        quote(request['docref'])).absolute_url()
+            widget.append(
+                render_element(
+                    'button',
+                    name=editid,
+                    id=editid,
+                    css_class="kupu-button kupu-link-reference kupu-link-editbutton",
+                    style="display: " + str(len(value) > 0 and "inline" or "none"),
+                    title='edit...',
+                    onclick="reference.editReference(this.getAttribute('id').replace(/_editbutton/,''),'%s');return false;"%(url),
+                    contents=' '
+                )
+            )
+        widget.append('</td><td style="text-align:right; padding-right: 3px;">')
+        taid = '%s_inputta%s'%(key,index)
         widget.append(
             render_element(
-                'input', 
-                type='text', 
-                name=key, 
+                'input',
+                type='text',
+                name=key + index,
+                id=key + index,
                 css_class=field.get_value('css_class'),
                 value=value,
-                size=field.get_value('display_width'), 
+                size=field.get_value('display_width'),
                 maxlength=field.get_value('display_maxwidth'),
+                onfocus="ta=document.getElementById(this.getAttribute('taid'));this.style.display='none';ta.value=this.value;ta.style.display='inline';ta.focus();",
+                taid=taid,
                 extra=field.get_value('extra')))
-        return ' '.join(widget)
+        widget.append(
+            render_element(
+                'textarea',
+                name=taid,
+                id=taid,
+                key=key + index,
+                css_class=field.get_value('css_class'),
+                rows="2",
+                cols="24",
+                onblur="i=document.getElementById(this.getAttribute('key'));i.value=this.value;i.style.display='inline';this.style.display='none';",
+                contents=value))
+        widget.append('</td><td>')
+        remove_style = ''
+        if (not show_add_remove) or (reqrows and reqrows > int(index)):
+            remove_style = "visibility:hidden"
+        widget.append(
+            render_element(
+                'button',
+                name='%s_removebutton%s'%(key,index),
+                id='%s_removebutton%s'%(key,index),
+                css_class='kupu-button kupu-link-reference kupu-link-removebutton',
+                title='remove reference...',
+                style=remove_style,
+                onclick='removeRowFromReferenceLookupWidget(this); return false;',
+                contents=' '))
+        widget.append('</td></tr>')
+        return widget
     
     def _onclick_handler(self, field, key):
         request = getattr(field, 'REQUEST', None)
@@ -139,74 +294,7 @@ class LookupWindowWidget(TextWidget):
             'field_id': key,
             'selected_path': getattr(field ,'value', '')}
         return field.get_value('onclick') % interpolate
-    
-class ReferenceLookupWindowWidget(LookupWindowWidget):
-    property_names = LookupWindowWidget.property_names  + ['button_label','show_edit_button']
-    
-    button_label = fields.StringField(
-        'button_label',
-        title='Label for get reference button',
-        description='The label for the get reference button',
-        default='get reference...',
-        required=0)
-    
-    show_edit_button = fields.CheckBoxField(
-        'show_edit_button', 
-        title='Show Edit Reference Button', 
-        description="Adds an 'Edit Reference' button to the widget.  When clicked, this will open a new window and redirect to the edit tab for the reference, if it is a valid Silva relative reference.  NOTE: only works in kupu.",
-        required=0,
-        default="")
 
-    def render(self, field, key, value, request):
-        widget = []
-        widget.append('<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0"><tr><td class="buttoncell">')
-        widget.append(
-            render_element(
-                'button',
-                name=key + '_button',
-                css_class="kupu-button kupu-link-reference kupu-link-lookupbutton",
-                title=field.get_value('button_label') or 'get reference...',
-                onclick="%s;return false;" % self._onclick_handler(field, key),
-                contents=' ')
-        )
-        widget.append('</td><td>')
-        widget.append(
-            render_element(
-                'input', 
-                type='text', 
-                name=key, 
-                css_class=field.get_value('css_class'),
-                value=getPathAdapter(field.REQUEST).pathToUrlPath(value),
-                size=field.get_value('display_width'), 
-                maxlength=field.get_value('display_maxwidth'),
-                extra=field.get_value('extra')))
-        widget.append('</td>')
-        if field.get_value('show_edit_button'):
-            widget.append('<td class="buttoncell">')
-            url = ''
-            request = getattr(field, 'REQUEST', None)
-            if request:
-                model = getattr(request, 'model', None)
-                if model and request.has_key('docref'):
-                    # we're in an ExternalSource, use the document in which it is
-                    # placed instead of the source as the model
-                    url = model.resolve_ref(
-                        quote(request['docref'])).absolute_url()
-            widget.append(
-                render_element(
-                    'button',
-                    name=key + '_editbutton',
-                    css_class="kupu-button kupu-link-reference kupu-link-editbutton",
-                    style="display: inline",
-                    title='edit...',
-                    onclick="reference.editReference('%s','%s');return false;"%(key,url),
-                    contents=' '
-                )
-            )
-            widget.append('</td>')
-        widget.append('</tr></table>')
-        return ' '.join(widget)
-    
 class LookupWindowField(StringField):
    
     meta_type = 'LookupWindowField'
@@ -216,8 +304,8 @@ class LookupWindowField(StringField):
 class ReferenceLookupWindowField(StringField):
 
     meta_type = 'ReferenceLookupWindowField'
-    validator = ReferenceLookupWindowValidator()
-    widget = ReferenceLookupWindowWidget()
+    validator = LookupWindowValidator()
+    widget = LookupWindowWidget()
     
 FieldRegistry.registerField(LookupWindowField)
 FieldRegistry.registerField(ReferenceLookupWindowField)

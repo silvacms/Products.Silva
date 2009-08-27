@@ -702,10 +702,14 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
 	for (var i=0; i < currCell.childNodes.length; i++) {
 	    newCell.appendChild(currCell.firstChild);
 	}
-	newCell.setAttribute('class',currCell.getAttribute('class'));
-	newCell.setAttribute('align',currCell.getAttribute('align'));
-	newCell.setAttribute('width',currCell.getAttribute('width'));
-	newCell.setAttribute('colspan',currCell.getAttribute('colspan'));
+	if (currCell.getAttribute('class'))
+	    newCell.setAttribute('class',currCell.getAttribute('class'));
+	if (currCell.getAttribute('align'))
+	    newCell.setAttribute('align',currCell.getAttribute('align'));
+	if (currCell.getAttribute('width'))
+	    newCell.setAttribute('width',currCell.getAttribute('width'));
+	if (currCell.getAttribute('colspan'))
+	    newCell.setAttribute('colspan',currCell.getAttribute('colspan'));
 	currCell.parentNode.replaceChild(newCell,currCell);
         this.editor.content_changed = true;
     }

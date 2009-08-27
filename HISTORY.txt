@@ -7,7 +7,12 @@ Silva 2.2b1 (unreleased)
 Bugs Fixed
 ~~~~~~~~~~
 
-- The user clipboard 'remove user' button now returns to the correct add user form.
+- The reference lookup window formulator widget now supports multiple
+  entries with javascript to add / remove entries.  NOTE: the default is
+  to retain the old behavior (supporting one reference, for either type of
+  lookup field).  If an exsiting lookup window field is changed to support more
+  the onclick widget property needs to change.  Copy the default value from a new
+  lookupwindowfield.
 
 - Errors when attempting to upload interlaced PNGs are now caught and
   displayed to the user.

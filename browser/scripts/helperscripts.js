@@ -2,7 +2,7 @@
 
 // can be attached to formfields so that pressing enter makes the form use
 // a specific action, useful in forms with more than 1 submit button
-function handle_default_action(element, event, action)
+handle_default_action = function(element, event, action)
 {
     code = event.which ? event.which : event.keyCode;
     if (code == 10 || code == 13)
@@ -18,7 +18,7 @@ function handle_default_action(element, event, action)
    content at the position the first item is checked. 
    The add new content functionality should work without using this
    function. */
-function addNewContent(event) {
+addNewContent = function(event) {
   /* NOTE": the position is "off by one" if the container has an index item.
      So, subtract one when determining the position, if an index document
      is present */
@@ -48,3 +48,71 @@ function addNewContent(event) {
   };
   return true;
 };
+
+/* helper for the lookup window widgets, to add an additional
+   row for placing a reference */
+addRowToReferenceLookupWidget = function(input,maxrows) {
+  var tbody = input;
+  while (tbody.nodeName != 'TBODY') tbody = tbody.parentNode;
+  var trs = -1; /* start at -1, since one row is the add buttonr ow */
+  for (var n=0; n < tbody.childNodes.length; n++) {
+    if (tbody.childNodes[n].tagName == 'TR')
+      trs++;      
+  }
+  if (trs == maxrows) {
+    alert("Unable to add additional reference.  The number of references allowed for this field is " + maxrows);
+    return;
+  }
+  var copy = tbody.lastChild.previousSibling.cloneNode(true);
+  var key = input.getAttribute('id').replace(/_addbutton$/,'');
+  var refinput = copy.getElementsByTagName('input')[0]; /* this is the ref text field*/
+  var index = parseInt(refinput.name.replace(/.*?(\d*)$/,'$1')) + 1;
+  refinput.value = '';
+  refinput.name = key + index;
+  refinput.id = key + index;
+  refinput.setAttribute('taid', key + '_inputta' + index);
+  var ta = copy.getElementsByTagName('textarea')[0];
+  ta.id = key + '_inputta' + index;
+  ta.setAttribute('key', key + index);
+  ta.name = key + '_inputta' + index;
+  var buttons = copy.getElementsByTagName('button');
+  var lbutton = buttons[0];
+  var editbutton = null;
+  var removebutton = null;
+  if (buttons.length == 3) { // both edit and remove buttons
+    editbutton = buttons[1];
+    removebutton = buttons[2];
+  } else if (buttons.length == 2) {
+    if (buttons[1].name.search(/editbutton/)>-1) {
+      editbutton = buttons[1];
+    } else {
+      removebutton = buttons[1];
+    }
+  }
+
+  var keyrepl = new RegExp("(" + key + "[a-zA-Z_-]*)\\d*", 'g');
+  lbutton.setAttribute('id',lbutton.getAttribute('id').replace(keyrepl,"$1"+index));
+  lbutton.setAttribute('name',lbutton.getAttribute('name').replace(keyrepl,"$1"+index));
+  if (editbutton) {
+    editbutton.style.display = 'none';
+    editbutton.setAttribute('id',editbutton.getAttribute('id').replace(keyrepl,"$1"+index));
+    editbutton.setAttribute('name',editbutton.getAttribute('name').replace(keyrepl,"$1"+index));
+  }
+  if (removebutton) {
+    removebutton.setAttribute('id',removebutton.getAttribute('id').replace(keyrepl,"$1"+index));
+    removebutton.setAttribute('name',removebutton.getAttribute('name').replace(keyrepl,"$1"+index));
+    removebutton.style.visibility="visible";
+  }
+  tbody.insertBefore(copy,tbody.lastChild);
+};
+
+removeRowFromReferenceLookupWidget = function(input) {
+    var row = input;
+  while (row.nodeName != 'TR') row = row.parentNode;
+  var tbody = row.parentNode;
+  if (tbody.getElementsByTagName('tr').length > 2) {
+    tbody.removeChild(row);
+  } else {
+    alert('You must have at least one reference');
+  }
+}
