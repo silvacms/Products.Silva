@@ -31,6 +31,8 @@
           <description>day / month / year &amp;nbsp;(23:59)</description>
           <allow_empty_time type="int">1</allow_empty_time>
           <extra>id="publish_datetime"</extra>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
@@ -54,6 +56,8 @@
           <title>expiration time</title>
           <description>Empty indicates no expiration.</description>
           <allow_empty_time type="int">1</allow_empty_time>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>

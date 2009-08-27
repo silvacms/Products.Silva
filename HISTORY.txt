@@ -4,8 +4,8 @@ Silva changes
 Silva 2.2b1 (unreleased)
 ------------------------
 
-Bugs Fixed
-~~~~~~~~~~
+New Features
+~~~~~~~~~~~~
 
 - The reference lookup window formulator widget now supports multiple
   entries with javascript to add / remove entries.  NOTE: the default is
@@ -13,6 +13,12 @@ Bugs Fixed
   lookup field).  If an exsiting lookup window field is changed to support more
   the onclick widget property needs to change.  Copy the default value from a new
   lookupwindowfield.
+  
+- DateTime widgets in the SMI now have a 'calendar' button which
+  opens a popup calendar -- an easier way to supply datetimes.
+
+Bugs Fixed
+~~~~~~~~~~
 
 - Errors when attempting to upload interlaced PNGs are now caught and
   displayed to the user.
@@ -24,6 +30,13 @@ Bugs Fixed
 
 - For a possible security issue the "served by host foo" comment was removed
   from macro_index.pt
+
+- The user clipboard 'remove user' button now returns to the correct add user 
+  form. (search or direct user lookup)
+
+- tab_preview frameset now requires that the user be logged in.  Previously, if 
+  using form-based auth, one might see an authentication screen in both
+  frames.
 
 Silva 2.2a2 (2009-01-12)
 ------------------------

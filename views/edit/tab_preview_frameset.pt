@@ -6,6 +6,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   tal:define="
     model request/model;
+    trigger model/security_trigger;
     root_url model/get_root_url;
     title   python: model.get_title_editable() or model.id;
     message_type  options/message_type|nothing;

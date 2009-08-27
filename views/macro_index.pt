@@ -84,6 +84,14 @@
         tal:attributes="src string:${root_url}/++resource++Products.Silva.browser.scripts/handler_registry.js"></script>
 <script type="text/javascript"
         tal:attributes="src  string:${root_url}/++resource++Products.Silva.browser.scripts/reference.js"></script>
+<script type="text/javascript"
+        tal:attributes="src string:$root_url/globals/js/jscalendar/calendar.js"></script>
+<script type="text/javascript"
+        tal:attributes="src string:$root_url/globals/js/jscalendar/lang/calendar-en.js"></script>
+<script type="text/javascript"
+        tal:attributes="src string:$root_url/globals/js/jscalendar/calendar-setup.js"></script>
+<link rel="stylesheet" type="text/css" media="all"
+        tal:attributes="href string:$root_url/globals/js/jscalendar/calendar-blue.css" />
 <tal:block tal:replace="nothing"> _______ script slot _______ </tal:block>
 <metal:block define-slot="script" />
 <tal:block tal:replace="nothing"> _______ rel navigation_______ </tal:block>

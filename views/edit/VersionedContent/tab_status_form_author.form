@@ -50,6 +50,8 @@
           <title>publish time</title>
           <description></description>
           <allow_empty_time type="int">1</allow_empty_time>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
@@ -72,6 +74,8 @@
           <title>expiration time</title>
           <description>If this document should expire, set the time.</description>
           <allow_empty_time type="int">1</allow_empty_time>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
         </values>
         <tales>
           <time_separator>python:form.get_time_punctuation()</time_separator>
