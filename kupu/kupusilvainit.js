@@ -389,7 +389,9 @@ function initSilvaKupu(iframe) {
         'kupu-table-delrow-button', 'kupu-table-addcolumn-button',
         'kupu-table-delcolumn-button', 'kupu-table-fix-button',
         'kupu-table-delete-button', 'kupu-toolbox-tables', 
-        'kupu-toolbox', 'kupu-toolbox-active'
+        'kupu-toolbox', 'kupu-toolbox-active', 'kupu-table-cell-type',
+	'kupu-table-cell-colspan','kupu-table-addcellbefore-button',
+	'kupu-table-addcellafter-button','kupu-table-delcell-button'
         );
     tabletool.registerToolBox('tabletoolbox', tabletoolbox);
 

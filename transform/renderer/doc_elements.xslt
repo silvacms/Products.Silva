@@ -399,6 +399,7 @@
   </xsl:template>
 
   <xsl:template match="doc:field" mode="tablerow-contents">
+   <xsl:element name="{@fieldtype|td}">
     <td class="{@class}">
       <!-- IE doesn't like empty table cells, insert a nbsp if there are
       no child elements -->
@@ -411,7 +412,7 @@
           <xsl:apply-templates />
         </xsl:otherwise>
       </xsl:choose>
-    </td>
+    </xsl:element>
   </xsl:template>
   
   <xsl:template match="doc:p" mode="remove-single-p">
