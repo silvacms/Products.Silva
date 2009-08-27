@@ -399,22 +399,40 @@
   </xsl:template>
 
   <xsl:template match="doc:field" mode="tablerow-contents">
-   <xsl:element name="{@fieldtype|td}">
-    <td class="{@class}">
-      <!-- IE doesn't like empty table cells, insert a nbsp if there are
-      no child elements -->
-      <xsl:choose>
-        <xsl:when test="count(*) = 1 and count(doc:p) = 1">
-          <xsl:apply-templates mode="remove-single-p" />
-        </xsl:when>
-        <xsl:when test="count(*) = 0">&#160;</xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates />
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:element>
+   <xsl:choose>
+    <xsl:when test="@fieldtype='td' or @fieldtype='th'">
+     <xsl:element name="{@fieldtype}">
+      <xsl:if test="@colspan">
+       <xsl:attribute name="colspan"><xsl:value-of select="@colspan" /></xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="field-contents" />
+     </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:element name="td">
+      <xsl:if test="@colspan">
+       <xsl:attribute name="colspan"><xsl:value-of select="@colspan" /></xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="field-contents" />
+     </xsl:element>
+    </xsl:otherwise>
+   </xsl:choose>
   </xsl:template>
   
+  <xsl:template mode="field-contents">
+    <!-- IE doesn't like empty table cells, insert a nbsp if there are
+      no child elements -->
+    <xsl:choose>
+      <xsl:when test="count(*) = 1 and count(doc:p) = 1">
+        <xsl:apply-templates mode="remove-single-p" />
+      </xsl:when>
+      <xsl:when test="count(*) = 0">&#160;</xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates />
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="doc:p" mode="remove-single-p">
     <xsl:apply-templates mode="text-content" />
   </xsl:template>
