@@ -23,7 +23,7 @@ from Products.Five import BrowserView
 from urlparse import urlparse
 from zExceptions import BadRequest
 
-from silva.core.interfaces import ISilvaObject
+from interfaces import ISilvaObject
 
 class EditButtonRedirector(BrowserView):
     """This view is used by the ReferenceLookupWindow's 'edit reference'
@@ -73,7 +73,13 @@ class LookupWindowValidator(StringValidator):
         keymatch = re.compile(r'^%s\d*?$'%key)
         keys = []
         ret = []
-        for k in REQUEST.form.keys():
+        if not hasattr(REQUEST,'form'):
+            # this is from Silva metadata, in which case REQUEST
+            # is just the original REQUEST.form dictionary
+            f = REQUEST
+        else:
+            f = REQUEST.form
+        for k in f.keys():
             if keymatch.match(k):
                 keys.append(k)
         #the keys need to be in order
@@ -146,7 +152,8 @@ reference.getReference(
         description=(
             "The minimum number of references required for this LookupWindowField."
             " If not set to 0, this essentially makes the field required. [ 0 disables this property ]"
-            " This is validated on the server side."),
+            " This is validated on the server side. The number of required rows must be less than or"
+            " equal to the maximum number of rows allowed."),
         default=0,
         required=True)
 

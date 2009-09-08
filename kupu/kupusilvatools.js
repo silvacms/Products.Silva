@@ -1364,7 +1364,7 @@ SilvaTableToolBox.prototype.delCell = function(event) {
 };
 
 SilvaTableToolBox.prototype.addCell = function(event) {
-    target = event.target;
+    var target = event.srcElement ? event.srcElement : event.target;
     //first param is a boolean, if true then cell is added before active cell
     // otherwise it is added after
     this.tool.addCell(target.value.search(/before/)>-1, this.widthinput);
