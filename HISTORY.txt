@@ -38,6 +38,8 @@ Bugs Fixed
   using form-based auth, one might see an authentication screen in both
   frames.
 
+- update last author when documents are saved.
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 

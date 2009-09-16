@@ -168,7 +168,7 @@ reference.getReference(
         for i,v in enumerate(values):
             ret.extend(self._render_helper(field, key, v, request, str(i)))
         if field.get_value('show_add_remove'):
-            ret.append('<tr><td colspan="3">')
+            ret.append('<tr><td colspan="3" class="buttoncell">')
             maxrows = field.get_value('max_rows')
             ret.append(render_element(
                 'button',
@@ -256,7 +256,7 @@ reference.getReference(
                 cols="24",
                 onblur="i=document.getElementById(this.getAttribute('key'));i.value=this.value;i.style.display='inline';this.style.display='none';",
                 contents=value))
-        widget.append('</td><td>')
+        widget.append('</td><td class="buttoncell">')
         remove_style = ''
         if (not show_add_remove) or (reqrows and reqrows > int(index)):
             remove_style = "visibility:hidden"
