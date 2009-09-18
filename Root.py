@@ -46,7 +46,7 @@ class SilvaGlobals(grok.DirectoryResource):
     grok.name('silva.globals')
 
 
-class Root(Publication):
+class Root(Publication, grok.Site):
     """Root of Silva site.
     """
     security = ClassSecurityInfo()
