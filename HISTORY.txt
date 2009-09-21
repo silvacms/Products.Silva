@@ -8,9 +8,14 @@ Silva changes
     Bug fixes
 
       - Add a content-type for BMP images.
+
       - The user clipboard 'remove user' button now returns to the
         correct add user form.
+
       - Fix tocfilter if somehow non Silva object go through it.
+
+      - Fix a bug if a view is used as return_to value in
+        quick_publish.
 
   Silva 2.1.6 (2009-08-05)
 

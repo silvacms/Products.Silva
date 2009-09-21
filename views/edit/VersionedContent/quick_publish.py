@@ -3,8 +3,10 @@ model = context.REQUEST.model
 view = context
 
 #get the tab to return to, defaulting to tab_edit
-return_to_id = context.REQUEST.get('return_to','tab_edit')
-return_to = getattr(view,return_to_id,'tab_edit')
+return_to_id = context.REQUEST.get('return_to', 'tab_edit')
+return_to = getattr(view, return_to_id, None)
+if return_to is None:
+    return_to = getattr(view, 'tab_edit')
 
 if not model.get_unapproved_version():
     # SHORTCUT: To allow approval of closed docs with no new version available,
