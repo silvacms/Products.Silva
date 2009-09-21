@@ -5,6 +5,9 @@ Silva changes
 
   Silva 2.1.7 (unreleased)
 
+    - Add an interface IRestrictedMemberInformation to be able to
+      restrict access to a member to his information.
+
     Bug fixes
 
       - Add a content-type for BMP images.

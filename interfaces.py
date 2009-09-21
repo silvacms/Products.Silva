@@ -934,6 +934,12 @@ class IMember(Interface):
         can have.
         """
 
+
+class IRestrictedMemberInformation(IMember):
+    """A member which is not able to modify its informations.
+    """
+
+
 class IMemberService(Interface):
     """Member service.
     """
