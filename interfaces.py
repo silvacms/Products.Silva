@@ -935,7 +935,7 @@ class IMember(Interface):
         """
 
 
-class IRestrictedMemberInformation(IMember):
+class IRestrictedMemberInformation(Interface):
     """A member which is not able to modify its informations.
     """
 
