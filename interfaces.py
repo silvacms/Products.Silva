@@ -917,7 +917,8 @@ class IMember(Interface):
         """
 
     def departments():
-        """Return list of departments user is in, or None if no such information.
+        """Return list of departments user is in, or None if no such
+        information.
         """
 
     def extra(name):
@@ -934,10 +935,22 @@ class IMember(Interface):
         can have.
         """
 
-
-class IRestrictedMemberInformation(Interface):
-    """A member which is not able to modify its informations.
+class IEditableMember(IMember):
+    """A member which is able to see its information to be modified.
     """
+
+
+    def set_fullname(fullname):
+        """Change the fullname of the user.
+        """
+
+    def set_email(email):
+        """Change member email.
+        """
+
+    def set_editor(editor):
+        """Change editor email.
+        """
 
 
 class IMemberService(Interface):

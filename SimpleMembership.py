@@ -14,12 +14,12 @@ import SilvaPermissions
 import roleinfo
 from helpers import add_and_edit
 
-from interfaces import IMember, IMemberService
+from interfaces import IEditableMember, IMemberService
 
 class SimpleMember(Member, Security, SimpleItem.SimpleItem):
     """Silva Simple Member"""
 
-    implements(IMember)
+    implements(IEditableMember)
 
     security = ClassSecurityInfo()
 
