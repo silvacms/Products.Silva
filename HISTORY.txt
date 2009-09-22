@@ -5,9 +5,6 @@ Silva changes
 
   Silva 2.1.7 (unreleased)
 
-    - Add an interface IRestrictedMemberInformation to be able to
-      restrict access to a member to his information.
-
     Bug fixes
 
       - Add a content-type for BMP images.
@@ -19,6 +16,9 @@ Silva changes
 
       - Fix a bug if a view is used as return_to value in
         quick_publish.
+
+      - Define a correct interface for SimpleMember which define the
+        protocol to edit a user.
 
   Silva 2.1.6 (2009-08-05)
 
