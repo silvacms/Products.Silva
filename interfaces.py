@@ -916,11 +916,6 @@ class IMember(Interface):
         """Return users's email address if known, None otherwise.
         """
 
-    def departments():
-        """Return list of departments user is in, or None if no such
-        information.
-        """
-
     def extra(name):
         """Return bit of extra information, keyed by name.
         """
