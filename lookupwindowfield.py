@@ -23,7 +23,7 @@ from Products.Five import BrowserView
 from urlparse import urlparse
 from zExceptions import BadRequest
 
-from interfaces import ISilvaObject
+from silva.core.interfaces import ISilvaObject
 
 class EditButtonRedirector(BrowserView):
     """This view is used by the ReferenceLookupWindow's 'edit reference'
