@@ -40,6 +40,9 @@ Bugs Fixed
 
 - update last author when documents are saved.
 
+- IContent objects (well, those extending Products.Silva.Content.Content) are now
+  cataloged.
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 
