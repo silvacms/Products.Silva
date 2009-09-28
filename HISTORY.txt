@@ -43,6 +43,9 @@ Bugs Fixed
 - IContent objects (well, those extending Products.Silva.Content.Content) are now
   cataloged.
 
+- enable changing the html form enctype of edit views using one of the
+  macro_edit macros
+
 Silva 2.2a2 (2009-01-12)
 ------------------------
 

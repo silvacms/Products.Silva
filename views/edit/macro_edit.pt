@@ -80,7 +80,8 @@ editor
      _____________________ main _____________________
     </tal:block>
     <td class="main">
-     <form method="post" name="silvaObjects" action=".">
+     <form method="post" name="silvaObjects" action="."
+      tal:attributes="enctype formenctype|nothing">
      <table class="listing" metal:define-slot="main-model">
       <thead>
        <tal:block replace="nothing">
@@ -128,7 +129,8 @@ editor
      _____________________ main _____________________
     </tal:block>
     <td class="main">
-     <form method="post" name="silvaObjects" action=".">
+     <form method="post" name="silvaObjects" action="."
+      tal:attributes="enctype formenctype|nothing">
      <table class="listing" metal:define-slot="main-model">
       <thead>
        <tal:block replace="nothing">
