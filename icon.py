@@ -62,7 +62,6 @@ class IconRegistry(object):
 
         NOTE: this will overwrite previous icon declarations
         """
-        url_path = '++resources++silva.icons/%s' % icon_name
         self._icon_mapping[identifier] = icon_name
 
 
