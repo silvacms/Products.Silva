@@ -8,7 +8,7 @@ from five import grok
 
 # Silva
 from silva.core.interfaces import IFile, ISilvaObject, \
-    IGhostContent, IGhostFolder
+    IGhostContent, IGhostFolder, IIconRegistry
 
 
 class SilvaIcons(grok.DirectoryResource):
@@ -18,33 +18,34 @@ class SilvaIcons(grok.DirectoryResource):
 
 
 class IconRegistry(object):
+    grok.implements(IIconRegistry)
 
     def __init__(self):
         self._icon_mapping = {}
 
-    def getIcon(self, object):
-        if IGhostContent.providedBy(object):
-            version = object.getLastVersion()
+    def getIcon(self, content):
+        if IGhostContent.providedBy(content):
+            version = content.getLastVersion()
             if version.get_link_status() == version.LINK_OK:
                 kind = 'link_ok'
             else:
                 kind = 'link_broken'
             identifier = ('ghost', kind)
-        elif IGhostFolder.providedBy(object):
-            if object.get_link_status() == object.LINK_OK:
-                if object.implements_publication():
+        elif IGhostFolder.providedBy(content):
+            if content.get_link_status() == content.LINK_OK:
+                if content.implements_publication():
                     kind = 'publication'
                 else:
                     kind = 'folder'
             else:
                 kind = 'link_broken'
             identifier = ('ghostfolder', kind)
-        elif IFile.providedBy(object):
-            identifier = ('mime_type', object.get_mime_type())
-        elif ISilvaObject.providedBy(object):
-            identifier = ('meta_type', object.meta_type)
+        elif IFile.providedBy(content):
+            identifier = ('mime_type', content.get_mime_type())
+        elif ISilvaObject.providedBy(content):
+            identifier = ('meta_type', content.meta_type)
         else:
-            meta_type = getattr(object, 'meta_type', None)
+            meta_type = getattr(content, 'meta_type', None)
             if meta_type is None:
                 raise ValueError, "Icon not found"
             identifier = ('meta_type', meta_type)
@@ -53,8 +54,7 @@ class IconRegistry(object):
     def getIconByIdentifier(self, identifier):
         icon = self._icon_mapping.get(identifier, None)
         if icon is None:
-            msg = "No icon for %s" % repr(identifier)
-            raise RegistryError, msg
+            raise ValueError, "No icon for %s" % repr(identifier)
         return icon
 
     def registerIcon(self, identifier, icon_name):
