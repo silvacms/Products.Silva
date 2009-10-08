@@ -15,13 +15,13 @@ import Globals, zLOG
 # silva
 import SilvaPermissions
 from helpers import add_and_edit
-from BaseService import SilvaService
 
 # other products
 from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
+from silva.core.services.base import SilvaService
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 

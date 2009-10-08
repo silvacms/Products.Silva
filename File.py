@@ -35,7 +35,6 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import upgrade
 from Products.Silva.i18n import translate as _
 from Products.Silva.Asset import Asset
-from Products.Silva.BaseService import SilvaService
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
@@ -53,6 +52,7 @@ except:                                          # available for import
 
 from Products.Silva.magic import MagicGuess
 
+from silva.core.services.base import SilvaService
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews

@@ -22,8 +22,8 @@ from Products.Silva import subscriptionerrors as errors
 from Products.Silva.adapters import subscribable
 from Products.Silva.mail import sendmail
 from silva.core.interfaces import IHaunted
-from Products.Silva.BaseService import SilvaService
 
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 class SubscriptionService(Folder.Folder, SilvaService):

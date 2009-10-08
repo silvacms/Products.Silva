@@ -9,14 +9,14 @@ from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva
 from SidebarCache import SidebarCache
-from BaseService import SilvaService
 import SilvaPermissions
 from helpers import add_and_edit
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 # Silva interfaces
-from silva.core.interfaces import ISidebarService
 
+from silva.core.interfaces import ISidebarService
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 class SidebarService(SilvaService):

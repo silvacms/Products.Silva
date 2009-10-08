@@ -17,7 +17,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # silva
 from silva.core.interfaces import IContainerPolicy
 from silva.core.interfaces import IInvisibleService
-from Products.Silva.BaseService import SilvaService
+from silva.core.services.base import SilvaService
 
 from silva.core import conf as silvaconf
 

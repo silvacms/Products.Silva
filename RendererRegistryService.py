@@ -11,8 +11,8 @@ from AccessControl import ClassSecurityInfo
 from Products.Silva.transform.rendererreg import getRendererRegistry
 import SilvaPermissions
 from helpers import add_and_edit
-from BaseService import SilvaService
 
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 OLD_STYLE_RENDERER = 'Do not use new-style renderer'

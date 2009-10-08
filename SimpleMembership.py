@@ -16,8 +16,8 @@ from Membership import cloneMember, Member
 import SilvaPermissions
 import roleinfo
 from helpers import add_and_edit
-from BaseService import SilvaService, ZMIObject
 
+from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 

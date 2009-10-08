@@ -10,8 +10,8 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.BaseService import SilvaService
 
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 _default_typo_chars = ['&#x20AC;',

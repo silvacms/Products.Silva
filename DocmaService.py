@@ -8,10 +8,10 @@ import xmlrpclib
 import Globals
 from AccessControl import Permissions, ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Products.Silva.BaseService import SilvaService
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.i18n import translate as _
 
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 class Job(object):
