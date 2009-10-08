@@ -5,7 +5,6 @@
 import os
 
 # Zope 3
-from zope.interface import implements
 from zope.app.component.hooks import setSite
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
@@ -27,7 +26,7 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
-from silva.core.interfaces import IRoot, ISiteManager
+from silva.core.interfaces import IRoot
 from silva.core import conf as silvaconf
 
 
@@ -53,9 +52,9 @@ class Root(Publication, grok.Site):
 
     meta_type = "Silva Root"
 
-    implements(IRoot)
-
-    silvaconf.baseclass()
+    # We do not want to register Root automaticaly.
+    grok.baseclass()
+    grok.implements(IRoot)
 
     def __init__(self, id):
         super(Root, self).__init__(id)
@@ -293,7 +292,6 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # excessive
     title = unicode(title, 'latin1')
     # now set it all up
-    ISiteManager(root).makeSite()
     setSite(root)
     install.installFromScratch(root)
     root.set_title(title)
