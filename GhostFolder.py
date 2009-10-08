@@ -148,7 +148,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
         (None, None, SyncCopy),
     ]
 
-    silvaconf.icon('www/silvaghostfolder.gif')
+    silvaconf.icon('icons/silvaghost_folder.gif')
     silvaconf.factory('manage_addGhostFolder')
 
     def __init__(self, id):

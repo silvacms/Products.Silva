@@ -244,7 +244,7 @@ class Ghost(CatalogedVersionedContent):
 
     implements(IVersionedContent, IGhostContent)
 
-    silvaconf.icon('www/silvaghost.gif')
+    silvaconf.icon('icons/silvaghost.gif')
     silvaconf.factory('manage_addGhost')
     silvaconf.versionClass('GhostVersion')
     silvaconf.versionFactory('manage_addGhostVersion')

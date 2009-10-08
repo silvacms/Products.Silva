@@ -49,7 +49,7 @@ def initialize(context):
 
     from Products.Silva.silvaxml import xmlexport
 
-    import Root
+    # import Root
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
@@ -58,14 +58,13 @@ def initialize(context):
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
 
-    context.registerClass(
-        Root.Root,
-        constructors = (Root.manage_addRootForm,
-                        Root.manage_addRoot),
-        icon="www/silva.png",
-        container_filter = makeContainerFilter(only_outside_silva=True)
-        )
-    registerTypeForMetadata(Root.Root.meta_type)
+    # context.registerClass(
+    #     Root.Root,
+    #     constructors = (Root.manage_addRootForm,
+    #                     Root.manage_addRoot),
+    #     icon="www/silva.png",
+    #     container_filter = makeContainerFilter(only_outside_silva=True)
+    #     )
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
@@ -136,7 +135,7 @@ allow_module('Products.Silva.i18n')
 allow_module('Products.Silva.mail')
 
 def initialize_icons():
-    from Products.Silva import icon, File, GhostFolder
+    from Products.Silva.icon import registry
 
     mimeicons = [
         ('audio/aiff', 'file_aiff.png'),
@@ -180,9 +179,10 @@ def initialize_icons():
         ('video/quicktime', 'file_quicktime.png'),
         ('video/x-dv', 'file_quicktime.png'),
     ]
-    ri = icon.registry.registerIcon
     for mimetype, icon_name in mimeicons:
-        ri(('mime_type', mimetype), 'www/%s' % icon_name, File.__dict__)
+        registry.registerIcon(
+            ('mime_type', mimetype),
+            '++resources++silva.icons/%s' % icon_name)
 
     misc_icons = [
         ('ghostfolder', 'folder', 'silvaghostfolder.gif'),
@@ -192,7 +192,9 @@ def initialize_icons():
         ('ghost', 'link_broken', 'silvaghostbroken.png'),
     ]
     for klass, kind, icon_name in misc_icons:
-        ri((klass, kind), 'www/%s' % icon_name, GhostFolder.__dict__)
+        registry.registerIcon(
+            (klass, kind),
+            '++resources++silva.icons/%s' % icon_name)
 
 
 #------------------------------------------------------------------------------

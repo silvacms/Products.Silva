@@ -17,7 +17,7 @@ from cStringIO import StringIO
 
 # silva imports
 from silva.core import interfaces
-from Products.Silva.install import configureIntIds
+
 from Products.Silva.upgrade import BaseUpgrader, AnyMetaType
 from Products.Silva.adapters import version_management
 from Products.Silva.File import FileSystemFile
@@ -50,8 +50,7 @@ class RootUpgrader(BaseUpgrader):
             ism.makeSite()
             setSite(obj)
 
-        if not hasattr(obj, 'service_ids'):
-            configureIntIds(obj)
+        # TODO: IntID
 
         reg = obj.service_view_registry
 

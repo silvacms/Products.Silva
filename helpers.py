@@ -164,13 +164,9 @@ def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
         if filter_addable and not zmi_addable:
             return False
         addable = False
-        if interfaces.IRoot.providedBy(object_manager) and \
-                interfaces.ISilvaService.implementedBy(content):
-            # We add services in the root
-            addable = True
-        elif ISite.providedBy(object_manager) and \
+        if ISite.providedBy(object_manager) and \
                 interfaces.ISilvaLocalService.implementedBy(content):
-            # Local services in local sites
+            # Services in  sites
             addable = True
         elif interfaces.IContainer.providedBy(object_manager):
             if interfaces.ISilvaObject.implementedBy(content) or \
@@ -183,7 +179,7 @@ def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
                 # Let version been added in a versionned
                 # object. Should match the correct version of course ...
                 addable = True
-        if only_outside_silva:
+        if only_outside_silva or interfaces.IRoot.implementedBy(content):
             return not addable
         return addable
     return SilvaZMIFilter

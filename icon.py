@@ -2,23 +2,22 @@
 # See also LICENSE.txt
 # $Id$
 
-"""Sivla icon registry"""
+"""Silva icon registry"""
 
-# python
-import os
-
-# zope
-import Globals
-import OFS.misc_
+from five import grok
 
 # Silva
-from silva.core.interfaces import (IFile, ISilvaObject,
-                                       IGhostContent, IGhostFolder)
+from silva.core.interfaces import IFile, ISilvaObject, \
+    IGhostContent, IGhostFolder
 
-class RegistryError(Exception):
-    """thrown on any error in registry"""
 
-class _IconRegistry:
+class SilvaIcons(grok.DirectoryResource):
+    # This export the globals directory using Zope 3 technology.
+    grok.path('icons')
+    grok.name('silva.icons')
+
+
+class IconRegistry(object):
 
     def __init__(self):
         self._icon_mapping = {}
@@ -47,7 +46,7 @@ class _IconRegistry:
         else:
             meta_type = getattr(object, 'meta_type', None)
             if meta_type is None:
-                raise RegistryError, "Icon not found"
+                raise ValueError, "Icon not found"
             identifier = ('meta_type', meta_type)
         return self.getIconByIdentifier(identifier)
 
@@ -58,33 +57,14 @@ class _IconRegistry:
             raise RegistryError, msg
         return icon
 
-    def registerIcon(self, identifier, icon, context):
-        """register icon
+    def registerIcon(self, identifier, icon_name):
+        """Register an icon.
 
-            identifier: icon identifier as returned from getIconIdentifier()
-            icon: path to icon (i.e. 'www/root.png')
-            context: module context of icon (i.e. globals())
-
-            raises  RegistryError if product doesn't exist
-            NOTE: this will overwrite previous icon declarations
+        NOTE: this will overwrite previous icon declarations
         """
-        # NOTE: code copied from App.ProductContext, modified though
-        product = self._get_module_from_context(context)
-        name = os.path.split(icon)[1]
-        icon = Globals.ImageFile(icon, context)
-        icon.__roles__ = None
-        if not hasattr(OFS.misc_.misc_, product):
-            msg = "The product %s doesn't exist" % product
-            raise RegistryError, msg
-        getattr(OFS.misc_.misc_, product)[name] = icon
-        self._icon_mapping[identifier] = 'misc_/%s/%s' % (product, name)
+        url_path = '++resources++silva.icons/%s' % icon_name
+        self._icon_mapping[identifier] = icon_name
 
-    def _get_module_from_context(self, context):
-        name = context['__name__']
-        name_parts = name.split('.')
-        if name.startswith('Products.'):
-            return name_parts[1]
-        return name_parts[0]
 
-registry = _IconRegistry()
+registry = IconRegistry()
 

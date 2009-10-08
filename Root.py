@@ -26,6 +26,7 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
+from silva.core.services import site
 from silva.core.interfaces import IRoot
 from silva.core import conf as silvaconf
 
@@ -45,7 +46,7 @@ class SilvaGlobals(grok.DirectoryResource):
     grok.name('silva.globals')
 
 
-class Root(Publication, grok.Site):
+class Root(Publication, site.Site):
     """Root of Silva site.
     """
     security = ClassSecurityInfo()
@@ -53,8 +54,10 @@ class Root(Publication, grok.Site):
     meta_type = "Silva Root"
 
     # We do not want to register Root automaticaly.
-    grok.baseclass()
     grok.implements(IRoot)
+    silvaconf.icon('www/silva.png')
+    silvaconf.factory('manage_addRootForm')
+    silvaconf.factory('manage_addRoot')
 
     def __init__(self, id):
         super(Root, self).__init__(id)
