@@ -49,7 +49,6 @@ def initialize(context):
 
     from Products.Silva.silvaxml import xmlexport
 
-    # import Root
     import install
     import helpers # to execute the module_permission statements
     import mangle, batch
@@ -57,14 +56,6 @@ def initialize(context):
 
     import UnicodeSplitter # To make the splitter register itself
     import Metadata
-
-    # context.registerClass(
-    #     Root.Root,
-    #     constructors = (Root.manage_addRootForm,
-    #                     Root.manage_addRoot),
-    #     icon="www/silva.png",
-    #     container_filter = makeContainerFilter(only_outside_silva=True)
-    #     )
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())
