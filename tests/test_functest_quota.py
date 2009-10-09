@@ -70,12 +70,17 @@ class QuotaTestCase(SilvaFunctionalTestCase):
     def set_quota(self, quota, expected_quota=None, expect_error=False):
         """Set the quota value, and expect a reply or an error.
         """
-        self.sb.browser.getControl(name='silva-quota.quota:record').value = quota
-        # There is several save metadata button, but they should all do the same.
-        self.sb.browser.getControl(name='save_metadata:method', index=0).click()
+        self.sb.browser.getControl(
+            name='silva-quota.quota:record').value = quota
+        # There is several save metadata button, but they should all
+        # do the same.
+        self.sb.browser.getControl(
+            name='save_metadata:method', index=0).click()
         if not (expected_quota is None):
             msg = self.quota_report % expected_quota
-            self.failUnless(msg in self.sb.browser.contents, 'No message "%s" in browser.' % msg)
+            self.failUnless(
+                msg in self.sb.browser.contents,
+                'No message "%s" in browser.' % msg)
         if expect_error:
             self.failUnless(self.quota_error in self.sb.browser.contents)
         else:
@@ -195,8 +200,10 @@ class QuotaTestCase(SilvaFunctionalTestCase):
         self.set_quota('10', expected_quota=10)
         self.sb.click_href_labeled('contents')
 
-        self.sb.make_content('Silva File', id='quota_test', title='q test',
-                             file='docs_export_2008-06-11.odt')
+        self.sb.browser.handleErrors = False
+        self.sb.make_content(
+            'Silva File', id='quota_test', title='q test',
+            file='docs_export_2008-06-11.odt')
         self.failUnless(
             self.sb.get_status_feedback().startswith('Added Silva File'))
 
