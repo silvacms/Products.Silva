@@ -32,8 +32,8 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
             'pdf', 'pdf file', upload)
 
         fields = Request()
-        fields.filename = 'anoterfilename'
-        fields.file = StringIO("just plain data")
+        fields.filename = 'afilename.txt'
+        fields.file = StringIO("just plain text")
         upload = FileUpload(fields)
         self.silva.manage_addProduct['Silva'].manage_addFile(
             'text', 'text file', upload)
@@ -43,6 +43,9 @@ class RegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             self.silva.pdf.get_mime_type(),
             'application/pdf')
+        self.assertEquals(
+            self.silva.text.get_mime_type(),
+            'text/plain')
 
         r = IconRegistry()
         self.failUnless(verifyObject(interfaces.IIconRegistry, r))
