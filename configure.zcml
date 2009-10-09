@@ -6,6 +6,8 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="silva">
 
+  <include package="." file="meta.zcml" />
+
   <!-- i18n -->
   <i18n:registerTranslations directory="i18n" />
 
