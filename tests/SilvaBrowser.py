@@ -10,7 +10,7 @@ from xml.dom import minidom
 from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
-Z3C_CONTENTS = ['Silva Document',
+Z3C_CONTENTS = ['Silva Document', 'Silva Link',
                 'Silva Indexer', 'Silva Find',
                 'Silva File', 'Silva Image']
 
@@ -51,7 +51,8 @@ class SilvaBrowser(object):
             # no button found yet, check if there are anchors in
             # the middleground div that match value_name
             # they sort of look like buttons too, right..
-            doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
+            doc = minidom.parseString(
+                self.browser.contents.replace('&nbsp;', ' '))
             divs = doc.getElementsByTagName('div')
             for div in divs:
                 if div.getAttribute('class') != 'middleground':
@@ -370,7 +371,6 @@ class SilvaBrowser(object):
         'file':         'test.txt',
         'reference':    'index',
         'link_url':     'www.infrae.com',
-        'link_type':    'absolute',
         'depth':        '-1',
     }
 
@@ -541,7 +541,7 @@ class SilvaBrowser(object):
         'Silva Find':           ['id', 'title'],
         'Silva Ghost':          ['id', 'reference'],
         'Silva Indexer':        ['id', 'title'],
-        'Silva Link':           ['id', 'title', 'link_url', 'link_type'],
+        'Silva Link':           ['id', 'title', 'url'],
         'Silva AutoTOC':        ['id', 'title', 'depth'],
     }
 
