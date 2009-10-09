@@ -335,7 +335,7 @@ class SilvaBrowser(object):
         except HTTPError, err:
             return (err.code, None)
 
-    def make_content(self, content_type, url=None, **fields):
+    def make_content(self, content_type, **fields):
         """Makes content of a specific type, with one or more fields
         filled in.
         """
@@ -370,7 +370,7 @@ class SilvaBrowser(object):
         'image':        'torvald.jpg',
         'file':         'test.txt',
         'reference':    'index',
-        'link_url':     'www.infrae.com',
+        'url':     'www.infrae.com',
         'depth':        '-1',
     }
 
