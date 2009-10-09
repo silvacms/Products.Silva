@@ -73,11 +73,11 @@ class ILinkFields(interface.Interface):
 
 
 class LinkAddForm(silvaz3cforms.AddForm):
-    """Add form for a file.
+    """Add form for a link.
     """
 
-    silvaconf.context(interfaces.ILink)
-    silvaconf.name(u'Silva Link')
+    grok.context(interfaces.ILink)
+    grok.name(u'Silva Link')
     fields = field.Fields(ILinkFields)
 
     def create(self, parent, data):
@@ -87,6 +87,8 @@ class LinkAddForm(silvaz3cforms.AddForm):
 
 
 class LinkView(silvaviews.View):
+
+    grok.context(interfaces.ILink)
 
     def update(self):
         if not self.is_preview:
