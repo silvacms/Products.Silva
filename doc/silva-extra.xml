@@ -54,7 +54,7 @@
      <value key="description"></value>
      <value key="max_length"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -114,7 +114,7 @@
      <value key="description"></value>
      <value key="max_length"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -174,7 +174,7 @@
      <value key="description"></value>
      <value key="max_length"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -280,7 +280,7 @@
      <value key="description"></value>
      <value key="max_length"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -342,7 +342,7 @@
      <value key="description"></value>
      <value key="max_length"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -807,7 +807,7 @@
      <value key="truncate"></value>
      <value key="description"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
@@ -865,7 +865,7 @@
      <value key="truncate"></value>
      <value key="description"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra">string: id="${here/id}"</value>
+     <value key="extra"></value>
    </field_tales>
    <field_messages>
    </field_messages>
