@@ -54,19 +54,6 @@ class LinkVersion(CatalogedVersion):
     def get_url(self):
         return self._url
 
-    security.declareProtected(SilvaPermissions.View, 'redirect')
-    def redirect(self, view_type='public'):
-        request = self.REQUEST
-        response = request.RESPONSE
-        if (request['HTTP_USER_AGENT'].startswith('Mozilla/4.77') or
-            request['HTTP_USER_AGENT'].find('Opera') > -1):
-            return ('<html><head><META HTTP-EQUIV="refresh" '
-                    'CONTENT="0; URL=%s"></head><body bgcolor="#FFFFFF">'
-                    '</body></html>') % self._url
-        else:
-            response.redirect(self._url)
-            return ""
-
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
@@ -77,7 +64,7 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 
-class ILinkAddFields(interface.Interface):
+class ILinkFields(interface.Interface):
 
     url = schema.URI(
         title=_(u"url"),
@@ -91,9 +78,21 @@ class LinkAddForm(silvaz3cforms.AddForm):
 
     silvaconf.context(interfaces.ILink)
     silvaconf.name(u'Silva Link')
-    fields = field.Fields(ILinkAddFields)
+    fields = field.Fields(ILinkFields)
 
     def create(self, parent, data):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addLink(
             data['id'], data['title'], data['url'])
+
+
+class LinkView(silvaviews.View):
+
+    def update(self):
+        if not self.is_preview:
+            self.redirect(self.content.get_url())
+
+    def render(self):
+        link = self.content
+        return u'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>' % (
+            link.get_title(), link.get_url(), link.get_url())
