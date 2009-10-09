@@ -33,7 +33,7 @@
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
-          <extra>string:id="${field/id}"</extra>
+          <extra></extra>
         </tales>
       </field>
       </fields>
