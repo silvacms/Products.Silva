@@ -46,7 +46,7 @@ class ViewCode:
             icon_path = '%s/%s' % (self.REQUEST['BASE1'],
                 icon.registry.getIcon(obj))
             meta_type = obj.meta_type
-        except icon.RegistryError:
+        except ValueError:
             icon_path = getattr(aq_base(obj), 'icon', None)
             if icon_path is None:
                 icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
