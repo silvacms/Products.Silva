@@ -370,7 +370,7 @@ class SilvaBrowser(object):
         'image':        'torvald.jpg',
         'file':         'test.txt',
         'reference':    'index',
-        'url':     'www.infrae.com',
+        'url':          'www.infrae.com',
         'depth':        '-1',
     }
 
