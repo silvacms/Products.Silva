@@ -17,7 +17,7 @@ from zope.app.container.interfaces import IObjectMovedEvent
 from Products.Silva import SilvaPermissions
 from Products.SilvaMetadata.Exceptions import BindingError
 
-from silva.core.interfaces import IVersion
+from silva.core.interfaces import IVersion, ICatalogedVersion
 
 from silva.core import conf as silvaconf
 
@@ -164,6 +164,8 @@ InitializeClass(Version)
 
 class CatalogedVersion(Version):
     """Base class for cataloged version objects"""
+    
+    implements(ICatalogedVersion)
 
     def getPath(self):
         return '/'.join(self.getPhysicalPath())
