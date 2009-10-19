@@ -1,8 +1,9 @@
+# $Id$
 import SilvaTestCase
-from DateTime import DateTime 
+from DateTime import DateTime
 
 from silva.core.interfaces import IVersion
-        
+
 class CatalogTestCase(SilvaTestCase.SilvaTestCase):
 
     def assertStatus(self, path, statuses):
@@ -27,25 +28,25 @@ class CatalogTestCase(SilvaTestCase.SilvaTestCase):
             if brain.getPath() == path:
                 return
         self.fail()
-        
+
     def assertNoPath(self, path):
         results = self.catalog.searchResults(path=path)
         for brain in results:
             if brain.getPath() == path:
                 self.fail()
-        
-    def assertPristineCatalog(self):
+
+    def assertPristineCatalog(self, extra=0):
         # the pristine catalog has no documents, just root
         results = self.catalog.searchResults()
-        # the root itself and its index document 
-        self.assertEquals(2, len(results))
-        
+        # the root itself and its index document (plus its version)
+        self.assertEquals(3 + extra, len(results))
+
 class VersionCatalogTestCase(CatalogTestCase):
 
     def afterSetUp(self):
         self.add_document(self.silva, 'alpha', 'Alpha')
         self.alpha = self.silva.alpha
-        
+
     def test_pristine(self):
         self.silva.manage_delObjects(['alpha'])
         self.assertPristineCatalog()
@@ -72,7 +73,8 @@ class VersionCatalogTestCase(CatalogTestCase):
         self.alpha.set_unapproved_version_publication_datetime(dt)
         self.alpha.approve_version()
         self.alpha.close_version()
-        self.assertPristineCatalog()
+        # close unindex the version, but the versioned is kept in the catalog
+        self.assertPristineCatalog(extra=1)
 
     def test_new(self):
         dt = DateTime() - 1
@@ -80,7 +82,7 @@ class VersionCatalogTestCase(CatalogTestCase):
         self.alpha.approve_version()
         self.alpha.create_copy()
         self.assertStatus('/root/alpha', ['unapproved', 'public'])
-        
+
     def test_new_approved(self):
         dt = DateTime() - 1
         self.alpha.set_unapproved_version_publication_datetime(dt)
@@ -101,7 +103,7 @@ class VersionCatalogTestCase(CatalogTestCase):
         self.assert_(hasattr(self.silva, 'copy_of_alpha'))
         self.assertStatus('/root/alpha', ['unapproved'])
         self.assertStatus('/root/copy_of_alpha', ['unapproved'])
-        
+
     def test_cut(self):
         self.silva.manage_addProduct['Silva'].manage_addFolder('sub', 'Sub')
         cb = self.silva.manage_cutObjects(['alpha'])
@@ -117,13 +119,13 @@ class ContainerCatalogTestCase(CatalogTestCase):
         self.assertPath('/root/sub')
         self.silva.manage_delObjects(['sub'])
         self.assertNoPath('/root/sub')
-        
+
     def test_folder2(self):
         self.silva.manage_addProduct['Silva'].manage_addFolder('sub', 'Sub')
         self.silva.manage_delObjects(['sub'])
         self.assertNoPath('/root/sub')
         self.assertStatus('/root/sub/index', [])
-        
+
     def test_folder3(self):
         # cut & paste
         self.add_folder(self.silva, 'sub', 'Sub',
@@ -151,7 +153,7 @@ class FulltextIndexTestCase(CatalogTestCase):
 
     def test_markup_not_in_fulltext_index(self):
         # For https://infrae.com/issue/silva/issue1642
-        
+
         document = self.document
         editable = self.editable
         editable.content.manage_edit('''<foo> Hello world!
@@ -174,7 +176,7 @@ class FulltextIndexTestCase(CatalogTestCase):
         # Also not 'verboten', because external sources are removed
         # from the fulltext.
         self.assertEquals(len(self.catalog(fulltext='verboten')), 0)
-        
+
 
 import unittest
 def test_suite():
