@@ -162,7 +162,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
                                               existing_content,
                                               id='test_link',
                                               title='Test link',
-                                              url='www.infrae.com')
+                                              url='http://www.infrae.com')
         self.login_delete_logout(sb, 'manager', existing_content)
 
     def test_silva_autotoc_in_publication(self):

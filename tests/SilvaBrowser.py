@@ -362,18 +362,6 @@ class SilvaBrowser(object):
         if current_form_type:
             self.form_type = current_form_type
 
-    # map default field values to field names
-    default_field_values = {
-        'id':           'test_object',
-        'title':        'A test object',
-        'policy':       'Silva Document',
-        'image':        'torvald.jpg',
-        'file':         'test.txt',
-        'reference':    'index',
-        'url':          'www.infrae.com',
-        'depth':        '-1',
-    }
-
     def make_default_content(self, content_type):
         """ """
         field_names = self.content_type_fields[content_type]
@@ -504,19 +492,24 @@ class SilvaBrowser(object):
         name = self.get_field_id('url')
         self.browser.getControl(name=name).value = link_url
 
-    def set_link_type_field(self, link_type):
-        """
-        set the Silva Link absolute/relative radio button
-        """
-        name = self.get_field_id('link_type')
-        self.browser.getControl(name=name).value = [link_type]
-
     def set_depth_field(self, depth):
         """
         set the depth field
         """
         name = self.get_field_id('depth')
         self.browser.getControl(name=name).value = '-1'
+
+    # map default field values to field names
+    default_field_values = {
+        'id':           'test_object',
+        'title':        'A test object',
+        'policy':       'Silva Document',
+        'image':        'torvald.jpg',
+        'file':         'test.txt',
+        'reference':    'index',
+        'url':          'http://www.infrae.com',
+        'depth':        '-1',
+    }
 
     # existing content type fields
     fields = {
@@ -526,8 +519,7 @@ class SilvaBrowser(object):
         'image':        set_image_field,
         'file':         set_file_field,
         'reference':    set_ghost_url_field,
-        'link_url':     set_url_field,
-        'link_type':    set_link_type_field,
+        'url':          set_url_field,
         'depth':        set_depth_field,
     }
 
@@ -544,7 +536,6 @@ class SilvaBrowser(object):
         'Silva Link':           ['id', 'title', 'url'],
         'Silva AutoTOC':        ['id', 'title', 'depth'],
     }
-
 
     @property
     def contents(self):

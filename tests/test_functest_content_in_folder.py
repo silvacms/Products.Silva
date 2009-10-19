@@ -4,12 +4,11 @@ from SilvaTestCase import SilvaFunctionalTestCase
 from SilvaBrowser import SilvaBrowser
 
 class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
-    """ each role make each content type in a folder
+    """Each role make each content type in a folder
     """
 
-    def create_content_and_logout(self, sb, content_type, username,
-                                  **fields):
-        """ make content type, logout
+    def create_content_and_logout(self, sb, content_type, username, **fields):
+        """Make content type, logout
         """
         sb.login(username, url='http://nohost/root/edit')
         self.failUnless('logout' in sb.browser.contents,
@@ -21,8 +20,8 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
 
     def create_content_delete_logout(self, sb, content_type, username,
                                      existing_content, **fields):
-        """ click into a container, make content type, delete content type,
-            logout
+        """Click into a container, make content type, delete content
+        type, logout
         """
         sb.login(username, url='http://nohost/root/edit')
         self.failUnless('logout' in sb.browser.contents,
@@ -63,7 +62,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
             policy='Silva Document')
         for username in ['manager', 'chiefeditor', 'editor', 'author']:
             self.create_content_delete_logout(sb, 'Silva Folder', username,
-                                              existing_content, url=None,
+                                              existing_content,
                                               id='test_folder',
                                               title='Test folder',
                                               policy='Silva Document')
@@ -161,7 +160,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
                                               existing_content,
                                               id='test_link',
                                               title='Test link',
-                                              url='www.infrae.com')
+                                              url='http://www.infrae.com')
         self.login_delete_logout(sb, 'manager', existing_content)
 
     def test_silva_autotoc_in_folder(self):
