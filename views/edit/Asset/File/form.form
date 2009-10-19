@@ -33,7 +33,6 @@
         </values>
         <tales>
           <default>python:form.REQUEST.model.get_title()</default>
-          <extra></extra>
         </tales>
       </field>
       </fields>

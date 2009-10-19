@@ -43,7 +43,7 @@
       <tr tal:attributes="class python:iterate and 'odd' or 'even'">
         <td class="designator">
           <label tal:content="structure field/title"
-            tal:attributes="for field/id">
+            tal:attributes="for string:field_${field/id}">
             title
           </label><span class="warning"
             tal:condition="field/is_required">*</span>
