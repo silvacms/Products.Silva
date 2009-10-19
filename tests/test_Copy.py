@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id $
+# $Id$
 
 from DateTime import DateTime
 
@@ -14,24 +14,23 @@ class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
     def test_cut1(self):
         folder = self.add_folder(
             self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
-        
+
         subdoc = self.add_document(folder, 'subdoc', 'Subdoc')
-    
+
         folder2 = self.add_folder(
             self.root, 'folder2', 'Folder2', policy_name='Silva AutoTOC')
-        
-        self.assertEquals(len([b.getPath() for b in
-                               self._query(path='/root/folder')]),
-                          2)
-        
+
+        self.assertEquals(
+            len([b.getPath() for b in self._query(path='/root/folder')]), 2*2)
+
         self.root.action_cut(['folder'], self.app.REQUEST)
         self.root.folder2.action_paste(self.app.REQUEST)
-    
+
         self.assertEquals(
             [b.getPath() for b in self._query(path='/root/folder')], [])
         self.assertEquals(len([b.getPath() for b in
                                self._query(path='/root/folder2/folder')]),
-                          2)
+                          2*2)
 
     def test_check_ordered_ids(self):
         doc = self.add_document(self.root, 'mydoc', 'My Document')
@@ -42,7 +41,7 @@ class NoSetupCopyTestCase(SilvaTestCase.SilvaTestCase):
     def test_remove_root(self):
         folder = self.add_folder(
             self.root, 'folder', 'Folder', policy_name='Silva AutoTOC')
-       
+
         # Just to make sure that this works
         self.app.manage_delObjects([self.root.getId()])
         self.assert_(self.root.getId() not in self.app.objectIds())
@@ -85,7 +84,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not self.root.copy_of_doc1.is_version_approved())
         # original *should* be approved
         self.assert_(self.root.doc1.is_version_approved())
-       
+
     def test_copy3(self):
         # approve & publish version
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -110,7 +109,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not self.root.copy_of_folder4.subdoc.is_version_approved())
         # original *should* be approved
         self.assert_(self.subdoc.is_version_approved())
-       
+
     def test_copy5(self):
         # approve & publish
         self.subdoc.set_unapproved_version_publication_datetime(DateTime() - 1)
@@ -149,8 +148,8 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
         self.doc1.approve_version()
         self.assert_(self.root.doc1.is_version_published())
-       # gotcha    
-        self.root.folder4.ghost6.sec_update_last_author_info()        
+       # gotcha
+        self.root.folder4.ghost6.sec_update_last_author_info()
         self.assertEquals(
             SilvaTestCase.user_name,
             self.root.folder4.ghost6.sec_get_last_author_info().fullname())
@@ -161,13 +160,13 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             SilvaTestCase.user_name,
             self.root.folder5.ghost6.sec_get_last_author_info().fullname())
-        # move ghost to root and check author        
+        # move ghost to root and check author
         self.root.folder4.action_cut(['ghost6'], self.app.REQUEST)
         self.root.action_paste(self.app.REQUEST)
         self.assertEquals(
             SilvaTestCase.user_name,
             self.root.ghost6.sec_get_last_author_info().fullname())
-        
+
 
     def test_copy8(self):
         # special test for testing rename behaviour
@@ -257,7 +256,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(self.root.is_delete_allowed('folder4'))
         self.root.action_delete(['folder4'])
         self.assert_(not hasattr(self.root, 'folder4'))
-       
+
     def test_delete3(self):
        # make doc1 approved
         self.doc1.set_unapproved_version_publication_datetime(DateTime() + 1)
@@ -268,7 +267,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
         self.root.action_delete(['doc1'])
        # should still be there
         self.assert_(hasattr(self.root, 'doc1'))
-       
+
     def test_delete4(self):
        # make doc1 approved & published
         self.doc1.set_unapproved_version_publication_datetime(DateTime() - 1)
