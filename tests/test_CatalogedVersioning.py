@@ -43,10 +43,11 @@ class CatalogedVersioningTestCase(SilvaTestCase.SilvaTestCase):
     def assertCatalogEmptyResult(self, **kw):
         result = self.service_catalog.searchResults(**kw)
         # only result that should exist is root and maybe its index document
-        sd_installed = self.root.service_extensions.is_installed('SilvaDocument')
+        sd_installed = self.root.service_extensions.is_installed(
+            'SilvaDocument')
         expeceted_items = 1
         if sd_installed:
-            expeceted_items = 2
+            expeceted_items = 3
         self.assertEquals(len(result), expeceted_items,
             'Catalog results where none expected.')
 
