@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<silva xmlns="http://infrae.com/ns/silva" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" path="/root/testfolder3" url="http://nohost/root/testfolder3" datetime="2004-04-26T15:35:38Z">
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" path="/root/testfolder3" url="http://nohost/root/testfolder3" datetime="2004-04-26T15:35:38Z">
   <folder id="testfolder3">
     <metadata>
       <set id="silva-content">

@@ -16,7 +16,8 @@ from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRigh
 from lxml import etree
 
 directory = os.path.dirname(__file__)
-expected_html = '\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top">\n      <a href="http://nohost/root/silva_xslt/bar.html">\n        <img src="http://nohost/root/silva_xslt/foo" />\n      </a>\n      <br />\n    </td>\n  </tr>\n</table>\n'
+expected_html = '\n<table>\n  <tr>\n    <td valign="top"><h2 class="heading">This is a rendering test</h2>\n                <p class="p">\n                    This is a test of the XSLT rendering functionality.\n                </p>\n            </td>\n    <td valign="top">\n      <a href="http://nohost/root/silva_xslt/bar.html">\n        <img src="http://nohost/root/silva_xslt/foo" />\n      </a>\n      <br />\n    </td>\n  </tr>\n</table>\n'
+
 
 class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 

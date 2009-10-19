@@ -10,8 +10,9 @@ from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
-expected_html = u'\n<table>\n  <tr>\n    <td valign="top">\n      <h2 class="heading">This is a rendering test</h2>\n      <p class="p">This is a test of the XSLT rendering functionality.</p>\n    </td>\n    <td valign="top"></td>\n  </tr>\n</table>\n'
+expected_html = u'\n<table>\n  <tr>\n    <td valign="top"><h2 class="heading">This is a rendering test</h2>\n                <p class="p">This is a test of the XSLT rendering functionality.</p>\n            </td>\n    <td valign="top"></td>\n  </tr>\n</table>\n'
 expected_html2 = '<h2 class="heading">This is a rendering test</h2>\n<p class="p">This is a test of the XSLT rendering functionality.</p>\n\n\n               \n\n'
+
 
 class FakeRenderer:
 
@@ -19,14 +20,14 @@ class FakeRenderer:
 
     def render(self, version):
         return "I faked all my renderings."
-        
+
     def getName(self):
         return "Fake Renderer"
 
 def testopen(path, rw='r'):
     directory = os.path.dirname(__file__)
     return open(os.path.join(directory, path), rw)
-    
+
 class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
@@ -43,7 +44,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
         source_file.close()
-        
+
     def test_render_preview(self):
         obj = self.root.silva_xslt.test_document
         obj.set_renderer_name('Images on Right')
@@ -77,7 +78,7 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         obj.set_renderer_name('Fake Renderer')
         self.assertEqual(obj.preview(), 'I faked all my renderings.')
         registry.unregisterRenderer('Silva Document', 'Fake Renderer')
-        
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

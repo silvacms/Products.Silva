@@ -5,7 +5,7 @@
 import os
 from DateTime import DateTime
 
-from Products.Silva.silvaxml import xmlimport 
+from Products.Silva.silvaxml import xmlimport
 from silva.core.interfaces import IGhost, IContainer
 
 import SilvaTestCase
@@ -15,7 +15,7 @@ def testopen(path, rw):
     return open(os.path.join(directory, path), rw)
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
-    
+
     def test_publication_import(self):
         source_file = testopen('data/test_publication.xml', 'r')
         xmlimport.importFromFile(
@@ -25,7 +25,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             u'Publication',
             publication.get_title())
-            
+
     def test_folder_import(self):
         importfolder = self.add_folder(
             self.root,
@@ -40,7 +40,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             u'This is &another; testfolder',
             folder.get_title())
-        
+
     def test_link_import(self):
         importfolder = self.add_folder(
             self.root,
@@ -124,7 +124,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         haunted_folder.manage_addProduct['SilvaDocument'].manage_addDocument(
             'foo', 'Foo')
 
-        
+
         metadata_service = haunted_folder.service_metadata
         binding = metadata_service.getMetadata(haunted_folder)
         binding._setData({'creator': 'ghost dog'}, 'silva-extra')
@@ -162,7 +162,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             binding._getData(
                 'silva-extra').data['creator'])
         # check whether we got ghosts (or subcontainers)
-        for obj in version.objectValues():            
+        for obj in version.objectValues():
             self.assert_(
                 IGhost.providedBy(obj) or
                 IContainer.providedBy(obj))
@@ -236,14 +236,14 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id)
         self.assertEquals(
             'Silva Image',
-            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].meta_type) 
+            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].meta_type)
         # ghost import
         self.assertEquals(
             'Silva Ghost',
-            importfolder.testfolder.testfolder2['haunting_the_neighbour'].meta_type) 
+            importfolder.testfolder.testfolder2['haunting_the_neighbour'].meta_type)
         self.assertEquals(
             '/silva/silva/testfolder/testfolder2/test_link',
-            importfolder.testfolder.testfolder2['haunting_the_neighbour'].get_haunted_url()) 
+            importfolder.testfolder.testfolder2['haunting_the_neighbour'].get_haunted_url())
 
     def test_replace_objects(self):
         source_file = testopen('data/test_autotoc.xml', 'r')
@@ -274,9 +274,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'Silva AutoTOC',
             autotoc.meta_type)
 
-        
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SetTestCase))
-    return suite    
+    return suite

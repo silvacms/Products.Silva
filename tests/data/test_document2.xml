@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<silva xmlns="http://infrae.com/ns/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:doc="http://infrae.com/ns/silva_document" datetime="2004-07-20T13:53:38Z" path="/silva_xslt/test_document" silva_version="Silva 1.0b1" url="http://localhost:8080/silva_xslt/test_document"><document id="test_document"><workflow><version id="0"><status>unapproved</status><publication_datetime/><expiration_datetime/></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a rendering test</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>2004-07-20T13:30:35Z</silva-extra:creationtime><silva-extra:creator>admin</silva-extra:creator><silva-extra:expirationtime/><silva-extra:keywords/><silva-extra:lastauthor>admin</silva-extra:lastauthor><silva-extra:location>http://localhost:8080/silva_xslt/test_document</silva-extra:location><silva-extra:modificationtime>2004-07-20T13:31:06Z</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><doc:doc><doc:p type="normal">This is a test of the XSLT rendering functionality.<image link="bar.html" path="foo" /></doc:p></doc:doc></content></document></silva>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:doc="http://infrae.com/namespace/silva-document" datetime="2004-07-20T13:53:38Z" path="/silva_xslt/test_document" silva_version="Silva 1.0b1" url="http://localhost:8080/silva_xslt/test_document">
+    <document id="test_document">
+        <workflow>
+            <version id="0">
+                <status>unapproved</status><publication_datetime/>
+                <expiration_datetime/>
+            </version>
+        </workflow>
+        <content version_id="0">
+            <metadata>
+                <set id="silva-content">
+                    <silva-content:maintitle>This is a rendering test</silva-content:maintitle><silva-content:shorttitle/>
+                </set>
+                <set id="silva-extra">
+                    <silva-extra:comment/><silva-extra:contactemail/>
+                    <silva-extra:contactname/>
+                    <silva-extra:content_description/>
+                    <silva-extra:creationtime>2004-07-20T13:30:35Z</silva-extra:creationtime><silva-extra:creator>admin</silva-extra:creator><silva-extra:expirationtime/>
+                    <silva-extra:keywords/>
+                    <silva-extra:lastauthor>admin</silva-extra:lastauthor><silva-extra:location>http://localhost:8080/silva_xslt/test_document</silva-extra:location><silva-extra:modificationtime>2004-07-20T13:31:06Z</silva-extra:modificationtime><silva-extra:publicationtime/>
+                    <silva-extra:subject/>
+                </set>
+            </metadata>
+            <doc:doc>
+                <doc:p type="normal">
+                    This is a test of the XSLT rendering functionality.<image link="bar.html" path="foo" />
+                </doc:p>
+            </doc:doc>
+        </content>
+    </document>
+</silva>

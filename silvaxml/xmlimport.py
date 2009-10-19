@@ -14,7 +14,7 @@ from silva.core import conf as silvaconf
 from Products.Silva import mangle
 from DateTime import DateTime
 
-NS_URI = 'http://infrae.com/ns/silva'
+NS_URI = 'http://infrae.com/namespace/silva'
 
 silvaconf.namespace(NS_URI)
 
