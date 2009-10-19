@@ -11,7 +11,7 @@ from Products.Silva.adapters import version_management
 
 NS_SILVA = 'http://infrae.com/namespace/silva'
 NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
-NS_SILVA_EXTRA = 'http://infrae.com/namespaces/metadata/silva-extra'
+NS_SILVA_EXTRA = 'http://infrae.com/namespace/metadata/silva-extra'
 
 theXMLExporter = xmlexport.Exporter(NS_SILVA)
 
