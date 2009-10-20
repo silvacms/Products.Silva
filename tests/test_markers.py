@@ -28,7 +28,7 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         # And there is no marker used.
         self.assertEqual(manager.usedMarkers, [])
         # The base interfaces for markers is availables however.
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'silva.core.layout.interfaces.ICustomizableMarker'])
 
 
@@ -52,7 +52,7 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         # Now, we should see our marker in availables ones
         # Since our manager cache it's result, we need to recreate a new one.
         manager = IMarkManager(self.root)
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'marker:root.ITestMarker',
                           u'silva.core.layout.interfaces.ICustomizableMarker'])
 
@@ -65,7 +65,7 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         # And we will see changes in the manager
         manager = IMarkManager(self.root)
         self.assertEqual(manager.usedMarkers, [u'marker:root.ITestMarker'])
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'silva.core.layout.interfaces.ICustomizableMarker'])
 
 
@@ -76,7 +76,7 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         self.failIf(marker.providedBy(self.root))
         manager = IMarkManager(self.root)
         self.assertEqual(manager.usedMarkers, [])
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'marker:root.ITestMarker',
                           u'silva.core.layout.interfaces.ICustomizableMarker'])
 
@@ -86,7 +86,7 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         # And it won't appear in the manager anymore (it's gone)
         manager = IMarkManager(self.root)
         self.assertEqual(manager.usedMarkers, [])
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'silva.core.layout.interfaces.ICustomizableMarker'])
 
 
@@ -117,38 +117,10 @@ class CustomizationMarkerTest(SilvaTestCase.SilvaTestCase):
         # And root have been updated
         manager = IMarkManager(self.root)
         self.assertEqual(manager.usedMarkers, [])
-        self.assertEqual(manager.availablesMarkers,
+        self.assertEqual(manager.availableMarkers,
                          [u'silva.core.layout.interfaces.ICustomizableMarker'])
 
 
-
-    def test_customization_view(self):
-        # There is a customization page to manage them on Silva
-        # Folderish and VersionedContent
-
-        self.assertRaises(
-            Unauthorized, self.root.restrictedTraverse, 'manage_customization')
-
-        # But of course, you need to be logged
-        self.login(name=SilvaTestCase.user_manager)
-        view = self.root.restrictedTraverse('manage_customization')()
-
-        for implemented in ['silva.core.interfaces.content.IFolder',
-                            'silva.core.interfaces.content.IPublication',
-                            'silva.core.interfaces.content.IRoot']:
-            self.failUnless(implemented in view)
-
-        # You will have the same on Folder
-        self.add_folder(self.root, 'folder', 'Folder')
-        view = self.root.folder.restrictedTraverse('manage_customization')()
-        self.failUnless('silva.core.interfaces.content.IFolder' in view)
-
-        # And on a document
-        self.add_document(self.root, 'document', 'Document')
-        view = self.root.document.restrictedTraverse('manage_customization')()
-        self.failUnless('Products.SilvaDocument.interfaces.IDocument' in view)
-
-        self.logout()
 
 
 import unittest

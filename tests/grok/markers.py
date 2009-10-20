@@ -7,7 +7,8 @@
 
     >>> browser = SilvaBrowser()
     >>> logAsUser(app, 'manager')
-    >>> app.root.manage_addProduct['Silva'].manage_addFolder('folder', 'Folder')
+    >>> factory = app.root.manage_addProduct['Silva']
+    >>> factory.manage_addFolder('folder', 'Folder')
     ''
     >>> folder = app.root.folder
 
@@ -25,7 +26,7 @@
     >>> from silva.core.layout.interfaces import IMarkManager
     >>> from Products.Silva.tests.grok.markers import IPhotoFolderTag
     >>> manager = IMarkManager(folder)
-    >>> manager.availablesMarkers
+    >>> manager.availableMarkers
     [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
@@ -37,7 +38,7 @@
   And it will be available on the object:
 
     >>> manager = IMarkManager(folder)
-    >>> manager.availablesMarkers
+    >>> manager.availableMarkers
     [u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     ['Products.Silva.tests.grok.markers.IPhotoFolderTag']
@@ -50,12 +51,13 @@
 
   And we can remove it:
 
-    >>> manager.removeMarker(u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
+    >>> manager.removeMarker(
+    ...       u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
 
   It won't exists anymore:
 
     >>> manager = IMarkManager(folder)
-    >>> manager.availablesMarkers
+    >>> manager.availableMarkers
     [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
@@ -72,8 +74,9 @@
     >>> from zope.component import getGlobalSiteManager
     >>> from silva.core.layout.interfaces import ICustomizableType
     >>> sm = getGlobalSiteManager()
-    >>> sm.unregisterUtility(IPhotoFolderTag, ICustomizableType,
-    ...                      u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
+    >>> sm.unregisterUtility(
+    ...         IPhotoFolderTag, ICustomizableType,
+    ...         u'Products.Silva.tests.grok.markers.IPhotoFolderTag')
     True
 
 """

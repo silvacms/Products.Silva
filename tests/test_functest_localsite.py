@@ -21,8 +21,9 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser = SilvaBrowser()
         browser.login('manager', url='http://nohost/root/pub/edit')
         browser.click_tab_named('properties')
-        self.assertEquals(list(browser.get_middleground_buttons()),
-                          [u'settings...', u'addables...', u'local site...'])
+        self.assertEquals(
+            list(browser.get_middleground_buttons()),
+            [u'settings...', u'addables...', u'local site...', u'customization...'])
         browser.click_href_labeled('local site...')
         self.assertEquals(browser.get_url(),
                           'http://nohost/root/pub/edit/tab_localsite')
