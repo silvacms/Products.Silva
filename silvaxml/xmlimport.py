@@ -10,7 +10,10 @@ from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
 from Products.Silva.Folder import manage_addFolder
 from Products.Silva.Publication import manage_addPublication
 from Products.Silva.Link import Link, LinkVersion
+
 from silva.core import conf as silvaconf
+from silva.core.upgrade.silvaxml import upgradeNamespaceOnFD
+
 from Products.Silva import mangle
 from DateTime import DateTime
 
@@ -641,6 +644,8 @@ def updateVersionCount(versionhandler):
     parent._version_count = vc
 
 def importFromFile(source_file, import_container, info=None):
+    upgradeNamespaceOnFD(source_file)
+
     settings = ImportSettings()
     info = info or ImportInfo()
     theXMLImporter.importFromFile(
@@ -654,6 +659,8 @@ def importFromFile(source_file, import_container, info=None):
     return import_container
 
 def importReplaceFromFile(source_file, import_container, info=None):
+    upgradeNamespaceOnFD(source_file)
+
     settings = ImportSettings(replace_objects=True)
     info = info or ImportInfo()
     theXMLImporter.importFromFile(
