@@ -24,7 +24,7 @@ from silva.core import conf as silvaconf
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
 
-    implements(interfaces.IMember)
+    implements(interfaces.IEditableMember)
 
     security = ClassSecurityInfo()
 
