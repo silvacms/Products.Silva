@@ -20,6 +20,9 @@ Silva changes
       - Define a correct interface for SimpleMember which define the
         protocol to edit a user.
 
+      - Fix link edition, when you change link type, the URL is set
+        according the new link type rule.
+
   Silva 2.1.6 (2009-08-05)
 
     Bug fixes
