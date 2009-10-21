@@ -13,60 +13,15 @@
 
   <!-- Include dependancy -->
   <include package="zope.annotation" />
-  <include package="five.localsitemanager" />
-  <include package="five.intid" />
   <include package="silva.core.layout" />
   <include package="silva.core.smi" />
   <include package="silva.core.services" />
+  <include package="silva.core.upgrade" />
 
   <include package=".browser" />
 
   <!-- Grok Silva -->
   <grok:grok package="." />
-
-  <!-- Prevent FileSystemSite to broke everything -->
-  <subscriber
-     handler="five.intid.unreferenceable.addIntIdSubscriber"
-     for="Products.FileSystemSite.interfaces.IDirectoryView
-          zope.app.container.interfaces.IObjectAddedEvent"
-     />
-  <subscriber
-     handler="five.intid.unreferenceable.removeIntIdSubscriber"
-     for="Products.FileSystemSite.interfaces.IDirectoryView
-          zope.app.container.interfaces.IObjectRemovedEvent"
-     />
-  <subscriber
-     handler="five.intid.unreferenceable.moveIntIdSubscriber"
-     for="Products.FileSystemSite.interfaces.IDirectoryView
-          zope.app.container.interfaces.IObjectMovedEvent"
-     />
-  <adapter
-     factory="five.intid.unreferenceable.KeyReferenceNever"
-     for="Products.FileSystemSite.interfaces.IDirectoryView"
-     trusted="y"
-     />
-
-  <!-- FSObject -->
-  <subscriber
-     handler="five.intid.unreferenceable.addIntIdSubscriber"
-     for="Products.FileSystemSite.FSObject.FSObject
-          zope.app.container.interfaces.IObjectAddedEvent"
-     />
-  <subscriber
-     handler="five.intid.unreferenceable.removeIntIdSubscriber"
-     for="Products.FileSystemSite.FSObject.FSObject
-           zope.app.container.interfaces.IObjectRemovedEvent"
-     />
-  <subscriber
-     handler="five.intid.unreferenceable.moveIntIdSubscriber"
-     for="Products.FileSystemSite.FSObject.FSObject
-          zope.app.container.interfaces.IObjectMovedEvent"
-     />
-  <adapter
-     factory="five.intid.unreferenceable.KeyReferenceNever"
-     for="Products.FileSystemSite.FSObject.FSObject"
-     trusted="y"
-     />
 
   <!-- Vocabularies -->
 
@@ -87,6 +42,6 @@
     name="resolve_and_redirect_editor"
     class=".lookupwindowfield.EditButtonRedirector"
     permission="silva.ReadSilvaContent"
-  /> 
+  />
 
 </configure>
