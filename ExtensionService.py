@@ -21,14 +21,14 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.i18n import translate as _
 from Products.Silva import install
 
-
 from silva.core import interfaces
-from silva.core.interfaces import (ISilvaObject, IVersion,
-                                       IContainer, IAsset)
+from silva.core.interfaces import ISilvaObject, IVersion, \
+    IContainer, IAsset
 from silva.core.services.base import SilvaService
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
 import os.path
+
 
 class ExtensionService(SilvaService):
     meta_type = 'Silva Extension Service'

@@ -32,7 +32,7 @@ import zLOG
 # Silva
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
-from Products.Silva import upgrade
+from silva.core.upgrade import upgrade
 from Products.Silva.i18n import translate as _
 from Products.Silva.Asset import Asset
 from Products.Silva.ContentObjectFactoryRegistry import \

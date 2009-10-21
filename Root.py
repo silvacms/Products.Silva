@@ -172,7 +172,7 @@ class Root(Publication, site.Site):
         """
         from_version = self.get_silva_content_version()
         to_version = self.get_silva_software_version()
-        from Products.Silva import upgrade
+        from silva.core.upgrade import upgrade
         upgrade.registry.upgrade(self, from_version, to_version)
         self._content_version = to_version
 
@@ -187,7 +187,7 @@ class Root(Publication, site.Site):
         """
         object = self.restrictedTraverse(object_path)
         to_version = self.get_silva_software_version()
-        from Products.Silva import upgrade
+        from silva.core.upgrade import upgrade
         upgrade.registry.upgrade(object, from_version, to_version)
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,

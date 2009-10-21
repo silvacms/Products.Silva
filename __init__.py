@@ -26,6 +26,10 @@ silvaconf.extensionName('Silva')
 silvaconf.extensionTitle('Silva Core')
 silvaconf.extensionDepends(None)
 
+
+# backward compatibility import
+from silva.core.upgrade import upgrade
+
 #----------------------------------------
 # Initialize subscription feature, part 1
 #----------------------------------------
