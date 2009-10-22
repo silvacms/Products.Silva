@@ -23,6 +23,9 @@ Silva changes
       - Fix link edition, when you change link type, the URL is set
         according the new link type rule.
 
+      - Fix authentication on tab_preview (only to get one login form,
+        and not one per frame).
+
   Silva 2.1.6 (2009-08-05)
 
     Bug fixes
