@@ -9,6 +9,9 @@
 ##
 model = context.REQUEST.model
 
+#this trigger the security check
+model.edit
+
 #send to no-frame version of preview tab if needed
 if not (model.implements_container() or model.implements_content() \
         or model.implements_versioned_content() ):
