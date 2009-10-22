@@ -5,8 +5,11 @@
 
 # Python
 import re
+import logging
 from cStringIO import StringIO
 from cgi import escape
+
+logger = logging.getLogger('silva.image')
 
 # Zope 3
 from zope import component, schema
@@ -20,7 +23,6 @@ from Globals import InitializeClass
 from webdav.WriteLockInterface import WriteLockInterface
 from webdav.common import Conflict
 import transaction
-import zLOG
 import OFS.interfaces
 
 # Silva
@@ -420,6 +422,8 @@ class Image(Asset):
         try:
             image = self._getPILImage(self.hires_image)
         except ValueError:
+            logger.info("Web presentation creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(e)))
             # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
@@ -434,12 +438,18 @@ class Image(Asset):
 
         new_image_data = StringIO()
         image = self._prepareWebFormat(image)
+
         try:
             image.save(new_image_data, self.web_format)
         except IOError, e:
-            # Transformation failed. We just raise ValueError and it
-            # will behave like if you don't have PIL.
-            raise ValueError, str(e)
+            logger.info("Web presentation creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(e)))
+            if str(e.args[0]) == "cannot read interlaced PNG files":
+                self.image = self.hires_image
+                return
+            else:
+                raise ValueError, str(e)
+
         ct = self._web2ct[self.web_format]
         new_image_data.seek(0)
         self._image_factory('image', new_image_data, ct)
@@ -448,21 +458,26 @@ class Image(Asset):
     def _createThumbnail(self):
         try:
             image = self._getPILImage(self.hires_image)
-        except ValueError:
+        except ValueError, e:
+            logger.info("Thumbnail creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(e)))
             # no thumbnail
             self.thumbnail_image = None
             return
+
         try:
             thumb = image.copy()
             ts = self.thumbnail_size
             thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
-        except IOError, exc_err:
-            if str(exc_err.args[0]) == "cannot read interlaced PNG files":
+        except IOError, e:
+            logger.info("Thumbnail creation failed for %s with %s" %
+                        ('/'.join(self.getPhysicalPath()), str(e)))
+            if str(e.args[0]) == "cannot read interlaced PNG files":
                 self.thumbnail_image = None
-                del exc_err
                 return
             else:
-                raise
+                raise ValueError, str(e)
+
         thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
@@ -553,9 +568,8 @@ class ImageStorageConverter(object):
         data = file.get_content_fd()
         image._image_factory('hires_image', data, ct)
         image._createDerivedImages()
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            "Image %s migrated" % '/'.join(image.getPhysicalPath()))
+        logger.info("Storage for image %s converted" %
+                    '/'.join(image.getPhysicalPath()))
         return image
 
 
