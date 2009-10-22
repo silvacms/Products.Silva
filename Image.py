@@ -424,21 +424,29 @@ class Image(Asset):
         except ValueError:
             logger.info("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
-            # XXX: warn the user, no scaling or converting has happend
             self.image = self.hires_image
             return
 
+        changed = False
         cropbox = self.getCropBox()
         if cropbox:
             image = image.crop(cropbox)
+            changed = True
 
         if self.web_scale != '100%':
             width, height = self.getCanonicalWebScale()
             image = image.resize((width, height), PIL.Image.ANTIALIAS)
+            changed = True
+
+        have_changed, image = self._prepareWebFormat(image)
+        if have_changed:
+            changed = True
+
+        if not changed:
+            self.image = self.hires_image
+            return
 
         new_image_data = StringIO()
-        image = self._prepareWebFormat(image)
-
         try:
             image.save(new_image_data, self.web_format)
         except IOError, e:
@@ -478,19 +486,21 @@ class Image(Asset):
             else:
                 raise ValueError, str(e)
 
-        thumb = self._prepareWebFormat(thumb)
+        changed, thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         thumb.save(thumb_data, self.web_format)
         ct = self._web2ct[self.web_format]
         thumb_data.seek(0)
         self._image_factory('thumbnail_image', thumb_data, ct)
 
-    def _prepareWebFormat(self, pil_image):
-        """converts image's mode if necessary"""
+    def _prepareWebFormat(self, image):
+        """Converts image's mode if necessary. Return True on change,
+        False if nothing is done.
+        """
 
-        if pil_image.mode != 'RGB' and self.web_format == 'JPEG':
-            pil_image = pil_image.convert("RGB")
-        return pil_image
+        if image.mode != 'RGB' and self.web_format == 'JPEG':
+            return True, image.convert("RGB")
+        return False, image
 
     def _image_factory(self, id, file, content_type=None):
         service_files = component.getUtility(interfaces.IFilesService)
