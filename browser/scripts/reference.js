@@ -115,23 +115,26 @@ this.reference = new function() {
         var request = new XMLHttpRequest();
         var resolveurl = url + '/resolve_and_redirect_editor?loc='+ref;
         request.open('GET', resolveurl+'&checkonly=y', true);
-        var callback = new ContextFixer(function() {
-                if (request.readyState == 4) {
-                    if (request.status.toString() == '200') {
-                        /* if not IE, it is possible to get the *real*
-                           window width/height.  use 90% of that for the
-                           dimensions, or fall back to 800x600 */
-                        w = window.outerWidth?window.outerWidth * 0.9 : 800;
-                        h = window.outerHeight?window.outerHeight * 0.9 : 600;
-                        openPopup(resolveurl,w,h);
-                        return;
-                    } else {
-                        /* all other cases raise an alert */
-                        alert('Reference "' + value + '" is not a valid relative silva reference.  The quick edit interface only works for valid relative silva references');
-                    };
-                };
-            }, this);
-        request.onreadystatechange = callback.execute;
+        var callback = function() {
+                 if (this.readyState == 4) {
+                     if (this.status.toString() == '200') {
+                         /* if not IE, it is possible to get the *real*
+                            window width/height.  use 90% of that for the
+                            dimensions, or fall back to 800x600 */
+                         var w = window.outerWidth?window.outerWidth * 0.9 : 800;
+                         var h = window.outerHeight?window.outerHeight * 0.9 : 600;
+                         var left = (screen.width - w) / 2;
+                         var top = (screen.height - h) / 2;
+                         window.open(resolveurl, 'editPopup',
+                           'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+                         return;
+                     } else {
+                         /* all other cases raise an alert */
+                         alert('Reference "' + value + '" is not a valid relative silva reference.  The quick edit interface only works for valid relative silva references');
+                     };
+                 };
+             };
+        request.onreadystatechange = callback;
         request.send('');
         return false;
     }

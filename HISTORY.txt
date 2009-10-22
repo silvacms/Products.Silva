@@ -17,6 +17,9 @@ New Features
 - DateTime widgets in the SMI now have a 'calendar' button which
   opens a popup calendar -- an easier way to supply datetimes.
 
+- fixed formulator lookupwindow widget to support functioning in multi-reference
+  mode in a metadata set.
+
 Bugs Fixed
 ~~~~~~~~~~
 

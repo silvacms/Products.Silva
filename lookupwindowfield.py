@@ -14,8 +14,9 @@ from urllib import quote
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
-from Products.Formulator.Validator import StringValidator
+from Products.Formulator.Validator import StringBaseValidator
 from Products.Formulator.Widget import render_element,TextWidget
+from Products.Formulator.helpers import is_sequence
 from Products.Silva.adapters.path import getPathAdapter
 import re
 
@@ -60,9 +61,9 @@ class EditButtonRedirector(BrowserView):
                 return "redirecting"
         raise BadRequest("Invalid location.  Target must be a Silva Object in order to edit")
 
-class LookupWindowValidator(StringValidator):
+class LookupWindowValidator(StringBaseValidator):
     
-    message_names = StringValidator.message_names +\
+    message_names = StringBaseValidator.message_names +\
                   ['exceeded_maxrows', 'required_not_met']
 
     exceeded_maxrows = 'Too many references.'
@@ -70,36 +71,33 @@ class LookupWindowValidator(StringValidator):
 
     def validate(self, field, key, REQUEST):
         pad = getPathAdapter(REQUEST)
-        keymatch = re.compile(r'^%s\d*?$'%key)
-        keys = []
-        ret = []
-        if not hasattr(REQUEST,'form'):
-            # this is from Silva metadata, in which case REQUEST
-            # is just the original REQUEST.form dictionary
-            f = REQUEST
-        else:
-            f = REQUEST.form
-        for k in f.keys():
-            if keymatch.match(k):
-                keys.append(k)
-        #the keys need to be in order
-        keys.sort()
-        for k in keys:
-            ret.append(pad.urlToPath(StringValidator.validate(self, field, k, REQUEST)))
+
+        values = REQUEST.get(key, [])
+        # NOTE: a hack to deal with single item selections
+        if not is_sequence(values):
+            # put whatever we got in a list
+            values = [values]
+        
+        result = []
+        for value in values:
+            if not field.get_value('whitespace_preserve'):
+                value = value.strip()
+            result.append(pad.urlToPath(value))
+
         maxrows = field.get_value('max_rows')
-        if maxrows > 0 and len(ret) > maxrows:
+        if maxrows > 0 and len(result) > maxrows:
             self.raise_error('exceeded_maxrows',field)
         reqrows = field.get_value('required_rows')
-        if reqrows > 0 and len(ret) < reqrows:
+        if reqrows > 0 and len(result) < reqrows:
             self.raise_error('required_not_met',field)
-        return ', '.join(ret)
+        return ', '.join(result)
     
 class LookupWindowWidget(TextWidget):
     
     property_names = TextWidget.property_names  + ['onclick','button_label','show_edit_button','show_add_remove','max_rows','required_rows']
     
     default_onclick_handler = """{
-var myid = this.getAttribute('id').replace(/_button/,'');
+var myid = this.getAttribute('id').replace(/^button/,'input');
 reference.getReference(
     function(path, id, title) {
         document.getElementById(myid).value = path;;
@@ -158,6 +156,8 @@ reference.getReference(
         required=True)
 
     def render(self, field, key, value, request):
+        if field.field_record:
+            key = key.replace(':record',':record:list')
         ret = ['<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">']
         values = value.split(', ')
         reqrows = field.get_value('required_rows')
@@ -172,8 +172,8 @@ reference.getReference(
             maxrows = field.get_value('max_rows')
             ret.append(render_element(
                 'button',
-                id=key + '_addbutton',
-                name=key + '_addbutton',
+                id='addbutton_' + key,
+                name='addbutton_' + key,
                 css_class='kupu-button kupu-link-reference kupu-link-addadditional',
                 title='add additional reference...',
                 onclick="addRowToReferenceLookupWidget(this, %s); return false;"%maxrows,
@@ -189,11 +189,11 @@ reference.getReference(
         show_edit = field.get_value('show_edit_button')
         show_add_remove = field.get_value('show_add_remove')
         reqrows = field.get_value('required_rows')
-        editid = '%s_editbutton%s'%(key,index)
-        onclick = self._onclick_handler(field, key + index)
+        editid = 'editbutton%s_%s'%(index,key)
+        onclick = self._onclick_handler(field, 'input'+index+'_'+key)
         buttoncellstyle=''
         if show_edit:
-            onclick += ";document.getElementById(this.getAttribute('id').replace(/_button/,'_editbutton')).style.display='inline';this.parentNode.style.width='42px';"
+            onclick += ";document.getElementById(this.getAttribute('id').replace(/^button/,'editbutton')).style.display='inline';this.parentNode.style.width='42px';"
             if value:
                 buttoncellstyle=" style='width:42px'"
                                                                                     
@@ -201,8 +201,8 @@ reference.getReference(
         widget.append(
             render_element(
                 'button',
-                name='%s_button%s'%(key,index),
-                id='%s_button%s'%(key,index),
+                name='button%s_%s'%(index,key),
+                id='button%s_%s'%(index,key),
                 css_class="kupu-button kupu-link-reference kupu-link-lookupbutton",
                 title=field.get_value('button_label') or 'get reference...',
                 onclick="%s;return false;" % onclick,
@@ -218,6 +218,8 @@ reference.getReference(
                     # placed instead of the source as the model
                     url = model.resolve_ref(
                         quote(request['docref'])).absolute_url()
+                else:
+                    url = model.absolute_url()
             widget.append(
                 render_element(
                     'button',
@@ -226,18 +228,18 @@ reference.getReference(
                     css_class="kupu-button kupu-link-reference kupu-link-editbutton",
                     style="display: " + str(len(value) > 0 and "inline" or "none"),
                     title='edit...',
-                    onclick="reference.editReference(this.getAttribute('id').replace(/_editbutton/,''),'%s');return false;"%(url),
+                    onclick="reference.editReference(this.getAttribute('id').replace(/^editbutton/,'input'),'%s');return false;"%(url),
                     contents=' '
                 )
             )
         widget.append('</td><td style="text-align:right; padding-right: 3px;">')
-        taid = '%s_inputta%s'%(key,index)
+        taid = 'inputta%s_%s'%(index,key)
         widget.append(
             render_element(
                 'input',
                 type='text',
-                name=key + index,
-                id=key + index,
+                name=key,
+                id='input%s_%s'%(index,key),
                 css_class=field.get_value('css_class'),
                 value=value,
                 size=field.get_value('display_width'),
@@ -250,7 +252,7 @@ reference.getReference(
                 'textarea',
                 name=taid,
                 id=taid,
-                key=key + index,
+                key='input%s_%s'%(index,key),
                 css_class=field.get_value('css_class'),
                 rows="2",
                 cols="24",
@@ -263,8 +265,8 @@ reference.getReference(
         widget.append(
             render_element(
                 'button',
-                name='%s_removebutton%s'%(key,index),
-                id='%s_removebutton%s'%(key,index),
+                name='removebutton%s_%s'%(index,key),
+                id='removebutton%s_%s'%(index,key),
                 css_class='kupu-button kupu-link-reference kupu-link-removebutton',
                 title='remove reference...',
                 style=remove_style,

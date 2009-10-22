@@ -2811,6 +2811,22 @@ SilvaExternalSourceTool.prototype._gatherFormData = function() {
     };
     // first place all data into a dict, convert to a string later on
     var data = {};
+    /* this function adds a value to a key in the dict.  If a value
+       already exists, it converts the value to an array.
+       (supports multi-valued items) */
+    var setValue = function(dict, key, value) {
+        if (dict[key]) {
+            if (typeof dict[key] == typeof('')) {
+                var v = new Array(dict[key]);
+                v.push(value);
+                dict[key] = v;
+            } else {
+                dict[key].push(value);
+            };
+        } else {
+            dict[key] = value;
+        };
+    };
     for (var i=0; i < form.elements.length; i++) {
         var child = form.elements[i];
         var elname = child.nodeName.toLowerCase();
@@ -2819,40 +2835,24 @@ SilvaExternalSourceTool.prototype._gatherFormData = function() {
             var type = child.getAttribute('type');
             if (!type || type == 'text' || type == 'hidden' ||
                     type == 'password') {
-                data[name] = child.value;
+                setValue(data, name, child.value);
             } else if (type == 'checkbox' || type == 'radio') {
                 if (child.checked) {
-                    if (data[name]) {
-                        if (typeof data[name] == typeof('')) {
-                            var value = new Array(data[name]);
-                            value.push(child.value);
-                            data[name] = value;
-                        } else {
-                            data[name].push(child.value);
-                        };
-                    } else {
-                        data[name] = child.value;
-                    };
+                    setValue(data, name, child.value);
                 };
             };
         } else if (elname == 'textarea') {
-            data[child.getAttribute('name')] = child.value;
+            setValue(data,child.getAttribute('name'),child.value);
         } else if (elname == 'select') {
             var name = child.getAttribute('name');
             var multiple = child.getAttribute('multiple');
             if (!multiple) {
-                data[name] = child.options[child.selectedIndex].value;
+                setValue(data, name, child.options[child.selectedIndex].value);
             } else {
-                var value = new Array();
                 for (var j=0; j < child.options.length; j++) {
                     if (child.options[j].selected) {
-                        value.push(child.options[j].value);
+                        setValue(data, name, child.options[j].value);
                     };
-                };
-                if (value.length > 1) {
-                    data[name] = value;
-                } else if (value.length) {
-                    data[name] = value[0];
                 };
             };
         };
@@ -2866,7 +2866,6 @@ SilvaExternalSourceTool.prototype._gatherFormData = function() {
             value = [value];
         };
         for (var i=0; i < value.length; i++) {
-            // XXX does IE5 support encodeURIComponent?
             ret.push(
                 encodeURIComponent(key) + '=' + encodeURIComponent(value[i]));
         };

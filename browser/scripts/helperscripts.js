@@ -26,23 +26,23 @@ addNewContent = function(event) {
   /* this will be blank if there are no items in the container */
   if (idcheckboxes) {
     if (idcheckboxes.length==null && 
-	idcheckboxes.id != 'index') {
+	    idcheckboxes.id != 'index') {
       if (idcheckboxes.checked) {/* there is only a single checkbox, 
-				  on the page, it isn't the
-			          index document, and it is checked*/
-	this.form['add_object_position'].value = 0;
-      }
+                                    on the page, it isn't the
+                                    index document, and it is checked */
+        this.form['add_object_position'].value = 0;
+      };
     } else {
       var checkboxListHasIndex = (idcheckboxes[0].id == 'index') ? true : false;
       for (var i=0; i < idcheckboxes.length; i++) {
-	if (idcheckboxes[i].checked) {
-	  /* if the index item is checked, leave the position at zero, so the
-	     new item will be added at position one (as listed in the contents tab)
-	  */
-	  if (checkboxListHasIndex && i>0) i-=1;
-	  this.form['add_object_position'].value = i;
-	  break;
-	};
+        if (idcheckboxes[i].checked) {
+          /* if the index item is checked, leave the position at zero, so the
+             new item will be added at position one (as listed in the contents tab)
+          */
+          if (checkboxListHasIndex && i>0) i-=1;
+          this.form['add_object_position'].value = i;
+          break;
+        };
       };
     };
   };
@@ -58,23 +58,23 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
   for (var n=0; n < tbody.childNodes.length; n++) {
     if (tbody.childNodes[n].tagName == 'TR')
       trs++;      
-  }
+  };
   if (trs == maxrows) {
     alert("Unable to add additional reference.  The number of references allowed for this field is " + maxrows);
     return;
-  }
+  };
   var copy = tbody.lastChild.previousSibling.cloneNode(true);
-  var key = input.getAttribute('id').replace(/_addbutton$/,'');
+  var key = input.getAttribute('id').replace(/^addbutton_/,'');
   var refinput = copy.getElementsByTagName('input')[0]; /* this is the ref text field*/
-  var index = parseInt(refinput.name.replace(/.*?(\d*)$/,'$1')) + 1;
+  var index = parseInt(refinput.id.replace(/^input(\d*)_.*$/,'$1')) + 1;
   refinput.value = '';
-  refinput.name = key + index;
-  refinput.id = key + index;
-  refinput.setAttribute('taid', key + '_inputta' + index);
+  refinput.id = 'input' + index + '_' + key;
+  refinput.setAttribute('taid', 'inputta' + index + '_' + key);
+ 
   var ta = copy.getElementsByTagName('textarea')[0];
-  ta.id = key + '_inputta' + index;
-  ta.setAttribute('key', key + index);
-  ta.name = key + '_inputta' + index;
+  ta.id = 'inputta' + index + '_' + key;
+  ta.setAttribute('key', refinput.id);
+  ta.name = ta.id;
   var buttons = copy.getElementsByTagName('button');
   var lbutton = buttons[0];
   var editbutton = null;
@@ -87,22 +87,22 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
       editbutton = buttons[1];
     } else {
       removebutton = buttons[1];
-    }
-  }
+    };
+  };
 
-  var keyrepl = new RegExp("(" + key + "[a-zA-Z_-]*)\\d*", 'g');
-  lbutton.setAttribute('id',lbutton.getAttribute('id').replace(keyrepl,"$1"+index));
-  lbutton.setAttribute('name',lbutton.getAttribute('name').replace(keyrepl,"$1"+index));
+  var keyrepl = new RegExp("(.*?)\\d*(_" + key + ")$", 'g');
+  lbutton.setAttribute('id',lbutton.getAttribute('id').replace(keyrepl,"$1"+index+"$2"));
+  lbutton.setAttribute('name',lbutton.getAttribute('name').replace(keyrepl,"$1"+index+"$2"));
   if (editbutton) {
     editbutton.style.display = 'none';
-    editbutton.setAttribute('id',editbutton.getAttribute('id').replace(keyrepl,"$1"+index));
-    editbutton.setAttribute('name',editbutton.getAttribute('name').replace(keyrepl,"$1"+index));
-  }
+    editbutton.setAttribute('id',editbutton.getAttribute('id').replace(keyrepl,"$1"+index+"$2"));
+    editbutton.setAttribute('name',editbutton.getAttribute('name').replace(keyrepl,"$1"+index+"$2"));
+  };
   if (removebutton) {
-    removebutton.setAttribute('id',removebutton.getAttribute('id').replace(keyrepl,"$1"+index));
-    removebutton.setAttribute('name',removebutton.getAttribute('name').replace(keyrepl,"$1"+index));
+    removebutton.setAttribute('id',removebutton.getAttribute('id').replace(keyrepl,"$1"+index+"$2"));
+    removebutton.setAttribute('name',removebutton.getAttribute('name').replace(keyrepl,"$1"+index+"$2"));
     removebutton.style.visibility="visible";
-  }
+  };
   tbody.insertBefore(copy,tbody.lastChild);
 };
 
