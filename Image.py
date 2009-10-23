@@ -542,7 +542,8 @@ class Image(Asset):
             thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
         except IOError, exc_err:
             if str(exc_err.args[0]) == "cannot read interlaced PNG files":
-                raise ValueError, str(exc_err)
+                self.thumbnail_image = None
+                return
             else:
                 raise
         is_changed, thumb = self._prepareWebFormat(thumb)
@@ -707,6 +708,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     return img
 
 class ImageStorageConverter:
+
 
     implements(IUpgrader)
 
