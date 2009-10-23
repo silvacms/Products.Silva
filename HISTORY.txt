@@ -7,6 +7,9 @@ Silva changes
 
     Bug fixes
 
+      - Safely completely ignore errors on Image resize / crop, so no
+        error happens when using zip import (revert a fix from 2.1.6).
+
       - Add a content-type for BMP images.
 
       - The user clipboard 'remove user' button now returns to the
