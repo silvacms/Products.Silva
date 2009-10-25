@@ -29,10 +29,13 @@ URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@
 _url_match = re.compile(URL_PATTERN)
 
 class Link(CatalogedVersionedContent):
-    __doc__ = _("""A Silva Link makes it possible to include links to external
-       sites &#8211; outside of Silva &#8211; in a Table of Contents. The
-       content of a Link is simply a hyperlink, beginning with
-       &#8220;http://....&#8221;, or https, ftp, news, and mailto.
+    __doc__ = _("""A Silva Link makes it possible to create links that show up
+    in navigation or a Table of Contents. The links can be absolute or relative.
+    Absolute links go to external sites while relative links go to content
+    within Silva. The Link can be a hyperlink, beginning with "http://...."
+    (including https, ftp, news, and mailto) or a path to Silva content. If the
+    path goes to Silva content which doesn't exist, 'http://' will be placed
+    before the link. This allows you to paste "www.somesite.com" into the field.
     """)
     security = ClassSecurityInfo()
 

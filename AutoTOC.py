@@ -19,10 +19,13 @@ from Products.Silva.adapters import tocrendering
 
 class AutoTOC(Content, SimpleItem):
     __doc__ = _("""This is a special document type that automatically generates
-       a Table of Contents. Usually it's used as the 'index' document of a
-       folder. Then the parent folder displays a TOC when accessed (e.g.
-       http://www.x.yz/silva/myFolder/). The AutoTOC can display any selection
-       of Silva content types including assets.""")
+    a Table of Contents. Usually it's used as the 'index' document of a folder.
+    Then the parent folder displays a TOC when accessed (e.g.
+    http://www.x.yz/silva/myFolder). The AutoTOC is configurable: it can display
+    any selection of Silva content including assets, include descriptions or
+    icons, be set to stop at a specific depth, and use various sorting
+    methods.
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva AutoTOC"
