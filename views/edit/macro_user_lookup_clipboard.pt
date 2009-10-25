@@ -29,7 +29,14 @@
             <tr class="top-controls">
               <td>
                 <metal:block define-slot="clipboard_lookup_action">
-
+                  <a class="transporter"
+                    style="float:right;"
+                    title="lookup users: alt-l"
+                    tal:attributes="href string:${model/absolute_url}/edit/lookup"
+                    i18n:translate=""
+                    i18n:attributes="title">
+                    lookup users...
+                  </a>
                 </metal:block>
               </td>
             </tr>
