@@ -10,7 +10,6 @@
   tal:define="
     global   vein string:preview;
     model    request/model;
-    trigger  model/security_trigger;
     mangle   modules/Products/Silva/mangle;
     url      model/absolute_url;
     title    python: model.get_title_editable() or model.id;
