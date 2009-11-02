@@ -13,7 +13,8 @@ Silva changes
       - Safely completely ignore errors on Image resize / crop, so no
         error happens when using zip import (revert a fix from 2.1.6).
 
-      - Add a content-type for BMP and TIFF images in image support.
+      - When setting web_format property on an Image, check if it's a
+        valid supported web_format.
 
       - The user clipboard 'remove user' button now returns to the
         correct add user form.

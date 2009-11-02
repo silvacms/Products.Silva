@@ -70,8 +70,6 @@ class Image(Asset):
         'JPEG': 'image/jpeg',
         'GIF': 'image/gif',
         'PNG': 'image/png',
-        'BMP': 'image/bmp',
-        'TIFF': 'image/tiff',
     }
 
     def __init__(self, id):
@@ -124,8 +122,7 @@ class Image(Asset):
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """sets format and scaling for web presentation
 
-            web_format (str): either JPEG or PNG (or whatever other format
-                makes sense, must be recognised by PIL)
+            web_format (str): either JPEG, PNG or GIF
             web_scale (str): WidthXHeight or nn.n%
             web_crop (str): X1xY1-X2xY2, crop-box or empty for no cropping
 
@@ -141,8 +138,9 @@ class Image(Asset):
             self.image = None
         if web_format != 'unknown':
             if self.web_format != web_format:
-                self.web_format = web_format
-                update_cache = 1
+                if web_format in self.web_formats:
+                    self.web_format = web_format
+                    update_cache = 1
         # check if web_scale can be parsed:
         canonical_scale = self.getCanonicalWebScale(web_scale)
         if self.web_scale != web_scale:
