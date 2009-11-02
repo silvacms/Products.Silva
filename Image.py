@@ -71,6 +71,7 @@ class Image(Asset):
         'GIF': 'image/gif',
         'PNG': 'image/png',
         'BMP': 'image/bmp',
+        'TIFF': 'image/tiff',
     }
 
     def __init__(self, id):
