@@ -7,6 +7,9 @@ Silva changes
 
     Bug fixes
 
+      - Fix an xml export error which happened when you export ghosts
+        object which refer links which are not available anymore.
+
       - Safely completely ignore errors on Image resize / crop, so no
         error happens when using zip import (revert a fix from 2.1.6).
 

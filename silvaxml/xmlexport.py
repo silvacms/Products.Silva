@@ -247,7 +247,8 @@ class GhostVersionProducer(SilvaBaseProducer):
         self.endElement('haunted_url')
         if content is not None:
             content = content.get_viewable()
-            self.subsax(content)
+            if content is not None:
+                self.subsax(content)
         self.endElement('content')
 
 class GhostFolderProducer(SilvaBaseProducer):
@@ -328,7 +329,7 @@ class ZexpProducer(SilvaBaseProducer):
     """
     def sax(self):
         info = self.getInfo()
-        if info is not None:
+        if (info is not None) and (self.context is not None):
             path = self.context.getPhysicalPath()
             id = self.context.id
             if callable(id):
