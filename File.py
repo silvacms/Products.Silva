@@ -26,7 +26,6 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.interfaces import IObjectWillBeRemovedEvent
 from webdav.common import rfc1123_date
-from webdav.WriteLockInterface import WriteLockInterface
 import zLOG
 
 # Silva
@@ -91,7 +90,6 @@ class File(Asset):
 
     meta_type = "Silva File"
 
-    __implements__ = (WriteLockInterface,)
     implements(interfaces.IFile)
 
     silvaconf.priority(-3)

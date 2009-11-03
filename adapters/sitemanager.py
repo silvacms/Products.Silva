@@ -8,7 +8,7 @@ from five.localsitemanager import make_objectmanager_site
 from zope.app.component.hooks import clearSite
 from zope.app.component.interfaces import ISite
 
-from Products.Five.site.localsite import disableLocalSiteHook
+from Products.Five.component import disableSite
 from silva.core import interfaces
 
 class SiteManager(grok.Adapter):
@@ -32,8 +32,7 @@ class SiteManager(grok.Adapter):
             raise ValueError, 'Still have registered adapters.'
         if list(sm.registeredUtilities()):
             raise ValueError, 'Still have registered utilities.'
-        disableLocalSiteHook(self.context)
-        clearSite()
+        disableSite(self.context)
 
     def isSite(self):
         return ISite.providedBy(self.context)

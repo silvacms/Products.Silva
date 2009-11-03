@@ -4,7 +4,7 @@
 
 # Zope
 from zope.interface import implements
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -16,12 +16,12 @@ import SilvaPermissions
 from silva.core.interfaces import IContent
 from silva.core import conf as silvaconf
 
-class Content(Publishable, SilvaObject, CatalogPathAware):
+class Content(Publishable, SilvaObject, CatalogAware):
 
     silvaconf.baseclass()
 
     security = ClassSecurityInfo()
-    
+
     implements(IContent)
 
     default_catalog = 'service_catalog'
@@ -29,7 +29,7 @@ class Content(Publishable, SilvaObject, CatalogPathAware):
     object_type = 'content'
 
     # use __init__ of SilvaObject
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'is_default')
     def is_default(self):

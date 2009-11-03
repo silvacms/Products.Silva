@@ -7,7 +7,7 @@ from zope.interface import implements
 from Globals import InitializeClass
 from OFS import SimpleItem
 from AccessControl import ClassSecurityInfo
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 import OFS.interfaces
 import zLOG
@@ -19,7 +19,7 @@ from silva.core import interfaces
 
 from silva.core import conf as silvaconf
 
-class Asset(CatalogPathAware, SilvaObject, SimpleItem.SimpleItem):
+class Asset(CatalogAware, SilvaObject, SimpleItem.SimpleItem):
     implements(interfaces.IAsset)
 
     security = ClassSecurityInfo()

@@ -14,11 +14,11 @@ def allow_translate():
 # XXX NOTE: this needs to be removed once the bug is
 #           fixed in ZCatalog
 def fixupCatalogPathAwareness():
-    from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+    from Products.ZCatalog.CatalogPathAwareness import CatalogAware
     def manage_beforeDelete(self, item, container):
         self.unindex_object()
-    CatalogPathAware.manage_beforeDelete = manage_beforeDelete
-    
+    CatalogAware.manage_beforeDelete = manage_beforeDelete
+
 def patch_all():
     # perform all patches
     allow_translate()

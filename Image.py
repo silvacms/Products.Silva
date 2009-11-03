@@ -20,7 +20,6 @@ import zope.app.container.interfaces
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from webdav.WriteLockInterface import WriteLockInterface
 from webdav.common import Conflict
 import transaction
 import OFS.interfaces
@@ -72,7 +71,6 @@ class Image(Asset):
 
     meta_type = "Silva Image"
 
-    __implements__ = (WriteLockInterface,)
     implements(interfaces.IImage)
 
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')

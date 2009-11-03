@@ -3,7 +3,7 @@
 # $Revision: 1.21 $
 from zope.interface import implements
 
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -20,7 +20,7 @@ from helpers import add_and_edit
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 
-class BaseGroup(CatalogPathAware, SilvaObject, SimpleItem):
+class BaseGroup(CatalogAware, SilvaObject, SimpleItem):
 
     implements(interfaces.IBaseGroup)
 

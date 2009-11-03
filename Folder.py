@@ -12,7 +12,7 @@ from AccessControl import ClassSecurityInfo, getSecurityManager
 from Globals import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from OFS.Uninstalled import BrokenClass
-from Products.ZCatalog.CatalogPathAwareness import CatalogPathAware
+from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
@@ -40,7 +40,7 @@ from zExceptions import Forbidden, MethodNotAllowed
 import OFS.interfaces
 from silva.core import conf as silvaconf
 
-class Folder(CatalogPathAware, SilvaObject, Publishable, BaseFolder):
+class Folder(CatalogAware, SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
