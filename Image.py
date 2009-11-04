@@ -273,7 +273,7 @@ class Image(Asset):
             image = self.image
         elif hires and webformat:
             pil_image = self._getPILImage(self.hires_image)
-            pil_image = self._prepareWebFormat(pil_image)
+            have_changed, pil_image = self._prepareWebFormat(pil_image)
             image_data = StringIO()
             pil_image.save(image_data, self.web_format)
             return image_data.getvalue()
