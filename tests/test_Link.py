@@ -5,7 +5,6 @@
 import SilvaTestCase
 import unittest
 
-
 class LinkTestCase(SilvaTestCase.SilvaTestCase):
     """Test Silva Link object features.
     """
@@ -27,6 +26,32 @@ class LinkTestCase(SilvaTestCase.SilvaTestCase):
 
         link.set_url('infrae.com')
         self.assertEqual(link.get_url(), 'http://infrae.com')
+    
+    def test_absolute_link_add_scheme_to_url(self):
+        """Test the http:// is added only if needed
+        """
+        self.root.manage_addProduct['Silva'].manage_addLink(
+            'link', 'Google', 'http://nebula/', link_type='absolute')
+        content = self.root.link
+        
+        link = content.get_editable()
+        self.assertEqual(link.get_link_type(), 'absolute')
+        self.assertEqual(link.get_url(), 'http://nebula/')
+
+    def test_relative_link_do_not_add_scheme_when_from_relative_to_absolute_url(self):
+        """Test the http:// is not added
+        """
+        self.root.manage_addProduct['Silva'].manage_addLink(
+            'link', 'Nebula', 'nebula', link_type='absolute')
+        content = self.root.link
+
+        link = content.get_editable()
+        self.assertEqual(link.get_url(), 'http://nebula')
+        
+        link.set_link_type('relative')
+        link.set_url('/nebula')
+        self.assertEqual(link.get_link_type(), 'relative')
+        self.assertEqual(link.get_url(), '/nebula')
 
     def test_set_relative_link(self):
         """Test to set the link url and check its result.
@@ -42,7 +67,6 @@ class LinkTestCase(SilvaTestCase.SilvaTestCase):
 
         link.set_url('infrae.com')
         self.assertEqual(link.get_url(), 'infrae.com')
-
 
 def test_suite():
     suite = unittest.TestSuite()

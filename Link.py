@@ -3,6 +3,7 @@
 # $Id$
 
 import re
+from urlparse import urlsplit, urlunsplit
 
 from warnings import warn
 
@@ -23,10 +24,6 @@ from helpers import translateCdata
 from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
-
-# XXX taken from SilvaDocument/mixedcontentsupport.py
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
-_url_match = re.compile(URL_PATTERN)
 
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
@@ -111,19 +108,19 @@ class LinkVersion(CatalogedVersion):
             response.redirect(self._url)
             return ""
         
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'is_valid_url')
-    def is_valid_url(self, url):
-        if _url_match.match(url):
-            return True
-        return False
-        
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
-        if self._link_type == 'absolute' and not self.is_valid_url(url):
-            url = 'http://' + url
+        (scheme, host, path, query, fragment) = urlsplit(url, 'http')
+        if self._link_type == 'absolute':
+            # by default the 'google.com' url is handled as path component
+            # so we need to change the behavior
+            if host == '':
+                (host, path) = (path, '')
+            url = urlunsplit((scheme, host, path, query, fragment))
+        else:
+            url = urlunsplit((None, None, path, query, fragment))
         self._url = url
         
     security.declareProtected(
