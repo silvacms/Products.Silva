@@ -7,7 +7,7 @@ from AccessControl import ModuleSecurityInfo
 from Products.MailHost.MailHost import _encode, _mungeHeaders
 from Products.Silva import MAILHOST_ID
 
-module_security =  ModuleSecurityInfo('Products.Silva.helpers')
+module_security =  ModuleSecurityInfo('Products.Silva.mail')
 
 module_security.declareProtected('Use mailhost services', 'sendmail')
 def sendmail(context, message, mto=None, mfrom=None, subject=None):
