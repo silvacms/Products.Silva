@@ -180,11 +180,11 @@ def initialize_icons():
             '++resources++silva.icons/%s' % icon_name)
 
     misc_icons = [
-        ('ghostfolder', 'folder', 'silvaghostfolder.gif'),
-        ('ghostfolder', 'publication', 'silvaghostpublication.gif'),
-        ('ghostfolder', 'link_broken', 'silvaghostbroken.png'),
+        ('ghostfolder', 'folder', 'silvaghost_folder.gif'),
+        ('ghostfolder', 'publication', 'silvaghost_publication.gif'),
+        ('ghostfolder', 'link_broken', 'silvaghost_broken.png'),
         ('ghost', 'link_ok', 'silvaghost.gif'),
-        ('ghost', 'link_broken', 'silvaghostbroken.png'),
+        ('ghost', 'link_broken', 'silvaghost_broken.png'),
     ]
     for klass, kind, icon_name in misc_icons:
         registry.registerIcon(
