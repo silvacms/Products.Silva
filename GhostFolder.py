@@ -1,6 +1,6 @@
 # Copyright (c) 2003-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: GhostFolder.py,v 1.42 2006/01/24 16:14:12 faassen Exp $
+# $Id$
 
 # Zope 3
 from zope.interface import implements

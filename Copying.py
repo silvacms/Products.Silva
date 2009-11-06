@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision$
 # helper module hiding all the details of cut/copy/paste support
 
 from OFS.CopySupport import _cb_encode, _cb_decode

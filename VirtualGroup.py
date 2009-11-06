@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: VirtualGroup.py,v 1.18 2006/01/24 16:14:13 faassen Exp $
+# $Id$
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo, Unauthorized
