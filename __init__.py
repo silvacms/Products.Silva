@@ -26,9 +26,14 @@ silvaconf.extensionName('Silva')
 silvaconf.extensionTitle('Silva Core')
 silvaconf.extensionDepends(None)
 
-
 # backward compatibility import
-from silva.core.upgrade import upgrade
+import zope.deferredimport
+zope.deferredimport.deprecated(
+    'Import from silva.core.interfaces',
+    interfaces = 'silva.core.interfaces')
+zope.deferredimport.deprecated(
+    'Import from silva.core.upgrade',
+    upgrade = 'silva.core.upgrade.upgrade')
 
 #----------------------------------------
 # Initialize subscription feature, part 1
