@@ -29,9 +29,6 @@ silvaconf.extensionDepends(None)
 # backward compatibility import
 import zope.deferredimport
 zope.deferredimport.deprecated(
-    'Please import silva.core.interfaces instead.',
-    interfaces = 'silva.core.interfaces')
-zope.deferredimport.deprecated(
     'Please import from silva.core.upgrade instead. '
     'Products.Silva.upgrade will go away in Silva 2.3.',
     upgrade = 'silva.core.upgrade.upgrade')
