@@ -3,7 +3,6 @@
 # $Id$
 
 # Zope
-from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 try:
     from App.class_init import InitializeClass # Zope 2.12
@@ -11,61 +10,52 @@ except ImportError:
     from Globals import InitializeClass # Zope < 2.12
 
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-# Silva
-from SidebarCache import SidebarCache
-import SilvaPermissions
-from helpers import add_and_edit
-# Silva adapters
-from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
-# Silva interfaces
+from zope.interface import implements
 
+# Silva
+from Products.Silva import SilvaPermissions
+from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
+from Products.Silva.helpers import add_and_edit
+
+# Silva interfaces
+from silva.core import conf as silvaconf
 from silva.core.interfaces import ISidebarService
 from silva.core.services.base import SilvaService
-from silva.core import conf as silvaconf
+
+from GenericCache.GenericCache import GenericCache
+
+
+class SidebarCache(object):
+    """The actual storage of the cache.
+    """
+
+    def __init__(self):
+        self.sidebar_cache = GenericCache(maxsize=125)
+        self.path_mapping = GenericCache(maxsize=125)
+
+
+cache = SidebarCache()
+
 
 class SidebarService(SilvaService):
     """Service for sidebar cache"""
 
     meta_type = 'Silva Sidebar Service'
     title = 'Silva Sidebar Cache'
-    
+
     security = ClassSecurityInfo()
 
     implements(ISidebarService)
-    
-    cache_container_id = 'temp_folder'
-
-    manage_options = (
-        {'label':'Edit', 'action':'manage_sidebarServiceEditTab'},
-        ) + SilvaService.manage_options
-
-    security.declareProtected(
-        'View management screens', 'manage_sidebarServiceEditTab')
-    manage_sidebarServiceEditTab = PageTemplateFile(
-        'www/sidebarServiceEditTab', globals(), 
-        __name__='manage_sidebarServiceEditTab')
-
     silvaconf.icon('www/sidebar_service.png')
     silvaconf.factory('manage_addSidebarServiceForm')
     silvaconf.factory('manage_addSidebarService')
 
+    def __init__(self, id, title):
+        self.id = id
+        self._title = title
+
     security.declareProtected(
-        'View management screens', 'manage_sidebarServiceEdit')
-    def manage_sidebarServiceEdit(self, id):
-        """set the cache container
-        """
-        # check validity
-        if getattr(self.aq_inner, id, None) is None:
-            # not valid
-            msg = 'Id does not provide for an existing cache container'
-        else:
-            self.cache_container_id = id
-            msg = 'Id changed'
-
-        return self.manage_sidebarServiceEditTab(manage_tabs_message=msg)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'render')
+        SilvaPermissions.AccessContentsInformation, 'render')
     def render(self, obj, tab_name, vein):
         """Returns the rendered PT
 
@@ -76,22 +66,23 @@ class SidebarService(SilvaService):
         pub = obj.get_publication()
         adapter = getVirtualHostingAdapter(pub)
         if adapter.containsVirtualRoot():
-            # If the virtual host points inside the publication, 
+            # If the virtual host points inside the publication,
             # use that point as 'publication' to start from.
             pub = adapter.getVirtualRoot()
-        
+
         abs_url = pub.absolute_url()
         ph_path = pub.getPhysicalPath()
 
-        storage = self._get_storage()
-        sidebar_cache = storage._sidebar_cache
+        sidebar_cache = cache.sidebar_cache
         cached_template = sidebar_cache.get(abs_url)
         if cached_template is None:
-            cached_template = sidebar_cache[abs_url] = self._render_template(pub)
+            cached_template = self._render_template(pub)
+            sidebar_cache[abs_url] = cached_template
+
             # now add the abs_url to the path_mapping of the storage so we
             # can find it for invalidation when the invalidation is done
             # from another virtual host.
-            mapping = storage._path_mapping
+            mapping = cache.path_mapping
             if not mapping.has_key(ph_path):
                 mapping[ph_path] = ()
             abs_urls = mapping[ph_path] + (abs_url,)
@@ -100,39 +91,28 @@ class SidebarService(SilvaService):
         return self._finalize_template(
             cached_template, obj, tab_name, vein)
 
-    security.declareProtected(SilvaPermissions.ViewAuthenticated,
-                              'invalidate')
+    security.declareProtected(
+        SilvaPermissions.ViewAuthenticated, 'invalidate')
     def invalidate(self, obj):
         """Invalidate the cache for a specific object
         """
-        storage = self._get_storage(create=0)
-        if storage is None:
-            return
-            
         pub = obj.get_publication()
         ph_path = pub.getPhysicalPath()
-        abs_urls = storage._path_mapping.get(ph_path)
+        abs_urls = cache.path_mapping.get(ph_path)
 
         if abs_urls is None:
             return
         for abs_url in abs_urls:
-            del storage._sidebar_cache[abs_url]
-        del storage._path_mapping[ph_path]
+            if abs_url in cache.sidebar_cache:
+                del cache.sidebar_cache[abs_url]
+        if ph_path in cache.path_mapping:
+            del cache.path_mapping[ph_path]
 
-    def _get_storage(self, create=1):
-        cc = getattr(self.aq_inner, self.cache_container_id)
-        storage = getattr(cc, 'silva_sidebar_cache', None)
-        if storage is None and create:
-            cc.silva_sidebar_cache = SidebarCache('silva_sidebar_cache')
-            # Trigger persistence machinery
-            cc._p_changed = 1
-            storage = cc.silva_sidebar_cache
-        return storage
-    
     def _render_template(self, pub):
         """Actually render the pagetemplate
 
-        Mind that some elements will be put in later on (e.g., tab_name, focus class)
+        Mind that some elements will be put in later on (e.g.,
+        tab_name, focus class)
         """
         request = self.REQUEST
         model = request.get('model')
@@ -144,9 +124,9 @@ class SidebarService(SilvaService):
     def _finalize_template(self, template, obj, tab_name, vein):
         """Add the tab_name and the focus class to the template
         """
-        # XXX ugly hack: we're putting in the focus class into the string by searching
-        # for the url of the current object and replacing the classname in the same
-        # tag
+        # XXX ugly hack: we're putting in the focus class into the
+        # string by searching for the url of the current object and
+        # replacing the classname in the same tag
         focused_url = obj.absolute_url()
         url_pos = template.rfind('%s/edit/{__vein_id__}' % focused_url)
         # this requires the class to ALWAYS be before the url
@@ -159,7 +139,7 @@ class SidebarService(SilvaService):
         template = template.replace('{__absolute_url__}', self.REQUEST.URL)
 
         return template
-        
+
 InitializeClass(SidebarService)
 
 manage_addSidebarServiceForm = PageTemplateFile(
