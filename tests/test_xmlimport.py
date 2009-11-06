@@ -52,6 +52,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         source_file.close()
         linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
         linkversion2 = importfolder.testfolder.testfolder2.test_link.get_previewable()
+        self.assertEquals('absolute', linkversion.get_link_type())
         self.assertEquals(
             'approved title',
             linkversion.get_title())
@@ -67,6 +68,18 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
            'test_user_1_',
             binding._getData(
                 'silva-extra').data['creator'])
+
+    def test_relative_link_import(self):
+        importFolder = self.add_folder(self.root,
+                                       'importforlder',
+                                       'This is a test folder',
+                                       policy_name='Silva AutoTOC')
+        source_file = testopen('data/test_link_relative.xml', 'r')
+        xmlimport.importFromFile(source_file, importFolder)
+        source_file.close()
+        linkversion = importFolder.testfolder.testfolder2.test_link.get_editable()
+        self.assertEquals('relative', linkversion.get_link_type())
+        self.failIf(linkversion.get_url().startswith('http://'))
 
     def test_autotoc_import(self):
         source_file = testopen('data/test_autotoc.xml', 'r')

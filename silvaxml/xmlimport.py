@@ -12,6 +12,7 @@ from Products.Silva.Publication import manage_addPublication
 from Products.Silva.Link import Link, LinkVersion
 from Products.Silva import mangle
 from DateTime import DateTime
+from urlparse import urlsplit
 
 NS_URI = 'http://infrae.com/ns/silva'
 
@@ -420,10 +421,18 @@ class LinkContentHandler(SilvaBaseHandler):
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
-            self.result().set_url(self.getData('url'))
+            url = self.getData('url')
+            link = self.result()
+            link.set_link_type(self.__get_url_type(url))
+            link.set_url(url)
             self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
+    
+    def __get_url_type(self, url):
+        (scheme, host, path, query, fragment) = urlsplit(url)
+        if scheme: return 'absolute'
+        else: return 'relative'
 
 class ImageHandler(SilvaBaseHandler):
     def getOverrides(self):
