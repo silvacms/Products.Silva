@@ -11,7 +11,10 @@ from z3c.form import field
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
 
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent

@@ -7,7 +7,11 @@ from zope.interface import implements
 from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 # Silva
 from SilvaObject import SilvaObject
 from Publishable import Publishable

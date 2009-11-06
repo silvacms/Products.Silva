@@ -5,7 +5,11 @@ from zope.interface import implements
 from zope.publisher.interfaces.http import IHTTPRequest
 
 from AccessControl import ModuleSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf

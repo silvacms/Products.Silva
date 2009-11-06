@@ -8,7 +8,10 @@ from zope.interface import implements
 # Zope 2
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
 
 # Silva
 import SilvaPermissions

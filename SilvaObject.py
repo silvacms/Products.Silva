@@ -17,7 +17,11 @@ from zope.interface import alsoProvides, providedBy
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from DateTime import DateTime
 from App.Common import rfc1123_date
 

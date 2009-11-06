@@ -9,7 +9,11 @@ from zope.interface import implements
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from OFS.SimpleItem import SimpleItem
 
 # Silva

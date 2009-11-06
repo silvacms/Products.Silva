@@ -9,7 +9,11 @@ from zope import interface
 from bisect import insort_right
 
 # zope
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from AccessControl import ClassSecurityInfo
 from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile

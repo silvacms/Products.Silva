@@ -9,7 +9,11 @@ from zope.deprecation import deprecation
 # Zope
 from OFS.Folder import Folder as BaseFolder
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from OFS.Uninstalled import BrokenClass
 from Products.ZCatalog.CatalogPathAwareness import CatalogAware

@@ -8,7 +8,10 @@ from zope.publisher.interfaces.browser import IBrowserSkinType
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
 
 # Silva
 from VersionedContent import CatalogedVersionedContent

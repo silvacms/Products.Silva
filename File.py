@@ -26,7 +26,11 @@ from five import grok
 # Zope 2
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from OFS.interfaces import IObjectWillBeRemovedEvent
 from webdav.common import rfc1123_date
 

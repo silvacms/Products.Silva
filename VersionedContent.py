@@ -12,7 +12,11 @@ from OFS.Folder import Folder as BaseFolder
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from DateTime import DateTime
 from Persistence import Persistent
 
