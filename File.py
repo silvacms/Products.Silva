@@ -5,9 +5,12 @@
 
 # Python
 import os
+import logging
 from types import StringTypes
 from cgi import escape
 from cStringIO import StringIO
+
+logger = logging.getLogger('silva.file')
 
 # Zope 3
 from zope import component, schema
@@ -26,7 +29,6 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.interfaces import IObjectWillBeRemovedEvent
 from webdav.common import rfc1123_date
-import zLOG
 
 # Silva
 from Products.Silva import mangle
@@ -618,9 +620,8 @@ class FileStorageConverter(object):
         new_file.set_file_data(data)
         new_file.set_content_type(content_type)
 
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            "File %s migrated" % '/'.join(new_file.getPhysicalPath()))
+        logger.info("File %s migrated" %
+                    '/'.join(new_file.getPhysicalPath()))
         return new_file
 
 def manage_addFilesService(self, id, title=None, REQUEST=None):
