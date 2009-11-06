@@ -5,7 +5,7 @@
 from OFS.SimpleItem import SimpleItem
 from zope import interface
 
-from silva.core.interfaces import IInvisibleService
+from silva.core.interfaces import IInvisibleService, ISilvaObject
 
 _filters = []
 
@@ -19,6 +19,8 @@ def registerTocFilter(filter):
 
 def hideFromTOC(context):
     # if document is not publish, it's hidden.
+    if not ISilvaObject.providedBy(context):
+        return True
     viewable = context.get_viewable()
     return (viewable is None) or \
         (context.service_metadata.getMetadataValue(
