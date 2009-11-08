@@ -1,6 +1,8 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 
+from types import UnicodeType
+
 from DocumentTemplate.DT_Util import html_quote
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
@@ -26,6 +28,15 @@ class KupuPopupValidator(StringValidator):
             browser = 'IE'
         ctx = Context(browser=browser,
                       request=REQUEST)
+        #replace any &nbsp; with \xa0, as xml.dom.minidom (used by to_source)
+        # can't handle named character entities.  Normal kupu usage should not
+        # introduce &nbsp;, but perhaps through copy/pasting they may be
+        # present.
+        if isinstance(val,UnicodeType):
+            val = val.replace(u'&nbsp;', u'\xa0')
+        else:
+            val = val.replace('&nbsp;', '\xc2\xa0')
+
         nodes = transformer.to_source(targetobj=val, context=ctx)
         content = nodes.asBytes(encoding="UTF8")
 
@@ -104,7 +115,6 @@ class KupuPopupWidget(Widget):
                                    required=0)
 
     def render(self, field, key, value, REQUEST):
-        content = self.render_view(field, value)
         
         #NOTE: self.buttons is still a DummyField
         enabled_buttons = [ f.encode('ascii') for f in field.values['buttons'] ]
@@ -127,7 +137,8 @@ class KupuPopupWidget(Widget):
         val += render_element("div",
                              id=key + "content",
                              css_class="kupupopupcontentbox",
-                             contents=value)
+                             contents=value or '&nbsp;'
+                             )
         val += render_element("textarea",
                               name=key,
                               id=key,
