@@ -11,7 +11,7 @@
      />
 
    <browser:page
-     for="Products.Silva.interfaces.ISilvaObject"
+     for="silva.core.interfaces.ISilvaObject"
      name="get_viewer_role_info"
      class=".viewerrole.ViewerRole"
      attribute="getViewerRoleInfo"
