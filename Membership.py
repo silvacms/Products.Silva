@@ -8,7 +8,8 @@ from Products.SilvaViews.ViewRegistry import ViewAttribute
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 import Globals
-from Globals import Persistent
+from Persistence import Persistent
+
 import SilvaPermissions
 import Acquisition
 

@@ -13,7 +13,8 @@ try:
 except ImportError:
     from Globals import InitializeClass # Zope < 2.12
 
-from Globals import package_home
+from App.Common import package_home
+
 from DateTime import DateTime
 import transaction
 import zLOG

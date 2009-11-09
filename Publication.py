@@ -8,7 +8,9 @@ from zope.interface import implements
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass
+from App.special_dtml import DTMLFile
+
 from zExceptions import BadRequest
 import transaction
 import Acquisition

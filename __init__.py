@@ -99,7 +99,7 @@ def initialize(context):
 
 # check if ExternalEditor is available
 import os
-from Globals import DTMLFile
+from App.special_dtml import DTMLFile
 
 try:
     #   import Product.ExternalEditor as ee

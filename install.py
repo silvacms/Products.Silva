@@ -12,7 +12,7 @@ from zope import interface
 from zope.app.intid.interfaces import IIntIds
 
 # Zope 2
-from Globals import package_home
+from App.Common import package_home
 from DateTime import DateTime
 from OFS import Image
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
@@ -158,7 +158,7 @@ def is_installed(root):
 
 def configureMetadata(root):
     from os import path
-    from Globals import package_home
+    from App.Common import package_home
 
     # install metadata
     if not 'service_metadata' in root.objectIds():
