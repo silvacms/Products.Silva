@@ -1,9 +1,11 @@
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision$
+# $Id$
+
 import AccessControl, Products
 from AccessControl import Permissions
 from Products.Silva import roleinfo
+from App.class_init import ApplicationDefaultPermissions
 
 # General Zope permissions
 View = Permissions.view
@@ -25,8 +27,7 @@ def setDefaultRoles(permission, roles):
         Products.__ac_permissions__=(
             Products.__ac_permissions__+((permission,(),roles),))
         mangled = AccessControl.Permission.pname(permission)
-        setattr(AccessControl.Permission.ApplicationDefaultPermissions,
-                mangled, roles)
+        setattr(ApplicationDefaultPermissions, mangled, roles)
 
 # Silva permissions
 # XXX is ViewAuthenticated in use?
