@@ -82,7 +82,6 @@ def installFromScratch(root):
     configureCoreFolders(root)
     configureViews(root)
     configureSecurity(root)
-    configureLayout(root)
     # now do the uinstallable stuff (views)
     install(root)
     installSilvaDocument(root)
@@ -334,7 +333,7 @@ def configureSecurity(root):
     except:
         pass
 
-def configureLayout(root, default_if_existent=0):
+def configureLegacyLayout(root, default_if_existent=0):
     """Install common layout code into root.
     If the default_if_existent argument is true, ids will be prefixed with
     default_ if the id already exists in the root.
@@ -579,10 +578,8 @@ def installSilvaDocument(root):
 
 def installSilvaLayout(root):
     # installs SilvaLayout if available
-    from Products.Silva.ExtensionRegistry import extensionRegistry
-    if 'SilvaLayout' not in extensionRegistry.get_names():
-        return
-    root.service_extensions.install('SilvaLayout')
+    from Products.SilvaLayout.install import install
+    install(root, default_skinid='Multiflex')
 
 def installSilvaFind(root):
     # installs Silva Find if available

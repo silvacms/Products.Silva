@@ -88,7 +88,7 @@ class ExtensionService(SilvaService):
 
     security.declareProtected('View management screens', 'refresh')
     def refresh(self, name, status=None):
-        """Refresh  extension.  
+        """Refresh  extension.
         """
         root = self.get_root()
         extensionRegistry.refresh(name,root)
@@ -125,9 +125,9 @@ class ExtensionService(SilvaService):
         """Install core layout.
         """
         root = self.get_root()
-        install.configureLayout(root, 1)
+        install.configureLegacyLayout(root, 1)
         if status:
-            return 'Default layout code installed'
+            return 'Default legacy layout code installed'
 
     security.declareProtected('View management screens',
                               'install_documentation')
