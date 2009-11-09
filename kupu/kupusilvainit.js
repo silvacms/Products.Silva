@@ -106,6 +106,14 @@ function fixupNestedListFilter() {
             li.parentNode.removeChild(li);
             li = saved_lis.pop();
         }
+        //Prevent the external source preview from being saved    
+        var divs = htmlnode.getElementsByTagName("div");
+        for (var i = divs.length - 1; i >= 0; i--) {
+          if (divs[i].getAttribute("class") == "externalsourcepreview" ||
+              divs[i].getAttribute("class") == "mousehover") {
+            divs[i].parentNode.removeChild(divs[i]);
+          }
+        }
         return htmlnode;
     }
 }
@@ -140,7 +148,7 @@ KupuEditor.prototype.afterInit = function() {
             };
             selection.selectNodeContents(next);
             selection.collapse();
-	    this.updateState(); /* activate tools */
+            this.updateState(); /* activate tools */
             break;
         } else if (h.nodeType == 1) {
             break;
@@ -209,6 +217,14 @@ KupuEditor.prototype.afterInit = function() {
     } else if (doc.attachEvent) {
         doc.attachEvent('onkeydown', table_spacing_handler);
     };
+    /* for each external source, load the external source previews */
+    var divs = doc.getElementsByTagName("div");
+    for (var i = 0; i < divs.length; i++) {
+      if (divs[i].className == 'externalsource') {
+        var el = new ExternalSourceLoader(divs[i]);
+        el.initialize();
+      }
+    }
 };
 
 function initSilvaKupu(iframe) {
@@ -375,8 +391,8 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-image-align', 'kupu-toolbox-image-alt', 
         'kupu-toolbox-images', 'kupu-toolbox',
         'kupu-toolbox-active',        'kupu-toolbox-image-link-cont', 'kupu-toolbox-image-resize',
-	'kupu-toolbox-image-add-button'
-	);
+        'kupu-toolbox-image-add-button'
+        );
     kupu.registerTool('imagetool', imagetool);
 
     var tabletool = new SilvaTableTool(); 
@@ -390,8 +406,8 @@ function initSilvaKupu(iframe) {
         'kupu-table-delcolumn-button', 'kupu-table-fix-button',
         'kupu-table-delete-button', 'kupu-toolbox-tables', 
         'kupu-toolbox', 'kupu-toolbox-active', 'kupu-table-cell-type',
-	'kupu-table-cell-colspan','kupu-table-addcellbefore-button',
-	'kupu-table-addcellafter-button','kupu-table-delcell-button'
+        'kupu-table-cell-colspan','kupu-table-addcellbefore-button',
+        'kupu-table-addcellafter-button','kupu-table-delcell-button'
         );
     tabletool.registerToolBox('tabletoolbox', tabletoolbox);
 

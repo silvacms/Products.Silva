@@ -22,6 +22,182 @@ EDITABLE_METADATA = {
      ['location', 'text', 0, 'location']]
 };
 
+function ExternalSourceLoader(div) {
+    if (div == null) {
+        return;
+    } 
+    this.div = div;
+    this.mynumber = ExternalSourceLoader.number--; //Needed for z-index adjustment later
+    this.source_id = this.div.getAttribute("source_id");
+    this.extsourcetool = window.kupueditor.getTool('extsourcetool');
+    this.docref = this.extsourcetool.docref;
+    this.params = this.extsourcetool._gatherFormDataFromElement(this.div);
+    /* the parameter keys all have the data type encoded in them, e.g.
+       name__type__string or decision__type__boolean.  Strip off __type__\w*,
+       since the ExternalSource's to_html is expecting parameters
+       without the data type (it does casting based off of the field's type */
+    this.params = this.params.replace(/__type__\w*=/g,'=');
+    this.params += "&docref="+this.docref + "&source_id="+this.source_id;
+    //Turn off editing for the previews, because IE won't accept display:none otherwise	      
+    this.div.contentEditable = false; 
+
+    this.docurl = document.location.href.replace(/\/edit.*?$/,'/');
+}
+
+ExternalSourceLoader.prototype = new ExternalSourceLoader;
+
+/* this is a class variable, which is used by the ESLoader to establish z-indexes
+   so that the higher of two adjacent ES will have the mousehover display *above*
+   the lower ES */
+ExternalSourceLoader.number = 200;
+
+ExternalSourceLoader.prototype.initialize = function() {
+    var request = new XMLHttpRequest();
+    var url = this.docurl + "@@render_extsource";
+
+    request.open("POST", url, true);
+    var callback = new ContextFixer(this.preload_callback, this, request);
+    request.onreadystatechange = callback.execute;
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send(this.params);
+
+    /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
+       doesn't recognize this selector within designMode */
+    addEventHandler(this.div, "mouseover", this.onMouseOverHandler, this);
+    addEventHandler(this.div, "mouseout", this.onMouseOutHandler, this);
+}
+
+ExternalSourceLoader.prototype.createPreview = function(request, previewcreator) {
+    /* this function prepares the preview and mousehover.  However,
+       the "previewcreator" is a caller-supplied function that actually
+       places content in the preview */
+    var parentDiv = this.div;
+    
+    parentDiv.setAttribute("title","External Source; content is locked");
+
+    /* populate the preview */
+    var previewDiv = parentDiv.ownerDocument.createElement("div");
+    this.previewDiv = previewDiv;
+    previewDiv.className = 'externalsourcepreview';
+    /* call supplied function to actually create the preview */
+    previewcreator(request,previewDiv);
+    
+    /* change the href of anchors so they are not clickable */
+    var anchors = previewDiv.getElementsByTagName('a');
+    for (var i=0; i<anchors.length; i++) {
+        anchors[i].href='javascript:void';
+    };
+    /* an attempt at preventing images from being selected (and moved around)
+        but this approach (moving the selection / focus elsewhere)
+        does not work */
+    /*var imgs = previewDiv.getElementsByTagName('img');
+    for (var i=0; i<imgs.length; i++) {
+        addEventHandler(imgs[i], "mousedrag", 
+            function(event) {
+                var e = event || window.event;
+                var target = event.srceElement || event.target;
+                var selection = window.kupueditor.getSelection();
+                selection.selectNodeContents(target.parentNode);
+                selection.collapse(true);
+            }, this.blurOnFocusHandler, this);
+    }*/
+    
+    parentDiv.appendChild(previewDiv);
+    /* set a lower z-index so IE won't push the hover div under another
+       ES preview lower in the document (each DIV has a lower number.
+       Cannot be negative. */
+    parentDiv.style.zIndex = this.mynumber;
+}
+
+ExternalSourceLoader.prototype.preload_callback = function(request) {
+    if (request.readyState == 4) {
+        var parentDiv = this.div;
+        var previewDiv = null;
+        /* find the preview div, if present */
+        for (var i = 0; i < parentDiv.childNodes.length; i++) {
+            var node = parentDiv.childNodes[i];
+            if (node.tagName == 'DIV') {
+                if (node.className == "externalsourcepreview") {
+                    previewDiv = node;
+                    break;
+                };
+            };
+        };
+        if (request.status == 200 || //HTTP 200: OK; HTTP 204: No content
+            request.status == 204 ||
+            /* when status is actually 204 no content, IE 7 appears to 
+               make response.status==1223 (what??) */
+            request.status == 1223) {
+            if (previewDiv) {
+                /* if the externalsourcpreview DIV already exists, replace the content 
+                    XXX When does this happen?  Clicking `update` in the ES removes
+                    and recreates the content of the ES div (so it doesn't happen then)
+                */
+                previewDiv.getElementsByTagName("div")[2].innerHTML = previewDiv.getElementsByTagName("div")[0].innerHTML;
+                if (request.responseText != "") {
+                    previewDiv.getElementsByTagName("div")[3].innerHTML = request.responseText;
+                } else {
+                    var h4 = previewDiv.ownerDocument.createElement("h4");
+                    var text = previewDiv.ownerDocument.createTextNode(" [Preview is not available]");
+                    h4.appendChild(text)
+                    previewDiv.appendChild(h4);
+                };
+            } else {
+                var pc = function(request,pd) {
+                    if (request.responseText != "") {
+                        pd.innerHTML = request.responseText;
+                    } else {
+                        var h4 = pd.ownerDocument.createElement("h4");
+                        var text = pd.ownerDocument.createTextNode(" [Preview is not available]");
+                        hiddenh4 = parentDiv.getElementsByTagName("h4")[0];
+                        for (var i=0;i<hiddenh4.childNodes.length; i++) {
+                            h4.appendChild(hiddenh4.childNodes[i].cloneNode(true));
+                        };
+                        h4.appendChild(text);
+                        pd.appendChild(h4);
+                    };
+                };
+                this.createPreview(request, pc);
+            };
+        } else {
+            var pc = function(request, pd) {
+                pd.innerHTML = "<h4>An HTTP " + request.status + " error was encountered when attempting to preview this external source</h4>";	    
+            };
+            /* populate the preview */
+            this.createPreview(request, pc);
+        };
+        /* add non-breaking space if the content height is 0.  The height could be 0
+           if the preview is a single floated div.  This ensures that the
+           ES will always be selectable. */
+        /* unfortunately, this is hard-coded to the height of the top and bottom
+            padding */ 
+        if (this.div.offsetHeight == 4) {
+            this.div.appendChild(this.div.ownerDocument.createTextNode('\xa0'));
+        }
+        this.div.style.overflow = 'auto';
+        /* ensure height will display the entire 'locked' graphic */
+        if (this.div.offsetHeight < 26) {
+            this.div.style.height = '33px';
+        }
+    }
+}
+
+ExternalSourceLoader.prototype.onMouseOverHandler = function() {
+    /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
+       doesn't recognize this selector within designMode */
+    if (this.div.className.search("active")==-1) {
+        this.div.className += " active"
+    }
+}
+
+ExternalSourceLoader.prototype.onMouseOutHandler = function(event) {
+    /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
+       doesn't recognize this selector within designMode */
+    if (this.extsourcetool._insideExternalSource != this.div) {
+        this.div.className = this.div.className.replace(/ active/,'');
+    }
+}
+
 function SilvaLinkTool() {
     /* redefine the contextmenu elements */
 };
@@ -147,6 +323,9 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
 };
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var currnode = selNode;
     var link = false;
     var href = '';
@@ -282,6 +461,9 @@ SilvaImageTool.prototype.selectTargetHandler = function(event) {
 };
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
          /* the rest of the image tool was originally designed to 
@@ -1271,6 +1453,9 @@ SilvaTableToolBox.prototype.delTable = function() {
 
 
 SilvaTableToolBox.prototype.updateState = function(selNode) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     /* update the state (add/edit) and update the pulldowns (if required) */
     var table = this.editor.getNearestParentOfType(selNode, 'table');
     if (table) {
@@ -1636,6 +1821,9 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
 };
 
 SilvaIndexTool.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var indexel = this.editor.getNearestParentOfType(selNode, 'A');
     if (indexel && !indexel.getAttribute('href')) {
         if (this.toolboxel) {
@@ -1738,6 +1926,9 @@ SilvaTocTool.prototype.handleKeyPressOnToc = function(event) {
 };
 
 SilvaTocTool.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var toc = this.getNearestToc(selNode);
     if (toc) {
         var depth = toc.getAttribute('toc_depth');
@@ -1899,6 +2090,9 @@ SilvaAbbrTool.prototype.initialize = function(editor) {
 };
 
 SilvaAbbrTool.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var element = this.getNearestAbbrAcronym(selNode);
     if (element) {
         this.addbutton.style.display = 'none';
@@ -2129,6 +2323,9 @@ SilvaCitationTool.prototype.handleKeyPressOnCitation = function(event) {
 };
 
 SilvaCitationTool.prototype.updateState = function(selNode, event) {
+    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+        return;
+    }
     var citation = this.getNearestCitation(selNode);
     if (citation) {
         this.addbutton.style.display = 'none';
@@ -2269,7 +2466,7 @@ function SilvaExternalSourceTool(
         this.idselect.style.display="none";
         this.addbutton.style.display="none";
         this.nosources_text.style.display="block";
-    } 
+    };
 
     // store the base url, this will be prepended to the id to form the url to
     // get the codesource from (Zope's acquisition will make sure it ends up on
@@ -2330,11 +2527,37 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
     };
 };
 
-SilvaExternalSourceTool.prototype.updateState = function(selNode) {
+SilvaExternalSourceTool.prototype.updateState = function(selNode, event) {
     var extsource = this.getNearestExternalSource(selNode);
+    if (!extsource) {
+        /* if the externalsource element's preview is _only_ a floated
+            div, in at least FF, clicking anywhere but inside the div
+            will cause selNode to be the body (resulting in extsource==undefined)
+            */
+        var e = event || window.event;
+        /* updateState is not always called on an event (like a mouse click
+           sometimes it is during initialization */
+        if (e) {
+            var target = e.srcElement || e.target;
+            extsource = this.getNearestExternalSource(target);
+        } else {
+            var selNode = this.editor.getSelectedNode();
+            extsource = this.getNearestExternalSource(selNode);
+        };
+    };
     var heading = this.toolbox.getElementsByTagName('h1')[0];
     if (extsource) {
-        this._insideExternalSource = true;
+        if (this._insideExternalSource == extsource) {
+            return;
+        };
+        /* if an external source is already active, remove it's active status */
+        if (this._insideExternalSource) {
+            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+        };
+        this._insideExternalSource = extsource;
+        if (extsource.className.search("active")==-1) {
+            extsource.className += " active";
+        };
         selectSelectItem(this.idselect, extsource.getAttribute('source_id'));
         this.addbutton.style.display = 'none';
         this.cancelbutton.style.display = 'none';
@@ -2362,10 +2585,13 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode) {
             };
         };
     } else {
-        this._insideExternalSource = false;
-        this.resetTool();
-        if (this.toolbox) {
-            this.toolbox.className = this.plainclass;
+        if (this._insideExternalSource) {
+            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+            this._insideExternalSource = false;
+            this.resetTool();
+            if (this.toolbox) {
+                this.toolbox.className = this.plainclass;
+            };
         };
     };
 };
@@ -2392,6 +2618,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
             div.parentNode.insertBefore(sel,div.nextSibling);
         };
         this.editor.content_changed = true;
+        if (this._insideExternalSource) {
+            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+        };
         this._insideExternalSource = false;
     } else if (keyCode == 9 || keyCode == 39 || keyCode == 40) {
         /* 9=tab; 39=right; 40=down; */
@@ -2402,6 +2631,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
             sel.appendChild(doc.createTextNode('\xa0'));
             div.parentNode.appendChild(sel);
             this.editor.content_changed = true;
+        };
+        if (this._insideExternalSource) {
+            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
         };
         this._insideExternalSource = false;
     } else if (keyCode == 37 || keyCode == 38) { 
@@ -2414,17 +2646,25 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
             this.editor.content_changed = true;
         };
         collapseToEnd = true;
-        this._insideExternalSource = false;
-    } else if (keyCode == 8) { /* 8=backspace */
-        sel = div.nextSibling;
-        if (!sel) {
-            sel = doc.createElement('p');
-            sel.appendChild(doc.createTextNode('\xa0'));
-            doc.appendChild(sel);
+        if (this._insideExternalSource) {
+            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
         };
-        div.parentNode.removeChild(div);
-        this.editor.content_changed = true;
         this._insideExternalSource = false;
+    } else if (keyCode == 8 || keyCode == 46) { /* 8=backspace, 46=delete */
+        if (confirm("Are you sure you want to delete this external source?")) {
+            sel = div.nextSibling;
+            if (!sel) {
+                sel = doc.createElement('p');
+                sel.appendChild(doc.createTextNode('\xa0'));
+                doc.appendChild(sel);
+            };
+            div.parentNode.removeChild(div);
+            this.editor.content_changed = true;
+            if (this._insideExternalSource) {
+                this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+            };
+            this._insideExternalSource = false;
+        };
     };
     if (sel) {
         selection.selectNodeContents(sel);
@@ -2473,9 +2713,8 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // headers or table cells (but the cursor may be inside an ES title,
     // which is an H4.)
     var selNode = this.editor.getSelectedNode();
-    if (selNode.tagName == 'H4' &&
-            selNode.parentNode.tagName == 'DIV' &&
-            selNode.parentNode.className=='externalsource') {
+    if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
+            (selNode.parentNode.className=='externalsource' || selNode.parentNode.className=='externalsourcepreview')) {
         selNode = selNode.parentNode;
     };
     var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
@@ -2740,6 +2979,10 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
             };
             /* reset the extsource select box */
             selectSelectItem(object.idselect, '');
+
+            /* load the external source preview */
+            var el = new ExternalSourceLoader(extsource);
+            el.initialize();
         } else if (this.status == '400') {
             // failure, provide some feedback and return to the form
             alert(
@@ -2874,14 +3117,22 @@ SilvaExternalSourceTool.prototype._gatherFormData = function() {
     return ret.join("&");
 };
 
-SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function() {
-    var selNode = this.editor.getSelectedNode();
-    var source = this.getNearestExternalSource(selNode);
+SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function(esElement) {
+    /* esElement, if passed in, is an externalsource div in the document.  If passed in,
+        this div will be used rather than attempting to get the nearest external source node
+        from the current selection.  Useful for processing external sources in code outside
+        of the ES tool (e.g. the ExternalSource preloader)*/
+    if (esElement) {
+        var source = esElement;
+    } else {
+        var selNode = this.editor.getSelectedNode();
+        var source = this.getNearestExternalSource(selNode);
+    };
     if (!source) {
         return '';
     };
     var ret = new Array();
-    var spans = source.getElementsByTagName('span');
+    var spans = source.getElementsByTagName("div")[0].getElementsByTagName('span');
     for (var i=0; i < spans.length; i++) {
         var name = spans[i].getAttribute('key');
         if (spans[i].childNodes.length > 0) {
@@ -2900,7 +3151,7 @@ SilvaExternalSourceTool.prototype.getNearestExternalSource =
     var currnode = selNode;
     while (currnode) {
         if (currnode.nodeName.toLowerCase() == 'div' &&
-                currnode.className == 'externalsource') {
+                currnode.className.search(/(^externalsource$)|(^externalsource\s+)/)>-1) {
             return currnode;
         };
         currnode = currnode.parentNode;

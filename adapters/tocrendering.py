@@ -137,7 +137,7 @@ class TOCRenderingAdapter(adapter.Adapter):
 
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
-        depth = 0
+        depth = -1
         item = None
         for (depth,item) in func(container=self.context, toc_depth=toc_depth, sort_order=sort_order, show_types=show_types):
             pd = prev_depth[-1]

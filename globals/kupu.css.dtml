@@ -30,7 +30,46 @@ div.toc {
 }
 
 div.externalsource {
-  background-color: PaleGoldenRod;
+  /* padding of 2px here, when hovered border of 1px, padding of 1px */
+  padding: 2px;
+  position: relative;
+  /* establish a new block-formatting context so floated blocks
+     in the preview don't flow outside of the ES div */
+  /* this is actually done inside the preloader, so the "real"
+     height can be computed.  An \xa0 (&nbsp;) is added if
+     the height is 4 (padding-top + padding-bottom) */
+  //overflow: auto;
+}
+
+div.externalsource h4, 
+div.externalsource p,
+div.externalsource div.parameters {
+  display: none;
+  padding: 3px;
+}
+
+/* using a :hover sudo-selector would be nice, but it seems that IE7 wonn't
+    doesn't recognize this selector within designMode */
+div.externalsource.active {
+  background: url("/silva/globals/btn-lock.png") no-repeat top right;
+  background-color: white;
+  padding: 1px;
+  border: 1px solid #fbab37;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+
+div.externalsourcepreview {
+  margin: 0px 2px;
+}
+div.externalsourcepreview h4 {
+  display: block;
+  margin-bottom:0;
+  margin-top: 0px;
+}
+
+div.externalsourcepreview p {
+  display: block;
 }
 
 /* keep this if you markup text with index elements, this overrides the highlighting in the editor */
@@ -52,17 +91,6 @@ table td.align-center p, table th.align-center p {
 table td.align-right, table th.align-right,
 table td.align-right p, table th.align-right p {
   text-align: right;
-}
-
-/* external source dispay selectors */
-div.externalsource h4 {
-  margin-bottom:0;
-}
-div.externalsource p {
-  margin:0;
-}
-div.parameters {
-  display:none;
 }
 
 /* end cascade */

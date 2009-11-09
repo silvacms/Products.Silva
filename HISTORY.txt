@@ -7,6 +7,13 @@ Silva 2.2b1 (unreleased)
 New Features
 ~~~~~~~~~~~~
 
+- External Sources are now previewable in kupu.  When an external source with preview
+  enabled is added to a document, the rendered extneral source is shown in kupu.
+  When that external source is active, or when hovering over it with the mouse,
+  the external source will have a different background color, a border, and a
+  'lock' icon.  This shows the extent of the external source within the document
+  and also provides a hint that it is not editable.
+
 - The reference lookup window formulator widget now supports multiple
   entries with javascript to add / remove entries.  NOTE: the default is
   to retain the old behavior (supporting one reference, for either type of
@@ -22,6 +29,9 @@ New Features
 
 Bugs Fixed
 ~~~~~~~~~~
+- In kupu, when an active external source (i.e. the external source tool is
+  showing that ES's parameters), clicking on the same ES no longer causes
+  the tool to reload (no more flicker)
 
 - Errors when attempting to upload interlaced PNGs are now caught and
   displayed to the user.
