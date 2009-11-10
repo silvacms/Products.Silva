@@ -35,7 +35,7 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         input_hidden = form1.getControl(name='name')
         self.assertEquals(input_hidden.value, 'Silva')
         form1.getControl(name='install_layout').click()
-        self.failUnless('Default layout code installed' in sb.browser.contents)
+        self.failUnless('Default legacy layout code installed' in sb.browser.contents)
 
         # Test to uninstall/reinstall already installed extensions.
         for extension in ['SilvaDocument',  'SilvaFind']:
