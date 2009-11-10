@@ -42,7 +42,7 @@ return ('<html>\n'
         '</head>\n'
         '%s\n'
         '</html>' % (model.get_title_editable(),
-                        getattr(context, 'frontend.css').absolute_url(),
+                        getattr(context.globals, 'frontend.css').absolute_url(),
                         getattr(context.globals, 'kupu.css').absolute_url(),
                         docref,
                         xhtml))
