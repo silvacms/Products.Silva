@@ -58,6 +58,7 @@ installProduct('Silva')
 installProduct('Five')
 installPackage('silva.core.views')
 installPackage('silva.core.layout')
+installPackage('silvatheme.multiflex')
 
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password
@@ -135,8 +136,10 @@ class SilvaLayer(ZopeLiteLayer):
         setDebugMode(1)
         import Products.Five.zcml as zcml
         import silva.export.opendocument
+        import silvatheme.multiflex
         zcml.load_site()
         zcml.load_config('configure.zcml', silva.export.opendocument)
+        zcml.load_config('configure.zcml', silvatheme.multiflex)
         setDebugMode(0)
 
         setupSilva()
