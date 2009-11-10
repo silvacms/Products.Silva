@@ -10,6 +10,7 @@ from zope.interface.verify import verifyObject
 from zope.testing import doctest
 
 from Testing import ZopeTestCase
+from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder, sync
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager
 
@@ -33,7 +34,9 @@ def logAsUser(app, username):
 extraglobs = {'logAsUser': logAsUser,
               'SilvaBrowser': SilvaBrowser,
               'verifyObject': verifyObject,
-              'grokkify': five.grok.testing.grok,}
+              'getRootFolder': getRootFolder,
+              'sync': sync,
+              'grok': five.grok.testing.grok,}
 
 
 def suiteFromPackage(name):

@@ -5,10 +5,10 @@
 
   Grok this module:
 
-    >>> grokkify('Products.Silva.tests.grok.layer')
+    >>> grok('Products.Silva.tests.grok.layer')
 
   Now we have a new layer:
- 
+
     >>> from Products.SilvaLayout.helpers import getAvailableSkins
     >>> 'My test skin' in getAvailableSkins()
     True
@@ -17,6 +17,7 @@
 
 from silva.core.layout.interfaces import ISilvaLayer, ISilvaSkin
 from silva.core import conf as silvaconf
+
 
 class IMyTestLayer(ISilvaLayer):
     """My test layer.

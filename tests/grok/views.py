@@ -8,18 +8,19 @@
 
  We grok this test file:
 
-    >>> grokkify('Products.Silva.tests.grok.views')
+    >>> grok('Products.Silva.tests.grok.views')
 
  Now we add a folder:
 
-    >>> app.root.manage_addProduct['Silva'].manage_addMyFolder('myfolder', 'My Folder')
+    >>> factory = app.root.manage_addProduct['Silva']
+    >>> factory.manage_addMyFolder('myfolder', 'My Folder')
     >>> app.root.myfolder
     <My Folder instance myfolder>
     >>> browser.go('http://localhost/root/myfolder')
     (200, 'http://localhost/root/myfolder')
     >>> print browser.contents
     <!DOCTYPE  ...
-    <div>A customized Folder</div> ...
+    <h1>A customized Folder</h1> ...
 
 
 """
@@ -27,6 +28,7 @@
 from Products.Silva.Folder import Folder
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
+
 
 class MyFolder(Folder):
 

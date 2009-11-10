@@ -8,21 +8,21 @@
 
   A extension is declared in __init__.py of a package:
 
-    >>> grokkify('Products.Silva.tests.grok.extension_nopackage_fixture')
+    >>> grok('Products.Silva.tests.grok.extension_nopackage_fixture')
     Traceback (most recent call last):
         ...
     GrokError: Your extension Bad Extension is not defined in a package.
 
   A extension should have a installer:
 
-    >>> grokkify('Products.Silva.tests.grok.extension_noinstaller')
+    >>> grok('Products.Silva.tests.grok.extension_noinstaller')
     Traceback (most recent call last):
-        ...  
+        ...
     GrokError: You need to define an installer for your extension Test Extension.
 
   But you can use the default installer from silva.core.conf.installer:
 
-    >>> grokkify('Products.Silva.tests.grok.extension_simple')
+    >>> grok('Products.Silva.tests.grok.extension_simple')
 
   You can now look for your extension, and check its parameters and installer:
 

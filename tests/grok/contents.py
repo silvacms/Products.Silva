@@ -3,7 +3,7 @@
 # $Id$
 """
 
-    >>> from Products.Silva.ExtensionRegistry import extensionRegistry 
+    >>> from Products.Silva.ExtensionRegistry import extensionRegistry
     >>> silva = extensionRegistry.get_extension('Silva')
     >>> browser = SilvaBrowser()
     >>> logAsUser(app, 'manager')
@@ -13,7 +13,7 @@
 
   On a publication:
 
-    >>> grokkify('Products.Silva.tests.grok.contents_publication_fixture')
+    >>> grok('Products.Silva.tests.grok.contents_publication_fixture')
     >>> 'My Publication' in [content['name'] for content in silva.get_content()]
     True
 
@@ -24,20 +24,21 @@
   here a custom factory, which just create a article, so we will be
   able to create an instance:
 
-    >>> grokkify('Products.Silva.tests.grok.contents')
+    >>> grok('Products.Silva.tests.grok.contents')
     >>> 'My Article' in [content['name'] for content in silva.get_content()]
     True
     >>> 'My Article Version' in [content['name'] for content in silva.get_content()]
     True
-    >>> app.root.manage_addProduct['Silva'].manage_addMyArticle('myarticle', 'My demo article')
+    >>> factory = app.root.manage_addProduct['Silva']
+    >>> factory.manage_addMyArticle('myarticle', 'My demo article')
     >>> app.root.myarticle
     <My Article instance myarticle>
     >>> app.root.myarticle.customCreation
     True
-  
+
   A versioned content should have a versionClass defined:
 
-    >>> grokkify('Products.Silva.tests.grok.contents_noversionclass_fixture')
+    >>> grok('Products.Silva.tests.grok.contents_noversionclass_fixture')
     Traceback (most recent call last):
        ...
     GrokError: You need to provide a version class for MyVersionedContent.

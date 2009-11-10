@@ -17,9 +17,9 @@
     >>> browser.go('http://localhost/root/folder/photo')
     (404, None)
 
-  We can grokkify our marker:
+  We can grok our marker:
 
-    >>> grokkify('Products.Silva.tests.grok.markers')
+    >>> grok('Products.Silva.tests.grok.markers')
 
   So now we should have it:
 
