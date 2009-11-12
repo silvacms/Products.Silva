@@ -85,24 +85,10 @@ class Zope3ViewAttribute(ViewAttribute):
         else:
             # Default behaviour of ViewAttribute, but look at a Five
             # views if the asked one doesn't exists.
+            request['model'] = context
 
-            request = self.REQUEST
-            request['model'] = model = self.aq_parent
-
-            view = getSilvaViewFor(self, self._view_type, model)
-            method_on_view =  getattr(view, name, None)
-
-            if method_on_view is None:
-                # "Method on view" does not exist: redirect to default
-                # method.  XXX may cause endless redirection loop, if
-                # default does not exist.
-                response = request.RESPONSE
-                response.redirect('%s/%s/%s' % (
-                        model.absolute_url(),
-                        self._view_type,
-                        self._default_method))
-
-            return method_on_view
+            view = getSilvaViewFor(self, self._view_type, context)
+            return getattr(view, name, None)
 
 
 class SilvaObject(Security, ViewCode):
