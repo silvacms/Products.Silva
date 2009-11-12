@@ -1,0 +1,590 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kupu trunkPOT-Creation-Date: Mon Aug 24 17:23:22 2009\n"
+"PO-Revision-Date: 2009-11-12 12:23+0100\n"
+"Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
+"Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generated-By: zope/app/translation_files/extract.py\n"
+"POT-Creation-Date: \n"
+
+#: /kupumacros.html:210
+msgid "Kupu 1.4b1"
+msgstr ""
+
+#: /kupumacros.html:214
+msgid "paragraph styles"
+msgstr ""
+
+#: /kupumacros.html:215
+#: /kupumacros.html:638
+msgid "plain"
+msgstr ""
+
+#: /kupumacros.html:216
+msgid "lead"
+msgstr ""
+
+#: /kupumacros.html:217
+msgid "annotation"
+msgstr ""
+
+#: /kupumacros.html:219
+msgid "heading styles"
+msgstr ""
+
+#: /kupumacros.html:220
+#: /kupumacros.html:513
+msgid "title"
+msgstr ""
+
+#: /kupumacros.html:221
+#: /kupumacros.html:658
+msgid "heading"
+msgstr ""
+
+#: /kupumacros.html:222
+msgid "sub"
+msgstr ""
+
+#: /kupumacros.html:223
+msgid "subsub"
+msgstr ""
+
+#: /kupumacros.html:224
+msgid "paragraph"
+msgstr ""
+
+#: /kupumacros.html:225
+msgid "subparagraph"
+msgstr ""
+
+#: /kupumacros.html:227
+msgid "preformatted"
+msgstr ""
+
+#: /kupumacros.html:231
+msgid "save: alt-s"
+msgstr ""
+
+#: /kupumacros.html:235
+msgid "Bold: Access key (Alt or Ctrl) + B"
+msgstr ""
+
+#: /kupumacros.html:236
+msgid "Italic: Access key (Alt or Ctrl) + I"
+msgstr ""
+
+#: /kupumacros.html:237
+msgid "Underline: Access key (Alt or Ctrl) + U"
+msgstr ""
+
+#: /kupumacros.html:241
+msgid "Subscript: Access key (Alt or Ctrl) + -"
+msgstr ""
+
+#: /kupumacros.html:242
+msgid "Superscript: Access key (Alt or Ctrl) + +"
+msgstr ""
+
+#: /kupumacros.html:247
+msgid "Numbered list: Access key (Alt or Ctrl) + #"
+msgstr ""
+
+#: /kupumacros.html:248
+msgid "Unordered list: Access key (Alt or Ctrl) + *"
+msgstr ""
+
+#: /kupumacros.html:253
+msgid "Definition list: Access key (Alt or Ctrl) + ="
+msgstr ""
+
+#: /kupumacros.html:257
+msgid "Undo: Access key (Alt or Ctrl) + Z"
+msgstr ""
+
+#: /kupumacros.html:258
+msgid "Redo: Access key (Alt or Ctrl) + Y"
+msgstr ""
+
+# Default: "Switch between visual editor and HTML view"
+#: /kupumacros.html:262
+msgid "toggle_source_view"
+msgstr ""
+
+# Default: "&#9679;"
+#: /kupumacros.html:268
+msgid "list-disc"
+msgstr ""
+
+# Default: "&#9632;"
+#: /kupumacros.html:269
+msgid "list-square"
+msgstr ""
+
+# Default: "&#9675;"
+#: /kupumacros.html:270
+msgid "list-circle"
+msgstr ""
+
+# Default: "no bullet"
+#: /kupumacros.html:271
+msgid "list-nobullet"
+msgstr ""
+
+# Default: "1"
+#: /kupumacros.html:274
+msgid "list-decimal"
+msgstr ""
+
+# Default: "I"
+#: /kupumacros.html:275
+msgid "list-upperroman"
+msgstr ""
+
+# Default: "i"
+#: /kupumacros.html:276
+msgid "list-lowerroman"
+msgstr ""
+
+# Default: "A"
+#: /kupumacros.html:277
+msgid "list-upperalpha"
+msgstr ""
+
+# Default: "a"
+#: /kupumacros.html:278
+msgid "list-loweralpha"
+msgstr ""
+
+#: /kupumacros.html:292
+msgid "Image inserted"
+msgstr ""
+
+#: /kupumacros.html:296
+msgid "click to fold"
+msgstr ""
+
+#: /kupumacros.html:300
+msgid "click to unfold"
+msgstr ""
+
+#: /kupumacros.html:304
+msgid ""
+"You are leaving the editor. Do you want to save your changes?\\n"
+"\\n"
+"Click OK to save your changes and leave the editor."
+msgstr ""
+
+#: /kupumacros.html:308
+msgid "Copy"
+msgstr ""
+
+#: /kupumacros.html:312
+msgid "Paste"
+msgstr ""
+
+#: /kupumacros.html:316
+msgid "Cut"
+msgstr ""
+
+#: /kupumacros.html:320
+msgid "Recursion detected when counting column position"
+msgstr ""
+
+#: /kupumacros.html:324
+msgid "Editor initialized"
+msgstr ""
+
+#: /kupumacros.html:328
+msgid "Please wait while saving document..."
+msgstr ""
+
+#: /kupumacros.html:332
+msgid ""
+"Error saving your data.\\n"
+"Response status: ${status}.\\n"
+"Check your server log for more information."
+msgstr ""
+
+#: /kupumacros.html:336
+msgid "Error saving document"
+msgstr ""
+
+#: /kupumacros.html:340
+msgid "Document saved"
+msgstr ""
+
+#: /kupumacros.html:344
+msgid "Error placing back selection"
+msgstr ""
+
+#: /kupumacros.html:362
+msgid "comment"
+msgstr ""
+
+#: /kupumacros.html:372
+msgid "properties"
+msgstr ""
+
+#: /kupumacros.html:378
+msgid "name"
+msgstr ""
+
+#: /kupumacros.html:381
+msgid "input"
+msgstr ""
+
+#: /kupumacros.html:394
+msgid "link"
+msgstr ""
+
+#: /kupumacros.html:400
+#: /kupumacros.html:480
+msgid "get link reference..."
+msgstr ""
+
+#: /kupumacros.html:402
+msgid "link target"
+msgstr ""
+
+#: /kupumacros.html:404
+#: /kupumacros.html:485
+msgid "same window"
+msgstr ""
+
+#: /kupumacros.html:405
+#: /kupumacros.html:486
+msgid "new window"
+msgstr ""
+
+#: /kupumacros.html:406
+msgid "parent"
+msgstr ""
+
+#: /kupumacros.html:407
+msgid "top"
+msgstr ""
+
+#: /kupumacros.html:408
+#: /kupumacros.html:487
+msgid "custom target"
+msgstr ""
+
+#: /kupumacros.html:411
+msgid "add link"
+msgstr ""
+
+#: /kupumacros.html:412
+#: /kupumacros.html:443
+#: /kupumacros.html:529
+#: /kupumacros.html:574
+#: /kupumacros.html:611
+#: /kupumacros.html:705
+msgid "update"
+msgstr ""
+
+#: /kupumacros.html:413
+#: /kupumacros.html:444
+#: /kupumacros.html:530
+#: /kupumacros.html:575
+#: /kupumacros.html:612
+#: /kupumacros.html:687
+#: /kupumacros.html:694
+#: /kupumacros.html:700
+#: /kupumacros.html:739
+msgid "remove"
+msgstr ""
+
+#: /kupumacros.html:420
+msgid "anchor/index item"
+msgstr ""
+
+#: /kupumacros.html:430
+msgid "anchor name"
+msgstr ""
+
+#: /kupumacros.html:430
+msgid "Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore."
+msgstr ""
+
+#: /kupumacros.html:434
+msgid "index title"
+msgstr ""
+
+#: /kupumacros.html:434
+msgid "If this anchor is also an index item, enter a title for the link in the Indexer."
+msgstr ""
+
+#: /kupumacros.html:442
+#: /kupumacros.html:528
+#: /kupumacros.html:610
+#: /kupumacros.html:738
+msgid "add element"
+msgstr ""
+
+#: /kupumacros.html:459
+msgid "image"
+msgstr ""
+
+#: /kupumacros.html:463
+msgid "get image reference..."
+msgstr ""
+
+#: /kupumacros.html:464
+msgid "edit image..."
+msgstr ""
+
+#: /kupumacros.html:466
+msgid "image source"
+msgstr ""
+
+#: /kupumacros.html:467
+msgid "image alignment:"
+msgstr ""
+
+#: /kupumacros.html:469
+msgid "default"
+msgstr ""
+
+#: /kupumacros.html:470
+msgid "align left"
+msgstr ""
+
+#: /kupumacros.html:471
+msgid "align center"
+msgstr ""
+
+#: /kupumacros.html:472
+msgid "align right"
+msgstr ""
+
+#: /kupumacros.html:473
+msgid "float left"
+msgstr ""
+
+#: /kupumacros.html:474
+msgid "float right"
+msgstr ""
+
+#: /kupumacros.html:477
+msgid "link settings"
+msgstr ""
+
+#: /kupumacros.html:478
+msgid "&#160;high resolution version"
+msgstr ""
+
+#: /kupumacros.html:478
+msgid "hires"
+msgstr ""
+
+#: /kupumacros.html:478
+#: /kupumacros.html:480
+msgid "link to:"
+msgstr ""
+
+#: /kupumacros.html:483
+msgid "link target:"
+msgstr ""
+
+#: /kupumacros.html:490
+msgid "tooltip"
+msgstr ""
+
+#: /kupumacros.html:493
+msgid "update image"
+msgstr ""
+
+#: /kupumacros.html:503
+msgid "abbreviations and acronyms"
+msgstr ""
+
+#: /kupumacros.html:513
+msgid "Enter the text of the tooltip that will appear when a user hovers over the element with the cursor."
+msgstr ""
+
+#: /kupumacros.html:517
+msgid "Choose the kind of html tag (abbr or acronym)."
+msgstr ""
+
+#: /kupumacros.html:517
+msgid "type"
+msgstr ""
+
+#: /kupumacros.html:544
+#: /kupumacros.html:699
+msgid "cleanup"
+msgstr ""
+
+#: /kupumacros.html:549
+msgid "perform"
+msgstr ""
+
+#: /kupumacros.html:555
+msgid "external source"
+msgstr ""
+
+#: /kupumacros.html:563
+msgid "For more info hover over the items in the list"
+msgstr ""
+
+#: /kupumacros.html:571
+msgid "The external sources product is not installed. This tool is disabled."
+msgstr ""
+
+#: /kupumacros.html:572
+msgid "add external source"
+msgstr ""
+
+#: /kupumacros.html:573
+msgid "cancel"
+msgstr ""
+
+#: /kupumacros.html:576
+msgid "No external sources found."
+msgstr ""
+
+#: /kupumacros.html:588
+msgid "citation"
+msgstr ""
+
+#: /kupumacros.html:598
+msgid "author"
+msgstr ""
+
+#: /kupumacros.html:602
+msgid "source"
+msgstr ""
+
+#: /kupumacros.html:628
+#: /kupumacros.html:697
+msgid "table"
+msgstr ""
+
+#: /kupumacros.html:635
+msgid "table class"
+msgstr ""
+
+#: /kupumacros.html:639
+msgid "list"
+msgstr ""
+
+#: /kupumacros.html:640
+msgid "grid"
+msgstr ""
+
+#: /kupumacros.html:641
+msgid "datagrid"
+msgstr ""
+
+#: /kupumacros.html:650
+msgid "rows"
+msgstr ""
+
+#: /kupumacros.html:654
+msgid "columns"
+msgstr ""
+
+#: /kupumacros.html:661
+msgid "create header"
+msgstr ""
+
+#: /kupumacros.html:665
+msgid "add table"
+msgstr ""
+
+#: /kupumacros.html:670
+msgid "column align"
+msgstr ""
+
+#: /kupumacros.html:673
+msgid "left"
+msgstr ""
+
+#: /kupumacros.html:674
+msgid "center"
+msgstr ""
+
+#: /kupumacros.html:675
+msgid "right"
+msgstr ""
+
+#: /kupumacros.html:680
+msgid "column widths"
+msgstr ""
+
+#: /kupumacros.html:684
+msgid "column"
+msgstr ""
+
+#: /kupumacros.html:686
+msgid "add column"
+msgstr ""
+
+#: /kupumacros.html:691
+msgid "row"
+msgstr ""
+
+#: /kupumacros.html:693
+msgid "add row"
+msgstr ""
+
+#: /kupumacros.html:722
+msgid "table of contents"
+msgstr ""
+
+#: /kupumacros.html:727
+msgid "1 level"
+msgstr ""
+
+#: /kupumacros.html:728
+msgid "2 levels"
+msgstr ""
+
+#: /kupumacros.html:729
+msgid "3 levels"
+msgstr ""
+
+#: /kupumacros.html:730
+msgid "4 levels"
+msgstr ""
+
+#: /kupumacros.html:731
+msgid "5 levels"
+msgstr ""
+
+#: /kupumacros.html:732
+msgid "6 levels"
+msgstr ""
+
+#: /kupumacros.html:733
+msgid "7 levels"
+msgstr ""
+
+#: /kupumacros.html:734
+msgid "8 levels"
+msgstr ""
+
+#: /kupumacros.html:735
+msgid "9 levels"
+msgstr ""
+
+#: /kupumacros.html:736
+msgid "unlimited"
+msgstr ""
+
+#: /kupumacros.html:748
+msgid "typographical characters"
+msgstr ""
+
+#: /kupumacros.html:760
+msgid "save"
+msgstr ""
+
+#: /kupumacros.html:764
+msgid "save document"
+msgstr ""
+
