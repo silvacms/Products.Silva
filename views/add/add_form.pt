@@ -79,8 +79,10 @@
             accesskey python:field.id == 'file' and 'f' or nothing;
           ">
           title
-        </label><span class="warning"
-          tal:condition="field/is_required">*</span>
+        </label><span class="required"
+          tal:condition="field/is_required">
+          *
+          </span>
         <p tal:define="note field/description"
           tal:condition="python:note != 'False'"
           tal:content="structure note"
