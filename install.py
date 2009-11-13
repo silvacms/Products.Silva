@@ -579,7 +579,7 @@ def installSilvaDocument(root):
 def installSilvaLayout(root):
     # installs SilvaLayout if available
     from Products.SilvaLayout.install import install
-    install(root, default_skinid='Multiflex')
+    install(root, default_skinid='Standard Issue')
 
 def installSilvaFind(root):
     # installs Silva Find if available
