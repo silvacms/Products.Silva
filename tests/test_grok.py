@@ -51,6 +51,7 @@ def suiteFromPackage(name):
             continue
 
         dottedname = 'Products.Silva.tests.%s.%s' % (name, filename[:-3])
+        print dottedname
         test = ZopeTestCase.FunctionalDocTestSuite(
             dottedname,
             setUp=setUp,
