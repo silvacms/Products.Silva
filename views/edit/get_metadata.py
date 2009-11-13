@@ -112,5 +112,6 @@ for set_name in set_names:
         element['description'] = bound_element.Description()
         element['title'] = bound_element.Title()
         element['hidden'] = bool(bound_element.field.get_value('hidden'))
+        element['html_id'] = bound_element.field.html_id
 
 return pt_binding

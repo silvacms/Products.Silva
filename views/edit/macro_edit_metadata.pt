@@ -96,12 +96,12 @@
                   <td class="designator">
                     <span class="matchlabel" tal:omit-tag="element/isEditable">
                       <label tal:content="element/title"
-                        tal:attributes="for element_name"
-                         tal:omit-tag="not:element/isEditable"
+                        tal:attributes="for element/html_id"
+                         tal:omit-tag="python:not (element['isEditable'] and element['html_id'])"
                         i18n:translate="">
                         Element name
-                      </label><span class="warning"
-                        tal:condition="element/isRequired">*</span>
+                      </label><span class="required"
+                        tal:condition="element/isRequired"> * </span>
                     </span>
                     <p tal:content="structure element/description"
                       i18n:translate="">
