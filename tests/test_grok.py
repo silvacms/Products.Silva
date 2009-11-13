@@ -39,8 +39,8 @@ extraglobs = {'logAsUser': logAsUser,
               'grok': five.grok.testing.grok,}
 
 
-def suiteFromPackage(name):
-    files = resource_listdir(__name__, name)
+def suiteFromPackage(name, module_base="Products.Silva.tests"):
+    files = resource_listdir(module_base, name)
     suite = unittest.TestSuite()
     for filename in files:
         if not filename.endswith('.py'):
@@ -50,7 +50,7 @@ def suiteFromPackage(name):
         if filename == '__init__.py':
             continue
 
-        dottedname = 'Products.Silva.tests.%s.%s' % (name, filename[:-3])
+        dottedname = '%s.%s.%s' % (module_base, name, filename[:-3])
         test = ZopeTestCase.FunctionalDocTestSuite(
             dottedname,
             setUp=setUp,
@@ -61,7 +61,6 @@ def suiteFromPackage(name):
         test.layer = SilvaLayer
         suite.addTest(test)
     return suite
-
 
 def test_suite():
     suite = unittest.TestSuite()
