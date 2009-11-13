@@ -33,6 +33,8 @@ Silva changes
       - Fix authentication on tab_preview (only to get one login form,
         and not one per frame).
 
+      - Improve how converters are invoked.
+
   Silva 2.1.6 (2009-08-05)
 
     Bug fixes
