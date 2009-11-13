@@ -1,19 +1,13 @@
-import os, tempfile
-from subprocess import Popen, PIPE
+import os, tempfile, subprocess
 
 
 def execute(cmd):
-    p = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
-    fp_err = p.stderr
-    fp_out = p.stdout
-    data = fp_out.read()
-    fp_out.close()
-    err = fp_err.read()
-    fp_err.close()
-    return err, data
+    return subprocess.Popen(
+        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 
-PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[0].startswith('pdftotext')
-WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[0].startswith('antiword') 
+
+PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[1].startswith('pdftotext')
+WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[1].startswith('antiword') 
 
 
 def get_converter_for_mimetype(mimetype):
@@ -37,7 +31,7 @@ class WordConverter(object):
         fp = open(fname, 'w+b')
         fp.write(data)
         fp.close()
-        err, converted = execute('antiword "%s"' % fname)
+        converted, err = execute('antiword "%s"' % fname)
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
@@ -64,7 +58,7 @@ class PDFConverter(object):
         fp = open(fname, 'w+b')
         fp.write(data)
         fp.close()
-        err, converted = execute('pdftotext -enc UTF-8 "%s" -' % fname)
+        converted, err = execute('pdftotext -enc UTF-8 "%s" -' % fname)
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
