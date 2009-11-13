@@ -4,4 +4,7 @@
 # 
 model = context.REQUEST.model
 
+if model is None:
+    return ''
+
 return '/'.join(model.sec_get_all_roles())
