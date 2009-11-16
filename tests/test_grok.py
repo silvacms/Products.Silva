@@ -18,7 +18,7 @@ import five.grok.testing
 
 from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
-
+from Products.Silva.tests.SilvaTestCase import SilvaFunctionalTestCase
 
 def logAsUser(app, username):
     """Login as the given user.
@@ -53,6 +53,7 @@ def suiteFromPackage(name, module_base="Products.Silva.tests"):
         dottedname = '%s.%s.%s' % (module_base, name, filename[:-3])
         test = ZopeTestCase.FunctionalDocTestSuite(
             dottedname,
+            test_class=SilvaFunctionalTestCase,
             setUp=setUp,
             tearDown=tearDown,
             extraglobs=extraglobs,
