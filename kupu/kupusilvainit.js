@@ -403,11 +403,10 @@ function initSilvaKupu(iframe) {
         'kupu-table-columnwidth', 'kupu-table-addtable-button',
         'kupu-table-addrow-button', 'kupu-table-delrow-button',
         'kupu-table-addcolumn-button', 'kupu-table-delcolumn-button',
+        'kupu-table-mergecell-button', 'kupu-table-splitcell-button',
         'kupu-table-fix-button', 'kupu-table-delete-button',
         'kupu-toolbox-tables', 'kupu-toolbox', 'kupu-toolbox-active',
-        'kupu-table-cell-type', 'kupu-table-cell-colspan',
-        'kupu-table-addcellbefore-button', 'kupu-table-addcellafter-button',
-        'kupu-table-delcell-button'
+        'kupu-table-cell-type'
     );
     tabletool.registerToolBox('tabletoolbox', tabletoolbox);
 

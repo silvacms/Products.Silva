@@ -781,7 +781,7 @@ SilvaTableTool.prototype.createTable = function(
     var tbody = doc.createElement('tbody');
 
     if (makeHeader) {
-        this._addRowHelper(doc, tbody, 'th', -1, cols);
+        this._addRowHelper(doc, tbody, 'th', -1, cols, true);
     };
 
     for (var i=0; i < rows; i++) {
@@ -790,9 +790,9 @@ SilvaTableTool.prototype.createTable = function(
 
     table.appendChild(tbody);
 
-    // call the _getColumnInfo() method, this will generate the colinfo on the
-    // table
-    this._getColumnInfo(table);
+    // make that Silva's column info attribute is calculated and set
+    var colinfo = this._getColumnInfo(table);
+    this._setColumnInfo(table, colinfo);
 
     var iterator = new NodeIterator(table);
     var currnode = null;
@@ -826,9 +826,8 @@ SilvaTableTool.prototype.createTable = function(
     this.editor.updateState();
 };
 
-SilvaTableTool.prototype.addTableRow = function() {
+SilvaTableTool.prototype.addTableRow = function(currnode) {
     /* add a table row or header */
-    var currnode = this.editor.getSelectedNode();
     var doc = this.editor.getInnerDocument();
     var tbody = this.editor.getNearestParentOfType(currnode, 'tbody');
     if (!tbody) {
@@ -850,9 +849,8 @@ SilvaTableTool.prototype.addTableRow = function() {
     this.editor.logMessage('Table row added');
 };
 
-SilvaTableTool.prototype.delTableRow = function() {
+SilvaTableTool.prototype.delTableRow = function(currnode) {
     /* delete a table row or header */
-    var currnode = this.editor.getSelectedNode();
     var currtr = this.editor.getNearestParentOfType(currnode, 'tr');
 
     if (!currtr) {
@@ -989,12 +987,52 @@ SilvaTableTool.prototype.removeCell = function(widthinput) {
     this._getColumnInfo();
     widthinput.value = this.getColumnWidths(table);
     this.editor.content_changed = true;
+    this.editor.getDocument().getWindow().focus();
     this.editor.logMessage('cell removed');
 };
 
-SilvaTableTool.prototype.addTableColumn = function(widthinput) {
+SilvaTableTool.prototype.changeCellType = function(newtype) {
+    /* change a single cell's type between <th> and <td> */
+    var currNode = this.editor.getSelectedNode();
+    var currCell = this.editor.getNearestParentOfType(currNode, 'td');
+    if (!currCell) {
+        var currCell = this.editor.getNearestParentOfType(currNode,'th');
+    };
+    if (!currCell) {
+        this.editor.logMessage('Not inside a cell!', 1);
+        return;
+    };
+    
+    if (newtype.toUpperCase() == currCell.nodeName) {
+        this.editor.logMessage('Table cell unchanged');
+    } else {
+        var doc = this.editor.getInnerDocument();
+        var newCell = doc.createElement(newtype);
+        while (currCell.hasChildNodes()) {
+            newCell.appendChild(currCell.firstChild);
+        };
+        if (currCell.className) {
+            newCell.className = currCell.className;
+        };
+        if (currCell.align && currCell.align != 'left') {
+            newCell.align = currCell.align;
+        };
+        if (currCell.width) {
+            newCell.width = currCell.width;
+        };
+        if (currCell.colSpan && currCell.colSpan > 1) {
+            newCell.colSpan = currCell.colSpan;
+        };
+        currCell.parentNode.replaceChild(newCell, currCell);
+        this.editor.content_changed = true;
+    };
+    var selection = this.editor.getSelection();
+    selection.selectNodeContents(newCell);
+    selection.collapse(true);
+};
+
+SilvaTableTool.prototype.addTableColumn = function(currnode) {
     /* add a table column */
-    var currnode = this.editor.getSelectedNode();
     var doc = this.editor.getInnerDocument();
     var table = this.editor.getNearestParentOfType(currnode, 'table');
     if (!table) {
@@ -1006,27 +1044,23 @@ SilvaTableTool.prototype.addTableColumn = function(widthinput) {
     if (!currcell) {
         var currcell = this.editor.getNearestParentOfType(currnode, 'th');
         if (!currcell) {
-            this.editor.logMessage('Not inside a row!', 1);
+            this.editor.logMessage('Not inside a cell!', 1);
             return;
-        } else {
-            var index = -1;
         };
-    } else {
-        var index = this._getColIndex(currcell) + 1;
     };
+    var index = this._getColIndex(currcell) + 1;
     var numcells = this._countColumns(body);
     this._addColHelper(doc, body, index, numcells);
-    table.removeAttribute('silva_column_info');
-    this._getColumnInfo();
 
-    widthinput.value = this.getColumnWidths(table);
+    var widths = this.getColumnWidths(table);
     this.editor.content_changed = true;
     this.editor.logMessage('Column added');
+
+    return widths;
 };
 
-SilvaTableTool.prototype.delTableColumn = function(widthinput) {
+SilvaTableTool.prototype.delTableColumn = function(currnode) {
     /* delete a column */
-    var currnode = this.editor.getSelectedNode();
     var table = this.editor.getNearestParentOfType(currnode, 'table');
     if (!table) {
         this.editor.logMessage('Not inside a table body!', 1);
@@ -1040,18 +1074,139 @@ SilvaTableTool.prototype.delTableColumn = function(widthinput) {
             this.editor.logMessage('Not inside a cell!');
             return;
         };
-        var index = -1;
-    } else {
-        var index = this._getColIndex(currcell);
     };
 
-    this._delColHelper(body, index);
-    table.removeAttribute('silva_column_info');
-    this._getColumnInfo();
+    if (this._getAllColumns(currcell.parentNode).length == 1) {
+        this.editor.logMessage('Can not delete the last cell of a table!');
+        return;
+    };
 
-    widthinput.value = this.getColumnWidths(table);
+    var index = this._getColIndex(currcell);
+    this._delColHelper(body, index);
+
+    var widths = this.getColumnWidths(table);
     this.editor.content_changed = true;
     this.editor.logMessage('Column deleted');
+
+    return widths;
+};
+
+SilvaTableTool.prototype.mergeTableCell =
+            function mergeTableCell(currnode) {
+    // I think it's safe to assume every table will have a tbody...
+    var cell = this.editor.getNearestParentOfType(currnode, 'td') ||
+        this.editor.getNearestParentOfType(currnode, 'th');
+    var tr = this.editor.getNearestParentOfType(cell, 'tr');
+    var table = this.editor.getNearestParentOfType(tr, 'table');
+    var index = this._getColIndex(cell);
+
+    var tbody = table.getElementsByTagName('tbody')[0];
+    var currindex = 0;
+    for (var j=0; j < tr.childNodes.length; j++) {
+        var child = tr.childNodes[j];
+        if (child.nodeType != 1) {
+            continue;
+        };
+        if (child.nodeName != 'TH' && child.nodeName != 'TD') {
+            // unexpected child name, log and continue
+            this.editor.logMessage(
+                'unexpected child ' + child.nodeName +
+                ' for table row');
+            continue;
+        };
+        if (currindex == index) {
+            // merge with next cell
+            var havenext = true;
+            var next = child;
+            do {
+                next = next.nextSibling;
+                if (next === undefined || next === null) {
+                    this.editor.logMessage(
+                        'not enough children in row to apply merge');
+                    havenext = false;
+                    break;
+                };
+            } while (next.nodeName != 'TD' && next.nodeName != 'TH');
+            if (!havenext) {
+                continue;
+            };
+            var colspan = child.colSpan || 1;
+            child.colSpan = colspan + 1;
+            child.appendChild(child.ownerDocument.createElement('br'));
+            while (next.hasChildNodes()) {
+                child.appendChild(next.firstChild);
+            };
+            next.parentNode.removeChild(next);
+            break;
+        };
+        currindex += child.colSpan || 1;
+    };
+
+    var widths = this.getColumnWidths(table);
+    this.editor.content_changed = true;
+    this.editor.logMessage('Cell merged');
+
+    return widths;
+};
+
+SilvaTableTool.prototype.splitTableCell =
+        function splitTableCell(currnode) {
+    var cell = this.editor.getNearestParentOfType(currnode, 'td') ||
+        this.editor.getNearestParentOfType(currnode, 'th');
+    var index = this._getColIndex(cell);
+    var tr = this.editor.getNearestParentOfType(cell, 'tr');
+    var table = this.editor.getNearestParentOfType(cell, 'table');
+
+    var currindex = 0;
+    for (var j=0; j < tr.childNodes.length; j++) {
+        var child = tr.childNodes[j];
+        if (child.nodeType != 1) {
+            continue;
+        };
+        if (child.nodeName != 'TH' && child.nodeName != 'TD') {
+            // unexpected child name, log and continue
+            this.editor.logMessage(
+                'unexpected child ' + child.nodeName +
+                ' for table row');
+            continue;
+        };
+        var colspan = child.colSpan || 1;
+        if (currindex == index) {
+            if (colspan == 1) {
+                this.editor.logMessage(
+                    'can not split cell without colspan');
+                continue;
+            };
+            if (colspan > 2) {
+                child.colSpan = colspan - 1;
+            } else {
+                child.colSpan = 1;
+                child.removeAttribute('colspan'); // just to clean up a bit
+            };
+            var newchild = child.ownerDocument.createElement(
+                child.nodeName);
+            if (child.className) {
+                newchild.className = child.className;
+            };
+            if (child.align && child.align != 'left') {
+                newchild.align = child.align;
+            };
+            newchild.appendChild(
+                child.ownerDocument.createTextNode('\ufeff'));
+            if (child.nextSibling) {
+                child.parentNode.insertBefore(newchild, child.nextSibling);
+            } else {
+                child.parentNode.appendChild(newchild);
+            };
+        };
+        currindex += colspan;
+    };
+
+    var widths = this.getColumnWidths(table);
+    this.editor.content_changed = true;
+    this.editor.logMessage('Cell split');
+
+    return widths;
 };
 
 SilvaTableTool.prototype.setColumnWidths = function(widths) {
@@ -1064,32 +1219,25 @@ SilvaTableTool.prototype.setColumnWidths = function(widths) {
         return;
     };
 
-    var silva_column_info = this._getColumnInfo(table);
-    widths = widths.split(',');
-    if (widths.length != silva_column_info.length) {
+    var colinfo = this._getColumnInfo(table);
+    if (widths.length != colinfo.length) {
         alert('number of widths doesn\'t match number of columns!');
         return;
     };
     for (var i=0; i < widths.length; i++) {
-        silva_column_info[i][1] = widths[i];
+        colinfo[i][1] = widths[i];
     };
-    this._setColumnInfo(table, silva_column_info);
+    this._setColumnInfo(table, colinfo);
     this._updateTableFromInfo(table);
     this.editor.content_changed = true;
     this.editor.logMessage('table column widths adjusted');
 };
 
 SilvaTableTool.prototype.getColumnWidths = function(table) {
-    var silvacolinfo = table.getAttribute('silva_column_info');
-    var widths = new Array();
-    silvacolinfo = silvacolinfo.split(' ');
-    for (var i=0; i < silvacolinfo.length; i++) {
-        var pair = silvacolinfo[i].split(':');
-        if (pair[1] == '*') {
-            widths.push('*');
-        } else {
-            widths.push(parseInt(pair[1]));
-        };
+    var colinfo = this._getColumnInfo(table);
+    var widths = [];
+    for (var i=0; i < colinfo.length; i++) {
+        widths.push(colinfo[i][1]);
     };
     widths = this._factorWidths(widths);
     return widths;
@@ -1100,7 +1248,7 @@ SilvaTableTool.prototype.setColumnAlign = function(align) {
     var currtd = this.editor.getNearestParentOfType(currnode, 'td');
     if (!currtd) {
         var currtd = this.editor.getNearestParentOfType(currnode, 'th');
-    }
+    };
     var index = 0;
     if (!currtd) {
         return; // might be we're not inside a table
@@ -1113,9 +1261,9 @@ SilvaTableTool.prototype.setColumnAlign = function(align) {
             };
         };
     };
-    var infos = this._getColumnInfo();
-    infos[index][0] = align;
     var table = this.editor.getNearestParentOfType(currnode, 'table');
+    var infos = this._getColumnInfo(table);
+    infos[index][0] = align;
     this._setColumnInfo(table, infos);
     this._updateTableFromInfo(table);
     this.editor.content_changed = true;
@@ -1152,22 +1300,22 @@ SilvaTableTool.prototype._factorWidths = function(widths) {
 };
 
 SilvaTableTool.prototype._addRowHelper = function(
-        doc, body, celltype, index, numcells) {
+        doc, body, celltype, index, numcells, colspan_all) {
     /* actually adds a row to the table */
     var row = doc.createElement('tr');
 
     // fill the row with cells
-    if (celltype == 'td') {
+    if (colspan_all) {
+        var cell = doc.createElement(celltype);
+        cell.appendChild(doc.createTextNode("\ufeff"));
+        cell.colSpan = numcells;
+        row.appendChild(cell);
+    } else {
         for (var i=0; i < numcells; i++) {
             var cell = doc.createElement(celltype);
-            cell.appendChild(doc.createTextNode("\u00a0"));
+            cell.appendChild(doc.createTextNode("\ufeff"));
             row.appendChild(cell);
         };
-    } else if (celltype == 'th') {
-        var cell = doc.createElement(celltype);
-        cell.setAttribute('colSpan', numcells);
-        cell.appendChild(doc.createTextNode("\u00a0"));
-        row.appendChild(cell);
     };
 
     // now append it to the tbody
@@ -1182,64 +1330,101 @@ SilvaTableTool.prototype._addRowHelper = function(
     return row;
 };
 
-SilvaTableTool.prototype._addColHelper = function(doc, body, index, numcells) {
+SilvaTableTool.prototype._addColHelper =
+        function _addColHelper(doc, body, index, numcells) {
     /* actually adds a column to a table */
+    var table = this.editor.getNearestParentOfType(body, 'table');
+    this._updateTableFromInfo(table);
+    var colinfo = this._getColumnInfo(table);
     var rows = this._getAllRows(body);
-    var numcols = this._countColumns(body)
     for (var i=0; i < rows.length; i++) {
         var row = rows[i];
         var cols = this._getAllColumns(row);
-        var col = cols[0];
-	/* a table header row is a row with only one cell, that is a TH
-	   in a table that has more than one column */
-        if (col.nodeName == 'TH' && numcols > 1 && cols.length == 1) {
-            var colspan = col.getAttribute('colspan');
-	    colspan = colspan ? parseInt(colspan) : 1;
-            col.setAttribute('colspan', colspan + 1);
-        } else {
-            var cell = doc.createElement(cols[0].nodeName);
-            cell.appendChild(doc.createTextNode('\u00a0'));
-            if (index == -1 || index >= rows.length) {
-                row.appendChild(cell);
-            } else {
-                row.insertBefore(cell, cols[index]);
+        var currindex = 0;
+        var added = false;
+        var col = null;
+        for (var j=0; j < cols.length; j++) {
+            var col = cols[j];
+            var cell = doc.createElement(col.nodeName);
+            cell.appendChild(doc.createTextNode('\ufeff'));
+            if (index <= currindex) {
+                row.insertBefore(cell, col);
+                added = true;
+                break;
             };
+            currindex += col.colSpan || 1;
+        };
+        if (!added) {
+            var cell = doc.createElement(col.nodeName || 'td');
+            cell.appendChild(doc.createTextNode('\ufeff'));
+            row.appendChild(cell);
         };
     };
-    var table = body.parentNode;
-    table.removeAttribute('silva_column_info');
-    this._getColumnInfo();
+    colinfo.splice(index, 0, ['left', 1]);
+    this._setColumnInfo(table, colinfo);
+    this._updateTableFromInfo(table, colinfo);
 };
 
 SilvaTableTool.prototype._delColHelper = function(body, index) {
     /* actually delete all cells in a column */
     /* needs to be smarter when deleting rows containing th's */
+    var current = this.editor.getSelectedNode();
+    var currcell = this.editor.getNearestParentOfType(current, 'td') ||
+        this.editor.getNearestParentOfType(current, 'th');
     var rows = this._getAllRows(body);
     var numcols = this._countColumns(body);
+    var table = this.editor.getNearestParentOfType(body, 'table');
+    var colinfo = this._getColumnInfo(table);
+    var toselect = current;
     for (var i=0; i < rows.length; i++) {
         var row = rows[i];
         var cols = this._getAllColumns(row);
-        if (cols[0].nodeName == 'TH' && numcols >=1 && cols.length == 1) {
-            // is a table header, so reduce colspan
-            var th = cols[0];
-            var colspan = th.getAttribute('colSpan');
-            if (!colspan || colspan == '1') {
-                body.removeChild(row);
-            } else {
-                colspan = parseInt(colspan);
-                th.setAttribute('colSpan', colspan - 1);
+        var currindex = 0;
+        for (var j=0; j < cols.length; j++) {
+            var col = cols[j];
+            if (currindex == index ||
+                    (col.colSpan && index < currindex + col.colSpan)) {
+                if (col.colSpan && col.colSpan > 1) {
+                    if (col.colSpan > 2) {
+                        col.colSpan = col.colSpan - 1;
+                    } else {
+                        col.colSpan = 1;
+                        col.removeAttribute('colspan');
+                    };
+                } else {
+                    if (col == currcell) {
+                        // we're going to remove the cell that contains the
+                        // current selection - need to find a new location to
+                        // select
+                        var toselect = currcell.previousSibling;
+                        var sel = this.editor.getSelection();
+                        while (toselect && toselect.nodeType != 1) {
+                            toselect = toselect.previousSibling;
+                        };
+                        if (!toselect) {
+                            // must have been the first column, perhaps the
+                            // next works better...
+                            toselect = currcell.nextSibling;
+                            while (toselect && toselect.nodeType != 1) {
+                                toselect = toselect.nextSibling;
+                            };
+                            if (toselect) {
+                                sel.selectNodeContents(toselect);
+                            };
+                        } else {
+                            sel.selectNodeContents(toselect);
+                        };
+                    };
+                    col.parentNode.removeChild(col);
+                };
+                break;
             };
-        } else {
-            // is a table cell row, remove one
-            if (index > -1) {
-		if (cols[index]) 
-                    row.removeChild(cols[index]);
-            } else {
-		if (cols[cols.length - 1])
-                    row.removeChild(cols[cols.length - 1]);
-            };
+            currindex += col.colSpan || 1;
         };
     };
+    colinfo.splice(index, 1);
+    this._setColumnInfo(table, colinfo);
+    this._updateTableFromInfo(table, colinfo);
 };
 
 SilvaTableTool.prototype._getRowIndex = function(row) {
@@ -1256,20 +1441,14 @@ SilvaTableTool.prototype._getRowIndex = function(row) {
 };
 
 SilvaTableTool.prototype._countColumns = function(body) {
-    /* get the current column count */
-    /* count all cells from all rows, ignoring colspans since they
-       may be inaccurate, and take the row with the highest number
-       of cells */
+    /* get the current column count
+    */
+    var row = this._getAllRows(body)[0];
+    var cols = this._getAllColumns(row);
     var numcols = 0;
-    var rows = this._getAllRows(body);
-    for (var i=0; i < rows.length; i++) {
-	var rowcols = 0;
-	var cols = this._getAllColumns(rows[i]);
-	for (var j=0; j < cols.length; j++) {
-	    rowcols++;
-	}
-	if (rowcols > numcols) numcols = rowcols;
-    }
+    for (var i=0; i < cols.length; i++) {
+        numcols += cols[i].colSpan || 1;
+    };
     return numcols;
 };
 
@@ -1290,14 +1469,15 @@ SilvaTableTool.prototype._getAllColumns = function(row) {
     var cols = new Array();
     for (var i=0; i < row.childNodes.length; i++) {
         var node = row.childNodes[i];
-        if (node.nodeName.search(/TD|TH/) > -1) {
+        if (node.nodeName.search(/^(TD|TH)$/) > -1) {
             cols.push(node);
         };
     };
     return cols;
 };
 
-SilvaTableTool.prototype._getColumnInfo = function(table) {
+SilvaTableTool.prototype._getColumnInfo =
+        function _getColumnInfo(table, ignore_attribute) {
     var mapping = {'C': 'center', 'L': 'left', 'R': 'right'};
     var revmapping = {'center': 'C', 'left': 'L', 'right': 'R'};
     if (!table) {
@@ -1308,46 +1488,68 @@ SilvaTableTool.prototype._getColumnInfo = function(table) {
         return;
     };
     var silvacolinfo = table.getAttribute('silva_column_info');
-    if (silvacolinfo) {
+    if (!ignore_attribute && silvacolinfo) {
         var infos = silvacolinfo.split(' ');
         var ret = [];
         for (var i=0; i < infos.length; i++) {
             var tup = infos[i].split(':');
-            tup[0] = mapping[tup[0]];
-            ret.push(tup);
+            ret.push([mapping[tup[0]], tup[1]]);
         };
         return ret;
     } else {
-        var body = null;
         var iterator = new NodeIterator(table);
-        var body = iterator.next();
-        while (body.nodeName != 'TBODY') body = iterator.next();
+        var body;
+        do {
+            body = iterator.next();
+        } while (body.nodeName != 'TBODY');
         var rows = this._getAllRows(body);
-	var numcols = this._countColumns(body);
         var ret = [];
-        var colinfo = []; // to use as the table attribute later on
+        var colinfo = [];
         for (var i=0; i < rows.length; i++) {
             var cols = this._getAllColumns(rows[i]);
-	    /* to make sure this isn't a "row header" */
-	    if (cols.length == 1 && numcols == 1 && cols[0].nodeName == 'TH')
-		continue;
+            var widths = [];
+            var aligns = [];
+            var usedata = true;
             for (var j=0; j < cols.length; j++) {
-                var tup = ['left'];
+                // if we have a colspan, this row is useless, skip to the
+                // next _unless_ this is the last row already, in which case
+                // it's the best we've got...
+                var col = cols[j];
+                var colspan = col.colSpan || 1;
+                if (colspan > 1 && i < rows.length - 1) {
+                    usedata = false;
+                    break;
+                };
+                var align = 'left';
                 var className = cols[j].className;
                 if (className.indexOf('align-') == 0) {
-                    tup[0] = className.substr(6);
+                    align = className.substr(6);
                 };
-                var width = cols[j].getAttribute('width');
-                tup[1] = !width ? 1 : parseInt(width);
-                colinfo[j] = revmapping[tup[0]] + ':' + tup[1];
-                ret[j] = tup;
-    		var colspan = cols[j].getAttribute('colspan')
+                var width = cols[j].width;
+                width = !width ? 1 : parseInt(width);
+                width = Math.ceil(width / (colspan * 1.0));
+                aligns.push(align);
+                widths.push(width);
+                // if we have colspan > 1 here, we're the last row and we need
+                // to make something up for the colspanned cells
+                for (var k=1; k < colspan; k++) {
+                    aligns.push('left');
+                    widths.push(width);
+                };
             };
-	    /* if this row contained every column, break out of loop */
-	    if (cols.length == numcols)
-	        break;		
+            if (!usedata) {
+                // we skip this row
+                colinfo = [];
+                continue;
+            };
+            widths = this._factorWidths(widths);
+            for (var j=0; j < widths.length; j++) {
+                ret.push([aligns[j], widths[j]]);
+                colinfo.push(revmapping[aligns[j]] + ':' + widths[j]);
+            };
+            // we're done here
+            break;
         };
-        table.setAttribute('silva_column_info', colinfo.join(' '));
         return ret;
     };
 };
@@ -1361,9 +1563,11 @@ SilvaTableTool.prototype._setColumnInfo = function(table, info) {
     table.setAttribute('silva_column_info', str.join(' '));
 };
 
-SilvaTableTool.prototype._updateTableFromInfo = function(table) {
-/* XXX do not skip over any cells, I think */
-    var colinfo = this._getColumnInfo(table);
+SilvaTableTool.prototype._updateTableFromInfo =
+        function _updateTableFromInfo(table, colinfo) {
+    if (colinfo === undefined || colinfo === null) {
+        colinfo = this._getColumnInfo(table);
+    };
 
     // convert the relative widths to percentages first
     var totalunits = 0;
@@ -1375,40 +1579,67 @@ SilvaTableTool.prototype._updateTableFromInfo = function(table) {
         };
     };
 
+    // if all colinfo widths are 1, replace them all with *
+    var allone = true;
+    for (var i=0; i < colinfo.length; i++) {
+        var width = colinfo[i][1];
+        if (width != 1 && width != '*') {
+            allone = false;
+            break;
+        };
+    };
+    if (allone) {
+        for (var i=0; i < colinfo.length; i++) {
+            colinfo[i][1] = '*';
+        };
+    };
+
     var percent_per_unit = 100.0 / totalunits;
 
     // find the rows containing cells
     var rows = this._getAllRows(table.getElementsByTagName('tbody')[0]);
     for (var i=0; i < rows.length; i++) {
         var cols = this._getAllColumns(rows[i]);
-        if (cols[0].nodeName == 'TH') {
-            continue;
-        };
+        var index = 0;
         for (var j=0; j < cols.length; j++) {
-            var align = colinfo[j][0];
-            cols[j].className = 'align-' + align;
-            var width = colinfo[j][1];
-            if (width != '*') {
-                cols[j].setAttribute('width', '' + 
-                    (width * percent_per_unit) + '%');
-            } else {
-                cols[j].removeAttribute('width');
+            var col = cols[j];
+            var align = colinfo[index][0];
+            var colspan = col.colSpan || 1;
+            if (align != 'left') {
+                col.className = 'align-' + align;
             };
+            var colwidth = 0;
+            for (var k=0; k < colspan; k++) {
+                var width = colinfo[index + k][1];
+                if (width == '*') {
+                    colwidth = '*';
+                    break;
+                } else {
+                    colwidth += parseInt(width);
+                };
+            };
+            if (colwidth == '*') {
+                col.removeAttribute('width');
+            } else {
+                col.setAttribute(
+                    'width', '' + (colwidth * percent_per_unit) + '%');
+            };
+            index += col.colSpan || 1;
         };
     };
 };
 
 function SilvaTableToolBox(addtabledivid, edittabledivid, newrowsinputid, 
-    newcolsinputid, makeheaderinputid, classselectid, 
-    alignselectid, widthinputid, addtablebuttonid, 
-    addrowbuttonid, delrowbuttonid, addcolbuttonid, 
-    delcolbuttonid, fixbuttonid, delbuttonid, toolboxid, 
-    plainclass, activeclass, celltypeid, cellcolspanid,
-    addcellafterid, addcellbeforeid, delcellid) {
-/* Silva specific table functionality
-    overrides most of the table functionality, required because Silva 
-    requires a completely different format for tables
-*/
+        newcolsinputid, makeheaderinputid, classselectid, 
+        alignselectid, widthinputid, addtablebuttonid, 
+        addrowbuttonid, delrowbuttonid, addcolbuttonid, 
+        delcolbuttonid, mergecellbuttonid, splitcellbuttonid,
+        fixbuttonid, delbuttonid, toolboxid, 
+        plainclass, activeclass, celltypeid) {
+    /* Silva specific table functionality
+        overrides most of the table functionality, required because Silva 
+        requires a completely different format for tables
+    */
 
     this.addtablediv = getFromSelector(addtabledivid);
     this.edittablediv = getFromSelector(edittabledivid);
@@ -1423,14 +1654,12 @@ function SilvaTableToolBox(addtabledivid, edittabledivid, newrowsinputid,
     this.delrowbutton = getFromSelector(delrowbuttonid);
     this.addcolbutton = getFromSelector(addcolbuttonid);
     this.delcolbutton = getFromSelector(delcolbuttonid);
+    this.mergecellbutton = getFromSelector(mergecellbuttonid);
+    this.splitcellbutton = getFromSelector(splitcellbuttonid);
     this.fixbutton = getFromSelector(fixbuttonid);
     this.delbutton = getFromSelector(delbuttonid);
     this.toolboxel = getFromSelector(toolboxid);
     this.celltypesel = getFromSelector(celltypeid);
-    this.cellcolspaninput = getFromSelector(cellcolspanid);
-    this.addcellafterbutton = getFromSelector(addcellafterid);
-    this.addcellbeforebutton = getFromSelector(addcellbeforeid);
-    this.delcellbutton = getFromSelector(delcellid);
     this.plainclass = plainclass;
     this.activeclass = activeclass;
 };
@@ -1442,22 +1671,18 @@ SilvaTableToolBox.prototype.initialize = function(tool, editor) {
     this.tool = tool;
     this.editor = editor;
     addEventHandler(this.addtablebutton, "click", this.addTable, this);
-    addEventHandler(
-        this.addrowbutton, "click", this.tool.addTableRow, this.tool);
-    addEventHandler(
-        this.delrowbutton, "click", this.tool.delTableRow, this.tool);
+    addEventHandler(this.addrowbutton, "click", this.addTableRow, this);
+    addEventHandler(this.delrowbutton, "click", this.delTableRow, this);
     addEventHandler(this.addcolbutton, "click", this.addTableColumn, this);
     addEventHandler(this.delcolbutton, "click", this.delTableColumn, this);
+    addEventHandler(this.mergecellbutton, 'click', this.mergeTableCell, this);
+    addEventHandler(this.splitcellbutton, 'click', this.splitTableCell, this);
     addEventHandler(this.fixbutton, "click", this.fixTable, this);
     addEventHandler(this.delbutton, "click", this.delTable, this);
     addEventHandler(this.alignselect, "change", this.setColumnAlign, this);
     addEventHandler(this.classselect, "change", this.setTableClass, this);
     addEventHandler(this.widthinput, "change", this.setColumnWidths, this);
     addEventHandler(this.celltypesel, "change", this.changeCellType, this);
-    addEventHandler(this.cellcolspaninput, "change", this.changeCellColspan, this);
-    addEventHandler(this.addcellafterbutton, "click", this.addCell, this);
-    addEventHandler(this.addcellbeforebutton, "click", this.addCell, this);
-    addEventHandler(this.delcellbutton, "click", this.delCell, this);
     this.edittablediv.style.display = "none";
     this.editor.logMessage('Table tool initialized');
 };
@@ -1466,15 +1691,24 @@ SilvaTableToolBox.prototype.delTable = function() {
     this.tool.delTable();
     this.editor.getDocument().getWindow().focus();
     this.editor.updateState();
-}
+};
 
+SilvaTableToolBox.prototype.addTableRow = function addTableRow() {
+    var current = this.editor.getSelectedNode();
+    this.tool.addTableRow(current);
+};
+
+SilvaTableToolBox.prototype.delTableRow = function delTableRow() {
+    var current = this.editor.getSelectedNode();
+    this.tool.delTableRow(current);
+};
 
 SilvaTableToolBox.prototype.updateState = function(selNode) {
+    /* update the state (add/edit) and update the pulldowns (if required) */
     if (this.editor.getTool('extsourcetool')
             .getNearestExternalSource(selNode)) {
         return;
     };
-    /* update the state (add/edit) and update the pulldowns (if required) */
     var table = this.editor.getNearestParentOfType(selNode, 'table');
     if (table) {
         this.addtablediv.style.display = "none";
@@ -1482,26 +1716,32 @@ SilvaTableToolBox.prototype.updateState = function(selNode) {
         var td = this.editor.getNearestParentOfType(selNode, 'td');
         if (!td) {
             td = this.editor.getNearestParentOfType(selNode, 'th');
-        }
+        };
 
-	if (td) {
+        if (td) {
             var align = td.className.split('-')[1];
             if (align == 'center' || align == 'left' || align == 'right') {
-		selectSelectItem(this.alignselect, align);
+                selectSelectItem(this.alignselect, align);
             };
-    	    /* XXX setup the tc type switching */
-    	    selectSelectItem(this.celltypesel, td.nodeName.toLowerCase());
-	    if (td.nodeName=='TH') {
-		var len = td.parentNode.getElementsByTagName('th').length + td.parentNode.getElementsByTagName('td').length
-		if (len == 1) { /* a single TH is a silva table row_heading */
-		    this.widthinput.value = '';
-		} else {
-		    this.widthinput.value = this.tool.getColumnWidths(table);
-		}
-	    } else {
-                this.widthinput.value = this.tool.getColumnWidths(table);
-	    }
-	    this.cellcolspaninput.value = td.getAttribute('colspan');
+            /* XXX setup the tc type switching */
+            selectSelectItem(this.celltypesel, td.nodeName.toLowerCase());
+            this.widthinput.value = this.tool.getColumnWidths(table);
+
+            if (td.colSpan && td.colSpan > 1) {
+                // show split button
+                this.splitcellbutton.style.display = 'inline';
+            } else {
+                this.splitcellbutton.style.display = 'none';
+            };
+
+            if (this.tool._getColIndex(td) <
+                    this.tool._getAllColumns(td.parentNode).length - 1) {
+                this.mergecellbutton.style.display = 'inline';
+            } else {
+                this.mergecellbutton.style.display = 'none';
+            };
+            // XXX would be nice to hide the tr entirely when neither of the
+            // buttons are displayed, but later...
         };
         selectSelectItem(this.classselect, table.className);
         if (this.toolboxel) {
@@ -1542,40 +1782,52 @@ SilvaTableToolBox.prototype.setTableClass = function() {
 };
 
 SilvaTableToolBox.prototype.changeCellType = function() {
-    this.tool.changeCellType(this.celltypesel.options[this.celltypesel.selectedIndex].value);
-    this.editor.getDocument().getWindow().focus();
-};
-
-SilvaTableToolBox.prototype.changeCellColspan = function() {
-    this.tool.changeCellColspan(this.cellcolspaninput.value);
+    this.tool.changeCellType(
+        this.celltypesel.options[this.celltypesel.selectedIndex].value);
     this.editor.getDocument().getWindow().focus();
 };
 
 SilvaTableToolBox.prototype.delTableColumn = function() {
-    this.tool.delTableColumn(this.widthinput);
+    var currnode = this.editor.getSelectedNode();
+    var widths = this.tool.delTableColumn(currnode);
+    this.widthinput.value = widths;
     this.editor.getDocument().getWindow().focus();
 };
 
 SilvaTableToolBox.prototype.addTableColumn = function() {
-    this.tool.addTableColumn(this.widthinput);
+    var currnode = this.editor.getSelectedNode();
+    var widths = this.tool.addTableColumn(currnode);
+    this.widthinput.value = widths;
     this.editor.getDocument().getWindow().focus();
 };
 
-SilvaTableToolBox.prototype.delCell = function(event) {
-    this.tool.removeCell(this.widthinput);
+SilvaTableToolBox.prototype.mergeTableCell = function mergeTableCell() {
+    var currnode = this.editor.getSelectedNode();
+    var widths = this.tool.mergeTableCell(currnode);
+    this.widthinput.value = widths;
+    this.editor.updateState();
     this.editor.getDocument().getWindow().focus();
 };
 
-SilvaTableToolBox.prototype.addCell = function(event) {
-    var target = event.srcElement ? event.srcElement : event.target;
-    //first param is a boolean, if true then cell is added before active cell
-    // otherwise it is added after
-    this.tool.addCell(target.value.search(/before/)>-1, this.widthinput);
+SilvaTableToolBox.prototype.splitTableCell = function splitTableCell() {
+    var currnode = this.editor.getSelectedNode();
+    var widths = this.tool.splitTableCell(currnode);
+    this.widthinput.value = widths;
+    this.editor.updateState();
     this.editor.getDocument().getWindow().focus();
 };
 
 SilvaTableToolBox.prototype.setColumnWidths = function() {
-    var widths = this.widthinput.value;
+    var swidths = this.widthinput.value.split(',');
+    var widths = [];
+    for (var i=0; i < swidths.length; i++) {
+        var width = parseInt(swidths[i]);
+        if (isNaN(width)) {
+            alert('width ' + (i + 1) + ' is not a number');
+            return;
+        };
+        widths.push(width);
+    };
     this.tool.setColumnWidths(widths);
     this.editor.content_changed = true;
     this.editor.getDocument().getWindow().focus();
@@ -1635,23 +1887,25 @@ SilvaTableToolBox.prototype.fixTable = function(event) {
         var currcolnum = 0;
         while (row.childNodes.length > 0) {
             var node = row.childNodes[0];
-	    if (node.nodeName == 'TH') {
-		/* if row only has one element, then we can say
-		   it is "inhead", otherwise it isn't */
-		numcells = row.getElementsByTagName('td').length + row.getElementsByTagName('th').length;
-		if (numcells==1) {
+            if (node.nodeName == 'TH') {
+                /* if row only has one element, then we can say
+                 it is "inhead", otherwise it isn't */
+                numcells = row.getElementsByTagName('td').length +
+                    row.getElementsByTagName('th').length;
+                if (numcells==1) {
                     newrow.appendChild(node);
                     node.setAttribute('colspan', '1');
                     node.setAttribute('rowspan', '1');
-		    continue
+                    continue;
                 }
             } else if (node.nodeName != 'TD') {
                 row.removeChild(node);
                 continue;
             };
             node.setAttribute('rowspan', '1');
-	    if (!node.hasAttribute('colspan'))
+            if (!node.hasAttribute('colspan')) {
                 node.setAttribute('colspan', '1');
+            };
             newrow.appendChild(node);
         };
         if (newrow.childNodes.length) {
@@ -1668,10 +1922,9 @@ SilvaTableToolBox.prototype.fixTable = function(event) {
 
     this.editor.getDocument().getWindow().focus();
     
-    /* now fix table widths if numcols is incorrect, e.g.
-       the add column handlebar was clicked at least once */
-    table.removeAttribute('silva_column_info');
-    this.tool._getColumnInfo();
+    // now fix table widths if numcols is incorrect
+    var colinfo = this.tool._getColumnInfo(table, true);
+    this.tool._setColumnInfo(table, colinfo);
     this.widthinput.value = this.tool.getColumnWidths(table);
 
     this.editor.content_changed = true;

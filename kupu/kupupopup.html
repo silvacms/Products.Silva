@@ -593,10 +593,10 @@
             <td class="titlecell" style="width:34%"><label for="kupu-table-classchooser" i18n:translate="">table class</label></td>
             <td style="padding-bottom:0.1em">
               <select class="store" id="kupu-table-classchooser">
-                <option i18n:translate="" value="plain">plain</option>
-                <option i18n:translate="" value="list">list</option>
-                <option i18n:translate="" value="grid">grid</option>
-                <option i18n:translate="" value="datagrid">datagrid</option>
+                <option value="plain" i18n:translate="">plain</option>
+                <option value="list" i18n:translate="">list</option>
+                <option value="grid" i18n:translate="">grid</option>
+                <option value="datagrid" i18n:translate="">datagrid</option>
               </select>
             </td>
           </tr>
@@ -642,24 +642,19 @@
 		   <td class="titlecell"><label for="kupu-table-cell-type" i18n:translate="" title="the active cell's type">cell type</label></td>
 		   <td>
 		    <select id="kupu-table-cell-type">
-		     <option value="td" i18n:translate="">data</option>
+		     <option value="td" i18n:translate="">normal</option>
 		     <option value="th" i18n:translate="">header</option>
 		    </select>
 		   </td>
 		  </tr>
-		  <tr>
-		   <td class="titlecell"><label for="kupu-table-cell-colspan" i18n:translate="" title="the active cell's colspan">cell colspan</label></td>
-                   <td><input type="text" id="kupu-table-cell-colspan"/></td>
-		  </tr>
 		  <tr><td colspan="2" class="sectionborder" i18n:translate="">actions</td></tr>
-                  <tr>
-                    <td class="titlecell" i18n:translate="">cell</td>
-                    <td>
-                        <input type="button" class="button" id="kupu-table-addcellbefore-button" value="add before" i18n:attributes="value"/>
-                        <input type="button" class="button" id="kupu-table-addcellafter-button" value="add after" i18n:attributes="value"/>
-                        <input type="button" class="button remover" id="kupu-table-delcell-button" value="remove" i18n:attributes="value"/>
-                    </td>
-                  </tr>
+            <tr>
+              <td class="titlecell" i18n:translate="">cell</td>
+              <td>
+                <input type="button" class="button" id="kupu-table-mergecell-button" value="merge" i18n:attributes="value"/>
+                <input type="button" class="button" id="kupu-table-splitcell-button" value="split" i18n:attributes="value"/>
+              </td>
+            </tr>
                   <tr>
                     <td class="titlecell" i18n:translate="">column</td>
                     <td>
