@@ -36,7 +36,7 @@ class WordConverter(object):
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
-            request.form['message'] = "The pdf was uploaded successfully " \
+            request.form['message'] = "The file was uploaded successfully " \
                 "but could not be indexed properly for the search."
         try:
             if converted:
@@ -60,11 +60,8 @@ class PDFConverter(object):
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
-            request.form['message'] = """File uploaded succesfully.
-            <br /><span class="error">
-            The uploaded file does not appear to be a valid PDF file:
-            <br /><br />%s
-            </span>""" % "<br />".join(err.split("\n"))
+            request.form['message'] = "The file was uploaded successfully " \
+                "but could not be indexed properly for the search."
         try:
             if converted:
                 decoded = unicode(converted, 'utf8')
