@@ -37,7 +37,7 @@ function ExternalSourceLoader(div) {
        name__type__string or decision__type__boolean.  Strip off __type__\w*,
        since the ExternalSource's to_html is expecting parameters
        without the data type (it does casting based off of the field's type */
-    this.params = this.params.replace(/__type__\w*=/g,'=');
+    this.params = this.params.replace(/__type__\w*=/g, '=');
     this.params += "&docref="+this.docref + "&source_id=" + this.source_id;
     // Turn off editing for the previews, because IE won't accept
     // display:none otherwise      
@@ -184,7 +184,7 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
            could be 0 if the preview is a single floated div. This ensures
            that the ES will always be selectable. */
         /* unfortunately, this is hard-coded to the height of the top
-           and bottom padding */ 
+           and bottom padding */
         if (this.div.offsetHeight == 4) {
             this.div.appendChild(
                 this.div.ownerDocument.createTextNode('\xa0'));
@@ -338,9 +338,10 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
 };
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var currnode = selNode;
     var link = false;
     var href = '';
@@ -476,9 +477,10 @@ SilvaImageTool.prototype.selectTargetHandler = function(event) {
 };
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
          /* the rest of the image tool was originally designed to 
@@ -1468,9 +1470,10 @@ SilvaTableToolBox.prototype.delTable = function() {
 
 
 SilvaTableToolBox.prototype.updateState = function(selNode) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     /* update the state (add/edit) and update the pulldowns (if required) */
     var table = this.editor.getNearestParentOfType(selNode, 'table');
     if (table) {
@@ -1836,9 +1839,10 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
 };
 
 SilvaIndexTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var indexel = this.editor.getNearestParentOfType(selNode, 'A');
     if (indexel && !indexel.getAttribute('href')) {
         if (this.toolboxel) {
@@ -1941,9 +1945,10 @@ SilvaTocTool.prototype.handleKeyPressOnToc = function(event) {
 };
 
 SilvaTocTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var toc = this.getNearestToc(selNode);
     if (toc) {
         var depth = toc.getAttribute('toc_depth');
@@ -2105,9 +2110,10 @@ SilvaAbbrTool.prototype.initialize = function(editor) {
 };
 
 SilvaAbbrTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var element = this.getNearestAbbrAcronym(selNode);
     if (element) {
         this.addbutton.style.display = 'none';
@@ -2338,9 +2344,10 @@ SilvaCitationTool.prototype.handleKeyPressOnCitation = function(event) {
 };
 
 SilvaCitationTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool').getNearestExternalSource(selNode)) {
+    if (this.editor.getTool('extsourcetool')
+            .getNearestExternalSource(selNode)) {
         return;
-    }
+    };
     var citation = this.getNearestCitation(selNode);
     if (citation) {
         this.addbutton.style.display = 'none';
