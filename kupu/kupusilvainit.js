@@ -106,21 +106,20 @@ function fixupNestedListFilter() {
             li.parentNode.removeChild(li);
             li = saved_lis.pop();
         }
-        //Prevent the external source preview from being saved    
+        // Prevent the external source preview from being saved    
         var divs = htmlnode.getElementsByTagName("div");
         for (var i = divs.length - 1; i >= 0; i--) {
-          if (divs[i].getAttribute("class") == "externalsourcepreview" ||
-              divs[i].getAttribute("class") == "mousehover") {
-            divs[i].parentNode.removeChild(divs[i]);
-          }
-        }
+            if (divs[i].getAttribute("class") == "externalsourcepreview" ||
+                    divs[i].getAttribute("class") == "mousehover") {
+                divs[i].parentNode.removeChild(divs[i]);
+            };
+        };
         return htmlnode;
-    }
-}
+    };
+};
 
 // XXX Port this to the default dist?
 KupuEditor.prototype.afterInit = function() {
-
     // select the line after the first heading, if the document is correctly
     // formatted
     this.getDocument().getWindow().focus();
@@ -390,29 +389,30 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-image-link',
         'kupu-toolbox-image-align', 'kupu-toolbox-image-alt', 
         'kupu-toolbox-images', 'kupu-toolbox',
-        'kupu-toolbox-active',        'kupu-toolbox-image-link-cont', 'kupu-toolbox-image-resize',
-        'kupu-toolbox-image-add-button'
-        );
+        'kupu-toolbox-active', 'kupu-toolbox-image-link-cont',
+        'kupu-toolbox-image-resize', 'kupu-toolbox-image-add-button'
+    );
     kupu.registerTool('imagetool', imagetool);
 
     var tabletool = new SilvaTableTool(); 
     kupu.registerTool('tabletool', tabletool);
     var tabletoolbox = new SilvaTableToolBox(
-        'kupu-toolbox-addtable', 'kupu-toolbox-edittable', 'kupu-table-newrows',
-        'kupu-table-newcols','kupu-table-makeheader', 'kupu-table-classchooser',
-        'kupu-table-alignchooser', 'kupu-table-columnwidth',
-        'kupu-table-addtable-button', 'kupu-table-addrow-button',
-        'kupu-table-delrow-button', 'kupu-table-addcolumn-button',
-        'kupu-table-delcolumn-button', 'kupu-table-fix-button',
-        'kupu-table-delete-button', 'kupu-toolbox-tables', 
-        'kupu-toolbox', 'kupu-toolbox-active', 'kupu-table-cell-type',
-        'kupu-table-cell-colspan','kupu-table-addcellbefore-button',
-        'kupu-table-addcellafter-button','kupu-table-delcell-button'
-        );
+        'kupu-toolbox-addtable', 'kupu-toolbox-edittable',
+        'kupu-table-newrows', 'kupu-table-newcols','kupu-table-makeheader',
+        'kupu-table-classchooser', 'kupu-table-alignchooser',
+        'kupu-table-columnwidth', 'kupu-table-addtable-button',
+        'kupu-table-addrow-button', 'kupu-table-delrow-button',
+        'kupu-table-addcolumn-button', 'kupu-table-delcolumn-button',
+        'kupu-table-fix-button', 'kupu-table-delete-button',
+        'kupu-toolbox-tables', 'kupu-toolbox', 'kupu-toolbox-active',
+        'kupu-table-cell-type', 'kupu-table-cell-colspan',
+        'kupu-table-addcellbefore-button', 'kupu-table-addcellafter-button',
+        'kupu-table-delcell-button'
+    );
     tabletool.registerToolBox('tabletoolbox', tabletoolbox);
 
-    var propertytool = new SilvaPropertyTool('propsrow', 
-        'kupu-properties-form');
+    var propertytool = new SilvaPropertyTool(
+        'propsrow', 'kupu-properties-form');
     kupu.registerTool('properties', propertytool);
 
     var showpathtool = new ShowPathTool();

@@ -2655,7 +2655,8 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
             this.editor.content_changed = true;
         };
         if (this._insideExternalSource) {
-            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+            this._insideExternalSource.className =
+                this._insideExternalSource.className.replace(/ active/,'');
         };
         this._insideExternalSource = false;
     } else if (keyCode == 37 || keyCode == 38) { 
@@ -2669,7 +2670,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
         };
         collapseToEnd = true;
         if (this._insideExternalSource) {
-            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+            this._insideExternalSource.className =
+                this._insideExternalSource.className.replace(
+                    / active/, '');
         };
         this._insideExternalSource = false;
     } else if (keyCode == 8 || keyCode == 46) { /* 8=backspace, 46=delete */
@@ -2683,7 +2686,9 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
             div.parentNode.removeChild(div);
             this.editor.content_changed = true;
             if (this._insideExternalSource) {
-                this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+                this._insideExternalSource.className =
+                    this._insideExternalSource.className.replace(
+                        / active/, '');
             };
             this._insideExternalSource = false;
         };
@@ -2736,7 +2741,8 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // which is an H4.)
     var selNode = this.editor.getSelectedNode();
     if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
-            (selNode.parentNode.className=='externalsource' || selNode.parentNode.className=='externalsourcepreview')) {
+            (selNode.parentNode.className=='externalsource' ||
+                selNode.parentNode.className=='externalsourcepreview')) {
         selNode = selNode.parentNode;
     };
     var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
@@ -3139,11 +3145,13 @@ SilvaExternalSourceTool.prototype._gatherFormData = function() {
     return ret.join("&");
 };
 
-SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function(esElement) {
-    /* esElement, if passed in, is an externalsource div in the document.  If passed in,
-        this div will be used rather than attempting to get the nearest external source node
-        from the current selection.  Useful for processing external sources in code outside
-        of the ES tool (e.g. the ExternalSource preloader)*/
+SilvaExternalSourceTool.prototype._gatherFormDataFromElement =
+        function(esElement) {
+    /* esElement, if passed in, is an externalsource div in the document.
+       If passed in, this div will be used rather than attempting to get
+       the nearest external source node from the current selection.
+       Useful for processing external sources in code outside of the ES
+       tool (e.g. the ExternalSource preloader) */
     if (esElement) {
         var source = esElement;
     } else {
@@ -3154,7 +3162,8 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement = function(esElemen
         return '';
     };
     var ret = new Array();
-    var spans = source.getElementsByTagName("div")[0].getElementsByTagName('span');
+    var spans = source.getElementsByTagName("div")[0]
+        .getElementsByTagName('span');
     for (var i=0; i < spans.length; i++) {
         var name = spans[i].getAttribute('key');
         if (spans[i].childNodes.length > 0) {
@@ -3173,7 +3182,8 @@ SilvaExternalSourceTool.prototype.getNearestExternalSource =
     var currnode = selNode;
     while (currnode) {
         if (currnode.nodeName.toLowerCase() == 'div' &&
-                currnode.className.search(/(^externalsource$)|(^externalsource\s+)/)>-1) {
+                currnode.className.search(
+                    /(^externalsource$)|(^externalsource\s+)/) > -1) {
             return currnode;
         };
         currnode = currnode.parentNode;
