@@ -43,3 +43,26 @@ class ResourceDirectoryTraverse(DefaultPublishTraverse):
     def browserDefault(self, request):
         return NotFoundIndex(self.context, request), ('index',)
 
+
+# We want to ignore a bunch of errors on a socket when writing and
+# it's disconnected. This gets better in Python2.6 hopefully.
+
+import socket
+import errno
+import asyncore
+
+def safe_send(original_send):
+    def patched_send(self, data):
+        try:
+            return original_send(self, data)
+        except socket.error, why:
+            if why.args[0] in (errno.ECONNRESET, errno.ENOTCONN,
+                               errno.ESHUTDOWN, errno.ECONNABORTED,
+                               errno.EPIPE):
+                self.handle_close()
+                return 0
+            else:
+                raise
+    return patched_send
+
+asyncore.dispatcher.send = safe_send(asyncore.dispatcher.send)
