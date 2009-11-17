@@ -104,7 +104,7 @@ msgstr "Aufzählungsliste: Tasten (Alt oder Ctrl) + *"
 
 #: /kupumacros.html:253
 msgid "Definition list: Access key (Alt or Ctrl) + ="
-msgstr "Defintionsliste: Tasten (Alt oder Crlt) + ="
+msgstr "Definitionsliste: Tasten (Alt oder Crlt) + ="
 
 #: /kupumacros.html:257
 msgid "Undo: Access key (Alt or Ctrl) + Z"
@@ -481,7 +481,7 @@ msgstr "Tabellen Typ"
 
 #: /kupumacros.html:639
 msgid "list"
-msgstr "lijst"
+msgstr "list"
 
 #: /kupumacros.html:640
 msgid "grid"
