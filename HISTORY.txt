@@ -33,6 +33,10 @@ Silva changes
       - Fix authentication on tab_preview (only to get one login form,
         and not one per frame).
 
+      - Fix issue in forms editor where clicking _any_ action resulted in
+        displaying the kupu editor. NOTE: this was actually fixed in an earlier
+        2.1 release (2.1.4), but was not mentioned there.
+
       - Improve how converters are invoked.
 
   Silva 2.1.6 (2009-08-05)
