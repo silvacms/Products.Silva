@@ -2,19 +2,20 @@ import os, tempfile, subprocess
 
 
 def execute(cmd):
-    return subprocess.Popen(
-        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+    process =  subprocess.Popen(
+        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return process.communicate()
 
 
 PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[1].startswith('pdftotext')
-WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[1].startswith('antiword') 
+WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[1].startswith('antiword')
 
 
 def get_converter_for_mimetype(mimetype):
     converter = {
         'text/plain': TextConverter,
         'application/pdf':PDFConverter,
-        'application/msword':WordConverter 
+        'application/msword':WordConverter
     }.get(mimetype)
 
     if converter is None:
@@ -35,11 +36,8 @@ class WordConverter(object):
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
-            request.form['message'] = """File uploaded succesfully.
-            <br /><span class="error">
-            The uploaded file does not appear to be a valid Word file:
-            <br /><br />%s
-            </span>""" % "<br />".join(err.split("\n"))
+            request.form['message'] = "The pdf was uploaded successfully " \
+                "but could not be indexed properly for the search."
         try:
             if converted:
                 decoded = unicode(converted, 'utf8')
@@ -62,7 +60,7 @@ class PDFConverter(object):
         os.unlink(fname)
         if err:
             request.form['message_type']='feedback'
-            request.form['message'] = """File uploaded succesfully. 
+            request.form['message'] = """File uploaded succesfully.
             <br /><span class="error">
             The uploaded file does not appear to be a valid PDF file:
             <br /><br />%s
