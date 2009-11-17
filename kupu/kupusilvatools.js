@@ -25,9 +25,10 @@ EDITABLE_METADATA = {
 function ExternalSourceLoader(div) {
     if (div == null) {
         return;
-    } 
+    };
     this.div = div;
-    this.mynumber = ExternalSourceLoader.number--; //Needed for z-index adjustment later
+    // Needed for z-index adjustment later
+    this.mynumber = ExternalSourceLoader.number--;
     this.source_id = this.div.getAttribute("source_id");
     this.extsourcetool = window.kupueditor.getTool('extsourcetool');
     this.docref = this.extsourcetool.docref;
@@ -37,18 +38,19 @@ function ExternalSourceLoader(div) {
        since the ExternalSource's to_html is expecting parameters
        without the data type (it does casting based off of the field's type */
     this.params = this.params.replace(/__type__\w*=/g,'=');
-    this.params += "&docref="+this.docref + "&source_id="+this.source_id;
-    //Turn off editing for the previews, because IE won't accept display:none otherwise	      
+    this.params += "&docref="+this.docref + "&source_id=" + this.source_id;
+    // Turn off editing for the previews, because IE won't accept
+    // display:none otherwise      
     this.div.contentEditable = false; 
 
-    this.docurl = document.location.href.replace(/\/edit.*?$/,'/');
-}
+    this.docurl = document.location.href.replace(/\/edit.*?$/, '/');
+};
 
 ExternalSourceLoader.prototype = new ExternalSourceLoader;
 
-/* this is a class variable, which is used by the ESLoader to establish z-indexes
-   so that the higher of two adjacent ES will have the mousehover display *above*
-   the lower ES */
+/* this is a class variable, which is used by the ESLoader to
+   establish z-indexes so that the higher of two adjacent ES will
+   have the mousehover display *above* the lower ES */
 ExternalSourceLoader.number = 200;
 
 ExternalSourceLoader.prototype.initialize = function() {
@@ -58,16 +60,18 @@ ExternalSourceLoader.prototype.initialize = function() {
     request.open("POST", url, true);
     var callback = new ContextFixer(this.preload_callback, this, request);
     request.onreadystatechange = callback.execute;
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.setRequestHeader(
+        'Content-Type', 'application/x-www-form-urlencoded');
     request.send(this.params);
 
     /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
        doesn't recognize this selector within designMode */
     addEventHandler(this.div, "mouseover", this.onMouseOverHandler, this);
     addEventHandler(this.div, "mouseout", this.onMouseOutHandler, this);
-}
+};
 
-ExternalSourceLoader.prototype.createPreview = function(request, previewcreator) {
+ExternalSourceLoader.prototype.createPreview =
+        function(request, previewcreator) {
     /* this function prepares the preview and mousehover.  However,
        the "previewcreator" is a caller-supplied function that actually
        places content in the preview */
@@ -129,16 +133,21 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
                make response.status==1223 (what??) */
             request.status == 1223) {
             if (previewDiv) {
-                /* if the externalsourcpreview DIV already exists, replace the content 
-                    XXX When does this happen?  Clicking `update` in the ES removes
-                    and recreates the content of the ES div (so it doesn't happen then)
+                /* if the externalsourcpreview DIV already exists, replace
+                   the content 
+                   XXX When does this happen?  Clicking `update` in the ES
+                   removes and recreates the content of the ES div (so
+                   it doesn't happen then)
                 */
-                previewDiv.getElementsByTagName("div")[2].innerHTML = previewDiv.getElementsByTagName("div")[0].innerHTML;
+                previewDiv.getElementsByTagName("div")[2].innerHTML =
+                    previewDiv.getElementsByTagName("div")[0].innerHTML;
                 if (request.responseText != "") {
-                    previewDiv.getElementsByTagName("div")[3].innerHTML = request.responseText;
+                    previewDiv.getElementsByTagName("div")[3].innerHTML =
+                        request.responseText;
                 } else {
                     var h4 = previewDiv.ownerDocument.createElement("h4");
-                    var text = previewDiv.ownerDocument.createTextNode(" [Preview is not available]");
+                    var text = previewDiv.ownerDocument.createTextNode(
+                        " [Preview is not available]");
                     h4.appendChild(text)
                     previewDiv.appendChild(h4);
                 };
@@ -148,10 +157,12 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
                         pd.innerHTML = request.responseText;
                     } else {
                         var h4 = pd.ownerDocument.createElement("h4");
-                        var text = pd.ownerDocument.createTextNode(" [Preview is not available]");
+                        var text = pd.ownerDocument.createTextNode(
+                            " [Preview is not available]");
                         hiddenh4 = parentDiv.getElementsByTagName("h4")[0];
                         for (var i=0;i<hiddenh4.childNodes.length; i++) {
-                            h4.appendChild(hiddenh4.childNodes[i].cloneNode(true));
+                            h4.appendChild(
+                                hiddenh4.childNodes[i].cloneNode(true));
                         };
                         h4.appendChild(text);
                         pd.appendChild(h4);
@@ -161,42 +172,46 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
             };
         } else {
             var pc = function(request, pd) {
-                pd.innerHTML = "<h4>An HTTP " + request.status + " error was encountered when attempting to preview this external source</h4>";	    
+                pd.innerHTML =
+                    "<h4>An HTTP " + request.status +
+                    " error was encountered when attempting to preview" +
+                    " this external source</h4>";
             };
             /* populate the preview */
             this.createPreview(request, pc);
         };
-        /* add non-breaking space if the content height is 0.  The height could be 0
-           if the preview is a single floated div.  This ensures that the
-           ES will always be selectable. */
-        /* unfortunately, this is hard-coded to the height of the top and bottom
-            padding */ 
+        /* add non-breaking space if the content height is 0. The height
+           could be 0 if the preview is a single floated div. This ensures
+           that the ES will always be selectable. */
+        /* unfortunately, this is hard-coded to the height of the top
+           and bottom padding */ 
         if (this.div.offsetHeight == 4) {
-            this.div.appendChild(this.div.ownerDocument.createTextNode('\xa0'));
-        }
+            this.div.appendChild(
+                this.div.ownerDocument.createTextNode('\xa0'));
+        };
         this.div.style.overflow = 'auto';
         /* ensure height will display the entire 'locked' graphic */
         if (this.div.offsetHeight < 26) {
             this.div.style.height = '33px';
-        }
-    }
-}
+        };
+    };
+};
 
 ExternalSourceLoader.prototype.onMouseOverHandler = function() {
     /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
        doesn't recognize this selector within designMode */
     if (this.div.className.search("active")==-1) {
         this.div.className += " active"
-    }
-}
+    };
+};
 
 ExternalSourceLoader.prototype.onMouseOutHandler = function(event) {
     /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
        doesn't recognize this selector within designMode */
     if (this.extsourcetool._insideExternalSource != this.div) {
         this.div.className = this.div.className.replace(/ active/,'');
-    }
-}
+    };
+};
 
 function SilvaLinkTool() {
     /* redefine the contextmenu elements */
