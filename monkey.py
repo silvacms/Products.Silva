@@ -44,3 +44,31 @@ class ResourceDirectoryTraverse(DefaultPublishTraverse):
         return NotFoundIndex(self.context, request), ('index',)
 
 
+# We want to ignore a bunch of errors on a socket when writing and
+# it's disconnected.
+
+import socket
+import errno
+import asyncore
+import transaction
+
+def safe_send(original_send):
+    def patched_send(self, data):
+        try:
+            return original_send(self, data)
+        except socket.error, why:
+            if why.args[0] in (errno.ECONNRESET, errno.ENOTCONN,
+                               errno.ESHUTDOWN, errno.ECONNABORTED):
+                self.handle_close()
+                return 0
+            if why.args[0] in (errno.EPIPE,):
+                # The connection close in a un expected way, we abort
+                # the transaction before continuing.
+                transaction.abort()
+                self.handle_close()
+                return 0
+            else:
+                raise
+    return patched_send
+
+asyncore.dispatcher.send = safe_send(asyncore.dispatcher.send)
