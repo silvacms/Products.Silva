@@ -29,8 +29,12 @@ from interfaces import IRoot, IInvisibleService
 
 icon="www/silva.png"
 
+
 class DocumentationInstallationException(Exception):
-    """Raised when a dependency is not installed when trying to install something"""
+    """Raised when a dependency is not installed when trying to
+    install something
+    """
+
 
 class Root(Publication):
     """Root of Silva site.
@@ -43,7 +47,7 @@ class Root(Publication):
 
     inherited_manage_options = Publication.manage_options
     manage_options= (
-        (inherited_manage_options[0],) + # ({'label':'Contents', 'action':'manage_contents'},) +
+        (inherited_manage_options[0],) +
         ({'label':'Services', 'action':'manage_services'},) +
         inherited_manage_options[1:]
         )
@@ -144,7 +148,7 @@ class Root(Publication):
         """Render object to XML.
         """
         warn('Use silvaxml/xmlexport instead of to_xml.'
-             ' to_xml will be removed in Silva 2.2.', 
+             ' to_xml will be removed in Silva 2.2.',
              DeprecationWarning)
         f = context.f
         f.write('<silva_root id="%s">' % self.id)
@@ -195,8 +199,9 @@ class Root(Publication):
     security.declarePublic('get_silva_product_version')
     def get_silva_product_version(self):
         """Returns the release version of the Product"""
-        warn('Use get_silva_software_version instead of get_silva_product_version.'
-             ' get_silva_product_version will be removed in Silva 2.2.', 
+        warn('Use get_silva_software_version instead of '
+             'get_silva_product_version. get_silva_product_version '
+             'will be removed in Silva 2.2.',
              DeprecationWarning)
         return self.manage_addProduct['Silva'].version
 
