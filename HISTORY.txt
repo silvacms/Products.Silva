@@ -3,7 +3,11 @@ See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.7 (unreleased)
+  Silva 2.1.7 (2009-11-18)
+
+    New features
+
+      - Kupu is now translated (in dutch/english/german).
 
     Bug fixes
 
@@ -28,7 +32,8 @@ Silva changes
         protocol to edit a user.
 
       - Fix link edition, when you change link type, the URL is set
-        according the new link type rule.
+        according the new link type rule. Fix other absolute/relative
+        edition bugs.
 
       - Fix authentication on tab_preview (only to get one login form,
         and not one per frame).
@@ -37,7 +42,8 @@ Silva changes
         displaying the kupu editor. NOTE: this was actually fixed in an earlier
         2.1 release (2.1.4), but was not mentioned there.
 
-      - Improve how converters are invoked.
+      - Improve how converters (to index file content) are
+        invoked. This fix a collection of bugs.
 
   Silva 2.1.6 (2009-08-05)
 
