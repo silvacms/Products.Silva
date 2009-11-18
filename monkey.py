@@ -45,11 +45,12 @@ class ResourceDirectoryTraverse(DefaultPublishTraverse):
 
 
 # We want to ignore a bunch of errors on a socket when writing and
-# it's disconnected. This gets better in Python2.6 hopefully.
+# it's disconnected.
 
 import socket
 import errno
 import asyncore
+import transaction
 
 def safe_send(original_send):
     def patched_send(self, data):
@@ -57,8 +58,13 @@ def safe_send(original_send):
             return original_send(self, data)
         except socket.error, why:
             if why.args[0] in (errno.ECONNRESET, errno.ENOTCONN,
-                               errno.ESHUTDOWN, errno.ECONNABORTED,
-                               errno.EPIPE):
+                               errno.ESHUTDOWN, errno.ECONNABORTED):
+                self.handle_close()
+                return 0
+            if why.args[0] in (errno.EPIPE,):
+                # The connection close in a un expected way, we abort
+                # the transaction before continuing.
+                transaction.abort()
                 self.handle_close()
                 return 0
             else:
