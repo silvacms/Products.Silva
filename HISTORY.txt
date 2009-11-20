@@ -58,6 +58,11 @@ Bugs Fixed
 
 - enable changing the html form enctype of edit views using one of the
   macro_edit macros
+  
+- #261571: AutoTOCs have a new property "show container link". When set to 'yes'
+  the public view will include an <h3> above the table of contents with
+  the title of the container of the AutoTOC linking to the container.  This is
+  useful if the AutoTOC is a sitemap.
 
 Silva 2.2a2 (2009-01-12)
 ------------------------

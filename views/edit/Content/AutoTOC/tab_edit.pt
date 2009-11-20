@@ -77,6 +77,20 @@
 
    <tr class="odd">
     <td class="designator">
+      <label for="show_container_link">show container link</label>
+      <p>
+        If yes, there will be a link to the container (as an H3) before the TOC list.</p>
+    </td>
+    <td tal:define="show model/show_container_link">
+     <select name="show_container_link" id="show_container_link" size="1">
+      <option value="no" tal:attributes="selected python:not show and 'selected' or nothing">No</option>
+      <option value="yes" tal:attributes="selected python:show and 'selected' or nothing">Yes</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="even">
+    <td class="designator">
       <label for="sort_order">sort order</label>
       <p>
         The order items in a container will be sorted:

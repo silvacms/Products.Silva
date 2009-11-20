@@ -52,6 +52,7 @@ class AutoTOC(Content, SimpleItem):
         #possible values: 'silva', 'alpha', 'reversealpha', 'chronmod', 'rchronmod'
         self._sort_order = 'silva'
         self._show_icon = False
+        self._show_container_link = False
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
@@ -84,6 +85,18 @@ class AutoTOC(Content, SimpleItem):
         if not hasattr(self, '_toc_depth'):
             self._toc_depth = -1
         return self._toc_depth
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'set_show_container_link')
+    def set_show_container_link(self, flag):
+        self._show_container_link = not not flag
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'show_container_link')
+    def show_container_link(self):
+        """get the depth to which the toc will be rendered"""
+        if not hasattr(self, '_show_container_link'):
+            self._show_container_link = False
+        return self._show_container_link
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'get_silva_types')
     def get_silva_types(self):
@@ -139,8 +152,7 @@ class AutoTOCView(silvaviews.View):
 
     silvaconf.context(IAutoTOC)
 
-    def render(self):
-        # The following adapters should be merged with the current view.
+    def render_tree(self):
         toc = self.context
         adapter = tocrendering.getTOCRenderingAdapter(toc)
         return adapter.render_tree(toc_depth=toc.toc_depth(),
