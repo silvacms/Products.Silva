@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.1.8 (2009-11-24)
+
+    New features
+
+      - On cataloging exception report which object this happens.
+
   Silva 2.1.7 (2009-11-18)
 
     New features
