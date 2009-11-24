@@ -29,7 +29,7 @@ class Version(SimpleItem):
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
@@ -66,11 +66,11 @@ class Version(SimpleItem):
         SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
     def get_renderer_name(self):
         """Get the name of the renderer selected for object.
-        
+
         Returns None if default is used.
         """
         return getattr(self, '_renderer_name', None)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
     def version_status(self):
@@ -96,7 +96,7 @@ class Version(SimpleItem):
             else:
                 # this is a completely new version not even registered
                 # with the machinery yet
-                status = 'unapproved' 
+                status = 'unapproved'
         return status
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -159,58 +159,71 @@ class Version(SimpleItem):
 
 InitializeClass(Version)
 
+
+class CatalogSupplement(object):
+
+    def __init__(self, object):
+        self.warnings = ['Error while indexing object at path %s' %  \
+                             object.getPhysicalPath()]
+
+
 class CatalogedVersion(Version):
     """Base class for cataloged version objects"""
 
     def getPath(self):
         return '/'.join(self.getPhysicalPath())
-    
-    def index_object(self):
-        """Index"""
-        catalog = getattr(self, 'service_catalog', None)
-        if catalog is not None:
+
+    def __index_object(self, catalog):
+        try:
             catalog.catalog_object(self, self.getPath())
             if self.version_status() in ('unapproved','approved','public'):
-                #search for Ghost objects in the catalog
+                # search for Ghost objects in the catalog
                 # that have this object's path as the haunted_path
                 # these Ghost objects need to be reindexed
                 # NOTE: this will change published and unpublished
                 # Ghost versions.
-                res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
+                haunted_path = self.get_content().getPhysicalPath()
+                res = catalog(haunted_path={'query':(haunted_path,)})
                 for r in res:
                     r.getObject().index_object()
-                
+        except Exception, e:
+            __traceback_supplement__ = (CatalogSupplement, self,)
+            raise e
+
+    def index_object(self):
+        """Index"""
+        catalog = getattr(self, 'service_catalog', None)
+        if catalog is not None:
+            self.__index_object(catalog)
+
+    def __unindex_object(self):
+        try:
+            catalog.uncatalog_object(self.getPath())
+        except Exception, e:
+            __traceback_supplement__ = (CatalogSupplement, self,)
+            raise e
 
     def unindex_object(self):
         """Unindex"""
         catalog = getattr(self, 'service_catalog', None)
         if catalog is not None:
-            catalog.uncatalog_object(self.getPath())
+            self.__unindex_object(catalog)
 
     def reindex_object(self):
         """Reindex."""
         catalog = getattr(self, 'service_catalog', None)
-        if catalog is None:
-            return 
-        path = self.getPath()
-        catalog.uncatalog_object(path)
-        catalog.catalog_object(self, path)
-        if self.version_status() in ('unapproved','approved','public'):
-            #search for Ghost objects in the catalog
-            # that have this object's path as the haunted_path
-            # these Ghost objects need to be reindexed
-            # NOTE: this will change published and unpublished
-            # Ghost versions.
-            res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
-            for r in res:
-                r.getObject().index_object()
-        
-    
+        if catalog is not None:
+            self.__unindex_object(catalog)
+            self.__index_object(catalog)
+
+
 InitializeClass(CatalogedVersion)
+
 
 def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
+
 
 def version_moved(version, event):
     if version != event.object or IObjectRemovedEvent.providedBy(event):
