@@ -174,6 +174,7 @@ class CatalogedVersion(Version):
         return '/'.join(self.getPhysicalPath())
 
     def __index_object(self, catalog):
+        __traceback_supplement__ = (CatalogSupplement, self)
         try:
             catalog.catalog_object(self, self.getPath())
             if self.version_status() in ('unapproved','approved','public'):
@@ -187,7 +188,6 @@ class CatalogedVersion(Version):
                 for r in res:
                     r.getObject().index_object()
         except Exception, e:
-            __traceback_supplement__ = (CatalogSupplement, self,)
             raise e
 
     def index_object(self):
@@ -196,11 +196,11 @@ class CatalogedVersion(Version):
         if catalog is not None:
             self.__index_object(catalog)
 
-    def __unindex_object(self):
+    def __unindex_object(self, catalog):
+        __traceback_supplement__ = (CatalogSupplement, self)
         try:
             catalog.uncatalog_object(self.getPath())
         except Exception, e:
-            __traceback_supplement__ = (CatalogSupplement, self,)
             raise e
 
     def unindex_object(self):
