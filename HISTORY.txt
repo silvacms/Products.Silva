@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.1.9 (2009-11-26)
+    
+    New features
+      
+      - Check libxslt and libxml version at start up.
+
   Silva 2.1.8 (2009-11-24)
 
     New features
