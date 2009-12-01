@@ -3,7 +3,7 @@
 # $Revision$
 import SilvaTestCase
 
-from Products.Silva.adapters import path
+from silva.core.interfaces.adapters import IPath
 
 class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
@@ -19,7 +19,7 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         request.setVirtualRoot(('', ))
     
     def test_pathToUrlPath(self):
-        path_adapter = path.getPathAdapter(self.request)
+        path_adapter = IPath(self.request)
         ptu = path_adapter.pathToUrlPath
         self.assertEquals(ptu('foo'), 'foo')
         self.assertEquals(ptu('index'), 'index')
@@ -28,7 +28,7 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(ptu('/root/foo/index#anchor'), '/index#anchor')
 
     def test_urlToPath(self):
-        path_adapter = path.getPathAdapter(self.request)
+        path_adapter = IPath(self.request)
         utp = path_adapter.urlToPath
         self.assertEquals(utp('index'), 'index')
         self.assertEquals(utp('foo/index'), 'foo/index')
@@ -41,6 +41,19 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
                                 '/root/foo/index')
         self.assertEquals(utp('http://foo.bar.com:80/index#anchor'), 
                                 '/root/foo/index#anchor')
+        
+    def test_ISilvaObject_pathToUrlPath(self):
+        #test the ISilvaObject SilvaPathAdapter, which converts
+        # the url attribute of silvaxml <link> tags to href= values.
+        # in some circumstances, the IHTTPRequest IPath adapter will
+        # be used to finalize the url of an absolute or relative path
+        path_ad = IPath(self.document)
+        ptup = path_ad.pathToUrlPath
+        #make sure mailto links with uncommon characters in the
+        #mailbox work
+        self.assertEquals(ptup("mailto:f.o'last@someplace.com"),
+                          "mailto:f.o'last@someplace.com")
+        
 import unittest
 def test_suite():
     suite = unittest.TestSuite()

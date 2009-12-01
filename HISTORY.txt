@@ -29,6 +29,12 @@ New Features
 
 Bugs Fixed
 ~~~~~~~~~~
+- uncommon (but valid) characters were not supported in the LHS (mailbox)
+  side of email addresses in mailto: links in Silva objects using silvaxml
+  content storage.  An example of an email address that did not work:
+  firstname.o'surname@beds.ac.uk .  The link regexp was expanded to allow
+  the full range of characters in the mailbox as specified in RFC 2822#3.4.1.
+
 - In kupu, when an active external source (i.e. the external source tool is
   showing that ES's parameters), clicking on the same ES no longer causes
   the tool to reload (no more flicker)
