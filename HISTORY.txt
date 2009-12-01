@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 Silva changes
 
+  Silva 2.1.10 (unreleased)
+
+    Bug fixes
+
+     - update URL_PATTERN to support the entire range of characters supporting in the LHS of email addresses in mailto: links
+
   Silva 2.1.9 (2009-11-26)
     
     New features
