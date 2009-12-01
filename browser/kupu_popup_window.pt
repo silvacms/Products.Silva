@@ -18,7 +18,7 @@
  <metal:block fill-slot="script">
   <script type="text/javascript" 
     tal:attributes="src  string:${root_url}/++resource++Products.Silva.browser.scripts/reference.js"></script>
-  <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/jsincludes" />
+  <metal:macro use-macro="context/service_kupu_silva/kupupopup/macros/jsincludes" />
   <script type="text/javascript">
    onload_registry.register(function() {
       var settings = window.opener.kupu_settings;
@@ -82,7 +82,7 @@
 
 <metal:fill fill-slot="main"
    tal:define="silva_permissions context/edit/get_silva_permissions;">
-  <metal:macro use-macro="here/service_kupu_silva/kupupopup/macros/body" />
+  <metal:macro use-macro="context/service_kupu_silva/kupupopup/macros/body" />
  </metal:fill>
 
 </metal:block>
