@@ -224,6 +224,12 @@ def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
+def version_will_be_removed(version, event):
+    if version != event.object:
+        return
+    #in case the version is "unpublished" and is being removed, the version
+    # needs to be uncataloged
+    version.unindex_object()
 
 def version_moved(version, event):
     if version != event.object or IObjectRemovedEvent.providedBy(event):

@@ -219,6 +219,12 @@
      handler=".Version.version_moved"
      />
 
+  <subscriber
+     for=".interfaces.IVersion
+          OFS.interfaces.IObjectWillBeRemovedEvent"
+     handler=".Version.version_will_be_removed"
+     />
+
   <!-- quota support -->
 
   <subscriber
