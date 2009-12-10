@@ -69,6 +69,13 @@ Bugs Fixed
   the public view will include an <h3> above the table of contents with
   the title of the container of the AutoTOC linking to the container.  This is
   useful if the AutoTOC is a sitemap.
+  
+Ported from Silva 2.1
+~~~~~~~~~~~~~~~~~~~~~
+
+- unpublished Versions of VersionedContent objects were not unindexed from 
+  the catalog when the Version was removed (e.g. via the status tab).
+  A subscriber was added for the IObjectWillBeRemoved event
 
 Silva 2.2a2 (2009-01-12)
 ------------------------

@@ -140,6 +140,23 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_('10' in ids)
         self.assert_('9' not in ids)
 
+    def test_deleteVersions_catalog(self):
+        #make sure unpublished versions are removed from the catalog
+        query = {'meta_type': 'Silva Document Version',
+                 'version_status': 'unapproved'}
+        #there should only be one version in the catalog, the last 
+        # version, which happens to be unpublished
+        current = self.catalog(query)
+        self.assertEquals(len(current),1)
+        version = current[0].getObject()
+        content = version.get_content()
+        self.assertEquals(version.id,content.get_unapproved_version())
+        self.adapter.deleteVersions([version.id])
+        #there should be no versions in the catalog
+        current = self.catalog(query)
+        self.assertEquals(len(current),0)
+
+        
     def test_deleteOldVersions(self):
         # there should be 10 versions that *can* be deleted
         # first try to remove the last 2, so keep 8
@@ -191,7 +208,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.adapter.deleteOldVersionsByAge(max_age, max_to_keep)
         self.assertEquals(
             ['8', '9', '10'],
-            self.doc.objectIds('Silva Document Version'))
+            self.doc.objectIds('Silva Document Version'))        
             
     # catalog tests, see if the adapter methods that change
     # workflow in some way result in correct catalog changes

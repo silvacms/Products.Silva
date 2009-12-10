@@ -5,17 +5,18 @@
 # Zope 3
 from zope.interface import implements
 from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.container.interfaces import IObjectMovedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
+from OFS.interfaces import IObjectWillBeRemovedEvent
 try:
     from App.class_init import InitializeClass # Zope 2.12
 except ImportError:
     from Globals import InitializeClass # Zope < 2.12
 
 from DateTime import DateTime
-from zope.app.container.interfaces import IObjectMovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
@@ -220,6 +221,14 @@ InitializeClass(CatalogedVersion)
 def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
+
+@silvaconf.subscribe(IVersion, IObjectWillBeRemovedEvent)
+def version_will_be_removed(version, event):
+    if version != event.object:
+        return
+    #in case the version is "unpublished" and is being removed, the version
+    # needs to be uncataloged
+    version.unindex_object()
 
 @silvaconf.subscribe(IVersion, IObjectMovedEvent)
 def version_moved(version, event):
