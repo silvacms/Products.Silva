@@ -145,14 +145,14 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         #there should only be one version in the catalog, the last 
         # version, which happens to be unpublished
         current = self.catalog(query)
-        assert(len(current),1)
+        self.assertEquals(len(current),1)
         version = current[0].getObject()
         content = version.get_content()
-        assert(version.id,content.get_unapproved_version())
+        self.assertEquals(version.id,content.get_unapproved_version())
         self.adapter.deleteVersions([version.id])
         #there should be no versions in the catalog
         current = self.catalog(query)
-        assert(len(current),0)
+        self.assertEquals(len(current),0)
 
         
     def test_deleteOldVersions(self):
