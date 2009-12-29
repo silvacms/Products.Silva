@@ -66,7 +66,7 @@
     <td class="designator">
       <label for="show_icon">show icon</label>
       <p>
-        If yes, each item displayed will include its icon.      </p>
+        If yes, each item displayed will include its icon.</p>
     </td>
     <td tal:define="show_icon model/show_icon">
      <select name="show_icon" id="show_icon" size="1">
@@ -83,11 +83,11 @@
         The order items in a container will be sorted:
       </p>
       <ul>
-       <li><b>Alpha:</b> sort alphabetically</li>
-       <li><b>Reverse-Alpha:</b> reverse-sort alphabetically</li>
-       <li><b>Silva folder order:</b> same order as the items have in their folder</li>
-       <li><b>Chronologically by modification date:</b> sort by the modification date</li>
-       <li><b>Reverse-Chronologically by modification date:</b> reverse-sort by the modification date</li>
+       <li>Alpha: sort alphabetically</li>
+       <li>Reverse-Alpha: reverse-sort alphabetically</li>
+       <li>Silva folder order: same order as the items have in their folder</li>
+       <li>Chronologically by modification date: sort by the modification date</li>
+       <li>Reverse-Chronologically by modification date: reverse-sort by the modification date</li>
       </ul>
     </td>
     <td tal:define="sort_order model/sort_order">
