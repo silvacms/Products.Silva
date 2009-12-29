@@ -1011,6 +1011,7 @@ input.closer:hover {
 
 input[type="radio"] {
   margin: 0 0.5em 0;
+  width: auto;
 }
 input[type="checkbox"] {
   margin: 0 1px;
