@@ -57,6 +57,32 @@ class ContainerTestCase(ContainerBaseTestCase):
     """Test the Container interface.
     """
     
+    def test_convert_to_folder(self):
+        #create a folder to test conversion with
+        cf2p_id = 'cf2p'
+        cf2p = self.add_folder(self.root, cf2p_id, 'folder conversion to publicaton',
+                               policy_name='Silva AutoTOC')
+        #it's id should be in objectIds
+        self.assert_(cf2p_id in self.root.objectIds('Silva Folder'),
+                     "folder is not in objectIds('Silva Folder') and should be")
+        cf2p.to_publication()
+        cf2p = self.root[cf2p_id]
+        #should no longer be in objectIds('Silva Folder')
+        self.assert_(cf2p_id not in self.root.objectIds('Silva Folder'),
+                     "folder converted to publication is still in objectIds('Silva Folder') but should not be")
+        #should be in objectIds('Silva Publication')
+        self.assert_(cf2p_id in self.root.objectIds('Silva Publication'),
+                     "folder converted to publication is not in objectIds('Silva Publication') and should be")
+        cf2p.to_folder()
+        cf2p = self.root[cf2p_id]
+        #should no longer be in objectIds('Silva Publication')
+        self.assert_(cf2p_id not in self.root.objectIds('Silva Publication'),
+                     "folder is still in objectIds('Silva Publication'), but should not be")
+        #should be in objectIds('Silva Folder')
+        self.assert_(cf2p_id in self.root.objectIds('Silva Folder'),
+                     "folder converted to publication is not in objectIds('Silva Folder') and should be")
+        self.root.manage_delObjects([cf2p_id])
+    
     def test_get_default(self):
         doc = self.folder4.get_default()
         self.assertEquals(doc.get_title(), 'Folder4')

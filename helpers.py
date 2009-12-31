@@ -129,9 +129,14 @@ class SwitchClass(object):
         new_obj = self.new_class(obj_id, *self.args, **self.kwargs)
         new_obj.__dict__.update(obj.__dict__)
         container = obj.aq_parent
-        setattr(container, obj_id, new_obj)
-        new_obj = getattr(container, obj_id)
-        return new_obj
+        #remove old object (since this is
+        # just replacing the object, we can suppress events)
+        container._delObject(obj_id, suppress_events=True)
+        #make sure _setObject is used, and not setattr,
+        # as ObjectManagers maintain extra data structures
+        # about contained objects
+        container._setObject(obj_id, new_obj, suppress_events=True)
+        return getattr(container, obj_id)
 
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class

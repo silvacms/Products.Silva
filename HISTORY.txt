@@ -76,6 +76,10 @@ Ported from Silva 2.1
 - unpublished Versions of VersionedContent objects were not unindexed from 
   the catalog when the Version was removed (e.g. via the status tab).
   A subscriber was added for the IObjectWillBeRemoved event
+  
+- fixed helpers.SwitchClass (used by the folder <--> publication conversion)
+  so that the ObjectManager api's are used to set the new object, keeping
+  the metadata structures up to date
 
 Silva 2.2a2 (2009-01-12)
 ------------------------
