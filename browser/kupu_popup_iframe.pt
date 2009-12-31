@@ -1,7 +1,7 @@
 <html>
  <head>
   <title>iframe</title>
-  <link type="text/css" rel="stylesheet" tal:attributes="href context/frontend.css/absolute_url" />
+  <link type="text/css" rel="stylesheet" tal:attributes="href context/globals/frontend.css/absolute_url" />
   <link type="text/css" rel="stylesheet" tal:attributes="href context/globals/kupu.css/absolute_url" />
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
   <script type="text/javascript">

@@ -219,7 +219,11 @@ KupuEditor.prototype.afterInit = function() {
     /* for each external source, load the external source previews */
     var divs = doc.getElementsByTagName("div");
     for (var i = 0; i < divs.length; i++) {
-      if (divs[i].className == 'externalsource') {
+      /* make sure the div is the root externalsource div by testing the
+         className.  note the class may be either "externalsource" or
+         "externalsource active" (if it is the first element of below
+         the title of the doc */
+      if (divs[i].className.search(/^externalsource(\ .*)?$/)>-1) {
         var el = new ExternalSourceLoader(divs[i]);
         el.initialize();
       }
