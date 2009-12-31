@@ -113,7 +113,7 @@ class SwitchClass:
         # as ObjectManagers maintain extra data structures
         # about contained objects
         container._setObject(obj_id, new_obj, suppress_events=True)
-        return new_obj
+        return getattr(container, obj_id)
 
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
