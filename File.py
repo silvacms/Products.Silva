@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
 
@@ -273,9 +273,9 @@ class ZODBFile(File):
 
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
-        id  = getattr(file, 'filename', self.id)
+        filename = getattr(file, 'filename', self.id)
         content_type = MAGIC.guess(
-            id=id,
+            id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
             default=DEFAULT_MIMETYPE)
         self._file.update_data(data, content_type, size)
@@ -574,7 +574,8 @@ class FileServiceManagementView(silvaviews.ZMIEditForm):
 
     def action_convert(self, action, data):
         self.convert()
-        self.status = 'Silva Files and Images converted. See Zope log for details.'
+        self.status = u'Silva Files and Images converted. ' \
+            u'See Zope log for details.'
 
 
 class StorageConverterHelper(object):
@@ -628,6 +629,7 @@ class FileStorageConverter(object):
                     '/'.join(new_file.getPhysicalPath()))
         return new_file
 
+
 def manage_addFilesService(self, id, title=None, REQUEST=None):
     """Add files service.
     """
@@ -638,9 +640,11 @@ def manage_addFilesService(self, id, title=None, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
+
 @silvaconf.subscribe(interfaces.IFilesService, IObjectWillBeRemovedEvent)
 def unregisterFileService(service, event):
     unregister_service(service, interfaces.IFilesService)
+
 
 contentObjectFactoryRegistry.registerFactory(
     file_factory,

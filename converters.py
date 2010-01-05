@@ -1,17 +1,33 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import os, tempfile, subprocess
 
 
 def execute(cmd):
+    """Execute the given command in a shell, and give back a tuple
+    (stdout, stderr).
+    """
     process =  subprocess.Popen(
         cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return process.communicate()
 
 
-PDF_TO_TEXT_AVAILABLE = execute('pdftotext -v -')[1].startswith('pdftotext')
-WORD_TO_TEXT_AVAILABLE = execute('antiword -v')[1].startswith('antiword')
+def have_command(cmd):
+    """Test if the given command is available.
+    """
+    return execute('%s -v' % cmd)[1].strip() != '%s: not found' % cmd
+
+
+PDF_TO_TEXT_AVAILABLE = have_command('pdftotext')
+WORD_TO_TEXT_AVAILABLE = have_command('antiword')
 
 
 def get_converter_for_mimetype(mimetype):
+    """Return the given converter for a given mimetype.
+    """
     converter = {
         'text/plain': TextConverter,
         'application/pdf':PDFConverter,
@@ -24,6 +40,8 @@ def get_converter_for_mimetype(mimetype):
 
 
 class WordConverter(object):
+    """Convert a word document to fulltext using antiword.
+    """
 
     def convert(self, data, request):
         if not WORD_TO_TEXT_AVAILABLE:
@@ -35,7 +53,7 @@ class WordConverter(object):
         converted, err = execute('antiword "%s"' % fname)
         os.unlink(fname)
         if err:
-            request.form['message_type']='feedback'
+            request.form['message_type'] = 'feedback'
             request.form['message'] = "The file was uploaded successfully " \
                 "but could not be indexed properly for the search."
         try:
@@ -48,6 +66,9 @@ class WordConverter(object):
 
 
 class PDFConverter(object):
+    """Converter for pdf files, which extract the text of a PDF file
+    using pdftotext.
+    """
 
     def convert(self, data, request):
         if not PDF_TO_TEXT_AVAILABLE:
@@ -59,7 +80,7 @@ class PDFConverter(object):
         converted, err = execute('pdftotext -enc UTF-8 "%s" -' % fname)
         os.unlink(fname)
         if err:
-            request.form['message_type']='feedback'
+            request.form['message_type'] = 'feedback'
             request.form['message'] = "The file was uploaded successfully " \
                 "but could not be indexed properly for the search."
         try:
@@ -72,6 +93,9 @@ class PDFConverter(object):
 
 
 class TextConverter(object):
+    """Fallback convert for text file, which does nothing.
+    """
+
     def convert(self, data, request):
         try:
             decoded = unicode(data, 'utf8')

@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Revision$
 # helper module hiding all the details of cut/copy/paste support
