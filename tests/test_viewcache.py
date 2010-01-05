@@ -7,8 +7,6 @@ import SilvaTestCase
 import time
 from DateTime import DateTime
 
-SECOND_IN_DAYS = 1.0 / (24 * 60 * 60)
-SECOND = 1.0
 
 class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
@@ -122,29 +120,34 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_publishInFuture(self):
         doc = self.document
-        # publish a doc
+        # create and publish a document
         now = DateTime()
         dom1 = doc.get_editable().content
         dom1.documentElement.appendChild(dom1.createElement('p'))
-        doc.set_unapproved_version_publication_datetime(now - 1)
+        doc.set_unapproved_version_publication_datetime(now - 3600)
         doc.approve_version()
         data = doc.view()
+
         # create copy and edit
         now = DateTime()
         doc.create_copy()
         dom2 = doc.get_editable().content
         dom2.documentElement.appendChild(dom2.createElement('heading'))
-        # XXX two seconds hereunder could be too short on very slow machines
-        # and make this test fail
-        DELAY = SECOND * 4
-        doc.set_unapproved_version_publication_datetime(
-            now + DELAY * SECOND_IN_DAYS)
+        # we publish the new version in the futur
+        doc.set_unapproved_version_publication_datetime(now + 3600)
         doc.approve_version()
+        # but still see the old one publish
         self.assert_(doc.is_cached())
         self.assertEquals(data, doc.view())
-        time.sleep(DELAY)
+
+        # if we take back our version and publish it in the past, we
+        # will see the new version
+        doc.unapprove_version()
+        doc.set_unapproved_version_publication_datetime(now - 3600)
+        doc.approve_version()
         self.assert_(not doc.is_cached())
         self.assertNotEquals(data, doc.view())
+
 
 class ViewCacheVirtualHostTestCase(ViewCacheTestCase):
     def afterSetUp(self):
