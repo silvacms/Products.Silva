@@ -771,6 +771,12 @@ input.store, textarea.store {
   width: 99%;
 }
 
+/* ie7 and below valid css hack */
+*:first-child+html input.store, * html input.store,
+*:first-child+html textarea.store, * html textarea.store {
+  width:94%;
+}
+
 select {
   margin: 0 0 1px;
   border: &dtml-inputBorder;;
@@ -787,6 +793,15 @@ select.manipulator {
   border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
 background-color:#195A3E;
+}
+
+select.store {
+  width:100%;
+}
+
+/* ie7 and below valid css hack */
+*:first-child+html select.store, * html select.store {
+  width:95%;
 }
 
 select.transporter {
