@@ -5,7 +5,7 @@
 ** The view crew at Infrae - all seasons of 2003-2006
 **   Thanks to Alexander Limi (limi@plone.org) - October 2002
 **     In turn, thanks to Geir B�kholt, Stian S�iland for input and guidance.
-**
+** Thanks to Yahoo! Inc. for making the YUI reset css, version: 2.6.0
 ** _______ Selector groups _______
 **
 ** sectors
@@ -31,12 +31,7 @@
 ** local styles
 */
 
-/*
-Copyright (c) 2008, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.net/yui/license.txt
-version: 2.6.0
-*/
+/* begin yui reset */
 html{color:#000;background:#fff;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}
 /* end yui reset */
 <dtml-with stylesheet_properties>
@@ -215,11 +210,9 @@ div.tabs a.transportlet {
 /* help (available as accesskey link) */
 div.tabs a.normal {
   float: right;
-  display: auto;
   width: auto;
   height: auto;
   border: none;
-  color: transparent;
   background: transparent;
 }
 
@@ -740,6 +733,12 @@ input.store, textarea.store {
   width: 99%;
 }
 
+/* ie7 valid css hack */
+*:first-child+html input.store, 
+*:first-child+html textarea.store {
+  width:97%;
+}
+
 select {
   margin: 0 0 1px;
   border: &dtml-inputBorder;;
@@ -755,6 +754,15 @@ select.manipulator {
   border-color: #064C29 #345 #064C29;
   color: &dtml-manipulatorFontColor;;
 background-color:#195A3E;
+}
+
+select.store {
+  width:100%;
+}
+
+/* ie7 valid css hack */
+*:first-child+html select.store {
+  width:98%;
 }
 
 select.transporter {
