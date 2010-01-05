@@ -422,7 +422,7 @@ table.listing tr.controls td {
 
 /* cycle text color in listing rows */
 table.listing tr.odd {
-  background: #8090a1;
+  background: #d7e4f0;
 }
 table.listing tr.even td {
   background: #cfdbe7;
