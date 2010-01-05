@@ -213,11 +213,9 @@ div.tabs a.transportlet {
 /* help (available as accesskey link) */
 div.tabs a.normal {
   float: right;
-  display: auto;
   width: auto;
   height: auto;
   border: none;
-  color: transparent;
   background: transparent;
 }
 
