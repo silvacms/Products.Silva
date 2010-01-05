@@ -771,10 +771,10 @@ input.store, textarea.store {
   width: 99%;
 }
 
-/* ie7 and below valid css hack */
-*:first-child+html input.store, * html input.store,
-*:first-child+html textarea.store, * html textarea.store {
-  width:94%;
+/* ie7 valid css hack */
+*:first-child+html input.store, 
+*:first-child+html textarea.store {
+  width:97%;
 }
 
 select {
@@ -799,9 +799,9 @@ select.store {
   width:100%;
 }
 
-/* ie7 and below valid css hack */
-*:first-child+html select.store, * html select.store {
-  width:95%;
+/* ie7 valid css hack */
+*:first-child+html select.store {
+  width:98%;
 }
 
 select.transporter {
