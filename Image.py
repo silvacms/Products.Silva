@@ -566,18 +566,21 @@ class ImagePublishTraverse(SilvaPublishTraverse):
             return img, method
         return object, method
 
+
 class ImageStorageConverter(object):
 
     implements(interfaces.IUpgrader)
 
     def upgrade(self, image):
         if not interfaces.IImage.providedBy(image):
-            return
-        file = image.hires_image
-        if file is None:
-            return
-        ct = file.get_mime_type()
-        data = file.get_content_fd()
+            return image
+        file_obj = image.hires_image
+        if file_obj is None:
+            logger.error("No orginal data for %s, storage not changed." %
+                         '/'.join(image.getPhysicalPath()))
+            return image
+        ct = file_obj.get_mime_type()
+        data = file_obj.get_content_fd()
         image._image_factory('hires_image', data, ct)
         image._createDerivedImages()
         logger.info("Storage for image %s converted" %
