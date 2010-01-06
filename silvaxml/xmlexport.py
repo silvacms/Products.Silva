@@ -1,4 +1,4 @@
-""" 
+"""
 The new and improved XML export for Silva content. This will replace
 the existing export machinery.
 """
@@ -52,6 +52,7 @@ def initializeXMLExportRegistry():
     exporter.registerProducer(AutoTOC, AutoTOCProducer)
     exporter.registerProducer(Indexer, IndexerProducer)
     exporter.registerFallbackProducer(ZexpProducer)
+
 
 class SilvaBaseProducer(xmlexport.BaseProducer):
     def metadata(self):
@@ -211,6 +212,7 @@ class PublicationProducer(SilvaBaseProducer):
         self.endElement('content')
         self.endElement('publication')
 
+
 class LinkProducer(VersionedContentProducer):
     """Export a Silva Link object to XML.
     """
@@ -219,6 +221,7 @@ class LinkProducer(VersionedContentProducer):
         self.workflow()
         self.versions()
         self.endElement('link')
+
 
 class LinkVersionProducer(SilvaBaseProducer):
     """Export a version of a Silva Link object to XML.
@@ -230,6 +233,7 @@ class LinkVersionProducer(SilvaBaseProducer):
         self.handler.characters(self.context.get_url())
         self.endElement('url')
         self.endElement('content')
+
 
 class GhostProducer(VersionedContentProducer):
     """Export a Silva Ghost object to XML.
@@ -271,7 +275,7 @@ class GhostFolderProducer(SilvaBaseProducer):
         self.startElement('ghost_folder', {'id': self.context.id})
         self.startElement('content')
         content = self.context.get_haunted_unrestricted()
-        meta_type = content is not None and content.meta_type or "" 
+        meta_type = content is not None and content.meta_type or ""
         haunted_url = self.context.get_haunted_url()
         self.startElement('metatype')
         self.handler.characters(meta_type)
@@ -286,15 +290,18 @@ class AutoTOCProducer(SilvaBaseProducer):
     """Export an AutoTOC object to XML.
     """
     def sax(self):
-        self.startElement('auto_toc', {'id': self.context.id,
-                                       'depth': str(self.context.toc_depth()),
-                                       'types': ','.join(self.context.get_local_types()),
-                                       'sort_order': self.context.sort_order(),
-                                       'show_icon': str(self.context.show_icon()),
-                                       'display_desc_flag': str(self.context.display_desc_flag())})
+        self.startElement(
+            'auto_toc',
+            {'id': self.context.id,
+             'depth': str(self.context.toc_depth()),
+             'types': ','.join(self.context.get_local_types()),
+             'sort_order': self.context.sort_order(),
+             'show_icon': str(self.context.show_icon()),
+             'display_desc_flag': str(self.context.display_desc_flag())})
         self.metadata()
         self.endElement('auto_toc')
-    
+
+
 class FileProducer(SilvaBaseProducer):
     """Export a File object to XML.
     """
@@ -310,6 +317,7 @@ class FileProducer(SilvaBaseProducer):
         self.handler.characters(self.getInfo().getAssetPathId(path))
         self.endElement('asset_id')
         self.endElement('file_asset')
+
 
 class ImageProducer(SilvaBaseProducer):
     """Export an Image object to XML.
@@ -329,6 +337,7 @@ class ImageProducer(SilvaBaseProducer):
         self.endElement('asset_id')
         self.endElement('image_asset')
 
+
 class IndexerProducer(SilvaBaseProducer):
     """Export an IndexerProducer to XML.
     """
@@ -336,6 +345,7 @@ class IndexerProducer(SilvaBaseProducer):
         self.startElement('indexer', {'id': self.context.id})
         self.metadata()
         self.endElement('indexer')
+
 
 class ZexpProducer(SilvaBaseProducer):
     """Export any unknown content type to a zexp in the zip-file.
@@ -354,7 +364,8 @@ class ZexpProducer(SilvaBaseProducer):
             self.handler.characters(path_id)
             self.endElement('zexp_id')
             self.endElement('unknown_content')
-    
+
+
 class SilvaExportRoot(object):
     def __init__(self, exportable):
         self._exportable = exportable
@@ -362,13 +373,14 @@ class SilvaExportRoot(object):
 
     def getSilvaProductVersion(self):
         return 'Silva %s' % self._exportable.get_root().get_silva_software_version()
-    
+
     def getExportable(self):
         return self._exportable
-    
+
     def getDateTime(self):
         return self._exportDateTime
-        
+
+
 class SilvaExportRootProducer(xmlexport.BaseProducer):
     def sax(self):
         self.startElement(
@@ -381,7 +393,6 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
         self.endElement('silva')
 
 
-        
 class ExportSettings(xmlexport.BaseSettings):
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,
@@ -392,10 +403,10 @@ class ExportSettings(xmlexport.BaseSettings):
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
         self._render_external = False
-        
+
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications
-        
+
     def setLastVersion(self, last_version):
         self._version = last_version and PREVIEWABLE_VERSION or ALL_VERSION
 
@@ -405,7 +416,7 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def setExternalRendering(self, external_rendering):
         self._render_external = external_rendering
-             
+
     @property
     def workflow(self):
         return self._workflow
@@ -422,23 +433,24 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def externalRendering(self):
         return self._render_external
-    
+
+
 class ExportInfo(object):
     def __init__(self):
         self._asset_paths = {}
         self._zexp_paths = {}
         self._last_asset_id = 0
         self._last_zexp_id = 0
-        
+
     def addAssetPath(self, path):
         self._asset_paths[path] = self._makeUniqueAssetId(path)
-    
+
     def getAssetPathId(self, path):
         return self._asset_paths[path]
 
     def getAssetPaths(self):
         return self._asset_paths.items()
-    
+
     def _makeUniqueAssetId(self, path):
         ext = ''
         name = path[-1]
@@ -447,16 +459,16 @@ class ExportInfo(object):
                 ext = name[-4:]
         self._last_asset_id += 1
         return str(self._last_asset_id) + ext
-    
+
     def addZexpPath(self, path):
         self._zexp_paths[path] = self._makeUniqueZexpId(path)
-    
+
     def getZexpPathId(self, path):
         return self._zexp_paths[path]
 
     def getZexpPaths(self):
         return self._zexp_paths.items()
-    
+
     def _makeUniqueZexpId(self, path):
         self._last_zexp_id += 1
         return str(self._last_zexp_id) + '.zexp'
