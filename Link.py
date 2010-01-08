@@ -25,6 +25,34 @@ from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
 
+import urlparse
+
+# see url_parse.py for capabilities
+SCHEME_HTTP_LIKE_CAPABILITIES = [
+    'uses_relative',
+    'uses_netloc',
+    'uses_params',
+    'uses_query',
+    'uses_fragment',
+]
+
+EXTRA_SCHEMES = [
+    ('itms',   SCHEME_HTTP_LIKE_CAPABILITIES), # itunes
+    ('webcal', SCHEME_HTTP_LIKE_CAPABILITIES), # webcal
+]
+
+def add_scheme(scheme, capabilities):
+    for capability in capabilities:
+        schemes = getattr(urlparse, capability)
+        if not scheme in schemes:
+            schemes.append(scheme)
+
+def update_url_parse_schemes():
+    for (scheme, caps) in EXTRA_SCHEMES:
+        add_scheme(scheme, caps)
+
+update_url_parse_schemes()
+
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
     in navigation or a Table of Contents. The links can be absolute or relative.
@@ -63,7 +91,7 @@ class Link(CatalogedVersionedContent):
 
         if version_id is None:
             return
-            
+
         version = getattr(self, version_id)
         f.write('<silva_link id="%s">' % self.id)
         f.write('<title>%s</title>' % translateCdata(version.get_title()))
@@ -107,7 +135,7 @@ class LinkVersion(CatalogedVersion):
         else:
             response.redirect(self._url)
             return ""
-        
+
     # MANIPULATORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
@@ -122,7 +150,7 @@ class LinkVersion(CatalogedVersion):
         else:
             url = urlunsplit((None, None, path, query, fragment))
         self._url = url
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_link_type')
     def set_link_type(self, lt):
