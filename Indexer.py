@@ -142,13 +142,9 @@ class IndexerView(silvaviews.View):
 
     def render_links(self, links):
         result = []
-        for title, id, name in links:
+        for title, cid, name in links:
             # XXX: This is sub-optimal
-            obj = self.resolver.getObject(id)
-            if obj is not None:
-                url = obj.absolute_url()
-            else:
-                url = '#'
+            obj = self.resolver.getObject(cid).absolute_url()
             result.append(
                 '<a class="indexer" href="%s#%s">%s</a>' % (
                     url, name, title))
