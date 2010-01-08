@@ -3,6 +3,7 @@
 # See also LICENSE.txt
 # $Id$
 
+from Acquisition import aq_base
 from Testing.ZopeTestCase import utils, connections, sandbox, ZopeLite
 from Testing import ZopeTestCase
 from ZODB.blob import BlobStorage
@@ -40,10 +41,39 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
 
     _blob_dir = None
 
+    def assertSame(self, first, second, msg=None):
+        """Assert that first is the same same object than second,
+        Acquisition wrapper removed. If the condition is not
+        satisfied, the test will fail with the given msg if not None.
+        """
+        if msg is None:
+            msg = u'%r is not %r' % (first, second)
+        if aq_base(first) is not aq_base(second):
+            raise self.failureException, msg
+
+    def assertListEqual(self, first, second, msg=None):
+        """Assert that the list first and second contains the same
+        object, without paying attention to the order of the
+        elements. If the condition is not satisfied, the test will
+        fail with the given msg if not None.
+        """
+        c_first = list(first)
+        c_first.sort()
+        c_second = list(second)
+        c_second.sort()
+        if msg is None:
+            msg = u'%r != %s' % (c_first, c_second)
+        if not c_first == c_second:
+            raise self.failureException, msg
+
     def get_users(self):
+        """Return the list of the available list of test users.
+        """
         return users.keys()
 
     def get_password(self, username):
+        """Return the password of the given user.
+        """
         return users[username]['password']
 
     def get_role(self, username):
