@@ -15,6 +15,9 @@
   <include package="silva.core.upgrade" />
   <include package="silva.translations" />
 
+  <include package="Products.SilvaMetadata" />
+  <include package="Products.SilvaDocument" />
+
   <include package=".browser" />
 
   <!-- Grok Silva -->
@@ -22,8 +25,9 @@
 
   <!-- Vocabularies -->
 
-  <utility component=".File.FileStorageTypeVocabulary"
-           name="File Storage Type" />
+  <utility
+     component=".File.FileStorageTypeVocabulary"
+     name="File Storage Type" />
 
   <adapter
     for="silva.core.interfaces.IImage
