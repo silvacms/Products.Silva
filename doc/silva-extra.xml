@@ -704,61 +704,6 @@
      <value key="index_type">Cosine Measure</value>
    </index_args>
  </metadata_element>
- <metadata_element id="location">
-   <index_type>TextIndex</index_type>
-   <index_p>0</index_p>
-   <field_type>StringField</field_type>
-   <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
-   <read_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </read_guard>
-   <write_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </write_guard>
-   <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_length" type="str" value="" />
-        <value key="external_validator" type="str" value="" />
-        <value key="display_maxwidth" type="str" value="" />
-        <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="url" />
-        <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="Resource location of this content." />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="" />
-   </field_values>
-   <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_length"></value>
-     <value key="external_validator"></value>
-     <value key="display_maxwidth"></value>
-     <value key="display_width"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default">content/silva_object_url</value>
-     <value key="title"></value>
-     <value key="truncate"></value>
-     <value key="description"></value>
-     <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
-   </field_tales>
-   <field_messages>
-   </field_messages>
-   <index_args>
-   </index_args>
- </metadata_element>
  <metadata_element id="contactname">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>

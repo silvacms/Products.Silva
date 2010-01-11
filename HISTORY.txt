@@ -7,20 +7,29 @@ Silva changes
 
     Bug fixes
 
-     - update URL_PATTERN to support the entire range of characters supporting in the LHS of email addresses in mailto: links
-     
-     - unpublished Versions of VersionedContent objects were not unindexed from 
-       the catalog when the Version was removed (e.g. via the status tab).
-       A subscriber was added for the IObjectWillBeRemoved event
-       
-     - fixed helpers.SwitchClass (used by the folder <--> publication conversion)
-       so that the ObjectManager api's are used to set the new object, keeping
-       the metadata structures up to date
+     - Update URL_PATTERN to support the entire range of characters
+       supporting in the LHS of email addresses in mailto: links
+
+     - Unpublished Versions of VersionedContent objects were not
+       unindexed from the catalog when the Version was removed
+       (e.g. via the status tab).  A subscriber was added for the
+       IObjectWillBeRemoved event
+
+     - Fixed helpers.SwitchClass (used by the folder <--> publication
+       conversion) so that the ObjectManager api's are used to set the
+       new object, keeping the metadata structures up to date
+
+     - Fix test clean up in ZCML support to support multiple layer
+       test suites.
+
+     - Remove the unused and wrong metadata element
+       silva-extra:location it was unused and not updated on content
+       move.
 
   Silva 2.1.9 (2009-11-26)
-    
+
     New features
-      
+
       - Check libxslt and libxml version at start up.
 
   Silva 2.1.8 (2009-11-24)
