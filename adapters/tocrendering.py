@@ -15,7 +15,7 @@ from silva.core.views.interfaces import IPreviewLayer
 module_security = AccessControl.ModuleSecurityInfo(
     'Products.Silva.adapters.tocrendering')
 
-_marker = None
+_marker = []
 default_show_types = None
 def compute_default_show_types():
     global default_show_types
