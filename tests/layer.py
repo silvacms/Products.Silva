@@ -8,7 +8,7 @@ import time
 
 # Zope 3
 import zope.component.eventtesting
-from zope.app.component.hooks import setSite
+from zope.app.component.hooks import setSite, setHooks
 from zope.component import provideHandler
 from zope.testing.cleanup import cleanUp as _cleanUp
 
@@ -164,12 +164,14 @@ def setUp(test):
     app.temp_folder.session_data._reset()
     zope.component.eventtesting.clearEvents()
     setSite(app.root)
+    setHooks()
 
 
 def tearDown(test):
     """Tear down after each tests.
     """
     setSite()
+    setHooks()
     noSecurityManager()
 
 
