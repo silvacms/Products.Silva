@@ -223,7 +223,6 @@ def VersionFactory(version_class):
     return factory_method
 
 # for use in test cleanup
-_register_monkies = []
 _meta_type_regs = []
 
 #visibility can be "Global" or None
@@ -253,7 +252,6 @@ def registerClass(class_, extension_name, zmi_addable=False):
     Products.meta_types += (info,)
 
     # register for test cleanup
-    _register_monkies.append(class_)
     _meta_type_regs.append(class_.meta_type)
 
 def registerFactory(methods, class_, factory):
@@ -282,11 +280,6 @@ def getProductDir(product):
         
 
 def cleanUp():
-    global _register_monkies
-    for class_ in _register_monkies:
-        unregisterClass(class_)
-    _register_monkies = []
-
     global _meta_type_regs
     Products.meta_types = tuple([ info for info in Products.meta_types
                                   if info['name'] not in _meta_type_regs ])
