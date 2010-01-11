@@ -16,7 +16,7 @@
 <tal:condition condition="python: not model.get_unapproved_version() and model.implements_versioned_content() and not model.meta_type == 'Silva Ghost'">
 <link rel="stylesheet"
   type="text/css"
-  tal:attributes="href here/frontend.css/absolute_url | nothing"
+  tal:attributes="href here/globals/frontend.css/absolute_url | nothing"
 />
 <style type="text/css">
 div.public {
