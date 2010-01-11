@@ -69,6 +69,12 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
+                    if not hasattr(set, element_name):
+                        zLOG.LOG(
+                            'Silva', zLOG.WARNING,
+                            "Unknown metadata element %s in set %s." %
+                            (element_name, set_id))
+                        continue
                     field = set.getElement(element_name).field
 
                     # Set data
