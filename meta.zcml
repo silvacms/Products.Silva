@@ -2,6 +2,9 @@
    xmlns="http://namespaces.zope.org/zope"
    i18n_domain="silva">
 
+  <include package="Products.Five" file="meta.zcml" />
+  <include package="Products.Five" />
+
   <!-- Silva permissions -->
   <permission
     id="silva.ReadSilvaContent"
