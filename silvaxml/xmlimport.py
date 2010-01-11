@@ -37,7 +37,7 @@ def initializeXMLImportRegistry():
     importer.registerHandler(
         (NS_URI, 'unknown_content'),
         UnknownContentHandler)
-    
+
 class SilvaBaseHandler(xmlimport.BaseHandler):
     def __init__(self, parent, parent_handler, settings=None, info=None):
         xmlimport.BaseHandler.__init__(
@@ -53,7 +53,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata = {}
         self._metadata_multivalue = False
         self._workflow = {}
-        
+
     # MANIPULATORS
 
     def setWorkflowVersion(
@@ -62,10 +62,10 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             publicationtime = DateTime(publicationtime)
         if expirationtime:
             expirationtime = DateTime(expirationtime)
-            
+
         self.parentHandler()._workflow[version_id] = (
             publicationtime, expirationtime, status)
-    
+
     def storeMetadata(self):
         content = self._result
         metadata_service = content.service_metadata
@@ -76,13 +76,19 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                 set = binding.collection.get(set_id, None)
                 if set is None:
                     zLOG.LOG(
-                    'Silva', zLOG.WARNING, 
+                    'Silva', zLOG.WARNING,
                     "Unknown metadata set %s present in import file." % set_id)
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
+                    if not hasattr(set, element_name):
+                        zLOG.LOG(
+                            'Silva', zLOG.WARNING,
+                            "Unknown metadata element %s in set %s." %
+                            (element_name, set_id))
+                        continue
                     field = set.getElement(element_name).field
-                
+
                     # Set data
                     try:
                         errors = binding._setData(
@@ -93,11 +99,11 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                             reindex=1)
                     except ValidationError:
                         zLOG.LOG(
-                            'Silva', zLOG.WARNING, 
+                            'Silva', zLOG.WARNING,
                             "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
                     if errors:
                         zLOG.LOG(
-                            'Silva', zLOG.WARNING, 
+                            'Silva', zLOG.WARNING,
                             "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
 
     def storeWorkflow(self):
@@ -132,13 +138,13 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                 )
             previous_versions.append(previous_version)
             self.parent()._previous_versions = previous_versions
-                    
+
     def setMaintitle(self):
         main_title = self.getMetadata('silva-content', 'maintitle')
         if main_title is not None:
             # metadata delivers utf-8, set_title expects unicode
             main_title = unicode(main_title, 'utf-8')
-            self.result().set_title(main_title)        
+            self.result().set_title(main_title)
 
     def setMetadataKey(self, key):
         self._metadata_key = key
@@ -165,7 +171,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
 
     def metadataKey(self):
         return self._metadata_key
-    
+
     def metadataSet(self):
         return self._metadata_set
 
@@ -196,13 +202,13 @@ class FolderHandler(SilvaBaseHandler):
             parent = self.parent()
             id = attrs[(None, 'id')].encode('utf-8')
             if self.settings().replaceObjects() and id in parent.objectIds():
-                self.setResult(getattr(parent, id))    
+                self.setResult(getattr(parent, id))
                 return
             uid = generateUniqueId(id, parent)
             parent.manage_addProduct['Silva'].manage_addFolder(
                 uid, '', create_default=0)
             self.setResult(getattr(parent, uid))
-                
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
             self.setMaintitle()
@@ -214,13 +220,13 @@ class PublicationHandler(SilvaBaseHandler):
             id = str(attrs[(None, 'id')])
             parent = self.parent()
             if self.settings().replaceObjects() and id in parent.objectIds():
-                self.setResult(getattr(parent, id))    
+                self.setResult(getattr(parent, id))
                 return
             uid = generateUniqueId(id, parent)
             self.parent().manage_addProduct['Silva'].manage_addPublication(
                 uid, '', create_default=0)
             self.setResult(getattr(parent, uid))
-                
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
             self.setMaintitle()
@@ -246,7 +252,7 @@ class AutoTOCHandler(SilvaBaseHandler):
             if (attrs.get((None,'sort_order'),None)):
                 obj.set_sort_order(attrs[(None,'sort_order')])
             self.setResult(getattr(self.parent(), uid))
-            
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
             self.setMaintitle()
@@ -260,13 +266,13 @@ class IndexerHandler(SilvaBaseHandler):
             self.parent().manage_addProduct['Silva'].manage_addIndexer(
                 uid, '')
             self.setResult(getattr(self.parent(), uid))
-            
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'indexer'):
             self.setMaintitle()
             self.storeMetadata()
             self._info.addIndexer(self.result())
-            
+
 class VersionHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -295,15 +301,15 @@ class SetHandler(SilvaBaseHandler):
         else:
             self.parentHandler().setMetadataMultiValue(True)
         self.setResult(None)
-            
+
     def characters(self, chrs):
         if self.parentHandler().metadataKey() is not None:
             self._chars = chrs
-       
+
     def endElementNS(self, name, qname):
         if name != (NS_URI, 'set'):
             value = getattr(self, '_chars', None)
-            
+
             if self.parentHandler().metadataKey() is not None:
                 self.parentHandler().setMetadata(
                     self.parentHandler().metadataSet(),
@@ -313,7 +319,7 @@ class SetHandler(SilvaBaseHandler):
             self.parentHandler().setMetadataKey(None)
             self.parentHandler().setMetadataMultiValue(False)
         self._chars = None
-        
+
 class GhostHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -332,7 +338,7 @@ class GhostHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
             self.result().indexVersions()
-            
+
 class GhostContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -369,7 +375,7 @@ class GhostFolderHandler(SilvaBaseHandler):
             object = getattr(self.parent(), uid)
             self.setResult(object)
             self._info.addSyncTarget(object)
-        
+
 class GhostFolderContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -380,7 +386,7 @@ class GhostFolderContentHandler(SilvaBaseHandler):
 class NoopHandler(SilvaBaseHandler):
     def isElementAllowed(self, name):
         return False
-    
+
 class HauntedUrlHandler(SilvaBaseHandler):
     def characters(self, chars):
         self.parent().set_haunted_url(chars)
@@ -402,7 +408,7 @@ class LinkHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'link'):
             self.result().indexVersions()
-            
+
 class LinkContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -418,7 +424,7 @@ class LinkContentHandler(SilvaBaseHandler):
             self.parent()._setObject(id, version)
             self.setResult(getattr(self.parent(), id))
             updateVersionCount(self)
-            
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             url = self.getData('url')
@@ -428,7 +434,7 @@ class LinkContentHandler(SilvaBaseHandler):
             self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
-    
+
     def __get_url_type(self, url):
         (scheme, host, path, query, fragment) = urlsplit(url)
         if scheme: return 'absolute'
@@ -439,7 +445,7 @@ class ImageHandler(SilvaBaseHandler):
         return {
             (NS_URI, 'asset_id'): ZipIdHandler
             }
-        
+
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'image_asset'):
             self.setData('id', attrs[(None, 'id')])
@@ -464,7 +470,7 @@ class ImageHandler(SilvaBaseHandler):
                     web_format,
                     web_scale,
                     web_crop)
-            
+
 class FileHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -484,7 +490,7 @@ class FileHandler(SilvaBaseHandler):
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
             self.parent().manage_addProduct['Silva'].manage_addFile(uid, '', file)
-            
+
 class UnknownContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {
@@ -505,11 +511,11 @@ class UnknownContentHandler(SilvaBaseHandler):
             if hasattr(id, 'im_func'):
                 id = id()
             self.parent()._setObject(id, ob)
-        
+
 class ZipIdHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('zip_id', chrs)
-    
+
 class StatusHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('status', chrs)
@@ -534,16 +540,16 @@ class ImportSettings(xmlimport.BaseSettings):
             import_filter_factory=collapser.CollapsingHandler
             )
         self._replace_objects = replace_objects
-    
+
     def replaceObjects(self):
         return self._replace_objects
-            
+
 class ImportInfo:
     def __init__(self):
         self._asset_paths = {}
         self._zexp_paths = {}
         self._zip_file = None
-        self._ghostfolders = [] 
+        self._ghostfolders = []
         self._indexers = []
 
     def setZipFile(self, file):
@@ -551,19 +557,19 @@ class ImportInfo:
 
     def ZipFile(self):
         return self._zip_file
-    
+
     def addAssetPath(self, zip_id, path):
         self._asset_paths[zip_id] = path
-    
+
     def getAssetZipPath(self, zip_id):
         return self._asset_paths[zip_id]
 
     def getAssetPaths(self):
         return self._asset_paths.items()
-    
+
     def addZexpPath(self, zip_id, path):
         self._zexp_paths[zip_id] = path
-    
+
     def getZexpZipPath(self, zip_id):
         return self._zexp_paths[zip_id]
 
@@ -585,7 +591,7 @@ class ImportInfo:
     def syncGhostFolders(self):
         for folder in self.getSyncTargets():
             folder.haunt()
-            
+
     def updateIndexers(self):
         for indexer in self.getIndexers():
             indexer.update()
@@ -601,7 +607,7 @@ def generateUniqueId(org_id, context):
                 add = str(i)
             id = 'import%s_of_%s' % (add, org_id)
         return id
-    
+
 def updateVersionCount(versionhandler):
     # The parent of a version is a VersionedContent object. This VC object
     # has an _version_count attribute to keep track of the number of
@@ -615,9 +621,9 @@ def updateVersionCount(versionhandler):
     try:
         id = int(id)
     except ValueError:
-        # I guess this is the only reasonable thing to do - apparently 
+        # I guess this is the only reasonable thing to do - apparently
         # this id does not have any numerical 'meaning'.
-        return 
+        return
     vc = max(parent._version_count, (id + 1))
     parent._version_count = vc
 
