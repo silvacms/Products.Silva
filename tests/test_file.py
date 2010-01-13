@@ -12,6 +12,8 @@ from silva.core import interfaces
 from Products.Silva import File
 
 class FileTest(SilvaTestCase.SilvaFileTestCase):
+    """Test file implementation.
+    """
 
     def _test_file(self):
         file_handle = helpers.openTestFile('photo.tif')
@@ -28,8 +30,8 @@ class FileTest(SilvaTestCase.SilvaFileTestCase):
         self.failUnless(file.get_download_url() is not None)
         self.failUnless(file.tag() is not None)
 
-        data = component.queryMultiAdapter((file, file.REQUEST), name='index')()
-        self.assertEqual(file_data, self.get_request_data(data))
+        component.queryMultiAdapter((file, file.REQUEST), name='index')()
+        self.assertEqual(file_data, self.get_request_data())
 
         assetdata = interfaces.IAssetData(file)
         self.failUnless(verifyObject(interfaces.IAssetData, assetdata))

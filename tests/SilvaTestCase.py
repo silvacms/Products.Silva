@@ -274,23 +274,16 @@ class SilvaFileTestCase(SilvaTestCase):
 
     def _app(self):
         app = super(SilvaFileTestCase, self)._app()
-        app = app.aq_base
-        request_out = self.request_out = StringIO()
-        return utils.makerequest(app, request_out)
+        self.request_out = StringIO()
+        return utils.makerequest(app.aq_base, self.request_out)
 
-    def get_request_data(self, data):
-        if data:
-            if hasattr(data, 'next'):
-                s = data._stream.read()
-            else:
-                s = data
-        else:
-            s = self.request_out.getvalue()
-            self.request_out.seek(0)
-            self.request_out.truncate()
-        if s.startswith('Status: 200'):
-            s = s[s.find('\n\n')+2:]
-        return s
+    def get_request_data(self):
+        content = self.request_out.getvalue()
+        self.request_out.seek(0)
+        self.request_out.truncate()
+        if content.startswith('Status: 200'):
+            content = content[content.find('\r\n\r\n')+4:]
+        return content
 
 
 class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
