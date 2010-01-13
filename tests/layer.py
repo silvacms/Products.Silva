@@ -59,6 +59,7 @@ installProduct('Five')
 installPackage('silva.core.views')
 installPackage('silva.core.layout')
 installPackage('silvatheme.standardissue')
+installPackage('silva.core.services')
 
 user_name = ZopeTestCase.user_name
 user_password = ZopeTestCase.user_password

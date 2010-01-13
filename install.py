@@ -540,7 +540,7 @@ def setup_catalog(silva_root):
     """
     # See if catalog exists, if not create one
     if not hasattr(silva_root, 'service_catalog'):
-        factory = silva_root.manage_addProduct['SilvaMetadata']
+        factory = silva_root.manage_addProduct['silva.core.services']
         factory.manage_addCatalogService(
             'service_catalog', 'Silva Service Catalog')
 
