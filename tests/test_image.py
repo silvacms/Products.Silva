@@ -25,15 +25,22 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
 
     def _app(self):
         app = ZopeTestCase._app(self)
-        app = app.aq_base
-        request_out = self.request_out = StringIO()
-        return utils.makerequest(app, request_out)
+        self.request_out = StringIO()
+        return utils.makerequest(app.aq_base, self.request_out)
 
     def test_imageformat(self):
         image_file = StringIO('invalid-image-format')
 
         self.assertRaises(ValueError, self.root.manage_addProduct['Silva'].\
             manage_addImage, 'testimage', 'Test Image', image_file)
+
+    def _get_req_data(self):
+        content = self.request_out.getvalue()
+        self.request_out.seek(0)
+        self.request_out.truncate()
+        if content.startswith('Status: 200'):
+            return content[content.find('\r\n\r\n')+4:]
+        return content
 
     def _getimage_test(self):
         image_file = open(test_path + '/test_image_data/photo.tif', 'rb')
@@ -87,33 +94,22 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
             return
 
         data = image.index_html(request)
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
+        pil_image = PIL.Image.open(StringIO(data))
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
         request.QUERY_STRING = 'hires'
-        data = image.index_html(request)
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
+        image.index_html(request)
+        silva_image = StringIO(self._get_req_data())
+        pil_image = PIL.Image.open(silva_image)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('TIFF', pil_image.format)
-        it.seek(0)
-        self.assertEquals(image_data, it.read())
+        silva_image.seek(0)
+        self.assertEquals(image_data, silva_image.read())
 
         request.QUERY_STRING = 'thumbnail'
         data = image.index_html(request)
-        if type(data) == type(''):
-            it = StringIO(self._get_req_data(data))
-        else:
-            it = data._stream
-        pil_image = PIL.Image.open(it)
+        pil_image = PIL.Image.open(StringIO(data))
         w, h = pil_image.size
         self.assert_(w == 120 or h == 120)
         self.assertEquals('JPEG', pil_image.format)
@@ -125,17 +121,6 @@ class ImageTest(SilvaTestCase.SilvaTestCase):
     def test_index_html_zodb(self):
         self.root.service_files.manage_filesServiceEdit('', 0)
         self._test_index_html()
-
-    def _get_req_data(self, data):
-        if data:
-            s = data
-        else:
-            s = self.request_out.getvalue()
-            self.request_out.seek(0)
-            self.request_out.truncate()
-        if s.startswith('Status: 200'):
-            s = s[s.find('\n\n')+2:]
-        return s
 
     def test_getCropBox(self):
         image_file = open(test_path + '/test_image_data/photo.tif', 'rb')

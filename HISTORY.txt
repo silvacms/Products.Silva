@@ -26,6 +26,9 @@ Silva changes
        silva-extra:location it was unused and not updated on content
        move.
 
+     - Fix broken tests on Zope 2.11.6 (HTTP headers are sperated
+       correctly now).
+
   Silva 2.1.9 (2009-11-26)
 
     New features
