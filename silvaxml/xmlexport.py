@@ -63,7 +63,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
         set_ids = binding.collection.keys()
         set_ids.sort()
         for set_id in set_ids:
-            prefix, namespace = binding.collection[set_id].getNamespace()
+            set_obj = binding.collection[set_id]
+            prefix, namespace = set_obj.getNamespace()
             if (namespace != NS_SILVA_CONTENT and
                 namespace != NS_SILVA_EXTRA):
                 self.handler.startPrefixMapping(prefix, namespace)
@@ -71,6 +72,8 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
             items = binding._getData(set_id).items()
             items.sort()
             for key, value in items:
+                if not hasattr(set_obj, key):
+                    continue
                 field = binding.getElement(set_id, key).field
                 self.startElementNS(namespace, key)
                 if not value is None:
