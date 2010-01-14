@@ -7,15 +7,17 @@ from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
-from silva.core.interfaces.adapters import IVersionManagement
-from silva.core.interfaces import IVersion
 from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
-from Products.Silva.i18n import translate as _
 
-module_security = ModuleSecurityInfo('Products.Silva.adapters.version_management')
+from silva.core.interfaces.adapters import IVersionManagement
+from silva.core.interfaces import IVersion
+from silva.translations import translate as _
+
+module_security = ModuleSecurityInfo(
+    'Products.Silva.adapters.version_management')
 
 class VersionManagementAdapter(adapter.Adapter):
     """Adapter to manage Silva versions"""

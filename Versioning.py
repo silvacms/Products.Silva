@@ -6,20 +6,15 @@
 from zope.interface import implements
 
 # Zope 2
-from DateTime import DateTime
 from AccessControl import ClassSecurityInfo, getSecurityManager
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
+from DateTime import DateTime
 
 # Silva
-import SilvaPermissions
-from Products.Silva import mangle
+from Products.Silva import mangle, SilvaPermissions
 
 from silva.core.interfaces import IVersioning
-
-from Products.Silva.i18n import translate as _
+from silva.translations import translate as _
 
 
 class VersioningError(Exception):

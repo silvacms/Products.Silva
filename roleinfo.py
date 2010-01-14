@@ -1,5 +1,5 @@
 from AccessControl import ModuleSecurityInfo
-from Products.Silva.i18n import translate as _
+from silva.translations import translate as _
 
 module_security = ModuleSecurityInfo('Products.Silva.roleinfo')
 
@@ -24,7 +24,7 @@ ALL_ROLES = VIEWER_ROLES + READER_ROLES
 
 _i18n_markers = (
     _('zope roles'),
-    _('silva roles'),    
+    _('silva roles'),
     _('public silva roles'),
     _('Anonymous'),
     _('Authenticated'),
@@ -32,9 +32,9 @@ _i18n_markers = (
     _('Viewer'),
     _('Viewer +'),
     _('Viewer ++'),
-    _('Reader'),    
-    _('Author'),    
-    _('Editor'),    
+    _('Reader'),
+    _('Author'),
+    _('Editor'),
     _('ChiefEditor'),)
 
 module_security.declareProtected('Change Silva access',

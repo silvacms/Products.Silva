@@ -24,21 +24,15 @@ from ZODB import blob
 from five import grok
 
 # Zope 2
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from OFS.interfaces import IObjectWillBeRemovedEvent
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from webdav.common import rfc1123_date
 
 # Silva
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
-from silva.core.upgrade import upgrade
-from Products.Silva.i18n import translate as _
 from Products.Silva.Asset import Asset
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
@@ -62,8 +56,10 @@ from silva.core import interfaces
 from silva.core.conf import schema as silvaschema
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
+from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
+from silva.translations import translate as _
 from z3c.form import field
 
 

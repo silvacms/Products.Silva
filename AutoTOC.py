@@ -2,27 +2,24 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
+from five import grok
 
 # Zope
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
 from AccessControl import ClassSecurityInfo
-from Persistence import Persistent
+from App.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
+from Persistence import Persistent
 
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
-from Products.Silva.i18n import translate as _
-from silva.core.interfaces import IAutoTOC, IContainerPolicy
 from Products.Silva.adapters import tocrendering
 
-from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
+from silva.core.interfaces import IAutoTOC, IContainerPolicy
+from silva.core.views import views as silvaviews
+from silva.translations import translate as _
+
 
 class AutoTOC(Content, SimpleItem):
     __doc__ = _("""This is a special document type that automatically generates
@@ -37,8 +34,7 @@ class AutoTOC(Content, SimpleItem):
 
     meta_type = "Silva AutoTOC"
 
-    implements(IAutoTOC)
-
+    grok.implements(IAutoTOC)
     silvaconf.icon('www/autotoc.png')
     silvaconf.priority(0.2)
 
@@ -150,7 +146,7 @@ InitializeClass(AutoTOC)
 
 class AutoTOCView(silvaviews.View):
 
-    silvaconf.context(IAutoTOC)
+    grok.context(IAutoTOC)
 
     def render_tree(self):
         toc = self.context
@@ -164,7 +160,7 @@ class AutoTOCView(silvaviews.View):
 
 class AutoTOCPolicy(Persistent):
 
-    implements(IContainerPolicy)
+    grok.implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         container.manage_addProduct['Silva'].manage_addAutoTOC(
