@@ -30,17 +30,6 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
     # MANIPULATORS
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_title')
-    def set_title(self, title):
-        """Set the title of the silva object.
-        """
-        # FIXME: Ugh. I get unicode from formulator but this will not validate
-        # when using the metadata system. So first make it into utf-8 again..
-        title = title.encode('utf-8')
-        binding = self.service_metadata.getMetadata(self)
-        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
-
-    security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'update_quota')
     def update_quota(self):
         # XXX Should use utility
