@@ -153,9 +153,8 @@ class SilvaObject(Security, ViewCode):
         title = title.encode('utf-8')
         binding = component.getUtility(IMetadataService).getMetadata(self)
         binding.setValues('silva-content', {'maintitle': title}, reindex=1)
-        if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
+
+        self.titleMutationTrigger()
 
     security.declarePrivate('titleMutationTrigger')
     def titleMutationTrigger(self):
@@ -163,7 +162,7 @@ class SilvaObject(Security, ViewCode):
         specifically, when the silva-content - defining titles - set is
         being editted for this object.
         """
-        if self.id == 'index':
+        if self.getId() == 'index':
             container = self.get_container()
             container._invalidate_sidebar(container)
 
