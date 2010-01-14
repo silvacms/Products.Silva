@@ -33,7 +33,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(self.root.get_title_editable(), 'Root2')
         self.publication.set_title('Publication2')
         self.assertEquals(self.publication.get_title_editable(), 'Publication2')
-        
+
     def test_title3(self):
         # Test get_title_or_id
         self.assertEquals(self.document.get_title_or_id_editable(), 'Document')
@@ -41,7 +41,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_title_on_version(self):
         self.add_document(self.folder, 'adoc', 'document')
-	self.folder.adoc.set_unapproved_version_publication_datetime(
+        self.folder.adoc.set_unapproved_version_publication_datetime(
             DateTime() - 1)
         self.folder.adoc.approve_version()
         self.folder.adoc.create_copy()
@@ -52,7 +52,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
     def test_title6(self):
         self.folder.set_title('folder 2')
         self.assertEquals(self.folder.get_title_editable(), 'folder 2')
-           
+
     def test_get_creation_datetime(self):
         now = DateTime()
         self.assert_(self.folder.document.get_creation_datetime() < now)
@@ -84,12 +84,6 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
                            self.subfolder, self.subsubdoc],
                           self.subsubdoc.get_breadcrumbs())
 
-
-    def test_HEAD(self):
-        for object in (self.root, self.folder, self.subsubdoc):
-            self.folder.HEAD(self.app.REQUEST, self.app.REQUEST.RESPONSE)
-            self.assertEquals('text/html',
-                              self.app.REQUEST.RESPONSE.getHeader('content-type'))
 
 import unittest
 def test_suite():
