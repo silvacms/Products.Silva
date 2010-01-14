@@ -7,10 +7,6 @@
 # Python
 import os
 
-# Zope 3
-from zope import interface
-from zope.app.intid.interfaces import IIntIds
-
 # Zope 2
 from App.Common import package_home
 from DateTime import DateTime
@@ -19,7 +15,10 @@ from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
     import manage_addAcceleratedHTTPCacheManager
 
 # sibling
-from silva.core.interfaces import IInvisibleService, IRoot
+from silva.core.interfaces import IRoot
+from silva.core.services.interfaces import ICataloging
+
+
 from Products.Silva.fssite import manage_addDirectoryView
 from Products.Silva.fssite import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
@@ -105,8 +104,8 @@ def install(root):
     # also register views
     registerViews(root.service_view_registry)
 
-    # add and/or update catalog
-    setup_catalog(root)
+    # add or update service metadata and catalog
+    configureMetadata(root)
 
     # always register the groups views
     registerGroupsViews(root.service_view_registry)
@@ -123,9 +122,6 @@ def install(root):
     root.add_silva_addable_forbidden('Silva Group')
     root.add_silva_addable_forbidden('Silva Virtual Group')
     root.add_silva_addable_forbidden('Silva IP Group')
-
-    # add or update service metadata
-    configureMetadata(root)
 
     configureContainerPolicies(root)
 
@@ -157,9 +153,14 @@ def is_installed(root):
 
 def configureMetadata(root):
     from os import path
-    from App.Common import package_home
 
-    # install metadata
+    # See if catalog exists, if not create one
+    if not hasattr(root, 'service_catalog'):
+        factory = root.manage_addProduct['silva.core.services']
+        factory.manage_addCatalogService(
+            'service_catalog', 'Silva Service Catalog')
+
+    # Install metadata
     if not 'service_metadata' in root.objectIds():
         factory = root.manage_addProduct['SilvaMetadata']
         factory.manage_addMetadataTool(
@@ -194,6 +195,10 @@ def configureMetadata(root):
     types = ('Silva Ghost Folder', 'Silva Ghost Version')
     root.service_metadata.addTypesMapping(types, ('', ))
     root.service_metadata.initializeMetadata()
+
+    # Reindex the Silva root
+    ICataloging(root).reindex()
+
 
 def configureProperties(root):
     """Configure properties on the root folder.
@@ -533,20 +538,6 @@ def unregisterViews(reg):
     reg.unregister('edit', 'Silva Simple Member')
     # next line for hysterical reasons, should go away
     reg.unregister('public', 'Silva Simple Member')
-
-
-def setup_catalog(silva_root):
-    """Sets up the ZCatalog
-    """
-    # See if catalog exists, if not create one
-    if not hasattr(silva_root, 'service_catalog'):
-        factory = silva_root.manage_addProduct['silva.core.services']
-        factory.manage_addCatalogService(
-            'service_catalog', 'Silva Service Catalog')
-
-    # if the silva root has an index_object attribute, add it to the catalog
-    if hasattr(silva_root, 'index_object'):
-        silva_root.index_object()
 
 
 def configureContainerPolicies(root):

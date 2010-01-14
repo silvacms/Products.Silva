@@ -13,6 +13,7 @@ from Products.Silva.Link import Link, LinkVersion
 
 from silva.core import conf as silvaconf
 from silva.core.upgrade.silvaxml import upgradeXMLOnFD
+from silva.core.services.interfaces import ICataloging
 
 from Products.Silva import mangle
 from DateTime import DateTime
@@ -347,7 +348,7 @@ class GhostHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
-            self.result().indexVersions()
+            ICataloging(self.result()).reindex()
 
 class GhostContentHandler(SilvaBaseHandler):
 
@@ -427,7 +428,8 @@ class LinkHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'link'):
-            self.result().indexVersions()
+            ICataloging(self.result()).reindex()
+
 
 class LinkContentHandler(SilvaBaseHandler):
 

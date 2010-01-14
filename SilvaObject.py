@@ -3,6 +3,7 @@
 # $Id$
 
 # Zope 3
+from five import grok
 from zope.i18n import translate
 from zope import component
 from zope.publisher.browser import applySkin
@@ -14,45 +15,37 @@ from zope.app.container.interfaces import IObjectMovedEvent
 from zope.interface import alsoProvides, providedBy
 
 # Zope 2
+from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
+from App.class_init import InitializeClass
+from DateTime import DateTime
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
-from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
-from DateTime import DateTime
-from App.Common import rfc1123_date
-
-# WebDAV
-from webdav.common import Conflict
-from zExceptions import MethodNotAllowed
 
 # Silva
-import SilvaPermissions
-from Products.SilvaViews.ViewRegistry import ViewAttribute
-from Security import Security
-from ViewCode import ViewCode
+from Products.Silva import SilvaPermissions
+from Products.Silva.Security import Security
+from Products.Silva.ViewCode import ViewCode
 from Products.Silva.utility import interfaces as utility_interfaces
-
-from silva.core.interfaces import (ISilvaObject, IPublishable, IAsset,
-                                   IContent, IContainer, IPublication, IRoot,
-                                   IVersioning, IVersionedContent, IFolder)
+from Products.SilvaViews.ViewRegistry import ViewAttribute
 
 # Silva adapters
 from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 from Products.SilvaMetadata.Exceptions import BindingError
-
-from Products.Silva.i18n import translate as _
-
-from silva.core.views.interfaces import IPreviewLayer
-from silva.core.layout.interfaces import ISMILayer
-from silva.core.layout.utils import queryMultiAdapterWithInterface
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.conf.utils import getSilvaViewFor
-from silva.core import conf as silvaconf
+from silva.core.layout.interfaces import ISMILayer
+from silva.core.layout.utils import queryMultiAdapterWithInterface
+from silva.core.views.interfaces import IPreviewLayer
+from silva.core.services.interfaces import ICataloging
+from silva.translations import translate as _
+
+from silva.core.interfaces import (
+    ISilvaObject, IPublishable, IAsset,
+    IContent, IContainer, IPublication, IRoot,
+    IVersioning, IVersionedContent, IFolder)
+
 
 class XMLExportContext:
     """Simple context class used in XML export.
@@ -137,7 +130,8 @@ class SilvaObject(Security, ViewCode):
         if ctime is None:
             return
         try:
-            binding = self.service_metadata.getMetadata(self)
+            service_metadata = component.getUtility(IMetadataService)
+            binding = service_metadata.getMetadata(self)
         except BindingError:
             # Non metadata object, don't do anything
             return
@@ -157,9 +151,8 @@ class SilvaObject(Security, ViewCode):
         # FIXME: Ugh. I get unicode from formulator but this will not validate
         # when using the metadata system. So first make it into utf-8 again..
         title = title.encode('utf-8')
-        binding = self.service_metadata.getMetadata(self)
-        binding.setValues(
-            'silva-content', {'maintitle': title})
+        binding = component.getUtility(IMetadataService).getMetadata(self)
+        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
         if self.id == 'index':
             container = self.get_container()
             container._invalidate_sidebar(container)
@@ -205,7 +198,7 @@ class SilvaObject(Security, ViewCode):
     def get_title(self):
         """Get the title of the silva object.
         """
-        return self.service_metadata.getMetadataValue(
+        return component.getUtility(IMetadataService).getMetadataValue(
             self, 'silva-content', 'maintitle')
 
     security.declareProtected(
@@ -213,10 +206,11 @@ class SilvaObject(Security, ViewCode):
     def get_short_title(self):
         """Get the title of the silva object.
         """
-        title = self.service_metadata.getMetadataValue(
+        service_metadata = component.getUtility(IMetadataService)
+        title = service_metadata.getMetadataValue(
             self, 'silva-content', 'shorttitle')
         if not title:
-            title = self.service_metadata.getMetadataValue(
+            title = service_metadata.getMetadataValue(
                 self, 'silva-content', 'maintitle')
         if not title:
             title = self.id
@@ -266,7 +260,7 @@ class SilvaObject(Security, ViewCode):
     def get_creation_datetime(self):
         """Return creation datetime."""
         version = self.get_previewable()
-        return self.service_metadata.getMetadataValue(
+        return  component.getUtility(IMetadataService).getMetadataValue(
             version, 'silva-extra', 'creationtime')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -274,7 +268,7 @@ class SilvaObject(Security, ViewCode):
     def get_modification_datetime(self, update_status=1):
         """Return modification datetime."""
         version = self.get_previewable()
-        return self.service_metadata.getMetadataValue(
+        return  component.getUtility(IMetadataService).getMetadataValue(
             version, 'silva-extra', 'modificationtime')
 
     security.declareProtected(
@@ -441,7 +435,7 @@ class SilvaObject(Security, ViewCode):
             rendered = view.render()
             try:
                 del request.model
-            except AttributeError, e:
+            except AttributeError:
                 pass
             return rendered
 
@@ -543,50 +537,10 @@ class SilvaObject(Security, ViewCode):
         """always deletable"""
         return 1
 
-    # WebDAV support
-
-    security.declarePublic('HEAD')
-    def HEAD(self, REQUEST, RESPONSE):
-        """ assumes the content type is text/html;
-            override HEAD for classes where this is wrong!
-        """
-        mod_time = rfc1123_date(self.get_modification_datetime())
-        RESPONSE.setHeader('Content-Type', 'text/html')
-        RESPONSE.setHeader('Last-Modified', mod_time)
-
-        return ''
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'LOCK')
-    def LOCK(self):
-        """WebDAV locking, for now just raise an exception"""
-        raise Conflict, 'not yet implemented'
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'UNLOCK')
-    def UNLOCK(self):
-        """WebDAV locking, for now just raise an exception"""
-        raise Conflict, 'not yet implemented'
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'MKCOL')
-    def MKCOL(self):
-        """WebDAV MKCOL, only supported by certain subclasses"""
-        raise MethodNotAllowed, 'method not allowed'
-
-    # commented out to shut up security declaration.
-    #security.declareProtected(SilvaPermissions.ReadSilvaContent,
-    #                            'PROPFIND')
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'PROPPATCH')
-    def PROPPATCH(self):
-        """PROPPATCH support, currently just fails"""
-        raise Conflict, 'not yet implemented'
 
 InitializeClass(SilvaObject)
 
-@silvaconf.subscribe(ISilvaObject, IObjectMovedEvent)
+@grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def object_moved(object, event):
     if object != event.object or IObjectRemovedEvent.providedBy(
         event) or IRoot.providedBy(object):
@@ -602,7 +556,7 @@ def object_moved(object, event):
     if not IVersionedContent.providedBy(object):
         object._set_creation_datetime()
 
-@silvaconf.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
+@grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
 def object_will_be_moved(object, event):
     if object != event.object or IObjectWillBeAddedEvent.providedBy(
         event) or IRoot.providedBy(object):
@@ -615,3 +569,20 @@ def object_will_be_moved(object, event):
         container._invalidate_sidebar(object)
     if event.oldName == 'index':
         container._invalidate_sidebar(container)
+
+@grok.subscribe(ISilvaObject, IObjectMovedEvent)
+def index_new_content(content, event):
+    """We index all newly moved or added content (but not removed
+    one).
+    """
+    if not IObjectRemovedEvent.providedBy(event):
+        ICataloging(content).index()
+
+
+@grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
+def unindex_removed_content(content, event):
+    """We unindex all content that is going to be moved, and/or
+    deleted.
+    """
+    if not IObjectWillBeAddedEvent.providedBy(event):
+        ICataloging(content).unindex()

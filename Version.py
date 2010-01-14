@@ -3,32 +3,29 @@
 # $Id$
 
 # Zope 3
-from zope.interface import implements
-from zope.app.container.interfaces import IObjectRemovedEvent
+from five import grok
+from zope import component
 from zope.app.container.interfaces import IObjectMovedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from App.class_init import InitializeClass
+from DateTime import DateTime
 from OFS.SimpleItem import SimpleItem
 from OFS.interfaces import IObjectWillBeRemovedEvent
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
-from DateTime import DateTime
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.SilvaMetadata.Exceptions import BindingError
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.interfaces import IVersion, ICatalogedVersion
-
-from silva.core import conf as silvaconf
+from silva.core.services.interfaces import ICataloging
 
 class Version(SimpleItem):
 
-    implements(IVersion)
+    grok.implements(IVersion)
 
     security = ClassSecurityInfo()
 
@@ -37,7 +34,7 @@ class Version(SimpleItem):
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_title')
     def set_title(self, title):
@@ -47,24 +44,26 @@ class Version(SimpleItem):
         # when using the metadata system. So first make it into utf-8 again..
         # XXX Could set it directly with _setData instead?
         title = title.encode('utf-8')
-        binding = self.service_metadata.getMetadata(self)
-        binding.setValues(
-            'silva-content', {'maintitle': title})
+        service_metadata = component.getUtility(IMetadataService)
+        binding = service_metadata.getMetadata(self)
+        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title')
     def get_title(self):
         """get title of version.
         """
-        return self.service_metadata.getMetadataValue(self, 'silva-content',
-                                                     'maintitle')
+        service_metadata = component.getUtility(IMetadataService)
+        return service_metadata.getMetadataValue(
+            self, 'silva-content', 'maintitle')
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get the title of the version.
         """
-        short_title = self.service_metadata.getMetadataValue(
+        service_metadata = component.getUtility(IMetadataService)
+        short_title = service_metadata.getMetadataValue(
             self, 'silva-content', 'shorttitle')
         if not short_title:
             return self.get_title()
@@ -74,11 +73,11 @@ class Version(SimpleItem):
         SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
     def get_renderer_name(self):
         """Get the name of the renderer selected for object.
-        
+
         Returns None if default is used.
         """
         return getattr(self, '_renderer_name', None)
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'version_status')
     def version_status(self):
@@ -104,7 +103,7 @@ class Version(SimpleItem):
             else:
                 # this is a completely new version not even registered
                 # with the machinery yet
-                status = 'unapproved' 
+                status = 'unapproved'
         return status
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -169,12 +168,9 @@ InitializeClass(Version)
 
 class CatalogedVersion(Version):
     """Base class for cataloged version objects"""
-    
-    implements(ICatalogedVersion)
 
-    def getPath(self):
-        return '/'.join(self.getPhysicalPath())
-    
+    grok.implements(ICatalogedVersion)
+
     def index_object(self):
         """Index"""
         catalog = getattr(self, 'service_catalog', None)
@@ -189,19 +185,13 @@ class CatalogedVersion(Version):
                 res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
                 for r in res:
                     r.getObject().index_object()
-                
 
-    def unindex_object(self):
-        """Unindex"""
-        catalog = getattr(self, 'service_catalog', None)
-        if catalog is not None:
-            catalog.uncatalog_object(self.getPath())
 
     def reindex_object(self):
         """Reindex."""
         catalog = getattr(self, 'service_catalog', None)
         if catalog is None:
-            return 
+            return
         path = self.getPath()
         catalog.uncatalog_object(path)
         catalog.catalog_object(self, path)
@@ -214,23 +204,24 @@ class CatalogedVersion(Version):
             res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
             for r in res:
                 r.getObject().index_object()
-        
-    
+
+
 InitializeClass(CatalogedVersion)
 
 def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
-@silvaconf.subscribe(IVersion, IObjectWillBeRemovedEvent)
-def version_will_be_removed(version, event):
-    if version != event.object:
-        return
-    #in case the version is "unpublished" and is being removed, the version
-    # needs to be uncataloged
-    version.unindex_object()
 
-@silvaconf.subscribe(IVersion, IObjectMovedEvent)
+@grok.subscribe(ICatalogedVersion, IObjectWillBeRemovedEvent)
+def catalog_version_removed(version, event):
+    if version != event.object:
+        # Only interested about version removed by hand.
+        return
+    ICataloging(version).unindex()
+
+
+@grok.subscribe(IVersion, IObjectMovedEvent)
 def version_moved(version, event):
     if version != event.object or IObjectRemovedEvent.providedBy(event):
         return
@@ -239,7 +230,8 @@ def version_moved(version, event):
     if ctime is None:
         return
     try:
-        binding = version.service_metadata.getMetadata(version)
+        service_metadata = component.getUtility(IMetadataService)
+        binding = service_metadata.getMetadata(version)
     except BindingError:
         return
     if binding is None:

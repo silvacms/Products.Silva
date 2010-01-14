@@ -4,7 +4,6 @@
 
 # Zope
 from zope.interface import implements
-from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 from AccessControl import ClassSecurityInfo
 try:
@@ -20,15 +19,13 @@ import SilvaPermissions
 from silva.core.interfaces import IContent
 from silva.core import conf as silvaconf
 
-class Content(Publishable, SilvaObject, CatalogAware):
+class Content(Publishable, SilvaObject):
 
     silvaconf.baseclass()
 
     security = ClassSecurityInfo()
 
     implements(IContent)
-
-    default_catalog = 'service_catalog'
 
     object_type = 'content'
 

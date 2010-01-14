@@ -21,12 +21,14 @@ from silva.core.interfaces import IVersioning
 
 from Products.Silva.i18n import translate as _
 
+
 class VersioningError(Exception):
     pass
 
 empty_version = (None, None, None)
 
-class RequestForApprovalInfo:
+
+class RequestForApprovalInfo(object):
     """ simple helper class storing information about the
     current request for approval
     """
@@ -39,20 +41,21 @@ class RequestForApprovalInfo:
 
 empty_request_for_approval_info = RequestForApprovalInfo()
 
-class Versioning:
+
+class Versioning(object):
     """Mixin baseclass to make object contents versioned.
     """
     security = ClassSecurityInfo()
 
     implements(IVersioning)
-    
+
     _unapproved_version = empty_version
     _approved_version = empty_version
     _public_version = empty_version
     _previous_versions = None
     _request_for_approval_info = empty_request_for_approval_info
     _first_publication_date = None
-    
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_version')
@@ -83,14 +86,14 @@ class Versioning:
                 msg = _('A previous version has that id already (${id}).',
                         {'id': self._previous_version[0]})
                 raise VersioningError, msg
-    
+
         self._unapproved_version = (version_id,
                                     publication_datetime,
                                     expiration_datetime)
         # overwrite possible previous info ...
         self._request_for_approval_info = RequestForApprovalInfo()
         self._index_version(self._unapproved_version[0])
-        
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
     def approve_version(self):
@@ -131,7 +134,7 @@ class Versioning:
         else:
             # otherwise simply reindex approved
             self._reindex_version(self._approved_version[0])
-            
+
         # send messages
         info = self._get_editable_rfa_info()
         if info.requester is None:
@@ -146,13 +149,13 @@ class Versioning:
         else:
             expiration_date_str = 'The version will expire at %s\n' % \
                                   _format_date_helper(expiration_datetime)
-            
+
         editor = getSecurityManager().getUser().getId()
         text = u"\nVersion was approved for publication by %s.\n%s%s" % \
                 (editor, publication_date_str, expiration_date_str)
         self._send_message(editor, info.requester,
                            "Version approved", text)
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'unapprove_version')
     def unapprove_version(self):
@@ -165,7 +168,7 @@ class Versioning:
         if self._unapproved_version != empty_version:
             msg = _(('Should never happen: unapproved version ${unapproved} found while '
                    'approved version ${approved} exists at the same time.'),
-                    mapping={'unapproved': self._unapproved_version[0], 
+                    mapping={'unapproved': self._unapproved_version[0],
                              'approved': self._approved_version[0]})
             raise VersioningError, msg
         self._unapproved_version = self._approved_version
@@ -191,13 +194,13 @@ class Versioning:
         if self._public_version == empty_version:
             raise VersioningError,\
                   _('No public version to close.')
-        previous_versions = self._previous_versions or []          
+        previous_versions = self._previous_versions or []
         previous_versions.append(self._public_version)
         self._public_version = empty_version
         self._previous_versions = previous_versions
 
         # remove it from the catalog (if required)
-        # this way the catalog only contains unapproved, approved 
+        # this way the catalog only contains unapproved, approved
         # and public versions
         self._unindex_version(self._previous_versions[-1][0])
 
@@ -207,7 +210,7 @@ class Versioning:
         """Create new version of public version.
         """
         if self.get_next_version() is not None:
-            return    
+            return
         # get id of public version to copy
         version_id_to_copy = self.get_public_version()
         # if there is no public version, get id of last closed version
@@ -250,7 +253,7 @@ class Versioning:
             # Zope should be notified that it has changed
             self._request_for_approval_info = self._request_for_approval_info
         return self._request_for_approval_info
-    
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'request_version_approval')
     def request_version_approval(self, message):
@@ -307,7 +310,7 @@ class Versioning:
         currently unapproved version has no request for approval yet,
         or if there is no unapproved version.
         """
-        
+
         self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
@@ -337,7 +340,7 @@ class Versioning:
         currently unapproved version has no request for approval yet,
         or if there is no unapproved version.
         """
-        
+
         self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
@@ -370,7 +373,7 @@ class Versioning:
                     self._unapproved_version
         self._unapproved_version = version_id, dt, expiration_datetime
         self._reindex_version(self._unapproved_version[0])
-        
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_expiration_datetime')
     def set_unapproved_version_expiration_datetime(self, dt):
@@ -383,7 +386,7 @@ class Versioning:
                     self._unapproved_version
         self._unapproved_version = version_id, publication_datetime, dt
         self._reindex_version(self._unapproved_version[0])
-        
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_approved_version_publication_datetime')
     def set_approved_version_publication_datetime(self, dt):
@@ -433,7 +436,7 @@ class Versioning:
         self._reindex_version(self._public_version[0])
         # may become closed, update publication status
         self._update_publication_status()
-        
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_next_version_publication_datetime')
     def set_next_version_publication_datetime(self, dt):
@@ -453,7 +456,7 @@ class Versioning:
         else:
             raise VersioningError,\
                   _('No next version.')
-            
+
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_next_version_expiration_datetime')
     def set_next_version_expiration_datetime(self, dt):
@@ -486,10 +489,10 @@ class Versioning:
         if self.get_next_version() is None:
             raise VersioningError, \
                   _("There is no version to add messages for.")
-        
+
         info = self._get_editable_rfa_info()
         info.request_messages.append(message)
-    
+
     def _update_publication_status(self):
         now = DateTime()
         # get publication datetime of approved version
@@ -511,7 +514,7 @@ class Versioning:
             # index approved version that is now public
             self._index_version(self._public_version[0])
             self._trigger_subscriptions()
-        # get expiration datetime of public version 
+        # get expiration datetime of public version
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
         if expiration_datetime and now >= expiration_datetime:
@@ -522,13 +525,13 @@ class Versioning:
             self._unindex_version(self._public_version[0])
             self._public_version = empty_version
             self._previous_versions = previous_versions
-            
+
     def _trigger_subscriptions(self):
         subscription_service = getattr(self, 'service_subscriptions', None)
         if subscription_service is None:
             return
         subscription_service.sendPublishNotification(self)
-        
+
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -553,7 +556,7 @@ class Versioning:
     def is_version_approval_requested(self):
         """Check if there exists an unapproved version
         which has a request for approval.
-        """        
+        """
         return self._request_for_approval_info.request_pending is not None
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -607,7 +610,7 @@ class Versioning:
         if update_status:
             self._update_publication_status()
         return self._approved_version
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approved_version_publication_datetime')
     def get_approved_version_publication_datetime(self, update_status=1):
@@ -643,7 +646,7 @@ class Versioning:
         if update_status:
             self._update_publication_status()
         return self._approved_version or self._unapproved_version
-    
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_next_version_publication_datetime')
     def get_next_version_publication_datetime(self, update_status=1):
@@ -703,7 +706,7 @@ class Versioning:
         if not self._first_publication_date is None:
             return self._first_publication_date
         return self.get_public_version_publication_datetime()
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version_publication_datetime')
     def get_public_version_publication_datetime(self, update_status=1):
@@ -750,7 +753,7 @@ class Versioning:
             return []
         else:
             return [version for version in self._previous_versions]
-        
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_last_closed_version')
     def get_last_closed_version(self, update_status=1):
@@ -763,7 +766,7 @@ class Versioning:
             return None
         else:
             return versions[-1]
-       
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_approval_requester')
     def get_approval_requester(self):
@@ -826,7 +829,7 @@ class Versioning:
 
     def _index_version(self, version):
         pass
-        
+
     def _reindex_version(self, version):
         pass
 

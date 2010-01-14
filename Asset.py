@@ -1,39 +1,31 @@
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
-# Zope
-from zope.interface import implements
 
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+# Zope 3
+from five import grok
 
-from OFS import SimpleItem
+# Zope 2
 from AccessControl import ClassSecurityInfo
-from Products.ZCatalog.CatalogPathAwareness import CatalogAware
-
+from App.class_init import InitializeClass
+from OFS import SimpleItem
 import OFS.interfaces
 import zLOG
 
 # Silva
-from SilvaObject import SilvaObject
+from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva import SilvaPermissions
 from silva.core import interfaces
 
-from silva.core import conf as silvaconf
 
-class Asset(CatalogAware, SilvaObject, SimpleItem.SimpleItem):
-    implements(interfaces.IAsset)
+class Asset(SilvaObject, SimpleItem.SimpleItem):
+    grok.baseclass()
+    grok.implements(interfaces.IAsset)
 
     security = ClassSecurityInfo()
 
-    default_catalog = 'service_catalog'
-
     object_type = 'asset'
     _old_size = 0               # Old size of the object.
-
-    silvaconf.baseclass()
 
     # MANIPULATORS
 
@@ -46,9 +38,7 @@ class Asset(CatalogAware, SilvaObject, SimpleItem.SimpleItem):
         # when using the metadata system. So first make it into utf-8 again..
         title = title.encode('utf-8')
         binding = self.service_metadata.getMetadata(self)
-        binding.setValues(
-            'silva-content', {'maintitle': title}, reindex=1)
-        self.reindex_object()
+        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'update_quota')
@@ -116,7 +106,7 @@ class Asset(CatalogAware, SilvaObject, SimpleItem.SimpleItem):
 
 InitializeClass(Asset)
 
-@silvaconf.subscribe(interfaces.IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
+@grok.subscribe(interfaces.IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
 def asset_moved_update_quota(obj, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.

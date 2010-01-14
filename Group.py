@@ -1,9 +1,9 @@
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision$
+# $Id$
+
 from zope.interface import implements
 
-from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 from AccessControl import ClassSecurityInfo, Unauthorized
 try:
     from App.class_init import InitializeClass # Zope 2.12
@@ -24,11 +24,10 @@ from helpers import add_and_edit
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 
-class BaseGroup(CatalogAware, SilvaObject, SimpleItem):
+class BaseGroup(SilvaObject, SimpleItem):
 
     implements(interfaces.IBaseGroup)
 
-    default_catalog = 'service_catalog'
     security = ClassSecurityInfo()
 
     manage_options = (
@@ -40,7 +39,7 @@ class BaseGroup(CatalogAware, SilvaObject, SimpleItem):
     def __init__(self, id, group_name):
         BaseGroup.inheritedAttribute('__init__')(self, id)
         self._group_name = group_name
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'isValid')
     def isValid(self):
@@ -49,11 +48,11 @@ class BaseGroup(CatalogAware, SilvaObject, SimpleItem):
         return (self.valid_path == self.getPhysicalPath())
 
 InitializeClass(BaseGroup)
-    
+
 class Group(BaseGroup):
     """Silva Group"""
 
-    meta_type = "Silva Group"    
+    meta_type = "Silva Group"
     security = ClassSecurityInfo()
 
     implements(interfaces.IGroup)
@@ -83,7 +82,7 @@ class Group(BaseGroup):
     def _copyUsersFromGroupsHelper(self, groups):
         sg = self.service_groups
         users = {}
-        for group in groups:        
+        for group in groups:
             if sg.isVirtualGroup(group):
                 self._copyUsersFromGroupsHelper(
                     sg.listGroupsInVirtualGroup(group))
@@ -104,11 +103,11 @@ class Group(BaseGroup):
             raise Unauthorized, "Zombie group asset"
         self.service_groups.removeUserFromZODBGroup(userid, self._group_name)
 
-    # ACCESSORS    
+    # ACCESSORS
     security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'listUsers')
     def listUsers(self):
-        """ returns a (sorted) list of users in this group""" 
+        """ returns a (sorted) list of users in this group"""
         if not self.isValid():
             raise Unauthorized, "Zombie group asset"
         result = self.service_groups.listUsersInZODBGroup(self._group_name)
@@ -132,8 +131,9 @@ def manage_addGroupUsingFactory(factory, context, id, title,
     context._setObject(id, object)
     object = getattr(context, id)
     object.set_title(title)
-    # set the valid_path, this cannot be done in the constructor because the context
-    # is not known as the object is not inserted into the container.
+    # set the valid_path, this cannot be done in the constructor
+    # because the context is not known as the object is not inserted
+    # into the container.
     object.valid_path = object.getPhysicalPath()
     if not asset_only:
         addGroupToService(context.service_groups, object)
@@ -146,7 +146,8 @@ def manage_addGroup(*args, **kwargs):
     """
     return manage_addGroupUsingFactory(Group, *args, **kwargs)
 
-@silvaconf.subscribe(interfaces.IBaseGroup, OFS.interfaces.IObjectWillBeRemovedEvent)
+@silvaconf.subscribe(
+    interfaces.IBaseGroup, OFS.interfaces.IObjectWillBeRemovedEvent)
 def group_will_be_removed(group, event):
     """Unregister group when it's deleted.
     """
@@ -156,7 +157,7 @@ def group_will_be_removed(group, event):
 def addGroupToService(service, group):
     """Register a group with the correct method.
     """
-    
+
     if interfaces.IGroup.providedBy(group):
         service.addNormalGroup(group._group_name)
     elif interfaces.IIPGroup.providedBy(group):
@@ -169,7 +170,7 @@ def addGroupToService(service, group):
 def removeGroupFromService(service, group):
     """Remove a group with the correct method.
     """
-    
+
     if interfaces.IGroup.providedBy(group):
         service.removeNormalGroup(group._group_name)
     elif interfaces.IIPGroup.providedBy(group):

@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import re
-
 # Zope 3
 from five import grok
 from zope import interface, schema
@@ -11,10 +9,7 @@ from z3c.form import field
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent

@@ -7,19 +7,6 @@ def allow_translate():
     # XXX is this opening up too much..?
     allow_module('zope.i18n')
 
-#Zope 2.10 contains a ZCatalog bug which causes
-# folders to be unindexed twice when a parent
-# container is removed.
-# see: https://bugs.launchpad.net/silva/+bug/101780
-# XXX NOTE: this needs to be removed once the bug is
-#           fixed in ZCatalog
-def fixupCatalogPathAwareness():
-    from Products.ZCatalog.CatalogPathAwareness import CatalogAware
-    def manage_beforeDelete(self, item, container):
-        self.unindex_object()
-    CatalogAware.manage_beforeDelete = manage_beforeDelete
-
 def patch_all():
     # perform all patches
     allow_translate()
-    fixupCatalogPathAwareness()

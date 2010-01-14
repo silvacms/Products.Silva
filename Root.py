@@ -6,21 +6,13 @@ import os
 
 # Zope 3
 from zope.app.component.hooks import setSite
-from zope.app.container.interfaces import IObjectRemovedEvent
-from zope.app.container.interfaces import IObjectMovedEvent
 from five import grok
 
 # Zope 2
-from OFS.interfaces import IObjectWillBeAddedEvent
-from OFS.interfaces import IObjectWillBeMovedEvent
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from DateTime import DateTime
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import transaction
 
 # Silva
@@ -314,12 +306,3 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
-@silvaconf.subscribe(IRoot, IObjectMovedEvent)
-def root_moved(root, event):
-    if not IObjectRemovedEvent.providedBy(event):
-        root.index_object()
-
-@silvaconf.subscribe(IRoot, IObjectWillBeMovedEvent)
-def root_will_be_moved(root, event):
-    if not IObjectWillBeAddedEvent.providedBy(event):
-        root.unindex_object()

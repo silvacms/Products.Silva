@@ -57,12 +57,13 @@ except:                                          # available for import
 
 from Products.Silva.magic import MagicGuess
 
-from silva.core.services.base import SilvaService
-from silva.core import interfaces
 from silva.core import conf as silvaconf
+from silva.core import interfaces
+from silva.core.conf import schema as silvaschema
+from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import ICataloging
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
-from silva.core.conf import schema as silvaschema
 from z3c.form import field
 
 
@@ -211,7 +212,8 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)
-        self.reindex_object()
+        #XXX should be event below
+        ICataloging(self).reindex()
         self.update_quota()
 
     security.declareProtected(
@@ -219,23 +221,6 @@ class File(Asset):
     def getFileSystemPath(self):
         """Return path on filesystem for containing File"""
         return None
-
-    def manage_FTPget(self, *args, **kwargs):
-        return self._file.manage_FTPget(*args, **kwargs)
-
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'PUT')
-    def PUT(self, REQUEST, RESPONSE):
-        """Handle HTTP PUT requests"""
-        return self._file.PUT(REQUEST, RESPONSE)
-
-    def HEAD(self, REQUEST, RESPONSE):
-        """ forward the request to the underlying file object
-        """
-        # should this set the content-disposition header,
-        # like the "index_html" does?
-        return self._file.HEAD(REQUEST, RESPONSE)
 
     # checks where the mime type is text/* or javascript
     def can_edit_text(self):
@@ -342,7 +327,8 @@ class BlobFile(File):
             data = file.read(CHUNK_SIZE)
         desc.close()
         self._set_content_type(file, DEFAULT_MIMETYPE)
-        self.reindex_object()
+        #XXX should be event below
+        ICataloging(self).reindex()
         self.update_quota()
 
     security.declareProtected(
@@ -351,7 +337,8 @@ class BlobFile(File):
         desc = self._file.open('w')
         desc.write(filestr)
         desc.close()
-        self.reindex_object()
+        #XXX should be event below
+        ICataloging(self).reindex()
         self.update_quota()
 
     def set_content_type(self, content_type):

@@ -1,11 +1,12 @@
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
+# $Id$
 
 """
 Thank you Samuel, for having the brilliant idea!
 
 NOTE:  The reference lookup window field and the
- lookup window field are now exactly the same.  
+ lookup window field are now exactly the same.
  These are kept for backwards compatibility, but
  both can be used to the same effect.
 """
@@ -18,7 +19,6 @@ from Products.Formulator.Validator import StringBaseValidator
 from Products.Formulator.Widget import render_element,TextWidget
 from Products.Formulator.helpers import is_sequence
 from Products.Silva.adapters.path import getPathAdapter
-import re
 
 from Products.Five import BrowserView
 from urlparse import urlparse
@@ -31,8 +31,8 @@ class EditButtonRedirector(BrowserView):
        button to redirect to the reference object's edit screen.
        It will raise a BadRequest error if the reference/location has a
        scheme or netloc, if the location cannot be found, or if it is not
-       a Silva Object.  
-       
+       a Silva Object.
+
        The decision to not raise NotFounds is kind of due
        to security (e.g. using this redirector to fish for valid paths)
        And also because the 'loc' parameter is a requirement for this
@@ -62,7 +62,7 @@ class EditButtonRedirector(BrowserView):
         raise BadRequest("Invalid location.  Target must be a Silva Object in order to edit")
 
 class LookupWindowValidator(StringBaseValidator):
-    
+
     message_names = StringBaseValidator.message_names +\
                   ['exceeded_maxrows', 'required_not_met']
 
@@ -77,7 +77,7 @@ class LookupWindowValidator(StringBaseValidator):
         if not is_sequence(values):
             # put whatever we got in a list
             values = [values]
-        
+
         result = []
         for value in values:
             if not field.get_value('whitespace_preserve'):
@@ -91,11 +91,11 @@ class LookupWindowValidator(StringBaseValidator):
         if reqrows > 0 and len(result) < reqrows:
             self.raise_error('required_not_met',field)
         return ', '.join(result)
-    
+
 class LookupWindowWidget(TextWidget):
-    
+
     property_names = TextWidget.property_names  + ['onclick','button_label','show_edit_button','show_add_remove','max_rows','required_rows']
-    
+
     default_onclick_handler = """{
 var myid = this.getAttribute('id').replace(/^button/,'input');
 reference.getReference(
@@ -103,33 +103,33 @@ reference.getReference(
         document.getElementById(myid).value = path;;
         }, '%(url)s', '', true, '%(selected_path)s')}
         """
-    
+
     onclick = fields.TextAreaField(
         'onclick',
-        title='Onclick', 
+        title='Onclick',
         description='onclick handler implementation',
         default=default_onclick_handler,
         required=0,
-        width='40', 
+        width='40',
         height='4')
-    
+
     button_label = fields.StringField(
         'button_label',
         title='Label for get reference button',
         description='The title for the get reference button',
         default='get reference...',
         required=0)
-    
+
     show_edit_button = fields.CheckBoxField(
-        'show_edit_button', 
-        title='Show edit reference button', 
+        'show_edit_button',
+        title='Show edit reference button',
         description="Adds an 'Edit Reference' button to the widget.  When clicked, this will open a new window and redirect to the edit tab for the reference, if it is a valid Silva relative reference.  NOTE: only works in kupu.",
         required=0,
         default="")
 
     show_add_remove = fields.CheckBoxField(
-        'show_add_remove', 
-        title='Show add / remove reference buttons', 
+        'show_add_remove',
+        title='Show add / remove reference buttons',
         description="Adds an 'add reference' button to the bottom of this widget and 'remove reference' buttons next to each reference row in the widget.  Only references greater than the number required have the 'remove reference' button.",
         required=0,
         default=True)
@@ -196,7 +196,7 @@ reference.getReference(
             onclick += ";document.getElementById(this.getAttribute('id').replace(/^button/,'editbutton')).style.display='inline';this.parentNode.style.width='42px';"
             if value:
                 buttoncellstyle=" style='width:42px'"
-                                                                                    
+
         widget.append('<tr><td class="buttoncell"%s>'%buttoncellstyle)
         widget.append(
             render_element(
@@ -274,7 +274,7 @@ reference.getReference(
                 contents=' '))
         widget.append('</td></tr>')
         return widget
-    
+
     def _onclick_handler(self, field, key):
         request = getattr(field, 'REQUEST', None)
         if request is None:
@@ -295,7 +295,7 @@ reference.getReference(
                 quote(request['docref'])).get_container().absolute_url()
         else:
             # start where we last looked something up
-            url = request.SESSION.get('lastpath') or '' 
+            url = request.SESSION.get('lastpath') or ''
         if url == '':
             url = model.get_container().absolute_url()
         interpolate = {
@@ -305,7 +305,7 @@ reference.getReference(
         return field.get_value('onclick') % interpolate
 
 class LookupWindowField(StringField):
-   
+
     meta_type = 'LookupWindowField'
     validator = LookupWindowValidator()
     widget = LookupWindowWidget()
@@ -315,6 +315,6 @@ class ReferenceLookupWindowField(StringField):
     meta_type = 'ReferenceLookupWindowField'
     validator = LookupWindowValidator()
     widget = LookupWindowWidget()
-    
+
 FieldRegistry.registerField(LookupWindowField)
 FieldRegistry.registerField(ReferenceLookupWindowField)

@@ -12,21 +12,17 @@ from cgi import escape
 logger = logging.getLogger('silva.image')
 
 # Zope 3
+from five import grok
 from zope import component, schema
 from zope.i18n import translate
-from zope.interface import implements, Interface
+from zope.interface import Interface
 import zope.app.container.interfaces
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
-from webdav.common import Conflict
-import transaction
+from App.class_init import InitializeClass
 import OFS.interfaces
+import transaction
 
 # Silva
 from Products.Silva import mangle, SilvaPermissions
@@ -75,7 +71,7 @@ class Image(Asset):
 
     meta_type = "Silva Image"
 
-    implements(interfaces.IImage)
+    grok.implements(interfaces.IImage)
 
     re_WidthXHeight = re.compile(r'^([0-9]+|\*)[Xx]([0-9\*]+|\*)$')
     re_percentage = re.compile(r'^([0-9\.]+)\%$')
@@ -124,12 +120,12 @@ class Image(Asset):
                 self.web_format = web_format
                 update_cache = 1
         # check if web_scale can be parsed:
-        canonical_scale = self.getCanonicalWebScale(web_scale)
+        self.getCanonicalWebScale(web_scale)
         if self.web_scale != web_scale:
             update_cache = 1
             self.web_scale = web_scale
         # check if web_crop can be parsed:
-        cropbox = self.getCropBox(web_crop)
+        self.getCropBox(web_crop)
         if self.web_crop != web_crop:
             update_cache = 1
             self.web_crop = web_crop
@@ -218,7 +214,6 @@ class Image(Asset):
             s = y1
             y1 = y2
             y2 = s
-        cropbox = (x1, y1, x2, y2)
         image = self._getPILImage(self.hires_image)
         bbox = image.getbbox()
         if x1 < bbox[0]:
@@ -369,21 +364,8 @@ class Image(Asset):
             return "landscape"
         return "portrait"
 
-    def manage_FTPget(self, *args, **kwargs):
-        return self.image.manage_FTPget(*args, **kwargs)
-
     def content_type(self):
         return self.image.content_type
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'PUT')
-    def PUT(self, REQUEST, RESPONSE):
-        """Handle HTTP PUT requests"""
-        file = REQUEST['BODYFILE']
-        length = REQUEST['CONTENT_LENGTH']
-        if int(length) == 0:
-            raise Conflict, 'Zope bug prevents creation of empty images'
-        self.set_image(file)
 
     def get_file_size(self):
         if self.hires_image:
@@ -423,7 +405,7 @@ class Image(Asset):
     def _createWebPresentation(self):
         try:
             image = self._getPILImage(self.hires_image)
-        except ValueError:
+        except ValueError, e:
             logger.info("Web presentation creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
             self.image = self.hires_image
@@ -569,7 +551,7 @@ class ImagePublishTraverse(SilvaPublishTraverse):
 
 class ImageStorageConverter(object):
 
-    implements(interfaces.IUpgrader)
+    grok.implements(interfaces.IUpgrader)
 
     def upgrade(self, image):
         if not interfaces.IImage.providedBy(image):

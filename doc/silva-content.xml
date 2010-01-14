@@ -58,7 +58,6 @@
    </field_messages>
    <index_args>
      <value key="lexicon_id">silva_lexicon</value>
-     <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
  </metadata_element>
@@ -116,7 +115,6 @@
    </field_messages>
    <index_args>
      <value key="lexicon_id">silva_lexicon</value>
-     <value key="doc_attr">proxy_value</value>
      <value key="index_type">Cosine Measure</value>
    </index_args>
   </metadata_element>

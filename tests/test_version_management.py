@@ -3,9 +3,9 @@
 # $Id $
 
 # Python
-from datetime import datetime, timedelta    
+from datetime import datetime, timedelta
 from StringIO import StringIO
-    
+
 from DateTime import DateTime
 
 from Products.Silva.Versioning import VersioningError
@@ -20,7 +20,8 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
         root = self.root
-        root.manage_addProduct['SilvaDocument'].manage_addDocument('testdoc', 'TestDoc')
+        root.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'testdoc', 'TestDoc')
         doc = self.doc = root.testdoc
         # create a nice list of versions
         for i in range(10):
@@ -73,7 +74,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         # Since there are other tests to cover get*Version, we won't test if
         # the publish and create actions succeeded, let's assume they did.
         #
-        # We should now have an unapproved version 11 and a public version 10.       
+        # We should now have an unapproved version 11 and a public version 10.
         #
         # Let's revert previous version 9 to editable, which would make
         # editable version 12, public still is version 10 and the last
@@ -144,7 +145,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         #make sure unpublished versions are removed from the catalog
         query = {'meta_type': 'Silva Document Version',
                  'version_status': 'unapproved'}
-        #there should only be one version in the catalog, the last 
+        #there should only be one version in the catalog, the last
         # version, which happens to be unpublished
         current = self.catalog(query)
         self.assertEquals(len(current),1)
@@ -156,7 +157,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         current = self.catalog(query)
         self.assertEquals(len(current),0)
 
-        
+
     def test_deleteOldVersions(self):
         # there should be 10 versions that *can* be deleted
         # first try to remove the last 2, so keep 8
@@ -183,7 +184,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
             moddate = DateTime(then.isoformat())
             binding = self.doc.service_metadata.getMetadata(version)
             binding.setValues('silva-extra', {'modificationtime': moddate}, 0)
-        
+
     def test_deleteOldVersionsByAge1(self):
         self._setupModificationTimes()
         max_age = 5
@@ -200,7 +201,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             ['6', '7', '8', '9', '10'],
             self.doc.objectIds('Silva Document Version'))
-            
+
     def test_deleteOldVersionsByAge3(self):
         self._setupModificationTimes()
         max_age = 5
@@ -208,8 +209,8 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.adapter.deleteOldVersionsByAge(max_age, max_to_keep)
         self.assertEquals(
             ['8', '9', '10'],
-            self.doc.objectIds('Silva Document Version'))        
-            
+            self.doc.objectIds('Silva Document Version'))
+
     # catalog tests, see if the adapter methods that change
     # workflow in some way result in correct catalog changes
     def test_revertPreviousToEditable_catalog(self):
@@ -224,7 +225,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(len(current_editables), 1)
         self.assertEquals(current_editables[0].id, '10')
 
-        current_public = [b for b in 
+        current_public = [b for b in
                             self.doc.service_catalog(query_public) if
                             b.getObject().object().id == 'testdoc']
         self.assertEquals(len(current_public), 0)
@@ -239,7 +240,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(len(current_editable), 1)
         self.assertEquals(current_editable[0].id, '11')
 
-        current_public = [b for b in 
+        current_public = [b for b in
                             self.doc.service_catalog(query_public) if
                             b.getObject().object().id == 'testdoc']
         self.assertEquals(len(current_public), 1)
@@ -253,7 +254,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(len(current_editable), 1)
         self.assertEquals(current_editable[0].id, '12')
 
-        current_public = [b for b in 
+        current_public = [b for b in
                             self.doc.service_catalog(query_public) if
                             b.getObject().object().id == 'testdoc']
         self.assertEquals(len(current_public), 1)

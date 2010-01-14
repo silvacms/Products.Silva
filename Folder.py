@@ -16,7 +16,6 @@ except ImportError:
 
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from OFS.Uninstalled import BrokenClass
-from Products.ZCatalog.CatalogPathAwareness import CatalogAware
 
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
@@ -31,20 +30,18 @@ import helpers
 import urllib
 
 from Products.Silva import mangle
-from Products.Silva.i18n import translate as _
+from silva.translations import translate as _
 
 from silva.core.interfaces import (IContentImporter,
                                    IPublishable, IContent, IGhost,
                                    ISilvaObject, IAsset, INonPublishable,
                                    IContainer, IFolder, IPublication, IRoot)
 
-from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
-from zExceptions import Forbidden, MethodNotAllowed
 
 import OFS.interfaces
 from silva.core import conf as silvaconf
 
-class Folder(CatalogAware, SilvaObject, Publishable, BaseFolder):
+class Folder(SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
@@ -56,8 +53,6 @@ class Folder(CatalogAware, SilvaObject, Publishable, BaseFolder):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Folder"
-
-    default_catalog = 'service_catalog'
 
     object_type = 'container'
 
@@ -874,33 +869,6 @@ class Folder(CatalogAware, SilvaObject, Publishable, BaseFolder):
         """A wrapper for the urllib.unquote_plus function"""
         return urllib.unquote_plus(string)
 
-    # WebDAV
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'manage_FTPget')
-    def manage_FTPget(self):
-        """Overridden because it should raise an exception rather then returning
-            the contents of the index"""
-        raise MethodNotAllowed
-
-    manage_DAVget = manage_FTPget
-
-    security.declarePrivate('MKCOL_handler')
-    def MKCOL_handler(self, name):
-        """WebDAV - create a sub folder"""
-        name = self.url_decode(name)
-        if not mangle.Id(self, name).isValid():
-            raise Forbidden, 'folder id not valid'
-        self.manage_addProduct['Silva'].manage_addFolder(name, name, create_default=1)
-
-    security.declarePrivate('PUT_factory')
-    def PUT_factory(self, name, content_type, body):
-        """WebDAV PUT - create a sub object"""
-
-        # use the contentObjectFactoryRegistry (what a name!) to get
-        # an object (if possible, else an InternalError will get raised)
-        object = contentObjectFactoryRegistry.getObjectFor(
-            self, name, content_type, body)
-        return object
 
 InitializeClass(Folder)
 
