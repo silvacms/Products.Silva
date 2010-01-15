@@ -8,28 +8,24 @@ from zope.publisher.interfaces.browser import IBrowserSkinType
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
 # Silva
-from VersionedContent import CatalogedVersionedContent
-from Version import CatalogedVersion
-from Products.Silva import mangle
-from Products.Silva.i18n import translate as _
-import SilvaPermissions
-from adapters.path import PathAdapter
-# misc
-from helpers import add_and_edit
+from Products.Silva.VersionedContent import CatalogedVersionedContent
+from Products.Silva.Version import CatalogedVersion
+from Products.Silva import mangle, SilvaPermissions
+from Products.Silva.adapters.path import PathAdapter
+from Products.Silva.helpers import add_and_edit
+
 import urlparse
 
+from silva.core import conf as silvaconf
 from silva.core.interfaces import (IVersionedContent, IContainer,
                                    IContent, IGhost, IGhostContent)
+from silva.translations import translate as _
 
-from silva.core import conf as silvaconf
 
-class GhostBase:
+class GhostBase(object):
     """baseclas for Ghosts (or Ghost versions if it's versioned)
     """
     security = ClassSecurityInfo()
@@ -46,7 +42,7 @@ class GhostBase:
     LINK_NO_CONTENT = 5 # link points to something which is not a content
     LINK_CONTENT = 6 # link points to content
     LINK_NO_FOLDER = 7 # link doesn't point to a folder
-    LINK_CIRC = 8 # Link results in a ghost haunting itself 
+    LINK_CIRC = 8 # Link results in a ghost haunting itself
 
     # those should go away
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -77,7 +73,7 @@ class GhostBase:
             return content.get_title_editable()
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
         """title comes from haunted object
         """
@@ -87,7 +83,7 @@ class GhostBase:
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get short title.
-        """        
+        """
         content = self.get_haunted_unrestricted()
         if content is None:
             return ("Ghost target is broken")
@@ -107,7 +103,7 @@ class GhostBase:
         """
         pad = PathAdapter(self.REQUEST)
         path = pad.urlToPath(content_url)
-        
+
         path_elements = path.split('/')
 
         # Cut off 'edit' and anything after it
@@ -126,14 +122,14 @@ class GhostBase:
         # Now resolve it...
         target = traversal_root.unrestrictedTraverse(path_elements, None)
         if target is None:
-            
+
             (scheme, netloc, path, parameters, query, fragment) = \
                                             urlparse.urlparse(content_url)
             self._content_path = path.split('/')
         else:
             # ...and get physical path for it
             self._content_path = target.getPhysicalPath()
-       
+
     security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
     def get_haunted_url(self):
         """Get content url.
@@ -142,13 +138,13 @@ class GhostBase:
             return None
 
         object = self.get_root().unrestrictedTraverse(self._content_path, None)
-        if object is None:    
+        if object is None:
             return '/'.join(self._content_path)
 
         pad = PathAdapter(self.REQUEST)
         url = pad.pathToUrlPath('/'.join(object.getPhysicalPath()))
         return url
-        
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunted_path')
     def haunted_path(self):
@@ -160,7 +156,7 @@ class GhostBase:
         returning None means the ghost is Ok.
         """
         raise NotImplementedError, "implemented in subclasses"
-        
+
     def _get_object_at(self, path, check=1):
         """Get content object for a url.
         """
@@ -179,7 +175,7 @@ class GhostBase:
             if content is None:
                 return None
             # check if it's valid
-            valid = None 
+            valid = None
             if check:
                 valid = self.get_link_status(content)
             if valid is None:
@@ -191,7 +187,7 @@ class GhostBase:
                       if not IBrowserSkinType.providedBy(iface)] + current_skins
             directlyProvides(request, *ifaces)
             request.set('resourcebase', current_resourcebase)
-            
+
     security.declarePrivate('get_haunted_unrestricted')
     def get_haunted_unrestricted(self, check=1):
         """Get the real content object.
@@ -201,12 +197,12 @@ class GhostBase:
     security.declareProtected(SilvaPermissions.View,'get_haunted')
     def get_haunted(self):
         """get the real content object; using restrictedTraverse
-        
+
             returns content object, or None on traversal failure.
         """
         path = self._content_path
         return self.restrictedTraverse(path, None)
-        
+
     def render_preview(self):
         """Render preview of this version (which is what we point at)
         """
@@ -240,7 +236,7 @@ class Ghost(CatalogedVersionedContent):
        The ghost inherits properties from its location (e.g. layout
        and stylesheets).
     """)
-    
+
     security = ClassSecurityInfo()
 
     meta_type = "Silva Ghost"
@@ -251,15 +247,15 @@ class Ghost(CatalogedVersionedContent):
     silvaconf.factory('manage_addGhost')
     silvaconf.versionClass('GhostVersion')
     silvaconf.versionFactory('manage_addGhostVersion')
-    
+
     def __init__(self, id):
         Ghost.inheritedAttribute('__init__')(self, id)
-    
+
     def get_title_editable(self):
         """Get title for editable or previewable use
         """
         # Ask for 'previewable', which will return either the 'next version'
-        # (which may be under edit, or is approved), or the public version, 
+        # (which may be under edit, or is approved), or the public version,
         # or, as a last resort, the closed version.
         # This to be able to show at least some title in the Silva edit
         # screens.
@@ -269,7 +265,7 @@ class Ghost(CatalogedVersionedContent):
         return previewable.get_title_editable()
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')    
+        SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
         """title comes from haunted object
         """
@@ -313,7 +309,7 @@ class Ghost(CatalogedVersionedContent):
         super_method = Ghost.inheritedAttribute(
             'get_modification_datetime')
         content = self.getLastVersion().get_haunted_unrestricted()
-        
+
         if content is not None:
             return content.get_modification_datetime(update_status)
         else:
@@ -415,7 +411,7 @@ def ghostFactory(container, id, haunted_object):
         on IContainer a GhostFolder is created
         on IVersionedContent a Ghost is created
 
-        willem suggested to call this function electricChair, but well... 
+        willem suggested to call this function electricChair, but well...
     """
     addProduct = container.manage_addProduct['Silva']
     content_url = '/'.join(haunted_object.getPhysicalPath())
@@ -439,4 +435,4 @@ def canBeHaunted(to_be_haunted):
         return 1
     return 0
 
-    
+
