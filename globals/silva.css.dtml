@@ -1579,5 +1579,5 @@ button.kupu-link-reference:hover {
 
 /* for the calendar button */
 button.calendar-button {
-  background-image: url("calendar.png");
+  background-image: url("calendar.gif");
 }
