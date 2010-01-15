@@ -1582,5 +1582,6 @@ button.calendar-button {
   background-image: url("calendar.gif");
   background-repeat:no-repeat;
   float:right;
-  margin-top:1px;
+  margin-top:2px;
+  border:none;
 }
