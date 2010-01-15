@@ -8,11 +8,7 @@ from zope.annotation.interfaces import IAnnotations
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from DateTime import DateTime
 
 # silva
@@ -22,13 +18,13 @@ from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Publishable import Publishable
-from Products.Silva.i18n import translate as _
 
+from silva.core import conf as silvaconf
 from silva.core.interfaces import \
     IContainer, IContent, IGhost, IVersionedContent, \
     IPublication, ISilvaObject, IGhostFolder, IGhostContent
+from silva.translations import translate as _
 
-from silva.core import conf as silvaconf
 
 class Sync(object):
 
