@@ -375,6 +375,7 @@ class BlobFileView(silvaviews.View):
     silvaconf.name('index')
 
     def render(self):
+        # XXX: HEAD Support
         self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))

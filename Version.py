@@ -17,6 +17,7 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
+from Products.Silva.SilvaObject import CatalogAwareBBB
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
@@ -166,44 +167,46 @@ class Version(SimpleItem):
 
 InitializeClass(Version)
 
-class CatalogedVersion(Version):
+
+class CatalogedVersion(Version, CatalogAwareBBB):
     """Base class for cataloged version objects"""
 
     grok.implements(ICatalogedVersion)
 
-    def index_object(self):
-        """Index"""
-        catalog = getattr(self, 'service_catalog', None)
-        if catalog is not None:
-            catalog.catalog_object(self, self.getPath())
-            if self.version_status() in ('unapproved','approved','public'):
-                #search for Ghost objects in the catalog
-                # that have this object's path as the haunted_path
-                # these Ghost objects need to be reindexed
-                # NOTE: this will change published and unpublished
-                # Ghost versions.
-                res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
-                for r in res:
-                    r.getObject().index_object()
+    # XXX: TODO ICataloging for ICataloged Version
+    # def index_object(self):
+    #     """Index"""
+    #     catalog = getattr(self, 'service_catalog', None)
+    #     if catalog is not None:
+    #         catalog.catalog_object(self, self.getPath())
+    #         if self.version_status() in ('unapproved','approved','public'):
+    #             #search for Ghost objects in the catalog
+    #             # that have this object's path as the haunted_path
+    #             # these Ghost objects need to be reindexed
+    #             # NOTE: this will change published and unpublished
+    #             # Ghost versions.
+    #             res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
+    #             for r in res:
+    #                 r.getObject().index_object()
 
 
-    def reindex_object(self):
-        """Reindex."""
-        catalog = getattr(self, 'service_catalog', None)
-        if catalog is None:
-            return
-        path = self.getPath()
-        catalog.uncatalog_object(path)
-        catalog.catalog_object(self, path)
-        if self.version_status() in ('unapproved','approved','public'):
-            #search for Ghost objects in the catalog
-            # that have this object's path as the haunted_path
-            # these Ghost objects need to be reindexed
-            # NOTE: this will change published and unpublished
-            # Ghost versions.
-            res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
-            for r in res:
-                r.getObject().index_object()
+    # def reindex_object(self):
+    #     """Reindex."""
+    #     catalog = getattr(self, 'service_catalog', None)
+    #     if catalog is None:
+    #         return
+    #     path = self.getPath()
+    #     catalog.uncatalog_object(path)
+    #     catalog.catalog_object(self, path)
+    #     if self.version_status() in ('unapproved','approved','public'):
+    #         #search for Ghost objects in the catalog
+    #         # that have this object's path as the haunted_path
+    #         # these Ghost objects need to be reindexed
+    #         # NOTE: this will change published and unpublished
+    #         # Ghost versions.
+    #         res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
+    #         for r in res:
+    #             r.getObject().index_object()
 
 
 InitializeClass(CatalogedVersion)

@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import warnings
+
 # Zope 3
 from five import grok
 from zope.i18n import translate
@@ -84,7 +86,48 @@ class Zope3ViewAttribute(ViewAttribute):
             return getattr(view, name, None)
 
 
-class SilvaObject(Security, ViewCode):
+class CatalogAwareBBB(object):
+    """Backward compatibility code for object using index_object,
+    unindex_object and reindex_object.
+    This will be removed in Silva 2.3.
+    """
+    security = ClassSecurityInfo()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'index_object')
+    def index_object(self):
+        """Index code (BBB code).
+        """
+        warnings.warn('index_object will be removed in Silva 2.3. '
+                      'Please use ICataloging instead.',
+                      DeprecationWarning, stacklevel=2)
+        ICataloging(self.aq_inner).index()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'reindex_object')
+    def reindex_object(self):
+        """Reindex code (BBB code).
+        """
+        warnings.warn('reindex_object will be removed in Silva 2.3. '
+                      'Please use ICataloging instead.',
+                      DeprecationWarning, stacklevel=2)
+        ICataloging(self.aq_inner).reindex()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'unindex_object')
+    def unindex_object(self):
+        """Unindex code (BBB code).
+        """
+        warnings.warn('unindex_object will be removed in Silva 2.3. '
+                      'Please use ICataloging instead.',
+                      DeprecationWarning, stacklevel=2)
+        ICataloging(self.aq_inner).unindex()
+
+
+InitializeClass(CatalogAwareBBB)
+
+
+class SilvaObject(Security, ViewCode, CatalogAwareBBB):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
@@ -175,6 +218,7 @@ class SilvaObject(Security, ViewCode):
             renderer_name = None
         self.get_editable()._renderer_name = renderer_name
 
+
     # ACCESSORS
 
     security.declareProtected(
@@ -190,6 +234,9 @@ class SilvaObject(Security, ViewCode):
     def silva_object_url(self):
         """Get url for silva object.
         """
+        warnings.warn('silva_object_url will be removed in Silva 2.3. '
+                      'Please use absoluteURL or @@absolute_url instead.',
+                      DeprecationWarning, stacklevel=2)
         return self.get_silva_object().absolute_url()
 
     security.declareProtected(

@@ -27,13 +27,13 @@ import transaction
 # Silva
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
-from Products.Silva.i18n import translate as _
 
+from silva.core import conf as silvaconf
+from silva.core import interfaces
+from silva.core.conf import schema as silvaschema
 from silva.core.views import z3cforms as silvaz3cforms
 from silva.core.views.traverser import SilvaPublishTraverse
-from silva.core import interfaces
-from silva.core import conf as silvaconf
-from silva.core.conf import schema as silvaschema
+from silva.translations import translate as _
 from z3c.form import field
 
 try:
