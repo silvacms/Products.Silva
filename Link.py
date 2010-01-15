@@ -14,13 +14,13 @@ from App.class_init import InitializeClass
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
-from Products.Silva.i18n import translate as _
 from Products.Silva import SilvaPermissions
 
+from silva.core import conf as silvaconf
+from silva.core import interfaces
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
-from silva.core import interfaces
-from silva.core import conf as silvaconf
+from silva.translations import translate as _
 
 
 class Link(CatalogedVersionedContent):

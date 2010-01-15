@@ -1,18 +1,23 @@
-from DateTime import DateTime
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 # Zope
+from zope.app import zapi
+from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
 from zope.interface import implements
+from zope.publisher.browser import BrowserLanguages
+
 import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
-from silva.core.interfaces.adapters import ILanguageProvider
 from Products.Silva import SilvaPermissions
 
-from Products.Silva.i18n import translate as _
+from silva.core.interfaces.adapters import ILanguageProvider
+from silva.translations import translate as _
 
-from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
-from zope.app import zapi
-from zope.publisher.browser import BrowserLanguages
 
 # XXX this isn't a real z3 adapter yet as it's used by view code
 class LanguageProvider(adapter.Adapter):

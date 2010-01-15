@@ -13,25 +13,25 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import Globals, zLOG
 
 # silva
-import SilvaPermissions
-from helpers import add_and_edit
+from Products.Silva import SilvaPermissions
+from Products.Silva.helpers import add_and_edit
 
 # other products
 from Products.Formulator.Form import ZMIForm
 from Products.Formulator.Errors import FormValidationError
 from Products.Formulator import StandardFields
 
-from silva.core.services.base import SilvaService
-from silva.core import interfaces
 from silva.core import conf as silvaconf
+from silva.core import interfaces
+from silva.core.services.base import SilvaService
+from silva.translations import translate as _
 
-from Products.Silva.i18n import translate as _
 
 class EmailMessageService(SilvaService):
     """Simple implementation of IMemberMessageService that sends email
     messages.
     """
-    
+
     title = 'Silva Message Service'
     meta_type = 'Silva Message Service'
 
@@ -90,7 +90,7 @@ class EmailMessageService(SilvaService):
             title="Debug mode",
             required=0,
             default=0)
-        
+
         for field in [host, port, fromaddr, send_email_enabled, debug]:
             edit_form._setObject(field.id, field)
         self.edit_form = edit_form
@@ -99,7 +99,7 @@ class EmailMessageService(SilvaService):
     # a security declaration. Removing to prevent warnings.
     #security.declareProtected(SilvaPermissions.ViewManagementScreens,
     #                          'edit_form')
-    
+
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_edit')
@@ -116,7 +116,7 @@ class EmailMessageService(SilvaService):
                                             error.error_text))
             # join them all together in a big message
             message = string.join(messages, "<br />")
-            # return to manage_editForm showing this failure message 
+            # return to manage_editForm showing this failure message
             return self.manage_editForm(self, REQUEST,
                                         manage_tabs_message=message)
 
@@ -139,12 +139,12 @@ class EmailMessageService(SilvaService):
                               'send_pending_messages')
     def send_pending_messages(self):
         self._debug_log("Sending pending messages...")
-        
+
         get_member = self.service_members.get_member
-        
+
         if not hasattr(self.aq_base, '_v_messages'):
             self._v_messages = {}
-        
+
         for to_memberid, message_dict in self._v_messages.items():
             to_member = get_member(to_memberid)
             if to_member is None:
@@ -244,7 +244,7 @@ class EmailMessageService(SilvaService):
                               'send_email_enabled')
     def send_email_enabled(self):
         return self._send_email_enabled
-    
+
     def _send_email(self, toaddr, msg, header={}):
         header['To'] = toaddr
         if not header.has_key('From'):
@@ -271,7 +271,7 @@ class EmailMessageService(SilvaService):
                     zLOG.LOG('Silva service_messages', zLOG.PROBLEM,
                              'could not send mail to %s' % toaddr,
                              details=('error[%s]: %s' % failures[toaddr]) )
-                             
+
             except smtplib.SMTPException:
                 # XXX seems the documentation failes here
                 # if e.g. connection is refused, this raises another

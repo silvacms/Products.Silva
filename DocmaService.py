@@ -9,14 +9,15 @@ import Globals
 from AccessControl import Permissions, ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.i18n import translate as _
 
-from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
+from silva.core.services.base import SilvaService
+from silva.translations import translate as _
+
 
 class Job(object):
     __allow_access_to_unprotected_subobjects__ = 1
-    
+
     def __init__(self, id, format, description):
         self.id = id
         self.format = format
@@ -208,7 +209,7 @@ class DocmaService(SilvaService):
         retval = server.getResultDescriptionsByUser(ident)
         retval = \
             map(lambda (storage_id, description, format): \
-                Job(storage_id, format, description), 
+                Job(storage_id, format, description),
                 retval)
         if format is not None:
             retval = filter(lambda job: job.format == format, retval)

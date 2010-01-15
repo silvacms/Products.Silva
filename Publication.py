@@ -4,32 +4,36 @@
 
 # Zope 3
 from zope.cachedescriptors.property import CachedProperty
-from zope.interface import implements
+from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
 from App.special_dtml import DTMLFile
-
+from Globals import InitializeClass
 from zExceptions import BadRequest
-import transaction
 import Acquisition
+import transaction
 
 # Silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
-from Products.Silva.i18n import translate as _
-from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
-                                   IInvisibleService)
 
 from silva.core import conf as silvaconf
+from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
+                                   IInvisibleService)
+from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.smi import smi as silvasmi
+from silva.translations import translate as _
+from z3c.form import button
+
 
 class OverQuotaException(BadRequest):
     """Exception triggered when you're overquota.
     """
     pass
+
 
 class AcquisitionMethod(Acquisition.Explicit):
     """This class let you have an acquisition context on a method.
@@ -58,8 +62,7 @@ class Publication(Folder.Folder):
 
     meta_type = "Silva Publication"
 
-    implements(IPublication)
-
+    grok.implements(IPublication)
     silvaconf.priority(-5)
     silvaconf.icon('www/silvapublication.gif')
     silvaconf.factory('manage_addPublication')
@@ -236,20 +239,18 @@ class Publication(Folder.Folder):
 
 InitializeClass(Publication)
 
-from silva.core.views import z3cforms as silvaz3cforms
-from silva.core.smi import smi as silvasmi
-from z3c.form import button
 
 class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
 
-    silvaconf.name('tab_localsite')
-    silvaconf.require('zope2.ViewManagementScreens')
-    implements(silvaz3cforms.INoCancelButton)
+    grok.implements(silvaz3cforms.INoCancelButton)
+    grok.name('tab_localsite')
+    grok.require('zope2.ViewManagementScreens')
 
     label = _(u"Local site")
-    description = _(u"Here you can enable/disable a local site (or subsite). By making a "
-                    u"local site, you will be able to add local services to the publication. "
-                    u"Those services will only affect elements inside that publication.")
+    description = _(u"Here you can enable/disable a local site (or subsite). "
+                    u"By making a local site, you will be able to add "
+                    u"local services to the publication. Those services "
+                    u"will only affect elements inside that publication.")
 
     @CachedProperty
     def manager(self):

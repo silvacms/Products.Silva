@@ -6,15 +6,12 @@
 from zope import interface, schema
 from five import grok
 
+import os.path
+
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
 from App.Common import package_home
-
+from App.class_init import InitializeClass
 from DateTime import DateTime
 import transaction
 import zLOG
@@ -23,16 +20,14 @@ import zLOG
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.Root import DocumentationInstallationException
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva.i18n import translate as _
 from Products.Silva import install
 
+from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.interfaces import ISilvaObject, IVersion, \
-    IContainer, IAsset
+from silva.core.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 from silva.core.services.base import SilvaService
 from silva.core.views import views as silvaviews
-from silva.core import conf as silvaconf
-import os.path
+from silva.translations import translate as _
 
 
 class ExtensionService(SilvaService):
