@@ -1580,4 +1580,6 @@ button.kupu-link-reference:hover {
 /* for the calendar button */
 button.calendar-button {
   background-image: url("calendar.gif");
+  float:right;
+  margin-top:1px;
 }
