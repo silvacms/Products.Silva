@@ -2,9 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.i18n import translate as _
-
 from silva.core.interfaces import IViewerSecurity
+from silva.translations import translate as _
+
 from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
 
 from Products.Five import BrowserView
