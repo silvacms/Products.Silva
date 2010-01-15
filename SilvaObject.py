@@ -163,7 +163,11 @@ class SilvaObject(Security, ViewCode, CatalogAwareBBB):
                 (providedBy(error), request,), self, name='error.html')
             if page is not None:
                 return page.__of__(self)()
-        return self.default_standard_error_message(**kwargs)
+        if hasattr(self, 'default_standard_error_message'):
+            # Fallback on ZMI views if available
+            return self.default_standard_error_message(**kwargs)
+        # Last resort
+        return '<html><body>An error happened.</body></html>'
 
     # MANIPULATORS
 
