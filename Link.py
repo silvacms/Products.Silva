@@ -37,8 +37,9 @@ SCHEME_HTTP_LIKE_CAPABILITIES = [
 ]
 
 EXTRA_SCHEMES = [
-    ('itms',   SCHEME_HTTP_LIKE_CAPABILITIES), # itunes
-    ('webcal', SCHEME_HTTP_LIKE_CAPABILITIES), # webcal
+    ('itms',   SCHEME_HTTP_LIKE_CAPABILITIES),
+    ('webcal', SCHEME_HTTP_LIKE_CAPABILITIES),
+    ('tel', SCHEME_HTTP_LIKE_CAPABILITIES),
 ]
 
 def add_scheme(scheme, capabilities):
