@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import re
 from urlparse import urlsplit, urlunsplit
 
 from warnings import warn
@@ -25,34 +24,6 @@ from Products.Silva.ImporterRegistry import get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
 
-import urlparse
-
-# see url_parse.py for capabilities
-SCHEME_HTTP_LIKE_CAPABILITIES = [
-    'uses_relative',
-    'uses_netloc',
-    'uses_params',
-    'uses_query',
-    'uses_fragment',
-]
-
-EXTRA_SCHEMES = [
-    ('itms',   SCHEME_HTTP_LIKE_CAPABILITIES),
-    ('webcal', SCHEME_HTTP_LIKE_CAPABILITIES),
-    ('tel', SCHEME_HTTP_LIKE_CAPABILITIES),
-]
-
-def add_scheme(scheme, capabilities):
-    for capability in capabilities:
-        schemes = getattr(urlparse, capability)
-        if not scheme in schemes:
-            schemes.append(scheme)
-
-def update_url_parse_schemes():
-    for (scheme, caps) in EXTRA_SCHEMES:
-        add_scheme(scheme, caps)
-
-update_url_parse_schemes()
 
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
