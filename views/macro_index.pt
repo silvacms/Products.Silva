@@ -279,7 +279,7 @@
     </a>
   </div>
   <a tal:attributes="href string:$url/edit/${template/id}#bottom"
-    accesskey="b">
+    accesskey="m">
   </a>
   <a name="bottom">
     &nbsp;
