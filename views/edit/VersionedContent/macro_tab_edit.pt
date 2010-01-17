@@ -17,6 +17,12 @@
   type="text/css"
   tal:attributes="href here/globals/frontend.css/absolute_url | nothing"
 />
+<link rel="stylesheet"
+  type="text/css"
+  tal:define="overrider here/globals/override_editor.css/absolute_url | nothing"
+  tal:condition="exists:overrider"
+  tal:attributes="href overrider"
+/>
 <style type="text/css">
 div.public {
   margin: 12px 16px 10px 16px;
