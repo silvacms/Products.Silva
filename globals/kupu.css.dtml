@@ -1,11 +1,8 @@
 /* _________ Extra stylesheet for Kupu rendering _______________ */
 
 body {
-  margin: 0.5em 1em 1.5em 1em;
-}
-
-body, h1, h2, h3, h4, h5, h6, p, div, ul, ol, dl, pre, table {
   max-width: 44em;
+  margin: 0.5em 1em 1.5em 1em;
 }
 
 th {
