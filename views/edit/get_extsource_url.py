@@ -1,4 +1,7 @@
 ##parameters=id
 
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
-return getSourceForId(context.REQUEST.model, id).absolute_url()
+source = getSourceForId(context.REQUEST.model, id)
+if source is not None:
+    return source.absolute_url()
+return ''
