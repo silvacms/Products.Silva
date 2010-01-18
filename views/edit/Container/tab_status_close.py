@@ -29,10 +29,10 @@ msg = []
 objects = []
 for ref in refs:
     obj = model.resolve_ref(ref)
-    if obj:
+    if obj is not None:
         objects.append(obj)
 
-def action(obj,fullPath,argv):
+def action(obj, fullPath, argv):
     if not obj.is_version_published():
         return (False, (fullPath, _('is not published')))
     obj.close_version()
