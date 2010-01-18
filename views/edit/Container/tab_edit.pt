@@ -94,7 +94,6 @@ window.onload_registry.register(function() {
             title="import xml data or a zip file: alt-i"
             accesskey="i"
             value="import..."
-            tal:condition="python:user.has_role(['Manager', 'ChiefEditor'], model)"
             i18n:attributes="title;value"
           />
         </tal:if>
