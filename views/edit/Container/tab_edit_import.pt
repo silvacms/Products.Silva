@@ -230,7 +230,6 @@
             type="checkbox"
             id="replace_content"
             name="replace_content"
-            checked="checked"
           />
         </td>
       </tr>
