@@ -73,69 +73,6 @@
             export...
           </a>
           <h3 i18n:translate="">
-            import silva xml
-          </h3>
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th width="50%"
-          i18n:translate="">
-          element
-        </th>
-        <th i18n:translate="">
-          content
-        </th>
-      </tr>
-      <tr class="odd">
-        <td class="designator">
-          <label for="importfile"
-            i18n:translate="">file to upload</label><span class="warning">*</span>
-          <p i18n:translate="">
-            Locate an XML file to import (must be valid Silva XML).
-          </p>
-        </td>
-        <td class="field">
-          <input type="file"
-            id="importfile"
-            name="importfile"
-            size="45"
-            title="browse for a file on your disk"
-            i18n:attributes="title"
-          />
-        </td>
-      </tr>
-      <tr class="controls">
-        <td class="align-right"
-          colspan="2">
-          <input class="button"
-            type="submit"
-            value="import"
-            name="tab_edit_import_xml:method"
-            title="access key: alt-i"
-            accesskey="i"
-            i18n:attributes="value;title"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</form>
-
-<tal:block replace="nothing">
-  ____________________________ upload zip file____________________________
-</tal:block>
-
-<form action="." enctype="multipart/form-data" method="post">
-  <table class="listing">
-    <thead>
-      <tr tal:replace="nothing">
-        ______________ vein + title row ______________
-      </tr>
-      <tr class="top-controls">
-        <td colspan="2">
-          <h3 i18n:translate="">
             import and extract zip archive
           </h3>
         </td>
