@@ -314,15 +314,14 @@ table.silvatable {
   border-collapse: collapse;
   margin-bottom: 1em;
   font-size: 100%; /* FF needs this with SL */
+border-collapse:collapse;
+border-spacing:0;
 }
 table.silvatable tr {
   vertical-align: top;
 } 
 table.silvatable tr.rowheading {
   font-weight: bold;
-} 
-table.silvatable td {
-  border-right: none;
 } 
 table.silvatable th.align-left, table.silvatable td.align-left {
   text-align: left;
@@ -343,48 +342,33 @@ table.datagrid, table.plain, table.list, table.grid {
 }
 
 table.plain {
-  border-style: none;
+  border: none;
 } 
-table.plain td {
-  border-right: none;
-}
  
+table.list th {
+  border: 2px solid #444444;
+  border-style: solid none;
+} 
 table.list td {
-  border-bottom: 1px solid #444444;
+  border: 1px solid #444444;
+  border-style: solid none;
 } 
 
-table.list tr.rowheading td, table.list thead th {
-  border-bottom: 2px solid #444444;
+table.grid th, table.grid td {
+  border: 1px solid #444444;
 } 
   
-table.grid td, table.grid thead th {
+table.datagrid th, table.datagrid td {
   border: 2px solid #444444;
-  border-right: 2px solid #444444;
-} 
-  
-table.datagrid td {
-  border: 2px solid #444444;
-  border-right: 2px solid #444444;
-} 
-table.datagrid tr.rowheading td {
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;  
 } 
 
 table.simple {
   border-style: none;
 }
-
 table.simple thead th {
   text-align: left;
   font-weight: normal;
 }
-
-td.even table td {
-  border-right: none;
-}
-
 
 /* ____________________________ various table layouts _____ */ 
 
