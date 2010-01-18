@@ -345,26 +345,21 @@ table.plain {
   border: none;
 } 
  
-table.list tr.rowheading td, table.list thead th {
-  border-bottom: 2px solid #444444;
+table.list th {
+  border: 2px solid #444444;
+  border-style: solid none;
 } 
 table.list td {
   border: 1px solid #444444;
   border-style: solid none;
 } 
-  
-table.grid td, table.grid thead th {
+
+table.grid th, table.grid td {
   border: 1px solid #444444;
 } 
   
-table.datagrid td {
+table.datagrid th, table.datagrid td {
   border: 2px solid #444444;
-  border-right: 2px solid #444444;
-} 
-table.datagrid tr.rowheading td {
-  border-top-style: none;
-  border-left-style: none;
-  border-right-style: none;  
 } 
 
 table.simple {
