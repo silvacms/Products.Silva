@@ -13,15 +13,15 @@ for obj in objects:
     if len(pathURL) > 0:
         pathURL += "/"
     if not obj.implements_versioning():
-        if not obj.implements_publication() and not obj.implements_container(): #The current object cannot be a folder or a publication
+        if not obj.implements_publication() and not obj.implements_container():
+            #The current object cannot be a folder or a publication
             failed.append((pathURL + get_name(obj), _('not applicable')))
-        else:            
+        else:
             returnStatus = []
+            obj = obj.aq_inner
             path.append(get_name(obj))
-            if (obj.implements_container()): #Folder or other container
-                returnStatus = context.do_publishing_action(obj.get_container().objectValues(), action, path, argv)
-            else: #Publication
-                returnStatus = context.do_publishing_action(obj.get_publication().objectValues(), action, path, argv)
+            returnStatus = context.do_publishing_action(
+                obj.objectValues(), action, path, argv)
             path.pop()
 
             success.extend(returnStatus[0])
@@ -38,5 +38,5 @@ for obj in objects:
         else:
             failed.append((result[0], result[1]))
             no_date_refs.append(result[2])
-    
+
 return [success,failed,no_date_refs]
