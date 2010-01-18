@@ -42,7 +42,7 @@
               <tal:block tal:define="
                 iterate repeat/item/even;
                 obj item/getObject;
-                url obj/silva_object_url | string:#;
+                url obj/@@absolute_url | string:#;
                 mdt python:mangle.DateTime(obj.get_modification_datetime()).toStrOptionalTime() or nothing;
                 ">
                 <tr tal:attributes="class python: iterate and 'even' or 'odd'">
