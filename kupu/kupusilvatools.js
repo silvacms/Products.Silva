@@ -10,11 +10,11 @@
 
 // $Id: kupusilvatools.js 25442 2006-04-06 10:29:19Z guido $
 
-// a mapping from namespace to field names, here you can configure which 
+// a mapping from namespace to field names, here you can configure which
 // metadata fields should be editable with the property editor (needs to
 // be moved to somewhere in Silva or something?)
 EDITABLE_METADATA = {
-    'http://infrae.com/namespace/metadata/silva-news-network': 
+    'http://infrae.com/namespace/metadata/silva-news-network':
     [['subjects', 'checkbox', 1, 'subjects'],
      ['target_audiences', 'checkbox', 1, 'target audiences'],
      ['start_datetime', 'datetime', 1, 'start date/time (dmy)'],
@@ -40,8 +40,8 @@ function ExternalSourceLoader(div) {
     this.params = this.params.replace(/__type__\w*=/g, '=');
     this.params += "&docref="+this.docref + "&source_id=" + this.source_id;
     // Turn off editing for the previews, because IE won't accept
-    // display:none otherwise      
-    this.div.contentEditable = false; 
+    // display:none otherwise
+    this.div.contentEditable = false;
 
     this.docurl = document.location.href.replace(/\/edit.*?$/, '/');
 };
@@ -76,7 +76,7 @@ ExternalSourceLoader.prototype.createPreview =
        the "previewcreator" is a caller-supplied function that actually
        places content in the preview */
     var parentDiv = this.div;
-    
+
     parentDiv.setAttribute("title","External Source; content is locked");
 
     /* populate the preview */
@@ -85,7 +85,7 @@ ExternalSourceLoader.prototype.createPreview =
     previewDiv.className = 'externalsourcepreview';
     /* call supplied function to actually create the preview */
     previewcreator(request,previewDiv);
-    
+
     /* change the href of anchors so they are not clickable */
     var anchors = previewDiv.getElementsByTagName('a');
     for (var i=0; i<anchors.length; i++) {
@@ -96,7 +96,7 @@ ExternalSourceLoader.prototype.createPreview =
         does not work */
     /*var imgs = previewDiv.getElementsByTagName('img');
     for (var i=0; i<imgs.length; i++) {
-        addEventHandler(imgs[i], "mousedrag", 
+        addEventHandler(imgs[i], "mousedrag",
             function(event) {
                 var e = event || window.event;
                 var target = event.srceElement || event.target;
@@ -105,7 +105,7 @@ ExternalSourceLoader.prototype.createPreview =
                 selection.collapse(true);
             }, this.blurOnFocusHandler, this);
     }*/
-    
+
     parentDiv.appendChild(previewDiv);
     /* set a lower z-index so IE won't push the hover div under another
        ES preview lower in the document (each DIV has a lower number.
@@ -129,12 +129,12 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
         };
         if (request.status == 200 || //HTTP 200: OK; HTTP 204: No content
             request.status == 204 ||
-            /* when status is actually 204 no content, IE 7 appears to 
+            /* when status is actually 204 no content, IE 7 appears to
                make response.status==1223 (what??) */
             request.status == 1223) {
             if (previewDiv) {
                 /* if the externalsourcpreview DIV already exists, replace
-                   the content 
+                   the content
                    XXX When does this happen?  Clicking `update` in the ES
                    removes and recreates the content of the ES div (so
                    it doesn't happen then)
@@ -147,7 +147,7 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
                 } else {
                     var h4 = previewDiv.ownerDocument.createElement("h4");
                     var text = previewDiv.ownerDocument.createTextNode(
-                        " [Preview is not available]");
+                        " [preview is not available]");
                     h4.appendChild(text)
                     previewDiv.appendChild(h4);
                 };
@@ -158,7 +158,7 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
                     } else {
                         var h4 = pd.ownerDocument.createElement("h4");
                         var text = pd.ownerDocument.createTextNode(
-                            " [Preview is not available]");
+                            " [preview is not available]");
                         hiddenh4 = parentDiv.getElementsByTagName("h4")[0];
                         for (var i=0;i<hiddenh4.childNodes.length; i++) {
                             h4.appendChild(
@@ -381,7 +381,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                         this.targetinput.style.display = 'none';
                     } else {
                         // XXX this is pretty hard-coded...
-                        this.targetselect.selectedIndex = 
+                        this.targetselect.selectedIndex =
                             this.targetselect.options.length - 1;
                         this.targetinput.value = target;
                         this.targetinput.style.display = 'inline';
@@ -483,7 +483,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
     };
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
-         /* the rest of the image tool was originally designed to 
+         /* the rest of the image tool was originally designed to
             getNearestparentOfType(img), but the 'confirm resizing'
             feature needs to know what image was active, after is it
             no longer selected.  So store it as a property of the image
@@ -580,7 +580,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
 };
 
 SilvaImageTool.prototype.finalizeResizeImage = function() {
-    this.stopResizePolling(); /* pause polling during resize */ 
+    this.stopResizePolling(); /* pause polling during resize */
     var image = this.image;
     if (!image) {
         this.editor.logMessage('No image selected!  unable to resize');
@@ -890,7 +890,7 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
         this.editor.logMessage('Not inside a cell!', 1);
         return;
     }
-    
+
     if (newtype.toUpperCase() == currCell.nodeName) {
         this.editor.logMessage('Table cell unchanged');
     } else {
@@ -917,7 +917,7 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
 };
 
 SilvaTableTool.prototype.addCell = function(before, widthinput) {
-    /* add a table cell before or after the cell containing the current 
+    /* add a table cell before or after the cell containing the current
        selection */
     var currnode = this.editor.getSelectedNode();
     var doc = this.editor.getInnerDocument();
@@ -953,7 +953,7 @@ SilvaTableTool.prototype.addCell = function(before, widthinput) {
 };
 
 SilvaTableTool.prototype.removeCell = function(widthinput) {
-    /* remove a  table cell before or after the cell containing the current 
+    /* remove a  table cell before or after the cell containing the current
        selection */
     var currnode = this.editor.getSelectedNode();
     var doc = this.editor.getInnerDocument();
@@ -982,7 +982,7 @@ SilvaTableTool.prototype.removeCell = function(widthinput) {
     row.removeChild(currcell);
     if (!row.hasChildNodes())
 	row.parentNode.removeChild(row);
-    
+
     table.removeAttribute('silva_column_info');
     this._getColumnInfo();
     widthinput.value = this.getColumnWidths(table);
@@ -1002,7 +1002,7 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
         this.editor.logMessage('Not inside a cell!', 1);
         return;
     };
-    
+
     if (newtype.toUpperCase() == currCell.nodeName) {
         this.editor.logMessage('Table cell unchanged');
     } else {
@@ -1629,15 +1629,15 @@ SilvaTableTool.prototype._updateTableFromInfo =
     };
 };
 
-function SilvaTableToolBox(addtabledivid, edittabledivid, newrowsinputid, 
-        newcolsinputid, makeheaderinputid, classselectid, 
-        alignselectid, widthinputid, addtablebuttonid, 
-        addrowbuttonid, delrowbuttonid, addcolbuttonid, 
+function SilvaTableToolBox(addtabledivid, edittabledivid, newrowsinputid,
+        newcolsinputid, makeheaderinputid, classselectid,
+        alignselectid, widthinputid, addtablebuttonid,
+        addrowbuttonid, delrowbuttonid, addcolbuttonid,
         delcolbuttonid, mergecellbuttonid, splitcellbuttonid,
-        fixbuttonid, delbuttonid, toolboxid, 
+        fixbuttonid, delbuttonid, toolboxid,
         plainclass, activeclass, celltypeid) {
     /* Silva specific table functionality
-        overrides most of the table functionality, required because Silva 
+        overrides most of the table functionality, required because Silva
         requires a completely different format for tables
     */
 
@@ -1921,7 +1921,7 @@ SilvaTableToolBox.prototype.fixTable = function(event) {
     table.appendChild(tbody);
 
     this.editor.getDocument().getWindow().focus();
-    
+
     // now fix table widths if numcols is incorrect
     var colinfo = this.tool._getColumnInfo(table, true);
     this.tool._setColumnInfo(table, colinfo);
@@ -2068,11 +2068,11 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
             this.editor.content_changed = true;
         };
         var selection = this.editor.getSelection();
-        // XXX I fear I'm working around bugs here... because of a bug in 
+        // XXX I fear I'm working around bugs here... because of a bug in
         // selection.moveStart() I can't use the same codepath in IE as in Moz
         if (this.editor.getBrowserName() == 'IE') {
             selection.selectNodeContents(a);
-            // XXX are we depending on a bug here? shouldn't we move the 
+            // XXX are we depending on a bug here? shouldn't we move the
             // selection one place to get out of the anchor? it works,
             // but seems wrong...
             selection.collapse(true);
@@ -2899,7 +2899,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
         this._insideExternalSource = false;
     } else if (keyCode == 9 || keyCode == 39 || keyCode == 40) {
         /* 9=tab; 39=right; 40=down; */
-        if (div.nextSibling) { 
+        if (div.nextSibling) {
             sel = div.nextSibling;
         } else {
             sel = doc.createElement('p');
@@ -2912,7 +2912,7 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
                 this._insideExternalSource.className.replace(/ active/,'');
         };
         this._insideExternalSource = false;
-    } else if (keyCode == 37 || keyCode == 38) { 
+    } else if (keyCode == 37 || keyCode == 38) {
         /* 37 = leftarrow, 38 = uparrow */
         sel = div.previousSibling;
         if (!sel) {
@@ -2972,15 +2972,20 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
     request.open('GET', url, true);
     var callback = new ContextFixer(function() {
         if (request.readyState == 4) {
-            if (request.status.toString() == '200') {
+            var status_code = request.status.toString()
+            if (status_code == '200') {
                 var returl = request.responseText;
                 this._id = id;
                 this._url = returl;
                 handler.call(this, returl);
+            } else if (status_code == '204'){
+                var text = document.createTextNode('Code source ' + id +
+                                                   ' is missing, please select a new one.');
+                this.formcontainer.appendChild(text);
             } else {
-                alert('problem: url ' + url + 
-                    ' could not be loaded (status ' +
-                    request.status + ')');
+                alert('problem: url ' + url +
+                      ' could not be loaded (status ' +
+                      request.status + ')');
             };
         };
     }, this);
@@ -2989,7 +2994,7 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 };
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
-    // you should not be allowed to add external sources inside 
+    // you should not be allowed to add external sources inside
     // headers or table cells (but the cursor may be inside an ES title,
     // which is an H4.)
     var selNode = this.editor.getSelectedNode();
@@ -3089,7 +3094,7 @@ SilvaExternalSourceTool.prototype._addFormToTool = function(object) {
         if (this.status != '200') {
             if (this.status == '500') {
                 alert(
-                    'error on the server. body returned:\n' + 
+                    'error on the server. body returned:\n' +
                     this.responseText);
             };
             // element not found, return without doing anythink
@@ -3099,9 +3104,9 @@ SilvaExternalSourceTool.prototype._addFormToTool = function(object) {
         while (object.formcontainer.hasChildNodes()) {
             object.formcontainer.removeChild(object.formcontainer.firstChild);
         };
-        // XXX Somehow appending the XML to the form using DOM doesn't 
-        // work correctly, it looks like the elements aren't HTMLElements 
-        // but XML elements, don't know how to fix now so I'll use string 
+        // XXX Somehow appending the XML to the form using DOM doesn't
+        // work correctly, it looks like the elements aren't HTMLElements
+        // but XML elements, don't know how to fix now so I'll use string
         // insertion for now, needless to say it should be changed to DOM
         // manipulation asap...
         // XXX why is this.responseXML.documentElement.xml sometimes
@@ -3136,9 +3141,9 @@ SilvaExternalSourceTool.prototype._showFormInWindow =
     var lpos = (screen.width - 760) / 2;
     var tpos = (screen.height - 500) / 2;
     var win = window.open("about:blank",
-        "extFormWindow", "toolbar=no," + 
-        "status=no,scrollbars=yes,resizable=yes," + 
-        "width=760,height=500,left=" + lpos + 
+        "extFormWindow", "toolbar=no," +
+        "status=no,scrollbars=yes,resizable=yes," +
+        "width=760,height=500,left=" + lpos +
         ",top=" + tpos);
     this._extFormWindowOpened = true;
     var loadme = function() {
@@ -3150,7 +3155,7 @@ SilvaExternalSourceTool.prototype._showFormInWindow =
     addEventHandler(win, 'load', loadme, this)
 };
 
-SilvaExternalSourceTool.prototype._addExternalSourceIfValidated = 
+SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
         function(object, ignorefocus) {
     if (this.readyState == 4) {
         if (this.status == '200') {
@@ -3326,7 +3331,7 @@ SilvaExternalSourceTool.prototype.resetTool = function() {
 
 SilvaExternalSourceTool.prototype._gatherFormData = function() {
     /* walks through the form and creates a POST body */
-    // XXX we may want to turn this into a helper function, since it's 
+    // XXX we may want to turn this into a helper function, since it's
     // quite useful outside of this object I reckon
     var form = this._form;
     if (!form) {
@@ -3420,7 +3425,7 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement =
     for (var i=0; i < spans.length; i++) {
         var name = spans[i].getAttribute('key');
         if (spans[i].childNodes.length > 0) {
-            var value = spans[i].childNodes[0].nodeValue;            
+            var value = spans[i].childNodes[0].nodeValue;
         } else {
             var value = '';
         };
@@ -3499,7 +3504,7 @@ SilvaKupuUI.prototype.updateState = function(selNode) {
 
 SilvaKupuUI.prototype.setTextStyle = function(style) {
     /* parse the argument into a type and classname part
-        generate a block element accordingly 
+        generate a block element accordingly
     */
 
     var classname = "";
@@ -3612,7 +3617,7 @@ SilvaPropertyTool.prototype.parseFormElIntoRow = function(metatag, tablerow) {
         return;
     };
 
-    tablerow.removeChild(tablerow.getElementsByTagName('td')[1]);   
+    tablerow.removeChild(tablerow.getElementsByTagName('td')[1]);
 
     var value = metatag.getAttribute('content');
     var parentvalue = metatag.getAttribute('parentcontent');
@@ -3647,7 +3652,7 @@ SilvaPropertyTool.prototype._createSimpleItemHTML = function(
     outerdiv.appendChild(h2div);
     var img = document.createElement('img');
     // XXX would be nice if this would be absolute...
-    img.src = 'service_kupu_silva/closed_arrow.gif'; 
+    img.src = 'service_kupu_silva/closed_arrow.gif';
     outerdiv.image = img; // XXX memory leak!!
     h2div.appendChild(img);
     h2div.appendChild(document.createTextNode(fieldtitle));
@@ -3709,7 +3714,7 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(
     outerdiv.appendChild(h2div);
     var img = document.createElement('img');
     // XXX would be nice if this would be absolute...
-    img.src = 'service_kupu_silva/closed_arrow.gif'; 
+    img.src = 'service_kupu_silva/closed_arrow.gif';
     outerdiv.image = img; // XXX memory leak!!
     h2div.appendChild(img);
     h2div.appendChild(document.createTextNode(fieldtitle));
@@ -3817,7 +3822,7 @@ SilvaPropertyTool.prototype.beforeSave = function() {
                 checkboxdata[name] = [];
                 // XXX yuck!!
                 checkboxdata[name].namespace = scheme;
-                checkboxdata[name].mandatory = 
+                checkboxdata[name].mandatory =
                     input.getAttribute('mandatory') ? true : false;
             };
             if (input.checked) {
@@ -3846,7 +3851,7 @@ SilvaPropertyTool.prototype.beforeSave = function() {
         };
     };
     if (errors.length) {
-        throw('Error in properties: fields ' + errors.join(', ') + 
+        throw('Error in properties: fields ' + errors.join(', ') +
             ' are required but not filled in');
     };
     for (var i=0; i < okay.length; i++) {
@@ -3865,7 +3870,7 @@ SilvaPropertyTool.prototype._addMetaTag = function(
     var metas = doc.getElementsByTagName('meta');
     for (var i=0; i < metas.length; i++) {
         var meta = metas[i];
-        if (meta.getAttribute('name') == name && 
+        if (meta.getAttribute('name') == name &&
                 meta.getAttribute('scheme') == scheme) {
             meta.parentNode.removeChild(meta);
         };
