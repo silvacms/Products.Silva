@@ -41,7 +41,7 @@ class KupuPopupValidator(StringValidator):
         content = nodes.asBytes(encoding="UTF8")
 
         renderer = field.service_renderer_registry.getRenderer('Silva Document', 'Basic XSLT Renderer')
-        content = '<doc xmlns="http://infrae.com/ns/silva_document">%s</doc>'%content
+        content = '<doc xmlns="http://infrae.com/namespace/silva-document">%s</doc>'%content
         content = renderer.render_snippet(content)
         return content
     
