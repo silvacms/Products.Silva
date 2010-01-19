@@ -489,11 +489,11 @@ class Image(Asset):
     def _image_factory(self, id, file, content_type=None):
         service_files = component.getUtility(interfaces.IFilesService)
         new_image = service_files.newFile(id)
-        new_image.set_file_data(file)
         if content_type:
             new_image.set_content_type(content_type)
-
         setattr(self, id, new_image)
+        new_image = getattr(self, id)
+        new_image.set_file_data(file)
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
