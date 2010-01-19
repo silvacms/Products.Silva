@@ -7,8 +7,7 @@
     >
 
   <kupu:part name="select-styles">
-    <select id="kupu-tb-styles"
-            onchange="kupuui.setTextStyle(this.options[this.selectedIndex].value)">
+    <select id="kupu-tb-styles">
       <optgroup i18n:attributes="label" label="paragraph styles">
         <option i18n:translate="" value="P|normal">plain</option>
         <option i18n:translate="" value="P|lead">lead</option>
