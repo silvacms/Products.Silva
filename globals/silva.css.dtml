@@ -6,6 +6,7 @@
 **   Thanks to Alexander Limi (limi@plone.org) - October 2002
 **     In turn, thanks to Geir B�kholt, Stian S�iland for input and guidance.
 ** Thanks to Yahoo! Inc. for making the YUI reset css, version: 2.6.0
+**
 ** _______ Selector groups _______
 **
 ** sectors
@@ -1531,8 +1532,6 @@ div.listingbar .previous {
   margin-bottom:0.3em;  
 }
 
-/* style is a filter */
-
 /* styles for the dynamic reference lookup window (from
    kupustyles.css) so that this widget works outside of
    kupu */
@@ -1585,3 +1584,5 @@ button.calendar-button {
   margin-top:2px;
   border:none;
 }
+
+/* style is a filter */
