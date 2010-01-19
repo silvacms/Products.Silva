@@ -24,7 +24,6 @@
   <grok:grok package="." />
 
   <!-- Vocabularies -->
-
   <utility
      component=".File.FileStorageTypeVocabulary"
      name="File Storage Type" />
@@ -44,5 +43,8 @@
     class=".lookupwindowfield.EditButtonRedirector"
     permission="silva.ReadSilvaContent"
   />
+
+  <!-- Default skin -->
+  <include package="silvatheme.standardissue" />
 
 </configure>
