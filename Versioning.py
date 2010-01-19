@@ -222,8 +222,7 @@ class Versioning(object):
         # objects; factory function for VersionedContent objects should
         # create an initial version with name '0', too.
         # only testable in unit tests after severe hacking..
-        self.manage_clone(getattr(self, version_id_to_copy),
-                          new_version_id, self.REQUEST)
+        self.manage_clone(getattr(self, version_id_to_copy), new_version_id)
         self.create_version(new_version_id, None, None)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
