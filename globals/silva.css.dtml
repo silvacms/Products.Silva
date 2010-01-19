@@ -1193,6 +1193,8 @@ table.listing div.message {
   font-weight: normal;
 }
 
+</dtml-with>
+</dtml-let>
 
 /* ______________________________________________________ typography _______ */
 
@@ -1237,9 +1239,9 @@ a {
   text-decoration: none;
 }
 
-</dtml-with>
-</dtml-let>
-
+i, em {
+font-style:italic;
+}
 
 /* ___________________________________________ Silva specific styles _______ */
 
