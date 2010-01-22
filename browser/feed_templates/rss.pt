@@ -23,7 +23,7 @@
   </channel>
   <tal:block repeat="item data/entries">
     <item tal:attributes="rdf:about item/url">
-      <title type="text" tal:content="item/title"/>
+      <title tal:content="item/title" />
       <link tal:content="item/url" />
       <description tal:content="item/description" />
       <dc:subject tal:define="subject item/subject"
