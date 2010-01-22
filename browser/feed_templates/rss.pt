@@ -16,8 +16,8 @@
     <rss:items>
       <rdf:Seq>
         <rdf:li
-          tal:repeat="item data/entries"
-          tal:attributes="rdf:resource item/url" />
+           tal:repeat="item data/entries"
+           tal:attributes="rdf:resource item/url" />
       </rdf:Seq>
     </rss:items>
   </rss:channel>
@@ -25,12 +25,17 @@
     <rss:item tal:attributes="rdf:about item/url">
       <rss:title type="text" tal:content="item/title"/>
       <rss:link tal:content="item/url" />
-      <rss:description tal:content="string:${item/description}      " />
-      <dc:subject tal:content="item/subject" />
-      <dc:creator tal:repeat="author item/authors" tal:content="author" />
-      <tal:block condition="item/date_published">
-      <dc:date tal:content="python: item.date_published().HTML4()"/>
-      </tal:block>
+      <rss:description tal:content="item/description" />
+      <dc:subject tal:define="subject item/subject"
+                  tal:condition="subject"
+                  tal:content="item/subject" />
+      <tal:authors tal:define="authors item/authors"
+                   tal:condition="authors">
+        <dc:creator tal:repeat="author authors" tal:content="author" />
+      </tal:authors>
+      <tal:data condition="item/date_published">
+        <dc:date tal:content="python: item.date_published().HTML4()"/>
+      </tal:data>
     </rss:item>
   </tal:block>
 </rdf:RDF>
