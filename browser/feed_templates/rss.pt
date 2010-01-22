@@ -7,7 +7,7 @@
   tal:define="data view/data">
   <channel tal:attributes="rdf:about data/url">
     <title tal:content="data/title" />
-    <link tal:content="string:${data/url}/rss.xml" />
+    <link tal:content="string:${data/url}/rss" />
     <description tal:content="data/description" />
     <dc:creator tal:repeat="author data/authors" tal:content="author" />
     <tal:block condition="data/date_updated">
