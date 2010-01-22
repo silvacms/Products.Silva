@@ -114,22 +114,6 @@
      permission="zope2.View"
      />
 
-  <browser:page
-     name="atom.xml"
-     for="silva.core.interfaces.IContainer"
-     class="Products.Silva.browser.feed.ContainerFeedView"
-     permission="zope2.View"
-     template="atom.pt"
-     />
-
-  <browser:page
-     name="rss.xml"
-     for="silva.core.interfaces.IContainer"
-     class="Products.Silva.browser.feed.ContainerFeedView"
-     permission="zope2.View"
-     template="rss.pt"
-     />
-
   <!-- view for resizing images from kupu -->
   <browser:page
      for="silva.core.interfaces.IImage"

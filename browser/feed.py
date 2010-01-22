@@ -2,41 +2,54 @@
 # See also LICENSE.txt
 # $Id$
 
+from five import grok
+from silva.core import interfaces
 from zExceptions import NotFound
-from silva.core.interfaces import IFeedEntry
-from Products.Five import BrowserView
+from zope.traversing.browser import absoluteURL
 
-class ContainerFeedView(BrowserView):
-    """Base class for feed representation."""
 
-    def __call__(self):
+class ContainerFeedProvider(grok.Adapter):
+    """This default feed provider provides feed the immediate content
+    of a container.
+    """
+    grok.context(interfaces.IContainer)
+    grok.provides(interfaces.IFeedEntryProvider)
+    grok.implements(interfaces.IFeedEntryProvider)
+
+    def entries(self):
+        for item in self.context.get_ordered_publishables():
+            if not item.is_published():
+                continue
+            entry = interfaces.IFeedEntry(item, None)
+            if entry is not None:
+                yield entry
+
+
+class FeedBase(grok.View):
+    """Base class for feed representation.
+    """
+    grok.baseclass()
+    grok.require('zope2.View')
+
+    def update(self):
         if not self.context.allow_feeds():
             raise NotFound()
-        self.request.RESPONSE.setHeader(
-            'Content-Type', 'text/xml;charset=UTF-8')
-        return super(ContainerFeedView, self).__call__(self)
 
-    def get_data(self):
-        """ prepare the data needed by a feed
-        """
         entries = []
         context = self.context
         ms = context.service_metadata
         date_updated = ms.getMetadataValue(
             self.context, 'silva-extra', 'creationtime')
-        for item in context.get_ordered_publishables():
-            if not item.is_published():
-                continue
-            entry = IFeedEntry(item, None)
-            if not entry is None:
-                entry_updated = entry.date_updated()
-                entries.append((entry_updated, entry))
-                if entry_updated > date_updated:
-                    date_updated = entry_updated
+        provider = interfaces.IFeedEntryProvider(self.context.aq_inner)
+        for entry in provider.entries():
+            entry_updated = entry.date_updated()
+            entries.append((entry_updated, entry))
+            if entry_updated > date_updated:
+                date_updated = entry_updated
         entries.sort()
         feed = [entry[1] for entry in entries]
-        url = context.absolute_url()
-        return {
+        url = absoluteURL(context, self.request)
+        self.data = {
             'id': url,
             'title': context.get_title(),
             'description': ms.getMetadataValue(
@@ -45,5 +58,24 @@ class ContainerFeedView(BrowserView):
             'authors': [ms.getMetadataValue(
                 self.context, 'silva-extra', 'creator')],
             'date_updated': date_updated,
-            'entries': feed
-            }
+            'entries': feed}
+
+        self.response.setHeader(
+            'Content-Type', 'text/xml;charset=UTF-8')
+
+
+class RSSFeed(FeedBase):
+    """Export the feed as an RSS feed.
+    """
+    grok.name('rss.xml')
+    grok.template('rss')
+    grok.context(interfaces.IContainer)
+
+
+class AtomFeed(FeedBase):
+    """Export the feed as an Atom feed.
+    """
+    grok.name('atom.xml')
+    grok.template('atom')
+    grok.context(interfaces.IContainer)
+

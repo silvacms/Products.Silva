@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  tal:define="data view/get_data">
+  tal:define="data view/data">
   <id tal:content="data/id" />
   <title type="text" tal:content="data/title"/>
   <subtitle tal:content="data/description" />
@@ -25,7 +25,7 @@
     <author tal:repeat="author item/authors">
       <name tal:content="author"/>
     </author>
-    <category 
+    <category
       tal:repeat="keyword item/keywords"
       tal:attributes="term keyword" />
     <summary type="xhtml">
