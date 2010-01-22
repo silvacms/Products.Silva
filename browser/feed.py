@@ -71,11 +71,13 @@ class FeedBase(grok.View):
 class RSS(FeedBase):
     """Export the feed as an RSS 1.0 feed.
     """
+    grok.name('rss.xml')
     grok.context(interfaces.IContainer)
 
 
 class Atom(FeedBase):
     """Export the feed as an Atom feed.
     """
+    grok.name('atom.xml')
     grok.context(interfaces.IContainer)
 
