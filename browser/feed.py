@@ -3,9 +3,13 @@
 # $Id$
 
 from five import grok
-from silva.core import interfaces
-from zExceptions import NotFound
+from zope import component
 from zope.traversing.browser import absoluteURL
+
+from Products.SilvaMetadata.interfaces import IMetadataService
+from zExceptions import NotFound
+
+from silva.core import interfaces
 
 
 class ContainerFeedProvider(grok.Adapter):
@@ -36,27 +40,27 @@ class FeedBase(grok.View):
             raise NotFound()
 
         entries = []
-        context = self.context
-        ms = context.service_metadata
-        date_updated = ms.getMetadataValue(
-            self.context, 'silva-extra', 'creationtime')
+        service_metadata = component.getUtility(IMetadataService)
+        metadata = service_metadata.getMetadata(self.context)
+        date_updated = metadata.get('silva-extra', 'creationtime')
+
         provider = interfaces.IFeedEntryProvider(self.context.aq_inner)
         for entry in provider.entries():
-            entry_updated = entry.date_updated()
-            entries.append((entry_updated, entry))
-            if entry_updated > date_updated:
-                date_updated = entry_updated
-        entries.sort()
+            entry_updated = entry.date_published()
+            entries.append((entry_updated.asdatetime(), entry))
+
+        entries.sort(key=lambda x: x[0], reverse=True)
         feed = [entry[1] for entry in entries]
-        url = absoluteURL(context, self.request)
+
+        last_published = feed[0].date_published()
+        if  last_published> date_updated:
+            date_updated = last_published
+
         self.data = {
-            'id': url,
-            'title': context.get_title(),
-            'description': ms.getMetadataValue(
-                self.context, 'silva-extra', 'content_description'),
-            'url': url,
-            'authors': [ms.getMetadataValue(
-                self.context, 'silva-extra', 'creator')],
+            'title': self.context.get_title(),
+            'description': metadata.get('silva-extra', 'content_description'),
+            'url': absoluteURL(self.context, self.request),
+            'authors': [metadata.get('silva-extra', 'creator')],
             'date_updated': date_updated,
             'entries': feed}
 
