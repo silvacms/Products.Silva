@@ -1,14 +1,17 @@
-Copyright (c) 2002-2009 Infrae. All rights reserved.
+Copyright (c) 2002-2010 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Silva changes
 
-  Silva 2.1.10 (unreleased)
+  Silva 2.1.10 (2010-01-26)
 
     Bug fixes
 
+     - Update sarissa support to make Kupu work on Firefox 3.6.
+
      - Update URL_PATTERN to support the entire range of characters
-       supporting in the LHS of email addresses in mailto: links
+       supporting in the LHS of email addresses in mailto: links. Allow
+       tel: links.
 
      - Unpublished Versions of VersionedContent objects were not
        unindexed from the catalog when the Version was removed
