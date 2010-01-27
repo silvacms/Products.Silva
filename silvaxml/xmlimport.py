@@ -73,26 +73,26 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         binding = metadata_service.getMetadata(content)
         if binding is not None:
             for set_id, elements in self._metadata.items():
-                set = binding.collection.get(set_id, None)
-                if set is None:
+                set_obj = binding.collection.get(set_id, None)
+                if set_obj is None:
                     zLOG.LOG(
                     'Silva', zLOG.WARNING,
                     "Unknown metadata set %s present in import file." % set_id)
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
-                    if not hasattr(set, element_name):
+                    if not hasattr(set_obj.aq_explicit, element_name):
                         zLOG.LOG(
                             'Silva', zLOG.WARNING,
                             "Unknown metadata element %s in set %s." %
                             (element_name, set_id))
                         continue
-                    field = set.getElement(element_name).field
+                    field = set_obj.getElement(element_name).field
 
                     # Set data
                     try:
                         errors = binding._setData(
-                            namespace_key=set.metadata_uri,
+                            namespace_key=set_obj.metadata_uri,
                             data={
                                 element_name: field.validator.deserializeValue(
                                     field, elements[element_name])},
