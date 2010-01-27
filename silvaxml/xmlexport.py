@@ -73,7 +73,7 @@ class SilvaBaseProducer(xmlexport.BaseProducer):
             items = binding._getData(set_id).items()
             items.sort()
             for key, value in items:
-                if not hasattr(set_obj, key):
+                if not hasattr(set_obj.aq_explicit, key):
                     continue
                 field = binding.getElement(set_id, key).field
                 self.startElementNS(namespace, key)
