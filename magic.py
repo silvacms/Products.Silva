@@ -76,6 +76,7 @@ try:
     magic_load.errcheck = error_check
 
     MAGIC_MIME = 0x000010 # Return a mime string
+    HAVE_MAGIC = True
 
     class MagicGuess(IdGuess):
 
@@ -94,6 +95,8 @@ try:
             return magic_file(self.cookie, filename)
 
 except (OSError, ImportError, AttributeError):
+
+    HAVE_MAGIC = False
 
     class MagicGuess(IdGuess):
 

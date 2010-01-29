@@ -5,6 +5,7 @@
 
 # Python
 import re
+import os
 import logging
 from cStringIO import StringIO
 from cgi import escape
@@ -486,14 +487,24 @@ class Image(Asset):
             return True, image.convert("RGB")
         return False, image
 
-    def _image_factory(self, id, file, content_type=None):
+    def _image_factory(self, image_id, file, content_type=None):
         service_files = component.getUtility(interfaces.IFilesService)
-        new_image = service_files.newFile(id)
-        if content_type:
-            new_image.set_content_type(content_type)
-        setattr(self, id, new_image)
-        new_image = getattr(self, id)
+        new_image = service_files.newFile(image_id)
+        setattr(self, image_id, new_image)
+        new_image = getattr(self, image_id)
         new_image.set_file_data(file)
+
+        image_filename = self.getId()
+        if not image_id.startswith('hires'):
+            if '.' in image_filename:
+                base_id, ext = os.path.splitext(image_filename)
+            else:
+                base_id = image_filename
+            image_filename = '%s.%s' % (base_id, self.web_format.lower())
+        new_image.set_filename(image_filename)
+
+        if content_type is not None:
+            new_image.set_content_type(content_type)
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):

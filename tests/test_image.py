@@ -4,25 +4,19 @@
 
 # Python
 from StringIO import StringIO
+import PIL
 
 # Zope 3
 from zope import component
 from zope.interface.verify import verifyObject
 
 from silva.core import interfaces
-from Products.Silva import File
-
+from Products.Silva import File, magic
 from Products.Five.testbrowser import Browser
+from Testing.ZopeTestCase.zopedoctest.functional import http
 
-import SilvaTestCase
-import helpers
-
-try:
-    import PIL
-except ImportError:
-    havePIL = 0
-else:
-    havePIL = 1
+from Products.Silva.tests import SilvaTestCase
+from Products.Silva.tests import helpers
 
 
 class ImageTestHelper(object):
@@ -31,10 +25,10 @@ class ImageTestHelper(object):
         image_file = helpers.openTestFile('photo.tif')
         image_data = image_file.read()
         image_file.seek(0)
-        self.root.manage_addProduct['Silva'].manage_addImage('testimage',
-            'Test Image', image_file)
+        self.root.manage_addProduct['Silva'].manage_addImage(
+            'testimage.tif', 'Test Image', image_file)
         image_file.close()
-        return self.root.testimage, image_data
+        return getattr(self.root, 'testimage.tif'), image_data
 
 
 class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
@@ -54,9 +48,6 @@ class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
         image.set_web_presentation_properties('JPEG', '100x100', '')
         self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
         self.failUnless(image.tag() is not None)
-
-        if not havePIL:
-            return
 
         it = image.getImage(hires=0, webformat=1)
         pil_image = PIL.Image.open(StringIO(it))
@@ -93,15 +84,13 @@ class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
             self._test_image()
 
     def test_getcropbox(self):
-        if not havePIL:
-            return
         image, _ = self.add_test_image()
         cropbox = image.getCropBox(crop="242x379-392x479")
         self.assert_(cropbox is not None)
 
     def test_copy_image(self):
         image, _ = self.add_test_image()
-        self.root.action_copy(['testimage'], self.app.REQUEST)
+        self.root.action_copy(['testimage.tif'], self.app.REQUEST)
         # now do the paste action
         self.root.action_paste(self.app.REQUEST)
 
@@ -109,30 +98,81 @@ class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
 class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
                           ImageTestHelper):
 
-    def test_view(self):
+    def afterSetUp(self):
         image, image_data = self.add_test_image()
         image.set_web_presentation_properties('JPEG', '100x100', '')
-        browser = Browser()
 
-        browser.open('http://localhost/root/testimage')
+    def test_view(self):
+        browser = Browser()
+        browser.open('http://localhost/root/testimage.tif')
+        self.assertEquals(
+            browser.headers['Content-Disposition'],
+            'inline;filename=testimage.jpeg')
+        self.assertEquals(
+            browser.headers['Content-Type'],
+            'image/jpeg')
         pil_image = PIL.Image.open(StringIO(browser.contents))
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-        if not havePIL:
+    def test_head_view(self):
+        response = http('HEAD /root/testimage.tif HTTP/1.1')
+        self.assertEquals(response.header_output.status, 200)
+        headers = response.header_output.headers
+        self.assertEquals(headers['Content-Length'], '0')
+        self.assertEquals(headers['Content-Type'], 'image/jpeg')
+
+    def test_hires(self):
+        browser = Browser()
+        browser.open('http://localhost/root/testimage.tif?hires')
+        self.assertEquals(
+            browser.headers['content-disposition'],
+            'inline;filename=testimage.tif')
+
+        if not magic.HAVE_MAGIC:
+            # If we don't use the libmagic, we won't know the type of
+            # the image.
             return
 
-        # Of course this is too big for a Browser.
-        # browser.open('http://localhost/root/testimage?hires')
-        # pil_image = PIL.Image.open(StringIO(browser.contents))
-        # self.assertEquals((960, 1280), pil_image.size)
-        # self.assertEquals('TIFF', pil_image.format)
-        # self.assertEquals(image_data, browser.contents)
+        self.assertEquals(
+            browser.headers['content-type'],
+            'image/tiff')
 
-        browser.open('http://localhost/root/testimage?thumbnail')
+        # a Browser is not able to read all image data.
+
+    def test_head_hires(self):
+        response = http('HEAD /root/testimage.tif?hires HTTP/1.1')
+        self.assertEquals(response.header_output.status, 200)
+        headers = response.header_output.headers
+        self.assertEquals(headers['Content-Length'], '0')
+
+        if not magic.HAVE_MAGIC:
+            # If we don't use the libmagic, we won't know the type of
+            # the image.
+            return
+
+        self.assertEquals(headers['Content-Type'], 'image/tiff')
+
+    def test_thumbnail(self):
+        browser = Browser()
+        browser.open('http://localhost/root/testimage.tif?thumbnail')
+        self.assertEquals(
+            browser.headers['content-disposition'],
+            'inline;filename=testimage.jpeg')
+        self.assertEquals(
+            browser.headers['content-type'],
+            'image/jpeg')
         pil_image = PIL.Image.open(StringIO(browser.contents))
         self.assertEquals((90, 120), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
+
+    def test_head_thumbnail(self):
+        response = http('HEAD /root/testimage.tif?thumbnail HTTP/1.1')
+        self.assertEquals(response.header_output.status, 200)
+        headers = response.header_output.headers
+        self.assertEquals(headers['Content-Length'], '0')
+        self.assertEquals(headers['Content-Type'], 'image/jpeg')
+
 
 
 import unittest

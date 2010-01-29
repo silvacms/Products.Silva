@@ -99,14 +99,18 @@ class File(Asset):
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addFile')
 
+    # Default values
+    _filename = None
 
     # ACCESSORS
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_filename')
     def get_filename(self):
-        """Object's id is filename
+        """Object's id is filename if not set.
         """
+        if self._filename is not None:
+            return self._filename
         return self.id
 
     security.declareProtected(
@@ -211,6 +215,13 @@ class File(Asset):
         #XXX should be event below
         ICataloging(self).reindex()
         self.update_quota()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_filename')
+    def set_filename(self, filename):
+        """Set filename
+        """
+        self._filename = filename
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
@@ -374,8 +385,7 @@ class BlobFileView(silvaviews.View):
     silvaconf.require('zope2.View')
     silvaconf.name('index')
 
-    def render(self):
-        # XXX: HEAD Support
+    def setHTTPHeaders(self):
         self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))
@@ -386,6 +396,8 @@ class BlobFileView(silvaviews.View):
             rfc1123_date(self.context.get_modification_datetime()))
         self.response.setHeader(
             'Accept-Ranges', None)
+
+    def render(self):
         desc = self.context.get_content_fd()
         data = desc.read(CHUNK_SIZE)
         while data:

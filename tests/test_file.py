@@ -11,6 +11,7 @@ import helpers
 from silva.core import interfaces
 from Products.Silva import File
 
+
 class FileTest(SilvaTestCase.SilvaFileTestCase):
     """Test file implementation.
     """
