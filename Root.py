@@ -198,18 +198,16 @@ class Root(Publication, site.Site):
             return 'No catalog found!'
 
         # first get all approved objects that should be published
-        query = {'silva-extrapublicationtime': DateTime(),
-                 'silva-extrapublicationtime_usage': 'range:max',
-                 'version_status': 'approved'
-                }
+        query = {'silva-extrapublicationtime':
+                     {'query': DateTime(), 'range': 'max'},
+                 'version_status': 'approved'}
 
         result = self.service_catalog(query)
 
         # now get all published objects that should be closed
-        query = {'silva-extraexpirationtime': DateTime(),
-                 'silva-extraexpirationtime_usage': 'range:max',
-                 'version_status': 'public'
-                }
+        query = {'silva-extraexpirationtime':
+                     {'query': DateTime(), 'range': 'max'},
+                 'version_status': 'public'}
 
         result += self.service_catalog(query)
 
