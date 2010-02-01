@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-from Products.Formulator.Errors import ValidationError, FormValidationError
+from Products.Formulator.Errors import FormValidationError
 from Products.Silva.i18n import translate as _
 
 model = context.REQUEST.model
@@ -19,16 +19,14 @@ except FormValidationError, e:
     return context.tab_edit(message_type="error",
                          message=context.render_form_errors(e))
 
-file = result['file']
-if not file or not
- getattr(file,'filename',None):
+uploaded_file = result['uploaded_file']
+if not uploaded_file or not getattr(uploaded_file,'filename',None):
     return context.tab_edit(
         message_type="error",
-        message=_("Empty or invalid file.")
-        )
+        message=_("Empty or invalid file."))
 
 model.sec_update_last_author_info()
-model.set_file_data(file)
+model.set_file_data(uploaded_file)
 
 message_type=REQUEST.form.get('message_type', 'feedback')
 message=_("File uploaded.")
