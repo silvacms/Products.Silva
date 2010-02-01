@@ -40,7 +40,7 @@ Silva is extensible with new document types and other types of content
 objects.
 
 Using Silva
------------
+===========
 
 After installing Silva in your Zope, you can go there by an URL such as::
 

@@ -7,20 +7,21 @@ Silva 2.2b1 (2010-02-01)
 New Features
 ~~~~~~~~~~~~
 
-- External Sources are now previewable in kupu.  When an external source with preview
-  enabled is added to a document, the rendered extneral source is shown in kupu.
-  When that external source is active, or when hovering over it with the mouse,
-  the external source will have a different background color, a border, and a
-  'lock' icon.  This shows the extent of the external source within the document
-  and also provides a hint that it is not editable.
+- External Sources are now previewable in kupu.  When an external
+  source with preview enabled is added to a document, the rendered
+  extneral source is shown in kupu.  When that external source is
+  active, or when hovering over it with the mouse, the external source
+  will have a different background color, a border, and a 'lock' icon.
+  This shows the extent of the external source within the document and
+  also provides a hint that it is not editable.
 
 - The reference lookup window formulator widget now supports multiple
-  entries with javascript to add / remove entries.  NOTE: the default is
-  to retain the old behavior (supporting one reference, for either type of
-  lookup field).  If an exsiting lookup window field is changed to support more
-  the onclick widget property needs to change.  Copy the default value from a new
-  lookupwindowfield.
-  
+  entries with javascript to add / remove entries.  NOTE: the default
+  is to retain the old behavior (supporting one reference, for either
+  type of lookup field).  If an exsiting lookup window field is
+  changed to support more the onclick widget property needs to change.
+  Copy the default value from a new lookupwindowfield.
+
 - DateTime widgets in the SMI now have a 'calendar' button which
   opens a popup calendar -- an easier way to supply datetimes.
 
@@ -29,11 +30,13 @@ New Features
 
 Bugs Fixed
 ~~~~~~~~~~
-- uncommon (but valid) characters were not supported in the LHS (mailbox)
-  side of email addresses in mailto: links in Silva objects using silvaxml
-  content storage.  An example of an email address that did not work:
-  firstname.o'surname@beds.ac.uk .  The link regexp was expanded to allow
-  the full range of characters in the mailbox as specified in RFC 2822#3.4.1.
+
+- uncommon (but valid) characters were not supported in the LHS
+  (mailbox) side of email addresses in mailto: links in Silva objects
+  using silvaxml content storage.  An example of an email address that
+  did not work: firstname.o'surname@beds.ac.uk .  The link regexp was
+  expanded to allow the full range of characters in the mailbox as
+  specified in RFC 2822#3.4.1.
 
 - In kupu, when an active external source (i.e. the external source tool is
   showing that ES's parameters), clicking on the same ES no longer causes
@@ -42,18 +45,19 @@ Bugs Fixed
 - Errors when attempting to upload interlaced PNGs are now caught and
   displayed to the user.
 
-- launchpad #400019: Silva Link: allow editing of relative / absolute property,
-  or get rid of it altogether.  Silva 2.1 allowed editing of this property.  Silva
-  2.2 has removed the link type.  Now there is only one type of link, and it is the
-  authors responsibility to ensure it is a valid relative or absolute link.
+- launchpad #400019: Silva Link: allow editing of relative / absolute
+  property, or get rid of it altogether.  Silva 2.1 allowed editing of
+  this property.  Silva 2.2 has removed the link type.  Now there is
+  only one type of link, and it is the authors responsibility to
+  ensure it is a valid relative or absolute link.
 
 - For a possible security issue the "served by host foo" comment was removed
   from macro_index.pt
 
-- The user clipboard 'remove user' button now returns to the correct add user 
+- The user clipboard 'remove user' button now returns to the correct add user
   form. (search or direct user lookup)
 
-- tab_preview frameset now requires that the user be logged in.  Previously, if 
+- tab_preview frameset now requires that the user be logged in.  Previously, if
   using form-based auth, one might see an authentication screen in both
   frames.
 
@@ -64,19 +68,19 @@ Bugs Fixed
 
 - enable changing the html form enctype of edit views using one of the
   macro_edit macros
-  
+
 - #261571: AutoTOCs have a new property "show container link". When set to 'yes'
   the public view will include an <h3> above the table of contents with
   the title of the container of the AutoTOC linking to the container.  This is
   useful if the AutoTOC is a sitemap.
-  
+
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
-- unpublished Versions of VersionedContent objects were not unindexed from 
+- unpublished Versions of VersionedContent objects were not unindexed from
   the catalog when the Version was removed (e.g. via the status tab).
   A subscriber was added for the IObjectWillBeRemoved event
-  
+
 - fixed helpers.SwitchClass (used by the folder <--> publication conversion)
   so that the ObjectManager api's are used to set the new object, keeping
   the metadata structures up to date
@@ -95,13 +99,13 @@ New Features
 
 - A New "Kupu Popup" formulator field.  This field is for html content
   and pops up a "popup kupu" to provide easy wysiwyg editing.
-  
+
 - Redesigned link and image tools: the link and image reference fields
-  now have an icon button for the 'get reference' functionality -- saving 
+  now have an icon button for the 'get reference' functionality -- saving
   toolbox space -- and when a reference is present an 'edit linked reference'
   button.  When clicked for a valid silva reference, this opens up a new window
   to the edit tab of the reference.
-  
+
 - The link tool's input field converts to a text area when it has the focus
   to allow for easier editing of long link references.
 
@@ -117,8 +121,8 @@ New Features
 Bugs Fixed
 ~~~~~~~~~~
 
-- Fixed Internet Explorer 7 kupu issue triggered when clicking the 
-  unordered list button. 
+- Fixed Internet Explorer 7 kupu issue triggered when clicking the
+  unordered list button.
 
 - External Source Tool: the title now reverts back to "external
   source" when the tool is reset
@@ -132,13 +136,13 @@ Bugs Fixed
 Ported from Silva 2.1
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Fixed issues with unicode characters in href value of links in 
+- Fixed issues with unicode characters in href value of links in
   Silva Documents.
 
 - Fixed some formatting issues with buttons in the tab editor for
   containers.
 
-- Fixed 310589: Silva AutoTOC ignores "types to list" setting 
+- Fixed 310589: Silva AutoTOC ignores "types to list" setting
   when using silva sort order.
 
 
