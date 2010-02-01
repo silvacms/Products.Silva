@@ -52,9 +52,10 @@ class FeedBase(grok.View):
         entries.sort(key=lambda x: x[0], reverse=True)
         feed = [entry[1] for entry in entries]
 
-        last_published = feed[0].date_published()
-        if  last_published> date_updated:
-            date_updated = last_published
+        if len(feed) > 0:
+            last_published = feed[0].date_published()
+            if  last_published> date_updated:
+                date_updated = last_published
 
         self.data = {
             'title': self.context.get_title(),
