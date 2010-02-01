@@ -19,7 +19,7 @@ except FormValidationError, e:
     return context.tab_edit(message_type="error",
                          message=context.render_form_errors(e))
 
-uploaded_file = result['uploaded_file']
+uploaded_file = result['file']
 if not uploaded_file or not getattr(uploaded_file,'filename',None):
     return context.tab_edit(
         message_type="error",
