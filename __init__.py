@@ -2,7 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
-# registers fields
+# prevent a circular import in Zope 2.12
+import AccessControl
+
+# registers field
 from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
