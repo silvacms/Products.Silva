@@ -76,7 +76,7 @@ class Zope3ViewAttribute(ViewAttribute):
         applySkin(request, ISMILayer)
         view = component.queryMultiAdapter((context, request), name=name)
         if view:
-            return view.__of__(context)
+            return view
         else:
             # Default behaviour of ViewAttribute, but look at a Five
             # views if the asked one doesn't exists.
@@ -162,7 +162,7 @@ class SilvaObject(Security, ViewCode, CatalogAwareBBB):
             page = queryMultiAdapterWithInterface(
                 (providedBy(error), request,), self, name='error.html')
             if page is not None:
-                return page.__of__(self)()
+                return page()
         if hasattr(self, 'default_standard_error_message'):
             # Fallback on ZMI views if available
             return self.default_standard_error_message(**kwargs)
