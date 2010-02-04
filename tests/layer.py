@@ -3,9 +3,6 @@
 # See also LICENSE.txt
 # $Id$
 
-# Python
-import time
-
 # Zope 3
 import zope.component.eventtesting
 from zope.app.component.hooks import setSite, setHooks
@@ -108,7 +105,6 @@ def setupRootUser(app):
 def setupSilvaRoot(app):
     """Creates a Silva root.
     """
-    _start = time.time()
     uf = app.acl_users
     uf._doAddUser('SilvaTestCase', '', ['Manager'], [])
     user = uf.getUserById('SilvaTestCase').__of__(uf)
