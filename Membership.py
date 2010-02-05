@@ -7,7 +7,8 @@ from Products.SilvaViews.ViewRegistry import ViewAttribute
 
 # some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
-import Globals
+from App.class_init import InitializeClass
+
 from Persistence import Persistent
 
 import SilvaPermissions
@@ -74,7 +75,7 @@ class Member(Persistent, Acquisition.Implicit):
     def allowed_roles(self):
         return []
 
-Globals.InitializeClass(Member)
+InitializeClass(Member)
 
 class CachedMember(Persistent, Acquisition.Implicit):
     """A member object returned by cloneMember
@@ -207,7 +208,7 @@ class NoneMember(Persistent, Acquisition.Implicit):
         return "Silva Simple Member"
 
 
-Globals.InitializeClass(NoneMember)
+InitializeClass(NoneMember)
 
 noneMember = NoneMember()
 

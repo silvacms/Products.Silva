@@ -3,7 +3,8 @@
 # $Revision$
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Globals import InitializeClass, DevelopmentMode
+from App.class_init import InitializeClass
+from Globals import DevelopmentMode
 from DateTime import DateTime
 # Silva
 from Products.Silva import roleinfo
