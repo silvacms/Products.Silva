@@ -26,7 +26,7 @@ def getAddView(context, meta_type):
         # represent a folder in the silva views machinery.
         while not ISilvaObject.providedBy(context):
             context = context.aq_parent
-        return factory(context, request).__of__(context)
+        return factory(context, request)
     return context.service_view_registry.get_view('add', meta_type).add_form
 
 
