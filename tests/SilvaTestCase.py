@@ -4,18 +4,18 @@
 # $Id$
 
 from Acquisition import aq_base
-from Testing.ZopeTestCase import utils, connections, sandbox, ZopeLite
+from AccessControl.SecurityManagement import newSecurityManager, \
+    noSecurityManager, getSecurityManager
+from Testing.ZopeTestCase import utils
 from Testing import ZopeTestCase
-from ZODB.blob import BlobStorage
-from ZODB.DemoStorage import DemoStorage
-import ZODB
-
-from StringIO import StringIO
-
-import tempfile, shutil
 import transaction
 import zope.component.eventtesting
-from zope.interface import Interface
+
+from Products.Silva.tests.layer import SilvaLayer, SilvaFunctionalLayer
+from Products.Silva.tests.layer import user_name, user_password
+from Products.Silva.tests.layer import users, setUp, tearDown
+
+from StringIO import StringIO
 
 user_manager = 'manager'
 user_chiefeditor = 'chiefeditor'
@@ -24,22 +24,10 @@ user_author = 'author'
 user_reader = 'reader'
 user_dummy = 'dummy'
 
-from AccessControl.SecurityManagement import newSecurityManager, \
-    noSecurityManager, getSecurityManager
-
-import helpers
-from layer import SilvaLayer, SilvaFunctionalLayer
-from layer import user_name, user_password, users, setUp, tearDown
-
-
-class ISilvaTestBlobs(Interface):
-    """This test needs blobs.
-    """
 
 class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
-    layer = SilvaLayer
 
-    _blob_dir = None
+    layer = SilvaLayer
 
     def assertSame(self, first, second, msg=None):
         """Assert that first is the same same object than second,
@@ -157,24 +145,6 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         self.beforeTearDown()
         self._clear(1)
 
-    def _app(self):
-        """Returns the app object for a test.
-        """
-        # Testing sucks and defined a STUPID quota of 1Mo. Change it
-        # to 32Mo. Add support for blob tests as well.
-        import Zope2
-        storage = DemoStorage(base=Zope2.DB._storage, quota=1<<25)
-        connection = ZODB.DB(storage).open()
-        if ISilvaTestBlobs.providedBy(self):
-            self._blob_dir = tempfile.mkdtemp('-blobs')
-            connection = ZODB.DB(BlobStorage(
-                    self._blob_dir, connection._storage)).open()
-        app = ZopeLite.app(connection)
-        sandbox.AppZapper().set(app)
-        app = utils.makerequest(app)
-        connections.register(app)
-        return app
-
     def _clear(self, call_close_hook=0):
         '''Clears the fixture.'''
         try:
@@ -188,12 +158,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
     def _close(self):
         '''Closes the ZODB connection.'''
         super(SilvaTestCase, self)._close()
-        if self._blob_dir:
-            shutil.rmtree(self._blob_dir)
-            self._blob_dir = None
 
-    def addObject(self, container, type_name, id, product='Silva',
-            **kw):
+    def addObject(self, container, type_name, id, product='Silva', **kw):
         getattr(container.manage_addProduct[product],
             'manage_add%s' % type_name)(id, **kw)
         # gives the new object a _p_jar ...
