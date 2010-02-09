@@ -24,7 +24,7 @@ class ZipFileExportAdapter(grok.Adapter):
         from zipfile import ZipFile, ZIP_DEFLATED
         from Products.Silva.silvaxml import xmlexport
         tempFile = TemporaryFile()
-        archive = ZipFile(tempFile, "wb", ZIP_DEFLATED)
+        archive = ZipFile(tempFile, "w", ZIP_DEFLATED)
 
         # export context to xml and add xml to zip
         if settings == None:
