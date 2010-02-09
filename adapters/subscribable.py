@@ -3,7 +3,7 @@
 # $Id$
 
 # Python
-import md5
+import hashlib
 import time, datetime
 
 # Zope 2
@@ -163,7 +163,7 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
         return token
 
     def _generateToken(self, *args):
-        s = md5.new()
+        s = hashlib.md5()
         for arg in args:
             s.update(arg)
         return s.hexdigest()
