@@ -3,7 +3,6 @@
 # $Id$
 
 from zope import component
-from zope.interface import implements
 from zope.interface.verify import verifyObject
 
 from zExceptions import BadRequest
@@ -17,7 +16,6 @@ from Products.Silva.tests import helpers, SilvaTestCase
 
 class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
 
-    implements(SilvaTestCase.ISilvaTestBlobs)
 
     def afterSetUp(self):
         """
