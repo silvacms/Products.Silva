@@ -315,7 +315,8 @@ class BlobFile(File):
 
     def _set_content_type(self, file, content_type=None):
         id  = getattr(file, 'filename', self.id)
-        blob_filename = self._file._p_blob_uncommitted or self._p_blob_committed
+        blob_filename = self._file._p_blob_uncommitted or \
+            self._file._p_blob_committed
         self._content_type = MAGIC.guess(
             id=id,
             filename=blob_filename,
