@@ -6,7 +6,7 @@
 import urllib
 
 # Zope
-from zope.app.component.interfaces import ISite
+from zope.location.interfaces import ISite
 from zExceptions import BadRequest
 
 # Silva core
