@@ -77,6 +77,7 @@ class Member(Persistent, Acquisition.Implicit):
 
 InitializeClass(Member)
 
+
 class CachedMember(Persistent, Acquisition.Implicit):
     """A member object returned by cloneMember
     """
@@ -148,6 +149,8 @@ class CachedMember(Persistent, Acquisition.Implicit):
     def meta_type(self):
         """Return meta_type of user object."""
         return self._meta_type
+
+InitializeClass(CachedMember)
 
 
 class NoneMember(Persistent, Acquisition.Implicit):
