@@ -315,9 +315,10 @@ class BlobFile(File):
 
     def _set_content_type(self, file, content_type=None):
         id  = getattr(file, 'filename', self.id)
+        blob_filename = self._file._p_blob_uncommitted or self._p_blob_committed
         self._content_type = MAGIC.guess(
             id=id,
-            filename=self._file._current_filename(),
+            filename=blob_filename,
             default=content_type)
         if self._content_type == 'text/plain':
             self._content_type = 'text/plain; charset=utf-8'
