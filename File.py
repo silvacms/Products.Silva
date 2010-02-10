@@ -13,13 +13,13 @@ from cStringIO import StringIO
 logger = logging.getLogger('silva.file')
 
 # Zope 3
-from zope import component, schema
-from zope.interface import implements, Interface, directlyProvides
-from zope.app.component.interfaces import ISite
-from zope.app.schema.vocabulary import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.schema.fieldproperty import FieldProperty
 from ZODB import blob
+from zope import component, schema
+from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.interface import implements, Interface, directlyProvides
+from zope.location.interfaces import ISite
+from zope.schema.fieldproperty import FieldProperty
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from five import grok
 
