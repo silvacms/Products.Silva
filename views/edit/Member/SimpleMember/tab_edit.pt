@@ -19,7 +19,8 @@
 <div class="feedback"
   tal:attributes="class python:message_type == 'feedback' and 'fixed-feedback' or (message_type == 'error' and 'fixed-alert' or 'fixed-clear');
       style python:(message_type != 'feedback' and message_type != 'error') and 'background-image: url(%s/globals/skyrise.gif)'%container.get_root_url() or None">
-  <span tal:replace="structure python: (message == '' or message == None) and '&nbsp;' or message">message</span>
+  <!-- Next line is broken. It's commenting, all this template shall be rebuilt -->
+  <!-- <span tal:replace="structure python: (message == '' or message == None) and '&nbsp;' or message.encode('ascii', 'replace')">message</span> -->
 </div>
 
 <script type="text/javascript"
