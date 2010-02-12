@@ -241,6 +241,9 @@ InitializeClass(Publication)
 
 
 class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
+    """This form let enable (or disable) a Publication as a local
+    site.
+    """
 
     grok.implements(silvaz3cforms.INoCancelButton)
     grok.name('tab_localsite')
