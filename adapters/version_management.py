@@ -1,9 +1,13 @@
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from datetime import datetime, timedelta
 
 from zope.interface import implements
-import Globals
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from App.class_init import InitializeClass
 from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
@@ -11,13 +15,14 @@ from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
-
 from silva.core.interfaces.adapters import IVersionManagement
 from silva.core.interfaces import IVersion
 from silva.translations import translate as _
 
+
 module_security = ModuleSecurityInfo(
     'Products.Silva.adapters.version_management')
+
 
 class VersionManagementAdapter(adapter.Adapter):
     """Adapter to manage Silva versions"""
@@ -293,10 +298,13 @@ class VersionManagementAdapter(adapter.Adapter):
     def _createUniqueId(self):
         return self.context.get_new_version_id()
 
-Globals.InitializeClass(VersionManagementAdapter)
+
+InitializeClass(VersionManagementAdapter)
+
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('getVersionManagementAdapter')
+
 
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getVersionManagementAdapter')

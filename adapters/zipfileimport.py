@@ -6,8 +6,8 @@ from StringIO import StringIO
 from zope.interface import implements
 
 # Zope
-import Globals
 from AccessControl import ClassSecurityInfo, allow_module
+from App.class_init import InitializeClass
 
 # Silva
 from silva.core import interfaces as silva_interfaces
@@ -73,7 +73,7 @@ class ZipfileImportAdapter(adapter.Adapter):
                succeeded.append(id)
         return succeeded, failed
 
-Globals.InitializeClass(ZipfileImportAdapter)
+InitializeClass(ZipfileImportAdapter)
 
 allow_module('Products.Silva.adapters.zipfileimport')
 

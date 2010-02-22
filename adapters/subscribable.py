@@ -7,10 +7,10 @@ import hashlib
 import time, datetime
 
 # Zope 2
-import Globals
-import Acquisition
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, allow_module
+from App.class_init import InitializeClass
 from BTrees.OOBTree import OOBTree
+import Acquisition
 
 # Silva
 from silva.core import interfaces
@@ -188,7 +188,8 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
             return True
         return False
 
-Globals.InitializeClass(Subscribable)
+
+InitializeClass(Subscribable)
 
 
 class SubscribableContainer(Subscribable):

@@ -8,8 +8,8 @@ from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
 from zope.interface import implements
 from zope.publisher.browser import BrowserLanguages
 
-import Globals
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from App.class_init import InitializeClass
 from DateTime import DateTime
 
 from Products.Silva.adapters import adapter
@@ -69,7 +69,7 @@ class LanguageProvider(adapter.Adapter):
         if language_variant is not None:
             name = name + ' (%s)' % language_variant
         return name
-    
+
     def _setupLocale(self):
         request = self.context.REQUEST
         # we already got it set up
@@ -78,7 +78,7 @@ class LanguageProvider(adapter.Adapter):
         # request doesn't have locale in Zope 2; this code should
         # ideally move somewhere into Five
         from zope.i18n.locales import locales, LoadLocaleError
-        
+
         langs = IUserPreferredLanguages(request).getPreferredLanguages()
         for httplang in langs:
             parts = (httplang.split('-') + [None, None])[:3]
@@ -91,8 +91,8 @@ class LanguageProvider(adapter.Adapter):
         else:
             # No combination gave us an existing locale, so use the default,
             # which is guaranteed to exist
-            request.locale = locales.getLocale(None, None, None)        
-        
+            request.locale = locales.getLocale(None, None, None)
+
     security.declarePublic('setPreferredLanguage')
     def setPreferredLanguage(self, language):
         response = self.context.REQUEST.RESPONSE
@@ -102,9 +102,9 @@ class LanguageProvider(adapter.Adapter):
             response.expireCookie('silva_language', path=path)
             return
         response.setCookie(
-            'silva_language', language, 
+            'silva_language', language,
             path=path, expires=(DateTime()+365).rfc822())
-    
+
     security.declarePublic('getPreferredLanguage')
     def getPreferredLanguage(self):
         try:
@@ -112,8 +112,10 @@ class LanguageProvider(adapter.Adapter):
                 self.context.REQUEST).getPreferredLanguages()[0]
         except IndexError:
             return None
-    
-Globals.InitializeClass(LanguageProvider)
+
+
+InitializeClass(LanguageProvider)
+
 
 # somehow we could access this from a python script before, but
 # not anymore.. Add in some voodoo code to make it possible again

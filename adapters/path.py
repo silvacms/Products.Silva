@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from urlparse import urlparse
 
 # Zope 3
@@ -5,10 +9,7 @@ from zope.interface import implements
 from zope.publisher.interfaces.http import IHTTPRequest
 
 from AccessControl import ModuleSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
 from Products.Silva import SilvaPermissions
 
@@ -194,7 +195,10 @@ class PathAdapter(component.Adapter):
         if frag:
             path += frag
         return path
+
+
 InitializeClass(PathAdapter)
+
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('getPathAdapter')

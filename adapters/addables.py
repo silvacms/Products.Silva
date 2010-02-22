@@ -4,10 +4,12 @@
 
 from five import grok
 
-import Globals
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
+from App.class_init import InitializeClass
+
 from Products.Silva import SilvaPermissions
 from silva.core import interfaces
+
 
 class BaseAddablesAdapter(grok.Adapter):
 
@@ -43,7 +45,8 @@ class AddablesAdapter(BaseAddablesAdapter):
     def setAddables(self, addables):
         """set the the Metatypes that are addable to this container."""
         self.context.__addables__ = addables
-Globals.InitializeClass(AddablesAdapter)
+
+InitializeClass(AddablesAdapter)
 
 class ContainerAddablesAdapter(BaseAddablesAdapter):
 
@@ -59,7 +62,8 @@ class ContainerAddablesAdapter(BaseAddablesAdapter):
     def setAddables(self, addables):
         """set the the Metatypes that are addable to this container."""
         self.context.set_silva_addables_allowed_in_container(addables)
-Globals.InitializeClass(ContainerAddablesAdapter)
+
+InitializeClass(ContainerAddablesAdapter)
 
 class RootAddablesAdapter(ContainerAddablesAdapter):
 
@@ -74,7 +78,8 @@ class RootAddablesAdapter(ContainerAddablesAdapter):
         if addables is not None:
             return addables
         return self.get_silva_addables_all()
-Globals.InitializeClass(RootAddablesAdapter)
+
+InitializeClass(RootAddablesAdapter)
 
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.addables')

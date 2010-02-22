@@ -4,13 +4,14 @@
 
 # Zope
 import AccessControl
-import Globals
+from App.class_init import InitializeClass
 import Products
 
 # Silva
 from Products.Silva.adapters import adapter
 from silva.core import interfaces
 from silva.core.views.interfaces import IPreviewLayer
+
 
 module_security = AccessControl.ModuleSecurityInfo(
     'Products.Silva.adapters.tocrendering')
@@ -177,7 +178,9 @@ class TOCRenderingAdapter(adapter.Adapter):
                 depth -= 1
         return '\n'.join(html)
 
-Globals.InitializeClass(TOCRenderingAdapter)
+
+InitializeClass(TOCRenderingAdapter)
+
 
 def __allow_access_to_unprotected_subobjects__(name,value=None):
     return name in ('getTOCRenderingAdapter','compute_default_show_types')
