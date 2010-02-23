@@ -29,6 +29,7 @@ from App.class_init import InitializeClass
 from OFS.interfaces import IObjectWillBeRemovedEvent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from webdav.common import rfc1123_date
+from ZPublisher.Iterators import IStreamIterator
 
 # Silva
 from Products.Silva import mangle
@@ -66,6 +67,38 @@ from z3c.form import field
 CHUNK_SIZE = 4092
 DEFAULT_MIMETYPE = 'application/octet-stream'
 MAGIC = MagicGuess()
+
+
+class FDIterator(object):
+    """This object provides an iterator on file descriptors.
+    """
+    grok.implements(IStreamIterator)
+
+    def __init__(self, fd, size=None, close=True):
+        if size is None:
+            position = fd.tell()
+            fd.seek(0, 2)
+            size = fd.tell()
+            fd.seek(position, 0)
+        self.__size = size
+        self.__fd = fd
+        self.__close = close
+
+    def len(self):
+        return self.__size
+
+    __len__ = len
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        data = self.__fd.read(CHUNK_SIZE)
+        if not data:
+            if self.__close:
+                self.__fd.close()
+            raise StopIteration
+        return data
 
 
 def manage_addFile(self, id, title=None, file=None):
@@ -400,13 +433,7 @@ class BlobFileView(silvaviews.View):
             'Accept-Ranges', None)
 
     def render(self):
-        desc = self.context.get_content_fd()
-        data = desc.read(CHUNK_SIZE)
-        while data:
-            self.response.write(data)
-            data = desc.read(CHUNK_SIZE)
-        desc.close()
-        return ''
+        return FDIterator(self.context.get_content_fd())
 
 
 class FileSystemFile(File):
