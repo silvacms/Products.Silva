@@ -30,14 +30,14 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
 
     layer = SilvaLayer
 
-    def assertHashEquals(self, s1, s2, reason=None):
+    def assertHashEquals(self, s1, s2, msg=None):
         """Assert the hash values of two strings are the same. It is
         commonly used to compare two large strings.
         """
         h1 = hashlib.md5(s1)
         h2 = hashlib.md5(s2)
-        reason = reason or 'hashes are different.'
-        self.assertEquals(h1.hexdigest(), h2.hexdigest(), reason)
+        msg = msg or 'string hashes are different.'
+        self.assertEquals(h1.hexdigest(), h2.hexdigest(), msg)
 
     def assertSame(self, first, second, msg=None):
         """Assert that first is the same same object than second,
