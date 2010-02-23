@@ -16,6 +16,7 @@ from Products.Silva.tests.layer import user_name, user_password
 from Products.Silva.tests.layer import users, setUp, tearDown
 
 from StringIO import StringIO
+import hashlib
 
 user_manager = 'manager'
 user_chiefeditor = 'chiefeditor'
@@ -28,6 +29,15 @@ user_dummy = 'dummy'
 class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
 
     layer = SilvaLayer
+
+    def assertHashEquals(self, s1, s2, reason=None):
+        """Assert the hash values of two strings are the same. It is
+        commonly used to compare two large strings.
+        """
+        h1 = hashlib.md5(s1)
+        h2 = hashlib.md5(s2)
+        reason = reason or 'hashes are different.'
+        self.assertEquals(h1.hexdigest(), h2.hexdigest(), reason)
 
     def assertSame(self, first, second, msg=None):
         """Assert that first is the same same object than second,

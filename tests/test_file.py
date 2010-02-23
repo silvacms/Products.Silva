@@ -5,8 +5,8 @@
 from zope import component
 from zope.interface.verify import verifyObject
 
-import SilvaTestCase
-import helpers
+from Products.Silva.tests import SilvaTestCase
+from Products.Silva.tests import helpers
 
 from silva.core import interfaces
 from Products.Silva import File
@@ -32,11 +32,11 @@ class FileTest(SilvaTestCase.SilvaFileTestCase):
         self.failUnless(file.tag() is not None)
 
         component.queryMultiAdapter((file, file.REQUEST), name='index')()
-        self.assertEqual(file_data, self.get_request_data())
+        self.assertHashEquals(file_data, self.get_request_data())
 
         assetdata = interfaces.IAssetData(file)
         self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
-        self.assertEquals(file_data, assetdata.getData())
+        self.assertHashEquals(file_data, assetdata.getData())
 
 
     def test_file_blob(self):
