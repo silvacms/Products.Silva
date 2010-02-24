@@ -20,6 +20,7 @@ from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.references.schema import Reference
 from silva.translations import translate as _
 
 
@@ -67,10 +68,19 @@ InitializeClass(LinkVersion)
 
 class ILinkFields(interface.Interface):
 
+    relative = schema.Bool(
+        title=_(u"Relative link"),
+        default=False,
+        required=True)
+
     url = schema.URI(
         title=_(u"url"),
         description=_(u"Link url. Links can contain anything, so it is the author's responsibility to create valid urls."),
-        required=True)
+        required=False)
+
+    target = Reference(
+        title=_("Target of relative link"),
+        required=False)
 
 
 class LinkAddForm(silvaz3cforms.AddForm):
