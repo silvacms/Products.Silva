@@ -37,10 +37,10 @@ from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.conf.utils import getSilvaViewFor
-from silva.core.layout.interfaces import ISMILayer
 from silva.core.layout.utils import queryMultiAdapterWithInterface
-from silva.core.views.interfaces import IPreviewLayer
 from silva.core.services.interfaces import ICataloging
+from silva.core.smi.interfaces import ISMILayer
+from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
 from silva.core.interfaces import (

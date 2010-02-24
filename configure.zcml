@@ -13,6 +13,7 @@
   <include package="silva.core.smi" />
   <include package="silva.core.services" />
   <include package="silva.core.upgrade" />
+  <include package="silva.core.references" />
   <include package="silva.translations" />
 
   <include package="Products.SilvaMetadata" />

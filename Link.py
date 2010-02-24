@@ -69,7 +69,7 @@ InitializeClass(LinkVersion)
 class ILinkFields(interface.Interface):
 
     relative = schema.Bool(
-        title=_(u"Relative link"),
+        title=_(u"relative link"),
         default=False,
         required=True)
 
@@ -79,7 +79,7 @@ class ILinkFields(interface.Interface):
         required=False)
 
     target = Reference(
-        title=_("Target of relative link"),
+        title=_("target of relative link"),
         required=False)
 
 
