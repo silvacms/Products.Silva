@@ -795,6 +795,8 @@ input.button, button.button, input.manipulator {
   background-position: top left;
   background-repeat: repeat-x;
   cursor: pointer;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 
 /* used in conflict situations where public view css would win */
