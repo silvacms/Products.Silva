@@ -25,7 +25,7 @@
     mangle modules/Products/Silva/mangle;
 ">
 <head>
-  <tal:block replace="structure request/model/@@set_content_type_and_nocache" />
+  <tal:block replace="structure request/model/set_content_type_and_nocache" />
 <title tal:content="title">
   Title
 </title>
