@@ -31,7 +31,7 @@ class ImageTestHelper(object):
         return getattr(self.root, 'testimage.tif'), image_data
 
 
-class ImageTest(SilvaTestCase.SilvaFileTestCase, ImageTestHelper):
+class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
 
     def test_badimage(self):
         image_file = StringIO('invalid-image-format')

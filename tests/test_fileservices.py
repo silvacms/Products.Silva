@@ -14,12 +14,11 @@ from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
 from Products.Silva.tests import helpers, SilvaTestCase
 
 
-class FileServicesTest(SilvaTestCase.SilvaFileTestCase):
+class FileServicesTest(SilvaTestCase.SilvaTestCase):
 
 
     def afterSetUp(self):
-        """
-        Test content structure:
+        """Test content structure:
 
         root/service_files (by default)
         root/folder1
