@@ -69,8 +69,6 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         """
         response = http('HEAD /root/testfile HTTP/1.1')
         headers = response.header_output.headers
-        self.assertEquals(len(downloaded_data), self.file_size)
-        self.assertHashEquals(downloaded_data, self.file_data)
         self.assertEquals(headers['Content-Length'], 0)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(
