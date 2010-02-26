@@ -6,7 +6,6 @@
 from Acquisition import aq_base
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager, getSecurityManager
-from Testing.ZopeTestCase import utils
 from Testing import ZopeTestCase
 import transaction
 import zope.component.eventtesting
@@ -15,7 +14,6 @@ from Products.Silva.tests.layer import SilvaLayer, SilvaFunctionalLayer
 from Products.Silva.tests.layer import user_name, user_password
 from Products.Silva.tests.layer import users, setUp, tearDown
 
-from StringIO import StringIO
 import hashlib
 
 user_manager = 'manager'
@@ -140,7 +138,7 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
             self.silva = self.root = self.getRoot()
             self.catalog = self.silva.service_catalog
             self.login()
-            self.app.REQUEST.AUTHENTICATED_USER=\
+            self.app.REQUEST.AUTHENTICATED_USER = \
                 self.app.acl_users.getUser(ZopeTestCase.user_name)
             self.afterSetUp()
         except:
@@ -232,7 +230,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         return self.addObject(object, 'File', id, title=title, **kw)
 
     def add_find(self, object, id, title):
-        return self.addObject(object, 'SilvaFind', id, title=title, product='SilvaFind')
+        return self.addObject(
+            object, 'SilvaFind', id, title=title, product='SilvaFind')
 
     def get_events(self, event_type=None, filter=None):
         """Return events that were fired since the beginning of the
@@ -244,28 +243,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         zope.component.eventtesting.clearEvents()
 
 
-class SilvaFileTestCase(SilvaTestCase):
-    """Test case which keep the result of the request (to test files).
-    """
-
-    def _app(self):
-        app = super(SilvaFileTestCase, self)._app()
-        self.request_out = StringIO()
-        return utils.makerequest(app.aq_base, self.request_out)
-
-    def get_request_data(self):
-        content = self.request_out.getvalue()
-        self.request_out.seek(0)
-        self.request_out.truncate()
-        if content.startswith('Status: 200'):
-            content = content[content.find('\r\n\r\n')+4:]
-        return content
-
-
 class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
     """Base class for functional tests.
     """
 
     layer = SilvaFunctionalLayer
-
-

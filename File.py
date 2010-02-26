@@ -74,29 +74,22 @@ class FDIterator(object):
     """
     grok.implements(IStreamIterator)
 
-    def __init__(self, fd, size=None, close=True):
-        if size is None:
-            position = fd.tell()
-            fd.seek(0, 2)
-            size = fd.tell()
-            fd.seek(position, 0)
-        self.__size = size
+    def __init__(self, fd, close=True):
         self.__fd = fd
         self.__close = close
-
-    def len(self):
-        return self.__size
-
-    __len__ = len
+        self.__closed = False
 
     def __iter__(self):
         return self
 
     def next(self):
+        if self.__closed:
+            raise StopIteration
         data = self.__fd.read(CHUNK_SIZE)
         if not data:
             if self.__close:
                 self.__fd.close()
+                self.__closed = True
             raise StopIteration
         return data
 
@@ -426,6 +419,8 @@ class BlobFileView(silvaviews.View):
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
             'Content-Type', self.context.content_type())
+        self.response.setHeader(
+            'Content-Length', self.context.get_file_size())
         self.response.setHeader(
             'Last-Modified',
             rfc1123_date(self.context.get_modification_datetime()))
