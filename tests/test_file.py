@@ -61,18 +61,18 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertHashEquals(downloaded_data, self.file_data)
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
-        self.assertEquals(
-            headers['Content-Disposition'], 'inline;filename=testfile')
+        self.assertEquals(headers['Content-Disposition'],
+                          'inline;filename=testfile')
 
     def test_head_request(self):
         """Test HEAD requests on Files.
         """
         response = http('HEAD /root/testfile HTTP/1.1')
         headers = response.header_output.headers
-        self.assertEquals(headers['Content-Length'], 0)
+        self.assertEquals(headers['Content-Length'], '0')
         self.assertEquals(headers['Content-Type'], 'image/tiff')
-        self.assertEquals(
-            headers['Content-Disposition'], 'inline;filename=testfile')
+        self.assertEquals(headers['Content-Disposition'],
+                          'inline;filename=testfile')
 
     def test_assetdata(self):
         """Test asset data adapter implementation.
