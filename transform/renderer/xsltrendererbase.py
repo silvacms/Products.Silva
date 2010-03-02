@@ -2,23 +2,21 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
-from lxml import etree
 from StringIO import StringIO
+from lxml import etree
+import os
 import threading
 
 from zope.interface import implements
 
 # Zope
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva.transform.interfaces import IRenderer, IXMLSource
 from silva.core import conf as silvaconf
+
 
 class ErrorHandler(object):
     def __init__(self):
@@ -30,6 +28,7 @@ class ErrorHandler(object):
     def getErrorText(self):
         return self._error_text
 
+
 class ImportResolver(etree.Resolver):
     def __init__(self, import_dir):
         self.import_dir = import_dir
@@ -37,6 +36,7 @@ class ImportResolver(etree.Resolver):
     def resolve(self, url, id, context):
         if url.startswith("silvabase:"):
             return self.resolve_filename(self.import_dir + url[10:], context)
+
 
 class XSLTRendererBase(object):
 

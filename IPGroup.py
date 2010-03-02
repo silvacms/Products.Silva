@@ -1,19 +1,18 @@
 # Copyright (c) 2003-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
+
 from zope.interface import implements
 
+# Zope
 from AccessControl import ClassSecurityInfo, Unauthorized
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-# Silva
-import SilvaPermissions
 
-from Group import BaseGroup, manage_addGroupUsingFactory
+# Silva
+from Products.Silva import SilvaPermissions
+from Products.Silva.Group import BaseGroup, manage_addGroupUsingFactory
+
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 

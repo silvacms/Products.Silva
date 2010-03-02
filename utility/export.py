@@ -11,6 +11,7 @@ from silva.core.interfaces.adapters import IContentExporter, \
     IDefaultContentExporter
 from Products.Silva.utility.interfaces import IExportUtility
 
+
 class ExportUtility(grok.GlobalUtility):
     """Utility to manage export.
     """

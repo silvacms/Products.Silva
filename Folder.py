@@ -7,14 +7,10 @@ from zope.i18n import translate
 from zope.deprecation import deprecation
 
 # Zope
-from OFS.Folder import Folder as BaseFolder
 from AccessControl import ClassSecurityInfo, getSecurityManager
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
+from OFS.Folder import Folder as BaseFolder
 from OFS.Uninstalled import BrokenClass
 
 # Silva

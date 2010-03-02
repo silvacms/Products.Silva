@@ -8,14 +8,10 @@ import urllib
 from smtplib import SMTPException
 
 # Zope
+from AccessControl import ClassSecurityInfo
+from App.class_init import InitializeClass
 from OFS import Folder
 from OFS.CopySupport import _cb_encode, _cb_decode
-from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # Silva
@@ -25,15 +21,15 @@ from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
 from Products.Silva.adapters import subscribable
 from Products.Silva.mail import sendmail
-from silva.core.interfaces import IHaunted
 
+from silva.core.interfaces import IHaunted
 from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
+
 
 class SubscriptionService(Folder.Folder, SilvaService):
     """Subscription Service
     """
-
     security = ClassSecurityInfo()
 
     meta_type = "Silva Subscription Service"

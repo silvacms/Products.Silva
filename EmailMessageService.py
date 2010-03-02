@@ -2,17 +2,20 @@
 # See also LICENSE.txt
 # $Id$
 
-#python
-import sys, string, smtplib
+# Python
+import logging
+import smtplib
+import string
+import sys
 
 from zope.interface import implements
 
-# zope
+# Zope
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals, zLOG
+from App.class_init import InitializeClass
 
-# silva
+# Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.helpers import add_and_edit
 
@@ -25,6 +28,9 @@ from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.services.base import SilvaService
 from silva.translations import translate as _
+
+
+logger = logging.getLogger('silva.email')
 
 
 class EmailMessageService(SilvaService):
@@ -205,10 +211,11 @@ class EmailMessageService(SilvaService):
         # as this line is not reached. bug or feature ?
         self._v_messages = {}
 
-    def _debug_log(self, message, details=''):
+    def _debug_log(self, message):
         """ simple helper for logging """
+        # XXX logger.debug should be used directly instead of this
         if self._debug:
-            zLOG.LOG('Silva messages', zLOG.INFO, message, details)
+            logger.debug(message)
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
@@ -268,19 +275,18 @@ class EmailMessageService(SilvaService):
                 if failures:
                     # next line raises KeyError if toaddr is no key
                     # in failures -- however this should not happen
-                    zLOG.LOG('Silva service_messages', zLOG.PROBLEM,
-                             'could not send mail to %s' % toaddr,
-                             details=('error[%s]: %s' % failures[toaddr]) )
+                    error = failures[toaddr]
+                    logger.error(
+                        'could not send mail to %s, error[%s]: %s' % (
+                            toaddr, error[0], error[1]))
 
-            except smtplib.SMTPException:
-                # XXX seems the documentation failes here
+            except smtplib.SMTPException, error:
                 # if e.g. connection is refused, this raises another
                 # kind of exception but smtplib.SMTPException
-                zLOG.LOG('Silva service_messages', zLOG.PROBLEM,
-                         'sending mail failed', sys.exc_info())
+                logger.error('sending mail failed %s' % repr(error))
 
 
-Globals.InitializeClass(EmailMessageService)
+InitializeClass(EmailMessageService)
 
 manage_addEmailMessageServiceForm = PageTemplateFile(
     "www/serviceEmailMessageServiceAdd", globals(),

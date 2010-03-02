@@ -6,20 +6,21 @@ from zope.interface import implements
 
 # zope
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
+from App.class_init import InitializeClass
 from DateTime import DateTime
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # silva
-from Security import Security
-from Membership import cloneMember, Member
-import SilvaPermissions
-import roleinfo
-from helpers import add_and_edit
+from Products.Silva import SilvaPermissions
+from Products.Silva import roleinfo
+from Products.Silva.Membership import cloneMember, Member
+from Products.Silva.Security import Security
+from Products.Silva.helpers import add_and_edit
 
 from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
+
 
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
@@ -134,7 +135,7 @@ class SimpleMember(Member, Security, ZMIObject):
             return 'field editor'
 
 
-Globals.InitializeClass(SimpleMember)
+InitializeClass(SimpleMember)
 
 manage_addSimpleMemberForm = PageTemplateFile(
     "www/simpleMemberAdd", globals(),
@@ -262,7 +263,7 @@ class SimpleMemberService(SilvaService):
         REQUEST.RESPONSE.redirect(REQUEST.URL2 + '/edit/logout')
 
 
-Globals.InitializeClass(SimpleMemberService)
+InitializeClass(SimpleMemberService)
 
 manage_addSimpleMemberServiceForm = PageTemplateFile(
     "www/simpleMemberServiceAdd", globals(),

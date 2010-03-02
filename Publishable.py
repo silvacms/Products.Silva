@@ -7,25 +7,23 @@ from zope.interface import implements
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
-# Silva 
-import SilvaPermissions
+# Silva
+from Products.Silva import SilvaPermissions
 
-from silva.core.interfaces import (IPublishable, IContent, IVersioning, 
+from silva.core.interfaces import (IPublishable, IContent, IVersioning,
                                    IContainer, IPublication)
 
-class Publishable:
+
+class Publishable(object):
     """Mixin class that can be provided to implement the Publishable
     interface.
     """
     security = ClassSecurityInfo()
-        
+
     implements(IPublishable)
-        
+
     # ACCESSORS
 
     # FIXME: perhaps make this less public?
@@ -50,11 +48,11 @@ class Publishable:
         'is_deletable')
     def is_deletable(self):
         """is object deletable?
-        
+
             a publishable object is only deletable if
                 it's not published
                 it's not approved
-        
+
         """
         return not self.is_published() and not self.is_approved()
 
@@ -71,17 +69,17 @@ class Publishable:
         """Get the container, even if we're a container.
 
         If we're the root object, returns None.
-        
+
         Can be used with acquisition to get the 'nearest' container.
         """
-        return self.get_container() 
-    
+        return self.get_container()
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_document_navigation_links')
     def get_document_navigation_links(self):
         """
         Create a dictionary with top, up, first, previous, next, last links.
-        
+
         This can be used by Mozilla in the accessibility toolbar.
         """
         # we need get_real_container as we want the container
@@ -93,7 +91,7 @@ class Publishable:
 
         if IContent.providedBy(self) and self.is_default():
             return container.get_document_navigation_links()
-        
+
         result = { 'up': '..' }
         links = {}
         objects = []
@@ -102,7 +100,7 @@ class Publishable:
         top = self.get_publication()
         if top is not self:
             result['top'] = top#.absolute_url()
-            
+
         tree = container.get_public_tree(0)
         for depth, obj in tree:
             if obj.meta_type == 'Silva AutoTOC':
@@ -111,10 +109,10 @@ class Publishable:
                 continue
             object_ids.append(obj.id)
             objects.append(obj)
-       
+
         # something bad happens
         # could be, that we're calling this method from an Indexer, so
-        # return nothing 
+        # return nothing
         try:
             i = object_ids.index(self.id)
         except ValueError:
@@ -136,7 +134,7 @@ class Publishable:
 
         for key, value in links.items():
             links[key] = objects[value]#.absolute_url()
-            
+
         result.update(links)
         return result
 
@@ -145,25 +143,25 @@ class Publishable:
     def get_navigation_links(self):
         """
         Create a dictionary with top, up, first, previous, next, last links.
-        
+
         This can be used by Mozilla in the accessibility toolbar.
         """
-        
+
         top = self.get_publication()
         result = {}
         next = self.get_navigation_next()
         prev = self.get_navigation_prev()
         last = self.get_navigation_last()
-        
+
         if top is not self:
             result['top'] = top
             result['first'] = top
             result['up'] = ".."
-        
+
 
         if last.id != self.id:
             result['last'] = last
-        
+
         if next is not None:
             result['next'] = next
 
@@ -171,22 +169,22 @@ class Publishable:
             result['prev'] = prev
 
         return result
-    
+
 
     def get_navigation_prev(self):
         """ Returns the prev object in the publication tree """
         node = self
         top = self.get_publication()
-        
+
         if self is top:
             return None
-            
+
         while 1:
             if node is top:
                 return node
             if IContainer.providedBy(node):
                 container = node.aq_parent
-            container = node.aq_parent 
+            container = node.aq_parent
             #objects = container.get_public_tree(0)
             objects = container.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
@@ -196,19 +194,19 @@ class Publishable:
                 return container
 
             prev_i = i-1
-           
+
             # there is no previous in a folder, so check if node is a
             # folder or not
             if prev_i == -1:
                 return container
             elif prev_i >= 0 and IContainer.providedBy(objects[prev_i][1]):
                 return self._get_last_helper(objects[i-1][1])
-    
+
             if prev_i >= 0:
                 return objects[prev_i][1]
-            
+
             node = container
-    
+
     def get_navigation_next(self):
         """ Returns the next object in the Publication tree """
         node = self
@@ -218,11 +216,11 @@ class Publishable:
             objects = node.get_public_tree_helper(0)
             if objects:
                 return objects[0][1]
-        
+
         while 1:
             if self is top:
                 return None
-            
+
             container = node.aq_parent
             objects = node.get_public_tree_helper(0)
             object_ids = [object.id for depth, object in objects]
@@ -231,23 +229,23 @@ class Publishable:
             except ValueError:
                 if not object_ids:
                     self = node
-                    node = container 
+                    node = container
                     continue
                 else:
                     return objects[0][1]
-                    
+
 
             next_i = i+1
-            
+
             if next_i < len(objects):
                 return objects[next_i][1]
-            
+
             self = node
             node = container
-            
+
     def get_public_tree_helper(self, depth):
         """ wrapper method for get_public_tree()
-            returns the public tree without any publications 
+            returns the public tree without any publications
         """
         public_tree = []
         tree = self.get_public_tree(depth)
@@ -258,7 +256,7 @@ class Publishable:
                 public_tree.append(item)
 
         return public_tree
-            
+
     def get_navigation_last(self):
         """ Returns the last object in the publication tree """
         node = self.get_publication()
@@ -273,9 +271,9 @@ class Publishable:
             if IContainer.providedBy(node):
                 objects = node.get_public_tree(0)
                 if not objects:
-                    return node 
-                
+                    return node
+
                 node = objects[-1][1]
-        
-             
+
+
 InitializeClass(Publishable)

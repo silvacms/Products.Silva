@@ -6,25 +6,21 @@
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass # Zope 2.12
 
 # Silva
-from SilvaObject import SilvaObject
-from Publishable import Publishable
-import SilvaPermissions
+from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.Publishable import Publishable
+from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IContent
 from silva.core import conf as silvaconf
 
+
 class Content(Publishable, SilvaObject):
 
     silvaconf.baseclass()
-
     security = ClassSecurityInfo()
-
     implements(IContent)
 
     object_type = 'content'

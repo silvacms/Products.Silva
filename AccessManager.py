@@ -1,17 +1,18 @@
 from zope.interface import implements
 
+# Zope
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
+from App.class_init import InitializeClass
 
-import SilvaPermissions
+# Silva
+from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IAccessManager
 
-class AccessManager:
-    """Mixin class for objects to request local roles on the object"""
+
+class AccessManager(object):
+    """Mixin class for objects to request local roles on the object
+    """
 
     security = ClassSecurityInfo()
     implements(IAccessManager)
@@ -99,17 +100,21 @@ class AccessManager:
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'requested_roles')
     def requested_roles(self):
-        """Returns a list of (userid, role) tuples of all requested roles on this object"""
+        """Returns a list of (userid, role) tuples of all requested
+        roles on this object
+        """
         if not hasattr(self, '_requested_roles'):
             return []
         return self._requested_roles
 
-    # note the low security restriction on this method, this allows unauthenticated users to add
-    #   themselves to acl_users
+    # note the low security restriction on this method, this allows
+    # unauthenticated users to add themselves to acl_users
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'add_user')
     def add_user(self, userid, password):
-        """Adds the user to the userfolder. Note that the user will not get a memberobject using this method"""
+        """Adds the user to the userfolder. Note that the user will
+        not get a memberobject using this method
+        """
         if not hasattr(self, 'service_members') or not self.service_members.allow_authentication_requests():
             raise Exception, 'Requests for authentication to this site are not allowed.'
 

@@ -4,25 +4,22 @@
 
 from zope.interface import implements
 
+# Zope
 from AccessControl import ClassSecurityInfo, Unauthorized
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from App.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import OFS.interfaces
 
 # Silva
-from SilvaObject import SilvaObject
+from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
-import SilvaPermissions
-# misc
-from helpers import add_and_edit
+from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.helpers import add_and_edit
 
 from silva.core import interfaces
 from silva.core import conf as silvaconf
+
 
 class BaseGroup(SilvaObject, SimpleItem):
 

@@ -2,15 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
+from zope.interface import implements
+
 # Zope
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from zope.interface import implements
 
 # Silva
 from Products.Silva import SilvaPermissions

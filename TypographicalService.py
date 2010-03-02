@@ -4,11 +4,7 @@
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # Silva
@@ -30,12 +26,12 @@ _default_typo_chars = ['&#x20AC;',
                        '&#x2014;',
                        '&#x2013;',
                        '&#xB7;',
-                       '&#xA9;'
-                       ]
+                       '&#xA9;']
+
 
 class TypographicalService(SilvaService):
     """This service stores non-keyboard characters"""
-    
+
     security = ClassSecurityInfo()
     meta_type = 'Silva Typographical Characters Service'
 

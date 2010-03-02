@@ -2,20 +2,19 @@
 # See also LICENSE.txt
 # $Id$
 
+# Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
 from Acquisition import aq_base
+from App.class_init import InitializeClass
 
+# Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
 from silva.core.interfaces import IVersionedContent, IContent, IContainer
 
-class ViewCode:
+
+class ViewCode(object):
     """A mixin to expose view specific code to the pagetemplates
 
     The methods in this class were formerly Pythonscripts, but were

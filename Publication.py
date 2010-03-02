@@ -9,7 +9,7 @@ from five import grok
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.special_dtml import DTMLFile
-from Globals import InitializeClass
+from App.class_init import InitializeClass
 from zExceptions import BadRequest
 import Acquisition
 import transaction

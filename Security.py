@@ -1,11 +1,13 @@
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision$
+# $Id$
+
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
-from Globals import DevelopmentMode
 from DateTime import DateTime
+from Globals import DevelopmentMode
+
 # Silva
 from Products.Silva import roleinfo
 from Products.Silva import SilvaPermissions

@@ -4,9 +4,10 @@
 
 # Python
 import xmlrpclib
+
 # Zope
-import Globals
 from AccessControl import Permissions, ClassSecurityInfo
+from App.class_init import InitializeClass
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.Silva.helpers import add_and_edit
 
@@ -264,7 +265,7 @@ class DocmaService(SilvaService):
         else:
             return self.edit_tab(manage_tabs_message='Error deleting template')
 
-Globals.InitializeClass(DocmaService)
+InitializeClass(DocmaService)
 
 manage_addDocmaServiceForm = PageTemplateFile(
         'www/serviceDocmaAdd', globals(),
