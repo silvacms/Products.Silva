@@ -17,7 +17,6 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.SilvaObject import CatalogAwareBBB
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
@@ -168,7 +167,7 @@ class Version(SimpleItem):
 InitializeClass(Version)
 
 
-class CatalogedVersion(Version, CatalogAwareBBB):
+class CatalogedVersion(Version):
     """Base class for cataloged version objects"""
 
     grok.implements(ICatalogedVersion)

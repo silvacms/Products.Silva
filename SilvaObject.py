@@ -86,48 +86,7 @@ class Zope3ViewAttribute(ViewAttribute):
             return getattr(view, name, None)
 
 
-class CatalogAwareBBB(object):
-    """Backward compatibility code for object using index_object,
-    unindex_object and reindex_object.
-    This will be removed in Silva 2.3.
-    """
-    security = ClassSecurityInfo()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'index_object')
-    def index_object(self):
-        """Index code (BBB code).
-        """
-        warnings.warn('index_object will be removed in Silva 2.3. '
-                      'Please use ICataloging instead.',
-                      DeprecationWarning, stacklevel=2)
-        ICataloging(self.aq_inner).index()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'reindex_object')
-    def reindex_object(self):
-        """Reindex code (BBB code).
-        """
-        warnings.warn('reindex_object will be removed in Silva 2.3. '
-                      'Please use ICataloging instead.',
-                      DeprecationWarning, stacklevel=2)
-        ICataloging(self.aq_inner).reindex()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'unindex_object')
-    def unindex_object(self):
-        """Unindex code (BBB code).
-        """
-        warnings.warn('unindex_object will be removed in Silva 2.3. '
-                      'Please use ICataloging instead.',
-                      DeprecationWarning, stacklevel=2)
-        ICataloging(self.aq_inner).unindex()
-
-
-InitializeClass(CatalogAwareBBB)
-
-
-class SilvaObject(Security, ViewCode, CatalogAwareBBB):
+class SilvaObject(Security, ViewCode):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
