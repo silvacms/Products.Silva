@@ -7,6 +7,7 @@ from zope import interface, schema
 from five import grok
 
 import os.path
+import logging
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -14,7 +15,6 @@ from App.Common import package_home
 from App.class_init import InitializeClass
 from DateTime import DateTime
 import transaction
-import zLOG
 
 # Silva
 from Products.Silva.helpers import add_and_edit
@@ -26,8 +26,62 @@ from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.interfaces import ISilvaObject, IVersion, IContainer, IAsset
 from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import ICataloging
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
+
+
+logger = logging.getLogger('silva.core')
+
+
+def get_content_to_index(self, content):
+    """A generator to lazily get all the objects that need to be
+    indexed.
+        """
+    if ISilvaObject.providedBy(content):
+        # Version are indexed by the versioned content itself
+        yield content
+    if IContainer.providedBy(content):
+        for child in content.objectValues():
+            for content in get_content_to_reindex(child):
+                yield content
+
+
+def index_content(self, obj, reindex=False):
+    """Recursively index or index Silva Content.
+    """
+    for count, content in enumerate(get_content_to_index(obj)):
+        if count and count % 500 == 0:
+            transaction.commit()
+            logger.info('indexing: %d objects indexed' % count)
+        if reindex:
+            ICataloging(content).reindex()
+        else:
+            ICataloging(content).index()
+    logger.info('catalog indexing: %d objects indexed' % count)
+
+
+def compute_used_space(content):
+    """Recursively compute the used space by asset in the given content.
+    """
+    total = 0
+    if IContainer.providedBy(content):
+        used_space = 0
+        for obj in content.objectValues():
+            if ISilvaObject.providedBy(obj):
+                used_space += compute_used_space(obj)
+        content.used_space = used_space
+        total += used_space
+    elif IAsset.providedBy(content):
+        try:
+            total += content.reset_quota()
+        except (AttributeError, NotImplementedError):
+            # Well, not all asset respect its interface.
+            path = '/'.join(content.getPhysicalPath())
+            klass = str(content.__class__)
+            logger.error('bad asset object %s - %s' % (path, klass))
+    return total
+
 
 
 class ExtensionService(SilvaService):
@@ -127,7 +181,7 @@ class ExtensionService(SilvaService):
     security.declareProtected('View management screens',
                               'install_documentation')
     def install_documentation(self, status=None):
-        """Install the doucmentation.
+        """Install the documentation.
         """
         message = 'Documentation installed'
         try:
@@ -145,63 +199,18 @@ class ExtensionService(SilvaService):
         """
         root = self.get_root()
         root.service_catalog.manage_catalogClear()
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            'Cleared the catalog')
-        self._index(root)
+        logger.info('Catalog cleared.')
+        index_content(root)
         if status:
             return 'Catalog refreshed'
 
     security.declareProtected('View management screens',
                               'reindex_subtree')
     def reindex_subtree(self, path):
-        """reindexes a subtree
+        """reindexes a subtree.
         """
         root = self.get_root()
-        obj = root.unrestrictedTraverse(str(path))
-        self._reindex(obj)
-
-    def _reindex(self, obj):
-        """Reindex a silva object or version.
-        """
-        for i, object_to_index in enumerate(self._get_objects_to_reindex(obj)):
-            if i and i % 500 == 0:
-                transaction.get().commit()
-                zLOG.LOG(
-                    'Silva', zLOG.INFO,
-                    '%s objects reindexed' % str(i))
-            object_to_index.reindex_object()
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            'Catalog rebuilt. Total of %s objects reindexed' % str(i))
-
-    def _index(self, obj):
-        """index silva objects or versions.
-        """
-        for i, object_to_index in enumerate(self._get_objects_to_reindex(obj)):
-            if i and i % 500 == 0:
-                transaction.get().commit()
-                zLOG.LOG(
-                    'Silva', zLOG.INFO,
-                    '%s objects indexed' % str(i))
-            object_to_index.index_object()
-        zLOG.LOG(
-            'Silva', zLOG.INFO,
-            'Catalog rebuilt. Total of %s objects indexed' % str(i))
-
-    def _get_objects_to_reindex(self, obj):
-        """A generator to lazily get all the objects that need to be
-        reindexed."""
-        if ISilvaObject.providedBy(obj) and getattr(obj, 'index_object', None):
-            yield obj
-        elif IVersion.providedBy(obj) and getattr(obj, 'index_object', None):
-            if obj.version_status() != 'last_closed' and obj.version_status(
-                ) != 'closed' :
-                yield obj
-        if IContainer.providedBy(obj):
-            for child in obj.objectValues():
-                for obj in self._get_objects_to_reindex(child):
-                    yield obj
+        index_content(root.unrestrictedTraverse(str(path)), reindex=True)
 
     security.declareProtected('View management screens',
                               'disable_quota_subsystem')
@@ -250,31 +259,10 @@ class ExtensionService(SilvaService):
         root.service_metadata.addTypesMapping(types, setids)
         root.service_metadata.initializeMetadata()
 
-        def visitor(item):
-            total = 0
-            if IContainer.providedBy(item):
-                used_space = 0
-                for _, obj in item.objectItems():
-                    used_space += visitor(obj)
-                item.used_space = used_space
-                total += used_space
-            elif IAsset.providedBy(item):
-                try:
-                    total += item.reset_quota()
-                except (AttributeError, NotImplementedError):      # Well, not all asset
-                                            # respect its interface.
-                    path = '/'.join(item.getPhysicalPath())
-                    klass = str(item.__class__)
-                    zLOG.LOG('Silva quota', zLOG.WARNING,
-                             'bad asset object %s - %s' % (path, klass))
-            return total
-
-        root = self.get_root()
-        root.used_space = visitor(root)
+        root.used_space = compute_used_space(root)
         self._quota_enabled = True
         if status:
             return 'Quota sub-system enabled'
-
 
     # ACCESSORS
 
@@ -298,7 +286,9 @@ class ExtensionService(SilvaService):
         """
         return self._refresh_datetime
 
+
 InitializeClass(ExtensionService)
+
 
 def manage_addExtensionService(self, id, title='', REQUEST=None):
     """Add extension service."""
@@ -322,9 +312,10 @@ class IPartialUpgrade(interface.Interface):
 
 
 class PartialUpgradesForm(silvaviews.ZMIForm):
-
+    """From to partially upgrade a site. TO USE ONLY if you known what
+    you are doing.
+    """
     silvaconf.name('manage_partialUpgrade')
-
     form_fields = grok.Fields(IPartialUpgrade)
     description = _(u"Below you find a form that allows you to specify "
                     u"an object to upgrade, and which version the object "
@@ -349,16 +340,15 @@ class PartialUpgradesForm(silvaviews.ZMIForm):
 class IPartialReindex(interface.Interface):
     """Information needed to partially reindex a site.
     """
-
     path = schema.TextLine(
         title=_(u"Absolute path to reindex"),
         required=True)
 
 
 class PartialReindexForm(silvaviews.ZMIForm):
-
+    """From to partially reindex a part of the site.
+    """
     silvaconf.name('manage_partialReindex')
-
     form_fields = grok.Fields(IPartialReindex)
     description = _(u"Reindex a subtree of the site in the Silva Catalog."
                     u"For big trees this may take a long time.")
@@ -374,9 +364,9 @@ class PartialReindexForm(silvaviews.ZMIForm):
 
 
 class ManageExtensions(silvaviews.ZMIView):
-
+    """Form to activate, deactivate, refresh extensions.
+    """
     silvaconf.name('manage_extensions')
-
     status = None
 
     def update(self):
@@ -391,9 +381,12 @@ class ManageExtensions(silvaviews.ZMIView):
                 methods = ['install', 'uninstall', 'refresh']
                 for method in methods:
                     if method in self.request.form:
-                        self.status = getattr(self.context, method)(self.request.form['name'], status=True)
+                        self.status = getattr(self.context, method)(
+                            self.request.form['name'], status=True)
 
     def extensions(self):
+        """Return non-system extensions
+        """
         names = extensionRegistry.get_names()
         for name in names:
             extension = extensionRegistry.get_extension(name)
@@ -401,6 +394,8 @@ class ManageExtensions(silvaviews.ZMIView):
                 yield extension
 
     def system_extensions(self):
+        """Return system extensions
+        """
         names = extensionRegistry.get_names()
         for name in names:
             extension = extensionRegistry.get_extension(name)
