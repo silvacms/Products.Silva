@@ -6,7 +6,6 @@
 import urllib
 
 # Zope
-from zExceptions import BadRequest
 import zope.deferredimport
 from zope.location.interfaces import ISite
 
