@@ -8,7 +8,7 @@ from five import grok
 
 # Silva
 from silva.core.interfaces import IFile, ISilvaObject, \
-    IGhostContent, IGhostFolder, IIconRegistry
+    IGhostContent, IGhostFolder, IIconRegistry, IPublication
 
 
 class SilvaIcons(grok.DirectoryResource):
@@ -33,7 +33,7 @@ class IconRegistry(object):
             identifier = ('ghost', kind)
         elif IGhostFolder.providedBy(content):
             if content.get_link_status() == content.LINK_OK:
-                if content.implements_publication():
+                if IPublication.providedBy(content):
                     kind = 'publication'
                 else:
                     kind = 'folder'

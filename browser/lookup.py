@@ -2,30 +2,31 @@
 # See also LICENSE.txt
 # $Id$
 
-# from Products.Silva.i18n import translate as _
-
-# from silva.core.interfaces.adapters import IViewerSecurity
-# from Products.Silva.roleinfo import ASSIGNABLE_VIEWER_ROLES
-
+# Python
 from urlparse import urlparse
 import re
 
-from silva.core.interfaces import (IContent, IContainer, IAsset,
-                                   IPublishable, IGhostFolder, ISilvaObject)
+# Zope
+from Acquisition import aq_base
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Acquisition import aq_base
 from zExceptions import Redirect
+
+# Silva
 from Products.Silva import icon
+
+from silva.core.interfaces import (IContent, IContainer, IAsset,
+                                   IPublishable, IGhostFolder, ISilvaObject)
 
 strip_poss_re = re.compile('\&?possible_container=[^\&]*')
 repl_sel_path_re = re.compile('(\&?selected_path=)[^\&]*')
 
+
 class ObjectLookup(BrowserView):
-    """
-    View that allows browsing and searching for objects.
+    """View that allows browsing and searching for objects.
     """
     render_lookup = ViewPageTemplateFile('object_lookup.pt')
+
     def __call__(self):
         psp = self.request.get('possible_container',None)
         if psp:
@@ -54,11 +55,11 @@ class ObjectLookup(BrowserView):
                         #    already set?
                         qs += '&startpath=%s'%'/'.join(self.context.getPhysicalPath())
                     url += qs
-                    
+
                     self.request.RESPONSE.redirect(url,lock=1)
                     raise Redirect(url)
         return self.render_lookup()
-    
+
     def renderIcon(self, obj=None, meta_type='Unknown'):
         """Gets the icon for the object and wraps that in an image tag
         """
@@ -88,14 +89,14 @@ class ObjectLookup(BrowserView):
             return True
         #assume filter contains a list of meta types
         return (self.context.meta_type in filter)
-    
+
     def objectLookupGetObjects(self, filter=None, show_add=False):
         """Returns objects to be displayed for the lookup window
-            
-            filter: 'Asset', 'Content', a certain meta_type (string) or a 
+
+            filter: 'Asset', 'Content', a certain meta_type (string) or a
                         list of meta_types
 
-            show_add: whether or not to show the 'add' button (to add new 
+            show_add: whether or not to show the 'add' button (to add new
                         objects)
 
             returns a tuple with 5 values:
@@ -106,7 +107,7 @@ class ObjectLookup(BrowserView):
 
               assets - a list of assets (ordered by id)
 
-              addables - a list of meta_types that are allowed to be added 
+              addables - a list of meta_types that are allowed to be added
                         to the page
 
               visible_containers - Contains the list of containers that
@@ -123,46 +124,44 @@ class ObjectLookup(BrowserView):
         visible_containers = []
 
         filter = filter or []
-        
+
         if show_add and not IGhostFolder.providedBy(model):
             all_addables = model.get_silva_addables()
 
         if isinstance(filter, str):
             filter = filter.split("|")
-        
+
         if filter == ['Asset']:
             assets = model.get_assets()
             ordered_publishables = [
-                o for o in model.get_ordered_publishables() 
-                if o.implements_container()]
+                content for content in model.get_ordered_publishables()
+                if IContainer.providedBy(content)]
             visible_containers = ordered_publishables
             if show_add:
-                addables = [a['name'] for a in all_addables if 
-                                IAsset.implementedBy(
-                                    a['instance'])]
+                addables = [a['name'] for a in all_addables if
+                            IAsset.implementedBy(a['instance'])]
         elif filter == ['Content']:
             default = model.get_default()
             ordered_publishables = []
             if default:
                 ordered_publishables.append(default)
             ordered_publishables.extend(
-                [o for o in model.get_ordered_publishables() if 
-                    o.implements_content() or o.implements_container() ]
+                [content for content in model.get_ordered_publishables() if
+                 IContent.providedBy(content) or IContainer.providedBy(content)]
             )
             visible_containers = [
-                o for o in ordered_publishables if o.implements_container()]
+                content for content in ordered_publishables
+                if IContainer.providerBy(content)]
             if show_add:
                 addables = [a['name'] for a in all_addables if
-                                IContent.implementedBy(
-                                    a['instance'])]
+                            IContent.implementedBy(a['instance'])]
         elif filter == ['Container']:
             ordered_publishables = [
-                o for o in model.get_ordered_publishables() 
-                if o.implements_container()]
+                content for content in model.get_ordered_publishables()
+                if IContainer.providedBy(content)]
             if show_add:
-                addables = [a['name'] for a in all_addables if 
-                                IContainer.implementedBy(
-                                    a['instance'])]
+                addables = [a['name'] for a in all_addables if
+                            IContainer.implementedBy(a['instance'])]
         elif filter == ['Publishable']:
             default = model.get_default()
             ordered_publishables = []
@@ -171,10 +170,9 @@ class ObjectLookup(BrowserView):
             ordered_publishables.extend(model.get_ordered_publishables())
             if show_add:
                 addables = [a['name'] for a in all_addables if
-                                IPublishable.implementedBy(
-                                    a['instance'])]
+                            IPublishable.implementedBy(a['instance'])]
         else:
-            # get all objects using filter, then divide them the way they 
+            # get all objects using filter, then divide them the way they
             # should be returned
             if not filter or filter == ['']:
                 # return everything
@@ -189,15 +187,15 @@ class ObjectLookup(BrowserView):
                 defaultobj = model.get_default()
                 if defaultobj and defaultobj in objects:
                     default = defaultobj
-                for o in model.get_ordered_publishables():
-                    if o in objects:
-                        ordered_publishables.append(o)
-                    elif o.implements_container():
-                        ordered_publishables.append(o)
-                        visible_containers.append(o)
-                for o in model.get_assets():
-                    if o in objects:
-                        assets.append(o)
+                for content in model.get_ordered_publishables():
+                    if content in objects:
+                        ordered_publishables.append(content)
+                    elif IContainer.providedBy(content):
+                        ordered_publishables.append(content)
+                        visible_containers.append(content)
+                for content in model.get_assets():
+                    if content in objects:
+                        assets.append(content)
 
                 if show_add:
                     addables = [

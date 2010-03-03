@@ -6,14 +6,13 @@
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from DateTime import DateTime
-from Globals import DevelopmentMode
 
 # Silva
 from Products.Silva import roleinfo
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 from Products.Silva.AccessManager import AccessManager
-from silva.core.interfaces import IVersion
+from silva.core.interfaces import IVersion, IContainer, IRoot
 
 # Groups
 try:
@@ -24,11 +23,10 @@ try:
 except ImportError:
     groups_enabled = 0
 
-from silva.core.interfaces import IContainer, IRoot
-
 from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
+
 
 class SecurityError(Exception):
     """An error has been triggered by the security system.
@@ -327,8 +325,10 @@ class Security(AccessManager):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'sec_get_all_roles')
     def sec_get_all_roles(self, userid=None):
-        """Returns all roles the user has in this context.  If userid is None, then
-           return all roles for the currently logged in user."""
+        """Returns all roles the user has in this context.  If userid
+        is None, then return all roles for the currently logged in
+        user
+        """
         roles = []
         if not userid:
             user = getSecurityManager().getUser()
@@ -505,15 +505,5 @@ class Security(AccessManager):
             if not self.__ac_local_groups__.getMappings():
                 self.__ac_local_groups__ = None
 
-    # XXX where does this method belong? it needs to be accessible
-    # from page templates easily so i put it here
-    security.declarePublic('sec_in_development_mode')
-    def sec_in_development_mode(self):
-        """Returns true if the site is in development mode and user is
-        Manager.
-        """
-        is_manager = getSecurityManager().getUser().has_role(
-            ['Manager'], object=self)
-        return DevelopmentMode and is_manager
 
 InitializeClass(Security)

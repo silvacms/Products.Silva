@@ -458,61 +458,6 @@ class SilvaObject(Security, ViewCode):
         """
         return False
 
-    # these help the UI that can't query interfaces directly
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_publishable')
-    def implements_publishable(self):
-        return IPublishable.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_asset')
-    def implements_asset(self):
-        return IAsset.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_content')
-    def implements_content(self):
-        return IContent.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_container')
-    def implements_container(self):
-        return IContainer.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_publication')
-    def implements_publication(self):
-        return IPublication.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_root')
-    def implements_root(self):
-        return IRoot.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_versioning')
-    def implements_versioning(self):
-        return IVersioning.providedBy(self)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'implements_versioned_content')
-    def implements_versioned_content(self):
-        return IVersionedContent.providedBy(self)
-
-    security.declareProtected(
-        SilvaPermissions.ViewAuthenticated, 'security_trigger')
-    def security_trigger(self):
-        """This is equivalent to activate_security_hack(), however this
-        method's name is less, er, hackish... (e.g. when visible in error
-        messages and trace-backs).
-        """
-        # create a member implicitely, if not already there
-        #if hasattr(self.get_root(),'service_members'):
-        #    self.get_root().service_members.get_member(
-        #        self.REQUEST.AUTHENTICATED_USER.getId())
-
-
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'export_content')
     def export_content(self, export_format,
