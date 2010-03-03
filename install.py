@@ -24,10 +24,9 @@ from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
-from Products.Silva import File
 from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
-from Products.Silva import TypographicalService
+
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.
@@ -74,6 +73,7 @@ def add_fss_directory_view(obj, name, base, *args):
 
     # FSS should eat the path now and work correctly with it
     manage_addDirectoryView(obj, path, name)
+
 
 def installFromScratch(root):
     configureProperties(root)
@@ -123,16 +123,6 @@ def install(root):
     root.add_silva_addable_forbidden('Silva IP Group')
 
     configureContainerPolicies(root)
-
-    # install the renderer registry service
-    if not hasattr(root, 'service_renderer_registry'):
-        root.manage_addProduct['Silva'].manage_addRendererRegistryService(
-            'service_renderer_registry',
-            'Silva Renderer Registry Configuration')
-
-    #install the typochars service
-    if not hasattr(root,'service_typo_chars'):
-        TypographicalService.manage_addTypographicalService(root,'service_typo_chars')
 
     # try to install Kupu
     installKupu(root)
@@ -236,18 +226,35 @@ def configureViews(root):
     #  they will be installed later on)
     root.service_view_registry.set_trees(['Silva'])
 
+
 def configureMiscServices(root):
-    """Set up some services which did not fit elsewhere """
-    # add service_files if it doesn't exist
-    if not hasattr(root, 'service_files'):
-        File.manage_addFilesService(root, 'service_files',
-            'Silva Files Service')
-    # do the same for the sidebar service
-    if not hasattr(root, 'service_sidebar'):
-        root.manage_addProduct['Silva'] \
-            .manage_addSidebarService('service_sidebar',
-            'Silva Content Tree Navigation')
-    if not hasattr(root, 'service_toc_filter'):
+    """Set up required Services
+    """
+    factory = root.manage_addProduct['Silva']
+    installed_ids = root.objectIds()
+    # add service_files
+    if 'service_files' not in installed_ids:
+        factory.manage_addFilesService(
+            'service_files', 'Silva Files Service')
+    # add service_sidebar
+    if 'service_sidebar' not in installed_ids:
+        factory.manage_addSidebarService(
+            'service_sidebar', 'Silva Content Tree Navigation')
+    # add service_renderer_registry
+    if 'service_renderer_registry' not in installed_ids:
+        factory.manage_addRendererRegistryService(
+            'service_renderer_registry', 'Silva Renderer Registry')
+    # add service_typo_chars
+    if 'service_typo_chars' not in installed_ids:
+        factory.manage_addTypographicalService('service_typo_chars')
+
+    # add service_references
+    factory = root.manage_addProduct['silva.core.references']
+    if 'service_references' not in installed_ids:
+        factory.manage_addReferenceService(
+            'service_references', 'Silva References')
+
+    if 'service_toc_filter' not in installed_ids:
         filter_service = TOCFilterService()
         root._setObject(filter_service.id, filter_service)
     #add a cache manager for /globals, and anything else that
@@ -361,16 +368,16 @@ def configureMembership(root):
     """Install membership code into root.
     """
     # add member service and message service
-    ids = root.objectIds()
-    if 'service_members' not in ids:
-        root.manage_addProduct['Silva'].manage_addSimpleMemberService(
-            'service_members')
+    installed_ids = root.objectIds()
+    factory = root.manage_addProduct['Silva']
+    if 'service_members' not in installed_ids:
+        factory.manage_addSimpleMemberService('service_members')
 
-    if 'Members' not in ids:
+    if 'Members' not in installed_ids:
         root.manage_addFolder('Members')
 
-    if 'service_messages' not in ids:
-        root.manage_addProduct['Silva'].manage_addEmailMessageService(
+    if 'service_messages' not in installed_ids:
+        factory.manage_addEmailMessageService(
             'service_messages', 'Silva Message Service')
 
 # helpers to add various objects to the root from the layout directory
