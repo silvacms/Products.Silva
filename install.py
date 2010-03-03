@@ -18,9 +18,8 @@ from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
 from silva.core.interfaces import IRoot
 from silva.core.services.interfaces import ICataloging
 
-
-from Products.Silva.fssite import manage_addDirectoryView
-from Products.Silva.fssite import minimalpath, expandpath
+from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService
@@ -29,6 +28,7 @@ from Products.Silva import File
 from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import TypographicalService
+
 
 def add_fss_directory_view(obj, name, base, *args):
     """ add a FSS-DirectoryView object with lots of sanity checks.

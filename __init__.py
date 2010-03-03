@@ -6,6 +6,9 @@
 from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
+from Products.FileSystemSite.DirectoryView import registerDirectory, \
+    registerFileExtension
+from Products.FileSystemSite.FSImage import FSImage
 
 #set havePIL here, so the Image add screen can determine
 #allowed image filetypes, which are different depending
@@ -45,12 +48,6 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
-    # import FileSystemSite functionality
-    # (use CMFCore if FileSystemSite is not installed)
-    from Products.Silva.fssite import registerDirectory, registerFileExtension
-    from Products.Silva.fssite import FSImage
-    from Products.Silva.fssite import FSDTMLMethod
-    from Products.Silva.fssite import FSPageTemplate
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
 
