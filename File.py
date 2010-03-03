@@ -193,7 +193,6 @@ class File(Asset):
         'class' in the output tag to work around this.
         """
         src = self.get_download_url()
-        title = self.get_title_or_id()
         named = []
         tooltip = unicode(_('download'))
 

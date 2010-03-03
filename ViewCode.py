@@ -14,9 +14,8 @@ from Products.Silva import mangle, icon
 
 from silva.translations import translate as _
 from silva.core.interfaces import (
-    ISilvaObject, IPublishable, IAsset, IImage,
-    IContent, IContainer, IPublication, IRoot,
-    IVersioning, IVersionedContent, IFolder)
+    IPublishable, IAsset, IImage, IContent, IContainer, IPublication, IRoot,
+    IVersioning, IVersionedContent)
 
 
 class ViewCode(object):
@@ -70,8 +69,8 @@ class ViewCode(object):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'render_icon_by_meta_type')
     def render_icon_by_meta_type(self, meta_type):
-        """Renders an icon by meta type"""
-        instance = None
+        """Renders an icon by meta type
+        """
         if callable(self.all_meta_types):
             all = self.all_meta_types()
         else:
@@ -209,7 +208,7 @@ class ViewCode(object):
             info = {}
             ret.append(info)
 
-            info['indent'] = indent = item[0]
+            info['indent'] = item[0]
             info['id'] = mangle.String.truncate(obj.id, 22)
 
             # do not smash the smi because one object is broken

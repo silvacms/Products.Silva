@@ -18,9 +18,8 @@ from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
 from silva.core.interfaces import IRoot
 from silva.core.services.interfaces import ICataloging
 
-
-from Products.Silva.fssite import manage_addDirectoryView
-from Products.Silva.fssite import minimalpath, expandpath
+from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
+from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService

@@ -9,13 +9,16 @@ import AccessControl
 from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.Silva.helpers import makeContainerFilter
+from Products.FileSystemSite.DirectoryView import registerDirectory, \
+    registerFileExtension
+from Products.FileSystemSite.FSImage import FSImage
 
-#set havePIL here, so the Image add screen can determine
-#allowed image filetypes, which are different depending
-#on whether PIL is installed or not.  I don't like that
-#havePIL is also defined in Image.py, and here it's used
-#for the sole purpose of imported into untrusted pagetemplate
-#land.
+
+# set havePIL here, so the Image add screen can determine allowed
+# image filetypes, which are different depending on whether PIL is
+# installed or not.  I don't like that havePIL is also defined in
+# Image.py, and here it's used for the sole purpose of imported into
+# untrusted page template land.
 try:
     import PIL.Image
     havePIL = 1
@@ -48,24 +51,19 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 def initialize(context):
-    # import FileSystemSite functionality
-    # (use CMFCore if FileSystemSite is not installed)
-    from Products.Silva.fssite import registerDirectory, registerFileExtension
-    from Products.Silva.fssite import FSImage
-    from Products.Silva.fssite import FSDTMLMethod
-    from Products.Silva.fssite import FSPageTemplate
     # enable .ico support for FileSystemSite
     registerFileExtension('ico', FSImage)
 
     from Products.Silva.silvaxml import xmlexport
 
-    import install
-    import helpers # to execute the module_permission statements
-    import mangle, batch
+    from Products.Silva import install
+    # to execute the module_permission statements
+    from Products.Silva import helpers, mangle, batch
     from Products.Silva.ExtensionRegistry import extensionRegistry
 
-    import UnicodeSplitter # To make the splitter register itself
-    import Metadata
+    # To make the splitter register itself
+    from Products.Silva import UnicodeSplitter
+    from Products.Silva import Metadata
 
     # register the FileSystemSite directories
     registerDirectory('views', globals())

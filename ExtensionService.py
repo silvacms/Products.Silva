@@ -24,7 +24,7 @@ from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.interfaces import ISilvaObject, IVersion, IContainer, IAsset
+from silva.core.interfaces import ISilvaObject, IContainer, IAsset
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
 from silva.core.views import views as silvaviews
@@ -43,7 +43,7 @@ def get_content_to_index(self, content):
         yield content
     if IContainer.providedBy(content):
         for child in content.objectValues():
-            for content in get_content_to_reindex(child):
+            for content in get_content_to_index(child):
                 yield content
 
 

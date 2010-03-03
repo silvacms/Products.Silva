@@ -6,7 +6,6 @@
 import logging
 import smtplib
 import string
-import sys
 
 from zope.interface import implements
 

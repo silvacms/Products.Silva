@@ -1,21 +1,35 @@
-## try:
+# Copyright (c) 2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-from Products.FileSystemSite.DirectoryView import registerDirectory, \
-     registerFileExtension
-from Products.FileSystemSite.FSImage import FSImage
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
-from Products.FileSystemSite.utils import minimalpath, expandpath
-from Products.FileSystemSite.FSDTMLMethod import FSDTMLMethod
-from Products.FileSystemSite.FSPageTemplate import FSPageTemplate
-    
-# can enable this to make it work with CMFCore instead of FileSystemSite
-# except some freakish behavior if you install both (and install/uninstall
-# Silva a few times) though.
-## except ImportError:
-##     from Products.CMFCore.DirectoryView import registerDirectory,\
-##          registerFileExtension
-##     from Products.CMFCore.FSImage import FSImage
-##     from Products.CMFCore.DirectoryView import manage_addDirectoryView
-##     from Products.CMFCore.utils import minimalpath, expandpath
-##     from Products.CMFCore.FSDTMLMethod import FSDTMLMethod
-##     from Products.CMFCore.FSPageTemplate import FSPageTemplate
+import zope.deferredimport
+
+zope.deferredimport.deprecated(
+    'Please import directly from Products.FileSystemSite.DirectoryView '
+    'this import will be removed in Silva 2.3',
+    registerDirectory='Products.FileSystemSite.DirectoryView:registerDirectory',
+    registerFileExtension='Products.FileSystemSite.DirectoryView:registerFileExtension',
+    manage_addDirectoryView='Products.FileSystemSite.DirectoryView:manage_addDirectoryView')
+
+zope.deferredimport.deprecated(
+    'Please import directly from Products.FileSystemSite.FSImage '
+    'this import will be removed in Silva 2.3',
+    FSImage='Products.FileSystemSite.FSImage:FSImage')
+
+zope.deferredimport.deprecated(
+    'Please import directly from Products.FileSystemSite.FSDTMLMethod '
+    'this import will be removed in Silva 2.3',
+    FSDTMLMethod='Products.FileSystemSite.FSDTMLMethod:FSDTMLMethod')
+
+zope.deferredimport.deprecated(
+    'Please import directly from Products.FileSystemSite.FSPageTemplate '
+    'this import will be removed in Silva 2.3',
+    FSPageTemplate='Products.FileSystemSite.FSPageTemplate:FSPageTemplate')
+
+zope.deferredimport.deprecated(
+    'Please import directly from Products.FileSystemSite.utils '
+    'this import will be removed in Silva 2.3',
+    minimalpath='Products.FileSystemSite.utils:minimalpath',
+    expandpath='Products.FileSystemSite.utils:expandpath')
+
+

@@ -44,9 +44,7 @@ from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
 from silva.core.interfaces import (
-    ISilvaObject, IPublishable, IAsset,
-    IContent, IContainer, IPublication, IRoot,
-    IVersioning, IVersionedContent, IFolder)
+    ISilvaObject, IPublishable, IContent, IRoot, IVersionedContent, IFolder)
 
 
 class XMLExportContext:
