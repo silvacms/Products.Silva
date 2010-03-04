@@ -395,7 +395,7 @@ class DateTime(object):
     __allow_access_to_unprotected_subobjects__ = 1
 
     def __init__(self, dt):
-        self._dt = dt
+        self._dt = _DateTime(dt)
 
     def toStr(self):
         dt = self._dt
