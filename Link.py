@@ -5,6 +5,7 @@
 # Zope 3
 from five import grok
 from zope import interface, schema
+from zope.traversing.browser import absoluteURL
 from z3c.form import field
 
 # Zope 2
@@ -20,7 +21,7 @@ from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
-from silva.core.references.schema import Reference
+from silva.core.references.reference import Reference, ReferenceProperty
 from silva.translations import translate as _
 
 
@@ -48,15 +49,33 @@ class LinkVersion(CatalogedVersion):
 
     grok.implements(interfaces.ILinkVersion)
 
-    def __init__(self, id, url):
-        super(LinkVersion, self).__init__(id)
-        self.set_url(url)
+    _url = None
+    _relative = False
+    _target = ReferenceProperty(name=u'link')
+
+    security.declareProtected(SilvaPermissions.View, 'get_relative')
+    def get_relative(self):
+        return self._relative
+
+    security.declareProtected(SilvaPermissions.View, 'get_target')
+    def get_target(self):
+        return self._target
 
     security.declareProtected(SilvaPermissions.View, 'get_url')
     def get_url(self):
         return self._url
 
     # MANIPULATORS
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_relative')
+    def set_relative(self, relative):
+        self._relative = relative
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_target')
+    def set_target(self, target):
+        self._target = target
+
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')
     def set_url(self, url):
@@ -66,7 +85,7 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 
-class ILinkFields(interface.Interface):
+class ILinkSchema(interface.Interface):
 
     relative = schema.Bool(
         title=_(u"relative link"),
@@ -75,7 +94,7 @@ class ILinkFields(interface.Interface):
 
     url = schema.URI(
         title=_(u"url"),
-        description=_(u"Link url. Links can contain anything, so it is the author's responsibility to create valid urls."),
+        description=_(u"Link url"),
         required=False)
 
     target = Reference(
@@ -86,15 +105,22 @@ class ILinkFields(interface.Interface):
 class LinkAddForm(silvaz3cforms.AddForm):
     """Add form for a link.
     """
-
     grok.context(interfaces.ILink)
     grok.name(u'Silva Link')
-    fields = field.Fields(ILinkFields)
+    fields = field.Fields(ILinkSchema)
 
     def create(self, parent, data):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addLink(
-            data['id'], data['title'], data['url'])
+            data['id'], data['title'],
+            url=data['url'], relative=data['relative'], target=data['target'])
+
+
+class LinkEditForm(silvaz3cforms.EditForm):
+    """Edit form for a link.
+    """
+    grok.context(interfaces.ILink)
+    fields = field.Fields(ILinkSchema)
 
 
 class LinkView(silvaviews.View):
@@ -102,10 +128,14 @@ class LinkView(silvaviews.View):
     grok.context(interfaces.ILink)
 
     def update(self):
+        self.url = None
+        if self.content.get_relative():
+            self.url = absoluteURL(self.content.get_target(), self.request)
+        else:
+            self.url = self.content.get_url()
         if not self.is_preview:
-            self.redirect(self.content.get_url())
+            self.redirect(self.url)
 
     def render(self):
-        link = self.content
         return u'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>' % (
-            link.get_title(), link.get_url(), link.get_url())
+            self.content.get_title(), self.url, self.url)
