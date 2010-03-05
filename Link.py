@@ -89,16 +89,21 @@ class ILinkSchema(interface.Interface):
 
     relative = schema.Bool(
         title=_(u"relative link"),
+        description=_(u"If selected, the link will to the selected "
+                      u"relative content."),
         default=False,
         required=True)
 
     url = schema.URI(
         title=_(u"url"),
-        description=_(u"Link url"),
+        description=_(u"If the link is hot relative, "
+                      u"it is the absolute link url."),
         required=False)
 
     target = Reference(
         title=_("target of relative link"),
+        description=_(u"If the link is relative, "
+                      u"it is the target of the link."),
         required=False)
 
 
