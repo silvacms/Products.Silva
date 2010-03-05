@@ -29,10 +29,7 @@ class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
     in navigation or a Table of Contents. The links can be absolute or relative.
     Absolute links go to external sites while relative links go to content
-    within Silva. The Link can be a hyperlink, beginning with "http://...."
-    (including https, ftp, news, and mailto) or a path to Silva content. If the
-    path goes to Silva content which doesn't exist, 'http://' will be placed
-    before the link. This allows you to paste "www.somesite.com" into the field.
+    within Silva.
     """)
 
     meta_type = "Silva Link"
@@ -106,6 +103,13 @@ class ILinkSchema(interface.Interface):
                       u"it is the target of the link."),
         required=False)
 
+    @interface.invariant
+    def url_validation(obj):
+        if obj.relative and not obj.target:
+            raise interface.Invalid(_("Relative link selected without target"))
+        if not obj.relative and not obj.url:
+            raise interface.Invalid(_("Absolute link selected without URL"))
+
 
 class LinkAddForm(silvaz3cforms.AddForm):
     """Add form for a link.
@@ -113,6 +117,7 @@ class LinkAddForm(silvaz3cforms.AddForm):
     grok.context(interfaces.ILink)
     grok.name(u'Silva Link')
     fields = field.Fields(ILinkSchema)
+    description = Link.__doc__
 
     def create(self, parent, data):
         factory = parent.manage_addProduct['Silva']

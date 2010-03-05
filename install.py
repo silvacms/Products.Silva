@@ -444,8 +444,6 @@ def registerViews(reg):
                  ['edit', 'Container', 'Publication'])
     reg.register('edit', 'Silva Ghost',
                  ['edit', 'VersionedContent', 'Ghost'])
-    reg.register('edit', 'Silva Link',
-                 ['edit', 'VersionedContent', 'Link'])
     reg.register('edit', 'Silva Image',
                  ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva File',
@@ -525,8 +523,7 @@ def unregisterViews(reg):
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
     # versioned objects (where version is registered for public)
-    for meta_type in ['Silva Ghost',
-                        'Silva Link']:
+    for meta_type in ['Silva Ghost']:
         reg.unregister('edit', meta_type)
         reg.unregister('add', meta_type)
         reg.unregister('public', '%s Version' % meta_type)
