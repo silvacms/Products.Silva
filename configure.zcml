@@ -9,6 +9,7 @@
 
   <!-- Include dependancy -->
   <include package="zope.annotation" />
+  <include package="silva.core.views" />
   <include package="silva.core.layout" />
   <include package="silva.core.smi" />
   <include package="silva.core.services" />
@@ -35,6 +36,13 @@
     factory=".Image.ImagePublishTraverse"
     provides="zope.publisher.interfaces.browser.IBrowserPublisher"
     />
+
+  <adapter
+     for="silva.core.interfaces.ISilvaObject
+          silva.core.smi.interfaces.ISMILayer"
+     factory=".ViewCode.FakeView"
+     provides="Products.FileSystemSite.interfaces.IFakeView"
+     />
 
   <!-- lookup window edit button support -->
 

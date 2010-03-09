@@ -6,6 +6,8 @@ import logging
 
 # Zope 3
 from five import grok
+from zope import component
+from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -16,7 +18,11 @@ import OFS.interfaces
 # Silva
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva import SilvaPermissions
+
 from silva.core import interfaces
+from silva.core.views import views as silvaviews
+from silva.core.smi.interfaces import ISMILayer
+from silva.core.references.interfaces import IReferenceService
 
 logger = logging.getLogger('silva.core')
 
@@ -126,6 +132,19 @@ def asset_moved_update_quota(asset, event):
         event.newParent.update_quota(size)
 
 
+class ReferencedBy(silvaviews.Viewlet):
+    """Report usage of this asset
+    """
+    grok.context(interfaces.IAsset)
+    grok.layer(ISMILayer)
+    grok.viewletmanager(silvaviews.SMIPortletManager)
 
-
-
+    def update(self):
+        self.references = []
+        service = component.getUtility(IReferenceService)
+        for reference in service.get_references_to(self.context):
+            source = reference.source
+            self.references.append(
+                {'title': source.get_title_or_id(),
+                 'url': absoluteURL(source, self.request),
+                 'reason': reference.tags[0]})

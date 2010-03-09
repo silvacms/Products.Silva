@@ -1,0 +1,14 @@
+<div class="info">
+  <h3>This asset is used by</h3>
+  <p tal:condition="not:viewlet/references">
+    Nothing
+  </p>
+  <ul tal:condition="viewlet/references">
+    <li tal:repeat="reference viewlet/references">
+      <a href="#"
+         tal:attributes="href reference/url"
+         tal:content="reference/title">
+      </a> as a <span tal:replace="reference/reason" />.
+    </li>
+  </ul>
+</div>

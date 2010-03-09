@@ -18,7 +18,7 @@ three-col-layout
 two-col-layout
   -- three column layouts
   * sidebar
-    -- override the default sidebar-column 
+    -- override the default sidebar-column
   * main-model
     -- the entire center column
     * main-head
@@ -105,10 +105,11 @@ editor
      <metal:slot define-slot="main-extra" />
     </td>
     <tal:block replace="nothing">
-      _____________________ right column _____________________ 
+      _____________________ right column _____________________
     </tal:block>
-    <td class="right">        
+    <td class="right">
       <metal:slot define-slot="right-column">&nbsp;</metal:slot>
+      <tal:portlets tal:replace="structure provider:smiportletmanager" />
     </td>
    </tr>
   </tbody>
