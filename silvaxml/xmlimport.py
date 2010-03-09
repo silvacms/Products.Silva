@@ -422,6 +422,7 @@ class LinkHandler(SilvaBaseHandler):
         if name == (NS_URI, 'link'):
             id = attrs[(None, 'id')].encode('utf-8')
             uid = self.generateOrReplaceId(id)
+            # XXX Need to use factories
             object = Link(uid)
             self.parent()._setObject(uid, object)
             self.setResult(getattr(self.parent(), uid))
@@ -443,7 +444,8 @@ class LinkContentHandler(SilvaBaseHandler):
             id = attrs[(None, 'version_id')].encode('utf-8')
             if not mangle.Id(self.parent(), id).isValid():
                 return
-            version = LinkVersion(id, '')
+            # XXX Need to use factories
+            version = LinkVersion(id)
             self.parent()._setObject(id, version)
             self.setResult(getattr(self.parent(), id))
             updateVersionCount(self)
