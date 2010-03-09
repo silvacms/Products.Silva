@@ -8,6 +8,9 @@ from Acquisition import aq_base
 from App.class_init import InitializeClass
 import Globals
 
+from zope.interface import implements
+from zope.browser.interfaces import IBrowserView
+
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
@@ -348,6 +351,15 @@ class ViewCode(object):
             ['Manager'], object=self)
         return Globals.DevelopmentMode and is_manager
 
-
-
 InitializeClass(ViewCode)
+
+
+class FakeView(object):
+
+    implements(IBrowserView)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+        # The next line is to enable security validation
+        self.__parent__ = context
