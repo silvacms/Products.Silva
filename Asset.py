@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import logging
+
 # Zope 3
 from five import grok
 
@@ -10,12 +12,13 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS import SimpleItem
 import OFS.interfaces
-import zLOG
 
 # Silva
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva import SilvaPermissions
 from silva.core import interfaces
+
+logger = logging.getLogger('silva.core')
 
 
 class Asset(SilvaObject, SimpleItem.SimpleItem):
@@ -54,14 +57,6 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
 
     # ACCESSORS
 
-    def is_deletable(self):
-        """assets are deletable
-
-            NOTE: once there is reference management those should only be
-            deletable if not referenced
-        """
-        return 1
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_navigation_links')
     def get_navigation_links(self):
@@ -95,18 +90,18 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
 
 InitializeClass(Asset)
 
+
 @grok.subscribe(interfaces.IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
-def asset_moved_update_quota(obj, event):
+def asset_moved_update_quota(asset, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.
     """
 
-    if obj != event.object:
+    if asset != event.object:
         return
 
-    if event.newParent is event.oldParent: # For rename event, we
-                                           # don't need to do
-                                           # something.
+    if event.newParent is event.oldParent:
+        # For rename event, we don't need to do something.
         return
 
     context = event.newParent or event.oldParent
@@ -114,17 +109,17 @@ def asset_moved_update_quota(obj, event):
         return
 
     try:
-        size = obj.get_file_size()
-    except (AttributeError, NotImplementedError): # Well, not all
-                                                  # asset respect its
-                                                  # interface.
-        path = '/'.join(obj.getPhysicalPath())
-        klass = str(obj.__class__)
-        zLOG.LOG('Silva quota', zLOG.WARNING,
-                 'bad asset object %s - %s' % (path, klass))
+        size = asset.get_file_size()
+    except (AttributeError, NotImplementedError):
+        # Well, not all asset respect its interface.
+        path = '/'.join(asset.getPhysicalPath())
+        klass = str(asset.__class__)
+        logger.error('bad asset object %s - %s' % (path, klass))
         return
+
     if not size:
         return
+
     if event.oldParent:
         event.oldParent.update_quota(-size)
     if event.newParent:
