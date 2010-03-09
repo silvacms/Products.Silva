@@ -19,9 +19,10 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.references.reference import Reference, ReferenceProperty
+from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
-from silva.core.references.reference import Reference, ReferenceProperty
 from silva.translations import translate as _
 
 
@@ -126,7 +127,7 @@ class LinkAddForm(silvaz3cforms.AddForm):
             url=data['url'], relative=data['relative'], target=data['target'])
 
 
-class LinkEditForm(silvaz3cforms.EditForm):
+class LinkEditForm(silvaz3cforms.EditForm, silvasmi.EditTab):
     """Edit form for a link.
     """
     grok.context(interfaces.ILink)
