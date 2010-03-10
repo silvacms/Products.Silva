@@ -17,7 +17,6 @@ from silva.core import interfaces
 class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
     """Test default file implementation.
     """
-
     implementation = None
 
     def afterSetUp(self):
@@ -53,7 +52,6 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
     def test_download(self):
         """Test downloading file.
         """
-
         response = http('GET /root/testfile HTTP/1.1')
         headers = response.header_output.headers
         downloaded_data = response.getBody()
@@ -63,6 +61,7 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
                           'inline;filename=testfile')
+        self.failUnless('Last-Modified' in headers)
 
     def test_head_request(self):
         """Test HEAD requests on Files.
@@ -73,6 +72,7 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
                           'inline;filename=testfile')
+        self.failUnless('Last-Modified' in headers)
 
     def test_assetdata(self):
         """Test asset data adapter implementation.
