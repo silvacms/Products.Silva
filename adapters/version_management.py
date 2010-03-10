@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 
 from zope.interface import implements
 
+from Acquisition import aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from App.class_init import InitializeClass
 from DateTime import DateTime
@@ -104,7 +105,9 @@ class VersionManagementAdapter(adapter.Adapter):
             self.context._unindex_version(current_version_id)
         # just hope for the best... scary API
         new_version_id = self._createUniqueId()
-        self.context.manage_clone(getattr(self.context, copy_id), new_version_id)
+        # This is need because of the __of__ of getVersionManagementAdapter
+        content = aq_inner(self.context)
+        content.manage_clone(getattr(content, copy_id), new_version_id)
         self.context._unapproved_version = (new_version_id, None, None)
         self.context._index_version(new_version_id)
 
