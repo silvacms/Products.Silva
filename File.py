@@ -18,6 +18,7 @@ from zope import component, schema
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.interface import implements, Interface, directlyProvides
 from zope.location.interfaces import ISite
+from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
@@ -59,6 +60,7 @@ from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
+from silva.core.views.httpheaders import HTTPResponseHeaders
 from silva.core.views import z3cforms as silvaz3cforms
 from silva.translations import translate as _
 from z3c.form import field
@@ -92,6 +94,27 @@ class FDIterator(object):
                 self.__closed = True
             raise StopIteration
         return data
+
+
+class FileResponseHeaders(HTTPResponseHeaders):
+    """This reliably set HTTP headers on file serving, for GET and
+    HEAD requests.
+    """
+    grok.adapts(interfaces.IFile, IBrowserRequest)
+
+    def other_headers(self, headers):
+        self.response.setHeader(
+            'Content-Disposition',
+            'inline;filename=%s' % (self.context.get_filename()))
+        self.response.setHeader(
+            'Content-Type', self.context.content_type())
+        self.response.setHeader(
+            'Content-Length', self.context.get_file_size())
+        self.response.setHeader(
+            'Last-Modified',
+            rfc1123_date(self.context.get_modification_datetime()))
+        self.response.setHeader(
+            'Accept-Ranges', None)
 
 
 def manage_addFile(self, id, title=None, file=None):
@@ -411,20 +434,6 @@ class BlobFileView(silvaviews.View):
     silvaconf.context(BlobFile)
     silvaconf.require('zope2.View')
     silvaconf.name('index')
-
-    def setHTTPHeaders(self):
-        self.response.setHeader(
-            'Content-Disposition',
-            'inline;filename=%s' % (self.context.get_filename()))
-        self.response.setHeader(
-            'Content-Type', self.context.content_type())
-        self.response.setHeader(
-            'Content-Length', self.context.get_file_size())
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(self.context.get_modification_datetime()))
-        self.response.setHeader(
-            'Accept-Ranges', None)
 
     def render(self):
         return FDIterator(self.context.get_content_fd())
