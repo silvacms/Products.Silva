@@ -56,7 +56,7 @@ class ObjectLookup(BrowserView):
                         qs += '&startpath=%s'%'/'.join(self.context.getPhysicalPath())
                     url += qs
 
-                    self.request.RESPONSE.redirect(url,lock=1)
+                    self.request.RESPONSE.redirect(url)
                     raise Redirect(url)
         return self.render_lookup()
 
