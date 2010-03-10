@@ -10,7 +10,7 @@
 <tal:block define="
   tabs here/get_authorized_tabs;
   active_tab active_tab | nothing;
-  screen_id screen_id | template/id;
+  screen_id screen_id | template_id | template/id;
   ">
 <!-- ______________ Breadcrumb space ______________ -->
   <div class="pathbar">
