@@ -44,6 +44,7 @@
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
+<tal:resource tal:replace="structure provider:resources" />
 <style media="all"
   type="text/css"
   xml:space="preserve"
