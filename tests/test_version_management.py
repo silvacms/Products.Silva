@@ -3,30 +3,30 @@
 # $Id $
 
 # Python
-from datetime import datetime, timedelta
 from StringIO import StringIO
+from datetime import datetime, timedelta
+import unittest
 
 from DateTime import DateTime
 
 from Products.Silva.Versioning import VersioningError
-from Products.Silva.adapters.version_management import getVersionManagementAdapter
-
-import SilvaTestCase
+from Products.Silva.adapters.version_management import \
+    getVersionManagementAdapter
+from Products.Silva.tests import SilvaTestCase
 
 now = DateTime()
+
 
 class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
     """Test the version management adapter"""
 
     def afterSetUp(self):
-        root = self.root
-        root.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'testdoc', 'TestDoc')
-        doc = self.doc = root.testdoc
-        # create a nice list of versions
+        self.add_document(self.root, 'testdoc', 'TestDoc')
+        self.doc = self.root.testdoc
+        # create some versions
         for i in range(10):
             self.create_version()
-        self.adapter = getVersionManagementAdapter(doc)
+        self.adapter = getVersionManagementAdapter(self.doc)
 
     def create_version(self):
         doc = self.doc
@@ -39,11 +39,10 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
             manage_addDocumentVersion(id, 'Version %s' % id)
         doc.create_version(id, None, None)
 
-    def beforeTearDown(self):
-        pass
-
     def test_getVersionById(self):
-        self.assertEquals(self.adapter.getVersionById('0'), getattr(self.doc, '0'))
+        self.assertEquals(
+            self.adapter.getVersionById('0'),
+            getattr(self.doc, '0'))
 
     def test_getPublishedVersion(self):
         self.assertEquals(self.adapter.getPublishedVersion(), None)
@@ -286,7 +285,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(self.doc._public_version[0] is not None)
         self.assert_(len(self.doc._previous_versions) == 11)
 
-import unittest
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(VersionManagementTestCase))
