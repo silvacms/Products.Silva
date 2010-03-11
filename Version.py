@@ -216,7 +216,7 @@ _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
 
-@grok.subscribe(IVersion, IObjectModifiedEvent):
+@grok.subscribe(IVersion, IObjectModifiedEvent)
 def version_modified(version, event):
     version.object().sec_update_last_author_info()
 
