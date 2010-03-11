@@ -5,6 +5,7 @@
 # Zope 3
 from five import grok
 from zope import component
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
 
@@ -213,6 +214,11 @@ InitializeClass(CatalogedVersion)
 def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
+
+
+@grok.subscribe(IVersion, IObjectModifiedEvent):
+def version_modified(version, event):
+    version.sec_update_last_author_info()
 
 
 @grok.subscribe(ICatalogedVersion, IObjectWillBeRemovedEvent)
