@@ -78,9 +78,7 @@
     <kupu:insert-part feature="toolboxes" part="abbr" />
     <kupu:insert-part feature="toolboxes" part="cleanupexpressions" />
     <kupu:insert-part feature="toolboxes" part="external_source" />
-    <kupu:insert-part feature="toolboxes" part="citation" />
     <kupu:insert-part feature="toolboxes" part="tables" />
-    <kupu:insert-part feature="toolboxes" part="toc" />
     <kupu:insert-part feature="toolboxes" part="typochars" />
     <kupu:insert-part feature="toolboxes" part="save" />
   </kupu:fill-slot>

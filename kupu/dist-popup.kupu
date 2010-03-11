@@ -25,7 +25,5 @@
   <kupu:disable-feature name="contextmenu" />
   <kupu:disable-part feature="toolboxes" part="comment" />
   <kupu:disable-part feature="toolboxes" part="properties" />
-  <kupu:disable-part feature="toolboxes" part="citation" />
-  <kupu:disable-part feature="toolboxes" part="toc" />
 
 </kupu:dist>

@@ -342,11 +342,6 @@ function initSilvaKupu(iframe) {
     var dltool = new DefinitionListTool('kupu-list-dl-addbutton');
     kupu.registerTool('dltool', dltool);
 
-    var toctool = new SilvaTocTool(
-        'kupu-toolbox-toc-depth', 'kupu-toc-del-button',
-        'kupu-toolbox-toc', 'kupu-toolbox', 'kupu-toolbox-active');
-    kupu.registerTool('toctool', toctool);
-
     var linktool = new SilvaLinkTool();
     kupu.registerTool('linktool', linktool);
     var linktoolbox = new SilvaLinkToolBox(
@@ -370,12 +365,6 @@ function initSilvaKupu(iframe) {
         'kupu-extsource-enabledflag', 'kupu-extsource-disabledtext',
         'kupu-extsource-nosourcestext');
     kupu.registerTool('extsourcetool', extsourcetool);
-
-    var citationtool = new SilvaCitationTool(
-        'kupu-citation-authorinput', 'kupu-citation-sourceinput',
-        'kupu-citation-addbutton', 'kupu-citation-updatebutton',
-        'kupu-citation-deletebutton', 'kupu-citation-form');
-    kupu.registerTool('citationtool', citationtool);
 
     var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
         'kupu-abbr-title', 'kupu-abbr-addbutton',
@@ -475,8 +464,7 @@ function initSilvaKupu(iframe) {
 //    var nonxhtmltagfilter = new NonXHTMLTagFilter();
 //    kupu.registerFilter(nonxhtmltagfilter);
 
-    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation',
-        'source', 'author', 'source_id', 'source_title', 'key',
+    kupu.xhtmlvalid.setAttrFilter(['source_id', 'source_title', 'key',
         'silva_type', 'alignment', 'link_to_hires', 'link', 'silva_src',
         'silva_href', 'silva_target', 'silva_reference', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that
@@ -672,8 +660,7 @@ function initSilvaPopupKupu(iframe) {
         };
     };
 
-    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation',
-        'source', 'author', 'source_id', 'source_title', 'key',
+    kupu.xhtmlvalid.setAttrFilter(['source_id', 'source_title', 'key',
         'silva_type', 'alignment', 'link_to_hires', 'link', 'silva_src',
         'silva_href', 'silva_reference', 'silva_target', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that

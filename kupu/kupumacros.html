@@ -343,10 +343,6 @@
         <id>Error placing back selection</id>
         <translation i18n:translate="">Error placing back selection</translation>
       </message>
-      <message>
-        <id>The TOC element has been deprecated and will be removed in a later release of Silva.  Use the TOC external source to add a 'Table of Contents' element to this document</id>
-        <translation i18n:translate="">The TOC element has been deprecated and will be removed in a later release of Silva.  Use the TOC external source to add a 'Table of Contents' element to this document</translation>
-      </message>
     </xml>
   
     <div class="kupu-editorframe">
@@ -614,46 +610,6 @@
     </div>
   
 
-    <div class="kupu-toolbox" id="kupu-toolbox-citation">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">citation</h1>
-
-      <div class="kupu-tooltray">
-        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "citation" element has been deprecated and will be removed in a later version of Silva.  Use the "citation" external source instead.</p>
-        <form name="kupu-citation-form" id="kupu-citation-form">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td>
-                  <table width="100%" border="0" cellspacing="0">
-                    <tr>
-                      <td class="titlecell" i18n:translate="">author</td>
-                      <td><input class="store" type="text" id="kupu-citation-authorinput"/></td>
-                    </tr>
-                    <tr>
-                      <td class="titlecell" i18n:translate="">source</td>
-                      <td><input class="store" type="text" id="kupu-citation-sourceinput"/></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="button" class="button" value="add element" id="kupu-citation-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-citation-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-citation-deletebutton" i18n:attributes="value"/>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-
-      </div>
-
-    </div>
-
-  
-
     <div class="kupu-toolbox" id="kupu-toolbox-tables">
     
 
@@ -764,33 +720,6 @@
     </div>
     
       </div>
-
-  
-    <div class="kupu-toolbox" id="kupu-toolbox-toc">
-
-      <h1 class="kupu-toolbox-heading" i18n:translate="">table of contents</h1>
-
-      <div class="kupu-tooltray">
-        <p i18n:translate="" style="margin-top: 0px;margin-bottom: 3px;"><b>NOTE:</b> The "table of contents" element has been deprecated and will be removed in a later version of Silva.  Use the TOC external source instead.</p>
-        <form name="kupu_toc_form" onsubmit="return false;">
-          <select id="kupu-toolbox-toc-depth">
-            <option i18n:translate="" value="1">1 level</option>
-            <option i18n:translate="" value="2">2 levels</option>
-            <option i18n:translate="" value="3">3 levels</option>
-            <option i18n:translate="" value="4">4 levels</option>
-            <option i18n:translate="" value="5">5 levels</option>
-            <option i18n:translate="" value="6">6 levels</option>
-            <option i18n:translate="" value="7">7 levels</option>
-            <option i18n:translate="" value="8">8 levels</option>
-            <option i18n:translate="" value="9">9 levels</option>
-            <option i18n:translate="" value="-1">unlimited</option>
-          </select>
-          
-          <input class="button remover" type="button" value="remove" id="kupu-toc-del-button" i18n:attributes="value"/>
-        </form>
-      </div>
-
-    </div>
 
   
     <div class="kupu-toolbox" id="kupu-toolbox-typochars">

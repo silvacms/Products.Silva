@@ -75,10 +75,6 @@
         <id>Error placing back selection</id>
         <translation i18n:translate="">Error placing back selection</translation>
       </message>
-      <message>
-        <id>The TOC element has been deprecated and will be removed in a later release of Silva.  Use the TOC external source to add a 'Table of Contents' element to this document</id>
-        <translation i18n:translate="">The TOC element has been deprecated and will be removed in a later release of Silva.  Use the TOC external source to add a 'Table of Contents' element to this document</translation>
-      </message>
     </xml>
   </kupu:part>
 
