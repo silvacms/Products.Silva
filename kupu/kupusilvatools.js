@@ -225,8 +225,23 @@ SilvaLinkTool.prototype.updateLink = function (
         linkel.removeAttribute('href');
         linkel.setAttribute('name', name);
     } else {
-        linkel.href = url;
-        linkel.setAttribute('silva_href', url);
+        if (type && type == 'reference') {
+            /* We have a reference. Href is set to something to
+             * prevent SilvaIndexTool to get contol over the link */
+            linkel.href = 'reference';
+            linkel.setAttribute('silva_target', url);
+            reference = linkel.getAttribute('silva_reference');
+            if (!reference) {
+                linkel.setAttribute('silva_reference', 'new');
+            }
+            linkel.removeAttribute('silva_href');
+        } else {
+            /* We have an old style link*/
+            linkel.href = url;
+            linkel.setAttribute('silva_href', url);
+            linkel.removeAttribute('silva_reference');
+            linkel.removeAttribute('silva_target');
+        }
         if (linkel.innerHTML == "") {
             var doc = this.editor.getInnerDocument();
             linkel.appendChild(doc.createTextNode(title || url));
@@ -246,31 +261,14 @@ SilvaLinkTool.prototype.updateLink = function (
     this.editor.content_changed = true;
 };
 
-SilvaLinkTool.prototype.createContextMenuElements = function(selNode, event) {
-    /* create the 'Create link' or 'Remove link' menu elements */
-    var ret = new Array();
-    var link = this.editor.getNearestParentOfType(selNode, 'a');
-    if (link) {
-        ret.push(new ContextMenuElement('Delete link', this.deleteLink, this));
-    } else {
-        ret.push(new ContextMenuElement('Create link', getLink, this));
-    };
-    return ret;
-};
-
 function SilvaLinkToolBox(
         inputid, targetselectid, targetinputid, addbuttonid,
         updatebuttonid, delbuttonid, toolboxid, plainclass, activeclass) {
     /* create and edit links */
 
-    this.input = getFromSelector(inputid);
-    this.inputTA = document.createElement('textarea');
-    this.inputTA.className='store';
-    this.inputTA.cols="30";
-    this.inputTA.rows="2";
-    this.input.parentNode.appendChild(this.inputTA);
-    var inputtable = this.input.parentNode.parentNode;
-    this.inputeditbutton = inputtable.getElementsByTagName('button')[1];
+    this.input = getFromSelector(inputid + '-value');
+    this.inputlink = $('#'+ inputid + '-link');
+    this.baseurl = $('#' + inputid + '-base').val();
     this.targetselect = getFromSelector(targetselectid);
     this.targetinput = getFromSelector(targetinputid);
     this.addbutton = getFromSelector(addbuttonid);
@@ -293,24 +291,8 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
     addEventHandler(this.addbutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.delbutton, 'click', this.tool.deleteLink, this);
-    addEventHandler(this.input, 'focus', this.inputFocusHandler, this);
-    addEventHandler(this.inputTA, 'blur', this.inputFocusHandler, this);
     this.targetinput.style.display = 'none';
     this.editor.logMessage('Link tool initialized');
-};
-
-
-SilvaLinkToolBox.prototype.inputFocusHandler = function(event) {
-    if (this.input.style.display == 'none') {
-        this.input.value = this.inputTA.value;
-        this.input.style.display = 'inline';
-        this.inputTA.style.display = 'none';
-    } else {
-        this.input.style.display = 'none';
-        this.inputTA.value = this.input.value;
-        this.inputTA.style.display = 'inline';
-        this.inputTA.focus();
-    };
 };
 
 SilvaLinkToolBox.prototype.selectTargetHandler = function(event) {
@@ -326,13 +308,13 @@ SilvaLinkToolBox.prototype.selectTargetHandler = function(event) {
 };
 
 SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
-    var url = this.input.value;
+    var reference = this.input.value;
     var target = this.targetselect.options[
         this.targetselect.selectedIndex].value;
     if (target == 'input') {
         target = this.targetinput.value;
     };
-    this.tool.createLink(url, 'link', null, target);
+    this.tool.createLink(reference, 'reference', null, target);
     this.editor.content_changed = true;
     this.editor.updateState();
 };
@@ -347,21 +329,23 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     var href = '';
     while (currnode) {
         if (currnode.nodeName == 'A') {
-            href = currnode.getAttribute('silva_href');
-            if (!href) {
-                href = currnode.getAttribute('href');
-            };
-            if (href) {
+            reference = currnode.getAttribute('silva_target');
+            if (reference) {
                 if (this.toolboxel) {
                     this.toolboxel.className = this.activeclass;
                     if (this.toolboxel.open_handler) {
                         this.toolboxel.open_handler();
                     };
                 };
-                this.input.value = href;
-                this.inputTA.value = href;
-                this.inputeditbutton.style.display="inline";
-                this.inputeditbutton.parentNode.style.width="42px";
+                this.input.value = reference;
+                this.inputlink.text(_('loading ...'));
+                var self = this;
+                $.getJSON(this.baseurl + '/++rest++items',
+                          {'intid': reference},
+                          function(data) {
+                              self.inputlink.text(data['title']);
+                              self.inputlink.attr('href', data['url']);
+                          });
                 var target = currnode.getAttribute('target');
                 if (!target) {
                     this.targetselect.selectedIndex = 0;
@@ -405,9 +389,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
         this.toolboxel.className = this.plainclass;
     };
     this.input.value = '';
-    this.inputTA.value = '';
-    this.inputeditbutton.style.display="none";
-    this.inputeditbutton.parentNode.style.width="21px";
+    this.inputlink.text(_('none'));
 };
 
 function SilvaImageTool(

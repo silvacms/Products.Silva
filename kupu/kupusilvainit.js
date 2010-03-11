@@ -37,7 +37,7 @@ function unescape_string(s) {
     s = s.replace(/\\/g, '');
     return s;
 };
- 
+
 window._ = function _(msgid, interpolations) {
     var ret = msgidmapping[escape_string(msgid)];
     if (ret === undefined) {
@@ -85,7 +85,7 @@ function fixupNestedListFilter() {
             for (var j = 0; j<li.childNodes.length;j++) {
                 alert('li type: ' + li.childNodes[j].nodeName);
                 }*/
-            if (li.childNodes.length == 1 && 
+            if (li.childNodes.length == 1 &&
                 li.firstChild.nodeType == li.ELEMENT_NODE) {
             nodeName = li.firstChild.nodeName.toLowerCase();
             if (nodeName == 'ul' || nodeName == 'ol') {
@@ -106,7 +106,7 @@ function fixupNestedListFilter() {
             li.parentNode.removeChild(li);
             li = saved_lis.pop();
         }
-        // Prevent the external source preview from being saved    
+        // Prevent the external source preview from being saved
         var divs = htmlnode.getElementsByTagName("div");
         for (var i = divs.length - 1; i >= 0; i--) {
             if (divs[i].getAttribute("class") == "externalsourcepreview" ||
@@ -154,14 +154,14 @@ KupuEditor.prototype.afterInit = function() {
         };
     };
 
-    /* add an empty 'p' at the end of the body.  This enables content to be 
-       added to the end of a doc when the last element in the doc is a table 
+    /* add an empty 'p' at the end of the body.  This enables content to be
+       added to the end of a doc when the last element in the doc is a table
        or an external source. This will get stripped out when the doc is saved.
        */
     var blank = doc.createElement('p');
     blank.appendChild(doc.createTextNode('\xa0'));
     body.appendChild(blank);
-    
+
     this.registerFilter(new fixupNestedListFilter());
 
     // if we don't first focus the outer window, Mozilla won't show a cursor
@@ -174,7 +174,7 @@ KupuEditor.prototype.afterInit = function() {
     var tabbing_handler = function(event){
         if (window.event) event = window.event;
         if (event.keyCode == '9') {
-            /* if inside an external source, ignore 
+            /* if inside an external source, ignore
                 the tab */
             var estool = kupu.getTool('extsourcetool');
             if (!(estool && estool._insideExternalSource)) {
@@ -266,7 +266,7 @@ function initSilvaKupu(iframe) {
         return false;
     };
     // to make firefox not pop up a warning as well...
-    addEventHandler(window, 'unload', cancelEvent); 
+    addEventHandler(window, 'unload', cancelEvent);
 
     // jasper@infrae.com: 2006-12-08,  Disabled context menu
     // var cm = new ContextMenu();
@@ -289,7 +289,7 @@ function initSilvaKupu(iframe) {
 
     var boldchecker = ParentWithStyleChecker(new Array('b', 'strong'),
         'font-weight', 'bold');
-    var boldbutton = new KupuStateButton('kupu-bold-button', 
+    var boldbutton = new KupuStateButton('kupu-bold-button',
         execCommand('bold'),
         boldchecker,
         'kupu-bold',
@@ -298,18 +298,18 @@ function initSilvaKupu(iframe) {
 
     var italicschecker = ParentWithStyleChecker(new Array('i', 'em'),
         'font-style', 'italic');
-    var italicsbutton = new KupuStateButton('kupu-italic-button', 
+    var italicsbutton = new KupuStateButton('kupu-italic-button',
         execCommand('italic'),
-        italicschecker, 
-        'kupu-italic', 
+        italicschecker,
+        'kupu-italic',
         'kupu-italic-pressed');
     kupu.registerTool('italicsbutton', italicsbutton);
 
     var underlinechecker = ParentWithStyleChecker(new Array('u'));
-    var underlinebutton = new KupuStateButton('kupu-underline-button', 
+    var underlinebutton = new KupuStateButton('kupu-underline-button',
         execCommand('underline'),
         underlinechecker,
-        'kupu-underline', 
+        'kupu-underline',
         'kupu-underline-pressed');
     kupu.registerTool('underlinebutton', underlinebutton);
 
@@ -322,10 +322,10 @@ function initSilvaKupu(iframe) {
     kupu.registerTool('subscriptbutton', subscriptbutton);
 
     var superscriptchecker = ParentWithStyleChecker(new Array('super', 'sup'));
-    var superscriptbutton = new KupuStateButton('kupu-superscript-button', 
+    var superscriptbutton = new KupuStateButton('kupu-superscript-button',
         execCommand('superscript'),
         superscriptchecker,
-        'kupu-superscript', 
+        'kupu-superscript',
         'kupu-superscript-pressed');
     kupu.registerTool('superscriptbutton', superscriptbutton);
 
@@ -357,13 +357,13 @@ function initSilvaKupu(iframe) {
     linktool.registerToolBox("linktoolbox", linktoolbox);
 
     var indextool = new SilvaIndexTool(
-        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton', 
-        'kupu-index-updatebutton', 'kupu-index-deletebutton', 
+        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton',
+        'kupu-index-updatebutton', 'kupu-index-deletebutton',
         'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('indextool', indextool);
 
     var extsourcetool = new SilvaExternalSourceTool(
-        'kupu-toolbox-extsource-id', 'kupu-extsource-formcontainer', 
+        'kupu-toolbox-extsource-id', 'kupu-extsource-formcontainer',
         'kupu-extsource-addbutton', 'kupu-extsource-cancelbutton',
         'kupu-extsource-updatebutton', 'kupu-extsource-delbutton',
         'kupu-toolbox-extsource', 'kupu-toolbox', 'kupu-toolbox-active',
@@ -377,8 +377,8 @@ function initSilvaKupu(iframe) {
         'kupu-citation-deletebutton', 'kupu-citation-form');
     kupu.registerTool('citationtool', citationtool);
 
-    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym', 
-        'kupu-abbr-title', 'kupu-abbr-addbutton', 
+    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
+        'kupu-abbr-title', 'kupu-abbr-addbutton',
         'kupu-abbr-updatebutton', 'kupu-abbr-deletebutton',
         'kupu-toolbox-abbr', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('abbrtool', abbrtool);
@@ -391,14 +391,14 @@ function initSilvaKupu(iframe) {
         'kupu-toolbox-image-target', 'kupu-toolbox-image-target-input',
         'kupu-toolbox-image-link-checkbox-hires',
         'kupu-toolbox-image-link',
-        'kupu-toolbox-image-align', 'kupu-toolbox-image-alt', 
+        'kupu-toolbox-image-align', 'kupu-toolbox-image-alt',
         'kupu-toolbox-images', 'kupu-toolbox',
         'kupu-toolbox-active', 'kupu-toolbox-image-link-cont',
         'kupu-toolbox-image-resize', 'kupu-toolbox-image-add-button'
     );
     kupu.registerTool('imagetool', imagetool);
 
-    var tabletool = new SilvaTableTool(); 
+    var tabletool = new SilvaTableTool();
     kupu.registerTool('tabletool', tabletool);
     var tabletoolbox = new SilvaTableToolBox(
         'kupu-toolbox-addtable', 'kupu-toolbox-edittable',
@@ -455,7 +455,7 @@ function initSilvaKupu(iframe) {
     kupu.registerTool('linklibdrawerbutton', linklibdrawerbutton);
     */
 
-    // create some drawers, drawers are some sort of popups that appear when a 
+    // create some drawers, drawers are some sort of popups that appear when a
     // toolbar button is clicked
     var drawertool = new DrawerTool();
     kupu.registerTool('drawertool', drawertool);
@@ -475,21 +475,21 @@ function initSilvaKupu(iframe) {
 //    var nonxhtmltagfilter = new NonXHTMLTagFilter();
 //    kupu.registerFilter(nonxhtmltagfilter);
 
-    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation', 
+    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation',
         'source', 'author', 'source_id', 'source_title', 'key',
-        'silva_type', 'alignment', 
-        'link_to_hires', 'link', 'silva_src',
-        'silva_href', 'silva_column_info']);
+        'silva_type', 'alignment', 'link_to_hires', 'link', 'silva_src',
+        'silva_href', 'silva_target', 'silva_reference', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that
     kupu.xhtmlvalid.includeTagAttributes(['div'], ['*']);
     kupu.xhtmlvalid.includeTagAttributes(['span'], ['key']);
     kupu.xhtmlvalid.includeTagAttributes(['p'], ['silva_type']);
     kupu.xhtmlvalid.includeTagAttributes(['h6'], ['silva_type']);
-    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment', 
-        'link_to_hires', 
+    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment',
+        'link_to_hires',
         'target', 'link',
         'silva_src']);
-    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href']);
+    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href',
+        'silva_reference', 'silva_target']);
     kupu.xhtmlvalid.includeTagAttributes(['table'], ['silva_column_info']);
 
     if (window.kuputoolcollapser) {
@@ -502,20 +502,20 @@ function initSilvaKupu(iframe) {
     // save every possible HTML attr for the div
     kupu.xhtmlvalid.excludeTagAttributes(['div'], ['onrowexit', 'onfocusout',
         'onrowsinserted', 'disabled', 'oncopy', 'onresizestart',
-        'onerrorupdate', 'tabIndex', 'ondeactivate', 
-        'ondataavailable', 'ondragover', 'title', 'accessKey', 
+        'onerrorupdate', 'tabIndex', 'ondeactivate',
+        'ondataavailable', 'ondragover', 'title', 'accessKey',
         'onkeypress', 'dataFld', 'onmousemove', 'onactivate',
         'onafterupdate', 'ondrag', 'contentEditable', 'hideFocus',
         'onblur', 'onmouseout', 'oncellchange', 'onmouseleave',
         'onkeydown', 'dataSrc', 'onmousewheel', 'onpaste', 'ondrop',
-        'onrowsdelete', 'onrowenter', 'ondragend', 'align', 
+        'onrowsdelete', 'onrowenter', 'ondragend', 'align',
         'onlayoutcomplete', 'onbeforedeactivate', 'nofocusrect',
         'ondblclick', 'onselectstart', 'onreadystatechange',
         'dataFormatAs', 'onmousedown', 'onscroll', 'style',
         'implementation', 'onbeforecut', 'oncontrolselect',
         'ondatasetcomplete', 'onmouseup', 'noWrap', 'onfocusin',
         'onresizeend', 'oncontextmenu', 'ondragstart', 'onmoveend',
-        'onbeforeeditfocus', 'onpropertychange', 'lang', 
+        'onbeforeeditfocus', 'onpropertychange', 'lang',
         'onmovestart', 'onkeyup', 'dir', 'onfilterchange',
         'onmouseenter', 'onresize', 'onclick', 'onbeforecopy',
         'onfocus', 'ondatasetchanged', 'id', 'onmove', 'onpage',
@@ -553,7 +553,7 @@ function initSilvaPopupKupu(iframe) {
         return false;
     };
     // to make firefox not pop up a warning as well...
-    addEventHandler(window, 'unload', cancelEvent); 
+    addEventHandler(window, 'unload', cancelEvent);
 
     // jasper@infrae.com: 2006-12-08,  Disabled context menu
     // var cm = new ContextMenu();
@@ -576,7 +576,7 @@ function initSilvaPopupKupu(iframe) {
 
     var boldchecker = ParentWithStyleChecker(new Array('b', 'strong'),
         'font-weight', 'bold');
-    var boldbutton = new KupuStateButton('kupu-bold-button', 
+    var boldbutton = new KupuStateButton('kupu-bold-button',
         execCommand('bold'),
         boldchecker,
         'kupu-bold',
@@ -585,18 +585,18 @@ function initSilvaPopupKupu(iframe) {
 
     var italicschecker = ParentWithStyleChecker(new Array('i', 'em'),
         'font-style', 'italic');
-    var italicsbutton = new KupuStateButton('kupu-italic-button', 
+    var italicsbutton = new KupuStateButton('kupu-italic-button',
         execCommand('italic'),
-        italicschecker, 
-        'kupu-italic', 
+        italicschecker,
+        'kupu-italic',
         'kupu-italic-pressed');
     kupu.registerTool('italicsbutton', italicsbutton);
 
     var underlinechecker = ParentWithStyleChecker(new Array('u'));
-    var underlinebutton = new KupuStateButton('kupu-underline-button', 
+    var underlinebutton = new KupuStateButton('kupu-underline-button',
         execCommand('underline'),
         underlinechecker,
-        'kupu-underline', 
+        'kupu-underline',
         'kupu-underline-pressed');
     kupu.registerTool('underlinebutton', underlinebutton);
 
@@ -609,10 +609,10 @@ function initSilvaPopupKupu(iframe) {
     kupu.registerTool('subscriptbutton', subscriptbutton);
 
     var superscriptchecker = ParentWithStyleChecker(new Array('super', 'sup'));
-    var superscriptbutton = new KupuStateButton('kupu-superscript-button', 
+    var superscriptbutton = new KupuStateButton('kupu-superscript-button',
         execCommand('superscript'),
         superscriptchecker,
-        'kupu-superscript', 
+        'kupu-superscript',
         'kupu-superscript-pressed');
     kupu.registerTool('superscriptbutton', superscriptbutton);
 
@@ -639,12 +639,12 @@ function initSilvaPopupKupu(iframe) {
     linktool.registerToolBox("linktoolbox", linktoolbox);
 
     var indextool = new SilvaIndexTool(
-        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton', 
-        'kupu-index-updatebutton', 'kupu-index-deletebutton', 
+        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton',
+        'kupu-index-updatebutton', 'kupu-index-deletebutton',
         'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('indextool', indextool);
 
-    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym', 
+    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
         'kupu-abbr-radiorow', 'kupu-abbr-title',
         'kupu-abbr-addbutton', 'kupu-abbr-updatebutton',
         'kupu-abbr-deletebutton', 'kupu-toolbox-abbr',
@@ -672,21 +672,21 @@ function initSilvaPopupKupu(iframe) {
         };
     };
 
-    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation', 
+    kupu.xhtmlvalid.setAttrFilter(['is_toc', 'toc_depth', 'is_citation',
         'source', 'author', 'source_id', 'source_title', 'key',
-        'silva_type', 'alignment', 
-        'link_to_hires', 'link', 'silva_src',
-        'silva_href', 'silva_column_info']);
+        'silva_type', 'alignment', 'link_to_hires', 'link', 'silva_src',
+        'silva_href', 'silva_reference', 'silva_target', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that
     kupu.xhtmlvalid.includeTagAttributes(['div'], ['*']);
     kupu.xhtmlvalid.includeTagAttributes(['span'], ['key']);
     kupu.xhtmlvalid.includeTagAttributes(['p'], ['silva_type']);
     kupu.xhtmlvalid.includeTagAttributes(['h6'], ['silva_type']);
-    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment', 
-        'link_to_hires', 
+    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment',
+        'link_to_hires',
         'target', 'link',
         'silva_src']);
-    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href']);
+    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href',
+        'silva_reference', 'silva_target']);
     kupu.xhtmlvalid.includeTagAttributes(['table'], ['silva_column_info']);
 
     if (window.kuputoolcollapser) {
@@ -699,20 +699,20 @@ function initSilvaPopupKupu(iframe) {
     // save every possible HTML attr for the div
     kupu.xhtmlvalid.excludeTagAttributes(['div'], ['onrowexit', 'onfocusout',
         'onrowsinserted', 'disabled', 'oncopy', 'onresizestart',
-        'onerrorupdate', 'tabIndex', 'ondeactivate', 
-        'ondataavailable', 'ondragover', 'title', 'accessKey', 
+        'onerrorupdate', 'tabIndex', 'ondeactivate',
+        'ondataavailable', 'ondragover', 'title', 'accessKey',
         'onkeypress', 'dataFld', 'onmousemove', 'onactivate',
         'onafterupdate', 'ondrag', 'contentEditable', 'hideFocus',
         'onblur', 'onmouseout', 'oncellchange', 'onmouseleave',
         'onkeydown', 'dataSrc', 'onmousewheel', 'onpaste', 'ondrop',
-        'onrowsdelete', 'onrowenter', 'ondragend', 'align', 
+        'onrowsdelete', 'onrowenter', 'ondragend', 'align',
         'onlayoutcomplete', 'onbeforedeactivate', 'nofocusrect',
         'ondblclick', 'onselectstart', 'onreadystatechange',
         'dataFormatAs', 'onmousedown', 'onscroll', 'style',
         'implementation', 'onbeforecut', 'oncontrolselect',
         'ondatasetcomplete', 'onmouseup', 'noWrap', 'onfocusin',
         'onresizeend', 'oncontextmenu', 'ondragstart', 'onmoveend',
-        'onbeforeeditfocus', 'onpropertychange', 'lang', 
+        'onbeforeeditfocus', 'onpropertychange', 'lang',
         'onmovestart', 'onkeyup', 'dir', 'onfilterchange',
         'onmouseenter', 'onresize', 'onclick', 'onbeforecopy',
         'onfocus', 'ondatasetchanged', 'id', 'onmove', 'onpage',
@@ -728,7 +728,7 @@ function initSilvaPopupKupu(iframe) {
         in that it's a direct copy, with some customizations
         to write the content back to the caller */
 function saveKupuPopup(editor) {
-    /* add some fields to the form and place the contents of the iframes 
+    /* add some fields to the form and place the contents of the iframes
     */
     var sourcetool = editor.getTool('sourceedittool');
     if (sourcetool) {sourcetool.cancelSourceMode();};
@@ -761,8 +761,8 @@ function saveKupuPopup(editor) {
     editor.logMessage(_("Starting HTML cleanup"));
     var transform = editor._filterContent(editor.getInnerDocument().documentElement);
 
-    // XXX need to fix this.  Sometimes a spurious "\n\n" text 
-    // node appears in the transform, which breaks the Moz 
+    // XXX need to fix this.  Sometimes a spurious "\n\n" text
+    // node appears in the transform, which breaks the Moz
     // serializer on .xml
     var contents =  editor._serializeOutputToString(transform);
     editor.logMessage(_("Cleanup done, sending back to opening window"));

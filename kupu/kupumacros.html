@@ -392,30 +392,29 @@
 
     </div>
   
-    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-links" tal:define="model_container model/get_container">
-      <script type="text/javascript">
-        function getLink(container_url) {
-	  var linktool = kupu.getTool('linktool');
-	  reference.getReference(
-	    function(path, id, title) {
-	      linktool.createLink(path,null,null,null,title);
-	    },
-	    container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
-	}	
-       </script>
-       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
+    <div class="kupu-toolbox" id="kupu-toolbox-links">
+      <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
       <div class="kupu-tooltray">
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-            <tr>
-              <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"> </button>
-	      </td>
-              <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
-            </tr>
-          </table>
+
+          <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
+            <div id="#" title="get reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog">
+              <ul class="reference-dialog-data">
+              </ul>
+            </div>
+            <span>selected:
+              <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
+            </span>
+            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value"/>
+            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url"/>
+            <button class="button reference-dialog-trigger">
+              Change
+            </button>
+          </div>
+
           <span i18n:translate="">link target:</span>
           <select id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>
