@@ -33,6 +33,7 @@ class CachedData(Persistent):
         self.data = data
         self.datetime = datetime
 
+
 class VersionedContent(Content, Versioning, BaseFolder):
     security = ClassSecurityInfo()
 
@@ -46,24 +47,18 @@ class VersionedContent(Content, Versioning, BaseFolder):
     _cached_checked = {}
     _cached_data = {}
 
+    # Set ZMI tabs
+    manage_options = (
+        (BaseFolder.manage_options[0], ) +
+        ({'label': 'Silva /edit...', 'action':'edit'},)+
+        BaseFolder.manage_options[1:])
 
     def __init__(self, id):
         """Initialize VersionedContent.
-
-        VersionedContent has no title of its own; its versions do.
         """
-        VersionedContent.inheritedAttribute('__init__')(
-            self, id)
+        super(VersionedContent, self).__init__(id)
         self._cached_data = {}
         self._cached_checked = {}
-
-    # A hackish way to get a Silva tab in between the standard ZMI tabs
-    inherited_manage_options = BaseFolder.manage_options
-    manage_options=(
-        (inherited_manage_options[0], ) +
-        ({'label':'Customization', 'action':'manage_customization'}, ) +
-        inherited_manage_options[1:]
-        )
 
     # MANIPULATORS
 
