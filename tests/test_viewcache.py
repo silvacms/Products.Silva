@@ -35,7 +35,7 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         # doc not cacheable
         doc = self.document
         dom = doc.get_editable().content
-        dom.documentElement.appendChild(dom.createElement('toc'))
+        dom.documentElement.appendChild(dom.createElement('code'))
         now = DateTime()
         doc.set_unapproved_version_publication_datetime(now - 1)
         doc.approve_version()
@@ -85,7 +85,7 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         # publication was not cacheable, but new version is
         doc = self.document
         dom = doc.get_editable().content
-        dom.documentElement.appendChild(dom.createElement('toc'))
+        dom.documentElement.appendChild(dom.createElement('code'))
         now = DateTime()
         doc.set_unapproved_version_publication_datetime(now - 1)
         doc.approve_version()
@@ -111,7 +111,7 @@ class ViewCacheTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(doc.is_cached())
         doc.create_copy()
         dom = doc.get_editable().content
-        dom.documentElement.appendChild(dom.createElement('toc'))
+        dom.documentElement.appendChild(dom.createElement('code'))
         now = DateTime()
         doc.set_unapproved_version_publication_datetime(now - 1)
         doc.approve_version()
