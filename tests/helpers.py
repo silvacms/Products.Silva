@@ -20,7 +20,7 @@ def enablePreview(content):
     if not IPreviewLayer.providedBy(content.REQUEST):
         alsoProvides(content.REQUEST, IPreviewLayer)
 
-def approveObject(obj):
+def approve_object(obj):
     """Publish object.
     """
     now = DateTime.DateTime()
@@ -28,13 +28,16 @@ def approveObject(obj):
     obj.approve_version()
 
 
-def publishObject(obj):
+def publish_object(obj):
     """Publish object.
     """
     now = DateTime.DateTime()
     obj.set_unapproved_version_publication_datetime(now - 10)
     obj.approve_version()
 
+# We are going to convert all API not to use camelcase anymore.
+publishObject = publish_object
+approveObject = approve_object
 
 def publishApprovedObject(obj):
     """Publish the approved object.
