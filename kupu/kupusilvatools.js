@@ -329,51 +329,64 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     var href = '';
     while (currnode) {
         if (currnode.nodeName == 'A') {
-            reference = currnode.getAttribute('silva_target');
-            if (reference) {
-                if (this.toolboxel) {
-                    this.toolboxel.className = this.activeclass;
-                    if (this.toolboxel.open_handler) {
-                        this.toolboxel.open_handler();
+
+            var enableToolBox = (function(self) {
+                if (self.toolboxel) {
+                    self.toolboxel.className = self.activeclass;
+                    if (self.toolboxel.open_handler) {
+                        self.toolboxel.open_handler();
                     };
                 };
+                var target = currnode.getAttribute('target');
+                if (!target) {
+                    self.targetselect.selectedIndex = 0;
+                    self.targetinput.style.display = 'none';
+                } else {
+                    var target_found = false;
+                    for (var i=0; i < self.targetselect.options.length; i++) {
+                        var option = self.targetselect.options[i];
+                        if (option.value == target) {
+                            self.targetselect.selectedIndex = i;
+                            target_found = true;
+                            break;
+                        };
+                    };
+                    if (target_found) {
+                        self.targetinput.value = '';
+                        self.targetinput.style.display = 'none';
+                    } else {
+                        // XXX self is pretty hard-coded...
+                        self.targetselect.selectedIndex =
+                            self.targetselect.options.length - 1;
+                        self.targetinput.value = target;
+                        self.targetinput.style.display = 'inline';
+                    };
+                };
+                self.addbutton.style.display = 'none';
+                self.updatebutton.style.display = 'inline';
+                self.delbutton.style.display = 'inline';
+                });
+
+            reference = currnode.getAttribute('silva_target');
+            if (reference) {
                 this.input.value = reference;
                 this.inputlink.text(_('loading ...'));
                 var self = this;
+                enableToolBox(self);
                 $.getJSON(this.baseurl + '/++rest++items',
                           {'intid': reference},
                           function(data) {
                               self.inputlink.text(data['title']);
                               self.inputlink.attr('href', data['url']);
                           });
-                var target = currnode.getAttribute('target');
-                if (!target) {
-                    this.targetselect.selectedIndex = 0;
-                    this.targetinput.style.display = 'none';
-                } else {
-                    var target_found = false;
-                    for (var i=0; i < this.targetselect.options.length; i++) {
-                        var option = this.targetselect.options[i];
-                        if (option.value == target) {
-                            this.targetselect.selectedIndex = i;
-                            target_found = true;
-                            break;
-                        };
-                    };
-                    if (target_found) {
-                        this.targetinput.value = '';
-                        this.targetinput.style.display = 'none';
-                    } else {
-                        // XXX this is pretty hard-coded...
-                        this.targetselect.selectedIndex =
-                            this.targetselect.options.length - 1;
-                        this.targetinput.value = target;
-                        this.targetinput.style.display = 'inline';
-                    };
-                };
-                this.addbutton.style.display = 'none';
-                this.updatebutton.style.display = 'inline';
-                this.delbutton.style.display = 'inline';
+                return;
+            };
+            href = currnode.getAttribute('href') ||
+                currnode.getAttribute('silva_href');
+            if (href) {
+                this.input.value = '';
+                this.inputlink.text(_('non-reference link'));
+                enableToolBox(this);
                 return;
             };
         };
