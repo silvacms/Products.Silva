@@ -71,6 +71,11 @@ class Zope3ViewAttribute(ViewAttribute):
         """
         context = self.aq_parent
         request = self.REQUEST
+
+        # All SMI views end up including SilvaViews templates, that
+        # expect to have request['model']
+        request['model'] = context
+
         applySkin(request, ISMILayer)
         view = component.queryMultiAdapter((context, request), name=name)
         if view:
@@ -78,8 +83,6 @@ class Zope3ViewAttribute(ViewAttribute):
         else:
             # Default behaviour of ViewAttribute, but look at a Five
             # views if the asked one doesn't exists.
-            request['model'] = context
-
             view = getSilvaViewFor(self, self._view_type, context)
             return getattr(view, name, None)
 
