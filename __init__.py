@@ -6,7 +6,6 @@
 import AccessControl
 
 # registers field
-from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.FileSystemSite.DirectoryView import registerDirectory, \
     registerFileExtension
@@ -69,15 +68,13 @@ def initialize(context):
     registerDirectory('resources', globals())
     registerDirectory('globals', globals())
 
-    try:
-        from Products import kupu
-    except ImportError:
-        pass
-    else:
-        registerDirectory('%s/common' % os.path.dirname(kupu.__file__),
-                          globals())
-        registerDirectory('%s/kupu' % os.path.dirname(__file__),
-                          globals())
+    from Products.Silva import emaillinesfield, lookupwindowfield, \
+        kupupopupfield
+    from Products import kupu
+    registerDirectory('%s/common' % os.path.dirname(kupu.__file__),
+                      globals())
+    registerDirectory('%s/kupu' % os.path.dirname(__file__),
+                      globals())
 
     # initialize the metadata system
     #  register silva core types w/ metadata system
