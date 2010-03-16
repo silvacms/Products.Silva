@@ -7,10 +7,10 @@ import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
 
+
 class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
-    """
-        test the service tab
-        install/uninstall silva products
+    """Test the service tab
+    install/uninstall silva products.
     """
 
     def test_manager_services(self):
@@ -27,15 +27,18 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         sb.click_href_labeled('Services')
         self.failUnless('service_extensions (Silva Product and Extension Configuration)' in sb.browser.contents)
         # click service_extensions
-        sb.click_href_labeled('service_extensions (Silva Product and Extension Configuration)')
-        self.failUnless('Configure Silva Extension Products' in sb.browser.contents)
+        sb.click_href_labeled(
+            'service_extensions (Silva Product and Extension Configuration)')
+        self.failUnless(
+            'Configure Silva Extension Products' in sb.browser.contents)
 
         # install Silva Core
         form1 = sb.browser.getForm(index=1)
         input_hidden = form1.getControl(name='name')
         self.assertEquals(input_hidden.value, 'Silva')
         form1.getControl(name='install_layout').click()
-        self.failUnless('Default legacy layout code installed' in sb.browser.contents)
+        self.failUnless(
+            'Default legacy layout code installed' in sb.browser.contents)
 
         # Test to uninstall/reinstall already installed extensions.
         for extension in ['SilvaDocument',  'SilvaFind']:
@@ -44,28 +47,13 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
             input_hidden = form.getControl(name='name')
             self.assertEquals(input_hidden.value, extension)
             form.getControl(name='uninstall').click()
-            self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
+            self.failUnless(
+                ('%s uninstalled' % extension) in sb.browser.contents)
 
             # install it
             form = sb.browser.getForm(name=extension)
             form.getControl(name='install').click()
             self.failUnless(('%s installed' % extension) in sb.browser.contents)
-
-
-        # Test to install/deinstall non-installed extensions.
-        for extension in ['SilvaExternalSources',]:
-            # install it
-            form = sb.browser.getForm(name=extension)
-            input_hidden = form.getControl(name='name')
-            self.assertEquals(input_hidden.value, extension)
-            form.getControl(name='install').click()
-            self.failUnless(('%s installed' % extension) in sb.browser.contents)
-
-            # uninstall it
-            form = sb.browser.getForm(name=extension)
-            form.getControl(name='uninstall').click()
-            self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
-
 
         # get back to the smi
         sb.go('http://nohost/root/manage_workspace')
@@ -76,6 +64,7 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
         # logout
         status, url = sb.click_href_labeled('logout')
         self.assertEquals(status, 401)
+
 
 def test_suite():
     suite = unittest.TestSuite()
