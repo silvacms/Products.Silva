@@ -52,6 +52,7 @@ class Root(Publication, site.Site):
     # We do not want to register Root automaticaly.
     grok.implements(IRoot)
     silvaconf.icon('www/silva.png')
+    silvaconf.zmiAddable(True)
     silvaconf.factory('manage_addRootForm')
     silvaconf.factory('manage_addRoot')
 

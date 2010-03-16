@@ -6,6 +6,8 @@
 import urllib
 
 # Zope
+from zope.deprecation import deprecation
+import zope.deferredimport
 from zope.app.component.interfaces import ISite
 from zExceptions import BadRequest
 
@@ -142,14 +144,7 @@ class SwitchClass(object):
         return "<SwitchClass %r>" % self.new_class
 
 
-#make a container_filter.  See doc/developer_changes for more info
-# basically, this returns a closure that can be used for a container filter
-# for a content type during product registration.  This closure then
-# knows whether the particular content type should be available in
-# the zmi add list, whether it should only be visible outside
-# of Silva (e.g. the silva root), and the container filter contains
-# an extended parameter list to control whether to use the
-# lexically-scoped zmi_addable variable when called
+deprecation.deprecated("makeContainerFilter","makeContainerFilter has been deprecated in favor of makeZMIFilter and moved to silva.core.conf.utils.  makeContainerFilter will be removed in Silva 2.3.")
 def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
     def SilvaZCMLContainerFilter(object_manager, filter_addable=False):
         if filter_addable and not zmi_addable: return False;
@@ -163,29 +158,6 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
             return False
     return SilvaZCMLContainerFilter
 
-
-def makeZMIFilter(content, zmi_addable=True, only_outside_silva=False):
-    def SilvaZMIFilter(object_manager, filter_addable=False):
-        if filter_addable and not zmi_addable:
-            return False
-        addable = False
-        if ISite.providedBy(object_manager) and \
-                interfaces.ISilvaLocalService.implementedBy(content):
-            # Services in  sites
-            addable = True
-        elif interfaces.IContainer.providedBy(object_manager):
-            if interfaces.ISilvaObject.implementedBy(content) or \
-                    (interfaces.IZMIObject.implementedBy(content) and \
-                     not interfaces.ISilvaService.implementedBy(content)):
-                # Silva and ZMI content in Silva objects
-                addable = True
-        elif interfaces.IVersionedContent.providedBy(object_manager) and \
-                interfaces.IVersion.implementedBy(content):
-                # Let version been added in a versionned
-                # object. Should match the correct version of course ...
-                addable = True
-        if only_outside_silva or interfaces.IRoot.implementedBy(content):
-            return not addable
-        return addable
-    return SilvaZMIFilter
-
+zope.deferredimport.deprecated(
+    'Please import directly from silva.core.conf.utils',
+    makeZMIFilter="silva.core.conf.utils:ZmakeZMIFilter")
