@@ -160,4 +160,4 @@ def makeContainerFilter(zmi_addable=True, only_outside_silva=False):
 
 zope.deferredimport.deprecated(
     'Please import directly from silva.core.conf.utils',
-    makeZMIFilter="silva.core.conf.utils:ZmakeZMIFilter")
+    makeZMIFilter="silva.core.conf.utils:makeZMIFilter")
