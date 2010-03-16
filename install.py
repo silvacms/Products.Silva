@@ -82,9 +82,11 @@ def installFromScratch(root):
     configureSecurity(root)
     # now do the uinstallable stuff (views)
     install(root)
+    installSilvaLayout(root)
+    installSilvaExternalSources(root)
+    installKupu(root)
     installSilvaDocument(root)
     installSilvaFind(root)
-    installSilvaLayout(root)
 
 
 # silva core install/uninstall are really only used at one go in refresh
@@ -123,9 +125,6 @@ def install(root):
     root.add_silva_addable_forbidden('Silva IP Group')
 
     configureContainerPolicies(root)
-
-    # try to install Kupu
-    installKupu(root)
 
     installSubscriptions(root)
 
@@ -552,35 +551,48 @@ def configureContainerPolicies(root):
     cpr.register('None', NothingPolicy, 100)
     cpr.register('Silva AutoTOC', AutoTOCPolicy, 0)
 
+
 def installSilvaDocument(root):
-    # installs Silva Document if available
-    # see issue #536 and #611
-    from Products.Silva.ExtensionRegistry import extensionRegistry
-    if 'SilvaDocument' not in extensionRegistry.get_names():
-        return
-    root.service_extensions.install('SilvaDocument')
-    # create the demo content:
-    root.sec_update_last_author_info()
-    root.manage_addProduct['SilvaDocument'].manage_addDocument('index',
-        'Welcome to Silva!')
-    doc = root.index
-    doc.sec_update_last_author_info()
-    version = doc.get_editable()
-    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc toc_depth="1" /></doc>')
-    doc.set_unapproved_version_publication_datetime(DateTime())
-    doc.approve_version()
+    """Install SilvaDocument
+    """
+    from Products.SilvaDocument.install import install
+    install(root)
+    if not hasattr(root.aq_explicit, 'index'):
+        # create index page
+        root.sec_update_last_author_info()
+        root.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index',
+            'Welcome to Silva!')
+        doc = root.index
+        version = doc.get_editable()
+        # TODO: add a code source in the default document
+        version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+        doc.set_unapproved_version_publication_datetime(DateTime())
+        doc.approve_version()
+
 
 def installSilvaLayout(root):
-    # installs SilvaLayout if available
+    """Install SilvaLayout
+    """
     from Products.SilvaLayout.install import install
     install(root, default_skinid='Standard Issue')
 
+
+def installSilvaExternalSources(root):
+    """Install SilvaExternalSources
+    """
+    from Products.SilvaExternalSources.install import install
+    install(root)
+
+
 def installSilvaFind(root):
-    # installs Silva Find if available
+    """Install SilvaFind
+    """
     from Products.Silva.ExtensionRegistry import extensionRegistry
     if 'SilvaFind' not in extensionRegistry.get_names():
         return
     root.service_extensions.install('SilvaFind')
+
 
 def installSubscriptions(root):
     # Setup infrastructure for subscriptions feature.
@@ -607,17 +619,15 @@ def installSubscriptions(root):
             root.service_subscriptions, id, globals(), fileobject_add_helper, True)
 
 def installKupu(root):
-    try:
-        from Products import kupu
-    except:
-        pass
-    else:
-        if not hasattr(root, 'service_kupu'):
-            add_fss_directory_view(root, 'service_kupu',
-                                    kupu.__file__, 'common')
-        if not hasattr(root, 'service_kupu_silva'):
-            add_fss_directory_view(root, 'service_kupu_silva',
-                                    __file__, 'kupu')
+    """Install kupu.
+    """
+    from Products import kupu
+    if not hasattr(root, 'service_kupu'):
+        add_fss_directory_view(root, 'service_kupu',
+                               kupu.__file__, 'common')
+    if not hasattr(root, 'service_kupu_silva'):
+        add_fss_directory_view(root, 'service_kupu_silva',
+                               __file__, 'kupu')
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
