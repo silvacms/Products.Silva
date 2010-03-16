@@ -84,10 +84,10 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         newm = []
         for m in mt:
             cf = m['container_filter']
-            #If the container_filter is the specail filter for
+            #If the container_filter is the special filter for
             #Silva content types, then call it to see if that type
             #should be filtered from the zmi-add list as well
-            if cf and cf.__name__=="SilvaZCMLContainerFilter" \
+            if cf and cf.__name__ == "SilvaZMIFilter" \
                    and not cf(self, filter_addable=True):
                 continue
             newm.append(m)

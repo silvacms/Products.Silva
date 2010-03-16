@@ -8,7 +8,6 @@ import AccessControl
 # registers field
 from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
-from Products.Silva.helpers import makeContainerFilter
 from Products.FileSystemSite.DirectoryView import registerDirectory, \
     registerFileExtension
 from Products.FileSystemSite.FSImage import FSImage
