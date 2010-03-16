@@ -191,10 +191,10 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
  vertical-align: top;
 }
 
-.kupu-link-reference-table button.kupu-link-lookupbutton {
+#kupu-toolboxes button.kupu-link-lookupbutton {
   background-image: url("<dtml-var root_url>/globals/system-search.png");
 }
-.kupu-link-reference-table button.kupu-link-editbutton {
+#kupu-toolboxes button.kupu-link-editbutton {
   background-image: url("<dtml-var root_url>/globals/edit-find.png");
   display: none;
 }
