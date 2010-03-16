@@ -26,12 +26,13 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         # Test get_names. SilvaDocument is installed by default.
         self.failUnless('SilvaDocument' in extensionRegistry.get_names())
 
-        # Test is_installed.
+        # Test is_installed. By default those extension are installed.
         self.assertEquals(
-            extensionRegistry.is_installed('SilvaDocument', self.root), True)
+            extensionRegistry.is_installed('SilvaDocument', self.root),
+            True)
         self.assertEquals(
             extensionRegistry.is_installed('SilvaExternalSources', self.root),
-            False)
+            True)
 
         # Test get_name_for_class.
         from Products.SilvaDocument.Document import Document
