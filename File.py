@@ -39,9 +39,9 @@ from Products.Silva.Asset import Asset
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
-from Products.Silva.helpers import add_and_edit, fix_content_type_header, \
-    register_service, unregister_service
+from Products.Silva.helpers import add_and_edit, fix_content_type_header
 from Products.Silva.converters import get_converter_for_mimetype
+from silva.core.conf.utils import registerService, unregisterService
 
 # Storages
 from OFS import Image                            # For ZODB storage
@@ -664,14 +664,14 @@ def manage_addFilesService(self, id, title=None, REQUEST=None):
     if title is None:
         title = id
     service = FilesService(id, title)
-    register_service(self, id, service, interfaces.IFilesService)
+    registerService(self, id, service, interfaces.IFilesService)
     add_and_edit(self, id, REQUEST)
     return ''
 
 
 @silvaconf.subscribe(interfaces.IFilesService, IObjectWillBeRemovedEvent)
 def unregisterFileService(service, event):
-    unregister_service(service, interfaces.IFilesService)
+    unregisterService(service, interfaces.IFilesService)
 
 
 contentObjectFactoryRegistry.registerFactory(
