@@ -392,8 +392,6 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
       <div class="kupu-tooltray">
-        <div id="kupu-toolbox-addlink"> </div>
-        <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
 
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
@@ -401,34 +399,43 @@
               <ul class="reference-dialog-data">
               </ul>
             </div>
-            <span>selected:
-              <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
-            </span>
+            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            </button>
+            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
             <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value"/>
             <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url"/>
-            <button class="button reference-dialog-trigger">
-              Change
-            </button>
           </div>
 
-          <span i18n:translate="">link target:</span>
-          <select id="kupu-linktarget-select">
-            <option value="_self" i18n:translate="">same window</option>
-            <option value="_blank" i18n:translate="">new window</option>
-            <option value="_parent" i18n:translate="">parent</option>
-            <option value="_top" i18n:translate="">top</option>
-            <option value="input" i18n:translate="">custom target</option>
-          </select><br/>
-          <input class="store" type="text" id="kupu-linktarget-input" name="kupu_link_target"/>
-          <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value"/>
-          <input type="button" class="button" value="update" id="kupu-link-updatebutton" i18n:attributes="value"/>
-          <input type="button" class="button remover" value="remove" id="kupu-link-delbutton" i18n:attributes="value"/>
+          <div id="kupu-link-image-options">
+            <input type="checkbox" id="kupu-link-image-hires"/>
+            <label class="select" for="kupu-link-image-hires" i18n:translate="">
+              link to image hires
+            </label>
+          </div>
+
+          <div id="kupu-toolbox-links-options">
+            <label class="select" for="kupu-link-target-select" i18n:translate="">link target:</label>
+            <select id="kupu-link-target-select">
+              <option value="_self" i18n:translate="">same window</option>
+              <option value="_blank" i18n:translate="">new window</option>
+              <option value="_parent" i18n:translate="">parent</option>
+              <option value="_top" i18n:translate="">top</option>
+              <option value="input" i18n:translate="">custom target</option>
+            </select><br/>
+            <input class="store" type="text" id="kupu-link-target-custom"/>
+            <label class="select" for="kupu-link-title" i18n:translate="">link title:</label>
+            <input class="store" type="text" id="kupu-link-title"/>
+          </div>
+          <div class="kupu-toolbox-actions">
+            <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value"/>
+            <input type="button" class="button" value="update" id="kupu-link-updatebutton" i18n:attributes="value"/>
+            <input type="button" class="button remover" value="remove" id="kupu-link-delbutton" i18n:attributes="value"/>
+          </div>
         </form>
       </div>
     </div>
   
     <div class="kupu-toolbox" id="kupu-toolbox-indexes">
-
       <h1 class="kupu-toolbox-heading" i18n:translate="">anchor/index item</h1>
 
       <div class="kupu-tooltray">
@@ -464,60 +471,43 @@
 
   
 
-    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-images" tal:define="model_container model/get_container">
+    <div class="kupu-toolbox" id="kupu-toolbox-images">
+      <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
 
-    <script type="text/javascript" tal:content="string:       function getImage() {         var imgtool = kupu.getTool('imagetool');         reference.getReference(           function(path, id, title) {             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${model_container/absolute_url}',           'Silva Image', true, '', imgtool.urlinput.value);;       }       function imageToolGetLinkReference() {         var imgtool = kupu.getTool('imagetool');         reference.getReference(           function(path, id, title) {             imgtool.linkinput.value = path;             imgtool.setLink();           }, '${model_container/absolute_url}',           '', true, '', imgtool.linkinput.value);;       }     "/>
+      <div class="kupu-tooltray">
+        <form name="kupu_image_form" onsubmit="return false">
 
-    <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
-
-    <div class="kupu-tooltray">
-      <form name="kupu_image_form" onsubmit="return false">
-        <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button" i18n:attributes="value"/>
-        <div id="kupu-toolbox-image-edit" style="display: none">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-	  <tr>
-	   <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"> </button>
-           </td>
-	   <td><input type="text" id="kupu-toolbox-image-src" title="image source" i18n:attributes="title" class="store"/></td>
-	  </tr>
-	  </table>
-          <label class="select" for="kupu-toolbox-image-align" i18n:translate="">image alignment:</label>
-          <select id="kupu-toolbox-image-align">
-            <option i18n:translate="" value="default">default</option>
-            <option i18n:translate="" value="image-left">align left</option>
-            <option i18n:translate="" value="image-center">align center</option>
-            <option i18n:translate="" value="image-right">align right</option>
-            <option i18n:translate="" value="float-left">float left</option>
-            <option i18n:translate="" value="float-right">float right</option>
-          </select>
-          <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
-            <legend i18n:translate="">link settings</legend>
-            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">high resolution version</label>
-            <div id="kupu-toolbox-image-link-cont" style="white-space: nowrap">
-             <label for="kupu-toolbox-image-link" i18n:translate="" style="float:left;padding-right: 3px;visibility:hidden">link to:</label> 
-             <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="width: 223px">
- 	      <tr>
-	       <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"> </button>
-	       </td>
-	       <td><input type="text" id="kupu-toolbox-image-link" class="store" title="link target for image" i18n:attributes="title"/></td>
-	      </tr>
-	     </table>
+          <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-image-input" tal:attributes="id widget_id">
+            <div id="#" title="get reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog">
+              <ul class="reference-dialog-data">
+              </ul>
             </div>
-            <label class="select" for="kupu-toolbox-image-target" i18n:translate="">link target:</label>
-            <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
-              <option value="_self" i18n:translate="">same window</option>
-              <option value="_blank" i18n:translate="">new window</option>
-              <option value="_parent" i18n:translate="">parent</option>
-              <option value="_top" i18n:translate="">top</option>
-              <option value="input" i18n:translate="">custom target</option>
-            </select><br/>
-            <input type="text" id="kupu-toolbox-image-target-input" title="custom link target" i18n:attributes="title" class="store" style="display: none"/>
-            <label for="kupu-toolbox-image-alt" i18n:translate="">tooltip</label><br/>
-            <input type="text" id="kupu-toolbox-image-alt" class="store" title="image alt/tooltip" i18n:attributes="title"/><br/>
-          </fieldset>
-          <input type="button" class="button" value="update image" onclick="kupu.focusDocument()" i18n:attributes="value"/>
-          <input type="button" class="button executor" name="kupu-toolbox-image-resize" id="kupu-toolbox-image-resize" i18n:attributes="value" value="confirm resize"/>
-        </div>
+            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            </button>
+            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
+            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value"/>
+            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url"/>
+          </div>
+
+          <div id="kupu-toolbox-images-options">
+            <label class="select" for="kupu-image-align" i18n:translate="">
+              image alignment:
+            </label>
+            <select id="kupu-image-align">
+              <option i18n:translate="" value="default">default</option>
+              <option i18n:translate="" value="image-left">align left</option>
+              <option i18n:translate="" value="image-center">align center</option>
+              <option i18n:translate="" value="image-right">align right</option>
+              <option i18n:translate="" value="float-left">float left</option>
+              <option i18n:translate="" value="float-right">float right</option>
+            </select>
+          </div>
+
+          <div class="kupu-toolbox-actions">
+            <input type="button" class="button" value="add image" id="kupu-image-addbutton" i18n:attributes="value"/>
+            <input type="button" class="button" value="update" id="kupu-image-updatebutton" i18n:attributes="value"/>
+            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" i18n:attributes="value"/>
+          </div>
       </form>
     </div>
 

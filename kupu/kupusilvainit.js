@@ -345,10 +345,10 @@ function initSilvaKupu(iframe) {
     var linktool = new SilvaLinkTool();
     kupu.registerTool('linktool', linktool);
     var linktoolbox = new SilvaLinkToolBox(
-        "kupu-link-input", 'kupu-linktarget-select', 'kupu-linktarget-input',
-        "kupu-link-addbutton", 'kupu-link-updatebutton',
-        'kupu-link-delbutton', 'kupu-toolbox-links', 'kupu-toolbox',
-        'kupu-toolbox-active');
+        "kupu-link-input", "kupu-link", "kupu-link-image",
+        "kupu-link-addbutton", "kupu-link-updatebutton",
+        "kupu-link-delbutton",
+        "kupu-toolbox-links", "kupu-toolbox", "kupu-toolbox-active");
     linktool.registerToolBox("linktoolbox", linktoolbox);
 
     var indextool = new SilvaIndexTool(
@@ -366,7 +366,8 @@ function initSilvaKupu(iframe) {
         'kupu-extsource-nosourcestext');
     kupu.registerTool('extsourcetool', extsourcetool);
 
-    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
+    var abbrtool = new SilvaAbbrTool(
+        'kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
         'kupu-abbr-title', 'kupu-abbr-addbutton',
         'kupu-abbr-updatebutton', 'kupu-abbr-deletebutton',
         'kupu-toolbox-abbr', 'kupu-toolbox', 'kupu-toolbox-active');
@@ -376,14 +377,9 @@ function initSilvaKupu(iframe) {
     kupu.registerTool('commentstool', commentstool);
 
     var imagetool = new SilvaImageTool(
-        'kupu-toolbox-image-edit', 'kupu-toolbox-image-src',
-        'kupu-toolbox-image-target', 'kupu-toolbox-image-target-input',
-        'kupu-toolbox-image-link-checkbox-hires',
-        'kupu-toolbox-image-link',
-        'kupu-toolbox-image-align', 'kupu-toolbox-image-alt',
-        'kupu-toolbox-images', 'kupu-toolbox',
-        'kupu-toolbox-active', 'kupu-toolbox-image-link-cont',
-        'kupu-toolbox-image-resize', 'kupu-toolbox-image-add-button'
+        "kupu-image-input", "kupu-image-align",
+        "kupu-image-addbutton", "kupu-image-updatebutton", "kupu-image-resizebutton",
+        'kupu-toolbox-images', 'kupu-toolbox', 'kupu-toolbox-active'
     );
     kupu.registerTool('imagetool', imagetool);
 

@@ -213,11 +213,87 @@ ExternalSourceLoader.prototype.onMouseOutHandler = function(event) {
     };
 };
 
+/* generic toolbox object helper */
+var SilvaToolBox = function(toolboxid, activeclass, plainclass) {
+    this.toolbox = getFromSelector(toolboxid);
+    this.options = $('#'+ toolboxid + '-options');
+    this.options.hide();
+    this.plainclass = plainclass;
+    this.activeclass = activeclass;
+};
+
+SilvaToolBox.prototype.open = function () {
+    /* open the tool box */
+    if (this.toolbox) {
+        this.toolbox.className = this.activeclass;
+        if (this.toolbox.open_handler) {
+            this.toolbox.open_handler();
+        };
+        this.options.show();
+    };
+};
+
+SilvaToolBox.prototype.close = function () {
+    /* close the tool box*/
+    if (this.toolbox) {
+        this.toolbox.className = this.plainclass;
+    };
+    this.options.hide();
+};
+
+/* helper to select link targets */
+var SilvaLinkTargetSelector = function(targetid) {
+    var self = this;
+    this.select = $('#'+ targetid + '-select');
+    this.input = $('#'+ targetid + '-custom');
+    /* initialize and bind event */
+    this.select.change(function () {
+            if (self.select.val() != 'input') {
+                self.input.hide();
+            } else {
+                self.input.show();
+            };
+        });
+    this.input.hide();
+};
+
+SilvaLinkTargetSelector.prototype.retrieve = function(target) {
+    var target = this.select.val();
+    if (target == 'input') {
+        return this.input.val();
+    };
+    return target;
+};
+
+SilvaLinkTargetSelector.prototype.set = function(target) {
+    if (!target) {
+        this.select.val('_self');
+        this.input.val('');
+        this.input.hide();
+    } else {
+        if ($.inArray(target, ['_self', '_blank', '_parent', '_top']) > -1) {
+            this.select.val(target);
+            this.input.val('');
+            this.input.hide();
+        } else {
+            this.select.val('input');
+            this.input.val(target);
+            this.input.show();
+        };
+    };
+};
+
+SilvaLinkTargetSelector.prototype.clear = function () {
+    this.select.val('_self');
+    this.input.val('');
+    this.input.hide();
+};
+
 function SilvaLinkTool() {
     /* redefine the contextmenu elements */
 };
 
-SilvaLinkTool.prototype = new LinkTool;
+SilvaLinkTool.prototype = new LinkTool();
 
 SilvaLinkTool.prototype.updateLink = function (
         linkel, url, type, name, target, title) {
@@ -262,59 +338,62 @@ SilvaLinkTool.prototype.updateLink = function (
 };
 
 function SilvaLinkToolBox(
-        inputid, targetselectid, targetinputid, addbuttonid,
-        updatebuttonid, delbuttonid, toolboxid, plainclass, activeclass) {
+        inputid, optionid, imageid, addbuttonid, updatebuttonid, delbuttonid,
+        toolboxid, plainclass, activeclass) {
     /* create and edit links */
 
-    this.input = getFromSelector(inputid + '-value');
-    this.inputlink = $('#'+ inputid + '-link');
-    this.baseurl = $('#' + inputid + '-base').val();
-    this.targetselect = getFromSelector(targetselectid);
-    this.targetinput = getFromSelector(targetinputid);
+    this.content = new ReferencedRemoteObject(inputid);
+    this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
+    this.target = new SilvaLinkTargetSelector(optionid + '-target');
+    this.title = $('#' + optionid + '-title');
+    this.image = null;
+    this.imageoptions = $('#' + imageid + '-options');
+    this.imagehires = $('#' + imageid + '-hires');
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
     this.delbutton = getFromSelector(delbuttonid);
-    this.toolboxel = getFromSelector(toolboxid);
-    this.plainclass = plainclass;
-    this.activeclass = activeclass;
 };
 
-SilvaLinkToolBox.prototype = new LinkToolBox;
+SilvaLinkToolBox.prototype = new LinkToolBox();
 
 SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
+    var self = this;
     this.tool = tool;
     this.editor = editor;
-    addEventHandler(
-        this.targetselect, 'change', this.selectTargetHandler, this);
-    addEventHandler(
-        this.targetinput, 'change', this.selectTargetHandler, this);
+    this.imagehires.change(function() {
+            self.content.toggle();
+        });
+
     addEventHandler(this.addbutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.delbutton, 'click', this.tool.deleteLink, this);
-    this.targetinput.style.display = 'none';
     this.editor.logMessage('Link tool initialized');
 };
 
-SilvaLinkToolBox.prototype.selectTargetHandler = function(event) {
-    var select = this.targetselect;
-    var input = this.targetinput;
-
-    var selvalue = select.options[select.selectedIndex].value;
-    if (selvalue != 'input') {
-        input.style.display = 'none';
-    } else {
-        input.style.display = 'inline';
-    };
-};
-
 SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
-    var reference = this.input.value;
-    var target = this.targetselect.options[
-        this.targetselect.selectedIndex].value;
-    if (target == 'input') {
-        target = this.targetinput.value;
+    var content = this.content;
+    var reference = null;
+    var title = null;
+
+    if (this.image) {
+        // We are in an image
+        var hires = this.imagehires.attr('checked');
+        if (hires) {
+            // Reuse content selector from the image tool box if hires selected
+            imagetool = this.editor.getTool('imagetool');
+            content = imagetool.content;
+        };
+    }
+    var reference = content.reference();
+    if (!reference) {
+        // TODO: add URL field here
+        alert('No content selected as link target!');
+        return;
     };
-    this.tool.createLink(reference, 'reference', null, target);
+    var title = this.title.val() || content.title();
+    var target = this.target.retrieve();
+
+    this.tool.createLink(reference, 'reference', null, target, title);
     this.editor.content_changed = true;
     this.editor.updateState();
 };
@@ -324,158 +403,137 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
             .getNearestExternalSource(selNode)) {
         return;
     };
+    var self = this;
     var currnode = selNode;
-    var link = false;
-    var href = '';
+
+    /* reset image link settings */
+    this.content.show();        /* no link display content selector */
+    this.image = null;
+    this.imageoptions.hide()
+    this.imagehires.val(false);
+
+    /* look for a link (or an image) */
     while (currnode) {
+        if (currnode.nodeName == 'IMG') {
+            this.image = currnode;
+            this.imageoptions.show();
+            this.imagehires.attr('checked', '');
+        };
         if (currnode.nodeName == 'A') {
 
             var enableToolBox = (function(self) {
-                if (self.toolboxel) {
-                    self.toolboxel.className = self.activeclass;
-                    if (self.toolboxel.open_handler) {
-                        self.toolboxel.open_handler();
-                    };
-                };
                 var target = currnode.getAttribute('target');
-                if (!target) {
-                    self.targetselect.selectedIndex = 0;
-                    self.targetinput.style.display = 'none';
-                } else {
-                    var target_found = false;
-                    for (var i=0; i < self.targetselect.options.length; i++) {
-                        var option = self.targetselect.options[i];
-                        if (option.value == target) {
-                            self.targetselect.selectedIndex = i;
-                            target_found = true;
-                            break;
-                        };
-                    };
-                    if (target_found) {
-                        self.targetinput.value = '';
-                        self.targetinput.style.display = 'none';
-                    } else {
-                        // XXX self is pretty hard-coded...
-                        self.targetselect.selectedIndex =
-                            self.targetselect.options.length - 1;
-                        self.targetinput.value = target;
-                        self.targetinput.style.display = 'inline';
-                    };
-                };
+
+                self.toolbox.open();
+                self.target.set(target);
                 self.addbutton.style.display = 'none';
                 self.updatebutton.style.display = 'inline';
                 self.delbutton.style.display = 'inline';
                 });
 
-            reference = currnode.getAttribute('silva_target');
+            var title = currnode.getAttribute('title') || '';
+            this.title.val(title);
+            var reference = currnode.getAttribute('silva_target');
             if (reference) {
-                this.input.value = reference;
-                this.inputlink.text(_('loading ...'));
-                var self = this;
                 enableToolBox(self);
-                $.getJSON(this.baseurl + '/++rest++items',
-                          {'intid': reference},
-                          function(data) {
-                              self.inputlink.text(data['title']);
-                              self.inputlink.attr('href', data['url']);
-                          });
+                this.content.fetch(reference);
                 return;
             };
-            href = currnode.getAttribute('href') ||
+            var href = currnode.getAttribute('href') ||
                 currnode.getAttribute('silva_href');
             if (href) {
-                this.input.value = '';
-                this.inputlink.text(_('non-reference link'));
-                enableToolBox(this);
+                enableToolBox(self);
+                this.content.clear('link to: ' + href);
                 return;
             };
         };
         currnode = currnode.parentNode;
     };
-    this.targetselect.selectedIndex = 0;
-    this.targetinput.value = '';
-    this.targetinput.style.display = 'none';
+    /* We have no link. Reset the toolbox to add state */
+    this.addbutton.style.display = 'inline';
     this.updatebutton.style.display = 'none';
     this.delbutton.style.display = 'none';
-    this.addbutton.style.display = 'inline';
-    if (this.toolboxel) {
-        this.toolboxel.className = this.plainclass;
-    };
-    this.input.value = '';
-    this.inputlink.text(_('none'));
+    this.title.val('');
+    this.toolbox.close();
+    this.content.clear();
+    this.target.clear();
 };
 
 function SilvaImageTool(
-    editelid, urlinputid, targetselectid, targetinputid, hireslinkcheckboxid,
-    linkinputid, alignselectid, titleinputid, toolboxid, plainclass,
-    activeclass, linktocontainerid, resizebuttonid, addbuttonid) {
-    /* Silva specific image tool */
-    this.editel = getFromSelector(editelid);
-    this.urlinput = getFromSelector(urlinputid);
-    var urltable = this.urlinput.parentNode.parentNode;
-    this.urlinputeditbutton = urltable.getElementsByTagName('button')[1];
-    this.targetselect = getFromSelector(targetselectid);
-    this.targetinput = getFromSelector(targetinputid);
-    this.hireslinkcheckbox = getFromSelector(hireslinkcheckboxid);
-    this.linkinput = getFromSelector(linkinputid);
-    var linktable = this.linkinput.parentNode.parentNode;
-    this.linkinputeditbutton = linktable.getElementsByTagName('button')[1];
-    this.alignselect = getFromSelector(alignselectid);
-    this.titleinput = getFromSelector(titleinputid);
-    this.toolboxel = getFromSelector(toolboxid);
-    this.linktocontainer = getFromSelector(linktocontainerid);
-    this.resizebutton = getFromSelector(resizebuttonid);
-    this.plainclass = plainclass;
-    this.activeclass = activeclass;
+        inputid, alignid, addbuttonid, updatebuttonid, resizebuttonid,
+        toolboxid, plainclass, activeclass) {
+
+    this.content = new ReferencedRemoteObject(inputid);
+    this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
+    this.alignment = $('#' + alignid);
     this.resizePollingInterval = null;
+
     this.addbutton = getFromSelector(addbuttonid);
+    this.updatebutton = getFromSelector(updatebuttonid);
+    this.resizebutton = getFromSelector(resizebuttonid);
 };
 
-SilvaImageTool.prototype = new ImageTool;
+SilvaImageTool.prototype = new ImageTool();
 
 SilvaImageTool.prototype.initialize = function(editor) {
     this.editor = editor;
-    addEventHandler(this.targetselect, 'change', this.setTarget, this);
-    addEventHandler(
-        this.targetselect, 'change', this.selectTargetHandler, this);
-    addEventHandler(this.targetinput, 'change', this.setTarget, this);
-    addEventHandler(this.urlinput, 'change', this.setSrc, this);
-    addEventHandler(this.hireslinkcheckbox, 'change', this.setHires, this);
-    addEventHandler(this.linkinput, 'change', this.setLink, this);
-    addEventHandler(this.alignselect, 'change', this.setAlign, this);
-    addEventHandler(this.titleinput, 'change', this.setTitle, this);
-    addEventHandler(
-        this.resizebutton, 'click', this.finalizeResizeImage, this);
-    this.targetinput.style.display = 'none';
-    this.resizebutton.style.display = 'none';
+    addEventHandler(this.addbutton, 'click', this.createImageHandler, this);
+    addEventHandler(this.updatebutton, 'click', this.createImageHandler, this);
+    addEventHandler(this.resizebutton, 'click', this.finalizeResizeImage, this);
     this.editor.logMessage('Image tool initialized');
-    /* this edit button cell is actually always displayed, as the
-       urlinput will always be filled in if it is visible */
-    this.urlinputeditbutton.style.display='inline';
-    this.urlinputeditbutton.parentNode.style.width='42px';
 };
 
 SilvaImageTool.prototype.createContextMenuElements = function(selNode, event) {
-    return new Array(new ContextMenuElement('Create image', getImage, this));
+    return new Array(new ContextMenuElement('Create image', this.createImageHandler, this));
 };
 
-SilvaImageTool.prototype.selectTargetHandler = function(event) {
-    var select = this.targetselect;
-    var input = this.targetinput;
+SilvaImageTool.prototype.createImageHandler = function(event) {
+    /* create an image */
+    var reference = this.content.reference();
+    if (!reference) {
+        alert("No image selected!");
+        return;
+    }
 
-    var selvalue = select.options[select.selectedIndex].value;
-    if (selvalue != 'input') {
-        input.style.display = 'none';
-    } else {
-        input.style.display = 'inline';
-    };
+    var default_title = this.content.title();
+    var url = this.content.url();
+    var image = null;
+    var is_new = true;
+
+    if (this.image) {
+        this.stopResizePolling();
+        image = this.image;
+        is_new = false;
+    }
+    else {
+        image = this.editor.getInnerDocument().createElement('img');
+    }
+
+    /* set image information */
+    image.setAttribute('silva_target', reference);
+    reference = image.getAttribute('silva_reference');
+    if (!reference) {
+        image.setAttribute('silva_reference', 'new');
+    }
+    image.setAttribute('alt', default_title);
+    image.setAttribute('alignment', this.alignment.val());
+    image.setAttribute('src', url);
+    image.removeAttribute('height');
+    image.removeAttribute('width');
+
+    if (is_new) {
+        this.editor.insertNodeAtSelection(image, 1);
+    }
+    this.editor.content_changed = true;
+    this.editor.updateState();
 };
+
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
     if (this.editor.getTool('extsourcetool')
-            .getNearestExternalSource(selNode)) {
+        .getNearestExternalSource(selNode)) {
         return;
-    };
+    }
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
          /* the rest of the image tool was originally designed to
@@ -483,82 +541,22 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             feature needs to know what image was active, after is it
             no longer selected.  So store it as a property of the image
             tool */
-        this.image = image;
-        this.editel.style.display = 'block';
         this.addbutton.style.display = 'none';
-        var src = image.getAttribute('silva_src');
-        if (!src) {
-            src = image.getAttribute('src');
-        };
-        this.urlinput.value = src;
-        var target = image.getAttribute('target');
-        if (!target) {
-            this.targetselect.selectedIndex = 0;
-            this.targetinput.style.display = 'none';
-        } else {
-            var target_found = false;
-            for (var i=0; i < this.targetselect.options.length; i++) {
-                var option = this.targetselect.options[i];
-                if (option.value == target) {
-                    this.targetselect.selectedIndex = i;
-                    target_found = true;
-                    break;
-                };
-            };
-            if (target_found) {
-                this.targetinput.value = '';
-                this.targetinput.style.display = 'none';
-            } else {
-                this.targetselect.selectedIndex =
-                    this.targetselect.options.length - 1;
-                this.targetinput.value = target;
-                this.targetinput.style.display = 'inline';
-            };
-        };
-        var hires = image.getAttribute('link_to_hires') == '1';
-        if (!hires) {
-            var link = image.getAttribute('link');
-            this.hireslinkcheckbox.checked = false;
-            this.linkinput.value = link == null ? '' : link;
-            this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
-            this.linkinputeditbutton.parentNode.style.width =
-                !link ? '21px' : '42px';
-        } else {
-            this.hireslinkcheckbox.checked = 'checked';
-            this.linktocontainer.style.display = 'none';
-            this.linkinput.value = '';
-            this.linkinput.disabled = 'disabled';
-            this.linkinputeditbutton.style.display = 'none';
-            this.linkinputeditbutton.parentNode.style.width = '21px';
-        };
-        if (this.toolboxel) {
-            if (this.toolboxel.open_handler) {
-                this.toolboxel.open_handler();
-            };
-            this.toolboxel.className = this.activeclass;
-        };
-        var align = image.getAttribute('alignment');
-        if (!align) {
-            align = 'left';
-        };
-        var title = image.getAttribute('title');
-        if (!title) {
-            title = '';
-        };
-        this.titleinput.value = title;
-        selectSelectItem(this.alignselect, align);
+        this.updatebutton.style.display = 'inline';
+        this.resizebutton.style.display = 'none';
+        this.image = image;
+        this.toolbox.open();
+
+        var reference = image.getAttribute('silva_target');
+        if (reference) {
+            this.content.fetch(reference);
+        }
+        var alignment = image.getAttribute('alignment');
+        if (alignment) {
+            this.alignment.val(alignment);
+        }
         this.startResizePolling(image);
     } else {
-        this.addbutton.style.display = 'inline';
-        this.editel.style.display = 'none';
-        this.urlinput.value = '';
-        this.titleinput.value = '';
-        if (this.toolboxel) {
-            this.toolboxel.className = this.plainclass;
-        };
-        this.targetselect.selectedIndex = 0;
-        this.targetinput.value = '';
-        this.targetinput.style.display = 'none';
         if (this.resizebutton.style.display != 'none' && this.image) {
             /* image has been resized, so prompt user to
                confirm resizing */
@@ -569,8 +567,12 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             };
         };
         this.stopResizePolling();
-        this.image = null;
+        this.toolbox.close();
+        this.addbutton.style.display = 'inline';
+        this.updatebutton.style.display = 'none';
         this.resizebutton.style.display='none';
+        this.content.clear();
+        this.image = null;
     };
 };
 
@@ -642,105 +644,6 @@ SilvaImageTool.prototype.stopResizePolling = function() {
     this.resizePollingInterval = null;
 };
 
-SilvaImageTool.prototype.createImage = function(url, alttext, imgclass) {
-    /* create an image */
-    var img = this.editor.getInnerDocument().createElement('img');
-    img.src = url;
-    img.setAttribute('silva_src', url);
-    img.removeAttribute('height');
-    img.removeAttribute('width');
-    if (alttext) {
-        img.alt = alttext;
-    };
-    if (imgclass) {
-        img.className = imgclass;
-    };
-    img = this.editor.insertNodeAtSelection(img, 1);
-    this.editor.logMessage(_('Image inserted'));
-    this.editor.content_changed = true;
-    this.editor.updateState();
-    return img;
-};
-
-SilvaImageTool.prototype.setTarget = function() {
-    var target = this.targetselect.options[
-        this.targetselect.selectedIndex].value;
-    if (target == 'input') {
-        target = this.targetinput.value;
-    };
-    var selNode = this.editor.getSelectedNode();
-    var image = this.editor.getNearestParentOfType(selNode, 'img');
-    if (!image) {
-        this.editor.logMessage('No image selected!', 1);
-    };
-    image.setAttribute('target', target);
-    this.editor.content_changed = true;
-};
-
-SilvaImageTool.prototype.setSrc = function() {
-    var selNode = this.editor.getSelectedNode();
-    var img = this.editor.getNearestParentOfType(selNode, 'img');
-    if (!img) {
-        this.editor.logMessage('Not inside an image!', 1);
-    };
-
-    var src = this.urlinput.value;
-    img.setAttribute('src', src);
-    img.setAttribute('silva_src', src);
-    this.editor.content_changed = true;
-    this.editor.logMessage('Image updated');
-};
-
-SilvaImageTool.prototype.setHires = function() {
-    var selNode = this.editor.getSelectedNode();
-    var image = this.editor.getNearestParentOfType(selNode, 'img');
-    if (!image) {
-        this.editor.logMessage('No image selected!', 1);
-        return;
-    };
-    if (this.hireslinkcheckbox.checked) {
-        image.setAttribute('link_to_hires', '1');
-        image.removeAttribute('link');
-        this.linkinput.value = '';
-        this.linkinput.disabled = 'disabled';
-        this.linkinputeditbutton.style.display = 'none';
-        this.linkinputeditbutton.parentNode.style.width = '21px';
-        this.linktocontainer.style.display = 'none';
-    } else {
-        image.setAttribute('link_to_hires', '0');
-        image.setAttribute('link', this.linkinput.value);
-        this.linkinput.disabled = false;
-        this.linktocontainer.style.display = 'block';
-    };
-    this.editor.content_changed = true;
-};
-
-SilvaImageTool.prototype.setLink = function() {
-    var link = this.linkinput.value;
-    var selNode = this.editor.getSelectedNode();
-    var image = this.editor.getNearestParentOfType(selNode, 'img');
-    if (!image) {
-        this.editor.logMessage('No image selected!', 1);
-        return;
-    };
-    image.setAttribute('link', link);
-    image.setAttribute('link_to_hires', '0');
-    this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
-    this.linkinputeditbutton.parentNode.style.width = !link ? '21px' : '42px';
-    this.editor.content_changed = true;
-};
-
-SilvaImageTool.prototype.setTitle = function() {
-    var selNode = this.editor.getSelectedNode();
-    var image = this.editor.getNearestParentOfType(selNode, 'img');
-    if (!image) {
-        this.editor.logMessage('No image selected!', 1);
-        return;
-    };
-    var title = this.titleinput.value;
-    image.setAttribute('title', title);
-    this.editor.content_changed = true;
-};
 
 SilvaImageTool.prototype.setAlign = function() {
     var selNode = this.editor.getSelectedNode();
@@ -3342,7 +3245,7 @@ SilvaPropertyTool.prototype._createCheckboxItemHTML = function(
         if (info.length == 3) {
             title = info[1];
             checked = (info[2] == 'true' || info[2] == 'yes');
-        };
+         };
         var div = document.createElement('div');
         div.className = 'kupu-properties-checkbox-line';
         innerdiv.appendChild(div);

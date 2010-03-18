@@ -15,6 +15,7 @@ from Products.SilvaDocument.transform.Transformer import EditorTransformer
 from Products.SilvaDocument.transform.base import Context
 
 class KupuPopupValidator(StringValidator):
+
     def validate(self, field, key, REQUEST):
         # XXX no validation at the moment, but perhaps
         #we'd want to validate to an xhtml standard,
