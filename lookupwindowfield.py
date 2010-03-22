@@ -50,7 +50,7 @@ class EditButtonRedirector(BrowserView):
             # to a zope path, taking into account virtualhosting
             path = request.physicalPathFromURL(path)
         #attempt to traverse to this object
-        ob = self.context.restrictedTraverse(path,None)
+        ob = self.context.aq_inner.restrictedTraverse(path,None)
         if not ob:
             raise BadRequest("Invalid location.  Unable to redirect to the edit view.")
         if ISilvaObject.providedBy(ob):
@@ -233,30 +233,14 @@ reference.getReference(
                 )
             )
         widget.append('</td><td style="text-align:right; padding-right: 3px;">')
-        taid = 'inputta%s_%s'%(index,key)
-        widget.append(
-            render_element(
-                'input',
-                type='text',
-                name=key,
-                id='input%s_%s'%(index,key),
-                css_class=field.get_value('css_class'),
-                value=value,
-                size=field.get_value('display_width'),
-                maxlength=field.get_value('display_maxwidth'),
-                onfocus="ta=document.getElementById(this.getAttribute('taid'));this.style.display='none';ta.value=this.value;ta.style.display='inline';ta.focus();",
-                taid=taid,
-                extra=field.get_value('extra')))
         widget.append(
             render_element(
                 'textarea',
-                name=taid,
-                id=taid,
-                key='input%s_%s'%(index,key),
+                name=key,
+                id='input%s_%s'%(index,key),
                 css_class=field.get_value('css_class'),
                 rows="2",
                 cols="24",
-                onblur="i=document.getElementById(this.getAttribute('key'));i.value=this.value;i.style.display='inline';this.style.display='none';",
                 contents=value))
         widget.append('</td><td class="buttoncell">')
         remove_style = ''
