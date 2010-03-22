@@ -220,6 +220,7 @@ reference.getReference(
                         quote(request['docref'])).absolute_url()
                 else:
                     url = model.absolute_url()
+            widget.append('<br />')
             widget.append(
                 render_element(
                     'button',
