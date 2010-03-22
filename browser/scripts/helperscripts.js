@@ -65,7 +65,6 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
   };
   var copy = tbody.lastChild.previousSibling.cloneNode(true);
   var key = input.getAttribute('id').replace(/^addbutton_/,'');
- debugger;
   var refinput = copy.getElementsByTagName('textarea')[0]; /* this is the ref text field*/
   var index = parseInt(refinput.id.replace(/^input(\d*)_.*$/,'$1')) + 1;
   refinput.value = '';
