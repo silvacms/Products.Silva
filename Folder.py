@@ -31,7 +31,7 @@ import urllib
 
 from Products.Silva import mangle
 from silva.translations import translate as _
-
+from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (IContentImporter,
                                    IPublishable, IContent, IGhost,
                                    ISilvaObject, IAsset, INonPublishable,
@@ -39,7 +39,10 @@ from silva.core.interfaces import (IContentImporter,
 
 
 import OFS.interfaces
+from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
+from five import grok
+
 
 class Folder(SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
@@ -923,3 +926,15 @@ def folder_moved_update_quota(obj, event):
     if event.newParent:
         event.newParent.update_quota(size)
 
+
+class IPhotoGallery(ICustomizableTag):
+    pass
+
+
+class PhotoGalleryView(silvaviews.View):
+    grok.context(IPhotoGallery)
+
+    def update(self):
+        self.photos = []
+        if IFolder.providedBy(self.context):
+            self.photos = self.context.objectValues('Silva Image')
