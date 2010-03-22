@@ -85,7 +85,9 @@
             <tr>
               <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"> </button>
 	      </td>
-              <td><input class="store" type="text" id="kupu-link-input" name="kupu_link_href"/></td>
+              <td>
+	      <textarea name="kupu_link_href" class="store" cols="30" rows="2" type="text" id="kupu-link-input"> </textarea>
+	      </td>
             </tr>
           </table>
           <span i18n:translate="">link target:</span>

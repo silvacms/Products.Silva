@@ -1573,9 +1573,6 @@ button.kupu-link-reference {
 button.kupu-link-reference:hover {
   background-color: #b3d4bf;
 }
-.kupu-link-reference-table textarea {
- display: none;
-}
 /* end reference lookup window styles */
 
 /* for the calendar button */

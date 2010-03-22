@@ -65,16 +65,16 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
   };
   var copy = tbody.lastChild.previousSibling.cloneNode(true);
   var key = input.getAttribute('id').replace(/^addbutton_/,'');
-  var refinput = copy.getElementsByTagName('input')[0]; /* this is the ref text field*/
+ debugger;
+  var refinput = copy.getElementsByTagName('textarea')[0]; /* this is the ref text field*/
   var index = parseInt(refinput.id.replace(/^input(\d*)_.*$/,'$1')) + 1;
   refinput.value = '';
   refinput.id = 'input' + index + '_' + key;
   refinput.setAttribute('taid', 'inputta' + index + '_' + key);
- 
-  var ta = copy.getElementsByTagName('textarea')[0];
+/*  var ta = copy.getElementsByTagName('textarea')[0];
   ta.id = 'inputta' + index + '_' + key;
   ta.setAttribute('key', refinput.id);
-  ta.name = ta.id;
+  ta.name = ta.id;*/
   var buttons = copy.getElementsByTagName('button');
   var lbutton = buttons[0];
   var editbutton = null;
