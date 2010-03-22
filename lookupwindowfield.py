@@ -50,7 +50,7 @@ class EditButtonRedirector(BrowserView):
             # to a zope path, taking into account virtualhosting
             path = request.physicalPathFromURL(path)
         #attempt to traverse to this object
-        ob = self.context.restrictedTraverse(path,None)
+        ob = self.context.aq_inner.restrictedTraverse(path,None)
         if not ob:
             raise BadRequest("Invalid location.  Unable to redirect to the edit view.")
         if ISilvaObject.providedBy(ob):
