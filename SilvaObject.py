@@ -396,44 +396,10 @@ class SilvaObject(Security, ViewCode):
         """
         return self.view_version()
 
-    def _view_version_helper(self, view_type, version):
-        #this code was moved out of _view_version so that
-        #the rendering code (only) can be cached.
-        #view_version has side-effects, which don't happen
-        # if view_version is cached.
-
-        # Search for an XSLT renderer
-        result = getRenderableAdapter(version).view()
-        if result is not None:
-            return result
-
-        request = self.REQUEST
-        # Search for a five view
-        view = component.queryMultiAdapter(
-            (self, request), name=u'content.html')
-        if view is not None:
-            return view()
-
-        # Fallback on a Silva view
-        request.model = version
-        request.other['model'] = version
-        try:
-            view = self.service_view_registry.get_view(
-                view_type, version.meta_type)
-        except KeyError:
-            msg = 'no %s view defined' % view_type
-            raise NoViewError, msg
-        else:
-            rendered = view.render()
-            try:
-                del request.model
-            except AttributeError:
-                pass
-            return rendered
-    
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'view_version')
     def view_version(self):
+
         # XXX Should be a view.
         version = None
         view_type = 'public'
@@ -453,8 +419,35 @@ class SilvaObject(Security, ViewCode):
             msg = _('Sorry, this ${meta_type} is not viewable.',
                     mapping={'meta_type': self.meta_type})
             return '<p>%s</p>' % translate(msg, context=self.REQUEST)
-        
-        return self._view_version_helper(view_type, version)
+
+        # Search for an XSLT renderer
+        result = getRenderableAdapter(version).view()
+        if result is not None:
+            return result
+
+        request = self.REQUEST
+        # Search for a five view
+        view = component.queryMultiAdapter(
+            (self, request), name=u'content.html')
+        if not (view is None):
+            return view()
+
+        # Fallback on a Silva view
+        request.model = version
+        request.other['model'] = version
+        try:
+            view = self.service_view_registry.get_view(
+                view_type, version.meta_type)
+        except KeyError:
+            msg = 'no %s view defined' % view_type
+            raise NoViewError, msg
+        else:
+            rendered = view.render()
+            try:
+                del request.model
+            except AttributeError:
+                pass
+            return rendered
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_default')
