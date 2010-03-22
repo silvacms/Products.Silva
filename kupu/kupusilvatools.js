@@ -339,7 +339,6 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                 };
                 this.input.value = href;
                 this.inputeditbutton.style.display="inline";
-                this.inputeditbutton.parentNode.style.width="42px";
                 var target = currnode.getAttribute('target');
                 if (!target) {
                     this.targetselect.selectedIndex = 0;
@@ -384,7 +383,6 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     };
     this.input.value = '';
     this.inputeditbutton.style.display="none";
-    this.inputeditbutton.parentNode.style.width="21px";
 };
 
 function SilvaImageTool(
