@@ -5,16 +5,14 @@
 from urlparse import urlparse
 
 # Zope 3
-from zope.interface import implements
 from zope.publisher.interfaces.http import IHTTPRequest
+from five import grok
 
 from AccessControl import ModuleSecurityInfo
 from App.class_init import InitializeClass
 
 from Products.Silva import SilvaPermissions
 
-from silva.core import conf as silvaconf
-from silva.core.conf import component
 from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.adapters import IPath
 
@@ -32,12 +30,13 @@ frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9!#\$%\&\'\*\+\-\/=\?\^_`\{\}\|~\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
-class SilvaPathAdapter(component.Adapter):
+
+class SilvaPathAdapter(grok.Adapter):
     """Adapter to unify the conversion of zope paths to Url Paths
        between the xml-based and widgets-based renderers"""
-    silvaconf.context(ISilvaObject)
-    implements(IPath)
-    
+    grok.context(ISilvaObject)
+    grok.implements(IPath)
+
     def urlToPath(self, url):
         """convert a HTTP URL to a Zope path"""
         raise NotImplemented #(yet)
@@ -56,7 +55,7 @@ class SilvaPathAdapter(component.Adapter):
          7) (same as 4)
          8) (same as 5)
          9) path within silva, different vhost
-         
+
          given:
          /silva/
                /rootc/
@@ -70,12 +69,12 @@ class SilvaPathAdapter(component.Adapter):
         A link in /silva/rootc/next to /silva/rootc/c/cdoc will be stored as c/cdoc (relative)
            and publicly rendered as c/cdoc
         -- this is also find in both contexts (nonvosted, vhosted)
-        
+
         -- reasons for using absolute_url:
            -- think: saving a relative path to an object only accessible
               through acquisition (is this bad)? -- absoluteurl will
               cleanup the path
-           -- to add on the ++preview++ layer, so absolute urls automatically 
+           -- to add on the ++preview++ layer, so absolute urls automatically
               stay within that layer
          """
         # If path is empty (can it be?), just return it
@@ -97,16 +96,16 @@ class SilvaPathAdapter(component.Adapter):
         splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
         obj = self.context.restrictedTraverse(splitpath, None)
         if obj is None:
-            # Was not found, maybe the link is broken, but maybe it's just 
+            # Was not found, maybe the link is broken, but maybe it's just
             # due to virtual hosting situations or whatever.
             return self._convertPath(path)
         if hasattr(obj.aq_base, 'absolute_url'):
-            # There are some cases where the object we find 
+            # There are some cases where the object we find
             # does not have the absolute_url method.
             return obj.absolute_url()
         # In all other cases:
         return self._convertPath(path)
-    
+
     def _convertPath(self, path):
         """if it's not an absolute url, run it through the
           IPath adapter on the REQUEST to take into account
@@ -116,17 +115,18 @@ class SilvaPathAdapter(component.Adapter):
         pad = IPath(self.context.REQUEST)
         return pad.pathToUrlPath(path)
 
-class PathAdapter(component.Adapter):
+
+class PathAdapter(grok.Adapter):
     """adapter that contains some magic to convert HTTP paths to
         physical paths and back (respecting virtual hosting situations)
-        
+
         note that this is an adapter for the *request* object, hence
         there's no normal context (instead there's self.request) and
         obviously acquisition can not be used
     """
 
-    silvaconf.context(IHTTPRequest)
-    implements(IPath)
+    grok.context(IHTTPRequest)
+    grok.implements(IPath)
 
     __allow_access_to_unprotected_subobjects__ = True
 
@@ -151,27 +151,27 @@ class PathAdapter(component.Adapter):
                 path += '#' + fragment
             return path
         request = self.request
-        
+
         # physicalPathFromURL breaks in complex virtual hosting situations
         # where incorrect urls are entered by hand, or imported
         try:
             result = '/'.join(request.physicalPathFromURL(path))
         except ValueError:
             result = path
-            
+
         # try to retain path and fragment information..
         if query:
             result += '?' + query
         if fragment:
             result += '#' + fragment
         return result
-    
+
     def pathToUrlPath(self, path):
         """convert a Zope physical path to a URL
 
             returns an absolute path relative from the HTTP virtual host
             root, unless the path is relative, then it just returns it
-            as is 
+            as is
         """
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
@@ -206,11 +206,4 @@ def __allow_access_to_unprotected_subobjects__(name, value=None):
 module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                   'getPathAdapter')
 def getPathAdapter(request):
-    #first test if request provides the zope3 IHTTPRequest interface
-    # and if not, fallback to checking if request is an instance of HTTPRequest
-    #The interface check allows code to use this pathadapter on other types
-    # of httprequest-like objects -- they just have to implement IHTTPRequest
-    # SilvaMetadata does this to "fake" a request object, when saving
-    # values from request (Binding.setValuesFromRequest)
-    assert IHTTPRequest.providedBy(request) or isinstance(request, HTTPRequest)
-    return PathAdapter(request)
+    return IPath(request)
