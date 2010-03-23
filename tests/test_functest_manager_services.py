@@ -52,21 +52,6 @@ class ManagerServicesResourcesTestCase(SilvaFunctionalTestCase):
             self.failUnless(('%s installed' % extension) in sb.browser.contents)
 
 
-        # Test to install/deinstall non-installed extensions.
-        for extension in ['SilvaExternalSources',]:
-            # install it
-            form = sb.browser.getForm(name=extension)
-            input_hidden = form.getControl(name='name')
-            self.assertEquals(input_hidden.value, extension)
-            form.getControl(name='install').click()
-            self.failUnless(('%s installed' % extension) in sb.browser.contents)
-
-            # uninstall it
-            form = sb.browser.getForm(name=extension)
-            form.getControl(name='uninstall').click()
-            self.failUnless(('%s uninstalled' % extension) in sb.browser.contents)
-
-
         # get back to the smi
         sb.go('http://nohost/root/manage_workspace')
         self.failUnless('Silva Root' in sb.browser.contents)
