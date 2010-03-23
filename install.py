@@ -438,8 +438,6 @@ def registerViews(reg):
                  ['edit', 'Container', 'Publication'])
     reg.register('edit', 'Silva Ghost',
                  ['edit', 'VersionedContent', 'Ghost'])
-    reg.register('edit', 'Silva Link',
-                 ['edit', 'VersionedContent', 'Link'])
     reg.register('edit', 'Silva Image',
                  ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva File',
