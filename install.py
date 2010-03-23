@@ -550,12 +550,9 @@ def configureContainerPolicies(root):
     cpr.register('Silva AutoTOC', AutoTOCPolicy, 0)
 
 def installSilvaDocument(root):
-    # installs Silva Document if available
-    # see issue #536 and #611
-    from Products.Silva.ExtensionRegistry import extensionRegistry
-    if 'SilvaDocument' not in extensionRegistry.get_names():
-        return
+    # Install Silva Document and SilvaExternalSource by default
     root.service_extensions.install('SilvaDocument')
+    root.service_extensions.install('SilvaExternalSources')
     # create the demo content:
     root.sec_update_last_author_info()
     root.manage_addProduct['SilvaDocument'].manage_addDocument('index',
@@ -563,7 +560,7 @@ def installSilvaDocument(root):
     doc = root.index
     doc.sec_update_last_author_info()
     version = doc.get_editable()
-    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><toc toc_depth="1" /></doc>')
+    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
