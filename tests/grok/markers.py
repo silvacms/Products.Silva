@@ -27,7 +27,8 @@
     >>> from Products.Silva.tests.grok.markers import IPhotoFolderTag
     >>> manager = IMarkManager(folder)
     >>> manager.availableMarkers
-    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
+    [u'Products.Silva.Folder.IPhotoGallery',
+     u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     []
@@ -39,7 +40,8 @@
 
     >>> manager = IMarkManager(folder)
     >>> manager.availableMarkers
-    [u'silva.core.layout.interfaces.ICustomizableMarker']
+    [u'Products.Silva.Folder.IPhotoGallery',
+     u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     ['Products.Silva.tests.grok.markers.IPhotoFolderTag']
     >>> IPhotoFolderTag.providedBy(folder)
@@ -58,7 +60,8 @@
 
     >>> manager = IMarkManager(folder)
     >>> manager.availableMarkers
-    [u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
+    [u'Products.Silva.Folder.IPhotoGallery',
+     u'Products.Silva.tests.grok.markers.IPhotoFolderTag',
      u'silva.core.layout.interfaces.ICustomizableMarker']
     >>> manager.usedMarkers
     []

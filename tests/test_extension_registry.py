@@ -31,7 +31,7 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
             extensionRegistry.is_installed('SilvaDocument', self.root), True)
         self.assertEquals(
             extensionRegistry.is_installed('SilvaExternalSources', self.root),
-            False)
+            True)
 
         # Test get_name_for_class.
         from Products.SilvaDocument.Document import Document
