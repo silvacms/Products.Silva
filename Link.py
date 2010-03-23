@@ -21,7 +21,9 @@ from silva.core import interfaces
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
 from silva.translations import translate as _
+from silva.core.smi import smi
 
+from urlparse import urlsplit, urlunsplit
 
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
@@ -64,10 +66,20 @@ class LinkVersion(CatalogedVersion):
 
 InitializeClass(LinkVersion)
 
+class URL(schema.URI):
+    def _validate(self, value):
+        (scheme, netloc, path, query, fragment,) = urlsplit(value)
+        if netloc and scheme:
+            return super(URL, self)._validate(value)
+        netloc = 'example.com'
+        scheme = 'http'
+        return super(URL, self)._validate(urlunsplit(
+            (scheme, netloc, path, query, fragment,)))
+
 
 class ILinkFields(interface.Interface):
 
-    url = schema.URI(
+    url = URL(
         title=_(u"url"),
         description=_(u"Link url. Links can contain anything, so it is the author's responsibility to create valid urls."),
         required=True)
@@ -85,6 +97,27 @@ class LinkAddForm(silvaz3cforms.AddForm):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addLink(
             data['id'], data['title'], data['url'])
+
+
+class LinkVersionFields(grok.Adapter):
+    grok.context(interfaces.ILinkVersion)
+    grok.provides(ILinkFields)
+
+    def __init__(self, context):
+        self.context = context
+
+    def get_url(self):
+        return self.context.get_url()
+
+    def set_url(self, value):
+        return self.context.set_url(value)
+
+    url = property(fget=get_url, fset=set_url)
+
+
+class LinkEditForm(silvaz3cforms.EditForm, smi.EditTab):
+    grok.context(interfaces.ILink)
+    fields = field.Fields(ILinkFields).select('url')
 
 
 class LinkView(silvaviews.View):
