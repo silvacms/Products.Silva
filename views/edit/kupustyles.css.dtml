@@ -78,87 +78,87 @@ div.kupu-tb {
  background-color: #607080;
 }
 
-span.kupu-tb-buttongroup button.kupu-spellchecker {
+#kupu-tb-buttons button.kupu-spellchecker {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/text-check.png");
 }
-span.kupu-tb-buttongroup button.kupu-save {
+#kupu-tb-buttons button.kupu-save {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/save.png");
  }
-span.kupu-tb-buttongroup button.kupu-bold {
+#kupu-tb-buttons button.kupu-bold {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png");
 }
-span.kupu-tb-buttongroup button.kupu-bold-pressed {
+#kupu-tb-buttons button.kupu-bold-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/bold.png");
  background-color: #b3d4bf;
 }
-span.kupu-tb-buttongroup button.kupu-italic {
+#kupu-tb-buttons button.kupu-italic {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png");
 }
-span.kupu-tb-buttongroup button.kupu-italic-pressed {
+#kupu-tb-buttons button.kupu-italic-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/italic.png");
  background-color: #b3d4bf;
 }
-span.kupu-tb-buttongroup button.kupu-underline {
+#kupu-tb-buttons button.kupu-underline {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png");
 }
-span.kupu-tb-buttongroup button.kupu-underline-pressed {
+#kupu-tb-buttons button.kupu-underline-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/underline.png");
  background-color: #b3d4bf;
 }
-span.kupu-tb-buttongroup button.kupu-subscript {
+#kupu-tb-buttons button.kupu-subscript {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png");
 }
-span.kupu-tb-buttongroup button.kupu-subscript-pressed {
+#kupu-tb-buttons button.kupu-subscript-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png");
  background-color: #b3d4bf;
 }
-span.kupu-tb-buttongroup button.kupu-superscript {
+#kupu-tb-buttons button.kupu-superscript {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png");
 }
-span.kupu-tb-buttongroup button.kupu-superscript-pressed {
+#kupu-tb-buttons button.kupu-superscript-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png");
  background-color: #b3d4bf;
 }
 
-span.kupu-tb-buttongroup button.kupu-hilitecolor {display: none;}
-span.kupu-tb-buttongroup button.kupu-forecolor {display: none;}
-span.kupu-tb-buttongroup button.kupu-inserthorizontalrule {display: none;}
-span.kupu-tb-buttongroup button.kupu-justifycenter {display: none;}
-span.kupu-tb-buttongroup button.kupu-justifyleft {display: none;}
-span.kupu-tb-buttongroup button.kupu-justifyright {display: none;}
-span.kupu-tb-buttongroup button.kupu-indent {display: none;}
-span.kupu-tb-buttongroup button.kupu-outdent {display: none;}
+#kupu-tb-buttons button.kupu-hilitecolor {display: none;}
+#kupu-tb-buttons button.kupu-forecolor {display: none;}
+#kupu-tb-buttons button.kupu-inserthorizontalrule {display: none;}
+#kupu-tb-buttons button.kupu-justifycenter {display: none;}
+#kupu-tb-buttons button.kupu-justifyleft {display: none;}
+#kupu-tb-buttons button.kupu-justifyright {display: none;}
+#kupu-tb-buttons button.kupu-indent {display: none;}
+#kupu-tb-buttons button.kupu-outdent {display: none;}
 
-span.kupu-tb-buttongroup button.kupu-insertunorderedlist {
+#kupu-tb-buttons button.kupu-insertunorderedlist {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/unordered-list.png");
 }
-span.kupu-tb-buttongroup button.kupu-insertorderedlist {
+#kupu-tb-buttons button.kupu-insertorderedlist {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/ordered-list.png");
 }
 
-span.kupu-tb-buttongroup button.kupu-insertdefinitionlist {
+#kupu-tb-buttons button.kupu-insertdefinitionlist {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/definitionlist.png");
 }
 
-span.kupu-tb-buttongroup button.kupu-undo {
+#kupu-tb-buttons button.kupu-undo {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/undo.png");
 }
-span.kupu-tb-buttongroup button.kupu-redo {
+#kupu-tb-buttons button.kupu-redo {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/redo.png");
 }
 
-span.kupu-tb-buttongroup button.kupu-source {
+#kupu-tb-buttons button.kupu-source {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/view-source.png");
 }
 
-span.kupu-tb-buttongroup button.kupu-hyperlink {
+#kupu-tb-buttons button.kupu-hyperlink {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png");
 }
-span.kupu-tb-buttongroup button.kupu-hyperlink-pressed {
+#kupu-tb-buttons button.kupu-hyperlink-pressed {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/link.png");
  background-color: #b3d4bf;
 }
-span.kupu-tb-buttongroup button.kupu-image {
+#kupu-tb-buttons button.kupu-image {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/image.png");
 }
 
