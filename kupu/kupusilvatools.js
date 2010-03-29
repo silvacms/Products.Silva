@@ -346,9 +346,12 @@ function SilvaLinkToolBox(
     this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
     this.target = new SilvaLinkTargetSelector(optionid + '-target');
     this.title = $('#' + optionid + '-title');
+    this.external_href = $('#' + inputid + '-href');
+    /* the next three options are for image link support */
     this.image = null;
     this.imageoptions = $('#' + imageid + '-options');
     this.imagehires = $('#' + imageid + '-hires');
+    /* buttons */
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
     this.delbutton = getFromSelector(delbuttonid);
@@ -372,7 +375,9 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
 
 SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
     var content = this.content;
+    var external_href = this.external_href.val();
     var reference = null;
+    var target = this.target.retrieve();
     var title = null;
 
     if (this.image) {
@@ -385,15 +390,25 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
         };
     }
     var reference = content.reference();
-    if (!reference) {
+
+    if (!reference && !external_href) {
         // TODO: add URL field here
         alert('No content selected as link target!');
         return;
     };
-    var title = this.title.val() || content.title();
-    var target = this.target.retrieve();
+    if (reference) {
+        if (external_href) {
+            alert('Reference and external href selected as link target!');
+            return;
+        };
 
-    this.tool.createLink(reference, 'reference', null, target, title);
+        var title = this.title.val() || content.title();
+
+        this.tool.createLink(reference, 'reference', null, target, title);
+    }
+    else {
+        this.tool.createLink(external_href, 'external', null, target, title);
+    };
     this.editor.content_changed = true;
     this.editor.updateState();
 };
@@ -436,6 +451,13 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
             var reference = currnode.getAttribute('silva_target');
             if (reference) {
                 enableToolBox(self);
+                if (this.image) {
+                    imagetool = this.editor.getTool('imagetool');
+                    if (imagetool.content.reference() == reference) {
+                        this.imagehires.attr('checked', 'checked');
+                        this.content.hide();
+                    };
+                };
                 this.content.fetch(reference);
                 return;
             };
@@ -443,7 +465,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                 currnode.getAttribute('silva_href');
             if (href) {
                 enableToolBox(self);
-                this.content.clear('link to: ' + href);
+                this.content.clear();
+                this.external_href.val(href);
                 return;
             };
         };
@@ -454,6 +477,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     this.updatebutton.style.display = 'none';
     this.delbutton.style.display = 'none';
     this.title.val('');
+    this.external_href.val('');
     this.toolbox.close();
     this.content.clear();
     this.target.clear();

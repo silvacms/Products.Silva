@@ -80,13 +80,16 @@
             <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
             </button>
             <a href="" id="#" target="_blank"
-               tal:attributes="id string:${widget_id}-link">none</a>
+               tal:attributes="id string:${widget_id}-link"></a>
             <input type="hidden" value="" id="#" name="#"
                    tal:attributes="id string:${widget_id}-value;
                                    name string:${widget_id}_value" />
             <input type="hidden" value="#" id="#"
                    tal:attributes="id string:${widget_id}-base;
                                    value model/absolute_url" />
+            <textarea id="#" cols="32" rows="2"
+                      tal:attributes="id string:${widget_id}-href">
+            </textarea>
           </div>
 
           <div id="kupu-link-image-options">

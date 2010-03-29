@@ -1,8 +1,9 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="kupu">
 
   
-    <head>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=ascii" />
       <metal:block xmlns:metal="http://xml.zope.org/namespaces/metal" define-macro="jsincludes">
       
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="sarissa.js" tal:attributes="src string:${root_url}/service_kupu/sarissa.js"> </script>
@@ -298,7 +299,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
       <div class="kupu-tooltray">
-        <form name="kupu_link_form" onsubmit="return false;">
+        <form name="kupu_link_form" onsubmit="return false;" id="kupu_link_form">
 
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
             <div id="#" title="get reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog">
@@ -307,13 +308,15 @@
             </div>
             <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
             </button>
-            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
-            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value"/>
-            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url"/>
+            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link"></a>
+            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value" />
+            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url" />
+            <textarea id="#" cols="32" rows="2" tal:attributes="id string:${widget_id}-href">
+            </textarea>
           </div>
 
           <div id="kupu-link-image-options">
-            <input type="checkbox" id="kupu-link-image-hires"/>
+            <input type="checkbox" id="kupu-link-image-hires" />
             <label class="select" for="kupu-link-image-hires" i18n:translate="">
               link to image hires
             </label>
@@ -327,15 +330,15 @@
               <option value="_parent" i18n:translate="">parent</option>
               <option value="_top" i18n:translate="">top</option>
               <option value="input" i18n:translate="">custom target</option>
-            </select><br/>
-            <input class="store" type="text" id="kupu-link-target-custom"/>
+            </select><br />
+            <input class="store" type="text" id="kupu-link-target-custom" />
             <label class="select" for="kupu-link-title" i18n:translate="">link title:</label>
-            <input class="store" type="text" id="kupu-link-title"/>
+            <input class="store" type="text" id="kupu-link-title" />
           </div>
           <div class="kupu-toolbox-actions">
-            <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value"/>
-            <input type="button" class="button" value="update" id="kupu-link-updatebutton" i18n:attributes="value"/>
-            <input type="button" class="button remover" value="remove" id="kupu-link-delbutton" i18n:attributes="value"/>
+            <input type="button" class="button" value="add link" id="kupu-link-addbutton" i18n:attributes="value" />
+            <input type="button" class="button" value="update" id="kupu-link-updatebutton" i18n:attributes="value" />
+            <input type="button" class="button remover" value="remove" id="kupu-link-delbutton" i18n:attributes="value" />
           </div>
         </form>
       </div>
@@ -345,7 +348,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">anchor/index item</h1>
 
       <div class="kupu-tooltray">
-        <form name="kupu_index_form" onsubmit="return false;">
+        <form name="kupu_index_form" onsubmit="return false;" id="kupu_index_form">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
@@ -353,20 +356,20 @@
                   <table width="100%" border="0" cellspacing="0">
                     <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-name"/></td>
+                      <td><input class="store" type="text" id="kupu-index-name" /></td>
                     </tr>
                     <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-title"/></td>
+                      <td><input class="store" type="text" id="kupu-index-title" /></td>
                     </tr>
                   </table>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
+                  <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value" />
+                  <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value" />
+                  <input type="button" class="button remover" value="remove" id="kupu-index-deletebutton" i18n:attributes="value" />
                 </td>
               </tr>
             </tbody>
@@ -381,7 +384,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
 
       <div class="kupu-tooltray">
-        <form name="kupu_image_form" onsubmit="return false">
+        <form name="kupu_image_form" onsubmit="return false" id="kupu_image_form">
 
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-image-input" tal:attributes="id widget_id">
             <div id="#" title="get reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog">
@@ -391,8 +394,8 @@
             <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
             </button>
             <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
-            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value"/>
-            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url"/>
+            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value" />
+            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url" />
           </div>
 
           <div id="kupu-toolbox-images-options">
@@ -410,9 +413,9 @@
           </div>
 
           <div class="kupu-toolbox-actions">
-            <input type="button" class="button" value="add image" id="kupu-image-addbutton" i18n:attributes="value"/>
-            <input type="button" class="button" value="update" id="kupu-image-updatebutton" i18n:attributes="value"/>
-            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" i18n:attributes="value"/>
+            <input type="button" class="button" value="add image" id="kupu-image-addbutton" i18n:attributes="value" />
+            <input type="button" class="button" value="update" id="kupu-image-updatebutton" i18n:attributes="value" />
+            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" i18n:attributes="value" />
           </div>
       </form>
     </div>
@@ -425,7 +428,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">abbreviations and acronyms</h1>
 
       <div class="kupu-tooltray">
-        <form name="kupu-abbr-form">
+        <form name="kupu-abbr-form" id="kupu-abbr-form">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
@@ -433,13 +436,13 @@
                   <table width="100%" border="0" cellspacing="0">
                     <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a></td>
-                      <td><input class="store" type="text" id="kupu-abbr-title"/></td>
+                      <td><input class="store" type="text" id="kupu-abbr-title" /></td>
                     </tr>
                     <tr>
                       <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span></a></td>
                       <td>
-                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" i18n:translate=""/>abbreviation</label>
-                        <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" i18n:translate=""/>acronym</label>
+                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" i18n:translate="" />abbreviation</label>
+                        <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" i18n:translate="" />acronym</label>
                       </td>
                     </tr>
                   </table>
@@ -447,9 +450,9 @@
               </tr>
               <tr>
                 <td>
-                  <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-abbr-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value"/>
+                  <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value" />
+                  <input type="button" class="button" value="update" id="kupu-abbr-updatebutton" i18n:attributes="value" />
+                  <input type="button" class="button remover" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value" />
                 </td>
               </tr>
             </tbody>
@@ -468,7 +471,7 @@
       <div class="kupu-tooltray">
         <select id="kupucleanupexpressionselect" class="kupu-toolbox-st">
         </select>
-        <input class="button" type="button" id="kupucleanupexpressionbutton" value="perform" i18n:attributes="value"/>
+        <input class="button" type="button" id="kupucleanupexpressionbutton" value="perform" i18n:attributes="value" />
       </div>
     </div>
   
@@ -481,21 +484,21 @@
         <div id="kupu-extsource-formcontainer">
         </div>
 
-        <form name="kupu_extsource_form" onsubmit="return false">
+        <form name="kupu_extsource_form" onsubmit="return false" id="kupu_extsource_form">
           <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" i18n:attributes="title" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
 	          <option value="" i18n:translate="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
-                <option tal:attributes="                   value id;                   title object/description" tal:content="python:object.get_title() or id"/>
+                <option tal:attributes="                   value id;                   title object/description" tal:content="python:object.get_title() or id"></option>
               </tal:block>
             </tal:block>
           </select>
-          <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:here.service_extensions.is_installed('SilvaExternalSources')"/>
+          <input xmlns:tal="http://xml.zope.org/namespaces/tal" type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:here.service_extensions.is_installed('SilvaExternalSources')" />
           <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">The external sources product is not installed. This tool is disabled.</div>
-          <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton" i18n:attributes="value"/>
-          <input class="button canceler" type="button" value="cancel" id="kupu-extsource-cancelbutton" i18n:attributes="value"/>
-          <input class="button" type="button" value="update" id="kupu-extsource-updatebutton" i18n:attributes="value"/>
-          <input class="button remover" type="button" value="remove" id="kupu-extsource-delbutton" i18n:attributes="value"/>
+          <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton" i18n:attributes="value" />
+          <input class="button canceler" type="button" value="cancel" id="kupu-extsource-cancelbutton" i18n:attributes="value" />
+          <input class="button" type="button" value="update" id="kupu-extsource-updatebutton" i18n:attributes="value" />
+          <input class="button remover" type="button" value="remove" id="kupu-extsource-delbutton" i18n:attributes="value" />
           <div id="kupu-extsource-nosourcestext" style="display: none" i18n:translate="">
             No External Sources are available in this area of the site.
           </div>
@@ -532,27 +535,27 @@
                 <table width="100%" cellspacing="0">
                   <tr>
                     <td class="titlecell" style="width:34%"><label for="kupu-table-newrows" i18n:translate="">rows</label></td>
-                    <td><input class="store" id="kupu-table-newrows"/></td>
+                    <td><input class="store" id="kupu-table-newrows" /></td>
                   </tr>
                   <tr>
                     <td class="titlecell"><label for="kupu-table-newcols" i18n:translate="">columns</label></td>
-                    <td><input class="store" id="kupu-table-newcols"/></td>
+                    <td><input class="store" id="kupu-table-newcols" /></td>
                   </tr>
                   <tr>
                     <td class="titlecell" i18n:translate="">heading</td>
                     <td>
-                      <input id="kupu-table-makeheader" type="checkbox"/>
+                      <input id="kupu-table-makeheader" type="checkbox" />
                         <label for="kupu-table-makeheader" i18n:translate="">create header</label>
                     </td>
                   </tr>
                 </table>
-                <input type="button" class="button" id="kupu-table-addtable-button" value="add table" i18n:attributes="value"/>
+                <input type="button" class="button" id="kupu-table-addtable-button" value="add table" i18n:attributes="value" />
               </div>
               <div id="kupu-toolbox-edittable" class="kupu-toolbox-edittable" style="display: none">
 		<table width="100%">
                   <tr>
                     <td class="titlecell"><label title="comma-sep list of relative column widths" i18n:attributes="title" for="kupu-table-columnwidth" i18n:translate="">column widths</label></td>
-                    <td><input type="text" id="kupu-table-columnwidth"/></td>
+                    <td><input type="text" id="kupu-table-columnwidth" /></td>
                   </tr>
                   <tr>
                     <td class="titlecell" width="34%"><label for="kupu-table-alignchooser" i18n:translate="" title="the active column's alignment" i18n:attributes="title">column align</label></td>
@@ -577,33 +580,33 @@
             <tr>
               <td class="titlecell" i18n:translate="">cell</td>
               <td>
-                <input type="button" class="button" id="kupu-table-mergecell-button" value="merge" i18n:attributes="value"/>
-                <input type="button" class="button" id="kupu-table-splitcell-button" value="split" i18n:attributes="value"/>
+                <input type="button" class="button" id="kupu-table-mergecell-button" value="merge" i18n:attributes="value" />
+                <input type="button" class="button" id="kupu-table-splitcell-button" value="split" i18n:attributes="value" />
               </td>
             </tr>
                   <tr>
                     <td class="titlecell" i18n:translate="">column</td>
                     <td>
-                        <input type="button" class="button" id="kupu-table-addcolumn-button" value="add column" i18n:attributes="value"/>
-                        <input type="button" class="button remover" id="kupu-table-delcolumn-button" value="remove" i18n:attributes="value"/>
+                        <input type="button" class="button" id="kupu-table-addcolumn-button" value="add column" i18n:attributes="value" />
+                        <input type="button" class="button remover" id="kupu-table-delcolumn-button" value="remove" i18n:attributes="value" />
                     </td>
                   </tr>
                   <tr>
                     <td class="titlecell" i18n:translate="">row</td>
                     <td>
-                      <input type="button" class="button" id="kupu-table-addrow-button" title="add row below the active cell" value="add row" i18n:attributes="value title"/>
-                      <input type="button" class="button remover" id="kupu-table-delrow-button" value="remove" title="remove this active cell's row" i18n:attributes="value title"/></td>
+                      <input type="button" class="button" id="kupu-table-addrow-button" title="add row below the active cell" value="add row" i18n:attributes="value title" />
+                      <input type="button" class="button remover" id="kupu-table-delrow-button" value="remove" title="remove this active cell's row" i18n:attributes="value title" /></td>
                   </tr>
                   <tr>
                     <td class="titlecell" i18n:translate="">table</td>
                     <td>
-                      <input type="button" class="button" id="kupu-table-fix-button" value="cleanup" i18n:attributes="value"/>
-                      <input type="button" class="button remover" id="kupu-table-delete-button" value="remove" i18n:attributes="value"/>
+                      <input type="button" class="button" id="kupu-table-fix-button" value="cleanup" i18n:attributes="value" />
+                      <input type="button" class="button remover" id="kupu-table-delete-button" value="remove" i18n:attributes="value" />
                     </td>
                   </tr>
                   <tr>
                     <td colspan="2">
-                      <input type="button" class="button" value="update" i18n:attributes="value"/>
+                      <input type="button" class="button" value="update" i18n:attributes="value" />
                     </td>
                   </tr>
                 </table>
@@ -623,7 +626,7 @@
       <h1 class="kupu-toolbox-heading" i18n:translate="">typographical characters</h1>
       <div class="kupu-tooltray">
        <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" define="ts here/service_typo_chars|nothing">
-        <span tal:condition="ts" tal:replace="structure python:' '.join(ts.getTypoChars())"/>
+        <span tal:condition="ts" tal:replace="structure python:' '.join(ts.getTypoChars())"></span>
         <span tal:condition="not:ts">&#8364; &#8218; &#145; &#146; &#132; &#147; &#148; &#171; &#187; &#8212; &#8211; &#183; &#169;</span>
        </tal:block>
       </div>
@@ -636,7 +639,7 @@
 
       <div class="kupu-tooltray">
         <form action="." method="post" onsubmit="return false">
-          <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()" i18n:attributes="value"/>
+          <input type="button" class="button" value="save document" id="kupu-save-toolbox-button" onclick="kupu.saveDocument()" i18n:attributes="value" />
         </form>
       </div>
 
