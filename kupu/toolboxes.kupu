@@ -202,6 +202,9 @@
             <input type="hidden" value="#" id="#"
                    tal:attributes="id string:${widget_id}-base;
                                    value model/absolute_url" />
+            <input type="hidden" value="silva.core.interfaces.content.IImage"
+                   id="#"
+                   tal:attributes="id string:${widget_id}-interface" />
           </div>
 
           <div id="kupu-toolbox-images-options">
