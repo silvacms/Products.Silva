@@ -12,8 +12,8 @@
 
 XSLTPROC = /usr/bin/env xsltproc
 XSL_DEBUG = --param debug true\(\)
-XSLTPROC_PARAMS = --nonet --novalid --xinclude
-XSL_FILE = ../../kupu/make.xsl
+XSLTPROC_PARAMS = --novalid --xinclude
+XSL_FILE = make.xsl
 
 all: clean silvamacros popup
 
