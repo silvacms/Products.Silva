@@ -269,7 +269,7 @@ class ExtensionRegistry(Registry):
 
     def uninstall(self, name, root):
         self._extensions[name].installer.uninstall(root)
-        
+
     def refresh(self, name, root):
         if hasattr(self._extensions[name].installer,'refresh'):
             #installer has a refresh, so use it

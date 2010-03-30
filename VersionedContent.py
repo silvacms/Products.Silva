@@ -11,6 +11,7 @@ from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.Folder import Folder as BaseFolder
 from Persistence import Persistent
+from zExceptions import NotFound
 
 # Silva
 from Products.Silva import SilvaPermissions
@@ -189,6 +190,15 @@ class VersionedContent(Content, Versioning, BaseFolder):
             return None # There is no public document
         return getattr(self, version_id)
 
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'view_version')
+    def view_version(self, version=None):
+        version_name = self.REQUEST.other.get('SILVA_PREVIEW_NAME', '')
+        if version_name:
+            version = getattr(self, version_name, None)
+            if version is None:
+                raise NotFound(version_name)
+        return super(VersionedContent, self).view_version(version)
 
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):

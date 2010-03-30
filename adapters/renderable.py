@@ -2,17 +2,18 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
+from five import grok
 
 from App.class_init import InitializeClass
+from zope.interface import Interface
 
-from Products.Silva.adapters import adapter
 from Products.Silva.transform.interfaces import IRenderable
 
 
-class RenderableAdapter(adapter.Adapter):
-
-    implements(IRenderable)
+class RenderableAdapter(grok.Adapter):
+    grok.context(Interface)     # XXX Should be ISilvaObject or IVersion
+    grok.provides(IRenderable)
+    grok.implements(IRenderable)
 
     def view(self):
         """Display the view of this version using the selected renderer.
@@ -32,5 +33,5 @@ InitializeClass(RenderableAdapter)
 
 
 def getRenderableAdapter(context):
-    return RenderableAdapter(context).__of__(context)
+    return IRenderable(context)
 

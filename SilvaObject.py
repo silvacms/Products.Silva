@@ -28,10 +28,10 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security
 from Products.Silva.ViewCode import ViewCode
 from Products.Silva.utility import interfaces as utility_interfaces
+from Products.Silva.transform.interfaces import IRenderable
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 
 # Silva adapters
-from Products.Silva.adapters.renderable import getRenderableAdapter
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -398,10 +398,8 @@ class SilvaObject(Security, ViewCode):
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'view_version')
-    def view_version(self):
-
+    def view_version(self, version=None):
         # XXX Should be a view.
-        version = None
         view_type = 'public'
         if IPreviewLayer.providedBy(self.REQUEST):
             manager = getSecurityManager()
@@ -409,7 +407,8 @@ class SilvaObject(Security, ViewCode):
                 SilvaPermissions.ReadSilvaContent, self):
                 raise Unauthorized
             ## Have to check permission here.
-            version = self.get_previewable()
+            if version is None:
+                version = self.get_previewable()
             view_type = 'preview'
         if version is None:
             version = self.get_viewable()
@@ -421,7 +420,7 @@ class SilvaObject(Security, ViewCode):
             return '<p>%s</p>' % translate(msg, context=self.REQUEST)
 
         # Search for an XSLT renderer
-        result = getRenderableAdapter(version).view()
+        result = IRenderable(version).view()
         if result is not None:
             return result
 

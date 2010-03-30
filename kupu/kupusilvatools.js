@@ -392,7 +392,6 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
     var reference = content.reference();
 
     if (!reference && !external_href) {
-        // TODO: add URL field here
         alert('No content selected as link target!');
         return;
     };
@@ -402,11 +401,11 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
             return;
         };
 
-        var title = this.title.val() || content.title();
-
+        title = this.title.val() || content.title();
         this.tool.createLink(reference, 'reference', null, target, title);
     }
     else {
+        title = this.title.val();
         this.tool.createLink(external_href, 'external', null, target, title);
     };
     this.editor.content_changed = true;
