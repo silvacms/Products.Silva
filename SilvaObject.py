@@ -425,6 +425,9 @@ class SilvaObject(Security, ViewCode):
             return result
 
         request = self.REQUEST
+        request.model = version
+        request.other['model'] = version
+
         # Search for a five view
         view = component.queryMultiAdapter(
             (self, request), name=u'content.html')
@@ -432,8 +435,6 @@ class SilvaObject(Security, ViewCode):
             return view()
 
         # Fallback on a Silva view
-        request.model = version
-        request.other['model'] = version
         try:
             view = self.service_view_registry.get_view(
                 view_type, version.meta_type)
