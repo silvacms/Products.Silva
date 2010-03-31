@@ -397,15 +397,17 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
 
 
 class ExportSettings(xmlexport.BaseSettings):
+
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,
-                 withSubPublications=True, otherContent=True):
+                 withSubPublications=True, otherContent=True, request=None):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._version = allVersions and ALL_VERSION or PREVIEWABLE_VERSION
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
         self._render_external = False
+        self.request = request
 
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications

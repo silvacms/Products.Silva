@@ -7,15 +7,15 @@
   xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
   xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
   version="1.0">
-  
+
 <!--
   An example of an alternative stylesheet for rendering Silva Documents.
   The above namespaces should not be changed. They could be added to for
   those who have extended Silva Document XML and used their own namespace.
   -->
-  
 
-<!--  
+
+<!--
   This is hackish, but no other way was found to get the relative
   url of the two stylesheets right. The xsl:import is weird in this, IMHO.
   Python uses a string interpolation to get the right url. This also
@@ -27,19 +27,19 @@
 
   <xsl:import href="silvabase:doc_elements.xslt"/>
 
-  <xsl:output 
-    method="xml" 
-    omit-xml-declaration="yes" 
-    indent="yes" 
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
+  <xsl:output
+    method="xml"
+    omit-xml-declaration="yes"
+    indent="yes"
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
-<!-- 
+<!--
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing
-  everything else. The match="/" matches the document element of the 
+  everything else. The match="/" matches the document element of the
   Silva xml (usually <silva>) and starts to build the html from there.
   -->
-  
+
   <xsl:template match="/">
     <table>
       <tr>
@@ -57,7 +57,7 @@
   Nothing special needs to be done with silva_document or content for our
   purposes here but it could for your own renderer.
   -->
-  
+
   <xsl:template match="silva:silva_document">
     <xsl:apply-templates />
   </xsl:template>
@@ -72,7 +72,7 @@
   </xsl:template>
 
 <!--
-  The metadata is ignored, except for the title. You can access all 
+  The metadata is ignored, except for the title. You can access all
   metadata fields here in the same manner.
   -->
 
@@ -83,7 +83,7 @@
   </xsl:template>
 
   <xsl:template match="silva:workflow" />
-  
+
 <!--
   In the 'normal' mode i.e. no mode specified, used in the left table
   cell, all images are ignored.
@@ -105,7 +105,7 @@
       <img src="{@rewritten_path}" />
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="doc:table" mode="images">
   </xsl:template>
 
@@ -114,10 +114,10 @@
   cell, all text() nodes are ignored, and the images are shown, as
   links if they have a link attribute, as plain images, if not.
   -->
-  
+
   <xsl:template match="text()" mode="images">
   </xsl:template>
-    
+
 
   <xsl:template match="doc:image[@rewritten_link]" mode="images">
     <a href="{@rewritten_link}">
@@ -133,9 +133,9 @@
 <!--
   These are all the overrides needed, but one could quite easily pick
   certain elements and override them to render them differently. I would
-  start with copying the xsl:template for the element from 
+  start with copying the xsl:template for the element from
   doc_elements.xslt to your own stylesheet, and modify it there until
-  it does what you want. 
+  it does what you want.
   -->
-  
+
 </xsl:stylesheet>
