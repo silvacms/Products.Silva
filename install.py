@@ -558,7 +558,7 @@ def installSilvaDocument(root):
     doc = root.index
     doc.sec_update_last_author_info()
     version = doc.get_editable()
-    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p></doc>')
+    version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><source id="cs_toc"><parameter type="string" key="paths">%s</parameter><parameter type="boolean" key="show_icon">0</parameter><parameter type="list" key="toc_types">[\'Silva Document\', \'Silva Folder\', \'Silva Ghost Folder\', \'Silva Publication\', \'Silva Root\', \'Silva Ghost\', \'Silva Indexer\', \'Silva Link\', \'Silva AutoTOC\', \'Silva Find\']</parameter><parameter type="string" key="css_class"/><parameter type="string" key="sort_on">alpha</parameter><parameter type="string" key="capsule_title"/><parameter type="string" key="depth">-1</parameter><parameter type="boolean" key="display_headings">0</parameter><parameter type="string" key="alignment"/><parameter type="string" key="css_style"/><parameter type="string" key="order">normal</parameter><parameter type="boolean" key="link_headings">0</parameter><parameter type="boolean" key="show_desc">0</parameter></source></doc>' % '/'.join(root.getPhysicalPath()))
     doc.set_unapproved_version_publication_datetime(DateTime())
     doc.approve_version()
 
