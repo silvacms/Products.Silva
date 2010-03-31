@@ -458,6 +458,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                     };
                 };
                 this.content.fetch(reference);
+                this.external_href.val('');
                 return;
             };
             var href = currnode.getAttribute('href') ||
