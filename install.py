@@ -317,10 +317,6 @@ def configureSecurity(root):
     root.manage_permission('Delete objects', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
-    # authenticated needs this permission as we are not
-    # allowed to use service_editor otherwise
-    root.manage_permission('Use XMLWidgets Editor Service',
-                           roleinfo.READER_ROLES + ('Authenticated',))
 
     # this is necessary to let authors use external editor
     try:

@@ -37,7 +37,6 @@ installProduct('PageTemplates')
 installProduct('Formulator')
 installProduct('FileSystemSite')
 installProduct('ParsedXML')
-installProduct('XMLWidgets')
 installProduct('ProxyIndex')
 if hasProduct('MaildropHost'):
     installProduct('MaildropHost')
