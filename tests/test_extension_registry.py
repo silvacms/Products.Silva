@@ -62,12 +62,9 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
 
         contents = extension.get_content()
         self.assertEqual([c['name'] for c in extension.get_content()],
-                         ['Silva Document', 'Silva Document Version',
-                          'Silva Editor Support Service',
-                          'Silva CodeSource Charset Service'])
+                         ['Silva Document', 'Silva Document Version'])
         self.assertEqual([c['product'] for c in extension.get_content()],
-                         ['SilvaDocument', 'SilvaDocument', 'SilvaDocument',
-                          'SilvaDocument'])
+                         ['SilvaDocument', 'SilvaDocument'])
 
         # After, an egg.
         extension = extensionRegistry.get_extension('silva.core.layout')
