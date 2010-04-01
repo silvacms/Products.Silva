@@ -92,7 +92,7 @@ class XSLTRendererBase(object):
         style = self.stylesheet()
         doc = etree.parse(StringIO(text))
         result_tree = style(doc)
-        result_string = unicode(result_tree, 'utf-8')
+        result_string = str(result_tree).decode('utf-8')
         doctypestring = '<!DOCTYPE'
         if result_string.startswith(doctypestring):
             result_string = result_string[result_string.find('>')+1:]
