@@ -85,23 +85,14 @@ class XSLTRendererBase(object):
     security.declareProtected("View", "render")
     def render(self, obj):
         source_xml = IXMLSource(obj).getXML(external_rendering=True)
+        return self.transform_xml(source_xml)
 
-        style = self.stylesheet()
-        doc = etree.parse(StringIO(source_xml))
-        result_tree = style(doc)
-        result_string = str(result_tree)
-        doctypestring = '<!DOCTYPE'
-        if result_string.startswith(doctypestring):
-            result_string = result_string[result_string.find('>')+1:]
-
-        return result_string
-
-    security.declareProtected("View", "render")
-    def render_snippet(self, text):
+    security.declareProtected("View", "tranform_xml")
+    def transform_xml(self, text):
         style = self.stylesheet()
         doc = etree.parse(StringIO(text))
         result_tree = style(doc)
-        result_string = str(result_tree)
+        result_string = unicode(result_tree, 'utf-8')
         doctypestring = '<!DOCTYPE'
         if result_string.startswith(doctypestring):
             result_string = result_string[result_string.find('>')+1:]

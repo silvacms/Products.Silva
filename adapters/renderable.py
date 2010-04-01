@@ -26,7 +26,7 @@ class RenderableAdapter(grok.Adapter):
             self.context.get_silva_object().meta_type, renderer_name)
         if renderer is None:
             return None
-        return unicode(renderer.render(self.context), 'UTF-8')
+        return renderer.render(self.context)
 
 
 InitializeClass(RenderableAdapter)
