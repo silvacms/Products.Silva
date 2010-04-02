@@ -27,8 +27,6 @@
     silva_permissions   here/get_silva_permissions;
     may_approve_content silva_permissions/ApproveSilvaContent | nothing;
     may_change_content  silva_permissions/ChangeSilvaContent | nothing;
-
-    dummy  python: here.recordError(type, message);
 ">
 
 <head>
