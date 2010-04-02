@@ -2,9 +2,11 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
+import urllib
+
 from zope.i18n import translate
 from zope.deprecation import deprecation
+from five import grok
 
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -12,30 +14,27 @@ from App.class_init import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from OFS.Folder import Folder as BaseFolder
 from OFS.Uninstalled import BrokenClass
+import OFS.interfaces
 
 # Silva
 from Products.Silva.Ghost import ghostFactory, canBeHaunted
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from SilvaObject import SilvaObject
-from Publishable import Publishable
-import Copying
-import SilvaPermissions
-import validate
-# misc
-import helpers
-import urllib
+from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.Publishable import Publishable
+from Products.Silva import Copying
+from Products.Silva import SilvaPermissions
+from Products.Silva import helpers, mangle
 
-from Products.Silva import mangle
 from silva.translations import translate as _
-
+from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (IContentImporter,
                                    IPublishable, IContent, IGhost,
                                    ISilvaObject, IAsset, INonPublishable,
                                    IContainer, IFolder, IPublication, IRoot)
 
-
-import OFS.interfaces
+from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
+
 
 class Folder(SilvaObject, Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
@@ -49,9 +48,10 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Folder"
-
     object_type = 'container'
 
+
+    grok.implements(IFolder)
     silvaconf.icon('www/silvafolder.gif')
     silvaconf.priority(-5)
     silvaconf.factory('manage_addFolder')
@@ -65,14 +65,10 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             BaseFolder.manage_options[1:]
 
     _allow_feeds = False
-
     used_space = 0
 
-    implements(IFolder)
-
     def __init__(self, id):
-        Folder.inheritedAttribute('__init__')(
-            self, id)
+        super(Folder, self).__init__(id)
         self._ordered_ids = []
         self._addables_allowed_in_container = None
 
@@ -850,7 +846,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     def xml_validate(self, xml):
         """Return true if XML is valid.
         """
-        return validate.validate(xml)
+        # XXX To be removed
+        return True
 
     security.declarePublic('url_encode')
     def url_encode(self, string):
@@ -884,10 +881,6 @@ def manage_addFolder(
     helpers.add_and_edit(context, id, REQUEST)
     return ''
 
-## def object_will_be_moved(object, event):
-##     if object != event.object:
-##         return
-##     event.oldParent._invalidate_sidebar(object)
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
 def folder_moved_update_quota(obj, event):
@@ -916,3 +909,15 @@ def folder_moved_update_quota(obj, event):
     if event.newParent:
         event.newParent.update_quota(size)
 
+
+class IPhotoGallery(ICustomizableTag):
+    pass
+
+
+class PhotoGalleryView(silvaviews.View):
+    grok.context(IPhotoGallery)
+
+    def update(self):
+        self.photos = []
+        if IFolder.providedBy(self.context):
+            self.photos = self.context.objectValues('Silva Image')

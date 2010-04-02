@@ -1,0 +1,10 @@
+<div class="photo-gallery">
+  <a class="photo" tal:repeat="photo view/photos"
+     style="display:block; float: left; padding: 10px"
+     target="_blank"
+     tal:attributes="href photo/url"
+     tal:content="structure python:photo.tag(thumbnail=True)">
+    Photo
+  </a>
+  <br clear="both" />
+</div>
