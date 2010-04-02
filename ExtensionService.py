@@ -6,6 +6,7 @@
 from zope import interface, schema
 from five import grok
 
+from datetime import datetime
 import os.path
 import logging
 
@@ -15,6 +16,7 @@ from App.Common import package_home
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.Folder import Folder
+from OFS.Image import manage_addFile
 import transaction
 
 # Silva
@@ -235,8 +237,13 @@ class ExtensionService(Folder, SilvaService):
     def upgrade_content(self, content, from_version, to_version):
         """Upgrade the given content
         """
+        now = datetime.now().strftime('%Y-%b-%dT%H%M%S')
+        log_filename = 'upgrade-log-%s-to-%s-on-%s.log' % (
+            from_version, to_version, now)
         log = upgrade.registry.upgrade(content, from_version, to_version)
-        if IRoot.providedBy(content):
+        manage_addFile(
+            self, log_filename, log.encode('utf-8'), content_type='text/plain')
+        if interfaces.IRoot.providedBy(content):
             content._content_version = to_version
 
 
