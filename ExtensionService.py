@@ -14,19 +14,19 @@ from AccessControl import ClassSecurityInfo
 from App.Common import package_home
 from App.class_init import InitializeClass
 from DateTime import DateTime
+from OFS.Folder import Folder
 import transaction
 
 # Silva
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.Root import DocumentationInstallationException
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.interfaces import ISilvaObject, IContainer, IAsset
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
+from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
@@ -38,10 +38,10 @@ def get_content_to_index(self, content):
     """A generator to lazily get all the objects that need to be
     indexed.
         """
-    if ISilvaObject.providedBy(content):
+    if interfaces.ISilvaObject.providedBy(content):
         # Version are indexed by the versioned content itself
         yield content
-    if IContainer.providedBy(content):
+    if interfaces.IContainer.providedBy(content):
         for child in content.objectValues():
             for content in get_content_to_index(child):
                 yield content
@@ -65,14 +65,14 @@ def compute_used_space(content):
     """Recursively compute the used space by asset in the given content.
     """
     total = 0
-    if IContainer.providedBy(content):
+    if interfaces.IContainer.providedBy(content):
         used_space = 0
         for obj in content.objectValues():
             if ISilvaObject.providedBy(obj):
                 used_space += compute_used_space(obj)
         content.used_space = used_space
         total += used_space
-    elif IAsset.providedBy(content):
+    elif interfaces.IAsset.providedBy(content):
         try:
             total += content.reset_quota()
         except (AttributeError, NotImplementedError):
@@ -83,8 +83,17 @@ def compute_used_space(content):
     return total
 
 
+def install_documentation(container):
+    """Install documentation in the given container.
+    """
+    documentation_path = os.path.join(
+        os.path.dirname(__file__), 'doc', 'silva_docs.zip')
+    with open(documentation_path, 'rb') as documentation:
+        interfaces.IZipfileImporter(container).importFromZip(
+            container, documentation)
 
-class ExtensionService(SilvaService):
+
+class ExtensionService(Folder, SilvaService):
     meta_type = 'Silva Extension Service'
 
     security = ClassSecurityInfo()
@@ -93,6 +102,7 @@ class ExtensionService(SilvaService):
         {'label':'Extensions', 'action':'manage_extensions'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgrade'},
         {'label':'Partial reindex', 'action':'manage_partialReindex'},
+        {'label': 'Logs', 'action':'manage_main'},
         ) + SilvaService.manage_options
 
     silvaconf.icon('www/silva.png')
@@ -115,45 +125,41 @@ class ExtensionService(SilvaService):
                 (inst_name in root.service_views.objectIds()))]
         root.service_view_registry.set_trees(productsWithView)
 
-    security.declareProtected('View management screens', 'install')
-    def install(self, name, status=None):
+    security.declareProtected(
+        'View management screens', 'install')
+    def install(self, name):
         """Install extension
         """
         root = self.get_root()
         extensionRegistry.install(name, root)
         self._update_views(root)
-        if status:
-            return '%s installed' % name
 
-    security.declareProtected('View management screens', 'uninstall')
-    def uninstall(self, name, status=None):
+    security.declareProtected(
+        'View management screens', 'uninstall')
+    def uninstall(self, name):
         """Uninstall extension
         """
         root = self.get_root()
         extensionRegistry.uninstall(name, root)
         self._update_views(root)
-        if status:
-            return '%s uninstalled' % name
 
-    security.declareProtected('View management screens', 'refresh')
-    def refresh(self, name, status=None):
+    security.declareProtected(
+        'View management screens', 'refresh')
+    def refresh(self, name):
         """Refresh  extension.
         """
         root = self.get_root()
         extensionRegistry.refresh(name,root)
         self.refresh_caches()
-        if status:
-            return '%s refreshed' % name
 
-    security.declareProtected('View management screens', 'refresh_all')
-    def refresh_all(self, status=None):
+    security.declareProtected(
+        'View management screens', 'refresh_all')
+    def refresh_all(self):
         """Refreshes all extensions
         """
         for name in extensionRegistry.get_names():
             if self.is_installed(name):
                 self.refresh(name)
-        if status:
-            return 'Silva and all installed extensions have been refreshed'
 
     security.declareProtected('View management screens', 'refresh_caches')
     def refresh_caches(self):
@@ -161,64 +167,30 @@ class ExtensionService(SilvaService):
         """
         self._refresh_datetime = DateTime()
 
-    security.declareProtected('View management screens', 'upgrade_all')
-    def upgrade_all(self, status=None):
-        """Upgrades all content
-        """
-        self.get_root().upgrade_silva()
-        if status:
-            return 'Content upgrade succeeded. See event log for details'
-
-    security.declareProtected('View management screens', 'install_layout')
-    def install_layout(self, status):
-        """Install core layout.
-        """
-        root = self.get_root()
-        install.configureLegacyLayout(root, 1)
-        if status:
-            return 'Default legacy layout code installed'
-
-    security.declareProtected('View management screens',
-                              'install_documentation')
-    def install_documentation(self, status=None):
-        """Install the documentation.
-        """
-        message = 'Documentation installed'
-        try:
-            self.get_root().manage_installDocumentation()
-        except DocumentationInstallationException, e:
-            message = e
-        if status:
-            return message
-
-
-    security.declareProtected('View management screens',
-                              'refresh_catalog')
-    def refresh_catalog(self, status=None):
+    security.declareProtected(
+        'View management screens', 'refresh_catalog')
+    def refresh_catalog(self):
         """Refresh the silva catalog.
         """
         root = self.get_root()
         root.service_catalog.manage_catalogClear()
         logger.info('Catalog cleared.')
         index_content(root)
-        if status:
-            return 'Catalog refreshed'
 
-    security.declareProtected('View management screens',
-                              'reindex_subtree')
+    security.declareProtected(
+        'View management screens', 'reindex_subtree')
     def reindex_subtree(self, path):
         """reindexes a subtree.
         """
         root = self.get_root()
         index_content(root.unrestrictedTraverse(str(path)), reindex=True)
 
-    security.declareProtected('View management screens',
-                              'disable_quota_subsystem')
-    def disable_quota_subsystem(self, status=None):
+    security.declareProtected(
+        'View management screens', 'disable_quota_subsystem')
+    def disable_quota_subsystem(self):
         """Disable quota sub-system.
         """
         assert (self._quota_enabled)
-
         root = self.get_root()
 
         # Disable metadata for quota
@@ -230,21 +202,17 @@ class ExtensionService(SilvaService):
         root.service_metadata.removeTypesMapping(types, setids)
 
         self._quota_enabled = False
-        if status:
-            return 'Quota sub-system disabled'
 
-    security.declareProtected('View management screens',
-                              'enable_quota_subsystem')
-    def enable_quota_subsystem(self, status=None):
+    security.declareProtected(
+        'View management screens', 'enable_quota_subsystem')
+    def enable_quota_subsystem(self):
         """Enable quota sub-system.
         """
         assert (not self._quota_enabled)
-
         root = self.get_root()
 
         # Setup metadata for quota
-        silva_home = package_home(globals())
-        silva_docs = os.path.join(silva_home, 'doc')
+        silva_docs = os.path.join(os.path.dirname(__file__), 'doc')
 
         collection = root.service_metadata.getCollection()
         if 'silva-quota' in collection.objectIds():
@@ -261,8 +229,16 @@ class ExtensionService(SilvaService):
 
         root.used_space = compute_used_space(root)
         self._quota_enabled = True
-        if status:
-            return 'Quota sub-system enabled'
+
+    security.declareProtected(
+        'View management screens', 'upgrade_content')
+    def upgrade_content(self, content, from_version, to_version):
+        """Upgrade the given content
+        """
+        log = upgrade.registry.upgrade(content, from_version, to_version)
+        if IRoot.providedBy(content):
+            content._content_version = to_version
+
 
     # ACCESSORS
 
@@ -331,9 +307,11 @@ class PartialUpgradesForm(silvaviews.ZMIForm):
     @grok.action(_("Upgrade"))
     def action_upgrade(self, path, version):
         root = self.context.get_root()
-        #path is unicode; it needs to either be a string, or split
+        # If path is an unicode string it need to be encoded.
         path = path.encode('utf-8')
-        root.upgrade_silva_object(version, path)
+        content = root.restrictedTraverse(path)
+        self.context.upgrade_content(
+            content, version, root.get_silva_software_version())
         self.status = _(u"Content upgrade succeeded. See event log for details")
 
 
@@ -369,20 +347,64 @@ class ManageExtensions(silvaviews.ZMIView):
     silvaconf.name('manage_extensions')
     status = None
 
+    def refresh_all(self):
+        self.context.refresh_all()
+        return _(u'Silva and all installed extensions have been refreshed')
+
+    def refresh_catalog(self):
+        self.context.refresh_catalog()
+        return _(u'Catalog refreshed')
+
+    def disable_quota_subsystem(self):
+        self.context.disable_quota_subsystem()
+        return _(u'Quota sub-system disabled')
+
+    def enable_quota_subsystem(self):
+        self.context.enable_quota_subsystem()
+        return _(u'Quota sub-system enabled')
+
+    def upgrade_all(self):
+        root = self.context.get_root()
+        from_version = root.get_silva_content_version()
+        to_version = root.get_silva_software_version()
+        self.context.upgrade_content(root, from_version, to_version)
+        return  _(u'Content upgrade succeeded. See log in Logs tab for details')
+
+    def install_documentation(self):
+        install_documentation(self.context.get_root())
+        return _(u'Documentation installed')
+
+    def install_layout(self):
+        root = self.context.get_root()
+        install.configureLegacyLayout(root, 1)
+        return _(u'Default legacy layout code installed')
+
+    def install(self, name):
+        self.context.install(name)
+        return '%s installed' % name
+
+    def uninstall(self, name):
+        self.context.uninstall(name)
+        return '%s uninstalled' % name
+
+    def refresh(self, name):
+        self.context.refresh(name)
+        return '%s refreshed' % name
+
     def update(self):
         methods = ['refresh_all', 'install_documentation',
                    'refresh_catalog', 'disable_quota_subsystem',
                    'enable_quota_subsystem', 'upgrade_all', 'install_layout']
         for method in methods:
             if method in self.request.form:
-                self.status = getattr(self.context, method)(status=True)
+                self.status = getattr(self, method)()
         else:
             if 'name' in self.request.form:
                 methods = ['install', 'uninstall', 'refresh']
                 for method in methods:
                     if method in self.request.form:
                         self.status = getattr(self.context, method)(
-                            self.request.form['name'], status=True)
+                            self.request.form['name'])
 
     def extensions(self):
         """Return non-system extensions

@@ -16,6 +16,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 import transaction
 
 # Silva
+from Products.Silva.ExtensionService import install_documentation
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
@@ -25,15 +26,6 @@ from Products.Silva import install
 from silva.core.services import site
 from silva.core.interfaces import IRoot
 from silva.core import conf as silvaconf
-
-
-icon="www/silva.png"
-
-
-class DocumentationInstallationException(Exception):
-    """Raised when a dependency is not installed when trying to
-    install something.
-    """
 
 
 class SilvaGlobals(grok.DirectoryResource):
@@ -160,34 +152,6 @@ class Root(Publication, site.Site):
         return getattr(self, '_content_version', 'before 0.9.2')
 
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'upgrade_silva')
-    def upgrade_silva(self):
-        """Upgrade Silva from previous version.
-
-            returns nothing
-            an exception is raised on error
-        """
-        from_version = self.get_silva_content_version()
-        to_version = self.get_silva_software_version()
-        from silva.core.upgrade import upgrade
-        upgrade.registry.upgrade(self, from_version, to_version)
-        self._content_version = to_version
-
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                                'upgrade_silva_object')
-    def upgrade_silva_object(self, from_version, object_path):
-        """EXPERIMENTAL partial upgrade functionality
-
-            upgrades a single object (recursively) in the Silva tree
-            rather than the whole Silva root, can be used to upgrade
-            imported content
-        """
-        object = self.restrictedTraverse(object_path)
-        to_version = self.get_silva_software_version()
-        from silva.core.upgrade import upgrade
-        upgrade.registry.upgrade(object, from_version, to_version)
-
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'status_update')
     def status_update(self):
         """Updates status for objects that need status updated
@@ -218,20 +182,6 @@ class Root(Publication, site.Site):
 
         return 'Status updated'
 
-    security.declarePublic('recordError')
-    def recordError(self, message_type, message):
-        """record given error/feedback
-
-            actual logging is not implemented, just an idea; what really
-            happens is a ZODB transaction rollback if message_type == 'error'
-
-            message_type: either 'feedback' or 'error'
-            message: string containing user readable error
-            returns None
-        """
-        if message_type == 'error':
-            transaction.abort()
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_real_container')
     def get_real_container(self):
@@ -242,32 +192,6 @@ class Root(Publication, site.Site):
         Can be used with acquisition to get the 'nearest' container.
         """
         return None
-
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'manage_installDocumentation')
-    def manage_installDocumentation(self):
-        """Install user docs into the root, called from service_extensions"""
-        self._installDocumentation()
-
-    def _installDocumentation(self):
-        """Install user documentation into the root"""
-        try:
-            import Products.SilvaDocument
-        except ImportError:
-            raise DocumentationInstallationException, 'Documentation can not be installed since SilvaDocument is not available'
-        from adapters.zipfileimport import getZipfileImportAdapter
-        importer = getZipfileImportAdapter(self)
-        zipfile = open('%s/doc/silva_docs.zip' % os.path.dirname(__file__), 'rb')
-        importer.importFromZip(self, zipfile)
-        zipfile.close()
-
-    def _installSilvaFindInstance(self):
-        """Install a SilvaFind instance in the siteroot"""
-
-        self.manage_addProduct['SilvaFind'
-                               ].manage_addSilvaFind('search',
-                                                     'Search this site')
-        self.search.sec_update_last_author_info()
 
 
 InitializeClass(Root)
@@ -296,11 +220,12 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
 
     if add_search:
         # install a silva find instance
-        root._installSilvaFindInstance()
+        factory = root .manage_addProduct['SilvaFind']
+        factory.manage_addSilvaFind('search', 'Search this site')
 
     if add_docs:
         # install the user documentation .zexp
-        root._installDocumentation()
+        install_documentation(root)
 
     add_and_edit(self, id, REQUEST)
     return ''

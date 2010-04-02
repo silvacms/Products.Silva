@@ -3,51 +3,48 @@
 # $Id$
 
 from StringIO import StringIO
-from zope.interface import implements
+from zipfile import ZipFile
+
+from five import grok
 
 # Zope
 from AccessControl import ClassSecurityInfo, allow_module
 from App.class_init import InitializeClass
 
 # Silva
-from silva.core import interfaces as silva_interfaces
-from silva.core.interfaces import adapters as interfaces
+from silva.core.interfaces import IZipfileImporter, IContainer
 
 # Silva Adapters
-from Products.Silva.adapters import adapter
+from Products.Silva.silvaxml import xmlimport
 from Products.Silva import SilvaPermissions
 
 
-class ZipfileImportAdapter(adapter.Adapter):
+class ZipfileImportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the full media import from zipfiles.
     """
 
-    implements(interfaces.IZipfileImporter)
+    grok.implements(IZipfileImporter)
+    grok.provides(IZipfileImporter)
+    grok.context(IContainer)
 
     security = ClassSecurityInfo()
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'isFullmediaArchive')
     def isFullmediaArchive(self, archive):
         """Returns true if the archive is a fullmedia archive
         """
-        from zipfile import ZipFile
-        archive = ZipFile(archive, 'r')
-        # XXX: this is very simplistic.
-        # TODO: Fullmedia archives should have a manifest file.
-        if 'silva.xml' in archive.namelist():
-            return True
-        return False
+        with ZipFile(archive, 'r') as archive:
+            if 'silva.xml' in archive.namelist():
+                return True
+            return False
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importFromZip')
     def importFromZip(self, container, zipfile, replace=0):
         """ imports fullmedia zipfile
         """
-        from zipfile import ZipFile
-        from Products.Silva.silvaxml import xmlimport
-
+        # XXX container should be self.context !@!#?#?!!!
         existing_objects = container.objectIds()
         archive = ZipFile(zipfile, 'r')
         info = xmlimport.ImportInfo()
@@ -80,8 +77,7 @@ allow_module('Products.Silva.adapters.zipfileimport')
 __allow_access_to_unprotected_subobjects__ = True
 
 def getZipfileImportAdapter(context):
-    if not silva_interfaces.IContainer.providedBy(context):
-        # raise some exception here?
-        return None
-
-    return ZipfileImportAdapter(context).__of__(context)
+    adapter = IZipfileImporter(context, None)
+    if adapter is not None:
+        return adapter.__of__(context)
+    return None
