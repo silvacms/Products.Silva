@@ -2,7 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-import SilvaTestCase
+from Products.Silva.ExtensionService import install_documentation
+from Products.Silva.tests import SilvaTestCase
+
 
 class DocumentationTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -10,7 +12,8 @@ class DocumentationTestCase(SilvaTestCase.SilvaTestCase):
         """Test documentation installation. That should not make any
         error at all.
         """
-        self.root.manage_installDocumentation()
+        install_documentation(self.root)
+        self.failUnless(hasattr(self.root.aq_explicit, 'docs'))
 
 
 import unittest
