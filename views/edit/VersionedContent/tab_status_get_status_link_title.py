@@ -34,7 +34,7 @@ from Products.Silva.i18n import translate
 _ = lambda x: x
 
 # create the message with the _() call around it (for the i18nextract tool)
-msg = _('view «${version_title}»')
+msg = _('view "${version_title}"')
 
 # turn it to unicode so the messageidfactory can handle it
 msg = unicode(msg, 'UTF-8')
