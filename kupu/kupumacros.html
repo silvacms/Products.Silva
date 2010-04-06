@@ -28,14 +28,14 @@
       
     <script xmlns:tal="http://xml.zope.org/namespaces/tal" type="text/javascript" src="kupusilvainit.js" tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvainit.js"> </script>
     <script type="text/javascript">
-	var kupu = null;
-	var kupuui = null;
-	function startKupu() {
-	    var frame = getFromSelector('kupu-editor'); 
-	    kupu = initSilvaKupu(frame); 
-	    kupuui = kupu.getTool('ui'); 
-	    kupu.initialize();
-	};
+          var kupu = null;
+          var kupuui = null;
+          function startKupu() {
+              var frame = getFromSelector('kupu-editor'); 
+              kupu = initSilvaKupu(frame); 
+              kupuui = kupu.getTool('ui'); 
+              kupu.initialize();
+          };
         // register the function to the unload registry
         window.onload_registry.register(startKupu);
     </script>
@@ -395,13 +395,13 @@
     <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-links" tal:define="model_container model/get_container">
       <script type="text/javascript">
         function getLink(container_url) {
-	  var linktool = kupu.getTool('linktool');
-	  reference.getReference(
-	    function(path, id, title) {
-	      linktool.createLink(path,null,null,null,title);
-	    },
-	    container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
-	}	
+            var linktool = kupu.getTool('linktool');
+            reference.getReference(
+              function(path, id, title) {
+                linktool.createLink(path,null,null,null,title);
+              },
+              container_url, '', true, '', linktool.toolboxes.linktoolbox.input.value);
+          }          
        </script>
        <h1 class="kupu-toolbox-heading" i18n:translate="">link</h1>
 
@@ -412,14 +412,14 @@
           <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
             <tr>
               <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"> </button><br/><button class="kupu-button kupu-link-reference kupu-link-editbutton" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"> </button>
-	      </td>
+                </td>
               <td>
-	      <textarea name="kupu_link_href" class="store" cols="30" rows="2" type="text" id="kupu-link-input"> </textarea>
-	      </td>
+                <textarea name="kupu_link_href" class="store" cols="30" rows="2" type="text" id="kupu-link-input"> </textarea>
+                </td>
             </tr>
           </table>
-          <span i18n:translate="">link target:</span>
-          <select id="kupu-linktarget-select">
+          <label for="kupu-linktarget-select" i18n:translate="">link target</label><br/>
+          <select class="store" id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>
             <option value="_blank" i18n:translate="">new window</option>
             <option value="_parent" i18n:translate="">parent</option>
@@ -471,7 +471,8 @@
 
   
 
-    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-images" tal:define="model_container model/get_container">
+    <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="kupu-toolbox" id="kupu-toolbox-images"
+      tal:define="model_container model/get_container">
 
     <script type="text/javascript" tal:content="string:       function getImage() {         var imgtool = kupu.getTool('imagetool');         reference.getReference(           function(path, id, title) {             imgtool.createImage(path);             if (title) {                 var selNode = kupu.getSelectedNode();                 var image = kupu.getNearestParentOfType(selNode, 'img');                 image.setAttribute('title', title);                 imgtool.updateState(selNode);             };           }, '${model_container/absolute_url}',           'Silva Image', true, '', imgtool.urlinput.value);;       }       function imageToolGetLinkReference() {         var imgtool = kupu.getTool('imagetool');         reference.getReference(           function(path, id, title) {             imgtool.linkinput.value = path;             imgtool.setLink();           }, '${model_container/absolute_url}',           '', true, '', imgtool.linkinput.value);;       }     "/>
 
@@ -482,14 +483,18 @@
         <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button" i18n:attributes="value"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
           <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-	  <tr>
-	   <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"> </button>
-           </td>
-	   <td><input type="text" id="kupu-toolbox-image-src" title="image source" i18n:attributes="title" class="store"/></td>
-	  </tr>
-	  </table>
-          <label class="select" for="kupu-toolbox-image-align" i18n:translate="">image alignment:</label>
-          <select id="kupu-toolbox-image-align">
+            <tr>
+             <td class="buttoncell">
+               <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><br/>
+               <button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"> </button>
+             </td>
+             <td>
+               <textarea class="store" id="kupu-toolbox-image-src" cols="30" rows="2" title="image source" i18n:attributes="title"> </textarea>
+             </td>
+           </tr>
+          </table>
+          <label for="kupu-toolbox-image-align" i18n:translate="">image alignment</label><br/>
+          <select class="store" id="kupu-toolbox-image-align">
             <option i18n:translate="" value="default">default</option>
             <option i18n:translate="" value="image-left">align left</option>
             <option i18n:translate="" value="image-center">align center</option>
@@ -499,19 +504,23 @@
           </select>
           <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
             <legend i18n:translate="">link settings</legend>
-            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">high resolution version</label>
+            <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked" style="margin-left:2px"/>
+            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to high resolution image</label><br>
             <div id="kupu-toolbox-image-link-cont" style="white-space: nowrap">
-             <label for="kupu-toolbox-image-link" i18n:translate="" style="float:left;padding-right: 3px;visibility:hidden">link to:</label> 
-             <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="width: 223px">
- 	      <tr>
-	       <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"> </button>
-	       </td>
-	       <td><input type="text" id="kupu-toolbox-image-link" class="store" title="link target for image" i18n:attributes="title"/></td>
-	      </tr>
-	     </table>
+              <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="buttoncell">
+                    <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><br/>
+                    <button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"> </button>
+                  </td>
+                  <td>
+                    <textarea class="store" id="kupu-toolbox-image-link" cols="30" rows="2" title="image link" i18n:attributes="title"> </textarea>
+                 </td>
+                </tr>
+              </table>
             </div>
-            <label class="select" for="kupu-toolbox-image-target" i18n:translate="">link target:</label>
-            <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
+            <label class="select" style="margin-left:0.1em" for="kupu-toolbox-image-target" i18n:translate="">link target</label><br/>
+            <select class="store" id="kupu-toolbox-image-target">
               <option value="_self" i18n:translate="">same window</option>
               <option value="_blank" i18n:translate="">new window</option>
               <option value="_parent" i18n:translate="">parent</option>
@@ -594,7 +603,7 @@
 
         <form name="kupu_extsource_form" onsubmit="return false">
           <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" i18n:attributes="title" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
-	          <option value="" i18n:translate="">select source:</option>
+                    <option value="" i18n:translate="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="                   value id;                   title object/description" tal:content="python:object.get_title() or id"/>
@@ -700,7 +709,7 @@
                 <input type="button" class="button" id="kupu-table-addtable-button" value="add table" i18n:attributes="value"/>
               </div>
               <div id="kupu-toolbox-edittable" class="kupu-toolbox-edittable" style="display: none">
-		<table width="100%">
+                    <table width="100%">
                   <tr>
                     <td class="titlecell"><label title="comma-sep list of relative column widths" i18n:attributes="title" for="kupu-table-columnwidth" i18n:translate="">column widths</label></td>
                     <td><input type="text" id="kupu-table-columnwidth"/></td>
@@ -715,16 +724,16 @@
                       </select>
                     </td>
                   </tr>
-		  <tr>
-		   <td class="titlecell"><label for="kupu-table-cell-type" i18n:translate="" title="the active cell's type">cell type</label></td>
-		   <td>
-		    <select id="kupu-table-cell-type">
-		     <option value="td" i18n:translate="">normal</option>
-		     <option value="th" i18n:translate="">header</option>
-		    </select>
-		   </td>
-		  </tr>
-		  <tr><td colspan="2" class="sectionborder" i18n:translate="">actions</td></tr>
+                      <tr>
+                       <td class="titlecell"><label for="kupu-table-cell-type" i18n:translate="" title="the active cell's type">cell type</label></td>
+                       <td>
+                        <select id="kupu-table-cell-type">
+                         <option value="td" i18n:translate="">normal</option>
+                         <option value="th" i18n:translate="">header</option>
+                        </select>
+                       </td>
+                      </tr>
+                      <tr><td colspan="2" class="sectionborder" i18n:translate="">actions</td></tr>
             <tr>
               <td class="titlecell" i18n:translate="">cell</td>
               <td>
