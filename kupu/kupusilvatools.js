@@ -432,7 +432,6 @@ SilvaImageTool.prototype.initialize = function(editor) {
     /* this edit button cell is actually always displayed, as the
        urlinput will always be filled in if it is visible */
     this.urlinputeditbutton.style.display='inline';
-    this.urlinputeditbutton.parentNode.style.width='42px';
 };
 
 SilvaImageTool.prototype.createContextMenuElements = function(selNode, event) {
@@ -501,8 +500,6 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             this.hireslinkcheckbox.checked = false;
             this.linkinput.value = link == null ? '' : link;
             this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
-            this.linkinputeditbutton.parentNode.style.width =
-                !link ? '21px' : '42px';
         } else {
             this.hireslinkcheckbox.checked = 'checked';
             this.linktocontainer.style.display = 'none';
@@ -706,7 +703,6 @@ SilvaImageTool.prototype.setLink = function() {
     image.setAttribute('link', link);
     image.setAttribute('link_to_hires', '0');
     this.linkinputeditbutton.style.display = !link ? 'none' : 'inline';
-    this.linkinputeditbutton.parentNode.style.width = !link ? '21px' : '42px';
     this.editor.content_changed = true;
 };
 
