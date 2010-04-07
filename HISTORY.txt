@@ -4,6 +4,8 @@ Silva changes
 Silva 2.2 (unreleased)
 ----------------------
 
+- updated opacity settings for image crop window
+
 - deprecate Products.Silva.helpers.makeContainerFilter and makeZMIFilter
   (makeZMIFilter was moved to silva.core.conf.utils).  Fix signature checking
   in Folder.filtered_meta_types.
