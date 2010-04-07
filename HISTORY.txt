@@ -1,6 +1,12 @@
 Silva changes
 =============
 
+Silva 2.2.1 (unreleased)
+------------------------
+
+- updated opacity settings for image crop window (ported form trunk)
+
+
 Silva 2.2 (2010-03-31)
 ----------------------
 
