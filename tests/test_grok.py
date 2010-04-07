@@ -39,7 +39,8 @@ extraglobs = {'logAsUser': logAsUser,
               'grok': five.grok.testing.grok,}
 
 
-def suiteFromPackage(name, module_base="Products.Silva.tests"):
+def suiteFromPackage(name, module_base="Products.Silva.tests",
+        layer=SilvaLayer):
     files = resource_listdir(module_base, name)
     suite = unittest.TestSuite()
     for filename in files:
@@ -59,7 +60,7 @@ def suiteFromPackage(name, module_base="Products.Silva.tests"):
             extraglobs=extraglobs,
             optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
 
-        test.layer = SilvaLayer
+        test.layer = layer
         suite.addTest(test)
     return suite
 
