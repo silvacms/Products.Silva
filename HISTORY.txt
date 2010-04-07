@@ -7,7 +7,7 @@ Silva changes
 
     Bug fixes
 
-     - ...
+     - updated opacity settings for image crop window (ported form trunk)
 
   Silva 2.1.10 (2010-01-26)
 
