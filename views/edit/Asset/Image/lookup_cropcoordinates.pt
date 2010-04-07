@@ -21,14 +21,14 @@
   position: absolute;
   }
 
-  table {
-  border: 1px dashed #73868c;
+  #draggable table {
   background-color: white;
-  FILTER:Alpha(Opacity=50, FinishOpacity=30, Style=0);
   -moz-opacity: 0.5;
   -khtml-opacity: 0.5;
   opacity: 0.5;
-  }
+  border: 1px dashed #73868c;
+  filter:alpha(opacity=50);
+  } 
 
   #dragbar, #additional_draggable {
   color: #73868c;
