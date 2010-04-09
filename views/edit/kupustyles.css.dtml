@@ -287,17 +287,20 @@ div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
   background-position: top left;
 }
 
-#kupu-toolbox-links label, #kupu-toolbox-image-edit label, #kupu-toolbox-image-link-settings label {
-  margin-left: 0.1em;
-  line-height:160%;
-}
-
 div.kupu-tooltray {
   margin: 0;
   padding: 0 0.3em 0 0.1em;
   color: #333;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-  line-height: 110%;
+  line-height: 140%;
+}
+
+div.kupu-tooltray label {
+  margin-left: 0.1em;
+}
+
+div.fieldblock {
+margin-top:0.1em;
 }
 
 div.kupu-tooltray table td.titlecell {
@@ -321,6 +324,7 @@ width:98%;
 }
 
 div.kupu-tooltray select {
+  margin:0.1em 0;
   overflow: hidden;
 }
 
@@ -444,6 +448,7 @@ div.kupu-properties-item-innerdiv {
 }
 
 .kupu-tooltray a {
+  margin-left:0.1em;
   color: #187374;
   text-decoration: none;
 }
@@ -457,12 +462,13 @@ div.kupu-properties-item-innerdiv {
 }
 
 .kupu-tooltray span.tooltip {
+  display: none;
   color: #444;
   background-color: #e3f1da;
   margin: 2em 0 0;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
-  display: none;
+  line-height:120%;
 }
 
 .kupu-tooltray a.rollover:hover span {
