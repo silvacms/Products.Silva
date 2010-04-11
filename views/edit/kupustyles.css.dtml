@@ -465,7 +465,7 @@ div.kupu-properties-item-innerdiv {
   display: none;
   color: #444;
   background-color: #e3f1da;
-  margin: 2em 0 0;
+  margin: 2em 0 0 -0.2em;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
   line-height:120%;
@@ -474,7 +474,7 @@ div.kupu-properties-item-innerdiv {
 .kupu-tooltray a.rollover:hover span {
   display:block;
   position:absolute;
-  width:21.5em;
+  width:23.3em;
 }
 
 .kupu-tooltray a.requiredfield {
