@@ -4,7 +4,14 @@ Silva changes
 Silva 2.2.1 (unreleased)
 ------------------------
 
-- updated opacity settings for image crop window (ported form trunk)
+- Neatened up the toc rendering.
+
+- Modified Kupu toolboxes. Moved delete button to left, expanding textarea (if
+all options are on  the column can get long but that's rare). Changed logic 
+for breaks. Removed table cell sizing. Made unused buttons display:none.
+Adjusted toolbox title rollover tooltips.
+
+- updated opacity settings for image crop window (ported from trunk)
 
 
 Silva 2.2 (2010-03-31)
