@@ -38,7 +38,7 @@ def escape(thestring):
 
 
 class TOCRenderingAdapter(adapter.Adapter):
-    """ Adapter for TOCs (autotoc, document toc) to render"""
+    """ Adapter for TOCs (autotoc, toc code source) to render"""
 
     __allow_access_to_unprotected_subobjects__ = 1
 
@@ -152,7 +152,7 @@ class TOCRenderingAdapter(adapter.Adapter):
             elif pd > depth: #up one level
                 for i in range(pd-depth):
                     prev_depth.pop()
-                    html.append('</ul></li>')
+                    html.append('\n</ul>\n</li>')
             elif pd == depth: #same level
                 html.append('</li>')
             html.append('<li>')
@@ -173,7 +173,7 @@ class TOCRenderingAdapter(adapter.Adapter):
             #the last item in the list could part of a nested list (with depth 1,2,3+, etc)
             #so need to loop down the depth and close all open lists
             while depth >= 0:
-                html.append('</li></ul>')
+                html.append('</li>\n</ul>')
                 depth -= 1
         return '\n'.join(html)
 
