@@ -167,9 +167,9 @@ reference.getReference(
             values.extend(['' for i in range(len(values),reqrows) ])
         for i,v in enumerate(values):
             ret.extend(self._render_helper(field, key, v, request, str(i)))
-        if field.get_value('show_add_remove'):
-            ret.append('<tr><td colspan="3" class="buttoncell">')
-            maxrows = field.get_value('max_rows')
+        maxrows = field.get_value('max_rows')
+        if field.get_value('show_add_remove') and maxrows > len(values):
+            ret.append('<tr><td colspan="2" class="buttoncell">')
             ret.append(render_element(
                 'button',
                 id='addbutton_' + key,
@@ -191,13 +191,10 @@ reference.getReference(
         reqrows = field.get_value('required_rows')
         editid = 'editbutton%s_%s'%(index,key)
         onclick = self._onclick_handler(field, 'input'+index+'_'+key)
-        buttoncellstyle=''
         if show_edit:
-            onclick += ";document.getElementById(this.getAttribute('id').replace(/^button/,'editbutton')).style.display='inline';this.parentNode.style.width='42px';"
-            if value:
-                buttoncellstyle=" style='width:42px'"
+            onclick += ";document.getElementById(this.getAttribute('id').replace(/^button/,'editbutton'))"
 
-        widget.append('<tr><td class="buttoncell"%s>'%buttoncellstyle)
+        widget.append('<tr><td class="buttoncell">')
         widget.append(
             render_element(
                 'button',
@@ -208,6 +205,7 @@ reference.getReference(
                 onclick="%s;return false;" % onclick,
                 contents=' ')
         )
+        widget.append('<br/>')
         if show_edit:
             url = ''
             request = getattr(field, 'REQUEST', None)
@@ -220,7 +218,6 @@ reference.getReference(
                         quote(request['docref'])).absolute_url()
                 else:
                     url = model.absolute_url()
-            widget.append('<br />')
             widget.append(
                 render_element(
                     'button',
@@ -233,20 +230,12 @@ reference.getReference(
                     contents=' '
                 )
             )
-        widget.append('</td><td style="text-align:right; padding-right: 3px;">')
-        widget.append(
-            render_element(
-                'textarea',
-                name=key,
-                id='input%s_%s'%(index,key),
-                css_class=field.get_value('css_class'),
-                rows="2",
-                cols="24",
-                contents=value))
-        widget.append('</td><td class="buttoncell">')
+            widget.append('<br/>')
         remove_style = ''
         if (not show_add_remove) or (reqrows and reqrows > int(index)):
-            remove_style = "visibility:hidden"
+            remove_style = "display:none"
+        if (not show_add_remove) and (not show_edit):
+            widget.append('<br/>')
         widget.append(
             render_element(
                 'button',
@@ -257,6 +246,17 @@ reference.getReference(
                 style=remove_style,
                 onclick='removeRowFromReferenceLookupWidget(this); return false;',
                 contents=' '))
+        widget.append('</td><td>')
+        widget.append(
+            render_element(
+                'textarea',
+                name=key,
+                id='input%s_%s'%(index,key),
+                css_class=field.get_value('css_class'),
+                rows="2",
+                cols="24",
+                style="height:37px",
+                contents=value))
         widget.append('</td></tr>')
         return widget
 
