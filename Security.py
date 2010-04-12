@@ -7,12 +7,16 @@ from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from DateTime import DateTime
 
+from zope.event import notify
+
 # Silva
 from Products.Silva import roleinfo
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 from Products.Silva.AccessManager import AccessManager
 from silva.core.interfaces import IVersion, IContainer, IRoot
+from silva.core.interfaces.events import (
+    SecurityRoleAddedEvent, SecurityRoleRemovedEvent)
 
 # Groups
 try:
@@ -65,6 +69,7 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             raise UnauthorizedRoleAssignement
         self.manage_addLocalRoles(userid, [role])
+        notify(SecurityRoleAddedEvent(self, userid, role))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_remove')
@@ -78,6 +83,8 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             return
         self.manage_delLocalRoles([userid])
+        notify(SecurityRoleRemovedEvent(self, userid, None))
+
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_revoke')
