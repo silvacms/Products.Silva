@@ -151,7 +151,7 @@ class ObjectLookup(BrowserView):
             )
             visible_containers = [
                 content for content in ordered_publishables
-                if IContainer.providerBy(content)]
+                if IContainer.providedBy(content)]
             if show_add:
                 addables = [a['name'] for a in all_addables if
                             IContent.implementedBy(a['instance'])]
