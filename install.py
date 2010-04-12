@@ -570,7 +570,7 @@ def installSilvaDocument(root):
 def installSilvaLayout(root):
     """Install SilvaLayout
     """
-    from Products.SilvaLayout.install import install
+    from silva.core.layout.install import install
     install(root, default_skinid='Standard Issue')
 
 
