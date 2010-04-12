@@ -87,7 +87,7 @@ class XSLTRendererBase(object):
         source_xml = IXMLSource(obj).getXML(external_rendering=True)
         return self.transform_xml(source_xml)
 
-    security.declareProtected("View", "tranform_xml")
+    security.declareProtected("View", "transform_xml")
     def transform_xml(self, text):
         style = self.stylesheet()
         doc = etree.parse(StringIO(text))
