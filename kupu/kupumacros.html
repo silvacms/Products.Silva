@@ -409,7 +409,7 @@
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+          <table class="kupu-link-reference-table">
             <tr>
               <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"> </button><br/><button class="kupu-button kupu-link-reference kupu-link-editbutton" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"> </button>
                 </td>
@@ -468,7 +468,7 @@
       <form name="kupu_image_form" onsubmit="return false">
         <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button" i18n:attributes="value"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+          <table class="kupu-link-reference-table">
             <tr>
              <td class="buttoncell">
                <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><br/>
@@ -493,7 +493,7 @@
             <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked" style="margin-left:2px"/>
             <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to high resolution image</label><br>
             <div id="kupu-toolbox-image-link-cont" style="white-space: nowrap">
-              <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+              <table class="kupu-link-reference-table">
                 <tr>
                   <td class="buttoncell">
                     <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><br/>

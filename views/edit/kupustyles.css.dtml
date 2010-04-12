@@ -163,7 +163,7 @@ div.kupu-tb {
 }
 
 div.kupu-tb select {
-  color : #333767;
+  color: #333767;
   background-color: #cedae8;
   border: 1px solid #797f7f;
   vertical-align: top;
@@ -175,8 +175,13 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 
 /** for buttons in the toolboxes **/
 #kupu-toolboxes button.kupu-button {
- height: 20px;
- padding: 0px;
+  height: 20px;
+  padding: 0px;
+}
+
+#extsourceform td.fieldtitlecell {
+width:5em;
+vertical-align:top;
 }
 
 .kupu-link-reference-table {
@@ -184,11 +189,11 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 }
 
 .kupu-link-reference-table td {
- white-space: nowrap;
+  white-space: nowrap;
 }
 .kupu-link-reference-table td.buttoncell {
- width: 21px;
- vertical-align: top;
+  width: 21px;
+  vertical-align: top;
 }
 
 .kupu-link-reference-table button.kupu-link-lookupbutton {

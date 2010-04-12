@@ -158,7 +158,7 @@ reference.getReference(
     def render(self, field, key, value, request):
         if field.field_record:
             key = key.replace(':record',':record:list')
-        ret = ['<table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">']
+        ret = ['<table class="kupu-link-reference-table">']
         values = value.split(', ')
         reqrows = field.get_value('required_rows')
         if reqrows > 0 and reqrows > len(values):
@@ -254,7 +254,7 @@ reference.getReference(
                 id='input%s_%s'%(index,key),
                 css_class=field.get_value('css_class'),
                 rows="2",
-                cols="24",
+                cols="20",
                 style="height:37px",
                 contents=value))
         widget.append('</td></tr>')
