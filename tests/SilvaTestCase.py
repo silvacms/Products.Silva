@@ -28,7 +28,7 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
 
     layer = SilvaLayer
 
-    def assertHashEquals(self, s1, s2, msg=None):
+    def assertHashEqual(self, s1, s2, msg=None):
         """Assert the hash values of two strings are the same. It is
         commonly used to compare two large strings.
         """
@@ -46,6 +46,12 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
             msg = u'%r is not %r' % (first, second)
         if aq_base(first) is not aq_base(second):
             raise self.failureException, msg
+
+    def assertStringEqual(self, s1, s2):
+        """Assert two string are equals ignore extra white spaces
+        around them.
+        """
+        self.assertEqual(s1.strip(), s2.strip())
 
     def assertListEqual(self, first, second, msg=None):
         """Assert that the list first and second contains the same

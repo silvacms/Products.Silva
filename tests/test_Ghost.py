@@ -67,8 +67,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         publishApprovedObject(self.doc1)
 
         # ghost=0, doc=1
-        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc1</h2>',
+                               ghost.preview())
         resetPreview(ghost)
         self.assertEquals('<p>Sorry', ghost.view()[:8])
 
@@ -76,31 +76,31 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         publishObject(ghost)
 
         # ghost=1, doc=1
-        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc1</h2>',
+                               ghost.preview())
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc1</h2>',
+                               ghost.view())
 
         # make new version of doc1 ('1')
         self.doc1.create_copy()
         self.doc1.set_title('Doc1 1')
 
         # the preview got the new version, but the published stay the same.
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc1 1</h2>',
+                               ghost.preview())
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc1</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc1</h2>',
+                               ghost.view())
 
         publishObject(self.doc1)
 
         # now we're ghosting the version 1
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc1 1</h2>',
+                               ghost.preview())
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc1 1</h2>',
+                               ghost.view())
 
         # since both the ghost and the doc are published, is_published()
         # should return true
@@ -113,27 +113,27 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(u'This ghost is broken. (/root/doc2)',
                           translate(ghost.preview()))
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc1 1</h2>',
+                               ghost.view())
 
         # publish doc2
         publishObject(self.doc2)
 
-        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc2</h2>',
+                               ghost.preview())
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc1 1</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc1 1</h2>',
+                               ghost.view())
 
 
         # approve ghost again
         publishObject(ghost)
 
-        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
-                          ghost.preview())
+        self.assertStringEqual(u'<h2 class="heading">Doc2</h2>',
+                               ghost.preview())
         resetPreview(ghost)
-        self.assertEquals(u'<h2 class="heading">Doc2</h2>\n\n',
-                          ghost.view())
+        self.assertStringEqual(u'<h2 class="heading">Doc2</h2>',
+                               ghost.view())
 
         # publish a ghost pointing to something that hasn't a published
         # version

@@ -41,7 +41,7 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEquals(content.get_file_size(), self.file_size)
         self.assertEquals(content.get_filename(), 'testfile')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
-        self.assertHashEquals(content.get_content(), self.file_data)
+        self.assertHashEqual(content.get_content(), self.file_data)
         self.failUnless(content.get_download_url() is not None)
         self.failUnless(content.tag() is not None)
 
@@ -56,7 +56,7 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         headers = response.header_output.headers
         downloaded_data = response.getBody()
         self.assertEquals(len(downloaded_data), self.file_size)
-        self.assertHashEquals(downloaded_data, self.file_data)
+        self.assertHashEqual(downloaded_data, self.file_data)
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
@@ -80,7 +80,7 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
         content = self.root.testfile
         assetdata = interfaces.IAssetData(content)
         self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
-        self.assertHashEquals(self.file_data, assetdata.getData())
+        self.assertHashEqual(self.file_data, assetdata.getData())
 
 
 class BlobFileImplementationTestCase(DefaultFileImplementationTestCase):
