@@ -460,18 +460,19 @@ function initSilvaKupu(iframe) {
 //    var nonxhtmltagfilter = new NonXHTMLTagFilter();
 //    kupu.registerFilter(nonxhtmltagfilter);
 
-    kupu.xhtmlvalid.setAttrFilter(['source_id', 'source_title', 'key',
-        'silva_type', 'alignment', 'silva_href', 'silva_reference',
-        'silva_target', 'silva_column_info']);
+    kupu.xhtmlvalid.setAttrFilter(
+        ['source_id', 'source_title', 'key', 'silva_type', 'alignment',
+         'silva_href', 'silva_anchor', 'silva_reference',
+         'silva_target', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that
     kupu.xhtmlvalid.includeTagAttributes(['div'], ['*']);
     kupu.xhtmlvalid.includeTagAttributes(['span'], ['key']);
     kupu.xhtmlvalid.includeTagAttributes(['p'], ['silva_type']);
     kupu.xhtmlvalid.includeTagAttributes(['h6'], ['silva_type']);
-    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment',
-        'target', 'silva_target', 'silva_reference']);
-    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href',
-        'silva_reference', 'silva_target']);
+    kupu.xhtmlvalid.includeTagAttributes(
+        ['img'], ['alignment', 'target', 'silva_target', 'silva_reference']);
+    kupu.xhtmlvalid.includeTagAttributes(
+        ['a'], ['silva_href', 'silva_reference', 'silva_target', 'silva_anchor']);
     kupu.xhtmlvalid.includeTagAttributes(['table'], ['silva_column_info']);
 
     if (window.kuputoolcollapser) {
@@ -654,18 +655,19 @@ function initSilvaPopupKupu(iframe) {
         };
     };
 
-    kupu.xhtmlvalid.setAttrFilter(['source_id', 'source_title', 'key',
-        'silva_type', 'alignment', 'silva_href', 'silva_reference',
-        'silva_target', 'silva_column_info']);
+    kupu.xhtmlvalid.setAttrFilter(
+        ['source_id', 'source_title', 'key','silva_type', 'alignment',
+         'silva_href', 'silva_reference', 'silva_anchor',
+         'silva_target', 'silva_column_info']);
     // allow all attributes on div, since ExternalSources require that
     kupu.xhtmlvalid.includeTagAttributes(['div'], ['*']);
     kupu.xhtmlvalid.includeTagAttributes(['span'], ['key']);
     kupu.xhtmlvalid.includeTagAttributes(['p'], ['silva_type']);
     kupu.xhtmlvalid.includeTagAttributes(['h6'], ['silva_type']);
-    kupu.xhtmlvalid.includeTagAttributes(['img'], ['alignment',
-        'target', 'silva_target', 'silva_reference']);
-    kupu.xhtmlvalid.includeTagAttributes(['a'], ['silva_href',
-        'silva_reference', 'silva_target']);
+    kupu.xhtmlvalid.includeTagAttributes(
+        ['img'], ['alignment', 'target', 'silva_target', 'silva_reference']);
+    kupu.xhtmlvalid.includeTagAttributes(
+        ['a'], ['silva_href', 'silva_reference', 'silva_target', 'silva_anchor']);
     kupu.xhtmlvalid.includeTagAttributes(['table'], ['silva_column_info']);
 
     if (window.kuputoolcollapser) {

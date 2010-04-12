@@ -327,6 +327,14 @@ SilvaLinkTool.prototype.updateLink = function (
         } else {
             linkel.removeAttribute('title');
         };
+        if (name) {
+            /* In case of reference or external link, name is a extra
+             * anchor */
+            linkel.setAttribute('silva_anchor', name);
+        }
+        else {
+            linkel.removeAttribute('silva_anchor');
+        }
         if (target && target != '') {
             linkel.setAttribute('target', target);
         } else {
@@ -347,6 +355,7 @@ function SilvaLinkToolBox(
     this.target = new SilvaLinkTargetSelector(optionid + '-target');
     this.title = $('#' + optionid + '-title');
     this.external_href = $('#' + inputid + '-href');
+    this.anchor = $('#' + inputid + '-anchor');
     /* the next three options are for image link support */
     this.image = null;
     this.imageoptions = $('#' + imageid + '-options');
@@ -376,6 +385,7 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
 SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
     var content = this.content;
     var external_href = this.external_href.val();
+    var anchor = this.anchor.val();
     var reference = null;
     var target = this.target.retrieve();
     var title = null;
@@ -402,11 +412,11 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
         };
 
         title = this.title.val() || content.title();
-        this.tool.createLink(reference, 'reference', null, target, title);
+        this.tool.createLink(reference, 'reference', anchor, target, title);
     }
     else {
         title = this.title.val();
-        this.tool.createLink(external_href, 'external', null, target, title);
+        this.tool.createLink(external_href, 'external', anchor, target, title);
     };
     this.editor.content_changed = true;
     this.editor.updateState();
@@ -447,6 +457,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
 
             var title = currnode.getAttribute('title') || '';
             this.title.val(title);
+            var anchor = currnode.getAttribute('silva_anchor') || '';
+            this.anchor.val(anchor);
             var reference = currnode.getAttribute('silva_target');
             if (reference) {
                 enableToolBox(self);
@@ -478,6 +490,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     this.delbutton.style.display = 'none';
     this.title.val('');
     this.external_href.val('');
+    this.anchor.val('');
     this.toolbox.close();
     this.content.clear();
     this.target.clear();

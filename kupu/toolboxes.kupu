@@ -5,8 +5,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    >
+    xmlns:tal="http://xml.zope.org/namespaces/tal">
 
   <kupu:part name="comment">
     <div class="kupu-toolbox not-collapsible" id="kupu-toolbox-comment"
@@ -92,6 +91,13 @@
             <textarea id="#" cols="32" rows="2"
                       tal:attributes="id string:${widget_id}-href">
             </textarea>
+            <label for="#"
+                   i18n:translate=""
+                   tal:attributes="name string:${widget_id}-anchor">
+              anchor:
+            </label>
+            <input type="text" id="#"
+                   tal:attributes="id string:${widget_id}-anchor" />
           </div>
 
           <div id="kupu-link-image-options">
