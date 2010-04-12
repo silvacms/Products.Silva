@@ -178,24 +178,6 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
   height: 20px;
   padding: 0px;
 }
-
-#extsourceform td.fieldtitlecell {
-width:5em;
-vertical-align:top;
-}
-
-.kupu-link-reference-table {
- width: 100%;
-}
-
-.kupu-link-reference-table td {
-  white-space: nowrap;
-}
-.kupu-link-reference-table td.buttoncell {
-  width: 21px;
-  vertical-align: top;
-}
-
 .kupu-link-reference-table button.kupu-link-lookupbutton {
   background-image: url("<dtml-var root_url>/globals/system-search.png");
 }
@@ -215,7 +197,6 @@ vertical-align:top;
 .kupu-link-reference-table button.kupu-link-removebutton {
   background-image: url("<dtml-var root_url>/globals/list-remove.png");
 }
-
 #kupu-toolboxes button.kupu-link-reference {
   width: 20px;
   margin: 1px 0 0;
@@ -306,6 +287,22 @@ div.kupu-tooltray label {
 
 div.fieldblock {
 margin-top:0.1em;
+}
+
+.kupu-link-reference-table {
+  width: 100%;
+}
+.kupu-link-reference-table td {
+  white-space: nowrap;
+}
+.kupu-link-reference-table td.buttoncell {
+  width: 21px;
+  vertical-align: top;
+}
+
+#extsourceform td.fieldtitlecell {
+width:5em;
+vertical-align:top;
 }
 
 div.kupu-tooltray table td.titlecell {
