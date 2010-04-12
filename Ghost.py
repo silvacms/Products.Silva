@@ -248,8 +248,6 @@ class Ghost(CatalogedVersionedContent):
     silvaconf.versionClass('GhostVersion')
     silvaconf.versionFactory('manage_addGhostVersion')
 
-    def __init__(self, id):
-        Ghost.inheritedAttribute('__init__')(self, id)
 
     def get_title_editable(self):
         """Get title for editable or previewable use

@@ -320,7 +320,7 @@ SilvaLinkTool.prototype.updateLink = function (
         }
         if (linkel.innerHTML == "") {
             var doc = this.editor.getInnerDocument();
-            linkel.appendChild(doc.createTextNode(title || url));
+            linkel.appendChild(doc.createTextNode(title || url || name));
         };
         if (title) {
             linkel.title = title;
@@ -375,6 +375,17 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
     this.imagehires.change(function() {
             self.content.toggle();
         });
+    this.content.change(function(event, info) {
+            if (info['path']) {
+                self.external_href.val(info['path']);
+                self.external_href.attr('readonly', 'readonly');
+                self.external_href.attr('class', 'readonly');
+            } else {
+                self.external_href.val('');
+                self.external_href.removeAttr('readonly');
+                self.external_href.attr('class', '');
+            };
+        });
 
     addEventHandler(this.addbutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createLinkHandler, this);
@@ -401,22 +412,22 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
     }
     var reference = content.reference();
 
-    if (!reference && !external_href) {
-        alert('No content selected as link target!');
+    if (!reference && !external_href && !anchor) {
+        alert('No content selected as link target, or no anchor!');
         return;
     };
     if (reference) {
-        if (external_href) {
-            alert('Reference and external href selected as link target!');
-            return;
-        };
-
         title = this.title.val() || content.title();
         this.tool.createLink(reference, 'reference', anchor, target, title);
     }
-    else {
+    else if (external_href) {
         title = this.title.val();
         this.tool.createLink(external_href, 'external', anchor, target, title);
+    }
+    else {
+        /* anchor only */
+        title = this.title.val();
+        this.tool.createLink('', 'internal', anchor, target, title);
     };
     this.editor.content_changed = true;
     this.editor.updateState();
@@ -443,7 +454,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
             this.imageoptions.show();
             this.imagehires.attr('checked', '');
         };
-        if (currnode.nodeName == 'A') {
+        if (currnode.nodeName == 'A' && !currnode.getAttribute('name')) {
 
             var enableToolBox = (function(self) {
                 var target = currnode.getAttribute('target');
@@ -474,13 +485,12 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                 return;
             };
             var href = currnode.getAttribute('href') ||
-                currnode.getAttribute('silva_href');
-            if (href) {
-                enableToolBox(self);
-                this.content.clear();
-                this.external_href.val(href);
-                return;
-            };
+                currnode.getAttribute('silva_href') ||
+                '';
+            enableToolBox(self);
+            this.content.clear();
+            this.external_href.val(href);
+            return;
         };
         currnode = currnode.parentNode;
     };
@@ -489,8 +499,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     this.updatebutton.style.display = 'none';
     this.delbutton.style.display = 'none';
     this.title.val('');
-    this.external_href.val('');
     this.anchor.val('');
+    this.external_href.val('');
     this.toolbox.close();
     this.content.clear();
     this.target.clear();
@@ -1884,9 +1894,7 @@ function SilvaIndexTool(
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
     this.deletebutton = getFromSelector(deletebuttonid);
-    this.toolboxel = getFromSelector(toolboxid);
-    this.plainclass = plainclass;
-    this.activeclass = activeclass;
+    this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
 };
 
 SilvaIndexTool.prototype = new KupuTool;
@@ -2032,22 +2040,15 @@ SilvaIndexTool.prototype.updateState = function(selNode, event) {
         return;
     };
     var indexel = this.editor.getNearestParentOfType(selNode, 'A');
-    if (indexel && !indexel.getAttribute('href')) {
-        if (this.toolboxel) {
-            if (this.toolboxel.open_handler) {
-                this.toolboxel.open_handler();
-            };
-            this.toolboxel.className = this.activeclass;
-        };
+    if (indexel && !indexel.getAttribute('href') && indexel.getAttribute('name')) {
+        this.toolbox.open();
         this.nameinput.value = indexel.getAttribute('name');
         this.titleinput.value = indexel.getAttribute('title');
         this.addbutton.style.display = 'none';
         this.updatebutton.style.display = 'inline';
         this.deletebutton.style.display = 'inline';
     } else {
-        if (this.toolboxel) {
-            this.toolboxel.className = this.plainclass;
-        };
+        this.toolbox.close();
         this.nameinput.value = '';
         this.titleinput.value = '';
         this.updatebutton.style.display = 'none';
