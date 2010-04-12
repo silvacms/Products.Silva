@@ -9,7 +9,7 @@
 
   Now we have a new layer:
 
-    >>> from Products.SilvaLayout.helpers import getAvailableSkins
+    >>> from silva.core.layout.helpers import getAvailableSkins
     >>> 'My test skin' in getAvailableSkins()
     True
 
