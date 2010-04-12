@@ -70,7 +70,7 @@ def compute_used_space(content):
     if interfaces.IContainer.providedBy(content):
         used_space = 0
         for obj in content.objectValues():
-            if ISilvaObject.providedBy(obj):
+            if interfaces.ISilvaObject.providedBy(obj):
                 used_space += compute_used_space(obj)
         content.used_space = used_space
         total += used_space
