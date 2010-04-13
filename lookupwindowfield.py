@@ -82,7 +82,9 @@ class LookupWindowValidator(StringBaseValidator):
         for value in values:
             if not field.get_value('whitespace_preserve'):
                 value = value.strip()
-            result.append(pad.urlToPath(value))
+            res = pad.urlToPath(value)
+            if res:
+                result.append(pad.urlToPath(value))
 
         maxrows = field.get_value('max_rows')
         if maxrows > 0 and len(result) > maxrows:

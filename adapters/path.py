@@ -149,7 +149,13 @@ class PathAdapter(component.Adapter):
             if fragment:
                 path += '#' + fragment
             return path
+
         request = self.request
+        
+        if netloc and netloc != request.environ['HTTP_HOST']:
+            # if the url is absolute and the server is not this server, don't
+            # convert.
+            return url
         
         # physicalPathFromURL breaks in complex virtual hosting situations
         # where incorrect urls are entered by hand, or imported

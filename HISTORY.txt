@@ -6,12 +6,15 @@ Silva 2.2.1 (unreleased)
 
 - Neatened up the toc rendering.
 
-- Modified Kupu toolboxes. Moved delete button to left, expanding textarea (if
+- Modified widget for lookupwindow field. Moved delete button to left, expanding textarea (if
 all options are on  the column can get long but that's rare). Changed logic 
 for breaks. Removed table cell sizing. Made unused buttons display:none.
 Adjusted toolbox title rollover tooltips.
 
 - updated opacity settings for image crop window (ported from trunk)
+
+- fixed issue in request PathAdapter which stripped absolute urls even if the
+  url was for netloc other than the silva server (or vhost)
 
 
 Silva 2.2 (2010-03-31)

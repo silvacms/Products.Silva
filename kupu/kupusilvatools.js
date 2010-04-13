@@ -2966,24 +2966,26 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // you should not be allowed to add external sources inside
-    // headers or table cells (but the cursor may be inside an ES title,
-    // which is an H4.)
-    var selNode = this.editor.getSelectedNode();
-    if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
-            (selNode.parentNode.className=='externalsource' ||
-                selNode.parentNode.className=='externalsourcepreview')) {
-        selNode = selNode.parentNode;
-    };
-    var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-    for (i=0; i < not_allowed_parent_tags.length; i++){
-        if (selNode.tagName == not_allowed_parent_tags[i]){
-            alert('Code source is not allowed inside a header.')
+    // headers or table cells
+    if (!this._editing) {
+	/* these checks are only needed when not currently editing */
+        var selNode = this.editor.getSelectedNode();
+        if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
+                (selNode.parentNode.className=='externalsource' ||
+                    selNode.parentNode.className=='externalsourcepreview')) {
+            selNode = selNode.parentNode;
+        };
+        var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+        for (i=0; i < not_allowed_parent_tags.length; i++){
+            if (selNode.tagName == not_allowed_parent_tags[i]){
+                alert('Code source is not allowed inside a header.')
+                return
+            };
+        };
+        if (selNode.tagName == 'TD'){
+            alert('Code source is not allowed inside a table cell.')
             return
         };
-    };
-    if (selNode.tagName == 'TD'){
-        alert('Code source is not allowed inside a table cell.')
-        return
     };
     // get the appropriate form and display it
     if (!this._editing) {
