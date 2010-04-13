@@ -27,6 +27,7 @@ from Products.Silva import install
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.services.base import SilvaService
+from silva.core.services.utils import walk_silva_tree
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
@@ -36,23 +37,10 @@ from silva.translations import translate as _
 logger = logging.getLogger('silva.core')
 
 
-def get_content_to_index(self, content):
-    """A generator to lazily get all the objects that need to be
-    indexed.
-        """
-    if interfaces.ISilvaObject.providedBy(content):
-        # Version are indexed by the versioned content itself
-        yield content
-    if interfaces.IContainer.providedBy(content):
-        for child in content.objectValues():
-            for content in get_content_to_index(child):
-                yield content
-
-
 def index_content(self, obj, reindex=False):
     """Recursively index or index Silva Content.
     """
-    for count, content in enumerate(get_content_to_index(obj)):
+    for count, content in enumerate(walk_silva_tree(obj)):
         if count and count % 500 == 0:
             transaction.commit()
             logger.info('indexing: %d objects indexed' % count)
