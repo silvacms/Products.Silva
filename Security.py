@@ -69,7 +69,7 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             raise UnauthorizedRoleAssignement
         self.manage_addLocalRoles(userid, [role])
-        notify(SecurityRoleAddedEvent(self, userid, role))
+        notify(SecurityRoleAddedEvent(self, userid, [role]))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_remove')
@@ -105,6 +105,7 @@ class Security(AccessManager):
         else:
             # if no more roles, remove user completely
             self.sec_remove(userid)
+        notify(SecurityRoleRemovedEvent(self, userid, revoke_roles))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_create_lock')
