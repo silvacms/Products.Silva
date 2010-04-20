@@ -5,7 +5,7 @@
   <id tal:content="data/url" />
   <title type="text" tal:content="data/title"/>
   <subtitle tal:content="data/description" />
-  <link rel="self" tal:attributes="href string:${data/url}/atom" />
+  <link rel="self" tal:attributes="href string:${data/url}/atom.xml" />
   <author tal:repeat="author data/authors">
     <name tal:content="author"/>
   </author>
