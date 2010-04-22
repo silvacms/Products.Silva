@@ -8,7 +8,6 @@
 import os
 
 # Zope 2
-from App.Common import package_home
 from DateTime import DateTime
 from OFS import Image
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
@@ -82,7 +81,7 @@ def installFromScratch(root):
     configureSecurity(root)
     # now do the uinstallable stuff (views)
     install(root)
-    installSilvaLayout(root)
+    setInitialSkin(root, 'Standard Issue')
     installSilvaExternalSources(root)
     installKupu(root)
     installSilvaDocument(root)
@@ -140,7 +139,6 @@ def is_installed(root):
     return IRoot.providedBy(root)
 
 def configureMetadata(root):
-    from os import path
 
     # See if catalog exists, if not create one
     if not hasattr(root, 'service_catalog'):
@@ -155,30 +153,29 @@ def configureMetadata(root):
             'service_metadata', 'Silva Service Metadata')
 
     # load up the default metadata
-    silva_home = package_home(globals())
-    silva_docs = path.join(silva_home, 'doc')
+    silva_home = os.path.dirname(__file__)
+    silva_docs = os.path.join(silva_home, 'doc')
+
+    metadata_sets_types = [
+        (('silva-extra', 'silva-content'),
+            ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
+             'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
+             'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
+             'Silva Link Version')),
+        (('silva-layout',),
+            ('Silva Root', 'Silva Publication'))
+    ]
 
     collection = root.service_metadata.getCollection()
-    if 'silva-content' in collection.objectIds():
-        collection.manage_delObjects(['silva-content'])
-
-    if 'silva-extra' in collection.objectIds():
-        collection.manage_delObjects(['silva-extra'])
-
-    xml_file = path.join(silva_docs, 'silva-content.xml')
-    fh = open(xml_file, 'r')
-    collection.importSet(fh)
-
-    xml_file = path.join(silva_docs, 'silva-extra.xml')
-    fh = open(xml_file, 'r')
-    collection.importSet(fh)
-
-    setids = ('silva-content', 'silva-extra')
-    types = ( 'Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
-              'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
-              'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
-              'Silva Link Version')
-    root.service_metadata.addTypesMapping(types, setids)
+    ids = collection.objectIds()
+    for metadata_sets, types in metadata_sets_types:
+        for metadata_set in metadata_sets:
+            if metadata_set in ids:
+                collection.manage_delObjects([metadata_set])
+            xml_file = os.path.join(silva_docs, "%s.xml" % metadata_set)
+            with open(xml_file, 'r') as fh:
+                collection.importSet(fh)
+        root.service_metadata.addTypesMapping(types, metadata_sets)
 
     types = ('Silva Ghost Folder', 'Silva Ghost Version')
     root.service_metadata.addTypesMapping(types, ('', ))
@@ -421,7 +418,7 @@ def fileobject_add_helper(context, id, text):
         Image.manage_addFile(context, id, text, content_type='text/plain')
 
 def read_file(id, info, folder):
-    filename = os.path.join(package_home(info), folder, id)
+    filename = os.path.join(os.path.dirname(info['__file__']), folder, id)
     f = open(filename, 'rb')
     text = f.read()
     f.close()
@@ -567,13 +564,6 @@ def installSilvaDocument(root):
         doc.approve_version()
 
 
-def installSilvaLayout(root):
-    """Install SilvaLayout
-    """
-    from silva.core.layout.install import install
-    install(root, default_skinid='Standard Issue')
-
-
 def installSilvaExternalSources(root):
     """Install SilvaExternalSources
     """
@@ -624,6 +614,15 @@ def installKupu(root):
     if not hasattr(root, 'service_kupu_silva'):
         add_fss_directory_view(root, 'service_kupu_silva',
                                __file__, 'kupu')
+
+def setInitialSkin(silvaroot, default_skinid):
+    setid = 'silva-layout'
+    metadataservice = silvaroot.service_metadata
+    currentskin = metadataservice.getMetadataValue(silvaroot, setid, 'skin')
+    if not currentskin:
+        binding = metadataservice.getMetadata(silvaroot)
+        binding.setValues(setid, {'skin': default_skinid})
+
 
 if __name__ == '__main__':
     print """This module is not an installer. You don't have to run it."""
