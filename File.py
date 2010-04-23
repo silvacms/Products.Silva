@@ -66,7 +66,7 @@ from silva.translations import translate as _
 from z3c.form import field
 
 
-CHUNK_SIZE = 4092
+CHUNK_SIZE = 1<<16              # 64K
 DEFAULT_MIMETYPE = 'application/octet-stream'
 MAGIC = MagicGuess()
 
