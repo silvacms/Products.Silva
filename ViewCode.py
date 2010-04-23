@@ -54,19 +54,13 @@ class ViewCode(object):
         """
         tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
                'alt="%(alt)s" title="%(alt)s" />')
-        if obj is None:
-            icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
-            return tag % {'icon_path': icon_path, 'alt': meta_type}
         try:
-            icon_path = '%s/%s' % (self.REQUEST['BASE1'],
+            icon_path = '%s/%s' % (self.get_root().absolute_url(),
                 icon.registry.getIcon(obj))
             meta_type = obj.meta_type
-        except ValueError:
-            icon_path = getattr(aq_base(obj), 'icon', None)
-            if icon_path is None:
-                icon_path = '%s/globals/silvageneric.gif' % (
-                    self.REQUEST['BASE2'],)
-            meta_type = getattr(obj, 'meta_type')
+        except ValueError, AttributeError:
+            icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
+            meta_type = hasattr(obj, 'meta_type') and obj.meta_type
         return tag % {'icon_path': icon_path, 'alt': meta_type}
 
     security.declareProtected(
