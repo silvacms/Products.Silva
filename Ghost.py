@@ -160,33 +160,20 @@ class GhostBase(object):
     def _get_object_at(self, path, check=1):
         """Get content object for a url.
         """
-        # temporary tuck away old skin & resourcebase, so we don't
-        # screw up any subsequence view lookups with traversal
-        request = self.REQUEST
-        current_skins = [iface for iface in directlyProvidedBy(request)
-                         if IBrowserSkinType.providedBy(iface)]
-        current_resourcebase = request.get('resourcebase')
-        try:
-            # XXX what if we're pointing to something that cannot be viewed
-            # publically?
-            if path is None:
-                return None
-            content = self.aq_inner.aq_parent.unrestrictedTraverse(path, None)
-            if content is None:
-                return None
-            # check if it's valid
-            valid = None
-            if check:
-                valid = self.get_link_status(content)
-            if valid is None:
-                return content
+        # XXX what if we're pointing to something that cannot be viewed
+        # publically?
+        if path is None:
             return None
-        finally:
-            # put back the old skin & resourcebase...
-            ifaces = [iface for iface in directlyProvidedBy(request)
-                      if not IBrowserSkinType.providedBy(iface)] + current_skins
-            directlyProvides(request, *ifaces)
-            request.set('resourcebase', current_resourcebase)
+        content = self.aq_inner.aq_parent.unrestrictedTraverse(path, None)
+        if content is None:
+            return None
+        # check if it's valid
+        valid = None
+        if check:
+            valid = self.get_link_status(content)
+        if valid is None:
+            return content
+        return None
 
     security.declarePrivate('get_haunted_unrestricted')
     def get_haunted_unrestricted(self, check=1):
