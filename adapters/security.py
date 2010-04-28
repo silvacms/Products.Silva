@@ -3,6 +3,7 @@
 # $Id$
 
 from five import grok
+from zope.event import notify
 
 from Acquisition import aq_parent, aq_inner
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -10,11 +11,14 @@ from AccessControl.PermissionRole import rolesForPermissionOn
 from AccessControl.Permission import Permission
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from silva.core import interfaces
 from Products.Silva.adapters import adapter
 
 from DateTime import DateTime
 from types import ListType
+
+from silva.core import interfaces
+from silva.core.interfaces import events
+
 
 class ViewerSecurityAdapter(grok.Adapter):
 
@@ -34,6 +38,7 @@ class ViewerSecurityAdapter(grok.Adapter):
                 SilvaPermissions.View,
                 roles=(),
                 acquire=1)
+        notify(events.SecurityRestrictionModifiedEvent(self.context, None))
 
     def setMinimumRole(self, role):
         if role == 'Anonymous':
@@ -43,6 +48,7 @@ class ViewerSecurityAdapter(grok.Adapter):
                 SilvaPermissions.View,
                 roles=roleinfo.getRolesAbove(role),
                 acquire=0)
+            notify(events.SecurityRestrictionModifiedEvent(self.context, role))
 
     def isAcquired(self):
         if (interfaces.IRoot.providedBy(self.context) and
