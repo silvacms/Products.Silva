@@ -10,7 +10,7 @@
 >
 <metal:use-macro use-macro="here/macro_asset_edit/macros/editor">
 
- <metal:fill-slot fill-slot="info">
+<metal:fill-slot fill-slot="info">
   <script type="text/javascript"
     tal:attributes="src here/cropping.js/absolute_url">
   </script>
@@ -33,16 +33,16 @@
       />
     </p>
     <p tal:condition="model/hires_image">
-    <span class="subhead" i18n:translate="">format</span><br />
-    <span tal:replace="python: model.web_format.lower()">format</span>
-    <tal:block i18n:translate="">image</tal:block>
+      <span class="subhead" i18n:translate="">format</span><br />
+      <span tal:replace="python: model.web_format.lower()">format</span>
+      <tal:block i18n:translate="">image</tal:block>
     </p>
     <p tal:define="
       image_width python: model.getDimensions()[0];
       image_height python: model.getDimensions()[1];
       scale_width python: model.getCanonicalWebScale()[0];
       scale_height python: model.getCanonicalWebScale()[1];
-      ">
+    ">
       <span class="subhead" i18n:translate="">dimensions</span><br />
       <span tal:on-error="string: unknown"
         tal:replace="string:${image_width}x${image_height} pixels"
@@ -51,11 +51,11 @@
         image_width != scale_width or
         image_height != scale_height"><br />
         <tal:block i18n:translate="">scaled to
-        <span
-          tal:on-error="string: unknown"
-          tal:replace="string:${scale_width}x${scale_height}"
-          i18n:name="WxH"
-        />
+          <span
+            tal:on-error="string: unknown"
+            tal:replace="string:${scale_width}x${scale_height}"
+            i18n:name="WxH"
+          />
         pixels</tal:block>
       </tal:condition>
     </p>
