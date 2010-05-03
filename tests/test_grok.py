@@ -3,18 +3,17 @@
 # See also LICENSE.txt
 # $Id$
 
-import unittest
 from pkg_resources import resource_listdir
+import doctest
+import unittest
 
 from zope.interface.verify import verifyObject
-from zope.testing import doctest
+import five.grok.testing
 
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder, sync
 from AccessControl.SecurityManagement import newSecurityManager, \
     noSecurityManager
-
-import five.grok.testing
 
 from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
 from Products.Silva.tests.SilvaBrowser import SilvaBrowser
