@@ -51,9 +51,8 @@
         image_width != scale_width or
         image_height != scale_height"><br />
         <tal:block i18n:translate="">scaled to
-          <span
+          <span tal:replace="string:${scale_width}x${scale_height}"
             tal:on-error="string: unknown"
-            tal:replace="string:${scale_width}x${scale_height}"
             i18n:name="WxH"
           />
         pixels</tal:block>
@@ -207,7 +206,8 @@
   <table class="listing"
     tal:define="
     web_format python:model.getWebFormat();
-    web_format_available python:web_format in ('PNG', 'JPEG', 'GIF')">
+    web_format_available python:web_format in ('PNG', 'JPEG', 'GIF');
+    ">
     <thead>
       <tal:block replace="nothing">
         ______________ top controls row ______________
@@ -237,9 +237,9 @@
         </td>
       </tr>
       <tr tal:condition="not:web_format_available">
-        <td class="field"
+        <td class="field alert"
           i18n:translate="">
-          This image is in <tal:in replace="web_format"/> format
+          This image is in <tal:in replace="web_format" i18n:name="image_format"/> format
           and won't display in a web browser.
         </td>
       </tr>
