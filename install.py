@@ -143,14 +143,12 @@ def configureMetadata(root):
     # See if catalog exists, if not create one
     if not hasattr(root, 'service_catalog'):
         factory = root.manage_addProduct['silva.core.services']
-        factory.manage_addCatalogService(
-            'service_catalog', 'Silva Service Catalog')
+        factory.manage_addCatalogService('service_catalog')
 
     # Install metadata
     if not 'service_metadata' in root.objectIds():
         factory = root.manage_addProduct['SilvaMetadata']
-        factory.manage_addMetadataTool(
-            'service_metadata', 'Silva Service Metadata')
+        factory.manage_addMetadataTool('service_metadata')
 
     # load up the default metadata
     silva_home = os.path.dirname(__file__)
@@ -247,8 +245,7 @@ def configureMiscServices(root):
     # add service_references
     factory = root.manage_addProduct['silva.core.references']
     if 'service_references' not in installed_ids:
-        factory.manage_addReferenceService(
-            'service_references', 'Silva References')
+        factory.manage_addReferenceService('service_references')
 
     if 'service_toc_filter' not in installed_ids:
         filter_service = TOCFilterService()
