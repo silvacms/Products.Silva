@@ -83,7 +83,7 @@ class Security(AccessManager):
             not self.sec_have_management_rights()):
             return
         self.manage_delLocalRoles([userid])
-        notify(SecurityRoleRemovedEvent(self, userid, None))
+        notify(SecurityRoleRemovedEvent(self, userid, []))
 
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
