@@ -8,7 +8,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
 >
-
 <metal:block use-macro="here/macro_asset_edit/macros/editor">
 <metal:fill-slot fill-slot="info">
   <div class="info">
@@ -18,20 +17,30 @@
     </h3>
     <p tal:define="mime_type model/get_mime_type"
       tal:condition="mime_type">
-      <span class="subhead"><strong i18n:translate="">file mime type</strong><br /></span>
+      <span class="subhead" i18n:translate="">file mime type</span><br />
       <span tal:replace="mime_type" />
     </p>
     <p>
-      <span class="subhead"><strong i18n:translate="">file size</strong><br /></span>
-      <span 
-        tal:define="size model/get_file_size"
+      <span class="subhead" i18n:translate="">file size</span><br />
+      <span tal:define="size model/get_file_size"
         tal:attributes="title string: ${size}"
-        tal:content="python:mangle.Bytes(size)" /> 
+        tal:replace="python:mangle.Bytes(size)" /> 
+    </p>
+    <p>
+      <span class="subhead" i18n:translate="">link to file</span><br />
+      <a title="download"
+        tal:define="url model/absolute_url"
+        tal:content="model/get_title_or_id"
+        tal:attributes="href url"
+        i18n:attributes="title">
+        link
+      </a>
     </p>
     <tal:condition condition="python:user.has_role(['Manager'], model)">
+      <tal:comment><!-- this works only for ExtFile --></tal:comment>
       <p tal:define="path model/getFileSystemPath"
         tal:condition="path">
-        <span class="subhead"><strong i18n:translate="">file system path</strong><br /></span>
+        <span class="subhead" i18n:translate="">file system path</span><br />
         <span tal:replace="structure python: ' / '.join(path.split('/'))" />
       </p>
     </tal:condition>
@@ -62,11 +71,12 @@
     <tbody>
      <tr class="odd">
       <td i18n:translate="">
-        Text content is too large to be edited through Silva.  Please upload changes.
+        Text content is too large to be edited through Silva. Please upload changes.
       </td>
      </tr>
     </tbody>
    </tal:cond>
+
    <tal:cond condition="model/is_editable_size">
     <tbody tal:define="fields python:here.text_edit_form.get_fields()">
       <tal:repeat repeat="field fields">
@@ -82,13 +92,12 @@
       </tr>
       <tr class="odd">
         <td>
-          <input tal:replace="structure python:field.render_from_request(request)" />
+          <textarea tal:replace="structure python:field.render_from_request(request)" />
         </td>
       </tr>
       </tal:define>
       </tal:repeat>
     </tbody>
-
     <tfoot>
       <tr class="controls">
         <td class="align-right"
@@ -110,7 +119,6 @@
  </tal:cond>
   <metal:block use-macro="here/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
-
 </metal:block>
 
 
