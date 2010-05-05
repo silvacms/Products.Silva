@@ -19,6 +19,7 @@
 
   <include package="Products.SilvaMetadata" />
   <include package="Products.SilvaDocument" />
+  <include package="Products.SilvaExternalSources" />
 
   <include package=".browser" />
 
