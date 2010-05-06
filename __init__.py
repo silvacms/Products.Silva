@@ -38,9 +38,7 @@ except ImportError:
 
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
-
 from Products.Silva.Metadata import initialize_metadata
-from Products.Silva import mangle # Initialize security ?
 # To make the splitter register itself
 from Products.Silva import UnicodeSplitter
 
@@ -51,22 +49,19 @@ from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 from Products.Silva.silvaxml import xmlexport
 xmlexport.initializeXMLExportRegistry()
 
-
-def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch', 'adapters', 'version_management', 'path')
-
-AccessControl.allow_module('Products.Silva.adapters.views')
-AccessControl.allow_module('Products.Silva.adapters.security')
-AccessControl.allow_module('Products.Silva.adapters.cleanup')
-AccessControl.allow_module('Products.Silva.adapters.renderable')
-AccessControl.allow_module('Products.Silva.adapters.version_management')
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
+AccessControl.allow_module('Products.Silva.adapters.cleanup')
 AccessControl.allow_module('Products.Silva.adapters.languageprovider')
-AccessControl.allow_module('Products.Silva.adapters.zipfileimport')
 AccessControl.allow_module('Products.Silva.adapters.path')
-AccessControl.allow_module('Products.Silva.roleinfo')
+AccessControl.allow_module('Products.Silva.adapters.renderable')
+AccessControl.allow_module('Products.Silva.adapters.security')
+AccessControl.allow_module('Products.Silva.adapters.version_management')
+AccessControl.allow_module('Products.Silva.adapters.views')
+AccessControl.allow_module('Products.Silva.adapters.zipfileimport')
 AccessControl.allow_module('Products.Silva.i18n')
 AccessControl.allow_module('Products.Silva.mail')
+AccessControl.allow_module('Products.Silva.mangle')
+AccessControl.allow_module('Products.Silva.roleinfo')
 AccessControl.allow_module('zope.i18n') # zope.i18n.translate
 
 def initialize_icons():
@@ -130,7 +125,6 @@ def initialize_icons():
         registry.registerIcon(
             (klass, kind),
             '++resource++silva.icons/%s' % icon_name)
-
 
 initialize_icons()
 initialize_metadata()
