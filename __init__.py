@@ -67,6 +67,7 @@ AccessControl.allow_module('Products.Silva.adapters.path')
 AccessControl.allow_module('Products.Silva.roleinfo')
 AccessControl.allow_module('Products.Silva.i18n')
 AccessControl.allow_module('Products.Silva.mail')
+AccessControl.allow_module('zope.i18n') # zope.i18n.translate
 
 def initialize_icons():
     from Products.Silva.icon import registry
@@ -134,10 +135,3 @@ def initialize_icons():
 initialize_icons()
 initialize_metadata()
 
-
-#------------------------------------------------------------------------------
-# Monkey patches
-#------------------------------------------------------------------------------
-
-import monkey
-monkey.patch_all()
