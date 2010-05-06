@@ -228,8 +228,7 @@ def configureMiscServices(root):
     installed_ids = root.objectIds()
     # add service_files
     if 'service_files' not in installed_ids:
-        factory.manage_addFilesService(
-            'service_files', 'Silva Files Service')
+        factory.manage_addFilesService('service_files')
     # add service_sidebar
     if 'service_sidebar' not in installed_ids:
         factory.manage_addSidebarService(

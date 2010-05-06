@@ -16,7 +16,7 @@ logger = logging.getLogger('silva.file')
 from ZODB import blob
 from zope import component, schema
 from zope.app.schema.vocabulary import IVocabularyFactory
-from zope.interface import implements, Interface, directlyProvides
+from zope.interface import Interface, directlyProvides
 from zope.location.interfaces import ISite
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
@@ -27,8 +27,6 @@ from five import grok
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from OFS.interfaces import IObjectWillBeRemovedEvent
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from webdav.common import rfc1123_date
 from ZPublisher.Iterators import IStreamIterator
 
@@ -39,9 +37,8 @@ from Products.Silva.Asset import Asset
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
-from Products.Silva.helpers import add_and_edit, fix_content_type_header
+from Products.Silva.helpers import fix_content_type_header
 from Products.Silva.converters import get_converter_for_mimetype
-from silva.core.conf.utils import registerService, unregisterService
 
 # Storages
 from OFS import Image                            # For ZODB storage
@@ -142,8 +139,7 @@ class File(Asset):
 
     meta_type = "Silva File"
 
-    implements(interfaces.IFile)
-
+    grok.implements(interfaces.IFile)
     silvaconf.priority(-3)
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addFile')
@@ -299,12 +295,11 @@ InitializeClass(File)
 
 
 class ZODBFile(File):
-    """Silva File object, storage in Filesystem. Contains the OFS.Image.File
+    """Silva File object, storage in Filesystem. Contains the
+    OFS.Image.File.
     """
-
-    implements(interfaces.IZODBFile)
-
-    silvaconf.baseclass()
+    grok.implements(interfaces.IZODBFile)
+    grok.baseclass()
 
     def __init__(self, id):
         super(ZODBFile, self).__init__(id)
@@ -335,10 +330,11 @@ InitializeClass(ZODBFile)
 
 
 class ZODBFileView(silvaviews.View):
-
-    silvaconf.context(ZODBFile)
-    silvaconf.require('zope2.View')
-    silvaconf.name('index')
+    """Download a ZODBFile
+    """
+    grok.context(ZODBFile)
+    grok.require('zope2.View')
+    grok.name('index')
 
     def render(self):
         self.response.setHeader(
@@ -351,9 +347,8 @@ class BlobFile(File):
     """Silva File object, storage using blobs.
     """
 
-    implements(interfaces.IBlobFile)
-
-    silvaconf.baseclass()
+    grok.implements(interfaces.IBlobFile)
+    grok.baseclass()
     security = ClassSecurityInfo()
 
     def __init__(self, id):
@@ -430,10 +425,11 @@ class BlobFile(File):
 InitializeClass(BlobFile)
 
 class BlobFileView(silvaviews.View):
-
-    silvaconf.context(BlobFile)
-    silvaconf.require('zope2.View')
-    silvaconf.name('index')
+    """Download a BlobFile.
+    """
+    grok.context(BlobFile)
+    grok.require('zope2.View')
+    grok.name('index')
 
     def render(self):
         return FDIterator(self.context.get_content_fd())
@@ -443,10 +439,8 @@ class FileSystemFile(File):
     """Silva File object, storage in ZODB. Contains the ExtFile object
     from the ExtFile Product - if available.
     """
-
-    implements(interfaces.IFileSystemFile)
-
-    silvaconf.baseclass()
+    grok.implements(interfaces.IFileSystemFile)
+    grok.baseclass()
     security = ClassSecurityInfo()
 
     def __init__(self, id):
@@ -551,11 +545,10 @@ def file_factory(self, id, content_type, file):
 
 class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
+    default_service_identifier = 'service_files'
     silvaconf.icon('www/files_service.gif')
-    silvaconf.factory('manage_addFilesServiceForm')
-    silvaconf.factory('manage_addFilesService')
 
-    implements(interfaces.IFilesService)
+    grok.implements(interfaces.IFilesService)
     security = ClassSecurityInfo()
 
     storage = FieldProperty(interfaces.IFilesService['storage'])
@@ -574,18 +567,14 @@ class FilesService(SilvaService):
 InitializeClass(FilesService)
 
 
-manage_addFilesServiceForm = PageTemplateFile(
-    "www/filesServiceAdd", globals(),
-    __name__='manage_addFilesServiceForm')
-
-
 from zope.formlib import form
 
 class FileServiceManagementView(silvaviews.ZMIEditForm):
-
-    silvaconf.require('zope2.ViewManagementScreens')
-    silvaconf.name('manage_filesservice')
-    silvaconf.context(FilesService)
+    """Edit File Serivce.
+    """
+    grok.require('zope2.ViewManagementScreens')
+    grok.name('manage_filesservice')
+    grok.context(FilesService)
 
     form_fields = grok.Fields(interfaces.IFilesService)
     actions =  form.Actions(silvaviews.ZMIEditForm.handle_edit_action,
@@ -610,8 +599,7 @@ class StorageConverterHelper(object):
     """The purpose of this converter is to stop convertion if there is
     an another configuration.
     """
-
-    implements(interfaces.IUpgrader)
+    grok.implements(interfaces.IUpgrader)
 
     def __init__(self, publication):
         self.startpoint = publication
@@ -635,7 +623,7 @@ class ConversionBlocker(object):
 
 class FileStorageConverter(object):
 
-    implements(interfaces.IUpgrader)
+    grok.implements(interfaces.IUpgrader)
 
     def upgrade(self, old_file):
         if not interfaces.IFile.providedBy(old_file):
@@ -656,22 +644,6 @@ class FileStorageConverter(object):
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
         return new_file
-
-
-def manage_addFilesService(self, id, title=None, REQUEST=None):
-    """Add files service.
-    """
-    if title is None:
-        title = id
-    service = FilesService(id, title)
-    registerService(self, id, service, interfaces.IFilesService)
-    add_and_edit(self, id, REQUEST)
-    return ''
-
-
-@silvaconf.subscribe(interfaces.IFilesService, IObjectWillBeRemovedEvent)
-def unregisterFileService(service, event):
-    unregisterService(service, interfaces.IFilesService)
 
 
 contentObjectFactoryRegistry.registerFactory(
