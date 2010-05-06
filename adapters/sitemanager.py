@@ -5,7 +5,7 @@
 from five import grok
 from five.localsitemanager import make_objectmanager_site
 
-from zope.app.component.hooks import clearSite
+from zope.site.hooks import clearSite
 from zope.location.interfaces import ISite
 
 from Products.Five.component import disableSite
