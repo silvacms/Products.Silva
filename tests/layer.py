@@ -131,10 +131,8 @@ class SilvaLayer(ZopeLiteLayer):
         setDebugMode(1)
         import Products.Five.zcml as zcml
         import silva.export.opendocument
-        import silvatheme.standardissue
         zcml.load_site()
         zcml.load_config('configure.zcml', silva.export.opendocument)
-        zcml.load_config('configure.zcml', silvatheme.standardissue)
         setDebugMode(0)
 
         setupSilva()
