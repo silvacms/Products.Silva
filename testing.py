@@ -43,7 +43,7 @@ class SilvaLayer(BrowserLayer):
         'silva.core.services',
         ]
 
-    def _install_app(self, app):
+    def _install_application(self, app):
         """Install Silva in the test application.
         """
         # Add a user
