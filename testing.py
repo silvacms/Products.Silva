@@ -42,13 +42,21 @@ class SilvaLayer(BrowserLayer):
         'silvatheme.standardissue',
         'silva.core.services',
         ]
+    default_users = {
+        'silvatestcase': ['Manager'],
+        'editor': ['Editor'],
+        'manager': ['Manager'],
+        'chiefeditor': ['ChiefEditor'],
+        'author': ['Author'],
+        'reader': ['Reader'],
+        'dummy': [],}
 
     def _install_application(self, app):
         """Install Silva in the test application.
         """
         # Add a user
         uf = app.acl_users
-        uf._doAddUser('silvatestcase', '', ['Manager'], [])
+        #uf._doAddUser('silvatestcase', '', ['Manager'], [])
         user = uf.getUserById('silvatestcase').__of__(uf)
 
         # Loging to that user and add a Silva Root
@@ -58,12 +66,25 @@ class SilvaLayer(BrowserLayer):
         # Commit changes
         transaction.commit()
 
+    def testSetUp(self):
+        super(SilvaLayer, self).testSetUp()
+
+        # Get the Silva Root and set it as a local site
+        app = super(SilvaLayer, self).get_application()
+        self._silva_root = app.root
+        setSite(self._silva_root)
+        setHooks()
+
+    def testTearDown(self):
+        # Reset local site to None
+        setSite(None)
+        setHooks()
+        self._silva_root = None
+
+        super(SilvaLayer, self).testTearDown()
+
     def get_application(self):
         """Return the application, here the Silva Root.
         """
-        app = super(SilvaLayer, self).get_application()
-        root = app.root
-        setSite(root)
-        setHooks()
-        return root
+        return self._silva_root
 
