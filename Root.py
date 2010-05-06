@@ -5,7 +5,7 @@
 import os
 
 # Zope 3
-from zope.app.component.hooks import setSite
+from zope.site.hooks import setSite, setHooks
 from five import grok
 
 # Zope 2
@@ -213,8 +213,10 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # information, and applying a regex to the content-type header seems
     # excessive
     title = unicode(title, 'latin1')
-    # now set it all up
+    # this root is the new local site
     setSite(root)
+    setHooks()
+    # now set it all up
     install.installFromScratch(root)
     root.set_title(title)
 
