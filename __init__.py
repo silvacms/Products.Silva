@@ -2,40 +2,30 @@
 # See also LICENSE.txt
 # $Id$
 
+import os
+
 # prevent a circular import in Zope 2.12
 import AccessControl
 
-# registers field
-from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
-from Products.FileSystemSite.DirectoryView import registerDirectory, \
-    registerFileExtension
+# register FileSystemSite directories
+from Products.FileSystemSite.DirectoryView import (
+    registerDirectory, registerFileExtension)
 from Products.FileSystemSite.FSImage import FSImage
+from Products import kupu
 
-
-# set havePIL here, so the Image add screen can determine allowed
-# image filetypes, which are different depending on whether PIL is
-# installed or not.  I don't like that havePIL is also defined in
-# Image.py, and here it's used for the sole purpose of imported into
-# untrusted page template land.
-try:
-    import PIL.Image
-    havePIL = 1
-except ImportError:
-    havePIL = 0
-
+registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
+registerDirectory('%s/kupu' % os.path.dirname(__file__), globals())
+registerDirectory('views', globals())
+registerDirectory('resources', globals())
+registerDirectory('globals', globals())
+# enable .ico support for FileSystemSite
+registerFileExtension('ico', FSImage)
 
 # register this extension
 from silva.core import conf as silvaconf
 silvaconf.extensionName('Silva')
 silvaconf.extensionTitle('Silva Core')
 silvaconf.extensionDepends(None)
-
-# backward compatibility import
-import zope.deferredimport
-zope.deferredimport.deprecated(
-    'Please import from silva.core.upgrade instead. '
-    'Products.Silva.upgrade will go away in Silva 2.3.',
-    upgrade = 'silva.core.upgrade.upgrade')
 
 #----------------------------------------
 # Initialize subscription feature, part 1
@@ -48,86 +38,35 @@ except ImportError:
 
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
-def initialize(context):
-    # enable .ico support for FileSystemSite
-    registerFileExtension('ico', FSImage)
 
-    from Products.Silva.silvaxml import xmlexport
+from Products.Silva.Metadata import initialize_metadata
+from Products.Silva import mangle # Initialize security ?
+# To make the splitter register itself
+from Products.Silva import UnicodeSplitter
 
-    from Products.Silva import install
-    # to execute the module_permission statements
-    from Products.Silva import helpers, mangle, batch
-    from Products.Silva.ExtensionRegistry import extensionRegistry
+# Add Formulator fields
+from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 
-    # To make the splitter register itself
-    from Products.Silva import UnicodeSplitter
-    from Products.Silva import Metadata
-
-    # register the FileSystemSite directories
-    registerDirectory('views', globals())
-    registerDirectory('resources', globals())
-    registerDirectory('globals', globals())
-
-    from Products.Silva import emaillinesfield, lookupwindowfield, \
-        kupupopupfield
-    from Products import kupu
-    registerDirectory('%s/common' % os.path.dirname(kupu.__file__),
-                      globals())
-    registerDirectory('%s/kupu' % os.path.dirname(__file__),
-                      globals())
-
-    # initialize the metadata system
-    #  register silva core types w/ metadata system
-    #  register the metadata xml import initializers
-    #  register a special accessor for ghosts
-    Metadata.initialize_metadata()
-    initialize_icons()
-
-    #------------------------------
-    # Initialize the XML registries
-    #------------------------------
-
-    xmlexport.initializeXMLExportRegistry()
-
-
-#------------------------------------------------------------------------------
-# External Editor support
-#------------------------------------------------------------------------------
-
-# check if ExternalEditor is available
-import os
-from App.special_dtml import DTMLFile
-
-try:
-    #   import Product.ExternalEditor as ee
-    import Product.ExternalEditor as ee
-except ImportError:
-    pass
-else:
-    from OFS.Folder import Folder
-    dirpath = os.path.dirname(ee.__file__)
-    dtmlpath = '%s/manage_main' % dirpath
-    Folder.manage_main = DTMLFile(dtmlpath, globals())
+# Initialize the XML registries
+from Products.Silva.silvaxml import xmlexport
+xmlexport.initializeXMLExportRegistry()
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('mangle', 'batch', 'adapters',
-                        'version_management', 'path')
+    return name in ('mangle', 'batch', 'adapters', 'version_management', 'path')
 
-from AccessControl import allow_module
-
-allow_module('Products.Silva.adapters.views')
-allow_module('Products.Silva.adapters.security')
-allow_module('Products.Silva.adapters.cleanup')
-allow_module('Products.Silva.adapters.renderable')
-allow_module('Products.Silva.adapters.version_management')
-allow_module('Products.Silva.adapters.archivefileimport')
-allow_module('Products.Silva.adapters.languageprovider')
-allow_module('Products.Silva.adapters.zipfileimport')
-allow_module('Products.Silva.adapters.path')
-allow_module('Products.Silva.roleinfo')
-allow_module('Products.Silva.i18n')
-allow_module('Products.Silva.mail')
+AccessControl.allow_module('Products.Silva.adapters.views')
+AccessControl.allow_module('Products.Silva.adapters.security')
+AccessControl.allow_module('Products.Silva.adapters.cleanup')
+AccessControl.allow_module('Products.Silva.adapters.renderable')
+AccessControl.allow_module('Products.Silva.adapters.version_management')
+AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
+AccessControl.allow_module('Products.Silva.adapters.languageprovider')
+AccessControl.allow_module('Products.Silva.adapters.zipfileimport')
+AccessControl.allow_module('Products.Silva.adapters.path')
+AccessControl.allow_module('Products.Silva.roleinfo')
+AccessControl.allow_module('Products.Silva.i18n')
+AccessControl.allow_module('Products.Silva.mail')
 
 def initialize_icons():
     from Products.Silva.icon import registry
@@ -190,6 +129,10 @@ def initialize_icons():
         registry.registerIcon(
             (klass, kind),
             '++resource++silva.icons/%s' % icon_name)
+
+
+initialize_icons()
+initialize_metadata()
 
 
 #------------------------------------------------------------------------------
