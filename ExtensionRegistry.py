@@ -102,7 +102,8 @@ class ProductExtension(BaseExtension):
                                                description, depends)
         assert path.startswith('Products.')
         self._product = path.split('.')[1]
-        self._version = open(os.path.join(self.module_directory, 'version.txt')).read()
+        self._version = open(os.path.join(
+                self.module_directory, 'version.txt')).read()
 
     @property
     def module_name(self):
@@ -117,9 +118,10 @@ class EggExtension(BaseExtension):
 
     def __init__(self, egg, name, install, path,
                  description=None, depends=(u'Silva',)):
-        super(EggExtension, self).__init__(name, install, path,
-                                           description, depends)
-        # We assume that the name of this egg is the name of the python extension
+        super(EggExtension, self).__init__(
+            name, install, path, description, depends)
+        # We assume that the name of this egg is the name of the
+        # python extension.
         if path.startswith('Products.'):
             self._product = path.split('.', 1)[1]
         else:
@@ -168,12 +170,16 @@ class ExtensionRegistry(Registry):
         for egg in pkg_resources.working_set:
             if (path.startswith(egg.location) and
                 path[len(egg.location)] == os.path.sep):
-                ext = EggExtension(egg, name, install_module, module_path, description, depends_on)
+                ext = EggExtension(
+                    egg, name, install_module, module_path,
+                    description, depends_on)
                 break
 
         # Otherwise, that's a product.
         if ext is None:
-            ext = ProductExtension(name, install_module, module_path, description, depends_on)
+            ext = ProductExtension(
+                name, install_module, module_path,
+                description, depends_on)
 
         self._extensions[ext.name] = ext
         self._extensions_by_module[ext.module_name] = ext
@@ -272,12 +278,12 @@ class ExtensionRegistry(Registry):
 
     def refresh(self, name, root):
         if hasattr(self._extensions[name].installer,'refresh'):
-            #installer has a refresh, so use it
-            #note: the default refresh (in silva.core.conf.installer.DefaultInstaller)
-            # is to just uninstall/install.  Extensions may choose to override
-            # this to do a custom uninstall/install which may, e.g. not
-            # remove a special service_<extension> object which contains
-            # site-specific customizations
+            #installer has a refresh, so use it note: the default
+            #refresh (in silva.core.conf.installer.DefaultInstaller)
+            #is to just uninstall/install.  Extensions may choose to
+            #override this to do a custom uninstall/install which may,
+            #e.g. not remove a special service_<extension> object
+            #which contains site-specific customizations
             self._extensions[name].installer.refresh(root)
         else:
             self._extensions[name].installer.uninstall(root)
