@@ -105,7 +105,6 @@ class Id(object):
         'elements',
         'form',
         'fulltext',
-        'getBatch',
         'getDocmaFormatName',
         'globals',
         'home',
