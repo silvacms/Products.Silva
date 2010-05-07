@@ -7,7 +7,7 @@ from lxml import etree
 import os
 import threading
 
-from zope.interface import implements
+from five import grok
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -15,10 +15,10 @@ from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva.transform.interfaces import IRenderer, IXMLSource
-from silva.core import conf as silvaconf
 
 
 class ErrorHandler(object):
+
     def __init__(self):
         self._error_text = ""
 
@@ -30,6 +30,7 @@ class ErrorHandler(object):
 
 
 class ImportResolver(etree.Resolver):
+
     def __init__(self, import_dir):
         self.import_dir = import_dir
 
@@ -38,14 +39,7 @@ class ImportResolver(etree.Resolver):
             return self.resolve_filename(self.import_dir + url[10:], context)
 
 
-class XSLTRendererBase(object):
-
-    implements(IRenderer)
-
-    security = ClassSecurityInfo()
-    security.declareObjectPublic()
-
-    silvaconf.baseclass()
+class XSLTTransformer(object):
 
     def __init__(self, path, file_context, import_context=__file__):
         """XSLT-based renderer.
@@ -82,12 +76,10 @@ class XSLTRendererBase(object):
             self._local.stylesheet = etree.XSLT(xslt_doc)
         return self._local.stylesheet
 
-    security.declareProtected("View", "render")
-    def render(self, obj):
+    def transform(self, obj):
         source_xml = IXMLSource(obj).getXML(external_rendering=True)
         return self.transform_xml(source_xml)
 
-    security.declareProtected("View", "transform_xml")
     def transform_xml(self, text):
         style = self.stylesheet()
         doc = etree.parse(StringIO(text))
@@ -97,5 +89,17 @@ class XSLTRendererBase(object):
         if result_string.startswith(doctypestring):
             result_string = result_string[result_string.find('>')+1:]
         return result_string
+
+
+class XSLTRendererBase(XSLTTransformer):
+    grok.implements(IRenderer)
+    grok.baseclass()
+
+    security = ClassSecurityInfo()
+    security.declareObjectPublic()
+    security.declareProtected("View", "transform_xml")
+    security.declareProtected("View", "render")
+
+    render = XSLTTransformer.transform
 
 InitializeClass(XSLTRendererBase)
