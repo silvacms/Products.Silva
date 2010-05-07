@@ -1,5 +1,5 @@
 <div class="info">
-  <h3>This asset is used by</h3>
+  <h4>references to this asset</h4>
   <p tal:condition="not:viewlet/references">
     Nothing
   </p>
