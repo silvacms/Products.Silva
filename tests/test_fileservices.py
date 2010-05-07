@@ -115,7 +115,7 @@ class FileServicesTest(unittest.TestCase):
         file_data = self.root.testfile.get_content()
         form = component.getMultiAdapter(
             (self.root.service_files, self.root.REQUEST),
-            name='manage_filesservice')
+            name='manage_filesservice').subforms[1]
 
         # Convert to Blobs
         self.root.service_files.storage = File.BlobFile
