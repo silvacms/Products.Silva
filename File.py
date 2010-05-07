@@ -555,7 +555,7 @@ class FilesService(SilvaService):
     storage = FieldProperty(interfaces.IFilesService['storage'])
 
     manage_options = (
-        {'label':'Edit', 'action':'manage_filesservice'},
+        {'label':'Manage', 'action':'manage_filesservice'},
         ) + SilvaService.manage_options
 
     security.declarePrivate('newFile')
