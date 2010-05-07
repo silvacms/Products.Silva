@@ -10,7 +10,7 @@ from AccessControl.SecurityManagement import noSecurityManager
 import Products.Silva
 
 from silva.testing import TestCase
-from silva.wsgi.testing import BrowserLayer, http
+from silva.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
 import transaction
 
@@ -95,4 +95,4 @@ class SilvaLayer(BrowserLayer):
 FunctionalLayer = SilvaLayer(Products.Silva)
 
 
-__all__ = ["FunctionalLayer", "SilvaLayer", "TestCase", "http"]
+__all__ = ["FunctionalLayer", "SilvaLayer", "TestCase", "Browser", "http"]
