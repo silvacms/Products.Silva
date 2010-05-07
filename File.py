@@ -568,9 +568,6 @@ class FilesService(SilvaService):
 InitializeClass(FilesService)
 
 
-from zope.formlib import form
-
-
 class FileServiceManagementView(silvaforms.ZMIComposedForm):
     """Edit File Serivce.
     """
@@ -582,6 +579,7 @@ class FileServiceManagementView(silvaforms.ZMIComposedForm):
 class FileServiceSettings(silvaforms.SubForm):
     grok.context(FilesService)
     silvaforms.view(FileServiceManagementView)
+    silvaforms.order(10)
 
     label = u"Configure storage"
     fields = silvaforms.Fields(interfaces.IFilesService)
@@ -592,6 +590,7 @@ class FileServiceSettings(silvaforms.SubForm):
 class FileServiceConvert(silvaforms.SubForm):
     grok.context(FilesService)
     silvaforms.view(FileServiceManagementView)
+    silvaforms.order(20)
 
     label = u"Convert stored files"
 
