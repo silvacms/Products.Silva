@@ -19,7 +19,7 @@ from Products.Silva import SilvaPermissions
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IIndexable, IIndexer
 from silva.core.views import views as silvaviews
-from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
 
 

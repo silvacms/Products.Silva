@@ -23,7 +23,7 @@ from Products.Silva import mangle
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
                                    IInvisibleService)
-from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.forms import z3cforms as silvaz3cforms
 from silva.core.smi import smi as silvasmi
 from silva.translations import translate as _
 from z3c.form import button

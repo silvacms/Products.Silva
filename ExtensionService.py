@@ -32,7 +32,7 @@ from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
-
+from zeam.form import silva as silvaforms
 
 logger = logging.getLogger('silva.core')
 
@@ -282,12 +282,12 @@ class IPartialUpgrade(interface.Interface):
         required=True)
 
 
-class PartialUpgradesForm(silvaviews.ZMIForm):
+class PartialUpgradesForm(silvaforms.ZMIForm):
     """From to partially upgrade a site. TO USE ONLY if you known what
     you are doing.
     """
-    silvaconf.name('manage_partialUpgrade')
-    form_fields = grok.Fields(IPartialUpgrade)
+    grok.name('manage_partialUpgrade')
+    fields = silvaforms.Fields(IPartialUpgrade)
     description = _(u"Below you find a form that allows you to specify "
                     u"an object to upgrade, and which version the object "
                     u"is in now. When you enter values in those fields and "
@@ -299,8 +299,12 @@ class PartialUpgradesForm(silvaviews.ZMIForm):
                     u"even (in some situations) cause the object to "
                     u"become unusable.")
 
-    @grok.action(_("Upgrade"))
-    def action_upgrade(self, path, version):
+    @silvaforms.action(_("Upgrade"))
+    def upgrade(self):
+        data, errors = self.extractData()
+        if errors:
+            return
+        path, version = data["path"], data["version"]
         root = self.context.get_root()
         # If path is an unicode string it need to be encoded.
         path = path.encode('utf-8')
@@ -318,16 +322,20 @@ class IPartialReindex(interface.Interface):
         required=True)
 
 
-class PartialReindexForm(silvaviews.ZMIForm):
+class PartialReindexForm(silvaforms.ZMIForm):
     """From to partially reindex a part of the site.
     """
-    silvaconf.name('manage_partialReindex')
-    form_fields = grok.Fields(IPartialReindex)
+    grok.name('manage_partialReindex')
+    fields = silvaforms.Fields(IPartialReindex)
     description = _(u"Reindex a subtree of the site in the Silva Catalog."
                     u"For big trees this may take a long time.")
 
-    @grok.action(_("Reindex"))
-    def action_reindex(self, path):
+    @silvaforms.action(_("Reindex"))
+    def reindex(self, path):
+        data, errors = self.extractData()
+        if errors:
+            return
+        path = data['path']
         try:
             self.context.reindex_subtree(path)
         except KeyError:

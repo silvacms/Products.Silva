@@ -58,9 +58,10 @@ from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
-from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
 from z3c.form import field
+from zeam.form import silva as silvaforms
 
 
 CHUNK_SIZE = 1<<16              # 64K
@@ -569,17 +570,32 @@ InitializeClass(FilesService)
 
 from zope.formlib import form
 
-class FileServiceManagementView(silvaviews.ZMIEditForm):
+
+class FileServiceManagementView(silvaforms.ZMIComposedForm):
     """Edit File Serivce.
     """
     grok.require('zope2.ViewManagementScreens')
     grok.name('manage_filesservice')
     grok.context(FilesService)
 
-    form_fields = grok.Fields(interfaces.IFilesService)
-    actions =  form.Actions(silvaviews.ZMIEditForm.handle_edit_action,
-        form.Action('Convert all files', success='action_convert'))
 
+class FileServiceSettings(silvaforms.SubForm):
+    grok.context(FilesService)
+    silvaforms.view(FileServiceManagementView)
+
+    label = u"Configure storage"
+    fields = silvaforms.Fields(interfaces.IFilesService)
+    actions = silvaforms.Actions(silvaforms.EditAction(u"Change"))
+    ignoreContent = False
+
+
+class FileServiceConvert(silvaforms.SubForm):
+    grok.context(FilesService)
+    silvaforms.view(FileServiceManagementView)
+
+    label = u"Convert stored files"
+
+    @silvaforms.action('Convert all files')
     def convert(self):
         parent = self.context.get_publication()
         upg = upgrade.UpgradeRegistry()
@@ -588,9 +604,6 @@ class FileServiceManagementView(silvaviews.ZMIEditForm):
         upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
         upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
         upg.upgradeTree(parent, '0.1')
-
-    def action_convert(self, action, data):
-        self.convert()
         self.status = u'Silva Files and Images converted. ' \
             u'See Zope log for details.'
 
