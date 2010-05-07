@@ -581,9 +581,9 @@ class FileServiceSettings(silvaforms.SubForm):
     silvaforms.view(FileServiceManagementView)
     silvaforms.order(10)
 
-    label = u"Configure storage"
+    label = _(u"Configure storage")
     fields = silvaforms.Fields(interfaces.IFilesService)
-    actions = silvaforms.Actions(silvaforms.EditAction(u"Change"))
+    actions = silvaforms.Actions(silvaforms.EditAction(_(u"Change")))
     ignoreContent = False
 
 
@@ -592,9 +592,11 @@ class FileServiceConvert(silvaforms.SubForm):
     silvaforms.view(FileServiceManagementView)
     silvaforms.order(20)
 
-    label = u"Convert stored files"
+    label = _(u"Convert stored files")
+    description = _(u"Convert all currently stored file to "
+                    u"the current set storage")
 
-    @silvaforms.action('Convert all files')
+    @silvaforms.action(_(u'Convert all files'))
     def convert(self):
         parent = self.context.get_publication()
         upg = upgrade.UpgradeRegistry()
@@ -603,8 +605,8 @@ class FileServiceConvert(silvaforms.SubForm):
         upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
         upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
         upg.upgradeTree(parent, '0.1')
-        self.status = u'Silva Files and Images converted. ' \
-            u'See Zope log for details.'
+        self.status = _(u'Storage for Silva Files and Images converted. '
+                        u'Check the log for more details.')
 
 
 class StorageConverterHelper(object):
