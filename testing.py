@@ -7,7 +7,10 @@ import unittest
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
 
-from silva.wsgi.testing import BrowserLayer
+import Products.Silva
+
+from silva.testing import TestCase
+from silva.wsgi.testing import BrowserLayer, http
 from zope.site.hooks import setSite, setHooks
 import transaction
 
@@ -88,3 +91,8 @@ class SilvaLayer(BrowserLayer):
         """
         return self._silva_root
 
+
+FunctionalLayer = SilvaLayer(Products.Silva)
+
+
+__all__ = ["FunctionalLayer", "SilvaLayer", "TestCase", "http"]

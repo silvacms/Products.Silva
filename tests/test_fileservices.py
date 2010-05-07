@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import unittest
+
 from zope import component
 from zope.interface.verify import verifyObject
 
@@ -11,13 +13,17 @@ from Products.Silva import File
 from silva.core import interfaces
 from Products.Silva.Image import havePIL
 from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
-from Products.Silva.tests import helpers, SilvaTestCase
+from Products.Silva.tests import helpers
+from Products.Silva.testing import FunctionalLayer, TestCase
 
 
-class FileServicesTest(SilvaTestCase.SilvaTestCase):
+class FileServicesTest(unittest.TestCase):
+    """Test file services features.
+    """
 
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
+    def setUp(self):
         """Test content structure:
 
         root/service_files (by default)
@@ -27,18 +33,20 @@ class FileServicesTest(SilvaTestCase.SilvaTestCase):
         root/folder1/folder1in1/folder1in1in1/service_files
         root/folder2
         """
-        root = self.root = self.getRoot()
-        folder1 = self.add_folder(root, 'folder1', 'Folder 1')
-        folder2 = self.add_folder(root, 'folder2', 'Folder 2')
-        folder1in1 = self.add_publication(
-            folder1, 'folder1in1', 'Folder 1 in 1')
-        folder1in1in1 = self.add_folder(
-            folder1in1, 'folder1in1in1', 'Folder 1 in 1 in 1')
+        root = self.root = self.layer.get_application()
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder1', 'Folder 1')
+        factory.manage_addFolder('folder2', 'Folder 2')
+
+        factory = self.root.folder1.manage_addProduct['Silva']
+        factory.manage_addPublication('folder1in1', 'Folder 1 in 1')
+
+        factory = self.root.folder1.folder1in1.manage_addProduct['Silva']
+        factory.manage_addFolder('folder1in1in1', 'Folder 1 in 1 in 1')
+
         # We can only add a new service in a site
-        manager = interfaces.ISiteManager(folder1in1)
-        manager.makeSite()
-        folder1in1.manage_addProduct['Silva'].manage_addFilesService(
-            'service_files', 'Other Files Service')
+        interfaces.ISiteManager(self.root.folder1.folder1in1).makeSite()
+        factory.manage_addFilesService()
 
     def add_test_file(self, id, context):
         file_handle = helpers.openTestFile('photo.tif')

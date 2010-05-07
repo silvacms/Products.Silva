@@ -6,20 +6,21 @@ import unittest
 
 from zope import component
 from zope.interface.verify import verifyObject
-from Testing.ZopeTestCase.zopedoctest.functional import http
 
 from Products.Silva import File
-from Products.Silva.tests import SilvaTestCase
+from Products.Silva.testing import FunctionalLayer, TestCase, http
 from Products.Silva.tests import helpers
 from silva.core import interfaces
 
 
-class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
+class DefaultFileImplementationTestCase(TestCase):
     """Test default file implementation.
     """
+    layer = FunctionalLayer
     implementation = None
 
-    def afterSetUp(self):
+    def setUp(self):
+        self.root = self.layer.get_application()
         file_handle = helpers.openTestFile('photo.tif')
         self.file_data = file_handle.read()
         self.file_size = file_handle.tell()
@@ -52,8 +53,8 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
     def test_download(self):
         """Test downloading file.
         """
-        response = http('GET /root/testfile HTTP/1.1')
-        headers = response.header_output.headers
+        response = http('GET /root/testfile HTTP/1.1', parsed=True)
+        headers = response.getHeaders()
         downloaded_data = response.getBody()
         self.assertEquals(len(downloaded_data), self.file_size)
         self.assertHashEqual(downloaded_data, self.file_data)
@@ -66,8 +67,8 @@ class DefaultFileImplementationTestCase(SilvaTestCase.SilvaFunctionalTestCase):
     def test_head_request(self):
         """Test HEAD requests on Files.
         """
-        response = http('HEAD /root/testfile HTTP/1.1')
-        headers = response.header_output.headers
+        response = http('HEAD /root/testfile HTTP/1.1', parsed=True)
+        headers = response.getHeaders()
         self.assertEquals(headers['Content-Length'], '0')
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
