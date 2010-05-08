@@ -1044,15 +1044,14 @@ input[type="submit"]:focus, input[type="button"]:focus {
 
 div.info {
   margin: -1px 0 0;
-  padding: 0.2em 0.4em 0.4em;
+  padding: 0.2em 0.4em 0.3em;
   border: 1px solid #789;
   color: #336;
   background-color: #c6d2dd;
 }
 
 div.info h3 {
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin: 0.2em 0;
   color: #336;
 }
 
@@ -1060,9 +1059,13 @@ div.info h3 img {
   vertical-align:top;
 }
 
+div.info h4 {
+  margin:0.6em 0 0;
+  font-size:100%;
+}
+
 div.info p {
-  margin-top: 0.6em;
-  margin-bottom: 0em;
+  margin:0 0 0.3em;
 }
 
 div.info p span.orientation {
@@ -1071,17 +1074,14 @@ div.info p span.orientation {
   border: 1px dotted black;
   text-align: center;
 }
-
 div.info p span.portrait {
   width: 4.5em;
   height: 6em;
 }
-
 div.info p span.landscape {
   width: 6.5em;
   height: 3.5em;
 }
-
 div.info p span.square {
   width: 4em;
   height: 4em;
