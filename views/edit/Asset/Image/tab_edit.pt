@@ -126,6 +126,7 @@
       </p>
       </tal:if>
     </tal:if>
+    <tal:portlets tal:replace="structure provider:smiportletmanager" />
   </div>
 </metal:fill-slot>
 

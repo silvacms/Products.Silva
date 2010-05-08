@@ -109,7 +109,6 @@ editor
     </tal:block>
     <td class="right">
       <metal:slot define-slot="right-column">&nbsp;</metal:slot>
-      <tal:portlets tal:replace="structure provider:smiportletmanager" />
     </td>
    </tr>
   </tbody>

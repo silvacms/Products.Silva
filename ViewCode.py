@@ -52,7 +52,7 @@ class ViewCode(object):
     def render_icon(self, obj=None, meta_type='Unknown'):
         """Gets the icon for the object and wraps that in an image tag
         """
-        tag = ('<img src="%(icon_path)s" width="16" height="16" border="0" '
+        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon"'
                'alt="%(alt)s" title="%(alt)s" />')
         try:
             icon_path = '%s/%s' % (self.get_root().absolute_url(),

@@ -1,14 +1,30 @@
-<div class="info">
-  <h4>references to this asset</h4>
-  <p tal:condition="not:viewlet/references">
-    Nothing
-  </p>
-  <ul tal:condition="viewlet/references">
-    <li tal:repeat="reference viewlet/references">
-      <a href="#"
-         tal:attributes="href reference/url"
-         tal:content="reference/title">
-      </a> as a <span tal:replace="reference/reason" />.
-    </li>
-  </ul>
-</div>
+<h4>usage references</h4>
+<p tal:condition="not:viewlet/references"
+  i18n:translate="">
+  No references to this asset.
+</p>
+<p style="margin-top:0.3em"
+  tal:condition="viewlet/references">
+  <tal:rep tal:repeat="reference viewlet/references">
+    <tal:def tal:define="
+      refurl reference/url;
+      refediturl string:$refurl/edit;
+      ">
+      <a title="edit content"
+        tal:attributes="href refediturl"
+        i18n:attributes="title">
+        <tal:icon tal:define="
+          metatype reference/meta_type;
+          metastring python:metatype.replace(' Version', '')"
+          tal:replace="structure python:context.render_icon_by_meta_type(metastring)"
+        />
+      </a>
+      <a tal:content="reference/title"
+        tal:attributes="
+          href refurl;
+          title refurl">
+        referring object, XXX: the title attribute should show the path from /
+      </a> (<span tal:replace="reference/reason" />)<br />
+    </tal:def>
+  </tal:rep>
+</p>

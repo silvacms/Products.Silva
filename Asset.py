@@ -145,6 +145,7 @@ class ReferencedBy(silvaviews.Viewlet):
         for reference in service.get_references_to(self.context):
             source = reference.source
             self.references.append(
-                {'title': source.get_title_or_id(),
+                {'title': source.get_title(),
                  'url': absoluteURL(source, self.request),
+                 'meta_type': source.meta_type,
                  'reason': reference.tags[0]})

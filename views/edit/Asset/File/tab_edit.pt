@@ -47,6 +47,7 @@
         path
       </p>
     </tal:condition>
+    <tal:portlets tal:replace="structure provider:smiportletmanager" />
   </div>
 </metal:fill-slot>
 
