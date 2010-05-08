@@ -8,7 +8,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva"
 >
-
 <metal:block use-macro="here/macro_asset_edit/macros/editor">
 <metal:fill-slot fill-slot="info">
   <div class="info">
@@ -16,23 +15,36 @@
       <img tal:replace="structure icon" i18n:name="icon"/>
       file info
     </h3>
+    <h4 i18n:translate="">file mime type</h4>
     <p tal:define="mime_type model/get_mime_type"
-      tal:condition="mime_type">
-      <span class="subhead"><strong i18n:translate="">file mime type</strong><br /></span>
-      <span tal:replace="mime_type" />
+      tal:condition="mime_type"
+      tal:content="mime_type">
+      mime type
     </p>
+    <h4 i18n:translate="">file size</h4>
     <p>
-      <span class="subhead"><strong i18n:translate="">file size</strong><br /></span>
-      <span 
-        tal:define="size model/get_file_size"
+      <span tal:define="size model/get_file_size"
         tal:attributes="title string: ${size}"
-        tal:content="python:mangle.Bytes(size)" /> 
+        tal:replace="python:mangle.Bytes(size)" /> 
     </p>
-    <tal:condition condition="python:user.has_role(['Manager'], model)">
-      <p tal:define="path model/getFileSystemPath"
-        tal:condition="path">
-        <span class="subhead"><strong i18n:translate="">file system path</strong><br /></span>
-        <span tal:replace="structure python: ' / '.join(path.split('/'))" />
+    <h4 i18n:translate="">link to file</h4>
+    <p>
+      <a class="underline"
+        title="download"
+        tal:define="url model/absolute_url"
+        tal:content="model/get_title_or_id"
+        tal:attributes="href url"
+        i18n:attributes="title">
+        link
+      </a>
+    </p>
+    <tal:condition 
+      tal:define="path model/getFileSystemPath"
+      tal:condition="python:user.has_role(['Manager'], model) and path">
+      <tal:comment><!-- this works only for ExtFile, not blobs --></tal:comment>
+      <h4 i18n:translate="">file system path</h4>
+      <p tal:content="structure python: ' / '.join(path.split('/'))">
+        path
       </p>
     </tal:condition>
   </div>
@@ -62,11 +74,12 @@
     <tbody>
      <tr class="odd">
       <td i18n:translate="">
-        Text content is too large to be edited through Silva.  Please upload changes.
+        Text content is too large to be edited through Silva. Please upload changes.
       </td>
      </tr>
     </tbody>
    </tal:cond>
+
    <tal:cond condition="model/is_editable_size">
     <tbody tal:define="fields python:here.text_edit_form.get_fields()">
       <tal:repeat repeat="field fields">
@@ -82,13 +95,12 @@
       </tr>
       <tr class="odd">
         <td>
-          <input tal:replace="structure python:field.render_from_request(request)" />
+          <textarea tal:replace="structure python:field.render_from_request(request)" />
         </td>
       </tr>
       </tal:define>
       </tal:repeat>
     </tbody>
-
     <tfoot>
       <tr class="controls">
         <td class="align-right"
@@ -110,7 +122,6 @@
  </tal:cond>
   <metal:block use-macro="here/macro_asset_edit/macros/uploader" />
 </metal:fill-slot>
-
 </metal:block>
 
 
