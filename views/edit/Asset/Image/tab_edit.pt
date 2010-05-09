@@ -108,7 +108,7 @@
          <span
            tal:attributes="title string:${scaled_size} bytes"
            tal:content="python:mangle.Bytes(scaled_size)" />
-           <span i18n:translate="">scaled</span>
+           <span i18n:translate="" tal:omit-tag="">scaled</span>
         </tal:condition>
       </tal:block>
     </p>

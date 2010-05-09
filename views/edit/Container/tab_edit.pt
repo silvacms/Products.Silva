@@ -430,8 +430,7 @@ window.onload_registry.register(function() {
       </th>
       <th class="controls listing-right" colspan="3">
         <tal:if condition="may_approve_content">
-          <span style="margin-right:0.1em"
-            tal:condition="python:(published or editables or closed)"
+          <span tal:condition="python:(published or editables or closed)"
             i18n:translate="">
             publishing actions
           </span>

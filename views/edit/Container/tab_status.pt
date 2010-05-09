@@ -370,7 +370,6 @@ function verifyChange(msg) {
         ______________ publication time controls ______________
       </tal:block>
       <td class="align-right"
-        style="padding-right:0.5em;"
         colspan="6">
         <label title="access key: alt-m"
           accesskey="m"

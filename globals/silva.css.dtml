@@ -405,18 +405,18 @@ table.listing td.top {
 }
 
 table.listing tr.top-controls td {
-  padding: 0;
+  padding: 0.1em 0.2em;
   background: #567;
 }
 
 table.listing tr.inter-controls td {
-  padding: 0;
+  padding: 0 0.2em;
   color: #c9dfe2;
   background-color: #789;
 }
 
 table.listing tr.controls td {
-  padding: 0;
+  padding: 0.1em 0.2em;
   color: #c9dfe2;
   background-color: #8090a1;
 }
@@ -485,7 +485,7 @@ table.listing td {
 
 /* title cell */
 table.listing td.top h2 {
-  margin: 0 0.2em 0.1em 0.3em;
+  margin: 0 0.1em;
   color: #c5d4ca;
 }
 table.listing td.top img {
@@ -785,10 +785,9 @@ input[type="submit"] {
 
 /* manipulator button style from which all others derive */
 input.button, button.button, input.manipulator {
-  margin: 0;
+  margin: 0 1px;
   padding: 1px 0.5em;
-  border: 1px solid #345;
-  border-style: none solid none;
+  border: none;
   color: #d9f3da;
   background-color: #064C29;
   background-image: url(<dtml-var root_url>/globals/reflection.png);
@@ -1585,6 +1584,7 @@ button.kupu-link-reference:hover {
 button.calendar-button {
   background-image: url("calendar.gif");
   background-repeat:no-repeat;
+  background-position:3px -1px;
   margin-top:2px;
   border:none;
 }
