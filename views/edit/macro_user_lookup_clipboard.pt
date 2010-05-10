@@ -32,7 +32,7 @@
               </td>
             </tr>
             <tr class="inter-controls"
-              tal:condition="clipboard_members">
+              tal:condition="python:len(clipboard_members) > 1">
               <th style="font-size:90%"
                 i18n:translate="">
                 ctrl-click to multi-select
