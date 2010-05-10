@@ -7,13 +7,16 @@
   xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
   xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
   version="1.0">
+
   <xsl:import href="silvabase:doc_elements.xslt"/>
+
   <xsl:output
     method="xml"
     omit-xml-declaration="yes"
     indent="no"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
+
   <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>

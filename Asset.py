@@ -144,8 +144,13 @@ class ReferencedBy(silvaviews.Viewlet):
         service = component.getUtility(IReferenceService)
         for reference in service.get_references_to(self.context):
             source = reference.source
+            if interfaces.IVersion.providedBy(source):
+                source = source.object()
+            source_url = absoluteURL(source, self.request)
             self.references.append(
                 {'title': source.get_title(),
-                 'url': absoluteURL(source, self.request),
-                 'meta_type': source.meta_type,
+                 'url': source_url,
+                 'path': '/'.join(source.getPhysicalPath()),
+                 'edit_url': source_url + '/edit',
+                 'icon': self.view.get_icon(source),
                  'reason': reference.tags[0]})

@@ -10,12 +10,14 @@ import Globals
 
 from zope.interface import implements
 from zope.browser.interfaces import IBrowserView
+from zope.cachedescriptors.property import CachedProperty
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle, icon
 
 from silva.translations import translate as _
+from silva.core.views.interfaces import IVirtualSite
 from silva.core.interfaces import (
     IPublishable, IAsset, IImage, IContent, IContainer, IPublication, IRoot,
     IVersioning, IVersionedContent)
@@ -349,7 +351,11 @@ InitializeClass(ViewCode)
 
 
 class FakeView(object):
+    """Fake view used in conjuction of FileSystemSite templates, to
+    enable to used content provider in it, and rebuild them.
 
+    This will rebuild in a cleaner fashion methods defined in ViewCode.
+    """
     implements(IBrowserView)
 
     def __init__(self, context, request):
@@ -357,3 +363,20 @@ class FakeView(object):
         self.request = request
         # The next line is to enable security validation
         self.__parent__ = context
+        self.virtual_site = IVirtualSite(self.request)
+
+    @CachedProperty
+    def root(self):
+        return self.virtual_site.get_root()
+
+    @CachedProperty
+    def root_url(self):
+        return self.virtual_site.get_root_url()
+
+    def get_icon(self, content=None):
+        """Gets the icon for the object and wraps that in an image tag.
+        """
+        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon"'
+               'alt="%(alt)s" title="%(alt)s" />')
+        icon_path = '%s/%s' % (self.root_url, icon.registry.getIcon(content))
+        return tag % {'icon_path': icon_path, 'alt': content.meta_type}
