@@ -405,20 +405,20 @@ table.listing td.top {
 }
 
 table.listing tr.top-controls td {
-  padding: 0.1em 0.2em;
+  padding: 0.1em 0.2em 0;
   background: #567;
 }
 
 table.listing tr.inter-controls td {
   padding: 0 0.2em;
   color: #c9dfe2;
-  background-color: #789;
+  background-color: #728394;
 }
 
 table.listing tr.controls td {
-  padding: 0.1em 0.2em;
+  padding: 0 0.2em;
   color: #c9dfe2;
-  background-color: #8090a1;
+  background-color: #789;
 }
 
 /* cycle text color in listing rows */
