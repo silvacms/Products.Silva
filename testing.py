@@ -2,10 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-import unittest
-
 from AccessControl.SecurityManagement import newSecurityManager
-from AccessControl.SecurityManagement import noSecurityManager
 
 import Products.Silva
 

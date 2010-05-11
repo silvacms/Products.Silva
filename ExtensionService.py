@@ -12,7 +12,6 @@ import logging
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from App.Common import package_home
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.Folder import Folder

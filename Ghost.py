@@ -2,9 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
+import urlparse
+
 # Zope 3
-from zope.interface import implements, directlyProvidedBy, directlyProvides
-from zope.publisher.interfaces.browser import IBrowserSkinType
+from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -17,11 +18,10 @@ from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.adapters.path import PathAdapter
 from Products.Silva.helpers import add_and_edit
 
-import urlparse
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import (IVersionedContent, IContainer,
-                                   IContent, IGhost, IGhostContent)
+from silva.core.interfaces import (
+    IVersionedContent, IContainer, IContent, IGhost, IGhostContent)
 from silva.translations import translate as _
 
 
@@ -224,16 +224,13 @@ class Ghost(CatalogedVersionedContent):
        and stylesheets).
     """)
 
+    meta_type = "Silva Ghost"
     security = ClassSecurityInfo()
 
-    meta_type = "Silva Ghost"
-
-    implements(IVersionedContent, IGhostContent)
-
+    grok.implements(IVersionedContent, IGhostContent)
     silvaconf.icon('icons/silvaghost.gif')
     silvaconf.factory('manage_addGhost')
     silvaconf.versionClass('GhostVersion')
-    silvaconf.versionFactory('manage_addGhostVersion')
 
 
     def get_title_editable(self):
@@ -271,7 +268,6 @@ class Ghost(CatalogedVersionedContent):
         version = getattr(self, version_id)
         return version
 
-    security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
     def get_haunted_url(self):
         """return content url of `last' version"""
         version = self.getLastVersion()
@@ -371,15 +367,6 @@ def manage_addGhost(self, id, content_url, REQUEST=None):
     # See:https://bugs.launchpad.net/silva/+bug/101253
     object.sec_update_last_author_info()
 
-    add_and_edit(self, id, REQUEST)
-    return ''
-
-# XXX this is never called by manage_addGhost, and it's actually broken!
-def manage_addGhostVersion(self, id, REQUEST=None):
-    """Add a Ghost version."""
-    object = GhostVersion(id)
-    self._setObject(id, object)
-    object.set_haunted_url(content_url)
     add_and_edit(self, id, REQUEST)
     return ''
 

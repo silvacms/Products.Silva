@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
-
 # Zope 3
 from zope.site.hooks import setSite, setHooks
 from five import grok
@@ -13,7 +11,6 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import transaction
 
 # Silva
 from Products.Silva.ExtensionService import install_documentation

@@ -4,7 +4,6 @@
 
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
-from Acquisition import aq_base
 from App.class_init import InitializeClass
 import Globals
 
@@ -60,7 +59,7 @@ class ViewCode(object):
             icon_path = '%s/%s' % (self.get_root().absolute_url(),
                 icon.registry.getIcon(obj))
             meta_type = obj.meta_type
-        except ValueError, AttributeError:
+        except (ValueError, AttributeError):
             icon_path = '%s/globals/silvageneric.gif' % self.REQUEST['BASE2']
             meta_type = hasattr(obj, 'meta_type') and obj.meta_type
         return tag % {'icon_path': icon_path, 'alt': meta_type}

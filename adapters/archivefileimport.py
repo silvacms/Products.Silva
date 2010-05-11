@@ -3,13 +3,10 @@
 # $Id$
 
 # Python
+from cStringIO import StringIO
 import os.path
-import zipfile
 import re
-try:
-    from cStringIO import StringIO
-except:
-    from StringIO import StringIO
+import zipfile
 
 # Zope
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module

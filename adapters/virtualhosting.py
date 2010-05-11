@@ -23,7 +23,7 @@ class VirtualHostingAdapter(grok.Adapter):
         """
         try:
             root_path = self.context.REQUEST['VirtualRootPhysicalPath']
-        except (AttributeError, KeyError), err:
+        except (AttributeError, KeyError):
             root_path =  None
 
         return root_path

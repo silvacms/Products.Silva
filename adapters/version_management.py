@@ -148,7 +148,7 @@ class VersionManagementAdapter(adapter.Adapter):
                         self.context._previous_versions.remove(version)
             delids.append(id)
             ret.append((id, None))
-        delret = self.context.manage_delObjects(delids)
+        self.context.manage_delObjects(delids)
         return ret
 
     def _getOldVersionIds(self):

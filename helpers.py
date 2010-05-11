@@ -7,7 +7,6 @@ import urllib
 
 # Zope
 import zope.deferredimport
-from zope.location.interfaces import ISite
 
 # Silva core
 from silva.core import interfaces

@@ -104,7 +104,6 @@ class VersionedContentCleanupAdapter(CleanupAdapter):
                 if id in seen_ids:
                     print "Duplicate old verion:", id
                     continue
-                v = self.context._getOb(id, self.context)
                 self.context._delObject(id)
                 seen_ids.append(id)
 
