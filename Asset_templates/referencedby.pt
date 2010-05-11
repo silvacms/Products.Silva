@@ -1,5 +1,5 @@
 <tal:references>
-  <h4>usage references</h4>
+  <h4 title="list of items that refer to this asset">usage references</h4>
   <p tal:condition="not:viewlet/references"
      i18n:translate="">
     No references to this asset.
@@ -13,9 +13,9 @@
         <tal:icon tal:replace="structure reference/icon" />
       </a>
       <a tal:content="reference/title"
-         tal:attributes="href reference/url;
-                         title reference/path">
-        referring object, XXX: the title attribute should show the path from /
+         tal:attributes="
+           href reference/url;
+           title reference/path">
       </a> (<span tal:replace="reference/reason" />)<br />
     </tal:references>
   </p>
