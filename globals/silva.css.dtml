@@ -417,6 +417,7 @@ table.listing tr.inter-controls td {
 
 table.listing tr.controls td {
   padding: 0 0.2em;
+  border-top: 1px solid #789;
   color: #c9dfe2;
   background-color: #789;
 }
@@ -741,7 +742,7 @@ input.store, textarea.store {
 }
 
 select {
-  margin: 0 0 1px;
+  margin: 0 1px 1px 0;
   border: 1px solid #366;
   color: #444;
   background-color: #d5e7e7;
