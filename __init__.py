@@ -38,12 +38,6 @@ except ImportError:
 
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
-from Products.Silva.Metadata import initialize_metadata
-
-# Initialize the XML registries
-#from Products.Silva.silvaxml import xmlexport
-#xmlexport.initializeXMLExportRegistry()
-
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
 AccessControl.allow_module('Products.Silva.adapters.cleanup')
 AccessControl.allow_module('Products.Silva.adapters.languageprovider')
@@ -122,5 +116,7 @@ def initialize_icons():
             '++resource++silva.icons/%s' % icon_name)
 
 initialize_icons()
+
+from Products.Silva.Metadata import initialize_metadata
 initialize_metadata()
 
