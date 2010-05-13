@@ -21,7 +21,8 @@ from Products.Silva.helpers import add_and_edit
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
-    IVersionedContent, IContainer, IContent, IGhost, IGhostContent)
+    IVersionedContent, IContainer, IContent, IGhost, IGhostContent,
+    IGhostVersion)
 from silva.translations import translate as _
 
 
@@ -303,10 +304,12 @@ class Ghost(CatalogedVersionedContent):
 
 InitializeClass(Ghost)
 
+
 class GhostVersion(GhostBase, CatalogedVersion):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'
+    grok.implements(IGhostVersion)
 
     security = ClassSecurityInfo()
 

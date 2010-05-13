@@ -3,7 +3,7 @@
 # $Id$
 
 # Zope 3
-from zope.interface import implements
+from five import grok
 from zope.annotation.interfaces import IAnnotations
 
 # Zope 2
@@ -17,7 +17,6 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
-from Products.Silva.Publishable import Publishable
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import \
@@ -121,7 +120,7 @@ class SyncCopy(Sync):
         self.g_container._setObject(self.h_id, g_ob_new)
 
 
-class GhostFolder(GhostBase, Publishable, Folder.Folder):
+class GhostFolder(GhostBase, Folder.Folder):
     __doc__ = _("""Ghost Folders are similar to Ghosts, but instead of being a
        placeholder for a document, they create placeholders and/or copies of all
        the contents of the &#8216;original&#8217; folder. The advantage of Ghost
@@ -132,7 +131,7 @@ class GhostFolder(GhostBase, Publishable, Folder.Folder):
 
     meta_type = 'Silva Ghost Folder'
 
-    implements(IContainer, IGhostFolder)
+    grok.implements(IGhostFolder)
 
     security = ClassSecurityInfo()
 
