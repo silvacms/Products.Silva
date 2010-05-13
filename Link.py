@@ -25,6 +25,8 @@ from silva.core.views import views as silvaviews
 from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
 
+from zeam.form import silva as silvaforms
+
 
 class Link(CatalogedVersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
@@ -98,18 +100,18 @@ class ILinkSchema(interface.Interface):
                       u"it is the absolute link url."),
         required=False)
 
-    target = Reference(
-        title=_("target of relative link"),
-        description=_(u"If the link is relative, "
-                      u"it is the target of the link."),
-        required=False)
+    # target = Reference(
+    #     title=_("target of relative link"),
+    #     description=_(u"If the link is relative, "
+    #                   u"it is the target of the link."),
+    #     required=False)
 
-    @interface.invariant
-    def url_validation(obj):
-        if obj.relative and not obj.target:
-            raise interface.Invalid(_("Relative link selected without target"))
-        if not obj.relative and not obj.url:
-            raise interface.Invalid(_("Absolute link selected without URL"))
+    # @interface.invariant
+    # def url_validation(obj):
+    #     if obj.relative and not obj.target:
+    #         raise interface.Invalid(_("Relative link selected without target"))
+    #     if not obj.relative and not obj.url:
+    #         raise interface.Invalid(_("Absolute link selected without URL"))
 
 
 class LinkAddForm(silvaz3cforms.AddForm):
@@ -124,14 +126,15 @@ class LinkAddForm(silvaz3cforms.AddForm):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addLink(
             data['id'], data['title'],
-            url=data['url'], relative=data['relative'], target=data['target'])
+            url=data['url'], relative=data['relative']) # , target=data['target']
 
 
-class LinkEditForm(silvaz3cforms.EditForm, silvasmi.EditTab):
+class LinkEditForm(silvaforms.SMIForm):
     """Edit form for a link.
     """
+    grok.name('tab_edit')
     grok.context(interfaces.ILink)
-    fields = field.Fields(ILinkSchema)
+    fields = silvaforms.Fields(ILinkSchema)
 
 
 class LinkView(silvaviews.View):

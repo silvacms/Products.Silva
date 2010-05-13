@@ -39,15 +39,10 @@ except ImportError:
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
 from Products.Silva.Metadata import initialize_metadata
-# To make the splitter register itself
-from Products.Silva import UnicodeSplitter
-
-# Add Formulator fields
-from Products.Silva import emaillinesfield, lookupwindowfield, kupupopupfield
 
 # Initialize the XML registries
-from Products.Silva.silvaxml import xmlexport
-xmlexport.initializeXMLExportRegistry()
+#from Products.Silva.silvaxml import xmlexport
+#xmlexport.initializeXMLExportRegistry()
 
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
 AccessControl.allow_module('Products.Silva.adapters.cleanup')

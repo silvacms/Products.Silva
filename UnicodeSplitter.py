@@ -6,8 +6,8 @@ from Products.ZCTextIndex.PipelineFactory import element_factory
 
 import re
 
-class Splitter:
-    
+class Splitter(object):
+
     rx = re.compile(r"\w+", re.UNICODE)
     rxGlob = re.compile(r"\w+[\w*?]*", re.UNICODE)
 
