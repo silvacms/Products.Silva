@@ -645,10 +645,9 @@ function initSilvaPopupKupu(iframe) {
     kupu.registerTool('indextool', indextool);
 
     var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym', 
-        'kupu-abbr-radiorow', 'kupu-abbr-title',
-        'kupu-abbr-addbutton', 'kupu-abbr-updatebutton',
-        'kupu-abbr-deletebutton', 'kupu-toolbox-abbr',
-        'kupu-toolbox', 'kupu-toolbox-active');
+        'kupu-abbr-title', 'kupu-abbr-addbutton', 
+        'kupu-abbr-updatebutton', 'kupu-abbr-deletebutton',
+        'kupu-toolbox-abbr', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('abbrtool', abbrtool);
 
     var showpathtool = new ShowPathTool();
