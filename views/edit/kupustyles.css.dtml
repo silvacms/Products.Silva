@@ -163,7 +163,7 @@ div.kupu-tb {
 }
 
 div.kupu-tb select {
-  color : #333767;
+  color: #333767;
   background-color: #cedae8;
   border: 1px solid #797f7f;
   vertical-align: top;
@@ -175,30 +175,13 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 
 /** for buttons in the toolboxes **/
 #kupu-toolboxes button.kupu-button {
- height: 20px;
- padding: 0px;
+  height: 20px;
+  padding: 0px;
 }
-
-#kupu-link-input .readonly {
- color: #187374;
-}
-
-.kupu-link-reference-table {
- width: 100%;
-}
-
-.kupu-link-reference-table td {
- white-space: nowrap;
-}
-.kupu-link-reference-table td.buttoncell {
- width: 21px;
- vertical-align: top;
-}
-
-#kupu-toolboxes button.kupu-link-lookupbutton {
+.kupu-link-reference-table button.kupu-link-lookupbutton {
   background-image: url("<dtml-var root_url>/globals/system-search.png");
 }
-#kupu-toolboxes button.kupu-link-editbutton {
+.kupu-link-reference-table button.kupu-link-editbutton {
   background-image: url("<dtml-var root_url>/globals/edit-find.png");
   display: none;
 }
@@ -214,12 +197,10 @@ div.kupu-tb select:hover, div.kupu-tb select:focus {
 .kupu-link-reference-table button.kupu-link-removebutton {
   background-image: url("<dtml-var root_url>/globals/list-remove.png");
 }
-
 #kupu-toolboxes button.kupu-link-reference {
   width: 20px;
-  margin-right: 1px;
+  margin: 1px 0 0;
   overflow: visible;
-/*  border: none;*/
   background-color: transparent;
 }
 #kupu-toolboxes button.kupu-link-reference:hover {
@@ -294,10 +275,34 @@ div.kupu-toolbox-active h1.kupu-toolbox-heading-opened {
 
 div.kupu-tooltray {
   margin: 0;
-  padding: 0.1em 0.3em;
+  padding: 0 0.3em 0 0.1em;
   color: #333;
   font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-  line-height: 110%;
+  line-height: 140%;
+}
+
+div.kupu-tooltray label {
+  margin-left: 0.1em;
+}
+
+div.fieldblock {
+margin-top:0.1em;
+}
+
+.kupu-link-reference-table {
+  width: 100%;
+}
+.kupu-link-reference-table td {
+  white-space: nowrap;
+}
+.kupu-link-reference-table td.buttoncell {
+  width: 21px;
+  vertical-align: top;
+}
+
+#extsourceform td.fieldtitlecell {
+width:5em;
+vertical-align:top;
 }
 
 div.kupu-tooltray table td.titlecell {
@@ -316,7 +321,12 @@ div.kupu-tooltray input {
 margin:0.1em 0;
 }
 
+div.kupu-tooltray input.store, div.kupu-tooltray textarea.store {
+width:98%;
+}
+
 div.kupu-tooltray select {
+  margin:0.1em 0;
   overflow: hidden;
 }
 
@@ -332,6 +342,10 @@ div.kupu-tooltray input.button, div.kupu-tooltray input.transport {
 /* improves problem with long values in string inputs in IE 7 */ 
 div.kupu-tooltray input.store {
    overflow: visible;
+}
+
+textarea#kupu-link-input, textarea#kupu-toolbox-image-src, textarea#kupu-toolbox-image-link {
+height:37px;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
@@ -436,6 +450,7 @@ div.kupu-properties-item-innerdiv {
 }
 
 .kupu-tooltray a {
+  margin-left:0.1em;
   color: #187374;
   text-decoration: none;
 }
@@ -449,18 +464,19 @@ div.kupu-properties-item-innerdiv {
 }
 
 .kupu-tooltray span.tooltip {
+  display: none;
   color: #444;
   background-color: #e3f1da;
-  margin: 2em 0 0;
+  margin: 2em 0 0 -0.2em;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
-  display: none;
+  line-height:120%;
 }
 
 .kupu-tooltray a.rollover:hover span {
   display:block;
   position:absolute;
-  width:21.5em;
+  width:23.3em;
 }
 
 .kupu-tooltray a.requiredfield {
@@ -469,20 +485,10 @@ div.kupu-properties-item-innerdiv {
 
 /* used in image toolbox */
 
-#kupu-toolbox-image-link-settings fieldset {
-  padding:0.2em;
-  margin-top:0.2em;
-}
-
 #kupu-toolbox-image-link-settings legend {
   color:#333;
-  font-size:110%;
-  padding-left:0;
-  border-bottom:1px solid #559999;
-}
-
-#kupu-toolbox-image-link-settings label.select {
-  line-height:160%;
+  font-size:120%;
+  padding:0.4em 0.1em 0.2em;
 }
 
 .kupupopuptextarea {
