@@ -379,11 +379,11 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
             if (info['path']) {
                 self.external_href.val(info['path']);
                 self.external_href.attr('readonly', 'readonly');
-                self.external_href.attr('class', 'readonly');
+                self.external_href.attr('class', 'store readonly');
             } else {
                 self.external_href.val('');
                 self.external_href.removeAttr('readonly');
-                self.external_href.attr('class', '');
+                self.external_href.attr('class', 'store');
             };
         });
 
@@ -538,7 +538,7 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
     /* create an image */
     var reference = this.content.reference();
     if (!reference) {
-        alert("No image selected!");
+        alert("First select an image.");
         return;
     }
 

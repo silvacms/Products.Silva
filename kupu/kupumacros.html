@@ -394,34 +394,38 @@
 
       <div class="kupu-tooltray">
         <form name="kupu_link_form" onsubmit="return false;" id="kupu_link_form">
-          <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
-            <div id="#" title="select link reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
+          <div id="kupu-link-image-options">
+            <input type="checkbox" id="kupu-link-image-hires" />
+            <label class="select" for="kupu-link-image-hires" i18n:translate="">
+              link to hires image
+            </label>
+          </div>
+
+          <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" 
+            tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
+            <div id="#" title="select link reference" class="ui-widget reference-dialog"
+              tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
               <ul class="reference-dialog-data">
               </ul>
             </div>
             <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
             </button>
-            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link"></a>
-            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value" />
-            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url" />
-            <textarea id="#" cols="32" rows="2" tal:attributes="id string:${widget_id}-href">
+            <a class="kupu-reference-link" href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link"></a>
+            <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;name string:${widget_id}_value" />
+            <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;value model/absolute_url" />
+            <textarea class="store" id="#" cols="32" rows="2" tal:attributes="id string:${widget_id}-href">
             </textarea>
-            <label for="#" i18n:translate="" tal:attributes="name string:${widget_id}-anchor">
-              anchor:
+            <label for="#" i18n:translate="" tal:attributes="for string:${widget_id}-anchor">
+              anchor
             </label>
-            <input type="text" id="#" tal:attributes="id string:${widget_id}-anchor" />
-          </div>
-
-          <div id="kupu-link-image-options">
-            <input type="checkbox" id="kupu-link-image-hires" />
-            <label class="select" for="kupu-link-image-hires" i18n:translate="">
-              link to image hires
-            </label>
+            <input class="store" type="text" id="#" tal:attributes="id string:${widget_id}-anchor" />
           </div>
 
           <div id="kupu-toolbox-links-options">
-            <label class="select" for="kupu-link-target-select" i18n:translate="">link target:</label>
-            <select id="kupu-link-target-select">
+            <label class="select" for="kupu-link-target-select" i18n:translate="">
+              link target
+            </label>
+            <select class="store" id="kupu-link-target-select">
               <option value="_self" i18n:translate="">same window</option>
               <option value="_blank" i18n:translate="">new window</option>
               <option value="_parent" i18n:translate="">parent</option>
@@ -429,7 +433,9 @@
               <option value="input" i18n:translate="">custom target</option>
             </select><br />
             <input class="store" type="text" id="kupu-link-target-custom" />
-            <label class="select" for="kupu-link-title" i18n:translate="">link title:</label>
+            <label class="select" for="kupu-link-title" i18n:translate="">
+              link title
+            </label>
             <input class="store" type="text" id="kupu-link-title" />
           </div>
           <div class="kupu-toolbox-actions">
@@ -465,10 +471,8 @@
 
     <div class="kupu-toolbox" id="kupu-toolbox-images">
       <h1 class="kupu-toolbox-heading" i18n:translate="">image</h1>
-
       <div class="kupu-tooltray">
         <form name="kupu_image_form" onsubmit="return false" id="kupu_image_form">
-
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-image-input" tal:attributes="id widget_id">
             <div id="#" title="select image reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
               <ul class="reference-dialog-data">
@@ -476,17 +480,17 @@
             </div>
             <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
             </button>
-            <a href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
+            <a class="kupu-reference-link" href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
             <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value" />
             <input type="hidden" value="#" id="#" tal:attributes="id string:${widget_id}-base;                                    value model/absolute_url" />
             <input type="hidden" value="silva.core.interfaces.content.IImage" id="#" tal:attributes="id string:${widget_id}-interface" />
           </div>
 
-          <div id="kupu-toolbox-images-options">
+          <div class="fieldblock" id="kupu-toolbox-images-options">
             <label class="select" for="kupu-image-align" i18n:translate="">
-              image alignment:
+              image alignment
             </label>
-            <select id="kupu-image-align">
+            <select class="store" id="kupu-image-align">
               <option i18n:translate="" value="default">default</option>
               <option i18n:translate="" value="image-left">align left</option>
               <option i18n:translate="" value="image-center">align center</option>
@@ -555,7 +559,8 @@
 	          <option value="" i18n:translate="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
-                <option tal:attributes="value id;title object/description" tal:content="python:object.get_title() or id"></option>
+                <option tal:attributes="value id;title object/description"
+                  tal:content="python:object.get_title() or id"></option>
               </tal:block>
             </tal:block>
           </select>
