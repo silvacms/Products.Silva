@@ -54,6 +54,7 @@ addNewContent = function(event) {
 addRowToReferenceLookupWidget = function(input,maxrows) {
   var tbody = input;
   while (tbody.nodeName != 'TBODY') tbody = tbody.parentNode;
+  /* count the number of RLW rows currently present */
   var trs = -1; /* start at -1, since one row is the add buttonr ow */
   for (var n=0; n < tbody.childNodes.length; n++) {
     if (tbody.childNodes[n].tagName == 'TR')
@@ -63,6 +64,8 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
     alert("Unable to add additional reference.  The number of references allowed for this field is " + maxrows);
     return;
   };
+  /* lastchild is the row with the "add" button.
+     the previousSibling is what we want to copy */
   var copy = tbody.lastChild.previousSibling.cloneNode(true);
   var key = input.getAttribute('id').replace(/^addbutton_/,'');
   var refinput = copy.getElementsByTagName('textarea')[0]; /* this is the ref text field*/
@@ -101,6 +104,7 @@ addRowToReferenceLookupWidget = function(input,maxrows) {
     removebutton.setAttribute('id',removebutton.getAttribute('id').replace(keyrepl,"$1"+index+"$2"));
     removebutton.setAttribute('name',removebutton.getAttribute('name').replace(keyrepl,"$1"+index+"$2"));
     removebutton.style.visibility="visible";
+    removebutton.style.display="inline";
   };
   tbody.insertBefore(copy,tbody.lastChild);
 };
@@ -109,7 +113,7 @@ removeRowFromReferenceLookupWidget = function(input) {
     var row = input;
   while (row.nodeName != 'TR') row = row.parentNode;
   var tbody = row.parentNode;
-  if (tbody.getElementsByTagName('tr').length > 2) {
+  if (tbody.getElementsByTagName('TR').length > 2) {
     tbody.removeChild(row);
   } else {
     alert('You must have at least one reference');
