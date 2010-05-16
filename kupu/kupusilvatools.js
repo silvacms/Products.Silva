@@ -2525,8 +2525,9 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     // you should not be allowed to add external sources inside
-    // headers or table cells (but the cursor may be inside an ES title,
-    // which is an H4.)
+    // headers or table cells
+	  if (!this._editing) {
+      /* these checks are only needed when not currently editing */
     var selNode = this.editor.getSelectedNode();
     if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
             (selNode.parentNode.className=='externalsource' ||
@@ -2543,6 +2544,7 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
     if (selNode.tagName == 'TD'){
         alert('Code source is not allowed inside a table cell.')
         return
+    };
     };
     // get the appropriate form and display it
     if (!this._editing) {
