@@ -24,18 +24,16 @@ silvaconf.namespace(NS_URI)
 
 theXMLImporter = xmlimport.Importer()
 
-class SilvaBaseHandler(xmlimport.BaseHandler):
 
+class SilvaBaseHandler(xmlimport.BaseHandler):
+    """Base class to writer an XML importer for a Silva content. It
+    provides helpers to set Silva properties and metadatas.
+    """
     silvaconf.baseclass()
 
     def __init__(self, parent, parent_handler, settings=None, info=None):
         xmlimport.BaseHandler.__init__(
-            self,
-            parent,
-            parent_handler,
-            settings,
-            info
-            )
+            self, parent, parent_handler, settings, info)
         self._metadata_set = None
         self._info = info
         self._metadata_key = None
@@ -182,9 +180,11 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         else:
             return generateUniqueId(id, parent)
 
+
 class SilvaExportRootHandler(SilvaBaseHandler):
 
     silvaconf.name('silva')
+
 
 class FolderHandler(SilvaBaseHandler):
 
@@ -206,6 +206,7 @@ class FolderHandler(SilvaBaseHandler):
         if name == (NS_URI, 'folder'):
             self.setMaintitle()
             self.storeMetadata()
+
 
 class PublicationHandler(SilvaBaseHandler):
 
@@ -257,6 +258,7 @@ class AutoTOCHandler(SilvaBaseHandler):
             self.setMaintitle()
             self.storeMetadata()
 
+
 class IndexerHandler(SilvaBaseHandler):
 
     silvaconf.name('indexer')
@@ -274,6 +276,7 @@ class IndexerHandler(SilvaBaseHandler):
             self.setMaintitle()
             self.storeMetadata()
             self._info.addIndexer(self.result())
+
 
 class VersionHandler(SilvaBaseHandler):
 
@@ -296,6 +299,7 @@ class VersionHandler(SilvaBaseHandler):
             self.getData('publication_datetime'),
             self.getData('expiration_datetime'),
             self.getData('status'))
+
 
 class SetHandler(SilvaBaseHandler):
 
@@ -328,14 +332,13 @@ class SetHandler(SilvaBaseHandler):
             self.parentHandler().setMetadataMultiValue(False)
         self._chars = None
 
+
 class GhostHandler(SilvaBaseHandler):
 
     silvaconf.name('ghost')
 
     def getOverrides(self):
-        return {
-            (NS_URI, 'content'): GhostContentHandler
-            }
+        return {(NS_URI, 'content'): GhostContentHandler}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'ghost'):
@@ -349,6 +352,7 @@ class GhostHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'ghost'):
             ICataloging(self.result()).reindex()
+
 
 class GhostContentHandler(SilvaBaseHandler):
 
@@ -371,6 +375,7 @@ class GhostContentHandler(SilvaBaseHandler):
             self.storeWorkflow()
             updateVersionCount(self)
 
+
 class GhostFolderHandler(SilvaBaseHandler):
 
     silvaconf.name('ghost_folder')
@@ -391,6 +396,7 @@ class GhostFolderHandler(SilvaBaseHandler):
             self.setResult(object)
             self._info.addSyncTarget(object)
 
+
 class GhostFolderContentHandler(SilvaBaseHandler):
 
     def getOverrides(self):
@@ -399,15 +405,18 @@ class GhostFolderContentHandler(SilvaBaseHandler):
             (NS_URI, 'content'): NoopHandler,
             }
 
+
 class NoopHandler(SilvaBaseHandler):
 
     def isElementAllowed(self, name):
         return False
 
+
 class HauntedUrlHandler(SilvaBaseHandler):
 
     def characters(self, chars):
         self.parent().set_haunted_url(chars)
+
 
 class LinkHandler(SilvaBaseHandler):
 
@@ -457,6 +466,7 @@ class LinkContentHandler(SilvaBaseHandler):
             self.storeMetadata()
             self.storeWorkflow()
 
+
 class ImageHandler(SilvaBaseHandler):
 
     silvaconf.name('image_asset')
@@ -491,6 +501,7 @@ class ImageHandler(SilvaBaseHandler):
                     web_scale,
                     web_crop)
 
+
 class FileHandler(SilvaBaseHandler):
 
     silvaconf.name('file_asset')
@@ -513,6 +524,7 @@ class FileHandler(SilvaBaseHandler):
                 info.ZipFile().read(
                     'assets/' + self.getData('zip_id')))
             self.parent().manage_addProduct['Silva'].manage_addFile(uid, '', file)
+
 
 class UnknownContentHandler(SilvaBaseHandler):
 
@@ -538,25 +550,31 @@ class UnknownContentHandler(SilvaBaseHandler):
                 id = id()
             self.parent()._setObject(id, ob)
 
+
 class ZipIdHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('zip_id', chrs)
+
 
 class StatusHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('status', chrs)
 
+
 class PublicationDateTimeHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('publication_datetime', chrs)
+
 
 class ExpirationDateTimeHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('expiration_datetime', chrs)
 
+
 class URLHandler(SilvaBaseHandler):
     def characters(self, chrs):
         self.parentHandler().setData('url', chrs)
+
 
 class ImportSettings(xmlimport.BaseSettings):
     def __init__(self, replace_objects=False):
@@ -569,6 +587,7 @@ class ImportSettings(xmlimport.BaseSettings):
 
     def replaceObjects(self):
         return self._replace_objects
+
 
 class ImportInfo(object):
     def __init__(self):
@@ -622,6 +641,7 @@ class ImportInfo(object):
         for indexer in self.getIndexers():
             indexer.update()
 
+
 def generateUniqueId(org_id, context):
         i = 0
         id = org_id
@@ -633,6 +653,7 @@ def generateUniqueId(org_id, context):
                 add = str(i)
             id = 'import%s_of_%s' % (add, org_id)
         return id
+
 
 def updateVersionCount(versionhandler):
     # The parent of a version is a VersionedContent object. This VC object
@@ -653,6 +674,7 @@ def updateVersionCount(versionhandler):
     vc = max(parent._version_count, (id + 1))
     parent._version_count = vc
 
+
 def importFromFile(source_file, import_container, info=None):
     source_file = upgradeXMLOnFD(source_file)
 
@@ -667,6 +689,7 @@ def importFromFile(source_file, import_container, info=None):
     info.syncGhostFolders()
     info.updateIndexers()
     return import_container
+
 
 def importReplaceFromFile(source_file, import_container, info=None):
     source_file = upgradeXMLOnFD(source_file)
