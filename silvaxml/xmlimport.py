@@ -3,10 +3,10 @@
 # $Id$
 
 from StringIO import StringIO
+import logging
 
 from DateTime import DateTime
 import transaction
-import zLOG
 
 from Products.Formulator.Errors import ValidationError
 from Products.Silva import mangle
@@ -25,6 +25,7 @@ NS_URI = 'http://infrae.com/namespace/silva'
 silvaconf.namespace(NS_URI)
 
 theXMLImporter = xmlimport.Importer()
+logger = logging.getLogger('silva.xml')
 
 
 class SilvaBaseHandler(xmlimport.BaseHandler):
@@ -63,15 +64,14 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             for set_id, elements in self._metadata.items():
                 set_obj = binding.collection.get(set_id, None)
                 if set_obj is None:
-                    zLOG.LOG(
-                    'Silva', zLOG.WARNING,
-                    "Unknown metadata set %s present in import file." % set_id)
+                    logger.warn(
+                        "Unknown metadata set %s present in import file." % (
+                            set_id,))
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
                     if not hasattr(set_obj.aq_explicit, element_name):
-                        zLOG.LOG(
-                            'Silva', zLOG.WARNING,
+                        logger.warn(
                             "Unknown metadata element %s in set %s." %
                             (element_name, set_id))
                         continue
@@ -86,13 +86,13 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                                     field, elements[element_name])},
                             reindex=1)
                     except ValidationError:
-                        zLOG.LOG(
-                            'Silva', zLOG.WARNING,
-                            "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
+                        logger.warn(
+                            "Value %s is not allowed for %s in set %s." % (
+                                elements[element_name], element_name, set_id))
                     if errors:
-                        zLOG.LOG(
-                            'Silva', zLOG.WARNING,
-                            "Value %s is not allowed for element %s in set %s." % (elements[element_name], element_name, set_id))
+                        logger.warn(
+                            "Value %s is not allowed for %s in set %s." % (
+                                elements[element_name], element_name, set_id))
 
     def storeWorkflow(self):
         content = self._result
@@ -445,9 +445,7 @@ class LinkHandler(SilvaBaseHandler):
 class LinkContentHandler(SilvaBaseHandler):
 
     def getOverrides(self):
-        return {
-            (NS_URI, 'url'): URLHandler
-            }
+        return {(NS_URI, 'url'): URLHandler}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
