@@ -210,7 +210,6 @@ class Ghost(CatalogedVersionedContent):
 
     grok.implements(IGhostContent)
     silvaconf.icon('icons/silvaghost.gif')
-    silvaconf.factory('manage_addGhost')
     silvaconf.versionClass('GhostVersion')
 
 
@@ -279,7 +278,7 @@ class Ghost(CatalogedVersionedContent):
 
     def _factory(self, container, id, content_url):
         return container.manage_addProduct['Silva'].manage_addGhost(id,
-            content_url)
+            haunted_url=content_url)
 
 
 InitializeClass(Ghost)
@@ -354,31 +353,31 @@ class GhostView(silvaviews.View):
 
 
 
-def manage_addGhost(self, id, content_url, REQUEST=None):
-    """Add a Ghost."""
-    if not mangle.Id(self, id).isValid():
-        return
-    object = Ghost(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    # add first version
-    object._setObject('0', GhostVersion('0'))
-    # we need to set content url after we created version, not
-    # in constructor, as getPhysicalRoot() won't work there
-    getattr(object, '0').set_haunted_url(content_url)
-    object.create_version('0', None, None)
+# def manage_addGhost(self, id, content_url, REQUEST=None):
+#     """Add a Ghost."""
+#     if not mangle.Id(self, id).isValid():
+#         return
+#     object = Ghost(id)
+#     self._setObject(id, object)
+#     object = getattr(self, id)
+#     # add first version
+#     object._setObject('0', GhostVersion('0'))
+#     # we need to set content url after we created version, not
+#     # in constructor, as getPhysicalRoot() won't work there
+#     getattr(object, '0').set_haunted_url(content_url)
+#     object.create_version('0', None, None)
 
-    # ghost metadata is defered to the haunted object.
-    # author / mod time data is in the haunted object's metadata
-    # BUT this data it is also stored on the ghost itself (being
-    # a SilvaObject).  This author data needs to be set when
-    # it's created, so the 'author' tab in the containers edit tab
-    # shows a username instead of "unknown".
-    # See:https://bugs.launchpad.net/silva/+bug/101253
-    object.sec_update_last_author_info()
+#     # ghost metadata is defered to the haunted object.
+#     # author / mod time data is in the haunted object's metadata
+#     # BUT this data it is also stored on the ghost itself (being
+#     # a SilvaObject).  This author data needs to be set when
+#     # it's created, so the 'author' tab in the containers edit tab
+#     # shows a username instead of "unknown".
+#     # See:https://bugs.launchpad.net/silva/+bug/101253
+#     object.sec_update_last_author_info()
 
-    add_and_edit(self, id, REQUEST)
-    return ''
+#     add_and_edit(self, id, REQUEST)
+#     return ''
 
 
 def ghostFactory(container, id, haunted_object):
@@ -392,8 +391,6 @@ def ghostFactory(container, id, haunted_object):
         actual ghost created depends on haunted object
         on IContainer a GhostFolder is created
         on IVersionedContent a Ghost is created
-
-        willem suggested to call this function electricChair, but well...
     """
     addProduct = container.manage_addProduct['Silva']
     content_url = '/'.join(haunted_object.getPhysicalPath())
@@ -404,7 +401,7 @@ def ghostFactory(container, id, haunted_object):
             version = getLastVersionFromGhost(haunted_object)
             content_url = version.get_haunted_url()
         factory = addProduct.manage_addGhost
-    factory(id, content_url)
+    factory(id, haunted_url=content_url)
     ghost = getattr(container, id)
     return ghost
 

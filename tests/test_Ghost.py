@@ -152,8 +152,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_broken_link1(self):
         # add a ghost
-        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/root/doc1/')
+        self.root.manage_addProduct['Silva'].manage_addGhost(
+            'ghost1', haunted_url='/root/doc1/')
         ghost = getattr(self.root, 'ghost1')
 
         # issue 41: test if get_haunted_url works now
@@ -193,8 +193,8 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
 
     def test_ghost_title(self):
-        self.root.manage_addProduct['Silva'].manage_addGhost('ghost1',
-                                                              '/root/doc1')
+        self.root.manage_addProduct['Silva'].manage_addGhost(
+            'ghost1', haunted_url='/root/doc1')
         # need to publish doc1 first
         publishObject(self.root.doc1)
         ghost = getattr(self.root, 'ghost1')

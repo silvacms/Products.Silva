@@ -15,7 +15,6 @@ from Products.Silva.tests.helpers import publishObject
 
 # Silva
 from silva.core import interfaces
-from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.adapters import archivefileimport
@@ -103,11 +102,14 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             'testfolder3',
             'This is yet &another; testfolder',
             policy_name='Silva AutoTOC')
-        manage_addGhost(
-            testfolder3, 'caspar', '/root/testfolder/testfolder2/test_link')
+        factory = testfolder3.manage_addProduct['Silva']
+        factory.manage_addGhost(
+            testfolder3, 'caspar',
+            haunted_url='/root/testfolder/testfolder2/test_link')
         # export of a broken link
-        manage_addGhost(
-            testfolder3, 'sadcaspar', '/this_link_is_broken')
+        factory.manage_addGhost(
+            testfolder3, 'sadcaspar',
+            haunted_url='/this_link_is_broken')
 
         # We will now do some horrible, horrible stuff to be able to test
         # the export, while ignoring the export date, which we can't know

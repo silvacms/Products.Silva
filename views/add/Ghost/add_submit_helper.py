@@ -9,5 +9,6 @@
 ##
 content_url = result['content_url']
 
-model.manage_addProduct['Silva'].manage_addGhost(id, content_url)
+model.manage_addProduct['Silva'].manage_addGhost(
+    id, None, haunted_url=content_url)
 return getattr(model, id)

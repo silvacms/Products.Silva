@@ -94,7 +94,7 @@ class SyncGhost(Sync):
     def _do_create(self):
         content_url = self._get_content_url()
         self.g_container.manage_addProduct['Silva'].manage_addGhost(
-            self.h_id, content_url)
+            self.h_id, haunted_url=content_url)
 
     def _get_content_url(self):
         return  self.h_ob.get_haunted_url()
