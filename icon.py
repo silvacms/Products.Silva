@@ -9,6 +9,7 @@ from five import grok
 # Silva
 from silva.core.interfaces import IFile, ISilvaObject, \
     IGhostContent, IGhostFolder, IIconRegistry, IPublication
+from silva.core.views.interfaces import IVirtualSite
 
 
 class SilvaIcons(grok.DirectoryResource):
@@ -68,9 +69,12 @@ class IconRegistry(object):
 registry = IconRegistry()
 
 def get_icon_url(content, request):
+    site = IVirtualSite(request)
+    base_url = site.get_root_url()
     try:
-        return registry.getIcon(content)
+        icon = registry.getIcon(content)
     except ValueError:
-        return './globals/silvageneric.gif'
+        icon = 'globals/silvageneric.gif'
+    return "/".join((base_url, icon,))
 
 
