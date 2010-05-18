@@ -459,8 +459,6 @@ def registerViews(reg):
     reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
     reg.register('public', 'Silva Publication', ['public', 'Folder', 'view'])
     reg.register('public', 'Silva Root', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva Ghost Version', ['public', 'Ghost', 'view'])
-    reg.register('public', 'Silva Ghost', ['public', 'Ghost', 'view'])
     reg.register('public', 'Silva Image', ['public', 'Image', 'view'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])

@@ -405,7 +405,7 @@ class SilvaObject(Security, ViewCode):
             manager = getSecurityManager()
             if not manager.checkPermission(
                 SilvaPermissions.ReadSilvaContent, self):
-                raise Unauthorized
+                raise Unauthorized()
             ## Have to check permission here.
             if version is None:
                 version = self.get_previewable()

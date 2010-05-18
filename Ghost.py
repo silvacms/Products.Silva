@@ -8,8 +8,10 @@ import urlparse
 from five import grok
 
 # Zope 2
-from AccessControl import ClassSecurityInfo
+from Acquisition import aq_inner
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
+from zExceptions import Unauthorized
 
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent
@@ -20,6 +22,7 @@ from Products.Silva.helpers import add_and_edit
 
 
 from silva.core import conf as silvaconf
+from silva.core.views import views as silvaviews
 from silva.core.interfaces import (
     IVersionedContent, IContainer, IContent, IGhost, IGhostContent,
     IGhostVersion)
@@ -191,29 +194,6 @@ class GhostBase(object):
         path = self._content_path
         return self.restrictedTraverse(path, None)
 
-    def render_preview(self):
-        """Render preview of this version (which is what we point at)
-        """
-        return self.render_view()
-
-    def render_view(self):
-        """Render view of this version (which is what we point at)
-        """
-        # FIXME what if content is None?
-        # what if we get circular ghosts?
-        self.REQUEST.set('ghost_model', self.aq_inner)
-        content = self.get_haunted_unrestricted()
-        if content is None:
-            # public render code of ghost should give broken message
-            return None
-        if not content.get_viewable():
-            return None
-        user = self.REQUEST.AUTHENTICATED_USER
-        permission = 'View'
-        if user.has_permission(permission, content):
-            return content.view()
-        else:
-            raise "Unauthorized"
 
 class Ghost(CatalogedVersionedContent):
     __doc__ = _("""Ghosts are special documents that function as a
@@ -228,7 +208,7 @@ class Ghost(CatalogedVersionedContent):
     meta_type = "Silva Ghost"
     security = ClassSecurityInfo()
 
-    grok.implements(IVersionedContent, IGhostContent)
+    grok.implements(IGhostContent)
     silvaconf.icon('icons/silvaghost.gif')
     silvaconf.factory('manage_addGhost')
     silvaconf.versionClass('GhostVersion')
@@ -346,6 +326,33 @@ class GhostVersion(GhostBase, CatalogedVersion):
         if IGhost.providedBy(content):
             return self.LINK_GHOST
         return self.LINK_OK
+
+
+class GhostView(silvaviews.View):
+    grok.context(IGhostContent)
+
+    broken_message = _(u"This 'ghost' document is broken. "
+                       u"Please inform the site administrator.")
+
+    def render(self):
+        # FIXME what if we get circular ghosts?
+        self.request.other['ghost_model'] = aq_inner(self.context)
+        try:
+            content = self.content.get_haunted_unrestricted()
+            if content is None:
+                return self.broken_message
+            if content.get_viewable() is None:
+                return self.broken_message
+            permission = self.is_preview and 'Read Silva content' or 'View'
+            if getSecurityManager().checkPermission(permission, content):
+                return content.view()
+            raise Unauthorized(
+                u"You does not have the permission to "
+                u"see the target of this ghost")
+        finally:
+            del self.request.other['ghost_model']
+
+
 
 def manage_addGhost(self, id, content_url, REQUEST=None):
     """Add a Ghost."""
