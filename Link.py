@@ -135,6 +135,8 @@ class LinkEditForm(silvaforms.SMIForm):
     grok.name('tab_edit')
     grok.context(interfaces.ILink)
     fields = silvaforms.Fields(ILinkSchema)
+    vein = u'edit'
+    vein_id = u'tab_edit'
 
 
 class LinkView(silvaviews.View):
