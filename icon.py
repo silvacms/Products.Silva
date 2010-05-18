@@ -69,7 +69,7 @@ registry = IconRegistry()
 
 def get_icon_url(content, request):
     try:
-        return icons.getIcon(content)
+        return registry.getIcon(content)
     except ValueError:
         return './globals/silvageneric.gif'
 
