@@ -75,10 +75,8 @@
                  class="ui-widget reference-dialog"
                  tal:attributes="id string:${widget_id}-dialog"
                  i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
             </div>
-            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            <button class="reference-dialog-trigger">
             </button>
             <a href="" id="#" target="_blank"
                tal:attributes="id string:${widget_id}-link"></a>
@@ -199,10 +197,8 @@
                  class="ui-widget reference-dialog"
                  tal:attributes="id string:${widget_id}-dialog"
                  i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
             </div>
-            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            <button class="reference-dialog-trigger">
             </button>
             <a href="" id="#" target="_blank"
                tal:attributes="id string:${widget_id}-link">none</a>
