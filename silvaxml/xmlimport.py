@@ -65,14 +65,14 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                 set_obj = binding.collection.get(set_id, None)
                 if set_obj is None:
                     logger.warn(
-                        "Unknown metadata set %s present in import file." % (
+                        u"unknown metadata set %s present in import file." % (
                             set_id,))
                     continue
                 element_names = elements.keys()
                 for element_name in element_names:
                     if not hasattr(set_obj.aq_explicit, element_name):
                         logger.warn(
-                            "Unknown metadata element %s in set %s." %
+                            u"unknown metadata element %s in set %s." %
                             (element_name, set_id))
                         continue
                     field = set_obj.getElement(element_name).field
@@ -87,11 +87,11 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                             reindex=1)
                     except ValidationError:
                         logger.warn(
-                            "Value %s is not allowed for %s in set %s." % (
+                            u"value %s is not allowed for %s in set %s." % (
                                 elements[element_name], element_name, set_id))
                     if errors:
                         logger.warn(
-                            "Value %s is not allowed for %s in set %s." % (
+                            u"value %s is not allowed for %s in set %s." % (
                                 elements[element_name], element_name, set_id))
 
     def storeWorkflow(self):
