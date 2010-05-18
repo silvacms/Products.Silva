@@ -2,15 +2,11 @@
 # See also LICENSE.txt
 # $Id$
 
-from StringIO import StringIO
-
-
 from sprout.saxext import xmlexport
 from silva.core import interfaces
 from zope.interface import Interface
 from five import grok
 
-from Products.ParsedXML.DOM.Core import Node
 from DateTime import DateTime
 from Products.Silva.adapters import version_management
 

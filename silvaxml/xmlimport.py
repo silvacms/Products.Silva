@@ -1,22 +1,24 @@
-import sys, string
-from StringIO import StringIO
-import transaction
+# Copyright (c) 2003-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
+from StringIO import StringIO
+
+from DateTime import DateTime
+import transaction
 import zLOG
-from sprout.saxext import xmlimport, collapser
+
 from Products.Formulator.Errors import ValidationError
+from Products.Silva import mangle
 from Products.Silva.Ghost import Ghost, GhostVersion
-from Products.Silva.GhostFolder import manage_addGhostFolder, GhostFolder
-from Products.Silva.Folder import manage_addFolder
-from Products.Silva.Publication import manage_addPublication
+from Products.Silva.GhostFolder import GhostFolder
 from Products.Silva.Link import Link, LinkVersion
 
 from silva.core import conf as silvaconf
-from silva.core.upgrade.silvaxml import upgradeXMLOnFD
 from silva.core.services.interfaces import ICataloging
+from silva.core.upgrade.silvaxml import upgradeXMLOnFD
+from sprout.saxext import xmlimport, collapser
 
-from Products.Silva import mangle
-from DateTime import DateTime
 
 NS_URI = 'http://infrae.com/namespace/silva'
 
@@ -56,7 +58,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def storeMetadata(self):
         content = self._result
         metadata_service = content.service_metadata
-        metadata = {}
         binding = metadata_service.getMetadata(content)
         if binding is not None:
             for set_id, elements in self._metadata.items():
