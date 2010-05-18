@@ -16,16 +16,13 @@ from zExceptions import Unauthorized
 # Silva
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
-from Products.Silva import mangle, SilvaPermissions
+from Products.Silva import SilvaPermissions
 from Products.Silva.adapters.path import PathAdapter
-from Products.Silva.helpers import add_and_edit
-
 
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
 from silva.core.interfaces import (
-    IVersionedContent, IContainer, IContent, IGhost, IGhostContent,
-    IGhostVersion)
+    IContainer, IContent, IGhost, IGhostContent, IGhostVersion)
 from silva.translations import translate as _
 
 
@@ -350,34 +347,6 @@ class GhostView(silvaviews.View):
                 u"see the target of this ghost")
         finally:
             del self.request.other['ghost_model']
-
-
-
-# def manage_addGhost(self, id, content_url, REQUEST=None):
-#     """Add a Ghost."""
-#     if not mangle.Id(self, id).isValid():
-#         return
-#     object = Ghost(id)
-#     self._setObject(id, object)
-#     object = getattr(self, id)
-#     # add first version
-#     object._setObject('0', GhostVersion('0'))
-#     # we need to set content url after we created version, not
-#     # in constructor, as getPhysicalRoot() won't work there
-#     getattr(object, '0').set_haunted_url(content_url)
-#     object.create_version('0', None, None)
-
-#     # ghost metadata is defered to the haunted object.
-#     # author / mod time data is in the haunted object's metadata
-#     # BUT this data it is also stored on the ghost itself (being
-#     # a SilvaObject).  This author data needs to be set when
-#     # it's created, so the 'author' tab in the containers edit tab
-#     # shows a username instead of "unknown".
-#     # See:https://bugs.launchpad.net/silva/+bug/101253
-#     object.sec_update_last_author_info()
-
-#     add_and_edit(self, id, REQUEST)
-#     return ''
 
 
 def ghostFactory(container, id, haunted_object):
