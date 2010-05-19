@@ -409,17 +409,17 @@
         <div id="kupu-toolbox-addlink"> </div>
         <div id="kupu-toolbox-editlink" class="kupu-toolbox-editlink"> </div>
         <form name="kupu_link_form" onsubmit="return false;">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
+          <table class="kupu-link-reference-table">
             <tr>
               <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" tal:attributes="onclick string:getLink('${model_container/absolute_url}');;return false;" title="get link reference..." i18n:attributes="title"> </button><br/><button class="kupu-button kupu-link-reference kupu-link-editbutton" tal:attributes="onclick string:reference.editReference('kupu-link-input','${model_container/absolute_url}')" title="edit linked reference..." i18n:attributes="title"> </button>
-	      </td>
+                </td>
               <td>
-	      <textarea name="kupu_link_href" class="store" cols="30" rows="2" type="text" id="kupu-link-input"> </textarea>
-	      </td>
+                <textarea name="kupu_link_href" class="store" cols="30" rows="2" type="text" id="kupu-link-input"> </textarea>
+                </td>
             </tr>
           </table>
-          <span i18n:translate="">link target:</span>
-          <select id="kupu-linktarget-select">
+          <label for="kupu-linktarget-select" i18n:translate="">link target</label><br/>
+          <select class="store" id="kupu-linktarget-select">
             <option value="_self" i18n:translate="">same window</option>
             <option value="_blank" i18n:translate="">new window</option>
             <option value="_parent" i18n:translate="">parent</option>
@@ -440,31 +440,17 @@
 
       <div class="kupu-tooltray">
         <form name="kupu_index_form" onsubmit="return false;">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td>
-                  <table width="100%" border="0" cellspacing="0">
-                    <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-name"/></td>
-                    </tr>
-                    <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a></td>
-                      <td><input class="store" type="text" id="kupu-index-title"/></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="fieldblock">
+            <a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a>
+            <input class="store" type="text" id="kupu-index-name"/><br/>
+          </div>
+          <div class="fieldblock">
+            <a class="rollover" href=""><span class="tooltip" i18n:translate="">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a>
+            <input class="store" type="text" id="kupu-index-title"/><br/>
+          </div>
+          <input type="button" class="button" value="add element" id="kupu-index-addbutton" i18n:attributes="value"/>
+          <input type="button" class="button" value="update" id="kupu-index-updatebutton" i18n:attributes="value"/>
+          <input type="button" class="button remover" value="remove" id="kupu-index-deletebutton" i18n:attributes="value"/>
         </form>
       </div>
     </div>
@@ -481,15 +467,19 @@
       <form name="kupu_image_form" onsubmit="return false">
         <input type="button" class="button transporter" onclick="getImage()" value="get image reference..." id="kupu-toolbox-image-add-button" i18n:attributes="value"/>
         <div id="kupu-toolbox-image-edit" style="display: none">
-          <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0">
-	  <tr>
-	   <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"> </button>
-           </td>
-	   <td><input type="text" id="kupu-toolbox-image-src" title="image source" i18n:attributes="title" class="store"/></td>
-	  </tr>
-	  </table>
-          <label class="select" for="kupu-toolbox-image-align" i18n:translate="">image alignment:</label>
-          <select id="kupu-toolbox-image-align">
+          <table class="kupu-link-reference-table">
+            <tr>
+             <td class="buttoncell">
+               <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get image reference..." tal:attributes="onclick string:getImage();;return false;;" i18n:attributes="title"> </button><br/>
+               <button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit image reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-src','${model_container/absolute_url}')"> </button>
+             </td>
+             <td>
+               <textarea class="store" id="kupu-toolbox-image-src" cols="30" rows="2" title="image source" i18n:attributes="title"> </textarea>
+             </td>
+           </tr>
+          </table>
+          <label for="kupu-toolbox-image-align" i18n:translate="">image alignment</label><br/>
+          <select class="store" id="kupu-toolbox-image-align">
             <option i18n:translate="" value="default">default</option>
             <option i18n:translate="" value="image-left">align left</option>
             <option i18n:translate="" value="image-center">align center</option>
@@ -499,19 +489,23 @@
           </select>
           <fieldset id="kupu-toolbox-image-link-settings" style="border:none;">
             <legend i18n:translate="">link settings</legend>
-            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to:</label> <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked"/>&#160;<label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">high resolution version</label>
+            <input type="checkbox" id="kupu-toolbox-image-link-checkbox-hires" name="linkcb" value="hires" title="link to high resolution version" i18n:attributes="title" checked="checked" style="margin-left:2px"/>
+            <label for="kupu-toolbox-image-link-checkbox-hires" i18n:translate="">link to high resolution image</label><br>
             <div id="kupu-toolbox-image-link-cont" style="white-space: nowrap">
-             <label for="kupu-toolbox-image-link" i18n:translate="" style="float:left;padding-right: 3px;visibility:hidden">link to:</label> 
-             <table class="kupu-link-reference-table" cellpadding="0" cellspacing="0" style="width: 223px">
- 	      <tr>
-	       <td class="buttoncell"><button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"> </button>
-	       </td>
-	       <td><input type="text" id="kupu-toolbox-image-link" class="store" title="link target for image" i18n:attributes="title"/></td>
-	      </tr>
-	     </table>
+              <table class="kupu-link-reference-table">
+                <tr>
+                  <td class="buttoncell">
+                    <button class="kupu-button kupu-link-reference kupu-link-lookupbutton" title="get link reference..." tal:attributes="onclick string:imageToolGetLinkReference();;return false;;" i18n:attributes="title"> </button><br/>
+                    <button class="kupu-button kupu-link-reference kupu-link-editbutton" title="edit linked reference..." i18n:attributes="title" tal:attributes="onclick string:reference.editReference('kupu-toolbox-image-link','${model_container/absolute_url}')"> </button>
+                  </td>
+                  <td>
+                    <textarea class="store" id="kupu-toolbox-image-link" cols="30" rows="2" title="image link" i18n:attributes="title"> </textarea>
+                 </td>
+                </tr>
+              </table>
             </div>
-            <label class="select" for="kupu-toolbox-image-target" i18n:translate="">link target:</label>
-            <select id="kupu-toolbox-image-target" style="margin-left:0.2em">
+            <label class="select" style="margin-left:0.1em" for="kupu-toolbox-image-target" i18n:translate="">link target</label><br/>
+            <select class="store" id="kupu-toolbox-image-target">
               <option value="_self" i18n:translate="">same window</option>
               <option value="_blank" i18n:translate="">new window</option>
               <option value="_parent" i18n:translate="">parent</option>
@@ -537,34 +531,16 @@
 
       <div class="kupu-tooltray">
         <form name="kupu-abbr-form">
-          <table width="100%" cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td>
-                  <table width="100%" border="0" cellspacing="0">
-                    <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a></td>
-                      <td><input class="store" type="text" id="kupu-abbr-title"/></td>
-                    </tr>
-                    <tr>
-                      <td class="titlecell"><a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span></a></td>
-                      <td>
-                        <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" i18n:translate=""/>abbreviation</label>
-                        <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" i18n:translate=""/>acronym</label>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value"/>
-                  <input type="button" class="button" value="update" id="kupu-abbr-updatebutton" i18n:attributes="value"/>
-                  <input type="button" class="button remover" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value"/>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="fieldblock">
+            <a class="rollover" href=""><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a>
+            <input class="store" type="text" id="kupu-abbr-title"/>
+          </div>
+          <a class="rollover" href=""><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span></a>
+          <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" i18n:translate=""/>abbreviation</label>
+          <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" i18n:translate=""/>acronym</label><br/>
+          <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value"/>
+          <input type="button" class="button" value="update" id="kupu-abbr-updatebutton" i18n:attributes="value"/>
+          <input type="button" class="button remover" value="remove" id="kupu-abbr-deletebutton" i18n:attributes="value"/>
         </form>
 
       </div>
@@ -593,8 +569,9 @@
         </div>
 
         <form name="kupu_extsource_form" onsubmit="return false">
-          <select xmlns:tal="http://xml.zope.org/namespaces/tal" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" i18n:attributes="title" tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
-	          <option value="" i18n:translate="">select source:</option>
+          <select xmlns:tal="http://xml.zope.org/namespaces/tal" class="store" id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" i18n:attributes="title"
+            tal:define="sources here/get_available_sources;               sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
+            <option value="" i18n:translate="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
                 <option tal:attributes="                   value id;                   title object/description" tal:content="python:object.get_title() or id"/>
