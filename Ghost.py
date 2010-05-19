@@ -95,8 +95,6 @@ class GhostBase(object):
         return short_title
     # /those should go away
 
-
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted_url')
     def set_haunted_url(self, content_url):

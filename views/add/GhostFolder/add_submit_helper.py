@@ -9,7 +9,8 @@
 ##
 content_url = result['content_url']
 
-model.manage_addProduct['Silva'].manage_addGhostFolder(id, content_url)
+model.manage_addProduct['Silva'].manage_addGhostFolder(
+    id, None, haunted_url=content_url)
 gf = getattr(model, id)
 gf.haunt()
 return gf

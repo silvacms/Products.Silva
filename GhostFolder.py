@@ -19,9 +19,9 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import \
-    IContainer, IContent, IGhost, IVersionedContent, \
-    IPublication, ISilvaObject, IGhostFolder, IGhostContent
+from silva.core.interfaces import (
+    IContainer, IContent, IGhost, IVersionedContent,
+    IPublication, ISilvaObject, IGhostFolder, IGhostContent)
 from silva.translations import translate as _
 
 
@@ -136,16 +136,14 @@ class GhostFolder(GhostBase, Folder.Folder):
     security = ClassSecurityInfo()
 
     # sync map... (haunted objects interface, ghost objects interface,
-    #   update/create class)
-    # order is important, i.e. interfaces are checked in this order
-    # I wonder if this needs to be pluggable, i.e. if third party components
-    # may register special upgraders.
+    # update/create class) order is important, i.e. interfaces are
+    # checked in this order.
     _sync_map = [
         (IContainer, IContainer, SyncContainer),
         (IGhostContent, IGhostContent, SyncGhost),
         (IContent, IGhostContent, SyncContent),
         (None, None, SyncCopy),
-    ]
+        ]
 
     silvaconf.icon('icons/silvaghost_folder.gif')
     silvaconf.factory('manage_addGhostFolder')

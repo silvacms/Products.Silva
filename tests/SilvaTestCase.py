@@ -224,7 +224,8 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
                               product='SilvaDocument')
 
     def add_ghost(self, object, id, content_url):
-        return self.addObject(object, 'Ghost', id, content_url=content_url)
+        return self.addObject(object, 'Ghost', id, None,
+                              haunted_url=content_url)
 
     def add_link(self, object, id, title, url):
         return self.addObject(object, 'Link', id, title=title, url=url)

@@ -25,6 +25,8 @@ from silva.core.views import views as silvaviews
 from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
 
+import silva.core.references.widgets.zeamform
+
 from zeam.form import silva as silvaforms
 
 
@@ -96,15 +98,15 @@ class ILinkSchema(interface.Interface):
 
     url = schema.URI(
         title=_(u"url"),
-        description=_(u"If the link is hot relative, "
+        description=_(u"If the link is not relative, "
                       u"it is the absolute link url."),
         required=False)
 
-    # target = Reference(
-    #     title=_("target of relative link"),
-    #     description=_(u"If the link is relative, "
-    #                   u"it is the target of the link."),
-    #     required=False)
+    target = Reference(
+        title=_("target of relative link"),
+        description=_(u"If the link is relative, "
+                      u"it is the target of the link."),
+        required=False)
 
     # @interface.invariant
     # def url_validation(obj):
@@ -126,17 +128,14 @@ class LinkAddForm(silvaz3cforms.AddForm):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addLink(
             data['id'], data['title'],
-            url=data['url'], relative=data['relative']) # , target=data['target']
+            url=data['url'], relative=data['relative'], target=data['target'])
 
 
-class LinkEditForm(silvaforms.SMIForm):
+class LinkEditForm(silvaforms.SMIEditForm):
     """Edit form for a link.
     """
-    grok.name('tab_edit')
     grok.context(interfaces.ILink)
     fields = silvaforms.Fields(ILinkSchema)
-    vein = u'edit'
-    vein_id = u'tab_edit'
 
 
 class LinkView(silvaviews.View):
