@@ -21,7 +21,7 @@
     rel="shortcut icon"
   />
   <link
-    tal:attributes="href ${request/model/absolute_url}/++resource++silva.core.smi/smi.css"
+    tal:attributes="href string:${request/model/absolute_url}/++resource++silva.core.smi/smi.css"
     rel="stylesheet"
   />
   <link href="globals/frontend.css"
