@@ -70,7 +70,7 @@
           <div id="kupu-link-image-options">
             <input type="checkbox" id="kupu-link-image-hires" />
             <label class="select" for="kupu-link-image-hires">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Make the image link to its high resolution version.</span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">link to hires image</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Make the image link to its high resolution version.</span><span tal:omit-tag="" i18n:translate="">link to hires image</span></a>
             </label>
           </div>
 
@@ -89,14 +89,14 @@
             <textarea class="store" id="#" cols="32" rows="2" tal:attributes="id string:${widget_id}-href">
             </textarea>
             <label for="#" tal:attributes="for string:${widget_id}-anchor">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span tal:omit-tag="" i18n:translate="">anchor</span></a>
             </label>
             <input class="store" type="text" id="#" tal:attributes="id string:${widget_id}-anchor" />
           </div>
 
           <div id="kupu-toolbox-links-options">
             <label class="select" for="kupu-link-target-select">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Choose a standard target for this link, or enter a custom target name.</span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">link target</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Choose a standard target for this link, or enter a custom target name.</span><span tal:omit-tag="" i18n:translate="">link target</span></a>
             </label>
             <select class="store" id="kupu-link-target-select">
               <option value="_self" i18n:translate="">same window</option>
@@ -107,7 +107,7 @@
             </select><br />
             <input class="store" type="text" id="kupu-link-target-custom" />
             <label class="select" for="kupu-link-title">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">link title</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span tal:omit-tag="" i18n:translate="">link title</span></a>
             </label>
             <input class="store" type="text" id="kupu-link-title" />
           </div>
@@ -129,13 +129,13 @@
         <form name="kupu_index_form" onsubmit="return false;">
           <div class="fieldblock">
             <label for="kupu-index-name">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">anchor name</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the name of an anchor. Do not use spaces, special characters, or any punctuation other than a hyphen or underscore. </span><span tal:omit-tag="" i18n:translate="">anchor name</span></a>
             </label>
             <input class="store" type="text" id="kupu-index-name"/><br/>
           </div>
           <div class="fieldblock">
             <label for="kupu-index-title">
-              <a class="rollover"><span class="tooltip" i18n:translate="">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">index title</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">If this anchor is also an index item, enter a title for the link in the Indexer. </span><span tal:omit-tag="" i18n:translate="">index title</span></a>
             </label>
             <input class="store" type="text" id="kupu-index-title"/><br/>
           </div>
@@ -170,7 +170,7 @@
 
           <div class="fieldblock" id="kupu-toolbox-images-options">
             <label class="select" for="kupu-image-align">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Choose an alignment for the image. This option depends on user-defined CSS styles.</span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">image alignment</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Choose an alignment for the image. This option depends on user-defined CSS styles.</span><span tal:omit-tag="" i18n:translate="">image alignment</span></a>
             </label>
             <select class="store" id="kupu-image-align">
               <option i18n:translate="" value="default">default</option>
@@ -202,11 +202,11 @@
         <form name="kupu-abbr-form">
           <div class="fieldblock">
             <label for="kupu-abbr-title">
-              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">title</span></a>
+              <a class="rollover"><span class="tooltip" i18n:translate="">Enter the text of the tooltip that will appear when a user hovers over the element with the cursor. </span><span tal:omit-tag="" i18n:translate="">title</span></a>
             </label>
             <input class="store" type="text" id="kupu-abbr-title"/>
           </div>
-          <a class="rollover"><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">type</span></a>
+          <a class="rollover"><span class="tooltip" i18n:translate="">Choose the kind of html tag (abbr or acronym). </span><span tal:omit-tag="" i18n:translate="">type</span></a>
           <label><input type="radio" id="kupu-abbr-type-abbr" name="kupu-abbr-type" value="abbr" checked="checked" i18n:translate=""/>abbreviation</label>
           <label><input type="radio" id="kupu-abbr-type-acronym" name="kupu-abbr-type" value="acronym" i18n:translate=""/>acronym</label><br/>
           <input type="button" class="button" value="add element" id="kupu-abbr-addbutton" i18n:attributes="value"/>
@@ -345,20 +345,20 @@
         </div>
 
         <form name="kupu_extsource_form" onsubmit="return false">
-          <select id="kupu-toolbox-extsource-id" title="For more info hover over the items in the list" i18n:attributes="title"
-            tal:define="sources here/get_available_sources;
-              sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))">
+          <select class="store" id="kupu-toolbox-extsource-id"
+            tal:define="
+              sources here/get_available_sources;
+              sorted_objects python:sequence.sort(sources, (('title', 'nocase', 'asc'),))"
+            i18n:attributes="title">
 	          <option value="" i18n:translate="">select source:</option>
-            <tal:block xmlns:tal="http://xml.zope.org/namespaces/tal" repeat="extsource sorted_objects">
+            <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
-                <option tal:attributes="
-                  value id;
-                  title object/description" tal:content="python:object.get_title() or id" />
+                <option tal:attributes="value id;title object/description"
+                  tal:content="python:object.get_title() or id"></option>
               </tal:block>
             </tal:block>
           </select>
-          <input type="hidden" id="kupu-extsource-enabledflag"
-            tal:attributes="value python:here.service_extensions.is_installed('SilvaExternalSources')" />
+          <input type="hidden" id="kupu-extsource-enabledflag" tal:attributes="value python:here.service_extensions.is_installed('SilvaExternalSources')" />
           <div style="display: none" id="kupu-extsource-disabledtext" i18n:translate="">The external sources product is not installed. This tool is disabled.</div>
           <input class="button" type="button" value="add external source" id="kupu-extsource-addbutton" i18n:attributes="value" />
           <input class="button canceler" type="button" value="cancel" id="kupu-extsource-cancelbutton" i18n:attributes="value" />
