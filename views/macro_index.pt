@@ -43,13 +43,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
 <tal:resource tal:replace="structure provider:resources" />
-<style media="all"
-  type="text/css"
-  xml:space="preserve"
-  tal:content="structure python: here.css_imports(['silva.css'])"
->
-@imports
-</style>
 <link href="globals/silvaContentStyle.css"
   rel="stylesheet"
   type="text/css"

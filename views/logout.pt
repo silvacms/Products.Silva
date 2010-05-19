@@ -20,7 +20,8 @@
   <link href="globals/favicon.ico"
     rel="shortcut icon"
   />
-  <link href="globals/silva.css"
+  <link
+    tal:attributes="href ${request/model/absolute_url}/++resource++silva.core.smi/smi.css"
     rel="stylesheet"
   />
   <link href="globals/frontend.css"

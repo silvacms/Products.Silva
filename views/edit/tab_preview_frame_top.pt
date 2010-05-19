@@ -38,9 +38,7 @@
 <style media="all"
   type="text/css"
   xml:space="preserve"
-  tal:content="structure python: here.css_imports(['silva.css'])"
->
-@imports
+  tal:content="string: @import url(${root_url}/++resource++silva.core.smi/smi.css)">
 </style>
 <link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title" />
@@ -53,7 +51,7 @@
 <tal:ie6fixstart replace="structure string:&lt;!--[if IE 6]&gt;" />
      <style type="text/css" media="all"
 	    tal:condition="exists:string:$root_url/globals/ie6fixes.css"
-            tal:content="string:@import url($root_url/globals/ie6fixes.css);">
+            tal:content="string:@import url($root_url/++resource++silva.core.smi/ie6fixes.css);">
      </style>
 <tal:ie6fixend replace="structure string:&lt;![endif]--&gt;" />
 
