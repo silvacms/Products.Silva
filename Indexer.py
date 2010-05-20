@@ -20,6 +20,8 @@ from silva.core import conf as silvaconf
 from silva.core.interfaces import IIndexable, IIndexer
 from silva.core.views import views as silvaviews
 from silva.core.forms import z3cforms as silvaz3cforms
+from zeam.form.silva.form import SMIAddForm
+
 from silva.translations import translate as _
 
 
@@ -120,11 +122,9 @@ class Indexer(Content, SimpleItem):
 
 InitializeClass(Indexer)
 
-
-class IndexerAddForm(silvaz3cforms.AddForm):
+class IndexerAddForm(SMIAddForm):
     """Add form for Silva indexer.
     """
-
     silvaconf.name(u"Silva Indexer")
 
 
