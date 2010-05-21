@@ -399,8 +399,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             if ghost.meta_type == 'Silva Ghost Folder':
                 ghost.haunt()
         elif IGhost.providedBy(item):
-            content_url = item.get_haunted_url()
-            item._factory(self, paste_id, content_url)
+            content = item.get_haunted()
+            item._factory(self, paste_id, content)
         else:
             # this is an object that just needs to be copied
             item = item._getCopy(self)

@@ -1,0 +1,315 @@
+<table class="listing"
+  tal:define="
+    default_document context/get_default;
+    default_doc_list python: default_document and [default_document] or [];
+    publishables python: default_doc_list + context.get_ordered_publishables();
+    assets context/get_non_publishables;
+   " >
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="5">
+        <h2 tal:attributes="title string:id: ${context/id}">
+        <img tal:attributes="src provider/get_icon_url" />
+          <span i18n:translate="">ghost folder contents</span>
+        </h2>
+      </td>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <!-- <tr class="top-controls">
+      <td colspan="5">
+         <div style="float: left;">
+            <form method="post"
+              name="resync_form"
+              action=".">
+              <input class="button"
+                type="submit"
+                name="sync:method"
+                value="resync ghost folder"
+                title="re-synchronize with content from the source folder: alt-e"
+                accesskey="e"
+                tal:condition="not:context/get_link_status"
+                i18n:attributes="value;title"
+               />
+            </form>
+         </div>
+      </td>
+    </tr> -->
+  </thead>
+
+  <tbody>
+    <tal:block replace="nothing">
+      ______________ listing header ______________
+    </tal:block>
+    <tr tal:condition="python:(default_document or publishables or assets)">
+      <th class="listing-left">
+        #&nbsp;
+      </th>
+      <th i18n:translate="">
+        edit
+      </th>
+      <th i18n:translate="">
+        preview
+      </th>
+      <th i18n:translate="">
+        modified
+      </th>
+      <th i18n:translate="">
+        author
+      </th>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ if folder is empty (XXX: check for Zope level objects?) ______________
+    </tal:block>
+    <tr class="odd"
+      tal:condition="python: not(default_document or publishables or assets)">
+      <td colspan="5"
+        i18n:translate="">
+        There is no content here.
+      </td>
+    </tr>
+
+    <tal:block replace="nothing">
+      ______________ default + publishables ______________
+    </tal:block>
+    <tal:repeat
+      repeat="item publishables">
+      <tal:define define="
+        is_default python: item is default_document;
+        item_url item/absolute_url;
+        status_style python:item.get_object_status()[1];
+        iterate repeat/item/odd">
+        <tr tal:attributes="class python: iterate and 'odd' or 'even'">
+          <tal:block replace="nothing">
+            _______ checkbox + position cell _______
+          </tal:block>
+          <td class="listing-left">
+            <span
+              tal:condition="default_document"
+              tal:content="repeat/item/index"
+              tal:attributes="for item/id">
+              # with default doc, starts at 0
+            </span>
+            <span
+              tal:condition="not: default_document"
+              tal:content="repeat/item/number"
+              tal:attributes="for item/id">
+              # without default doc, starts at 1
+            </span>
+          </td>
+          <tal:block replace="nothing">
+            _______ id cell _______
+          </tal:block>
+          <td>
+            <a class="icon"
+              tal:attributes="
+                href python:provider.get_editor_link(item);
+                title item/meta_type;">
+              <img tal:attributes="src python:provider.get_item_icon_url(item)" />
+            </a>
+            <a class="blacklink"
+              title="edit"
+              tal:define="id item/id"
+              tal:content="python: id&#91;:30&#93;"
+              tal:attributes="
+                href python:provider.get_editor_link(item);
+                class status_style;"
+                i18n:attributes="title"
+              >
+              id
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ title cell _______
+          </tal:block>
+          <td>
+            <a class="blacklink"
+              title="preview"
+              tal:attributes="
+                href string:${item_url}/edit/tab_preview;
+                class status_style;"
+              tal:define="title python:(item.get_title_editable() or default)"
+              tal:content="title"
+              i18n:attributes="title"
+              >
+              <em i18n:translate="">no title</em>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ modified date/metadata downlink cell _______
+          </tal:block>
+          <td tal:define="modification_time item/get_modification_datetime | nothing">
+            <a class="blacklink" title="metadata"
+              tal:condition="modification_time"
+              tal:attributes="href string:${item_url}/edit/tab_metadata"
+              tal:content="structure python:provider.display_datetime(modification_time)"
+              i18n:attributes="metadata">
+              date
+            </a>
+            <a class="closed" title="settings"
+              tal:condition="not:modification_time"
+              tal:attributes="href string:${item_url}/edit/tab_metadata"
+              i18n:attributes="title">
+              <em i18n:translate="">n/a</em>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ author/tab_status downlink cell _______
+          </tal:block>
+          <td tal:define="last_author python:(item.sec_get_last_author_info().fullname() or default)">
+            <a style="float:right"
+              title="content approved, or published..."
+              tal:define="
+                is_published item/is_version_published | nothing;
+                is_approved item/is_version_approved | nothing"
+              tal:condition="
+                python: is_published or is_approved"
+              tal:attributes="
+                href item_url;"
+              i18n:attributes="title">
+              <img alt="content approved or published"
+                border="0"
+                width="10"
+                height="10"
+                tal:attributes="src string:${provider/root_url}/globals/checkmark.gif"
+                i18n:attributes="alt"
+              />
+            </a>
+            <a class="blacklink" title="status"
+              tal:condition="python:not item.implements_container() and item.implements_versioned_content()"
+              tal:attributes="href string:${item_url}/edit/tab_status"
+              tal:content="structure last_author"
+              i18n:attributes="title">
+              authorname
+            </a>
+            <a class="closed" title="publish"
+              tal:condition="python:item.implements_container()"
+              tal:attributes="href string:${item_url}/edit/tab_status"
+              i18n:attributes="title">
+              <em i18n:translate="">n/a</em>
+            </a>
+            <span
+              tal:condition="python:item.implements_content() and not item.implements_versioned_content()"
+              tal:replace="last_author">
+              authorname
+            </span>
+          </td>
+        </tr>
+        <tal:block replace="nothing">
+          ______________ sync cycling of row colors ______________
+        </tal:block>
+        <tal:condition condition="repeat/item/end">
+          <tal:define define="global iterate python: iterate == 1 and 'odd' or 'even'" />
+        </tal:condition>
+      </tal:define>
+    </tal:repeat>
+
+    <tal:block replace="nothing">
+      ______________ assets ______________
+    </tal:block>
+    <tal:block
+      condition="python:len(assets)"
+      repeat="asset assets">
+
+      <tal:block define="
+        asset_url asset/absolute_url;
+        odd_even python: iterate == 'odd' and 'odd' or 'even';
+        iterate repeat/asset/?odd_even;
+        ">
+        <tr
+          tal:define="
+            title python:(asset.get_title());
+            show_top_border repeat/asset/start;"
+          tal:attributes="
+            class python: iterate and 'odd' or 'even';
+            style python: show_top_border and 'border-top: 1px solid #77858c' or nothing">
+          <tal:block replace="nothing">
+            _______ checkbox + position cell _______
+          </tal:block>
+          <td class="listing-left">
+            &#8211;
+          </td>
+          <tal:block replace="nothing">
+            _______ icon + id cell _______
+          </tal:block>
+          <td>
+            <tal:block condition="python: hasattr(provider, 'externalEditLink_')">
+              <span style="float: right;"
+                tal:content="structure python: provider.externalEditLink_(asset)" />
+            </tal:block>
+            <a class="icon"
+              tal:attributes="
+                href string:${asset_url}/edit/tab_edit;
+                title asset/meta_type;">
+              <img tal:attributes="src python:provider.get_item_icon_url(asset)" />
+            </a>
+            <a class="blacklink"
+              href="asset"
+              title="edit"
+              tal:define="id asset/id"
+              tal:attributes="href string:${asset_url}/edit/tab_edit"
+              tal:content="python: id[:30]"
+              i18n:attributes="title"
+              >
+              id
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ title cell _______
+          </tal:block>
+          <td>
+            <a class="blacklink"
+              title="preview"
+              tal:content="python: asset.get_title() == '' and default or asset.get_title()"
+              tal:attributes="
+                href string:${asset_url}/edit/tab_preview;
+                class python: asset.get_title() == '' and 'closed' or 'blacklink'"
+              i18n:attributes="title"
+              >
+              <em i18n:translate="">view</em>
+            </a>
+          </td>
+          <tal:block replace="nothing">
+            _______ modified date cell _______
+          </tal:block>
+          <td tal:define="modification_time asset/get_modification_datetime | nothing">
+            <a class="blacklink" title="metadata"
+              tal:condition="modification_time"
+              tal:attributes="href string:${asset_url}/edit/tab_metadata"
+              tal:content="structure python:provider.display_datetime(modification_time)"
+              i18n:attributes="title"
+              >
+              date
+            </a>
+            <tal:block condition="not:modification_time">
+              <i i18n:translate="">
+                unknown
+              </i>
+            </tal:block>
+          </td>
+          <tal:block replace="nothing">
+            _______ author cell _______
+          </tal:block>
+          <td tal:content="structure last_author"
+            tal:define="last_author python:(asset.sec_get_last_author_info().fullname() or default)">
+            unknown
+          </td>
+        </tr>
+      </tal:block>
+    </tal:block>
+  </tbody>
+
+  <tfoot>
+    <tr class="controls">
+      <td colspan="5">
+      </td>
+    </tr>
+  </tfoot>
+</table>

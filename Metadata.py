@@ -12,7 +12,7 @@ from Products.SilvaMetadata import Binding
 ### handlers and thin wrappers for metadata
 
 def ghost_access_handler(tool, content_type, content):
-    target_content = content.get_haunted_unrestricted()
+    target_content = content.get_haunted()
     if target_content is None:
         return None
     target_content = target_content.get_viewable()
@@ -22,7 +22,7 @@ def ghost_access_handler(tool, content_type, content):
     return default_accessor(tool, ct, target_content, read_only=True)
 
 def ghostfolder_access_handler(tool, content_type, content):
-    haunted_folder = content.get_haunted_unrestricted()
+    haunted_folder = content.get_haunted()
     if haunted_folder is None:
         return None
     ct = haunted_folder.meta_type

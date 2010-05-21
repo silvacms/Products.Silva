@@ -5,6 +5,8 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="silva">
 
+  <include package="five.grok" />
+
   <!-- Include dependencies -->
   <include package="zope.annotation" />
   <include package="silva.core.conf" />

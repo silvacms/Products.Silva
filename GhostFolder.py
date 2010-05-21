@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2003-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -5,6 +6,7 @@
 # Zope 3
 from five import grok
 from zope.annotation.interfaces import IAnnotations
+from zope.interface import Interface
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -23,6 +25,20 @@ from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
     IPublication, ISilvaObject, IGhostFolder, IGhostContent)
 from silva.translations import translate as _
+
+from zeam.form.base.actions import Actions, Action
+from zeam.form.base.fields import Fields
+from zeam.form.ztk.actions import CancelAction
+from Products.Silva.Ghost import AddAction as GhostAddAction
+from Products.Silva.Ghost import GhostAddForm, GhostEditForm
+
+from silva.core.conf import schema as silvaschema
+from silva.core.references.reference import Reference
+from silva.core.conf.utils import ContentFactory
+from silva.core.views import views as silvaviews
+from silva.core.smi.interfaces import ISMILayer
+from Products.Silva.icon import get_icon_url
+from Products.Silva import mangle
 
 
 class Sync(object):
@@ -71,7 +87,7 @@ class SyncContainer(Sync):
 
     def _do_create(self):
         self.g_container.manage_addProduct['Silva'].manage_addGhostFolder(
-            self.h_id, self.h_ob.absolute_url())
+            self.h_id, 'Ghost Folder', haunted=self.h_ob)
         self.g_ob = self.g_container._getOb(self.h_id)
         self._do_update()
 
@@ -82,28 +98,28 @@ class SyncContainer(Sync):
 class SyncGhost(Sync):
 
     def _do_update(self):
-        content_url = self._get_content_url()
-        old_content_url = self.g_ob.get_haunted_url()
-        if content_url == old_content_url:
+        content = self._get_content()
+        old_content = self.g_ob.get_haunted()
+        if content == old_content:
             return
         self.g_ob.create_copy()
         version_id = self.g_ob.get_unapproved_version()
         version = getattr(self.g_ob, version_id)
-        version.set_haunted_url(content_url)
+        version.set_haunted(content)
 
     def _do_create(self):
-        content_url = self._get_content_url()
+        content = self._get_content()
         self.g_container.manage_addProduct['Silva'].manage_addGhost(
-            self.h_id, haunted_url=content_url)
+            self.h_id, 'Ghost', haunted=content)
 
-    def _get_content_url(self):
-        return  self.h_ob.get_haunted_url()
+    def _get_content(self):
+        return  self.h_ob.get_haunted()
 
 
 class SyncContent(SyncGhost):
 
-    def _get_content_url(self):
-        return '/'.join(self.h_ob.getPhysicalPath())
+    def _get_content(self):
+        return self.h_ob
 
 
 class SyncCopy(Sync):
@@ -164,7 +180,7 @@ class GhostFolder(GhostBase, Folder.Folder):
     def haunt(self):
         """populate the the ghost folder with ghosts
         """
-        haunted = self.get_haunted_unrestricted()
+        haunted = self.get_haunted()
         if haunted is None:
             return
         if self.get_link_status() != self.LINK_OK:
@@ -271,14 +287,11 @@ class GhostFolder(GhostBase, Folder.Folder):
         return objects
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
-    def get_link_status(self, content=None):
+    def get_link_status(self):
         """return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
-        if content is None:
-            content = self.get_haunted_unrestricted(check=0)
-        if self._content_path is None:
-            return self.LINK_EMPTY
+        content = self.get_haunted()
         if content is None:
             return self.LINK_VOID
         if IGhost.providedBy(content):
@@ -295,7 +308,7 @@ class GhostFolder(GhostBase, Folder.Folder):
         """returns True if ghost folder references self or a ancestor of self
         """
         if content is None:
-            content = self.get_haunted_unrestricted(check=0)
+            content = self.get_haunted()
             if content is None:
                 # if we're not referencing anything it is not a circular
                 # reference for sure
@@ -319,7 +332,7 @@ class GhostFolder(GhostBase, Folder.Folder):
         self._copy_annotations_from_haunted(new_self)
 
     def _copy_annotations_from_haunted(self, new_self):
-        src = IAnnotations(self.get_haunted_unrestricted())
+        src = IAnnotations(self.get_haunted())
         dst = IAnnotations(new_self)
         for key in src.keys():
             dst[key] = src[key]
@@ -327,20 +340,20 @@ class GhostFolder(GhostBase, Folder.Folder):
     # all this is for a nice side bar
     def is_transparent(self):
         """show in subtree? depends on haunted object"""
-        content = self.get_haunted_unrestricted()
+        content = self.get_haunted()
         if IContainer.providedBy(content):
             return content.is_transparent()
         return 0
 
     def get_publication(self):
         """returns self if haunted object is a publication"""
-        content = self.get_haunted_unrestricted()
+        content = self.get_haunted()
         if IPublication.providedBy(content):
             return self.aq_inner
         return self.aq_inner.aq_parent.get_publication()
 
     def implements_publication(self):
-        content = self.get_haunted_unrestricted()
+        content = self.get_haunted()
         if ISilvaObject.providedBy(content):
             return content.implements_publication()
         return 0
@@ -369,21 +382,92 @@ class GhostFolder(GhostBase, Folder.Folder):
     def is_published(self):
         return Folder.Folder.is_published(self)
 
-    def _factory(self, container, id, content_url):
-        return container.manage_addProduct['Silva'].manage_addGhostFolder(id,
-            content_url)
+    def _factory(self, container, id, content):
+        return container.manage_addProduct['Silva'].manage_addGhostFolder(
+            id, 'Ghost Folder', haunted=content)
 
 
 InitializeClass(GhostFolder)
+manage_addGhostFolder = ContentFactory(GhostFolder)
 
-def manage_addGhostFolder(dispatcher, id, content_url, REQUEST=None):
-    """Add a GhostFolder"""
-    if not mangle.Id(dispatcher, id).isValid():
-        return
-    gf = GhostFolder(id)
-    dispatcher._setObject(id, gf)
-    gf = getattr(dispatcher, id)
-    gf.set_haunted_url(content_url)
-    add_and_edit(dispatcher, id, REQUEST)
-    return ''
+
+class IGhostFolderSchema(Interface):
+    id = silvaschema.ID(
+        title=_(u"id"),
+        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        required=True)
+
+    haunted = Reference(IContainer,
+            title=_(u"target"),
+            description=_(u"The silva object the ghost is mirroring"),
+            required=True)
+
+
+class AddAction(GhostAddAction):
+    """ Add action for Ghost folder
+    """
+    def add(self, parent, data, form):
+        factory = parent.manage_addProduct['Silva']
+        return factory.manage_addGhostFolder(
+            data['id'], 'Ghost', haunted=data['haunted'])
+
+
+class AddAndEdit(AddAction):
+    """ Add action then redirect to edit action
+    """
+    def next_url(self, form, content, parent):
+        return "%s/edit" % content.absolute_url()
+
+
+class SyncAction(Action):
+
+    ignoreRequest = True
+
+    def __call__(self, form):
+        gf = form.context
+        if gf.get_link_status() == gf.LINK_OK:
+            gf.haunt()
+        form.redirect("%s/edit" % form.context.absolute_url())
+
+
+class GhostFolderAddForm(GhostAddForm):
+    """ Add form for ghost folders
+    """
+    grok.name(u'Silva Ghost Folder')
+    actions = Actions(CancelAction(_(u'cancel')),
+                        AddAction(_(u'save')),
+                        AddAndEdit(_(u'save + edit')))
+    fields = Fields(IGhostFolderSchema)
+
+
+class GhostFolderListingProvider(silvaviews.ContentProvider):
+    grok.context(IGhostFolder)
+    grok.layer(ISMILayer)
+    grok.name('ghost_folder_listing')
+
+    def get_icon_url(self):
+        return get_icon_url(self.context, self.request)
+
+    def get_editor_link(self, item):
+        return "%s/edit" % item.absolute_url()
+
+    def get_item_icon_url(self, item):
+        return get_icon_url(item, self.request)
+
+    def display_datetime(self, datetime):
+        return mangle.DateTime(datetime).toShortStr()
+
+    def root_url(self):
+        return self.context.get_root_url()
+
+
+class GhostFolderEditForm(GhostEditForm):
+    """ Edit form Ghost Folder
+    """
+    grok.context(IGhostFolder)
+    fields = Fields(IGhostFolderSchema).omit('id')
+    actions = GhostEditForm.actions
+    actions.extend(SyncAction(_(u'sync')))
+    template = grok.PageTemplate(filename='GhostFolder_templates/smieditform.pt')
+
 

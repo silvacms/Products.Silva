@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-import SilvaTestCase
+import unittest
 
 from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostVersion
@@ -14,37 +14,57 @@ from Products.Silva.tests.helpers import resetPreview, \
     approveObject, publishObject, publishApprovedObject
 
 from silva.core import interfaces as silvainterfaces
+from silva.core.references.reference import BrokenReferenceError
 
+import Products.Silva
+from Products.Silva.testing import SilvaLayer
 
-class GhostTestCase(SilvaTestCase.SilvaTestCase):
+class GhostTestCase(unittest.TestCase):
     """Test the Ghost object.
     """
-    def afterSetUp(self):
 
-        # register silva document
-        self.setPermissions([SilvaPermissions.ReadSilvaContent])
-        self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
-        self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
-        self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
-        self.folder4 = folder4 = self.add_folder(self.root,
-                  'folder4', 'Folder4')
-        self.publication5 = publication5 = self.add_publication(self.root,
-                  'publication5', 'Publication5')
-        self.subdoc = subdoc = self.add_document(folder4,
-                  'subdoc', 'Subdoc')
-        self.subfolder = subfolder = self.add_folder(folder4,
-                  'subfolder', 'Subfolder')
-        self.subsubdoc = subsubdoc = self.add_document(subfolder,
-                   'subsubdoc', 'Subsubdoc')
-        self.subdoc2 = subdoc2 = self.add_document(publication5,
-                   'subdoc2', 'Subdoc2')
+    layer = SilvaLayer(Products.Silva)
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+
+        def factory(obj, product="Silva"):
+            return obj.manage_addProduct[product]
+
+        for i in range(1,4):
+            id = 'doc%d' % i
+            title = 'Doc%d' % i
+            factory(self.root, 'SilvaDocument').manage_addDocument(id, title)
+            setattr(self, id, getattr(self.root, id))
+
+        factory(self.root).manage_addFolder('folder4', 'Folder4')
+        self.folder4 = folder4 = getattr(self.root, 'folder4')
+
+        factory(self.root).\
+            manage_addPublication('publication5', 'Publication5')
+        self.publication5 = publication5 = getattr(self.root, 'publication5')
+
+        factory(folder4, 'SilvaDocument').\
+            manage_addDocument('subdoc', 'Subdoc')
+        self.subdoc = subdoc = getattr(folder4, 'subdoc')
+
+        factory(folder4).manage_addFolder('subfolder', 'Subfolder')
+        self.subfolder = subfolder = getattr(folder4, 'subfolder')
+
+        factory(subfolder, 'SilvaDocument').\
+            manage_addDocument('subsubdoc', 'Subsubdoc')
+        self.subsubdoc = subsubdoc = getattr(subfolder, 'subsubdoc')
+
+        factory(publication5, 'SilvaDocument').\
+            manage_addDocument('subdoc2', 'Subdoc2')
+        self.subdoc2 = subdoc2 = getattr(publication5, 'subdoc2')
+
 
     def test_ghost(self):
-        self.add_ghost(self.root, 'ghost1', '/root/doc1')
-
-        # testing call cases of published (1) and non published (0)
-
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost1', 'Ghost 1', haunted=self.doc1)
         ghost = getattr(self.root, 'ghost1')
+
         # there is no version published at all there
         # ghost=0, doc=0
         self.assertEquals('This ghost is broken. (/root/doc1)',
@@ -153,7 +173,7 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
     def test_broken_link1(self):
         # add a ghost
         self.root.manage_addProduct['Silva'].manage_addGhost(
-            'ghost1', haunted_url='/root/doc1/')
+            'ghost1', 'Ghost1', haunted=self.root.doc1)
         ghost = getattr(self.root, 'ghost1')
 
         # issue 41: test if get_haunted_url works now
@@ -161,40 +181,13 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(None, ghost.get_editable().get_link_status())
 
         # now delete doc1
-        self.root.action_delete(['doc1'])
-        # ghost should say 'This ghost is broken'
-        self.assertEquals('This ghost is broken. (/root/doc1)',
-                          translate(ghost.preview()))
-        resetPreview(ghost)
-        # issue 41: test get_haunted_url; should catch KeyError
-        # and return original inserted url
-        self.assertEquals('/root/doc1',
-                          ghost.get_previewable().get_haunted_url())
-        self.assertEqual(GhostVersion.LINK_VOID,
-                         ghost.get_editable().get_link_status())
-
-        # now make ghost point to doc2, and publish ghost and doc2
-        publishObject(self.doc2)
-        ghost.create_copy()
-        ghost.get_editable().set_haunted_url('/root/doc2')
-        publishObject(ghost)
-
-        # now close & delete doc2
-        self.doc2.close_version()
-        self.root.action_delete(['doc2'])
-        self.assertEquals("This 'ghost' document is broken. Please inform the site administrator.",
-                          translate(ghost.view()))
-        # issue 41: test get_haunted_url; should catch KeyError
-        # and return original inserted url
-        self.assertEquals('/root/doc2',
-                          ghost.get_previewable().get_haunted_url())
-        self.assertEquals(GhostVersion.LINK_VOID,
-                          ghost.get_previewable().get_link_status())
-
+        def delete():
+            self.root.action_delete(['doc1'])
+        self.assertRaises(BrokenReferenceError, delete)
 
     def test_ghost_title(self):
         self.root.manage_addProduct['Silva'].manage_addGhost(
-            'ghost1', haunted_url='/root/doc1')
+            'ghost1', 'Ghost 1', haunted=self.root.doc1)
         # need to publish doc1 first
         publishObject(self.root.doc1)
         ghost = getattr(self.root, 'ghost1')
@@ -207,52 +200,52 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('Doc1', ghost.get_title())
         # now break link
         self.root.doc1.close_version()
-        self.root.action_delete(['doc1'])
-        self.assertEquals('Ghost target is broken',
-                          ghost.get_title())
+        
+        def delete():
+            self.root.action_delete(['doc1'])
+        self.assertRaises(BrokenReferenceError, delete)
 
     # FIXME: ghost should do read access checks, test for it somehow?
 
     def test_ghost_points(self):
         # test that the ghost cannot point to the wrong thing;
         # only non-ghost versioned content
-        ghost = self.add_ghost(self.root, 'ghost1', '/root/does_not_exist')
-        self.add_image(self.root, 'image6', 'Test image')
+        id = 'ghost1'
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost(id, 'Ghost')
+        ghost = getattr(self.root, id)
 
-        self.assertEquals('This ghost is broken. (/root/does_not_exist)',
-                          translate(ghost.preview()))
-        resetPreview(ghost)
-        self.assertEquals(GhostVersion.LINK_VOID,
+        factory.manage_addImage('image6', 'Test image')
+        image = getattr(self.root, 'image6')
+
+        self.assertEquals(GhostVersion.LINK_EMPTY,
                           ghost.get_editable().get_link_status())
-        ghost.get_editable().set_haunted_url('/root/folder4')
-        self.assertEquals('This ghost is broken. (/root/folder4)',
-                          translate(ghost.preview()))
-        resetPreview(ghost)
+        ghost.get_editable().set_haunted(self.folder4)
         self.assertEquals(GhostVersion.LINK_FOLDER,
                           ghost.get_editable().get_link_status())
-        ghost.get_editable().set_haunted_url('/root/ghost1')
-        self.assertEquals('This ghost is broken. (/root/ghost1)',
-                          translate(ghost.preview()))
-        resetPreview(ghost)
+        ghost.get_editable().set_haunted(ghost)
         self.assertEquals(GhostVersion.LINK_GHOST,
                           ghost.get_editable().get_link_status())
-        ghost.get_editable().set_haunted_url('/root/image6')
-        self.assertEquals('This ghost is broken. (/root/image6)',
-                          translate(ghost.preview()))
-        resetPreview(ghost)
+        ghost.get_editable().set_haunted(image)
         self.assertEquals(GhostVersion.LINK_NO_CONTENT,
             ghost.get_editable().get_link_status())
 
     def test_ghostfolder(self):
-        gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
-                               content_url='/root/publication5')
-        gffold = self.addObject(self.root, 'GhostFolder', 'gf2',
-                                content_url='/root/folder4')
-        self.assert_(gfpub.implements_container())
-        self.assert_(gfpub.implements_publication())
-        self.assert_(not gffold.implements_publication())
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'gf1', 'GhostFolder', haunted=self.publication5)
+        gfpub = getattr(self.root, 'gf1')
+
+        factory.manage_addGhostFolder(
+            'gf2', 'GhostFolder2', haunted=self.folder4)
+        gffold = getattr(self.root, 'gf2')
+
+        self.assertTrue(gfpub.implements_container())
+        self.assertTrue(gfpub.implements_publication())
+        self.assertTrue(not gffold.implements_publication())
         self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
         self.assertEquals(gffold.get_link_status(), gffold.LINK_OK)
+
         metadata_pub = self.root.service_metadata.getMetadata(
             self.root.publication5)
         metadata_gf = self.root.service_metadata.getMetadata(gfpub)
@@ -265,28 +258,31 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
         # the publication's 'subdoc2' document is not published, so the ghost
         # folder should say it's not published either no matter what the
         # status of the contained ghost that points to the doc
-        self.assert_(not gfpub.is_published())
+        self.assertTrue(not gfpub.is_published())
 
         # the ghost's documents are published on creation, so if we publish
         # the haunted document is_published() should return true
         doc = self.subdoc2
         publishObject(doc)
 
-        self.assert_(gfpub.is_published())
+        self.assertTrue(gfpub.is_published())
 
         # now if we close the haunted document, is_published() should return
         # false again
         ghostdoc = gfpub.subdoc2
         ghostdoc.close_version()
 
-        self.assert_(not gfpub.is_published())
+        self.assertTrue(not gfpub.is_published())
 
 
     def test_ghostfolder_topub(self):
-        gfpub = self.addObject(self.root, 'GhostFolder', 'gf1',
-                               content_url='/root/publication5')
-        self.assert_(gfpub.implements_container())
-        self.assert_(gfpub.implements_publication())
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'gf1', 'GhostFolder', haunted=self.publication5)
+        gfpub = getattr(self.root, 'gf1')
+
+        self.assertTrue(gfpub.implements_container())
+        self.assertTrue(gfpub.implements_publication())
         self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
         metadata_pub = self.root.service_metadata.getMetadata(
             self.root.publication5)
@@ -300,62 +296,77 @@ class GhostTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_circular_links(self):
         # add some content in a tree
-        self.add_folder(self.root, 'f', 'F')
-        f = self.root.f
-        self.add_folder(f, 'g', 'G')
-        g = self.root.f.g
-        self.add_document(g, 'foo', 'Foo')
-        doc = g.foo
-        self.add_folder(self.root, 'h', 'H')
-        # add a non-circular ghost folder
-        self.root.manage_addProduct['Silva'].manage_addGhostFolder(
-            'gf1',
-            '/root/f/g')
-        self.assertEquals('/root/f/g',
-                          self.root.gf1.get_haunted_url())
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('f', 'F')
+        f = getattr(self.root, 'f')
+
+        factory = f.manage_addProduct['Silva']
+        factory.manage_addFolder('g', 'G')
+        g = getattr(f, 'g')
+
+        factory = g.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('foo', 'Foo')
+        doc = getattr(g, 'foo')
+
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('h', 'H')
+        h = getattr(self.root, 'h')
+
+        factory.manage_addGhostFolder(
+            'gf1', 'Ghost forlder 1', haunted=g)
+        gf1 = getattr(self.root, 'gf1')
+
+        self.assertEquals(g, self.root.gf1.get_haunted)
         self.assertEquals(self.root.gf1.LINK_OK,
                           self.root.gf1.get_link_status())
+
         # now change link to circular
-        self.root.gf1.set_haunted_url('/root')
+        self.root.gf1.set_haunted(self.root)
         self.assertEquals(self.root.gf1.LINK_CIRC,
                           self.root.gf1.get_link_status())
+
         # set up some more complicated circular setup
-        g.manage_addProduct['Silva'].manage_addGhostFolder(
-            'gf2',
-            '/root/f/g')
-        gf2 = g.gf2
+        factory = g.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'gf2', 'Ghost folder2', haunted=g)
+        gf2 = getattr(g, 'gf2')
+
         self.assertEquals(
             gf2.LINK_CIRC,
             gf2.get_link_status())
-        gf2.set_haunted_url('/root/f/g/gf2')
+        gf2.set_haunted(gf2)
         self.assertEquals(
             gf2.LINK_GHOST,
             gf2.get_link_status())
-        gf2.set_haunted_url('/root/f/g')
+        gf2.set_haunted(g)
         self.assertEquals(
             gf2.LINK_CIRC,
             gf2.get_link_status())
-        gf2.set_haunted_url('/root')
+        gf2.set_haunted(self.root)
         self.assertEquals(
             gf2.LINK_CIRC,
             gf2.get_link_status())
-        gf2.set_haunted_url('/root/h')
+        gf2.set_haunted(h)
         self.assertEquals(
             gf2.LINK_OK,
             gf2.get_link_status())
 
-        #self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
-        #self.assertEquals(None, ghost.get_editable().get_link_status())
+        self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
+        self.assertEquals(None, ghost.get_editable().get_link_status())
 
     def test_modification_time(self):
         # https://infrae.com/issue/silva/issue1645
-        self.add_ghost(self.root, 'ghost1', '/root/doc1')
-        ghost = self.root.ghost1
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost(
+            'ghost1', 'Ghost 1', haunted=self.doc1)
+        ghost = getattr(self.root, 'ghost1')
+
         self.assertEqual(ghost.get_modification_datetime(),
                          self.doc1.get_modification_datetime())
 
         # Let's delete the haunted object;
         # `get_modification_datetime` should still work
+        del ghost.getLastVersion()._haunted
         self.root.manage_delObjects(['doc1'])
         self.assertEqual(ghost.get_modification_datetime(), None)
 

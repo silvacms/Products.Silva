@@ -102,7 +102,7 @@ class ILinkSchema(interface.Interface):
                       u"it is the absolute link url."),
         required=False)
 
-    target = Reference(
+    target = Reference(interfaces.ISilvaObject,
         title=_("target of relative link"),
         description=_(u"If the link is relative, "
                       u"it is the target of the link."),
@@ -154,3 +154,5 @@ class LinkView(silvaviews.View):
     def render(self):
         return u'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>' % (
             self.content.get_title(), self.url, self.url)
+
+

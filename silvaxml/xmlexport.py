@@ -234,7 +234,7 @@ class GhostVersionProducer(SilvaBaseProducer):
 
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        content = self.context.get_haunted_unrestricted()
+        content = self.context.get_haunted()
         if content is not None:
             meta_type = content.meta_type
         else:
@@ -260,7 +260,7 @@ class GhostFolderProducer(SilvaBaseProducer):
     def sax(self):
         self.startElement('ghost_folder', {'id': self.context.id})
         self.startElement('content')
-        content = self.context.get_haunted_unrestricted()
+        content = self.context.get_haunted()
         meta_type = content is not None and content.meta_type or ""
         haunted_url = self.context.get_haunted_url()
         self.startElement('metatype')

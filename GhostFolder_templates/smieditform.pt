@@ -1,0 +1,82 @@
+<tal:main>
+<form action="." tal:attributes="action request/URL" method="post"
+      enctype="multipart/form-data"
+      i18n:domain="silva">
+  <table class="listing">
+    <thead>
+      <tr>
+        <td class="top" colspan="2">
+          <h2>
+            <span tal:replace="context/meta_type" />
+          </h2>
+        </td>
+      </tr>
+      <tr class="top-controls" tal:condition="view/label">
+        <td colspan="2">
+          <h3 tal:content="view/label">label</h3>
+        </td>
+      </tr>
+      <tr class="odd" tal:condition="view/description">
+        <td class="designator" colspan="2"
+            tal:content="structure view/description">
+        </td>
+      </tr>
+      <tr tal:condition="view/fieldWidgets">
+        <th style="width:33%" i18n:translate="">
+          aspect
+        </th>
+        <th i18n:translate="">
+          content
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tal:repeat tal:repeat="widget view/fieldWidgets">
+        <tr class="#"
+            tal:define="odd   repeat/widget/odd;
+                        idx   repeat/widget/index"
+            tal:attributes="class python:odd and ('odd' + ' row' + str(idx))
+                            or ('even' + ' row' + str(idx)) + (widget.error and ' field-error' or '')">
+          <td class="designator">
+            <label tal:attributes="for widget/htmlId"
+                   tal:content="widget/title">
+              Field Name
+            </label>
+            <span class="required"
+                  tal:condition="widget/required">
+              *
+            </span>
+            <p tal:condition="widget/description"
+               tal:content="widget/description">
+              Description
+            </p>
+          </td>
+          <td class="field">
+            <tal:error tal:condition="widget/error"
+                       tal:content="structure widget/error/title">
+              Validation error.
+            </tal:error>
+            <tal:widget tal:content="structure widget/render">
+              Widget.
+            </tal:widget>
+          </td>
+        </tr>
+      </tal:repeat>
+    </tbody>
+    <tfoot>
+      <tr tal:condition="view/fieldWidgets">
+        <th i18n:translate="">
+          * required
+        </th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr class="controls" tal:condition="view/actionWidgets">
+        <td colspan="2">
+          <input tal:repeat="widget view/actionWidgets"
+                 tal:replace="structure widget/render" />
+        </td>
+      </tr>
+  </table>
+</form>
+<div tal:replace="structure provider:ghost_folder_listing" />
+</tal:main>

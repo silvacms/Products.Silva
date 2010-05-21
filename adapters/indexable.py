@@ -33,7 +33,7 @@ class GhostIndexableAdapter(IndexableAdapter):
         if version is None:
             return []
         else:
-            haunted = version.get_haunted_unrestricted()
+            haunted = version.get_haunted()
             if not haunted:
                 return []
         return interfaces.IIndexable(haunted).getIndexes()
