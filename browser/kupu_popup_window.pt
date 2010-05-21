@@ -12,12 +12,11 @@
 
 <metal:block use-macro="python: context.edit['macro_no_tabs'].macros['master']">
  <link type="text/css" rel="stylesheet"
-   metal:fill-slot="extension_css" 
+   metal:fill-slot="extension_css"
    tal:attributes="href here/kupustyles.css/absolute_url" />
 
  <metal:block fill-slot="script">
-  <script type="text/javascript" 
-    tal:attributes="src  string:${root_url}/++resource++Products.Silva.browser.scripts/reference.js"></script>
+   <tal:resource tal:replace="structure provider:resources" />
   <metal:macro use-macro="context/service_kupu_silva/kupupopup/macros/jsincludes" />
   <script type="text/javascript">
    onload_registry.register(function() {
@@ -62,7 +61,7 @@
       }
       /* re-select the first visible option and trigger the onchange,
          as the first option may have changed (i.e. been removed) */
-      /* this may change the the text style of the block where the 
+      /* this may change the the text style of the block where the
         cursor is, so ONLY do this if the document is empty! */
       var htmlbody = kupu.getHTMLBody()
       /* in IE htmlbody is an empty string, but in FF3 htmlbody
