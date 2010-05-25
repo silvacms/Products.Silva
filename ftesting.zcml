@@ -3,6 +3,5 @@
 
   <include package="Products.Silva" />
   <include package="silva.export.opendocument" />
-  <include package="Products.SilvaDocument" />
 
 </configure>
