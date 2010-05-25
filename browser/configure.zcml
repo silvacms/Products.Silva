@@ -3,13 +3,6 @@
    xmlns:browser="http://namespaces.zope.org/browser"
    xmlns:five="http://namespaces.zope.org/five">
 
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="render_extsource"
-     class="Products.Silva.browser.kupu.RenderExternalSource"
-     permission="silva.ChangeSilvaContent"
-     />
-
    <browser:page
      for="silva.core.interfaces.ISilvaObject"
      name="get_viewer_role_info"
