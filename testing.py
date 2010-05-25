@@ -2,7 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
-from AccessControl.SecurityManagement import newSecurityManager
+from AccessControl.SecurityManagement import (
+    newSecurityManager, noSecurityManager)
 
 import Products.Silva
 
@@ -50,6 +51,16 @@ class SilvaLayer(BrowserLayer):
         'author': ['Author'],
         'reader': ['Reader'],
         'dummy': [],}
+
+    def login(self, username):
+        user_folder = self._silva_root.acl_users
+        user = user_folder.getUserById(username)
+        if user is None:
+            raise ValueError("No user %s available" % username)
+        newSecurityManager(None, user.__of__(user_folder))
+
+    def logout(self):
+        noSecurityManager()
 
     def _install_application(self, app):
         """Install Silva in the test application.
