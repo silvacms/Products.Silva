@@ -5,7 +5,8 @@
 from Acquisition import aq_parent
 
 from five import grok
-from silva.core import rest, interfaces
+from infrae import rest
+from silva.core import interfaces
 from silva.core.views.interfaces import IVirtualSite
 from zope.interface.interfaces import IInterface
 from zope import component
