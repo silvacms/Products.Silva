@@ -1,6 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope">
 
+  <!-- Silva do dependent on the WSGI for the tests -->
+  <include package="infrae.wsgi" />
   <include package="Products.Silva" />
   <include package="silva.export.opendocument" />
 
