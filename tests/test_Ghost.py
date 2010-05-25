@@ -316,7 +316,7 @@ class GhostTestCase(unittest.TestCase):
             'gf1', 'Ghost forlder 1', haunted=g)
         gf1 = getattr(self.root, 'gf1')
 
-        self.assertEquals(g, self.root.gf1.get_haunted)
+        self.assertEquals(g, self.root.gf1.get_haunted())
         self.assertEquals(self.root.gf1.LINK_OK,
                           self.root.gf1.get_link_status())
 
@@ -351,8 +351,6 @@ class GhostTestCase(unittest.TestCase):
             gf2.LINK_OK,
             gf2.get_link_status())
 
-        self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
-        self.assertEquals(None, ghost.get_editable().get_link_status())
 
     def test_modification_time(self):
         # https://infrae.com/issue/silva/issue1645

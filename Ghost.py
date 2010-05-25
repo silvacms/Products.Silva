@@ -161,7 +161,8 @@ class Ghost(CatalogedVersionedContent):
     silvaconf.icon('icons/silvaghost.gif')
     silvaconf.versionClass('GhostVersion')
 
-
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                                'get_title_editable')
     def get_title_editable(self):
         """Get title for editable or previewable use
         """
@@ -197,6 +198,8 @@ class Ghost(CatalogedVersionedContent):
         version = getattr(self, version_id)
         return version
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                                'get_haunted_url')
     def get_haunted_url(self):
         """return content url of `last' version"""
         version = self.getLastVersion()
@@ -214,6 +217,8 @@ class Ghost(CatalogedVersionedContent):
             return False
         return haunted.is_published()
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                                'get_modification_datetime')
     def get_modification_datetime(self, update_status=1):
         """Return modification datetime."""
         super_method = Ghost.inheritedAttribute(
