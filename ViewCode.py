@@ -53,7 +53,7 @@ class ViewCode(object):
     def render_icon(self, obj=None, meta_type='Unknown'):
         """Gets the icon for the object and wraps that in an image tag
         """
-        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon"'
+        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon" '
                'alt="%(alt)s" title="%(alt)s" />')
         try:
             icon_path = '%s/%s' % (self.get_root().absolute_url(),
@@ -375,7 +375,7 @@ class FakeView(object):
     def get_icon(self, content=None):
         """Gets the icon for the object and wraps that in an image tag.
         """
-        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon"'
+        tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon" '
                'alt="%(alt)s" title="%(alt)s" />')
         icon_path = '%s/%s' % (self.root_url, icon.registry.getIcon(content))
         return tag % {'icon_path': icon_path, 'alt': content.meta_type}
