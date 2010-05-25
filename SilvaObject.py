@@ -84,7 +84,7 @@ class Zope3ViewAttribute(ViewAttribute):
             # Default behaviour of ViewAttribute, but look at a Five
             # views if the asked one doesn't exists.
             view = getSilvaViewFor(self, self._view_type, context)
-            return getattr(view, name, None)
+            return getattr(view, name)
 
 
 class SilvaObject(Security, ViewCode):
