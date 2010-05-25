@@ -20,9 +20,6 @@ from Products.Formulator.Widget import render_element,TextWidget
 from Products.Formulator.helpers import is_sequence
 from Products.Silva.adapters.path import getPathAdapter
 
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
-
 from Products.Five import BrowserView
 from urlparse import urlparse
 from zExceptions import BadRequest
@@ -274,6 +271,7 @@ reference.getReference(
         if model is None:
             # XXX not sure yet either
             return ''
+        assert ISilvaObject.providedBy(model)
         interpolate = {
             'url': model.get_container().absolute_url(),
             'field_id': key,
