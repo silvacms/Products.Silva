@@ -10,20 +10,18 @@ from Products.Silva.Ghost import GhostVersion
 from zope.interface.verify import verifyObject
 from zope.i18n import translate
 
+from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import resetPreview, \
     approveObject, publishObject, publishApprovedObject
 
 from silva.core import interfaces as silvainterfaces
 from silva.core.references.reference import BrokenReferenceError
 
-import Products.Silva
-from Products.Silva.testing import SilvaLayer
 
 class GhostTestCase(unittest.TestCase):
     """Test the Ghost object.
     """
-
-    layer = SilvaLayer(Products.Silva)
+    layer = FunctionalLayer
 
     def setUp(self):
         self.root = self.layer.get_application()
