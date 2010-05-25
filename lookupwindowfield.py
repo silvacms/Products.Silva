@@ -20,6 +20,9 @@ from Products.Formulator.Widget import render_element,TextWidget
 from Products.Formulator.helpers import is_sequence
 from Products.Silva.adapters.path import getPathAdapter
 
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
+
 from Products.Five import BrowserView
 from urlparse import urlparse
 from zExceptions import BadRequest
@@ -271,22 +274,8 @@ reference.getReference(
         if model is None:
             # XXX not sure yet either
             return ''
-        # when inside Kupu, 'model' points to the ExternalSource, which is not
-        # very useful... however, in that case a request variable 'docref' will
-        # be available to refer to the original model...
-        url = ''
-        if request.has_key('docref'):
-            # we're in an ExternalSource, use the document in which it is
-            # placed instead of the source as the model
-            url = model.resolve_ref(
-                quote(request['docref'])).get_container().absolute_url()
-        else:
-            # start where we last looked something up
-            url = request.SESSION.get('lastpath') or ''
-        if url == '':
-            url = model.get_container().absolute_url()
         interpolate = {
-            'url': url,
+            'url': model.get_container().absolute_url(),
             'field_id': key,
             'selected_path': getattr(field ,'value', '')}
         return field.get_value('onclick') % interpolate
