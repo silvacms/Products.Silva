@@ -17,6 +17,7 @@
   <include package="silva.core.services" />
   <include package="silva.core.upgrade" />
   <include package="silva.core.references" />
+  <include package="silva.core.rest" />
   <include package="silva.translations" />
   <include package="zeam.form.silva" />
 
