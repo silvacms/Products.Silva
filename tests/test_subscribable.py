@@ -24,12 +24,12 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.publication = self.add_publication(self.root, 'publication', u'Test Publication')
         self.folder = self.add_folder(self.publication, 'folder', u'Test Folder')
         self.doc = self.add_document(self.folder, 'doc', u'Test Document')
-        self.ghost = self.add_ghost(self.root, 'ghost', 'contenturl')
+        self.ghost = self.add_ghost(self.root, 'ghost', None)
         self.link = self.add_link(self.root, 'link', u'Test Link', 'url')
         self.image = self.add_image(self.root, 'image', u'Test Image')
         Indexer.manage_addIndexer(self.root, 'indexer', 'Test Indexer')
         self.indexer = self.root.indexer
-        
+
     def test_getSubscribable(self):
         subscr = subscribable.getSubscribable(self.root)
         self.assert_(isinstance(subscr, subscribable.SubscribableRoot))

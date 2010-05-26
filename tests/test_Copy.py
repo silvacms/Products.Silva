@@ -139,7 +139,7 @@ class CopyTestCase(SilvaTestCase.SilvaTestCase):
 
     def test_copy7(self):
         # test for issue 92: pasted ghosts have unknown author
-        self.add_ghost(self.root.folder4, 'ghost6', '/root/doc1')
+        self.add_ghost(self.root.folder4, 'ghost6', self.doc1)
         self.failUnless(self.root.folder4.ghost6)
        # gotcha this makes the tests pass but I am not sure it is the desired
        # functionality : test was failing because a ghost on a private doc does

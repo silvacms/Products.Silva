@@ -223,10 +223,10 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         return self.addObject(object, 'Document', id, title=title,
                               product='SilvaDocument')
 
-    def add_ghost(self, object, id, content_url):
+    def add_ghost(self, object, id, content):
         # XXX This is deprecated you should not use it
         factory = object.manage_addProduct['Silva']
-        factory.manage_addGhost(id, None)
+        factory.manage_addGhost(id, None, haunted=content)
         return getattr(object, id)
 
     def add_link(self, object, id, title, url):

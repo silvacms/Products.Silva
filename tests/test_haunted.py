@@ -24,7 +24,7 @@ class HauntedTestCase(SilvaTestCase.SilvaTestCase):
         self.doc1 = self.add_document(self.root, 'doc1', u'Test Document 1')
         self.publication = self.add_publication(self.root, 'publication', u'Test Publication')
         self.folder = self.add_folder(self.publication, 'folder', u'Test Folder')
-        self.ghost = self.add_ghost(self.root, 'ghost', 'somesortofcontenturl')
+        self.ghost = self.add_ghost(self.root, 'ghost', self.doc1)
         self.link = self.add_link(self.root, 'link', u'Test Link', 'url')
 
     def test_getHaunting(self):

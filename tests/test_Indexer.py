@@ -29,7 +29,7 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.pub, 'Beta', 'Beta Capital B')
         self.kappa = kappa = self.add_document(self.pub, 'kappa', 'Kappa')
         self.ghost = ghost = self.add_ghost(
-            self.pub, 'ghost', '/'.join(toghost.getPhysicalPath()))
+            self.pub, 'ghost', toghost)
 
         self.foldertoghost = self.add_folder(
             self.root, 'foldertoghost', 'Folder to Ghost')
@@ -39,10 +39,7 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.ghostfolder = ghostfolder = Ghost.ghostFactory(
             self.pub, 'ghostfolder', self.foldertoghost)
         self.ghostfolder.haunt()
-
-        self.broken_ghost = broken_ghost = self.add_ghost(
-            self.pub, 'broken_ghost', '/this/object/does/not/exist')
-
+        self.broken_ghost = self.add_ghost(self.root, 'Broken', None)
         # add a folder with an indexable index document
         self.subfolder = subfolder =  self.add_folder(
             self.pub, 'folder_with_index_doc',
