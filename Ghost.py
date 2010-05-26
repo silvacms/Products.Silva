@@ -300,7 +300,7 @@ class AddAction(Action):
         return form.redirect(self.next_url(form, content, form.context))
 
     def next_url(self, form, content, parent):
-        return "%s/edit" % self.parent.absolute_url()
+        return "%s/edit" % parent.absolute_url()
 
 
 class AddAndEdit(AddAction):
@@ -318,7 +318,8 @@ class GhostAddForm(SMIAddForm):
     description = Ghost.__doc__
     actions = Actions(CancelAddAction(_(u'cancel')),
                         AddAction(_(u'save')),
-                        AddAndEdit(_(u'save + edit')))
+                        AddAndEdit(_(u'save + edit'),
+                                   identifier="save_edit"))
 
 
 class GhostEditForm(SMIEditForm):

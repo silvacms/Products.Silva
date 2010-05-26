@@ -416,6 +416,7 @@ class NoopHandler(SilvaBaseHandler):
 class HauntedUrlHandler(SilvaBaseHandler):
 
     def characters(self, chars):
+        # XXX Fix me, haunted use references
         self.parent().set_haunted_url(chars)
 
 
