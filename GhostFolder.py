@@ -28,7 +28,7 @@ from silva.translations import translate as _
 
 from zeam.form.base.actions import Actions, Action
 from zeam.form.base.fields import Fields
-from zeam.form.ztk.actions import CancelAction
+from zeam.form.silva.actions import CancelAddAction, CancelEditAction
 from Products.Silva.Ghost import AddAction as GhostAddAction
 from Products.Silva.Ghost import GhostAddForm, GhostEditForm
 
@@ -434,7 +434,7 @@ class GhostFolderAddForm(GhostAddForm):
     """ Add form for ghost folders
     """
     grok.name(u'Silva Ghost Folder')
-    actions = Actions(CancelAction(_(u'cancel')),
+    actions = Actions(CancelAddAction(_(u'cancel')),
                         AddAction(_(u'save')),
                         AddAndEdit(_(u'save + edit')))
     fields = Fields(IGhostFolderSchema)
@@ -466,7 +466,7 @@ class GhostFolderEditForm(GhostEditForm):
     """
     grok.context(IGhostFolder)
     fields = Fields(IGhostFolderSchema).omit('id')
-    actions = GhostEditForm.actions
+    actions = GhostEditForm.actions.copy()
     actions.extend(SyncAction(_(u'sync')))
     template = grok.PageTemplate(filename='GhostFolder_templates/smieditform.pt')
 

@@ -23,7 +23,7 @@ from zeam.form.base.actions import Action, Actions
 from zeam.form.base.fields import Fields
 from zeam.form.silva.form import SMIAddForm
 from zeam.form.silva.form import SMIEditForm
-from zeam.form.ztk.actions import CancelAction
+from zeam.form.silva.actions import CancelAddAction, CancelEditAction
 
 # this initializes the widgets
 import silva.core.references.widgets.zeamform
@@ -316,7 +316,7 @@ class GhostAddForm(SMIAddForm):
     grok.context(IGhost)
     fields = Fields(IGhostSchema)
     description = Ghost.__doc__
-    actions = Actions(CancelAction(_(u'cancel')),
+    actions = Actions(CancelAddAction(_(u'cancel')),
                         AddAction(_(u'save')),
                         AddAndEdit(_(u'save + edit')))
 
@@ -374,7 +374,7 @@ def ghostFactory(container, id, haunted_object):
             version = getLastVersionFromGhost(haunted_object)
             content = version.get_haunted()
         factory = addProduct.manage_addGhost
-    factory(id, 'Ghost', haunted=content)
+    factory(id, 'Ghost', haunted=haunted_object)
     ghost = getattr(container, id)
     return ghost
 
