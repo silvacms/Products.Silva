@@ -67,6 +67,57 @@ class TestGhostAdd(BaseTest):
             self.browser.url)
 
 
+class TestGhostEdit(BaseTest):
+
+    def setUp(self):
+        super(TestGhostEdit, self).setUp()
+        self._login(self.browser)
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost(
+            'ghost', None, haunted=self.doc)
+        self.ghost = getattr(self.root, 'ghost')
+        self.ghost_path = "/".join(self.ghost.getPhysicalPath())
+
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('other', 'Other document')
+        self.other = getattr(self.root, 'other')
+
+    def test_edit_form(self):
+        form = self._get_form()
+        reference_field = form.getControl(name="form.field.haunted")
+        self.assertEquals(reference_field.value,
+            str(self.intids.getId(self.doc)),
+            "reference field value should be the intid of the doc")
+
+    def test_edit_form_set_new_haunted(self):
+        form = self._get_form()
+        reference_field = form.getControl(name="form.field.haunted")
+        reference_field.value = str(self.intids.register(self.other))
+        button = form.getControl(name="form.action.save")
+        button.click()
+
+        self.assertEquals("200 OK", self.browser.status)
+        self.assertEquals(self.other,
+            self.ghost.getLastVersion().get_haunted())
+
+    def test_edit_form_set_new_haunted_on_published(self):
+        publish_object(self.ghost)
+        form = self._get_form()
+        reference_field = form.getControl(name="form.field.haunted")
+        reference_field.value = str(self.intids.register(self.other))
+        button = form.getControl(name="form.action.save")
+        button.click()
+
+        self.assertEquals("200 OK", self.browser.status)
+        self.assertEquals(self.doc,
+            self.ghost.getLastVersion().get_haunted())
+
+    def _get_form(self):
+        self.browser.open(self.host_base + self.ghost_path + '/edit')
+        self.assertEquals('200 OK', self.browser.status)
+        return self.browser.getForm(name="edit_object")
+
+
 class TestGhostViewBase(BaseTest):
 
     def setUp(self):
@@ -132,6 +183,7 @@ class TestGhostViewGhostAndDocPublished(TestGhostViewGhostPublished):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestGhostAdd))
+    suite.addTest(unittest.makeSuite(TestGhostEdit))
     suite.addTest(unittest.makeSuite(TestGhostViewNotPublished))
     suite.addTest(unittest.makeSuite(TestGhostViewGhostPublished))
     suite.addTest(unittest.makeSuite(TestGhostViewGhostAndDocPublished))
