@@ -66,9 +66,8 @@ class SilvaLayer(BrowserLayer):
         """Install Silva in the test application.
         """
         # Add a user
-        uf = app.acl_users
-        #uf._doAddUser('silvatestcase', '', ['Manager'], [])
-        user = uf.getUserById('silvatestcase').__of__(uf)
+        userfolder = app.acl_users
+        user = userfolder.getUserById('silvatestcase').__of__(userfolder)
 
         # Loging to that user and add a Silva Root
         newSecurityManager(None, user)
