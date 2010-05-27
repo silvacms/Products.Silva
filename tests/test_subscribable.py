@@ -13,13 +13,13 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
     """
     def afterSetUp(self):
         """Content tree:
-        
+
         /publication
         /publication/folder
         /publication/folder/doc
         /ghost
         /link
-        
+
         """
         self.publication = self.add_publication(self.root, 'publication', u'Test Publication')
         self.folder = self.add_folder(self.publication, 'folder', u'Test Folder')
@@ -47,7 +47,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(None, subscr)
         subscr = subscribable.getSubscribable(self.indexer)
         self.assertEquals(None, subscr)
-        
+
     def test_subscribability(self):
         subscr = subscribable.getSubscribable(self.doc)
         # content aqcuires subscribability by default
@@ -58,7 +58,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(subscribable.SUBSCRIBABLE, subscr.subscribability())
         # and make it not subscribable anymore
         subscr.setSubscribability(subscribable.NOT_SUBSCRIBABLE)
-        self.assertEquals(subscribable.NOT_SUBSCRIBABLE, subscr.subscribability())        
+        self.assertEquals(subscribable.NOT_SUBSCRIBABLE, subscr.subscribability())
 
     def test__buildSubscribablesList(self):
         # first make root subscribable (acquired by the contained objects)
@@ -103,7 +103,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         subscribables = subscr._buildSubscribablesList()
         contexts = [o.context for o in subscribables]
         self.assertEquals(expected, contexts)
-        
+
     def test_getSubscriptions(self):
         d = {'foo@bar.baz':None, 'baz@bar.baz':None, 'qux@bar.baz':None}
         self.doc.__subscriptions__ = OOBTree(d)
@@ -118,7 +118,7 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         contentsubscribedtos = [s.contentSubscribedTo() for s in subscriptions]
         expected = [self.doc, self.doc, self.doc]
         self.assertEquals(expected, contentsubscribedtos)
-        
+
     def test_subscribe(self):
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
