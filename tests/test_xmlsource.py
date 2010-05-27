@@ -3,18 +3,23 @@
 # See also LICENSE.txt
 # $Id$
 
-import os, re
-import SilvaTestCase
+import re
+import unittest
+
+from Products.Silva.tests import SilvaTestCase, helpers
 from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 
-class XMLSourceTest(SilvaTestCase.SilvaTestCase):
-    DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-    def replace_datetimes(self, s):
-        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
+DATETIME_RE = re.compile(
+    r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
 
-    def genericize(self, s):
-        return self.replace_datetimes(s)
+
+class XMLSourceTest(SilvaTestCase.SilvaTestCase):
+    """Test XML source adapter.
+    """
+
+    def genericize(self, string):
+        return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
 
     def test_xml_source(self):
         importfolder = self.add_folder(
@@ -25,8 +30,7 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        directory = os.path.dirname(__file__)
-        source_file = open(os.path.join(directory, "data/test_document.xml"))
+        source_file = helpers.openTestFile("test_document.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
@@ -46,7 +50,7 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
             expected_xml, self.genericize(
             IXMLSource(obj).getXML()))
 
-import unittest
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(XMLSourceTest))

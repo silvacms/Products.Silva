@@ -4,67 +4,64 @@
 
 from datetime import datetime, timedelta
 
-from zope.interface import implements
+from five import grok
 
 from Acquisition import aq_inner
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
 from App.class_init import InitializeClass
 from DateTime import DateTime
 
-from Products.Silva.adapters import adapter
 from Products.Silva.Versioning import VersioningError
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces.adapters import IVersionManagement
-from silva.core.interfaces import IVersion
+from silva.core.interfaces import IVersionedContent, IVersion
 from silva.translations import translate as _
 
 
-module_security = ModuleSecurityInfo(
-    'Products.Silva.adapters.version_management')
-
-
-class VersionManagementAdapter(adapter.Adapter):
+class VersionManagement(grok.Adapter):
     """Adapter to manage Silva versions"""
 
-    implements(IVersionManagement)
+    grok.implements(IVersionManagement)
+    grok.context(IVersionedContent)
+    grok.provides(IVersionManagement)
     security = ClassSecurityInfo()
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionById')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionById')
     def getVersionById(self, id):
         return getattr(self.context, id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getPublishedVersion')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getPublishedVersion')
     def getPublishedVersion(self):
         id = self.context.get_public_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getUnapprovedVersion')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getUnapprovedVersion')
     def getUnapprovedVersion(self):
         id = self.context.get_unapproved_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getApprovedVersion')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getApprovedVersion')
     def getApprovedVersion(self):
         id = self.context.get_approved_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionIds')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionIds')
     def getVersionIds(self):
         ret = [v.id for v in self.getVersions()]
         return ret
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersions')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersions')
     def getVersions(self, sort_attribute='id'):
         objects = [o for o in self.context.objectValues() if
                     IVersion.providedBy(o)]
@@ -80,8 +77,8 @@ class VersionManagementAdapter(adapter.Adapter):
                 )
         return objects
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'revertPreviousToEditable')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'revertPreviousToEditable')
     def revertPreviousToEditable(self, copy_id):
         if not hasattr(self.context, copy_id):
             raise AttributeError, copy_id
@@ -111,8 +108,8 @@ class VersionManagementAdapter(adapter.Adapter):
         self.context._unapproved_version = (new_version_id, None, None)
         self.context._index_version(new_version_id)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'deleteVersions')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'deleteVersions')
     def deleteVersions(self, ids):
         """Delete a number of versions
 
@@ -198,8 +195,8 @@ class VersionManagementAdapter(adapter.Adapter):
         if number_to_keep is not None:
             self.deleteOldVersions(number_to_keep)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionModificationTime')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionModificationTime')
     def getVersionModificationTime(self, versionid):
         version = getattr(self.context, versionid)
         return self.context.service_metadata.getMetadataValue(
@@ -209,8 +206,8 @@ class VersionManagementAdapter(adapter.Adapter):
     # implementation, hopefully in the future we can change the underlying
     # Versioning and VersionedContent layers and store these times on the
     # version objects rather then on the VersionedContent
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionPublicationTime')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionPublicationTime')
     def getVersionPublicationTime(self, versionid):
         if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
@@ -227,8 +224,8 @@ class VersionManagementAdapter(adapter.Adapter):
                     if verid == versionid:
                         return pubtime
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionExpirationTime')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionExpirationTime')
     def getVersionExpirationTime(self, versionid):
         if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
@@ -245,8 +242,8 @@ class VersionManagementAdapter(adapter.Adapter):
                     if verid == versionid:
                         return exptime
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionLastAuthorInfo')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionLastAuthorInfo')
     def getVersionLastAuthorInfo(self, versionid):
         version = self.getVersionById(versionid)
         info = getattr(version, '_last_author_info', None)
@@ -255,14 +252,14 @@ class VersionManagementAdapter(adapter.Adapter):
         else:
             return info.__of__(self.context)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionCreatorInfo')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionCreatorInfo')
     def getVersionCreatorInfo(self, versionid):
         version = self.getVersionById(versionid)
         return self.context.sec_get_member(version.getOwner().getId())
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'getVersionStatus')
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'getVersionStatus')
     def getVersionStatus(self, versionid):
         """Returns the status of a version as a string
 
@@ -302,15 +299,22 @@ class VersionManagementAdapter(adapter.Adapter):
         return self.context.get_new_version_id()
 
 
-InitializeClass(VersionManagementAdapter)
+InitializeClass(VersionManagement)
 
 
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('getVersionManagementAdapter')
 
 
-module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                  'getVersionManagementAdapter')
+module_security = ModuleSecurityInfo(
+    'Products.Silva.adapters.version_management')
+
+
+module_security.declareProtected(
+    SilvaPermissions.ChangeSilvaContent, 'getVersionManagementAdapter')
 def getVersionManagementAdapter(context):
-    return VersionManagementAdapter(context).__of__(context)
+    adapter = IVersionManagement(context, None)
+    if adapter is not None:
+        adapter.__parent__ = context
+    return adapter
 
