@@ -105,8 +105,8 @@ class SilvaObject(Security, ViewCode):
         self.id = id
         self._v_creation_datetime = DateTime()
 
-    def __repr__(self):
-        return "<%s instance %s>" % (self.meta_type, self.id)
+    #def __repr__(self):
+    #    return "<%s instance %s>" % (self.meta_type, self.id)
 
     # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.
     def absolute_url(self, relative=None):
