@@ -363,7 +363,9 @@ class ZexpProducer(SilvaBaseProducer):
             id = self.context.id
             if callable(id):
                 id = id()
-            self.startElement('unknown_content', {'id': id})
+            meta_type = getattr(aq_base(self.context), 'meta_type', '')
+            self.startElement(
+                'unknown_content', {'id': id, 'meta_type': meta_type})
             info.addZexpPath(path)
             path_id = self.getInfo().getZexpPathId(path)
             self.startElement('zexp_id')
