@@ -8,14 +8,14 @@ from silva.core import interfaces
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 
+
 class XMLSourceAdapter(grok.Adapter):
     """Adapter for Silva objects to get their XML content.
     """
-
     grok.implements(IXMLSource)
     grok.context(interfaces.ISilvaObject)
 
-    def getXML(self, 
+    def getXML(self,
                version=xmlexport.PREVIEWABLE_VERSION,
                external_rendering=False):
         # Set settings
@@ -23,17 +23,13 @@ class XMLSourceAdapter(grok.Adapter):
         settings.setVersion(version)
         settings.setExternalRendering(external_rendering)
 
-        # Export to string
-        info = xmlexport.ExportInfo()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(self.context)
-        return exporter.exportToString(exportRoot, settings, info)
+        xml, info = xmlexport.exportToString(self.context, settings)
+        return xml
 
-    
+
 class XMLSourceVersionAdapter(XMLSourceAdapter):
     """XMLSourceAdapter for content version.
     """
-
     grok.context(interfaces.IVersion)
 
 

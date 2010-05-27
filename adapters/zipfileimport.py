@@ -34,10 +34,13 @@ class ZipfileImportAdapter(grok.Adapter):
     def isFullmediaArchive(self, archive):
         """Returns true if the archive is a fullmedia archive
         """
-        with ZipFile(archive, 'r') as archive:
+        archive = ZipFile(archive, 'r')
+        try:
             if 'silva.xml' in archive.namelist():
                 return True
             return False
+        finally:
+            archive.close()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importFromZip')
@@ -79,5 +82,6 @@ __allow_access_to_unprotected_subobjects__ = True
 def getZipfileImportAdapter(context):
     adapter = IZipfileImporter(context, None)
     if adapter is not None:
-        return adapter.__of__(context)
-    return None
+        # For ZODB-script security
+        adapter.__parent__ = context
+    return adapter

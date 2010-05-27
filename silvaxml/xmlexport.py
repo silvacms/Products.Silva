@@ -2,13 +2,19 @@
 # See also LICENSE.txt
 # $Id$
 
-from sprout.saxext import xmlexport
-from silva.core import interfaces
+from zope.component import getUtility
 from zope.interface import Interface
 from five import grok
 
+from Acquisition import aq_base
 from DateTime import DateTime
-from Products.Silva.adapters import version_management
+
+from sprout.saxext import xmlexport
+from silva.core import interfaces
+from silva.core.interfaces.adapters import IVersionManagement
+from Products.SilvaMetadata.interfaces import IMetadataService
+
+from Products.Silva.ExtensionRegistry import extensionRegistry
 
 NS_SILVA = 'http://infrae.com/namespace/silva'
 NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
@@ -21,11 +27,15 @@ class SilvaBaseProducer(xmlexport.Producer):
     def metadata(self):
         """Export the metadata
         """
-        metadata_service = self.context.service_metadata
-        binding = metadata_service.getMetadata(self.context)
+        binding = getUtility(IMetadataService).getMetadata(self.context)
+        settings = self.getSettings()
+        # Don't acquire metadata only for the root of the xmlexport
+        acquire_metadata = int(settings.isExportRoot(self.context))
+
         self.startElement('metadata')
         set_ids = binding.collection.keys()
         set_ids.sort()
+
         for set_id in set_ids:
             set_obj = binding.collection[set_id]
             prefix, namespace = set_obj.getNamespace()
@@ -33,10 +43,10 @@ class SilvaBaseProducer(xmlexport.Producer):
                 namespace != NS_SILVA_EXTRA):
                 self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
-            items = binding._getData(set_id).items()
+            items = binding._getData(set_id, acquire=acquire_metadata).items()
             items.sort()
             for key, value in items:
-                if not hasattr(set_obj.aq_explicit, key):
+                if not hasattr(aq_base(set_obj), key):
                     continue
                 field = binding.getElement(set_id, key).field
                 self.startElementNS(namespace, key)
@@ -110,8 +120,7 @@ class VersionedContentProducer(SilvaBaseProducer):
         """
         wanted = self.getSettings().version
         if wanted is ALL_VERSION:
-            vm = version_management.getVersionManagementAdapter(self.context)
-            for version in vm.getVersions():
+            for version in IVersionManagement(self.context).getVersions():
                 # getVersions will order by id - most recent last.
                 self.subsax(version)
         else:
@@ -369,8 +378,8 @@ class SilvaExportRoot(object):
         self._exportable = exportable
         self._exportDateTime = DateTime()
 
-    def getSilvaProductVersion(self):
-        return 'Silva %s' % self._exportable.get_root().get_silva_software_version()
+    def getSilvaVersion(self):
+        return 'Silva %s' % extensionRegistry.get_extension('Silva').version
 
     def getExportable(self):
         return self._exportable
@@ -387,7 +396,7 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
             {'datetime': self.context.getDateTime().HTML4(),
              'path': '/'.join(self.context.getExportable().getPhysicalPath()),
              'url': self.context.getExportable().absolute_url(),
-             'silva_version': self.context.getSilvaProductVersion()})
+             'silva_version': self.context.getSilvaVersion()})
         self.subsax(self.context.getExportable())
         self.endElement('silva')
 
@@ -403,7 +412,14 @@ class ExportSettings(xmlexport.BaseSettings):
         self._with_sub_publications = withSubPublications
         self._other_content = otherContent
         self._render_external = False
+        self._export_root = None
         self.request = request
+
+    def setExportRoot(self, root):
+        self._export_root = root
+
+    def isExportRoot(self, content):
+        return self._export_root is content
 
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications
@@ -484,3 +500,18 @@ theXMLExporter.registerNamespace('silva-content', NS_SILVA_CONTENT)
 theXMLExporter.registerNamespace('silva-extra', NS_SILVA_EXTRA)
 theXMLExporter.registerProducer(SilvaExportRoot, SilvaExportRootProducer)
 theXMLExporter.registerFallbackProducer(ZexpProducer)
+
+
+def exportToString(context, settings=None):
+    """Export a Silva Object to a XML string.
+    """
+    if settings is None:
+        settings = ExportSettings()
+    info = ExportInfo()
+    settings.setExportRoot(context)
+
+    return theXMLExporter.exportToString(
+        SilvaExportRoot(context),
+        settings,
+        info), info
+

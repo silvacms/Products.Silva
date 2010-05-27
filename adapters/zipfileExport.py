@@ -3,10 +3,14 @@
 # $Id$
 
 from tempfile import TemporaryFile
+from zipfile import ZipFile, ZIP_DEFLATED
 
 from five import grok
 
 from silva.core import interfaces
+
+from Products.Silva.silvaxml import xmlexport
+
 
 class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
@@ -21,22 +25,13 @@ class ZipFileExportAdapter(grok.Adapter):
     extension = "zip"
 
     def export(self, settings=None):
-        from zipfile import ZipFile, ZIP_DEFLATED
-        from Products.Silva.silvaxml import xmlexport
         tempFile = TemporaryFile()
         archive = ZipFile(tempFile, "w", ZIP_DEFLATED)
 
         # export context to xml and add xml to zip
-        if settings == None:
-            settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        info = xmlexport.ExportInfo()
-        exportRoot = xmlexport.SilvaExportRoot(self.context)
+        xml, info = xmlexport.exportToString(self.context, settings)
 
-        archive.writestr(
-            'silva.xml',
-            exporter.exportToString(exportRoot, settings, info)
-            )
+        archive.writestr('silva.xml', xml)
 
         # process data from the export, i.e. export binaries
         for path, id in info.getAssetPaths():
@@ -48,6 +43,7 @@ class ZipFileExportAdapter(grok.Adapter):
                 archive.writestr(
                     asset_path,
                     adapter.getData())
+
         for path, id in info.getZexpPaths():
             ob = self.context.restrictedTraverse(path)
             obid = ob.id
