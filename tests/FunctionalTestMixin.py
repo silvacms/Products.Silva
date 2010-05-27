@@ -343,3 +343,30 @@ class MixinNavigate(MixinLoginLogout):
                         "condition '%s' is not included in browser content"
                         % test_condition)
 
+
+class SMIFunctionalHelperMixin(BaseMixin):
+
+    def _get_add_form(self, browser, meta_type, container,
+            base_url='http://localhost'):
+        base_url =  "%s%s/edit" % (base_url,
+            "/".join(container.getPhysicalPath()))
+        browser.open(base_url)
+        self.assertEquals('200 OK', browser.status,
+            "Couldn't get the SMI")
+
+        select_box = browser.getControl(name="meta_type")
+        self.assertTrue(select_box,
+            "Couldn't get the select box for adding contents")
+        select_mt_option = select_box.getControl(value=meta_type)
+        self.assertTrue(select_mt_option,
+            "Couldn't find the option in meta types select box")
+        select_box.value = [meta_type]
+        button = browser.getControl(name="add_object:method")
+        button.click()
+        return browser.getForm(name="add_object")
+
+    def _login(self, browser, username="manager", password=""):
+        browser.addHeader('Authorization',
+            "Basic %s:%s" % (username, password))
+
+

@@ -436,7 +436,8 @@ class GhostFolderAddForm(GhostAddForm):
     grok.name(u'Silva Ghost Folder')
     actions = Actions(CancelAddAction(_(u'cancel')),
                         AddAction(_(u'save')),
-                        AddAndEdit(_(u'save + edit')))
+                        AddAndEdit(_(u'save + edit'),
+                                   identifier='save_edit'))
     fields = Fields(IGhostFolderSchema)
 
 

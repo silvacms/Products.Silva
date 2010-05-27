@@ -1,17 +1,13 @@
 import unittest
 from Products.Silva.testing import FunctionalLayer, Browser
-from base64 import b64encode
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
 from Products.Silva.tests.helpers import publish_object
+from Products.Silva.tests.FunctionalTestMixin import \
+    SMIFunctionalHelperMixin
 
 
-def trim_url(url):
-    if url.endswith('/'):
-        return url[:-1]
-    return url
-
-class BaseTest(unittest.TestCase):
+class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
 
     layer = FunctionalLayer
     host_base = 'http://localhost'
@@ -29,20 +25,16 @@ class BaseTest(unittest.TestCase):
         self.intids = getUtility(IIntIds)
         self.browser = Browser()
 
-    def _login(self, username="manager", password=""):
-        self.browser.addHeader('Authorization',
-            "Basic %s:%s" % (username, password))
-
 
 class TestGhostAdd(BaseTest):
 
     def setUp(self):
         super(TestGhostAdd, self).setUp()
-        self._login()
+        self._login(self.browser)
 
     def test_add_ghost_save(self):
         intid = self.intids.register(self.doc)
-        form = self._get_add_form('Silva Ghost')
+        form = self._get_add_form(self.browser, 'Silva Ghost', self.root)
         id_field = form.getControl(name="form.field.id")
         id_field.value = 'someghost'
         reference_field = form.getControl(name="form.field.haunted")
@@ -56,7 +48,7 @@ class TestGhostAdd(BaseTest):
 
     def test_add_ghost_save_and_edit(self):
         intid = self.intids.register(self.doc)
-        form = self._get_add_form('Silva Ghost')
+        form = self._get_add_form(self.browser, 'Silva Ghost', self.root)
         id_field = form.getControl(name="form.field.id")
         id_field.value = 'someghost'
         reference_field = form.getControl(name="form.field.haunted")
@@ -69,34 +61,10 @@ class TestGhostAdd(BaseTest):
             self.browser.url)
 
     def test_add_ghost_cancel(self):
-        form = self._get_add_form('Silva Ghost')
+        form = self._get_add_form(self.browser, 'Silva Ghost', self.root)
         form.submit(name="form.action.cancel")
         self.assertEquals('http://localhost/root/edit',
             self.browser.url)
-
-    def _get_add_form(self, meta_type, container=None):
-        container = container or self.root
-        base_url = self._get_url(container, pathsuffix='/edit')
-        self.browser.open(base_url)
-        self.assertEquals('200 OK', self.browser.status,
-            "Couldn't get the SMI")
-
-        select_box = self.browser.getControl(name="meta_type")
-        self.assertTrue(select_box,
-            "Couldn't get the select box for adding contents")
-        select_mt_option = select_box.getControl(value=meta_type)
-        self.assertTrue(select_mt_option,
-            "Couldn't find the option in meta types select box")
-        select_box.value = [meta_type]
-        button = self.browser.getControl(name="add_object:method")
-        button.click()
-        self.assertEquals(trim_url("%s" % base_url),
-            trim_url(self.browser.url))
-        return self.browser.getForm(name="add_object")
-
-    def _get_url(self, object, pathsuffix=""):
-        opath = "/".join(object.getPhysicalPath())
-        return self.host_base + opath + pathsuffix
 
 
 class TestGhostViewBase(BaseTest):
@@ -118,7 +86,7 @@ class TestGhostViewNotPublished(TestGhostViewBase):
         self.assertTrue('Document title' not in self.browser.contents)
 
     def test_preview_as_admin_before_publish(self):
-        self._login()
+        self._login(self.browser)
         self.browser.open(self.host_base + '/root/++preview++/docghost')
         self.assertEquals("200 OK", self.browser.status)
         self.assertTrue('is not viewable' not in self.browser.contents)
@@ -154,7 +122,7 @@ class TestGhostViewGhostAndDocPublished(TestGhostViewGhostPublished):
         self.assertTrue('Document title' in self.browser.contents)
 
     def test_preview_as_admin_before_publish(self):
-        self._login()
+        self._login(self.browser)
         self.browser.open(self.host_base + '/root/++preview++/docghost')
         self.assertEquals("200 OK", self.browser.status)
         self.assertTrue('is not viewable' not in self.browser.contents)
