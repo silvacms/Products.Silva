@@ -1,5 +1,7 @@
 <tal:main>
-<form action="." tal:attributes="action request/URL" method="post"
+<form action="."
+      name="edit_object"
+      tal:attributes="action request/URL" method="post"
       enctype="multipart/form-data"
       i18n:domain="silva">
   <table class="listing">
