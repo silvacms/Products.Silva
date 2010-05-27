@@ -13,6 +13,7 @@ class XMLSourceAdapter(grok.Adapter):
     """Adapter for Silva objects to get their XML content.
     """
     grok.implements(IXMLSource)
+    grok.provides(IXMLSource)
     grok.context(interfaces.ISilvaObject)
 
     def getXML(self,

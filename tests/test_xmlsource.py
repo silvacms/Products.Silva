@@ -6,6 +6,8 @@
 import re
 import unittest
 
+from zope.interface.verify import verifyObject
+
 from Products.Silva.tests import SilvaTestCase, helpers
 from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
@@ -40,15 +42,14 @@ class XMLSourceTest(SilvaTestCase.SilvaTestCase):
         # a hard deadline in place, things have to keep moving.  in an
         # ideal world, the output compared against would be a string
         # literal, of course.
-        obj = self.root.silva_xslt.test_document
-        settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(obj)
-        expected_xml = self.genericize(
-            exporter.exportToString(exportRoot, settings))
+        document = self.root.silva_xslt.test_document
+        expected_xml = self.genericize(xmlexport.exportToString(document)[0])
+
+        xml_source = IXMLSource(document)
+
+        self.failUnless(verifyObject(IXMLSource, xml_source))
         self.assertEqual(
-            expected_xml, self.genericize(
-            IXMLSource(obj).getXML()))
+            expected_xml, self.genericize(IXMLSource(document).getXML()))
 
 
 def test_suite():
