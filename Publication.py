@@ -125,7 +125,8 @@ class Publication(Folder.Folder):
 
         quota = self.get_current_quota()
         if quota and self.used_space > (quota * 1024 * 1024):
-            # No comments.
+            # XXX Should be update to use an error page. When error
+            # pages will work.
             if (not REQUEST) and hasattr(self, 'REQUEST'):
                 REQUEST = self.REQUEST
             if REQUEST:
@@ -133,8 +134,10 @@ class Publication(Folder.Folder):
                 REQUEST.form.clear()
                 REQUEST.form['message_type'] = 'error'
                 REQUEST.form['message'] = _('You are overquota.')
-                REQUEST.RESPONSE.write(unicode(REQUEST.PARENTS[0].index_html()).encode('utf-8'))
-                REQUEST.close()
+                REQUEST.RESPONSE.setHeader('Content-Type', 'text/html')
+                REQUEST.RESPONSE.setStatus(500)
+                REQUEST.RESPONSE.write(
+                    unicode(REQUEST.PARENTS[0].index_html()).encode('utf-8'))
             raise OverQuotaException
 
 
