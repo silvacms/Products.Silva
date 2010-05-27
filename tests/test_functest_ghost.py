@@ -23,11 +23,10 @@ class BaseTest(unittest.TestCase):
         self.publication = getattr(self.root, 'pub')
 
         factory = self.publication.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('doc', 'Document')
+        factory.manage_addDocument('doc', 'Document title')
         self.doc = getattr(self.publication, 'doc')
 
         self.intids = getUtility(IIntIds)
-
         self.browser = Browser()
 
     def _login(self, username="manager", password=""):
@@ -85,13 +84,14 @@ class TestGhostAdd(BaseTest):
         select_box = self.browser.getControl(name="meta_type")
         self.assertTrue(select_box,
             "Couldn't get the select box for adding contents")
-        select_ghost_option = select_box.getControl(value=meta_type)
-        self.assertTrue(select_ghost_option,
+        select_mt_option = select_box.getControl(value=meta_type)
+        self.assertTrue(select_mt_option,
             "Couldn't find the option in meta types select box")
         select_box.value = [meta_type]
         button = self.browser.getControl(name="add_object:method")
         button.click()
-        self.assertEquals(trim_url("%s" % base_url), trim_url(self.browser.url))
+        self.assertEquals(trim_url("%s" % base_url),
+            trim_url(self.browser.url))
         return self.browser.getForm(name="add_object")
 
     def _get_url(self, object, pathsuffix=""):
@@ -115,30 +115,58 @@ class TestGhostViewNotPublished(TestGhostViewBase):
         self.browser.open(self.host_base + '/root/docghost')
         self.assertEquals('200 OK', self.browser.status)
         self.assertTrue('is not viewable' in self.browser.contents)
+        self.assertTrue('Document title' not in self.browser.contents)
 
     def test_preview_as_admin_before_publish(self):
         self._login()
         self.browser.open(self.host_base + '/root/++preview++/docghost')
         self.assertEquals("200 OK", self.browser.status)
         self.assertTrue('is not viewable' not in self.browser.contents)
+        self.assertTrue('is broken' in self.browser.contents)
 
-class TestGhostViewPublished(TestGhostViewBase):
+
+class TestGhostViewGhostPublished(TestGhostViewBase):
 
     def setUp(self):
-        super(TestGhostViewPublished, self).setUp()
+        super(TestGhostViewGhostPublished, self).setUp()
         publish_object(self.ghost)
+
+    def test_view(self):
+        """ The ghost is published but not the document
+        so the ghost is broken
+        """
+        self.browser.open(self.host_base + '/root/docghost')
+        self.assertEquals("200 OK", self.browser.status)
+        self.assertTrue('is not viewable' not in self.browser.contents)
+        self.assertTrue('is broken' in self.browser.contents)
+
+
+class TestGhostViewGhostAndDocPublished(TestGhostViewGhostPublished):
+
+    def setUp(self):
+        super(TestGhostViewGhostAndDocPublished, self).setUp()
+        publish_object(self.doc)
 
     def test_view(self):
         self.browser.open(self.host_base + '/root/docghost')
         self.assertEquals("200 OK", self.browser.status)
         self.assertTrue('is not viewable' not in self.browser.contents)
+        self.assertTrue('Document title' in self.browser.contents)
+
+    def test_preview_as_admin_before_publish(self):
+        self._login()
+        self.browser.open(self.host_base + '/root/++preview++/docghost')
+        self.assertEquals("200 OK", self.browser.status)
+        self.assertTrue('is not viewable' not in self.browser.contents)
+        self.assertTrue('Document title' in self.browser.contents)
 
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestGhostAdd))
     suite.addTest(unittest.makeSuite(TestGhostViewNotPublished))
-    suite.addTest(unittest.makeSuite(TestGhostViewPublished))
+    suite.addTest(unittest.makeSuite(TestGhostViewGhostPublished))
+    suite.addTest(unittest.makeSuite(TestGhostViewGhostAndDocPublished))
     return suite
 
 
