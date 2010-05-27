@@ -46,8 +46,11 @@ def publishApprovedObject(obj):
     obj.set_approved_version_publication_datetime(now - 10)
 
 
-def openTestFile(path, mode='rb'):
+def open_test_file(path, mode='rb'):
     """Open the given test file.
     """
     directory = os.path.join(os.path.dirname(__file__), 'data')
     return open(os.path.join(directory, path), mode)
+
+
+openTestFile = open_test_file

@@ -3,15 +3,17 @@
 # $Id$
 
 # Python
-import os
-import re
 from os.path import join
 from zipfile import ZipFile
+import os
+import re
+import unittest
+
 from zope.component import getAdapter
 
-import SilvaTestCase
-from SilvaTestCase import transaction
-from Products.Silva.tests.helpers import publishObject
+from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.tests.helpers import publishObject, open_test_file
+from Products.Silva.tests import SilvaTestCase
 
 # Silva
 from silva.core import interfaces
@@ -21,7 +23,12 @@ from Products.Silva.adapters import archivefileimport
 from Products.Silva.transform.interfaces import IXMLSource
 from Products.Silva.Image import Image
 
-class XMLExportMixin:
+
+DATETIME_RE = re.compile(
+    r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+
+
+class XMLHelpers(object):
 
     def get_namespaces(self):
         # this is needed because we don't know the namespaces registered
@@ -31,56 +38,57 @@ class XMLExportMixin:
         # order correct.
         nss = []
         items = xmlexport.theXMLExporter._namespaces.items()
-        #it seems like the namespaces need to be sorted, I don't know
-        # why the order is different this way vs. during the export, but
-        # it is.  I hope that
         items.sort()
         for prefix, uri in items:
-            nss.append('xmlns:%s="%s"'%(prefix,uri))
+            nss.append('xmlns:%s="%s"' % (prefix, uri))
         return ' '.join(nss)
-
-
-
-class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
-    DATETIME_RE = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-    def replace_datetimes(self, s):
-        return self.DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', s)
-
-    def genericize(self, s):
-        return self.replace_datetimes(s)
 
     def get_version(self):
         return 'Silva %s' % self.root.get_silva_software_version()
 
-    def test_xml_folder_export(self):
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
+    def genericize(self, string):
+        return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
+
+    def assertExportEqual(self, xml, filename):
+        """Verify that the xml result of an export is the same than
+        the one contained in a test file.
+        """
+        with open_test_file(filename) as xml_file:
+            expected_xml = xml_file.read().format(
+                namespaces=self.get_namespaces(),
+                version=self.get_version())
+            actual_xml = self.genericize(xml)
+            self.assertXMLEqual(expected_xml, actual_xml)
+
+
+class ExportTestCase(TestCase, XMLHelpers):
+    """Test XML Exporter.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+
+    def test_folder(self):
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'folder',
+            'This is <boo>a</boo> folder',
             policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
+        self.root.folder.manage_addProduct['Silva'].manage_addFolder(
+            'folder',
+            'This is &another; a subfolder',
             policy_name='Silva AutoTOC')
-        # We will now do some horrible, horrible stuff to be able to test
-        # the export, while ignoring the export date, which we can't know
-        # about beforehand. Also I don't see how to get this within 80
-        # columns without a lot of pain.
-        splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
-        settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(testfolder)
-        xml = exporter.exportToString(exportRoot, settings)
-        xml = self.genericize(xml)
-        self.assertEquals(
-            xml,
-            '<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/namespace/silva" %s datetime="YYYY-MM-DDTHH:MM:SS" path="/root/testfolder" silva_version="%s" url="http://nohost/root/testfolder"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default><folder id="testfolder2"><metadata><set id="silva-content"><silva-content:maintitle>This is &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default></content></folder></content></folder></silva>' % (self.get_namespaces(), self.get_version()))
+        xml, info = xmlexport.exportToString(self.root.folder)
+
+        self.assertExportEqual(xml, 'test_xmlexport_folder.xml')
+
+
+class SetTestCase(SilvaTestCase.SilvaTestCase, XMLHelpers):
+
 
     def test_xml_ghost_export(self):
-        # `manage_addLink` does not exist when this module is
-        # imported, because our zcml handlers add it
-        from Products.Silva.Link import manage_addLink
+
         testfolder = self.add_folder(
             self.root,
             'testfolder',
@@ -91,11 +99,11 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             'testfolder2',
             'This is &another; testfolder',
             policy_name='Silva AutoTOC')
-        manage_addLink(
-            testfolder2,
+        testfolder2.manage_addProduct['Silva'].manage_addLink(
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
+
         publishObject(testfolder2.test_link)
         testfolder3 = self.add_folder(
             self.root,
@@ -111,11 +119,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             testfolder3, 'sadcaspar',
             haunted_url='/this_link_is_broken')
 
-        # We will now do some horrible, horrible stuff to be able to test
-        # the export, while ignoring the export date, which we can't know
-        # about beforehand. Also I don't see how to get this within 80
-        # columns without a lot of pain.
-        splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder3)
@@ -157,11 +160,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             'sadcaspar',
             '/root/testfolder/broken')
 
-        # We will now do some horrible, horrible stuff to be able to test
-        # the export, while ignoring the export date, which we can't know
-        # about beforehand. Also I don't see how to get this within 80
-        # columns without a lot of pain.
-        #splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder3)
@@ -187,11 +185,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             'test_link',
             'This is a test link, you insensitive clod!',
             'http://www.snpp.com/')
-        # We will now do some horrible, horrible stuff to be able to test
-        # the export, while ignoring the export date, which we can't know
-        # about beforehand. Also I don't see how to get this within 80
-        # columns without a lot of pain.
-        splittor = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+
         settings = xmlexport.ExportSettings()
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder)
@@ -222,7 +216,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
-        transaction.savepoint()
+
         # We just see if we can call the 'getXML()' on the xmlsource adapter
         # without failure. This will test/prove that we *do* need to provide
         # an ExportInfo object to the exporter.exportToString() in the
@@ -243,6 +237,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             'This is &another; testfolder',
             policy_name='Silva AutoTOC')
         manage_addLink(
+
             testfolder2,
             'test_link',
             'This is a test link, you insensitive clod!',
@@ -251,7 +246,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
         zip_in = open(join(directory,'data','test1.zip'))
         adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
         succeeded, failed = adapter.importArchive(zip_in)
-        transaction.savepoint()
+
         # we will now unregister the image producer, to test whether
         # fallback kicks in
         xmlexport.theXMLExporter._mapping[Image] = None
@@ -265,7 +260,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
         zip_out = ZipFile(f, 'r')
         namelist = zip_out.namelist()
         namelist.sort()
-        self.assertEquals(
+        self.assertListEqual(
             ['assets/1.swf', 'assets/2.mp3', 'silva.xml', 'zexps/1.zexp',
             'zexps/2.zexp', 'zexps/3.zexp', 'zexps/4.zexp', 'zexps/5.zexp'],
             namelist)
@@ -273,8 +268,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
         f.close()
         os.remove(join(directory, 'test_export.zip'))
 
-import unittest
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SetTestCase))
+    suite.addTest(unittest.makeSuite(ExportTestCase))
     return suite

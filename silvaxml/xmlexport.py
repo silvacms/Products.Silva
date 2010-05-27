@@ -4,6 +4,7 @@
 
 from zope.component import getUtility
 from zope.interface import Interface
+from zope.traversing.browser import absoluteURL
 from five import grok
 
 from Acquisition import aq_base
@@ -12,6 +13,7 @@ from DateTime import DateTime
 from sprout.saxext import xmlexport
 from silva.core import interfaces
 from silva.core.interfaces.adapters import IVersionManagement
+from silva.core.references.interfaces import IReferenceService
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -21,8 +23,28 @@ NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
 NS_SILVA_EXTRA = 'http://infrae.com/namespace/metadata/silva-extra'
 
 
+class ExternalReferenceError(xmlexport.XMLExportError):
+    """A reference outside of the exported  tree is being exported.
+    """
+
+
 class SilvaBaseProducer(xmlexport.Producer):
     grok.baseclass()
+
+    def reference(self, name):
+        """Return a path to refer an object in the export.
+        """
+        service = getUtility(IReferenceService)
+        reference = service.get_reference(self.context, name=name)
+        settings = self.getSettings()
+        root = settings.getExportRoot()
+        if not settings.externalRendering():
+            if not reference.is_target_inside_container(root):
+                raise ExternalReferenceError(self.context, reference.target)
+            return reference.relative_path_to(root)
+        else:
+            # Return url to the target
+            return absoluteURL(reference.target, settings.request)
 
     def metadata(self):
         """Export the metadata
@@ -50,7 +72,7 @@ class SilvaBaseProducer(xmlexport.Producer):
                     continue
                 field = binding.getElement(set_id, key).field
                 self.startElementNS(namespace, key)
-                if not value is None:
+                if value is not None:
                     field.validator.serializeValue(field, value, self)
                 self.endElementNS(namespace, key)
             self.endElement('set')
@@ -216,9 +238,14 @@ class LinkVersionProducer(SilvaBaseProducer):
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
         self.metadata()
-        self.startElement('url')
-        self.handler.characters(self.context.get_url())
-        self.endElement('url')
+        if self.context.get_relative():
+            self.startElement('target')
+            self.handler.characters(self.reference(self.reference(u'link')))
+            self.endElement('target')
+        else:
+            self.startElement('url')
+            self.handler.characters(self.context.get_url())
+            self.endElement('url')
         self.endElement('content')
 
 
@@ -243,21 +270,14 @@ class GhostVersionProducer(SilvaBaseProducer):
 
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        content = self.context.get_haunted()
-        if content is not None:
-            meta_type = content.meta_type
-        else:
-            meta_type = ''
-        self.startElement('metatype')
-        self.handler.characters(meta_type)
-        self.endElement('metatype')
-        haunted_url = self.context.get_haunted_url()
-        self.startElement('haunted_url')
-        self.handler.characters(haunted_url)
-        self.endElement('haunted_url')
-        if content is not None:
-            content = content.get_viewable()
-            self.subsax(content)
+        self.startElement('haunted')
+        self.handler.characters(self.reference(u'haunted'))
+        self.endElement('haunted')
+        haunted = self.context.get_haunted
+        if haunted is not None:
+            content = haunted.get_viewable()
+            if content is not None:
+                self.subsax(content)
         self.endElement('content')
 
 
@@ -269,15 +289,9 @@ class GhostFolderProducer(SilvaBaseProducer):
     def sax(self):
         self.startElement('ghost_folder', {'id': self.context.id})
         self.startElement('content')
-        content = self.context.get_haunted()
-        meta_type = content is not None and content.meta_type or ""
-        haunted_url = self.context.get_haunted_url()
-        self.startElement('metatype')
-        self.handler.characters(meta_type)
-        self.endElement('metatype')
-        self.startElement('haunted_url')
-        self.handler.characters(haunted_url)
-        self.endElement('haunted_url')
+        self.startElement('haunted')
+        self.handler.characters(self.reference(u'haunted'))
+        self.endElement('haunted')
         self.endElement('content')
         self.endElement('ghost_folder')
 
@@ -309,9 +323,6 @@ class FileProducer(SilvaBaseProducer):
         path = self.context.getPhysicalPath()
         self.startElement('file_asset', {'id': self.context.id})
         self.metadata()
-        # self.startElement('mime_type')
-        # self.handler.characters(self.context.get_mime_type())
-        # self.endElement('mime_type')
         self.getInfo().addAssetPath(path)
         self.startElement('asset_id')
         self.handler.characters(self.getInfo().getAssetPathId(path))
@@ -419,6 +430,9 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def setExportRoot(self, root):
         self._export_root = root
+
+    def getExportRoot(self):
+        return self._export_root
 
     def isExportRoot(self, content):
         return self._export_root is content
