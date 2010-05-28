@@ -46,10 +46,14 @@ def publishApprovedObject(obj):
     obj.set_approved_version_publication_datetime(now - 10)
 
 
-def open_test_file(path, mode='rb'):
+def open_test_file(path, globs=None, mode='rb'):
     """Open the given test file.
     """
-    directory = os.path.join(os.path.dirname(__file__), 'data')
+    if globs is None:
+        testfile = __file__
+    else:
+        testfile = globs['__file__']
+    directory = os.path.join(os.path.dirname(testfile), 'data')
     return open(os.path.join(directory, path), mode)
 
 

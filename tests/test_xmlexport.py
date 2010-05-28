@@ -49,11 +49,13 @@ class SilvaXMLTestCase(TestCase):
     def genericize(self, string):
         return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
 
-    def assertExportEqual(self, xml, filename):
+    def assertExportEqual(self, xml, filename, globs=None):
         """Verify that the xml result of an export is the same than
         the one contained in a test file.
         """
-        with open_test_file(filename) as xml_file:
+        if globs is None:
+            globs = globals()
+        with open_test_file(filename, globs) as xml_file:
             expected_xml = xml_file.read().format(
                 namespaces=self.get_namespaces(),
                 version=self.get_version())
