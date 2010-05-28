@@ -3,25 +3,19 @@
 # $Id$
 
 # Python
-from os.path import join
 from cStringIO import StringIO
 from zipfile import ZipFile
-import os
 import re
 import unittest
 
 from zope.component import getAdapter
 
+# Silva
+from Products.Silva.silvaxml import xmlexport
+from Products.Silva.silvaxml.xmlexport import ExternalReferenceError
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
-from Products.Silva.tests import SilvaTestCase
-
-# Silva
 from silva.core import interfaces
-from Products.Silva.silvaxml import xmlexport
-from Products.Silva.adapters import archivefileimport
-from Products.Silva.transform.interfaces import IXMLSource
-from Products.Silva.silvaxml.xmlexport import ExternalReferenceError
 
 
 DATETIME_RE = re.compile(
