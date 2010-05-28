@@ -61,7 +61,7 @@ class SilvaXMLTestCase(TestCase):
             self.assertXMLEqual(expected_xml, actual_xml)
 
 
-class ExportTestCase(SilvaXMLTestCase):
+class XMLExportTestCase(SilvaXMLTestCase):
     """Test XML Exporter.
     """
     layer = FunctionalLayer
@@ -236,5 +236,5 @@ class ZipTestCase(TestCase):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ZipTestCase))
-    suite.addTest(unittest.makeSuite(ExportTestCase))
+    suite.addTest(unittest.makeSuite(XMLExportTestCase))
     return suite
