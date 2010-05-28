@@ -4,6 +4,7 @@
 
 # Python
 from os.path import join
+from cStringIO import StringIO
 from zipfile import ZipFile
 import os
 import re
@@ -12,23 +13,22 @@ import unittest
 from zope.component import getAdapter
 
 from Products.Silva.testing import FunctionalLayer, TestCase
-from Products.Silva.tests.helpers import publishObject, open_test_file
+from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests import SilvaTestCase
 
 # Silva
 from silva.core import interfaces
-from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.adapters import archivefileimport
 from Products.Silva.transform.interfaces import IXMLSource
-from Products.Silva.Image import Image
+from Products.Silva.silvaxml.xmlexport import ExternalReferenceError
 
 
 DATETIME_RE = re.compile(
     r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
 
 
-class XMLHelpers(object):
+class SilvaXMLTestCase(TestCase):
 
     def get_namespaces(self):
         # this is needed because we don't know the namespaces registered
@@ -61,7 +61,7 @@ class XMLHelpers(object):
             self.assertXMLEqual(expected_xml, actual_xml)
 
 
-class ExportTestCase(TestCase, XMLHelpers):
+class ExportTestCase(SilvaXMLTestCase):
     """Test XML Exporter.
     """
     layer = FunctionalLayer
@@ -69,208 +69,146 @@ class ExportTestCase(TestCase, XMLHelpers):
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('author')
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'folder', 'This is <boo>a</boo> folder',
+            policy_name='Silva AutoTOC')
 
     def test_folder(self):
-        self.root.manage_addProduct['Silva'].manage_addFolder(
-            'folder',
-            'This is <boo>a</boo> folder',
-            policy_name='Silva AutoTOC')
+        """Export a folder.
+        """
         self.root.folder.manage_addProduct['Silva'].manage_addFolder(
-            'folder',
-            'This is &another; a subfolder',
+            'folder', 'This is &another; a subfolder',
             policy_name='Silva AutoTOC')
+
         xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_folder.silvaxml')
 
-        self.assertExportEqual(xml, 'test_xmlexport_folder.xml')
-
-
-class SetTestCase(SilvaTestCase.SilvaTestCase, XMLHelpers):
-
-
-    def test_xml_ghost_export(self):
-
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2.manage_addProduct['Silva'].manage_addLink(
-            'test_link',
-            'This is a test link, you insensitive clod!',
-            'http://www.snpp.com/')
-
-        publishObject(testfolder2.test_link)
-        testfolder3 = self.add_folder(
-            self.root,
-            'testfolder3',
-            'This is yet &another; testfolder',
-            policy_name='Silva AutoTOC')
-        factory = testfolder3.manage_addProduct['Silva']
+    def test_ghost(self):
+        """Export a ghost.
+        """
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'New website', url='http://infrae.com/', relative=False)
         factory.manage_addGhost(
-            testfolder3, 'caspar',
-            haunted_url='/root/testfolder/testfolder2/test_link')
-        # export of a broken link
-        factory.manage_addGhost(
-            testfolder3, 'sadcaspar',
-            haunted_url='/this_link_is_broken')
+            'ghost', None, haunted=self.root.folder.link)
 
-        settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(testfolder3)
-        xml = exporter.exportToString(exportRoot, settings)
-        xml = self.genericize(xml)
-        self.assertEquals(
-            xml,
-            '<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/namespace/silva" %s datetime="YYYY-MM-DDTHH:MM:SS" path="/root/testfolder3" silva_version="%s" url="http://nohost/root/testfolder3"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default><ghost id="caspar"><workflow><version id="0"><status>unapproved</status><publication_datetime/><expiration_datetime/></version></workflow><content version_id="0"><metatype>Silva Link</metatype><haunted_url>/root/testfolder/testfolder2/test_link</haunted_url><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:publicationtime><silva-extra:subject/></set></metadata><url>http://www.snpp.com/</url></content></content></ghost><ghost id="sadcaspar"><workflow><version id="0"><status>unapproved</status><publication_datetime/><expiration_datetime/></version></workflow><content version_id="0"><metatype/><haunted_url>/this_link_is_broken</haunted_url></content></ghost></content></folder></silva>' % (self.get_namespaces(), self.get_version()))
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_ghost.silvaxml')
 
-    def test_xml_ghost_folder_export(self):
-        from Products.Silva.Link import manage_addLink
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
-            policy_name='Silva AutoTOC')
-        manage_addLink(
-            testfolder2,
-            'test_link',
-            'This is a test link, you insensitive clod!',
-            'http://www.snpp.com/')
-        testfolder3 = self.add_folder(
-            self.root,
-            'testfolder3',
-            'This is yet &another; testfolder',
-            policy_name='Silva AutoTOC')
-        manage_addGhostFolder(
-            testfolder3,
-            'caspar',
-            '/root/testfolder/testfolder2')
-        # test broken ghost folder reference
-        manage_addGhostFolder(
-            testfolder3,
-            'sadcaspar',
-            '/root/testfolder/broken')
+    def test_ghost_outside_of_export(self):
+        """Export a ghost that link something outside of export tree.
+        """
+        self.root.manage_addProduct['Silva'].manage_addLink(
+            'link', 'New website', url='http://infrae.com/', relative=False)
+        self.root.folder.manage_addProduct['Silva'].manage_addGhost(
+            'ghost', None, haunted=self.root.folder.link)
 
-        settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(testfolder3)
-        xml = self.genericize(exporter.exportToString(exportRoot, settings))
-        self.assertEquals(
-            xml,
-            '<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/namespace/silva" %s datetime="YYYY-MM-DDTHH:MM:SS" path="/root/testfolder3" silva_version="%s" url="http://nohost/root/testfolder3"><folder id="testfolder3"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is yet &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default><ghost_folder id="caspar"><content><metatype>Silva Folder</metatype><haunted_url>/root/testfolder/testfolder2</haunted_url></content></ghost_folder><ghost_folder id="sadcaspar"><content><metatype/><haunted_url>/root/testfolder/broken</haunted_url></content></ghost_folder></content></folder></silva>' % (self.get_namespaces(), self.get_version()))
+        self.assertRaises(
+            ExternalReferenceError, xmlexport.exportToString, self.root.folder)
 
-    def test_xml_link_export(self):
-        from Products.Silva.Link import manage_addLink
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
-            policy_name='Silva AutoTOC')
-        manage_addLink(
-            testfolder2,
-            'test_link',
-            'This is a test link, you insensitive clod!',
-            'http://www.snpp.com/')
+    def test_ghostfolder(self):
+        """Export a ghost folder.
+        """
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFolder('container', 'Content')
+        factory.manage_addGhostFolder(
+            'ghost', None, haunted=self.root.folder.container)
+        factory = self.root.folder.container.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Infrae', url='http://infrae.com', relative=False)
+        factory.manage_addFile('file', 'Torvald blob')
 
-        settings = xmlexport.ExportSettings()
-        exporter = xmlexport.theXMLExporter
-        exportRoot = xmlexport.SilvaExportRoot(testfolder)
-        xml = exporter.exportToString(exportRoot, settings)
-        xml = self.genericize(xml)
-        self.assertEquals(
-            xml,
-            ('<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/namespace/silva" %s datetime="YYYY-MM-DDTHH:MM:SS" path="/root/testfolder" silva_version="%s" url="http://nohost/root/testfolder"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default><folder id="testfolder2"><metadata><set id="silva-content"><silva-content:maintitle>This is &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is &amp;another; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>test_user_1_</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata></auto_toc></default><link id="test_link"><workflow><version id="0"><status>unapproved</status><publication_datetime/><expiration_datetime/></version></workflow><content version_id="0"><metadata><set id="silva-content"><silva-content:maintitle>This is a test link, you insensitive clod!</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:modificationtime>YYYY-MM-DDTHH:MM:SS</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><url>http://www.snpp.com/</url></content></link></content></folder></content></folder></silva>' % (self.get_namespaces(), self.get_version())))
+        self.root.folder.ghost.haunt()
 
-    def test_xml_folder_with_assets_export(self):
-        from Products.Silva.Link import manage_addLink
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
-            policy_name='Silva AutoTOC')
-        manage_addLink(
-            testfolder2,
-            'test_link',
-            'This is a test link, you insensitive clod!',
-            'http://www.snpp.com/')
-        directory = os.path.dirname(__file__)
-        zip_in = open(join(directory,'data','test1.zip'))
-        adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
-        succeeded, failed = adapter.importArchive(zip_in)
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_ghostfolder.silvaxml')
 
-        # We just see if we can call the 'getXML()' on the xmlsource adapter
-        # without failure. This will test/prove that we *do* need to provide
-        # an ExportInfo object to the exporter.exportToString() in the
-        # xmlsource adapter.
-        adapted = IXMLSource(testfolder)
-        self.assert_(adapted.getXML(external_rendering=True))
+    def test_ghostfolder_outside_of_export(self):
+        """Export a ghost folder but not the ghosted folder.
+        """
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFolder('container', 'Content')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'ghost', None, haunted=self.root.folder.container)
+        factory = self.root.folder.container.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Infrae', url='http://infrae.com', relative=False)
+        factory.manage_addFile('file', 'Torvald blob')
+
+        self.root.ghost.haunt()
+
+        self.assertRaises(
+            ExternalReferenceError, xmlexport.exportToString, self.root.ghost)
+
+    def test_link_relative(self):
+        """Export a link with to an another Silva object.
+        """
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFile('file', 'Torvald file')
+        factory.manage_addFolder('new', 'New changes')
+        factory = self.root.folder.new.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Last file',
+            relative=True, target=self.root.folder.file)
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_link.silvaxml')
+
+    def test_link_relative_outside_of_export(self):
+        """Export a link with to an another Silva object.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFile('file', 'Torvald file')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Last file', relative=True, target=self.root.file)
+
+        self.assertRaises(
+            ExternalReferenceError, xmlexport.exportToString, self.root.folder)
+
+
+class ZipTestCase(TestCase):
+    """Test Zip import/export.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
 
     def test_zip_export(self):
-        from Products.Silva.Link import manage_addLink
-        testfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        testfolder2 = self.add_folder(
-            testfolder,
-            'testfolder2',
-            'This is &another; testfolder',
-            policy_name='Silva AutoTOC')
-        manage_addLink(
+        """Import/export a Zip file.
+        """
+        # XXX This test needs improvement.
+        self.root.manage_addProduct['Silva'].manage_addFolder(
+            'folder', 'Folder')
 
-            testfolder2,
-            'test_link',
-            'This is a test link, you insensitive clod!',
-            'http://www.snpp.com/')
-        directory = os.path.dirname(__file__)
-        zip_in = open(join(directory,'data','test1.zip'))
-        adapter = archivefileimport.getArchiveFileImportAdapter(testfolder2)
-        succeeded, failed = adapter.importArchive(zip_in)
-
-        # we will now unregister the image producer, to test whether
-        # fallback kicks in
-        xmlexport.theXMLExporter._mapping[Image] = None
-        settings = xmlexport.ExportSettings()
-        adapter = getAdapter(testfolder, interfaces.IContentExporter, name='zip')
-        result = adapter.export(settings)
-        f = open(join(directory, 'test_export.zip'), 'wb')
-        f.write(result)
-        f.close()
-        f = open(join(directory, 'test_export.zip'), 'rb')
-        zip_out = ZipFile(f, 'r')
-        namelist = zip_out.namelist()
-        namelist.sort()
+        zip_import = open_test_file('test1.zip')
+        importer = interfaces.IArchiveFileImporter(self.root.folder)
+        succeeded, failed = importer.importArchive(zip_import)
         self.assertListEqual(
-            ['assets/1.swf', 'assets/2.mp3', 'silva.xml', 'zexps/1.zexp',
-            'zexps/2.zexp', 'zexps/3.zexp', 'zexps/4.zexp', 'zexps/5.zexp'],
-            namelist)
-        zip_out.close()
-        f.close()
-        os.remove(join(directory, 'test_export.zip'))
+            succeeded,
+            ['testzip/Clock.swf', 'testzip/bar/image2.jpg',
+             'testzip/foo/bar/baz/image5.jpg', 'testzip/foo/bar/image4.jpg',
+             'testzip/foo/image3.jpg', 'testzip/image1.jpg',
+             'testzip/sound1.mp3'])
+        self.assertListEqual(failed, [])
+
+        exporter = getAdapter(
+            self.root.folder, interfaces.IContentExporter, name='zip')
+        export = StringIO(exporter.export())
+
+        zip_export = ZipFile(export, 'r')
+        self.assertListEqual(
+            ['assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg',
+             'assets/4.jpg', 'assets/5.swf', 'assets/6.jpg',
+             'assets/7.mp3', 'silva.xml'],
+            zip_export.namelist())
+        zip_export.close()
 
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(SetTestCase))
+    suite.addTest(unittest.makeSuite(ZipTestCase))
     suite.addTest(unittest.makeSuite(ExportTestCase))
     return suite

@@ -12,29 +12,29 @@ import zipfile
 from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 from App.class_init import InitializeClass
 
-from zope.interface import implements
+from five import grok
 from zope import contenttype
 
 # Silva
-from Products.Silva import File
 from Products.Silva import SilvaPermissions
 from Products.Silva import assetregistry
 from Products.Silva import mangle
-from Products.Silva.adapters import adapter
+from Products.Silva import File
 from silva.core import interfaces
 
 
 BadZipfile = zipfile.BadZipfile
 
 
-class ArchiveFileImportAdapter(adapter.Adapter):
+class ZipFileImport(grok.Adapter):
     """ Adapter for container-like objects to facilitate
     the import of archive files (e.g. zipfiles) and create
     Assets out of its contents and, optionally, to recreate
     the 'directory' structure contained in the archive file.
     """
-
-    implements(interfaces.IArchiveFileImporter, )
+    grok.implements(interfaces.IArchiveFileImporter)
+    grok.provides(interfaces.IArchiveFileImporter)
+    grok.context(interfaces.IContainer)
 
     security = ClassSecurityInfo()
 
@@ -57,8 +57,10 @@ class ArchiveFileImportAdapter(adapter.Adapter):
                 # Its a directory entry
                 continue
 
-            if re.match("^__MACOSX", path) or re.match(".*\.DS_Store$", filename):
-                # It's meta information from a Mac archive, and we don't need it
+            if (re.match("^__MACOSX", path) or
+                re.match(".*\.DS_Store$", filename)):
+                # It's meta information from a Mac archive, and we
+                # don't need it
                 continue
 
             if recreatedirs and path:
@@ -85,7 +87,6 @@ class ArchiveFileImportAdapter(adapter.Adapter):
                 # FIXME: can I extract some info for the reason of failure?
                 failed_list.append(name)
             else:
-                added_object.sec_update_last_author_info()
                 succeeded_list.append(name)
 
         return succeeded_list, failed_list
@@ -111,15 +112,14 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         return container
 
     def _addSilvaContainer(self, context, id):
-        IContainer = interfaces.IContainer
-
-        idObj = mangle.Id(context, id, interface=IContainer, allow_dup=1)
+        idObj = mangle.Id(
+            context, id, interface=interfaces.IContainer, allow_dup=1)
         if not idObj.isValid():
             return None
 
         while id in context.objectIds():
             obj = context[id]
-            if IContainer.providedBy(obj):
+            if interfaces.IContainer.providedBy(obj):
                 return obj
             id = str(idObj.new())
         context.manage_addProduct['Silva'].manage_addFolder(id, id)
@@ -139,19 +139,17 @@ class ArchiveFileImportAdapter(adapter.Adapter):
         return factory
 
 
-InitializeClass(ArchiveFileImportAdapter)
+InitializeClass(ZipFileImport)
 
 
 allow_module('Products.Silva.adapters.archivefileimport')
 
-__allow_access_to_unprotected_subobjects__ = True
-
-module_security = ModuleSecurityInfo('Products.Silva.adapters.archivefileimport')
+module_security = ModuleSecurityInfo(
+    'Products.Silva.adapters.archivefileimport')
 
 module_security.declareProtected(
     SilvaPermissions.ChangeSilvaContent, 'getArchiveFileImportAdapter')
 def getArchiveFileImportAdapter(context):
-    if not interfaces.IContainer.providedBy(context):
-        # raise some exception here?
-        return None
-    return ArchiveFileImportAdapter(context).__of__(context)
+    adapter = interfaces.IArchiveFileImporter(context)
+    adapter.__parent__ = context
+    return adapter

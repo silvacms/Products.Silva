@@ -36,13 +36,11 @@ class ZipFileExportAdapter(grok.Adapter):
         # process data from the export, i.e. export binaries
         for path, id in info.getAssetPaths():
             asset = self.context.restrictedTraverse(path)
-            # XXX Code will change when AssetData adapters are phased out
             adapter = interfaces.IAssetData(asset)
-            if adapter is not None:
-                asset_path = 'assets/%s' % id
-                archive.writestr(
-                    asset_path,
-                    adapter.getData())
+            asset_path = 'assets/%s' % id
+            archive.writestr(
+                asset_path,
+                adapter.getData())
 
         for path, id in info.getZexpPaths():
             ob = self.context.restrictedTraverse(path)

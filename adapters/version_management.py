@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from five import grok
 
 from Acquisition import aq_inner
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo
+from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
 from App.class_init import InitializeClass
 from DateTime import DateTime
 
@@ -302,13 +302,10 @@ class VersionManagement(grok.Adapter):
 InitializeClass(VersionManagement)
 
 
-def __allow_access_to_unprotected_subobjects__(name, value=None):
-    return name in ('getVersionManagementAdapter')
-
+allow_module('Products.Silva.adapters.version_management')
 
 module_security = ModuleSecurityInfo(
     'Products.Silva.adapters.version_management')
-
 
 module_security.declareProtected(
     SilvaPermissions.ChangeSilvaContent, 'getVersionManagementAdapter')

@@ -32,7 +32,8 @@ class SilvaBaseProducer(xmlexport.Producer):
     grok.baseclass()
 
     def reference(self, name):
-        """Return a path to refer an object in the export.
+        """Return a path to refer an object in the export of a
+        reference tagged name.
         """
         service = getUtility(IReferenceService)
         reference = service.get_reference(self.context, name=name)
@@ -40,8 +41,9 @@ class SilvaBaseProducer(xmlexport.Producer):
         root = settings.getExportRoot()
         if not settings.externalRendering():
             if not reference.is_target_inside_container(root):
-                raise ExternalReferenceError(self.context, reference.target)
-            return reference.relative_path_to(root)
+                raise ExternalReferenceError(
+                    self.context, reference.target, root)
+            return '/'.join(reference.relative_path_to(root))
         else:
             # Return url to the target
             return absoluteURL(reference.target, settings.request)
@@ -239,9 +241,12 @@ class LinkVersionProducer(SilvaBaseProducer):
         self.startElement('content', {'version_id': self.context.id})
         self.metadata()
         if self.context.get_relative():
-            self.startElement('target')
-            self.handler.characters(self.reference(self.reference(u'link')))
-            self.endElement('target')
+            tag = 'target'
+            if self.getSettings().externalRendering():
+                tag = 'url'
+            self.startElement(tag)
+            self.handler.characters(self.reference(u'link'))
+            self.endElement(tag)
         else:
             self.startElement('url')
             self.handler.characters(self.context.get_url())
@@ -273,11 +278,14 @@ class GhostVersionProducer(SilvaBaseProducer):
         self.startElement('haunted')
         self.handler.characters(self.reference(u'haunted'))
         self.endElement('haunted')
-        haunted = self.context.get_haunted
-        if haunted is not None:
-            content = haunted.get_viewable()
-            if content is not None:
-                self.subsax(content)
+        if self.getSettings().externalRendering():
+            # Include an export of the haunted object, for external
+            # rendering.
+            haunted = self.context.get_haunted()
+            if haunted is not None:
+                content = haunted.get_viewable()
+                if content is not None:
+                    self.subsax(content)
         self.endElement('content')
 
 
