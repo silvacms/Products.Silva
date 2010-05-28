@@ -82,6 +82,22 @@ class ExportTestCase(SilvaXMLTestCase):
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_folder.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(info.getAssetPaths(), [])
+
+    def test_fallback(self):
+        """Test the fallback exporter: create a Zope 2 folder in a
+        Silva folder and export it.
+        """
+        self.root.folder.manage_addProduct['OFS'].manage_addFolder(
+            'zope2folder', 'Zope 2 Folder')
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_fallback.silvaxml')
+        self.assertEqual(
+            info.getZexpPaths(),
+            [(('', 'root', 'folder', 'zope2folder'), '1.zexp')])
+        self.assertEqual(info.getAssetPaths(), [])
 
     def test_ghost(self):
         """Export a ghost.
@@ -94,6 +110,8 @@ class ExportTestCase(SilvaXMLTestCase):
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_ghost.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(info.getAssetPaths(), [])
 
     def test_ghost_outside_of_export(self):
         """Export a ghost that link something outside of export tree.
@@ -122,6 +140,10 @@ class ExportTestCase(SilvaXMLTestCase):
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_ghostfolder.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(
+            info.getAssetPaths(),
+            [(('', 'root', 'folder', 'container', 'file'), '1')])
 
     def test_ghostfolder_outside_of_export(self):
         """Export a ghost folder but not the ghosted folder.
@@ -154,6 +176,10 @@ class ExportTestCase(SilvaXMLTestCase):
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_link.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(
+            info.getAssetPaths(),
+            [(('', 'root', 'folder', 'file'), '1')])
 
     def test_link_relative_outside_of_export(self):
         """Export a link with to an another Silva object.
