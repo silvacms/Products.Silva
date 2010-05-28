@@ -2,21 +2,13 @@
 # See also LICENSE.txt
 # $Id$
 
-# Python
-import os
-from os.path import join
+import unittest
 
-# Silva
-from Products.Silva.adapters import archivefileimport
-from Products.Silva import Image, File
+from zope.interface.verify import verifyObject
 
-import SilvaTestCase
-
-# Constructing some testable zipfile
-directory = os.path.dirname(__file__)
-zipfile1 = open(join(directory,'data','test1.zip'))
-zipfile2 = open(join(directory,'data','test2.zip'))
-zipfile3 = open(join(directory,'data','test3.zip'))
+from Products.Silva.tests.helpers import open_test_file
+from Products.Silva.testing import FunctionalLayer, TestCase
+from silva.core import interfaces
 
 
 """
@@ -52,120 +44,166 @@ Test file 'test3.zip' structure:
   |--[various files]
 """
 
-class ArchiveFileImport(object):
 
-    def importArchiveFileDefaultSettings(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(zipfile1)
-        succeslist = [
-            'testzip/foo/bar/baz/image5.jpg', 
-            'testzip/foo/bar/image4.jpg', 
-            'testzip/foo/image3.jpg', 
-            'testzip/bar/image2.jpg', 
-            'testzip/image1.jpg', 
-            'testzip/sound1.mp3', 
-            'testzip/Clock.swf']
-        self.assertEquals(succeslist, succeeded)
-        self.assertEquals([], failed)
+class ArchiveFileImportTestCase(TestCase):
+    """Test the archive file importer.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addLink(
+            'link', 'Link', relative=False, url="http:/infrae.com")
+
+    def test_adapter(self):
+        """Test adapter lookup.
+        """
+        importer = interfaces.IArchiveFileImporter(self.root.folder, None)
+        self.failUnless(
+            verifyObject(interfaces.IArchiveFileImporter, importer))
+        self.failUnless(
+            interfaces.IArchiveFileImporter(self.root.link, None) is None)
+
+    def test_import_default_settings(self):
+        """Import a Zip file.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(open_test_file('test1.zip'))
+
+        self.assertListEqual(succeeded,
+                             ['testzip/foo/bar/baz/image5.jpg',
+                              'testzip/foo/bar/image4.jpg',
+                              'testzip/foo/image3.jpg',
+                              'testzip/bar/image2.jpg',
+                              'testzip/image1.jpg',
+                              'testzip/sound1.mp3',
+                              'testzip/Clock.swf'])
+        self.assertListEqual([], failed)
+
         self.assert_(folder['testzip'])
         self.assert_(folder['testzip']['bar'])
         self.assert_(folder['testzip']['foo'])
         self.assert_(folder['testzip']['foo']['bar'])
         self.assert_(folder['testzip']['foo']['bar']['baz'])
-        object = folder['testzip']['image1.jpg']
-        self.assert_(isinstance(object, Image.Image))
-        object = folder['testzip']['sound1.mp3']
-        self.assert_(isinstance(object, File.File))
-        object = folder['testzip']['bar']['image2.jpg']
-        self.assert_(isinstance(object, Image.Image))
-        object = folder['testzip']['foo']['bar']['baz']['image5.jpg']
-        self.assert_(isinstance(object, Image.Image))
-        # I'd like to test the flash asset, but it is not in Silva core.
-        object = folder['testzip']['Clock.swf']
-        self.assert_(isinstance(object, File.File))
 
-    def importArchiveFileDefaultSettingsNoSubdirsInArchive(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(zipfile2)
-        succeslist = ['Clock.swf', 'image1.jpg', 'sound1.mp3']
-        self.assertEquals(succeslist, succeeded)
-        self.assertEquals([], failed)
-        object = folder['image1.jpg']
-        self.assert_(isinstance(object, Image.Image))
-        object = folder['sound1.mp3']
-        self.assert_(isinstance(object, File.File))
-        # I'd like to test the flash asset, but it is not in Silva core.
-        object = folder['Clock.swf']
-        self.assert_(isinstance(object, File.File))
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['testzip']['image1.jpg']))
+        self.failUnless(interfaces.IFile.providedBy(
+                folder['testzip']['sound1.mp3']))
+        self.failUnless(interfaces.IFile.providedBy(
+                folder['testzip']['Clock.swf']))
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['testzip']['bar']['image2.jpg']))
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['testzip']['foo']['bar']['baz']['image5.jpg']))
+
+    def test_import_no_sub_dirs(self):
+        """Import a Zip that doesn't have any subdirectories.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(open_test_file('test2.zip'))
+
+        self.assertListEqual(
+            succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
+        self.assertListEqual(failed, [])
+
+        self.assertListEqual(
+            succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
+        self.assertListEqual([], failed)
+        self.assertListEqual(
+            folder.objectIds(), ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
+        self.failUnless(interfaces.IImage.providedBy(folder['image1.jpg']))
+        self.failUnless(interfaces.IFile.providedBy(folder['sound1.mp3']))
+        self.failUnless(interfaces.IFile.providedBy(folder['Clock.swf']))
+
+    def test_import_asset_set_title(self):
+        """Set a default title to the imported assets.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(
+            open_test_file('test1.zip'), assettitle=u'Daarhelemali')
+
+        self.assertListEqual(failed, [])
+        self.assertEquals(
+            u'Daarhelemali',
+            folder['testzip']['bar']['image2.jpg'].get_title())
+        self.assertEquals(
+            u'Daarhelemali',
+            folder['testzip']['foo']['bar']['baz']['image5.jpg'].get_title())
+
+    def test_import_no_recreate_directory(self):
+        """Import a ZIP which have subdirectories with the setting don't
+        create directories.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(
+            open_test_file('test1.zip'), recreatedirs=0)
+
+        self.assertListEqual(
+            succeeded,
+            ['testzip/foo/bar/baz/image5.jpg', 'testzip/foo/bar/image4.jpg',
+             'testzip/foo/image3.jpg', 'testzip/bar/image2.jpg',
+             'testzip/image1.jpg', 'testzip/sound1.mp3', 'testzip/Clock.swf'])
+        self.assertListEqual(failed, [])
+        self.assertListEqual(
+            folder.objectIds(),
+            ['testzip_Clock.swf', 'testzip_bar_image2.jpg',
+             'testzip_foo_bar_baz_image5.jpg', 'testzip_foo_bar_image4.jpg',
+             'testzip_foo_image3.jpg', 'testzip_image1.jpg',
+             'testzip_sound1.mp3'])
+
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['testzip_image1.jpg']))
+        self.failUnless(interfaces.IFile.providedBy(
+                folder['testzip_sound1.mp3']))
+        self.failUnless(interfaces.IFile.providedBy(
+                folder['testzip_Clock.swf']))
+
+    def test_import_no_recreate_directory2(self):
+        """Import a ZIP without directories with the setting don't
+        create directories.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(
+            open_test_file('test2.zip'), recreatedirs=0)
+
+        self.assertListEqual(
+            succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
+        self.assertListEqual([], failed)
+        self.assertListEqual(
+            folder.objectIds(), ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
+        self.failUnless(interfaces.IImage.providedBy(folder['image1.jpg']))
+        self.failUnless(interfaces.IFile.providedBy(folder['sound1.mp3']))
+        self.failUnless(interfaces.IFile.providedBy(folder['Clock.swf']))
+
+    def test_import_macos_files(self):
+        """Import an archive file that have Macos X metadata
+        directories. They should be ignored.
+        """
+        folder = self.root.folder
+        importer = interfaces.IArchiveFileImporter(folder)
+        succeeded, failed = importer.importArchive(open_test_file('test3.zip'))
+
+        self.assertListEqual(succeeded, ['imgs/c16.png', 'imgs/c17.png'])
+        self.assertListEqual([], failed)
+
+        self.assertListEqual(folder.objectIds(), ['imgs'])
+        self.assertListEqual(folder.imgs.objectIds(), ['c16.png', 'c17.png'])
+
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['imgs']['c16.png']))
+        self.failUnless(interfaces.IImage.providedBy(
+                folder['imgs']['c17.png']))
 
 
-
-class ArchiveFileImportTestCase(SilvaTestCase.SilvaTestCase, ArchiveFileImport):
-    def test_getAdapter(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        self.assert_(
-            isinstance(adapter, archivefileimport.ArchiveFileImportAdapter))
-        document = self.add_document(self.root, 'bar', 'BarDocument')
-        adapter = archivefileimport.getArchiveFileImportAdapter(document)        
-        self.assertEquals(None, adapter)
-    
-    def test_importArchiveFileDefaultSettings(self):
-        self.importArchiveFileDefaultSettings()
-    
-    def test_importArchiveFileDefaultSettingsNoSubdirsInArchive(self):
-        self.importArchiveFileDefaultSettingsNoSubdirsInArchive()
-        
-    def test_importArchiveFileTitleSet(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(
-            zipfile1, assettitle=u'Daarhelemali\x00EB')
-        object = folder['testzip']['bar']['image2.jpg']
-        self.assertEquals(u'Daarhelemali\x00EB', object.get_title())
-        object = folder['testzip']['foo']['bar']['baz']['image5.jpg']
-        self.assertEquals(u'Daarhelemali\x00EB', object.get_title())
-    
-    def test_importArchiveFileNoRecreateDirs(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(zipfile1, recreatedirs=0)
-        self.assert_(folder['testzip_foo_bar_baz_image5.jpg'])
-        self.assert_(folder['testzip_foo_bar_image4.jpg'])
-        self.assert_(folder['testzip_foo_image3.jpg'])
-        self.assert_(folder['testzip_bar_image2.jpg'])
-        self.assert_(folder['testzip_image1.jpg'])
-        self.assert_(folder['testzip_sound1.mp3'])
-        self.assert_(folder['testzip_Clock.swf'])
-        self.assert_(isinstance(folder['testzip_image1.jpg'], Image.Image))
-        self.assert_(isinstance(folder['testzip_sound1.mp3'], File.File))
-        self.assert_(isinstance(folder['testzip_Clock.swf'], File.File))
-
-    def test_importArchiveFileNoRecreateDirsNoSubdirsInArchive(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(zipfile2, recreatedirs=0)
-        self.assert_(folder['image1.jpg'])
-        self.assert_(folder['sound1.mp3'])
-        self.assert_(folder['Clock.swf'])
-        self.assert_(isinstance(folder['image1.jpg'], Image.Image))
-        self.assert_(isinstance(folder['sound1.mp3'], File.File))
-        self.assert_(isinstance(folder['Clock.swf'], File.File))
-
-    def test_importArchiveMacOSX(self):
-        folder = self.add_folder(self.root, 'foo', 'FooFolder')
-        adapter = archivefileimport.getArchiveFileImportAdapter(folder)
-        succeeded, failed = adapter.importArchive(zipfile3)
-        self.assertTrue(folder['imgs']['c16.png'])
-        self.assertTrue(folder['imgs']['c17.png'])
-        self.assertTrue(isinstance(folder['imgs']['c16.png'], Image.Image))
-        self.assertTrue(isinstance(folder['imgs']['c17.png'], Image.Image))
-        self.assertTrue(folder.unrestrictedTraverse('imgs/.DS_Store',None)==None)
-        self.assertTrue(folder.unrestrictedTraverse('__MACOSX',None)==None)
-        
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ArchiveFileImportTestCase))
