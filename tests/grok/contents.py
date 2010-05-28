@@ -32,7 +32,7 @@
     >>> factory = app.root.manage_addProduct['Silva']
     >>> factory.manage_addMyArticle('myarticle', 'My demo article')
     >>> app.root.myarticle
-    <My Article instance myarticle>
+    <Article at /root/myarticle>
     >>> app.root.myarticle.customCreation
     True
 

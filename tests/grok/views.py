@@ -15,7 +15,7 @@
     >>> factory = app.root.manage_addProduct['Silva']
     >>> factory.manage_addMyFolder('myfolder', 'My Folder')
     >>> app.root.myfolder
-    <My Folder instance myfolder>
+    <MyFolder at /root/myfolder>
     >>> browser.go('http://localhost/root/myfolder')
     (200, 'http://localhost/root/myfolder')
     >>> print browser.contents
