@@ -98,7 +98,7 @@ class FileResponseHeaders(HTTPResponseHeaders):
     """This reliably set HTTP headers on file serving, for GET and
     HEAD requests.
     """
-    grok.adapts(interfaces.IFile, IBrowserRequest)
+    grok.adapts(IBrowserRequest, interfaces.IFile)
 
     def other_headers(self, headers):
         self.response.setHeader(
