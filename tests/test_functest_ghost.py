@@ -100,18 +100,6 @@ class TestGhostEdit(BaseTest):
         self.assertEquals(self.other,
             self.ghost.getLastVersion().get_haunted())
 
-    def test_edit_form_set_new_haunted_on_published(self):
-        publish_object(self.ghost)
-        form = self._get_form()
-        reference_field = form.getControl(name="form.field.haunted")
-        reference_field.value = str(self.intids.register(self.other))
-        button = form.getControl(name="form.action.save")
-        button.click()
-
-        self.assertEquals("200 OK", self.browser.status)
-        self.assertEquals(self.doc,
-            self.ghost.getLastVersion().get_haunted())
-
     def _get_form(self):
         self.browser.open(self.host_base + self.ghost_path + '/edit')
         self.assertEquals('200 OK', self.browser.status)
