@@ -39,7 +39,8 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.ghostfolder = ghostfolder = Ghost.ghostFactory(
             self.pub, 'ghostfolder', self.foldertoghost)
         self.ghostfolder.haunt()
-        self.broken_ghost = self.add_ghost(self.root, 'Broken', None)
+        self.broken_ghost = broken_ghost = \
+            self.add_ghost(self.root, 'brokenghost', None)
         # add a folder with an indexable index document
         self.subfolder = subfolder =  self.add_folder(
             self.pub, 'folder_with_index_doc',

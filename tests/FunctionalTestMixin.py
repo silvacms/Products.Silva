@@ -365,7 +365,7 @@ class SMIFunctionalHelperMixin(BaseMixin):
         button.click()
         return browser.getForm(name="add_object")
 
-    def _login(self, browser, username="manager", password=""):
+    def _login(self, browser, username="manager", password="manager"):
         browser.addHeader('Authorization',
             "Basic %s:%s" % (username, password))
 
