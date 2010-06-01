@@ -222,7 +222,7 @@ class PublicationHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
-            id = str(attrs[(None, 'id')])
+            id = attrs[(None, 'id')].encode('utf-8')
             parent = self.parent()
             if self.settings().replaceObjects() and id in parent.objectIds():
                 self.setResult(getattr(parent, id))
@@ -244,8 +244,7 @@ class AutoTOCHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'auto_toc'):
-            id = str(attrs[(None, 'id')])
-            uid = self.generateOrReplaceId(id)
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addAutoTOC(
                 uid, '')
             self.setResultId(uid)
@@ -274,8 +273,7 @@ class IndexerHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'indexer'):
-            id = str(attrs[(None, 'id')])
-            uid = self.generateOrReplaceId(id)
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addIndexer(
                 uid, '')
             self.setResultId(uid)
@@ -293,11 +291,11 @@ class VersionHandler(SilvaBaseHandler):
 
     def getOverrides(self):
         return {
-            (NS_URI, 'status'): make_character_handler('status'),
+            (NS_URI, 'status'): make_character_handler('status', self),
             (NS_URI, 'publication_datetime'): make_character_handler(
-                'publication_datetime'),
+                'publication_datetime', self),
             (NS_URI, 'expiration_datetime'): make_character_handler(
-                'expiration_datetime'),
+                'expiration_datetime', self),
             }
 
     def startElementNS(self, name, qname, attrs):
@@ -363,8 +361,7 @@ class GhostContentHandler(SilvaBaseHandler):
 
     def getOverrides(self):
         return {
-            (NS_URI, 'haunted'): make_character_handler('haunted'),
-            (NS_URI, 'content'): NoopHandler,
+            (NS_URI, 'haunted'): make_character_handler('haunted', self),
             }
 
     def startElementNS(self, name, qname, attrs):
@@ -396,16 +393,18 @@ class GhostFolderHandler(SilvaBaseHandler):
 
     def getOverrides(self):
         return {
-            (NS_URI, 'content'): GhostFolderContentHandler,
-            (NS_URI, 'metadata'): NoopHandler,
+            (NS_URI, 'haunted'): make_character_handler('haunted', self),
             }
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'ghost_folder'):
-            uid = self.generateUniqueId(attrs[(None, 'id')].encode('utf-8'))
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addGhostFolder(
                 uid, '')
             self.setResultId(uid)
+
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'ghost_folder'):
             folder = self.result()
             haunted = self.getData('haunted')
             if haunted is None:
@@ -417,29 +416,13 @@ class GhostFolderHandler(SilvaBaseHandler):
                 info.addAction(
                     resolve_path,
                     [folder.set_haunted, info.importRoot(), haunted])
-                info.addAction(folder.haunt)
-
-
-class GhostFolderContentHandler(SilvaBaseHandler):
-
-    def getOverrides(self):
-        return {
-            (NS_URI, 'haunted'): make_character_handler('haunted'),
-            (NS_URI, 'content'): NoopHandler,
-            }
+                info.addAction(folder.haunt, [])
 
 
 class NoopHandler(SilvaBaseHandler):
 
     def isElementAllowed(self, name):
         return False
-
-
-class HauntedUrlHandler(SilvaBaseHandler):
-
-    def characters(self, chars):
-        # XXX Fix me, haunted use references
-        self.parent().set_haunted_url(chars)
 
 
 class LinkHandler(SilvaBaseHandler):
@@ -466,8 +449,8 @@ class LinkVersionHandler(SilvaBaseHandler):
 
     def getOverrides(self):
         return {
-            (NS_URI, 'url'): make_character_handler('url'),
-            (NS_URI, 'target'): make_character_handler('target'),
+            (NS_URI, 'url'): make_character_handler('url', self),
+            (NS_URI, 'target'): make_character_handler('target', self),
             }
 
     def startElementNS(self, name, qname, attrs):
@@ -503,7 +486,7 @@ class ImageHandler(SilvaBaseHandler):
     silvaconf.name('image_asset')
 
     def getOverrides(self):
-        return {(NS_URI, 'asset_id'): make_character_handler('zip_id'),}
+        return {(NS_URI, 'asset_id'): make_character_handler('zip_id', self),}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'image_asset'):
@@ -538,7 +521,7 @@ class FileHandler(SilvaBaseHandler):
     silvaconf.name('file_asset')
 
     def getOverrides(self):
-        return {(NS_URI, 'asset_id'): make_character_handler('zip_id'),}
+        return {(NS_URI, 'asset_id'): make_character_handler('zip_id', self),}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'file_asset'):
@@ -562,7 +545,7 @@ class UnknownContentHandler(SilvaBaseHandler):
     silvaconf.name('unknown_content')
 
     def getOverrides(self):
-        return {(NS_URI, 'zexp_id'): make_character_handler('zexp_id'),}
+        return {(NS_URI, 'zexp_id'): make_character_handler('zexp_id', self),}
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'unknown_content'):
@@ -579,7 +562,7 @@ class UnknownContentHandler(SilvaBaseHandler):
             self.parent()._setObject(id, ob)
 
 
-def make_character_handler(name):
+def make_character_handler(name, handler):
 
     class CharacterHandler(SilvaBaseHandler):
 
@@ -587,7 +570,7 @@ def make_character_handler(name):
             return '<XMLImportHandler for characters of %s>' % name
 
         def characters(self, chars):
-            return self.parentHandler().setData(name, chars.strip())
+            return handler.setData(name, chars.strip())
 
     return CharacterHandler
 

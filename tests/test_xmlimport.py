@@ -176,6 +176,8 @@ class XMLImportTestCase(TestCase):
 
         image = self.root.folder.folder.torvald_jpg
         ghost = self.root.folder.folder.images.ghost_of_torvald_jpg
+        self.failUnless(interfaces.IImage.providedBy(image))
+        self.failUnless(interfaces.IGhostContent.providedBy(ghost))
 
         version = ghost.get_viewable()
         self.failIf(version is None)
@@ -215,6 +217,20 @@ class XMLImportTestCase(TestCase):
     def test_ghost_folder(self):
         """Import a ghost folder that contains various things.
         """
+        self.import_file('test_import_ghostfolder.silvaxml')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(),
+            ['container', 'ghost'])
+        self.assertListEqual(
+            self.root.folder.folder.container.objectIds(),
+            ['indexer', 'link'])
+
+        folder = self.root.folder.folder.ghost
+        container = self.root.folder.folder.container
+        self.failUnless(interfaces.IGhostFolder.providedBy(folder))
+        self.assertEqual(folder.get_haunted(), container)
+        self.assertListEqual(folder.objectIds(), container.objectIds())
 
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
@@ -255,50 +271,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
            'the short title of the testlink',
             binding._getData(
                 'silva-content').data['shorttitle'])
-
-    def test_zip_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        directory = os.path.dirname(__file__)
-        zip_file = ZipFile(open_test_file('test_export.zip'))
-        test_info = xmlimport.ImportInfo()
-        test_info.setZipFile(zip_file)
-        bytes = zip_file.read('silva.xml')
-        source_file = StringIO(bytes)
-        xmlimport.importFromFile(
-            source_file,
-            importfolder,
-            info=test_info)
-        source_file.close()
-        zip_file.close()
-        # normal xml import works
-        self.assertEquals(
-            'test_link',
-            importfolder.testfolder.testfolder2.test_link.id)
-        # asset file import works
-        self.assertEquals(
-            'sound1.wav',
-            importfolder.testfolder.testfolder2['testzip']['sound1.wav'].id)
-        self.assertEquals(
-            'Silva File',
-            importfolder.testfolder.testfolder2['testzip']['sound1.wav'].meta_type)
-        # image file import works:
-        self.assertEquals(
-            'image5.jpg',
-            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id)
-        self.assertEquals(
-            'Silva Image',
-            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].meta_type)
-        # ghost import
-        self.assertEquals(
-            'Silva Ghost',
-            importfolder.testfolder.testfolder2['haunting_the_neighbour'].meta_type)
-        self.assertEquals(
-            '/silva/silva/testfolder/testfolder2/test_link',
-            importfolder.testfolder.testfolder2['haunting_the_neighbour'].get_haunted_url())
 
     def test_replace_objects(self):
         source_file = open_test_file('test_autotoc.xml')

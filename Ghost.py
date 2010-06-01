@@ -8,7 +8,7 @@ from five import grok
 from zope.interface import Interface
 
 # Zope 2
-from Acquisition import aq_inner
+from Acquisition import aq_inner, aq_base
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from zExceptions import Unauthorized
@@ -252,7 +252,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
        target = self.get_haunted()
        if target:
            public_version = target.get_viewable()
-           if public_version and hasattr(public_version.aq_inner, 'fulltext'):
+           if public_version and hasattr(aq_base(public_version), 'fulltext'):
                return public_version.fulltext()
        return ""
 
