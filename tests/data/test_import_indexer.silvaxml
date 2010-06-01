@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" datetime="2004-04-23T16:13:39Z" path="/root/folder" url="http://foo/root/folder">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Exported folder
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          author
+        </silva-extra:creator>
+        <silva-extra:expirationtime>
+        </silva-extra:expirationtime>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+      </set>
+    </metadata>
+    <content>
+      <indexer id="indexer">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Index of this site
+            </silva-content:maintitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:comment>
+              Nothing special is required.
+            </silva-extra:comment>
+            <silva-extra:content_description>
+              Index the content of your website.
+            </silva-extra:content_description>
+            <silva-extra:creationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:creationtime>
+            <silva-extra:creator>
+              antoine
+            </silva-extra:creator>
+            <silva-extra:hide_from_tocs>
+              do not hide
+            </silva-extra:hide_from_tocs>
+            <silva-extra:lastauthor>
+              antoine
+            </silva-extra:lastauthor>
+            <silva-extra:modificationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:modificationtime>
+          </set>
+        </metadata>
+      </indexer>
+    </content>
+  </folder>
+</silva>

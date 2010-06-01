@@ -43,7 +43,9 @@ class SilvaBaseProducer(xmlexport.Producer):
             if not reference.is_target_inside_container(root):
                 raise ExternalReferenceError(
                     self.context, reference.target, root)
-            return '/'.join(reference.relative_path_to(root))
+            # Add root path id as it is always mentioned in exports
+            relative_path = [root.getId()] + reference.relative_path_to(root)
+            return '/'.join(relative_path)
         else:
             # Return url to the target
             return absoluteURL(reference.target, settings.request)

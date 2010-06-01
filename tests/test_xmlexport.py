@@ -8,13 +8,14 @@ from zipfile import ZipFile
 import re
 import unittest
 
-from zope.component import getAdapter
+from zope.component import getAdapter, getUtility
 
 # Silva
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.silvaxml.xmlexport import ExternalReferenceError
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
+from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core import interfaces
 
 
@@ -93,6 +94,24 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             info.getZexpPaths(),
             [(('', 'root', 'folder', 'zope2folder'), '1.zexp')])
+        self.assertEqual(info.getAssetPaths(), [])
+
+    def test_indexer(self):
+        """Export an indexer.
+        """
+        self.root.folder.manage_addProduct['Silva'].manage_addIndexer(
+            'indexer', 'Index of this site')
+
+        metadata = getUtility(IMetadataService).getMetadata(
+            self.root.folder.indexer)
+        metadata.setValues(
+            'silva-extra',
+            {'content_description': 'Index the content of your website.',
+             'comment': 'Nothing special is required.'})
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_indexer.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
         self.assertEqual(info.getAssetPaths(), [])
 
     def test_ghost(self):

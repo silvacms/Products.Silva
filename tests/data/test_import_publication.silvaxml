@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" datetime="2004-09-13T09:21:46Z" path="/export/publication" silva_version="Silva 1.1b1" url="http://hubble:8080/export/publication">
+ <publication id="publication">
+  <metadata>
+   <set id="silva-content">
+    <silva-content:maintitle>
+     Test Publication
+    </silva-content:maintitle>
+    <silva-content:shorttitle>
+    </silva-content:shorttitle>
+   </set>
+   <set id="silva-extra">
+    <silva-extra:comment>
+    </silva-extra:comment>
+    <silva-extra:contactemail>
+    </silva-extra:contactemail>
+    <silva-extra:contactname>
+    </silva-extra:contactname>
+    <silva-extra:content_description>
+    </silva-extra:content_description>
+    <silva-extra:creationtime>
+     2004-09-13T09:21:29Z
+    </silva-extra:creationtime>
+    <silva-extra:creator>
+     admin
+    </silva-extra:creator>
+    <silva-extra:expirationtime>
+    </silva-extra:expirationtime>
+    <silva-extra:keywords>
+    </silva-extra:keywords>
+    <silva-extra:lastauthor>
+     n/a
+    </silva-extra:lastauthor>
+    <silva-extra:modificationtime>
+     2004-09-13T09:21:29Z
+    </silva-extra:modificationtime>
+    <silva-extra:publicationtime>
+    </silva-extra:publicationtime>
+    <silva-extra:renderer_name>
+    </silva-extra:renderer_name>
+    <silva-extra:subject>
+    </silva-extra:subject>
+   </set>
+  </metadata>
+  <content>
+   <default>
+    <document id="index">
+     <workflow>
+      <version id="0">
+       <status>
+        unapproved
+       </status>
+       <publication_datetime>
+       </publication_datetime>
+       <expiration_datetime>
+       </expiration_datetime>
+      </version>
+     </workflow>
+    </document>
+   </default>
+  </content>
+  <content version_id="0">
+   <metadata>
+    <set id="silva-content">
+     <silva-content:maintitle>
+      Test Publication
+     </silva-content:maintitle>
+     <silva-content:shorttitle>
+     </silva-content:shorttitle>
+    </set>
+    <set id="silva-extra">
+     <silva-extra:comment>
+     </silva-extra:comment>
+     <silva-extra:contactemail>
+     </silva-extra:contactemail>
+     <silva-extra:contactname>
+     </silva-extra:contactname>
+     <silva-extra:content_description>
+     </silva-extra:content_description>
+     <silva-extra:creationtime>
+      2004-09-13T09:21:29Z
+     </silva-extra:creationtime>
+     <silva-extra:creator>
+      admin
+     </silva-extra:creator>
+     <silva-extra:expirationtime>
+     </silva-extra:expirationtime>
+     <silva-extra:keywords>
+     </silva-extra:keywords>
+     <silva-extra:lastauthor>
+      admin
+     </silva-extra:lastauthor>
+     <silva-extra:modificationtime>
+      2004-09-13T09:21:29Z
+     </silva-extra:modificationtime>
+     <silva-extra:publicationtime>
+     </silva-extra:publicationtime>
+     <silva-extra:renderer_name>
+     </silva-extra:renderer_name>
+     <silva-extra:subject>
+     </silva-extra:subject>
+    </set>
+   </metadata>
+   <doc:doc>
+     This document have been imported with love.
+   </doc:doc>
+  </content>
+ </publication>
+</silva>
+

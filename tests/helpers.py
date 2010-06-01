@@ -46,6 +46,10 @@ def publishApprovedObject(obj):
     obj.set_approved_version_publication_datetime(now - 10)
 
 
+# Keep track of used test files to cleanup data directory
+opened_paths = []
+
+
 def open_test_file(path, globs=None, mode='rb'):
     """Open the given test file.
     """
@@ -54,7 +58,13 @@ def open_test_file(path, globs=None, mode='rb'):
     else:
         testfile = globs['__file__']
     directory = os.path.join(os.path.dirname(testfile), 'data')
-    return open(os.path.join(directory, path), mode)
+    try:
+        fd = open(os.path.join(directory, path), mode)
+    except Exception:
+        raise
+    if (directory, path) not in opened_paths:
+        opened_paths.append((directory, path))
+    return fd
 
 
 openTestFile = open_test_file

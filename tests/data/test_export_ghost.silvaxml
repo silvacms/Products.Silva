@@ -170,7 +170,7 @@
         </workflow>
         <content version_id="0">
           <haunted>
-            link
+            folder/link
           </haunted>
         </content>
       </ghost>

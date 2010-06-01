@@ -2,11 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
 from zope.interface.verify import verifyClass
-from zope.interface.exceptions import BrokenImplementation, DoesNotImplement,\
-     BrokenMethodImplementation
-import SilvaTestCase
+
+from Products.Silva.tests import SilvaTestCase
+from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.silvaxml import xmlimport
 
 from Products.Silva.transform.interfaces import IRenderer
@@ -15,7 +14,6 @@ from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRigh
 
 from lxml import etree
 
-directory = os.path.dirname(__file__)
 expected_html = '\n<table>\n  <tr>\n    <td valign="top"><h2 class="heading">This is a rendering test</h2>\n                <p class="p">\n                    This is a test of the XSLT rendering functionality.\n                </p>\n            </td>\n    <td valign="top">\n      <a href="http://nohost/root/silva_xslt/bar.html">\n        <img src="http://nohost/root/silva_xslt/foo" />\n      </a>\n      <br />\n    </td>\n  </tr>\n</table>\n'
 
 
@@ -30,11 +28,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
 
     def test_implements_renderer_interface(self):
         images_on_right = self._get_renderer_images_on_right()
-        try:
-            verifyClass(IRenderer, ImagesOnRightRenderer)
-        except (BrokenImplementation, DoesNotImplement,
-                BrokenMethodImplementation):
-            self.fail("ImagesOnRightRenderer does not implement IRenderer")
+        self.failUnless(verifyClass(IRenderer, ImagesOnRightRenderer))
 
     def test_renders_images_on_right(self):
         importfolder = self.add_folder(
@@ -45,7 +39,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open(os.path.join(directory, "data/test_document2.xml"))
+        source_file = open_test_file("test_document2.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
@@ -54,12 +48,13 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         obj = self.root.silva_xslt.test_document
         images_on_right = self._get_renderer_images_on_right()
         self.assertEquals(images_on_right.render(obj), expected_html)
-                                                       
+
     def test_error_handling(self):
-        
+
         class BrokenImagesOnRightRenderer(ImagesOnRightRenderer):
             def __init__(self):
-                super(BrokenImagesOnRightRenderer, self).__init__('data/images_to_the_right_broken.xslt', __file__)
+                super(BrokenImagesOnRightRenderer, self).__init__(
+                    'data/images_to_the_right_broken.xslt', __file__)
 
         importfolder = self.add_folder(
             self.root,
@@ -69,7 +64,7 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = open(os.path.join(directory, "data/test_document2.xml"))
+        source_file = open_test_file("test_document2.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)

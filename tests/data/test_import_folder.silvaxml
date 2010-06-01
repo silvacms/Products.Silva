@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" path="/root/folder" url="http://nohost/root/folder" datetime="2004-04-23T16:13:39Z">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Test Folder
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:lastauthor>
+          admin
+        </silva-extra:lastauthor>
+        <silva-extra:creator>
+          admin
+        </silva-extra:creator>
+        <silva-extra:contactname>
+          Henri McArthur
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+          This folder have been created only in testing purpose.
+        </silva-extra:content_description>
+      </set>
+    </metadata>
+    <content>
+      <folder id="subfolder">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Second test folder
+            </silva-content:maintitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:modificationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:modificationtime>
+            <silva-extra:creationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:creationtime>
+            <silva-extra:lastauthor>
+              henri
+            </silva-extra:lastauthor>
+            <silva-extra:creator>
+              henri
+            </silva-extra:creator>
+          </set>
+        </metadata>
+        <content>
+        </content>
+      </folder>
+    </content>
+  </folder>
+</silva>
+

@@ -2,75 +2,210 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
+from StringIO import StringIO
+from zipfile import ZipFile
+import unittest
+
 from DateTime import DateTime
 
+from zope.component import getUtility
+from silva.core import interfaces
+
 from Products.Silva.silvaxml import xmlimport
-from silva.core.interfaces import IGhost, IContainer
+from Products.Silva.tests import SilvaTestCase
+from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.tests.helpers import open_test_file
+from Products.SilvaMetadata.interfaces import IMetadataService
 
-import SilvaTestCase
 
-def testopen(path, rw):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
+class XMLImportTestCase(TestCase):
+    """Import data from an XML file.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        self.metadata = getUtility(IMetadataService)
+
+    def import_file(self, filename, replace=False):
+        """Import an XML file.
+        """
+        with open_test_file(filename) as source_file:
+            xmlimport.importFromFile(
+                source_file, self.root.folder, replace=replace)
+
+    def import_zip(self, filename, replace=False):
+        """Import a ZIP file.
+        """
+        with open_test_file(filename) as source_file:
+            source_zip = ZipFile(source_file)
+            info = xmlimport.ImportInfo()
+            info.setZIPFile(source_zip)
+            import_file = StringIO(source_zip.read('silva.xml'))
+            xmlimport.importFromFile(
+                import_file, self.root.folder, info=info, replace=replace)
+
+    def test_publication(self):
+        """Test import of publication.
+        """
+        self.import_file('test_import_publication.silvaxml')
+        self.assertListEqual(self.root.folder.objectIds(), ['publication'])
+
+        publication = self.root.folder.publication
+        binding = self.metadata.getMetadata(publication)
+
+        self.failUnless(interfaces.IPublication.providedBy(publication))
+        self.assertEquals(publication.get_title(), u'Test Publication')
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'admin')
+        self.assertEquals(
+            binding.get('silva-content', 'maintitle'), u'Test Publication')
+
+    def test_folder(self):
+        """Test folder import.
+        """
+        self.import_file('test_import_folder.silvaxml')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(self.root.folder.folder.objectIds(), ['subfolder'])
+
+        folder = self.root.folder.folder
+        binding = self.metadata.getMetadata(folder)
+
+        self.failUnless(interfaces.IFolder.providedBy(folder))
+        self.assertEquals(folder.get_title(), u'Test Folder')
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'admin')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'admin')
+        self.assertEquals(
+            binding.get('silva-extra', 'contactname'), u'Henri McArthur')
+        self.assertEquals(
+            binding.get('silva-extra', 'content_description'),
+            u'This folder have been created only in testing purpose.')
+        self.assertEquals(
+            binding.get('silva-content', 'maintitle'), u'Test Folder')
+
+        subfolder = folder.subfolder
+        binding = self.metadata.getMetadata(subfolder)
+
+        self.assertEquals(subfolder.get_title(), u'Second test folder')
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'henri')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'henri')
+
+    def test_link_to_file(self):
+        """Import a link that is linked to a file.
+        """
+        self.import_zip('test_import_link.zip')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(),
+            ['file', 'index', 'new'])
+        self.assertListEqual(
+            self.root.folder.folder.new.objectIds(),
+            ['link'])
+
+        link = self.root.folder.folder.new.link
+        datafile = self.root.folder.folder.file
+
+        self.failUnless(interfaces.ILink.providedBy(link))
+        self.failUnless(interfaces.IFile.providedBy(datafile))
+        self.assertEquals(datafile.get_title(),  u'Torvald file')
+
+        version = link.get_editable()
+        self.failIf(version is None)
+        self.assertEqual(link.get_viewable(), None)
+        self.assertEqual(version.get_title(), u'Last file')
+        self.assertEquals(
+            DateTime('2004-04-23T16:13:39Z'),
+            version.get_modification_datetime())
+
+        binding = self.metadata.getMetadata(version)
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'henri')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'henri')
+        self.assertEquals(
+            binding.get('silva-extra', 'content_description'),
+            u'Link to the lastest file.')
+
+        self.assertEquals(version.get_relative(), True)
+        self.assertEquals(version.get_target(), datafile)
+
+        binding = self.metadata.getMetadata(datafile)
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'pauline')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'pauline')
+        self.assertEquals(
+            binding.get('silva-extra', 'comment'),
+            u'This file contains Torvald lastest whereabouts.')
+
+    def test_link_url(self):
+        """Import a link set with an URL.
+        """
+        self.import_file('test_import_link.silvaxml')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(),
+            ['index', 'link'])
+
+        link = self.root.folder.folder.link
+
+        version = link.get_viewable()
+        self.failIf(version is None)
+        self.assertEqual(link.get_editable(), None)
+        self.assertEqual(version.get_title(), u'Best website')
+
+        binding = self.metadata.getMetadata(version)
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'wimbou')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'wimbou')
+        self.assertEquals(
+            binding.get('silva-extra', 'content_description'),
+            u'Best website in the world.')
+
+        self.assertEquals(version.get_relative(), False)
+        self.assertEquals(version.get_url(), 'http://wimbou.be')
+
+    def test_ghost_to_image(self):
+        """Import a ghost to an image.
+        """
+        self.import_zip('test_import_ghost.zip')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(),
+            ['images', 'torvald_jpg'])
+        self.assertListEqual(
+            self.root.folder.folder.images.objectIds(),
+            ['ghost_of_torvald_jpg'])
+
+        image = self.root.folder.folder.torvald_jpg
+        ghost = self.root.folder.folder.images.ghost_of_torvald_jpg
+
+        version = ghost.get_viewable()
+        self.failIf(version is None)
+        self.assertEqual(ghost.get_editable(), None)
+        self.assertEqual(version.get_title(), u'Torvald picture')
+        self.assertEqual(image.get_title(), u'Torvald picture')
+        self.assertEqual(version.get_haunted(), image)
+
+        binding = self.metadata.getMetadata(image)
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'pauline')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'pauline')
+        self.assertEquals(
+            binding.get('silva-extra', 'comment'),
+            u'Torvald public face.')
+
+    def test_indexer(self):
+        """Import an indexer.
+        """
+        self.import_file('test_import_indexer.silvaxml')
+
+    def test_ghost_folder(self):
+        """Import a ghost folder that contains various things.
+        """
+
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
 
-    def test_publication_import(self):
-        source_file = testopen('data/test_publication.xml', 'r')
-        xmlimport.importFromFile(
-            source_file, self.root)
-        source_file.close()
-        publication = self.root.testpublication
-        self.assertEquals(
-            u'Publication',
-            publication.get_title())
-
-    def test_folder_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        source_file = testopen('data/test_folder.xml', 'r')
-        xmlimport.importFromFile(
-            source_file, importfolder)
-        source_file.close()
-        folder = importfolder.testfolder.testfolder2
-        self.assertEquals(
-            u'This is &another; testfolder',
-            folder.get_title())
-
-    def test_link_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        source_file = testopen('data/test_link.xml', 'r')
-        xmlimport.importFromFile(
-            source_file, importfolder)
-        source_file.close()
-        linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
-        linkversion2 = importfolder.testfolder.testfolder2.test_link.get_previewable()
-        self.assertEquals(
-            'approved title',
-            linkversion.get_title())
-        self.assertEquals(
-            'approved title',
-            linkversion.get_title())
-        self.assertEquals(
-            DateTime('2004-04-23T16:13:40Z'),
-            linkversion.get_modification_datetime())
-        metadata_service = linkversion.service_metadata
-        binding = metadata_service.getMetadata(linkversion)
-        self.assertEquals(
-           'test_user_1_',
-            binding._getData(
-                'silva-extra').data['creator'])
 
     def test_autotoc_import(self):
-        source_file = testopen('data/test_autotoc.xml', 'r')
+        source_file = open_test_file('test_autotoc.xml')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -84,91 +219,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'Silva AutoTOC',
             autotoc.meta_type)
 
-    def test_ghost_import(self):
-        # import the ghost
-        source_file = testopen('data/test_link.xml', 'r')
-        xmlimport.importFromFile(
-            source_file,
-            self.root)
-        source_file.close()
-
-        source_file = testopen('data/test_ghost.xml', 'r')
-        xmlimport.importFromFile(
-            source_file,
-            self.root)
-        source_file.close()
-        version = self.root.testfolder3.caspar.get_editable()
-        version2 = self.root.testfolder3.caspar.get_previewable()
-        self.assertEquals(version.id, version2.id)
-        self.assertEquals(
-            'test_link',
-            version.get_title()
-            )
-        self.assertEquals(
-            'Silva Ghost Version',
-            version.meta_type
-            )
-
-    def test_ghostfolder_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'testfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        haunted_folder = self.add_folder(
-            importfolder,
-            'testfolder2',
-            'This is <boo>a</boo> haunted testfolder',
-            policy_name='Silva AutoTOC')
-        # add some content.
-        haunted_folder.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'foo', 'Foo')
-
-
-        metadata_service = haunted_folder.service_metadata
-        binding = metadata_service.getMetadata(haunted_folder)
-        binding._setData({'creator': 'ghost dog'}, 'silva-extra')
-        # import the ghost folder
-        source_file = testopen('data/test_ghost_folder.xml', 'r')
-        xmlimport.importFromFile(
-            source_file,
-            self.root)
-        source_file.close()
-        version = self.root.testfolder3.caspar.get_editable()
-        version2 = self.root.testfolder3.caspar.get_previewable()
-
-        self.assertEquals(version.id, version2.id)
-        self.assertEquals(
-            'This is <boo>a</boo> haunted testfolder',
-            version.get_title()
-            )
-        self.assertEquals(
-            '/root/testfolder/testfolder2',
-            version.get_haunted_url()
-            )
-        self.assertEquals(
-            'Silva Ghost Folder',
-            version.meta_type
-            )
-
-        # test if sync has been done
-        haunted_ids = list(haunted_folder.objectIds())
-        ghost_ids = list(version.objectIds())
-        self.assertEquals(haunted_ids.sort(), ghost_ids.sort())
-        metadata_service = version.service_metadata
-        binding = metadata_service.getMetadata(version)
-        self.assertEquals(
-           'ghost dog',
-            binding._getData(
-                'silva-extra').data['creator'])
-        # check whether we got ghosts (or subcontainers)
-        for obj in version.objectValues():
-            self.assert_(
-                IGhost.providedBy(obj) or
-                IContainer.providedBy(obj))
-
     def test_indexer_import(self):
-        source_file = testopen('data/test_indexer.xml', 'r')
+        source_file = open_test_file('test_indexer.xml')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -178,20 +230,20 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals('Silva Indexer', indexer.meta_type)
 
     def test_metadata_import(self):
-	# this is a reproduction of the xmlimport bug
-	# which causes import to fail if an installed metadata set is not
-	# present in the import
-	importfolder = self.add_folder(
+        # this is a reproduction of the xmlimport bug
+        # which causes import to fail if an installed metadata set is not
+        # present in the import
+        importfolder = self.add_folder(
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
-        source_file = testopen('data/test_metadata_import.xml', 'r')
+        source_file = open_test_file('test_metadata_import.xml')
         xmlimport.importFromFile(
             source_file, importfolder)
         source_file.close()
         linkversion = importfolder.testfolder.testfolder2.test_link.get_editable()
-	metadata_service = linkversion.service_metadata
+        metadata_service = linkversion.service_metadata
         binding = metadata_service.getMetadata(linkversion)
         self.assertEquals(
            'the short title of the testlink',
@@ -199,16 +251,13 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
                 'silva-content').data['shorttitle'])
 
     def test_zip_import(self):
-        from StringIO import StringIO
-        from zipfile import ZipFile
         importfolder = self.add_folder(
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
         directory = os.path.dirname(__file__)
-        zip_file = ZipFile(
-            os.path.join(directory, 'data/test_export.zip'), 'r')
+        zip_file = ZipFile(open_test_file('test_export.zip'))
         test_info = xmlimport.ImportInfo()
         test_info.setZipFile(zip_file)
         bytes = zip_file.read('silva.xml')
@@ -246,7 +295,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             importfolder.testfolder.testfolder2['haunting_the_neighbour'].get_haunted_url())
 
     def test_replace_objects(self):
-        source_file = testopen('data/test_autotoc.xml', 'r')
+        source_file = open_test_file('test_autotoc.xml')
         xmlimport.importFromFile(
             source_file,
             self.root)
@@ -260,7 +309,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'Silva AutoTOC',
             autotoc.meta_type)
 
-        source_file = testopen('data/test_autotoc2.xml', 'r')
+        source_file = open_test_file('test_autotoc2.xml')
         xmlimport.importReplaceFromFile(
             source_file,
             self.root)
@@ -274,9 +323,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'Silva AutoTOC',
             autotoc.meta_type)
 
-
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(XMLImportTestCase))
     suite.addTest(unittest.makeSuite(SetTestCase))
     return suite

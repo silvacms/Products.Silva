@@ -256,7 +256,7 @@
       <ghost_folder id="ghost">
         <content>
           <haunted>
-            container
+            folder/container
           </haunted>
         </content>
       </ghost_folder>
