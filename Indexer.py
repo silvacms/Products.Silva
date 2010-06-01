@@ -159,6 +159,11 @@ class IndexerAddForm(SMIAddForm):
     """
     silvaconf.name(u"Silva Indexer")
 
+    def add(self, parent, data, form):
+        factory = parent.manage_addProduct['Silva']
+        factory.manage_addIndexer(self, data['id'], data['title'])
+        return getattr(parent, data['id'])
+
 
 class IndexerView(silvaviews.View):
     """View on indexer objects.

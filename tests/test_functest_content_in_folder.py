@@ -2,6 +2,8 @@ import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
 from SilvaBrowser import SilvaBrowser
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 
 class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
     """Each role make each content type in a folder
@@ -125,6 +127,8 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
 
     def test_silva_ghost_in_folder(self):
         sb = SilvaBrowser()
+        intid = getUtility(IIntIds)
+        refid = str(intid.register(self.root.index))
         existing_content = self.create_content_and_logout(
             sb, 'Silva Folder', 'manager',
             id='test_folder1', title='Test folder 1',
@@ -133,7 +137,7 @@ class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
             self.create_content_delete_logout(sb, 'Silva Ghost', username,
                                               existing_content,
                                               id='test_ghost',
-                                              reference='index')
+                                              reference=refid)
         self.login_delete_logout(sb, 'manager', existing_content)
 
     def test_silva_indexer_in_folder(self):

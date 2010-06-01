@@ -2,6 +2,8 @@ import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
 from SilvaBrowser import SilvaBrowser
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 
 class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
     """ each role make each content type in a publication
@@ -126,6 +128,8 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
 
     def test_silva_ghost_in_publication(self):
         sb = SilvaBrowser()
+        intid = getUtility(IIntIds)
+        refid = str(intid.register(self.root.index))
         existing_content = self.create_content_and_logout(
             sb, 'Silva Publication', 'manager',
             id='test_publication1', title='Test publication 1',
@@ -134,7 +138,7 @@ class ContentTypeInPublicationTestCase(SilvaFunctionalTestCase):
             self.create_content_delete_logout(sb, 'Silva Ghost', username,
                                               existing_content,
                                               id='test_ghost',
-                                              reference='index')
+                                              reference=refid)
         self.login_delete_logout(sb, 'manager', existing_content)
 
     def test_silva_indexer_in_publication(self):

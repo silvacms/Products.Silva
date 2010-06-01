@@ -10,14 +10,21 @@ from xml.dom import minidom
 from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
-Z3C_CONTENTS = ['Silva Document', 'Silva Link',
-                'Silva Indexer', 'Silva Find',
-                'Silva File', 'Silva Image']
+Z3C_CONTENTS = ['Silva Document',
+                'Silva Link',
+                'Silva Find',
+                'Silva File',
+                'Silva Image',]
+
+ZEAM_CONTENTS = ['Silva Ghost',
+                 'Silva Indexer',]
 
 # Define types of forms.
 SILVA_FORM = object()
 Z3CFORM_FORM = object()
 FORMLIB_FORM = object()
+ZEAMFORM_FORM = object()
+
 
 class SilvaBrowser(object):
     def __init__(self):
@@ -344,6 +351,9 @@ class SilvaBrowser(object):
         if content_type in Z3C_CONTENTS:
             current_form_type = self.form_type
             self.form_type = Z3CFORM_FORM
+        if content_type in ZEAM_CONTENTS:
+            current_form_type = self.form_type
+            self.form_type = ZEAMFORM_FORM
 
         fields_needed = self.content_type_fields.get(content_type, None)
         # do some testing to determine if needed fields are supplied
@@ -437,6 +447,8 @@ class SilvaBrowser(object):
             return 'form.widgets.' + name
         if self.form_type is FORMLIB_FORM:
             raise NotImplementedError
+        if self.form_type is ZEAMFORM_FORM:
+            return 'form.field.' + name
         raise NotImplementedError
 
     def set_id_field(self, id):
@@ -482,7 +494,7 @@ class SilvaBrowser(object):
         """
         set the ghost url field
         """
-        name = self.get_field_id('content_url')
+        name = self.get_field_id('haunted')
         self.browser.getControl(name=name).value = reference
 
     def set_url_field(self, link_url):
@@ -518,9 +530,9 @@ class SilvaBrowser(object):
         'policy':       set_policy_field,
         'image':        set_image_field,
         'file':         set_file_field,
-        'reference':    set_ghost_url_field,
         'url':          set_url_field,
         'depth':        set_depth_field,
+        'reference':      set_ghost_url_field,
     }
 
     # map field_names to content_types

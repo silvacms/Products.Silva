@@ -1,6 +1,9 @@
 import unittest
 from SilvaBrowser import SilvaBrowser
 from SilvaTestCase import SilvaFunctionalTestCase
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
+
 
 class ContentTypeTestCase(SilvaFunctionalTestCase):
     """ each role make each content type
@@ -66,10 +69,12 @@ class ContentTypeTestCase(SilvaFunctionalTestCase):
 
     def test_silva_ghost(self):
         sb = SilvaBrowser()
+        intid = getUtility(IIntIds)
+        refid = str(intid.register(self.root.index))
         for username in ['manager','chiefeditor', 'editor', 'author']:
             self.create_content_and_delete(sb, 'Silva Ghost', username,
                                            id='test_ghost',
-                                           reference='index')
+                                           reference=refid)
     def test_silva_indexer(self):
         sb = SilvaBrowser()
         for username in ['manager','chiefeditor', 'editor']:
