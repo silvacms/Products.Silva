@@ -152,17 +152,13 @@ class Indexer(Content, SimpleItem):
         """return 1 so the title can be set"""
         return 1
 
+
 InitializeClass(Indexer)
 
 class IndexerAddForm(SMIAddForm):
     """Add form for Silva indexer.
     """
     silvaconf.name(u"Silva Indexer")
-
-    def add(self, parent, data, form):
-        factory = parent.manage_addProduct['Silva']
-        factory.manage_addIndexer(self, data['id'], data['title'])
-        return getattr(parent, data['id'])
 
 
 class IndexerView(silvaviews.View):
