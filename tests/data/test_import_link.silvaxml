@@ -61,51 +61,51 @@
         </auto_toc>
       </default>
 
-          <link id="link">
-            <workflow>
-              <version id="0">
-                <status>
-                  public
-                </status>
-                <publication_datetime>
-                </publication_datetime>
-                <expiration_datetime>
-                </expiration_datetime>
-              </version>
-            </workflow>
-            <content version_id="0">
-              <metadata>
-                <set id="silva-content">
-                  <silva-content:maintitle>
-                    Best website
-                  </silva-content:maintitle>
-                </set>
-                <set id="silva-extra">
-                  <silva-extra:content_description>
-                    Best website in the world.
-                  </silva-extra:content_description>
-                  <silva-extra:creationtime>
-                    2004-04-23T16:13:39Z
-                  </silva-extra:creationtime>
-                  <silva-extra:creator>
-                    wimbou
-                  </silva-extra:creator>
-                  <silva-extra:hide_from_tocs>
-                    do not hide
-                  </silva-extra:hide_from_tocs>
-                  <silva-extra:lastauthor>
-                    wimbou
-                  </silva-extra:lastauthor>
-                  <silva-extra:modificationtime>
-                    2004-04-23T16:13:39Z
-                  </silva-extra:modificationtime>
-                </set>
-              </metadata>
-              <url>
-                http://wimbou.be
-              </url>
-            </content>
-          </link>
+      <link id="link">
+        <workflow>
+          <version id="0">
+            <status>
+              public
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Best website
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:content_description>
+                Best website in the world.
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                wimbou
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:lastauthor>
+                wimbou
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+            </set>
+          </metadata>
+          <url>
+            http://wimbou.be
+          </url>
+        </content>
+      </link>
 
 
     </content>

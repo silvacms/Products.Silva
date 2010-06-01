@@ -195,6 +195,22 @@ class XMLImportTestCase(TestCase):
         """Import an indexer.
         """
         self.import_file('test_import_indexer.silvaxml')
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(self.root.folder.folder.objectIds(), ['indexer'])
+
+        indexer = self.root.folder.folder.indexer
+        self.failUnless(interfaces.IIndexer.providedBy(indexer))
+        self.assertEqual(indexer.get_title(), u'Index of this site')
+
+        binding = self.metadata.getMetadata(indexer)
+        self.assertEquals(binding.get('silva-extra', 'creator'), u'antoine')
+        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'antoine')
+        self.assertEquals(
+            binding.get('silva-extra', 'comment'),
+            u'Nothing special is required.')
+        self.assertEquals(
+            binding.get('silva-extra', 'content_description'),
+            u'Index the content of your website.')
 
     def test_ghost_folder(self):
         """Import a ghost folder that contains various things.
@@ -218,16 +234,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             'Silva AutoTOC',
             autotoc.meta_type)
-
-    def test_indexer_import(self):
-        source_file = open_test_file('test_indexer.xml')
-        xmlimport.importFromFile(
-            source_file,
-            self.root)
-        source_file.close()
-        indexer = self.root.testfolder.Indexer
-        self.assertEquals('Index', indexer.get_title())
-        self.assertEquals('Silva Indexer', indexer.meta_type)
 
     def test_metadata_import(self):
         # this is a reproduction of the xmlimport bug
