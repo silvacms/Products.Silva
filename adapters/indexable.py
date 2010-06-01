@@ -5,6 +5,7 @@
 from five import grok
 from silva.core import interfaces
 
+
 class IndexableAdapter(grok.Adapter):
 
     grok.implements(interfaces.IIndexable)
@@ -22,6 +23,7 @@ class IndexableAdapter(grok.Adapter):
     def getIndexes(self):
         return []
 
+
 class GhostIndexableAdapter(IndexableAdapter):
 
     grok.context(interfaces.IGhost)
@@ -37,6 +39,7 @@ class GhostIndexableAdapter(IndexableAdapter):
             if not haunted:
                 return []
         return interfaces.IIndexable(haunted).getIndexes()
+
 
 class ContainerIndexableAdapter(IndexableAdapter):
 

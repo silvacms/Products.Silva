@@ -11,6 +11,9 @@ from DateTime import DateTime
 
 from Products.Silva import Ghost
 from silva.core.interfaces import IIndexer
+from silva.core.references.interfaces import IReferenceService
+from silva.core.references.reference import BrokenReferenceError
+
 
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
 
@@ -127,6 +130,12 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             'indexer', 'Title')
         self.indexer = self.pub.indexer
         self.indexer.update()
+        self.reference_service = getUtility(IReferenceService)
+        def resolver(obj):
+            return list(self.reference_service.get_references_between(
+                self.indexer, obj, name="indexer"))[0].__name__
+
+        self.resolver = resolver
 
     def test_indexer(self):
         verifyObject(IIndexer, self.indexer)
@@ -137,34 +146,44 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             self.indexer.getIndexNames())
 
     def test_getIndexEntry(self):
-        resolver = getUtility(IIntIds).register
         expected = [
-            (u'Alpha', resolver(self.alpha), u'a'),
-            (u'Gamma', resolver(self.gamma), u'a')]
+            (u'Alpha', self.resolver(self.alpha), u'a'),
+            (u'Gamma', self.resolver(self.gamma), u'a')]
         self.assertEquals(expected, self.indexer.getIndexEntry('a'))
 
     def test_getAllIndexEntries(self):
-        resolver = getUtility(IIntIds).register
         expected = {}
-        expected['a'] = [('Alpha', resolver(self.alpha), u'a'),
-                        ('Gamma', resolver(self.gamma), u'a')]
-        expected['A'] = [(u'Alpha Capital A', resolver(self.Alpha), u'A')]
-        expected['b'] = [(u'Beta', resolver(self.beta), u'b')]
-        expected['c'] = [(u'Kappa', resolver(self.kappa), u'c')]
-        expected['f'] = [(u'Folder to Ghost', resolver(self.ghostfolder), u'f')]
-        expected['g'] = [(u'Barrr', resolver(self.ghostfolder.bar), u'g')]
+        expected['a'] = [('Alpha', self.resolver(self.alpha), u'a'),
+                        ('Gamma', self.resolver(self.gamma), u'a')]
+        expected['A'] = [(u'Alpha Capital A', self.resolver(self.Alpha), u'A')]
+        expected['b'] = [(u'Beta', self.resolver(self.beta), u'b')]
+        expected['c'] = [(u'Kappa', self.resolver(self.kappa), u'c')]
+        expected['f'] = [(u'Folder to Ghost', self.resolver(self.ghostfolder), u'f')]
+        expected['g'] = [(u'Barrr', self.resolver(self.ghostfolder.bar), u'g')]
 
-        expected['ghost'] = [(u'To be Haunted', resolver(self.ghost), u'ghost')]
+        expected['ghost'] = [(u'To be Haunted', self.resolver(self.ghost), u'ghost')]
 
 
         expected['subfolder'] = [(u'Folder with indexable index document',
-                                 resolver(self.subfolder), u'subfolder')]
+                                 self.resolver(self.subfolder), u'subfolder')]
 
         result =  self.indexer.getIndexNames()
         self.assertEquals(len(expected), len(result))
         for indexName in result:
             self.assertEquals(expected[indexName],
                               self.indexer.getIndexEntry(indexName))
+
+    def test_remove_entry_when_remove_object(self):
+        ref_name = self.resolver(self.alpha)
+        self.assertEquals([('Alpha', self.resolver(self.alpha), u'a'),
+                            ('Gamma', self.resolver(self.gamma), u'a')],
+                          self.indexer.getIndexEntry('a'))
+
+        self.pub.manage_delObjects(['alpha'])
+
+        self.assertEquals([('Gamma', self.resolver(self.gamma), u'a')],
+                          self.indexer.getIndexEntry('a'))
+
 
 import unittest
 def test_suite():

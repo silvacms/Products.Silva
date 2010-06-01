@@ -19,10 +19,23 @@ from Products.Silva import SilvaPermissions
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IIndexable, IIndexer
 from silva.core.views import views as silvaviews
-from silva.core.forms import z3cforms as silvaz3cforms
 from zeam.form.silva.form import SMIAddForm
+from silva.core.references.interfaces import IReferenceService, IReferenceValue
+from silva.core.references.reference import WeakReferenceValue
 
 from silva.translations import translate as _
+
+
+class IndexerReferenceValue(WeakReferenceValue):
+
+    def __init__(self, *args, **kwargs):
+        super(IndexerReferenceValue, self).__init__(*args, **kwargs)
+        if not IIndexer.providedBy(self.source):
+            raise TypeError('Indexer only accepts IIndexer as source')
+
+    def cleanup(self):
+        super(IndexerReferenceValue, self).cleanup()
+        self.source._remove_reference_related_entries(self)
 
 
 class Indexer(Content, SimpleItem):
@@ -88,7 +101,8 @@ class Indexer(Content, SimpleItem):
         """Update the index.
         """
         result = {}
-        resolver = getUtility(IIntIds)
+        reference_service = getUtility(IReferenceService)
+
         # get tree of all subobjects
         for object in self._getIndexables():
             indexable = IIndexable(object)
@@ -97,10 +111,28 @@ class Indexer(Content, SimpleItem):
                 continue
 
             title = indexable.getTitle()
-            obj_id = resolver.register(object)
+            references = reference_service.get_references_between(
+                self, object, name="indexer")
+            try:
+                reference = references.next()
+            except StopIteration:
+                reference = reference_service.new_reference(
+                    self, name=u"indexer", factory=IndexerReferenceValue)
+                reference.set_target(object)
             for indexName, indexTitle in indexes:
-                result.setdefault(indexTitle, {})[obj_id] = (indexName, title)
+                result.setdefault(indexTitle, {})[reference.__name__] = \
+                    (indexName, title)
+
         self._index = result
+
+    def _remove_reference_related_entries(self, reference):
+        if IReferenceValue.providedBy(reference):
+            reference_name = reference.__name__
+        else:
+            reference_name = reference
+        for indexes in self._index.itervalues():
+            if indexes.has_key(reference_name):
+                del indexes[reference_name]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_deletable')
@@ -146,3 +178,5 @@ class IndexerView(silvaviews.View):
                 '<a class="indexer" href="%s#%s">%s</a>' % (
                     url, name, title))
         return '<br />'.join(result)
+
+
