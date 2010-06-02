@@ -206,15 +206,9 @@ class FolderHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
-            parent = self.parent()
-            id = attrs[(None, 'id')].encode('utf-8')
-            if self.settings().replaceObjects() and id in parent.objectIds():
-                self.setResult(getattr(parent, id))
-                return
-            uid = generateUniqueId(id, parent)
-            parent.manage_addProduct['Silva'].manage_addFolder(
-                uid, '', create_default=0)
-            self.setResult(getattr(parent, uid))
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
+            self.parent().manage_addProduct['Silva'].manage_addFolder(uid, '')
+            self.setResultId(uid)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
@@ -228,15 +222,10 @@ class PublicationHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
-            id = attrs[(None, 'id')].encode('utf-8')
-            parent = self.parent()
-            if self.settings().replaceObjects() and id in parent.objectIds():
-                self.setResult(getattr(parent, id))
-                return
-            uid = generateUniqueId(id, parent)
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addPublication(
-                uid, '', create_default=0)
-            self.setResult(getattr(parent, uid))
+                uid, '')
+            self.setResultId(uid)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
@@ -557,19 +546,21 @@ class UnknownContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return {(NS_URI, 'zexp_id'): make_character_handler('zexp_id', self),}
 
+    def startElementNS(self, name, qname, attrs):
+        if name == (NS_URI, 'unknown_content'):
+            self.setData('id', attrs[(None, 'id')])
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'unknown_content'):
             info = self.getInfo()
             import_file = info.getFileFromZIP(
-                'zexps/' + self.getData('zip_id'))
-            # Commit subtransaction to be able to get to a valid
-            # connection (the _p_jar attribute on the object)
-            transaction.get().commit()
-            ob = self.parent()._p_jar.importFile(import_file)
-            id = ob.id
-            if hasattr(id, 'im_func'):
-                id = id()
-            self.parent()._setObject(id, ob)
+                'zexps/' + self.getData('zexp_id'))
+            root = self.getInfo().importRoot()
+            content = root._p_jar.importFile(import_file)
+            uid = self.generateOrReplaceId()
+            self.parent()._setObject(str(uid), content)
+            self.setResultId(uid)
+            self.notifyImport()
 
 
 def make_character_handler(name, handler):
