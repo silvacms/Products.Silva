@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" path="/root/folder" url="http://nohost/root/folder" datetime="2004-04-23T16:13:39Z">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Test Folder
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:lastauthor>
+          sylvain-sama
+        </silva-extra:lastauthor>
+        <silva-extra:creator>
+          sylvain-sama
+        </silva-extra:creator>
+        <silva-extra:contactname>
+          Henri McArthur
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+          This folder have been created only in testing purpose.
+        </silva-extra:content_description>
+      </set>
+    </metadata>
+    <content>
+      <default>
+        <auto_toc depth="42" display_desc_flag="False" id="index"
+                  show_icon="False" sort_order="silva"
+                  types="Silva Publication,Silva Folder">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Containers
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:contactname>
+                Container-sama
+              </silva-extra:contactname>
+              <silva-extra:content_description>
+                Report all local containers
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                jean-paul
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:lastauthor>
+                jean-paul
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+            </set>
+          </metadata>
+        </auto_toc>
+      </default>
+      <auto_toc depth="-1" display_desc_flag="False" id="assets"
+                show_icon="True" sort_order="silva"
+                types="Silva File,Silva Image">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Local assets
+            </silva-content:maintitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:content_description>
+              Report local assets.
+            </silva-extra:content_description>
+            <silva-extra:creationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:creationtime>
+            <silva-extra:creator>
+              hacker-kun
+            </silva-extra:creator>
+            <silva-extra:hide_from_tocs>
+              do not hide
+            </silva-extra:hide_from_tocs>
+            <silva-extra:language>
+              japanese
+            </silva-extra:language>
+            <silva-extra:lastauthor>
+              hacker-kun
+            </silva-extra:lastauthor>
+            <silva-extra:modificationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:modificationtime>
+          </set>
+        </metadata>
+      </auto_toc>
+    </content>
+  </folder>
+</silva>

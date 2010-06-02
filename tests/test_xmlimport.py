@@ -286,24 +286,50 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(folder.get_haunted(), container)
         self.assertListEqual(folder.objectIds(), container.objectIds())
 
+    def test_autotoc(self):
+        """Import some autotoc.
+        """
+        self.import_file('test_import_autotoc.silvaxml')
+        self.assertEventsAre(
+            ['ContentImported for /root/folder/folder',
+             'ContentImported for /root/folder/folder/assets',
+             'ContentImported for /root/folder/folder/index'])
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(), ['assets', 'index'])
+
+        assets = self.root.folder.folder.assets
+        containers = self.root.folder.folder.index
+        self.failUnless(interfaces.IAutoTOC.providedBy(assets))
+        self.failUnless(interfaces.IAutoTOC.providedBy(containers))
+        self.assertEqual(assets.get_title(), u'Local assets')
+        self.assertEqual(containers.get_title(), u'Containers')
+
+        self.assertEqual(assets.show_icon(), True)
+        self.assertEqual(containers.show_icon(), False)
+        self.assertEqual(assets.toc_depth(), -1)
+        self.assertEqual(containers.toc_depth(), 42)
+        self.assertListEqual(
+            assets.get_local_types(),
+            [u'Silva File', u'Silva Image'])
+        self.assertListEqual(
+            containers.get_local_types(),
+            [u'Silva Folder', u'Silva Publication'])
+
+        binding = self.metadata.getMetadata(assets)
+        self.assertEqual(
+            binding.get('silva-extra', 'creator'), u'hacker-kun')
+        self.assertEqual(
+            binding.get('silva-extra', 'lastauthor'), u'hacker-kun')
+        self.assertEqual(
+            binding.get('silva-extra', 'hide_from_tocs'),
+            u'do not hide')
+        self.assertEqual(
+            binding.get('silva-extra', 'content_description'),
+            u'Report local assets.')
+
 
 class SetTestCase(SilvaTestCase.SilvaTestCase):
-
-
-    def test_autotoc_import(self):
-        source_file = open_test_file('test_autotoc.xml')
-        xmlimport.importFromFile(
-            source_file,
-            self.root)
-        source_file.close()
-
-        autotoc = self.root.autotokkies
-        self.assertEquals(
-            'Autotoc 1',
-            autotoc.get_title())
-        self.assertEquals(
-            'Silva AutoTOC',
-            autotoc.meta_type)
 
     def test_metadata_import(self):
         # this is a reproduction of the xmlimport bug
