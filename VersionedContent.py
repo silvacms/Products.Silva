@@ -7,6 +7,7 @@ from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.Folder import Folder as BaseFolder
@@ -320,8 +321,8 @@ class VersionedContentCataloging(Cataloging):
         for version_id in version_ids:
             if version_id is None:
                 continue
-            if hasattr(self.context.aq_base, version_id):
-                yield getattr(self.context, version_id, None)
+            if hasattr(aq_base(self.context), version_id):
+                yield getattr(self.context, version_id)
 
     def index(self, indexes=None):
         if self._catalog is None:
