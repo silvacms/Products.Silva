@@ -18,7 +18,34 @@ from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 
-class XMLImportTestCase(TestCase):
+class SilvaXMLTestCase(TestCase):
+    """Test case with some helpers to work with XML import.
+    """
+
+    def import_file(self, filename, globs=None, replace=False):
+        """Import an XML file.
+        """
+        if globs is None:
+            globs = globals()
+        with open_test_file(filename, globs) as source_file:
+            xmlimport.importFromFile(
+                source_file, self.root.folder, replace=replace)
+
+    def import_zip(self, filename, globs=None, replace=False):
+        """Import a ZIP file.
+        """
+        if globs is None:
+            globs = globals()
+        with open_test_file(filename, globs) as source_file:
+            source_zip = ZipFile(source_file)
+            info = xmlimport.ImportInfo()
+            info.setZIPFile(source_zip)
+            import_file = StringIO(source_zip.read('silva.xml'))
+            xmlimport.importFromFile(
+                import_file, self.root.folder, info=info, replace=replace)
+
+
+class XMLImportTestCase(SilvaXMLTestCase):
     """Import data from an XML file.
     """
     layer = FunctionalLayer
@@ -29,24 +56,6 @@ class XMLImportTestCase(TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         self.metadata = getUtility(IMetadataService)
-
-    def import_file(self, filename, replace=False):
-        """Import an XML file.
-        """
-        with open_test_file(filename) as source_file:
-            xmlimport.importFromFile(
-                source_file, self.root.folder, replace=replace)
-
-    def import_zip(self, filename, replace=False):
-        """Import a ZIP file.
-        """
-        with open_test_file(filename) as source_file:
-            source_zip = ZipFile(source_file)
-            info = xmlimport.ImportInfo()
-            info.setZIPFile(source_zip)
-            import_file = StringIO(source_zip.read('silva.xml'))
-            xmlimport.importFromFile(
-                import_file, self.root.folder, info=info, replace=replace)
 
     def test_publication(self):
         """Test import of publication.

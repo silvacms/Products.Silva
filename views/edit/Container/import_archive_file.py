@@ -19,7 +19,7 @@ fullmedia = importer.isFullmediaArchive(archive)
 
 try:
     if fullmedia:
-        succeeded, failed = importer.importFromZip(model, archive,  replace)
+        succeeded, failed = importer.importFromZip(archive,  replace)
     else:
         importer = archivefileimport.getArchiveFileImportAdapter(model)
         succeeded, failed = importer.importArchive(

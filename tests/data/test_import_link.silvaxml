@@ -60,7 +60,6 @@
           </metadata>
         </auto_toc>
       </default>
-
       <link id="link">
         <workflow>
           <version id="0">
@@ -106,8 +105,6 @@
           </url>
         </content>
       </link>
-
-
     </content>
   </folder>
 </silva>

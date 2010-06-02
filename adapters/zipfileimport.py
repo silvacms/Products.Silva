@@ -44,34 +44,29 @@ class ZipfileImportAdapter(grok.Adapter):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importFromZip')
-    def importFromZip(self, container, zipfile, replace=0):
+    def importFromZip(self, zipfile, replace=0):
         """ imports fullmedia zipfile
         """
-        # XXX container should be self.context !@!#?#?!!!
-        existing_objects = container.objectIds()
+        existing_objects = self.context.objectIds()
+
         archive = ZipFile(zipfile, 'r')
         info = xmlimport.ImportInfo()
-        info.setZipFile(archive)
-        source_file = StringIO(archive.read('silva.xml'))
-        if replace:
-            result = xmlimport.importReplaceFromFile(
-                source_file,
-                container,
-                info=info)
-        else:
-            result = xmlimport.importFromFile(
-                source_file,
-                container,
-                info=info)
-        source_file.close()
-        archive.close()
+        info.setZIPFile(archive)
+        source_file = info.getFileFromZIP('silva.xml')
+        try:
+            imported = xmlimport.importFromFile(
+                source_file, self.context, info=info, replace=replace)
 
-        succeeded = []
-        failed = []
-        for id in result.objectIds():
-            if id not in existing_objects:
-               succeeded.append(id)
-        return succeeded, failed
+            succeeded = []
+            failed = []
+            for id in imported.objectIds():
+                if id not in existing_objects:
+                    succeeded.append(id)
+            return succeeded, failed
+        finally:
+            source_file.close()
+            archive.close()
+
 
 InitializeClass(ZipfileImportAdapter)
 
