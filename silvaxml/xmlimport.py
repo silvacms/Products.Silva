@@ -117,12 +117,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         """
         self.getInfo().addAction(notify, [ContentImported(self.result())])
 
-    def setMaintitle(self):
-        title = self.getMetadata('silva-content', 'maintitle')
-        if title is not None:
-            # metadata delivers utf-8, set_title expects unicode
-            self.result().set_title(unicode(title, 'utf-8'))
-
     def setResultId(self, uid):
         self.setResult(getattr(self.parent(), uid))
 
@@ -224,7 +218,6 @@ class FolderHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'folder'):
-            self.setMaintitle()
             self.storeMetadata()
             self.notifyImport()
 
@@ -247,7 +240,6 @@ class PublicationHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'publication'):
-            self.setMaintitle()
             self.storeMetadata()
             self.notifyImport()
 
@@ -277,7 +269,6 @@ class AutoTOCHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
-            self.setMaintitle()
             self.storeMetadata()
             self.notifyImport()
 
@@ -295,7 +286,7 @@ class IndexerHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'indexer'):
-            self.setMaintitle()
+            #self.setMaintitle()
             self.storeMetadata()
             self.getInfo().addAction(self.result().update, [])
             self.notifyImport()
@@ -495,7 +486,6 @@ class LinkVersionHandler(SilvaBaseHandler):
                 info.addAction(
                     resolve_path, [link.set_target, info.importRoot(), target])
             updateVersionCount(self)
-            self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
 
@@ -531,7 +521,6 @@ class ImageHandler(SilvaBaseHandler):
                 self.result().set_web_presentation_properties(
                     web_format, web_scale, web_crop)
 
-            self.setMaintitle()
             self.storeMetadata()
             self.notifyImport()
 
@@ -556,7 +545,6 @@ class FileHandler(SilvaBaseHandler):
             self.parent().manage_addProduct['Silva'].manage_addFile(
                 uid, '', import_file)
             self.setResultId(uid)
-            self.setMaintitle()
             self.storeMetadata()
             self.notifyImport()
 
