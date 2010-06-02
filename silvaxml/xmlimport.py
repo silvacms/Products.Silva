@@ -6,7 +6,9 @@ from StringIO import StringIO
 import logging
 import warnings
 
+from five import grok
 from zope.component import getUtility
+from zope.event import notify
 
 from DateTime import DateTime
 import transaction
@@ -16,6 +18,8 @@ from Products.Silva import mangle
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core import conf as silvaconf
+from silva.core.interfaces import ISilvaObject
+from silva.core.interfaces.events import ContentImported, IContentImported
 from silva.core.references.interfaces import IReferenceService
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade.silvaxml import upgradeXMLOnFD
@@ -30,12 +34,16 @@ theXMLImporter = xmlimport.Importer()
 logger = logging.getLogger('silva.xml')
 
 
+@grok.subscribe(ISilvaObject, IContentImported)
+def reindex_import_content(content, event):
+    """Re-index imported content.
+    """
+    ICataloging(content).index()
+
 
 def parse_date(date):
-    if date is not None:
-        date = date.strip()
-        if date:
-            return DateTime(date)
+    if date:
+        return DateTime(date)
     return None
 
 
@@ -52,7 +60,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     """Base class to writer an XML importer for a Silva content. It
     provides helpers to set Silva properties and metadatas.
     """
-    silvaconf.baseclass()
+    grok.baseclass()
 
     def __init__(self, parent, parent_handler, settings=None, info=None):
         xmlimport.BaseHandler.__init__(
@@ -93,7 +101,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                             data={
                                 element_name: field.validator.deserializeValue(
                                     field, elements[element_name])},
-                            reindex=1)
+                            reindex=0)
                     except ValidationError:
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (
@@ -103,13 +111,17 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                             u"value %s is not allowed for %s in set %s." % (
                                 elements[element_name], element_name, set_id))
 
+    def notifyImport(self):
+        """Notify the event system that the content have been
+        imported. This must be the last item done.
+        """
+        self.getInfo().addAction(notify, [ContentImported(self.result())])
 
     def setMaintitle(self):
-        main_title = self.getMetadata('silva-content', 'maintitle')
-        if main_title is not None:
+        title = self.getMetadata('silva-content', 'maintitle')
+        if title is not None:
             # metadata delivers utf-8, set_title expects unicode
-            main_title = unicode(main_title, 'utf-8')
-            self.result().set_title(main_title)
+            self.result().set_title(unicode(title, 'utf-8'))
 
     def setResultId(self, uid):
         self.setResult(getattr(self.parent(), uid))
@@ -191,12 +203,12 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
 
 class SilvaExportRootHandler(SilvaBaseHandler):
 
-    silvaconf.name('silva')
+    grok.name('silva')
 
 
 class FolderHandler(SilvaBaseHandler):
 
-    silvaconf.name('folder')
+    grok.name('folder')
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'folder'):
@@ -214,11 +226,12 @@ class FolderHandler(SilvaBaseHandler):
         if name == (NS_URI, 'folder'):
             self.setMaintitle()
             self.storeMetadata()
+            self.notifyImport()
 
 
 class PublicationHandler(SilvaBaseHandler):
 
-    silvaconf.name('publication')
+    grok.name('publication')
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'publication'):
@@ -236,11 +249,12 @@ class PublicationHandler(SilvaBaseHandler):
         if name == (NS_URI, 'publication'):
             self.setMaintitle()
             self.storeMetadata()
+            self.notifyImport()
 
 
 class AutoTOCHandler(SilvaBaseHandler):
 
-    silvaconf.name('auto_toc')
+    grok.name('auto_toc')
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'auto_toc'):
@@ -265,11 +279,12 @@ class AutoTOCHandler(SilvaBaseHandler):
         if name == (NS_URI, 'auto_toc'):
             self.setMaintitle()
             self.storeMetadata()
+            self.notifyImport()
 
 
 class IndexerHandler(SilvaBaseHandler):
 
-    silvaconf.name('indexer')
+    grok.name('indexer')
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'indexer'):
@@ -283,11 +298,12 @@ class IndexerHandler(SilvaBaseHandler):
             self.setMaintitle()
             self.storeMetadata()
             self.getInfo().addAction(self.result().update, [])
+            self.notifyImport()
 
 
 class VersionHandler(SilvaBaseHandler):
 
-    silvaconf.name('version')
+    grok.name('version')
 
     def getOverrides(self):
         return {
@@ -312,7 +328,7 @@ class VersionHandler(SilvaBaseHandler):
 
 class SetHandler(SilvaBaseHandler):
 
-    silvaconf.name('set')
+    grok.name('set')
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'set'):
@@ -325,7 +341,7 @@ class SetHandler(SilvaBaseHandler):
 
     def characters(self, chars):
         if self.parentHandler().metadataKey() is not None:
-            self._chars = chars
+            self._chars = chars.strip()
 
     def endElementNS(self, name, qname):
         if name != (NS_URI, 'set'):
@@ -344,7 +360,7 @@ class SetHandler(SilvaBaseHandler):
 
 class GhostHandler(SilvaBaseHandler):
 
-    silvaconf.name('ghost')
+    grok.name('ghost')
 
     def getOverrides(self):
         return {(NS_URI, 'content'): GhostContentHandler}
@@ -355,6 +371,10 @@ class GhostHandler(SilvaBaseHandler):
             self.parent().manage_addProduct['Silva'].manage_addGhost(
                 uid, '', no_default_version=True)
             self.setResultId(uid)
+
+    def endElementNS(self, name, qname):
+        if name == (NS_URI, 'ghost'):
+            self.notifyImport()
 
 
 class GhostContentHandler(SilvaBaseHandler):
@@ -389,7 +409,7 @@ class GhostContentHandler(SilvaBaseHandler):
 
 class GhostFolderHandler(SilvaBaseHandler):
 
-    silvaconf.name('ghost_folder')
+    grok.name('ghost_folder')
 
     def getOverrides(self):
         return {
@@ -417,6 +437,7 @@ class GhostFolderHandler(SilvaBaseHandler):
                     resolve_path,
                     [folder.set_haunted, info.importRoot(), haunted])
                 info.addAction(folder.haunt, [])
+            self.notifyImport()
 
 
 class NoopHandler(SilvaBaseHandler):
@@ -427,7 +448,7 @@ class NoopHandler(SilvaBaseHandler):
 
 class LinkHandler(SilvaBaseHandler):
 
-    silvaconf.name('link')
+    grok.name('link')
 
     def getOverrides(self):
         return {(NS_URI, 'content'): LinkVersionHandler}
@@ -441,8 +462,7 @@ class LinkHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'link'):
-            # move this to an event. Should be done after in runActions
-            ICataloging(self.result()).reindex()
+            self.notifyImport()
 
 
 class LinkVersionHandler(SilvaBaseHandler):
@@ -483,7 +503,7 @@ class LinkVersionHandler(SilvaBaseHandler):
 class ImageHandler(SilvaBaseHandler):
     """Import a Silva image.
     """
-    silvaconf.name('image_asset')
+    grok.name('image_asset')
 
     def getOverrides(self):
         return {(NS_URI, 'asset_id'): make_character_handler('zip_id', self),}
@@ -513,12 +533,13 @@ class ImageHandler(SilvaBaseHandler):
 
             self.setMaintitle()
             self.storeMetadata()
+            self.notifyImport()
 
 
 class FileHandler(SilvaBaseHandler):
     """Import a Silva File.
     """
-    silvaconf.name('file_asset')
+    grok.name('file_asset')
 
     def getOverrides(self):
         return {(NS_URI, 'asset_id'): make_character_handler('zip_id', self),}
@@ -537,12 +558,13 @@ class FileHandler(SilvaBaseHandler):
             self.setResultId(uid)
             self.setMaintitle()
             self.storeMetadata()
+            self.notifyImport()
 
 
 class UnknownContentHandler(SilvaBaseHandler):
     """Importer for content which have been exported in a ZEXP.
     """
-    silvaconf.name('unknown_content')
+    grok.name('unknown_content')
 
     def getOverrides(self):
         return {(NS_URI, 'zexp_id'): make_character_handler('zexp_id', self),}
@@ -589,6 +611,8 @@ class ImportSettings(xmlimport.BaseSettings):
 
 
 class ImportInfo(object):
+    """Manage information about the import.
+    """
 
     def __init__(self):
         self.__zip_file = None
