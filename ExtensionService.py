@@ -78,8 +78,7 @@ def install_documentation(container):
     documentation_path = os.path.join(
         os.path.dirname(__file__), 'doc', 'silva_docs.zip')
     with open(documentation_path, 'rb') as documentation:
-        interfaces.IZipfileImporter(container).importFromZip(
-            container, documentation)
+        interfaces.IZipfileImporter(container).importFromZip(documentation)
 
 
 class ExtensionService(Folder, SilvaService):
