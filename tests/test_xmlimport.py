@@ -23,6 +23,16 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 class SilvaXMLTestCase(TestCase):
     """Test case with some helpers to work with XML import.
     """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        self.metadata = getUtility(IMetadataService)
+        # setUp triggered some events. Clear them.
+        clearEvents()
 
     def import_file(self, filename, globs=None, replace=False):
         """Import an XML file.
@@ -61,16 +71,6 @@ def repr_event(evt):
 class XMLImportTestCase(SilvaXMLTestCase):
     """Import data from an XML file.
     """
-    layer = FunctionalLayer
-
-    def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
-        self.metadata = getUtility(IMetadataService)
-        # setUp triggered some events. Clear them.
-        clearEvents()
 
     def test_publication(self):
         """Test import of publication.
