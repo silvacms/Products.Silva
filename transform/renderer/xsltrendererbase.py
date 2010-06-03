@@ -8,6 +8,7 @@ import os
 import threading
 
 from five import grok
+from zope.component import getMultiAdapter
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -76,9 +77,9 @@ class XSLTTransformer(object):
             self._local.stylesheet = etree.XSLT(xslt_doc)
         return self._local.stylesheet
 
-    def transform(self, obj):
-        source_xml = IXMLSource(obj).getXML(external_rendering=True)
-        return self.transform_xml(source_xml)
+    def transform(self, context, request):
+        source = getMultiAdapter((context, request), IXMLSource).getXML()
+        return self.transform_xml(source)
 
     def transform_xml(self, text):
         style = self.stylesheet()

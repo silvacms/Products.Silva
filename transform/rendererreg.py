@@ -18,14 +18,14 @@ class RendererRegistry(object):
         """Register a class as a renderer for a meta type under a name.
         """
         del self._renderers.setdefault(meta_type, {})[renderer_name]
-        
+
     def getRenderersForMetaType(self, meta_type):
         """Return a dictionary of registered renderers for this meta type
         """
         return self._renderers.get(meta_type)
-    
+
     def getMetaTypes(self):
-        """Return a list of all meta types for which nay renderers are are 
+        """Return a list of all meta types for which nay renderers are are
         registered.
         """
         return self._renderers.keys()

@@ -3,26 +3,28 @@
 # $Id$
 
 from five import grok
-
 from silva.core import interfaces
+from zope.publisher.interfaces.browser import IBrowserRequest
+
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 
 
-class XMLSourceAdapter(grok.Adapter):
+class XMLSourceAdapter(grok.MultiAdapter):
     """Adapter for Silva objects to get their XML content.
     """
     grok.implements(IXMLSource)
     grok.provides(IXMLSource)
-    grok.context(interfaces.ISilvaObject)
+    grok.adapts(interfaces.ISilvaObject, IBrowserRequest)
 
-    def getXML(self,
-               version=xmlexport.PREVIEWABLE_VERSION,
-               external_rendering=False):
-        # Set settings
-        settings = xmlexport.ExportSettings()
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def getXML(self, version=xmlexport.PREVIEWABLE_VERSION):
+        settings = xmlexport.ExportSettings(request=self.request)
         settings.setVersion(version)
-        settings.setExternalRendering(external_rendering)
+        settings.setExternalRendering(True)
 
         xml, info = xmlexport.exportToString(self.context, settings)
         return xml
@@ -31,6 +33,6 @@ class XMLSourceAdapter(grok.Adapter):
 class XMLSourceVersionAdapter(XMLSourceAdapter):
     """XMLSourceAdapter for content version.
     """
-    grok.context(interfaces.IVersion)
+    grok.adapts(interfaces.IVersion, IBrowserRequest)
 
 
