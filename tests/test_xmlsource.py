@@ -3,27 +3,21 @@
 # See also LICENSE.txt
 # $Id$
 
-import re
 import unittest
 
 from zope.interface.verify import verifyObject
 from zope.publisher.browser import TestRequest
 from zope.component import getMultiAdapter
 
-from Products.Silva.testing import FunctionalLayer
-from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
 from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
 
 
-class XMLSourceTest(SilvaXMLTestCase):
+class XMLSourceTestCase(SilvaXMLTestCase):
     """Test XML source adapter.
     """
-    layer = FunctionalLayer
-
     def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('author')
+        super(XMLSourceTestCase, self).setUp()
         factory = self.root.manage_addProduct['SilvaDocument']
         factory.manage_addDocument('document', 'Test Document')
 
@@ -46,5 +40,5 @@ class XMLSourceTest(SilvaXMLTestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(XMLSourceTest))
+    suite.addTest(unittest.makeSuite(XMLSourceTestCase))
     return suite

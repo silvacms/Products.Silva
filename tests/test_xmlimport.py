@@ -9,7 +9,7 @@ import unittest
 from DateTime import DateTime
 
 from zope.component import getUtility
-from zope.component.eventtesting import getEvents, clearEvents
+from zope.component.eventtesting import clearEvents
 from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
 

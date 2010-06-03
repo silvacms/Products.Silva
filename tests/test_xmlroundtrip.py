@@ -9,7 +9,7 @@ import unittest
 from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
 from zope.component import getAdapter
-from zope.component.eventtesting import getEvents, clearEvents
+from zope.component.eventtesting import clearEvents
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer, TestCase

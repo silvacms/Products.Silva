@@ -24,6 +24,13 @@ DATETIME_RE = re.compile(
 
 
 class SilvaXMLTestCase(TestCase):
+    """Basic TestCase to test XML export features.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
 
     def get_namespaces(self):
         # this is needed because we don't know the namespaces registered
@@ -61,11 +68,9 @@ class SilvaXMLTestCase(TestCase):
 class XMLExportTestCase(SilvaXMLTestCase):
     """Test XML Exporter.
     """
-    layer = FunctionalLayer
 
     def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('author')
+        super(XMLExportTestCase, self).setUp()
         self.root.manage_addProduct['Silva'].manage_addFolder(
             'folder', 'This is <boo>a</boo> folder',
             policy_name='Silva AutoTOC')
