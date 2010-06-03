@@ -9,7 +9,7 @@ import SilvaTestCase
 from zope.interface import implements
 from DateTime import DateTime
 
-from Products.silva.tests.helpers import open_test_file
+from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry

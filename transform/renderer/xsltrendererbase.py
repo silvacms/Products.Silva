@@ -65,17 +65,17 @@ class XSLTTransformer(object):
         self._import_dir = import_dir
         self._error_handler = ErrorHandler()
         # we store stylesheets in a thread-local storage
-        self._local = threading.local()
+        self.__local = threading.local()
 
     def stylesheet(self):
-        if not hasattr(self._local, 'stylesheet'):
+        if not hasattr(self.__local, 'stylesheet'):
             f = open(self._stylesheet_path)
             parser = etree.XMLParser()
             parser.resolvers.add(ImportResolver(self._import_dir))
             xslt_doc = etree.parse(f, parser)
             f.close()
-            self._local.stylesheet = etree.XSLT(xslt_doc)
-        return self._local.stylesheet
+            self.__local.stylesheet = etree.XSLT(xslt_doc)
+        return self.__local.stylesheet
 
     def transform(self, context, request):
         source = getMultiAdapter((context, request), IXMLSource).getXML()

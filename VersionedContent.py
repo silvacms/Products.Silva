@@ -28,14 +28,6 @@ from silva.core.views.interfaces import IPreviewLayer
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 
-class CachedData(Persistent):
-    """ Persistent cache container
-    """
-    def __init__(self, data, datetime):
-        self.data = data
-        self.datetime = datetime
-
-
 class VersionedContent(Content, Versioning, BaseFolder):
     security = ClassSecurityInfo()
 
@@ -45,9 +37,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
     # there is always at least a single version to start with,
     # created by the object's factory function
     _version_count = 1
-    # for backwards compatibilty - ugh.
-    _cached_checked = {}
-    _cached_data = {}
 
     # Set ZMI tabs
     manage_options = (
@@ -55,12 +44,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
         ({'label': 'Silva /edit...', 'action':'edit'},)+
         BaseFolder.manage_options[1:])
 
-    def __init__(self, id):
-        """Initialize VersionedContent.
-        """
-        super(VersionedContent, self).__init__(id)
-        self._cached_data = {}
-        self._cached_checked = {}
 
     # MANIPULATORS
 
@@ -200,76 +183,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
             if version is None:
                 raise NotFound(version_name)
         return super(VersionedContent, self).view_version(version)
-
-    security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self):
-        """
-        """
-        # XXX the "suppress_title" hack in the
-        # SilvaDocument widget/top/doc/mode_view
-        # makes it necessary to bypass the cache here
-        if self.REQUEST.other.get('suppress_title'):
-            return VersionedContent.inheritedAttribute('view')(self)
-
-        if IPreviewLayer.providedBy(self.REQUEST):
-            # Preview, don't pay attention to the cache.
-            return VersionedContent.inheritedAttribute('view')(self)
-
-        adapter = getVirtualHostingAdapter(self)
-        cache_key = ('public', adapter.getVirtualHostKey())
-        data = self._get_cached_data(cache_key)
-        if data is not None:
-            return data
-
-        # No cache or not valid anymore, so render.
-        data = VersionedContent.inheritedAttribute('view')(self)
-        # See if the previous cacheability check is still valid,
-        # if not, see if we can cache at all.
-        publicationtime = self.get_public_version_publication_datetime()
-        refreshtime = self.service_extensions.get_refresh_datetime()
-        cache_check_time = self._cached_checked.get(cache_key, None)
-        if (cache_check_time <= publicationtime or
-                cache_check_time <= refreshtime):
-            if self.is_cacheable():
-                # Caching the data is allowed.
-                now = DateTime()
-                self._cached_data[cache_key] = CachedData(data, now)
-                self._cached_checked[cache_key] = now
-                self._p_changed = 1
-            else:
-                # Remove from cache if caching is not allowed
-                # or not valid anymore.
-                # Only remove if there is something to remove,
-                # avoiding creating a transaction each time.
-                if self._cached_data.has_key(cache_key):
-                    del self._cached_data[cache_key]
-                    self._p_changed = 1
-        return data
-
-    def _get_cached_data(self, cache_key):
-        cached_data = self._cached_data.get(cache_key, None)
-        if cached_data is not None:
-            # If cache is still valid, serve it.
-            # XXX: get_public_version_publication_datetime *and*
-            # is_version_published trigger workflow updates; necessary?
-            data, datetime = cached_data.data, cached_data.datetime
-            publicationtime = self.get_public_version_publication_datetime()
-            if datetime > publicationtime:
-                refreshtime = self.service_extensions.get_refresh_datetime()
-                if (datetime > refreshtime and self.is_version_published()):
-                    # Yes! We have valid cached data! Return data
-                    return data
-        return None
-
-    def _clean_cache(self):
-        self._cached_data = {}
-        self._cached_checked = {}
-
-    security.declareProtected(SilvaPermissions.View, 'is_cached')
-    def is_cached(self, view_type='public'):
-        adapter = getVirtualHostingAdapter(self)
-        cache_key = (view_type, adapter.getVirtualHostKey())
-        return self._get_cached_data(cache_key) is not None
 
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):

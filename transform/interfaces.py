@@ -34,8 +34,13 @@ class IRenderer(Interface):
     meta_type = Attribute(u"Meta type rendered by this renderer")
     title = Attribute(u"Name for the renderer")
 
-    def render(obj):
-        """Renders obj; returns the rendering as a string."""
+    def transform(content, request):
+        """Render content by get out the XML out of it. Return a string
+        """
+
+    def transform_xml(xml):
+        """Render XML.
+        """
 
 
 class IRendererRegistry(Interface):
