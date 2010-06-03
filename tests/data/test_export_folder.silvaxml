@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<silva xmlns="http://infrae.com/namespace/silva" {namespaces} datetime="YYYY-MM-DDTHH:MM:SS" path="/root/folder" silva_version="{version}" url="http://foo/root/folder">
+<silva xmlns="http://infrae.com/namespace/silva" {namespaces} silva_version="{version}">
   <folder id="folder">
     <metadata>
       <set id="silva-content">

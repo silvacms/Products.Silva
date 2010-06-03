@@ -2,75 +2,120 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
-from zope.component import getAdapter
-
-import SilvaTestCase
-from SilvaTestCase import transaction
-from Products.Silva.silvaxml import xmlimport
-from silva.core import interfaces
-
-class SetTestCase(SilvaTestCase.SilvaTestCase):
-    def test_xml_roundtrip(self):
-        from StringIO import StringIO
-        from Products.Silva.silvaxml import xmlexport
-        from zipfile import ZipFile
-
-        directory = os.path.dirname(__file__)
-
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        importer = xmlimport.theXMLImporter
-        zip_file = ZipFile(os.path.join(directory, 'data/test_export.zip'), 'r')
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        test_info.setZipFile(zip_file)
-        bytes = zip_file.read('silva.xml')
-        source_file = StringIO(bytes)
-        importer.importFromFile(
-            source_file,
-            result=importfolder,
-            settings=test_settings,
-            info=test_info)
-        source_file.close()
-        zip_file.close()
-        # normal xml import works
-        self.assertEquals(
-            importfolder.testfolder.testfolder2.test_link.id,
-            'test_link')
-        # asset file import works
-        self.assertEquals(
-            importfolder.testfolder.testfolder2['testzip']['sound1.wav'].id,
-            'sound1.wav')
-        # .zexp import works:
-        self.assertEquals(
-            importfolder.testfolder.testfolder2.testzip.foo.bar.baz['image5.jpg'].id,
-            'image5.jpg')
-        transaction.savepoint()
-        testfolder = importfolder.testfolder
-        xmlexport.initializeXMLExportRegistry()
-        settings = xmlexport.ExportSettings()
-        adapter = getAdapter(testfolder, interfaces.IContentExporter, name='zip')
-        result = adapter.export(settings)
-        f = open(os.path.join(directory, 'test_export.zip'), 'wb')
-        f.write(result)
-        f.close()
-        f = open(os.path.join(directory, 'test_export.zip'), 'rb')
-        zip_out = ZipFile(f, 'r')
-        namelist = zip_out.namelist()
-        namelist.sort()
-        self.assertEquals(namelist, [
-            'assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg', 'assets/4.jpg',
-            'assets/5.jpg', 'assets/6.wav', 'silva.xml'])
-        zip_out.close()
-        f.close()
-        os.remove(os.path.join(directory, 'test_export.zip'))
-            
+from cStringIO import StringIO
+from zipfile import ZipFile
 import unittest
+
+from silva.core import interfaces
+from silva.core.interfaces.events import IContentImported
+from zope.component import getAdapter
+from zope.component.eventtesting import getEvents, clearEvents
+from zope.interface.verify import verifyObject
+
+from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.tests.helpers import open_test_file
+
+
+class ImportExportTripTestCase(TestCase):
+    """Export/Import/Export data in XML. Check that you obtain twice
+    the same export.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+
+    def test_round_trip(self):
+        """Make a trip:
+        1. Create items.
+        2. Export them.
+        3. Import them.
+        4. Export them.
+        5. Check that export created at 2. and 4. are identical.
+        """
+        # 1. create content
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('publication', 'Publication')
+
+        factory = self.root.publication.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'infrae', 'Infrae', relative=False, url='http://infrae.com')
+        factory.manage_addIndexer('assets', 'Assets')
+        factory.manage_addFolder('pictures', 'Pictures')
+        factory.manage_addFolder('trash', 'Trash')
+
+        factory = self.root.publication.pictures.manage_addProduct['Silva']
+        factory.manage_addImage(
+            'torvald', 'Torvald', open_test_file('torvald.jpg'))
+        factory.manage_addFile(
+            'unknown', 'Something testique', open_test_file('testimage.gif'))
+        factory.manage_addFolder('tobesorted', 'To Be Sorted Eh!')
+
+        factory = self.root.publication.manage_addProduct['Silva']
+        factory.manage_addGhost(
+            'nice', None, haunted=self.root.publication.pictures.torvald)
+
+        factory = self.root.publication.manage_addProduct['PythonScripts']
+        factory.manage_addPythonScript('kikoo.py')
+
+        # 2. export
+        exporter1 = getAdapter(
+            self.root.publication,
+            interfaces.IContentExporter, name='zip')
+        self.failUnless(verifyObject(interfaces.IContentExporter, exporter1))
+
+        export1 = exporter1.export()
+
+        # 3. import
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Import Folder')
+        importer = getAdapter(
+            self.root.folder, interfaces.IZipFileImporter)
+        self.failUnless(verifyObject(interfaces.IZipFileImporter, importer))
+
+        clearEvents()
+        importer.importFromZip(StringIO(export1))
+
+        self.assertEventsAre(
+            ['ContentImported for /root/folder/publication',
+             'ContentImported for /root/folder/publication/assets',
+             'ContentImported for /root/folder/publication/infrae',
+             'ContentImported for /root/folder/publication/kikoo.py',
+             'ContentImported for /root/folder/publication/nice',
+             'ContentImported for /root/folder/publication/pictures',
+             'ContentImported for /root/folder/publication/pictures/tobesorted',
+             'ContentImported for /root/folder/publication/pictures/torvald',
+             'ContentImported for /root/folder/publication/pictures/unknown',
+             'ContentImported for /root/folder/publication/trash'],
+            IContentImported)
+
+        imported_ghost = self.root.folder.publication.nice
+        imported_image = self.root.folder.publication.pictures.torvald
+        self.assertEqual(
+            imported_ghost.get_editable().get_haunted(),
+            imported_image)
+
+        # 4. export
+        exporter2 = getAdapter(
+            self.root.folder.publication,
+            interfaces.IContentExporter, name='zip')
+
+        export2 = exporter2.export()
+
+        # 5. compare the two exports
+        zip_export1 = ZipFile(StringIO(export1))
+        zip_export2 = ZipFile(StringIO(export2))
+
+        self.failUnless('silva.xml' in zip_export1.namelist())
+        self.assertListEqual(zip_export1.namelist(), zip_export2.namelist())
+        silva_export1 = zip_export1.read('silva.xml')
+        silva_export2 = zip_export2.read('silva.xml')
+
+        self.assertXMLEqual(silva_export1, silva_export2)
+
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(SetTestCase))
-    return suite    
+    suite.addTest(unittest.makeSuite(ImportExportTripTestCase))
+    return suite

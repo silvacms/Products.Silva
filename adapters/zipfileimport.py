@@ -12,29 +12,29 @@ from AccessControl import ClassSecurityInfo, allow_module
 from App.class_init import InitializeClass
 
 # Silva
-from silva.core.interfaces import IZipfileImporter, IContainer
+from silva.core.interfaces import IZipFileImporter, IContainer
 
 # Silva Adapters
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva import SilvaPermissions
 
 
-class ZipfileImportAdapter(grok.Adapter):
+class ZipFileImportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the full media import from zipfiles.
     """
 
-    grok.implements(IZipfileImporter)
-    grok.provides(IZipfileImporter)
+    grok.implements(IZipFileImporter)
+    grok.provides(IZipFileImporter)
     grok.context(IContainer)
 
     security = ClassSecurityInfo()
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'isFullmediaArchive')
-    def isFullmediaArchive(self, archive):
+    def isFullmediaArchive(self, input_archive):
         """Returns true if the archive is a fullmedia archive
         """
-        archive = ZipFile(archive, 'r')
+        archive = ZipFile(input_archive, 'r')
         try:
             if 'silva.xml' in archive.namelist():
                 return True
@@ -44,12 +44,12 @@ class ZipfileImportAdapter(grok.Adapter):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'importFromZip')
-    def importFromZip(self, zipfile, replace=0):
+    def importFromZip(self, input_archive, replace=0):
         """ imports fullmedia zipfile
         """
         existing_objects = self.context.objectIds()
 
-        archive = ZipFile(zipfile, 'r')
+        archive = ZipFile(input_archive, 'r')
         info = xmlimport.ImportInfo()
         info.setZIPFile(archive)
         source_file = info.getFileFromZIP('silva.xml')
@@ -68,7 +68,7 @@ class ZipfileImportAdapter(grok.Adapter):
             archive.close()
 
 
-InitializeClass(ZipfileImportAdapter)
+InitializeClass(ZipFileImportAdapter)
 
 allow_module('Products.Silva.adapters.zipfileimport')
 

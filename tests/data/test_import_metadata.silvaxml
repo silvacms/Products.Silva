@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" xmlns:silva-cool="http://infrae.com/namespaces/metadata/silva-cool-stuff" datetime="2004-09-13T09:21:46Z" path="/export/publication" silva_version="Silva 1.1b1" url="http://hubble:8080/export/publication">
+ <publication id="publication">
+  <metadata>
+   <set id="silva-content">
+    <silva-content:maintitle>
+     Test Publication
+    </silva-content:maintitle>
+    <silva-content:shorttitle>
+    </silva-content:shorttitle>
+   </set>
+   <set id="silva-extra">
+    <silva-extra:creationtime>
+     2004-09-13T09:21:29Z
+    </silva-extra:creationtime>
+    <silva-extra:creator>
+     admin
+    </silva-extra:creator>
+    <silva-extra:lastauthor>
+     n/a
+    </silva-extra:lastauthor>
+    <silva-extra:modificationtime>
+     2004-09-13T09:21:29Z
+    </silva-extra:modificationtime>
+    <silva-extra:unknownstuff>
+      Unknown metadata element.
+    </silva-extra:unknownstuff>
+   </set>
+   <set id="silva-cool">
+    <silva-cool:level>
+      Supa-cool level.
+    </silva-cool:level>
+   </set>
+  </metadata>
+  <content>
+  </content>
+ </publication>
+</silva>
+

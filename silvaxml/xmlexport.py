@@ -398,17 +398,13 @@ class ZexpProducer(SilvaBaseProducer):
 class SilvaExportRoot(object):
 
     def __init__(self, exportable):
-        self._exportable = exportable
-        self._exportDateTime = DateTime()
+        self.__exportable = exportable
 
     def getSilvaVersion(self):
         return 'Silva %s' % extensionRegistry.get_extension('Silva').version
 
     def getExportable(self):
-        return self._exportable
-
-    def getDateTime(self):
-        return self._exportDateTime
+        return self.__exportable
 
 
 class SilvaExportRootProducer(xmlexport.BaseProducer):
@@ -416,10 +412,7 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
     def sax(self):
         self.startElement(
             'silva',
-            {'datetime': self.context.getDateTime().HTML4(),
-             'path': '/'.join(self.context.getExportable().getPhysicalPath()),
-             'url': self.context.getExportable().absolute_url(),
-             'silva_version': self.context.getSilvaVersion()})
+            {'silva_version': self.context.getSilvaVersion()})
         self.subsax(self.context.getExportable())
         self.endElement('silva')
 
