@@ -2,10 +2,14 @@
 # See also LICENSE.txt
 # $Id$
 
+import unittest
 import os
 import SilvaTestCase
+
 from zope.interface import implements
 from DateTime import DateTime
+
+from Products.silva.tests.helpers import open_test_file
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
@@ -24,10 +28,6 @@ class FakeRenderer:
     def getName(self):
         return "Fake Renderer"
 
-def testopen(path, rw='r'):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
-
 class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
@@ -39,7 +39,8 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         importer = xmlimport.theXMLImporter
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
-        source_file = testopen("data/test_document.xml")
+
+        source_file = open_test_file("data/test_document.xml")
         importer.importFromFile(
             source_file, result = importfolder,
             settings = test_settings, info = test_info)
@@ -79,7 +80,6 @@ class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(obj.preview(), 'I faked all my renderings.')
         registry.unregisterRenderer('Silva Document', 'Fake Renderer')
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(PublicViewRenderingTest))

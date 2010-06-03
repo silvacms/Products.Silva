@@ -2,146 +2,118 @@
 # See also LICENSE.txt
 # $Id$
 
+import unittest
+
 from Products.Silva.RendererRegistryService import OLD_STYLE_RENDERER
-xslt = True
-try: 	 
-    from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
-except ImportError: 	
-    print 'Error importing Silva renderers'
-    xslt = False
+from Products.Silva.transform.renderer.imagesonrightrenderer import ImagesOnRightRenderer
+from Products.Silva.testing import FunctionalLayer
 
-import SilvaTestCase
+class RendererRegistryTest(unittest.TestCase):
+    layer = FunctionalLayer
 
-class RendererRegistryTest(SilvaTestCase.SilvaTestCase):
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.registry = self.root.service_renderer_registry
 
     def test_renderers_registered_for_meta_type(self):
-        if not xslt:
-            return
-        registry_service = self.root.service_renderer_registry
-        doc_version_renderers = registry_service.getRendererNamesForMetaType(
+        doc_version_renderers = self.registry.getRendererNamesForMetaType(
             "Silva Document")
         self.assertEquals(4, len(doc_version_renderers))
         self.assertEquals(
             [],
-            registry_service.getRendererNamesForMetaType("NotReal"))
+            self.registry.getRendererNamesForMetaType("NotReal"))
 
     def test_get_renderer_by_name(self):
-        if not xslt:
-            return
-        registry_service = self.root.service_renderer_registry
         self.assert_(
             isinstance(
-                registry_service.getRenderer(
+                self.registry.getRenderer(
                     'Silva Document',
                     'Images on Right'
                     ),
                 ImagesOnRightRenderer))
 
     def test_get_default_renderer_name_for_meta_type(self):
-        if not xslt:
-            return
-        registry_service = self.root.service_renderer_registry
         self.assertEqual(
-            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
+            self.registry.getDefaultRendererNameForMetaType("Silva Document"),
             None)
         self.assertEqual(
-            registry_service.getDefaultRendererNameForMetaType("Foobar"),
+            self.registry.getDefaultRendererNameForMetaType("Foobar"),
             None)
-        registry_service.registerDefaultRenderer('Silva Document', 'Images on Right')
+        self.registry.registerDefaultRenderer('Silva Document', 'Images on Right')
         self.assertEqual(
-            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
+            self.registry.getDefaultRendererNameForMetaType("Silva Document"),
             'Images on Right')
-        registry_service.registerDefaultRenderer('Silva Document', None)
+        self.registry.registerDefaultRenderer('Silva Document', None)
         self.assertEqual(
-            registry_service.getDefaultRendererNameForMetaType("Silva Document"),
+            self.registry.getDefaultRendererNameForMetaType("Silva Document"),
             None)
 
     def test_get_registered_content_types(self):
-        if not xslt:
-            return
-        registry_service = self.root.service_renderer_registry
         self.assertEqual(
-            registry_service.getRegisteredMetaTypes(), ['Silva Document'])
+            self.registry.getRegisteredMetaTypes(), ['Silva Document'])
 
     def test_getFormRenderersList(self):
-        if not xslt:
-            return
-        reg = self.root.service_renderer_registry
         self.assertEquals(
             ['(Default)',
              OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
              'Images on Right',
              'Without Title Renderer (Same as basic but without the document title)'],
-            reg.getFormRenderersList('Silva Document'))
+            self.registry.getFormRenderersList('Silva Document'))
 
     def test_getRendererNamesForMetaType(self):
-        if not xslt:
-            return
-        reg = self.root.service_renderer_registry
         self.assertEquals(
             [OLD_STYLE_RENDERER,
              'Basic XSLT Renderer',
              'Images on Right',
              'Without Title Renderer (Same as basic but without the document title)'],
-            reg.getRendererNamesForMetaType('Silva Document'))
-        
+            self.registry.getRendererNamesForMetaType('Silva Document'))
+
     def test_doesRendererExistForMetaType(self):
-        if not xslt:
-            return
-        reg = self.root.service_renderer_registry
-        self.assert_(reg.doesRendererExistForMetaType(
+        self.assert_(self.registry.doesRendererExistForMetaType(
             'Silva Document', 'Basic XSLT Renderer'))
-        self.assert_(reg.doesRendererExistForMetaType(
+        self.assert_(self.registry.doesRendererExistForMetaType(
             'Silva Document', OLD_STYLE_RENDERER))
-        self.assert_(not reg.doesRendererExistForMetaType(
+        self.assert_(not self.registry.doesRendererExistForMetaType(
             'Silva Document', 'Imaginary Renderer'))
-        self.assert_(not reg.doesRendererExistForMetaType(
+        self.assert_(not self.registry.doesRendererExistForMetaType(
             'Imaginary Object', OLD_STYLE_RENDERER))
-        self.assert_(not reg.doesRendererExistForMetaType(
+        self.assert_(not self.registry.doesRendererExistForMetaType(
             'Imiginary Object', 'Imaginary Renderer'))
 
     def test_getRenderer_without_default(self):
-        if not xslt:
-            return
         # first without registered default
-        reg = self.root.service_renderer_registry
         # we expect None if we ask for the old-style renderer
         self.assertEquals(
             None,
-            reg.getRenderer('Silva Document', OLD_STYLE_RENDERER))
+            self.registry.getRenderer('Silva Document', OLD_STYLE_RENDERER))
         # we expect None if we ask for default
         self.assertEquals(
             None,
-            reg.getRenderer('Silva Document', None))
+            self.registry.getRenderer('Silva Document', None))
         # we expect a renderer if we ask for one
-        self.assert_(reg.getRenderer('Silva Document', 'Basic XSLT Renderer'))
+        self.assert_(self.registry.getRenderer('Silva Document', 'Basic XSLT Renderer'))
         # we expect None if we ask for a non-existent renderer
         self.assertEquals(
             None,
-            reg.getRenderer('Silva Document', 'Foo bar'))
+            self.registry.getRenderer('Silva Document', 'Foo bar'))
 
     def test_getRenderer_with_default(self):
-        if not xslt:
-            return
         # now test with registered default
-        reg = self.root.service_renderer_registry
-        reg.registerDefaultRenderer('Silva Document', 'Basic XSLT Renderer')
+        self.registry.registerDefaultRenderer('Silva Document', 'Basic XSLT Renderer')
         # we expect None if we ask for the old-style renderer
         self.assertEquals(
             None,
-            reg.getRenderer('Silva Document', OLD_STYLE_RENDERER))
+            self.registry.getRenderer('Silva Document', OLD_STYLE_RENDERER))
         # we expect a renderer if we ask for default
-        self.assert_(reg.getRenderer('Silva Document', None))
+        self.assert_(self.registry.getRenderer('Silva Document', None))
         # we expect a renderer if we ask for one
-        self.assert_(reg.getRenderer('Silva Document', 'Basic XSLT Renderer'))
+        self.assert_(self.registry.getRenderer('Silva Document', 'Basic XSLT Renderer'))
         # we expect None if we ask for a non-existent renderer
         self.assertEquals(
             None,
-            reg.getRenderer('Silva Document', 'Foo bar'))
-        
+            self.registry.getRenderer('Silva Document', 'Foo bar'))
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(RendererRegistryTest))
