@@ -404,7 +404,7 @@ class ManageExtensions(silvaviews.ZMIView):
                 methods = ['install', 'uninstall', 'refresh']
                 for method in methods:
                     if method in self.request.form:
-                        self.status = getattr(self.context, method)(
+                        self.status = getattr(self, method)(
                             self.request.form['name'])
 
     def extensions(self):
