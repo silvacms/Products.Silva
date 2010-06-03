@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" {namespaces} silva_version="{version}">
+  <content version_id="0">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Test Document
+        </silva-content:maintitle>
+        <silva-content:shorttitle>
+        </silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment>
+        </silva-extra:comment>
+        <silva-extra:contactemail>
+        </silva-extra:contactemail>
+        <silva-extra:contactname>
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+        </silva-extra:content_description>
+        <silva-extra:creationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          author
+        </silva-extra:creator>
+        <silva-extra:expirationtime>
+        </silva-extra:expirationtime>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:keywords>
+        </silva-extra:keywords>
+        <silva-extra:language>
+        </silva-extra:language>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:modificationtime>
+        <silva-extra:publicationtime>
+        </silva-extra:publicationtime>
+        <silva-extra:subject>
+        </silva-extra:subject>
+      </set>
+    </metadata>
+    <doc:doc>
+    </doc:doc>
+  </content>
+</silva>
+

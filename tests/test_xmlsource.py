@@ -7,49 +7,41 @@ import re
 import unittest
 
 from zope.interface.verify import verifyObject
+from zope.publisher.browser import TestRequest
+from zope.component import getMultiAdapter
 
-from Products.Silva.tests import SilvaTestCase, helpers
+from Products.Silva.testing import FunctionalLayer
 from Products.Silva.silvaxml import xmlimport, xmlexport
 from Products.Silva.transform.interfaces import IXMLSource
-
-DATETIME_RE = re.compile(
-    r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z')
+from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
 
 
-class XMLSourceTest(SilvaTestCase.SilvaTestCase):
+class XMLSourceTest(SilvaXMLTestCase):
     """Test XML source adapter.
     """
+    layer = FunctionalLayer
 
-    def genericize(self, string):
-        return DATETIME_RE.sub(r'YYYY-MM-DDTHH:MM:SS', string)
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('document', 'Test Document')
 
-    def test_xml_source(self):
-        importfolder = self.add_folder(
-            self.root,
-            'silva_xslt',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        source_file = helpers.openTestFile("test_document.xml")
-        importer.importFromFile(
-            source_file, result = importfolder,
-            settings = test_settings, info = test_info)
-        source_file.close()
+    def test_versioned_content(self):
+        document = self.root.document
+        request = TestRequest()
+        source = getMultiAdapter((document, request), IXMLSource)
 
-        # XXX: this way test of testing the XML output sucks but with
-        # a hard deadline in place, things have to keep moving.  in an
-        # ideal world, the output compared against would be a string
-        # literal, of course.
-        document = self.root.silva_xslt.test_document
-        expected_xml = self.genericize(xmlexport.exportToString(document)[0])
+        self.failUnless(verifyObject(IXMLSource, source))
+        self.assertExportEqual(source.getXML(), 'test_source_document.silvaxml')
 
-        xml_source = IXMLSource(document)
+    def test_version(self):
+        version = self.root.document.get_editable()
+        request = TestRequest()
+        source = getMultiAdapter((version, request), IXMLSource)
 
-        self.failUnless(verifyObject(IXMLSource, xml_source))
-        self.assertEqual(
-            expected_xml, self.genericize(IXMLSource(document).getXML()))
+        self.failUnless(verifyObject(IXMLSource, source))
+        self.assertExportEqual(source.getXML(), 'test_source_version.silvaxml')
 
 
 def test_suite():
