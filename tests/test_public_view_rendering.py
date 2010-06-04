@@ -3,14 +3,12 @@
 # $Id$
 
 import unittest
-import os
-import SilvaTestCase
 
 from zope.interface import implements
-from DateTime import DateTime
 
-from Products.Silva.tests.helpers import open_test_file
+from Products.Silva.tests.helpers import open_test_file, publish_object
 from Products.Silva.silvaxml import xmlimport
+from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
@@ -22,62 +20,45 @@ class FakeRenderer:
 
     implements(IRenderer)
 
-    def render(self, version):
+    def transform(self, context, request):
         return "I faked all my renderings."
 
     def getName(self):
         return "Fake Renderer"
 
-class PublicViewRenderingTest(SilvaTestCase.SilvaTestCase):
+class PublicViewRenderingTest(TestCase):
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
-        importfolder = self.add_folder(
-            self.root,
-            'silva_xslt',
-            'This is a testfolder',
-            policy_name='Silva AutoTOC')
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-
-        source_file = open_test_file("data/test_document.xml")
-        importer.importFromFile(
-            source_file, result = importfolder,
-            settings = test_settings, info = test_info)
-        source_file.close()
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        with open_test_file("test_document.xml") as source_document:
+            xmlimport.importFromFile(source_document, self.root)
+        self.document = self.root.test_document
+        self.registry = self.root.service_renderer_registry
 
     def test_render_preview(self):
-        obj = self.root.silva_xslt.test_document
-        obj.set_renderer_name('Images on Right')
-        self.assertStringEqual(obj.preview(), expected_html)
+        self.document.set_renderer_name('Images on Right')
+        self.assertStringEqual(self.document.preview(), expected_html)
 
     def test_render_public_view(self):
-        obj = self.root.silva_xslt.test_document
-        obj.set_renderer_name('Images on Right')
-        self.assertEqual(str(obj.view())[:8], "<p>Sorry")
-        obj.set_unapproved_version_publication_datetime(DateTime())
-        obj.approve_version()
-        self.assertStringEqual(obj.view(), expected_html)
+        self.document.set_renderer_name('Images on Right')
+        self.assertEqual(str(self.document.view())[:8], "<p>Sorry")
+        publish_object(self.document)
+        self.assertStringEqual(self.document.view(), expected_html)
 
     def test_default_renderer(self):
-        registry_service = self.root.service_renderer_registry
-        obj = self.root.silva_xslt.test_document
-        obj.set_renderer_name(None)
-        self.assertStringEqual(obj.preview(), expected_html2)
-        registry_service.registerDefaultRenderer('Silva Document', 'Images on Right')
-        self.assertStringEqual(obj.preview(), expected_html)
-        registry_service.registerDefaultRenderer('Silva Document', None)
+        self.document.set_renderer_name(None)
+        self.assertStringEqual(self.document.preview(), expected_html2)
+        self.registry.registerDefaultRenderer('Silva Document', 'Images on Right')
+        self.assertStringEqual(self.document.preview(), expected_html)
+        self.registry.registerDefaultRenderer('Silva Document', None)
 
     def test_add_renderer(self):
-        registry_service = self.root.service_renderer_registry
-        obj = self.root.silva_xslt.test_document
         registry = getRendererRegistry()
-        registry.registerRenderer(
-            'Silva Document',
-            'Fake Renderer',
-            FakeRenderer())
-        obj.set_renderer_name('Fake Renderer')
-        self.assertEqual(obj.preview(), 'I faked all my renderings.')
+        registry.registerRenderer('Silva Document', 'Fake Renderer', FakeRenderer())
+        self.document.set_renderer_name('Fake Renderer')
+        self.assertEqual(self.document.preview(), 'I faked all my renderings.')
         registry.unregisterRenderer('Silva Document', 'Fake Renderer')
 
 def test_suite():
