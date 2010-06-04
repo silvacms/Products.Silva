@@ -2,7 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
+
 
 class IRenderable(Interface):
     """I'm implemented by objects that can be rendered."""
@@ -21,6 +22,7 @@ class IRenderable(Interface):
         found.
         """
 
+
 class IXMLSource(Interface):
     """I'm implemented by objects that use XML as their source content."""
 
@@ -28,11 +30,10 @@ class IXMLSource(Interface):
         """Return the XML content."""
 
 
+
 class IRenderer(Interface):
     """I'm implemented by objects that can render other objects."""
 
-    meta_type = Attribute(u"Meta type rendered by this renderer")
-    title = Attribute(u"Name for the renderer")
 
     def transform(content, request):
         """Render content by get out the XML out of it. Return a string

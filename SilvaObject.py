@@ -410,18 +410,19 @@ class SilvaObject(Security, ViewCode):
         if version is None:
             version = self.get_viewable()
 
+        request = self.REQUEST
+
         # No version
         if version is None:
             msg = _('Sorry, this ${meta_type} is not viewable.',
                     mapping={'meta_type': self.meta_type})
-            return '<p>%s</p>' % translate(msg, context=self.REQUEST)
+            return '<p>%s</p>' % translate(msg, context=request)
 
         # Search for an XSLT renderer
-        result = IRenderable(version).view()
+        result = IRenderable(version).view(request)
         if result is not None:
             return result
 
-        request = self.REQUEST
         request.model = version
         request.other['model'] = version
 

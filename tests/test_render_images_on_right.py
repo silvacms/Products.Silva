@@ -2,9 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface.verify import verifyClass
+import unittest
 
-from Products.Silva.tests import SilvaTestCase
+from zope.interface.verify import verifyObject
+from zope.publisher.browser import TestRequest
+
+from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.silvaxml import xmlimport
 
@@ -17,7 +20,16 @@ from lxml import etree
 expected_html = '\n<table>\n  <tr>\n    <td valign="top"><h2 class="heading">This is a rendering test</h2>\n                <p class="p">\n                    This is a test of the XSLT rendering functionality.\n                </p>\n            </td>\n    <td valign="top">\n      <a href="http://nohost/root/silva_xslt/bar.html">\n        <img src="http://nohost/root/silva_xslt/foo" />\n      </a>\n      <br />\n    </td>\n  </tr>\n</table>\n'
 
 
-class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
+class ImagesOnRightRendererTest(TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        with open_test_file("test_document2.xml") as source_document:
+            xmlimport.importFromFile(source_document, self.root)
+        self.document = self.root.test_document
+        self.request = TestRequest()
 
     def _get_renderer_images_on_right(self):
         registry = getRendererRegistry()
@@ -27,27 +39,14 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
         return silva_doc_renderers['Images on Right']
 
     def test_implements_renderer_interface(self):
-        images_on_right = self._get_renderer_images_on_right()
-        self.failUnless(verifyClass(IRenderer, ImagesOnRightRenderer))
+        renderer = self._get_renderer_images_on_right()
+        self.failUnless(verifyObject(IRenderer, renderer))
 
     def test_renders_images_on_right(self):
-        importfolder = self.add_folder(
-            self.root,
-            'silva_xslt',
-            'This is a testfolder',
-            policy_name='Silva AutoTOC')
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        source_file = open_test_file("test_document2.xml")
-        importer.importFromFile(
-            source_file, result = importfolder,
-            settings = test_settings, info = test_info)
-        source_file.close()
-        # XXX get a (which?) version
-        obj = self.root.silva_xslt.test_document
-        images_on_right = self._get_renderer_images_on_right()
-        self.assertEquals(images_on_right.render(obj), expected_html)
+        renderer = self._get_renderer_images_on_right()
+        self.assertXMLEqual(
+            renderer.transform(self.document, self.request),
+            expected_html)
 
     def test_error_handling(self):
 
@@ -56,26 +55,12 @@ class ImagesOnRightRendererTest(SilvaTestCase.SilvaTestCase):
                 super(BrokenImagesOnRightRenderer, self).__init__(
                     'data/images_to_the_right_broken.xslt', __file__)
 
-        importfolder = self.add_folder(
-            self.root,
-            'silva_xslt',
-            'This is a testfolder',
-            policy_name='Silva AutoTOC')
-        importer = xmlimport.theXMLImporter
-        test_settings = xmlimport.ImportSettings()
-        test_info = xmlimport.ImportInfo()
-        source_file = open_test_file("test_document2.xml")
-        importer.importFromFile(
-            source_file, result = importfolder,
-            settings = test_settings, info = test_info)
-        source_file.close()
-        # XXX get a (which?) version
-        obj = self.root.silva_xslt.test_document
+        renderer = BrokenImagesOnRightRenderer()
+        self.assertRaises(
+            etree.XMLSyntaxError,
+            renderer.transform, self.document, self.request)
 
-        images_on_right = BrokenImagesOnRightRenderer()
-        self.assertRaises(etree.XMLSyntaxError, images_on_right.render, obj)
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ImagesOnRightRendererTest))

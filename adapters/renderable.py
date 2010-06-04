@@ -15,7 +15,7 @@ class RenderableAdapter(grok.Adapter):
     grok.provides(IRenderable)
     grok.implements(IRenderable)
 
-    def view(self):
+    def view(self, request=None):
         """Display the view of this version using the selected renderer.
 
         Returns the rendered content or None if no renderer can be
@@ -26,7 +26,7 @@ class RenderableAdapter(grok.Adapter):
             self.context.get_silva_object().meta_type, renderer_name)
         if renderer is None:
             return None
-        return renderer.render(self.context)
+        return renderer.transform(self.context, request)
 
 
 InitializeClass(RenderableAdapter)

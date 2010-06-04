@@ -23,8 +23,6 @@ class FakeRenderer:
     def transform(self, context, request):
         return "I faked all my renderings."
 
-    def getName(self):
-        return "Fake Renderer"
 
 class PublicViewRenderingTest(TestCase):
     layer = FunctionalLayer

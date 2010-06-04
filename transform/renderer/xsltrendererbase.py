@@ -18,26 +18,14 @@ from App.class_init import InitializeClass
 from Products.Silva.transform.interfaces import IRenderer, IXMLSource
 
 
-class ErrorHandler(object):
-
-    def __init__(self):
-        self._error_text = ""
-
-    def callback(self, ctx, s):
-        self._error_text += s
-
-    def getErrorText(self):
-        return self._error_text
-
-
 class ImportResolver(etree.Resolver):
 
-    def __init__(self, import_dir):
-        self.import_dir = import_dir
+    def __init__(self, directory):
+        self.directory = directory
 
     def resolve(self, url, id, context):
         if url.startswith("silvabase:"):
-            return self.resolve_filename(self.import_dir + url[10:], context)
+            return self.resolve_filename(self.directory + url[10:], context)
 
 
 class XSLTTransformer(object):
@@ -60,20 +48,18 @@ class XSLTTransformer(object):
         import_dir = os.path.dirname(os.path.abspath(import_context))
         if os.path.isdir(import_dir) and not import_dir.endswith('/'):
             import_dir += '/'
-        self._stylesheet_path = os.path.join(path_context, path)
-        self._stylesheet_dir = path_context
-        self._import_dir = import_dir
-        self._error_handler = ErrorHandler()
+        self.__stylesheet_path = os.path.join(path_context, path)
+        self.__stylesheet_dir = path_context
+        self.__import_dir = import_dir
         # we store stylesheets in a thread-local storage
         self.__local = threading.local()
 
     def stylesheet(self):
         if not hasattr(self.__local, 'stylesheet'):
-            f = open(self._stylesheet_path)
-            parser = etree.XMLParser()
-            parser.resolvers.add(ImportResolver(self._import_dir))
-            xslt_doc = etree.parse(f, parser)
-            f.close()
+            with open(self.__stylesheet_path) as stylesheet:
+                parser = etree.XMLParser()
+                parser.resolvers.add(ImportResolver(self.__import_dir))
+                xslt_doc = etree.parse(stylesheet, parser)
             self.__local.stylesheet = etree.XSLT(xslt_doc)
         return self.__local.stylesheet
 
@@ -84,12 +70,10 @@ class XSLTTransformer(object):
     def transform_xml(self, text):
         style = self.stylesheet()
         doc = etree.parse(StringIO(text))
-        result_tree = style(doc)
-        result_string = str(result_tree).decode('utf-8')
-        doctypestring = '<!DOCTYPE'
-        if result_string.startswith(doctypestring):
-            result_string = result_string[result_string.find('>')+1:]
-        return result_string
+        result = str(style(doc)).decode('utf-8')
+        if result.startswith('<!DOCTYPE'):
+            result = result[result.find('>')+1:]
+        return result
 
 
 class XSLTRendererBase(XSLTTransformer):
