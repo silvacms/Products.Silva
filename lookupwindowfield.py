@@ -257,7 +257,6 @@ reference.getReference(
                 css_class=field.get_value('css_class'),
                 rows="2",
                 cols="20",
-                style="height:37px",
                 contents=value))
         widget.append('</td></tr>')
         return widget
