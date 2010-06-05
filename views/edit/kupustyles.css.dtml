@@ -180,7 +180,7 @@ margin:1px 5px 0 0;
 width:20px;
 height: 20px;
 padding: 0px;
-background-color:#e0e7ef;
+background-color:#dfefff;
 }
 button.kupu-link-lookupbutton {
   background-image: url("<dtml-var root_url>/globals/system-search.png");
@@ -294,6 +294,11 @@ clear:both;
 margin-top:0.1em;
 }
 
+p.messageblock {
+margin:0.1em 0.2em;
+line-height:130%;
+}
+
 /* these will probably go */
 .kupu-link-reference-table {
   width: 100%;
@@ -305,12 +310,10 @@ margin-top:0.1em;
   width: 21px;
   vertical-align: top;
 }
-
 #extsourceform td.fieldtitlecell {
 width:5em;
 vertical-align:top;
 }
-
 div.kupu-tooltray table td.titlecell {
 width:15%;
 padding-right:0.2em;
@@ -331,7 +334,12 @@ div.kupu-tooltray input.store, div.kupu-tooltray textarea.store {
 width:98%;
 }
 div.kupu-tooltray textarea.store {
-height:32px;
+height:37px;
+}
+
+textarea.readonly, textarea.readonly:hover, textarea.readonly:focus {
+background-color: #eee;
+border-color: #aaa;
 }
 
 div.kupu-tooltray select {
@@ -344,7 +352,12 @@ margin-right:0.5em;
 vertical-align:middle;
 }
 
-/* seems to keep IE (inc 7) in check without anything else */ 
+div.kupu-tooltray input[type="checkbox"] {
+float:left;
+margin:0.1em;
+}
+
+/* seems to keep IE (inc 7) in check without affecting anything else */ 
 div.kupu-tooltray input.button, div.kupu-tooltray input.transport {
   overflow: visible; 
 }
@@ -366,15 +379,6 @@ min-height:18px;
 div.reference-widget img {
 vertical-align:middle;
 margin-right:2px;
-}
-
-textarea#kupu-link-input, textarea#kupu-toolbox-image-src, textarea#kupu-toolbox-image-link {
-height:37px;
-}
-
-textarea.readonly, textarea.readonly:hover, textarea.readonly:focus {
-background-color: #eee;
-border-color: #aaa;
 }
 
 div.kupu-toolbox-label, span.kupu-toolbox-searchterm, 
@@ -508,8 +512,9 @@ div.kupu-properties-item-innerdiv {
   width:23.3em;
 }
 
-.kupu-tooltray a.requiredfield {
- border-bottom: 1px solid #cc0000;
+.kupu-tooltray a.requiredfield:after {
+  color:#cc0000;
+  content:"*";
 }
 
 /* used in image toolbox */
