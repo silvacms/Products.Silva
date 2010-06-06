@@ -4,19 +4,24 @@
      i18n:translate="">
     No references to this asset.
   </p>
-  <p style="margin-top:0.3em"
-     tal:condition="viewlet/references">
-    <tal:references tal:repeat="reference viewlet/references">
+  <tal:references tal:condition="viewlet/references"
+    tal:repeat="reference viewlet/references">
+    <p tal:define="editlink reference/edit_url">
       <a title="edit content"
-         tal:attributes="href reference/edit_url"
-         i18n:attributes="title">
+        tal:attributes="href editlink"
+        i18n:attributes="title">
+        <img class="icon" style="float:right" alt="edit content"
+          height="16" width="16" 
+          tal:define="url context/globals/edit-find.png/absolute_url"
+          tal:attributes="src url"
+        />
         <tal:icon tal:replace="structure reference/icon" />
       </a>
       <a tal:content="reference/title"
-         tal:attributes="
-           href reference/url;
-           title reference/path">
+        tal:attributes="
+          href reference/url;
+          title reference/path">
       </a> (<span tal:replace="reference/reason" />)<br />
-    </tal:references>
-  </p>
+    </p>
+  </tal:references>
 </tal:references>
