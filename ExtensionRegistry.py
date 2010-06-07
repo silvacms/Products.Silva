@@ -2,35 +2,39 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
-from zope.deprecation import deprecation
-from zope.configuration.name import resolve
-import Products
-
-from silva.core.conf.registry import Registry
-
 from bisect import insort_right
-
 import os.path
 import pkg_resources
 import types
-import icon
+
+from zope.configuration.name import resolve
+from zope.deprecation import deprecation
+from zope.interface import implements
+from zope.testing import cleanup
+
+import Products
+
+from silva.core.conf.registry import Registry
 from silva.core import interfaces
+
+#from Products.Silva import icon
 
 class Addable(object):
 
     def __init__(self, meta_type, priority=0.0):
-        self._meta_type = meta_type
+        self.meta_type = meta_type
         self.priority = priority
 
     def __cmp__(self, other):
         sort = cmp(self.priority, other.priority)
         if sort == 0:
-            sort = cmp(self._meta_type['name'], other._meta_type['name'])
+            sort = cmp(self.meta_type['name'], other.meta_type['name'])
         return sort
 
 
 class BaseExtension(object):
+    """Base for extensions.
+    """
 
     def __init__(self, name, install, path,
                  description=None, depends=(u'Silva',)):
@@ -90,10 +94,10 @@ class BaseExtension(object):
                 result.append(content)
         return result
 
+
 class ProductExtension(BaseExtension):
     """Extension based on a Zope product.
     """
-
     implements(interfaces.IExtension)
 
     def __init__(self, name, install, path,
@@ -113,7 +117,6 @@ class ProductExtension(BaseExtension):
 class EggExtension(BaseExtension):
     """Extension package as an egg.
     """
-
     implements(interfaces.IExtension)
 
     def __init__(self, egg, name, install, path,
@@ -139,13 +142,17 @@ class ExtensionRegistry(Registry):
     implements(interfaces.IExtensionRegistry)
 
     def __init__(self):
+        self.clear_registry()
+
+    # MANIPULATORS
+
+    def clear_registry(self):
+        """Clear the registry. *Don't call this in regular order of operation*.
+        """
         self._extensions_order = []
         self._extensions = {}
         self._extensions_by_module = {}
         self._silva_addables = []
-
-    # MANIPULATORS
-
 
     def register(self, name, description, context, modules,
                  install_module=None, module_path=None, depends_on=(u'Silva',)):
@@ -317,3 +324,5 @@ class ExtensionRegistry(Registry):
 
 extensionRegistry = ExtensionRegistry()
 
+# Cleanup registry on test tearDown
+cleanup.addCleanUp(extensionRegistry.clear_registry)
