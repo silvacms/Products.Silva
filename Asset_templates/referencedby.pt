@@ -15,13 +15,13 @@
           tal:define="url context/globals/edit-find.png/absolute_url"
           tal:attributes="src url"
         />
-        <tal:icon tal:replace="structure reference/icon" />
       </a>
-      <a tal:content="reference/title"
-        tal:attributes="
-          href reference/url;
-          title reference/path">
-      </a> (<span tal:replace="reference/reason" />)<br />
+      <a tal:attributes="
+        href reference/url;
+        title reference/path">
+        <tal:icon tal:replace="structure reference/icon" />
+        <span tal:content="reference/title"/>
+      </a> (<span tal:replace="reference/reason" />)
     </p>
   </tal:references>
 </tal:references>
