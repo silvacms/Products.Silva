@@ -8,7 +8,6 @@ import pkg_resources
 import types
 
 from zope.configuration.name import resolve
-from zope.deprecation import deprecation
 from zope.interface import implements
 from zope.testing import cleanup
 
@@ -17,7 +16,6 @@ import Products
 from silva.core.conf.registry import Registry
 from silva.core import interfaces
 
-#from Products.Silva import icon
 
 class Addable(object):
 
@@ -155,8 +153,8 @@ class ExtensionRegistry(Registry):
         self._silva_addables = []
 
     def register(self, name, description, context, modules,
-                 install_module=None, module_path=None, depends_on=(u'Silva',)):
-
+                 install_module=None, module_path=None,
+                 depends_on=(u'Silva',)):
         # Figure out which is the extension path.
         path = None
         assert not ((install_module is None) and (module_path is None))
@@ -196,49 +194,6 @@ class ExtensionRegistry(Registry):
 
         for module in modules:
             self.registerClass(context, module)
-
-    @deprecation.deprecate(
-        "You should use either ZCML or Grok to register your new classes.")
-    def registerClass(self, context, module):
-        # We assume the class name to be identical to the module name
-        classname = module.__name__.split('.')[-1]
-        klass = getattr(module, classname)
-        version_classname = classname + 'Version'
-        __traceback_info__ = (module, classname, version_classname)
-        meta_type = klass.meta_type
-        # The order of the items in the contents screen new list is
-        # determined by the addable_priority, defined in each item's
-        # py file. Might be better if this was centrally defined.
-        # Silva News items begin at 3 (the current bottom).
-        priority = getattr(module, 'addable_priority', 0)
-        # Register Silva Addable
-        context.registerClass(
-            klass,
-            constructors = (
-                getattr(module, 'manage_add%sForm' % classname),
-                getattr(module, 'manage_add%s' % classname)),
-                icon = getattr(module, 'icon', None)
-            )
-        # Register version object, if available
-        if hasattr(module, version_classname):
-            context.registerClass(
-                getattr(module, version_classname),
-                constructors = (
-                    getattr(module, 'manage_add%sForm' % version_classname),
-                    getattr(module, 'manage_add%s' % version_classname)),
-                    )
-        icon_path = getattr(module, 'icon', None)
-        if icon_path:
-            icon.registry.registerIcon(
-                ('meta_type', meta_type),
-                icon_path,
-                module.__dict__)
-        if interfaces.ISilvaObject.implementedBy(klass):
-            for i in range(len(self._silva_addables)):
-                if self._silva_addables[i]._meta_type['name'] == meta_type:
-                    del(self._silva_addables[i])
-                    break
-            self.addAddable(meta_type, priority)
 
     def addAddable(self, meta_type, priority):
         """Allow adding an addable to silva without using the
@@ -284,13 +239,13 @@ class ExtensionRegistry(Registry):
         self._extensions[name].installer.uninstall(root)
 
     def refresh(self, name, root):
-        if hasattr(self._extensions[name].installer,'refresh'):
-            #installer has a refresh, so use it note: the default
-            #refresh (in silva.core.conf.installer.DefaultInstaller)
-            #is to just uninstall/install.  Extensions may choose to
-            #override this to do a custom uninstall/install which may,
-            #e.g. not remove a special service_<extension> object
-            #which contains site-specific customizations
+        if hasattr(self._extensions[name].installer, 'refresh'):
+            # installer has a refresh, so use it note: the default
+            # refresh (in silva.core.conf.installer.DefaultInstaller)
+            # is to just uninstall/install.  Extensions may choose to
+            # override this to do a custom uninstall/install which may,
+            # e.g. not remove a special service_<extension> object
+            # which contains site-specific customizations
             self._extensions[name].installer.refresh(root)
         else:
             self._extensions[name].installer.uninstall(root)
@@ -320,7 +275,8 @@ class ExtensionRegistry(Registry):
         return None
 
     def get_addables(self):
-        return [ addable._meta_type for addable in self._silva_addables ]
+        return [addable.meta_type for addable in self._silva_addables]
+
 
 extensionRegistry = ExtensionRegistry()
 

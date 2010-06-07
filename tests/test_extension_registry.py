@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+from urllib import URLopener
+import unittest
+
 from zope.interface.verify import verifyObject
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -41,7 +44,6 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
             'SilvaDocument')
         from Products.Silva.Link import Link
         self.assertEquals(extensionRegistry.get_name_for_class(Link), 'Silva')
-        from urllib import URLopener
         self.assertEquals(extensionRegistry.get_name_for_class(URLopener), None)
 
     def test_extension(self):
@@ -76,7 +78,6 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(extension.product, 'silva.core.layout')
         self.assertEqual(extension.module_name, 'silva.core.layout')
 
-
     def test_installer(self):
         # First system extension installer.
         system_installer = SystemExtensionInstaller()
@@ -86,8 +87,6 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
 
         # Other test on installer are done with grok tests.
 
-
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ExtensionRegistryTest))
