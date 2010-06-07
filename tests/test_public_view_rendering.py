@@ -12,8 +12,20 @@ from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.transform.interfaces import IRenderer
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
-expected_html = u'<table>\n  <tr>\n    <td valign="top"><h2 class="heading">This is a rendering test</h2>\n                <p class="p">This is a test of the XSLT rendering functionality.</p>\n            </td>\n    <td valign="top"></td>\n  </tr>\n</table>'
-expected_html2 = u'<h2 class="heading">This is a rendering test</h2>\n                <p class="p">This is a test of the XSLT rendering functionality.</p>'
+expected_html = """
+<table>
+  <tr>
+    <td valign="top"><h2 class="heading">This is a rendering test</h2>
+                <p class="p">This is a test of the XSLT rendering functionality.</p>
+            </td>
+    <td valign="top"></td>
+  </tr>
+</table>
+"""
+expected_html2 = """
+<h2 class="heading">This is a rendering test</h2>
+                <p class="p">This is a test of the XSLT rendering functionality.</p>
+"""
 
 
 class FakeRenderer:
@@ -37,19 +49,19 @@ class PublicViewRenderingTest(TestCase):
 
     def test_render_preview(self):
         self.document.set_renderer_name('Images on Right')
-        self.assertStringEqual(self.document.preview(), expected_html)
+        self.assertXMLEqual(self.document.preview(), expected_html)
 
     def test_render_public_view(self):
         self.document.set_renderer_name('Images on Right')
         self.assertEqual(str(self.document.view())[:8], "<p>Sorry")
         publish_object(self.document)
-        self.assertStringEqual(self.document.view(), expected_html)
+        self.assertXMLEqual(self.document.view(), expected_html)
 
     def test_default_renderer(self):
         self.document.set_renderer_name(None)
-        self.assertStringEqual(self.document.preview(), expected_html2)
+        self.assertXMLEqual(self.document.preview(), expected_html2)
         self.registry.registerDefaultRenderer('Silva Document', 'Images on Right')
-        self.assertStringEqual(self.document.preview(), expected_html)
+        self.assertXMLEqual(self.document.preview(), expected_html)
         self.registry.registerDefaultRenderer('Silva Document', None)
 
     def test_add_renderer(self):

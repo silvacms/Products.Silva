@@ -224,17 +224,17 @@
   </xsl:template>
 
   <xsl:template match="doc:link[@target]" mode="text-content">
-    <!--
-      @rewritten_url is used for silvaxml, but snippets (e.g. using
-      the kupupopupwindow don't go through the same pre-xslt pipeline
-      and so don't have a @rewritten_url; fallback to @url.
-      (sylvain: dat is not good for references).
-    -->
+    <!-- @rewritten_url is used for silvaxml, but snippets (e.g. using
+    the kupupopupwindow don't go through the same pre-xslt pipeline
+    and so don't have a @rewritten_url; fallback to @url.  (sylvain:
+    dat is not good for references).  -->
     <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 
   <xsl:template match="doc:link" mode="text-content">
-    <xsl:comment>@rewritten_url is used for silvaxml, but snippets (e.g. using the kupupopupwindow don't go through the same pre-xslt pipeline and so don't have a @rewritten_url; fallback to @url </xsl:comment>
+    <!-- @rewritten_url is used for silvaxml, but snippets (e.g. using
+    the kupupopupwindow don't go through the same pre-xslt pipeline
+    and so don't have a @rewritten_url; fallback to @url -->
     <a href="{@rewritten_url|@url}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 

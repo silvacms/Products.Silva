@@ -25,14 +25,16 @@
   No changes should be made to doc_elements.xslt.
   -->
 
+
   <xsl:import href="silvabase:doc_elements.xslt"/>
 
   <xsl:output
     method="xml"
     omit-xml-declaration="yes"
-    indent="yes"
+    indent="no"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
+
 <!--
   In this example we want to render all content in in two table cells.
   The right one containing all images in order, and the left one containing
