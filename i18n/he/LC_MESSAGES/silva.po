@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Aug 24 16:05:56 2009\n"
-"PO-Revision-Date: 2008-04-09 15:31+0000\n"
-"Last-Translator: Ofer Weisglass <contact@weisglass.net>\n"
+"PO-Revision-Date: 2010-06-07 10:56+0100\n"
+"Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
 "Language-Team: Ofer Weisglass <ofer@plone.org.il>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,8 +22,7 @@ msgid ""
 "This is a special document type that automatically generates\n"
 "       a Table of Contents. Usually it's used as the 'index' document of a\n"
 "       folder. Then the parent folder displays a TOC when accessed (e.g.\n"
-"       http://www.x.yz/silva/myFolder/). The AutoTOC can display any "
-"selection\n"
+"       http://www.x.yz/silva/myFolder/). The AutoTOC can display any selection\n"
 "       of Silva content types including assets."
 msgstr ""
 
@@ -39,16 +38,19 @@ msgstr ""
 msgid "Changed settings."
 msgstr "הגדרות שונו."
 
-#: /File.py:186 /views/edit/Container/docma_queue.pt:166
+#: /File.py:186
+#: /views/edit/Container/docma_queue.pt:166
 #: /views/edit/Container/docma_queue.pt:191
 msgid "download"
 msgstr "הורדה"
 
-#: /Folder.py:320 /Folder.py:382
+#: /Folder.py:320
+#: /Folder.py:382
 msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
 msgstr ""
 
-#: /Folder.py:341 /Folder.py:379
+#: /Folder.py:341
+#: /Folder.py:379
 msgid "pasted &#xab;${id}&#xbb;"
 msgstr ""
 
@@ -79,26 +81,20 @@ msgstr ""
 #: /GhostFolder.py:124
 msgid ""
 "Ghost Folders are similar to Ghosts, but instead of being a \n"
-"       placeholder for a document, they create placeholders and/or copies of "
-"all \n"
-"       the contents of the &#8216;original&#8217; folder. The advantage of "
-"Ghost \n"
-"       Folders is the contents stay in sync with the original, by manual "
-"or \n"
+"       placeholder for a document, they create placeholders and/or copies of all \n"
+"       the contents of the &#8216;original&#8217; folder. The advantage of Ghost \n"
+"       Folders is the contents stay in sync with the original, by manual or \n"
 "       automatic resyncing. Note that when a folder is\n"
 "       ghosted, assets &#8211; such as Images and Files &#8211; are copied\n"
 "       (physically duplicated) while documents are ghosted."
 msgstr ""
 
 #: /Image.py:194
-msgid ""
-"'${scale}' is not a valid scale identifier. Probably a percent symbol is "
-"missing."
+msgid "'${scale}' is not a valid scale identifier. Probably a percent symbol is missing."
 msgstr ""
 
 #: /Image.py:213
-msgid ""
-"'${scale} is not a valid scale identifier. At least one number is required."
+msgid "'${scale} is not a valid scale identifier. At least one number is required."
 msgstr ""
 
 #: /Image.py:238
@@ -158,8 +154,7 @@ msgid ""
 "       major organizing blocks of a Silva site. They are comparable to \n"
 "       binders, and can contain folders, documents, and assets. \n"
 "       Publications are opaque. They instill a threshold of view, showing\n"
-"       only the contents of the current publication. This keeps the "
-"overview\n"
+"       only the contents of the current publication. This keeps the overview\n"
 "       screens manageable. Publications have configuration settings that\n"
 "       determine which core and pluggable objects are available. For\n"
 "       complex sites, sub-publications can be nested.\n"
@@ -194,7 +189,8 @@ msgstr "ממתין"
 msgid "draft"
 msgstr "דראפט"
 
-#: /Version.py:213 /views/edit/Container/tab_status.pt:256
+#: /Version.py:213
+#: /views/edit/Container/tab_status.pt:256
 msgid "closed"
 msgstr "סגור"
 
@@ -211,16 +207,16 @@ msgid "No approved version to unapprove."
 msgstr ""
 
 #: /Versioning.py:163
-msgid ""
-"Should never happen: unapproved version ${unapproved} found while approved "
-"version ${approved} exists at the same time."
+msgid "Should never happen: unapproved version ${unapproved} found while approved version ${approved} exists at the same time."
 msgstr ""
 
 #: /Versioning.py:190
 msgid "No public version to close."
 msgstr "אין גירסה ציבורית לסגור."
 
-#: /Versioning.py:262 /Versioning.py:311 /Versioning.py:341
+#: /Versioning.py:262
+#: /Versioning.py:311
+#: /Versioning.py:341
 msgid "There is no unapproved version to request approval for."
 msgstr ""
 
@@ -228,15 +224,18 @@ msgstr ""
 msgid "The version is already requested for approval."
 msgstr ""
 
-#: /Versioning.py:315 /Versioning.py:345
+#: /Versioning.py:315
+#: /Versioning.py:345
 msgid "The version is not requested for approval."
 msgstr "הגירסה לא התבקשה לאישור"
 
-#: /Versioning.py:365 /Versioning.py:378
+#: /Versioning.py:365
+#: /Versioning.py:378
 msgid "No unapproved version."
 msgstr "אין גירסה לא מאושרת."
 
-#: /Versioning.py:391 /Versioning.py:412
+#: /Versioning.py:391
+#: /Versioning.py:412
 msgid "No approved version."
 msgstr "אין גירסה מאושרת."
 
@@ -248,7 +247,8 @@ msgstr ""
 msgid "No public version."
 msgstr "אין גירסה ציבורית."
 
-#: /Versioning.py:452 /Versioning.py:471
+#: /Versioning.py:452
+#: /Versioning.py:471
 msgid "No next version."
 msgstr "אין גירסה הבאה."
 
@@ -272,7 +272,8 @@ msgstr ""
 msgid "A previous version has that id already (${id})."
 msgstr ""
 
-#: /Versioning.py:99 /views/edit/VersionedContent/quick_publish.py:16
+#: /Versioning.py:99
+#: /views/edit/VersionedContent/quick_publish.py:16
 #: /views/edit/VersionedContent/tab_metadata_publish.py:12
 #: /views/edit/VersionedContent/tab_status_approve.py:14
 msgid "There is no unapproved version to approve."
@@ -290,15 +291,21 @@ msgstr "בלתי אפשרי למחוק את כל הגירסאות"
 msgid "no such version ${version}"
 msgstr "אין גירסה כזו ${version}"
 
-#: /adapters/version_management.py:83 /adapters/version_management.py:91
+#: /adapters/version_management.py:83
+#: /adapters/version_management.py:91
 msgid "No unapproved version available"
 msgstr "אין גירסה לא מאושרת זמינה"
 
-#: /browser/object_lookup.pt:111 /views/public/subscriptor.pt:46
-#: /views/add/add_form.pt:153 /views/add/GhostFolder/add_form.pt:141
-#: /views/add/Ghost/add_form.pt:125 /views/edit/lookup_ui_direct.pt:102
-#: /views/edit/macro_edit_metadata.pt:173 /views/edit/tab_subscriptions.pt:114
-#: /views/edit/lookup_ui.pt:104 /views/edit/Container/tab_edit.pt:74
+#: /browser/object_lookup.pt:111
+#: /views/public/subscriptor.pt:46
+#: /views/add/add_form.pt:153
+#: /views/add/GhostFolder/add_form.pt:141
+#: /views/add/Ghost/add_form.pt:125
+#: /views/edit/lookup_ui_direct.pt:102
+#: /views/edit/macro_edit_metadata.pt:173
+#: /views/edit/tab_subscriptions.pt:114
+#: /views/edit/lookup_ui.pt:104
+#: /views/edit/Container/tab_edit.pt:74
 #: /views/edit/Container/tab_access_groups.pt:140
 #: /views/edit/Container/GhostFolder/tab_edit.pt:128
 #: /views/edit/Asset/macro_asset_edit.pt:70
@@ -307,11 +314,13 @@ msgstr "אין גירסה לא מאושרת זמינה"
 msgid "access key: alt-s"
 msgstr "מקש גישה: : alt-s"
 
-#: /browser/object_lookup.pt:117 /views/edit/Container/tab_edit.pt:59
+#: /browser/object_lookup.pt:117
+#: /views/edit/Container/tab_edit.pt:59
 msgid "select a new item: alt-s"
 msgstr "בחר פריט חדש: alt-s"
 
-#: /browser/object_lookup.pt:124 /views/edit/Container/tab_edit.pt:65
+#: /browser/object_lookup.pt:124
+#: /views/edit/Container/tab_edit.pt:65
 msgid "select:"
 msgstr "בחר:"
 
@@ -323,19 +332,22 @@ msgstr "בחר"
 msgid "view"
 msgstr "צפיה"
 
-#: /browser/object_lookup.pt:162 /views/edit/Container/tab_edit.pt:136
+#: /browser/object_lookup.pt:162
+#: /views/edit/Container/tab_edit.pt:136
 #: /views/edit/Container/tab_access_groups.pt:188
 #: /views/edit/Container/tab_access_groups.pt:303
 #: /views/edit/Container/GhostFolder/tab_edit.pt:208
 msgid "modified"
 msgstr "עודכן"
 
-#: /browser/object_lookup.pt:165 /views/edit/Container/tab_edit.pt:139
+#: /browser/object_lookup.pt:165
+#: /views/edit/Container/tab_edit.pt:139
 #: /views/edit/Container/GhostFolder/tab_edit.pt:211
 msgid "author"
 msgstr "כותב"
 
-#: /browser/object_lookup.pt:175 /views/edit/Container/tab_edit.pt:153
+#: /browser/object_lookup.pt:175
+#: /views/edit/Container/tab_edit.pt:153
 #: /views/edit/Container/GhostFolder/tab_edit.pt:221
 msgid "There is no content here."
 msgstr "אין תוכן שם"
@@ -344,7 +356,8 @@ msgstr "אין תוכן שם"
 msgid "enter"
 msgstr "אנטר"
 
-#: /browser/object_lookup.pt:286 /browser/object_lookup.pt:316
+#: /browser/object_lookup.pt:286
+#: /browser/object_lookup.pt:316
 #: /views/edit/Container/tab_status.pt:208
 #: /views/edit/Container/tab_edit.pt:235
 #: /views/edit/Container/GhostFolder/tab_edit.pt:308
@@ -356,7 +369,8 @@ msgstr ""
 msgid "content is published"
 msgstr "התוכן פורסם"
 
-#: /browser/object_lookup.pt:402 /views/edit/Container/tab_edit.pt:397
+#: /browser/object_lookup.pt:402
+#: /views/edit/Container/tab_edit.pt:397
 #: /views/edit/Container/GhostFolder/tab_edit.pt:440
 msgid "unknown"
 msgstr "אינו ידוע"
@@ -365,9 +379,12 @@ msgstr "אינו ידוע"
 msgid "cancel operation: alt-c"
 msgstr "פעולת ביטול: : alt-c"
 
-#: /browser/object_lookup.pt:429 /views/add/add_form.pt:162
-#: /views/add/GhostFolder/add_form.pt:150 /views/add/Ghost/add_form.pt:134
-#: /views/edit/promptWindow.pt:35 /views/edit/Container/tab_edit_rename.pt:129
+#: /browser/object_lookup.pt:429
+#: /views/add/add_form.pt:162
+#: /views/add/GhostFolder/add_form.pt:150
+#: /views/add/Ghost/add_form.pt:134
+#: /views/edit/promptWindow.pt:35
+#: /views/edit/Container/tab_edit_rename.pt:129
 msgid "cancel"
 msgstr "ביטול"
 
@@ -387,21 +404,22 @@ msgstr ""
 msgid "groups administration: alt-g"
 msgstr ""
 
-#: /browser/smi_access.py:30 /views/macro_middleground.pt:81
+#: /browser/smi_access.py:30
+#: /views/macro_middleground.pt:81
 msgid "lookup users: alt-l"
 msgstr "חיפוש משתמשים: alt-l"
 
 #: /browser/smi_access.py:43
 msgid "add users"
-msgstr ""
+msgstr "הוסף משתמשים"
 
 #: /browser/smi_access.py:44
 msgid "lookup users"
-msgstr ""
+msgstr "חפש משתמשים"
 
 #: /browser/smi_edit.py:22
 msgid "kupu editor"
-msgstr ""
+msgstr "עורך קופו"
 
 #: /browser/smi_edit.py:23
 msgid "edit with the kupu editor: alt-("
@@ -409,51 +427,60 @@ msgstr ""
 
 #: /browser/smi_edit.py:32
 msgid "forms editor"
-msgstr ""
+msgstr "עורך טפסים"
 
 #: /browser/smi_edit.py:33
 msgid "edit with the forms editor: alt-)"
 msgstr ""
 
-#: /browser/smi_properties.py:19 /views/macro_middleground.pt:73
+#: /browser/smi_properties.py:19
+#: /views/macro_middleground.pt:73
 #: /views/edit/Container/Publication/tab_addables_form.form:39
 msgid "addables"
 msgstr "ניתנים להוספה"
 
-#: /browser/smi_properties.py:20 /views/macro_middleground.pt:58
+#: /browser/smi_properties.py:20
+#: /views/macro_middleground.pt:58
 msgid "change the addables allowed in this publication: alt-d"
 msgstr ""
 
 #: /browser/smi_properties.py:29
 #: /views/edit/Content/SimpleContent/get_tabs.py:6
-#: /views/macro_middleground.pt:41 /views/edit/tab_settings.pt:289
-#: /views/edit/tab_settings.pt:308 /views/edit/tab_settings.pt:328
+#: /views/macro_middleground.pt:41
+#: /views/edit/tab_settings.pt:289
+#: /views/edit/tab_settings.pt:308
+#: /views/edit/tab_settings.pt:328
 #: /views/edit/Container/GhostFolder/tab_edit.pt:304
 #: /views/edit/Asset/Groups/IPGroup/tab_edit.pt:33
 msgid "settings"
 msgstr "הגדרות"
 
-#: /browser/smi_properties.py:30 /views/macro_middleground.pt:28
+#: /browser/smi_properties.py:30
+#: /views/macro_middleground.pt:28
 msgid "various settings: alt-e"
 msgstr ""
 
-#: /browser/smi_properties.py:39 /views/macro_middleground.pt:56
+#: /browser/smi_properties.py:39
+#: /views/macro_middleground.pt:56
 msgid "subscriptions"
-msgstr ""
+msgstr "רישום"
 
-#: /browser/smi_properties.py:40 /views/macro_middleground.pt:42
+#: /browser/smi_properties.py:40
+#: /views/macro_middleground.pt:42
 #: /views/edit/Container/GhostFolder/tab_metadata.pt:27
 msgid "manage subscriptions: alt-u"
-msgstr ""
+msgstr "ניהול רישום: alt-u"
 
-#: /browser/smi_properties.py:54 /views/edit/Container/tab_edit.pt:565
+#: /browser/smi_properties.py:54
+#: /views/edit/Container/tab_edit.pt:565
 #: /views/edit/VersionedContent/tab_status_macros.pt:253
 #: /views/edit/tab_status_form.form:67
 #: /views/edit/VersionedContent/tab_status_form_editor.form:70
 msgid "publish now"
 msgstr "פרסם עכשיו"
 
-#: /browser/smi_properties.py:55 /views/macro_middleground.pt:17
+#: /browser/smi_properties.py:55
+#: /views/macro_middleground.pt:17
 msgid "publish this document: alt-p"
 msgstr "פרסם מסמך זה: : alt-p"
 
@@ -513,7 +540,9 @@ msgstr "נושא תוכן באזור זה"
 msgid "creation time"
 msgstr "תאריך יצירה"
 
-#: /doc/silva-extra.xml:386 /doc/silva-extra.xml:445 /doc/silva-extra.xml:620
+#: /doc/silva-extra.xml:386
+#: /doc/silva-extra.xml:445
+#: /doc/silva-extra.xml:620
 msgid "Automatically set."
 msgstr "מוגדר בצורה אוטומטית."
 
@@ -546,9 +575,7 @@ msgid "contact email"
 msgstr "תיבת דואר אלקטרוני ליצירת קשר"
 
 #: /doc/silva-extra.xml:895
-msgid ""
-"If this is enabled, this content (and anything it contains!) will not show "
-"up in tables of content."
+msgid "If this is enabled, this content (and anything it contains!) will not show up in tables of content."
 msgstr ""
 
 #: /doc/silva-extra.xml:897
@@ -568,8 +595,7 @@ msgid "Default Document Policy"
 msgstr "פו"
 
 #: /doc/silva-quota.xml:34
-msgid ""
-"Maximum space allowed for this container, including sub-containers, in MB."
+msgid "Maximum space allowed for this container, including sub-containers, in MB."
 msgstr ""
 
 #: /doc/silva-quota.xml:37
@@ -581,20 +607,16 @@ msgid "Listing body"
 msgstr "גוף הרשימה"
 
 #: /globals/accesskeys.pt:105
-msgid ""
-"${listing_body}${br} p &nbsp; Select list for position number${br} m &nbsp; "
-"move"
+msgid "${listing_body}${br} p &nbsp; Select list for position number${br} m &nbsp; move"
 msgstr ""
 
-#: /globals/accesskeys.pt:110 /globals/accesskeys.pt:136
+#: /globals/accesskeys.pt:110
+#: /globals/accesskeys.pt:136
 msgid "Listing footer"
 msgstr ""
 
 #: /globals/accesskeys.pt:116
-msgid ""
-"${listing_footer}${br} a &nbsp; select all${br} r &nbsp; rename${br} d "
-"&nbsp; delete${br} x &nbsp; cut${br} c &nbsp; copy${br} v &nbsp; paste${br} "
-"g &nbsp; paste as ghost"
+msgid "${listing_footer}${br} a &nbsp; select all${br} r &nbsp; rename${br} d &nbsp; delete${br} x &nbsp; cut${br} c &nbsp; copy${br} v &nbsp; paste${br} g &nbsp; paste as ghost"
 msgstr ""
 
 #: /globals/accesskeys.pt:120
@@ -614,11 +636,7 @@ msgid "${listing_header}${br} i &nbsp; import${br} e &nbsp; Export"
 msgstr ""
 
 #: /globals/accesskeys.pt:144
-msgid ""
-"${listing_footer}${br} a &nbsp; select all${br} n &nbsp; create new vesions"
-"${br} j &nbsp; reject (request for approval)${br} v &nbsp; revoke (request "
-"for approval)${br} c &nbsp; close (public version)${br} l &nbsp; approve for "
-"later${br} u &nbsp; update settings${br} p &nbsp; publish now${br}"
+msgid "${listing_footer}${br} a &nbsp; select all${br} n &nbsp; create new vesions${br} j &nbsp; reject (request for approval)${br} v &nbsp; revoke (request for approval)${br} c &nbsp; close (public version)${br} l &nbsp; approve for later${br} u &nbsp; update settings${br} p &nbsp; publish now${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:147
@@ -634,9 +652,7 @@ msgid "Editor screen"
 msgstr "מסך עורך"
 
 #: /globals/accesskeys.pt:161
-msgid ""
-"( &nbsp; forms editor${br} ) &nbsp; Kupu editor${br} ; &nbsp; public preview"
-"${br} p &nbsp; publish now${br}"
+msgid "( &nbsp; forms editor${br} ) &nbsp; Kupu editor${br} ; &nbsp; public preview${br} p &nbsp; publish now${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:166
@@ -644,11 +660,7 @@ msgid "Kupu editor"
 msgstr "עורך קופו"
 
 #: /globals/accesskeys.pt:177
-msgid ""
-"${kupu_editor}${br} b &nbsp; bold${br} i &nbsp; italic${br} u &nbsp; "
-"underline${br} - &nbsp; subscript${br} + &nbsp; superscript${br} # &nbsp; "
-"numbered list${br} * &nbsp; bulleted list${br} = &nbsp; definition list${br} "
-"z &nbsp; undo${br} y &nbsp; redo${br} h &nbsp; html source${br}"
+msgid "${kupu_editor}${br} b &nbsp; bold${br} i &nbsp; italic${br} u &nbsp; underline${br} - &nbsp; subscript${br} + &nbsp; superscript${br} # &nbsp; numbered list${br} * &nbsp; bulleted list${br} = &nbsp; definition list${br} z &nbsp; undo${br} y &nbsp; redo${br} h &nbsp; html source${br}"
 msgstr ""
 
 #: /globals/accesskeys.pt:182
@@ -656,21 +668,20 @@ msgid "Forms editor"
 msgstr "עורך טפסים"
 
 #: /globals/accesskeys.pt:185
-msgid ""
-"${forms_editor}${br} s &nbsp; save${br} e &nbsp; save and exit${br} i &nbsp; "
-"save and insert${br} tab Use your tab key to edit without using the mouse. "
-"Shift-tab goes backwards."
+msgid "${forms_editor}${br} s &nbsp; save${br} e &nbsp; save and exit${br} i &nbsp; save and insert${br} tab Use your tab key to edit without using the mouse. Shift-tab goes backwards."
 msgstr ""
 
 #: /globals/accesskeys.pt:189
 msgid "Other screens"
 msgstr "מסכים אחרים."
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
+#: /globals/accesskeys.pt:19
+#: /globals/accesskeys.pt:266
 msgid "return"
 msgstr "חזרה"
 
-#: /globals/accesskeys.pt:19 /globals/accesskeys.pt:266
+#: /globals/accesskeys.pt:19
+#: /globals/accesskeys.pt:266
 #: /views/edit/Container/tab_edit_rename.pt:121
 #: /views/edit/VersionedContent/tab_status_macros.pt:138
 #: /views/edit/VersionedContent/tab_status_macros.pt:331
@@ -678,20 +689,11 @@ msgid "access key: alt-r"
 msgstr "מקש גישה: alt-r"
 
 #: /globals/accesskeys.pt:191
-msgid ""
-"The Properties, Access, and Publish screens as well as their subscreens "
-"(such as Lookup, Import, and Export) have access keys for most buttons. "
-"Usually the first letter of the button is the access key. You can always "
-"hover over the button to see the tooltip."
+msgid "The Properties, Access, and Publish screens as well as their subscreens (such as Lookup, Import, and Export) have access keys for most buttons. Usually the first letter of the button is the access key. You can always hover over the button to see the tooltip."
 msgstr ""
 
 #: /globals/accesskeys.pt:194
-msgid ""
-"If there are two buttons with the same name, the access key for the second "
-"is usually the first letter of the second word (e.g. for &#8220;get image "
-"reference&#8221; and &#8220;get link reference&#8221;, the access keys are "
-"&#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are multiples of the "
-"same button, in which case only the first has an access key."
+msgid "If there are two buttons with the same name, the access key for the second is usually the first letter of the second word (e.g. for &#8220;get image reference&#8221; and &#8220;get link reference&#8221;, the access keys are &#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are multiples of the same button, in which case only the first has an access key."
 msgstr ""
 
 #: /globals/accesskeys.pt:198
@@ -699,32 +701,19 @@ msgid "Notes"
 msgstr "הערות"
 
 #: /globals/accesskeys.pt:202
-msgid ""
-"Some access keys can conflict with browser menus. However the key works if "
-"the focus is in the page (a form element is active or just click in the "
-"page)."
+msgid "Some access keys can conflict with browser menus. However the key works if the focus is in the page (a form element is active or just click in the page)."
 msgstr ""
 
 #: /globals/accesskeys.pt:205
-msgid ""
-"Mozilla and Internet Explorer handle access keys for hyperlinks differently. "
-"Mozilla initiates the action (same as clicking the link), whereas Explorer "
-"just highlights the link, and then you have to hit return to activate it. "
-"Both browsers treat form buttons the same, initiating the action immediately."
+msgid "Mozilla and Internet Explorer handle access keys for hyperlinks differently. Mozilla initiates the action (same as clicking the link), whereas Explorer just highlights the link, and then you have to hit return to activate it. Both browsers treat form buttons the same, initiating the action immediately."
 msgstr ""
 
 #: /globals/accesskeys.pt:208
-msgid ""
-"Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-"
-"right arrow to go forward. On the Mac, command-left arrow and command-right "
-"arrow do this."
+msgid "Don&#8217;t forget that most browsers use alt-left arrow to go back, and alt-right arrow to go forward. On the Mac, command-left arrow and command-right arrow do this."
 msgstr ""
 
 #: /globals/accesskeys.pt:212
-msgid ""
-"If you wish to create additional docs, the hyperlink of the Silva help link "
-"can be changed by altering the the 'help_url' property in the Silva root. "
-"See the properties tab in the Zope Management Interface."
+msgid "If you wish to create additional docs, the hyperlink of the Silva help link can be changed by altering the the 'help_url' property in the Silva root. See the properties tab in the Zope Management Interface."
 msgstr ""
 
 #: /globals/accesskeys.pt:216
@@ -732,10 +721,7 @@ msgid "Tip: one click editing"
 msgstr "טיפ: עריכת לחיצה אחת"
 
 #: /globals/accesskeys.pt:220
-msgid ""
-"When viewing a public Silva page, switching to the SMI is is easiest if "
-"there's a bookmark on your toolbar. Add a bookmark with the following "
-"javascript:"
+msgid "When viewing a public Silva page, switching to the SMI is is easiest if there's a bookmark on your toolbar. Add a bookmark with the following javascript:"
 msgstr ""
 
 #: /globals/accesskeys.pt:227
@@ -763,27 +749,20 @@ msgid "Tip for Mozilla/Netscape users"
 msgstr "טיפ למשתמשי מוזילה/נייטסקייפ"
 
 #: /globals/accesskeys.pt:244
-msgid ""
-"${tip_for_mozilla_users}${br} Using the &#8220;Find As You Type&#8221; "
-"feature will make keyboard navigation to hyperlinks &#8211; such as item "
-"names &#8211; remarkably easy. See:${br} ${typeaheadfind_link}"
+msgid "${tip_for_mozilla_users}${br} Using the &#8220;Find As You Type&#8221; feature will make keyboard navigation to hyperlinks &#8211; such as item names &#8211; remarkably easy. See:${br} ${typeaheadfind_link}"
 msgstr ""
 
-#: /globals/accesskeys.pt:247 /views/edit/Container/tab_edit_new.pt:81
+#: /globals/accesskeys.pt:247
+#: /views/edit/Container/tab_edit_new.pt:81
 msgid "Silva documentation"
 msgstr "תיעוד סילווה"
 
 #: /globals/accesskeys.pt:251
-msgid ""
-"The most up to date documentation can be found at:${br} "
-"${silva_documentation_link}"
+msgid "The most up to date documentation can be found at:${br} ${silva_documentation_link}"
 msgstr ""
 
 #: /globals/accesskeys.pt:253
-msgid ""
-"The technical documentation is included in the Silva product in &#8216;"
-"plain&#8217; structured text, gracefully degraded for text mode (no links, "
-"unicode entities, etc.)."
+msgid "The technical documentation is included in the Silva product in &#8216;plain&#8217; structured text, gracefully degraded for text mode (no links, unicode entities, etc.)."
 msgstr ""
 
 #: /globals/accesskeys.pt:260
@@ -807,14 +786,11 @@ msgid "Silva access keys"
 msgstr "מקשי גישה לסילווה"
 
 #: /globals/accesskeys.pt:45
-msgid ""
-"The access key on your machine may be &#8216;alt&#8217;. On a Mac it&#8217;s "
-"&#8216;ctrl&#8217;."
+msgid "The access key on your machine may be &#8216;alt&#8217;. On a Mac it&#8217;s &#8216;ctrl&#8217;."
 msgstr ""
 
 #: /globals/accesskeys.pt:47
-msgid ""
-"Hover over the link or button and a tooltip will popup with the access key."
+msgid "Hover over the link or button and a tooltip will popup with the access key."
 msgstr ""
 
 #: /globals/accesskeys.pt:49
@@ -842,10 +818,7 @@ msgid "General"
 msgstr "כללי"
 
 #: /globals/accesskeys.pt:66
-msgid ""
-"${general}${br} t &nbsp; Jump to top of page${br} b &nbsp; Jump to bottom of "
-"page${br} / &nbsp; Jump to top of Silva (Silva icon)${br} ? &nbsp; Access "
-"keys and shortcuts"
+msgid "${general}${br} t &nbsp; Jump to top of page${br} b &nbsp; Jump to bottom of page${br} / &nbsp; Jump to top of Silva (Silva icon)${br} ? &nbsp; Access keys and shortcuts"
 msgstr ""
 
 #: /globals/accesskeys.pt:69
@@ -853,30 +826,15 @@ msgid "Changing screens with the tabs"
 msgstr "שינוי מסכים בעזרת טאבים"
 
 #: /globals/accesskeys.pt:70
-msgid ""
-"${changing_screens_with_tabs}${br}The tabs have numbered access keys, "
-"starting from one going up to five. You can navigate horizontally accross an "
-"item&#8217;s screens by using alt-1, alt-2, and so forth."
+msgid "${changing_screens_with_tabs}${br}The tabs have numbered access keys, starting from one going up to five. You can navigate horizontally accross an item&#8217;s screens by using alt-1, alt-2, and so forth."
 msgstr ""
 
 #: /globals/accesskeys.pt:74
-msgid ""
-"Each tab has a toplink ${img}, the tall tree on the left side. It takes you "
-"to the top of the current publication, within the same tab, or &#8216;"
-"vein&#8217;. The access key is the shift character of the corresponding "
-"number (on the English keyboard, sorry if you have an international one). "
-"Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters "
-"resemble the number)."
+msgid "Each tab has a toplink ${img}, the tall tree on the left side. It takes you to the top of the current publication, within the same tab, or &#8216;vein&#8217;. The access key is the shift character of the corresponding number (on the English keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the number)."
 msgstr ""
 
 #: /globals/accesskeys.pt:77
-msgid ""
-"On the right of each tab is an uplink ${img}, a small tree that takes you up "
-"one level in the same vein. The access keys for the uplinks are the "
-"remaining numbers (add five to the access key for the tab). If you are in a "
-"screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-"
-"0. If there are less than five tabs, you still add five to get the uplink "
-"key."
+msgid "On the right of each tab is an uplink ${img}, a small tree that takes you up one level in the same vein. The access keys for the uplinks are the remaining numbers (add five to the access key for the tab). If you are in a screen with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less than five tabs, you still add five to get the uplink key."
 msgstr ""
 
 #: /globals/accesskeys.pt:81
@@ -892,9 +850,7 @@ msgid "Footer user row"
 msgstr ""
 
 #: /globals/accesskeys.pt:88
-msgid ""
-"${footer_user_row}${br} ~ &nbsp; User settings${br} &nbsp;, &nbsp; Request "
-"access${br} q &nbsp; Logout"
+msgid "${footer_user_row}${br} ~ &nbsp; User settings${br} &nbsp;, &nbsp; Request access${br} q &nbsp; Logout"
 msgstr ""
 
 #: /globals/accesskeys.pt:9
@@ -905,26 +861,28 @@ msgstr "עזרת סילווה"
 msgid "Contents screen (folder)"
 msgstr ""
 
-#: /globals/accesskeys.pt:96 /globals/accesskeys.pt:130
+#: /globals/accesskeys.pt:96
+#: /globals/accesskeys.pt:130
 msgid "Listing header"
 msgstr "ראש רשימה"
 
 #: /globals/accesskeys.pt:99
-msgid ""
-"${listing_header}${br} n &nbsp; new${br} s &nbsp; select list for a new "
-"object${br} i &nbsp; import${br} e &nbsp; export"
+msgid "${listing_header}${br} n &nbsp; new${br} s &nbsp; select list for a new object${br} i &nbsp; import${br} e &nbsp; export"
 msgstr ""
 
-#: /globals/copyright.pt:17 /globals/reference.pt:22
+#: /globals/copyright.pt:17
+#: /globals/reference.pt:22
 msgid "access key: alt-b"
 msgstr ""
 
-#: /globals/copyright.pt:17 /globals/reference.pt:22
+#: /globals/copyright.pt:17
+#: /globals/reference.pt:22
 #: /views/edit/VersionedContent/tab_status_view_version.pt:53
 msgid "back"
 msgstr "חזרה"
 
-#: /globals/copyright.pt:28 /globals/reference.pt:33
+#: /globals/copyright.pt:28
+#: /globals/reference.pt:33
 msgid "Silva info: alt-s"
 msgstr "מידע סילווה : alt-s"
 
@@ -937,20 +895,15 @@ msgid "Thanks to...."
 msgstr "תודות ל..."
 
 #: /globals/reference.pt:114
-msgid ""
-"The people at ${eth_zuerich} for their feedback, contributions, and "
-"innovation."
+msgid "The people at ${eth_zuerich} for their feedback, contributions, and innovation."
 msgstr ""
 
 #: /globals/reference.pt:117
-msgid ""
-"Jan Smith at ${ozzope} for advice, hosting the documentation wiki, and her "
-"tutorials."
+msgid "Jan Smith at ${ozzope} for advice, hosting the documentation wiki, and her tutorials."
 msgstr ""
 
 #: /globals/reference.pt:120
-msgid ""
-"Many thanks go to Hans Verster at the ${eur} for his vision and support."
+msgid "Many thanks go to Hans Verster at the ${eur} for his vision and support."
 msgstr ""
 
 #: /globals/reference.pt:131
@@ -958,9 +911,7 @@ msgid "Silva site"
 msgstr "אתר סילווה"
 
 #: /globals/reference.pt:140
-msgid ""
-"${br} ${br} ${silva_icon} <span class=\"subhead\"> Silva ${silva_version} </"
-"span>${br} &#xa9; Copyright 2001-2009 Infrae. All rights reserved."
+msgid "${br} ${br} ${silva_icon} <span class=\"subhead\"> Silva ${silva_version} </span>${br} &#xa9; Copyright 2001-2009 Infrae. All rights reserved."
 msgstr ""
 
 #: /globals/reference.pt:39
@@ -999,7 +950,8 @@ msgstr ""
 msgid "Return to where you came from..."
 msgstr "חזור חזרה למקום שהגעת ממנו"
 
-#: /resources/sidebar_template.pt:25 /resources/sidebar_template.pt:64
+#: /resources/sidebar_template.pt:25
+#: /resources/sidebar_template.pt:64
 #: /views/edit/macro_vein_navigation.pt:137
 #: /views/edit/macro_vein_navigation.pt:179
 msgid "slide to the publish screen"
@@ -1013,7 +965,8 @@ msgstr ""
 msgid "up to top of publication"
 msgstr ""
 
-#: /resources/sidebar_template.pt:70 /views/edit/macro_vein_navigation.pt:143
+#: /resources/sidebar_template.pt:70
+#: /views/edit/macro_vein_navigation.pt:143
 #: /views/edit/macro_vein_navigation.pt:186
 msgid "slide to the contents screen"
 msgstr ""
@@ -1048,11 +1001,11 @@ msgstr "צפוי"
 
 #: /roleinfo.py:33
 msgid "Viewer +"
-msgstr ""
+msgstr "צופה +"
 
 #: /roleinfo.py:34
 msgid "Viewer ++"
-msgstr ""
+msgstr "צופה ++"
 
 #: /roleinfo.py:35
 msgid "Reader"
@@ -1075,17 +1028,18 @@ msgid "depth"
 msgstr "עומק"
 
 #: /views/add/AutoTOC/form.form:71
-msgid ""
-"The depth to which the Table of Contents will be rendered (-1 means "
-"unlimited depth.)"
+msgid "The depth to which the Table of Contents will be rendered (-1 means unlimited depth.)"
 msgstr ""
 
-#: /views/add/File/add_submit.py:43 /views/edit/Asset/File/upload_submit.py:33
+#: /views/add/File/add_submit.py:43
+#: /views/edit/Asset/File/upload_submit.py:33
 msgid "Please upload a file with an correct extension."
 msgstr ""
 
-#: /views/add/File/add_submit.py:83 /views/add/Groups/add_submit.py:59
-#: /views/add/Image/add_submit.py:78 /views/add/add_submit.py:79
+#: /views/add/File/add_submit.py:83
+#: /views/add/Groups/add_submit.py:59
+#: /views/add/Image/add_submit.py:78
+#: /views/add/add_submit.py:79
 #: /views/edit/show_local.py:19
 msgid "meta_type"
 msgstr "סוג_מטה"
@@ -1098,7 +1052,8 @@ msgstr "סוג_מטה"
 msgid "message"
 msgstr "הודעה"
 
-#: /views/add/File/form.form:24 /views/edit/Asset/upload_form.form:24
+#: /views/add/File/form.form:24
+#: /views/edit/Asset/upload_form.form:24
 msgid "file"
 msgstr "קובץ"
 
@@ -1122,7 +1077,8 @@ msgstr ""
 msgid "Location of originating document."
 msgstr ""
 
-#: /views/add/GhostFolder/add_form.pt:42 /views/add/Ghost/add_form.pt:42
+#: /views/add/GhostFolder/add_form.pt:42
+#: /views/add/Ghost/add_form.pt:42
 msgid "create ${meta_type}"
 msgstr "צור ${meta_type}"
 
@@ -1131,16 +1087,15 @@ msgid "creation may take a while"
 msgstr "יצירה יכולה לקחת זמן"
 
 #: /views/add/GhostFolder/add_form.pt:78
-msgid ""
-"Location of originating folder. Depending on how much content there is, "
-"${warning}."
+msgid "Location of originating folder. Depending on how much content there is, ${warning}."
 msgstr ""
 
 #: /views/add/GhostFolder/add_form.pt:82
 msgid "find the folder this ghost should refer to: alt-r"
 msgstr ""
 
-#: /views/add/GhostFolder/add_form.pt:82 /views/add/Ghost/add_form.pt:79
+#: /views/add/GhostFolder/add_form.pt:82
+#: /views/add/Ghost/add_form.pt:79
 #: /views/edit/Container/GhostFolder/tab_edit.pt:65
 #: /views/edit/VersionedContent/Ghost/tab_edit.pt:51
 msgid "reference..."
@@ -1165,18 +1120,15 @@ msgid "Empty or invalid file."
 msgstr "ריק או קובץ שאינו תקין"
 
 #: /views/add/Image/form.form:48
-msgid ""
-"Fill in a title. It&#8217;ll be used for the ALT (Alternative text) "
-"attribute of the image."
+msgid "Fill in a title. It&#8217;ll be used for the ALT (Alternative text) attribute of the image."
 msgstr ""
 
 #: /views/add/Link/form.form:63
-msgid ""
-"Links can contain anything, so it is the author's responsibility to create "
-"valid urls."
+msgid "Links can contain anything, so it is the author's responsibility to create valid urls."
 msgstr ""
 
-#: /views/add/Link/form.form:92 /doc/silva-extra.xml:734
+#: /views/add/Link/form.form:92
+#: /doc/silva-extra.xml:734
 msgid "url"
 msgstr "כתובת קישור"
 
@@ -1192,40 +1144,49 @@ msgstr ""
 msgid "First item"
 msgstr "פריט ראשון"
 
-#: /views/add/add_form.pt:121 /views/add/GhostFolder/add_form.pt:108
-#: /views/add/Ghost/add_form.pt:105 /views/edit/macro_edit_metadata.pt:158
+#: /views/add/add_form.pt:121
+#: /views/add/GhostFolder/add_form.pt:108
+#: /views/add/Ghost/add_form.pt:105
+#: /views/edit/macro_edit_metadata.pt:158
 #: /views/edit/tab_subscriptions.pt:106
 #: /views/edit/Member/SimpleMember/tab_edit.pt:103
 msgid "* required"
 msgstr ""
 
-#: /views/add/add_form.pt:131 /views/add/GhostFolder/add_form.pt:119
+#: /views/add/add_form.pt:131
+#: /views/add/GhostFolder/add_form.pt:119
 #: /views/add/GhostFolder/add_form.pt:130
 msgid "save + enter"
-msgstr ""
+msgstr "שמור + הכנס"
 
-#: /views/add/add_form.pt:131 /views/add/add_form.pt:142
+#: /views/add/add_form.pt:131
+#: /views/add/add_form.pt:142
 #: /views/add/GhostFolder/add_form.pt:119
-#: /views/add/GhostFolder/add_form.pt:130 /views/add/Ghost/add_form.pt:114
+#: /views/add/GhostFolder/add_form.pt:130
+#: /views/add/Ghost/add_form.pt:114
 #: /views/edit/Container/tab_status_export.pt:319
 #: /views/edit/Container/tab_access_groups.pt:131
 #: /views/edit/VersionedContent/tab_status.pt:60
 msgid "access key: alt-e"
 msgstr "מקש גישה: : alt-e"
 
-#: /views/add/add_form.pt:142 /views/edit/Container/tab_access_groups.pt:131
+#: /views/add/add_form.pt:142
+#: /views/edit/Container/tab_access_groups.pt:131
 msgid "save + edit"
 msgstr "שמור+ערוך"
 
-#: /views/add/add_form.pt:153 /views/add/GhostFolder/add_form.pt:141
-#: /views/add/Ghost/add_form.pt:125 /views/edit/macro_edit_metadata.pt:173
+#: /views/add/add_form.pt:153
+#: /views/add/GhostFolder/add_form.pt:141
+#: /views/add/Ghost/add_form.pt:125
+#: /views/edit/macro_edit_metadata.pt:173
 #: /views/edit/Container/tab_access_groups.pt:140
 #: /views/edit/Asset/macro_asset_edit.pt:70
 #: /views/edit/Member/SimpleMember/tab_edit.pt:131
 msgid "save"
 msgstr "שמור"
 
-#: /views/add/add_form.pt:162 /views/add/GhostFolder/add_form.pt:150
+#: /views/add/add_form.pt:162
+#: /views/add/GhostFolder/add_form.pt:150
 #: /views/add/Ghost/add_form.pt:134
 #: /views/edit/Container/tab_edit_rename.pt:129
 #: /views/edit/Asset/File/tab_edit.pt:97
@@ -1243,17 +1204,22 @@ msgstr "העלה ${meta_type}"
 msgid "create ${TOC_or_meta_type}"
 msgstr "צור ${TOC_or_meta_type}"
 
-#: /views/add/add_form.pt:65 /views/add/add_form.pt:107
-#: /views/add/GhostFolder/add_form.pt:50 /views/add/Ghost/add_form.pt:50
+#: /views/add/add_form.pt:65
+#: /views/add/add_form.pt:107
+#: /views/add/GhostFolder/add_form.pt:50
+#: /views/add/Ghost/add_form.pt:50
 #: /views/edit/Asset/macro_asset_edit.pt:32
 #: /views/edit/Asset/macro_asset_edit.pt:120
 #: /views/edit/Asset/Image/tab_edit.pt:136
 msgid "aspect"
 msgstr "אספקט"
 
-#: /views/add/add_form.pt:69 /views/add/add_form.pt:110
-#: /views/add/GhostFolder/add_form.pt:54 /views/add/Ghost/add_form.pt:54
-#: /views/edit/macro_edit_metadata.pt:81 /views/edit/tab_subscriptions.pt:78
+#: /views/add/add_form.pt:69
+#: /views/add/add_form.pt:110
+#: /views/add/GhostFolder/add_form.pt:54
+#: /views/add/Ghost/add_form.pt:54
+#: /views/edit/macro_edit_metadata.pt:81
+#: /views/edit/tab_subscriptions.pt:78
 #: /views/edit/macro_view_metadata.pt:66
 #: /views/edit/Container/tab_edit_import.pt:89
 #: /views/edit/Container/tab_edit_import.pt:152
@@ -1272,11 +1238,13 @@ msgstr "אספקט"
 msgid "content"
 msgstr "תוכן"
 
-#: /views/add/form.form:47 /views/add/Link/form.form:50
-#: /views/add/SimpleContent/form.form:49 /views/add/Publication/form.form:49
-#: /views/add/AutoTOC/form.form:50 /views/add/Folder/form.form:49
-msgid ""
-"The title will be publicly visible, and is used for the link in indexes."
+#: /views/add/form.form:47
+#: /views/add/Link/form.form:50
+#: /views/add/SimpleContent/form.form:49
+#: /views/add/Publication/form.form:49
+#: /views/add/AutoTOC/form.form:50
+#: /views/add/Folder/form.form:49
+msgid "The title will be publicly visible, and is used for the link in indexes."
 msgstr ""
 
 #: /views/add/get_id_status_text.py:18
@@ -1289,50 +1257,37 @@ msgstr ""
 
 # Default: "prefix"
 #: /views/add/get_id_status_text.py:25
-msgid ""
-"Sorry, ids starting with ${prefix} are reserved for internal use. Please use "
-"another id."
+msgid "Sorry, ids starting with ${prefix} are reserved for internal use. Please use another id."
 msgstr ""
 
 # Default: "id"
 #: /views/add/get_id_status_text.py:30
-msgid ""
-"Sorry, the id ${id} is reserved for internal use. Please use another id."
+msgid "Sorry, the id ${id} is reserved for internal use. Please use another id."
 msgstr ""
 
 # Default: "id"
 #: /views/add/get_id_status_text.py:34
-msgid ""
-"There is already an object with the id ${id} in this folder. Please use a "
-"different one."
+msgid "There is already an object with the id ${id} in this folder. Please use a different one."
 msgstr ""
 
 # Default: "id"
 #: /views/add/get_id_status_text.py:39
-msgid ""
-"There is already an asset with the id ${id} in this folder. Please use "
-"another id."
+msgid "There is already an asset with the id ${id} in this folder. Please use another id."
 msgstr ""
 
 # Default: "id"
 #: /views/add/get_id_status_text.py:44
-msgid ""
-"Sorry, the id ${id} ends with invalid characters. Please use another id."
+msgid "Sorry, the id ${id} ends with invalid characters. Please use another id."
 msgstr ""
 
 # Default: "id"
 #: /views/add/get_id_status_text.py:48
-msgid ""
-"Sorry, the id ${id} is already in use by a Zope object. Please use another "
-"id."
+msgid "Sorry, the id ${id} is already in use by a Zope object. Please use another id."
 msgstr ""
 
 # Default: "status_code"
 #: /views/add/get_id_status_text.py:54
-msgid ""
-"(Internal Error): An invalid status ${status_code} occured while checking "
-"the id ${id}. Please contact the person responsible for this Silva "
-"installation or file a bug report."
+msgid "(Internal Error): An invalid status ${status_code} occured while checking the id ${id}. Please contact the person responsible for this Silva installation or file a bug report."
 msgstr ""
 
 #: /views/edit/Asset/File/form.form:30
@@ -1344,11 +1299,13 @@ msgstr ""
 msgid "File uploaded."
 msgstr "קובץ הועלה."
 
-#: /views/edit/Asset/File/submit.py:21 /views/edit/Asset/Image/submit.py:20
+#: /views/edit/Asset/File/submit.py:21
+#: /views/edit/Asset/Image/submit.py:20
 msgid "old_title"
 msgstr "כותרת ישנה"
 
-#: /views/edit/Asset/File/submit.py:30 /views/edit/Asset/Image/submit.py:34
+#: /views/edit/Asset/File/submit.py:30
+#: /views/edit/Asset/Image/submit.py:34
 msgid "Properties changed: ${changed}"
 msgstr "הגדרות שונו ל: ${changed}"
 
@@ -1375,8 +1332,7 @@ msgid "edit textual content"
 msgstr ""
 
 #: /views/edit/Asset/File/tab_edit.pt:65
-msgid ""
-"Text content is too large to be edited through Silva. Please upload changes."
+msgid "Text content is too large to be edited through Silva. Please upload changes."
 msgstr "תוכן טקסט גדול מדי על מנת להערוך תוך סילווה.  בבקשה העלה שינויים."
 
 #: /views/edit/Asset/File/tab_edit.pt:97
@@ -1598,7 +1554,8 @@ msgstr ""
 msgid "remove group"
 msgstr "הסר קבוצה"
 
-#: /views/edit/Asset/Groups/get_tabs.py:14 /views/edit/Asset/get_tabs.py:14
+#: /views/edit/Asset/Groups/get_tabs.py:14
+#: /views/edit/Asset/get_tabs.py:14
 #: /views/edit/Content/AutoTOC/get_tabs.py:17
 #: /views/edit/Content/Indexer/get_tabs.py:17
 #: /views/edit/Content/SimpleContent/get_tabs.py:4
@@ -1619,11 +1576,7 @@ msgid "instructions"
 msgstr "הוראות"
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:118
-msgid ""
-"Drag the window below to the image region which should be cropped. You can "
-"resize the window with the handle on the lower right corner. If you're done, "
-"you can click the submit button below or double click in the window to set "
-"your coordinates and close the cropping tool."
+msgid "Drag the window below to the image region which should be cropped. You can resize the window with the handle on the lower right corner. If you're done, you can click the submit button below or double click in the window to set your coordinates and close the cropping tool."
 msgstr ""
 
 #: /views/edit/Asset/Image/lookup_cropcoordinates.pt:126
@@ -1689,8 +1642,7 @@ msgstr "שינוי גודל"
 #: /views/edit/Asset/Image/scale_form.form:57
 msgid ""
 "\n"
-"\t  Image scaling for web: use width x height in pixels, or one axis length, "
-"or a percentage (100x200, 100x*, *x200, 40%)."
+"\t  Image scaling for web: use width x height in pixels, or one axis length, or a percentage (100x200, 100x*, *x200, 40%)."
 msgstr ""
 
 #: /views/edit/Asset/Image/scale_form.form:78
@@ -1700,8 +1652,7 @@ msgstr ""
 #: /views/edit/Asset/Image/scale_form.form:87
 msgid ""
 "\n"
-"              Image cropping for web: use the &#8216;set crop "
-"coordinates&#8217; button, or enter X1xY1-X2xY2 to define the cropping box.\n"
+"              Image cropping for web: use the &#8216;set crop coordinates&#8217; button, or enter X1xY1-X2xY2 to define the cropping box.\n"
 "          "
 msgstr ""
 
@@ -1710,8 +1661,7 @@ msgid "Scaling and/or format changed"
 msgstr ""
 
 #: /views/edit/Asset/Image/tab_edit.pt:101
-msgid ""
-"Note: Silva can provide image scaling and conversion with the help of PIL"
+msgid "Note: Silva can provide image scaling and conversion with the help of PIL"
 msgstr ""
 
 #: /views/edit/Asset/Image/tab_edit.pt:103
@@ -1744,14 +1694,15 @@ msgid "format"
 msgstr "פורמט"
 
 #: /views/edit/Asset/Image/tab_edit.pt:25
-#: /views/edit/Asset/Image/tab_edit.pt:39 /views/add/Image/form.form:24
+#: /views/edit/Asset/Image/tab_edit.pt:39
+#: /views/add/Image/form.form:24
 msgid "image"
 msgstr "תמונה"
 
 #: /views/edit/Asset/Image/tab_edit.pt:27
 #: /views/edit/Asset/Image/tab_edit.pt:47
 msgid "dimensions"
-msgstr ""
+msgstr "מימדים"
 
 #: /views/edit/Asset/Image/tab_edit.pt:55
 msgid "scaled to ${WxH} pixels"
@@ -1797,9 +1748,12 @@ msgstr "תמונה הועלתה."
 #: /views/edit/Content/SimpleContent/get_tabs.py:5
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:18
 #: /views/edit/VersionedContent/Link/get_tabs.py:16
-#: /views/edit/get_authorized_tabs.py:15 /views/edit/get_authorized_tabs.py:19
-#: /browser/object_lookup.pt:383 /views/edit/Container/tab_edit.pt:133
-#: /views/edit/Container/tab_edit.pt:209 /views/edit/Container/tab_edit.pt:371
+#: /views/edit/get_authorized_tabs.py:15
+#: /views/edit/get_authorized_tabs.py:19
+#: /browser/object_lookup.pt:383
+#: /views/edit/Container/tab_edit.pt:133
+#: /views/edit/Container/tab_edit.pt:209
+#: /views/edit/Container/tab_edit.pt:371
 #: /views/edit/Container/GhostFolder/tab_edit.pt:205
 #: /views/edit/Container/GhostFolder/tab_edit.pt:281
 #: /views/edit/Container/GhostFolder/tab_edit.pt:416
@@ -1813,10 +1767,14 @@ msgstr "תצוגה מקדימה"
 #: /views/edit/Content/Indexer/get_tabs.py:19
 #: /views/edit/VersionedContent/Ghost/get_tabs.py:19
 #: /views/edit/VersionedContent/Link/get_tabs.py:17
-#: /views/edit/macro_edit_metadata.pt:40 /views/edit/tab_metadata.pt:68
-#: /views/edit/tab_metadata.pt:87 /views/edit/tab_metadata.pt:105
-#: /views/edit/Container/tab_edit.pt:222 /views/edit/Container/tab_edit.pt:230
-#: /views/edit/Container/tab_edit.pt:384 /views/edit/Container/tab_edit.pt:392
+#: /views/edit/macro_edit_metadata.pt:40
+#: /views/edit/tab_metadata.pt:68
+#: /views/edit/tab_metadata.pt:87
+#: /views/edit/tab_metadata.pt:105
+#: /views/edit/Container/tab_edit.pt:222
+#: /views/edit/Container/tab_edit.pt:230
+#: /views/edit/Container/tab_edit.pt:384
+#: /views/edit/Container/tab_edit.pt:392
 #: /views/edit/VersionedContent/Ghost/tab_metadata.pt:45
 msgid "properties"
 msgstr "מאפיינים"
@@ -1840,12 +1798,14 @@ msgstr "העלאת קובץ"
 msgid "characterization"
 msgstr ""
 
-#: /views/edit/Asset/tab_status.pt:26 /views/edit/Content/tab_status.pt:26
+#: /views/edit/Asset/tab_status.pt:26
+#: /views/edit/Content/tab_status.pt:26
 #: /views/edit/VersionedContent/tab_status.pt:47
 msgid "status of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/Asset/tab_status.pt:31 /views/edit/Content/tab_status.pt:31
+#: /views/edit/Asset/tab_status.pt:31
+#: /views/edit/Content/tab_status.pt:31
 msgid "A ${type} automatically has a published state."
 msgstr ""
 
@@ -1856,10 +1816,7 @@ msgstr ""
 
 #: /views/edit/Asset/tab_subscriptions.pt:35
 #: /views/edit/Content/tab_subscriptions.pt:35
-msgid ""
-"This ${vein} screen doesn&#8217;t have settings, because it&#8217;s not "
-"possible to subscribe to a ${type}. Only documents that contain textual "
-"content, or folders that contain them, can be subscribed to."
+msgid "This ${vein} screen doesn&#8217;t have settings, because it&#8217;s not possible to subscribe to a ${type}. Only documents that contain textual content, or folders that contain them, can be subscribed to."
 msgstr ""
 
 #: /views/edit/Asset/upload_form.form:25
@@ -1879,7 +1836,8 @@ msgid "Ghost Folder has been replaced by a publication"
 msgstr ""
 
 #: /views/edit/Container/GhostFolder/get_tabs.py:17
-#: /views/edit/Container/get_tabs.py:17 /views/edit/get_authorized_tabs.py:14
+#: /views/edit/Container/get_tabs.py:17
+#: /views/edit/get_authorized_tabs.py:14
 msgid "contents"
 msgstr "תכנים"
 
@@ -1896,8 +1854,7 @@ msgid "publish"
 msgstr "פרסם"
 
 #: /views/edit/Container/GhostFolder/submit.py:19
-msgid ""
-"Ghost Folder changed but not synchronized, because thenew target is invalid."
+msgid "Ghost Folder changed but not synchronized, because thenew target is invalid."
 msgstr ""
 
 #: /views/edit/Container/GhostFolder/submit.py:24
@@ -1949,9 +1906,10 @@ msgstr "מאפיינים"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:58
 #: /views/edit/VersionedContent/Ghost/tab_edit.pt:44
-#: /views/add/GhostFolder/form.form:48 /views/add/Ghost/form.form:48
+#: /views/add/GhostFolder/form.form:48
+#: /views/add/Ghost/form.form:48
 msgid "path"
-msgstr ""
+msgstr "נתיב"
 
 #: /views/edit/Container/GhostFolder/tab_edit.pt:60
 #: /views/edit/VersionedContent/Ghost/tab_edit.pt:46
@@ -2006,16 +1964,11 @@ msgid "acquire"
 msgstr ""
 
 #: /views/edit/Container/Publication/tab_addables_form.form:25
-msgid ""
-"If checked, inherit the addables from above. Uncheck this to change the "
-"allowed addables below."
+msgid "If checked, inherit the addables from above. Uncheck this to change the allowed addables below."
 msgstr ""
 
 #: /views/edit/Container/Publication/tab_addables_form.form:41
-msgid ""
-"If 'acquire' is not checked, these settings will determine the items allowed "
-"in this publication. Otherwise the addables are acquired from the "
-"publication above."
+msgid "If 'acquire' is not checked, these settings will determine the items allowed in this publication. Otherwise the addables are acquired from the publication above."
 msgstr ""
 
 #: /views/edit/Container/Publication/tab_addables_submit.py:34
@@ -2235,15 +2188,19 @@ msgstr ""
 msgid "create a group"
 msgstr "צור קבוצה"
 
-#: /views/edit/Container/tab_access_groups.pt:91 /views/add/form.form:27
-#: /views/add/Groups/form.form:30 /views/add/Link/form.form:30
-#: /views/add/SimpleContent/form.form:30 /views/add/GhostFolder/form.form:30
-#: /views/add/File/form.form:47 /views/add/Image/form.form:69
-#: /views/add/Publication/form.form:30 /views/add/AutoTOC/form.form:30
-#: /views/add/Ghost/form.form:30 /views/add/Folder/form.form:30
-msgid ""
-"No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
-"or &#8216;.&#8217;"
+#: /views/edit/Container/tab_access_groups.pt:91
+#: /views/add/form.form:27
+#: /views/add/Groups/form.form:30
+#: /views/add/Link/form.form:30
+#: /views/add/SimpleContent/form.form:30
+#: /views/add/GhostFolder/form.form:30
+#: /views/add/File/form.form:47
+#: /views/add/Image/form.form:69
+#: /views/add/Publication/form.form:30
+#: /views/add/AutoTOC/form.form:30
+#: /views/add/Ghost/form.form:30
+#: /views/add/Folder/form.form:30
+msgid "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
 msgstr ""
 
 #: /views/edit/Container/tab_access_groups_delete.py:11
@@ -2265,7 +2222,8 @@ msgstr "מחק ${deleted_ids}."
 msgid "Could not delete ${not_deleted_ids}."
 msgstr "לא ניתן למחיקה ${not_deleted_ids}."
 
-#: /views/edit/Container/tab_edit.pt:130 /views/edit/Container/tab_edit.pt:195
+#: /views/edit/Container/tab_edit.pt:130
+#: /views/edit/Container/tab_edit.pt:195
 msgid "modify"
 msgstr "שינה"
 
@@ -2283,11 +2241,13 @@ msgstr "תוכן עודכן, או פורסם..."
 msgid "content approved or published"
 msgstr "תוכן אושר או פורסם"
 
-#: /views/edit/Container/tab_edit.pt:275 /views/edit/Container/tab_edit.pt:278
+#: /views/edit/Container/tab_edit.pt:275
+#: /views/edit/Container/tab_edit.pt:278
 msgid "move up"
 msgstr "הזז מעלה"
 
-#: /views/edit/Container/tab_edit.pt:283 /views/edit/Container/tab_edit.pt:286
+#: /views/edit/Container/tab_edit.pt:283
+#: /views/edit/Container/tab_edit.pt:286
 msgid "move down"
 msgstr "הזז מטה"
 
@@ -2422,8 +2382,7 @@ msgstr ""
 
 # Default: "cut_ids"
 #: /views/edit/Container/tab_edit_cut.py:31
-msgid ""
-"Placed ${cut_ids} on clipboard for cutting, but could not cut ${not_cut_ids}."
+msgid "Placed ${cut_ids} on clipboard for cutting, but could not cut ${not_cut_ids}."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_cut.py:36
@@ -2436,18 +2395,11 @@ msgstr ""
 
 # Default: "deleted_ids"
 #: /views/edit/Container/tab_edit_delete.py:31
-msgid ""
-"Deleted ${deleted_ids}, but could not delete ${not_deleted_ids}. Probably "
-"there is a published version that must be closed, or an approved version "
-"that needs to be revoked. Change the status in the Publish screen (alt-5)."
+msgid "Deleted ${deleted_ids}, but could not delete ${not_deleted_ids}. Probably there is a published version that must be closed, or an approved version that needs to be revoked. Change the status in the Publish screen (alt-5)."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_delete.py:45
-msgid ""
-"Could not delete ${not_deleted_ids}. Possibly there is a published version, "
-"which must be closed before it can be deleted. Or, the document is approved "
-"(the link will be green), and approval needs to be revoked. Change the "
-"status in the Publish screen (alt-5)."
+msgid "Could not delete ${not_deleted_ids}. Possibly there is a published version, which must be closed before it can be deleted. Or, the document is approved (the link will be green), and approval needs to be revoked. Change the status in the Publish screen (alt-5)."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:102
@@ -2469,9 +2421,7 @@ msgid "import and extract zip archive"
 msgstr "מייבא ופותח קובץ ארכיב זיפ"
 
 #: /views/edit/Container/tab_edit_import.pt:160
-msgid ""
-"Locate a zip file containing Assets or a zip file created by a Silva full "
-"media export."
+msgid "Locate a zip file containing Assets or a zip file created by a Silva full media export."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:177
@@ -2479,9 +2429,7 @@ msgid "title for assets"
 msgstr "כותרת לנכסים"
 
 #: /views/edit/Container/tab_edit_import.pt:181
-msgid ""
-"Set a title for all Assets created from the contents of a zip file with "
-"Assets."
+msgid "Set a title for all Assets created from the contents of a zip file with Assets."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:187
@@ -2490,12 +2438,10 @@ msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:199
 msgid "subdirectories"
-msgstr ""
+msgstr "תת ספריות"
 
 #: /views/edit/Container/tab_edit_import.pt:203
-msgid ""
-"Recreate the subdirectory structure of a zip file with Assets by adding "
-"Silva Folders."
+msgid "Recreate the subdirectory structure of a zip file with Assets by adding Silva Folders."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:220
@@ -2503,9 +2449,7 @@ msgid "replace content"
 msgstr "החלף תוכן"
 
 #: /views/edit/Container/tab_edit_import.pt:224
-msgid ""
-"Replace Content Objects with the Objects from the import when they have the "
-"same ids (Note: they will be replaced *even* when published)."
+msgid "Replace Content Objects with the Objects from the import when they have the same ids (Note: they will be replaced *even* when published)."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:243
@@ -2532,9 +2476,7 @@ msgid "upload a document in word format (.doc) for conversion"
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:329
-msgid ""
-"Locate a Word file to upload. It'll be converted and appear in the list of "
-"processed items below. It can be imported anywhere in Silva."
+msgid "Locate a Word file to upload. It'll be converted and appear in the list of processed items below. It can be imported anywhere in Silva."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:346
@@ -2546,14 +2488,14 @@ msgstr "דואר אלקטרוני ישלח לך כאשר הפריט יעובד."
 #: /views/edit/Container/tab_status_export.pt:494
 #: /views/edit/Container/docma_queue.pt:24
 #: /views/edit/Container/docma_queue.pt:71
-#: /views/edit/Container/docma_queue.pt:163 /doc/silva-extra.xml:155
+#: /views/edit/Container/docma_queue.pt:163
+#: /doc/silva-extra.xml:155
 msgid "description"
 msgstr "תיאור"
 
 #: /views/edit/Container/tab_edit_import.pt:360
 #: /views/edit/Container/tab_status_export.pt:503
-msgid ""
-"This description will be shown in the queue and the list of processed items."
+msgid "This description will be shown in the queue and the list of processed items."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_import.pt:368
@@ -2686,10 +2628,7 @@ msgid "create an object"
 msgstr "צור אובייקט."
 
 #: /views/edit/Container/tab_edit_new.pt:78
-msgid ""
-"Click a name to create an item. Note that this screen only lists "
-"descriptions of objects that are available at this location. For additional "
-"information about an item see the ${silva_documentation}."
+msgid "Click a name to create an item. Note that this screen only lists descriptions of objects that are available at this location. For additional information about an item see the ${silva_documentation}."
 msgstr ""
 
 #: /views/edit/Container/tab_edit_new_link_title.py:11
@@ -2722,12 +2661,18 @@ msgstr "תכונה"
 msgid "old"
 msgstr "ישן"
 
-#: /views/edit/Container/tab_edit_rename.pt:81 /views/add/form.form:45
-#: /views/add/Groups/form.form:48 /views/add/Link/form.form:49
-#: /views/add/SimpleContent/form.form:48 /views/add/File/form.form:66
-#: /views/add/Image/form.form:46 /views/add/Publication/form.form:48
-#: /views/add/AutoTOC/form.form:49 /views/add/Folder/form.form:48
-#: /views/edit/Asset/File/form.form:28 /views/edit/Asset/Image/form.form:29
+#: /views/edit/Container/tab_edit_rename.pt:81
+#: /views/add/form.form:45
+#: /views/add/Groups/form.form:48
+#: /views/add/Link/form.form:49
+#: /views/add/SimpleContent/form.form:48
+#: /views/add/File/form.form:66
+#: /views/add/Image/form.form:46
+#: /views/add/Publication/form.form:48
+#: /views/add/AutoTOC/form.form:49
+#: /views/add/Folder/form.form:48
+#: /views/edit/Asset/File/form.form:28
+#: /views/edit/Asset/Image/form.form:29
 #: /doc/silva-content.xml:35
 msgid "title"
 msgstr "כותרת"
@@ -2778,7 +2723,7 @@ msgstr "שנה לפירסומים"
 
 #: /views/edit/Container/tab_status.pt:104
 msgid "modify / preview"
-msgstr ""
+msgstr "עדכן / תצוגה מוקדמת"
 
 #: /views/edit/Container/tab_status.pt:107
 msgid "revision"
@@ -2808,7 +2753,8 @@ msgstr "אין פריטים שפורסמו כאן."
 msgid "access key: alt-m"
 msgstr "מקש גישה: alt-m"
 
-#: /views/edit/Container/tab_status.pt:298 /views/edit/tab_status_form.form:30
+#: /views/edit/Container/tab_status.pt:298
+#: /views/edit/tab_status_form.form:30
 #: /views/edit/VersionedContent/tab_status_form_change_settings.form:30
 #: /views/edit/VersionedContent/tab_status_form_author.form:50
 #: /views/edit/VersionedContent/tab_status_form_editor.form:30
@@ -2919,11 +2865,13 @@ msgstr ""
 msgid "export to xml or convert for export: alt-e"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:77 /views/edit/Container/tab_edit.pt:90
+#: /views/edit/Container/tab_status.pt:77
+#: /views/edit/Container/tab_edit.pt:90
 msgid "import xml data or a zip file: alt-i"
 msgstr ""
 
-#: /views/edit/Container/tab_status.pt:77 /views/edit/Container/tab_edit.pt:90
+#: /views/edit/Container/tab_status.pt:77
+#: /views/edit/Container/tab_edit.pt:90
 #: /views/edit/Container/tab_status_export.pt:100
 msgid "import..."
 msgstr "ייבוא..."
@@ -2992,7 +2940,7 @@ msgstr "אפשרויות"
 
 #: /views/edit/Container/tab_status_export.pt:121
 msgid "setting"
-msgstr ""
+msgstr "הגדרות"
 
 #: /views/edit/Container/tab_status_export.pt:127
 #: /views/edit/Container/tab_status_export.pt:270
@@ -3060,9 +3008,7 @@ msgid "Check to include closed content in the export."
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:47
-msgid ""
-"Sorry, full media export is currently not supported for more than one item. "
-"Please select one item, or select no items to export the whole folder."
+msgid "Sorry, full media export is currently not supported for more than one item. Please select one item, or select no items to export the whole folder."
 msgstr ""
 
 #: /views/edit/Container/tab_status_export.pt:471
@@ -3105,12 +3051,18 @@ msgstr ""
 
 #: /views/edit/Container/tab_status_get_name.py:16
 #: /views/edit/VersionedContent/tab_status_delete_versions.py:39
-#: /views/edit/Container/tab_edit_rename.pt:58 /views/add/form.form:25
-#: /views/add/Groups/form.form:28 /views/add/Link/form.form:28
-#: /views/add/SimpleContent/form.form:28 /views/add/GhostFolder/form.form:28
-#: /views/add/File/form.form:45 /views/add/Image/form.form:67
-#: /views/add/Publication/form.form:28 /views/add/AutoTOC/form.form:28
-#: /views/add/Ghost/form.form:28 /views/add/Folder/form.form:28
+#: /views/edit/Container/tab_edit_rename.pt:58
+#: /views/add/form.form:25
+#: /views/add/Groups/form.form:28
+#: /views/add/Link/form.form:28
+#: /views/add/SimpleContent/form.form:28
+#: /views/add/GhostFolder/form.form:28
+#: /views/add/File/form.form:45
+#: /views/add/Image/form.form:67
+#: /views/add/Publication/form.form:28
+#: /views/add/AutoTOC/form.form:28
+#: /views/add/Ghost/form.form:28
+#: /views/add/Folder/form.form:28
 msgid "id"
 msgstr ""
 
@@ -3159,7 +3111,7 @@ msgstr ""
 #: /views/edit/Container/tab_status_request_approval.py:59
 #: /views/edit/Container/tab_status_request_approval_now.py:61
 msgid "approval already requested"
-msgstr ""
+msgstr "הוגשה בקשה לאישור"
 
 #: /views/edit/Container/tab_status_request_approval.py:69
 msgid "no publication time set"
@@ -3224,17 +3176,14 @@ msgstr "עדיין לא :)"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:108
 msgid "save changes"
-msgstr ""
+msgstr "שמור שינויים"
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:121
 msgid "${icon} AutoTOC"
 msgstr ""
 
 #: /views/edit/Content/AutoTOC/tab_edit.pt:124
-msgid ""
-"An Automatic Table Of Contents is generated from the items in its location, "
-"and includes all item types that are selected in the &#8216;types to "
-"list&#8217; selector."
+msgid "An Automatic Table Of Contents is generated from the items in its location, and includes all item types that are selected in the &#8216;types to list&#8217; selector."
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:19
@@ -3246,8 +3195,7 @@ msgid "preview screen"
 msgstr "מסך מקדים"
 
 #: /views/edit/Content/Indexer/tab_edit.pt:25
-msgid ""
-"An index is not editable. To view the index go to the ${preview_screen}."
+msgid "An index is not editable. To view the index go to the ${preview_screen}."
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:26
@@ -3255,9 +3203,7 @@ msgid "Note that ${warning}, so the list may be empty if nothing is published."
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:27
-msgid ""
-"If new content has been added, click &#8220;update index&#8221; (in large "
-"publications this may take a while)."
+msgid "If new content has been added, click &#8220;update index&#8221; (in large publications this may take a while)."
 msgstr ""
 
 #: /views/edit/Content/Indexer/tab_edit.pt:36
@@ -3285,10 +3231,7 @@ msgid "preferred editor"
 msgstr "עורך מעודף"
 
 #: /views/edit/Member/SimpleMember/memberform.form:71
-msgid ""
-"Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu "
-"WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1"
-"+)"
+msgid "Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla 1.3.1+)"
 msgstr ""
 
 #: /views/edit/Member/SimpleMember/save_memberdata.py:26
@@ -3366,7 +3309,7 @@ msgstr "קישור השתנה"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:37
 msgid "link url"
-msgstr ""
+msgstr "כתובת קישור"
 
 #: /views/edit/VersionedContent/Link/tab_edit.pt:52
 #: /views/add/Link/form.form:72
@@ -3382,9 +3325,7 @@ msgid "'first un-approve' this item in order to edit: alt-r"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:117
-msgid ""
-"${note} this version is approved but not yet public. In order to make "
-"changes you need to first revoke the approval."
+msgid "${note} this version is approved but not yet public. In order to make changes you need to first revoke the approval."
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:130
@@ -3396,9 +3337,7 @@ msgid "withdraw a request for approval in order to edit: alt-w"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:139
-msgid ""
-"${note} this version has an request for approval pending. In order to make "
-"changes you need to first withdraw the pending request."
+msgid "${note} this version has an request for approval pending. In order to make changes you need to first withdraw the pending request."
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:59
@@ -3410,9 +3349,7 @@ msgid "break lock"
 msgstr "שבור נעילה"
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:68
-msgid ""
-"${note} This object is already being edited by another user, and is "
-"temporarily locked."
+msgid "${note} This object is already being edited by another user, and is temporarily locked."
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:68
@@ -3427,9 +3364,7 @@ msgid "work on a new version while the previous one stays online: alt-n"
 msgstr ""
 
 #: /views/edit/VersionedContent/macro_tab_edit.pt:96
-msgid ""
-"${note} there is already a published or closed version of this content. "
-"Changes can only be made in a new version."
+msgid "${note} there is already a published or closed version of this content. Changes can only be made in a new version."
 msgstr ""
 
 #: /views/edit/VersionedContent/preview_open_now.py:14
@@ -3458,7 +3393,7 @@ msgstr "גרסה אושרה"
 
 #: /views/edit/VersionedContent/tab_edit_break_lock.py:14
 msgid "Lock broken"
-msgstr ""
+msgstr "קישור שבור"
 
 #: /views/edit/VersionedContent/tab_edit_make_copy.py:32
 msgid "New version created."
@@ -3466,8 +3401,7 @@ msgstr "גירסה חדשה נוצרה."
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:30
 #: /views/edit/VersionedContent/tab_status_withdraw.py:33
-msgid ""
-"This content is already public. You can close the current public version."
+msgid "This content is already public. You can close the current public version."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_edit_withdraw.py:34
@@ -3499,15 +3433,18 @@ msgstr ""
 msgid "manage versions of &#xab;${export_id}&#xbb;"
 msgstr ""
 
-#: /views/edit/VersionedContent/tab_status.pt:167 /doc/silva-extra.xml:444
+#: /views/edit/VersionedContent/tab_status.pt:167
+#: /doc/silva-extra.xml:444
 msgid "modification time"
 msgstr "זמן עידכון"
 
-#: /views/edit/VersionedContent/tab_status.pt:168 /doc/silva-extra.xml:503
+#: /views/edit/VersionedContent/tab_status.pt:168
+#: /doc/silva-extra.xml:503
 msgid "publication time"
 msgstr "זמן פרסום"
 
-#: /views/edit/VersionedContent/tab_status.pt:170 /doc/silva-extra.xml:676
+#: /views/edit/VersionedContent/tab_status.pt:170
+#: /doc/silva-extra.xml:676
 msgid "last author"
 msgstr "מחבר אחרון"
 
@@ -3641,9 +3578,7 @@ msgid "message to editor"
 msgstr "הודעה לעורך"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:123
-msgid ""
-"This message will remain visible in the status screen for other authors and "
-"editors."
+msgid "This message will remain visible in the status screen for other authors and editors."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:158
@@ -3668,7 +3603,7 @@ msgstr "בקשה"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:299
 msgid "add message on"
-msgstr ""
+msgstr "הוסף הודעה ל"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:301
 msgid "rejection"
@@ -3715,9 +3650,7 @@ msgid "manual close"
 msgstr "סגור ידנית"
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:404
-msgid ""
-"If necessary, the published version of this content can be manually closed "
-"(taken offline). It will also be removed from the public index."
+msgid "If necessary, the published version of this content can be manually closed (taken offline). It will also be removed from the public index."
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:413
@@ -3733,9 +3666,7 @@ msgid "${author_id} sent a message on ${some_date} ${with_comments}"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_macros.pt:96
-msgid ""
-"A previous request for approval has been rejected / withdrawn by "
-"${requester} on ${some_date}. The last message regarding this issue is:"
+msgid "A previous request for approval has been rejected / withdrawn by ${requester} on ${some_date}. The last message regarding this issue is:"
 msgstr ""
 
 #: /views/edit/VersionedContent/tab_status_request.py:16
@@ -3801,8 +3732,7 @@ msgstr "לא נבחרו משתמש(ים)"
 
 # Default: ""
 #: /views/edit/access_assign_to_user.py:35
-msgid ""
-"Role(s) assigned for ${good_users} but failed to assign for ${bad_users}."
+msgid "Role(s) assigned for ${good_users} but failed to assign for ${bad_users}."
 msgstr ""
 
 # Default: ""
@@ -3854,7 +3784,7 @@ msgstr "לא נבחרו משתמשים."
 
 #: /views/edit/lookup_add_userid.py:16
 msgid "No username supplied."
-msgstr ""
+msgstr "לא סופק שם משתמש."
 
 #: /views/edit/lookup_add_userid.py:21
 msgid "Added username to clipboard: ${string}"
@@ -3873,8 +3803,7 @@ msgid "No search string supplied."
 msgstr ""
 
 #: /views/edit/lookup_search.py:27
-msgid ""
-"Search string '${string}' is too short. Please try a longer search string."
+msgid "Search string '${string}' is too short. Please try a longer search string."
 msgstr ""
 
 #: /views/edit/lookup_search.py:35
@@ -3889,11 +3818,13 @@ msgstr "חיפש '${string}'"
 msgid "search"
 msgstr "חפש"
 
-#: /views/edit/lookup_ui.pt:124 /views/edit/lookup_ui.pt:195
+#: /views/edit/lookup_ui.pt:124
+#: /views/edit/lookup_ui.pt:195
 msgid "add checked users to clipboard: alt-a"
 msgstr ""
 
-#: /views/edit/lookup_ui.pt:124 /views/edit/lookup_ui.pt:195
+#: /views/edit/lookup_ui.pt:124
+#: /views/edit/lookup_ui.pt:195
 msgid "add to clipboard"
 msgstr "הוסף לקליפבורד"
 
@@ -3929,19 +3860,23 @@ msgstr ""
 msgid "add"
 msgstr "הוסף"
 
-#: /views/edit/lookup_ui_direct.pt:120 /views/edit/lookup_ui.pt:214
+#: /views/edit/lookup_ui_direct.pt:120
+#: /views/edit/lookup_ui.pt:214
 msgid "return to the access screen with this clipboard: alt-u"
 msgstr ""
 
-#: /views/edit/lookup_ui_direct.pt:128 /views/edit/lookup_ui.pt:222
+#: /views/edit/lookup_ui_direct.pt:128
+#: /views/edit/lookup_ui.pt:222
 msgid "${u}se clipboard..."
 msgstr ""
 
-#: /views/edit/lookup_ui_direct.pt:132 /views/edit/lookup_ui.pt:226
+#: /views/edit/lookup_ui_direct.pt:132
+#: /views/edit/lookup_ui.pt:226
 msgid "remove user"
 msgstr "הסר משתמש"
 
-#: /views/edit/lookup_ui_direct.pt:132 /views/edit/lookup_ui.pt:226
+#: /views/edit/lookup_ui_direct.pt:132
+#: /views/edit/lookup_ui.pt:226
 msgid "remove users from the clipboard: alt-r"
 msgstr ""
 
@@ -3953,7 +3888,8 @@ msgstr ""
 msgid "add user to clipboard"
 msgstr ""
 
-#: /views/edit/lookup_ui_direct.pt:86 /views/edit/tab_access.pt:80
+#: /views/edit/lookup_ui_direct.pt:86
+#: /views/edit/tab_access.pt:80
 #: /views/edit/tab_access.pt:210
 msgid "username"
 msgstr "שם משתמש"
@@ -3976,11 +3912,13 @@ msgstr ""
 msgid "of &#xab;${title}"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:72 /views/edit/macro_view_metadata.pt:57
+#: /views/edit/macro_edit_metadata.pt:72
+#: /views/edit/macro_view_metadata.pt:57
 msgid "metadata set"
 msgstr ""
 
-#: /views/edit/macro_edit_metadata.pt:77 /views/edit/tab_subscriptions.pt:74
+#: /views/edit/macro_edit_metadata.pt:77
+#: /views/edit/tab_subscriptions.pt:74
 #: /views/edit/macro_view_metadata.pt:62
 #: /views/edit/Container/tab_edit_import.pt:85
 #: /views/edit/Container/tab_edit_import.pt:148
@@ -4005,13 +3943,16 @@ msgstr "קבוצות  ${type} קיימות"
 msgid "select_groups"
 msgstr "בחר קבוצות"
 
-#: /views/edit/macro_select_all.pt:14 /views/edit/macro_select_all.pt:26
+#: /views/edit/macro_select_all.pt:14
+#: /views/edit/macro_select_all.pt:26
 #: /views/edit/Container/tab_status.pt:96
-#: /views/edit/Container/tab_edit.pt:111 /views/edit/Container/tab_edit.pt:118
+#: /views/edit/Container/tab_edit.pt:111
+#: /views/edit/Container/tab_edit.pt:118
 msgid "select all: alt-a"
 msgstr "בחר הכל: alt-a"
 
-#: /views/edit/macro_select_all.pt:31 /views/edit/Container/tab_edit.pt:122
+#: /views/edit/macro_select_all.pt:31
+#: /views/edit/Container/tab_edit.pt:122
 #: /views/edit/Container/tab_access_groups.pt:174
 #: /views/edit/Container/tab_access_groups.pt:289
 msgid "select all"
@@ -4041,7 +3982,7 @@ msgstr ""
 #: /views/edit/macro_vein_navigation.pt:207
 #: /views/edit/Container/tab_status.pt:178
 msgid "index:"
-msgstr ""
+msgstr "אינדקס:"
 
 #: /views/edit/macro_vein_navigation.pt:44
 #: /views/edit/macro_vein_navigation.pt:50
@@ -4057,11 +3998,13 @@ msgstr ""
 msgid "reload screen"
 msgstr "העלה מחדש את המסך"
 
-#: /views/edit/macro_view_metadata.pt:110 /views/edit/tab_settings.pt:121
+#: /views/edit/macro_view_metadata.pt:110
+#: /views/edit/tab_settings.pt:121
 msgid "content renderer"
 msgstr ""
 
-#: /views/edit/macro_view_metadata.pt:119 /views/edit/tab_settings.pt:128
+#: /views/edit/macro_view_metadata.pt:119
+#: /views/edit/tab_settings.pt:128
 msgid "renderer"
 msgstr ""
 
@@ -4095,11 +4038,7 @@ msgid "session timeout"
 msgstr ""
 
 #: /views/edit/promptWindow.pt:27
-msgid ""
-"In about 5 minutes, the working session is going to expire for the document "
-"you are currently editing. This means that any unsaved work will be lost. "
-"Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;"
-"cancel&#8217; (alt-c) to do nothing, or save manually."
+msgid "In about 5 minutes, the working session is going to expire for the document you are currently editing. This means that any unsaved work will be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;cancel&#8217; (alt-c) to do nothing, or save manually."
 msgstr ""
 
 #: /views/edit/promptWindow.pt:35
@@ -4115,9 +4054,7 @@ msgid " save "
 msgstr " שמור "
 
 #: /views/edit/save_metadata.py:15
-msgid ""
-"The data that was submitted did not validate properly (you might want to use "
-"the browser back button to adjust the form values)."
+msgid "The data that was submitted did not validate properly (you might want to use the browser back button to adjust the form values)."
 msgstr ""
 
 #: /views/edit/save_metadata.py:21
@@ -4126,18 +4063,21 @@ msgstr ""
 
 #: /views/edit/show_local.py:24
 msgid "in"
-msgstr ""
+msgstr "בתוך"
 
 #: /views/edit/tab_access.pt:146
 msgid "No users with local roles are defined here."
 msgstr ""
 
-#: /views/edit/tab_access.pt:156 /views/edit/tab_access.pt:604
+#: /views/edit/tab_access.pt:156
+#: /views/edit/tab_access.pt:604
 msgid "select a role to assign"
 msgstr ""
 
-#: /views/edit/tab_access.pt:161 /views/edit/tab_access.pt:304
-#: /views/edit/tab_access.pt:464 /views/edit/tab_access.pt:509
+#: /views/edit/tab_access.pt:161
+#: /views/edit/tab_access.pt:304
+#: /views/edit/tab_access.pt:464
+#: /views/edit/tab_access.pt:509
 msgid "select role:"
 msgstr ""
 
@@ -4145,7 +4085,8 @@ msgstr ""
 msgid "assign role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:166 /views/edit/tab_access.pt:316
+#: /views/edit/tab_access.pt:166
+#: /views/edit/tab_access.pt:316
 #: /views/edit/tab_access.pt:470
 msgid "assign a local role to selected user(s)"
 msgstr ""
@@ -4198,7 +4139,8 @@ msgstr ""
 msgid "Grant and approve"
 msgstr ""
 
-#: /views/edit/tab_access.pt:316 /views/edit/tab_access.pt:518
+#: /views/edit/tab_access.pt:316
+#: /views/edit/tab_access.pt:518
 msgid "assign"
 msgstr ""
 
@@ -4207,12 +4149,7 @@ msgid "A Groups Service is not installed"
 msgstr "שירותי קבוצות לא הותקנו"
 
 #: /views/edit/tab_access.pt:347
-msgid ""
-"You are seeing this message because the Silva Groups extension is installed "
-"on the file system, but a Groups Service hasn't been added to this Silva "
-"instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;"
-"Groups Service&#8221; from the add list and give it the id "
-"${service_groups}. No further configuration is necessary."
+msgid "You are seeing this message because the Silva Groups extension is installed on the file system, but a Groups Service hasn't been added to this Silva instance. To install one, go to the ${silva_root_in_the_ZMI}, choose &#8220;Groups Service&#8221; from the add list and give it the id ${service_groups}. No further configuration is necessary."
 msgstr ""
 
 #: /views/edit/tab_access.pt:367
@@ -4255,32 +4192,36 @@ msgstr ""
 msgid "public view access restrictions for"
 msgstr ""
 
-#: /views/edit/tab_access.pt:568 /views/edit/tab_access.pt:699
+#: /views/edit/tab_access.pt:568
+#: /views/edit/tab_access.pt:699
 msgid "access restriction by role"
 msgstr ""
 
-#: /views/edit/tab_access.pt:576 /views/edit/tab_access.pt:707
+#: /views/edit/tab_access.pt:576
+#: /views/edit/tab_access.pt:707
 msgid "current restriction"
 msgstr ""
 
-#: /views/edit/tab_access.pt:579 /views/edit/tab_access.pt:710
+#: /views/edit/tab_access.pt:579
+#: /views/edit/tab_access.pt:710
 #: /views/edit/Container/tab_edit_import.pt:316
 #: /views/edit/Container/tab_status_export.pt:263
 #: /views/edit/Container/tab_status_export.pt:391
 msgid "note"
 msgstr "הערה"
 
-#: /views/edit/tab_access.pt:584 /views/edit/tab_access.pt:717
+#: /views/edit/tab_access.pt:584
+#: /views/edit/tab_access.pt:717
 msgid "Open to the public"
 msgstr "פתוח לציבור"
 
-#: /views/edit/tab_access.pt:589 /views/edit/tab_access.pt:720
+#: /views/edit/tab_access.pt:589
+#: /views/edit/tab_access.pt:720
 msgid "(acquired)."
 msgstr ""
 
 #: /views/edit/tab_access.pt:593
-msgid ""
-"Setting an access restriction here affects objects on this and lower levels."
+msgid "Setting an access restriction here affects objects on this and lower levels."
 msgstr ""
 
 #: /views/edit/tab_access.pt:613
@@ -4296,8 +4237,7 @@ msgid "acquire restriction"
 msgstr ""
 
 #: /views/edit/tab_access.pt:621
-msgid ""
-"cancel the access restriction at this level, making it inherit from above"
+msgid "cancel the access restriction at this level, making it inherit from above"
 msgstr ""
 
 #: /views/edit/tab_access.pt:65
@@ -4316,11 +4256,13 @@ msgstr ""
 msgid "An access restriction here affects objects on this and lower levels."
 msgstr ""
 
-#: /views/edit/tab_access.pt:83 /views/edit/tab_access.pt:383
+#: /views/edit/tab_access.pt:83
+#: /views/edit/tab_access.pt:383
 msgid "roles defined above"
 msgstr ""
 
-#: /views/edit/tab_access.pt:86 /views/edit/tab_access.pt:386
+#: /views/edit/tab_access.pt:86
+#: /views/edit/tab_access.pt:386
 msgid "roles defined here"
 msgstr ""
 
@@ -4345,22 +4287,20 @@ msgid "listing of all authorized users below this level"
 msgstr ""
 
 #: /views/edit/tab_access_authorized_below.pt:63
-msgid ""
-"Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
-"field of an email message."
+msgid "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; field of an email message."
 msgstr ""
 
 #: /views/edit/tab_addables.pt:1
-msgid ""
-"The addables settings can only be changed on Silva Publications. A ${item} "
-"doesn&#8217;t have that capability."
+msgid "The addables settings can only be changed on Silva Publications. A ${item} doesn&#8217;t have that capability."
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:108 /views/edit/tab_settings.pt:331
+#: /views/edit/tab_metadata.pt:108
+#: /views/edit/tab_settings.pt:331
 msgid "for closed version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_metadata.pt:71 /views/edit/tab_settings.pt:292
+#: /views/edit/tab_metadata.pt:71
+#: /views/edit/tab_settings.pt:292
 msgid "for approved version of &#xab;${title}&#xbb;"
 msgstr ""
 
@@ -4411,7 +4351,7 @@ msgstr ""
 
 #: /views/edit/tab_settings.pt:229
 msgid "used space"
-msgstr ""
+msgstr "מקום בשימוש"
 
 #: /views/edit/tab_settings.pt:236
 msgid "space used in this folder"
@@ -4425,19 +4365,18 @@ msgstr ""
 msgid "for published version of &#xab;${title}&#xbb;"
 msgstr ""
 
-#: /views/edit/tab_settings.pt:52 /views/edit/tab_settings.pt:275
+#: /views/edit/tab_settings.pt:52
+#: /views/edit/tab_settings.pt:275
 #: /views/edit/tab_settings.pt:346
 msgid "settings for &#xab;${title}&#xbb;"
 msgstr ""
 
 #: /views/edit/tab_settings.pt:64
 msgid "container type"
-msgstr ""
+msgstr "סוג קונטיינר"
 
 #: /views/edit/tab_settings.pt:70
-msgid ""
-"This Ghost Folder can be converted to a normal Publication or Folder. All "
-"ghosted content will be duplicated and can then be edited."
+msgid "This Ghost Folder can be converted to a normal Publication or Folder. All ghosted content will be duplicated and can then be edited."
 msgstr ""
 
 #: /views/edit/tab_settings.pt:76
@@ -4534,8 +4473,7 @@ msgstr ""
 #: /views/edit/tab_subscriptions_form.form:27
 msgid ""
 "\n"
-"              Set the subscribability for this content (Yes or No), or set "
-"it\n"
+"              Set the subscribability for this content (Yes or No), or set it\n"
 "              to acquire the subscribability from above (the default).\n"
 "            "
 msgstr ""
@@ -4547,8 +4485,7 @@ msgstr ""
 #: /views/edit/tab_subscriptions_form.form:56
 msgid ""
 "\n"
-"              List of email addresses (one per line) currently subscribed to "
-"this content.\n"
+"              List of email addresses (one per line) currently subscribed to this content.\n"
 "            "
 msgstr ""
 
@@ -4620,8 +4557,10 @@ msgstr ""
 msgid "sservices..."
 msgstr "שירותים..."
 
-#: /views/macro_index.pt:169 /views/macro_index.pt:172
-#: /views/macro_index.pt:182 /views/macro_index.pt:186
+#: /views/macro_index.pt:169
+#: /views/macro_index.pt:172
+#: /views/macro_index.pt:182
+#: /views/macro_index.pt:186
 msgid "jump to top: alt-t"
 msgstr ""
 
@@ -4665,11 +4604,13 @@ msgstr ""
 msgid "request access"
 msgstr "בקשת גישה"
 
-#: /views/macro_index.pt:85 /views/edit/tab_preview_frame_top.pt:47
+#: /views/macro_index.pt:85
+#: /views/edit/tab_preview_frame_top.pt:47
 msgid "Help with access keys"
 msgstr "עזרה עם מקשי גישה"
 
-#: /views/macro_index.pt:86 /views/edit/tab_preview_frame_top.pt:48
+#: /views/macro_index.pt:86
+#: /views/edit/tab_preview_frame_top.pt:48
 msgid "Silva copyright info"
 msgstr "מידע זכויות יוצרים סילווה"
 
@@ -4683,7 +4624,7 @@ msgstr "חיפוש משתמשים..."
 
 #: /views/macro_middleground.pt:88
 msgid "external users..."
-msgstr ""
+msgstr "משתמשים חיצוניים..."
 
 #: /views/macro_middleground.pt:88
 msgid "external users: alt-e"
@@ -4711,7 +4652,7 @@ msgstr ""
 
 #: /views/macro_tabs.pt:70
 msgid "view..."
-msgstr ""
+msgstr "צפיה..."
 
 #: /views/macro_tabs.pt:80
 msgid "Silva access keys: alt-?"
@@ -4753,14 +4694,11 @@ msgid "emailaddress not valid"
 msgstr ""
 
 #: /views/public/cancellation_request.py:30
-msgid ""
-"Confirmation request for cancellation has been emailed to ${emailaddress}"
+msgid "Confirmation request for cancellation has been emailed to ${emailaddress}"
 msgstr ""
 
 #: /views/public/confirm_cancellation.py:12
-msgid ""
-"Something went wrong in unsubscribing from this page. It might be that the "
-"link you followed expired."
+msgid "Something went wrong in unsubscribing from this page. It might be that the link you followed expired."
 msgstr ""
 
 #: /views/public/confirm_cancellation.py:18
@@ -4772,12 +4710,11 @@ msgid "Subscription failed"
 msgstr "רישום נכשל"
 
 #: /views/public/confirm_subscription.py:15
-msgid ""
-"You have been successfully subscribed. This means you will receive email "
-"notifications whenever a new version of these pages becomes available."
+msgid "You have been successfully subscribed. This means you will receive email notifications whenever a new version of these pages becomes available."
 msgstr ""
 
-#: /views/public/request_roles.pt:12 /views/public/request_roles.pt:20
+#: /views/public/request_roles.pt:12
+#: /views/public/request_roles.pt:20
 msgid "membership"
 msgstr "חברות"
 
@@ -4823,9 +4760,7 @@ msgid "Error: ${error}"
 msgstr "שגיאה : ${error}"
 
 #: /views/public/request_roles_submit.py:25
-msgid ""
-"Roles requested. You will receive an e-mail from the Chief Editor or Manager "
-"as soon as your request is processed."
+msgid "Roles requested. You will receive an e-mail from the Chief Editor or Manager as soon as your request is processed."
 msgstr ""
 
 #: /views/public/request_roles_submit.py:9
@@ -4839,8 +4774,7 @@ msgstr "סוגי תוכן"
 #: /views/public/search_form.form:104
 msgid ""
 "\n"
-"              Select (multiple using ctrl-key) object type(s) to search "
-"in. \n"
+"              Select (multiple using ctrl-key) object type(s) to search in. \n"
 "              If none is selected, all types are searched.\n"
 "            "
 msgstr ""
@@ -4880,8 +4814,7 @@ msgid ""
 msgstr ""
 
 #: /views/public/subscription_request.py:30
-msgid ""
-"Confirmation request for subscription has been emailed to ${emailaddress}"
+msgid "Confirmation request for subscription has been emailed to ${emailaddress}"
 msgstr ""
 
 #: /views/public/subscriptor.pt:34
@@ -4889,12 +4822,11 @@ msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
 #: /views/public/subscriptor.pt:36
-msgid ""
-"Fill in your email address if you want to receive email notifications "
-"whenever a new version of this page or its subdocuments becomes available."
+msgid "Fill in your email address if you want to receive email notifications whenever a new version of this page or its subdocuments becomes available."
 msgstr ""
 
-#: /views/public/subscriptor.pt:41 /views/public/subscriptor.pt:66
+#: /views/public/subscriptor.pt:41
+#: /views/public/subscriptor.pt:66
 #: /views/edit/Container/tab_edit_import.pt:336
 #: /views/edit/Container/tab_status_export.pt:455
 #: /views/edit/Member/SimpleMember/memberform.form:49
@@ -4903,23 +4835,22 @@ msgstr "כתובת תיבת דואר אלקטרוני"
 
 #: /views/public/subscriptor.pt:46
 msgid "subscribe"
-msgstr ""
+msgstr "הירשם"
 
 #: /views/public/subscriptor.pt:60
 msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
 msgstr ""
 
 #: /views/public/subscriptor.pt:62
-msgid ""
-"Fill in your email address if you want to unsubscribe from email "
-"notifications for this page and its subdocuments."
+msgid "Fill in your email address if you want to unsubscribe from email notifications for this page and its subdocuments."
 msgstr ""
 
 #: /views/public/subscriptor.pt:71
 msgid "unsubscribe"
-msgstr ""
+msgstr "בטל רישום"
 
-#: /views/public/subscriptor.pt:71 /views/edit/Asset/macro_asset_edit.pt:152
+#: /views/public/subscriptor.pt:71
+#: /views/edit/Asset/macro_asset_edit.pt:152
 #: /views/edit/Content/Indexer/tab_edit.pt:36
 #: /views/edit/VersionedContent/tab_status_macros.pt:171
 msgid "access key: alt-u"
@@ -4935,169 +4866,116 @@ msgstr ""
 
 #~ msgid "add users..."
 #~ msgstr "הוסף משתמשים..."
-
 #~ msgid "Cannot approve version; not allowed."
 #~ msgstr "לא יכול לאשר גרסה; לא מורשה."
-
 #~ msgid "file info"
 #~ msgstr "פריט קובץ"
-
 #~ msgid "${old_title} to ${new_title}"
 #~ msgstr "${old_title} ל ${new_title}"
-
 #~ msgid "Properties changed"
 #~ msgstr "הגדרות שונו"
-
 #~ msgid "position"
 #~ msgstr "מיקום"
-
 #~ msgid "day / month / year"
 #~ msgstr "יום / חודש/ שנה"
-
 #~ msgid "set timing"
 #~ msgstr "עדכן זמן"
-
 #~ msgid "full media export (.zip)"
 #~ msgstr "ייצוא מדיה מלא (.zip)"
-
 #~ msgid "export zip"
 #~ msgstr "יצא זיפ"
-
 #~ msgid "could not delete ${id}: ${error}"
 #~ msgstr "לא יכול למחוק ${id}: ${error}"
-
 #~ msgid "change settings"
 #~ msgstr "שנה הגדרות"
-
 #~ msgid "place reference..."
 #~ msgstr "מקם רפרנס..."
-
 #~ msgid "logout link"
 #~ msgstr "קישור התנתקות"
-
 #~ msgid "Up one level"
 #~ msgstr "רמה אחת למעלה"
-
 #~ msgid "Search"
 #~ msgstr "חיפור"
-
 #~ msgid "Element"
 #~ msgstr "אלמנט"
-
 #~ msgid "Note"
 #~ msgstr "הערה"
-
 #~ msgid "Find"
 #~ msgstr "מצא"
-
 #~ msgid "Silva forms editor"
 #~ msgstr "סילוה עורך טפסים"
-
 #~ msgid "export only last version?"
 #~ msgstr "יצא רק גרסה אחרונה?"
-
 #~ msgid "Check to export only the last version."
 #~ msgstr "בדוק ליצא רק גירסה אחרונה."
-
 #~ msgid "Index"
 #~ msgstr "אינדקס"
-
 #~ msgid "change Folder into Publication: alt-c"
 #~ msgstr "שנה ספריה לפרסום: alt-c"
-
 #~ msgid "view the original image"
 #~ msgstr "צפה בתמונה המקורית"
-
 #~ msgid "index of"
 #~ msgstr "אינדקס של"
-
 #~ msgid "open to public"
 #~ msgstr "פתוח לציבור"
-
 #~ msgid "fullname updated"
 #~ msgstr "שם מלא עודכן"
-
 #~ msgid "e-mail updated"
 #~ msgstr "כתובת תיבת דואר אלקטרוני עודכנה"
-
 #~ msgid "editor updated"
 #~ msgstr "עורך עודכן"
-
 #~ msgid "save: alt-s"
 #~ msgstr "שמור: alt-s"
-
 #~ msgid "cleanup"
 #~ msgstr "נקיון"
-
 #~ msgid "external source"
 #~ msgstr "מקור חיצוני"
-
 #~ msgid "citation"
 #~ msgstr "קריטריון"
-
 #~ msgid "table"
 #~ msgstr "טבלה"
-
 #~ msgid "table of contents"
 #~ msgstr "תוכן עיניינים"
-
 #~ msgid "Kupu 1.4b1"
 #~ msgstr "1.4b1 קופו"
-
 #~ msgid "link target"
 #~ msgstr "קישור מטרה"
-
 #~ msgid "same window"
 #~ msgstr "באותו החלון"
-
 #~ msgid "new window"
 #~ msgstr "חלון חדש"
-
 #~ msgid "custom target"
 #~ msgstr "מטרה מותאמת אישית"
-
 #~ msgid "add link"
 #~ msgstr "הוסף קישור"
-
 #~ msgid "update"
 #~ msgstr "עדכן"
-
 #~ msgid "anchor name"
 #~ msgstr "שם עוגן"
-
 #~ msgid "index title"
 #~ msgstr "כותרת אינדקס"
-
 #~ msgid "add element"
 #~ msgstr "הוסף אלמנט"
-
 #~ msgid "No external sources found."
 #~ msgstr "לא נמצאו מקורות חיצוניים."
-
 #~ msgid "add column"
 #~ msgstr "הוסף עמודה"
-
 #~ msgid "add row"
 #~ msgstr "הוסף שורה"
-
 #~ msgid "day / month / year (hh:mm)"
 #~ msgstr "יום / חודש/ שנה (hh:mm)"
-
 #~ msgid "; &nbsp; See public preview<br />"
 #~ msgstr "; &nbsp; צפיה בתצוגה מקדמת ציבורית<br />"
-
 #~ msgid ""
 #~ "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
 #~ "preview<br /> p &nbsp; publish now<br />"
 #~ msgstr ""
 #~ "( &nbsp; עורך טפסים<br /> ) &nbsp; עורך קופו<br /> ; &nbsp; צפיה "
 #~ "ציבורית<br /> p &nbsp; פרסם עכשיו <br />"
-
 #~ msgid "Optional, but useful."
 #~ msgstr "אפשרות, אולם חיוני."
-
 #~ msgid "Edit Text Content"
 #~ msgstr "ערוך תוכן טקסט"
-
 #~ msgid "broken"
 #~ msgstr "שבור"
+
