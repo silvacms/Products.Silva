@@ -26,8 +26,8 @@ class ManagerPropertiesSilvaDocTestCase(SilvaFunctionalTestCase):
         self.failUnless('test_document' in sb.get_content_ids())
         # click into the silva document
         sb.click_href_labeled('test_document')
-        tab_name = sb.get_tab_named('editor')
-        self.assertEquals(tab_name, 'editor')
+        tab_name = sb.get_tab_named('edit')
+        self.assertEquals(tab_name, 'edit')
         sb.click_tab_named('properties')
         self.assertEquals(sb.browser.url,
                           'http://nohost/root/test_document/edit/tab_metadata')
