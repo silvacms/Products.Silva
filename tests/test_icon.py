@@ -3,76 +3,95 @@
 # $Id$
 
 # Python
-from StringIO import StringIO
-
-# Zope 2
-from ZPublisher.HTTPRequest import FileUpload
+import unittest
 
 # Silva
 from silva.core import interfaces
 from zope.interface.verify import verifyObject
+from zope.publisher.browser import TestRequest
 
-from Products.Silva.icon import IconRegistry
+from Products.Silva.icon import IconRegistry, registry, get_icon_url
+from Products.Silva.testing import FunctionalLayer
 
-import SilvaTestCase
 
-class Request(object):
-    filename = None
-    headers = {}
-    file = None
+class IconRegistryTestCase(unittest.TestCase):
+    layer = FunctionalLayer
 
-class RegistryTest(SilvaTestCase.SilvaTestCase):
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFile('pdf', 'PDF File')
+        factory.manage_addFile('text', 'Text File')
+        self.root.pdf.set_content_type('application/pdf')
+        self.root.text.set_content_type('text/plain')
 
-    def afterSetUp(self):
-        fields = Request()
-        fields.filename = 'afilename.pdf'
-        fields.file = StringIO("a nice pdf ;)")
-        upload = FileUpload(fields)
-        self.silva.manage_addProduct['Silva'].manage_addFile(
-            'pdf', 'pdf file', upload)
+    def test_get_icon_url(self):
+        """Test usefull function get_icon_url
+        """
+        request = TestRequest()
+        self.assertEqual(
+            get_icon_url(self.root, request),
+            u'http://localhost/root/misc_/Silva/silva.png')
+        self.assertEqual(
+            get_icon_url(self.root.pdf, request),
+            u'http://localhost/root/++resource++silva.icons/file_pdf.png')
+        self.assertEqual(
+            get_icon_url(self.root.text, request),
+            u'http://localhost/root/++resource++silva.icons/file_txt.png')
 
-        fields = Request()
-        fields.filename = 'afilename.txt'
-        fields.file = StringIO("just plain text")
-        upload = FileUpload(fields)
-        self.silva.manage_addProduct['Silva'].manage_addFile(
-            'text', 'text file', upload)
+    def test_default_icons(self):
+        """Test default registered icons.
+        """
+        # Silva content types
+        self.assertEqual(
+            registry.getIcon(self.root),
+            'misc_/Silva/silva.png')
+        self.assertEqual(
+            registry.getIconByIdentifier(('meta_type', 'Silva Link')),
+            'misc_/Silva/link.png' )
+
+        # Simple member icons
+        member = self.root.service_members.get_member('author')
+        self.assertEqual(
+            registry.getIcon(member),
+            'misc_/Silva/member.png')
 
     def test_registry(self):
-        # Be sure we get the correct mimetype from the pdf file.
+        """Test registry
+        """
         self.assertEquals(
-            self.silva.pdf.get_mime_type(),
-            'application/pdf')
+            self.root.pdf.get_mime_type(), 'application/pdf')
         self.assertEquals(
-            self.silva.text.get_mime_type(),
-            'text/plain')
+            self.root.text.get_mime_type(), 'text/plain')
 
-        r = IconRegistry()
-        self.failUnless(verifyObject(interfaces.IIconRegistry, r))
+        registry = IconRegistry()
+        self.failUnless(verifyObject(interfaces.IIconRegistry, registry))
 
-        r.registerIcon(('meta_type', 'Silva Root'), 'root.png')
-        r.registerIcon(('mime_type', 'text/plain'), 'file_text.png')
-        r.registerIcon(
+        registry.registerIcon(('meta_type', 'Silva Root'), 'root.png')
+        registry.registerIcon(('mime_type', 'text/plain'), 'file_text.png')
+        registry.registerIcon(
             ('mime_type', 'application/octet-stream'), 'file.png')
-        r.registerIcon(('mime_type', 'application/pdf'), 'file_pdf.png')
+        registry.registerIcon(('mime_type', 'application/pdf'), 'file_pdf.png')
 
         self.assertEquals(
-            r.getIconByIdentifier(('meta_type', 'Silva Root')),
+            registry.getIconByIdentifier(('meta_type', 'Silva Root')),
             'root.png')
         self.assertEquals(
-            r.getIconByIdentifier(('mime_type', 'application/octet-stream')),
+            registry.getIconByIdentifier(
+                ('mime_type', 'application/octet-stream')),
             'file.png')
         self.assertRaises(
-            ValueError, r.getIconByIdentifier, ('meta_type', 'Foo Bar'))
+            ValueError, registry.getIconByIdentifier, ('meta_type', 'Foo Bar'))
 
-        self.assertEquals(r.getIcon(self.silva), 'root.png')
-        self.assertEquals(r.getIcon(self.silva.pdf), 'file_pdf.png')
-        self.assertEquals(r.getIcon(self.silva.text), 'file_text.png')
-        self.assertRaises(ValueError, r.getIcon, Request())
+        self.assertEquals(registry.getIcon(self.root), 'root.png')
+        self.assertEquals(registry.getIcon(self.root.pdf), 'file_pdf.png')
+        self.assertEquals(registry.getIcon(self.root.text), 'file_text.png')
+        self.assertRaises(ValueError, registry.getIcon, TestRequest())
 
-import unittest
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(RegistryTest))
+    suite.addTest(unittest.makeSuite(IconRegistryTestCase))
     return suite
 
