@@ -139,30 +139,28 @@ def is_installed(root):
     return IRoot.providedBy(root)
 
 def configureMetadata(root):
-
+    installed_ids = root.objectIds()
     # See if catalog exists, if not create one
-    if not hasattr(root, 'service_catalog'):
+    if not 'service_catalog' in installed_ids:
         factory = root.manage_addProduct['silva.core.services']
         factory.manage_addCatalogService('service_catalog')
 
     # Install metadata
-    if not 'service_metadata' in root.objectIds():
+    if not 'service_metadata' in installed_ids:
         factory = root.manage_addProduct['SilvaMetadata']
         factory.manage_addMetadataTool('service_metadata')
 
     # load up the default metadata
-    silva_home = os.path.dirname(__file__)
-    silva_docs = os.path.join(silva_home, 'doc')
+    silva_docs = os.path.join(os.path.dirname(__file__), 'doc')
 
     metadata_sets_types = [
-        (('silva-extra', 'silva-content'),
-            ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
-             'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
-             'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
-             'Silva Link Version')),
+        (('silva-content', 'silva-extra'),
+         ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
+          'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
+          'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
+          'Silva Link Version')),
         (('silva-layout',),
-            ('Silva Root', 'Silva Publication'))
-    ]
+         ('Silva Root', 'Silva Publication'))]
 
     collection = root.service_metadata.getCollection()
     ids = collection.objectIds()
