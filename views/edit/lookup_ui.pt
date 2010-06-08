@@ -61,7 +61,7 @@
               <tr>
                 <td class="top" colspan="2">
                   <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure python:here.render_icon(model)" />
+                    <img tal:replace="structure python:view.get_icon(model)" />
                     <tal:block i18n:translate="">
                       user lookup at
                       &#xab;<span tal:content="string:${model/get_title_or_id_editable}"
@@ -158,8 +158,7 @@
                            tal:attributes="value member/userid;
                                            id member/userid" />
                     <tal:icon
-                       tal:define="user_meta member/meta_type"
-                       tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
+                       tal:replace="structure python:view.get_icon(member)" />
                      <label style="text-transform:none"
                             tal:content="member/fullname"
                             tal:attributes="for member/userid">

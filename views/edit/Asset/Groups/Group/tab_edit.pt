@@ -56,8 +56,7 @@
                    tal:attributes="value member/userid;
                                    id member/userid" />
             <tal:icon
-               tal:define="user_meta member/meta_type"
-               tal:replace="structure python:model.render_icon_by_meta_type(user_meta)" />
+               tal:replace="structure python:view.get_icon(member)" />
             <label tal:content="member/fullname"
                    tal:attributes="for member/userid">
               Member

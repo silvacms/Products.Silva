@@ -357,6 +357,8 @@ class FakeView(object):
     """
     implements(IBrowserView)
 
+    security = ClassSecurityInfo()
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -364,18 +366,31 @@ class FakeView(object):
         self.__parent__ = context
         self.virtual_site = IVirtualSite(self.request)
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'root')
     @CachedProperty
     def root(self):
         return self.virtual_site.get_root()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'root_url')
     @CachedProperty
     def root_url(self):
         return self.virtual_site.get_root_url()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_icon')
     def get_icon(self, content=None):
         """Gets the icon for the object and wraps that in an image tag.
         """
         tag = ('<img src="%(icon_path)s" width="16" height="16" class="icon" '
                'alt="%(alt)s" title="%(alt)s" />')
-        icon_path = '%s/%s' % (self.root_url, icon.registry.getIcon(content))
+        try:
+            content_icon = icon.registry.getIcon(content)
+        except ValueError:
+            content_icon = '/globals/silvageneric.gif'
+        icon_path = '%s/%s' % (self.root_url, content_icon)
         return tag % {'icon_path': icon_path, 'alt': content.meta_type}
+
+
+InitializeClass(FakeView)

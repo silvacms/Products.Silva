@@ -146,6 +146,7 @@ class CachedMember(Persistent, Acquisition.Implicit):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'meta_type')
+    @property
     def meta_type(self):
         """Return meta_type of user object."""
         return self._meta_type
