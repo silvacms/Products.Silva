@@ -7,7 +7,7 @@ import hashlib
 import time, datetime
 
 # Zope 2
-from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, allow_module
+from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from App.class_init import InitializeClass
 from BTrees.OOBTree import OOBTree
 import Acquisition
@@ -39,12 +39,12 @@ class Subscription(object):
     def contentSubscribedTo(self):
         return self._contentsubscribedto
 
+
 class Subscribable(Acquisition.Explicit, grok.Adapter):
     """Subscribable adapters potentially subscribable content and container
     Silva objects and encapsulates the necessary API for
     handling subscriptions.
     """
-
     grok.context(interfaces.IVersionedContent)
     grok.implements(interfaces.ISubscribable)
     grok.provides(interfaces.ISubscribable)
@@ -195,7 +195,6 @@ InitializeClass(Subscribable)
 class SubscribableContainer(Subscribable):
     """Subscribable container.
     """
-
     grok.context(interfaces.IContainer)
 
 
@@ -222,8 +221,6 @@ class SubscribableRoot(Subscribable):
 
 # Jumping through security hoops to get the adapter
 # somewhat accessible to Python scripts
-
-allow_module('Products.Silva.adapters.subscribable')
 
 __allow_access_to_unprotected_subobjects__ = 1
 

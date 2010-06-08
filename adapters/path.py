@@ -3,22 +3,16 @@
 # $Id$
 
 from urlparse import urlparse
+import re
 
 # Zope 3
 from zope.publisher.interfaces.http import IHTTPRequest
 from five import grok
 
-from AccessControl import ModuleSecurityInfo
 from App.class_init import InitializeClass
-
-from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.adapters import IPath
-
-module_security = ModuleSecurityInfo('Products.Silva.adapters.path')
-
-import re
 
 frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
 
@@ -124,10 +118,10 @@ class PathAdapter(grok.Adapter):
         there's no normal context (instead there's self.request) and
         obviously acquisition can not be used
     """
-
     grok.context(IHTTPRequest)
     grok.implements(IPath)
 
+    # XXX That's a bit too much
     __allow_access_to_unprotected_subobjects__ = True
 
     def __init__(self, request):
@@ -209,7 +203,6 @@ InitializeClass(PathAdapter)
 def __allow_access_to_unprotected_subobjects__(name, value=None):
     return name in ('getPathAdapter')
 
-module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                  'getPathAdapter')
+
 def getPathAdapter(request):
     return IPath(request)

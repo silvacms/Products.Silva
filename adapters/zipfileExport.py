@@ -16,7 +16,6 @@ class ZipFileExportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the export to zipfiles.
     """
-
     grok.implements(interfaces.IDefaultContentExporter)
     grok.provides(interfaces.IContentExporter)
     grok.context(interfaces.ISilvaObject)

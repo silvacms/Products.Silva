@@ -9,7 +9,7 @@ import re
 import zipfile
 
 # Zope
-from AccessControl import ModuleSecurityInfo, ClassSecurityInfo, allow_module
+from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 
 from five import grok
@@ -142,13 +142,10 @@ class ZipFileImport(grok.Adapter):
 InitializeClass(ZipFileImport)
 
 
-allow_module('Products.Silva.adapters.archivefileimport')
+def __allow_access_to_unprotected_subobjects__(name,value=None):
+    return name in ('getArchiveFileImportAdapter')
 
-module_security = ModuleSecurityInfo(
-    'Products.Silva.adapters.archivefileimport')
 
-module_security.declareProtected(
-    SilvaPermissions.ChangeSilvaContent, 'getArchiveFileImportAdapter')
 def getArchiveFileImportAdapter(context):
     adapter = interfaces.IArchiveFileImporter(context)
     adapter.__parent__ = context

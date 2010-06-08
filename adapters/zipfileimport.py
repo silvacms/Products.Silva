@@ -2,28 +2,25 @@
 # See also LICENSE.txt
 # $Id$
 
-from StringIO import StringIO
 from zipfile import ZipFile
 
 from five import grok
 
 # Zope
-from AccessControl import ClassSecurityInfo, allow_module, ModuleSecurityInfo
+from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 
 # Silva
-from silva.core.interfaces import IZipFileImporter, IContainer
-
-# Silva Adapters
 from Products.Silva.silvaxml import xmlimport
 from Products.Silva import SilvaPermissions
+
+from silva.core.interfaces import IZipFileImporter, IContainer
 
 
 class ZipFileImportAdapter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the full media import from zipfiles.
     """
-
     grok.implements(IZipFileImporter)
     grok.provides(IZipFileImporter)
     grok.context(IContainer)
@@ -71,13 +68,10 @@ class ZipFileImportAdapter(grok.Adapter):
 InitializeClass(ZipFileImportAdapter)
 
 
-allow_module('Products.Silva.adapters.zipfileimport')
+def __allow_access_to_unprotected_subobjects__(name,value=None):
+    return name in ('getZipfileImportAdapter')
 
-module_security = ModuleSecurityInfo(
-    'Products.Silva.adapters.zipfileimport')
 
-module_security.declareProtected(
-    SilvaPermissions.ChangeSilvaContent, 'getZipfileImportAdapter')
 def getZipfileImportAdapter(context):
     adapter = IZipFileImporter(context, None)
     if adapter is not None:

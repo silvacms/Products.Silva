@@ -9,9 +9,7 @@ from five import grok
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base
 from App.class_init import InitializeClass
-from DateTime import DateTime
 from OFS.Folder import Folder as BaseFolder
-from Persistence import Persistent
 from zExceptions import NotFound
 
 # Silva
@@ -22,10 +20,6 @@ from Products.Silva.Content import Content
 from silva.core.interfaces import IVersionedContent, ICatalogedVersionedContent
 from silva.core.services.catalog import Cataloging
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
-from silva.core.views.interfaces import IPreviewLayer
-
-# Silva adapters
-from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 
 
 class VersionedContent(Content, Versioning, BaseFolder):

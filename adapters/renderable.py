@@ -3,8 +3,6 @@
 # $Id$
 
 from five import grok
-
-from App.class_init import InitializeClass
 from zope.interface import Interface
 
 from Products.Silva.transform.interfaces import IRenderable
@@ -28,10 +26,4 @@ class RenderableAdapter(grok.Adapter):
             return None
         return renderer.transform(self.context, request)
 
-
-InitializeClass(RenderableAdapter)
-
-
-def getRenderableAdapter(context):
-    return IRenderable(context)
 

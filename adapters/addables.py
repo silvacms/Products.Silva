@@ -83,7 +83,7 @@ InitializeClass(RootAddablesAdapter)
 
 
 module_security = ModuleSecurityInfo('Products.Silva.adapters.addables')
-module_security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                 'getAddablesAdapter')
+module_security.declareProtected(
+    SilvaPermissions.ChangeSilvaContent, 'getAddablesAdapter')
 def getAddablesAdapter(context):
     return interfaces.IAddables(context)

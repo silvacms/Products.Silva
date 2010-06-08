@@ -3,6 +3,8 @@
 # $Revision$
 import SilvaTestCase
 
+import unittest
+
 from silva.core.interfaces import IViewerSecurity
 from Products.Silva.adapters import security
 from AccessControl.SecurityManagement import newSecurityManager
@@ -19,7 +21,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             'Anonymous',
             IViewerSecurity(self.root.test).getMinimumRole())
-        
+
     def test_setMinimumRole(self):
         viewer_security = IViewerSecurity(self.root)
         viewer_security.setMinimumRole('Viewer')
@@ -33,7 +35,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(
             'Viewer +',
             viewer_security.getMinimumRole())
-        
+
     def test_getDefaultMinimumRole(self):
         viewer_security = IViewerSecurity(self.root)
         self.assertEquals(
@@ -75,7 +77,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
         # further than would be possible according to acquisition
         self.add_folder(self.root, 'alpha', 'Alpha')
         self.add_folder(self.root.alpha, 'beta', 'Beta')
-        
+
         s_alpha = IViewerSecurity(self.root.alpha)
         s_alpha.setMinimumRole('Viewer')
         s_beta = IViewerSecurity(
@@ -98,7 +100,7 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
                           viewer_security.getMinimumRole())
         self.assert_(not viewer_security.isAcquired())
         viewer_security.setAcquired()
-        self.assert_(viewer_security.isAcquired()) 
+        self.assert_(viewer_security.isAcquired())
         self.assertEquals('Anonymous',
                           viewer_security.getMinimumRole())
 
@@ -109,14 +111,14 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
                           viewer_security.getMinimumRole())
         self.assert_(not viewer_security.isAcquired())
         viewer_security.setMinimumRole('Anonymous')
-        self.assert_(viewer_security.isAcquired()) 
+        self.assert_(viewer_security.isAcquired())
         self.assertEquals('Anonymous',
                           viewer_security.getMinimumRole())
 
     def test_getMinimumRoleAbove(self):
         self.add_folder(self.root, 'alpha', 'Alpha')
         self.add_folder(self.root.alpha, 'beta', 'Beta')
-        
+
         s_alpha = IViewerSecurity(self.root.alpha)
         s_alpha.setMinimumRole('Viewer')
         s_beta = IViewerSecurity(
@@ -130,40 +132,9 @@ class ViewerSecurityTestCase(SilvaTestCase.SilvaTestCase):
                           s_beta.getMinimumRole())
         self.assertEquals('Viewer',
                           s_beta.getMinimumRoleAbove())
-                          
 
-class LockSecurityTestCase(SilvaTestCase.SilvaTestCase):
-    def test_startUnlocked(self):
-        self.add_document(self.root, 'doc', 'Doc')
-        adapter = security.getLockAdapter(self.root.doc)
-        self.assert_(not adapter.isLocked())
 
-    def test_isLocked(self):        
-        self.add_document(self.root, 'doc', 'Doc')
-        adapter = security.getLockAdapter(self.root.doc)
-        self.assert_(adapter.createLock())
-        # as we're the same user
-        self.assert_(not adapter.isLocked())
-        # log in as other user
-        uf = self.root.acl_users
-        uf._doAddUser('dummy', 'secret', ['Author'], [])
-        user = uf.getUserById('dummy').__of__(uf)
-        newSecurityManager(None, user)
-        # should be locked now
-        self.assert_(adapter.isLocked())
-        # can't create lock
-        self.assert_(not adapter.createLock())
-        # break lock
-        adapter.breakLock()
-        self.assert_(not adapter.isLocked())
-        # now can make lock
-        self.assert_(adapter.createLock())
-        # and we're not locked at the moment either
-        self.assert_(not adapter.isLocked())
-        
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ViewerSecurityTestCase))
-    suite.addTest(unittest.makeSuite(LockSecurityTestCase))
     return suite

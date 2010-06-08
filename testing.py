@@ -2,9 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from AccessControl.SecurityManagement import (
-    newSecurityManager, noSecurityManager)
-
+from AccessControl.SecurityManagement import newSecurityManager
 import Products.Silva
 
 from infrae.testing import TestCase, suite_from_package

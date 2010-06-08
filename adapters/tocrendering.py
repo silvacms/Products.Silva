@@ -2,8 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+from xml.sax.saxutils import escape
+
 # Zope
-import AccessControl
 from App.class_init import InitializeClass
 import Products
 
@@ -12,9 +13,6 @@ from Products.Silva.adapters import adapter
 from silva.core import interfaces
 from silva.core.views.interfaces import IPreviewLayer
 
-
-module_security = AccessControl.ModuleSecurityInfo(
-    'Products.Silva.adapters.tocrendering')
 
 _marker = []
 default_show_types = None
@@ -31,16 +29,10 @@ def compute_default_show_types():
     default_show_types = defaults
     return defaults
 
-def escape(thestring):
-    thestring = thestring.replace('&','&amp;')
-    thestring = thestring.replace('<','&lt;')
-    thestring = thestring.replace('>','&gt;')
-    return thestring
-
 
 class TOCRenderingAdapter(adapter.Adapter):
     """ Adapter for TOCs (autotoc, document toc) to render"""
-
+    # XXX again too much
     __allow_access_to_unprotected_subobjects__ = 1
 
     #Special "fastie quickie" autotoc rendering code...
