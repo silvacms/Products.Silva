@@ -8,6 +8,10 @@ from zope.interface.verify import verifyObject
 
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.testing import FunctionalLayer, TestCase
+
+from AccessControl import getSecurityManager
+from Products.Silva.adapters.archivefileimport import (
+    getArchiveFileImportAdapter)
 from silva.core import interfaces
 
 
@@ -66,6 +70,17 @@ class ArchiveFileImportTestCase(TestCase):
             verifyObject(interfaces.IArchiveFileImporter, importer))
         self.failUnless(
             interfaces.IArchiveFileImporter(self.root.link, None) is None)
+
+    def test_smi_adapter(self):
+        """Test adapter  query for SMI / SMI right access
+        """
+        importer = getArchiveFileImportAdapter(self.root.folder)
+        self.failUnless(
+            verifyObject(interfaces.IArchiveFileImporter, importer))
+        security = getSecurityManager()
+        self.failUnless(
+            security.checkPermission(
+                'Change Silva content', importer))
 
     def test_import_default_settings(self):
         """Import a Zip file.
