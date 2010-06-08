@@ -85,7 +85,7 @@ class Image(Asset):
     thumbnail_image = None
     web_scale = '100%'
     web_format = 'JPEG'
-    web_formats = ('JPEG', 'GIF', 'PNG')
+    web_formats = ('JPEG', 'GIF', 'PNG',)
     web_crop = ''
 
     _web2ct = {
@@ -117,7 +117,8 @@ class Image(Asset):
             self.hires_image = self.image
             self.image = None
         if web_format != 'unknown':
-            if self.web_format != web_format:
+            if self.web_format != web_format and \
+                    web_format in self.web_formats:
                 self.web_format = web_format
                 update_cache = 1
         # check if web_scale can be parsed:
