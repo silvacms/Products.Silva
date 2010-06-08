@@ -44,7 +44,6 @@ class SilvaLayer(BrowserLayer):
         'silva.core.services',
         ]
     default_users = {
-        'silvatestcase': ['Manager'],
         'editor': ['Editor'],
         'manager': ['Manager'],
         'chiefeditor': ['ChiefEditor'],
@@ -57,7 +56,7 @@ class SilvaLayer(BrowserLayer):
         """
         # Add a user
         userfolder = app.acl_users
-        user = userfolder.getUserById('silvatestcase').__of__(userfolder)
+        user = userfolder.getUserById('manager').__of__(userfolder)
 
         # Loging to that user and add a Silva Root
         newSecurityManager(None, user)
