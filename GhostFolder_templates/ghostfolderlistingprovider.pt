@@ -4,6 +4,7 @@
     default_doc_list python: default_document and [default_document] or [];
     publishables python: default_doc_list + context.get_ordered_publishables();
     assets context/get_non_publishables;
+    global iterate python: 1;
    " >
   <thead>
     <tal:block replace="nothing">
@@ -22,25 +23,6 @@
     <tal:block replace="nothing">
       ______________ top controls row ______________
     </tal:block>
-    <!-- <tr class="top-controls">
-      <td colspan="5">
-         <div style="float: left;">
-            <form method="post"
-              name="resync_form"
-              action=".">
-              <input class="button"
-                type="submit"
-                name="sync:method"
-                value="resync ghost folder"
-                title="re-synchronize with content from the source folder: alt-e"
-                accesskey="e"
-                tal:condition="not:context/get_link_status"
-                i18n:attributes="value;title"
-               />
-            </form>
-         </div>
-      </td>
-    </tr> -->
   </thead>
 
   <tbody>
