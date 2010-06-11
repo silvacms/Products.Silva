@@ -31,7 +31,7 @@ import silva.core.references.widgets.zeamform
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
 from silva.core.interfaces import (
-    IContainer, IContent, IGhost, IGhostContent, IGhostVersion)
+    IContainer, IContent, IGhost, IGhostFolder, IGhostContent, IGhostVersion)
 from silva.translations import translate as _
 
 from silva.core.references.reference import ReferenceProperty
@@ -230,10 +230,6 @@ class Ghost(CatalogedVersionedContent):
         else:
             return super_method(self, update_status)
 
-    def _factory(self, container, id, content):
-        return container.manage_addProduct['Silva'].manage_addGhost(
-            id, 'Ghost', haunted=content)
-
 
 InitializeClass(Ghost)
 
@@ -296,7 +292,7 @@ class AddAction(Action):
         data, errors = form.extractData()
         if errors:
             return FAILURE
-        content = self.add(form.context, data, form)
+        content = self.add(form.context, data , form)
         return form.redirect(self.next_url(form, content, form.context))
 
     def next_url(self, form, content, parent):
@@ -312,14 +308,15 @@ class AddAndEdit(AddAction):
 class GhostAddForm(SMIAddForm):
     """Add form for a ghost
     """
-    silvaconf.name(u"Silva Ghost")
+    grok.name(u"Silva Ghost")
     grok.context(IGhost)
+
     fields = Fields(IGhostSchema)
     description = Ghost.__doc__
     actions = Actions(CancelAddAction(_(u'cancel')),
-                        AddAction(_(u'save')),
-                        AddAndEdit(_(u'save + edit'),
-                                   identifier="save_edit"))
+                      AddAction(_(u'save')),
+                      AddAndEdit(_(u'save + edit'),
+                                 identifier="save_edit"))
 
 
 class GhostEditForm(SMIEditForm):
@@ -354,38 +351,29 @@ class GhostView(silvaviews.View):
             del self.request.other['ghost_model']
 
 
-def ghostFactory(container, id, haunted_object):
+def ghost_factory(container, identifier, target):
     """add new ghost to container
 
         container: container to add ghost to (must be acquisition wrapped)
         id: (str) id for new ghost in container
-        haunted_object: object to be haunted (ghosted), acquisition wrapped
+        target: object to be haunted (ghosted), acquisition wrapped
         returns created ghost
 
         actual ghost created depends on haunted object
         on IContainer a GhostFolder is created
         on IVersionedContent a Ghost is created
     """
-    addProduct = container.manage_addProduct['Silva']
-    content_url = '/'.join(haunted_object.getPhysicalPath())
-    if IContainer.providedBy(haunted_object):
-        factory = addProduct.manage_addGhostFolder
-    elif IContent.providedBy(haunted_object):
-        if haunted_object.meta_type == 'Silva Ghost':
-            version = getLastVersionFromGhost(haunted_object)
-            content = version.get_haunted()
-        factory = addProduct.manage_addGhost
-    factory(id, 'Ghost', haunted=haunted_object)
-    ghost = getattr(container, id)
-    return ghost
+    factory = container.manage_addProduct['Silva']
+    if IContainer.providedBy(target):
+        if IGhostFolder.providedBy(target):
+            target = target.get_hauted()
+        factory = factory.manage_addGhostFolder
+    elif IContent.providedBy(target):
+        if IGhostContent.providedBy(target):
+            target = target.getLastVersion().get_haunted()
+        factory = factory.manage_addGhost
+    factory(identifier, None, haunted=target)
+    return getattr(container, identifier)
 
-
-def canBeHaunted(to_be_haunted):
-    if IGhost.providedBy(to_be_haunted):
-        return 0
-    if (IContainer.providedBy(to_be_haunted) or
-            IContent.providedBy(to_be_haunted)):
-        return 1
-    return 0
 
 

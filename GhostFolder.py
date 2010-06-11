@@ -7,9 +7,11 @@
 from five import grok
 from zope.annotation.interfaces import IAnnotations
 from zope.interface import Interface
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_inner
 from App.class_init import InitializeClass
 from DateTime import DateTime
 
@@ -19,26 +21,24 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Ghost import GhostBase
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
+from Products.Silva.Ghost import AddAction as GhostAddAction
+from Products.Silva.Ghost import GhostAddForm, GhostEditForm
+from Products.Silva.icon import get_icon_url
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
     IPublication, ISilvaObject, IGhostFolder, IGhostContent)
+from silva.core.conf import schema as silvaschema
+from silva.core.references.reference import Reference
+from silva.core.smi.interfaces import ISMILayer
+from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
 from zeam.form.base.actions import Actions, Action
 from zeam.form.base.fields import Fields
 from zeam.form.silva.actions import CancelAddAction, CancelEditAction
-from Products.Silva.Ghost import AddAction as GhostAddAction
-from Products.Silva.Ghost import GhostAddForm, GhostEditForm
 
-from silva.core.conf import schema as silvaschema
-from silva.core.references.reference import Reference
-from silva.core.conf.utils import ContentFactory
-from silva.core.views import views as silvaviews
-from silva.core.smi.interfaces import ISMILayer
-from Products.Silva.icon import get_icon_url
-from Products.Silva import mangle
 
 
 class Sync(object):
@@ -148,6 +148,7 @@ class GhostFolder(GhostBase, Folder.Folder):
     meta_type = 'Silva Ghost Folder'
 
     grok.implements(IGhostFolder)
+    silvaconf.icon('icons/silvaghost_folder.gif')
 
     security = ClassSecurityInfo()
 
@@ -161,19 +162,6 @@ class GhostFolder(GhostBase, Folder.Folder):
         (None, None, SyncCopy),
         ]
 
-    silvaconf.icon('icons/silvaghost_folder.gif')
-    silvaconf.factory('manage_addGhostFolder')
-
-    def __init__(self, id):
-        super(GhostFolder, self).__init__(id)
-        self._content_path = None
-
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """title comes from haunted object
-        """
-        return False
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunt')
@@ -190,7 +178,6 @@ class GhostFolder(GhostBase, Folder.Folder):
         object_list = self._haunt_diff(haunted, ghost)
         upd = SyncContainer(self, None, haunted, None, self)
         updaters = [upd]
-
 
         while object_list:
             # breadth first search
@@ -377,18 +364,8 @@ class GhostFolder(GhostBase, Folder.Folder):
                     DateTime())
                 object.approve_version()
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'is_published')
-    def is_published(self):
-        return Folder.Folder.is_published(self)
-
-    def _factory(self, container, id, content):
-        return container.manage_addProduct['Silva'].manage_addGhostFolder(
-            id, 'Ghost Folder', haunted=content)
-
 
 InitializeClass(GhostFolder)
-manage_addGhostFolder = ContentFactory(GhostFolder)
 
 
 class IGhostFolderSchema(Interface):
@@ -465,10 +442,13 @@ class GhostFolderListingProvider(silvaviews.ContentProvider):
 class GhostFolderEditForm(GhostEditForm):
     """ Edit form Ghost Folder
     """
+    grok.template('smieditform')
     grok.context(IGhostFolder)
+
     fields = Fields(IGhostFolderSchema).omit('id')
-    actions = GhostEditForm.actions.copy()
-    actions.extend(SyncAction(_(u'sync')))
-    template = grok.PageTemplate(filename='GhostFolder_templates/smieditform.pt')
+    actions = GhostEditForm.actions + SyncAction(_(u'sync'))
 
 
+@grok.subscribe(IGhostFolder, IObjectCreatedEvent)
+def haunt_created_folder(folder, event):
+    aq_inner(folder).haunt()

@@ -17,7 +17,7 @@ from OFS.Uninstalled import BrokenClass
 import OFS.interfaces
 
 # Silva
-from Products.Silva.Ghost import ghostFactory, canBeHaunted
+from Products.Silva.Ghost import ghost_factory
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
@@ -357,7 +357,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_paste_to_ghost')
-    def action_paste_to_ghost(self, REQUEST):
+    def action_paste_to_ghost(self, REQUEST=None):
         """Paste what is on clipboard to ghost.
 
             Note: the return value of this method has changed in Silva 1.2
@@ -379,11 +379,11 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                     add = ''
                     if i > 1:
                         add = str(i)
-                    if canBeHaunted(item):
-                        paste_id = 'ghost%s_of_%s' % (add, org_paste_id)
-                    else:
+                    if IAsset.providedBy(item):
                         paste_id = 'copy%s_of_%s' % (add, org_paste_id)
-                self._ghost_paste(paste_id, item, REQUEST)
+                    else:
+                        paste_id = 'ghost%s_of_%s' % (add, org_paste_id)
+                self._ghost_paste(paste_id, item)
                 msg = _('pasted &#xab;${id}&#xbb;', mapping={'id': paste_id})
                 messages.append(translate(msg))
             else:
@@ -393,19 +393,14 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 message_type = 'error'
         return message_type, ', '.join(messages).capitalize()
 
-    def _ghost_paste(self, paste_id, item, REQUEST):
-        if canBeHaunted(item):
-            ghost = ghostFactory(self, paste_id, item)
-            if ghost.meta_type == 'Silva Ghost Folder':
-                ghost.haunt()
-        elif IGhost.providedBy(item):
-            content = item.get_haunted()
-            item._factory(self, paste_id, content)
-        else:
+    def _ghost_paste(self, paste_id, item, REQUEST=None):
+        if IAsset.providedBy(item):
             # this is an object that just needs to be copied
             item = item._getCopy(self)
             item._setId(paste_id)
             self._setObject(paste_id, item)
+        else:
+            ghost_factory(self, paste_id, item)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_allow_feeds')
@@ -481,7 +476,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                               'is_silva_addables_acquired')
     def is_silva_addables_acquired(self):
         return self._addables_allowed_in_container is None
-    
+
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -492,7 +487,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         """
         user = getSecurityManager().getUser()
         if user.has_permission(SilvaPermissions.ApproveSilvaContent, self):
-            return 1
+            return True
 
         return not self.is_published() and not self.is_approved()
 
