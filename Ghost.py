@@ -40,7 +40,7 @@ from silva.core.references.reference import Reference
 
 
 class GhostBase(object):
-    """baseclas for Ghosts (or Ghost versions if it's versioned)
+    """baseclass for Ghosts (or Ghost versions if it's versioned)
     """
     security = ClassSecurityInfo()
 
@@ -64,7 +64,7 @@ class GhostBase(object):
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
     def set_title(self, title):
-        """Don't do a thing.
+        """Don't do anything.
         """
         pass
 
@@ -277,7 +277,7 @@ class IGhostSchema(Interface):
 
     haunted = Reference(IContent,
             title=_(u"target"),
-            description=_(u"The silva object the ghost is mirroring"),
+            description=_(u"The silva object the ghost is mirroring."),
             required=True)
 
 
@@ -330,7 +330,7 @@ class GhostView(silvaviews.View):
     grok.context(IGhostContent)
 
     broken_message = _(u"This 'ghost' document is broken. "
-                       u"Please inform the site administrator.")
+                       u"Please inform the site manager.")
 
     def render(self):
         # FIXME what if we get circular ghosts?
@@ -345,7 +345,7 @@ class GhostView(silvaviews.View):
             if getSecurityManager().checkPermission(permission, content):
                 return content.view()
             raise Unauthorized(
-                u"You does not have the permission to "
+                u"You do not have permission to "
                 u"see the target of this ghost")
         finally:
             del self.request.other['ghost_model']
