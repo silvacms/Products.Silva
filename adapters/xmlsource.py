@@ -21,8 +21,9 @@ class XMLSourceAdapter(grok.MultiAdapter):
         self.context = context
         self.request = request
 
-    def getXML(self, version=xmlexport.PREVIEWABLE_VERSION):
-        settings = xmlexport.ExportSettings(request=self.request)
+    def getXML(self, version=xmlexport.PREVIEWABLE_VERSION, options={}):
+        settings = xmlexport.ExportSettings(request=self.request,
+                                            options=options)
         settings.setVersion(version)
         settings.setExternalRendering(True)
 

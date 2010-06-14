@@ -421,7 +421,8 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,
-                 withSubPublications=True, otherContent=True, request=None):
+                 withSubPublications=True, otherContent=True,
+                 options={}, request=None):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._version = allVersions and ALL_VERSION or PREVIEWABLE_VERSION
@@ -429,6 +430,7 @@ class ExportSettings(xmlexport.BaseSettings):
         self._other_content = otherContent
         self._render_external = False
         self._export_root = None
+        self.options = options
         self.request = request
 
     def setExportRoot(self, root):
