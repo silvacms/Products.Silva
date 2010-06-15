@@ -25,6 +25,7 @@ class GhostTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
+        self.layer.login('editor')
 
         def factory(obj, product="Silva"):
             return obj.manage_addProduct[product]
