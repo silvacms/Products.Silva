@@ -9,7 +9,7 @@ from zope.interface.verify import verifyObject
 import SilvaTestCase
 from DateTime import DateTime
 
-from Products.Silva import Ghost
+from Products.Silva.Ghost import ghost_factory
 from silva.core.interfaces import IIndexer
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import BrokenReferenceError
@@ -18,11 +18,8 @@ from silva.core.references.reference import BrokenReferenceError
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
-        self.pub = pub = self.add_folder(
-            self.root, 'pub', 'Publication')
-
-        self.toghost  = toghost = self.add_document(
-            self.root, 'toghost', 'To be Haunted')
+        self.pub = self.add_folder(self.root, 'pub', 'Publication')
+        self.toghost  = self.add_document(self.root, 'toghost', 'To be Haunted')
         self.gamma  = gamma = self.add_document(self.pub, 'gamma', 'Gamma')
         self.alpha = alpha = self.add_document(self.pub, 'alpha', 'Alpha')
         self.Alpha = Alpha = self.add_document(
@@ -31,36 +28,35 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.Beta = Beta = self.add_document(
             self.pub, 'Beta', 'Beta Capital B')
         self.kappa = kappa = self.add_document(self.pub, 'kappa', 'Kappa')
-        self.ghost = ghost = self.add_ghost(
-            self.pub, 'ghost', toghost)
+        self.ghost = ghost = self.add_ghost(self.pub, 'ghost', self.toghost)
 
         self.foldertoghost = self.add_folder(
             self.root, 'foldertoghost', 'Folder to Ghost')
         self.foo = foo = self.add_document(self.foldertoghost, 'index', 'Index')
         self.bar = bar = self.add_document(self.foldertoghost, 'bar', 'Barrr')
         self.baz = baz = self.add_document(self.foldertoghost, 'baz', 'Bazzz')
-        self.ghostfolder = ghostfolder = Ghost.ghostFactory(
+        self.ghostfolder = ghost_factory(
             self.pub, 'ghostfolder', self.foldertoghost)
         self.ghostfolder.haunt()
-        self.broken_ghost = broken_ghost = \
-            self.add_ghost(self.root, 'brokenghost', None)
+        self.broken_ghost = self.add_ghost(self.root, 'brokenghost', None)
+
         # add a folder with an indexable index document
-        self.subfolder = subfolder =  self.add_folder(
+        self.subfolder = self.add_folder(
             self.pub, 'folder_with_index_doc',
             'Folder with indexable index document',
             policy_name='Silva Document')
 
         # also add a folder with a not indexable index document
-        self.subfolder_autotoc = subfolder_autotoc = self.add_folder(
-            subfolder, 'folder_with_autotoc',
+        self.subfolder_autotoc = self.add_folder(
+            self.subfolder, 'folder_with_autotoc',
             'Folder with AutoTOC index document',
             policy_name='Silva AutoTOC')
 
-        getattr(subfolder.index, '0').content.manage_edit(
+        getattr(self.subfolder.index, '0').content.manage_edit(
             '<doc>'
             '<p><index name="subfolder" title="subfolder" /></p>'
             '</doc>')
-        getattr(toghost, '0').content.manage_edit(
+        getattr(self.toghost, '0').content.manage_edit(
             '<doc>'
             '<p><index name="ghost" title="ghost" /></p>'
             '</doc>')
@@ -103,8 +99,8 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
             '</doc>')
 
         # publish documents
-        for doc in [gamma, alpha, Alpha, beta, Beta, kappa, toghost, ghost,
-                    broken_ghost, subfolder.index, foo, bar, baz]:
+        for doc in [gamma, alpha, Alpha, beta, Beta, kappa, self.toghost, ghost,
+                    self.broken_ghost, self.subfolder.index, foo, bar, baz]:
             doc.set_unapproved_version_publication_datetime(DateTime() - 1)
             # should now be published
             doc.approve_version()
