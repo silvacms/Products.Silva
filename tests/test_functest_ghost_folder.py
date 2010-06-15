@@ -28,6 +28,7 @@ class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
                         +- pubdoc (Silva Document)
         """
         self.root = self.layer.get_application()
+        self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
@@ -46,6 +47,7 @@ class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
         self.pubdoc = getattr(self.publication, 'pubdoc')
 
         self.intids = getUtility(IIntIds)
+        self.layer.logout()
         self.browser = Browser()
 
 
@@ -114,6 +116,8 @@ class TestEditGhostFolder(BaseTest):
     def setUp(self):
         super(TestEditGhostFolder, self).setUp()
         self._login(self.browser)
+
+        self.layer.login('editor')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
             'ghost_folder', "Ghost folder on root/folder",
@@ -121,6 +125,7 @@ class TestEditGhostFolder(BaseTest):
         self.ghost_folder = getattr(self.root, 'ghost_folder')
         self.ghost_folder_path = "/".join(self.ghost_folder.getPhysicalPath())
         self.reference_utility = getUtility(IReferenceService)
+        self.layer.logout()
 
     def test_edit_form_reference_field(self):
         form = self._get_form()

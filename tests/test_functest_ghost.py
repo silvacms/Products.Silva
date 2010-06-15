@@ -1,4 +1,10 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
+
 from Products.Silva.testing import FunctionalLayer, Browser
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
@@ -14,6 +20,7 @@ class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
 
     def setUp(self):
         self.root = self.layer.get_application()
+        self.layer.login('editor')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('pub', 'Publication')
         self.publication = getattr(self.root, 'pub')
@@ -23,6 +30,7 @@ class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
         self.doc = getattr(self.publication, 'doc')
 
         self.intids = getUtility(IIntIds)
+        self.layer.logout()
         self.browser = Browser()
 
 
