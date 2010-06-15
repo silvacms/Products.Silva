@@ -5,6 +5,7 @@
 # Python
 from StringIO import StringIO
 import PIL
+import unittest
 
 # Zope 3
 from zope import component
@@ -12,17 +13,14 @@ from zope.interface.verify import verifyObject
 
 from silva.core import interfaces
 from Products.Silva import File, magic
-from Products.Five.testbrowser import Browser
-from Testing.ZopeTestCase.zopedoctest.functional import http
-
-from Products.Silva.tests import SilvaTestCase
+from Products.Silva.testing import FunctionalLayer, Browser, http
 from Products.Silva.tests import helpers
 
 
 class ImageTestHelper(object):
 
     def add_test_image(self):
-        image_file = helpers.openTestFile('photo.tif')
+        image_file = helpers.open_test_file('photo.tif')
         image_data = image_file.read()
         image_file.seek(0)
         self.root.manage_addProduct['Silva'].manage_addImage(
@@ -31,7 +29,13 @@ class ImageTestHelper(object):
         return getattr(self.root, 'testimage.tif'), image_data
 
 
-class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
+class ImageTest(unittest.TestCase, ImageTestHelper):
+
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
 
     def test_badimage(self):
         image_file = StringIO('invalid-image-format')
@@ -90,15 +94,18 @@ class ImageTest(SilvaTestCase.SilvaTestCase, ImageTestHelper):
 
     def test_copy_image(self):
         image, _ = self.add_test_image()
-        self.root.action_copy(['testimage.tif'], self.app.REQUEST)
+        self.root.action_copy(['testimage.tif'], self.root.REQUEST)
         # now do the paste action
-        self.root.action_paste(self.app.REQUEST)
+        self.root.action_paste(self.root.REQUEST)
 
 
-class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
+class ImageFunctionalTest(unittest.TestCase,
                           ImageTestHelper):
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
         image, image_data = self.add_test_image()
         image.set_web_presentation_properties('JPEG', '100x100', '')
 
@@ -116,9 +123,9 @@ class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
         self.assertEquals('JPEG', pil_image.format)
 
     def test_head_view(self):
-        response = http('HEAD /root/testimage.tif HTTP/1.1')
-        self.assertEquals(response.header_output.status, 200)
-        headers = response.header_output.headers
+        response = http('HEAD /root/testimage.tif HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
         self.assertEquals(headers['Content-Length'], '0')
         self.assertEquals(headers['Content-Type'], 'image/jpeg')
 
@@ -141,9 +148,9 @@ class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
         # a Browser is not able to read all image data.
 
     def test_head_hires(self):
-        response = http('HEAD /root/testimage.tif?hires HTTP/1.1')
-        self.assertEquals(response.header_output.status, 200)
-        headers = response.header_output.headers
+        response = http('HEAD /root/testimage.tif?hires HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
         self.assertEquals(headers['Content-Length'], '0')
 
         if not magic.HAVE_MAGIC:
@@ -155,6 +162,7 @@ class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
 
     def test_thumbnail(self):
         browser = Browser()
+        browser.handleErrors = False
         browser.open('http://localhost/root/testimage.tif?thumbnail')
         self.assertEquals(
             browser.headers['content-disposition'],
@@ -167,15 +175,13 @@ class ImageFunctionalTest(SilvaTestCase.SilvaFunctionalTestCase,
         self.assertEquals('JPEG', pil_image.format)
 
     def test_head_thumbnail(self):
-        response = http('HEAD /root/testimage.tif?thumbnail HTTP/1.1')
-        self.assertEquals(response.header_output.status, 200)
-        headers = response.header_output.headers
+        response = http('HEAD /root/testimage.tif?thumbnail HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
         self.assertEquals(headers['Content-Length'], '0')
         self.assertEquals(headers['Content-Type'], 'image/jpeg')
 
 
-
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ImageTest))

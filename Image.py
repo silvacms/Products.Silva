@@ -17,6 +17,7 @@ from five import grok
 from zope import component, schema
 from zope.i18n import translate
 from zope.interface import Interface
+from zope.component import getMultiAdapter
 import zope.app.container.interfaces
 
 # Zope 2
@@ -547,8 +548,8 @@ class ImagePublishTraverse(SilvaPublishTraverse):
     def browserDefault(self, request):
         # We don't want to lookup five views if we have other than a
         # GET or HEAD request, but delegate to the sub-object.
-        object, method = super(
-            ImagePublishTraverse, self).browserDefault(request)
+        content, method = super(ImagePublishTraverse, self).browserDefault(
+            request)
         if request.method in ('GET', 'HEAD',):
             query = request.QUERY_STRING
             if query == 'hires':
@@ -557,8 +558,11 @@ class ImagePublishTraverse(SilvaPublishTraverse):
                 img = self.context.thumbnail_image
             else:
                 img = self.context.image
-            return img, method
-        return object, method
+            view = getMultiAdapter((img, request), Interface, name='index')
+            view.__parent__ = img
+            method = {'GET': tuple(), 'HEAD': ('HEAD',)}.get(request.method)
+            return (view, method)
+        return content, method
 
 
 class ImageStorageConverter(object):
