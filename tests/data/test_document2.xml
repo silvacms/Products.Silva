@@ -58,11 +58,11 @@
    <doc:doc>
     <doc:p type="normal">
      This is a test of the XSLT rendering functionality.
-     <doc:link url="bar.html">
-       <doc:image path="foo">
-       </doc:image>
-     </doc:link>
     </doc:p>
+    <doc:link url="bar.html" target="_blank" title="Path to the bar">
+      <doc:image path="foo" title="Foo">
+      </doc:image>
+    </doc:link>
    </doc:doc>
   </content>
  </document>

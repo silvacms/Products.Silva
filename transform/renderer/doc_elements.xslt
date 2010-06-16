@@ -282,7 +282,7 @@
   </xsl:template>
 
   <xsl:template match="doc:image" mode="image-content">
-    <img src="{@rewritten_path}" alt="{@image_title}" class="{@alignment}">
+    <img src="{@rewritten_path}" alt="{@title}" class="{@alignment}">
       <xsl:if test="@width">
         <xsl:attribute name="width">
           <xsl:value-of select="@width" />

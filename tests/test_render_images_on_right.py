@@ -19,18 +19,18 @@ from lxml import etree
 
 expected_html = """
 <table>
-  <tr>
-    <td valign="top"><h2 class="heading">This is a rendering test</h2>
-                <p class="p">
-                    This is a test of the XSLT rendering functionality.
-                </p>
-            </td>
-    <td valign="top">
-      <a href="http://foo/root/bar.html">
-        <img src="http://foo/root/foo" />
-      </a>
-      <br />
-    </td>
+ <tr>
+  <td valign="top"><h2 class="heading">This is a rendering test</h2>
+     <p class="p">
+      This is a test of the XSLT rendering functionality.
+    </p>
+   </td>
+   <td valign="top">
+    <a href="http://foo/root/bar.html" title="Path to the bar" target="_blank">
+     <img src="http://foo/root/foo" alt="Foo" class="default" />
+    </a>
+    <br />
+   </td>
   </tr>
 </table>
 """
