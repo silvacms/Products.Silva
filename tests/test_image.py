@@ -248,6 +248,7 @@ class ImageFunctionalTest(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
         image, image_data = self.add_test_image()
+        # Need to add test for this
         image.set_web_presentation_properties('JPEG', '100x100', '')
 
 
