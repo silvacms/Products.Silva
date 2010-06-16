@@ -69,6 +69,7 @@ class DefaultFileImplementationTestCase(TestCase):
         """
         response = http('HEAD /root/testfile HTTP/1.1', parsed=True)
         headers = response.getHeaders()
+        # XXX content-lenght should be the size of the file
         self.assertEquals(headers['Content-Length'], '0')
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
