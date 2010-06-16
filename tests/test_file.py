@@ -75,7 +75,7 @@ class DefaultFileImplementationTestCase(TestCase):
                           'inline;filename=testfile')
         self.failUnless('Last-Modified' in headers)
 
-    def test_assetdata(self):
+    def test_asset_data(self):
         """Test asset data adapter implementation.
         """
         content = self.root.testfile

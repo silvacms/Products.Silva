@@ -7,6 +7,7 @@
 import re
 import os
 import logging
+import mimetypes
 from cStringIO import StringIO
 from cgi import escape
 
@@ -23,12 +24,14 @@ import zope.app.container.interfaces
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-import OFS.interfaces
 import transaction
 
 # Silva
+from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
+from Products.Silva.ContentObjectFactoryRegistry import (
+    contentObjectFactoryRegistry)
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
@@ -38,11 +41,11 @@ from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
 from z3c.form import field
 
-try:
-    import PIL.Image
-    havePIL = 1
-except ImportError:
-    havePIL = 0
+# Load mime.types
+mimetypes.init()
+
+import PIL.Image
+havePIL = 1
 
 
 def manage_addImage(context, id, title, file=None, REQUEST=None):
@@ -63,6 +66,23 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
             raise
     image_obj.set_title(title)
     return image_obj
+
+
+def set_image_filename(image, basename):
+    """Compute and set a new filename for the image. It is composed of
+    the given id, basename, where the file extension is changed in
+    order to match the format of the image.
+    """
+    extension = None
+    if '.' in basename:
+        basename, extension = os.path.splitext(basename)
+        extension = '.' + extension
+    guessed_extension = mimetypes.guess_extension(image.content_type())
+    if guessed_extension is not None:
+        extension = guessed_extension
+    if extension is not None:
+        basename += extension
+    image.set_filename(basename)
 
 
 class Image(Asset):
@@ -192,8 +212,8 @@ class Image(Asset):
                 height = int(height)
         return width, height
 
-    security.declareProtected(SilvaPermissions.View, 'getCropBox')
-    def getCropBox(self, crop=None):
+    security.declareProtected(SilvaPermissions.View, 'get_crop_box')
+    def get_crop_box(self, crop=None):
         """return crop box"""
         if crop is None:
             crop = self.web_crop
@@ -234,8 +254,11 @@ class Image(Asset):
             raise ValueError, msg
         return (x1, y1, x2, y2)
 
-    security.declareProtected(SilvaPermissions.View, 'getDimensions')
-    def getDimensions(self, img=None):
+    security.declareProtected(SilvaPermissions.View, 'getCropBox')
+    getCropBox = get_crop_box
+
+    security.declareProtected(SilvaPermissions.View, 'get_dimensions')
+    def get_dimensions(self, img=None):
         """Returns width, heigt of (hi res) image.
 
         Raises ValueError if there is no way of determining the dimenstions,
@@ -254,19 +277,20 @@ class Image(Asset):
             return (0, 0)
         return width, height
 
-    security.declareProtected(SilvaPermissions.View, 'getFormat')
-    def getFormat(self):
+    security.declareProtected(SilvaPermissions.View, 'getDimensions')
+    getDimensions = get_dimensions
+
+    security.declareProtected(SilvaPermissions.View, 'get_format')
+    def get_format(self):
         """Returns image format.
         """
-        if havePIL:
-            return self._getPILImage(self.hires_image).format
-        ct, w, h = OFS.Image.getImageInfo(self.hires_image.get_content())
-        if not ct:
-            raise ValueError, _(u"Unknown image format.")
-        return ct.split('/')[1].upper()
+        return self._getPILImage(self.hires_image).format
 
-    security.declareProtected(SilvaPermissions.View, 'getImage')
-    def getImage(self, hires=1, webformat=0):
+    security.declareProtected(SilvaPermissions.View, 'getFormat')
+    getFormat = get_format
+
+    security.declareProtected(SilvaPermissions.View, 'get_image')
+    def get_image(self, hires=1, webformat=0):
         """Return image data.
         """
         if hires and not webformat:
@@ -283,6 +307,9 @@ class Image(Asset):
             raise ValueError, _(u"Low resolution image in original format is "
                                 u"not supported")
         return image.get_content()
+
+    security.declareProtected(SilvaPermissions.View, 'getImage')
+    getImage = get_image
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **kw):
@@ -340,7 +367,7 @@ class Image(Asset):
     security.declareProtected(SilvaPermissions.View, 'canScale')
     def canScale(self):
         """returns if scaling/converting is possible"""
-        return havePIL
+        return True
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'getFileSystemPath')
@@ -348,11 +375,14 @@ class Image(Asset):
         """return path on filesystem for containing image"""
         return self.hires_image.getFileSystemPath()
 
-    security.declareProtected(SilvaPermissions.View, 'getOrientation')
-    def getOrientation(self):
+    security.declareProtected(SilvaPermissions.View, 'get_orientation')
+    def get_orientation(self):
         """Returns translated Image orientation (string).
         """
         return _(self.getOrientationClass())
+
+    security.declareProtected(SilvaPermissions.View, 'getOrientation')
+    getOrientation = get_orientation
 
     security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
     def getOrientationClass(self):
@@ -367,13 +397,17 @@ class Image(Asset):
             return "landscape"
         return "portrait"
 
+    def get_filename(self):
+        return self.image.get_filename()
+
+    def get_mime_type(self):
+        return self.image.get_mime_type()
+
     def content_type(self):
-        return self.image.content_type
+        return self.image.content_type()
 
     def get_file_size(self):
-        if self.hires_image:
-            return self.hires_image.get_file_size()
-        return 0
+        return self.image.get_file_size()
 
     security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
     def get_scaled_file_size(self):
@@ -388,8 +422,6 @@ class Image(Asset):
             raise ValueError if no PIL is available
             raise ValueError if image could not be identified
         """
-        if not havePIL:
-            raise ValueError, _(u"No PIL installed.")
         if img is None:
             img = self.image
         image_reference = img.get_content_fd()
@@ -489,24 +521,15 @@ class Image(Asset):
             return True, image.convert("RGB")
         return False, image
 
-    def _image_factory(self, image_id, file, content_type=None):
+    def _image_factory(self, image_id, image_file, content_type=None):
         service_files = component.getUtility(interfaces.IFilesService)
         new_image = service_files.newFile(image_id)
         setattr(self, image_id, new_image)
         new_image = getattr(self, image_id)
-        new_image.set_file_data(file)
-
-        image_filename = self.getId()
-        if not image_id.startswith('hires'):
-            if '.' in image_filename:
-                base_id, ext = os.path.splitext(image_filename)
-            else:
-                base_id = image_filename
-            image_filename = '%s.%s' % (base_id, self.web_format.lower())
-        new_image.set_filename(image_filename)
-
+        new_image.set_file_data(image_file)
         if content_type is not None:
             new_image.set_content_type(content_type)
+        set_image_filename(new_image, self.getId())
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
@@ -533,12 +556,7 @@ class Image(Asset):
 
             raises ValueError if the dimensions could not be determined
         """
-        if havePIL:
-            return self._getPILImage(img).size
-        ct, w, h = OFS.Image.getImageInfo(img.get_content())
-        if w <= 0 or h <= 0:
-            raise ValueError, _(u"Could not identify image type.")
-        return w, h
+        return self._getPILImage(img).size
 
 InitializeClass(Image)
 
@@ -613,11 +631,6 @@ class ImageAddForm(silvaz3cforms.AddForm):
             data['id'], data['title'], file=data['file'])
 
 
-# Register Image factory for image mimetypes
-import mimetypes
-from Products.Silva import assetregistry
-from ContentObjectFactoryRegistry import contentObjectFactoryRegistry
-
 mt = mimetypes.types_map.values()
 mt  = [mt for mt in mt if mt.startswith('image')]
 assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
@@ -644,21 +657,12 @@ contentObjectFactoryRegistry.registerFactory(
 
 
 @silvaconf.subscribe(
-    interfaces.IImage, zope.app.container.interfaces.IObjectAddedEvent)
+    interfaces.IImage, zope.app.container.interfaces.IObjectMovedEvent)
 def image_added(image, event):
-    for id in ('hires_image', 'image', 'thumbnail_image'):
-        img = getattr(image, id, None)
-        if img is None:
+    if image is not event.object or event.newName is None:
+        return
+    for file_id in ('hires_image', 'image', 'thumbnail_image'):
+        image_file = getattr(image, file_id, None)
+        if image_file is None:
             continue
-        img.id = id
-
-
-@silvaconf.subscribe(
-    interfaces.IImage, OFS.interfaces.IObjectClonedEvent)
-def image_cloned(image, event):
-    "copy support"
-    for id in ('image', 'hires_image', 'thumbnail_image'):
-        img = getattr(image, id, None)
-        if img is None:
-            continue
-        img.id = id
+        set_image_filename(image_file, event.newName)

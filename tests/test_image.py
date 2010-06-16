@@ -2,105 +2,246 @@
 # See also LICENSE.txt
 # $Id$
 
-# Python
 from StringIO import StringIO
 import PIL
 import unittest
 
-# Zope 3
-from zope import component
 from zope.interface.verify import verifyObject
-
 from silva.core import interfaces
-from Products.Silva import File, magic
-from Products.Silva.testing import FunctionalLayer, Browser, http
-from Products.Silva.tests import helpers
+
+from Products.Silva import File
+from Products.Silva.testing import FunctionalLayer, http, TestCase
+from Products.Silva.tests.helpers import open_test_file
 
 
-class ImageTestHelper(object):
-
-    def add_test_image(self):
-        image_file = helpers.open_test_file('photo.tif')
-        image_data = image_file.read()
-        image_file.seek(0)
-        self.root.manage_addProduct['Silva'].manage_addImage(
-            'testimage.tif', 'Test Image', image_file)
-        image_file.close()
-        return getattr(self.root, 'testimage.tif'), image_data
-
-
-class ImageTest(unittest.TestCase, ImageTestHelper):
-
+class DefaultImageTestCase(TestCase):
+    """Test images, switching storages.
+    """
     layer = FunctionalLayer
+    implementation = None
 
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
-    def test_badimage(self):
-        image_file = StringIO('invalid-image-format')
-        self.assertRaises(ValueError, self.root.manage_addProduct['Silva'].\
-            manage_addImage, 'badimage', 'Bad Image', image_file)
+        image_file = open_test_file('photo.tif')
+        self.image_data = image_file.read()
+        self.image_size = image_file.tell()
+        image_file.seek(0, 0)
+        if self.implementation is not None:
+            self.root.service_files.storage = self.implementation
 
-    def _test_image(self):
-        image, image_data = self.add_test_image()
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addImage('test_image', 'Test Image', image_file)
+        image_file.close()
 
-        self.failUnless(verifyObject(interfaces.IImage, image))
-        self.assertEquals(image.getFormat(), 'TIFF')
-        self.assertEquals(image.getDimensions(), (960, 1280))
-        self.assertEquals(str(image.getOrientation()), "portrait")
-        image.set_web_presentation_properties('JPEG', '100x100', '')
-        self.assertRaises(ValueError, image.getImage, hires=0, webformat=0)
-        self.failUnless(image.tag() is not None)
+    def test_content(self):
+        """Test image content.
+        """
+        content = self.root.test_image
+        self.failUnless(verifyObject(interfaces.IAsset, content))
+        self.failUnless(verifyObject(interfaces.IImage, content))
 
-        it = image.getImage(hires=0, webformat=1)
-        pil_image = PIL.Image.open(StringIO(it))
+        # Asset methods
+        self.assertEquals(content.content_type(), 'image/tiff')
+        self.assertEquals(content.get_file_size(), self.image_size)
+        self.assertEquals(content.get_filename(), 'test_image.tiff')
+        self.assertEquals(content.get_mime_type(), 'image/tiff')
+
+        # Image methods
+        self.assertEquals(content.get_format(), 'TIFF')
+        self.assertEquals(content.get_dimensions(), (960, 1280))
+        self.assertEquals(str(content.get_orientation()), "portrait")
+        content.set_web_presentation_properties('JPEG', '100x100', '')
+        self.assertRaises(ValueError, content.get_image, hires=0, webformat=0)
+        self.failUnless(content.tag() is not None)
+
+        data = StringIO(content.get_image(hires=0, webformat=1))
+        pil_image = PIL.Image.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-        it = image.getImage(hires=1, webformat=0)
-        self.assertEquals(image_data, it)
+        data = content.get_image(hires=1, webformat=0)
+        self.assertEquals(self.image_data, data)
 
-        it = image.getImage(hires=1, webformat=1)
-        pil_image = PIL.Image.open(StringIO(it))
+        data = StringIO(content.get_image(hires=1, webformat=1))
+        pil_image = PIL.Image.open(data)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
-        assetdata = interfaces.IAssetData(image)
-        self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
-        self.assertEquals(image_data, assetdata.getData())
+    def test_rename_content(self):
+        """Move an image and check that the filename is updated correctly.
+        """
+        content = getattr(self.root, 'test_image')
+        self.assertEquals(content.get_filename(), 'test_image.tiff')
+        self.root.manage_renameObjects(['test_image'], ['new_image.gif'])
 
-    def test_image_blob(self):
-        self.root.service_files.storage = File.BlobFile
-        self._test_image()
+        content = getattr(self.root, 'new_image.gif')
+        self.assertEquals(content.get_filename(), 'new_image.tiff')
 
-    def test_image_zodb_default(self):
-        if self.root.service_files.storage is None:
-            self._test_image()
+    def test_copy_paste_content(self):
+        """Cut and paste an image. Check the filename is updated.
+        """
+        token = self.root.manage_copyObjects(['test_image'])
+        self.root.manage_pasteObjects(token)
 
-    def test_image_zodb(self):
-        self.root.service_files.storage = File.ZODBFile
-        self._test_image()
+        self.failUnless('copy_of_test_image' in self.root.objectIds())
+        copy_of_content = self.root.copy_of_test_image
+        self.assertEquals(
+            copy_of_content.get_filename(),
+            'copy_of_test_image.tiff')
 
-    def test_image_extfile(self):
-        if File.FILESYSTEM_STORAGE_AVAILABLE:
-            self.root.service_files.storage = File.FileSystemFile
-            self._test_image()
+    def test_asset_data(self):
+        """Test AssetData adapter.
+        """
+        asset_data = interfaces.IAssetData(self.root.test_image)
+        self.failUnless(verifyObject(interfaces.IAssetData, asset_data))
+        self.assertEquals(self.image_data, asset_data.getData())
 
-    def test_getcropbox(self):
-        image, _ = self.add_test_image()
-        cropbox = image.getCropBox(crop="242x379-392x479")
-        self.assert_(cropbox is not None)
+    def test_http_view(self):
+        """Retrieve the image, check the headers.
+        """
+        response = http('GET /root/test_image HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
+        self.assertEquals(
+            headers['Content-Type'], 'image/tiff')
+        self.failUnless('Last-Modified' in headers)
+        image_data = response.getBody()
+        pil_image = PIL.Image.open(StringIO(image_data))
+        self.assertEquals((960, 1280), pil_image.size)
+        self.assertEquals('TIFF', pil_image.format)
+        self.assertHashEqual(self.image_data, image_data)
 
-    def test_copy_image(self):
-        image, _ = self.add_test_image()
-        self.root.action_copy(['testimage.tif'], self.root.REQUEST)
-        # now do the paste action
-        self.root.action_paste(self.root.REQUEST)
+    def test_http_view_hires(self):
+        """Retrieve the image, check the headers.
+        """
+        response = http('GET /root/test_image?hires HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
+        self.assertEquals(
+            headers['Content-Type'], 'image/tiff')
+        image_data = response.getBody()
+        pil_image = PIL.Image.open(StringIO(image_data))
+        self.assertEquals((960, 1280), pil_image.size)
+        self.assertEquals('TIFF', pil_image.format)
+        self.assertHashEqual(self.image_data, image_data)
+
+    def test_http_view_thumbnail(self):
+        """Retrieve image thumbnail, check the headers.
+        """
+        response = http('GET /root/test_image?thumbnail HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
+        self.assertEquals(
+            headers['Content-Type'], 'image/jpeg')
+        pil_image = PIL.Image.open(StringIO(response.getBody()))
+        self.assertEquals((90, 120), pil_image.size)
+        self.assertEquals('JPEG', pil_image.format)
+
+    def test_http_head(self):
+        """Do an HEAD request.
+        """
+        response = http('HEAD /root/test_image HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
+        self.assertEquals(
+            headers['Content-Type'], 'image/tiff')
+        self.assertEquals(
+            headers['Content-Length'], str(self.image_size))
+        self.failUnless('Last-Modified' in headers)
+        self.assertEquals(response.getBody(), '')
+
+    def test_http_head_thumbnail(self):
+        """Do an HEAD request on a thumbnail.
+        """
+        response = http('HEAD /root/test_image?thumbnail HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
+        self.assertEquals(
+            headers['Content-Type'], 'image/jpeg')
+        self.assertEquals(response.getBody(), '')
+
+    def test_http_head_hires(self):
+        """Do an HEAD request.
+        """
+        response = http('HEAD /root/test_image?hires HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
+        headers = response.getHeaders()
+        self.assertEquals(
+            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
+        self.assertEquals(
+            headers['Content-Type'], 'image/tiff')
+        self.assertEquals(
+            headers['Content-Length'], str(self.image_size))
+        self.assertEquals(response.getBody(), '')
 
 
-class ImageFunctionalTest(unittest.TestCase,
-                          ImageTestHelper):
+class ZODBImageTestCase(DefaultImageTestCase):
+    """Test image with ZODB storage.
+    """
+    implementation = File.ZODBFile
+
+
+class BlobImageTestCase(DefaultImageTestCase):
+    """Test image with ZODB storage.
+    """
+    implementation = File.BlobFile
+
+
+class FFSImageTestCase(DefaultImageTestCase):
+    """Test image with ZODB storage.
+    """
+    implementation = File.FileSystemFile
+
+
+class MiscellaneousImageTestCase(unittest.TestCase):
+    """Test miscellaneous image features.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+
+    def test_invalid_image(self):
+        image_file = StringIO('invalid-image-format')
+        factory = self.root.manage_addProduct['Silva']
+        self.assertRaises(
+            ValueError,
+            factory.manage_addImage, 'badimage', 'Bad Image', image_file)
+
+    def test_get_crop_box(self):
+        """Test get_crop_box method that either return or parse a crop_box.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addImage('image', 'Torvald', open_test_file('photo.tif'))
+        self.assertEqual(
+            self.root.image.get_crop_box(crop="242x379-392x479"),
+            (242, 379, 392, 479))
+        self.assertEqual(
+            self.root.image.get_crop_box(crop="392x479-242x379"),
+            (242, 379, 392, 479))
+        # To big for the given image
+        self.assertRaises(
+            ValueError,
+            self.root.image.get_crop_box, crop="26000x8000-1280x2800")
+        self.assertRaises(
+            ValueError,
+            self.root.image.get_crop_box, crop="santa clauss")
+
+
+class ImageFunctionalTest(unittest.TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
@@ -108,82 +249,14 @@ class ImageFunctionalTest(unittest.TestCase,
         self.layer.login('author')
         image, image_data = self.add_test_image()
         image.set_web_presentation_properties('JPEG', '100x100', '')
-
-    def test_view(self):
-        browser = Browser()
-        browser.open('http://localhost/root/testimage.tif')
-        self.assertEquals(
-            browser.headers['Content-Disposition'],
-            'inline;filename=testimage.jpeg')
-        self.assertEquals(
-            browser.headers['Content-Type'],
-            'image/jpeg')
-        pil_image = PIL.Image.open(StringIO(browser.contents))
-        self.assertEquals((100, 100), pil_image.size)
-        self.assertEquals('JPEG', pil_image.format)
-
-    def test_head_view(self):
-        response = http('HEAD /root/testimage.tif HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(headers['Content-Length'], '0')
-        self.assertEquals(headers['Content-Type'], 'image/jpeg')
-
-    def test_hires(self):
-        browser = Browser()
-        browser.open('http://localhost/root/testimage.tif?hires')
-        self.assertEquals(
-            browser.headers['content-disposition'],
-            'inline;filename=testimage.tif')
-
-        if not magic.HAVE_MAGIC:
-            # If we don't use the libmagic, we won't know the type of
-            # the image.
-            return
-
-        self.assertEquals(
-            browser.headers['content-type'],
-            'image/tiff')
-
-        # a Browser is not able to read all image data.
-
-    def test_head_hires(self):
-        response = http('HEAD /root/testimage.tif?hires HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(headers['Content-Length'], '0')
-
-        if not magic.HAVE_MAGIC:
-            # If we don't use the libmagic, we won't know the type of
-            # the image.
-            return
-
-        self.assertEquals(headers['Content-Type'], 'image/tiff')
-
-    def test_thumbnail(self):
-        browser = Browser()
-        browser.handleErrors = False
-        browser.open('http://localhost/root/testimage.tif?thumbnail')
-        self.assertEquals(
-            browser.headers['content-disposition'],
-            'inline;filename=testimage.jpeg')
-        self.assertEquals(
-            browser.headers['content-type'],
-            'image/jpeg')
-        pil_image = PIL.Image.open(StringIO(browser.contents))
-        self.assertEquals((90, 120), pil_image.size)
-        self.assertEquals('JPEG', pil_image.format)
-
-    def test_head_thumbnail(self):
-        response = http('HEAD /root/testimage.tif?thumbnail HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(headers['Content-Length'], '0')
-        self.assertEquals(headers['Content-Type'], 'image/jpeg')
 
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ImageTest))
-    suite.addTest(unittest.makeSuite(ImageFunctionalTest))
+    suite.addTest(unittest.makeSuite(DefaultImageTestCase))
+    suite.addTest(unittest.makeSuite(ZODBImageTestCase))
+    suite.addTest(unittest.makeSuite(BlobImageTestCase))
+    if File.FILESYSTEM_STORAGE_AVAILABLE:
+        suite.addTest(unittest.makeSuite(FFSImageTestCase))
+    suite.addTest(unittest.makeSuite(MiscellaneousImageTestCase))
     return suite
