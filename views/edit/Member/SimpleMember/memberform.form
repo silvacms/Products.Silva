@@ -56,6 +56,30 @@
         </tales>
       </field>
 
+      <field><id>avatar</id> <type>EmailField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class></css_class>
+          <default></default>
+          <description></description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">40</display_width>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra>accept-charset="UTF-8" style="width:98%"</extra>
+          <hidden type="int">0</hidden>
+          <link_type>external</link_type>
+          <max_length></max_length>
+          <required type="int">0</required>
+          <title>gravatar email address</title>
+          <truncate type="int">0</truncate>
+          <unicode type="int">1</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+	  </values>
+        <tales>
+        </tales>
+      </field>
+
       <field><id>editor</id> <type>ListField</type>
         <values>
           <size type="int">1</size>

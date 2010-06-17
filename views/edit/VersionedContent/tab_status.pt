@@ -176,6 +176,7 @@ _______ manual close section here _______
         publicationtime python: vmadapter.getVersionPublicationTime(versionid);
         expirationtime python: vmadapter.getVersionExpirationTime(versionid);
         lastauthor python: vmadapter.getVersionLastAuthorInfo(versionid).fullname();
+        author_avatar python: vmadapter.getVersionLastAuthorInfo(versionid).extra('avatar_tag:16') or '';
         version_status python: vmadapter.getVersionStatus(versionid);
         state python: ((version_status == 'unapproved' and 'draft') or
                         (version_status == 'last_closed' and 'closed') or
@@ -200,8 +201,8 @@ _______ manual close section here _______
         <td tal:content="structure python: mangle.DateTime(expirationtime).toShortStr() or '-'">
           expiration time
         </td>
-        <td tal:content="lastauthor">
-          last author
+        <td tal:content="structure python: lastauthor + ' &nbsp; ' + author_avatar">
+          last author and avatar
         </td>
         <td>
           <a tal:content="version_status"

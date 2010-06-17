@@ -28,6 +28,10 @@ if model.email() != result['email']:
     model.set_email(result['email'])
     messages.append(translate(_('Email updated')))
 
+if model.avatar() != result['avatar']:
+    model.set_avatar(result['avatar'])
+    messages.append('Updated avatar')
+
 if result.has_key('editor'):
     if model.editor() != result['editor']:
         model.set_editor(result['editor'])

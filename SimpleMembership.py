@@ -21,6 +21,7 @@ from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
 
+import urllib, hashlib
 
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
@@ -40,6 +41,7 @@ class SimpleMember(Member, Security, ZMIObject):
         self._title = id
         self._fullname = None
         self._email = None
+        self._avatar = None
         self._creation_datetime = self._modification_datetime = DateTime()
         self._is_approved = 0
 
@@ -67,6 +69,12 @@ class SimpleMember(Member, Security, ZMIObject):
         """
         self._email = email
         self._p_changed = 1
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_avatar')
+    def set_avatar(self, avatar):
+        """Set the email address to be used by gravatar"""
+        self._avatar = avatar
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_editor')
@@ -106,18 +114,54 @@ class SimpleMember(Member, Security, ZMIObject):
         return self._email
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'extra')
+    def extra(self, name):
+        """Return bit of extra information, keyed by name.
+        """
+        
+        #For CachedMember accessing of the avatar tag
+        #Should be 'avatar_tag:SIZE' -- ie, 'avatar_tag:32'
+        if name.startswith("avatar_tag"):
+            return self.avatar_tag(name.split(':')[1])
+        
+        return None
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'avatar')
+    def avatar(self):
+        """Return the email address to be used by gravatar. Return '' if
+        no address has been specified.
+        """
+        return hasattr(self, '_avatar') and self._avatar is not None and self._avatar or ''
+    
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'avatar_tag')
+    def avatar_tag(self, size=32):
+        """HTML <img /> tag for the avatar icon
+        """
+        
+        #See http://en.gravatar.com/site/implement/python
+        
+        email = self.avatar()
+        default = self.get_root_url() + "/globals/avatar.png"
+        
+        if email is '':
+            return """<img src="%s" alt="%s's avatar" title="%s's avatar" style="height: %spx; width: %spx" />""" % \
+               (default, self.id, self.id, size, size)
+        
+        gravatar_url = "https://secure.gravatar.com/avatar.php?"
+        gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(email.lower()).hexdigest(), 
+                                          'default':default, 'size':str(size)})
+
+        return """<img src="%s" alt="%s's avatar" title="%s's avatar" style="height: %spx; width: %spx" />""" % \
+               (gravatar_url, self.id, self.id, size, size)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
     def is_approved(self):
         """is_approved
         """
         return self._is_approved
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'extra')
-    def extra(self, name):
-        """Not implemented for simple membership.
-        """
-        pass
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'editor')

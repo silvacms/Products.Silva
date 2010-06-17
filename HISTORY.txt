@@ -1,22 +1,33 @@
 Silva changes
 =============
 
-Silva 2.2 (unreleased)
+Silva 2.3 (unreleased)
 ----------------------
 
-- updated opacity settings for image crop window
+- Users can select a Gravatar image to appear next to their name in Silva.
 
-- deprecate Products.Silva.helpers.makeContainerFilter and makeZMIFilter
+Silva 2.2 (2010-03-31)
+----------------------
+
+- A simple PhotoGallery demo view have been added to use on any
+  container.
+
+- Silva Links now support again relative links.
+
+- SilvaExternalSources is installed by default, and the toc element in
+  the default created SilvaDocument have been removed.
+
+- Deprecate Products.Silva.helpers.makeContainerFilter and makeZMIFilter
   (makeZMIFilter was moved to silva.core.conf.utils).  Fix signature checking
   in Folder.filtered_meta_types.
-  
+
 - kupu: the `link` input field in the link toolbox was changed to be a
   textarea.  In 2.2 releases prior to 2.2 final, the input field changed
   to a textarea on focus and back to an input field onblur, so long urls
   where easier to view.  This caused confusing 'double clicking' behavior
   in order to manually add or update a link (first to unfocus, second to update)
-  
-- the formulator lookupwindow field changed to a textarea to address the same
+
+- The formulator lookupwindow field changed to a textarea to address the same
   concerns as the link toolbox in kupu mentioned above.
   
 Silva 2.2b1 (2010-02-01)
