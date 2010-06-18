@@ -504,13 +504,14 @@ div.kupu-properties-item-innerdiv {
   margin: 2em 0 0 -0.2em;
   padding: 0.1em 0.2em 0.2em;
   border: 1px solid #797f7f;
+  font-size: 11px;
   line-height:120%;
 }
 
 .kupu-tooltray a.rollover:hover span {
   display:block;
   position:absolute;
-  width:23.3em;
+  width:23.7em;
 }
 
 .kupu-tooltray a.requiredfield:after {
