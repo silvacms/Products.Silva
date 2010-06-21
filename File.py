@@ -498,7 +498,7 @@ def FileStorageTypeVocabulary(context):
              SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
     if FILESYSTEM_STORAGE_AVAILABLE:
         terms += [SimpleTerm(value=FileSystemFile,
-                             title='FileSystem File',
+                             title='FileSystem File (Legacy)',
                              token='FileSystemFile'),]
     return SimpleVocabulary(terms)
 
