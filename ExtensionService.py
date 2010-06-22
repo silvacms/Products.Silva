@@ -15,7 +15,7 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.Folder import Folder
-from OFS.Image import manage_addFile
+from ZPublisher.HTTPRequest import FileUpload
 import transaction
 
 # Silva
@@ -227,8 +227,9 @@ class ExtensionService(Folder, SilvaService):
         log_filename = 'upgrade-log-%s-to-%s-on-%s.log' % (
             from_version, to_version, now)
         log = upgrade.registry.upgrade(content, from_version, to_version)
-        manage_addFile(
-            self, log_filename, log.encode('utf-8'), content_type='text/plain')
+        factory = self.manage_addProduct['OFS']
+        factory = manage_addFile(
+            log_filename, FileUpload(log), content_type='text/plain')
         if interfaces.IRoot.providedBy(content):
             content._content_version = to_version
 
