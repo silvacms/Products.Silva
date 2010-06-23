@@ -63,17 +63,7 @@
 
   <tal:buttons tal:replace="structure model/@@tab_preview_extra" />
 
-  <tal:if condition="message">
-    <div tal:attributes="class python:message_type == 'error' and 'fixed-alert' or 'fixed-feedback'">
-      <span tal:replace="structure message">
-        message
-      </span>
-      <tal:block tal:condition="python:message_type == 'feedback'">
-        &nbsp;(<tal:block tal:replace="structure python:mangle.Now().toShortStr()" />)
-      </tal:block>
-    </div>
-  </tal:if>
-
+  <tal:replace replace="structure provider:smimessages" />
   <span tal:replace="nothing"> _______ closed notice _______ </span>
   <div class="fixed-feedback"
        tal:condition="here/tab_preview_needs_feedback">

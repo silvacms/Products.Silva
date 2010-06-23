@@ -12,4 +12,3 @@ zope.deferredimport.deprecated(
     **dict(map(lambda s: (s, 'silva.core.interfaces:%s' % s),
                filter(lambda s: not (s.startswith('_') or s.startswith('grok')),
                       dir(silva.core.interfaces)))))
-
