@@ -384,7 +384,7 @@ class BlobFile(File):
             data = file.read(CHUNK_SIZE)
         desc.close()
         self._set_content_type(file, DEFAULT_MIMETYPE)
-        notify(ObjectModifiedEvent(content))
+        notify(ObjectModifiedEvent(self))
 
         #XXX should be event below
         ICataloging(self).reindex()
