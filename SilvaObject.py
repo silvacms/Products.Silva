@@ -533,6 +533,8 @@ def content_will_be_moved(content, event):
 def content_modified(content, event):
     """An object have been modified.
     """
+    if IRoot.providedBy(content):
+        return
     content.sec_update_last_author_info()
 
 
