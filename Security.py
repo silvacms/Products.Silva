@@ -271,7 +271,7 @@ class Security(AccessManager):
         # (this was always returning the previewable
         # version's info, even if the version in question
         # was the published or closed version
-        
+
         # get cached author info (may be None)
         if not version:
             version = self.get_previewable()

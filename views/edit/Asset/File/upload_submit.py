@@ -4,6 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
+##bind view=view
 ##parameters=
 ##title=
 ##
@@ -25,7 +26,6 @@ if not uploaded_file or not getattr(uploaded_file,'filename',None):
         message_type="error",
         message=_("Empty or invalid file."))
 
-model.sec_update_last_author_info()
 model.set_file_data(uploaded_file)
 
 message_type=REQUEST.form.get('message_type', 'feedback')

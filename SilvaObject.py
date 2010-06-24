@@ -6,15 +6,16 @@ import warnings
 
 # Zope 3
 from five import grok
-from zope.i18n import translate
 from zope import component
-from zope.publisher.browser import applySkin
-from zope.publisher.interfaces.browser import IBrowserView
-from zope.publisher.interfaces.browser import IBrowserPage
-from zope.traversing.browser import absoluteURL
-from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.container.interfaces import IObjectMovedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.i18n import translate
 from zope.interface import alsoProvides, providedBy
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.publisher.browser import applySkin
+from zope.publisher.interfaces.browser import IBrowserPage
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
@@ -493,35 +494,47 @@ class SilvaObject(Security, ViewCode):
 
 InitializeClass(SilvaObject)
 
+
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
-def object_moved(object, event):
-    if object != event.object or IObjectRemovedEvent.providedBy(
-        event) or IRoot.providedBy(object):
+def content_moved(content, event):
+    if (content != event.object or
+        IObjectRemovedEvent.providedBy(event) or
+        IRoot.providedBy(content)):
         return
     newParent = event.newParent
 
-    if (IPublishable.providedBy(object) and not (
-        IContent.providedBy(object) and object.is_default())):
-        newParent._add_ordered_id(object)
+    if (IPublishable.providedBy(content) and not (
+        IContent.providedBy(content) and content.is_default())):
+        newParent._add_ordered_id(content)
 
     if event.newName == 'index':
         newParent._invalidate_sidebar(newParent)
-    if not IVersionedContent.providedBy(object):
-        object._set_creation_datetime()
+    if not IVersionedContent.providedBy(content):
+        content._set_creation_datetime()
+
 
 @grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
-def object_will_be_moved(object, event):
-    if object != event.object or IObjectWillBeAddedEvent.providedBy(
-        event) or IRoot.providedBy(object):
+def content_will_be_moved(content, event):
+    if (content != event.object or
+        IObjectWillBeAddedEvent.providedBy(event) or
+        IRoot.providedBy(content)):
         return
     container = event.oldParent
-    if (IPublishable.providedBy(object) and not (
-        IContent.providedBy(object) and object.is_default())):
-        container._remove_ordered_id(object)
-    if IFolder.providedBy(object):
-        container._invalidate_sidebar(object)
+    if (IPublishable.providedBy(content) and not (
+        IContent.providedBy(content) and content.is_default())):
+        container._remove_ordered_id(content)
+    if IFolder.providedBy(content):
+        container._invalidate_sidebar(content)
     if event.oldName == 'index':
         container._invalidate_sidebar(container)
+
+
+@grok.subscribe(ISilvaObject, IObjectModifiedEvent)
+def content_modified(content, event):
+    """An object have been modified.
+    """
+    content.sec_update_last_author_info()
+
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def index_new_content(content, event):

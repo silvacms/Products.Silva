@@ -16,9 +16,11 @@ logger = logging.getLogger('silva.image')
 # Zope 3
 from five import grok
 from zope import component, schema
+from zope.component import getMultiAdapter
+from zope.event import notify
 from zope.i18n import translate
 from zope.interface import Interface
-from zope.component import getMultiAdapter
+from zope.lifecycleevent import ObjectCreatedEvent
 import zope.app.container.interfaces
 
 # Zope 2
@@ -51,21 +53,22 @@ havePIL = 1
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image.
     """
-    image_obj = image_factory(context, id, None, file)
-    if image_obj is None:
+    content = image_factory(context, id, None, file)
+    if content is None:
         return None
-    id = image_obj.id
-    context._setObject(id, image_obj)
-    image_obj = getattr(context, id)
+    id = content.id
+    context._setObject(id, content)
+    content = getattr(context, id)
     if file:
         try:
-            image_obj.set_image(file)
+            content.set_image(file)
         except ValueError:
             # uploaded contents is not a proper image file
             transaction.abort()
             raise
-    image_obj.set_title(title)
-    return image_obj
+    content.set_title(title)
+    notify(ObjectCreatedEvent(content))
+    return content
 
 
 def set_image_filename(image, basename):
@@ -523,7 +526,7 @@ class Image(Asset):
 
     def _image_factory(self, image_id, image_file, content_type=None):
         service_files = component.getUtility(interfaces.IFilesService)
-        new_image = service_files.newFile(image_id)
+        new_image = service_files.new_file(image_id)
         setattr(self, image_id, new_image)
         new_image = getattr(self, image_id)
         new_image.set_file_data(image_file)
@@ -590,14 +593,18 @@ class ImageStorageConverter(object):
     def upgrade(self, image):
         if not interfaces.IImage.providedBy(image):
             return image
-        file_obj = image.hires_image
-        if file_obj is None:
+        image_file = image.hires_image
+        if image_file is None:
             logger.error("No orginal data for %s, storage not changed." %
                          '/'.join(image.getPhysicalPath()))
             return image
-        ct = file_obj.get_mime_type()
-        data = file_obj.get_content_fd()
-        image._image_factory('hires_image', data, ct)
+        if image.service_files.is_file_using_correct_storage(image_file):
+            # don't convert that are already correct
+            return old_file
+
+        content_type = image_file.get_mime_type()
+        data = image_file.get_content_fd()
+        image._image_factory('hires_image', data, content_type)
         image._createDerivedImages()
         logger.info("Storage for image %s converted" %
                     '/'.join(image.getPhysicalPath()))

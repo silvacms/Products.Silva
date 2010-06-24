@@ -82,17 +82,22 @@ class FileServicesTest(unittest.TestCase):
             verifyObject(interfaces.IFilesService, service))
 
         service.storage = File.ZODBFile
-        file = service.newFile('test')
-        self.isZODBFile(file)
+        zodb_file = service.new_file('test')
+        self.isZODBFile(zodb_file)
+        self.assertEqual(
+            service.is_file_using_correct_storage(zodb_file), True)
 
         service.storage = File.BlobFile
-        file = service.newFile('test')
-        self.isBlobFile(file)
+        blob_file = service.new_file('test')
+        self.isBlobFile(blob_file)
+        self.assertEqual(
+            service.is_file_using_correct_storage(zodb_file), False)
+        self.assertEqual(
+            service.is_file_using_correct_storage(blob_file), True)
 
         factory = self.root.folder1.manage_addProduct['Silva']
-        self.assertRaises(BadRequest,
-                          factory.manage_addFilesService,
-                          'service_files')
+        self.assertRaises(
+            BadRequest, factory.manage_addFilesService, 'service_files')
 
     def test_manage_convertStorage(self):
         # By default we use ZODB storage

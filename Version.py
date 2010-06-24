@@ -218,7 +218,8 @@ _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
 
 @grok.subscribe(IVersion, IObjectModifiedEvent)
 def version_modified(version, event):
-    version.object().sec_update_last_author_info()
+    # This version have been modified
+    version.get_content().sec_update_last_author_info()
 
 
 @grok.subscribe(ICatalogedVersion, IObjectWillBeRemovedEvent)

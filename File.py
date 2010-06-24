@@ -14,15 +14,17 @@ logger = logging.getLogger('silva.file')
 
 # Zope 3
 from ZODB import blob
+from five import grok
 from zope import component, schema
+from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.interface import Interface, directlyProvides
+from zope.lifecycleevent import ObjectCreatedEvent
 from zope.location.interfaces import ISite
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-
-from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -119,17 +121,18 @@ def manage_addFile(self, id, title=None, file=None):
     """Add a File
     """
 
-    file_obj = file_factory(self, id, DEFAULT_MIMETYPE, file)
-    if file_obj is None:
+    content = file_factory(self, id, DEFAULT_MIMETYPE, file)
+    if content is None:
         return None
-    id = file_obj.id
-    self._setObject(id, file_obj)
-    file_obj = getattr(self, id)
-    if file:
-        file_obj.set_file_data(file)
+    id = content.id
+    self._setObject(id, content)
+    content = getattr(self, id)
     if title:
-        file_obj.set_title(title)
-    return file_obj
+        content.set_title(title)
+    if file:
+        content.set_file_data(file)
+    notify(ObjectCreatedEvent(content))
+    return content
 
 
 class File(Asset):
@@ -258,6 +261,7 @@ class File(Asset):
         self._p_changed = 1
         self._set_file_data_helper(file)
         #XXX should be event below
+        notify(ObjectModifiedEvent(self))
         ICataloging(self).reindex()
         self.update_quota()
 
@@ -380,6 +384,8 @@ class BlobFile(File):
             data = file.read(CHUNK_SIZE)
         desc.close()
         self._set_content_type(file, DEFAULT_MIMETYPE)
+        notify(ObjectModifiedEvent(content))
+
         #XXX should be event below
         ICataloging(self).reindex()
         self.update_quota()
@@ -541,7 +547,7 @@ def file_factory(self, id, content_type, file):
     if not id.isValid():
         return None
     service_files = component.getUtility(interfaces.IFilesService)
-    return service_files.newFile(str(id))
+    return service_files.new_file(str(id))
 
 
 class FilesService(SilvaService):
@@ -558,11 +564,17 @@ class FilesService(SilvaService):
         {'label':'Manage', 'action':'manage_filesservice'},
         ) + SilvaService.manage_options
 
-    security.declarePrivate('newFile')
-    def newFile(self, id):
+    security.declarePrivate('new_file')
+    def new_file(self, id):
         if self.storage is None:
             return ZODBFile(id)
         return self.storage(id)
+
+    def is_file_using_correct_storage(self, content):
+        storage = ZODBFile
+        if self.storage is not None:
+            storage = self.storage
+        return isinstance(content, self.storage)
 
 
 InitializeClass(FilesService)
@@ -642,12 +654,15 @@ class FileStorageConverter(object):
     def upgrade(self, old_file):
         if not interfaces.IFile.providedBy(old_file):
             return old_file
+        if old_file.service_files.is_file_using_correct_storage(old_file):
+            # don't convert that are already correct
+            return old_file
         data = old_file.get_content_fd()
         id = old_file.id
         title = old_file.get_title()
         content_type = old_file.content_type()
 
-        new_file = old_file.service_files.newFile(id)
+        new_file = old_file.service_files.new_file(id)
         container = old_file.aq_parent
         setattr(container, id, new_file)
         new_file = getattr(container, id)
