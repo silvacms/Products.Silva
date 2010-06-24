@@ -59,6 +59,7 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     id = content.id
     context._setObject(id, content)
     content = getattr(context, id)
+    content.set_title(title)
     if file:
         try:
             content.set_image(file)
@@ -66,7 +67,6 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
             # uploaded contents is not a proper image file
             transaction.abort()
             raise
-    content.set_title(title)
     notify(ObjectCreatedEvent(content))
     return content
 
