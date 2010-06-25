@@ -19,7 +19,8 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.references.reference import Reference, ReferenceProperty
+from silva.core.references.reference import (
+    Reference, ReferenceProperty, get_content_id)
 from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.core.forms import z3cforms as silvaz3cforms
@@ -76,6 +77,8 @@ class LinkVersion(CatalogedVersion):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_target')
     def set_target(self, target):
+        if not isinstance(target, int):
+            target = get_content_id(target)
         self._target = target
 
     security.declareProtected(
