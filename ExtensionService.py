@@ -228,7 +228,7 @@ class ExtensionService(Folder, SilvaService):
             from_version, to_version, now)
         log = upgrade.registry.upgrade(content, from_version, to_version)
         factory = self.manage_addProduct['OFS']
-        factory = manage_addFile(
+        factory = factory.manage_addFile(
             log_filename, FileUpload(log), content_type='text/plain')
         if interfaces.IRoot.providedBy(content):
             content._content_version = to_version
