@@ -204,7 +204,6 @@ _______ manual close section here _______
         <td>
           <span tal:replace="structure lastauthor" />&nbsp;
           <span tal:replace="structure author_avatar" />
-          last author and avatar
         </td>
         <td>
           <a tal:content="version_status"
