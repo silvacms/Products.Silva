@@ -49,11 +49,11 @@ td.preview-compare-right {
       <tr>
         <td class="preview-compare-left">
           <strong i18n:translate="">Older version (<tal:block i18n:name="version_id" tal:content="version2/id" />)</strong>
-          <tal:block content="structure python: model.view_version('preview', version2)" />
+          <tal:block content="structure python: model.view_version(version2)" />
         </td>
         <td class="preview-compare-right">
           <strong i18n:translate="">Newer version (<tal:block i18n:name="version_id" tal:content="version1/id" />)</strong>
-          <tal:block content="structure python: model.view_version('preview', version1)" />
+          <tal:block content="structure python: model.view_version(version1)" />
         </td>
       </tr>
     </tbody>
