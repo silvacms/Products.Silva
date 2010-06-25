@@ -2,13 +2,15 @@
 # See also LICENSE.txt
 # $Id$
 
+from cStringIO import StringIO
 import unittest
 
 from zope import component
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
-from Products.Silva.testing import FunctionalLayer, TestCase, http
+from Products.Silva.testing import (
+    FunctionalLayer, TestCase, http, get_event_names)
 from Products.Silva.tests import helpers
 from silva.core import interfaces
 
@@ -30,6 +32,31 @@ class DefaultFileImplementationTestCase(TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFile('testfile', 'Test File', file_handle)
         file_handle.close()
+
+    def test_event(self):
+        """Test that events are triggered.
+        """
+        # Clear events
+        get_event_names()
+
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFile('file', 'Eventfull File')
+        self.assertEquals(
+            get_event_names(),
+            ['ObjectWillBeAddedEvent', 'ObjectAddedEvent',
+             'IntIdAddedEvent', 'ContainerModifiedEvent',
+             'ObjectCreatedEvent'])
+
+        self.root.file.set_file_data(StringIO("Some text file"))
+        self.assertEquals(
+            get_event_names(),
+            ['ObjectModifiedEvent'])
+
+        self.root.file.set_text_file_data("Text to set as file content")
+        self.assertEquals(
+            get_event_names(),
+            ['ObjectModifiedEvent'])
+
 
     def test_content(self):
         """Test base content methods.

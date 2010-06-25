@@ -129,9 +129,9 @@ def manage_addFile(self, id, title=None, file=None):
     content = getattr(self, id)
     if title:
         content.set_title(title)
+    notify(ObjectCreatedEvent(content))
     if file:
         content.set_file_data(file)
-    notify(ObjectCreatedEvent(content))
     return content
 
 
@@ -396,6 +396,8 @@ class BlobFile(File):
         desc = self._file.open('w')
         desc.write(filestr)
         desc.close()
+        notify(ObjectModifiedEvent(self))
+
         #XXX should be event below
         ICataloging(self).reindex()
         self.update_quota()
@@ -611,11 +613,14 @@ class FileServiceConvert(silvaforms.SubForm):
     @silvaforms.action(_(u'Convert all files'))
     def convert(self):
         parent = self.context.get_publication()
+        service = self.context
         upg = upgrade.UpgradeRegistry()
         upg.registerUpgrader(
             StorageConverterHelper(parent), '0.1', upgrade.AnyMetaType)
-        upg.registerUpgrader(FileStorageConverter(), '0.1', 'Silva File')
-        upg.registerUpgrader(ImageStorageConverter(), '0.1', 'Silva Image')
+        upg.registerUpgrader(
+            FileStorageConverter(service), '0.1', 'Silva File')
+        upg.registerUpgrader(
+            ImageStorageConverter(service), '0.1', 'Silva Image')
         upg.upgradeTree(parent, '0.1')
         self.status = _(u'Storage for Silva Files and Images converted. '
                         u'Check the log for more details.')
@@ -630,40 +635,44 @@ class StorageConverterHelper(object):
     def __init__(self, publication):
         self.startpoint = publication
 
-    def upgrade(self, context):
+    def validate(self, context):
         if context is self.startpoint:
-            return context
+            return False
 
         if ISite.providedBy(context):
             for obj in context.objectValues():
                 if interfaces.IFilesService.providedBy(obj):
-                    dummy = ConversionBlocker()
-                    dummy.aq_base = ConversionBlocker()
-                    return dummy
+                    raise StopIteration()
+        return False
+
+    def upgrade(self, context):
         return context
 
 
-class ConversionBlocker(object):
-    pass
-
-
 class FileStorageConverter(object):
-
+    """Convert storage for a file.
+    """
     grok.implements(interfaces.IUpgrader)
 
-    def upgrade(self, old_file):
-        if not interfaces.IFile.providedBy(old_file):
-            return old_file
-        if old_file.service_files.is_file_using_correct_storage(old_file):
-            # don't convert that are already correct
-            return old_file
-        data = old_file.get_content_fd()
-        id = old_file.id
-        title = old_file.get_title()
-        content_type = old_file.content_type()
+    def __init__(self, service):
+        self.service = service
 
-        new_file = old_file.service_files.new_file(id)
-        container = old_file.aq_parent
+    def validate(self, content):
+        if not interfaces.IFile.providedBy(content):
+            return False
+        if self.service.is_file_using_correct_storage(content):
+            # don't convert that are already correct
+            return False
+        return True
+
+    def upgrade(self, content):
+        data = content.get_content_fd()
+        id = content.getId()
+        title = content.get_title()
+        content_type = content.content_type()
+
+        new_file = self.service.new_file(id)
+        container = content.aq_parent
         setattr(container, id, new_file)
         new_file = getattr(container, id)
         new_file.set_title(title)

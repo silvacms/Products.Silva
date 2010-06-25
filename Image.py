@@ -587,27 +587,35 @@ class ImagePublishTraverse(SilvaPublishTraverse):
 
 
 class ImageStorageConverter(object):
-
+    """Convert image storage.
+    """
     grok.implements(interfaces.IUpgrader)
 
-    def upgrade(self, image):
-        if not interfaces.IImage.providedBy(image):
-            return image
-        image_file = image.hires_image
-        if image_file is None:
-            logger.error("No orginal data for %s, storage not changed." %
-                         '/'.join(image.getPhysicalPath()))
-            return image
-        if image.service_files.is_file_using_correct_storage(image_file):
-            # don't convert that are already correct
-            return old_file
+    def __init__(self, service):
+        self.service = service
 
+    def validate(self, image):
+        if not interfaces.IImage.providedBy(image):
+            return False
+        if image.hires_image is None:
+            logger.error(
+                "No orginal data for %s, storage not changed." %
+                '/'.join(image.getPhysicalPath()))
+            return False
+        if self.service.is_file_using_correct_storage(image.hires_image):
+            # don't convert that are already correct
+            return False
+        return True
+
+    def upgrade(self, image):
+        image_file = image.hires_image
         content_type = image_file.get_mime_type()
         data = image_file.get_content_fd()
         image._image_factory('hires_image', data, content_type)
         image._createDerivedImages()
-        logger.info("Storage for image %s converted" %
-                    '/'.join(image.getPhysicalPath()))
+        logger.info(
+            "Storage for image %s converted" %
+            '/'.join(image.getPhysicalPath()))
         return image
 
 

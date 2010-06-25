@@ -118,6 +118,3 @@ def initialize_icons():
 
 initialize_icons()
 
-from Products.Silva.Metadata import initialize_metadata
-initialize_metadata()
-

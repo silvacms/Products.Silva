@@ -32,10 +32,6 @@ def ghostfolder_access_handler(tool, content_type, content):
 #################################
 ### registration
 
-def initialize_metadata():
-    register_access_handlers()
-    register_initialize_handlers()
-
 def register_access_handlers():
     """
     deal with special silva content types that need specialized
@@ -63,3 +59,6 @@ def _initialize_handler(object, bind_data):
         }
 
     bind_data[Binding.MutationTrigger] = {set_id: set_triggers}
+
+register_access_handlers()
+register_initialize_handlers()

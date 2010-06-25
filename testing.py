@@ -5,7 +5,7 @@
 from AccessControl.SecurityManagement import newSecurityManager
 import Products.Silva
 
-from infrae.testing import TestCase, suite_from_package
+from infrae.testing import TestCase, suite_from_package, get_event_names
 from infrae.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
 import transaction

@@ -17,10 +17,9 @@ from Products.Silva.tests import helpers
 from Products.Silva.testing import FunctionalLayer, TestCase
 
 
-class FileServicesTest(unittest.TestCase):
+class FileServicesTest(TestCase):
     """Test file services features.
     """
-
     layer = FunctionalLayer
 
     def setUp(self):
@@ -99,7 +98,7 @@ class FileServicesTest(unittest.TestCase):
         self.assertRaises(
             BadRequest, factory.manage_addFilesService, 'service_files')
 
-    def test_manage_convertStorage(self):
+    def test_manage_convert_storage(self):
         # By default we use ZODB storage
         self.root.service_files.storage = File.ZODBFile
 
@@ -150,12 +149,11 @@ class FileServicesTest(unittest.TestCase):
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
         converted_image_data = self.root.testimage.getImage(hires=1)
-        self.assertEquals(image_data, converted_image_data)
+        self.assertHashEqual(image_data, converted_image_data)
         converted_file_data = self.root.testfile.get_content()
-        self.assertEquals(file_data, converted_file_data)
+        self.assertHashEqual(file_data, converted_file_data)
 
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(FileServicesTest))
