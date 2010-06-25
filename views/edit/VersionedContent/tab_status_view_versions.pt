@@ -42,7 +42,6 @@ td.preview-compare-right {
 </metal:block>
 
 <metal:block fill-slot="main">
-<span tal:replace="nothing"> _______ content area, here the XML is rendered in HTML _______ </span>
 <div class="preview-compare">
   <table cellspacing="0">
     <tbody>
