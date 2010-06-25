@@ -34,7 +34,7 @@ from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostFolder, IGhostContent, IGhostVersion)
 from silva.translations import translate as _
 
-from silva.core.references.reference import ReferenceProperty
+from silva.core.references.reference import ReferenceProperty, get_content_id
 from silva.core.conf import schema as silvaschema
 from silva.core.references.reference import Reference
 
@@ -117,6 +117,8 @@ class GhostBase(object):
     def set_haunted(self, content):
         """ Set the content as the haunted object
         """
+        if not isinstance(content, int):
+            content = get_content_id(content)
         self._haunted = content
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted')
