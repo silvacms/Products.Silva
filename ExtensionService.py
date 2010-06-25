@@ -101,8 +101,6 @@ class ExtensionService(Folder, SilvaService):
     def __init__(self, id, title):
         self.id = id
         self.title = title
-        # Actually is the cache refresh datetime
-        self._refresh_datetime = DateTime()
 
     # MANIPULATORS
 
@@ -138,7 +136,6 @@ class ExtensionService(Folder, SilvaService):
         """
         root = self.get_root()
         extensionRegistry.refresh(name,root)
-        self.refresh_caches()
 
     security.declareProtected(
         'View management screens', 'refresh_all')
@@ -148,12 +145,6 @@ class ExtensionService(Folder, SilvaService):
         for name in extensionRegistry.get_names():
             if self.is_installed(name):
                 self.refresh(name)
-
-    security.declareProtected('View management screens', 'refresh_caches')
-    def refresh_caches(self):
-        """Refresh caches
-        """
-        self._refresh_datetime = DateTime()
 
     security.declareProtected(
         'View management screens', 'refresh_catalog')
@@ -248,13 +239,6 @@ class ExtensionService(Folder, SilvaService):
         """
         root = self.get_root()
         return extensionRegistry.is_installed(name, root)
-
-    security.declareProtected(
-        'View management screens', 'get_refresh_datetime')
-    def get_refresh_datetime(self):
-        """Get datetime of last refresh.
-        """
-        return self._refresh_datetime
 
 
 InitializeClass(ExtensionService)
