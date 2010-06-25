@@ -38,6 +38,7 @@ except ImportError:
 
 MAILHOST_ID = 'service_subscriptions_mailhost'
 
+AccessControl.allow_module('Products.Silva.adapters')
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
 AccessControl.allow_module('Products.Silva.adapters.cleanup')
 AccessControl.allow_module('Products.Silva.adapters.languageprovider')

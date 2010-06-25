@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import warnings
+
 # Zope 3
 from five import grok
 from zope import component
@@ -18,13 +20,15 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 
 # Silva
 from Products.Silva import SilvaPermissions
+from Products.Silva.SilvaObject import TitledObject
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.interfaces import IVersion, ICatalogedVersion
 from silva.core.services.interfaces import ICataloging
 
-class Version(SimpleItem):
+
+class Version(TitledObject, SimpleItem):
 
     grok.implements(IVersion)
 
@@ -35,40 +39,6 @@ class Version(SimpleItem):
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_title')
-    def set_title(self, title):
-        """Set title of version.
-        """
-        # FIXME: Ugh. I get unicode from formulator but this will not validate
-        # when using the metadata system. So first make it into utf-8 again..
-        # XXX Could set it directly with _setData instead?
-        title = title.encode('utf-8')
-        service_metadata = component.getUtility(IMetadataService)
-        binding = service_metadata.getMetadata(self)
-        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title')
-    def get_title(self):
-        """get title of version.
-        """
-        service_metadata = component.getUtility(IMetadataService)
-        return service_metadata.getMetadataValue(
-            self, 'silva-content', 'maintitle')
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    def get_short_title(self):
-        """Get the title of the version.
-        """
-        service_metadata = component.getUtility(IMetadataService)
-        short_title = service_metadata.getMetadataValue(
-            self, 'silva-content', 'shorttitle')
-        if not short_title:
-            return self.get_title()
-        return short_title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
@@ -129,6 +99,9 @@ class Version(SimpleItem):
     def object(self):
         """Returns the object this version belongs to
         """
+        warnings.warn('object() will be removed in Silva 2.4. '
+                      'Please use get_content instead.',
+                      DeprecationWarning, stacklevel=2)
         return self.aq_inner.aq_parent
 
 

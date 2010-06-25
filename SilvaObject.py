@@ -88,7 +88,63 @@ class Zope3ViewAttribute(ViewAttribute):
             return getattr(view, name)
 
 
-class SilvaObject(Security, ViewCode):
+class TitledObject(object):
+    """Object with a Title stored in the metadata.
+    """
+    security = ClassSecurityInfo()
+
+    def __init__(self, id):
+        self.id = id
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_title')
+    def set_title(self, title):
+        """Set the title of the silva object.
+        """
+        # FIXME: Ugh. I get unicode from formulator but this will not validate
+        # when using the metadata system. So first make it into utf-8 again..
+        title = title.encode('utf-8')
+        binding = component.getUtility(IMetadataService).getMetadata(self)
+        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
+    def get_title(self):
+        """Get the title of the silva object.
+        """
+        return component.getUtility(IMetadataService).getMetadataValue(
+            self, 'silva-content', 'maintitle')
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get the title of the silva object.
+        """
+        service = component.getUtility(IMetadataService)
+        title = service.getMetadataValue(
+            self, 'silva-content', 'shorttitle')
+        if not title.strip():
+            title = service.getMetadataValue(
+                self, 'silva-content', 'maintitle')
+        if not title.strip():
+            title = self.get_silva_object().id
+        return title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
+    def get_title_or_id(self):
+        """Get title or id if not available.
+        """
+        title = self.get_title()
+        if not title.strip():
+            title = self.get_silva_object().id
+        return title
+
+
+InitializeClass(TitledObject)
+
+
+class SilvaObject(TitledObject, Security, ViewCode):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
@@ -148,18 +204,6 @@ class SilvaObject(Security, ViewCode):
                 timings[elem] = ctime
         binding.setValues('silva-extra', timings)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_title')
-    def set_title(self, title):
-        """Set the title of the silva object.
-        """
-        # FIXME: Ugh. I get unicode from formulator but this will not validate
-        # when using the metadata system. So first make it into utf-8 again..
-        title = title.encode('utf-8')
-        binding = component.getUtility(IMetadataService).getMetadata(self)
-        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
-
-        self.titleMutationTrigger()
 
     security.declarePrivate('titleMutationTrigger')
     def titleMutationTrigger(self):
@@ -190,49 +234,6 @@ class SilvaObject(Security, ViewCode):
         Document for a Version object.
         """
         return self.aq_inner
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'silva_object_url')
-    def silva_object_url(self):
-        """Get url for silva object.
-        """
-        warnings.warn('silva_object_url will be removed in Silva 2.3. '
-                      'Please use absoluteURL or @@absolute_url instead.',
-                      DeprecationWarning, stacklevel=2)
-        return self.get_silva_object().absolute_url()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title')
-    def get_title(self):
-        """Get the title of the silva object.
-        """
-        return component.getUtility(IMetadataService).getMetadataValue(
-            self, 'silva-content', 'maintitle')
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_short_title')
-    def get_short_title(self):
-        """Get the title of the silva object.
-        """
-        service_metadata = component.getUtility(IMetadataService)
-        title = service_metadata.getMetadataValue(
-            self, 'silva-content', 'shorttitle')
-        if not title:
-            title = service_metadata.getMetadataValue(
-                self, 'silva-content', 'maintitle')
-        if not title:
-            title = self.id
-        return title
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_or_id')
-    def get_title_or_id(self):
-        """Get title or id if not available.
-        """
-        title = self.get_title()
-        if not title.strip():
-            title = self.id
-        return title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title_editable')
@@ -286,6 +287,9 @@ class SilvaObject(Security, ViewCode):
         list of items from the Silva Root or the object being the root of
         the virtual host - which ever comes first.
         """
+        warnings.warn('get_breadcrumbs() will be removed in Silva 2.4. '
+                      'Please use @@absolute_url/breadcrumbs instead.',
+                      DeprecationWarning, stacklevel=2)
         adapter = getVirtualHostingAdapter(self)
         root = adapter.getVirtualRoot()
         if root is None:

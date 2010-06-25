@@ -21,6 +21,7 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import interfaces
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import ISilvaURL
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.references.interfaces import IReferenceService
 
@@ -144,13 +145,16 @@ class ReferencedBy(silvaviews.Viewlet):
         service = component.getUtility(IReferenceService)
         for reference in service.get_references_to(self.context):
             source = reference.source
+            source_title = source.get_title_or_id()
+            source_url = component.getMultiAdapter(
+                (source, self.request), ISilvaURL).preview()
             if interfaces.IVersion.providedBy(source):
-                source = source.object()
-            source_url = absoluteURL(source, self.request)
+                source_title += ' (%s)' % source.id
+                source = source.get_content()
+            edit_url = absoluteURL(source, self.request) + '/edit'
             self.references.append(
-                {'title': source.get_title(),
+                {'title': source_title,
                  'url': source_url,
                  'path': '/'.join(source.getPhysicalPath()),
-                 'edit_url': source_url + '/edit',
-                 'icon': self.view.get_icon(source),
-                 'reason': reference.tags[0]})
+                 'edit_url': edit_url,
+                 'icon': self.view.get_icon(source)})

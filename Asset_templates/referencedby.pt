@@ -11,7 +11,7 @@
         tal:attributes="href editlink"
         i18n:attributes="title">
         <img class="icon" style="float:right" alt="edit content"
-          height="16" width="16" 
+          height="16" width="16"
           tal:define="url context/globals/edit-find.png/absolute_url"
           tal:attributes="src url"
         />
@@ -21,7 +21,7 @@
         title reference/path">
         <tal:icon tal:replace="structure reference/icon" />
         <span tal:content="reference/title"/>
-      </a> (<span tal:replace="reference/reason" />)
+      </a>
     </p>
   </tal:references>
 </tal:references>

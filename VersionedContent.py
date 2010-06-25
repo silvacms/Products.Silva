@@ -60,7 +60,7 @@ class VersionedContent(Content, Versioning, BaseFolder):
     def can_set_title(self):
         """Check to see if the title can be set
         """
-        return not not self.get_editable()
+        return bool(self.get_editable())
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'get_title')
