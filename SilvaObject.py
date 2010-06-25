@@ -398,20 +398,23 @@ class SilvaObject(TitledObject, Security, ViewCode):
         SilvaPermissions.ReadSilvaContent, 'view_version')
     def view_version(self, version=None):
         # XXX Should be a view.
+        request = self.REQUEST
         view_type = 'public'
         if IPreviewLayer.providedBy(self.REQUEST):
             manager = getSecurityManager()
             if not manager.checkPermission(
                 SilvaPermissions.ReadSilvaContent, self):
                 raise Unauthorized()
-            ## Have to check permission here.
+            preview_name = request.other.get('SILVA_PREVIEW_NAME', None)
             if version is None:
-                version = self.get_previewable()
+                if (preview_name is not None and
+                    hasattr(aq_base(self), preview_name)):
+                    version = getattr(self, preview_name)
+                else:
+                    version = self.get_previewable()
             view_type = 'preview'
         if version is None:
             version = self.get_viewable()
-
-        request = self.REQUEST
 
         # No version
         if version is None:
