@@ -201,7 +201,9 @@ _______ manual close section here _______
         <td tal:content="structure python: mangle.DateTime(expirationtime).toShortStr() or '-'">
           expiration time
         </td>
-        <td tal:content="structure python: lastauthor + ' &nbsp; ' + author_avatar">
+        <td>
+          <span tal:replace="structure lastauthor" />&nbsp;
+          <span tal:replace="structure author_avatar" />
           last author and avatar
         </td>
         <td>
