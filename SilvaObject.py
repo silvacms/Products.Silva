@@ -48,10 +48,6 @@ from silva.core.interfaces import (
     ISilvaObject, IPublishable, IContent, IRoot, IVersionedContent, IFolder)
 
 
-class XMLExportContext:
-    """Simple context class used in XML export.
-    """
-
 
 class NoViewError(Exception):
     """No view defined.
