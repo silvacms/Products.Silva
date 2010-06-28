@@ -16,11 +16,12 @@ logger = logging.getLogger('silva.file')
 from ZODB import blob
 from five import grok
 from zope import component, schema
-from zope.event import notify
-from zope.lifecycleevent import ObjectModifiedEvent
 from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.datetime import time as time_from_datetime
+from zope.event import notify
 from zope.interface import Interface, directlyProvides
 from zope.lifecycleevent import ObjectCreatedEvent
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.location.interfaces import ISite
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
@@ -441,6 +442,18 @@ class BlobFileView(silvaviews.View):
     grok.name('index')
 
     def render(self):
+        header = self.request.environ.get('HTTP_IF_MODIFIED_SINCE', None)
+        if header is not None:
+            header = header.split(';')[0]
+            try:
+                mod_since = long(time_from_datetime(header))
+            except:
+                mod_since = None
+            if mod_since is not None:
+                last_mod = long(self.context.get_modification_datetime())
+                if last_mod > 0 and last_mod <= mod_since:
+                    self.response.setStatus(304)
+                    return u''
         return FDIterator(self.context.get_content_fd())
 
 
