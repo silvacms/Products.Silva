@@ -41,6 +41,7 @@ from silva.core.conf import schema as silvaschema
 from silva.core.forms import z3cforms as silvaz3cforms
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
+from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
 from z3c.form import field
 
 # Load mime.types
@@ -536,7 +537,9 @@ class Image(Asset):
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
-        img_src = self.absolute_url()
+        request = self.REQUEST
+        absolute_url = getMultiAdapter((self, request), ISilvaURL)
+        img_src = absolute_url.url(preview=INonCachedLayer.providedBy(request))
         if hires:
             image = self.hires_image
             img_src += '?hires'
