@@ -34,7 +34,8 @@ from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostFolder, IGhostContent, IGhostVersion)
 from silva.translations import translate as _
 
-from silva.core.references.reference import ReferenceProperty, get_content_id
+from silva.core.references.reference import (
+    ReferenceProperty, get_content_id, get_content_from_id)
 from silva.core.conf import schema as silvaschema
 from silva.core.references.reference import Reference
 
@@ -123,7 +124,7 @@ class GhostBase(object):
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted')
     def get_haunted(self):
-        return self._haunted
+        return get_content_from_id(self._haunted)
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
     def get_haunted_url(self):

@@ -20,7 +20,7 @@ from Products.Silva import SilvaPermissions
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.references.reference import (
-    Reference, ReferenceProperty, get_content_id)
+    Reference, ReferenceProperty, get_content_id, get_content_from_id)
 from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.core.forms import z3cforms as silvaz3cforms
@@ -62,7 +62,7 @@ class LinkVersion(CatalogedVersion):
 
     security.declareProtected(SilvaPermissions.View, 'get_target')
     def get_target(self):
-        return self._target
+        return get_content_from_id(self._target)
 
     security.declareProtected(SilvaPermissions.View, 'get_url')
     def get_url(self):
@@ -142,7 +142,8 @@ class LinkEditForm(silvaforms.SMIEditForm):
 
 
 class LinkView(silvaviews.View):
-
+    """Render a link.
+    """
     grok.context(interfaces.ILink)
 
     def update(self):

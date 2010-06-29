@@ -12,7 +12,7 @@ from zope.i18n import translate
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import resetPreview, \
-    approveObject, publishObject, publishApprovedObject
+    approveObject, publish_object, publishApprovedObject
 
 from silva.core import interfaces as silvainterfaces
 from silva.core.references.reference import BrokenReferenceError
@@ -58,40 +58,39 @@ class GhostTestCase(unittest.TestCase):
             manage_addDocument('subdoc2', 'Subdoc2')
         self.subdoc2 = subdoc2 = getattr(publication5, 'subdoc2')
 
-    def test_broken_link1(self):
+    def test_broken_ghost(self):
         # add a ghost
         self.root.manage_addProduct['Silva'].manage_addGhost(
             'ghost1', 'Ghost1', haunted=self.root.doc1)
-        ghost = getattr(self.root, 'ghost1')
+        ghost = self.root.ghost1
 
         # issue 41: test if get_haunted_url works now
         self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
         self.assertEquals(None, ghost.get_editable().get_link_status())
 
-        # now delete doc1
-        def delete():
-            self.root.action_delete(['doc1'])
-        self.assertRaises(BrokenReferenceError, delete)
+        # try to delete doc1
+        self.assertRaises(
+            BrokenReferenceError, self.root.action_delete, ['doc1'])
 
     def test_ghost_title(self):
         self.root.manage_addProduct['Silva'].manage_addGhost(
             'ghost1', 'Ghost 1', haunted=self.root.doc1)
         # need to publish doc1 first
-        publishObject(self.root.doc1)
-        ghost = getattr(self.root, 'ghost1')
+        publish_object(self.root.doc1)
+        ghost = self.root.ghost1
         # FIXME: should we be able to get title of unpublished document?
         self.assertEquals('Doc1', ghost.get_title_editable())
         # now publish ghost
-        publishObject(ghost)
+        publish_object(ghost)
 
         # should have title of whatever we're pointing at now
         self.assertEquals('Doc1', ghost.get_title())
         # now break link
         self.root.doc1.close_version()
-        
-        def delete():
-            self.root.action_delete(['doc1'])
-        self.assertRaises(BrokenReferenceError, delete)
+
+        # try to delete doc1
+        self.assertRaises(
+            BrokenReferenceError, self.root.action_delete, ['doc1'])
 
     # FIXME: ghost should do read access checks, test for it somehow?
 
@@ -151,7 +150,7 @@ class GhostTestCase(unittest.TestCase):
         # the ghost's documents are published on creation, so if we publish
         # the haunted document is_published() should return true
         doc = self.subdoc2
-        publishObject(doc)
+        publish_object(doc)
 
         self.assertTrue(gfpub.is_published())
 
@@ -239,7 +238,6 @@ class GhostTestCase(unittest.TestCase):
             gf2.LINK_OK,
             gf2.get_link_status())
 
-
     def test_modification_time(self):
         # https://infrae.com/issue/silva/issue1645
         factory = self.root.manage_addProduct['Silva']
@@ -256,7 +254,7 @@ class GhostTestCase(unittest.TestCase):
         self.root.manage_delObjects(['doc1'])
         self.assertEqual(ghost.get_modification_datetime(), None)
 
-import unittest
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(GhostTestCase))
