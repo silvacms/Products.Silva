@@ -68,7 +68,7 @@
     style="float:right"
     title="Leave Silva and view the public page: alt-;"
     accesskey=";"
-    tal:attributes="href string:${model/@@absolute_url/public}"
+    tal:attributes="href string:${model/@@absolute_url}"
     i18n:attributes="title"
     i18n:translate="">
     view...
