@@ -14,7 +14,6 @@ import logging
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS.Folder import Folder
-from ZPublisher.HTTPRequest import FileUpload
 import transaction
 
 # Silva
