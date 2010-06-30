@@ -202,8 +202,8 @@ class ExtensionRegistry(Registry):
         meta_types = Products.meta_types
         for mt_dict in meta_types:
             if mt_dict['name'] == meta_type:
-                insort_right(self._silva_addables, Addable(mt_dict,
-                     priority))
+                mt_dict['doc'] = mt_dict['instance'].__doc__
+                insort_right(self._silva_addables, Addable(mt_dict, priority))
 
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
