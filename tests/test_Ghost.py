@@ -4,17 +4,15 @@
 
 import unittest
 
-from Products.Silva import SilvaPermissions
-from Products.Silva.Ghost import GhostVersion
-
 from zope.interface.verify import verifyObject
-from zope.i18n import translate
 
+from Acquisition import aq_chain
+
+from Products.Silva.Ghost import GhostVersion
 from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.helpers import resetPreview, \
-    approveObject, publish_object, publishApprovedObject
+from Products.Silva.tests.helpers import publish_object
 
-from silva.core import interfaces as silvainterfaces
+from silva.core import interfaces
 from silva.core.references.reference import BrokenReferenceError
 
 
@@ -45,28 +43,33 @@ class GhostTestCase(unittest.TestCase):
 
         factory(folder4, 'SilvaDocument').\
             manage_addDocument('subdoc', 'Subdoc')
-        self.subdoc = subdoc = getattr(folder4, 'subdoc')
+        self.subdoc = getattr(folder4, 'subdoc')
 
         factory(folder4).manage_addFolder('subfolder', 'Subfolder')
         self.subfolder = subfolder = getattr(folder4, 'subfolder')
 
         factory(subfolder, 'SilvaDocument').\
             manage_addDocument('subsubdoc', 'Subsubdoc')
-        self.subsubdoc = subsubdoc = getattr(subfolder, 'subsubdoc')
+        self.subsubdoc = getattr(subfolder, 'subsubdoc')
 
         factory(publication5, 'SilvaDocument').\
             manage_addDocument('subdoc2', 'Subdoc2')
-        self.subdoc2 = subdoc2 = getattr(publication5, 'subdoc2')
+        self.subdoc2 = getattr(publication5, 'subdoc2')
 
-    def test_broken_ghost(self):
-        # add a ghost
-        self.root.manage_addProduct['Silva'].manage_addGhost(
-            'ghost1', 'Ghost1', haunted=self.root.doc1)
-        ghost = self.root.ghost1
+    def test_ghost(self):
+        """Test ghost.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.doc1)
+        ghost = self.root.ghost.get_editable()
+        self.failUnless(verifyObject(interfaces.IGhost, self.root.ghost))
+        self.failUnless(verifyObject(interfaces.IGhostVersion, ghost))
 
-        # issue 41: test if get_haunted_url works now
-        self.assertEquals('/root/doc1', ghost.get_editable().get_haunted_url())
-        self.assertEquals(None, ghost.get_editable().get_link_status())
+        self.assertEqual(ghost.get_haunted(), self.root.doc1)
+        self.assertEqual(
+            aq_chain(ghost.get_haunted()), aq_chain(self.root.doc1))
+        self.assertEqual(ghost.get_haunted_url(), '/root/doc1')
+        self.assertEqual(ghost.get_link_status(), None)
 
         # try to delete doc1
         self.assertRaises(
@@ -193,7 +196,6 @@ class GhostTestCase(unittest.TestCase):
 
         factory = g.manage_addProduct['SilvaDocument']
         factory.manage_addDocument('foo', 'Foo')
-        doc = getattr(g, 'foo')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('h', 'H')
@@ -201,7 +203,6 @@ class GhostTestCase(unittest.TestCase):
 
         factory.manage_addGhostFolder(
             'gf1', 'Ghost forlder 1', haunted=g)
-        gf1 = getattr(self.root, 'gf1')
 
         self.assertEquals(g, self.root.gf1.get_haunted())
         self.assertEquals(self.root.gf1.LINK_OK,

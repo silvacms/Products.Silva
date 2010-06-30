@@ -19,6 +19,7 @@ from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
+from Acquisition import aq_base
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.interfaces import IObjectWillBeAddedEvent

@@ -3,9 +3,6 @@
 # See also LICENSE.txt
 # $Id$
 
-
-import warnings
-
 # Zope 3
 from five import grok
 from zope.interface import Interface
@@ -34,7 +31,7 @@ import silva.core.references.widgets.zeamform
 from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
 from silva.core.interfaces import (
-    IContainer, IContent, IGhost, IGhostFolder, IGhostContent, IGhostVersion)
+    IContainer, IContent, IGhost, IGhostFolder, IGhostAware, IGhostVersion)
 from silva.core.references.reference import (
     ReferenceProperty, get_content_id, get_content_from_id)
 from silva.core.references.reference import Reference
@@ -138,20 +135,21 @@ class GhostBase(object):
         # XXX: this is a path, not a URL, should not be used as a URL.
         return "/".join(haunted.getPhysicalPath())
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'haunted_path')
-    def haunted_path(self):
-        haunted = self.get_haunted()
-        if haunted is None:
-            return None
-        return haunted.getPhysicalPath()
-
-    security.declareProtected(SilvaPermissions.View,'get_link_status')
+    security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):
         """return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
-        raise NotImplementedError, "implemented in subclasses"
+        content = self.get_haunted()
+        if content is None:
+            return self.LINK_EMPTY
+        if IContainer.providedBy(content):
+            return self.LINK_FOLDER
+        if not IContent.providedBy(content):
+            return self.LINK_NO_CONTENT
+        if IGhostAware.providedBy(content):
+            return self.LINK_GHOST
+        return self.LINK_OK
 
 
 class Ghost(CatalogedVersionedContent):
@@ -167,7 +165,7 @@ class Ghost(CatalogedVersionedContent):
     meta_type = "Silva Ghost"
     security = ClassSecurityInfo()
 
-    grok.implements(IGhostContent)
+    grok.implements(IGhost)
     silvaconf.icon('icons/silvaghost.gif')
     silvaconf.versionClass('GhostVersion')
 
@@ -262,21 +260,6 @@ class GhostVersion(GhostBase, CatalogedVersion):
                return public_version.fulltext()
        return ""
 
-    security.declareProtected(SilvaPermissions.View, 'get_link_status')
-    def get_link_status(self):
-        """return an error code if this version of the ghost is broken.
-        returning None means the ghost is Ok.
-        """
-        content = self.get_haunted()
-        if content is None:
-            return self.LINK_EMPTY
-        if IContainer.providedBy(content):
-            return self.LINK_FOLDER
-        if not IContent.providedBy(content):
-            return self.LINK_NO_CONTENT
-        if IGhost.providedBy(content):
-            return self.LINK_GHOST
-        return self.LINK_OK
 
 
 class IGhostSchema(Interface):
@@ -337,7 +320,7 @@ class GhostEditForm(SMIEditForm):
 
 
 class GhostView(silvaviews.View):
-    grok.context(IGhostContent)
+    grok.context(IGhost)
 
     broken_message = _(u"This 'ghost' document is broken. "
                        u"Please inform the site manager.")
@@ -379,7 +362,7 @@ def ghost_factory(container, identifier, target):
             target = target.get_hauted()
         factory = factory.manage_addGhostFolder
     elif IContent.providedBy(target):
-        if IGhostContent.providedBy(target):
+        if IGhost.providedBy(target):
             target = target.getLastVersion().get_haunted()
         factory = factory.manage_addGhost
     factory(identifier, None, haunted=target)

@@ -275,7 +275,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         image = self.root.folder.torvald_jpg
         ghost = self.root.folder.images.ghost_of_torvald_jpg
         self.failUnless(interfaces.IImage.providedBy(image))
-        self.failUnless(interfaces.IGhostContent.providedBy(ghost))
+        self.failUnless(interfaces.IGhost.providedBy(ghost))
 
         version = ghost.get_viewable()
         self.failIf(version is None)

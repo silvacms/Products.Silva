@@ -13,7 +13,6 @@ import logging
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from DateTime import DateTime
 from OFS.Folder import Folder
 from ZPublisher.HTTPRequest import FileUpload
 import transaction

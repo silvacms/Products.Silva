@@ -589,7 +589,7 @@ class FilesService(SilvaService):
         storage = ZODBFile
         if self.storage is not None:
             storage = self.storage
-        return isinstance(content, self.storage)
+        return isinstance(content, storage)
 
 
 InitializeClass(FilesService)

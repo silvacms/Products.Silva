@@ -8,8 +8,6 @@ from zope.interface.verify import verifyObject
 from silva.core.interfaces import IHaunted
 
 from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.helpers import publish_object
-from Products.Silva.Ghost import ghost_factory
 
 
 class HauntedTestCase(unittest.TestCase):
@@ -20,10 +18,9 @@ class HauntedTestCase(unittest.TestCase):
     def setUp(self):
         """Content tree:
 
-        /doc1
+        /doc
         /publication
         /publication/folder
-        /publication/folder/doc2
         /ghost
         /link
 
@@ -31,50 +28,35 @@ class HauntedTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
         factory = self.root.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('doc', u'Test Document 1')
-        self.doc = getattr(self.root, 'doc')
+        factory.manage_addDocument('document', u'Test Document')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addPublication('publication', u'Test Publication')
-        self.publication = getattr(self.root, 'publication')
-        factory.manage_addGhost('ghost', None, haunted=self.doc)
-        self.ghost = getattr(self.root, 'ghost')
+        factory.manage_addGhost('ghost', None, haunted=self.root.document)
         factory.manage_addLink('link', u'Test Link')
-        self.link = getattr(self.root, 'link')
-        factory = self.publication.manage_addProduct['Silva']
+        factory = self.root.publication.manage_addProduct['Silva']
         factory.manage_addFolder('folder', u'Test Folder')
-        self.folder = getattr(self.publication, 'folder')
-
 
     def test_get_haunting(self):
         # No adapter for non-content or containers objects
         self.assertRaises(TypeError, IHaunted, self.root.service_catalog)
-        self.assertRaises(TypeError, IHaunted, self.publication)
-        self.assertRaises(TypeError, IHaunted, self.folder)
+        self.assertRaises(TypeError, IHaunted, self.root.publication.folder)
+        self.assertRaises(TypeError, IHaunted, self.root.publication)
 
         # Test getting an adapter for content
-        self.failUnless(verifyObject(
-                IHaunted, IHaunted(self.doc)))
-        self.failUnless(verifyObject(
-                IHaunted, IHaunted(self.link)))
-        self.failUnless(verifyObject(
-                IHaunted, IHaunted(self.ghost)))
+        self.failUnless(
+            verifyObject(IHaunted, IHaunted(self.root.document)))
+        self.failUnless(
+            verifyObject(IHaunted, IHaunted(self.root.link)))
+        self.failUnless(
+            verifyObject(IHaunted, IHaunted(self.root.ghost)))
 
-        # Create a ghost of the doc the haunting list for this object
-        ghostofdoc = ghost_factory(self.root, 'ghostofdoc', self.doc)
-        publish_object(ghostofdoc)
-        publish_object(self.doc)
+        self.assertEqual(
+            list(IHaunted(self.root.document).getHaunting()),
+            [self.root.ghost])
+        self.assertEqual(
+            list(IHaunted(self.root.link).getHaunting()),
+            [])
 
-        # See if it works :)
-        adapted = IHaunted(self.doc)
-        thehaunting = adapted.getHaunting()
-
-        ghost = thehaunting.next()
-        self.assertEquals(
-            ghostofdoc.getPhysicalPath(),
-            ghost.getPhysicalPath())
-
-        # There should be only one
-        self.assertRaises(StopIteration, thehaunting.next)
 
 def test_suite():
     suite = unittest.TestSuite()

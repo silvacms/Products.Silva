@@ -7,8 +7,8 @@
 from five import grok
 
 # Silva
-from silva.core.interfaces import IFile, ISilvaObject, \
-    IGhostContent, IGhostFolder, IIconRegistry, IPublication
+from silva.core.interfaces import (
+    IFile, ISilvaObject, IGhost, IGhostFolder, IIconRegistry, IPublication)
 from silva.core.views.interfaces import IVirtualSite
 
 
@@ -25,7 +25,7 @@ class IconRegistry(object):
         self._icon_mapping = {}
 
     def getIcon(self, content):
-        if IGhostContent.providedBy(content):
+        if IGhost.providedBy(content):
             version = content.getLastVersion()
             if version.get_link_status() == version.LINK_OK:
                 kind = 'link_ok'

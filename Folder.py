@@ -28,7 +28,7 @@ from Products.Silva import helpers, mangle
 from silva.translations import translate as _
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (IContentImporter,
-                                   IPublishable, IContent, IGhost,
+                                   IPublishable, IContent,
                                    ISilvaObject, IAsset, INonPublishable,
                                    IContainer, IFolder, IPublication, IRoot)
 

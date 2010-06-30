@@ -18,17 +18,16 @@ from DateTime import DateTime
 # silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
-from Products.Silva.Ghost import GhostBase
-from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 from Products.Silva.Ghost import AddAction as GhostAddAction
 from Products.Silva.Ghost import GhostAddForm, GhostEditForm
+from Products.Silva.Ghost import GhostBase
 from Products.Silva.icon import get_icon_url
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
-    IPublication, ISilvaObject, IGhostFolder, IGhostContent)
+    IPublication, ISilvaObject, IGhostFolder, IGhostAware)
 from silva.core.conf import schema as silvaschema
 from silva.core.references.reference import Reference
 from silva.core.smi.interfaces import ISMILayer
@@ -157,8 +156,8 @@ class GhostFolder(GhostBase, Folder.Folder):
     # checked in this order.
     _sync_map = [
         (IContainer, IContainer, SyncContainer),
-        (IGhostContent, IGhostContent, SyncGhost),
-        (IContent, IGhostContent, SyncContent),
+        (IGhost, IGhost, SyncGhost),
+        (IContent, IGhost, SyncContent),
         (None, None, SyncCopy),
         ]
 
@@ -281,7 +280,7 @@ class GhostFolder(GhostBase, Folder.Folder):
         content = self.get_haunted()
         if content is None:
             return self.LINK_VOID
-        if IGhost.providedBy(content):
+        if IGhostAware.providedBy(content):
             return self.LINK_GHOST
         if IContent.providedBy(content):
             return self.LINK_CONTENT
