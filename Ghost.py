@@ -38,6 +38,7 @@ from silva.core.references.reference import Reference
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
+from zope.traversing.browser import absoluteURL
 
 class GhostBase(object):
     """baseclass for Ghosts (or Ghost versions if it's versioned)
@@ -132,8 +133,7 @@ class GhostBase(object):
         haunted = self.get_haunted()
         if haunted is None:
             return None
-        # XXX: this is a path, not a URL, should not be used as a URL.
-        return "/".join(haunted.getPhysicalPath())
+        return absoluteURL(haunted)
 
     security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):
