@@ -3,73 +3,43 @@
 # See also LICENSE.txt
 # $Id$
 
-import SilvaTestCase
-from Products.Silva.adapters.addables import getAddablesAdapter
-
-class OldAddablesTestCase(SilvaTestCase.SilvaTestCase):
-
-    def afterSetUp(self):
-        self.publication = self.add_publication(
-            self.root,
-            'test_publication',
-            'Test Publication',
-            create_default=0,
-            policy_name='None'
-            )
-
-    def test_get_addables(self):
-        addables = ['Silva Image']
-        self.publication.set_silva_addables_allowed_in_container(addables)
-        self.assertEquals(
-            ['Silva Image'],
-            self.publication.get_silva_addables_allowed_in_container()
-            )
-
-class AddablesAdapterTestCase(SilvaTestCase.SilvaTestCase):
-
-    def afterSetUp(self):
-        self.publication = self.add_publication(
-            self.root,
-            'test_publication',
-            'Test Publication',
-            create_default=0,
-            policy_name='None'
-            )
-        self.folder = self.add_folder(
-            self.publication,
-            'test_folder',
-            'Test Folder',
-            create_default=0,
-            policy_name='None'
-            )
-
-    def test_root_adapter(self):
-        adapter = getAddablesAdapter(self.root)
-        adapter.setAddables(['Silva Publication'])
-        self.assertEquals(
-            ['Silva Publication'],
-            adapter.getAddables()
-            )
-
-    def test_container_adapter(self):
-        getAddablesAdapter(self.root).setAddables(['Silva Publication'])
-        addables = ['Silva Folder']
-        adapter = getAddablesAdapter(self.publication)
-        adapter.setAddables(addables)
-        self.assertEquals(
-            ['Silva Folder'],
-            adapter.getAddables()
-            )
-        folderAdapter = getAddablesAdapter(self.folder)
-        folderAdapter.setAddables(['Silva Image'])
-        self.assertEquals(
-            ['Silva Image'],
-            folderAdapter.getAddables()
-            )
-
 import unittest
+
+from Products.Silva.testing import FunctionalLayer
+
+
+class AddablesTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('publication', 'Publication')
+
+    def test_set_and_get_addables(self):
+        """Test that if you set addables you get what you set.
+        """
+        addables = ['Silva Image']
+        self.root.publication.set_silva_addables_allowed_in_container(addables)
+        self.assertEquals(
+            self.root.publication.get_silva_addables_allowed_in_container(),
+            ['Silva Image'])
+
+    def test_root_not_addables(self):
+        """Silva Root should not be addable.
+        """
+        self.failIf(
+            'Silva Root' in self.root.get_silva_addables_all())
+        self.failIf(
+            'Silva Root' in
+            self.root.get_silva_addables_allowed_in_container())
+        self.failIf(
+            'Silva Root' in
+            self.root.publication.get_silva_addables_allowed_in_container())
+
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(OldAddablesTestCase))
-    suite.addTest(unittest.makeSuite(AddablesAdapterTestCase))
+    suite.addTest(unittest.makeSuite(AddablesTestCase))
     return suite

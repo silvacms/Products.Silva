@@ -3,6 +3,9 @@
 # See also LICENSE.txt
 # $Id$
 
+
+import warnings
+
 # Zope 3
 from five import grok
 from zope.interface import Interface
@@ -29,15 +32,14 @@ from zeam.form.silva.actions import CancelAddAction, CancelEditAction
 import silva.core.references.widgets.zeamform
 
 from silva.core import conf as silvaconf
-from silva.core.views import views as silvaviews
+from silva.core.conf import schema as silvaschema
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostFolder, IGhostContent, IGhostVersion)
-from silva.translations import translate as _
-
 from silva.core.references.reference import (
     ReferenceProperty, get_content_id, get_content_from_id)
-from silva.core.conf import schema as silvaschema
 from silva.core.references.reference import Reference
+from silva.core.views import views as silvaviews
+from silva.translations import translate as _
 
 
 class GhostBase(object):
@@ -130,14 +132,19 @@ class GhostBase(object):
     def get_haunted_url(self):
         """Get content url.
         """
-        if self._haunted is None:
+        haunted = self.get_haunted()
+        if haunted is None:
             return None
-        return "/".join(self._haunted.getPhysicalPath())
+        # XXX: this is a path, not a URL, should not be used as a URL.
+        return "/".join(haunted.getPhysicalPath())
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunted_path')
     def haunted_path(self):
-        return self._haunted.getPhysicalPath()
+        haunted = self.get_haunted()
+        if haunted is None:
+            return None
+        return haunted.getPhysicalPath()
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self):
@@ -249,7 +256,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
         SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
        target = self.get_haunted()
-       if target:
+       if target is not None:
            public_version = target.get_viewable()
            if public_version and hasattr(aq_base(public_version), 'fulltext'):
                return public_version.fulltext()
@@ -260,7 +267,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
         """return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
-        content = self._haunted
+        content = self.get_haunted()
         if content is None:
             return self.LINK_EMPTY
         if IContainer.providedBy(content):

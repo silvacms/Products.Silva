@@ -175,7 +175,7 @@ class Root(Publication, site.Site):
 
         for item in result:
             ob = item.getObject()
-            ob.object()._update_publication_status()
+            ob.get_content()._update_publication_status()
 
         return 'Status updated'
 

@@ -447,7 +447,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             self.aq_parent.update_quota(delta)
 
 
-
     # ACCESSORS
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
@@ -463,14 +462,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             if current == root:
                 return self.get_silva_addables_all()
             current = current.aq_parent
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed_in_publication')
-    @deprecation.deprecate("""The get_silva_addables_allowed_in_publication
-      method has been deprecated and should be replaced by
-      get_silva_addables_allowed_in_container. The allowed addables api has
-      been moved from publications to containers in general.""")
-    def get_silva_addables_allowed_in_publication(self):
-        return self.get_silva_addables_allowed_in_container()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addables_acquired')
@@ -498,24 +489,18 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         """
         result = []
         allowed = self.get_silva_addables_allowed()
-        for addable_dict in extensionRegistry.get_addables():
-            meta_type = addable_dict['name']
-            if meta_type not in allowed:
-                continue
-            if self._is_silva_addable(addable_dict):
-                # add the docstring to the dict so it is available
-                # in pythonscripts
-                addable_dict['doc'] = addable_dict['instance'].__doc__
-                result.append(addable_dict)
+        for addable in extensionRegistry.get_addables():
+            if (addable['name'] in allowed and
+                self._is_silva_addable(addable)):
+                result.append(addable)
         return result
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_all')
     def get_silva_addables_all(self):
-        result = [addable_dict['name']
-                  for addable_dict in extensionRegistry.get_addables()
-                  if self._is_silva_addable(addable_dict)]
-        return result
+        return [addable_dict['name']
+                for addable_dict in extensionRegistry.get_addables()
+                if self._is_silva_addable(addable_dict)]
 
     def _is_silva_addable(self, addable_dict):
         """Given a dictionary from filtered_meta_types, check whether this
@@ -523,6 +508,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         """
         if not (addable_dict.has_key('instance') and
                 ISilvaObject.implementedBy(addable_dict['instance'])):
+            return False
+        if IRoot.implementedBy(addable_dict['instance']):
             return False
 
         root = self.get_root()
