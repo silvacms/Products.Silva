@@ -25,10 +25,6 @@ Z3CFORM_FORM = object()
 FORMLIB_FORM = object()
 ZEAMFORM_FORM = object()
 
-HTML_STRIP = re.compile(r'<[^>]+>')
-
-def strip_html(string):
-    return re.sub(HTML_STRIP, '', string)
 
 class SilvaBrowser(object):
     def __init__(self):
@@ -146,7 +142,7 @@ class SilvaBrowser(object):
             return ''
         start += len(div)
         end = self.browser.contents.find('</div>', start)
-        return self.browser.contents[start:end].strip()
+        return self.html2text(self.browser.contents[start:end])
 
     def get_frame_url(self,frameindex):
         """
@@ -251,7 +247,7 @@ class SilvaBrowser(object):
             return ''
         start += len(div)
         end = self.browser.contents.find('</div>', start)
-        return strip_html(self.browser.contents[start:end]).strip()
+        return self.html2text(self.browser.contents[start:end])
 
     def get_tabs(self):
         """Get all tabs on the page
