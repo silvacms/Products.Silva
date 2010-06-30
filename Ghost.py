@@ -126,15 +126,6 @@ class GhostBase(object):
     def get_haunted(self):
         return get_content_from_id(self._haunted)
 
-    security.declareProtected(SilvaPermissions.View, 'get_haunted_url')
-    def get_haunted_url(self):
-        """Get content url.
-        """
-        haunted = self.get_haunted()
-        if haunted is None:
-            return None
-        return absoluteURL(haunted)
-
     security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):
         """return an error code if this version of the ghost is broken.
@@ -205,13 +196,6 @@ class Ghost(CatalogedVersionedContent):
             version_id = self.get_last_closed_version()
         version = getattr(self, version_id)
         return version
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                                'get_haunted_url')
-    def get_haunted_url(self):
-        """return content url of `last' version"""
-        version = self.getLastVersion()
-        return version.get_haunted_url()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                                 'is_version_published')

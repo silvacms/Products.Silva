@@ -68,7 +68,6 @@ class GhostTestCase(unittest.TestCase):
         self.assertEqual(ghost.get_haunted(), self.root.doc1)
         self.assertEqual(
             aq_chain(ghost.get_haunted()), aq_chain(self.root.doc1))
-        self.assertEqual(ghost.get_haunted_url(), '/root/doc1')
         self.assertEqual(ghost.get_link_status(), None)
 
         # try to delete doc1

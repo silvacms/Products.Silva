@@ -403,6 +403,12 @@ class SyncAction(Action):
         gf = form.context
         if gf.get_link_status() == gf.LINK_OK:
             gf.haunt()
+            form.send_message(_(u'Ghost Folder synchronized'),
+                              type=u'feedback')
+        else:
+            form.send_message(_(u'Ghost Folder was not synchronized, '
+                                 'because the target is invalid.'),
+                              type=u'error')
         form.redirect("%s/edit" % form.context.absolute_url())
 
 
