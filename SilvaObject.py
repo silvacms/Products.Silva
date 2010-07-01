@@ -19,7 +19,7 @@ from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_inner
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.interfaces import IObjectWillBeAddedEvent
@@ -354,7 +354,7 @@ class SilvaObject(TitledObject, Security, ViewCode):
         # XXX Only keep for compatibility
         if not IPreviewLayer.providedBy(self.REQUEST):
             alsoProvides(self.REQUEST, IPreviewLayer)
-        return self.view_version()
+        return aq_inner(self).view_version()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'public_preview')
@@ -393,7 +393,7 @@ class SilvaObject(TitledObject, Security, ViewCode):
         """Render this with the public view. If there is no viewable,
         should return something indicating this.
         """
-        return self.view_version()
+        return aq_inner(self).view_version()
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'view_version')
