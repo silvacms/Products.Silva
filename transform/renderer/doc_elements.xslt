@@ -251,19 +251,26 @@
   </xsl:template>
 
   <xsl:template match="doc:link">
-    <xsl:variable name="image" select="doc:image" />
     <xsl:choose>
-      <xsl:when test="starts-with($image/@alignment, 'image-')">
-        <div class="{$image/@alignment}">
-          <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
-            <xsl:apply-templates mode="image-content" />
-          </a>
-        </div>
+      <xsl:when test="count(*) = 1 and count(doc:image) = 1">
+        <xsl:variable name="image" select="doc:image" />
+        <xsl:choose>
+          <xsl:when test="starts-with($image/@alignment, 'image-')">
+            <div class="{$image/@alignment}">
+              <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+                <xsl:apply-templates mode="image-content" />
+              </a>
+            </div>
+          </xsl:when>
+          <xsl:otherwise>
+            <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+              <xsl:apply-templates mode="image-content" />
+            </a>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
-            <xsl:apply-templates mode="image-content" />
-        </a>
+        <p class="error">Error: junk within link</p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -304,10 +311,6 @@
     <a class="index-element" id="{@name}" />
   </xsl:template>
 
-  <xsl:template match="doc:external_data">
-    <xsl:apply-templates />
-  </xsl:template>
-
   <xsl:template match="doc:code">
     <xsl:apply-templates />
   </xsl:template>
@@ -345,10 +348,11 @@
   </xsl:template>
 
   <xsl:template match="doc:row_heading" mode="table-contents">
-    <tr class="rowheading">
-      <td colspan="{@colspan}">
-        <xsl:apply-templates />
-      </td>
+    <!-- this is for backward compatibility (Silva 2.3) -->
+    <tr>
+      <th colspan="{@colspan}">
+        <xsl:apply-templates mode="field-contents" />
+      </th>
     </tr>
   </xsl:template>
 
@@ -364,14 +368,14 @@
 
   <xsl:template match="doc:field" mode="tablerow-contents">
    <xsl:choose>
-    <xsl:when test="@fieldtype='td' or @fieldtype='th'">
-     <xsl:element name="{@fieldtype}">
+      <xsl:when test="@fieldtype='th'">
+     <xsl:element name="th">
       <xsl:if test="@colspan">
        <xsl:attribute name="colspan">
          <xsl:value-of select="@colspan" />
        </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates mode="field-contents" />
+      <xsl:apply-templates select="." mode="field-contents" />
      </xsl:element>
     </xsl:when>
     <xsl:otherwise>
@@ -381,13 +385,13 @@
          <xsl:value-of select="@colspan" />
        </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates mode="field-contents" />
+      <xsl:apply-templates select="." mode="field-contents" />
      </xsl:element>
     </xsl:otherwise>
    </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="field-contents">
+  <xsl:template match="doc:field" mode="field-contents">
     <!-- IE doesn't like empty table cells, insert a nbsp if there are
       no child elements -->
     <xsl:choose>
