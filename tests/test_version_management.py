@@ -226,7 +226,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
         current_public = [b for b in
                             self.doc.service_catalog(query_public) if
-                            b.getObject().object().id == 'testdoc']
+                            b.getObject().get_content().id == 'testdoc']
         self.assertEquals(len(current_public), 0)
 
         # make sure there's a published version and an editable one
@@ -241,7 +241,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
         current_public = [b for b in
                             self.doc.service_catalog(query_public) if
-                            b.getObject().object().id == 'testdoc']
+                            b.getObject().get_content().id == 'testdoc']
         self.assertEquals(len(current_public), 1)
         self.assertEquals(current_public[0].id, '10')
 
@@ -255,7 +255,7 @@ class VersionManagementTestCase(SilvaTestCase.SilvaTestCase):
 
         current_public = [b for b in
                             self.doc.service_catalog(query_public) if
-                            b.getObject().object().id == 'testdoc']
+                            b.getObject().get_content().id == 'testdoc']
         self.assertEquals(len(current_public), 1)
         self.assertEquals(current_public[0].id, '10')
 
