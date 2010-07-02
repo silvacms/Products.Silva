@@ -54,7 +54,7 @@ class AuthorManagerScenarioOneTestCase(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('publish now')
         preview_top_url = sb.get_frame_url(0)
         self.assertEquals(preview_top_url,
-                          'http://nohost/root/test_document/edit/tab_preview_frame_top?message=Version approved.&message_type=feedback')
+                          'http://nohost/root/test_document/edit/tab_preview_frame_top?message=&message_type=')
         sb.go(preview_top_url)
         self.failUnless('Version approved.' in sb.browser.contents)
         sb.go(sb.smi_url())
