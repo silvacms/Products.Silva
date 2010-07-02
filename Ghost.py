@@ -38,7 +38,6 @@ from silva.core.references.reference import Reference
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
-from zope.traversing.browser import absoluteURL
 
 class GhostBase(object):
     """baseclass for Ghosts (or Ghost versions if it's versioned)
