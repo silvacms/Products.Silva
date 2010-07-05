@@ -450,10 +450,12 @@ class BlobFileView(silvaviews.View):
             except:
                 mod_since = None
             if mod_since is not None:
-                last_mod = long(self.context.get_modification_datetime())
-                if last_mod > 0 and last_mod <= mod_since:
-                    self.response.setStatus(304)
-                    return u''
+                last_mod = self.context.get_modification_datetime()
+                if last_mod is not None:
+                    last_mod = long(last_mod)
+                    if last_mod > 0 and last_mod <= mod_since:
+                        self.response.setStatus(304)
+                        return u''
         return FDIterator(self.context.get_content_fd())
 
 
