@@ -66,7 +66,7 @@ class SilvaViewsTraversingTestCase(unittest.TestCase):
         """
         response = http(
             'GET /root/folder/edit/tab_nothing HTTP/1.0',
-            parsed=True, handle_errors=False)
+            parsed=True, handle_errors=True)
         self.assertEqual(response.getStatus(), 404)
 
         response = http(
