@@ -11,6 +11,7 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from OFS.Application import Application
 
 # Silva
 from Products.Silva.ExtensionService import install_documentation
@@ -23,6 +24,14 @@ from Products.Silva import install
 from silva.core.services import site
 from silva.core.interfaces import IRoot
 from silva.core import conf as silvaconf
+
+
+class ZopeWelcomePage(grok.View):
+    grok.context(Application)
+    grok.name('index.html')
+
+    def update(self):
+        self.sites = self.context.objectValues('Silva Root')
 
 
 class SilvaGlobals(grok.DirectoryResource):

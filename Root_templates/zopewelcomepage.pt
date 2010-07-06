@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+   i18n:domain="silva">
+  <head>
+    <title>Zope / Silva</title>
+    <link rel="stylesheet" href="#" type="text/css"
+          tal:attributes="href view/static/welcome.css" />
+  </head>
+  <body>
+    <div class="welcome">
+      <div class="title">
+        <img src="#" alt="Silva logo"
+             tal:attributes="src view/static/silva_logo.png" />
+        <h1 i18n:translate="">Welcome to Silva</h1>
+      </div>
+      <div class="existing-sites" tal:condition="view/sites">
+        <h3>Your existing Silva sites:</h3>
+        <ul>
+          <li tal:repeat="site view/sites">
+            <a href="#"
+               tal:attributes="href site/@@absolute_url"
+               tal:content="site/getId">
+              Site name
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="new-site">
+        <h3>Add a new Silva site</h3>
+        <form action="manage_addProduct/Silva/manage_addRoot" method="post">
+          <label for="form.id">Site identifier</label>
+          <br />
+          <input id="form.id" type="text" name="id" size="40" />
+          <br />
+          <label for="form.title">Site title</label>
+          <br />
+          <input id="form.title" type="text" name="title" size="40" />
+          <br />
+          <label for="form.add_search">Add Search functionality?</label>
+          <br />
+          <input id="form.add_search" name="add_search"
+                 type="checkbox" checked="checked" />
+          <br />
+          <label for="form.add_search">Add Silva user documentation?</label>
+          <br />
+          <input id="form.add_search" name="add_docs"
+                 type="checkbox" checked="checked" />
+          <br />
+          <input type="submit" name="submit_edit" value=" Add " />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

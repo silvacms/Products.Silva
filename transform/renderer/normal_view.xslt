@@ -22,7 +22,6 @@
   </xsl:template>
 
   <xsl:template match="silva:silva_document">
-    <xsl:comment>xslt renderer used</xsl:comment>
     <xsl:apply-templates />
   </xsl:template>
 

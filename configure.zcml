@@ -1,9 +1,9 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:grok="http://namespaces.zope.org/grok"
-    xmlns:silva="http://infrae.com/ns/silvaconf"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    i18n_domain="silva">
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:grok="http://namespaces.zope.org/grok"
+   xmlns:silva="http://infrae.com/ns/silvaconf"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="silva">
 
   <include package="five.grok" />
 
@@ -37,11 +37,11 @@
      name="File Storage Type" />
 
   <adapter
-    for="silva.core.interfaces.IImage
-         zope.publisher.interfaces.browser.IBrowserRequest"
-    factory=".Image.ImagePublishTraverse"
-    provides="zope.publisher.interfaces.browser.IBrowserPublisher"
-    />
+     for="silva.core.interfaces.IImage
+          zope.publisher.interfaces.browser.IBrowserRequest"
+     factory=".Image.ImagePublishTraverse"
+     provides="zope.publisher.interfaces.browser.IBrowserPublisher"
+     />
 
   <adapter
      for="silva.core.interfaces.ISilvaObject
@@ -51,13 +51,18 @@
      />
 
   <!-- lookup window edit button support -->
-
   <browser:page
-    for="silva.core.interfaces.ISilvaObject"
-    name="resolve_and_redirect_editor"
-    class=".lookupwindowfield.EditButtonRedirector"
-    permission="silva.ReadSilvaContent"
-  />
+     for="silva.core.interfaces.ISilvaObject"
+     name="resolve_and_redirect_editor"
+     class=".lookupwindowfield.EditButtonRedirector"
+     permission="silva.ReadSilvaContent"
+     />
+
+  <!-- Setd default view on Application to get a welcome page -->
+  <browser:defaultView
+     for="OFS.Application.Application"
+     name="index.html"
+     />
 
   <!-- Default skin -->
   <include package="silvatheme.standardissue" />

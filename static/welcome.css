@@ -1,0 +1,25 @@
+
+body {
+  color: #225577;
+  font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif;
+  background-color: #D8E3BA;
+}
+
+.welcome {
+  width: 50%;
+  margin: 10px 25% 10px 25%;
+  text-align: left;
+}
+
+.title {
+  margin: 0px 0px 50px 0px;
+}
+
+.title img {
+  float: left;
+  margin: 0px 25px 0px 0px;
+}
+
+.title h1 {
+  padding: 10px 0px 10px 0px;
+}
