@@ -11,10 +11,13 @@
       <div class="title">
         <img src="#" alt="Silva logo"
              tal:attributes="src view/static/silva_logo.png" />
-        <h1 i18n:translate="">Welcome to Silva</h1>
+        <h1 i18n:translate="">
+          Welcome to Silva
+          <span i18n:name="version" tal:content="view/version" />
+        </h1>
       </div>
       <div class="existing-sites" tal:condition="view/sites">
-        <h3>Your existing Silva sites:</h3>
+        <h3 i18n:translate>Your existing Silva sites:</h3>
         <ul>
           <li tal:repeat="site view/sites">
             <a href="#"
@@ -26,28 +29,46 @@
         </ul>
       </div>
       <div class="new-site">
-        <h3>Add a new Silva site</h3>
+        <h3 i18n:translate="">Add a new Silva site</h3>
         <form action="manage_addProduct/Silva/manage_addRoot" method="post">
-          <label for="form.id">Site identifier</label>
+          <label for="form.id" i18n:translate="">
+            Site identifier
+          </label>
           <br />
           <input id="form.id" type="text" name="id" size="40" />
           <br />
-          <label for="form.title">Site title</label>
+          <label for="form.title" i18n:translate="">
+            Site title
+          </label>
           <br />
           <input id="form.title" type="text" name="title" size="40" />
           <br />
-          <label for="form.add_search">Add Search functionality?</label>
+          <label for="form.add_search" i18n:translate="">
+            Add Search functionality?
+          </label>
           <br />
           <input id="form.add_search" name="add_search"
                  type="checkbox" checked="checked" />
           <br />
-          <label for="form.add_search">Add Silva user documentation?</label>
+          <label for="form.add_search" i18n:translate="">
+            Add Silva user documentation?
+          </label>
           <br />
           <input id="form.add_search" name="add_docs"
                  type="checkbox" checked="checked" />
           <br />
-          <input type="submit" name="submit_edit" value=" Add " />
+          <input type="submit" name="submit_edit" value="Add"
+                 i18n:attributes="value"/>
         </form>
+      </div>
+      <div class="info">
+        <h3>Server status</h3>
+        <p tal:condition="view/is_dev" i18n:translate="">
+          Zope is running in development mode.
+        </p>
+        <p tal:condition="not:view/is_dev" i18n:translate="">
+          Zope is running in production mode.
+        </p>
       </div>
     </div>
   </body>

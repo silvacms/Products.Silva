@@ -12,6 +12,7 @@ from App.class_init import InitializeClass
 from DateTime import DateTime
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Application import Application
+import Globals
 
 # Silva
 from Products.Silva.ExtensionService import install_documentation
@@ -32,6 +33,8 @@ class ZopeWelcomePage(grok.View):
 
     def update(self):
         self.sites = self.context.objectValues('Silva Root')
+        self.is_dev = Globals.DevelopmentMode
+        self.version = extensionRegistry.get_extension('Silva').version
 
 
 class SilvaGlobals(grok.DirectoryResource):
