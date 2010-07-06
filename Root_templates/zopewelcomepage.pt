@@ -20,11 +20,22 @@
         <h3 i18n:translate>Your existing Silva sites:</h3>
         <ul>
           <li tal:repeat="site view/sites">
-            <a href="#"
-               tal:attributes="href site/@@absolute_url"
-               tal:content="site/getId">
-              Site name
-            </a>
+            <tal:site
+               tal:define="site_url site/@@absolute_url">
+              <a href="#"
+                 tal:attributes="href site_url"
+                 tal:content="site/getId">
+                Site name
+              </a>
+              <a href="#" class="zmi-link"
+                 tal:attributes="href string:${site_url}/edit">
+                (SMI)
+              </a>
+              <a href="#" class="smi-link"
+                 tal:attributes="href string:${site_url}/manage_main">
+                (ZMI)
+              </a>
+            </tal:site>
           </li>
         </ul>
       </div>

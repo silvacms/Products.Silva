@@ -12,6 +12,13 @@ body {
   text-align: left;
 }
 
+.zmi-link,
+.smi-link {
+  text-decoration: none;
+  font-style: italic;
+  font-size: 80%;
+}
+
 .title {
   margin: 0px 0px 50px 0px;
 }
