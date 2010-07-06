@@ -1,6 +1,7 @@
 
 body {
   color: #225577;
+  font-size: 90%;
   font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,Helvetica,sans-serif;
   background-color: #D8E3BA;
 }
@@ -22,4 +23,8 @@ body {
 
 .title h1 {
   padding: 10px 0px 10px 0px;
+}
+
+.zope {
+  text-align: right;
 }
