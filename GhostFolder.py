@@ -19,9 +19,7 @@ from DateTime import DateTime
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
-from Products.Silva.Ghost import AddAction as GhostAddAction
-from Products.Silva.Ghost import GhostAddForm, GhostEditForm
-from Products.Silva.Ghost import GhostBase
+from Products.Silva.Ghost import GhostBase, GhostEditForm
 from Products.Silva.icon import get_icon_url
 
 from silva.core import conf as silvaconf
@@ -37,7 +35,7 @@ from silva.translations import translate as _
 from zeam.form.base.actions import Actions, Action
 from zeam.form.base.fields import Fields
 from zeam.form.silva.actions import CancelAddAction, CancelEditAction
-
+from zeam.form.silva.form import SMIAddForm
 
 
 class Sync(object):
@@ -370,29 +368,14 @@ InitializeClass(GhostFolder)
 class IGhostFolderSchema(Interface):
     id = silvaschema.ID(
         title=_(u"id"),
-        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        description=_(u"No spaces or special "
+                      u"characters besides ‘_’ or ‘-’ or ‘.’"),
         required=True)
 
     haunted = Reference(IContainer,
             title=_(u"target"),
             description=_(u"The silva object the ghost is mirroring"),
             required=True)
-
-
-class AddAction(GhostAddAction):
-    """ Add action for Ghost folder
-    """
-    def add(self, parent, data, form):
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addGhostFolder(
-            data['id'], 'Ghost', haunted=data['haunted'])
-
-
-class AddAndEdit(AddAction):
-    """ Add action then redirect to edit action
-    """
-    def next_url(self, form, content, parent):
-        return "%s/edit" % content.absolute_url()
 
 
 class SyncAction(Action):
@@ -412,15 +395,17 @@ class SyncAction(Action):
         form.redirect("%s/edit" % form.context.absolute_url())
 
 
-class GhostFolderAddForm(GhostAddForm):
+class GhostFolderAddForm(SMIAddForm):
     """ Add form for ghost folders
     """
     grok.name(u'Silva Ghost Folder')
-    actions = Actions(CancelAddAction(_(u'cancel')),
-                        AddAction(_(u'save')),
-                        AddAndEdit(_(u'save + edit'),
-                                   identifier='save_edit'))
+    description = GhostFolder.__doc__
     fields = Fields(IGhostFolderSchema)
+
+    def _add(self, parent, data):
+        factory = parent.manage_addProduct['Silva']
+        return factory.manage_addGhostFolder(
+            data['id'], 'Ghost', haunted=data['haunted'])
 
 
 class GhostFolderListingProvider(silvaviews.ContentProvider):

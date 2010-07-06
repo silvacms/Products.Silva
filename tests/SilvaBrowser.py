@@ -10,13 +10,13 @@ from xml.dom import minidom
 from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
-Z3C_CONTENTS = ['Silva Document',
-                'Silva Link',
+Z3C_CONTENTS = ['Silva Link',
                 'Silva Find',
                 'Silva File',
                 'Silva Image',]
 
-ZEAM_CONTENTS = ['Silva Ghost',
+ZEAM_CONTENTS = ['Silva Document',
+                 'Silva Ghost',
                  'Silva Indexer',]
 
 # Define types of forms.

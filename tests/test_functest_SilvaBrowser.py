@@ -6,7 +6,7 @@
 import unittest
 
 from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser, Z3CFORM_FORM
+from SilvaBrowser import SilvaBrowser, ZEAMFORM_FORM
 
 class SilvaBrowserTest(SilvaFunctionalTestCase):
     """
@@ -75,11 +75,12 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('new...')
         self.failUnless(sb.get_addform_title() == 'create Silva Document')
         # fill in form fields
-        sb.form_type = Z3CFORM_FORM
+        sb.form_type = ZEAMFORM_FORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
-        self.failUnless(sb.get_status_feedback().startswith('Added Silva Document'))
+        self.failUnless(
+            sb.get_status_feedback().startswith('Added Silva Document'))
         # select meta_type
         addables = sb.get_addables_list()
         self.failUnless('Silva Document' in addables)
@@ -91,7 +92,8 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         sb.set_id_field('test_content2')
         sb.set_title_field('test content2')
         status, url = sb.click_button_labeled('save')
-        self.failUnless(sb.get_status_feedback().startswith('Added Silva Document'))
+        self.failUnless(
+            sb.get_status_feedback().startswith('Added Silva Document'))
         # get all silva content
         data = sb.get_content_data()
         sb.select_all_content(data)
@@ -120,11 +122,12 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('new...')
         self.failUnless(sb.get_addform_title() == 'create Silva Document')
         # fill in form fields
-        sb.form_type = Z3CFORM_FORM
+        sb.form_type = ZEAMFORM_FORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
-        self.failUnless(sb.get_status_feedback().startswith('Added Silva Document'))
+        self.failUnless(
+            sb.get_status_feedback().startswith('Added Silva Document'))
         # delete content
         data = sb.get_content_data()
         # get the right content

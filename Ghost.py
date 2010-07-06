@@ -23,7 +23,6 @@ from zeam.form.base.actions import Action, Actions
 from zeam.form.base.fields import Fields
 from zeam.form.silva.form import SMIAddForm
 from zeam.form.silva.form import SMIEditForm
-from zeam.form.silva.actions import CancelAddAction, CancelEditAction
 
 # this initializes the widgets
 import silva.core.references.widgets.zeamform
@@ -244,41 +243,17 @@ class GhostVersion(GhostBase, CatalogedVersion):
        return ""
 
 
-
 class IGhostSchema(Interface):
     id = silvaschema.ID(
         title=_(u"id"),
-        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
+        description=_(u"No spaces or special characters besides"
+                      u"‘_’ or ‘-’ or ‘.’"),
         required=True)
 
     haunted = Reference(IContent,
             title=_(u"target"),
             description=_(u"The silva object the ghost is mirroring."),
             required=True)
-
-
-class AddAction(Action):
-
-    def add(self, parent, data, form):
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addGhost(
-            data['id'], 'Ghost', haunted=data['haunted'])
-
-    def __call__(self, form):
-        data, errors = form.extractData()
-        if errors:
-            return FAILURE
-        content = self.add(form.context, data , form)
-        return form.redirect(self.next_url(form, content, form.context))
-
-    def next_url(self, form, content, parent):
-        return "%s/edit" % parent.absolute_url()
-
-
-class AddAndEdit(AddAction):
-
-    def next_url(self, form, content, parent):
-        return "%s/edit" % content.absolute_url()
 
 
 class GhostAddForm(SMIAddForm):
@@ -289,10 +264,11 @@ class GhostAddForm(SMIAddForm):
 
     fields = Fields(IGhostSchema)
     description = Ghost.__doc__
-    actions = Actions(CancelAddAction(_(u'cancel')),
-                      AddAction(_(u'save')),
-                      AddAndEdit(_(u'save + edit'),
-                                 identifier="save_edit"))
+
+    def _add(self, parent, data):
+        factory = parent.manage_addProduct['Silva']
+        return factory.manage_addGhost(
+            data['id'], 'Ghost', haunted=data['haunted'])
 
 
 class GhostEditForm(SMIEditForm):
