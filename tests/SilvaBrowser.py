@@ -10,9 +10,10 @@ from xml.dom import minidom
 from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
-Z3C_CONTENTS = ['Silva File',]
+Z3C_CONTENTS = []
 
 ZEAM_CONTENTS = ['Silva Document',
+                 'Silva File',
                  'Silva Link',
                  'Silva Image',
                  'Silva Ghost',

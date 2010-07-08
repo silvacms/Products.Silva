@@ -639,14 +639,12 @@ class ImageAddForm(silvaforms.SMIAddForm):
     description = Image.__doc__
     fields = silvaforms.Fields(IImageAddFields)
     fields['id'].required = False
-    fields['title'].required = False
 
     def _add(self, parent, data):
         default_id = data['id'] is not NO_VALUE and data['id'] or u''
-        default_title = data['title'] is not NO_VALUE and data['title'] or u''
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addImage(
-            default_id, default_title, file=data['file'])
+            default_id, data['title'], file=data['file'])
 
 
 mt = mimetypes.types_map.values()

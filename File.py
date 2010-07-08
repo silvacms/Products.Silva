@@ -15,11 +15,11 @@ logger = logging.getLogger('silva.file')
 # Zope 3
 from ZODB import blob
 from five import grok
-from zope import component, schema
+from zope import component
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.datetime import time as time_from_datetime
 from zope.event import notify
-from zope.interface import Interface, directlyProvides
+from zope.interface import directlyProvides
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.location.interfaces import ISite
@@ -55,16 +55,18 @@ from Products.Silva.magic import MagicGuess
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.conf.interfaces import ITitledContent
 from silva.core.conf import schema as silvaschema
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
-from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
-from z3c.form import field
+
 from zeam.form import silva as silvaforms
+from zeam.form.base import NO_VALUE
+
 
 
 CHUNK_SIZE = 1<<16              # 64K
@@ -503,10 +505,9 @@ InitializeClass(FileSystemFile)
 
 
 class FileSystemFileView(silvaviews.View):
-
-    silvaconf.context(FileSystemFile)
-    silvaconf.require('zope2.View')
-    silvaconf.name('index')
+    grok.context(FileSystemFile)
+    grok.require('zope2.View')
+    grok.name('index')
 
     def render(self):
         self.response.setHeader(
@@ -528,31 +529,28 @@ def FileStorageTypeVocabulary(context):
 directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 
-class IFileAddFields(Interface):
+class IFileAddFields(ITitledContent):
 
     file = silvaschema.Bytes(title=_(u"file"), required=True)
-    id = silvaschema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
-        required=False)
-    title = schema.TextLine(
-        title=_(u"title"),
-        description=_(u"Tip: You don't have to fill in the id and title."),
-        required=False)
 
 
-class FileAddForm(silvaz3cforms.AddForm):
+class FileAddForm(silvaforms.SMIAddForm):
     """Add form for a file.
     """
+    grok.context(interfaces.IFile)
+    grok.name(u'Silva File')
 
-    silvaconf.context(interfaces.IFile)
-    silvaconf.name(u'Silva File')
-    fields = field.Fields(IFileAddFields)
+    description = File.__doc__
+    fields = silvaforms.Fields(IFileAddFields)
+    fields['id'].required = False
+    fields['title'].required = False
 
-    def create(self, parent, data):
+    def _add(self, parent, data):
+        default_id = data['id'] is not NO_VALUE and data['id'] or u''
+        default_title = data['title'] is not NO_VALUE and data['title'] or u''
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addFile(
-            data['id'], data['title'], data['file'])
+            default_id, default_title, data['file'])
 
 
 def file_factory(self, id, content_type, file):
