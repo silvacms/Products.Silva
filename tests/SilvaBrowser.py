@@ -11,13 +11,13 @@ from helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
 Z3C_CONTENTS = ['Silva Link',
-                'Silva Find',
                 'Silva File',
                 'Silva Image',]
 
 ZEAM_CONTENTS = ['Silva Document',
                  'Silva Ghost',
-                 'Silva Indexer',]
+                 'Silva Indexer',
+                 'Silva Find',]
 
 # Define types of forms.
 SILVA_FORM = object()
@@ -363,6 +363,7 @@ class SilvaBrowser(object):
                 raise ValueError('Missing field "%s" for "%s"' % (field_name,
                                                                   content_type))
         self.select_addable(content_type)
+        self.browser.handleErrors = False
         self.click_button_labeled('new...')
         id = fields.get('id', 'test_object')
         fields['id'] = id
