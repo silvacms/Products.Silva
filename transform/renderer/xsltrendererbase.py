@@ -72,7 +72,7 @@ class XSLTTransformer(object):
         doc = etree.parse(StringIO(text))
         result = str(style(doc)).decode('utf-8')
         if result.startswith('<!DOCTYPE'):
-            result = result[result.find('>')+1:]
+            result = result[result.find('>')+1:].strip()
         return result
 
 
