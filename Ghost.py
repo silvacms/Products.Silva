@@ -5,7 +5,6 @@
 
 # Zope 3
 from five import grok
-from zope.interface import Interface
 
 # Zope 2
 from Acquisition import aq_inner, aq_base
@@ -18,14 +17,9 @@ from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import SilvaPermissions
 
-from zeam.form.base import FAILURE
-from zeam.form.base.actions import Action, Actions
 from zeam.form.base.fields import Fields
 from zeam.form.silva.form import SMIAddForm
 from zeam.form.silva.form import SMIEditForm
-
-# this initializes the widgets
-import silva.core.references.widgets.zeamform
 
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent

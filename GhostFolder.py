@@ -6,7 +6,6 @@
 # Zope 3
 from five import grok
 from zope.annotation.interfaces import IAnnotations
-from zope.interface import Interface
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
@@ -32,9 +31,8 @@ from silva.core.smi.interfaces import ISMILayer
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
-from zeam.form.base.actions import Actions, Action
+from zeam.form.base.actions import Action
 from zeam.form.base.fields import Fields
-from zeam.form.silva.actions import CancelAddAction, CancelEditAction
 from zeam.form.silva.form import SMIAddForm
 
 

@@ -23,10 +23,8 @@ from Products.Silva import mangle
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
                                    IInvisibleService)
-from silva.core.forms import z3cforms as silvaz3cforms
-from silva.core.smi import smi as silvasmi
 from silva.translations import translate as _
-from z3c.form import button
+from zeam.form import silva as silvaforms
 
 
 class OverQuotaException(BadRequest):
@@ -243,14 +241,15 @@ class Publication(Folder.Folder):
 InitializeClass(Publication)
 
 
-class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
+class ManageLocalSite(silvaforms.SMIForm):
     """This form let enable (or disable) a Publication as a local
     site.
     """
-
-    grok.implements(silvaz3cforms.INoCancelButton)
     grok.name('tab_localsite')
     grok.require('zope2.ViewManagementScreens')
+
+    tab = 'properties'
+    tab_name = 'tab_localsite'
 
     label = _(u"Local site")
     description = _(u"Here you can enable/disable a local site (or subsite). "
@@ -262,40 +261,40 @@ class ManageLocalSite(silvaz3cforms.PageForm, silvasmi.PropertiesTab):
     def manager(self):
         return ISiteManager(self.context)
 
-    def canBeALocalSite(self):
+    def can_be_a_local_site(self):
         return IPublication.providedBy(self.context) and \
             not self.manager.isSite()
 
-    @button.buttonAndHandler(_("make local site"),
-                             name="make_site",
-                             condition=lambda form: form.canBeALocalSite())
-    def action_make_site(self, action):
+    @silvaforms.action(_("make local site"),
+                       identifier="make_site",
+                       available=lambda form: form.can_be_a_local_site())
+    def make_site(self):
         try:
             self.manager.makeSite()
         except ValueError, e:
-            self.status_type = 'error'
-            self.status = e
+            self.send_message(str(e), type=u"error")
+            return silvaforms.FAILURE
         else:
-            self.updateActions()
             self.status = _("Local site activated.")
+            return silvaforms.SUCCESS
 
-    def canBeNormalAgain(self):
+    def can_be_normal_again(self):
         return IPublication.providedBy(self.context) and \
             self.manager.isSite() and \
             not IRoot.providedBy(self.context)
 
-    @button.buttonAndHandler(_("remove local site"),
-                             name="delete_site",
-                             condition=lambda form: form.canBeNormalAgain())
-    def action_delete_site(self, action):
+    @silvaforms.action(_("remove local site"),
+                       identifier="delete_site",
+                       available=lambda form: form.can_be_normal_again())
+    def delete_site(self):
         try:
             self.manager.deleteSite()
         except ValueError, e:
-            self.status_type = 'error'
-            self.status = e
+            self.send_message(str(e), type=u"error")
+            return silvaforms.FAILURE
         else:
-            self.updateActions()
             self.status = _("Local site deactivated.")
+            return silvaforms.SUCCESS
 
 
 def manage_addPublication(

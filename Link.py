@@ -4,7 +4,7 @@
 
 # Zope 3
 from five import grok
-from zope import interface, schema
+from zope import schema
 from zope.traversing.browser import absoluteURL
 
 # Zope 2
@@ -21,7 +21,6 @@ from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.references.reference import (
     Reference, ReferenceProperty, get_content_id, get_content_from_id)
-from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 

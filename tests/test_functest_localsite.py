@@ -23,7 +23,8 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser.click_tab_named('properties')
         self.assertEquals(
             list(browser.get_middleground_buttons()),
-            [u'settings...', u'addables...', u'local site...', u'customization...'])
+            [u'settings...', u'addables...',
+             u'local site...', u'customization...'])
         browser.click_href_labeled('local site...')
         self.assertEquals(browser.get_url(),
                           'http://nohost/root/pub/edit/tab_localsite')
@@ -44,7 +45,8 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser.click_control_labeled("make local site")
         feedback = browser.get_status_feedback()
         self.failUnless(feedback.startswith('Local site activated.'))
-        self.root.pub.manage_addProduct['silva.core.layout'].manage_addCustomizationService('service_customization')
+        factory = self.root.pub.manage_addProduct['silva.core.layout']
+        factory.manage_addCustomizationService('service_customization')
         browser.click_control_labeled("remove local site")
         self.assertEquals(browser.get_alert_feedback(),
                           'Still have registered utilities.')
@@ -61,14 +63,16 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
         browser = SilvaBrowser()
         browser.login('manager', url='http://nohost/root/edit')
         browser.click_tab_named('properties')
-        self.failIf(u'local site ...' in list(browser.get_middleground_buttons()))
+        self.failIf(u'local site ...' in
+                    list(browser.get_middleground_buttons()))
         code, url = browser.go('http://nohost/root/edit/tab_localsite')
         self.assertEquals(code, 200)
         browser.go('http://nohost/root/folder/edit')
         browser.click_tab_named('properties')
-        self.failIf(u'local site ...' in list(browser.get_middleground_buttons()))
+        self.failIf(u'local site ...' in
+                    list(browser.get_middleground_buttons()))
         code, url = browser.go('http://nohost/root/folder/edit/tab_localsite')
-        self.assertEquals(code, 200)
+        self.assertEquals(code, 404)
 
     def test_localsite_others_user(self):
         """Others users than manager should not access that feature.
@@ -78,7 +82,8 @@ class LocalSiteTestCase(SilvaFunctionalTestCase):
             browser.login(user, url='http://nohost/root/pub/edit')
             browser.click_href_labeled('pub')
             browser.click_tab_named('properties')
-            self.failIf(u'local site ...' in list(browser.get_middleground_buttons()))
+            self.failIf(u'local site ...' in
+                        list(browser.get_middleground_buttons()))
             code, url = browser.go('http://nohost/root/pub/edit/tab_localsite')
             self.assertEquals(code, 401)
 
