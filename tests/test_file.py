@@ -81,6 +81,7 @@ class DefaultFileImplementationTestCase(TestCase):
         """Test downloading file.
         """
         response = http('GET /root/testfile HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
         headers = response.getHeaders()
         downloaded_data = response.getBody()
         self.assertEquals(len(downloaded_data), self.file_size)
@@ -91,10 +92,22 @@ class DefaultFileImplementationTestCase(TestCase):
                           'inline;filename=testfile')
         self.failUnless('Last-Modified' in headers)
 
+    def test_not_modified(self):
+        """Test downloading a file if it as been modified after a date.
+        """
+        response = http(
+            'GET /root/testfile HTTP/1.1',
+            parsed=True,
+            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
+        self.assertEquals(response.getStatus(), 304)
+        headers = response.getHeaders()
+        self.assertEquals(len(response.getBody()), 0)
+
     def test_head_request(self):
         """Test HEAD requests on Files.
         """
         response = http('HEAD /root/testfile HTTP/1.1', parsed=True)
+        self.assertEquals(response.getStatus(), 200)
         headers = response.getHeaders()
         # Even on HEAD requests where there is no body, Content-Lenght
         # should be the size of the file.
