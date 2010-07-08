@@ -96,12 +96,14 @@ class DefaultFileImplementationTestCase(TestCase):
         """
         response = http('HEAD /root/testfile HTTP/1.1', parsed=True)
         headers = response.getHeaders()
-        # XXX content-lenght should be the size of the file
-        self.assertEquals(headers['Content-Length'], '0')
+        # Even on HEAD requests where there is no body, Content-Lenght
+        # should be the size of the file.
+        self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
                           'inline;filename=testfile')
         self.failUnless('Last-Modified' in headers)
+        self.assertEquals(len(response.getBody()), 0)
 
     def test_asset_data(self):
         """Test asset data adapter implementation.
