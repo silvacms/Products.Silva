@@ -21,12 +21,12 @@ from zope.event import notify
 from zope.i18n import translate
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent
+from zope.lifecycleevent import ObjectModifiedEvent
 import zope.app.container.interfaces
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-import transaction
 
 # Silva
 from Products.Silva import assetregistry
@@ -61,14 +61,9 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     context._setObject(id, content)
     content = getattr(context, id)
     content.set_title(title)
-    if file:
-        try:
-            content.set_image(file)
-        except ValueError:
-            # uploaded contents is not a proper image file
-            transaction.abort()
-            raise
     notify(ObjectCreatedEvent(content))
+    if file:
+        content.set_image(file)
     return content
 
 
@@ -158,6 +153,7 @@ class Image(Asset):
             self.web_crop = web_crop
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
+        notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_image')
@@ -169,6 +165,9 @@ class Image(Asset):
         if format in self.web_formats:
             self.web_format = format
         self._createDerivedImages()
+        notify(ObjectModifiedEvent(self))
+
+        # XXX Should be on event
         self.update_quota()
 
     security.declareProtected(SilvaPermissions.View, 'getCanonicalWebScale')

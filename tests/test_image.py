@@ -102,17 +102,16 @@ class DefaultImageTestCase(TestCase):
         """Retrieve the image, check the headers.
         """
         response = http('GET /root/test_image HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
+        self.assertEqual(response.getStatus(), 200)
         headers = response.getHeaders()
-        self.assertEquals(
+        self.assertEqual(
             headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEquals(
-            headers['Content-Type'], 'image/tiff')
+        self.assertEqual(headers['Content-Type'], 'image/tiff')
         self.failUnless('Last-Modified' in headers)
         image_data = response.getBody()
         pil_image = PIL.Image.open(StringIO(image_data))
-        self.assertEquals((960, 1280), pil_image.size)
-        self.assertEquals('TIFF', pil_image.format)
+        self.assertEqual((960, 1280), pil_image.size)
+        self.assertEqual('TIFF', pil_image.format)
         self.assertHashEqual(self.image_data, image_data)
 
     def test_http_view_hires(self):
@@ -135,15 +134,16 @@ class DefaultImageTestCase(TestCase):
         """Retrieve image thumbnail, check the headers.
         """
         response = http('GET /root/test_image?thumbnail HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
+        self.assertEqual(response.getStatus(), 200)
         headers = response.getHeaders()
-        self.assertEquals(
+        self.assertEqual(
             headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
-        self.assertEquals(
-            headers['Content-Type'], 'image/jpeg')
-        pil_image = PIL.Image.open(StringIO(response.getBody()))
-        self.assertEquals((90, 120), pil_image.size)
-        self.assertEquals('JPEG', pil_image.format)
+        self.assertEqual(headers['Content-Type'], 'image/jpeg')
+        body = response.getBody()
+        self.assertEqual(headers['Content-Length'], str(len(body)))
+        pil_image = PIL.Image.open(StringIO(body))
+        self.assertEqual((90, 120), pil_image.size)
+        self.assertEqual('JPEG', pil_image.format)
 
     def test_http_head(self):
         """Do an HEAD request.
@@ -153,10 +153,8 @@ class DefaultImageTestCase(TestCase):
         headers = response.getHeaders()
         self.assertEquals(
             headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEquals(
-            headers['Content-Type'], 'image/tiff')
-        self.assertEquals(
-            headers['Content-Length'], str(self.image_size))
+        self.assertEquals(headers['Content-Type'], 'image/tiff')
+        self.assertEquals(headers['Content-Length'], str(self.image_size))
         self.failUnless('Last-Modified' in headers)
         self.assertEquals(response.getBody(), '')
 
@@ -168,8 +166,8 @@ class DefaultImageTestCase(TestCase):
         headers = response.getHeaders()
         self.assertEquals(
             headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
-        self.assertEquals(
-            headers['Content-Type'], 'image/jpeg')
+        self.assertEquals(headers['Content-Type'], 'image/jpeg')
+        self.assertNotEqual(headers['Content-Length'], '0')
         self.assertEquals(response.getBody(), '')
 
     def test_http_head_hires(self):
@@ -178,13 +176,41 @@ class DefaultImageTestCase(TestCase):
         response = http('HEAD /root/test_image?hires HTTP/1.1', parsed=True)
         self.assertEquals(response.getStatus(), 200)
         headers = response.getHeaders()
-        self.assertEquals(
+        self.assertEqual(
             headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEquals(
-            headers['Content-Type'], 'image/tiff')
-        self.assertEquals(
-            headers['Content-Length'], str(self.image_size))
-        self.assertEquals(response.getBody(), '')
+        self.assertEqual(headers['Content-Type'], 'image/tiff')
+        self.assertEqual(headers['Content-Length'], str(self.image_size))
+        self.assertEqual(len(response.getBody()), 0)
+
+    def test_http_not_modified(self):
+        """Retrieve the image if it has been modified after a certain date.
+        """
+        response = http(
+            'GET /root/test_image HTTP/1.1',
+            parsed=True,
+            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
+        self.assertEqual(response.getStatus(), 304)
+        self.assertEqual(len(response.getBody()), 0)
+
+    def test_http_not_modified_thumbmail(self):
+        """Retrieve the image if it has been modified after a certain date.
+        """
+        response = http(
+            'GET /root/test_image?thumbnail HTTP/1.1',
+            parsed=True,
+            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
+        self.assertEqual(response.getStatus(), 304)
+        self.assertEqual(len(response.getBody()), 0)
+
+    def test_http_not_modified_hires(self):
+        """Retrieve the image if it has been modified after a certain date.
+        """
+        response = http(
+            'GET /root/test_image?hires HTTP/1.1',
+            parsed=True,
+            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
+        self.assertEqual(response.getStatus(), 304)
+        self.assertEqual(len(response.getBody()), 0)
 
 
 class ZODBImageTestCase(DefaultImageTestCase):
