@@ -15,7 +15,7 @@ logger = logging.getLogger('silva.image')
 
 # Zope 3
 from five import grok
-from zope import component, schema
+from zope import component
 from zope.component import getMultiAdapter
 from zope.event import notify
 from zope.i18n import translate
@@ -35,14 +35,16 @@ from Products.Silva.Asset import Asset
 from Products.Silva.ContentObjectFactoryRegistry import (
     contentObjectFactoryRegistry)
 
+from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.conf import schema as silvaschema
-from silva.core.forms import z3cforms as silvaz3cforms
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
 from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
-from z3c.form import field
+
+from zeam.form import silva as silvaforms
+from zeam.form.base import NO_VALUE
 
 # Load mime.types
 mimetypes.init()
@@ -621,31 +623,30 @@ class ImageStorageConverter(object):
         return image
 
 
-class IImageAddFields(Interface):
+class IImageAddFields(ITitledContent):
 
     file = silvaschema.Bytes(title=_(u"image"), required=True)
-    title = schema.TextLine(
-        title=_(u"title"),
-        description=_(u"Fill in a title. It will be used for the ALT (Alternative text) attribute of the image."),
-        required=True)
-    id = silvaschema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special characters besides ‘_’ or ‘-’ or ‘.’"),
-        required=False)
 
 
-class ImageAddForm(silvaz3cforms.AddForm):
+
+class ImageAddForm(silvaforms.SMIAddForm):
     """Add form for an image.
     """
 
-    silvaconf.context(interfaces.IImage)
-    silvaconf.name(u'Silva Image')
-    fields = field.Fields(IImageAddFields)
+    grok.context(interfaces.IImage)
+    grok.name(u'Silva Image')
 
-    def create(self, parent, data):
+    description = Image.__doc__
+    fields = silvaforms.Fields(IImageAddFields)
+    fields['id'].required = False
+    fields['title'].required = False
+
+    def _add(self, parent, data):
+        default_id = data['id'] is not NO_VALUE and data['id'] or u''
+        default_title = data['title'] is not NO_VALUE and data['title'] or u''
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addImage(
-            data['id'], data['title'], file=data['file'])
+            default_id, default_title, file=data['file'])
 
 
 mt = mimetypes.types_map.values()
