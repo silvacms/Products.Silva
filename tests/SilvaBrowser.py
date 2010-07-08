@@ -16,6 +16,7 @@ Z3C_CONTENTS = ['Silva File',
 ZEAM_CONTENTS = ['Silva Document',
                  'Silva Link',
                  'Silva Ghost',
+                 'Silva Ghost Folder',
                  'Silva Indexer',
                  'Silva Find',]
 
