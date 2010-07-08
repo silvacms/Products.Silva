@@ -28,7 +28,7 @@ from zeam.form.silva.form import SMIEditForm
 import silva.core.references.widgets.zeamform
 
 from silva.core import conf as silvaconf
-from silva.core.conf import schema as silvaschema
+from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostFolder, IGhostAware, IGhostVersion)
 from silva.core.references.reference import (
@@ -243,12 +243,7 @@ class GhostVersion(GhostBase, CatalogedVersion):
        return ""
 
 
-class IGhostSchema(Interface):
-    id = silvaschema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special characters besides"
-                      u"‘_’ or ‘-’ or ‘.’"),
-        required=True)
+class IGhostSchema(IIdentifiedContent):
 
     haunted = Reference(IContent,
             title=_(u"target"),

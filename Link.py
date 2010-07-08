@@ -6,7 +6,6 @@
 from five import grok
 from zope import interface, schema
 from zope.traversing.browser import absoluteURL
-from z3c.form import field
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -19,14 +18,12 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.conf.interfaces import ITitledContent
 from silva.core.references.reference import (
     Reference, ReferenceProperty, get_content_id, get_content_from_id)
 from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
-from silva.core.forms import z3cforms as silvaz3cforms
 from silva.translations import translate as _
-
-import silva.core.references.widgets.zeamform
 
 from zeam.form import silva as silvaforms
 
@@ -90,7 +87,7 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 
-class ILinkSchema(interface.Interface):
+class ILinkSchema(ITitledContent):
 
     relative = schema.Bool(
         title=_(u"relative link"),
@@ -119,26 +116,23 @@ class ILinkSchema(interface.Interface):
     #         raise interface.Invalid(_("Absolute link selected without URL"))
 
 
-class LinkAddForm(silvaz3cforms.AddForm):
+class LinkAddForm(silvaforms.SMIAddForm):
     """Add form for a link.
     """
     grok.context(interfaces.ILink)
     grok.name(u'Silva Link')
-    fields = field.Fields(ILinkSchema)
+
+    fields = silvaforms.Fields(ILinkSchema)
     description = Link.__doc__
 
-    def create(self, parent, data):
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addLink(
-            data['id'], data['title'],
-            url=data['url'], relative=data['relative'], target=data['target'])
 
 
 class LinkEditForm(silvaforms.SMIEditForm):
     """Edit form for a link.
     """
     grok.context(interfaces.ILink)
-    fields = silvaforms.Fields(ILinkSchema)
+
+    fields = silvaforms.Fields(ILinkSchema).omit('id')
 
 
 class LinkView(silvaviews.View):

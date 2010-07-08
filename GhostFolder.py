@@ -26,7 +26,7 @@ from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
     IPublication, ISilvaObject, IGhostFolder, IGhostAware)
-from silva.core.conf import schema as silvaschema
+from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.views import views as silvaviews
@@ -365,12 +365,7 @@ class GhostFolder(GhostBase, Folder.Folder):
 InitializeClass(GhostFolder)
 
 
-class IGhostFolderSchema(Interface):
-    id = silvaschema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special "
-                      u"characters besides ‘_’ or ‘-’ or ‘.’"),
-        required=True)
+class IGhostFolderSchema(IIdentifiedContent):
 
     haunted = Reference(IContainer,
             title=_(u"target"),
