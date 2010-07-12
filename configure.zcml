@@ -11,7 +11,6 @@
   <include package="zope.annotation" />
   <include package="silva.core.conf" />
   <include package="silva.core.views" />
-  <include package="silva.core.forms" />
   <include package="silva.core.layout" />
   <include package="silva.core.smi" />
   <include package="silva.core.services" />

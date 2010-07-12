@@ -259,12 +259,14 @@ class GhostTestCase(unittest.TestCase):
             'ghost1', 'Ghost 1', haunted=self.doc1)
         ghost = getattr(self.root, 'ghost1')
 
-        self.assertEqual(ghost.get_modification_datetime(),
-                         self.doc1.get_modification_datetime())
+        self.assertEqual(
+            ghost.get_modification_datetime(),
+            self.doc1.get_modification_datetime())
 
         # Let's delete the haunted object;
         # `get_modification_datetime` should still work
-        del ghost.getLastVersion()._haunted
+        service = getUtility(IReferenceService)
+        service.delete_reference(ghost.get_editable(), name=u'haunted')
         self.root.manage_delObjects(['doc1'])
         self.assertEqual(ghost.get_modification_datetime(), None)
 

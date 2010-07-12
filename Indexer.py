@@ -104,21 +104,21 @@ class Indexer(Content, SimpleItem):
         reference_service = getUtility(IReferenceService)
 
         # get tree of all subobjects
-        for object in self._getIndexables():
-            indexable = IIndexable(object)
+        for content in self._getIndexables():
+            indexable = IIndexable(content)
             indexes = indexable.getIndexes()
             if not indexes:
                 continue
 
             title = indexable.getTitle()
             references = reference_service.get_references_between(
-                self, object, name="indexer")
+                self, content, name="indexer")
             try:
                 reference = references.next()
             except StopIteration:
                 reference = reference_service.new_reference(
                     self, name=u"indexer", factory=IndexerReferenceValue)
-                reference.set_target(object)
+                reference.set_target(content)
             for indexName, indexTitle in indexes:
                 result.setdefault(indexTitle, {})[reference.__name__] = \
                     (indexName, title)

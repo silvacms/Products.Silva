@@ -5,6 +5,7 @@
 
 # Zope 3
 from five import grok
+from zope.component import getUtility
 
 # Zope 2
 from Acquisition import aq_inner, aq_base
@@ -25,9 +26,8 @@ from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IGhostFolder, IGhostAware, IGhostVersion)
-from silva.core.references.reference import (
-    ReferenceProperty, get_content_id, get_content_from_id)
-from silva.core.references.reference import Reference
+from silva.core.references.reference import Reference, get_content_id
+from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
@@ -50,8 +50,6 @@ class GhostBase(object):
     LINK_CONTENT = 6 # link points to content
     LINK_NO_FOLDER = 7 # link doesn't point to a folder
     LINK_CIRC = 8 # Link results in a ghost haunting itself
-
-    _haunted = ReferenceProperty(name=u'haunted')
 
     # those should go away
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -110,13 +108,19 @@ class GhostBase(object):
     def set_haunted(self, content):
         """ Set the content as the haunted object
         """
+        service = getUtility(IReferenceService)
+        reference = service.get_reference(
+            aq_inner(self), name=u"haunted", add=True)
         if not isinstance(content, int):
             content = get_content_id(content)
-        self._haunted = content
+        reference.set_target_id(content)
 
     security.declareProtected(SilvaPermissions.View, 'get_haunted')
     def get_haunted(self):
-        return get_content_from_id(self._haunted)
+        service = getUtility(IReferenceService)
+        reference = service.get_reference(
+            aq_inner(self), name=u"haunted", add=True)
+        return reference.target
 
     security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):

@@ -6,9 +6,11 @@
 from five import grok
 from zope import schema
 from zope.traversing.browser import absoluteURL
+from zope.component import getUtility
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_inner
 from App.class_init import InitializeClass
 
 # Silva
@@ -19,8 +21,8 @@ from Products.Silva import SilvaPermissions
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
-from silva.core.references.reference import (
-    Reference, ReferenceProperty, get_content_id, get_content_from_id)
+from silva.core.references.reference import Reference, get_content_id
+from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
@@ -50,7 +52,6 @@ class LinkVersion(CatalogedVersion):
 
     _url = None
     _relative = False
-    _target = ReferenceProperty(name=u'link')
 
     security.declareProtected(SilvaPermissions.View, 'get_relative')
     def get_relative(self):
@@ -58,7 +59,10 @@ class LinkVersion(CatalogedVersion):
 
     security.declareProtected(SilvaPermissions.View, 'get_target')
     def get_target(self):
-        return get_content_from_id(self._target)
+        service = getUtility(IReferenceService)
+        reference = service.get_reference(
+            aq_inner(self), name=u'link', add=True)
+        return reference.target
 
     security.declareProtected(SilvaPermissions.View, 'get_url')
     def get_url(self):
@@ -73,9 +77,12 @@ class LinkVersion(CatalogedVersion):
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_target')
     def set_target(self, target):
+        service = getUtility(IReferenceService)
+        reference = service.get_reference(
+            aq_inner(self), name=u'link', add=True)
         if not isinstance(target, int):
             target = get_content_id(target)
-        self._target = target
+        reference.set_target_id(target)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_url')

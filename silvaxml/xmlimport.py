@@ -7,20 +7,15 @@ import logging
 import warnings
 
 from five import grok
-from zope.component import getUtility
 from zope.event import notify
 
 from DateTime import DateTime
-import transaction
 
 from Products.Formulator.Errors import ValidationError
-from Products.Silva import mangle
-from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.events import ContentImported, IContentImported
-from silva.core.references.interfaces import IReferenceService
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade.silvaxml import upgradeXMLOnFD
 from sprout.saxext import xmlimport, collapser

@@ -3,7 +3,7 @@
 # $Id$
 
 # Zope
-from zope.app import zapi
+from zope.component import getUtility
 from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
 from zope.interface import implements
 from zope.publisher.browser import BrowserLanguages
@@ -30,7 +30,7 @@ class LanguageProvider(adapter.Adapter):
 
     security.declarePublic('getAvailableLanguages')
     def getAvailableLanguages(self):
-        silva_domain = zapi.getUtility(ITranslationDomain, 'silva')
+        silva_domain = getUtility(ITranslationDomain, 'silva')
         # XXX awful hack, but we don't have access to any
         # 'getAvailableLanguages' functionality apparently..
         result = ['none']
