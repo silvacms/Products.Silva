@@ -3,7 +3,6 @@
 # $Id$
 
 from urlparse import urlparse
-import re
 
 # Zope 3
 from zope.publisher.interfaces.http import IHTTPRequest
@@ -13,16 +12,6 @@ from App.class_init import InitializeClass
 
 from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.adapters import IPath
-
-frag_re = re.compile("([^\#\?]*)(\?[^\#]*)?(\#.*)?")
-
-#for the mailto: pattern see the description of the email addressing
-#format in the RFC 2822: http://tools.ietf.org/html/rfc2822#section-3.4.1
-# so much more is allowed everywhere in the email address.  The RE currently
-# only searches the full list of chars for the LHS of the address.  It does
-# not support "quoted strings".
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9!#\$%\&\'\*\+\-\/=\?\^_`\{\}\|~\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
-_url_match = re.compile(URL_PATTERN)
 
 
 class SilvaPathAdapter(grok.Adapter):
@@ -75,16 +64,18 @@ class SilvaPathAdapter(grok.Adapter):
         if path == '':
             return path
         # If it is a url already, return it:
-        if _url_match.match(path):
+        parsed_path = urlparse(path)
+        if parsed_path.scheme:
             return path
-        # Is it simply a query or anchor fragment? If so, return it
-        if path[0] in ['?', '#']:
+        if not parsed_path.path:
             return path
+
         # It is not an URL, query or anchor, so treat it as a path.
         # If it is a relative path, treat is as such:
         if not path.startswith('/'):
             container = self.context.get_container()
             return self._convertPath(container.absolute_url() + '/' + path)
+
         # If it is an absolute path, try to traverse it to
         # a Zope/Silva object and get the URL for that.
         splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
@@ -93,10 +84,12 @@ class SilvaPathAdapter(grok.Adapter):
             # Was not found, maybe the link is broken, but maybe it's just
             # due to virtual hosting situations or whatever.
             return self._convertPath(path)
+
         if hasattr(obj.aq_base, 'absolute_url'):
             # There are some cases where the object we find
             # does not have the absolute_url method.
             return obj.absolute_url()
+
         # In all other cases:
         return self._convertPath(path)
 
@@ -135,6 +128,13 @@ class PathAdapter(grok.Adapter):
             be returned untouched)
         """
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
+        if scheme and scheme not in ['http', 'https']:
+            return url
+        if netloc and netloc != self.request.environ['HTTP_HOST']:
+            # if the url is absolute and the server is not this server, don't
+            # convert.
+            return url
+
         # XXX does returning the path if it's relative always work? do we
         # take care to only store 'safe' paths in Silva?
         if not path.startswith('/'):
@@ -145,17 +145,10 @@ class PathAdapter(grok.Adapter):
                 path += '#' + fragment
             return path
 
-        request = self.request
-
-        if netloc and netloc != request.environ['HTTP_HOST']:
-            # if the url is absolute and the server is not this server, don't
-            # convert.
-            return url
-
         # physicalPathFromURL breaks in complex virtual hosting situations
         # where incorrect urls are entered by hand, or imported
         try:
-            result = '/'.join(request.physicalPathFromURL(path))
+            result = '/'.join(self.request.physicalPathFromURL(path))
         except ValueError:
             result = path
 
@@ -179,21 +172,19 @@ class PathAdapter(grok.Adapter):
             # query and fragment information is in path so will
             # automatically be passed along
             return path
-        request = self.request
-        #strip off fragment (#) or query before
-        #calling physicalPathtoURL, so they don't
-        #get converted
-        m = frag_re.search(path)
-        path = m.group(1)
-        query = m.group(2)
-        frag = m.group(3)
-        url = request.physicalPathToURL(path.split('/'))
+
+        original_path = urlparse(path)
+        if original_path.scheme:
+            # This is already a URL
+            return path
+
+        url = self.request.physicalPathToURL(original_path.path.split('/'))
         path = urlparse(url)[2]
         # try to retain fragment or query information
-        if query:
-            path += query
-        if frag:
-            path += frag
+        if original_path.query:
+            path += '?' + original_path.query
+        if original_path.fragment:
+            path += '#' + original_path.fragment
         return path
 
 
