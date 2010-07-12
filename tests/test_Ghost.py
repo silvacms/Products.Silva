@@ -5,6 +5,7 @@
 import unittest
 
 from zope.interface.verify import verifyObject
+from zope.component import getUtility
 
 from Acquisition import aq_chain
 
@@ -14,6 +15,7 @@ from Products.Silva.tests.helpers import publish_object
 
 from silva.core import interfaces
 from silva.core.references.reference import BrokenReferenceError
+from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
 
 class GhostTestCase(unittest.TestCase):
@@ -73,6 +75,19 @@ class GhostTestCase(unittest.TestCase):
         # try to delete doc1
         self.assertRaises(
             BrokenReferenceError, self.root.action_delete, ['doc1'])
+
+    def test_ghost_reference(self):
+        """Test the reference created by the ghost.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.doc1)
+        ghost = self.root.ghost.get_editable()
+
+        reference = getUtility(IReferenceService).get_reference(
+            ghost, name=u"haunted")
+        self.failUnless(verifyObject(IReferenceValue, reference))
+        self.assertEqual(aq_chain(reference.target), aq_chain(self.root.doc1))
+        self.assertEqual(aq_chain(reference.source), aq_chain(ghost))
 
     def test_ghost_title(self):
         self.root.manage_addProduct['Silva'].manage_addGhost(
@@ -162,7 +177,6 @@ class GhostTestCase(unittest.TestCase):
         ghostdoc.close_version()
 
         self.assertTrue(not gfpub.is_published())
-
 
     def test_ghostfolder_topub(self):
         factory = self.root.manage_addProduct['Silva']
