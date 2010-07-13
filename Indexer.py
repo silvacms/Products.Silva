@@ -3,9 +3,9 @@
 # $Id$
 
 # Zope 3
-from zope.app.intid.interfaces import IIntIds
+from five import grok
 from zope.component import getUtility
-from zope.interface import implements
+from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -18,12 +18,11 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IIndexable, IIndexer
-from silva.core.views import views as silvaviews
-from zeam.form.silva.form import SMIAddForm
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
-
+from silva.core.views import views as silvaviews
 from silva.translations import translate as _
+from zeam.form.silva.form import SMIAddForm
 
 
 class IndexerReferenceValue(WeakReferenceValue):
@@ -49,7 +48,7 @@ class Indexer(Content, SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Indexer"
-    implements(IIndexer)
+    grok.implements(IIndexer)
     silvaconf.icon('www/silvaindexer.png')
 
     def __init__(self, id):
@@ -79,8 +78,7 @@ class Indexer(Content, SimpleItem):
         for path, (name, title) in self._index[indexTitle].items():
             result.append((title.lower(), title, path, name,))
         result.sort()
-        result = [
-            (title, path, name) for title_lowercase, title, path, name in result]
+        result = [(title, path, name) for _, title, path, name in result]
         return result
 
     def _getIndexables(self):
@@ -155,29 +153,37 @@ class Indexer(Content, SimpleItem):
 
 InitializeClass(Indexer)
 
+
 class IndexerAddForm(SMIAddForm):
     """Add form for Silva indexer.
     """
-    silvaconf.name(u"Silva Indexer")
+    grok.name(u"Silva Indexer")
 
 
 class IndexerView(silvaviews.View):
     """View on indexer objects.
     """
-
-    silvaconf.context(IIndexer)
+    grok.context(IIndexer)
 
     def update(self):
-        self.resolver = getUtility(IIntIds)
+        cache = {}
+        references = getUtility(IReferenceService).references
 
-    def render_links(self, links):
-        result = []
+        def resolver(cid):
+            if cid in cache:
+                return cache[cid]
+            reference = references.get(cid, None)
+            if reference is not None:
+                url = absoluteURL(reference.target, self.request)
+                cache[cid] = url
+                return url
+            return ''
+
+        self.__resolver = resolver
+
+    def links(self, links):
         for title, cid, name in links:
-            # XXX: This is sub-optimal
-            url = self.resolver.getObject(cid).absolute_url()
-            result.append(
-                '<a class="indexer" href="%s#%s">%s</a>' % (
-                    url, name, title))
-        return '<br />'.join(result)
+            url = self.__resolver(cid)
+            yield '<a class="indexer" href="%s#%s">%s</a>' % (url, name, title)
 
 

@@ -1,7 +1,7 @@
 <tal:def xmlns:i18n="http://xml.zope.org/namespaces/i18n"
          i18n:domain="silva">
 
-  <h2 tal:content="content/get_title | default"
+  <h2 tal:content="content/get_title_or_id | default"
       i18n:translate="">
     Index
   </h2>
@@ -28,8 +28,11 @@
             <td tal:content="indexTitle">
               Term
             </td>
-            <td tal:content="structure python:view.render_links(indexEntry)">
-              Links
+            <td>
+              <tal:index tal:repeat="link python:view.links(indexEntry)">
+                <tal:link tal:content="structure link" />
+                <br />
+              </tal:index>
             </td>
           </tr>
         </tal:def>
