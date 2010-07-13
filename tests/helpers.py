@@ -2,10 +2,11 @@
 # See also LICENSE.txt
 # $Id$
 
+import os.path
+
 from zope.interface import noLongerProvides, alsoProvides
 from silva.core.views.interfaces import IPreviewLayer
 
-import os.path
 import DateTime
 
 def resetPreview(content):

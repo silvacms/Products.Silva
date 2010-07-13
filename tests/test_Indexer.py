@@ -2,17 +2,17 @@
 # See also LICENSE.txt
 # $Id $
 
-from zope.app.intid.interfaces import IIntIds
+import unittest
+
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
-import SilvaTestCase
-from DateTime import DateTime
+from Products.Silva.tests.helpers import publish_object
+from Products.Silva.tests import SilvaTestCase
 
 from Products.Silva.Ghost import ghost_factory
 from silva.core.interfaces import IIndexer
 from silva.core.references.interfaces import IReferenceService
-from silva.core.references.reference import BrokenReferenceError
 
 
 class IndexerTestCase(SilvaTestCase.SilvaTestCase):
@@ -101,13 +101,11 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         # publish documents
         for doc in [gamma, alpha, Alpha, beta, Beta, kappa, self.toghost, ghost,
                     self.broken_ghost, self.subfolder.index, foo, bar, baz]:
-            doc.set_unapproved_version_publication_datetime(DateTime() - 1)
-            # should now be published
-            doc.approve_version()
+            publish_object(doc)
 
         # create one unpublished document that should never show up in the
         # index
-        self.omega = omega = self.add_document(self.root, 'omega', 'Omega')
+        self.omega = self.add_document(self.root, 'omega', 'Omega')
 
         # create a new version of a document that should not be picked up by the
         # indexer
@@ -170,9 +168,8 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
                               self.indexer.getIndexEntry(indexName))
 
     def test_remove_entry_when_remove_object(self):
-        ref_name = self.resolver(self.alpha)
         self.assertEquals([('Alpha', self.resolver(self.alpha), u'a'),
-                            ('Gamma', self.resolver(self.gamma), u'a')],
+                           ('Gamma', self.resolver(self.gamma), u'a')],
                           self.indexer.getIndexEntry('a'))
 
         self.pub.manage_delObjects(['alpha'])
@@ -181,7 +178,6 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
                           self.indexer.getIndexEntry('a'))
 
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(IndexerTestCase, 'test'))

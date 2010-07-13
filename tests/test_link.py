@@ -100,3 +100,9 @@ class LinkTestCase(TestCase):
         self.assertEqual(
             headers['Location'],
             'http://localhost/root/folder/document')
+
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(LinkTestCase, 'test'))
+    return suite

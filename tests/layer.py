@@ -5,12 +5,11 @@
 
 # Zope 3
 import zope.component.eventtesting
-from zope.app.component.hooks import setSite, setHooks
+from zope.site.hooks import setSite, setHooks
 from zope.component import provideHandler
 from zope.testing.cleanup import cleanUp as _cleanUp
 
 # Zope 2
-from ZODB.DemoStorage import DemoStorage
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase import installProduct, hasProduct
 from Testing.ZopeTestCase.layer import ZopeLiteLayer
