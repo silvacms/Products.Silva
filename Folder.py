@@ -893,7 +893,8 @@ def folder_moved_update_quota(obj, event):
 
 
 class IPhotoGallery(ICustomizableTag):
-    pass
+    """Container as a photo gallery
+    """
 
 
 class PhotoGalleryView(silvaviews.View):
