@@ -7,6 +7,7 @@ import unittest
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
+from DateTime import DateTime
 from Acquisition import aq_chain
 
 from Products.Silva.Ghost import GhostVersion
@@ -37,26 +38,26 @@ class GhostTestCase(unittest.TestCase):
             setattr(self, id, getattr(self.root, id))
 
         factory(self.root).manage_addFolder('folder4', 'Folder4')
-        self.folder4 = folder4 = getattr(self.root, 'folder4')
+        self.folder4 = getattr(self.root, 'folder4')
 
         factory(self.root).\
             manage_addPublication('publication5', 'Publication5')
-        self.publication5 = publication5 = getattr(self.root, 'publication5')
+        self.publication5 = getattr(self.root, 'publication5')
 
-        factory(folder4, 'SilvaDocument').\
+        factory(self.folder4, 'SilvaDocument').\
             manage_addDocument('subdoc', 'Subdoc')
-        self.subdoc = getattr(folder4, 'subdoc')
+        self.subdoc = getattr(self.folder4, 'subdoc')
 
-        factory(folder4).manage_addFolder('subfolder', 'Subfolder')
-        self.subfolder = subfolder = getattr(folder4, 'subfolder')
+        factory(self.folder4).manage_addFolder('subfolder', 'Subfolder')
+        self.subfolder = getattr(self.folder4, 'subfolder')
 
-        factory(subfolder, 'SilvaDocument').\
+        factory(self.subfolder, 'SilvaDocument').\
             manage_addDocument('subsubdoc', 'Subsubdoc')
-        self.subsubdoc = getattr(subfolder, 'subsubdoc')
+        self.subsubdoc = getattr(self.subfolder, 'subsubdoc')
 
-        factory(publication5, 'SilvaDocument').\
+        factory(self.publication5, 'SilvaDocument').\
             manage_addDocument('subdoc2', 'Subdoc2')
-        self.subdoc2 = getattr(publication5, 'subdoc2')
+        self.subdoc2 = getattr(self.publication5, 'subdoc2')
 
     def test_ghost(self):
         """Test ghost.
@@ -270,6 +271,25 @@ class GhostTestCase(unittest.TestCase):
         self.root.manage_delObjects(['doc1'])
         self.assertEqual(ghost.get_modification_datetime(), None)
 
+    def test_ghost_folder_sync_twice(self):
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'ghostfolder', 'Ghost Folder', haunted=self.folder4)
+        ghostfolder = self.root.ghostfolder
+        ghostfolder.haunt()
+        ghost = ghostfolder.subdoc
+        self.assertEquals('Silva Ghost', ghost.meta_type)
+        ghost_version = ghost.get_viewable()
+        self.assertEquals(self.subdoc, ghost_version.get_haunted())
+        self.assertEquals('public',
+                          ghost_version.version_status())
+        self.subdoc.set_unapproved_version_publication_datetime(
+            DateTime() - 10)
+        self.subdoc.approve_version()
+        ghostfolder.haunt()
+        ghost_version2 = ghost.get_viewable()
+        self.assertEquals(ghost_version, ghost_version2)
+        self.assertEquals('public', ghost_version.version_status())
 
 def test_suite():
     suite = unittest.TestSuite()
