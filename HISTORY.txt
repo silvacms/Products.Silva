@@ -1,5 +1,5 @@
-Silva changes
-=============
+Changes
+=======
 
 Silva 2.3 (unreleased)
 ----------------------
