@@ -1,10 +1,29 @@
 Silva changes
 =============
 
-Silva 2.3 (unreleased)
-----------------------
+Silva 2.3b1 (2010/07/16)
+------------------------
 
 - Users can select a Gravatar image to appear next to their name in Silva.
+
+- Silva File and Images have been reviewed, HEAD and HTTP headers are now
+  properly implemented. ExtFile storage is considered legacy, please migrate
+  to Blob storage.
+
+- References are used to link content: Link, Indexer, Ghosts and links, images
+  in Kupu uses it to refer linked content. XML import / export have been updated
+  to work with thoses.
+
+- z3c.forms have been replaced with Zeam Forms.
+
+- Silva now uses Python 2.6 and Zope 2.12.
+
+- Most of Silva contents now properly triggers Zope event when being 
+  added/edited.
+
+- More parts of the SMI have been replaced by Zope views and forms.
+
+- Tests now use infrae.testing. Functional tests rely on infrae.wsgi.
 
 Silva 2.2 (2010-03-31)
 ----------------------
