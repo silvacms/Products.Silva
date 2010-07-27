@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+from __future__ import absolute_import
+
 from StringIO import StringIO
 try:
     from PIL import Image as PILImage
