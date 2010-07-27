@@ -464,7 +464,7 @@ class Image(Asset):
 
         if self.web_scale != '100%':
             width, height = self.getCanonicalWebScale()
-            image = image.resize((width, height), PIL.Image.ANTIALIAS)
+            image = image.resize((width, height), PILImage.ANTIALIAS)
             changed = True
 
         have_changed, image = self._prepareWebFormat(image)
@@ -505,7 +505,7 @@ class Image(Asset):
         try:
             thumb = image.copy()
             ts = self.thumbnail_size
-            thumb.thumbnail((ts, ts), PIL.Image.ANTIALIAS)
+            thumb.thumbnail((ts, ts), PILImage.ANTIALIAS)
         except IOError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
