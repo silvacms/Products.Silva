@@ -49,7 +49,10 @@ from zeam.form.base import NO_VALUE
 # Load mime.types
 mimetypes.init()
 
-import PIL.Image
+try:
+    from PIL import Image as PILImage
+except ImportError:
+    import Image as PILImage
 havePIL = 1
 
 
@@ -431,7 +434,7 @@ class Image(Asset):
             img = self.image
         image_reference = img.get_content_fd()
         try:
-            image = PIL.Image.open(image_reference)
+            image = PILImage.open(image_reference)
         except IOError, e:
             raise ValueError, e.args[-1]
         return image

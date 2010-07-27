@@ -3,7 +3,10 @@
 # $Id$
 
 from StringIO import StringIO
-import PIL
+try:
+    from PIL import Image as PILImage
+except ImportError:
+    import Image as PILImage
 import unittest
 
 from zope.interface.verify import verifyObject
@@ -57,7 +60,7 @@ class DefaultImageTestCase(TestCase):
         self.failUnless(content.tag() is not None)
 
         data = StringIO(content.get_image(hires=0, webformat=1))
-        pil_image = PIL.Image.open(data)
+        pil_image = PILImage.open(data)
         self.assertEquals((100, 100), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
@@ -65,7 +68,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(self.image_data, data)
 
         data = StringIO(content.get_image(hires=1, webformat=1))
-        pil_image = PIL.Image.open(data)
+        pil_image = PILImage.open(data)
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('JPEG', pil_image.format)
 
@@ -109,7 +112,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEqual(headers['Content-Type'], 'image/tiff')
         self.failUnless('Last-Modified' in headers)
         image_data = response.getBody()
-        pil_image = PIL.Image.open(StringIO(image_data))
+        pil_image = PILImage.open(StringIO(image_data))
         self.assertEqual((960, 1280), pil_image.size)
         self.assertEqual('TIFF', pil_image.format)
         self.assertHashEqual(self.image_data, image_data)
@@ -125,7 +128,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(
             headers['Content-Type'], 'image/tiff')
         image_data = response.getBody()
-        pil_image = PIL.Image.open(StringIO(image_data))
+        pil_image = PILImage.open(StringIO(image_data))
         self.assertEquals((960, 1280), pil_image.size)
         self.assertEquals('TIFF', pil_image.format)
         self.assertHashEqual(self.image_data, image_data)
@@ -141,7 +144,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEqual(headers['Content-Type'], 'image/jpeg')
         body = response.getBody()
         self.assertEqual(headers['Content-Length'], str(len(body)))
-        pil_image = PIL.Image.open(StringIO(body))
+        pil_image = PILImage.open(StringIO(body))
         self.assertEqual((90, 120), pil_image.size)
         self.assertEqual('JPEG', pil_image.format)
 
