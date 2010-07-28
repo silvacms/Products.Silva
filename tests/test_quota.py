@@ -14,7 +14,7 @@ from silva.core import interfaces
 def test_file_size(filename):
     """Return the size of a file.
     """
-    with open_test_file(filename, mode='r') as file_handle:
+    with open_test_file(filename, mode='rb') as file_handle:
         file_handle.seek(0, 2)
         return file_handle.tell()
 

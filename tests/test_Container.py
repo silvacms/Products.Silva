@@ -3,12 +3,12 @@
 # $Id $
 
 # Python
-from os.path import dirname, join
 from DateTime import DateTime
 
 # Silva
 from silva.core.interfaces import IVersionedContent, IContent
 from Products.Silva.mangle import Id
+from Products.Silva.tests.helpers import open_test_file
 
 import SilvaTestCase
 
@@ -26,37 +26,32 @@ def check_valid_id(*args, **kw):
 class ContainerBaseTestCase(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
-        self.doc1 = doc1 = self.add_document(self.root, 'doc1', 'Doc1')
-        self.doc2 = doc2 = self.add_document(self.root, 'doc2', 'Doc2')
-        self.doc3 = doc3 = self.add_document(self.root, 'doc3', 'Doc3')
+        self.doc1 = self.add_document(self.root, 'doc1', 'Doc1')
+        self.doc2 = self.add_document(self.root, 'doc2', 'Doc2')
+        self.doc3 = self.add_document(self.root, 'doc3', 'Doc3')
         self.folder4 = folder4 = self.add_folder(
             self.root, 'folder4', 'Folder4', policy_name='Silva AutoTOC')
         self.publication5 = publication5 = self.add_publication(
             self.root, 'publication5', 'Publication5', policy_name='Silva AutoTOC')
-        self.subdoc = subdoc = self.add_document(folder4, 'subdoc', 'Subdoc')
+        self.subdoc = self.add_document(folder4, 'subdoc', 'Subdoc')
         self.subfolder = subfolder = self.add_folder(
             folder4, 'subfolder', 'Subfolder', policy_name='Silva AutoTOC')
-        self.subsubdoc = subsubdoc = self.add_document(subfolder,
+        self.subsubdoc = self.add_document(subfolder,
                   'subsubdoc', 'Subsubdoc')
-        self.subdoc2 = subdoc2 = self.add_document(publication5,
+        self.subdoc2 = self.add_document(publication5,
                   'subdoc2', 'Subdoc2')
-        directory = dirname(__file__)
-        test_image_filename = join(directory,'data','testimage.gif')
-        test_image = open(test_image_filename, 'r')
-        self.image1 = self.add_image(self.root, 'image1', 'Image1',
-                                 file=test_image)
-        test_image.close()
-        test_image = open(test_image_filename, 'r')
-        self.image2 = self.add_image(self.root, 'image2', 'Image2',
-                                 file=test_image)
-        test_image.close()
+        with open_test_file('testimage.gif') as test_image:
+            self.image1 = self.add_image(
+                self.root, 'image1', 'Image1', file=test_image)
+            self.image2 = self.add_image(
+                self.root, 'image2', 'Image2', file=test_image)
         # adding role for action_rename may succeed
         self.setRoles(['Manager'])
-        
+
 class ContainerTestCase(ContainerBaseTestCase):
     """Test the Container interface.
     """
-    
+
     def test_convert_to_folder(self):
         #create a folder to test conversion with
         cf2p_id = 'cf2p'
@@ -82,8 +77,8 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assert_(cf2p_id in self.root.objectIds('Silva Folder'),
                      "folder converted to publication is not in objectIds('Silva Folder') and should be")
         self.root.manage_delObjects([cf2p_id])
-    
-    def test_get_default(self):
+
+    def test_get_default_2(self):
         doc = self.folder4.get_default()
         self.assertEquals(doc.get_title(), 'Folder4')
         self.assert_(IContent.providedBy(doc),
@@ -98,11 +93,11 @@ class ContainerTestCase(ContainerBaseTestCase):
         l = [self.subdoc, self.subfolder]
         self.assertEquals(self.folder4.get_ordered_publishables(),
                           l)
-        
+
     def test_get_assets(self):
         self.assertEquals(self.root.get_assets(), [self.image1, self.image2])
         # assets should be sorted by id
-        r = self.root.action_rename('image2','aimage')
+        self.root.action_rename('image2','aimage')
         self.assertEquals(self.root.get_assets(), [self.image2, self.image1])
         # FIXME: more tests with assets
 
@@ -121,15 +116,15 @@ class ContainerTestCase(ContainerBaseTestCase):
             self.publication5)]
         self.assertEquals(self.root.get_public_tree(), l)
         self.assertEquals(self.root.get_public_tree(1), l)
-        
+
         l = [(0, self.folder4), (0, self.publication5)]
         self.assertEquals(self.root.get_public_tree(0), l)
 
     def test_get_public_tree_all(self):
         self.subdoc2.set_unapproved_version_publication_datetime(DateTime())
         self.subdoc2.approve_version()
-        
-        l = [(0, self.folder4), (1, self.subfolder), 
+
+        l = [(0, self.folder4), (1, self.subfolder),
              (0, self.publication5), (1, self.subdoc2),]
         self.assertEquals(self.root.get_public_tree_all(), l)
 
@@ -139,7 +134,7 @@ class ContainerTestCase(ContainerBaseTestCase):
             (1, self.subdoc), (1, self.subfolder), (2, self.subfolder.index),
             (2, self.subfolder.subsubdoc), (0, self.root.publication5)]
         self.assertEquals(self.root.get_status_tree(), l)
-        
+
     def test_move_object_up(self):
         r = self.root.move_object_up('doc2')
         l = [self.doc2, self.doc1, self.doc3, self.folder4, self.publication5]
@@ -210,28 +205,28 @@ class ContainerTestCase(ContainerBaseTestCase):
         l = [self.doc2, self.folder4, self.doc1, self.doc3, self.publication5]
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
-    
+
     def test_move_to_all(self):
         r = self.root.move_to(['doc1', 'doc2', 'doc3', 'folder4', 'publication5'], 1)
         self.assert_(r)
         l = [self.doc1, self.doc2, self.doc3, self.folder4, self.publication5]
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
-        
+
     def test_move_to_end(self):
         r = self.root.move_to(['doc2'], 5)
         self.assert_(r)
         l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
-        
+
     def test_move_to_wrong_indexes(self):
         r = self.root.move_to(['doc2'], 100)
         self.assert_(r)
         l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
         self.assertEquals(self.root.get_ordered_publishables(),
                           l)
-        
+
     def test_move_wrong_ids(self):
         r = self.root.move_to(['foo'], 1)
         self.assert_(not r)
@@ -251,14 +246,15 @@ class ContainerTestCase(ContainerBaseTestCase):
         r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('.foo_', 'This should not work')
         self.assert_(not hasattr(self.root, '.foo_'))
         # issues189/321
+        factory = self.root.manage_addProduct['SilvaDocument']
         for bad_id in ('service_foo', 'edit', 'manage_main', 'index_html'):
-            r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument(bad_id, 'This should not work')
-            obj = getattr(self.root, bad_id, None)            
+            factory.manage_addDocument(bad_id, 'This should not work')
+            obj = getattr(self.root, bad_id, None)
             self.assert_(not IVersionedContent.providedBy(obj),
                          'should not have created document with id '+bad_id)
-        
+
         # during rename
-        r = self.root.action_rename('doc1', '_doc')
+        self.root.action_rename('doc1', '_doc')
         self.assert_(hasattr(self.root, 'doc1'))
         self.assert_(not hasattr(self.root, '_doc'))
 
@@ -330,7 +326,7 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertRaises(AttributeError, self.root.folder6.is_published)
 
 
-    
+
 import unittest
 def test_suite():
     suite = unittest.TestSuite()
