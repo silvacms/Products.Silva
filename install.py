@@ -360,7 +360,7 @@ def configureMembership(root):
         factory.manage_addSimpleMemberService('service_members')
 
     if 'Members' not in installed_ids:
-        root.manage_addFolder('Members')
+        root.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder('Members')
 
     if 'service_messages' not in installed_ids:
         factory.manage_addEmailMessageService(

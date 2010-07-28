@@ -4,7 +4,11 @@ Changes
 Silva 2.3 (unreleased)
 ----------------------
 
-- ...
+- Members folder is a BTreeFolder, that improve performances on site
+  with lot of users.
+
+- Issues with PIL usages and libmagic have been fixed to work properly
+  on native Windows.
 
 Silva 2.3b1 (2010/07/16)
 ------------------------
