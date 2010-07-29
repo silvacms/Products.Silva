@@ -17,6 +17,7 @@ class PathAdapterTestCase(SilvaTestCase.SilvaTestCase):
         request.setServerURL(
             protocol='http', hostname='foo.bar.com', port='80')
         request.setVirtualRoot(('', ))
+        request.environ['HTTP_HOST'] = 'duumy.bar.com'
     
     def test_pathToUrlPath(self):
         path_adapter = IPath(self.request)
