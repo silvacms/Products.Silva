@@ -236,6 +236,64 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEquals(version.get_target(), datafile)
         self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
 
+    def test_link_to_file_existing_rename_twice(self):
+        """Import a link to file in a folder that already exists two times. The
+        imported folder should be done under a different name for each import.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addIndexer('folder', 'Folder')
+        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+
+        self.import_zip('test_import_link.zip')
+        self.assertEventsAre(
+            ['ContentImported for /root/import_of_folder',
+             'ContentImported for /root/import_of_folder/file',
+             'ContentImported for /root/import_of_folder/index',
+             'ContentImported for /root/import_of_folder/new',
+             'ContentImported for /root/import_of_folder/new/link'],
+            IContentImported)
+        self.failUnless(
+            interfaces.IFolder.providedBy(self.root.import_of_folder))
+        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+
+        clearEvents()
+
+        self.import_zip('test_import_link.zip')
+        self.assertEventsAre(
+            ['ContentImported for /root/import2_of_folder',
+             'ContentImported for /root/import2_of_folder/file',
+             'ContentImported for /root/import2_of_folder/index',
+             'ContentImported for /root/import2_of_folder/new',
+             'ContentImported for /root/import2_of_folder/new/link'],
+            IContentImported)
+        self.failUnless(
+            interfaces.IFolder.providedBy(self.root.import2_of_folder))
+        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+
+        link = self.root.import_of_folder.new.link
+        datafile = self.root.import_of_folder.file
+
+        self.failUnless(interfaces.ILink.providedBy(link))
+        self.failUnless(interfaces.IFile.providedBy(datafile))
+        self.assertEquals(datafile.get_title(),  u'Torvald file')
+
+        version = link.get_editable()
+        self.assertEquals(version.get_relative(), True)
+        self.assertEquals(version.get_target(), datafile)
+        self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
+
+        link2 = self.root.import2_of_folder.new.link
+        datafile2 = self.root.import2_of_folder.file
+
+        self.failUnless(interfaces.ILink.providedBy(link2))
+        self.failUnless(interfaces.IFile.providedBy(datafile2))
+        self.assertEquals(datafile2.get_title(),  u'Torvald file')
+
+        version2 = link2.get_editable()
+        self.assertEquals(version2.get_relative(), True)
+        self.assertEquals(version2.get_target(), datafile2)
+        self.assertEquals(aq_chain(version2.get_target()), aq_chain(datafile2))
+
     def test_link_url(self):
         """Import a link set with an URL.
         """
