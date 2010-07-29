@@ -28,6 +28,11 @@ silvaconf.namespace(NS_URI)
 theXMLImporter = xmlimport.Importer()
 logger = logging.getLogger('silva.xml')
 
+class ImportReferenceError(xmlimport.XMLImportError):
+    """The imported content refer to a non-existing other imported
+    content.
+    """
+
 
 @grok.subscribe(ISilvaObject, IContentImported)
 def reindex_import_content(content, event):
@@ -42,11 +47,14 @@ def parse_date(date):
     return None
 
 
-def resolve_path(setter, root, target_path):
+def resolve_path(setter, info, target_path):
     """Resolve target_path from root, and set it using setter.
     """
-    # XXX support renamed imports
-    path = map(str, target_path.split('/'))
+    root = info.importRoot()
+    imported_target_path = info.getImportedPath(target_path)
+    if imported_target_path is None:
+        raise ImportReferenceError(target_path)
+    path = map(str, imported_target_path.split('/'))
     target = root.unrestrictedTraverse(path)
     setter(target)
 
@@ -65,6 +73,8 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata = {}
         self._metadata_multivalue = False
         self._workflow = {}
+        self.__id_result = None
+        self.__id_original = None
 
     # MANIPULATORS
 
@@ -113,7 +123,32 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self.getInfo().addAction(notify, [ContentImported(self.result())])
 
     def setResultId(self, uid):
+        self.__id_result = uid
         self.setResult(getattr(self.parent(), uid))
+        # This should be done by the importer in the processing of
+        # end. However we set it here for backward compatiblity
+        # issues.
+        self.getInfo().addImportedPath(
+            self.getOriginalPhysicalPath(), self.getResultPhysicalPath())
+
+    def setOriginalId(self, uid):
+        self.__id_original = uid
+
+    def getResultPhysicalPath(self):
+        parent = self.parentHandler()
+        if parent is None:
+            return []
+        path = parent.getResultPhysicalPath()
+        path.append(self.__id_result)
+        return path
+
+    def getOriginalPhysicalPath(self):
+        parent = self.parentHandler()
+        if parent is None:
+            return []
+        path = parent.getOriginalPhysicalPath()
+        path.append(self.__id_original or self.__id_result)
+        return path
 
     def setMetadataKey(self, key):
         self._metadata_key = key
@@ -145,7 +180,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
             status)
 
     def getWorkflowVersion(self, version_id):
-        return self._parent_handler._workflow[version_id]
+        return self.parentHandler()._workflow[version_id]
 
     def storeWorkflow(self):
         content = self.result()
@@ -178,21 +213,28 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def metadataMultiValue(self):
         return self._metadata_multivalue
 
-    def generateOrReplaceId(self, base_id=None):
-        if base_id is None:
-            base_id = self.getData('id')
+    def generateOrReplaceId(self, uid=None):
+        if uid is None:
+            uid = self.getData('id')
         parent = self.parent()
+        self.setOriginalId(uid)
         if self.settings().replaceObjects():
-            if base_id in parent.objectIds():
-                parent.manage_delObjects([base_id])
-            return base_id
+            if uid in parent.objectIds():
+                parent.manage_delObjects([uid])
+            return uid
         else:
-            return generateUniqueId(base_id, parent)
+            return generateUniqueId(uid, parent)
 
 
 class SilvaExportRootHandler(SilvaBaseHandler):
 
     grok.name('silva')
+
+    def getResultPhysicalPath(self):
+        return []
+
+    def getOriginalPhysicalPath(self):
+        return []
 
 
 class FolderHandler(SilvaBaseHandler):
@@ -377,7 +419,7 @@ class GhostContentHandler(SilvaBaseHandler):
                 info = self.getInfo()
                 info.addAction(
                     resolve_path,
-                    [self.result().set_haunted, info.importRoot(), haunted])
+                    [self.result().set_haunted, info, haunted])
             updateVersionCount(self)
             self.storeWorkflow()
 
@@ -410,7 +452,7 @@ class GhostFolderHandler(SilvaBaseHandler):
                 folder = self.result()
                 info.addAction(
                     resolve_path,
-                    [folder.set_haunted, info.importRoot(), haunted])
+                    [folder.set_haunted, info, haunted])
                 info.addAction(folder.haunt, [])
             self.notifyImport()
 
@@ -468,7 +510,7 @@ class LinkVersionHandler(SilvaBaseHandler):
                 target = self.getData('target')
                 info = self.getInfo()
                 info.addAction(
-                    resolve_path, [link.set_target, info.importRoot(), target])
+                    resolve_path, [link.set_target, info, target])
             updateVersionCount(self)
             self.storeMetadata()
             self.storeWorkflow()
@@ -592,6 +634,18 @@ class ImportInfo(object):
         self.__zip_file = None
         self.__actions = []
         self.__import_root = None
+        self.__paths = {}
+
+    def addImportedPath(self, original, imported):
+        """Remenber that the original imported path as been imported
+        with the given new one.
+        """
+        self.__paths[u'/'.join(original)] = u'/'.join(imported)
+
+    def getImportedPath(self, path):
+        """Return an imported path for the given original one.
+        """
+        return self.__paths.get(path)
 
     def setImportRoot(self, root):
         self.__import_root = root
