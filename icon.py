@@ -5,6 +5,7 @@
 """Silva icon registry"""
 
 from five import grok
+from zope.annotation.interfaces import IAnnotations
 
 # Silva
 from silva.core.interfaces import (
@@ -69,8 +70,12 @@ class IconRegistry(object):
 registry = IconRegistry()
 
 def get_icon_url(content, request):
-    site = IVirtualSite(request)
-    base_url = site.get_root_url()
+    annotations = IAnnotations(request)
+    base_url = annotations.get('silva.icon.baseurl')
+    if base_url is None:
+        site = IVirtualSite(request)
+        base_url = site.get_root_url()
+        annotations['silva.icon.baseurl'] = base_url
     try:
         icon = registry.getIcon(content)
     except ValueError:
