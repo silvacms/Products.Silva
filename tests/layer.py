@@ -29,6 +29,7 @@ def installPackage(name):
 # Install Zope 2 Products
 
 installProduct('ZCatalog')
+installProduct('BTreeFolder2')
 installProduct('TemporaryFolder')
 installProduct('ZCTextIndex')
 installProduct('PythonScripts')
