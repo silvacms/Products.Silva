@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import warnings
+
 # Zope 3
 from zope.interface import implements
 
@@ -12,8 +14,8 @@ from App.class_init import InitializeClass
 # Silva
 from Products.Silva import SilvaPermissions
 
-from silva.core.interfaces import (IPublishable, IContent, IVersioning,
-                                   IContainer, IPublication)
+from silva.core.interfaces import (
+    IPublishable, IContent, IVersioning, IContainer, IPublication)
 
 
 class Publishable(object):
@@ -44,18 +46,6 @@ class Publishable(object):
             # never be approved if there is no versioning
             return 0
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-        'is_deletable')
-    def is_deletable(self):
-        """is object deletable?
-
-            a publishable object is only deletable if
-                it's not published
-                it's not approved
-
-        """
-        return not self.is_published() and not self.is_approved()
-
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -72,6 +62,10 @@ class Publishable(object):
 
         Can be used with acquisition to get the 'nearest' container.
         """
+        warnings.warn(
+            u'get_real_container() will be removed in Silva 2.4. '
+            u'Please use get_container instead who does exactly the same.',
+            DeprecationWarning, stacklevel=2)
         return self.get_container()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

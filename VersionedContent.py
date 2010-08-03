@@ -186,6 +186,18 @@ class VersionedContent(Content, Versioning, BaseFolder):
         # by default nothing is safely cacheable
         return 0
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+        'is_deletable')
+    def is_deletable(self):
+        """is object deletable?
+
+            a publishable object is only deletable if
+                it's not published
+                it's not approved
+
+        """
+        return not self.is_published() and not self.is_approved()
+
 
 InitializeClass(VersionedContent)
 
