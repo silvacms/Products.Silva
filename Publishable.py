@@ -28,7 +28,8 @@ class Publishable(object):
 
     # ACCESSORS
 
-    # FIXME: perhaps make this less public?
+    # XXX: those two methods is_published and is_approved are only
+    # used in VersionedContent. They should move there.
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
     def is_published(self):
