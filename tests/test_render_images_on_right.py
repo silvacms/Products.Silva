@@ -26,8 +26,8 @@ expected_html = """
     </p>
    </td>
    <td valign="top">
-    <a href="http://foo/root/bar.html" title="Path to the bar" target="_blank">
-     <img src="http://foo/root/foo" alt="Foo" class="default" />
+    <a href="http://localhost/root/bar.html" title="Path to the bar" target="_blank">
+     <img src="http://localhost/root/foo" alt="Foo" class="default" />
     </a>
     <br />
    </td>
