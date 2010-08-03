@@ -79,7 +79,7 @@ class Publishable(object):
         """
         # we need get_real_container as we want the container
         # *even if* we are a container ourselves
-        container = self.get_real_container()
+        container = self.get_container()
         # if we're in the root, we can't navigate
         if container is None:
             return {}
