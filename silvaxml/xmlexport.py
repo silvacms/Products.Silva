@@ -37,6 +37,8 @@ class SilvaBaseProducer(xmlexport.Producer):
         """
         service = getUtility(IReferenceService)
         reference = service.get_reference(self.context, name=name)
+        if reference is None:
+            return None
         settings = self.getSettings()
         root = settings.getExportRoot()
         if not settings.externalRendering():
