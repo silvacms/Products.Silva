@@ -39,6 +39,13 @@ class Content(Publishable, SilvaObject):
         the 'nearest' content."""
         return self.aq_inner
 
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_cacheable')
+    def is_cacheable(self):
+        return 1
+
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_url')
     def content_url(self):
