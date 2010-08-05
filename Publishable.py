@@ -63,10 +63,6 @@ class Publishable(object):
 
         Can be used with acquisition to get the 'nearest' container.
         """
-        warnings.warn(
-            u'get_real_container() will be removed in Silva 2.4. '
-            u'Please use get_container instead who does exactly the same.',
-            DeprecationWarning, stacklevel=2)
         return self.get_container()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -79,7 +75,7 @@ class Publishable(object):
         """
         # we need get_real_container as we want the container
         # *even if* we are a container ourselves
-        container = self.get_container()
+        container = self.get_real_container()
         # if we're in the root, we can't navigate
         if container is None:
             return {}
