@@ -46,6 +46,7 @@ class SilvaBaseProducer(xmlexport.Producer):
                 raise ExternalReferenceError(
                     self.context, reference.target, root)
             # Add root path id as it is always mentioned in exports
+            # XXX manage case where relative_path_to returns ['.']
             relative_path = [root.getId()] + reference.relative_path_to(root)
             return '/'.join(relative_path)
         else:
