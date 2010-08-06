@@ -351,28 +351,6 @@ class Security(AccessManager):
         return roles.keys()
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_userids')
-    def sec_get_downward_defined_userids(self):
-        """Get the list of userids with roles defined in a lower
-        level of the tree (these users do not have rights on this
-        local level)
-        """
-        d = {}
-        self._sec_get_downward_defined_userids_helper(d)
-        return d.keys()
-
-    def _sec_get_downward_defined_userids_helper(self, d):
-        for userid in self.sec_get_userids():
-            d[userid] = 1
-        if IContainer.providedBy(self):
-            for item in self.get_ordered_publishables():
-                item._sec_get_downward_defined_userids_helper(d)
-            for item in self.get_nonactive_publishables():
-                item._sec_get_downward_defined_userids_helper(d)
-            for item in self.get_non_publishables():
-                item._sec_get_downward_defined_userids_helper(d)
-
-    security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_members_for_userids')
     def sec_get_members_for_userids(self, userids):
         d = {}
