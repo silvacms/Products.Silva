@@ -27,7 +27,7 @@ expected_html = """
    </td>
    <td valign="top">
     <a href="http://localhost/root/bar.html" title="Path to the bar" target="_blank">
-     <img src="http://localhost/root/foo" alt="Foo" class="default" />
+     <img src="http://localhost/root/++resource++Products.SilvaDocument/broken-link.jpg" alt="Referenced image is missing" class="default">
     </a>
     <br />
    </td>
