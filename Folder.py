@@ -551,13 +551,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         return container
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'container_url')
-    def container_url(self):
-        """Get url for container.
-        """
-        return self.absolute_url()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_feeds')
     def allow_feeds(self):
         """return the flag that indicates whether rss/atom feeds are allowed
