@@ -161,31 +161,6 @@ class Security(AccessManager):
                     break
         return result
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_userids_deep')
-    def sec_get_userids_deep(self):
-        """Get all userids that have local roles in anything under this
-        object.
-        """
-        l = []
-        self._sec_get_userids_deep_helper(l)
-        # now make sure we have only one of each userid
-        dict = {}
-        for userid in l:
-            dict[userid] = 0
-        return dict.keys()
-
-    def _sec_get_userids_deep_helper(self, l):
-        for userid in self.sec_get_userids():
-            l.append(userid)
-        if IContainer.providedBy(self):
-            for item in self.get_ordered_publishables():
-                item._sec_get_userids_deep_helper(l)
-            for item in self.get_nonactive_publishables():
-                item._sec_get_userids_deep_helper(l)
-            for item in self.get_non_publishables():
-                item._sec_get_userids_deep_helper(l)
-
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'sec_get_nearest_of_role')
     def sec_get_nearest_of_role(self, role):
