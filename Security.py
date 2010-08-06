@@ -415,27 +415,6 @@ class Security(AccessManager):
         return roles.keys()
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_downward_defined_groups')
-    def sec_get_downward_defined_groups(self):
-        """Get the list of groups with roles defined in a lower
-        level of the tree.
-        """
-        d = {}
-        self._sec_get_downward_defined_groups_helper(d)
-        return d.keys()
-
-    def _sec_get_downward_defined_groups_helper(self, d):
-        for group in self.sec_get_local_defined_groups():
-            d[group] = 1
-        if IContainer.providedBy(self):
-            for item in self.get_ordered_publishables():
-                item._sec_get_downward_defined_groups_helper(d)
-            for item in self.get_nonactive_publishables():
-                item._sec_get_downward_defined_groups_helper(d)
-            for item in self.get_non_publishables():
-                item._sec_get_downward_defined_groups_helper(d)
-
-    security.declareProtected(
         SilvaPermissions.ChangeSilvaAccess, 'sec_get_groupsmapping')
     def sec_get_groupsmapping(self):
         """Return the groupmappings for this object.
