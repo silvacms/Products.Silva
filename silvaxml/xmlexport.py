@@ -14,6 +14,7 @@ from sprout.saxext import xmlexport
 from silva.core import interfaces
 from silva.core.interfaces.adapters import IVersionManagement
 from silva.core.references.interfaces import IReferenceService
+from silva.core.references.reference import canonical_path
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -46,9 +47,8 @@ class SilvaBaseProducer(xmlexport.Producer):
                 raise ExternalReferenceError(
                     self.context, reference.target, root)
             # Add root path id as it is always mentioned in exports
-            # XXX manage case where relative_path_to returns ['.']
             relative_path = [root.getId()] + reference.relative_path_to(root)
-            return '/'.join(relative_path)
+            return canonical_path('/'.join(relative_path))
         else:
             # Return url to the target
             return absoluteURL(reference.target, settings.request)

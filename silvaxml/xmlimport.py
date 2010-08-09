@@ -16,6 +16,7 @@ from Products.Formulator.Errors import ValidationError
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ISilvaObject
 from silva.core.interfaces.events import ContentImported, IContentImported
+from silva.core.references.reference import canonical_path
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade.silvaxml import upgradeXMLOnFD
 from sprout.saxext import xmlimport, collapser
@@ -51,7 +52,7 @@ def resolve_path(setter, info, target_path):
     """Resolve target_path from root, and set it using setter.
     """
     root = info.importRoot()
-    imported_target_path = info.getImportedPath(target_path)
+    imported_target_path = info.getImportedPath(canonical_path(target_path))
     if imported_target_path is None:
         raise ImportReferenceError(target_path)
     path = map(str, imported_target_path.split('/'))
