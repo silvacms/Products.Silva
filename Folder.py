@@ -5,8 +5,11 @@
 import urllib
 
 from zope.i18n import translate
+from zope.event import notify
 from zope.deprecation import deprecation
 from five import grok
+from zope.lifecycleevent import ObjectRemovedEvent
+from zope.container.contained import notifyContainerModified
 
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -14,6 +17,8 @@ from App.class_init import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
 from OFS.Folder import Folder as BaseFolder
 from OFS.Uninstalled import BrokenClass
+from OFS.event import ObjectWillBeRemovedEvent
+from OFS.subscribers import compatibilityCall
 import OFS.interfaces
 
 # Silva
@@ -72,9 +77,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         self._ordered_ids = []
         self._addables_allowed_in_container = None
 
-    #overridden from ObjectManager, so that additional filtering
-    #can be done to remove those objects that aren't zmi-addable
-    #(see the doc/developer_changes notes for more info)
+    # override ObjectManager implementation, so that additional filtering
+    # can be done to remove those objects that aren't zmi-addable
     def filtered_meta_types(self, user=None):
         mt = Folder.inheritedAttribute('filtered_meta_types')(self, user)
         newm = []
@@ -88,6 +92,45 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 continue
             newm.append(m)
         return newm
+
+    # override ObjectManager implementaton to trigger all events
+    # before deleting content / after deleting all content.
+
+    def manage_delObjects(self, ids=[], REQUEST=None):
+        if isinstance(ids, basestring):
+            ids = [ids]
+
+        try:
+            protected = self._reserved_names
+        except:
+            protected = ()
+
+        deleted_objects = []
+        for identifier in ids:
+            if identifier in protected:
+                continue
+            ob = self._getOb(identifier, None)
+            if ob is None:
+                continue
+            deleted_objects.append((identifier, ob))
+
+        for identifier, ob in deleted_objects:
+            compatibilityCall('manage_beforeDelete', ob, ob, self)
+            notify(ObjectWillBeRemovedEvent(ob, self, identifier))
+
+        for identifier, ob in deleted_objects:
+            self._objects = tuple(
+                [i for i in self._objects if i['id'] != identifier])
+            self._delOb(identifier)
+            try:
+                ob._v__object_deleted__ = 1
+            except:
+                pass
+
+        for identifier, ob in deleted_objects:
+            notify(ObjectRemovedEvent(ob, self, identifier))
+
+        notifyContainerModified(self)
 
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
