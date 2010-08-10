@@ -1,4 +1,3 @@
-
 body {
   color: #225577;
   font-size: 90%;
@@ -12,8 +11,7 @@ body {
   text-align: left;
 }
 
-.zmi-link,
-.smi-link {
+.zmi-link, .smi-link {
   text-decoration: none;
   font-style: italic;
   font-size: 80%;
@@ -34,4 +32,9 @@ body {
 
 .zope {
   text-align: right;
+}
+
+.form-error, .field-error {
+  color: red;
+  font-weight: bold;
 }

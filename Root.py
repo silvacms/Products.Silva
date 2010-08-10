@@ -3,15 +3,18 @@
 # $Id$
 
 # Zope 3
+from zope import schema, interface, component
 from zope.site.hooks import setSite, setHooks
+from zope.traversing.browser import absoluteURL
 from five import grok
 
 # Zope 2
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Application import Application
+from zExceptions import Unauthorized
 import Globals
 
 # Silva
@@ -22,19 +25,75 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
 
-from silva.core.services import site
-from silva.core.interfaces import IRoot
 from silva.core import conf as silvaconf
+from silva.core.conf import schema as silvaschema
+from silva.core.interfaces import IRoot
+from silva.core.messages.interfaces import IMessageService
+from silva.core.services import site
+from silva.translations import translate as _
+from zeam.form import silva as silvaforms
 
 
-class ZopeWelcomePage(grok.View):
+class ISilvaRootAddFields(interface.Interface):
+    """Describe an add form for a new Silva root.
+    """
+    identifier = silvaschema.ID(
+        title=_(u"Site identifier"),
+        required=True)
+    title = schema.TextLine(
+        title=_(u"Site title"),
+        required=False)
+    add_search = schema.Bool(
+        title=_(u"Add search functionality?"),
+        default=True,
+        required=False)
+    add_documentation = schema.Bool(
+        title=_(u"Add user documentation?"),
+        default=True,
+        required=False)
+
+
+class ZopeWelcomePage(silvaforms.ZMIForm):
     grok.context(Application)
     grok.name('index.html')
+
+    fields = silvaforms.Fields(ISilvaRootAddFields)
 
     def update(self):
         self.sites = self.context.objectValues('Silva Root')
         self.is_dev = Globals.DevelopmentMode
         self.version = extensionRegistry.get_extension('Silva').version
+
+    def isAllowedToAddSilvaRoot(self):
+        return getSecurityManager().checkPermission(
+            'View Management Screens', self.context)
+
+    @silvaforms.action(
+        _(u"Authenticate first to add a new site"),
+        available=lambda form:not form.isAllowedToAddSilvaRoot())
+    def login(self):
+        if not self.isAllowedToAddSilvaRoot():
+            raise Unauthorized("You must authenticate to add a new Silva Site")
+
+    @silvaforms.action(
+        _(u"Add a new site"),
+        available=lambda form:form.isAllowedToAddSilvaRoot())
+    def new_root(self):
+        data, errors = self.extractData()
+        if errors:
+            return silvaforms.FAILURE
+        self.context.manage_addProduct['Silva'].manage_addRoot(
+            data['identifier'],
+            data.getDefault('title'),
+            data.getDefault('add_documentation'),
+            data.getDefault('add_search'))
+        root = getattr(self.context, data['identifier'])
+        service = component.getUtility(IMessageService)
+        service.send(
+            _(u"New Silva root ${identifier} added.", mapping=data),
+            self.request, namespace=type)
+        self.redirect(absoluteURL(root, self.request) + '/edit')
+        return silvaforms.SUCCESS
 
 
 class SilvaGlobals(grok.DirectoryResource):
@@ -210,8 +269,8 @@ manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
 
 def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     """Add a Silva root."""
-    # no id check possible or necessary, as this only happens rarely and the
-    # Zope id check is fine
+    # Zope Dont' like to have be unicode
+    id = str(id)
     root = Root(id)
     self._setObject(id, root)
     root = getattr(self, id)
@@ -221,7 +280,8 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # it being Zope 2 there's no proper method on RESPONSE to get to this
     # information, and applying a regex to the content-type header seems
     # excessive
-    title = unicode(title, 'latin1')
+    if not isinstance(title, unicode):
+        title = unicode(title, 'latin1')
     # this root is the new local site
     setSite(root)
     setHooks()
@@ -240,4 +300,3 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
 
     add_and_edit(self, id, REQUEST)
     return ''
-

@@ -40,36 +40,48 @@
         </ul>
       </div>
       <div class="new-site">
-        <h3 i18n:translate="">Add a new Silva site</h3>
-        <form action="manage_addProduct/Silva/manage_addRoot" method="post">
-          <label for="form.id" i18n:translate="">
-            Site identifier
-          </label>
-          <br />
-          <input id="form.id" type="text" name="id" size="40" />
-          <br />
-          <label for="form.title" i18n:translate="">
-            Site title
-          </label>
-          <br />
-          <input id="form.title" type="text" name="title" size="40" />
-          <br />
-          <label for="form.add_search" i18n:translate="">
-            Add Search functionality?
-          </label>
-          <br />
-          <input id="form.add_search" name="add_search"
-                 type="checkbox" checked="checked" />
-          <br />
-          <label for="form.add_search" i18n:translate="">
-            Add Silva user documentation?
-          </label>
-          <br />
-          <input id="form.add_search" name="add_docs"
-                 type="checkbox" checked="checked" />
-          <br />
-          <input type="submit" name="submit_edit" value="Add"
-                 i18n:attributes="value"/>
+        <form action="." tal:attributes="action request/URL" method="post"
+              enctype="multipart/form-data">
+
+          <h3 i18n:translate="">Add a new Silva site</h3>
+
+          <p class="form-error"
+             tal:condition="view/errors">
+            <tal:error tal:repeat="error view/formErrors">
+              <span tal:replace="error/title" />
+              <br tal:condition="not:repeat/error/end" />
+            </tal:error>
+          </p>
+
+          <div class="fields"
+               tal:condition="view/fieldWidgets">
+            <div class="field" tal:repeat="widget view/fieldWidgets">
+              <label class="field-label" for="#"
+                     tal:attributes="for widget/htmlId"
+                     tal:content="widget/title">
+                Label
+              </label>
+              <span class="field-required"
+                    tal:condition="widget/required">(required)</span>
+              <br />
+              <tal:error tal:define="error widget/error"
+                         tal:condition="error">
+                <span class="field-error"
+                      tal:content="error/title">
+                  Error
+                </span>
+                <br />
+              </tal:error>
+              <tal:widget tal:content="structure widget/render" />
+            </div>
+          </div>
+
+          <div class="actions"
+               tal:condition="view/actionWidgets">
+            <div class="action" tal:repeat="widget view/actionWidgets">
+              <tal:widget tal:content="structure widget/render" />
+            </div>
+          </div>
         </form>
       </div>
       <div class="info">
