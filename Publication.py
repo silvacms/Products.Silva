@@ -249,7 +249,6 @@ class ManageLocalSite(silvaforms.SMIForm):
     grok.require('zope2.ViewManagementScreens')
 
     tab = 'properties'
-    tab_name = 'tab_localsite'
 
     label = _(u"Local site")
     description = _(u"Here you can enable/disable a local site (or subsite). "

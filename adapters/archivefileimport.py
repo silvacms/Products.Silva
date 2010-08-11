@@ -23,6 +23,7 @@ from Products.Silva import File
 from silva.core import interfaces
 
 
+# BBB only
 BadZipfile = zipfile.BadZipfile
 
 
