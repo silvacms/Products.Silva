@@ -41,6 +41,7 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.conf import schema as silvaschema
+from silva.core.views import views as silvaviews
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
 from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
@@ -571,6 +572,20 @@ class Image(Asset):
         return self._getPILImage(img).size
 
 InitializeClass(Image)
+
+
+class DefaultImageView(silvaviews.View):
+    """View a Image in the SMI / preview. For this just return a
+    tag.
+
+    Note that if you ask directly the URL of the image, you will
+    get it, not this view (See the traverser below).
+    """
+    grok.context(Image)
+    grok.require('zope2.View')
+
+    def render(self):
+        return self.content.tag()
 
 
 class ImagePublishTraverse(SilvaPublishTraverse):

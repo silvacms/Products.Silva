@@ -302,6 +302,20 @@ class File(Asset):
 InitializeClass(File)
 
 
+class DefaultFileView(silvaviews.View):
+    """View a File in the SMI / preview. For this just return a tag.
+
+    Note that if you directly access the URL of the file, you will
+    download its content (See the independent index view below for
+    each storage).
+    """
+    grok.context(File)
+    grok.require('zope2.View')
+
+    def render(self):
+        return self.content.tag()
+
+
 class ZODBFile(File):
     """Silva File object, storage in Filesystem. Contains the
     OFS.Image.File.

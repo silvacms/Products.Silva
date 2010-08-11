@@ -457,8 +457,6 @@ def registerViews(reg):
     reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
     reg.register('public', 'Silva Publication', ['public', 'Folder', 'view'])
     reg.register('public', 'Silva Root', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva Image', ['public', 'Image', 'view'])
-    reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
 
     # add
@@ -473,8 +471,8 @@ def registerViews(reg):
     reg.register('preview', 'Silva Folder', ['public', 'Folder', 'preview'])
     reg.register('preview', 'Silva Publication', ['public', 'Folder', 'preview'])
     reg.register('preview', 'Silva Root', ['public', 'Folder', 'preview'])
-    reg.register('preview', 'Silva Image', ['public', 'Image', 'preview'])
     reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
+
 
 def registerGroupsViews(reg):
     """Register groups views on registry.
