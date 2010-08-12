@@ -4,6 +4,9 @@ Silva changes
 Silva 2.2.1 (unreleased)
 ------------------------
 
+- Fix an error when ctypes is installed but libmagic is not (ported
+  from trunk).
+
 - Add icons for new offices documents. Fix an icon lookup error in the
   lookup window.
 
