@@ -18,8 +18,6 @@
 <metal:block fill-slot="main"
   tal:define="
     model_is_container model/implements_container | nothing;
-    groups_enabled model/sec_groups_enabled | nothing;
-    group_service here/service_groups | nothing;
     allow_authentication_requests model/service_members/allow_authentication_requests | nothing;
     has_access here/has_change_access_permission;
     silva_permissions here/get_silva_permissions;
@@ -52,8 +50,7 @@
           method="post"
           tal:define="
             members here/get_members;
-            global revokeable_roles nothing;
-            global revokeable_groups nothing">
+            global revokeable_roles nothing">
           <table class="listing">
             <thead>
               <tr>
@@ -322,209 +319,6 @@
       </td>
     </tr>
     <tal:block replace="nothing">
-      _______________ group roles management ________________
-    </tal:block>
-    <tr tal:condition="python:user.has_role(['Manager'], object=model) and (groups_enabled or group_service)">
-      <td class="main"
-        style="padding-top:2em;">
-        <tal:block condition="groups_enabled">
-          <div class="alert"
-            style="margin-bottom:1em;"
-            tal:condition="not:group_service">
-              <span class="subhead">
-                <span class="warning" i18n:translate="">A Groups Service is not installed</span>
-              </span><br /><span i18n:translate="">
-              You are seeing this message because the Silva Groups extension is installed on the file system,
-              but a Groups Service hasn't been added to this Silva instance. To install one, go to the
-              <a href="" class="underline" tal:attributes="href string:${root_url}/manage_services"
-                i18n:name="silva_root_in_the_ZMI"><tal:block i18n:translate="">Silva Root in the ZMI</tal:block></a>,
-              choose &#8220;Groups Service&#8221; from the add list and give it the id
-              <code i18n:name="service_groups">service_groups</code>.
-              No further configuration is necessary.</span>
-          </div>
-          <tal:block condition="group_service">
-            <!-- Defined groups listing -->
-            <!-- Role assignment table -->
-            <form name="group_roles_management" action="."
-              method="post">
-              <table class="listing"
-                border="0"
-                cellpadding="5"
-                cellspacing="0"
-                style="empty-cells:show;"
-                tal:define="groups here/get_groups;">
-                <thead>
-                  <tr>
-                    <td class="top"
-                      colspan="3">
-                      <h2 tal:attributes="title string:id: ${model/id}">
-                    <img tal:replace="structure icon" />
-                        <tal:block i18n:translate="">group roles</tal:block>
-                      </h2>
-                    </td>
-                  </tr>
-                </thead>
-                <tr class="top-controls">
-                  <td colspan="3">
-                    <h3 i18n:translate="">
-                      grant or revoke local roles for groups
-                    </h3>
-                  </td>
-                </tr>
-                <tr tal:condition="groups">
-                  <th i18n:translate="">
-                    groupname
-                  </th>
-                  <th class="align-right" i18n:translate="">
-                    roles defined above
-                  </th>
-                  <th class="align-right" i18n:translate="">
-                    roles defined here
-                  </th>
-                </tr>
-                <tal:block repeat="group groups">
-                  <tr
-                    tal:define="
-                      iterate repeat/group/odd"
-                    tal:attributes="class python: iterate and 'odd' or 'even';">
-                    <td class="align-left">
-                      <input class="min"
-                        type="checkbox"
-                        name="groups:list"
-                        tal:attributes="
-                          value group;
-                          id group;" />
-                        &nbsp;
-                        <label tal:content="group"
-                          tal:attributes="for group">
-                          group
-                        </label>
-                        <span class="warning"
-                          tal:condition="python: group not in group_service.listAllGroups()"
-                          i18n:translate="">
-                          (broken group, not listed in Groups Service)
-                        </span>
-                    </td>
-                    <td class="align-right">
-                      <tal:block repeat="upward python:model.sec_get_upward_roles_for_group(group)">
-                        <i tal:content="upward" />
-                        &nbsp;
-                        <br tal:condition="not:repeat/upward/end" />
-                      </tal:block>
-                    </td>
-                    <td class="align-right">
-                      <tal:block repeat="local python:model.sec_get_local_roles_for_group(group)">
-                        <label tal:content="local"
-                          tal:attributes="for string:revoke_${group}">
-                          local
-                        </label>
-                        &nbsp;
-                          <input class="min"
-                            type="checkbox"
-                            name="revoke_roles:list"
-                            value=""
-                            tal:define="
-                              global revokeable_groups python: 1;
-                              enable python: i_am_manager or local not in managers_only_options;
-                              disable not: enable;
-                              "
-                            tal:attributes="
-                              value python:'%s||%s' % (group, local);
-                              id string:revoke_${group};
-                              disabled disable | nothing;
-                              "
-                            /><br tal:condition="not:repeat/local/end" />
-                      </tal:block>
-                    </td>
-                  </tr>
-                </tal:block>
-                <tr class="even"
-                  tal:condition="not:groups">
-                  <td colspan="3">
-                    <i i18n:translate="">
-                      No groups with (local) roles.
-                    </i>
-                  </td>
-                </tr>
-                <tr class="controls">
-                  <td class="align-left"
-                    colspan="2">
-                    <tal:block
-                      define="preselected python: request.form.get('assign_group_role')"
-                      condition="groups">
-                      <select class="manipulator"
-                        style="float:left"
-                        name="assign_group_role"
-                        title="select a role to assign">
-                        <option value="None"
-                          i18n:translate="">
-                          select role:
-                        </option>
-                        <metal:block use-macro="here/macro_role_options/macros/options" />
-                      </select>
-                      <input class="button"
-                        style="float:left"
-                        name="access_assign_to_group:method"
-                        title="assign a local role to selected user(s)"
-                        type="submit"
-                        value="assign role to group"
-                        i18n:attributes="title;value"
-                      />
-                    </tal:block>
-                  </td>
-                  <td class="align-right">
-                    <input class="button remover"
-                      name="access_revoke_from_group:method"
-                      title="revoke selected role(s) from selected group(s)"
-                      type="submit"
-                      value="revoke role from group"
-                      tal:condition="revokeable_groups"
-                      i18n:attributes="title;value"
-                    />
-                  </td>
-                </tr>
-              </table>
-            </form>
-          </tal:block>
-        </tal:block>
-      </td>
-      <tal:block replace="nothing">
-        _______________ groups clipboard ________________
-      </tal:block>
-      <td class="right"
-        style="padding-top:2em ! important;">
-        <tal:condition condition="group_service">
-          <tal:define define="global group_meta_type string:Silva Group">
-            <metal:block use-macro="here/macro_groups_listing/macros/all_groups_listing">
-              <metal:block fill-slot="listing_actions">
-                <select class="manipulator"
-                  style="float:left"
-                  name="assign_group_role"
-                  title="select a role to assign">
-                  <option value="None"
-                    i18n:translate="">
-                    select role:
-                  </option>
-                  <tal:block
-                    define="preselected python: request.form.get('assign_group_role')">
-                    <metal:block use-macro="here/macro_role_options/macros/options" />
-                  </tal:block>
-                </select>
-                <input class="button"
-                  style="float:left"
-                  type="submit"
-                  name="access_assign_to_group:method"
-                  value="assign"
-                  title="assign selected role to selected group(s)"
-                  i18n:attributes="title;value"
-                />
-              </metal:block>
-            </metal:block>
-          </tal:define>
-        </tal:condition>
-      </td>
-    </tr>
-    <tal:block replace="nothing">
       _____________________ misc tools ______________________
     </tal:block>
     <tr>
@@ -627,24 +421,6 @@
             </tfoot>
           </table>
         </form>
-      </td>
-      <td class="right">
-      </td>
-    </tr>
-    <tal:comment replace="nothing"> _______
-      hack to fix a scaling problem for sites having very long sidebars, so the
-      browser renders heights of the table cells according to their content,
-      causing users to have to scroll to adjust groups or access restrictions;
-      this adds lines in a last table row that compensates for the sidebar;
-      we'll remove this when we switch Silva over to tableless layout
-      _______
-    </tal:comment>
-    <tr tal:define="tree publication/get_container_tree"
-      tal:condition="python:len(tree) > test(group_service, 25, 18)">
-      <td class="main">
-        <tal:series repeat="line tree">
-          <br />
-        </tal:series>
       </td>
       <td class="right">
       </td>

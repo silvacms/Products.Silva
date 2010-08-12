@@ -17,24 +17,16 @@ from silva.core import interfaces
 from silva.core.interfaces import events
 
 
-class ViewerSecurityAdapter(grok.Adapter):
-
-    grok.implements(interfaces.IViewerSecurity)
+class AccessSecurityAdapter(grok.Adapter):
+    grok.implements(interfaces.IAccessSecurity)
+    grok.provides(interfaces.IAccessSecurity)
     grok.context(interfaces.ISilvaObject)
 
     def setAcquired(self):
-        # if we're root, we can't set it to acquire, just give
-        # everybody permission again
-        if interfaces.IRoot.providedBy(self.context):
-            self.context.manage_permission(
-                SilvaPermissions.View,
-                roles=roleinfo.ALL_ROLES,
-                acquire=0)
-        else:
-            self.context.manage_permission(
-                SilvaPermissions.View,
-                roles=(),
-                acquire=1)
+        self.context.manage_permission(
+            SilvaPermissions.View,
+            roles=(),
+            acquire=1)
         notify(events.SecurityRestrictionModifiedEvent(self.context, None))
 
     def setMinimumRole(self, role):
@@ -62,9 +54,61 @@ class ViewerSecurityAdapter(grok.Adapter):
             SilvaPermissions.View, self.context)[0])
 
     def getMinimumRoleAbove(self):
-        if interfaces.IRoot.providedBy(self.context):
-            return 'Anonymous'
-        else:
-            parent = aq_parent(aq_inner(self.context))
-            return interfaces.IViewerSecurity(parent).getMinimumRole()
+        parent = aq_parent(aq_inner(self.context))
+        return interfaces.IAccessSecurity(parent).getMinimumRole()
 
+
+class RootAccessSecurityAdapter(AccessSecurityAdapter):
+    grok.context(interfaces.IRoot)
+
+    def setAcquired(self):
+        # we're root, we can't set it to acquire, just give
+        # everybody permission again
+        self.context.manage_permission(
+            SilvaPermissions.View,
+            roles=roleinfo.ALL_ROLES,
+            acquire=0)
+        notify(events.SecurityRestrictionModifiedEvent(self.context, None))
+
+    def getMinimumRoleAbove(self):
+        return 'Anonymous'
+
+
+class UserAuthorization(object):
+    grok.implements(interfaces.IUserAuthorization)
+
+    def __init__(self, userid):
+        self.userid = userid
+        self.acquired_roles = []
+        self.local_roles = []
+
+
+class UserAccess(grok.Adapter):
+    grok.context(interfaces.ISilvaObject)
+    grok.provides(interfaces.IUserAccessSecurity)
+    grok.implements(interfaces.IUserAccessSecurity)
+
+    def getAuthorizations(self):
+        auth = {}
+        # Collect user with roles here, tag as local_roles
+        for userid, roles in self.context.get_local_roles():
+            if userid not in auth:
+                auth[userid] = UserAuthorization(userid)
+            user_auth = auth[userid]
+            for role in roles:
+                if role in roleinfo.ASSIGNABLE_ROLES:
+                    user_auth.local_roles.append(role)
+
+        # Collect user with parent roles
+        content = self.context
+        while not interfaces.IRoot.providedBy(content):
+            content = aq_parent(content)
+            for userid, roles in content.get_local_roles():
+                if userid not in auth:
+                    auth[userid] = UserAuthorization(userid)
+                user_auth = auth[userid]
+                for role in roles:
+                    if role in roleinfo.ASSIGNABLE_ROLES:
+                        user_auth.acquired_roles.append(role)
+
+        return auth

@@ -107,9 +107,6 @@ def install(root):
     # add or update service metadata and catalog
     configureMetadata(root)
 
-    # always register the groups views
-    registerGroupsViews(root.service_view_registry)
-
     # configure membership; this checks whether this is necessary
     configureMembership(root)
     # also re-configure security (XXX should this happen?)
@@ -117,11 +114,6 @@ def install(root):
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
-
-    # forbid adding group & virtualgroup from the SMI
-    root.add_silva_addable_forbidden('Silva Group')
-    root.add_silva_addable_forbidden('Silva Virtual Group')
-    root.add_silva_addable_forbidden('Silva IP Group')
 
     configureContainerPolicies(root)
 
@@ -157,7 +149,6 @@ def configureMetadata(root):
         (('silva-content', 'silva-extra'),
          ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
           'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
-          'Silva Group', 'Silva Virtual Group', 'Silva IP Group',
           'Silva Link Version')),
         (('silva-layout',),
          ('Silva Root', 'Silva Publication'))]
@@ -285,11 +276,6 @@ def configureSecurity(root):
     for add_permission in add_permissions:
         root.manage_permission(add_permission, roleinfo.AUTHOR_ROLES)
 
-    # chief editors and up may also place groups.
-    root.manage_permission('Add Silva Groups', roleinfo.CHIEF_ROLES)
-    root.manage_permission('Add Silva Virtual Groups', roleinfo.CHIEF_ROLES)
-    root.manage_permission('Add Silva IP Groups', roleinfo.CHIEF_ROLES)
-
     # everybody may view root by default XXX
     # (is this bad in case of upgrade/refresh)
     root.manage_permission('View', roleinfo.ALL_ROLES)
@@ -313,20 +299,6 @@ def configureSecurity(root):
     try:
         root.manage_permission('Use external editor', roleinfo.AUTHOR_ROLES)
     # hail to Zope and its string exceptions!!
-    except:
-        pass
-
-    # Set permissions/roles for Groups Service
-    # XXX this is a bit of a hack, as Groups may not be installed we
-    # catch exceptions. A 'refresh' after Groups is installed should
-    # set the permissions right
-    try:
-        root.manage_permission('Access Groups information',
-                               roleinfo.READER_ROLES)
-        root.manage_permission('Access Group mappings',
-                               roleinfo.READER_ROLES)
-        root.manage_permission('Change Groups', roleinfo.CHIEF_ROLES)
-        root.manage_permission('Change Group mappings', roleinfo.CHIEF_ROLES)
     except:
         pass
 
@@ -474,30 +446,13 @@ def registerViews(reg):
     reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
 
 
-def registerGroupsViews(reg):
-    """Register groups views on registry.
-    """
-    reg.register(
-        'edit', 'Silva Group', ['edit', 'Asset', 'Groups', 'Group'])
-    reg.register(
-        'edit', 'Silva Virtual Group', ['edit', 'Asset', 'Groups', 'VirtualGroup'])
-    reg.register(
-        'edit', 'Silva IP Group', ['edit', 'Asset', 'Groups', 'IPGroup'])
-    reg.register('add', 'Silva Group', ['add', 'Groups', 'Group'])
-    reg.register('add', 'Silva Virtual Group', ['add', 'Groups', 'VirtualGroup'])
-    reg.register('add', 'Silva IP Group', ['add', 'Groups', 'IPGroup'])
-
 def unregisterViews(reg):
     # plain add, edit and public
     for meta_type in ['Silva Folder',
                       'Silva Publication',
                       'Silva Image',
-                      'Silva DemoObject',
                       'Silva File',
                       'Silva Indexer',
-                      'Silva Group',
-                      'Silva Virtual Group',
-                      'Silva IP Group',
                       'Silva Ghost Folder']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)

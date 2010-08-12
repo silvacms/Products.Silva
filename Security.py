@@ -18,15 +18,6 @@ from silva.core.interfaces import IVersion, IContainer, IRoot
 from silva.core.interfaces.events import (
     SecurityRoleAddedEvent, SecurityRoleRemovedEvent)
 
-# Groups
-try:
-    # Are groups available?
-    from Products.Groups.ZGroupsMapping import ZGroupsMapping
-    from Products.Groups.GroupsErrors import GroupsError
-    groups_enabled = 1
-except ImportError:
-    groups_enabled = 0
-
 from Products.SilvaMetadata.Exceptions import BindingError
 
 LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
@@ -52,8 +43,6 @@ class Security(AccessManager):
     _last_author_info = None
     _lock_info = None
 
-    __ac_local_groups__ = None
-
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_assign')
@@ -63,10 +52,6 @@ class Security(AccessManager):
 
         member = self.sec_get_member(userid)
         if role not in member.allowed_roles():
-            raise UnauthorizedRoleAssignement
-        # check whether we have permission to add Manager
-        if (role == 'Manager' and
-            not self.sec_have_management_rights()):
             raise UnauthorizedRoleAssignement
         self.manage_addLocalRoles(userid, [role])
         notify(SecurityRoleAddedEvent(self, userid, [role]))
@@ -358,92 +343,5 @@ class Security(AccessManager):
         for userid in userids:
             d[userid] = self.sec_get_member(userid)
         return d
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_groups_enabled')
-    def sec_groups_enabled(self):
-        """Are groups enabled in this Silva site
-        """
-        return groups_enabled
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_defined_groups')
-    def sec_get_local_defined_groups(self):
-        """Get the list of groups with locally defined roles.
-        """
-        local_groups = self.__ac_local_groups__
-        if local_groups is None:
-            return []
-        return local_groups.getMappings().keys()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_local_roles_for_group')
-    def sec_get_local_roles_for_group(self, group):
-        """Get a list of local roles that are defined for a group here.
-        """
-        local_groups = self.__ac_local_groups__
-        if local_groups is None:
-            return []
-        return local_groups.getMappings().get(group, [])
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_defined_groups')
-    def sec_get_upward_defined_groups(self):
-        """Get the list of groups with roles defined in a higer
-        level of the tree.
-        """
-        parent = self.aq_inner.aq_parent
-        groups = {}
-        while IContainer.providedBy(parent):
-            for group in parent.sec_get_local_defined_groups():
-                groups[group] = 1
-            parent = parent.aq_inner.aq_parent
-        return groups.keys()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_upward_roles_for_group')
-    def sec_get_upward_roles_for_group(self, group):
-        """Get the roles that a group has here, defined in a higer
-        level of the tree.
-        """
-        parent = self.aq_inner.aq_parent
-        roles = {}
-        while IContainer.providedBy(parent):
-            for role in parent.sec_get_local_roles_for_group(group):
-                roles[role] = 1
-            parent = parent.aq_inner.aq_parent
-        return roles.keys()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_groupsmapping')
-    def sec_get_groupsmapping(self):
-        """Return the groupmappings for this object.
-        """
-        return self.__ac_local_groups__
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_get_or_create_groupsmapping')
-    def sec_get_or_create_groupsmapping(self):
-        """Return the groupmappings for this object. Create one of currently
-        no mapping exists.
-        """
-        if not groups_enabled:
-            return None
-
-        if not self.__ac_local_groups__:
-            self.__ac_local_groups__ = ZGroupsMapping('acl_groups')
-        return self.sec_get_groupsmapping()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaAccess, 'sec_cleanup_groupsmapping')
-    def sec_cleanup_groupsmapping(self):
-        """If called, check to see whether any mappings are defined in the
-        mappings object. If not, clear the __ac_local_groups__ attribute
-        for efficiency.
-        """
-        if self.__ac_local_groups__:
-            if not self.__ac_local_groups__.getMappings():
-                self.__ac_local_groups__ = None
-
 
 InitializeClass(Security)

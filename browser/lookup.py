@@ -72,7 +72,7 @@ class ObjectLookup(BrowserView):
         try:
             icon_path = '%s/%s' % (self.context.REQUEST['BASE1'],
                 icon.registry.getIcon(obj))
-        except icon.RegistryError:
+        except ValueError:
             icon_path = getattr(aq_base(obj), 'icon', None)
             if icon_path is None:
                 icon_path = ('%s/globals/silvageneric.gif' %
