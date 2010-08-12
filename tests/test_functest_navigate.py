@@ -27,9 +27,9 @@ class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase,
         url = self.url()
         self.do_navigate(SilvaTestCase.user_manager, success, properties, url)
         
-    def test_access_tab(self):
-        url = self.url()
-        self.do_navigate(SilvaTestCase.user_manager, success, access, url)
+    # def test_access_tab(self):
+    #     url = self.url()
+    #     self.do_navigate(SilvaTestCase.user_manager, success, access, url)
         
     def test_publish_tab(self):
         url = self.url()
