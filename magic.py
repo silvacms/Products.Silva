@@ -36,7 +36,10 @@ try:
     class MagicException(Exception):
         pass
 
-    libmagic = ctypes.CDLL(ctypes.util.find_library('magic'))
+    libmagic_path = ctypes.util.find_library('magic')
+    if libmagic_path is None:
+        raise ImportError(u"libmagic not available")
+    libmagic = ctypes.CDLL(libmagic_path)
 
     magic_t = ctypes.c_void_p
 
@@ -110,4 +113,3 @@ except (OSError, ImportError, AttributeError):
         def file(self, filename):
             fd = open(filename)
             return self.buffer(fd.read(5))
-
