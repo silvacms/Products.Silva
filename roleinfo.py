@@ -40,6 +40,7 @@ _i18n_markers = (
 module_security.declareProtected('Change Silva access',
                                  'ASSIGNABLE_ROLES')
 ASSIGNABLE_ROLES = SILVA_VIEWER_ROLES + READER_ROLES
+ASSIGNABLE_ROLES_SET = set(ASSIGNABLE_ROLES)
 
 module_security.declareProtected('Change Silva access',
                                  'ASSIGNABLE_VIEWER_ROLES')

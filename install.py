@@ -329,7 +329,7 @@ def configureMembership(root):
     installed_ids = root.objectIds()
     factory = root.manage_addProduct['Silva']
     if 'service_members' not in installed_ids:
-        factory.manage_addSimpleMemberService('service_members')
+        factory.manage_addSimpleMemberService()
 
     if 'Members' not in installed_ids:
         root.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder('Members')

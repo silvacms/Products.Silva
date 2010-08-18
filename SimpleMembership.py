@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
+from five import grok
 
 # zope
 from AccessControl import ClassSecurityInfo
@@ -23,10 +23,11 @@ from silva.core import conf as silvaconf
 
 import urllib, hashlib
 
+
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
 
-    implements(interfaces.IEditableMember)
+    grok.implements(interfaces.IEditableMember)
 
     security = ClassSecurityInfo()
 
@@ -173,10 +174,7 @@ class SimpleMember(Member, Security, ZMIObject):
                               'default_editor')
     def default_editor(self):
         """Return the id of the default editor"""
-        if hasattr(self, 'service_kupu'):
-            return 'kupu'
-        else:
-            return 'field editor'
+        return 'kupu'
 
 
 InitializeClass(SimpleMember)
@@ -194,13 +192,16 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     add_and_edit(self, id, REQUEST)
     return ''
 
+
 class SimpleMemberService(SilvaService):
-    implements(interfaces.IMemberService)
-
-    security = ClassSecurityInfo()
-
     meta_type = 'Silva Simple Member Service'
     title = 'Silva Membership Service'
+    default_service_identifier = 'service_members'
+
+    grok.implements(interfaces.IMemberService)
+    silvaconf.icon('www/members.png')
+
+    security = ClassSecurityInfo()
 
     manage_options = (
         {'label':'Edit', 'action':'manage_editForm'},
@@ -213,10 +214,6 @@ class SimpleMemberService(SilvaService):
 
     security.declareProtected('View management screens', 'manage_main')
     manage_main = manage_editForm
-
-    silvaconf.icon('www/members.png')
-    silvaconf.factory('manage_addSimpleMemberServiceForm')
-    silvaconf.factory('manage_addSimpleMemberService')
 
     def __init__(self, id):
         self.id = id
@@ -308,15 +305,3 @@ class SimpleMemberService(SilvaService):
 
 
 InitializeClass(SimpleMemberService)
-
-manage_addSimpleMemberServiceForm = PageTemplateFile(
-    "www/simpleMemberServiceAdd", globals(),
-    __name__='manage_addSimpleMemberServiceForm')
-
-def manage_addSimpleMemberService(self, id, REQUEST=None):
-    """Add a Simple Member Service."""
-    object = SimpleMemberService(id)
-    self._setObject(id, object)
-    add_and_edit(self, id, REQUEST)
-    return ''
-
