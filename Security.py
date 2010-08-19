@@ -44,6 +44,14 @@ class Security(AccessManager):
     _lock_info = None
 
     # MANIPULATORS
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                              'sec_have_management_rights')
+    def sec_have_management_rights(self):
+        """Check whether we have management rights here.
+        """
+        return getSecurityManager().getUser().has_role(['Manager'], self)
+
+
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_assign')
     def sec_assign(self, userid, role):
@@ -69,7 +77,6 @@ class Security(AccessManager):
             return
         self.manage_delLocalRoles([userid])
         notify(SecurityRoleRemovedEvent(self, userid, []))
-
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_revoke')
@@ -126,12 +133,6 @@ class Security(AccessManager):
         current_user_id = getSecurityManager().getUser().getId()
         return user_id != current_user_id
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'sec_have_management_rights')
-    def sec_have_management_rights(self):
-        """Check whether we have management rights here.
-        """
-        return getSecurityManager().getUser().has_role(['Manager'], self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'sec_get_userids')

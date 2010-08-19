@@ -170,7 +170,7 @@ class UserAuthorization(object):
         if role not in self.__user.allowed_roles():
             raise UnauthorizedRoleAssignement(role, user_id)
         self.context.manage_addLocalRoles(user_id, [role])
-        notify(events.SecurityRoleAddedEvent(self, user_id, [role]))
+        notify(events.SecurityRoleAddedEvent(self.context, user_id, [role]))
         return True
 
     def __repr__(self):
@@ -197,6 +197,10 @@ class UserAccess(grok.Adapter):
         return []
 
     def get_user_authorization(self, user_id=None):
+        """Return authorization object for the given user. If no user
+        is specified, return authorization object for the current
+        authenticated user.
+        """
         if user_id is None:
             user_id = getSecurityManager().getUser().getId()
 
@@ -218,7 +222,25 @@ class UserAccess(grok.Adapter):
             local_roles,
             acquired_roles)
 
+    def get_authorizations_for(self, user_ids):
+        """Return all current authorizations at this level, and
+        authorization objects for given users.
+        """
+        auth = self.get_authorizations()
+        for user_id in user_ids:
+            if user_id not in auth:
+                auth[user_id] = UserAuthorization(
+                    self.context,
+                    self,
+                    self.__service.get_member(
+                        user_id, location=self.context),
+                    [],
+                    self.__get_default_roles(user_id))
+        return auth
+
     def get_authorizations(self):
+        """Return current all authorizations at this level.
+        """
         user_ids = set()
         local_roles = defaultdict(list)
         acquired_roles = defaultdict(list)
