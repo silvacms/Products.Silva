@@ -57,7 +57,7 @@ class IconRegistry(object):
     def getIconByIdentifier(self, identifier):
         icon = self.__icons.get(identifier, None)
         if icon is None:
-            raise ValueError(u"No icon for %r" % identifier)
+            raise ValueError(u"No icon for %r" % repr(identifier))
         return icon
 
     def registerIcon(self, identifier, icon_name):
