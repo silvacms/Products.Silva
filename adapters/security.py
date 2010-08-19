@@ -112,14 +112,6 @@ class UserAuthorization(object):
         self.__local_roles = sanatize_roles(local_roles)
 
     @property
-    def all_local_roles(self):
-        return self.__local_roles
-
-    @property
-    def all_acquired_roles(self):
-        return self.__acquired_roles
-
-    @property
     def local_role(self):
         roles = self.__local_roles
         return roles[0] if len(roles) else None
@@ -228,7 +220,7 @@ class UserAccess(grok.Adapter):
             local_roles,
             acquired_roles)
 
-    def get_authorizations_for(self, user_ids):
+    def get_users_authorization(self, user_ids):
         """Return all current authorizations at this level, and
         authorization objects for given users.
         """

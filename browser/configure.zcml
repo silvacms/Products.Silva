@@ -3,30 +3,6 @@
    xmlns:browser="http://namespaces.zope.org/browser"
    xmlns:five="http://namespaces.zope.org/five">
 
-   <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="get_viewer_role_info"
-     class=".viewerrole.ViewerRole"
-     attribute="getViewerRoleInfo"
-     permission="silva.ReadSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="minimum_role_submit"
-     class=".viewerrole.ViewerRole"
-     attribute="submitMinimumRole"
-     permission="silva.ChangeSilvaAccess"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="acquire_minimum_role_submit"
-     class=".viewerrole.ViewerRole"
-     attribute="submitAcquiredMinimumRole"
-     permission="silva.ChangeSilvaAccess"
-     />
-
   <browser:page
      for="silva.core.interfaces.ISilvaObject"
      name="object_lookup"

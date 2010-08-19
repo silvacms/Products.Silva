@@ -5,6 +5,7 @@
 from datetime import datetime, timedelta
 
 from five import grok
+from zope.component import getUtility
 
 from Acquisition import aq_inner
 from AccessControl import ClassSecurityInfo
@@ -17,6 +18,7 @@ from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces.adapters import IVersionManagement
 from silva.core.interfaces import IVersionedContent, IVersion
+from silva.core.interfaces.service import IMemberService
 from silva.translations import translate as _
 
 
@@ -256,7 +258,10 @@ class VersionManagement(grok.Adapter):
         SilvaPermissions.ChangeSilvaContent, 'getVersionCreatorInfo')
     def getVersionCreatorInfo(self, versionid):
         version = self.getVersionById(versionid)
-        return self.context.sec_get_member(version.getOwner().getId())
+        service = getUtility(IMemberService)
+        return service.get_cached_member(
+            version.getOwner().getId(),
+            location=self.context)
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'getVersionStatus')
