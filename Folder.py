@@ -95,8 +95,9 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
     # override ObjectManager implementaton to trigger all events
     # before deleting content / after deleting all content.
-
     def manage_delObjects(self, ids=[], REQUEST=None):
+        """Delete objects.
+        """
         if isinstance(ids, basestring):
             ids = [ids]
 
