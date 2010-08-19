@@ -34,8 +34,8 @@ def is_role_greater_or_equal(role1, role2):
     index = roleinfo.ASSIGNABLE_ROLES.index
     return index(role1) >= index(role2)
 
-def required_roles_for_role(role):
-    all_roles = list(roleinfo.ASSIGNABLE_ROLES)
+def minimum_role(role):
+    all_roles = list(roleinfo.ALL_ROLES)
     return all_roles[all_roles.index(role):]
 
 
@@ -55,24 +55,27 @@ class AccessSecurityAdapter(grok.Adapter):
         permission = Permission(SilvaPermissions.View, (), self.context)
         return isinstance(permission.getRoles(default=[]), list)
 
-    def set_role(self, role):
+    def set_minimum_role(self, role):
         self.context.manage_permission(
             SilvaPermissions.View,
-            roles=required_roles_for_role(role),
+            roles=minimum_role(role),
             acquire=0)
         notify(events.SecurityRestrictionModifiedEvent(self.context, role))
 
-    def get_role(self):
+    def get_minimum_role(self):
         roles = filter(
-            lambda r: r in roleinfo.ASSIGNABLE_ROLES,
+            lambda r: r in roleinfo.ALL_ROLES,
             map(str, rolesForPermissionOn(
                     SilvaPermissions.View, self.context)))
-        roles.sort(key=roleinfo.ASSIGNABLE_ROLES.index)
+        roles.sort(key=roleinfo.ALL_ROLES.index)
         if roles:
-            return roles[0]
+            role = roles[0]
+            if role == 'Anonymous':
+                return None
+            return role
         return None
 
-    role = property(get_role, set_role)
+    minimum_role = property(get_minimum_role, set_minimum_role)
     acquired = property(is_acquired)
 
 
@@ -84,14 +87,17 @@ class RootAccessSecurityAdapter(AccessSecurityAdapter):
         # everybody permission again
         self.context.manage_permission(
             SilvaPermissions.View,
-            roles=('Anonymous',),
+            roles=roleinfo.ALL_ROLES,
             acquire=0)
         notify(events.SecurityRestrictionModifiedEvent(self.context, None))
 
     def is_acquired(self):
-        if not self.get_role():
+        if not self.get_minimum_role():
             return True
         return AccessSecurityAdapter.is_acquired(self)
+
+    # Need to redefined the property with the new version of is_acquired
+    acquired = property(is_acquired)
 
 
 class UserAuthorization(object):
