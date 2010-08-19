@@ -97,11 +97,11 @@ class RootAccessSecurityAdapter(AccessSecurityAdapter):
 class UserAuthorization(object):
     grok.implements(interfaces.IUserAuthorization)
 
-    def __init__(self, context, query, user,
+    def __init__(self, context, query, member,
                  local_roles=[], acquired_roles=[]):
         self.context = context
-        self.query = query
-        self.__user = user
+        self.__query = query
+        self.member = member
         self.__acquired_roles = sanatize_roles(acquired_roles)
         self.__local_roles = sanatize_roles(local_roles)
 
@@ -137,11 +137,11 @@ class UserAuthorization(object):
 
     @property
     def username(self):
-        return self.__user.fullname()
+        return self.member.fullname()
 
     @property
     def userid(self):
-        return self.__user.userid()
+        return self.member.userid()
 
     def revoke(self):
         """Revoke all Silva roles defined at this level for this user,
@@ -151,7 +151,7 @@ class UserAuthorization(object):
         if not role:
             return False
         user_id = self.userid
-        if is_role_greater(role, self.query.get_user_role()):
+        if is_role_greater(role, self.__query.get_user_role()):
             raise UnauthorizedRoleAssignement(role, user_id)
         self.context.manage_delLocalRoles([user_id])
         notify(events.SecurityRoleRemovedEvent(self.context, user_id, []))
@@ -165,9 +165,9 @@ class UserAuthorization(object):
         if user_role and is_role_greater_or_equal(user_role, role):
             return False
         user_id = self.userid
-        if is_role_greater(role, self.query.get_user_role()):
+        if is_role_greater(role, self.__query.get_user_role()):
             raise UnauthorizedRoleAssignement(role, user_id)
-        if role not in self.__user.allowed_roles():
+        if role not in self.member.allowed_roles():
             raise UnauthorizedRoleAssignement(role, user_id)
         self.context.manage_addLocalRoles(user_id, [role])
         notify(events.SecurityRoleAddedEvent(self.context, user_id, [role]))
