@@ -224,16 +224,10 @@ class UserAccess(grok.Adapter):
         """Return all current authorizations at this level, and
         authorization objects for given users.
         """
-        auth = self.get_authorizations()
+        auth = {}
         for user_id in user_ids:
             if user_id not in auth:
-                auth[user_id] = UserAuthorization(
-                    self.context,
-                    self,
-                    self.__service.get_member(
-                        user_id, location=self.context),
-                    [],
-                    self.__get_default_roles(user_id))
+                auth[user_id] = self.get_user_authorization(user_id)
         return auth
 
     def get_authorizations(self):
