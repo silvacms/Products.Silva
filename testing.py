@@ -48,6 +48,7 @@ class SilvaLayer(BrowserLayer):
         'chiefeditor': ['ChiefEditor'],
         'author': ['Author'],
         'reader': ['Reader'],
+        'viewer': ['Viewer'],
         'dummy': [],}
 
     def _install_application(self, app):
