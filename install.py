@@ -424,13 +424,6 @@ def registerViews(reg):
     reg.register('edit', 'Five Content',
                  ['edit', 'Content', 'SimpleContent', 'FiveContent'])
 
-
-    # public
-    reg.register('public', 'Silva Folder', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva Publication', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva Root', ['public', 'Folder', 'view'])
-    reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
-
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
     reg.register('add', 'Silva Publication', ['add', 'Publication'])
@@ -438,12 +431,6 @@ def registerViews(reg):
 
     # five compatibility for add
     reg.register('add', 'Five Content', ['add', 'FiveContent'])
-
-    # preview
-    reg.register('preview', 'Silva Folder', ['public', 'Folder', 'preview'])
-    reg.register('preview', 'Silva Publication', ['public', 'Folder', 'preview'])
-    reg.register('preview', 'Silva Root', ['public', 'Folder', 'preview'])
-    reg.register('preview', 'Silva Ghost Folder', ['public', 'Folder', 'preview'])
 
 
 def unregisterViews(reg):
@@ -455,27 +442,12 @@ def unregisterViews(reg):
                       'Silva Indexer',
                       'Silva Ghost Folder']:
         reg.unregister('edit', meta_type)
-        reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
     # versioned objects (where version is registered for public)
     for meta_type in ['Silva Ghost']:
         reg.unregister('edit', meta_type)
-        reg.unregister('add', meta_type)
-        reg.unregister('public', '%s Version' % meta_type)
-    # preview
-    for meta_type in ['Silva Folder',
-                        'Silva Publication',
-                        'Silva Root',
-                        'Silva Image',
-                        'Silva Ghost Folder',
-                        'Silva AutoTOC',
-                        'Silva Link Version']:
-        reg.unregister('preview', meta_type)
     reg.unregister('edit', 'Silva Root')
-    reg.unregister('public', 'Silva Root')
     reg.unregister('edit', 'Silva Simple Member')
-    # next line for hysterical reasons, should go away
-    reg.unregister('public', 'Silva Simple Member')
 
 
 def configureContainerPolicies(root):

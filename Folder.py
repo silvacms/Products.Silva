@@ -30,15 +30,14 @@ from Products.Silva import Copying
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
 
-from silva.translations import translate as _
 from silva.core.layout.interfaces import ICustomizableTag
-from silva.core.interfaces import (IContentImporter,
-                                   IPublishable, IContent,
-                                   ISilvaObject, IAsset, INonPublishable,
-                                   IContainer, IFolder, IPublication, IRoot)
+from silva.core.interfaces import (
+    IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
+    INonPublishable, IContainer, IFolder, IPublication, IRoot)
 
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
+from silva.translations import translate as _
 
 
 class Folder(SilvaObject, Publishable, BaseFolder):
@@ -927,6 +926,18 @@ def folder_moved_update_quota(obj, event):
         event.oldParent.update_quota(-size)
     if event.newParent:
         event.newParent.update_quota(size)
+
+
+class ContainerView(silvaviews.View):
+    """Default view for containers.
+    """
+    grok.context(IContainer)
+
+    def render(self):
+        default = self.context.get_default()
+        if default is not None:
+            return default.view()
+        return _(u'This container as no index.')
 
 
 class IPhotoGallery(ICustomizableTag):

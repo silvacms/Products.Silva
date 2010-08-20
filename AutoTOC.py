@@ -39,7 +39,7 @@ class AutoTOC(Content, SimpleItem):
     silvaconf.priority(0.2)
 
     def __init__(self, id):
-        AutoTOC.inheritedAttribute('__init__')(self, id)
+        super(AutoTOC, self).__init__(id)
         #it'd be really nice if these could be placed in the Interface, and z3-ized
         self._local_types = ['Silva Document', 'Silva Publication',
                              'Silva Folder']
@@ -58,11 +58,6 @@ class AutoTOC(Content, SimpleItem):
         code, toc, etc.
         """
         return 0
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'is_deletable')
-    def is_deletable(self):
-        """always deletable"""
-        return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'can_set_title')
     def can_set_title(self):
