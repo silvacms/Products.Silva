@@ -21,7 +21,7 @@ from silva.core.interfaces import events
 from silva.core.interfaces.service import IMemberService
 
 
-def sanatize_roles(roles):
+def silva_roles(roles):
     silva_roles = list(set(roles).intersection(roleinfo.ASSIGNABLE_ROLES_SET))
     silva_roles.sort(key=roleinfo.ASSIGNABLE_ROLES.index, reverse=True)
     return silva_roles
@@ -108,8 +108,8 @@ class UserAuthorization(object):
         self.context = context
         self.__query = query
         self.member = member
-        self.__acquired_roles = sanatize_roles(acquired_roles)
-        self.__local_roles = sanatize_roles(local_roles)
+        self.__acquired_roles = silva_roles(acquired_roles)
+        self.__local_roles = silva_roles(local_roles)
 
     @property
     def local_role(self):
@@ -149,9 +149,12 @@ class UserAuthorization(object):
         if not role:
             return False
         user_id = self.userid
-        if is_role_greater(role, self.__query.get_user_role()):
+        user_role = self.__query.get_user_role()
+        if user_role is None or is_role_greater(role, user_role):
             raise UnauthorizedRoleAssignement(role, user_id)
         self.context.manage_delLocalRoles([user_id])
+        # Update computed value
+        self.__local_roles = []
         notify(events.SecurityRoleRemovedEvent(self.context, user_id, []))
         return True
 
@@ -159,15 +162,18 @@ class UserAuthorization(object):
         """Grant a new role to the user, if it doesn't already have it
         The current user must have at least that role.
         """
-        user_role = self.role
-        if user_role and is_role_greater_or_equal(user_role, role):
+        current_role = self.role
+        if current_role and is_role_greater_or_equal(current_role, role):
             return False
         user_id = self.userid
-        if is_role_greater(role, self.__query.get_user_role()):
+        user_role = self.__query.get_user_role()
+        if user_role is None or is_role_greater(role, user_role):
             raise UnauthorizedRoleAssignement(role, user_id)
         if role not in self.member.allowed_roles():
             raise UnauthorizedRoleAssignement(role, user_id)
         self.context.manage_addLocalRoles(user_id, [role])
+        # Update computed value
+        self.__local_roles.insert(0, role)
         notify(events.SecurityRoleAddedEvent(self.context, user_id, [role]))
         return True
 
@@ -194,7 +200,7 @@ class UserAccess(grok.Adapter):
             return user.getRoles()
         return []
 
-    def get_user_authorization(self, user_id=None):
+    def get_user_authorization(self, user_id=None, dont_acquire=False):
         """Return authorization object for the given user. If no user
         is specified, return authorization object for the current
         authenticated user.
@@ -205,13 +211,14 @@ class UserAccess(grok.Adapter):
         local_roles = self.context.get_local_roles_for_userid(user_id)
 
         acquired_roles = []
-        content = self.context
-        while not interfaces.IRoot.providedBy(content):
-            content = aq_parent(content)
+        if not dont_acquire:
+            content = self.context
+            while not interfaces.IRoot.providedBy(content):
+                content = aq_parent(content)
+                acquired_roles.extend(
+                    content.get_local_roles_for_userid(user_id))
             acquired_roles.extend(
-                content.get_local_roles_for_userid(user_id))
-        acquired_roles.extend(
-            self.__get_default_roles(user_id))
+                self.__get_default_roles(user_id))
 
         return UserAuthorization(
             self.context,
@@ -220,17 +227,18 @@ class UserAccess(grok.Adapter):
             local_roles,
             acquired_roles)
 
-    def get_users_authorization(self, user_ids):
+    def get_users_authorization(self, user_ids, dont_acquire=False):
         """Return all current authorizations at this level, and
         authorization objects for given users.
         """
         auth = {}
         for user_id in user_ids:
             if user_id not in auth:
-                auth[user_id] = self.get_user_authorization(user_id)
+                auth[user_id] = self.get_user_authorization(
+                    user_id, dont_acquire=dont_acquire)
         return auth
 
-    def get_authorizations(self):
+    def get_defined_authorizations(self, dont_acquire=False):
         """Return current all authorizations at this level.
         """
         user_ids = set()
@@ -242,24 +250,32 @@ class UserAccess(grok.Adapter):
             user_ids.add(user_id)
             local_roles[user_id].extend(roles)
 
-        # Collect user with parent roles
-        content = self.context
-        while not interfaces.IRoot.providedBy(content):
-            content = aq_parent(content)
-            for user_id, roles in content.get_local_roles():
-                user_ids.add(user_id)
-                acquired_roles[user_id].extend(roles)
+        if not dont_acquire:
+            # Collect user with parent roles
+            content = self.context
+            while not interfaces.IRoot.providedBy(content):
+                content = aq_parent(content)
+                for user_id, roles in content.get_local_roles():
+                    user_ids.add(user_id)
+                    acquired_roles[user_id].extend(roles)
 
         auth = {}
         for user_id in user_ids:
-            acquired_roles[user_id].extend(
-                self.__get_default_roles(user_id))
+            user_local_roles = silva_roles(local_roles[user_id])
+            user_acquired_roles = silva_roles(acquired_roles[user_id])
+            if not (user_local_roles or user_acquired_roles):
+                # If the user doesn't have any Silva roles, we ignore it
+                continue
+            if not dont_acquire:
+                # If we acquired default roles, add default user roles.
+                user_acquired_roles.extend(
+                    self.__get_default_roles(user_id))
 
             auth[user_id] = UserAuthorization(
                 self.context,
                 self,
                 self.__service.get_member(user_id, location=self.context),
-                local_roles[user_id],
-                acquired_roles[user_id])
+                user_local_roles,
+                user_acquired_roles)
 
         return auth

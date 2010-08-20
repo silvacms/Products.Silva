@@ -5,7 +5,9 @@
 from AccessControl.SecurityManagement import newSecurityManager
 import Products.Silva
 
-from infrae.testing import TestCase, suite_from_package, get_event_names
+from infrae.testing import TestCase, suite_from_package
+from infrae.testing import get_event_names, clear_events, get_events
+from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
 import transaction
@@ -91,4 +93,8 @@ class SilvaLayer(BrowserLayer):
 FunctionalLayer = SilvaLayer(Products.Silva)
 
 
-__all__ = ["FunctionalLayer", "SilvaLayer", "TestCase", "Browser", "http"]
+__all__ = ['FunctionalLayer', 'SilvaLayer',
+           'TestCase', 'suite_from_package',
+           'Browser', 'http',
+           'get_event_names', 'clear_events', 'get_events',
+           'assertNotTriggersEvents', 'assertTriggersEvents',]
