@@ -122,7 +122,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         self.access = component.queryAdapter(
             self.root.folder, IUserAccessSecurity)
 
-    def test_adapter(self):
+    def test_interface(self):
         self.assertTrue(verifyObject(IUserAccessSecurity, self.access))
 
     def test_logged_in_user(self):
@@ -226,7 +226,6 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.role, 'Manager')
 
-
     def test_grant_role_as_nobody(self):
         """Test setting a role while being nobody.
         """
@@ -323,9 +322,46 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.acquired_role, None)
         self.assertEqual(authorization.role, 'Manager')
 
-    def test_get_user_authorization(self):
+    def test_get_user_authorization_dont_acquire(self):
         """Retrieve a user authorization that have some acquired roles.
         """
+        access = IUserAccessSecurity(self.folder)
+
+        authorization = access.get_user_authorization(
+            'reader', dont_acquire=True)
+        self.assertEqual(authorization.local_role, 'Manager')
+        self.assertEqual(authorization.acquired_role, None)
+        self.assertEqual(authorization.role, 'Manager')
+
+        authorization = access.get_user_authorization(
+            'viewer', dont_acquire=True)
+        self.assertEqual(authorization.local_role, None)
+        self.assertEqual(authorization.acquired_role, None)
+        self.assertEqual(authorization.role, None)
+
+    def  test_get_users_authorzation(self):
+        """Test get_users_authorization.
+        """
+        access = IUserAccessSecurity(self.folder)
+
+        authorizations = access.get_users_authorization(
+            ['reader', 'viewer', 'editor'])
+        self.assertEqual(len(authorizations), 3)
+        self.assertTrue('reader' in authorizations.keys())
+        self.assertTrue('viewer' in authorizations.keys())
+        self.assertTrue('editor' in authorizations.keys())
+        self.assertFalse('manager' in authorizations.keys())
+
+        authorization = authorizations['reader']
+        self.assertEqual(authorization.local_role, 'Manager')
+        self.assertEqual(authorization.acquired_role, 'Editor')
+        self.assertEqual(authorization.role, 'Manager')
+
+        authorization = authorizations['editor']
+        self.assertEqual(authorization.local_role, None)
+        self.assertEqual(authorization.acquired_role, 'Editor')
+        self.assertEqual(authorization.role, 'Editor')
+
 
     def test_revoke_as_manager(self):
         """Revoke a local role as a manager.
