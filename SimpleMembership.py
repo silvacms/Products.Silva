@@ -293,11 +293,6 @@ class SimpleMemberService(SilvaService):
         """
         return None
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_extra_names')
-    def get_extra_names(self):
-        return []
-
     security.declarePublic('logout')
     def logout(self, came_from=None, REQUEST=None):
         """Logout the user.
@@ -328,7 +323,7 @@ class EditMemberService(silvaforms.ZMIForm):
     grok.name('manage_configure')
 
     label = _(u"Configure member service")
-    description = _(u"Update member service settings")
+    description = _(u"Update member service settings.")
     ignoreContent = False
     fields = silvaforms.Fields(IServiceSetting)
     actions = silvaforms.Actions(silvaforms.EditAction(_(u"Update")))
