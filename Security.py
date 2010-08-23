@@ -17,7 +17,7 @@ from Products.Silva.AccessManager import AccessManager
 from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces import IVersion, IRoot
-from silva.core.interfaces import IMemberService
+from silva.core.services.interfaces import IMemberService
 
 from Products.SilvaMetadata.Exceptions import BindingError
 

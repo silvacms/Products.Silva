@@ -18,7 +18,7 @@ from Products.Silva import roleinfo
 
 from silva.core import interfaces
 from silva.core.interfaces import events
-from silva.core.interfaces.service import IMemberService
+from silva.core.services.interfaces import IMemberService
 
 
 def silva_roles(roles):
@@ -171,7 +171,7 @@ class UserAuthorization(object):
             raise UnauthorizedRoleAssignement(role, user_id)
         if role not in self.member.allowed_roles():
             raise UnauthorizedRoleAssignement(role, user_id)
-        self.context.manage_addLocalRoles(user_id, [role])
+        self.context.manage_setLocalRoles(user_id, [role])
         # Update computed value
         self.__local_roles.insert(0, role)
         notify(events.SecurityRoleAddedEvent(self.context, user_id, [role]))

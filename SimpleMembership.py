@@ -2,7 +2,11 @@
 # See also LICENSE.txt
 # $Id$
 
+import urllib
+import hashlib
+
 from five import grok
+from zope import interface, schema
 
 # zope
 from AccessControl import ClassSecurityInfo
@@ -17,11 +21,12 @@ from Products.Silva.Membership import cloneMember, Member
 from Products.Silva.Security import Security
 from Products.Silva.helpers import add_and_edit
 
+from silva.core.services.interfaces import IMemberService
 from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
-
-import urllib, hashlib
+from silva.translations import translate as _
+from zeam.form import silva as silvaforms
 
 
 class SimpleMember(Member, Security, ZMIObject):
@@ -197,27 +202,17 @@ class SimpleMemberService(SilvaService):
     meta_type = 'Silva Simple Member Service'
     title = 'Silva Membership Service'
     default_service_identifier = 'service_members'
+    _use_direct_lookup = False
+    _allow_authentication_requests = False
 
-    grok.implements(interfaces.IMemberService)
+    grok.implements(IMemberService)
     silvaconf.icon('www/members.png')
-
     security = ClassSecurityInfo()
 
     manage_options = (
-        {'label':'Edit', 'action':'manage_editForm'},
+        {'label':'Configure', 'action':'manage_configure'},
         ) + SilvaService.manage_options
 
-    security.declareProtected('View management screens', 'manage_editForm')
-    manage_editForm = PageTemplateFile(
-        'www/simpleMemberServiceEdit', globals(),
-        __name__='manage_editForm')
-
-    security.declareProtected('View management screens', 'manage_main')
-    manage_main = manage_editForm
-
-    def __init__(self, id):
-        self.id = id
-        self._allow_authentication_requests = 0
 
     # XXX will be used by access tab and should be opened wider if this
     # is central service..
@@ -260,6 +255,17 @@ class SimpleMemberService(SilvaService):
     def get_cached_member(self, userid, location=None):
         """Returns a cloned member object, which can be stored in the ZODB"""
         return cloneMember(self.get_member(userid, location=location)).__of__(self)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
+                              'set_use_direct_lookup')
+    def set_use_direct_lookup(self, value):
+        """sets use_direct_lookup"""
+        self._use_direct_lookup = value
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'use_direct_lookup')
+    def use_direct_lookup(self):
+        return self._use_direct_lookup
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'allow_authentication_requests')
@@ -305,3 +311,24 @@ class SimpleMemberService(SilvaService):
 
 
 InitializeClass(SimpleMemberService)
+
+
+
+class IServiceSetting(interface.Interface):
+    _use_direct_lookup = schema.Bool(
+        title=_(u"Use direct lookup?"),
+        description=_(u"Disable search feature to affect a role to a user."))
+    _allow_authentication_requests = schema.Bool(
+        title=_(u"Allow membership requests on this site ?"),
+        description=_(u"Proprose to users to request for roles on content."))
+
+
+class EditMemberService(silvaforms.ZMIForm):
+    grok.context(SimpleMemberService)
+    grok.name('manage_configure')
+
+    label = _(u"Configure member service")
+    description = _(u"Update member service settings")
+    ignoreContent = False
+    fields = silvaforms.Fields(IServiceSetting)
+    actions = silvaforms.Actions(silvaforms.EditAction(_(u"Update")))

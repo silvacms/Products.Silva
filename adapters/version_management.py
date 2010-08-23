@@ -18,7 +18,7 @@ from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces.adapters import IVersionManagement
 from silva.core.interfaces import IVersionedContent, IVersion
-from silva.core.interfaces.service import IMemberService
+from silva.core.services.interfaces import IMemberService
 from silva.translations import translate as _
 
 

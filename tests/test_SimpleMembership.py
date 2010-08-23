@@ -5,7 +5,7 @@
 
 from zope.interface.verify import verifyObject
 
-from silva.core import interfaces
+from silva.core.services.interfaces import IMemberService
 from Products.Silva.tests import  SilvaTestCase
 
 import urllib
@@ -25,8 +25,8 @@ class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
         acl_users._addUser('alpha2', 'alpha2', 'alpha2', [], [])
 
     def test_service(self):
-        self.failUnless(verifyObject(interfaces.IMemberService,
-                                     self.root.service_members))
+        self.failUnless(verifyObject(
+                IMemberService, self.root.service_members))
 
     def test_is_user(self):
         service_members = self.root.service_members
