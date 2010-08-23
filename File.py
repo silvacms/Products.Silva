@@ -616,19 +616,21 @@ class FileServiceManagementView(silvaforms.ZMIComposedForm):
     grok.name('manage_filesservice')
     grok.context(FilesService)
 
+    label = _(u"Configure file storage")
 
-class FileServiceSettings(silvaforms.SubForm):
+
+class FileServiceSettings(silvaforms.ZMISubForm):
     grok.context(FilesService)
     silvaforms.view(FileServiceManagementView)
     silvaforms.order(10)
 
-    label = _(u"Configure storage")
+    label = _(u"Select storage")
     fields = silvaforms.Fields(interfaces.IFilesService)
     actions = silvaforms.Actions(silvaforms.EditAction(_(u"Change")))
     ignoreContent = False
 
 
-class FileServiceConvert(silvaforms.SubForm):
+class FileServiceConvert(silvaforms.ZMISubForm):
     grok.context(FilesService)
     silvaforms.view(FileServiceManagementView)
     silvaforms.order(20)
