@@ -19,7 +19,7 @@
     message_type options/message_type | request/message_type | nothing;
     message  options/message | request/message | nothing;
     screen_id string:tab_preview;
-    global   nofeedback nofeedback | nothing;
+    global   no_empty_feedback python:True;
     global   active_tab string:tab_preview;
     ">
 

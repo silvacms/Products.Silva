@@ -103,13 +103,8 @@
 <span tal:replace="nothing">
 <!-- ______________ start feedback ______________ -->
 </span>
-<tal:provider replace="structure provider:smimessages" />
 <metal:plug define-slot="notice" />
-<metal:plug define-slot="editorcheck" />
-<tal:set define="global nofeedback nofeedback | nothing" />
-<metal:slot define-slot="feedback"
-  tal:condition="python:not (message or nofeedback)">
-</metal:slot>
+<tal:provider replace="structure provider:smimessages" />
 <span tal:replace="nothing">
 <!-- ______________ /end feedback ______________ -->
 </span>
