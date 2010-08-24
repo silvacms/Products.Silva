@@ -22,6 +22,7 @@ from Products.Silva import SilvaPermissions
 from silva.core import interfaces
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
+from silva.core.smi.smi import SMIPortletManager
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.references.interfaces import IReferenceService
 
@@ -138,7 +139,7 @@ class ReferencedBy(silvaviews.Viewlet):
     """
     grok.context(interfaces.IAsset)
     grok.layer(ISMILayer)
-    grok.viewletmanager(silvaviews.SMIPortletManager)
+    grok.viewletmanager(SMIPortletManager)
 
     def update(self):
         self.references = []
