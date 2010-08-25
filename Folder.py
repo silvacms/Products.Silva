@@ -938,7 +938,6 @@ class FolderAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva Folder')
 
     fields = silvaforms.Fields(IContainerSchema)
-    description = Folder.__doc__
 
     def _edit(self, parent, content, data):
         policies = getUtility(IContainerPolicyService)

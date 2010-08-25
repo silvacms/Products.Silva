@@ -211,7 +211,6 @@ class AutoTOCAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva AutoTOC')
 
     fields = silvaforms.Fields(ITitledContent, IAutoTOCSchema)
-    description = AutoTOC.__doc__
 
 
 class AutoTOCEditForm(silvaforms.SMIEditForm):

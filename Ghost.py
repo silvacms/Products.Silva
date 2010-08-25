@@ -256,7 +256,6 @@ class GhostAddForm(SMIAddForm):
     grok.context(IGhost)
 
     fields = Fields(IGhostSchema)
-    description = Ghost.__doc__
 
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']

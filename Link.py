@@ -129,8 +129,6 @@ class LinkAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva Link')
 
     fields = silvaforms.Fields(ITitledContent, ILinkSchema)
-    description = Link.__doc__
-
 
 
 class LinkEditForm(silvaforms.SMIEditForm):

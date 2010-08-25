@@ -297,5 +297,3 @@ class ManageLocalSite(silvaforms.SMIForm):
 class PublicationAddForm(Folder.FolderAddForm):
     grok.context(IPublication)
     grok.name(u'Silva Publication')
-
-    description = Publication.__doc__

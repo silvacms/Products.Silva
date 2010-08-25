@@ -656,7 +656,6 @@ class ImageAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.IImage)
     grok.name(u'Silva Image')
 
-    description = Image.__doc__
     fields = silvaforms.Fields(IImageAddFields)
     fields['id'].required = False
 

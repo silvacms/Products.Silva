@@ -279,8 +279,8 @@ class ExtensionRegistry(Registry):
 
     def get_addable(self, content_type):
         for addable in self._silva_addables:
-            if content_type == addable['name']:
-                return addable
+            if content_type == addable.meta_type['name']:
+                return addable.meta_type
         return {}
 
 

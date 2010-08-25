@@ -554,7 +554,6 @@ class FileAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.IFile)
     grok.name(u'Silva File')
 
-    description = File.__doc__
     fields = silvaforms.Fields(IFileAddFields)
     fields['id'].required = False
     fields['title'].required = False

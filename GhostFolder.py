@@ -394,7 +394,6 @@ class GhostFolderAddForm(SMIAddForm):
     """
     grok.name(u'Silva Ghost Folder')
 
-    description = GhostFolder.__doc__
     fields = Fields(IGhostFolderSchema)
 
     def _add(self, parent, data):
