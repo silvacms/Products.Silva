@@ -4,8 +4,10 @@
 
 # Zope 3
 from five import grok
+from zope.event import notify
 from zope.component import getUtility
 from zope.traversing.browser import absoluteURL
+from zope.lifecycleevent import ObjectModifiedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -17,12 +19,13 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
+from silva.core.smi.interfaces import IEditTabIndex
 from silva.core.interfaces import IIndexable, IIndexer
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
-from zeam.form.silva.form import SMIAddForm
+from zeam.form import silva as silvaforms
 
 
 class IndexerReferenceValue(WeakReferenceValue):
@@ -138,12 +141,6 @@ class Indexer(Content, SimpleItem):
         """always deletable"""
         return 1
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_cacheable')
-    def is_cacheable(self):
-        """always cacheable"""
-        return 1
-
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -154,10 +151,32 @@ class Indexer(Content, SimpleItem):
 InitializeClass(Indexer)
 
 
-class IndexerAddForm(SMIAddForm):
+class IndexerAddForm(silvaforms.SMIAddForm):
     """Add form for Silva indexer.
     """
+    grok.context(IIndexer)
     grok.name(u"Silva Indexer")
+
+
+class IndexerEditForm(silvaforms.SMIForm):
+    """Edit form for an indexer. There is not that much to edit however.
+    """
+    grok.name('tab_edit')
+    grok.context(IIndexer)
+    grok.implements(IEditTabIndex)
+
+    description = _(
+        u"An index is not editable. "
+        u"However, you can update the index to include recent added content.")
+    actions = silvaforms.Actions(silvaforms.CancelEditAction())
+
+    @silvaforms.action(_(u"update index"))
+    def update_index(self):
+        self.context.update()
+        notify(ObjectModifiedEvent(self.context))
+        self.send_message(
+            _(u"Index content have been successfully updated."),
+            type="feedback")
 
 
 class IndexerView(silvaviews.View):
