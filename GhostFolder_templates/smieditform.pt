@@ -8,8 +8,12 @@
     <thead>
       <tr>
         <td class="top" colspan="2">
-          <h2>
+          <h2 tal:define="title context/get_title_or_id">
+            <img src="#" alt="#"
+                 tal:attributes="src view/icon_url;
+                                 alt title" />
             <span tal:replace="context/meta_type" />
+            &#xab;<span tal:replace="title"/>&#xbb;
           </h2>
         </td>
       </tr>
