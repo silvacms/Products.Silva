@@ -81,14 +81,13 @@ def _get_icon_base_url(request):
 
 
 def get_icon_url(content, request):
-    """Return a content icon.
+    """Return a content icon URL.
     """
-    base_url = _get_icon_base_url(request)
     try:
         icon = registry.getIcon(content)
     except ValueError:
         icon = 'globals/silvageneric.gif'
-    return "/".join((base_url, icon,))
+    return "/".join(( _get_icon_base_url(request), icon,))
 
 
 def get_meta_type_icon(meta_type):
@@ -98,3 +97,9 @@ def get_meta_type_icon(meta_type):
         return registry.getIconByIdentifier(('meta_type', meta_type))
     except ValueError:
         return 'globals/silvageneric.gif'
+
+def get_meta_type_icon_url(meta_type, request):
+    """Return a content icon URL from its meta_type.
+    """
+    return "/".join(
+        (_get_icon_base_url(request), get_meta_type_icon(meta_type)))
