@@ -170,7 +170,10 @@ class IndexerEditForm(silvaforms.SMIForm):
         u"However, you can update the index to include recent added content.")
     actions = silvaforms.Actions(silvaforms.CancelEditAction())
 
-    @silvaforms.action(_(u"update index"))
+    @silvaforms.action(
+        _(u"update index"),
+        accesskey=u"u",
+        description=_(u"Update index to include recent added content: alt-u"))
     def update_index(self):
         self.context.update()
         notify(ObjectModifiedEvent(self.context))
