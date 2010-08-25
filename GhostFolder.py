@@ -373,6 +373,7 @@ class IGhostFolderSchema(IIdentifiedContent):
 
 class SyncAction(Action):
 
+    description = _(u"Synchronize target and ghost folder content")
     ignoreRequest = True
 
     def __call__(self, form):

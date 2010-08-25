@@ -319,6 +319,3 @@ def ghost_factory(container, identifier, target):
         factory = factory.manage_addGhost
     factory(identifier, None, haunted=target)
     return getattr(container, identifier)
-
-
-

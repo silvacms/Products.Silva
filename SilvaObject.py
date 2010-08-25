@@ -69,7 +69,6 @@ class Zope3ViewAttribute(ViewAttribute):
         """
         context = self.aq_parent
         request = self.REQUEST
-
         # All SMI views end up including SilvaViews templates, that
         # expect to have request['model']
         request['model'] = context

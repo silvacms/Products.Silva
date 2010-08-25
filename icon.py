@@ -70,15 +70,31 @@ class IconRegistry(object):
 
 registry = IconRegistry()
 
-def get_icon_url(content, request):
+def _get_icon_base_url(request):
     annotations = IAnnotations(request)
     base_url = annotations.get('silva.icon.baseurl')
     if base_url is None:
         site = IVirtualSite(request)
         base_url = site.get_root_url()
         annotations['silva.icon.baseurl'] = base_url
+    return base_url
+
+
+def get_icon_url(content, request):
+    """Return a content icon.
+    """
+    base_url = _get_icon_base_url(request)
     try:
         icon = registry.getIcon(content)
     except ValueError:
         icon = 'globals/silvageneric.gif'
     return "/".join((base_url, icon,))
+
+
+def get_meta_type_icon(meta_type):
+    """Return a content icon from its meta_type.
+    """
+    try:
+        return registry.getIconByIdentifier(('meta_type', meta_type))
+    except ValueError:
+        return 'globals/silvageneric.gif'

@@ -2,26 +2,21 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
-
 # Python
 from bisect import insort_right
 
 # Zope
+from five import grok
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from Persistence import Persistent
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # Silva
-from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy
-from silva.core.interfaces import IInvisibleService
+from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.services.base import SilvaService
 
 
-# XXX: can these "helper" classes for ordering be refactored in something
-# more generic? See also ExtensionRegistry.Addable.
 class _Policy:
     def __init__(self, name, priority):
         self._name = name
@@ -36,78 +31,63 @@ class _Policy:
 
 class ContainerPolicyRegistry(SilvaService):
 
-    security = ClassSecurityInfo()
-    id = 'service_containerpolicy'
-    title = 'Container Policies Listing'
-    implements(IInvisibleService)
+    grok.implements(IContainerPolicyService)
+    default_service_identifier = 'service_containerpolicy'
     meta_type = 'Silva Container Policy Registry'
 
-    manage_options = (
-        {'label': 'Edit', 'action': 'manage_main'},
-        ) + SilvaService.manage_options
+    security = ClassSecurityInfo()
 
-    security.declareProtected('View management screens', 'manage_main')
-    manage_main = PageTemplateFile('www/containerPolicyEdit.zpt', globals())
+    def __init__(self, identifier):
+        super(ContainerPolicyRegistry, self).__init__(identifier)
+        self.__policies = {}
+        self.register('None', NothingPolicy, 100)
 
-    silvaconf.icon('www/containerpolicy_service.png')
-    silvaconf.factory('manage_addContainerPolicyRegistry')
+    security.declareProtected(
+        'Access contents information', 'get_policy')
+    def get_policy(self, name):
+        return self.__policies[name][0]
 
-    def __init__(self):
-        self._policies = {}
-
-    def getPolicy(self, name):
-        """return policy of given name
-
-            raises KeyError if policy doesn't exist
-        """
-        return self._policies[name][0]
-
-    def listPolicies(self):
+    security.declareProtected(
+        'Access contents information', 'list_policies')
+    def list_policies(self):
         sorted_policies = []
-        for key, value in self._policies.items():
+        for key, value in self.__policies.items():
             insort_right(sorted_policies, _Policy(key, value[1]))
         return [p._name for p in sorted_policies]
 
-    def listAddablePolicies(self, model):
-        """return a formulator items list of policies available
-        in the current context"""
-        allowed_addables = model.get_silva_addables_allowed()
-        return [ (p,p) for p in self.listPolicies()
-                 if p in allowed_addables or p == 'None']
+    security.declareProtected(
+        'Access contents information', 'list_addable_policies')
+    def list_addable_policies(self, content):
+        allowed_addables = content.get_silva_addables_allowed()
+        return [p for p in self.list_policies()
+                if p in allowed_addables or p == 'None']
 
+    security.declareProtected(
+        'View management screens', 'register')
     def register(self, name, policy, priority=0.0):
-        """register policy
-        If policy is simple and is a factory for a silva content type, 'name'
-        should be the silva conte type's meta_type.  This is required to hide
-        policies which create addables not allowed in the publication.
-        Policy should be the container policy class."""
-        msg = ('The object %(policy)s does not implement IContainerPolicy, '
-                    'try restarting Zope.')
-        msg = msg % {'policy': repr(policy)}
-        assert IContainerPolicy.implementedBy(policy), msg
-        self._policies[name] = (policy(), priority)
+        """Register policy.
+        """
+        assert IContainerPolicy.implementedBy(policy)
+        self.__policies[name] = (policy(), priority)
         self._p_changed = 1
 
+    security.declareProtected(
+        'View management screens', 'unregister')
     def unregister(self, name):
-        """unregister policy"""
+        """Unregister policy.
+        """
         try:
-            del(self._policies[name])
+            del self.__policies[name]
         except KeyError:
             pass
         self._p_changed = 1
 
+
 InitializeClass(ContainerPolicyRegistry)
 
 
-def manage_addContainerPolicyRegistry(dispatcher):
-    cpr = ContainerPolicyRegistry()
-    dispatcher._setObject(cpr.id, cpr)
-    return ''
-
-
 class NothingPolicy(Persistent):
-
-    implements(IContainerPolicy)
+    grok.implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         pass

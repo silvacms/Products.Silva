@@ -42,66 +42,6 @@
  </td>
 </metal:fill>
 
-   <metal:fillhead fill-slot="main-head">
-    <tal:block replace="nothing">
-      ______________ top controls row ______________
-    </tal:block>
-    <tr class="top-controls">
-      <td colspan="6">
-        <tal:if condition="may_change_content">
-<script type="text/javascript">
-window.onload_registry.register(function() {
-  ao = document.getElementById("add_object_button");
-  mt = document.getElementById("meta_type");
-  ao.onclick = addNewContent;
-  mt.onchange = function(event) { ao.click(); return true; }
-});
-</script>
-          <input type="hidden" name="add_object_position" value="" />
-          <select class="transporter"
-            style="float:left"
-            name="meta_type"
-            id="meta_type"
-            title="select a new item: alt-s"
-            i18n:attributes="title">
-            <option value="None" i18n:translate="">
-              select:
-            </option>
-            <tal:block tal:repeat="addable model/get_silva_addables">
-              <option tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
-                      tal:attributes="value addable/name" />
-            </tal:block>
-          </select>
-          <label for="meta_type"
-            style="float:left;"
-            title="access key: alt-s"
-            accesskey="s"
-            i18n:attributes="title"
-          ></label>
-          <input class="button transporter"
-            style="float:left"
-            name="add_object:method"
-            id="add_object_button"
-            type="submit"
-            value="new..."
-            title="add a new item - alt-n"
-            accesskey="n"
-            i18n:attributes="value;title"
-          />
-          <input class="button transporter"
-            style="float:right"
-            name="tab_edit_import:method"
-            type="submit"
-            title="import xml data or a zip file: alt-i"
-            accesskey="i"
-            value="import..."
-            i18n:attributes="title;value"
-          />
-        </tal:if>
-      </td>
-    </tr>
-   </metal:fillhead>
-
    <metal:fillbody fill-slot="main-body">
     <tal:block replace="nothing">
       ______________ listing header ______________

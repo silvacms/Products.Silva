@@ -4,14 +4,19 @@
 
 import urllib
 
-from zope.i18n import translate
-from zope.event import notify
-from zope.deprecation import deprecation
 from five import grok
-from zope.lifecycleevent import ObjectRemovedEvent
+from zope import schema
+from zope.component import getUtility
 from zope.container.contained import notifyContainerModified
+from zope.event import notify
+from zope.i18n import translate
+from zope.lifecycleevent import ObjectRemovedEvent
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.traversing.browser import absoluteURL
 
 # Zope
+from Acquisition import aq_parent
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from OFS.CopySupport import _cb_decode, _cb_encode # HACK
@@ -30,14 +35,17 @@ from Products.Silva import Copying
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
 
+from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
     INonPublishable, IContainer, IFolder, IPublication, IRoot)
 
+from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
+from zeam.form import silva as silvaforms
 
 
 class Folder(SilvaObject, Publishable, BaseFolder):
@@ -54,11 +62,9 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     meta_type = "Silva Folder"
     object_type = 'container'
 
-
     grok.implements(IFolder)
     silvaconf.icon('www/silvafolder.gif')
     silvaconf.priority(-5)
-    silvaconf.factory('manage_addFolder')
 
     @property
     def manage_options(self):
@@ -132,6 +138,11 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
         notifyContainerModified(self)
 
+        if REQUEST is not None:
+            # For ZMI
+            REQUEST.RESPONSE.redirect(
+                absoluteURL(self, self.REQUET) + '/manage_main')
+
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
         # changed
@@ -146,19 +157,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
 
     # MANIPULATORS
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'set_silva_addables_allowed_in_container')
-    def set_silva_addables_allowed_in_container(self, addables):
-        self._addables_allowed_in_container = addables
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'set_silva_addables_allowed_in_publication')
-    @deprecation.deprecate("""The set_silva_addables_allowed_in_publication
-      method has been deprecated and should be replaced by
-      set_silva_addables_allowed_in_container. The allowed addables api has
-      been moved from publications to containers in general.""")
-    def set_silva_addables_allowed_in_publication(self, addables):
-        return self.set_silva_addables_allowed_in_container(addables)
 
     security.declarePrivate('titleMutationTrigger')
     def titleMutationTrigger(self):
@@ -492,25 +490,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed_in_container')
-    def get_silva_addables_allowed_in_container(self):
-        current = self
-        root = self.get_root()
-        while 1:
-            if IContainer.providedBy(current):
-                addables = current._addables_allowed_in_container
-                if addables is not None:
-                    return addables
-            if current == root:
-                return self.get_silva_addables_all()
-            current = current.aq_parent
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_silva_addables_acquired')
-    def is_silva_addables_acquired(self):
-        return self._addables_allowed_in_container is None
-
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -524,6 +503,30 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             return True
 
         return not self.is_published() and not self.is_approved()
+
+    # Silva addables
+
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'set_silva_addables_allowed_in_container')
+    def set_silva_addables_allowed_in_container(self, addables):
+        self._addables_allowed_in_container = addables
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_silva_addables_allowed_in_container')
+    def get_silva_addables_allowed_in_container(self):
+        current = self
+        while not IRoot.providedBy(current):
+            if IContainer.providedBy(current):
+                addables = current._addables_allowed_in_container
+                if addables is not None:
+                    return addables
+            current = aq_parent(current)
+        return self.get_silva_addables_all()
+
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'is_silva_addables_acquired')
+    def is_silva_addables_acquired(self):
+        return self._addables_allowed_in_container is None
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables')
@@ -568,6 +571,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         addables = self.get_silva_addables_allowed_in_container()
         allowed = [name for name in addables if secman.checkPermission('Add %ss' % name, self)]
         return allowed
+
+    # get_container API
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_container')
@@ -859,14 +864,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         return Copying.resolve_ref(self.getPhysicalRoot(), ref)
 
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'xml_validate')
-    def xml_validate(self, xml):
-        """Return true if XML is valid.
-        """
-        # XXX To be removed
-        return True
-
     security.declarePublic('url_encode')
     def url_encode(self, string):
         """A wrapper for the urllib.quote function
@@ -882,22 +879,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
 
 InitializeClass(Folder)
-
-def manage_addFolder(
-    context, id, title, create_default=1, policy_name='None', REQUEST=None):
-    """Add a Folder."""
-
-    if not mangle.Id(context, id).isValid():
-        return
-    folder = Folder(id)
-    context._setObject(id, folder)
-    folder = getattr(context, id)
-    folder.set_title(title)
-    if create_default:
-        policy = context.service_containerpolicy.getPolicy(policy_name)
-        policy.createDefaultDocument(folder, title)
-    helpers.add_and_edit(context, id, REQUEST)
-    return ''
 
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
@@ -926,6 +907,43 @@ def folder_moved_update_quota(obj, event):
         event.oldParent.update_quota(-size)
     if event.newParent:
         event.newParent.update_quota(size)
+
+
+@grok.provider(IContextSourceBinder)
+def silva_container_policy(context):
+    contents = []
+    policies = getUtility(IContainerPolicyService)
+    for policy in policies.list_addable_policies(context):
+        contents.append(SimpleTerm(
+                value=policy,
+                token=policy,
+                title=policy))
+    return SimpleVocabulary(contents)
+
+
+class IContainerSchema(ITitledContent):
+    """Add a select for the default item.
+    """
+    default_item = schema.Choice(
+        title=_(u"first item"),
+        description=_(u"Choose an item to be created within the container"),
+        source=silva_container_policy,
+        required=True)
+
+
+class FolderAddForm(silvaforms.SMIAddForm):
+    """Add form for a Folder.
+    """
+    grok.context(IFolder)
+    grok.name(u'Silva Folder')
+
+    fields = silvaforms.Fields(IContainerSchema)
+    description = Folder.__doc__
+
+    def _edit(self, parent, content, data):
+        policies = getUtility(IContainerPolicyService)
+        policy = policies.get_policy(data['default_item'])
+        policy.createDefaultDocument(content, data['title'])
 
 
 class ContainerView(silvaviews.View):

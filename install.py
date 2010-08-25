@@ -19,7 +19,6 @@ from silva.core.services.interfaces import ICataloging
 
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
-from Products.Silva.ContainerPolicy import NothingPolicy
 from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
@@ -412,8 +411,6 @@ def registerViews(reg):
                  ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
                  ['edit', 'Container', 'GhostFolder'])
-    reg.register('edit', 'Silva AutoTOC',
-                 ['edit', 'Content', 'AutoTOC'])
     # five compatibility for edit
     reg.register('edit', 'Five Asset',
                  ['edit', 'Asset', 'FiveAsset'])
@@ -424,39 +421,26 @@ def registerViews(reg):
     reg.register('edit', 'Five Content',
                  ['edit', 'Content', 'SimpleContent', 'FiveContent'])
 
-    # add
-    reg.register('add', 'Silva Folder', ['add', 'Folder'])
-    reg.register('add', 'Silva Publication', ['add', 'Publication'])
-    reg.register('add', 'Silva AutoTOC', ['add', 'AutoTOC'])
-
-    # five compatibility for add
-    reg.register('add', 'Five Content', ['add', 'FiveContent'])
-
 
 def unregisterViews(reg):
-    # plain add, edit and public
     for meta_type in ['Silva Folder',
                       'Silva Publication',
                       'Silva Image',
                       'Silva File',
                       'Silva Indexer',
+                      'Silva Ghost',
+                      'Silva Root',
+                      'Silva Simple Member',
                       'Silva Ghost Folder']:
         reg.unregister('edit', meta_type)
-        reg.unregister('add', meta_type)
-    # versioned objects (where version is registered for public)
-    for meta_type in ['Silva Ghost']:
-        reg.unregister('edit', meta_type)
-    reg.unregister('edit', 'Silva Root')
-    reg.unregister('edit', 'Silva Simple Member')
 
 
 def configureContainerPolicies(root):
     # create container policy registry
     if not hasattr(root, 'service_containerpolicy'):
-        root.manage_addProduct['Silva'] \
-            .manage_addContainerPolicyRegistry()
+        factory = root.manage_addProduct['Silva']
+        factory.manage_addContainerPolicyRegistry()
     cpr = root.service_containerpolicy
-    cpr.register('None', NothingPolicy, 100)
     cpr.register('Silva AutoTOC', AutoTOCPolicy, 0)
 
 

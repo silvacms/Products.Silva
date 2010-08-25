@@ -21,8 +21,8 @@ from Products.Silva.helpers import add_and_edit
 from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import (IPublication, IRoot, ISiteManager,
-                                   IInvisibleService)
+from silva.core.interfaces import (
+    IPublication, IRoot, ISiteManager, IInvisibleService)
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -63,8 +63,6 @@ class Publication(Folder.Folder):
     grok.implements(IPublication)
     silvaconf.priority(-5)
     silvaconf.icon('www/silvapublication.gif')
-    silvaconf.factory('manage_addPublication')
-
 
     @property
     def manage_options(self):
@@ -296,19 +294,8 @@ class ManageLocalSite(silvaforms.SMIForm):
             return silvaforms.SUCCESS
 
 
-def manage_addPublication(
-    self, id, title, create_default=1, policy_name='None', REQUEST=None):
-    """Add a Silva publication."""
-    if not mangle.Id(self, id).isValid():
-        return
-    publication = Publication(id)
-    self._setObject(id, publication)
-    publication = getattr(self, id)
-    publication.set_title(title)
-    if create_default:
-        policy = self.service_containerpolicy.getPolicy(policy_name)
-        policy.createDefaultDocument(publication, title)
-    add_and_edit(self, id, REQUEST)
-    return ''
+class PublicationAddForm(Folder.FolderAddForm):
+    grok.context(IPublication)
+    grok.name(u'Silva Publication')
 
-
+    description = Publication.__doc__

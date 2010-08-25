@@ -4,7 +4,7 @@
 
 # Zope 3
 from five import grok
-from zope import schema
+from zope import schema, interface
 from zope.traversing.browser import absoluteURL
 from zope.component import getUtility
 
@@ -93,7 +93,7 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 
-class ILinkSchema(ITitledContent):
+class ILinkSchema(interface.Interface):
 
     relative = schema.Bool(
         title=_(u"relative link"),
@@ -128,7 +128,7 @@ class LinkAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.ILink)
     grok.name(u'Silva Link')
 
-    fields = silvaforms.Fields(ILinkSchema)
+    fields = silvaforms.Fields(ITitledContent, ILinkSchema)
     description = Link.__doc__
 
 
@@ -158,5 +158,3 @@ class LinkView(silvaviews.View):
     def render(self):
         return u'Link &laquo;%s&raquo; redirects to: <a href="%s">%s</a>' % (
             self.content.get_title(), self.url, self.url)
-
-
