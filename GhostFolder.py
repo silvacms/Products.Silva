@@ -430,7 +430,7 @@ class GhostFolderEditForm(GhostEditForm):
     grok.context(IGhostFolder)
 
     fields = Fields(IGhostFolderSchema).omit('id')
-    actions = GhostEditForm.actions + SyncAction(_(u'sync'))
+    actions = GhostEditForm.actions + SyncAction(_(u'synchronize'))
 
 
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)
