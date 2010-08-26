@@ -2,27 +2,21 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
-from Products.SilvaViews.ViewRegistry import ViewAttribute
-
-# some common classes used by Membership implementations
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-
 from Persistence import Persistent
-
-import SilvaPermissions
 import Acquisition
 
+from Products.Silva import SilvaPermissions
+
 from silva.core.interfaces import IMember
+from zope.interface import implements
+
 
 class Member(Persistent, Acquisition.Implicit):
     implements(IMember)
 
     security = ClassSecurityInfo()
-
-    # allow edit view on this object
-    edit = ViewAttribute('edit', 'tab_edit')
 
     def __init__(self, userid, fullname, email, is_approved):
         self.id = userid
@@ -65,11 +59,6 @@ class Member(Persistent, Acquisition.Implicit):
         """
         return None
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'editor')
-    def editor(self):
-        """Return the preferred editor"""
-        return 'field_editor'
 
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
@@ -87,13 +76,12 @@ class CachedMember(Persistent, Acquisition.Implicit):
     security = ClassSecurityInfo()
 
     def __init__(self, userid, fullname, email,
-                 is_approved, editor, allowed_roles,
+                 is_approved, allowed_roles,
                  meta_type='Silva Simple Member'):
         self.id = userid
         self._fullname = fullname
         self._email = email
         self._is_approved = is_approved
-        self._editor = editor
         self._allowed_roles = allowed_roles
         self._meta_type = meta_type
 
@@ -133,11 +121,6 @@ class CachedMember(Persistent, Acquisition.Implicit):
         # fall back on actual member object, don't cache
         return self.service_members.get_member(self.id).extra(name)
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'editor')
-    def editor(self):
-        """Return the preferred editor"""
-        return self._editor
 
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
@@ -194,11 +177,6 @@ class NoneMember(Persistent, Acquisition.Implicit):
         """
         return None
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'editor')
-    def editor(self):
-        """Return the preferred editor"""
-        return 'field_editor'
 
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
@@ -223,6 +201,5 @@ def cloneMember(member):
                         fullname=member.fullname(),
                         email=member.email(),
                         is_approved=member.is_approved(),
-                        editor=member.editor(),
                         allowed_roles=member.allowed_roles(),
                         meta_type=member.meta_type)

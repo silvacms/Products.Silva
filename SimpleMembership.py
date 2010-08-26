@@ -29,6 +29,13 @@ from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
 
+GRAVATAR_URL = "https://secure.gravatar.com/avatar.php?"
+GRAVATAR_TEMPLATE = """
+<img src="%(image)s" alt="%(userid)s's avatar" title="%(userid)s's avatar"
+     style="height: %(size)spx; width: %(size)spx" />
+"""
+
+
 class SimpleMember(Member, Security, ZMIObject):
     """Silva Simple Member"""
 
@@ -41,6 +48,9 @@ class SimpleMember(Member, Security, ZMIObject):
     silvaconf.icon('www/member.png')
     silvaconf.factory('manage_addSimpleMemberForm')
     silvaconf.factory('manage_addSimpleMember')
+
+    # BBB
+    _avatar = None
 
     def __init__(self, id):
         self.id = id
@@ -65,7 +75,6 @@ class SimpleMember(Member, Security, ZMIObject):
     def set_fullname(self, fullname):
         """set the full name"""
         self._fullname = fullname
-        self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_email')
@@ -74,7 +83,6 @@ class SimpleMember(Member, Security, ZMIObject):
            (does not test, if email address is valid)
         """
         self._email = email
-        self._p_changed = 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'set_avatar')
@@ -83,17 +91,10 @@ class SimpleMember(Member, Security, ZMIObject):
         self._avatar = avatar
 
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_editor')
-    def set_editor(self, editor):
-        """Set the user's preferred editor"""
-        self._editor = editor
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'approve')
     def approve(self):
         """Approve the member"""
         self._is_approved = 1
-        self._p_changed = 1
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -124,12 +125,11 @@ class SimpleMember(Member, Security, ZMIObject):
     def extra(self, name):
         """Return bit of extra information, keyed by name.
         """
-        
         #For CachedMember accessing of the avatar tag
         #Should be 'avatar_tag:SIZE' -- ie, 'avatar_tag:32'
         if name.startswith("avatar_tag"):
             return self.avatar_tag(name.split(':')[1])
-        
+
         return None
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -138,29 +138,27 @@ class SimpleMember(Member, Security, ZMIObject):
         """Return the email address to be used by gravatar. Return '' if
         no address has been specified.
         """
-        return hasattr(self, '_avatar') and self._avatar is not None and self._avatar or ''
-    
+        return self._avatar if self._avatar is not None else self._email
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'avatar_tag')
     def avatar_tag(self, size=32):
         """HTML <img /> tag for the avatar icon
         """
-        
         #See http://en.gravatar.com/site/implement/python
-        
         email = self.avatar()
         default = self.get_root_url() + "/globals/avatar.png"
-        
-        if email is '':
-            return """<img src="%s" alt="%s's avatar" title="%s's avatar" style="height: %spx; width: %spx" />""" % \
-               (default, self.id, self.id, size, size)
-        
-        gravatar_url = "https://secure.gravatar.com/avatar.php?"
-        gravatar_url += urllib.urlencode({'gravatar_id':hashlib.md5(email.lower()).hexdigest(), 
-                                          'default':default, 'size':str(size)})
 
-        return """<img src="%s" alt="%s's avatar" title="%s's avatar" style="height: %spx; width: %spx" />""" % \
-               (gravatar_url, self.id, self.id, size, size)
+        if email:
+            url = GRAVATAR_URL + urllib.urlencode(
+                {'gravatar_id':hashlib.md5(email.lower()).hexdigest(),
+                 'default':default, 'size':str(size)})
+        else:
+            url = default
+        info = {'userid': self.userid(),
+                'size': size,
+                'image': url}
+        return GRAVATAR_TEMPLATE % info
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_approved')
@@ -168,18 +166,6 @@ class SimpleMember(Member, Security, ZMIObject):
         """is_approved
         """
         return self._is_approved
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'editor')
-    def editor(self):
-        """Return the id of the member's favorite editor"""
-        return getattr(self, '_editor', self.default_editor())
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'default_editor')
-    def default_editor(self):
-        """Return the id of the default editor"""
-        return 'kupu'
 
 
 InitializeClass(SimpleMember)

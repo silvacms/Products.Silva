@@ -405,8 +405,6 @@ def registerViews(reg):
                  ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva File',
                  ['edit', 'Asset', 'File'])
-    reg.register('edit', 'Silva Simple Member',
-                 ['edit', 'Member', 'SimpleMember'])
     reg.register('edit', 'Silva Ghost Folder',
                  ['edit', 'Container', 'GhostFolder'])
     # five compatibility for edit

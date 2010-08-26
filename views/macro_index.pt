@@ -188,20 +188,19 @@
 <div class="personalbar"
   tal:define="userid request/AUTHENTICATED_USER/getUserName">
   <div style="float: left;">
-    <a href="service_resources/Silva/edit_member"
-      title="Change your settings: alt-~"
-      accesskey="~"
-      tal:attributes="
-        onclick string:userWindow = window.open('service_resources/Silva/edit_member', 'userWindow', 'width=450, height=250, resizable=no');;
-        userWindow.focus();;
-        return false;;"
-      i18n:attributes="title">
+    <a title="Change your settings: alt-~"
+       accesskey="~"
+       id="user-update-info"
+       class="link-remote-form"
+       href="#"
+       tal:attributes="href string:${model/@@absolute_url}/++rest++userinfo"
+       i18n:attributes="title">
       <img border="0"
-        height="9"
-        width="9"
-        alt="user icon"
-        tal:attributes="src string:$root_url/globals/user.png"
-      />
+           height="9"
+           width="9"
+           alt="user icon"
+           tal:attributes="src string:$root_url/globals/user.png"
+           />
       <span i18n:translate="">user settings</span>
     </a>
   </div>
@@ -233,6 +232,8 @@
     i18n:translate="">
     request access
   </a>
+</div>
+<div id="remote-form-dialog">
 </div>
 <span tal:replace="nothing">
   <!-- ____________________________ /end footer _____________________________ -->
