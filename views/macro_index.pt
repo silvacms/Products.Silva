@@ -172,6 +172,7 @@
   </div>
   <div style="float: right;">
     <a shape="rect"
+       id="smi-content-url"
       title="Leave Silva and view the public page: alt-:"
       tal:attributes="href url"
       i18n:attributes="title"
