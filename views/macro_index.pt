@@ -191,7 +191,7 @@
     <a title="Change your settings: alt-~"
        accesskey="~"
        id="user-update-info"
-       class="link-remote-form"
+       class="link-popup-form"
        href="#"
        tal:attributes="href string:${model/@@absolute_url}/++rest++userinfo"
        i18n:attributes="title">
