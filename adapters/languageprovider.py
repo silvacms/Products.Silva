@@ -16,6 +16,15 @@ from silva.core.views.interfaces import IVirtualSite
 from silva.core.interfaces.adapters import ILanguageProvider
 
 
+def canonalize_language(code):
+    # make sure that language ids like zh_TW are translated into
+    # browser-format, namely zh-tw
+    if '_' in code:
+        language_id, language_variant = code.split('_')
+        return '%s-%s' % (language_id, language_variant.lower())
+    return code
+
+
 class LanguageProvider(grok.Adapter):
     """Information about available languages.
     """
@@ -48,19 +57,8 @@ class LanguageProvider(grok.Adapter):
             self.request.locale = locales.getLocale(None, None, None)
 
     def getAvailableLanguages(self):
-        results = []
-        silva_domain = getUtility(ITranslationDomain, 'silva')
-        for key in silva_domain._catalogs.keys():
-            # make sure that language ids like zh_TW are translated into
-            # browser-format, namely zh-tw
-            if '_' in key:
-                language_id, language_variant = key.split('_')
-                results.append(
-                    '%s-%s' % (language_id, language_variant.lower()))
-            else:
-                results.append(key)
-        results.sort()
-        return results
+        domain = getUtility(ITranslationDomain, 'silva')
+        return map(canonalize_language, domain._catalogs.keys())
 
     def getLanguageName(self, language_id):
         """Get the name of the language, in the current language.
@@ -86,19 +84,17 @@ class LanguageProvider(grok.Adapter):
         response = self.request.response
         root = IVirtualSite(self.request).get_root()
         path = '/'.join(root.getPhysicalPath())
-        if language == 'none':
+        if not language:
             response.expireCookie('silva_language', path=path)
             return
         response.setCookie('silva_language', language,
                            path=path, expires=(DateTime()+365).rfc822())
 
     def getPreferredLanguage(self):
-        try:
-            return IUserPreferredLanguages(
-                self.request).getPreferredLanguages()[0]
-        except IndexError:
+        langs = IUserPreferredLanguages(self.request).getPreferredLanguages()
+        if not langs:
             return None
-
+        return canonalize_language(langs[0])
 
 
 # new language extractor that looks in the silva_language cookie first,
