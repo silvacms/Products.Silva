@@ -43,7 +43,8 @@ class AccessSecurityTestCase(unittest.TestCase):
             ('ChiefEditor', False),
             ('Manager', False)]:
 
-            access.set_minimum_role(role)
+            with assertTriggersEvents('SecurityRestrictionModifiedEvent'):
+                access.set_minimum_role(role)
 
             self.assertEqual(access.is_acquired(), False)
             self.assertEqual(access.acquired, False)
@@ -58,7 +59,8 @@ class AccessSecurityTestCase(unittest.TestCase):
         from parents.
         """
         access = component.queryAdapter(self.content, IAccessSecurity)
-        access.set_minimum_role('ChiefEditor')
+        with assertTriggersEvents('SecurityRestrictionModifiedEvent'):
+            access.set_minimum_role('ChiefEditor')
         checkPermission = getSecurityManager().checkPermission
         self.assertEqual(
             bool(checkPermission('View', self.content)), False)
@@ -75,11 +77,13 @@ class AccessSecurityTestCase(unittest.TestCase):
         """Test that set_acquired reset the settings.
         """
         access = component.queryAdapter(self.content, IAccessSecurity)
-        access.set_minimum_role('Manager')
+        with assertTriggersEvents('SecurityRestrictionModifiedEvent'):
+            access.set_minimum_role('Manager')
         checkPermission = getSecurityManager().checkPermission
         self.assertEqual(bool(checkPermission('View', self.content)), False)
 
-        access.set_acquired()
+        with assertTriggersEvents('SecurityRestrictionModifiedEvent'):
+            access.set_acquired()
         self.assertEqual(access.is_acquired(), True)
         self.assertEqual(access.acquired, True)
         self.assertEqual(access.get_minimum_role(), None)
