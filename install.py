@@ -24,6 +24,7 @@ from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
 from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
+from Products.Silva.ExtensionRegistry import extensionRegistry
 
 
 def add_fss_directory_view(obj, name, base, *args):
@@ -328,7 +329,10 @@ def configureMembership(root):
     installed_ids = root.objectIds()
     factory = root.manage_addProduct['Silva']
     if 'service_members' not in installed_ids:
-        factory.manage_addSimpleMemberService()
+        if extensionRegistry.have('silva.pas.base'):
+            root.service_extensions.install('silva.pas.base')
+        else:
+            factory.manage_addSimpleMemberService()
 
     if 'Members' not in installed_ids:
         root.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder('Members')
@@ -462,17 +466,14 @@ def installSilvaDocument(root):
 def installSilvaExternalSources(root):
     """Install SilvaExternalSources
     """
-    from Products.SilvaExternalSources.install import install
-    install(root)
+    root.service_extensions.install('SilvaExternalSources')
 
 
 def installSilvaFind(root):
     """Install SilvaFind
     """
-    from Products.Silva.ExtensionRegistry import extensionRegistry
-    if 'SilvaFind' not in extensionRegistry.get_names():
-        return
-    root.service_extensions.install('SilvaFind')
+    if extensionRegistry.have('SilvaFind'):
+        root.service_extensions.install('SilvaFind')
 
 
 def installSubscriptions(root):

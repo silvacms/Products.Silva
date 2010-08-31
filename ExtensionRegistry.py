@@ -259,6 +259,9 @@ class ExtensionRegistry(Registry):
     def get_extension(self, name):
         return self._extensions.get(name, None)
 
+    def have(self, name):
+        return name in self._extensions_order
+
     def is_installed(self, name, root):
         extension = self.get_extension(name)
         if extension:
