@@ -17,8 +17,6 @@ import transaction
 # Silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
-from Products.Silva.helpers import add_and_edit
-from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
