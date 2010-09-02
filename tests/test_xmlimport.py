@@ -590,10 +590,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(assets.get_title(), u'Local assets')
         self.assertEqual(containers.get_title(), u'Containers')
 
-        self.assertEqual(assets.show_icon(), True)
-        self.assertEqual(containers.show_icon(), False)
-        self.assertEqual(assets.toc_depth(), -1)
-        self.assertEqual(containers.toc_depth(), 42)
+        self.assertEqual(assets.get_show_icon(), True)
+        self.assertEqual(containers.get_show_icon(), False)
+        self.assertEqual(assets.get_toc_depth(), -1)
+        self.assertEqual(containers.get_toc_depth(), 42)
         self.assertListEqual(
             assets.get_local_types(),
             [u'Silva File', u'Silva Image'])
