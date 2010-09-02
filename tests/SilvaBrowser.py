@@ -3,29 +3,34 @@
 # See also LICENSE.txt
 # $Id$
 
-import re, os.path
+import re
 from urllib2 import HTTPError
 from xml.dom import minidom
 
-from helpers import openTestFile
+from Products.Silva.tests.helpers import openTestFile
 from Products.Five.testbrowser import Browser
 
 Z3C_CONTENTS = []
 
-ZEAM_CONTENTS = ['Silva Document',
-                 'Silva File',
-                 'Silva Link',
-                 'Silva Image',
-                 'Silva Ghost',
-                 'Silva Ghost Folder',
-                 'Silva Indexer',
-                 'Silva Find',]
+ZEAM_CONTENTS = [
+    'Silva AutoTOC',
+    'Silva Folder',
+    'Silva Publication',
+    'Silva Document',
+    'Silva File',
+    'Silva Link',
+    'Silva Image',
+    'Silva Ghost',
+    'Silva Ghost Folder',
+    'Silva Indexer',
+    'Silva Find',]
 
 # Define types of forms.
 SILVA_FORM = object()
 Z3CFORM_FORM = object()
 FORMLIB_FORM = object()
 ZEAMFORM_FORM = object()
+
 
 
 class SilvaBrowser(object):
@@ -117,7 +122,8 @@ class SilvaBrowser(object):
         return a list of addable meta_types
         """
         try:
-            addables = self.browser.getControl(name='meta_type').options
+            addables = self.browser.getControl(
+                name='md.container.field.content').options
             addables.remove('None')
         except:
             # there probably is no 'meta_type' control
@@ -394,7 +400,8 @@ class SilvaBrowser(object):
         """
         select a meta_type from the addables list
         """
-        self.browser.getControl(name='meta_type').value = [meta_type]
+        self.browser.getControl(
+            name='md.container.field.content').value = [meta_type]
 
     def select_all_content(self, data):
         """
@@ -490,8 +497,7 @@ class SilvaBrowser(object):
         """
         name = self.get_field_id('file')
         self.browser.getControl(name=name).add_file(
-            self.open_file(file),
-            'text/plain', file)
+            self.open_file(file), 'text/plain', file)
 
     def set_ghost_url_field(self, reference):
         """

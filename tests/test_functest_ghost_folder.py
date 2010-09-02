@@ -1,17 +1,18 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
-from Products.Silva.testing import FunctionalLayer, Browser
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
-from Products.Silva.tests.helpers import publish_object
-from Products.Silva.tests.FunctionalTestMixin import \
-    SMIFunctionalHelperMixin
-from silva.core.references.interfaces import IReferenceService
+
+from Products.Silva.testing import FunctionalLayer
+from infrae.testbrowser.browser import Browser
+from silva.core.references.reference import get_content_id
 
 
-class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
+class BaseTest(unittest.TestCase):
 
     layer = FunctionalLayer
-    host_base = 'http://localhost'
 
     def setUp(self):
         """
@@ -46,68 +47,63 @@ class BaseTest(unittest.TestCase, SMIFunctionalHelperMixin):
         factory.manage_addDocument('pubdoc', 'Document inside `pub`')
         self.pubdoc = getattr(self.publication, 'pubdoc')
 
-        self.intids = getUtility(IIntIds)
         self.layer.logout()
-        self.browser = Browser()
+        self.browser = Browser(self.layer._test_wsgi_application)
+        self.browser.login('manager', 'manager')
+        self.browser.inspect.add('feedback', '//div[@id="feedback"]/div/span')
 
 
 class TestAddGhostFolder(BaseTest):
     """ Test add form for ghost folder
     """
 
-    def setUp(self):
-        super(TestAddGhostFolder, self).setUp()
-        self._login(self.browser)
+    def goto_add_form(self):
+        self.assertEqual(self.browser.open('/root/edit'), 200)
+
+        form = self.browser.get_form('md.container')
+        form.get_control('md.container.field.content').value = 'Silva Ghost Folder'
+        self.assertEqual(form.submit('md.container.action.new'), 200)
+        self.assertEqual(self.browser.url, '/root/edit/+/Silva Ghost Folder')
+
+        return self.browser.get_form('addform')
 
     def test_add_form_save(self):
-        form = self._get_add_form(
-            self.browser, 'Silva Ghost Folder', self.root)
-        self.assertTrue(form, 'Couldn\'t get add form for ghost folder')
-        self._fill_form(form)
-        button = form.getControl(name="form.action.save")
-        button.click()
+        form = self.goto_add_form()
 
-        self.assertTrue("200 OK", self.browser.status)
-        self.assertTrue(
-            getattr(self.root, "ghostfolderonpublication", False),
-            "Ghost folder not created.")
-        self.assertTrue(self.browser.url, "http://localhost/root/edit/")
+        publication_id = get_content_id(self.publication)
+        form.get_control('addform.field.id').value = 'ghostfolder'
+        form.get_control('addform.field.haunted').value = publication_id
+        self.assertEqual(form.submit(name="addform.action.save"), 200)
+
+        self.assertTrue('ghostfolder' in self.root.objectIds())
+        self.assertEqual(
+            self.browser.inspect.feedback, ['Added Silva Ghost Folder'])
+        self.assertEqual(self.browser.url, '/root/edit')
 
     def test_add_form_save_and_edit(self):
-        form = self._get_add_form(
-            self.browser, 'Silva Ghost Folder', self.root)
-        self.assertTrue(form, 'Couldn\'t get add form for ghost folder')
-        self._fill_form(form)
-        button = form.getControl(name="form.action.save_edit")
-        button.click()
-        self.assertTrue("200 OK", self.browser.status)
-        self.assertTrue(
-            getattr(self.root, "ghostfolderonpublication", False),
-            "Ghost folder not created.")
-        self.assertTrue(self.browser.url,
-            "http://localhost/root/ghostfolderonpublication/edit")
-        self.assertEquals(self.publication,
-            self.root.ghostfolderonpublication.get_haunted(),
-            "haunted object should be publication")
+        form = self.goto_add_form()
+
+        publication_id = get_content_id(self.publication)
+        form.get_control('addform.field.id').value = 'ghostfolder'
+        form.get_control('addform.field.haunted').value = publication_id
+        self.assertEqual(form.submit(name="addform.action.save_edit"), 200)
+
+        self.assertTrue('ghostfolder' in self.root.objectIds())
+        self.assertEqual(
+            self.browser.inspect.feedback, ['Added Silva Ghost Folder'])
+        self.assertEqual(self.browser.url, '/root/ghostfolder/edit')
 
     def test_cancel(self):
-        form = self._get_add_form(
-            self.browser, 'Silva Ghost Folder', self.root)
-        self.assertTrue(form, 'Couldn\'t get add form for ghost folder')
-        self._fill_form(form)
-        button = form.getControl(name="form.action.cancel")
-        button.click()
-        self.assertTrue("200 OK", self.browser.status)
-        self.assertFalse(
-            getattr(self.root, "ghostfolderonpublication", False),
-            "Ghost folder created on Cancel action")
-        self.assertTrue(self.browser.url, "http://localhost/root/edit/")
+        form = self.goto_add_form()
 
-    def _fill_form(self, form):
-        id_field = form.getControl(name='form.field.id')
-        id_field.value = 'ghostfolderonpublication'
-        reference_field = form.getControl(name='form.field.haunted')
-        reference_field.value = str(self.intids.register(self.publication))
+        publication_id = get_content_id(self.publication)
+        form.get_control('addform.field.id').value = 'ghostfolder'
+        form.get_control('addform.field.haunted').value = publication_id
+        self.assertEqual(form.submit(name="addform.action.cancel"), 200)
+
+        self.assertTrue('ghostfolder' not in self.root.objectIds())
+        self.assertEqual(self.browser.inspect.feedback, [])
+        self.assertEqual(self.browser.url, '/root/edit')
 
 
 class TestEditGhostFolder(BaseTest):
@@ -115,7 +111,6 @@ class TestEditGhostFolder(BaseTest):
     """
     def setUp(self):
         super(TestEditGhostFolder, self).setUp()
-        self._login(self.browser)
 
         self.layer.login('editor')
         factory = self.root.manage_addProduct['Silva']
@@ -123,50 +118,51 @@ class TestEditGhostFolder(BaseTest):
             'ghost_folder', "Ghost folder on root/folder",
             haunted=self.folder)
         self.ghost_folder = getattr(self.root, 'ghost_folder')
-        self.ghost_folder_path = "/".join(self.ghost_folder.getPhysicalPath())
-        self.reference_utility = getUtility(IReferenceService)
         self.layer.logout()
 
+    def goto_form(self):
+        path = "/".join(self.ghost_folder.getPhysicalPath())
+        self.assertEqual(self.browser.open(path + '/edit'), 200)
+        return self.browser.get_form("editform")
+
     def test_edit_form_reference_field(self):
-        form = self._get_form()
-        reference_field = form.getControl(name="form.field.haunted")
-        self.assertEquals(reference_field.value,
-            str(self.intids.getId(self.folder)),
+        form = self.goto_form()
+        reference_field = form.get_control("editform.field.haunted")
+        self.assertEqual(
+            reference_field.value,
+            str(get_content_id(self.folder)),
             "reference field value should be the intid of the folder")
 
     def test_edit_form_set_new_haunted(self):
-        form = self._get_form()
-        reference_field = form.getControl(name="form.field.haunted")
-        reference_field.value = str(self.intids.register(self.publication))
-        button = form.getControl(name="form.action.save")
-        button.click()
+        form = self.goto_form()
 
-        self.assertEquals("200 OK", self.browser.status)
-        self.assertEquals(self.publication, self.ghost_folder.get_haunted())
+        publication_id = get_content_id(self.publication)
+        form.get_control("editform.field.haunted").value = publication_id
+        self.assertEqual(form.submit(name="editform.action.save-changes"), 200)
+
+        self.assertEqual(self.browser.inspect.feedback, ['Modification saved'])
+        self.assertEqual(self.publication, self.ghost_folder.get_haunted())
 
     def test_sync(self):
-        form = self._get_form()
-        sync_button = form.getControl(name="form.action.sync")
-        sync_button.click()
+        form = self.goto_form()
+        self.assertEqual(form.submit(name="editform.action.synchronize"), 200)
+        self.assertEqual(
+            self.browser.inspect.feedback, ['Ghost Folder synchronized'])
 
-        self.assertEquals("200 OK", self.browser.status)
-        self.assertEquals(['folderdoc', 'pub'],
-            self.ghost_folder.objectIds())
+        self.assertEqual(['folderdoc', 'pub'], self.ghost_folder.objectIds())
 
-        self.assertEquals("Silva Ghost Folder",
-            self.ghost_folder['pub'].meta_type)
-        self.assertEquals("Silva Ghost",
-            self.ghost_folder['folderdoc'].meta_type)
+        self.assertEqual(
+            "Silva Ghost Folder", self.ghost_folder['pub'].meta_type)
+        self.assertEqual(
+            "Silva Ghost", self.ghost_folder['folderdoc'].meta_type)
 
-        self.pubghost = self.ghost_folder['pub']
-        self.assertEquals(['pubdoc'],
-            self.pubghost.objectIds())
-        self.assertEquals('Silva Ghost',
-            self.pubghost['pubdoc'].meta_type)
-
-    def _get_form(self):
-        self.browser.open(self.host_base + self.ghost_folder_path + '/edit')
-        self.assertEquals('200 OK', self.browser.status)
-        return self.browser.getForm(name="edit_object")
+        pubghost = self.ghost_folder['pub']
+        self.assertEquals(['pubdoc'], pubghost.objectIds())
+        self.assertEquals('Silva Ghost', pubghost['pubdoc'].meta_type)
 
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestAddGhostFolder))
+    suite.addTest(unittest.makeSuite(TestEditGhostFolder))
+    return suite

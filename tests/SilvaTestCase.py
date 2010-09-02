@@ -214,10 +214,23 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         noSecurityManager()
 
     def add_folder(self, object, id, title, **kw):
-        return self.addObject(object, 'Folder', id, title=title, **kw)
+        folder = self.addObject(object, 'Folder', id, title=title, **kw)
+        # policy = kw.get('policy_name', 'Silva Document')
+        # if policy == 'Silva Document':
+        #     self.addObject(folder, 'Document', 'index', title=title)
+        # if policy == 'Silva AutoTOC':
+        #     self.addObject(folder, 'AutoTOC', 'index', title=title)
+        return folder
 
     def add_publication(self, object, id, title, **kw):
-        return self.addObject(object, 'Publication', id, title=title, **kw)
+        publication = self.addObject(
+            object, 'Publication', id, title=title, **kw)
+        # policy = kw.get('policy_name', 'Silva Document')
+        # if policy == 'Silva Document':
+        #     self.addObject(publication, 'Document', 'index', title=title)
+        # if policy == 'Silva AutoTOC':
+        #     self.addObject(publication, 'AutoTOC', 'index', title=title)
+        return publication
 
     def add_document(self, object, id, title):
         return self.addObject(object, 'Document', id, title=title,

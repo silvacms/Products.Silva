@@ -5,14 +5,14 @@
 
 # Python
 from urllib2 import HTTPError
-import re, os.path
+import re
 
 # Zope
 from Products.Five.testbrowser import Browser
 
 # Silva
-from helpers import openTestFile
-import SilvaTestCase
+from Products.Silva.tests.helpers import openTestFile
+from Products.Silva.tests import SilvaTestCase
 
 # Expected state of creation
 fail_login = object()
@@ -40,6 +40,7 @@ publish.append('publishing actions')
 
 
 class BaseMixin(object):
+
      def setUpMixin(self):
         """Set up method for test mixin class
         """
@@ -153,7 +154,8 @@ class MixinRoleContent(MixinLoginLogout):
     def do_create_content(self, browser, content_type, creator, result, item_id='test_content'):
         # Test if role has access to no content_types
         try:
-            meta_type = browser.getControl(name="meta_type")
+            meta_type = browser.getControl(
+                 name="md.container.field.content")
         except LookupError:
             if result is fail_nothing_addable:
                 return
@@ -167,8 +169,10 @@ class MixinRoleContent(MixinLoginLogout):
                             "Content type '%s' is not included as meta_type"
                             % content_type)
             # Create the content
-            browser.getControl(name='meta_type').value = [content_type]
-            browser.getControl(name='add_object:method').click()
+            browser.getControl(
+                 name='md.container.field.content').value = [content_type]
+            browser.getControl(
+                 name='md.container.action.new').click()
             browser.getControl(name='field_object_id').value = item_id
             if creator:
                creator(browser)
@@ -347,26 +351,25 @@ class MixinNavigate(MixinLoginLogout):
 class SMIFunctionalHelperMixin(BaseMixin):
 
     def _get_add_form(self, browser, meta_type, container,
-            base_url='http://localhost'):
-        base_url =  "%s%s/edit" % (base_url,
-            "/".join(container.getPhysicalPath()))
-        browser.open(base_url)
-        self.assertEquals('200 OK', browser.status,
-            "Couldn't get the SMI")
+                      base_url='http://localhost'):
+        url = "%s%s/edit" % (base_url, "/".join(container.getPhysicalPath()))
+        browser.open(url)
+        self.assertEquals('200 OK', browser.status, "Couldn't get the SMI")
 
-        select_box = browser.getControl(name="meta_type")
-        self.assertTrue(select_box,
+        select_box = browser.getControl(name="md.container.field.content")
+        self.assertTrue(
+             select_box,
             "Couldn't get the select box for adding contents")
         select_mt_option = select_box.getControl(value=meta_type)
-        self.assertTrue(select_mt_option,
-            "Couldn't find the option in meta types select box")
+        self.assertTrue(
+             select_mt_option,
+             "Couldn't find the option in meta types select box")
         select_box.value = [meta_type]
-        button = browser.getControl(name="add_object:method")
+        button = browser.getControl(name="md.container.action.new")
+        browser.handleErrors = False
         button.click()
-        return browser.getForm(name="add_object")
+        return browser.getForm(name="addform")
 
     def _login(self, browser, username="manager", password="manager"):
-        browser.addHeader('Authorization',
-            "Basic %s:%s" % (username, password))
-
-
+        browser.addHeader(
+             'Authorization', "Basic %s:%s" % (username, password))
