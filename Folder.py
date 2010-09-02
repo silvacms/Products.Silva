@@ -39,7 +39,8 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
-    INonPublishable, IContainer, IFolder, IPublication, IRoot)
+    INonPublishable, IContainer, IFolder, IPublication, IRoot,
+    InvalidateSidebarEvent)
 
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
@@ -150,11 +151,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             item = item.get_container()
         if not IContainer.providedBy(item):
             return
-        service_sidebar = self.aq_inner.service_sidebar
-        service_sidebar.invalidate(item)
-        if (IPublication.providedBy(item) and
-                not IRoot.providedBy(item)):
-            service_sidebar.invalidate(item.aq_inner.aq_parent)
+
+        notify(InvalidateSidebarEvent(item))
 
     # MANIPULATORS
 

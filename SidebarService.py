@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+from five import grok
+
 from zope.interface import implements
 
 # Zope
@@ -16,8 +18,10 @@ from Products.Silva.helpers import add_and_edit
 
 # Silva interfaces
 from silva.core import conf as silvaconf
-from silva.core.interfaces import ISidebarService
 from silva.core.services.base import SilvaService
+from silva.core.interfaces import (ISidebarService, IInvalidateSidebarEvent,
+    ISilvaObject, IPublication, IRoot)
+
 
 from GenericCache.GenericCache import GenericCache
 
@@ -148,3 +152,12 @@ def manage_addSidebarService(self, id, title, REQUEST=None):
     id = self._setObject(id, SidebarService(id, title))
     add_and_edit(self, id, REQUEST)
     return ''
+
+
+@grok.subscribe(ISilvaObject, IInvalidateSidebarEvent)
+def invalidate_sidebar(obj, event):
+    service_sidebar = obj.get_root().service_sidebar
+    service_sidebar.invalidate(obj)
+    if (IPublication.providedBy(obj) and
+            not IRoot.providedBy(obj)):
+        service_sidebar.invalidate(obj.aq_inner.aq_parent)
