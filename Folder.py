@@ -141,7 +141,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         if REQUEST is not None:
             # For ZMI
             REQUEST.RESPONSE.redirect(
-                absoluteURL(self, self.REQUET) + '/manage_main')
+                absoluteURL(self, self.REQUEST) + '/manage_main')
 
     def _invalidate_sidebar(self, item):
         # invalidating sidebar also takes place for folder when index gets
