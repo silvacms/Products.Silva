@@ -22,7 +22,7 @@ macro plateau
 <metal:define-macro define-macro="vein">
 <table class="listing"
   cellspacing="0"
-  style="border-collapse:separate; margin-top:-1px;">
+  style="margin-top:-1px;">
   <thead>
     <tr>
       <th class="top"
