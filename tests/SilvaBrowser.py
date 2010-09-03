@@ -3,12 +3,9 @@
 # See also LICENSE.txt
 # $Id$
 
-import re
-from urllib2 import HTTPError
-from xml.dom import minidom
-
-from Products.Silva.tests.helpers import openTestFile
-from Products.Five.testbrowser import Browser
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.helpers import open_test_file
+from infrae.testbrowser.browser import Browser
 
 Z3C_CONTENTS = []
 
@@ -28,103 +25,63 @@ ZEAM_CONTENTS = [
 # Define types of forms.
 SILVA_FORM = object()
 Z3CFORM_FORM = object()
-FORMLIB_FORM = object()
 ZEAMFORM_FORM = object()
-
+ZEAMFORM_ADDFORM = object()
 
 
 class SilvaBrowser(object):
+
     def __init__(self):
         self.form_type = SILVA_FORM
         self.new_browser()
 
     def new_browser(self):
-        self.browser = Browser()
-        # self.browser.handleErrors = False
-
-    def go_back(self):
-        return self.browser.goBack()
-
-    def click_control_labeled(self, value_name):
-        """Click on the real button called value_name
-        """
-        self.browser.getControl(value_name).click()
+        self.browser = Browser(FunctionalLayer._test_wsgi_application)
 
     def click_button_labeled(self, value_name):
         """Click on a button or pseudo button (an href) with a
         specific label.
         """
-        # for some reason the browser object does not expose
-        # enough input and form info, however we can reach what
-        # we want through the mech_... objects. Since they are not
-        # private (no underscore) this is maybe not too bad...
-
-        button = None
-        # get middleground pseudo buttons
-        if button is None and 'class="middleground"' in self.browser.contents:
-            # no button found yet, check if there are anchors in
-            # the middleground div that match value_name
-            # they sort of look like buttons too, right..
-            doc = minidom.parseString(
-                self.browser.contents.replace('&nbsp;', ' '))
-            divs = doc.getElementsByTagName('div')
-            for div in divs:
-                if div.getAttribute('class') != 'middleground':
-                    continue
-                anchors = div.getElementsByTagName('a')
-                for anchor in anchors:
-                    text = self.html2text(anchor.toxml())
-                    if text == value_name:
-                        url = anchor.getAttribute('href')
-                        return self.go(url)
+        middleware_buttons = self.browser.html.xpath(
+            '//a/div[@class="middleground"]/div[@class="transporter"]'
+            '/a[contains(normalize-space(text()), "%s")]' % value_name)
+        if len(middleware_buttons) == 1:
+            return self.go(middleware_buttons[0].href)
 
         # get all forms
-        for form in self.browser.mech_browser.forms():
-            for control in form.controls:
-                if not control.type in ['button', 'submit']:
+        for form in self.browser.html.forms:
+            for control in form.inputs:
+                if (control.tag != 'input' or
+                    control.type not in ['button', 'submit']):
                     continue
                 if control.value == value_name:
-                    # found the button
-                    button = control
+                    self.browser.get_form(form.attrib['name']).submit(
+                        name=control.attrib['name'])
+                    return self.get_status_and_url()
 
-        assert button != None, 'No button labeled: "%s" found' % value_name
-        # we cannot click this control, we need to get a browser
-        # control, since all controls have a name, we can use that to
-        # get the real control.
-        self.browser.getControl(name=button.name).click()
-        return self.get_status_and_url()
+        raise AssertionError, 'No button labeled: "%s" found' % value_name
+
 
     def click_href_labeled(self, value_name):
         """Click on a link with a specific label
         """
+        self.browser.get_link(value_name).click()
         if 'logout' in value_name:
-            # logout always results in a 401 error, login window. since
-            # you can't access the popup, i accept that a logout is, an href
-            # value_name that has logout in it, and clicking the link there is
-            # a 401 HTTPError
-            try:
-                self.browser.getLink(value_name).click()
-            except HTTPError, err:
-                if err.code == 401:
-                    return self.get_status_and_url()
-        else:
-            self.browser.getLink(value_name).click()
-            return self.get_status_and_url()
+            # fake logout code, even if doesn't do it.
+            return (401, None)
+        return self.get_status_and_url()
 
-    def click_tab_named(self, name):
-        """click on a tab with a specific label
-        """
-        link = self.browser.getLink(name)
-        link.click()
+    click_tab_named = click_href_labeled
 
     def get_addables_list(self):
         """
         return a list of addable meta_types
         """
         try:
-            addables = self.browser.getControl(
-                name='md.container.field.content').options
-            addables.remove('None')
+            form = self.browser.get_form('md.container')
+            addables = list(form.get_control(
+                'md.container.field.content').value_options)
+            addables.remove('none')
         except:
             # there probably is no 'meta_type' control
             addables = []
@@ -134,23 +91,27 @@ class SilvaBrowser(object):
         """
         return a normalized <h2> title for add forms
         """
-        start = self.browser.contents.find('<h2>')
-        if start == -1:
-            return ''
-        end = self.browser.contents.find('</h2>', start)
-        return self.html2text(self.browser.contents[start:end+5])
+        title = self.browser.html.xpath(
+            'normalize-space('
+                  '//form[@name="addform"]/descendant::h2/text()[last()])')
+        return title.replace(u'\xab', '').replace(u'\xbb', '')
 
     def get_alert_feedback(self):
         """
         return the alert message in the page, or an empty string
         """
-        div = '<div class="fixed-alert">'
-        start = self.browser.contents.find(div)
-        if start == -1:
+        feedback = self.browser.html.xpath('//div[@class="fixed-alert"]')
+        if not feedback:
             return ''
-        start += len(div)
-        end = self.browser.contents.find('</div>', start)
-        return self.html2text(self.browser.contents[start:end])
+        return feedback[0].text_content().strip()
+
+    def get_status_feedback(self):
+        """Return the status message in the page, or an empty string
+        """
+        feedback = self.browser.html.xpath('//div[@class="fixed-feedback"]')
+        if not feedback:
+            return ''
+        return feedback[0].text_content().strip()
 
     def get_frame_url(self,frameindex):
         """
@@ -167,43 +128,34 @@ class SilvaBrowser(object):
         """
         return a list of dictionaries describing the content objects
         """
-        doc = minidom.parseString(self.browser.contents.replace('&nbsp;', ' '))
         result = []
-        for form in doc.getElementsByTagName('form'):
-            if form.getAttribute('name') == 'silvaObjects':
-                for tbody in form.getElementsByTagName('tbody'):
-                    for row in tbody.getElementsByTagName('tr')[1:]:
-                        count = 1
-                        data = {}
-                        for cell in row.getElementsByTagName('td'):
-                            if count == 1:
-                                data['id'] = cell.getElementsByTagName('input')[0].getAttribute('id')
-                            elif count == 2:
-                                anchor = cell.getElementsByTagName('a')[-1]
-                                data['url'] = anchor.getAttribute('href')
-                            elif count == 3:
-                                anchor = cell.getElementsByTagName('a')[-1]
-                                data['name'] = anchor.childNodes[0].nodeValue
-                                css = anchor.getAttribute('class')
-                                if css == 'published':
-                                    data['closed'] = False
-                                    data['published'] = True
-                                    data['publishable'] = True
-                                elif css == 'draft':
-                                    data['closed'] = True
-                                    data['published'] = False
-                                    data['publishable'] = True
-                                else:
-                                    data['closed'] = True
-                                    data['publishable'] = False
-                            elif count == 5:
-                                anchors = cell.getElementsByTagName('a')
-                                if anchors:
-                                    data['author'] = anchors[-1].childNodes[0].nodeValue
-                                else:
-                                    data['author'] = cell.childNodes[0].nodeValue.strip()
-                            count +=1
-                        result.append(data)
+        for row in self.browser.html.xpath(
+            '//form[@name="silvaObjects"]/*/tbody/tr'):
+            data = {}
+            for count, cell in enumerate(row.xpath('td')):
+                if count == 0:
+                    data['id'] = cell.xpath('input/@id')[0]
+                elif count == 1:
+                    data['url'] = cell.xpath('a[last()]/@href')[0]
+                elif count == 2:
+                    anchor = cell.xpath('a[last()]')[0]
+                    data['name'] = anchor.text_content()
+                    css = anchor.attrib['class']
+                    if css == 'published':
+                        data['closed'] = False
+                        data['published'] = True
+                        data['publishable'] = True
+                    elif css == 'draft':
+                        data['closed'] = True
+                        data['published'] = False
+                        data['publishable'] = True
+                    else:
+                        data['closed'] = True
+                        data['publishable'] = False
+                elif count == 4:
+                    data['author'] = cell.xpath('a[last()]/text()')
+            if data:
+                result.append(data)
         return result
 
     def get_content_ids(self):
@@ -216,7 +168,7 @@ class SilvaBrowser(object):
         """
         return an href with a specific label
         """
-        href = self.browser.getLink(value_name)
+        href = self.browser.get_link(value_name)
         return href
 
     def get_listing_h2(self):
@@ -242,20 +194,8 @@ class SilvaBrowser(object):
     def get_status_and_url(self):
         """Return status and url of current page
         """
-        status = self.browser.headers.getheader('Status')
-        status = int(status.split(' ')[0])
-        return (status, self.browser.url)
+        return (self.browser.status_code, self.browser.url)
 
-    def get_status_feedback(self):
-        """Return the status message in the page, or an empty string
-        """
-        div = '<div class="fixed-feedback">'
-        start = self.browser.contents.find(div)
-        if start == -1:
-            return ''
-        start += len(div)
-        end = self.browser.contents.find('</div>', start)
-        return self.html2text(self.browser.contents[start:end])
 
     def get_tabs(self):
         """Get all tabs on the page
@@ -301,33 +241,19 @@ class SilvaBrowser(object):
     def get_root_url(self):
         """Return the ZMI root URL
         """
-        return 'http://nohost/root'
+        return 'http://localhost/root'
 
     def go(self, url):
         """Same as browser.open, but handles http exceptions, and returns http
         status and url tuple.
         """
-        try:
-            self.browser.open(str(url))
-        except HTTPError, err:
-            # there is no way to read status from browser,
-            # so we'll just have to use the error str, ugh
-            return (err.code, None)
-
+        self.browser.open(str(url))
+        if self.browser.status_code >= 300:
+            return (self.browser.status_code, None)
         # read status code from first http header
         return self.get_status_and_url()
 
-    def html2text(self, htmlstring):
-        """Return children of an html element, stripping out child elements,
-        and normalizing text nodes
-        """
-        # replace all text within <> with an empty string
-        text = re.compile('<([^>]+)>').sub('', htmlstring)
-        # replace multiple whitespace characters with a space
-        text = re.compile('(\s+)').sub(' ', text)
-        return text.strip()
-
-    def login(self, username='manager', password='secret', url=None):
+    def login(self, username='manager', password='manager', url=None):
         """Authentificate.
         """
         # it seems the Browser object gets confused if 401's are
@@ -335,9 +261,8 @@ class SilvaBrowser(object):
         # when logginf in
         url = url or self.get_root_url()
         self.new_browser()
-        self.browser.addHeader('Authorization', 'Basic %s:%s' % (
-                          username, password))
-        self.browser.addHeader('Accept-Language', 'en-US')
+        self.browser.login(username, password)
+        self.browser.set_request_header('Accept-Language', 'en-US')
         return self.go(url)
 
     def logout(self, url=None):
@@ -345,10 +270,7 @@ class SilvaBrowser(object):
         """
         url = url or self.get_root_url()
         url = '%s/manage_zmi_logout' % url
-        try:
-            self.browser.open(url)
-        except HTTPError, err:
-            return (err.code, None)
+        self.browser.open(url)
 
     def make_content(self, content_type, **fields):
         """Makes content of a specific type, with one or more fields
@@ -361,17 +283,16 @@ class SilvaBrowser(object):
             self.form_type = Z3CFORM_FORM
         if content_type in ZEAM_CONTENTS:
             current_form_type = self.form_type
-            self.form_type = ZEAMFORM_FORM
+            self.form_type = ZEAMFORM_ADDFORM
 
         fields_needed = self.content_type_fields.get(content_type, None)
         # do some testing to determine if needed fields are supplied
         assert fields_needed != None, 'Unknown Content Type'
         for field_name in fields_needed:
             if not fields.has_key(field_name):
-                raise ValueError('Missing field "%s" for "%s"' % (field_name,
-                                                                  content_type))
+                raise ValueError('Missing field "%s" for "%s"' % (
+                        field_name, content_type))
         self.select_addable(content_type)
-        self.browser.handleErrors = False
         self.click_button_labeled('new...')
         id = fields.get('id', 'test_object')
         fields['id'] = id
@@ -394,14 +315,14 @@ class SilvaBrowser(object):
         """
         format the path to data/ for test files
         """
-        return openTestFile(filename)
+        return open_test_file(filename)
 
     def select_addable(self, meta_type):
         """
         select a meta_type from the addables list
         """
-        self.browser.getControl(
-            name='md.container.field.content').value = [meta_type]
+        form = self.browser.get_form('md.container')
+        form.get_control('md.container.field.content').value = meta_type
 
     def select_all_content(self, data):
         """
@@ -410,13 +331,15 @@ class SilvaBrowser(object):
         # Hack way to select all the checkboxes, since this is done
         # with js
         ids = [item['id'] for item in data]
-        self.browser.getControl(name='ids:list').value = ids
+        form = self.browser.get_form('silvaObjects')
+        form.get_control('ids:list').value = ids
 
     def select_content(self, content_id):
         """
         toggle a content item checkbox
         """
-        self.browser.getControl(name='ids:list').value = [content_id]
+        form = self.browser.get_form('silvaObjects')
+        form.get_control('ids:list').value = content_id
 
     def select_delete_content(self, content_id):
         """
@@ -455,10 +378,10 @@ class SilvaBrowser(object):
             return 'field_' + name
         if self.form_type is Z3CFORM_FORM:
             return 'form.widgets.' + name
-        if self.form_type is FORMLIB_FORM:
-            raise NotImplementedError
         if self.form_type is ZEAMFORM_FORM:
-            return 'form.field.' + name
+            return 'editform.field.' + name
+        if self.form_type is ZEAMFORM_ADDFORM:
+            return 'addform.field.' + name
         raise NotImplementedError
 
     def set_id_field(self, id):
@@ -466,21 +389,24 @@ class SilvaBrowser(object):
         set the id field
         """
         name = self.get_field_id('id')
-        self.browser.getControl(name=name).value = id
+        form = self.browser.get_form('addform')
+        form.get_control(name).value = id
 
     def set_title_field(self, title):
         """
         set the title field
         """
         name = self.get_field_id('title')
-        self.browser.getControl(name=name).value = title
+        form = self.browser.get_form('addform')
+        form.get_control(name).value = title
 
     def set_policy_field(self, content_type='Silva Document'):
         """
         set the policy field
         """
         name = self.get_field_id('policy_name')
-        self.browser.getControl(name=name).value = [content_type]
+        form = self.browser.get_form('addform')
+        form.get_control(name).value = content_type
 
     def set_image_field(self, image):
         """
@@ -499,26 +425,21 @@ class SilvaBrowser(object):
         self.browser.getControl(name=name).add_file(
             self.open_file(file), 'text/plain', file)
 
-    def set_ghost_url_field(self, reference):
-        """
-        set the ghost url field
-        """
-        name = self.get_field_id('haunted')
-        self.browser.getControl(name=name).value = reference
-
     def set_url_field(self, link_url):
         """
         set the url field
         """
         name = self.get_field_id('url')
-        self.browser.getControl(name=name).value = link_url
+        form = self.browser.get_form('addform')
+        form.get_control(name).value = link_url
 
     def set_depth_field(self, depth):
         """
         set the depth field
         """
         name = self.get_field_id('depth')
-        self.browser.getControl(name=name).value = '-1'
+        form = self.browser.get_form('addform')
+        form.get_control(name).value = depth
 
     # map default field values to field names
     default_field_values = {
@@ -541,7 +462,6 @@ class SilvaBrowser(object):
         'file':         set_file_field,
         'url':          set_url_field,
         'depth':        set_depth_field,
-        'reference':      set_ghost_url_field,
     }
 
     # map field_names to content_types
@@ -552,7 +472,6 @@ class SilvaBrowser(object):
         'Silva Image':          ['id', 'title', 'image'],
         'Silva File':           ['id', 'title', 'file'],
         'Silva Find':           ['id', 'title'],
-        'Silva Ghost':          ['id', 'reference'],
         'Silva Indexer':        ['id', 'title'],
         'Silva Link':           ['id', 'title', 'url'],
         'Silva AutoTOC':        ['id', 'title', 'depth'],

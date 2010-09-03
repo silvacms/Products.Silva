@@ -5,21 +5,21 @@
 
 import unittest
 
-from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser, ZEAMFORM_FORM
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.SilvaBrowser import SilvaBrowser, ZEAMFORM_ADDFORM
 
-class SilvaBrowserTest(SilvaFunctionalTestCase):
+
+class SilvaBrowserTest(unittest.TestCase):
     """
         test the basic SilvaBrowser API methods
     """
-    def test_silvabrowser(self):
-        sb = SilvaBrowser()
+    layer = FunctionalLayer
 
     def test_login_logout(self):
         # login
         sb = SilvaBrowser()
         # goto silva root
-        status, url = sb.go(self.silva_url)
+        status, url = sb.go('/root')
         self.assertEquals(status, 200)
         # goto edit page
         status, url = sb.go(sb.smi_url())
@@ -31,7 +31,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.login('skdgsdkj', 'zxcmnbvx', sb.smi_url())
         self.assertEquals(status, 401)
         # login manager
-        status, url = sb.login('manager', 'secret', sb.smi_url())
+        status, url = sb.login('manager', 'manager', sb.smi_url())
         self.assertEquals(status, 200)
         # logout
         status, url = sb.click_href_labeled('logout Manager manager')
@@ -40,7 +40,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
     def test_delete_published_content(self):
         # login
         sb = SilvaBrowser()
-        status, url = sb.login('manager', 'secret', sb.smi_url())
+        status, url = sb.login('manager', 'manager', sb.smi_url())
         # get silva content
         data = sb.get_content_data()
         self.assertEquals(len(data), 1)
@@ -65,7 +65,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
     def test_get_all_content(self):
         # login
         sb = SilvaBrowser()
-        status, url = sb.login('manager', 'secret', sb.smi_url())
+        status, url = sb.login('manager', 'manager', sb.smi_url())
         # make some content
         # select meta_type
         addables = sb.get_addables_list()
@@ -73,9 +73,9 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         sb.select_addable('Silva Document')
         # create silva document
         status, url = sb.click_button_labeled('new...')
-        self.failUnless(sb.get_addform_title() == 'create Silva Document')
+        self.assertEqual(sb.get_addform_title(), 'create Silva Document')
         # fill in form fields
-        sb.form_type = ZEAMFORM_FORM
+        sb.form_type = ZEAMFORM_ADDFORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
@@ -99,7 +99,6 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         sb.select_all_content(data)
         # close published content
         status, url = sb.click_button_labeled('close')
-        self.failUnless(sb.get_status_feedback().startswith('Closed'))
         data = sb.get_content_data()
         sb.select_all_content(data)
         # delete content
@@ -113,7 +112,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
     def test_make_silva_document(self):
         # login
         sb = SilvaBrowser()
-        status, url = sb.login('manager', 'secret', sb.smi_url())
+        status, url = sb.login('manager', 'manager', sb.smi_url())
         # select meta_type
         addables = sb.get_addables_list()
         self.failUnless('Silva Document' in addables)
@@ -122,7 +121,7 @@ class SilvaBrowserTest(SilvaFunctionalTestCase):
         status, url = sb.click_button_labeled('new...')
         self.failUnless(sb.get_addform_title() == 'create Silva Document')
         # fill in form fields
-        sb.form_type = ZEAMFORM_FORM
+        sb.form_type = ZEAMFORM_ADDFORM
         sb.set_id_field('test_content')
         sb.set_title_field('test content')
         status, url = sb.click_button_labeled('save')
