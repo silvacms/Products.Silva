@@ -130,7 +130,7 @@
         <td class="field align-right">
           <p style="float:left"
             i18n:translate="">
-            Check to export an entire branch of the site. 
+            Check to export all sub publications. 
           </p>
           <input class="min"
             type="checkbox"
@@ -202,7 +202,7 @@
               </tal:repeat>
             </div>
             <p i18n:translate="">
-              Select the format which is going to used to export.
+              Select the format which will be used for the export.
             </p>
           </td>
         </tr>
