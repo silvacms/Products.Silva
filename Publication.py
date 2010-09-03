@@ -18,11 +18,13 @@ import transaction
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
 
+from silva.core.smi.interfaces import IPropertiesTab
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IPublication, IRoot, ISiteManager, IInvisibleService)
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
+from zeam.form.silva.interfaces import IRemoverAction
 
 
 class OverQuotaException(BadRequest):
@@ -243,8 +245,7 @@ class ManageLocalSite(silvaforms.SMIForm):
     """
     grok.name('tab_localsite')
     grok.require('zope2.ViewManagementScreens')
-
-    tab = 'properties'
+    grok.implements(IPropertiesTab)
 
     label = _(u"Local site")
     description = _(u"Here you can enable/disable a local site (or subsite). "
@@ -260,9 +261,10 @@ class ManageLocalSite(silvaforms.SMIForm):
         return IPublication.providedBy(self.context) and \
             not self.manager.isSite()
 
-    @silvaforms.action(_("make local site"),
-                       identifier="make_site",
-                       available=lambda form: form.can_be_a_local_site())
+    @silvaforms.action(
+        _("make local site"),
+        identifier="make_site",
+        available=lambda form: form.can_be_a_local_site())
     def make_site(self):
         try:
             self.manager.makeSite()
@@ -278,9 +280,11 @@ class ManageLocalSite(silvaforms.SMIForm):
             self.manager.isSite() and \
             not IRoot.providedBy(self.context)
 
-    @silvaforms.action(_("remove local site"),
-                       identifier="delete_site",
-                       available=lambda form: form.can_be_normal_again())
+    @silvaforms.action(
+        _("remove local site"),
+        identifier="delete_site",
+        available=lambda form: form.can_be_normal_again(),
+        implements=IRemoverAction)
     def delete_site(self):
         try:
             self.manager.deleteSite()
