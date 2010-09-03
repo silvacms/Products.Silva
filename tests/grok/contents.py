@@ -5,8 +5,6 @@
 
     >>> from Products.Silva.ExtensionRegistry import extensionRegistry
     >>> silva = extensionRegistry.get_extension('Silva')
-    >>> browser = SilvaBrowser()
-    >>> logAsUser(app, 'manager')
 
   You can grok your contents. Since our test are in Silva, they will
   be registered for Silva here.
@@ -29,11 +27,12 @@
     True
     >>> 'My Article Version' in [content['name'] for content in silva.get_content()]
     True
-    >>> factory = app.root.manage_addProduct['Silva']
+    >>> root = get_root()
+    >>> factory = root.manage_addProduct['Silva']
     >>> factory.manage_addMyArticle('myarticle', 'My demo article')
-    >>> app.root.myarticle
+    >>> root.myarticle
     <Article at /root/myarticle>
-    >>> app.root.myarticle.customCreation
+    >>> root.myarticle.customCreation
     True
 
   A versioned content should have a versionClass defined:
@@ -79,5 +78,3 @@ def manage_addMyArticle(self, id, title, REQUEST=None):
     article.customCreation = True
     # As well we should create a version, and other stuff ...
     add_and_edit(self, id, REQUEST)
-
-

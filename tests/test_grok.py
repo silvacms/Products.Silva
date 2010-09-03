@@ -3,70 +3,31 @@
 # See also LICENSE.txt
 # $Id$
 
-from pkg_resources import resource_listdir
 import doctest
 import unittest
 
+from Products.Silva.testing import FunctionalLayer, suite_from_package
+from infrae.testbrowser.browser import Browser
 from zope.interface.verify import verifyObject
-import five.grok.testing
-
-from Testing import ZopeTestCase
-from Testing.ZopeTestCase.zopedoctest.functional import getRootFolder, sync
-from AccessControl.SecurityManagement import newSecurityManager, \
-    noSecurityManager
-
-from Products.Silva.tests.layer import SilvaLayer, setUp, tearDown
-from Products.Silva.tests.SilvaBrowser import SilvaBrowser
-from Products.Silva.tests.SilvaTestCase import SilvaFunctionalTestCase
-
-def logAsUser(app, username):
-    """Login as the given user.
-    """
-    if username is None:
-        noSecurityManager()
-    else:
-        uf = app.root.acl_users
-        user = uf.getUserById(username).__of__(uf)
-        newSecurityManager(None, user)
 
 
-extraglobs = {'logAsUser': logAsUser,
-              'SilvaBrowser': SilvaBrowser,
-              'verifyObject': verifyObject,
-              'getRootFolder': getRootFolder,
-              'sync': sync,
-              'grok': five.grok.testing.grok,}
+globs = {
+    'Browser': lambda: Browser(FunctionalLayer._test_wsgi_application),
+    'verifyObject': verifyObject,
+    'get_root': FunctionalLayer.get_application,
+    'grok': FunctionalLayer.grok,}
 
 
-def suiteFromPackage(name, module_base="Products.Silva.tests",
-        layer=SilvaLayer):
-    files = resource_listdir(module_base, name)
-    suite = unittest.TestSuite()
-    for filename in files:
-        if not filename.endswith('.py'):
-            continue
-        if filename.endswith('_fixture.py'):
-            continue
-        if filename == '__init__.py':
-            continue
+def create_test(build_test_suite, name):
+    test =  build_test_suite(
+        name,
+        globs=globs,
+        optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
+    test.layer = FunctionalLayer
+    return test
 
-        dottedname = '%s.%s.%s' % (module_base, name, filename[:-3])
-        test = ZopeTestCase.FunctionalDocTestSuite(
-            dottedname,
-            test_class=SilvaFunctionalTestCase,
-            setUp=setUp,
-            tearDown=tearDown,
-            extraglobs=extraglobs,
-            optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE)
-
-        test.layer = layer
-        suite.addTest(test)
-    return suite
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(suiteFromPackage('grok'))
+    suite.addTest(suite_from_package('Products.Silva.tests.grok', create_test))
     return suite
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')
