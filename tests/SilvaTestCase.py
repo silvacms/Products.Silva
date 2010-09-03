@@ -92,12 +92,6 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         """
         return self.app.root
 
-    @property
-    def silva_url(self):
-        """Return the absolute url of silva root.
-        """
-        return self.getRoot().absolute_url()
-
     def afterSetUp(self):
         '''Called after setUp() has completed. This is
            far and away the most useful hook.
@@ -215,21 +209,24 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
 
     def add_folder(self, object, id, title, **kw):
         folder = self.addObject(object, 'Folder', id, title=title, **kw)
-        # policy = kw.get('policy_name', 'Silva Document')
-        # if policy == 'Silva Document':
-        #     self.addObject(folder, 'Document', 'index', title=title)
-        # if policy == 'Silva AutoTOC':
-        #     self.addObject(folder, 'AutoTOC', 'index', title=title)
+        # Emulate old add index feature
+        policy = kw.get('policy_name', None)
+        if policy == 'Silva Document':
+            self.addObject(folder, 'Document', 'index',
+                           title=title, product='SilvaDocument')
+        if policy == 'Silva AutoTOC':
+            self.addObject(folder, 'AutoTOC', 'index', title=title)
         return folder
 
     def add_publication(self, object, id, title, **kw):
         publication = self.addObject(
             object, 'Publication', id, title=title, **kw)
-        # policy = kw.get('policy_name', 'Silva Document')
-        # if policy == 'Silva Document':
-        #     self.addObject(publication, 'Document', 'index', title=title)
-        # if policy == 'Silva AutoTOC':
-        #     self.addObject(publication, 'AutoTOC', 'index', title=title)
+        policy = kw.get('policy_name', None)
+        if policy == 'Silva Document':
+            self.addObject(publication, 'Document', 'index',
+                           title=title, product='SilvaDocument')
+        if policy == 'Silva AutoTOC':
+            self.addObject(publication, 'AutoTOC', 'index', title=title)
         return publication
 
     def add_document(self, object, id, title):

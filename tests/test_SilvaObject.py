@@ -10,17 +10,17 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
     """
     def afterSetUp(self):
 
-        self.folder = self.add_folder(self.root, 'folder','Folder',
-                                      policy_name='Silva Document')
-        self.publication = self.add_publication(self.root,
-                                                'publication','Publication')
+        self.folder = self.add_folder(
+            self.root, 'folder','Folder', policy_name='Silva Document')
+        self.publication = self.add_publication(
+            self.root, 'publication','Publication')
         self.document = self.add_document(self.root, 'document','Document')
         self.document2 = self.add_document(self.root, 'document2','')
 
         # add some stuff to test breadcrumbs
         self.subfolder = self.add_folder(self.folder, 'subfolder', 'Subfolder')
-        self.subsubdoc = self.add_document(self.subfolder,
-                                           'subsubdoc', 'Subsubdoc')
+        self.subsubdoc = self.add_document(
+            self.subfolder, 'subsubdoc', 'Subsubdoc')
 
 
     def test_set_title(self):
