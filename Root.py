@@ -268,20 +268,17 @@ manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
 def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
-    """Add a Silva root."""
-    # Zope Dont' like to have be unicode
-    id = str(id)
-    root = Root(id)
-    self._setObject(id, root)
-    root = getattr(self, id)
-    # transform title from whatever encoding it is in to unicode
-    # we're assuming latin1 encoding. I guess this is not necessarily
-    # correct in case the ZMI has been set to another encoding, but of course
-    # it being Zope 2 there's no proper method on RESPONSE to get to this
-    # information, and applying a regex to the content-type header seems
-    # excessive
+    """Add a Silva root.
+    """
+    if not title:
+        title = id
     if not isinstance(title, unicode):
         title = unicode(title, 'latin1')
+    id = str(id)
+    root = Root(id)
+    container = self.Destination()
+    container._setObject(id, root)
+    root = getattr(container, id)
     # this root is the new local site
     setSite(root)
     setHooks()
@@ -298,5 +295,6 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         # install the user documentation .zexp
         install_documentation(root)
 
-    add_and_edit(self, id, REQUEST)
+    if REQUEST is not None:
+        add_and_edit(self, id, REQUEST)
     return ''
