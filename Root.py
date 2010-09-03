@@ -282,19 +282,26 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     # this root is the new local site
     setSite(root)
     setHooks()
-    # now set it all up
-    install.installFromScratch(root)
-    root.set_title(title)
+    try:
+        # now set it all up
+        install.installFromScratch(root)
+        root.set_title(title)
 
-    if add_search:
-        # install a silva find instance
-        factory = root .manage_addProduct['SilvaFind']
-        factory.manage_addSilvaFind('search', 'Search this site')
+        if add_search:
+            # install a silva find instance
+            factory = root .manage_addProduct['SilvaFind']
+            factory.manage_addSilvaFind('search', 'Search this site')
 
-    if add_docs:
-        # install the user documentation .zexp
-        install_documentation(root)
+        if add_docs:
+            # install the user documentation .zexp
+            install_documentation(root)
 
-    if REQUEST is not None:
-        add_and_edit(self, id, REQUEST)
+        if REQUEST is not None:
+            add_and_edit(self, id, REQUEST)
+    except:
+        # If there is an error, reset the local site. This prevent
+        # more confusion.
+        setSite(None)
+        setHooks()
+        raise
     return ''
