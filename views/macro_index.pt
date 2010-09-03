@@ -236,6 +236,9 @@
 </div>
 <div id="remote-form-dialog">
 </div>
+<div id="remote-request-loading">
+  <p i18n:translate="">loading ...</p>
+</div>
 <span tal:replace="nothing">
   <!-- ____________________________ /end footer _____________________________ -->
 </span>
