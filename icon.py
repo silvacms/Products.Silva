@@ -46,8 +46,8 @@ class IconRegistry(object):
         elif interfaces.ISilvaObject.providedBy(content):
             identifier = ('meta_type', content.meta_type)
         else:
-            if interfaces.IUserAuthorization.providedBy(content):
-                content = content.member
+            if interfaces.IAuthorization.providedBy(content):
+                content = content.source
             meta_type = getattr(content, 'meta_type', None)
             if meta_type is None:
                 raise ValueError(u"No icon for unknown object %r" % content)

@@ -61,11 +61,6 @@ class SimpleMember(Member, Security, ZMIObject):
         self._creation_datetime = self._modification_datetime = DateTime()
         self._is_approved = 0
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'security_trigger')
-    def security_trigger(self):
-        pass
-
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
         return roleinfo.ASSIGNABLE_ROLES

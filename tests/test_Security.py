@@ -5,8 +5,8 @@
 
 import unittest
 
-from silva.core.interfaces import IAccessSecurity, IUserAccessSecurity
-from silva.core.interfaces import IUserAuthorization
+from silva.core.interfaces import IAccessSecurity
+from silva.core.interfaces import IAuthorization, IAuthorizationManager
 from zope import component
 from zope.interface.verify import verifyObject
 
@@ -124,10 +124,10 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         factory.manage_addFolder('folder', 'Folder')
 
         self.access = component.queryAdapter(
-            self.root.folder, IUserAccessSecurity)
+            self.root.folder, IAuthorizationManager)
 
     def test_interface(self):
-        self.assertTrue(verifyObject(IUserAccessSecurity, self.access))
+        self.assertTrue(verifyObject(IAuthorizationManager, self.access))
 
     def test_logged_in_user(self):
         """Lookup information about the current logged in user.
@@ -139,10 +139,11 @@ class UserAccessSecurityTestCase(unittest.TestCase):
                 self.access.get_user_role().lower(),
                 user_id)
 
-            authorization = self.access.get_user_authorization()
-            self.assertTrue(verifyObject(IUserAuthorization, authorization))
-            self.assertEqual(authorization.userid, user_id)
+            authorization = self.access.get_authorization()
+            self.assertTrue(verifyObject(IAuthorization, authorization))
+            self.assertEqual(authorization.identifier, user_id)
             self.assertEqual(authorization.role.lower(), user_id)
+            self.assertEqual(authorization.type, 'user')
             # By default users don't have a local here. Their role is
             # acquired.
             self.assertEqual(authorization.local_role, None)
@@ -157,9 +158,9 @@ class UserAccessSecurityTestCase(unittest.TestCase):
                 self.access.get_user_role(user_id).lower(),
                 user_id)
 
-            authorization = self.access.get_user_authorization(user_id)
-            self.assertTrue(verifyObject(IUserAuthorization, authorization))
-            self.assertEqual(authorization.userid, user_id)
+            authorization = self.access.get_authorization(user_id)
+            self.assertTrue(verifyObject(IAuthorization, authorization))
+            self.assertEqual(authorization.identifier, user_id)
             self.assertEqual(authorization.role.lower(), user_id)
             # By default users don't have a local here. Their role is
             # acquired.
@@ -171,9 +172,10 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         self.assertEqual(self.access.get_user_role('dummy'), None)
 
-        authorization = self.access.get_user_authorization('dummy')
-        self.assertTrue(verifyObject(IUserAuthorization, authorization))
-        self.assertEqual(authorization.userid, 'dummy')
+        authorization = self.access.get_authorization('dummy')
+        self.assertTrue(verifyObject(IAuthorization, authorization))
+        self.assertEqual(authorization.identifier, 'dummy')
+        self.assertEqual(authorization.type, 'user')
         self.assertEqual(authorization.role, None)
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.acquired_role, None)
@@ -181,7 +183,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
     def test_grant_role(self):
         """Test setting a role (as a ChiefEditor).
         """
-        authorization = self.access.get_user_authorization('reader')
+        authorization = self.access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # We (chiefeditor) don't have Manager, so can't give that role.
@@ -209,7 +211,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('manager')
 
-        authorization = self.access.get_user_authorization('reader')
+        authorization = self.access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # The user already have role, reader, so this does nothing
@@ -226,7 +228,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.role, 'Manager')
 
         # A new query returns the same  results
-        authorization = self.access.get_user_authorization('reader')
+        authorization = self.access.get_authorization('reader')
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.role, 'Manager')
 
@@ -235,7 +237,7 @@ class UserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('dummy')
 
-        authorization = self.access.get_user_authorization('reader')
+        authorization = self.access.get_authorization('reader')
         self.assertEqual(authorization.role, 'Reader')
 
         # You don't have the right to do any of those
@@ -278,24 +280,24 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         factory.manage_addFolder('folder', 'Folder')
         self.folder = self.root.publication.folder
 
-        access = IUserAccessSecurity(self.root)
-        authorization = access.get_user_authorization('reader')
+        access = IAuthorizationManager(self.root)
+        authorization = access.get_authorization('reader')
         authorization.grant('Editor')
-        authorization = access.get_user_authorization('viewer')
+        authorization = access.get_authorization('viewer')
         authorization.grant('Reader')
 
-        access = IUserAccessSecurity(self.publication)
-        authorization = access.get_user_authorization('viewer')
+        access = IAuthorizationManager(self.publication)
+        authorization = access.get_authorization('viewer')
         authorization.grant('ChiefEditor')
 
-        access = IUserAccessSecurity(self.folder)
-        authorization = access.get_user_authorization('reader')
+        access = IAuthorizationManager(self.folder)
+        authorization = access.get_authorization('reader')
         authorization.grant('Manager')
 
     def test_get_defined_authorizations(self):
         """Retrieve all current authorization, trying to acquire.
         """
-        access = IUserAccessSecurity(self.folder)
+        access = IAuthorizationManager(self.folder)
 
         authorizations = access.get_defined_authorizations()
         self.assertEqual(len(authorizations), 2)
@@ -315,7 +317,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
     def test_get_defined_authorizations_dont_acquire(self):
         """Retrieve current all current authorizations without acquiring.
         """
-        access = IUserAccessSecurity(self.folder)
+        access = IAuthorizationManager(self.folder)
 
         authorizations = access.get_defined_authorizations(dont_acquire=True)
         self.assertEqual(len(authorizations), 1)
@@ -326,29 +328,29 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.acquired_role, None)
         self.assertEqual(authorization.role, 'Manager')
 
-    def test_get_user_authorization_dont_acquire(self):
+    def test_get_authorization_dont_acquire(self):
         """Retrieve a user authorization that have some acquired roles.
         """
-        access = IUserAccessSecurity(self.folder)
+        access = IAuthorizationManager(self.folder)
 
-        authorization = access.get_user_authorization(
+        authorization = access.get_authorization(
             'reader', dont_acquire=True)
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.acquired_role, None)
         self.assertEqual(authorization.role, 'Manager')
 
-        authorization = access.get_user_authorization(
+        authorization = access.get_authorization(
             'viewer', dont_acquire=True)
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.acquired_role, None)
         self.assertEqual(authorization.role, None)
 
     def  test_get_users_authorzation(self):
-        """Test get_users_authorization.
+        """Test get_authorizations.
         """
-        access = IUserAccessSecurity(self.folder)
+        access = IAuthorizationManager(self.folder)
 
-        authorizations = access.get_users_authorization(
+        authorizations = access.get_authorizations(
             ['reader', 'viewer', 'editor'])
         self.assertEqual(len(authorizations), 3)
         self.assertTrue('reader' in authorizations.keys())
@@ -370,8 +372,8 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
     def test_revoke_as_manager(self):
         """Revoke a local role as a manager.
         """
-        access = IUserAccessSecurity(self.folder)
-        authorization = access.get_user_authorization('reader')
+        access = IAuthorizationManager(self.folder)
+        authorization = access.get_authorization('reader')
 
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.acquired_role, 'Editor')
@@ -387,7 +389,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.role, 'Editor')
 
         # Even on a new query
-        authorization = access.get_user_authorization('reader')
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.acquired_role, 'Editor')
         self.assertEqual(authorization.role, 'Editor')
@@ -397,8 +399,8 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('chiefeditor')
 
-        access = IUserAccessSecurity(self.folder)
-        authorization = access.get_user_authorization('reader')
+        access = IAuthorizationManager(self.folder)
+        authorization = access.get_authorization('reader')
 
         self.assertEqual(authorization.local_role, 'Manager')
         self.assertEqual(authorization.acquired_role, 'Editor')
@@ -420,8 +422,8 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('chiefeditor')
 
-        access = IUserAccessSecurity(self.root)
-        authorization = access.get_user_authorization('reader')
+        access = IAuthorizationManager(self.root)
+        authorization = access.get_authorization('reader')
 
         self.assertEqual(authorization.local_role, 'Editor')
         self.assertEqual(authorization.acquired_role, 'Reader')
@@ -437,7 +439,7 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         self.assertEqual(authorization.role, 'Reader')
 
         # Even on a new query
-        authorization = access.get_user_authorization('reader')
+        authorization = access.get_authorization('reader')
         self.assertEqual(authorization.local_role, None)
         self.assertEqual(authorization.acquired_role, 'Reader')
         self.assertEqual(authorization.role, 'Reader')
@@ -447,16 +449,16 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         """
         self.layer.login('dummy')
 
-        access = IUserAccessSecurity(self.root)
+        access = IAuthorizationManager(self.root)
         # We don't have the right to revoke that role
-        authorization = access.get_user_authorization('reader')
+        authorization = access.get_authorization('reader')
         with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
             self.assertRaises(
                 UnauthorizedRoleAssignement,
                 authorization.revoke)
 
         # We don't have the right to revoke that role
-        authorization = access.get_user_authorization('viewer')
+        authorization = access.get_authorization('viewer')
         with assertNotTriggersEvents('SecurityRoleRemovedEvent'):
             self.assertRaises(
                 UnauthorizedRoleAssignement,
@@ -465,8 +467,8 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
     def test_revoke_no_role(self):
         """Revoke local role when there is no local role.
         """
-        access = IUserAccessSecurity(self.folder)
-        authorization = access.get_user_authorization('viewer')
+        access = IAuthorizationManager(self.folder)
+        authorization = access.get_authorization('viewer')
 
         self.assertEqual(authorization.local_role, None)
 
