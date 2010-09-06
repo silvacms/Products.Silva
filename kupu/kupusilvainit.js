@@ -342,6 +342,15 @@ function initSilvaKupu(iframe) {
     var dltool = new DefinitionListTool('kupu-list-dl-addbutton');
     kupu.registerTool('dltool', dltool);
 
+    var extsourcetool = new SilvaExternalSourceTool(
+        'kupu-toolbox-extsource-id', 'kupu-extsource-formcontainer',
+        'kupu-extsource-addbutton', 'kupu-extsource-cancelbutton',
+        'kupu-extsource-updatebutton', 'kupu-extsource-delbutton',
+        'kupu-toolbox-extsource', 'kupu-toolbox', 'kupu-toolbox-active',
+        'kupu-extsource-enabledflag', 'kupu-extsource-disabledtext',
+        'kupu-extsource-nosourcestext');
+    kupu.registerTool('extsourcetool', extsourcetool);
+
     var linktool = new SilvaLinkTool();
     kupu.registerTool('linktool', linktool);
     var linktoolbox = new SilvaLinkToolBox(
@@ -356,15 +365,6 @@ function initSilvaKupu(iframe) {
         'kupu-index-updatebutton', 'kupu-index-deletebutton',
         'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('indextool', indextool);
-
-    var extsourcetool = new SilvaExternalSourceTool(
-        'kupu-toolbox-extsource-id', 'kupu-extsource-formcontainer',
-        'kupu-extsource-addbutton', 'kupu-extsource-cancelbutton',
-        'kupu-extsource-updatebutton', 'kupu-extsource-delbutton',
-        'kupu-toolbox-extsource', 'kupu-toolbox', 'kupu-toolbox-active',
-        'kupu-extsource-enabledflag', 'kupu-extsource-disabledtext',
-        'kupu-extsource-nosourcestext');
-    kupu.registerTool('extsourcetool', extsourcetool);
 
     var abbrtool = new SilvaAbbrTool(
         'kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
@@ -400,21 +400,15 @@ function initSilvaKupu(iframe) {
     tabletool.registerToolBox('tabletoolbox', tabletoolbox);
 
     var propertytool = new SilvaPropertyTool(
-        'propsrow', 'kupu-properties-form');
+        "kupu-toolbox-properties", "kupu-toolbox-active", "kupu-toolbox");
     kupu.registerTool('properties', propertytool);
 
     var showpathtool = new ShowPathTool();
     kupu.registerTool('showpathtool', showpathtool);
 
-    var sourceedittool = new SourceEditTool('kupu-source-button',
-        'kupu-editor-textarea');
+    var sourceedittool = new SourceEditTool(
+        'kupu-source-button', 'kupu-editor-textarea');
     kupu.registerTool('sourceedittool', sourceedittool);
-
-/*
-    var spellchecker = new KupuSpellChecker('kupu-spellchecker-button',
-        'kupu_spellcheck');
-    kupu.registerTool('spellchecker', spellchecker);
-*/
 
     var cleanupexpressions = new CleanupExpressionsTool(
         'kupucleanupexpressionselect', 'kupucleanupexpressionbutton');
@@ -429,16 +423,6 @@ function initSilvaKupu(iframe) {
             drawertool.openDrawer(drawerid);
         };
     };
-
-    /*
-    var imagelibdrawerbutton = new KupuButton('kupu-imagelibdrawer-button',
-        opendrawer('imagelibdrawer'));
-    kupu.registerTool('imagelibdrawerbutton', imagelibdrawerbutton);
-
-    var linklibdrawerbutton = new KupuButton('kupu-linklibdrawer-button',
-        opendrawer('linklibdrawer'));
-    kupu.registerTool('linklibdrawerbutton', linklibdrawerbutton);
-    */
 
     // create some drawers, drawers are some sort of popups that appear when a
     // toolbar button is clicked

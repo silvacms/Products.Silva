@@ -6,21 +6,9 @@
     * License. See LICENSE.txt for license text. For a list of Kupu
     * Contributors see CREDITS.txt.
     *
-    *****************************************************************************/
+    **************************************************************************/
 
 // $Id: kupusilvatools.js 25442 2006-04-06 10:29:19Z guido $
-
-// a mapping from namespace to field names, here you can configure which
-// metadata fields should be editable with the property editor (needs to
-// be moved to somewhere in Silva or something?)
-EDITABLE_METADATA = {
-    'http://infrae.com/namespace/metadata/silva-news-network':
-    [['subjects', 'checkbox', 1, 'subjects'],
-     ['target_audiences', 'checkbox', 1, 'target audiences'],
-     ['start_datetime', 'datetime', 1, 'start date/time (dmy)'],
-     ['end_datetime', 'datetime', 0, 'end date/time (dmy)'],
-     ['location', 'text', 0, 'location']]
-};
 
 function ExternalSourceLoader(div) {
     if (div == null) {
@@ -248,12 +236,12 @@ var SilvaLinkTargetSelector = function(targetid) {
     this.input = $('#'+ targetid + '-custom');
     /* initialize and bind event */
     this.select.change(function () {
-            if (self.select.val() != 'input') {
-                self.input.hide();
-            } else {
-                self.input.show();
-            };
-        });
+        if (self.select.val() != 'input') {
+            self.input.hide();
+        } else {
+            self.input.show();
+        };
+    });
     this.input.hide();
 };
 
@@ -373,19 +361,19 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
     this.tool = tool;
     this.editor = editor;
     this.imagehires.change(function() {
-            self.content.toggle();
-        });
+        self.content.toggle();
+    });
     this.content.change(function(event, info) {
-            if (info['path']) {
-                self.external_href.val(info['path']);
-                self.external_href.attr('readonly', 'readonly');
-                self.external_href.attr('class', 'store readonly');
-            } else {
-                self.external_href.val('');
-                self.external_href.removeAttr('readonly');
-                self.external_href.attr('class', 'store');
-            };
-        });
+        if (info['path']) {
+            self.external_href.val(info['path']);
+            self.external_href.attr('readonly', 'readonly');
+            self.external_href.attr('class', 'store readonly');
+        } else {
+            self.external_href.val('');
+            self.external_href.removeAttr('readonly');
+            self.external_href.attr('class', 'store');
+        };
+    });
 
     addEventHandler(this.addbutton, 'click', this.createLinkHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createLinkHandler, this);
@@ -435,7 +423,7 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     if (this.editor.getTool('extsourcetool')
-            .getNearestExternalSource(selNode)) {
+        .getNearestExternalSource(selNode)) {
         return;
     };
     var self = this;
@@ -3068,351 +3056,87 @@ SilvaKupuUI.prototype.setTextStyle = function(style) {
     this.editor.getDocument().getWindow().focus();
 };
 
-function SilvaPropertyTool(tablerowid, formid) {
-    /* a simple tool to edit metadata fields
-
-       the fields' contents are stored in Silva's metadata sets
-    */
-    this.tablerow = document.getElementById(tablerowid);
-    this.form = document.getElementById(formid);
-    this.table = this.tablerow.parentNode;
-    while (!this.table.nodeName.toLowerCase() == 'table') {
-        this.table = this.table.parentNode;
-    };
-    // remove current content from the fields
-    var tds = this.tablerow.getElementsByTagName('td');
-    for (var i=0; i < tds.length; i++) {
-        while (tds[i].hasChildNodes()) {
-            tds[i].removeChild(tds[i].childNodes[0]);
-        };
-    };
+function SilvaPropertyTool(toolboxid, activeclass, plainclass) {
+    this.header = $('#' + toolboxid).find('h1');
+    this.data = $('#' + toolboxid + '-data');
+    this.url = $('#' + toolboxid + '-base').attr('href') +
+        '/++rest++kupu-properties';
+    this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
 };
 
 SilvaPropertyTool.prototype = new KupuTool;
 
 SilvaPropertyTool.prototype.initialize = function(editor) {
+    var self = this;
     this.editor = editor;
-
-    // walk through all metadata fields and expose them to the user
-    var metas = this.editor.getInnerDocument().getElementsByTagName('meta');
-    for (var i=0; i < metas.length; i++) {
-        var meta = metas[i];
-        var name = meta.getAttribute('name');
-        if (!name) {
-            // http-equiv type
-            continue;
-        };
-        var rowcopy = this.tablerow.cloneNode(true);
-        this.tablerow.parentNode.appendChild(rowcopy);
-        // create the form elements, pass in the rowcopy so the row can be
-        // rendered real-time, this because IE doesn't select checkboxes that
-        // arent' visible(!!)
-        this.parseFormElIntoRow(meta, rowcopy);
-        /*
-        if (tag) {
-            this.tablerow.parentNode.appendChild(tag);
-        };
-        */
-    };
-    // throw away the original row: we don't need it anymore...
-    this.tablerow.parentNode.removeChild(this.tablerow);
+    $.getJSON(this.url , function(data) {
+        self.loadProperties(data);
+    });
 };
 
-SilvaPropertyTool.prototype.parseFormElIntoRow = function(metatag, tablerow) {
-    /* render a field in the properties tool according to a metadata tag
+SilvaPropertyTool.prototype.close = function() {
+    this.toolbox.close();
+    $(document).trigger('zeam-popup-closed');
+}
 
-        returns some false value if the meta tag should not be editable
-    */
-    var scheme = metatag.getAttribute('scheme');
-    if (!scheme || !(scheme in EDITABLE_METADATA)) {
-        return;
-    };
-    var name = metatag.getAttribute('name');
-    var namespace = metatag.getAttribute('scheme');
-    var nametypes = EDITABLE_METADATA[scheme];
-    var type = 'text';
-    var mandatory = false;
-    var namefound = false;
-    var fieldtitle = '';
-    for (var i=0; i < nametypes.length; i++) {
-        var nametype = nametypes[i];
-        var elname = nametype[0];
-        var type = nametype[1];
-        var mandatory = nametype[2];
-        var fieldtitle = nametype[3];
-        if (elname == name) {
-            namefound = true;
-            break;
-        };
-    };
-    if (!namefound) {
-        return;
-    };
-
-    tablerow.removeChild(tablerow.getElementsByTagName('td')[1]);
-
-    var value = metatag.getAttribute('content');
-    var parentvalue = metatag.getAttribute('parentcontent');
-    var td = tablerow.getElementsByTagName('td')[0]
-    if (type == 'text' || type == 'textarea' || type == 'datetime') {
-        this._createSimpleItemHTML(
-            type, value, name, namespace, mandatory, td, fieldtitle);
-    } else if (type == 'checkbox') {
-        var titlecell = tablerow.getElementsByTagName('td')[0];
-        this._createCheckboxItemHTML(
-            titlecell, value, name, namespace, mandatory, td, fieldtitle);
-    };
-    if (parentvalue && parentvalue != '') {
-        td.appendChild(document.createElement('br'));
-        td.appendChild(document.createTextNode('acquired value:'));
-        td.appendChild(document.createElement('br'));
-        td.appendChild(document.createTextNode(parentvalue));
-    };
-
-    return tablerow;
+SilvaPropertyTool.prototype._postForm = function(form_data, callback) {
+    $.ajax({
+        url: this.url,
+        type: 'POST',
+        dataType: 'json',
+        data: form_data,
+        success: callback
+    });
 };
 
-// just to make the above method a bit more readable
-SilvaPropertyTool.prototype._createSimpleItemHTML = function(
-        type, value, name, namespace, mandatory, td, fieldtitle) {
-
-    var outerdiv = document.createElement('div');
-    outerdiv.className = 'kupu-properties-item-outerdiv';
-
-    // the arrow and 'items' label
-    var h2div = document.createElement('h2');
-    outerdiv.appendChild(h2div);
-    var img = document.createElement('img');
-    // XXX would be nice if this would be absolute...
-    img.src = 'service_kupu_silva/closed_arrow.gif';
-    outerdiv.image = img; // XXX memory leak!!
-    h2div.appendChild(img);
-    h2div.appendChild(document.createTextNode(fieldtitle));
-    h2div.className = 'kupu-properties-metadata-field'
-    // handler for showing/hiding the checkbox divs
-    var handler = function(evt) {
-        if (this.lastChild.style.display == 'none') {
-            this.image.src = 'service_kupu_silva/opened_arrow.gif';
-            this.image.setAttribute('title', _('click to fold'));
-            this.lastChild.style.display = 'block';
-        } else {
-            this.image.src = 'service_kupu_silva/closed_arrow.gif';
-            this.image.setAttribute('title', _('click to unfold'));
-            this.lastChild.style.display = 'none';
-        };
-    };
-    addEventHandler(h2div, 'click', handler, outerdiv);
-
-    var innerdiv = document.createElement('div');
-    innerdiv.className = 'kupu-properties-item-innerdiv';
-    outerdiv.appendChild(innerdiv);
-
-    var input = null;
-
-    if (type == 'text' || type == 'datetime') {
-        input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.value = value;
-        if (type == 'datetime') {
-            input.setAttribute('widget:type', 'datetime');
-        };
-    } else if (type == 'textarea') {
-        input = document.createElement('textarea');
-        var content = document.createTextNode(value);
-        input.appendChild(content);
-    };
-    input.setAttribute('name', name);
-    input.setAttribute('namespace', namespace);
-    input.className = 'metadata-input';
-    if (mandatory) {
-        input.setAttribute('mandatory', 'true');
-    };
-    innerdiv.appendChild(input);
-    td.appendChild(outerdiv);
-};
-
-SilvaPropertyTool.prototype._createCheckboxItemHTML = function(
-        titlecell, value, name, namespace, mandatory, td, fieldtitle) {
-    // elements are seperated by ||
-    var infos = value.split('||');
-
-    // messy stuff coming up, that make the checkboxes appear in some
-    // 'foldable' div
-    var outerdiv = document.createElement('div');
-    outerdiv.className = 'kupu-properties-item-outerdiv';
-
-    // the arrow and 'items' label
-    var h2div = document.createElement('h2');
-    outerdiv.appendChild(h2div);
-    var img = document.createElement('img');
-    // XXX would be nice if this would be absolute...
-    img.src = 'service_kupu_silva/closed_arrow.gif';
-    outerdiv.image = img; // XXX memory leak!!
-    h2div.appendChild(img);
-    h2div.appendChild(document.createTextNode(fieldtitle));
-    h2div.className = 'kupu-properties-metadata-field'
-
-    // handler for showing/hiding the checkbox divs
-    var handler = function(evt) {
-        if (this.lastChild.style.display == 'none') {
-            this.image.src = 'service_kupu_silva/opened_arrow.gif';
-            this.image.setAttribute('title', _('click to fold'));
-            this.lastChild.style.display = 'block';
-        } else {
-            this.image.src = 'service_kupu_silva/closed_arrow.gif';
-            this.image.setAttribute('title', _('click to unfold'));
-            this.lastChild.style.display = 'none';
-        };
-    };
-    addEventHandler(h2div, 'click', handler, outerdiv);
-
-    // innerdiv is where the actual checkboxes are displayed in, and what
-    // is collapsed/uncollapsed
-    var innerdiv = document.createElement('div');
-    innerdiv.className = 'kupu-properties-item-innerdiv';
-    outerdiv.appendChild(innerdiv);
-    td.appendChild(outerdiv);
-
-    for (var i=0; i < infos.length; i++) {
-        // in certain cases the value you want to display is different
-        // from that you want to store, in that case seperate id from
-        // value with a |, there should always be a value|checked, but
-        // in some cases you may want a value|title|checked set...
-        var info = infos[i].split('|');
-        var itemvalue = info[0];
-        var title = info[0];
-        var checked = (info[1] == 'true' || info[1] == 'yes');
-        if (info.length == 3) {
-            title = info[1];
-            checked = (info[2] == 'true' || info[2] == 'yes');
-         };
-        var div = document.createElement('div');
-        div.className = 'kupu-properties-checkbox-line';
-        innerdiv.appendChild(div);
-
-        var cbdiv = document.createElement('div');
-        cbdiv.className = 'kupu-properties-checkbox-input';
-        div.appendChild(cbdiv);
-
-        checkbox_id = 'kupu-properties-' + fieldtitle + '-' + title;
-        var checkbox = document.createElement('input');
-        checkbox.setAttribute('name', name);
-        checkbox.setAttribute('namespace', namespace);
-        checkbox.setAttribute('id',checkbox_id);
-        checkbox.type = 'checkbox';
-        checkbox.value = itemvalue;
-        cbdiv.appendChild(checkbox);
-        if (checked) {
-            checkbox.checked = 'checked';
-        };
-        checkbox.className = 'metadata-checkbox';
-        // XXX a bit awkward to set this on all checkboxes
-        if (mandatory) {
-            checkbox.setAttribute('mandatory', 'true');
-        };
-        var textdiv = document.createElement('div');
-        textdiv.className = 'kupu-properties-checkbox-item-title';
-        var cblabel = document.createElement('label');
-        cblabel.setAttribute('for',checkbox_id);
-        cblabel.htmlFor = checkbox_id; /* for IE 6 setAttribute doesn't work */
-        cblabel.appendChild(document.createTextNode(title));
-        textdiv.appendChild(cblabel);
-        div.appendChild(textdiv);
-    };
-    // we can not hide the checkboxes earlier because IE requires them
-    // to be *visible* in order to check them from code :(
-    innerdiv.style.display = 'none';
-};
-
-SilvaPropertyTool.prototype.beforeSave = function() {
-    /* save the metadata to the document */
-    if (window.widgeteer) {
-        widgeteer.widget_registry.prepareForm(this.form);
-    };
-    var doc = this.editor.getInnerDocument();
-    var inputs = this.table.getElementsByTagName('input');
-    var textareas = this.table.getElementsByTagName('textarea');
-    var checkboxdata = {}; // name: value for all checkboxes checked
-    var errors = [];
-    var okay = [];
-    for (var i=0; i < inputs.length; i++) {
-        var input = inputs[i];
-        if (!input.getAttribute('namespace')) {
-            continue;
-        };
-        var name = input.getAttribute('name');
-        var scheme = input.getAttribute('namespace');
-        if (input.getAttribute('type') == 'text') {
-            var value = input.value;
-            if (input.getAttribute('mandatory') && value.strip() == '') {
-                errors.push(name);
-                continue;
+SilvaPropertyTool.prototype._buildButtonCallback = function(form, data) {
+    var self = this;
+    var action_label = data['label'];
+    var action_name = data['name'];
+    var action_type = data['action'];
+    return function() {
+        if (action_type == 'send' || action_type == 'close_on_success') {
+            var form_array = form.serializeArray();
+            var form_data = {};
+            form_data[action_name] = action_label;
+            for (var j=0; j < form_array.length; j++) {
+                form_data[form_array[j]['name']] = form_array[j]['value'];
             };
-            okay.push([name, scheme, value]);
-        } else if (input.getAttribute('type') == 'checkbox') {
-            if (checkboxdata[name] === undefined) {
-                checkboxdata[name] = [];
-                // XXX yuck!!
-                checkboxdata[name].namespace = scheme;
-                checkboxdata[name].mandatory =
-                    input.getAttribute('mandatory') ? true : false;
-            };
-            if (input.checked) {
-                checkboxdata[name].push(
-                    input.value.replace('|', '&pipe;', 'g'));
-            };
+            self._postForm(form_data,  function(data) {
+                if (action_type == 'close_on_success' && data['success']) {
+                    self.close();
+                }
+                else {
+                    self.loadProperties(data);
+                };
+            });
         };
-    };
-    for (var i=0; i < textareas.length; i++) {
-        var textarea = textareas[i];
-        var name = textarea.getAttribute('name');
-        var scheme = textarea.getAttribute('namespace');
-        var value = textarea.value;
-        if (textarea.getAttribute('mandatory') && value.strip() == '') {
-            errors.push(name);
-            continue;
+        if (action_type == 'close') {
+            self.close();
         };
-        okay.push([name, scheme, value]);
-    };
-    for (var name in checkboxdata) {
-        if (checkboxdata[name].mandatory && checkboxdata[name].length == 0) {
-            errors.push(name);
-        } else {
-            var data = checkboxdata[name];
-            okay.push([name, data.namespace, data.join('|')]);
-        };
-    };
-    if (errors.length) {
-        throw('Error in properties: fields ' + errors.join(', ') +
-            ' are required but not filled in');
-    };
-    for (var i=0; i < okay.length; i++) {
-        this._addMetaTag(doc, okay[i][0], okay[i][1], okay[i][2]);
+        return false;
     };
 };
 
-SilvaPropertyTool.prototype._addMetaTag = function(
-        doc, name, scheme, value, parentvalue) {
-    var head = doc.getElementsByTagName('head')[0];
-    if (!head) {
-        throw('The editable document *must* have a <head> element!');
+SilvaPropertyTool.prototype.loadProperties = function(data) {
+    var form = $('<form method="post" enctype="multipart/form-data" />');
+    this.data.empty();
+    this.data.append(form);
+    if (data['label']) {
+        this.header.text(data['label']);
     };
-    // first find and delete the old one
-    // XXX if only we'd have XPath...
-    var metas = doc.getElementsByTagName('meta');
-    for (var i=0; i < metas.length; i++) {
-        var meta = metas[i];
-        if (meta.getAttribute('name') == name &&
-                meta.getAttribute('scheme') == scheme) {
-            meta.parentNode.removeChild(meta);
+    form.append(data['widgets']);
+    for (var i=0; i < data['actions'].length; i++) {
+        var button = $('<input class="button" type="submit" />');
+        button.attr('value', data['actions'][i]['label']);
+        button.attr('name', data['actions'][i]['name']);
+        var callback = this._buildButtonCallback(form, data['actions'][i]);
+        button.bind('submit', callback);
+        if (data['actions'][i]['name'] == data['default_action']) {
+            form.bind('submit', callback);
         };
+        form.append(button);
     };
-    var tag = doc.createElement('meta');
-    tag.setAttribute('name', name);
-    tag.setAttribute('scheme', scheme);
-    tag.setAttribute('content', value);
-
-    head.appendChild(tag);
 };
 
 function SilvaCharactersTool(charselectid) {
