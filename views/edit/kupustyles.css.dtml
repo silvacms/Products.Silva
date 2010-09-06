@@ -353,11 +353,6 @@ margin-right:0.5em;
 vertical-align:middle;
 }
 
-div.kupu-tooltray input[type="checkbox"] {
-float:left;
-margin:0.1em;
-}
-
 /* seems to keep IE (inc 7) in check without affecting anything else */ 
 div.kupu-tooltray input.button, div.kupu-tooltray input.transport {
   overflow: visible; 
@@ -415,14 +410,6 @@ div#kupu-colorchooser {
 
 div#kupu-fgcolorchooser div:hover {
   /* border: outset 1px; */
-}
-
-#kupu-toolbox-news-images {
-  display: none;
-}
-
-#kupu-toolbox-properties {
-  display: none;
 }
 
 #kupu-toolbox-properties .metadata-input {
