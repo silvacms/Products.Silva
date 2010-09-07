@@ -229,6 +229,11 @@ SilvaToolBox.prototype.close = function () {
     this.options.hide();
 };
 
+SilvaToolBox.prototype.enable = function () {
+    $(this.toolbox).slideDown('fast');
+};
+
+
 /* helper to select link targets */
 var SilvaLinkTargetSelector = function(targetid) {
     var self = this;
@@ -3137,6 +3142,7 @@ SilvaPropertyTool.prototype.loadProperties = function(data) {
         };
         form.append(button);
     };
+    this.toolbox.enable();
 };
 
 function SilvaCharactersTool(charselectid) {
