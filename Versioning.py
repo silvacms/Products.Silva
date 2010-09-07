@@ -4,6 +4,7 @@
 
 # Zope 3
 from zope.interface import implements
+from zope.event import notify
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -13,6 +14,7 @@ from DateTime import DateTime
 # Silva
 from Products.Silva import mangle, SilvaPermissions
 
+from silva.core.interfaces import events
 from silva.core.interfaces import IVersioning
 from silva.translations import translate as _
 
@@ -122,6 +124,8 @@ class Versioning(object):
 
         expiration_datetime = self._approved_version[2]
 
+        notify(events.ContentApprovedEvent(
+                getattr(self, self._approved_version[0])))
         # update publication status; we may be published by now
         # will take care of indexing
         if publish_now:
@@ -168,6 +172,9 @@ class Versioning(object):
             raise VersioningError, msg
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
+        notify(events.ContentUnApprovedEvent(
+                getattr(self, self._unapproved_version[0])))
+
         self._reindex_version(self._unapproved_version[0])
 
         # send messages to editor
@@ -193,6 +200,8 @@ class Versioning(object):
         previous_versions.append(self._public_version)
         self._public_version = empty_version
         self._previous_versions = previous_versions
+        notify(events.ContentClosedEvent(
+                getattr(self, self._previous_versions[-1][0])))
 
         # remove it from the catalog (if required)
         # this way the catalog only contains unapproved, approved
@@ -221,7 +230,6 @@ class Versioning(object):
         # FIXME: this only works if versions are stored in a folder as
         # objects; factory function for VersionedContent objects should
         # create an initial version with name '0', too.
-        # only testable in unit tests after severe hacking..
         self.manage_clone(getattr(self, version_id_to_copy), new_version_id)
         self.create_version(new_version_id, None, None)
 
@@ -272,6 +280,8 @@ class Versioning(object):
         info.request_date = DateTime()
         info.request_pending=1
         self._set_approval_request_message(message)
+        notify(events.ContentRequestApprovalEvent(
+                getattr(self, self._unapproved_version[0])))
         publication_datetime = self._unapproved_version[1]
         if publication_datetime is None:
             publication_date_str=''
@@ -318,6 +328,8 @@ class Versioning(object):
         info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
+        notify(events.ContentApprovalRequestCanceledEvent(
+                getattr(self, self._unapproved_version[0])))
         # send messages
         text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
                % (info.requester, message)
@@ -348,6 +360,8 @@ class Versioning(object):
         info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
+        notify(events.ContentApprovalRequestRefusedEvent(
+                getattr(self, self._unapproved_version[0])))
         # send message back to requester
         text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
                % (info.requester, message)
@@ -497,6 +511,8 @@ class Versioning(object):
                 if not self._previous_versions:
                     self._previous_versions = []
                 self._previous_versions.append(self._public_version)
+                notify(events.ContentClosedEvent(
+                        getattr(self, self._public_version[0])))
                 # unindex version (now last closed)
                 self._unindex_version(self._public_version[0])
             self._public_version = self._approved_version
@@ -505,6 +521,8 @@ class Versioning(object):
             # unindex previously approved version
             self._unindex_version(self._approved_version[0])
             self._approved_version = empty_version
+            notify(events.ContentPublishedEvent(
+                    getattr(self, self._public_version[0])))
             # index approved version that is now public
             self._index_version(self._public_version[0])
             self._trigger_subscriptions()
@@ -515,10 +533,13 @@ class Versioning(object):
             # make sure to add it to the previous versions
             previous_versions = self._previous_versions or []
             previous_versions.append(self._public_version)
-            # remove from index
-            self._unindex_version(self._public_version[0])
             self._public_version = empty_version
             self._previous_versions = previous_versions
+            notify(events.ContentExpiredEvent(
+                    getattr(self, self._previous_versions[-1][0])))
+            # remove from index
+            self._unindex_version(self._previous_versions[-1][0])
+
 
     def _trigger_subscriptions(self):
         subscription_service = getattr(self, 'service_subscriptions', None)
