@@ -3130,6 +3130,7 @@ SilvaPropertyTool.prototype.loadProperties = function(data) {
     if (data['label']) {
         this.header.text(data['label']);
     };
+    form.attr('action', this.url);
     form.append(data['widgets']);
     for (var i=0; i < data['actions'].length; i++) {
         var button = $('<input class="button" type="submit" />');
