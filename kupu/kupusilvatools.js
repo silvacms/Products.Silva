@@ -3079,11 +3079,6 @@ SilvaPropertyTool.prototype.initialize = function(editor) {
     });
 };
 
-SilvaPropertyTool.prototype.close = function() {
-    this.toolbox.close();
-    $(document).trigger('zeam-popup-closed');
-}
-
 SilvaPropertyTool.prototype._postForm = function(form_data, callback) {
     $.ajax({
         url: this.url,
@@ -3108,12 +3103,16 @@ SilvaPropertyTool.prototype._buildButtonCallback = function(form, data) {
                 form_data[form_array[j]['name']] = form_array[j]['value'];
             };
             self._postForm(form_data,  function(data) {
-                if (action_type == 'close_on_success' && data['success']) {
-                    self.close();
+                if (action_type != 'close_on_success' || !data['success']) {
+                    self.loadProperties(data);
                 }
                 else {
-                    self.loadProperties(data);
+                    // remove errors
+                    form.find('div.error').each(function(index) {
+                        $(this).remove();
+                    });
                 };
+                $(document).trigger('smi-refresh-feedback');
             });
         };
         if (action_type == 'close') {
@@ -3143,6 +3142,11 @@ SilvaPropertyTool.prototype.loadProperties = function(data) {
         };
         form.append(button);
     };
+    form.find('.field-datetime').each(function(index) {
+        // Initiliaze date time widgets
+        var date_field = new ZeamDateField($(this));
+        date_field.initialize();
+    });
     this.toolbox.enable();
 };
 
