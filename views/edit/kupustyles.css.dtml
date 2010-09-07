@@ -412,6 +412,10 @@ div#kupu-fgcolorchooser div:hover {
   /* border: outset 1px; */
 }
 
+#kupu-toolbox-properties {
+  display: none;
+}
+
 #kupu-toolbox-properties .metadata-input {
   width:99%;
 }
