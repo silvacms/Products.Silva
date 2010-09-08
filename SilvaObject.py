@@ -12,6 +12,7 @@ from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.i18n import translate
 from zope.interface import alsoProvides, providedBy
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.publisher.browser import applySkin
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.publisher.interfaces.browser import IBrowserView
@@ -532,9 +533,11 @@ def content_will_be_moved(content, event):
         container._invalidate_sidebar(container)
 
 
+@grok.subscribe(ISilvaObject, IObjectCreatedEvent)
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
-def content_modified(content, event):
-    """An object have been modified.
+def update_content_author_info(content, event):
+    """A content have been created of modifed. Update its author
+    information.
     """
     if IRoot.providedBy(content):
         return
@@ -542,7 +545,7 @@ def content_modified(content, event):
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
-def index_new_content(content, event):
+def index_added_content(content, event):
     """We index all newly moved or added content (but not removed
     one).
     """
