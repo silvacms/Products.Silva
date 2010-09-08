@@ -13,6 +13,7 @@ from zope.i18n import translate
 from zope.interface import alsoProvides, providedBy
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.publisher.browser import applySkin
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.publisher.interfaces.browser import IBrowserView
@@ -539,7 +540,10 @@ def update_content_author_info(content, event):
     """A content have been created of modifed. Update its author
     information.
     """
-    if IRoot.providedBy(content):
+    # XXX ObjectCopiedEvent should not be ignored but content is not in
+    # Zope tree when it is triggered, so metadata service doesn't
+    # work.
+    if IRoot.providedBy(content) or IObjectCopiedEvent.providedBy(event):
         return
     content.sec_update_last_author_info()
 
