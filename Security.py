@@ -19,9 +19,10 @@ from Products.Silva.Membership import noneMember
 from silva.core.interfaces import IVersion, IRoot
 from silva.core.services.interfaces import IMemberService
 
+from Products.SilvaMetadata.interfaces import IMetadataService
 from Products.SilvaMetadata.Exceptions import BindingError
 
-LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
+# LOCK_DURATION = (1./24./60.)*20. # 20 minutes, expressed as fraction of a day
 
 
 class SecurityError(Exception):
@@ -260,7 +261,7 @@ class Security(AccessManager):
             version._last_author_info = aq_base(user)
             # XXX performance issue?
             try:
-                binding = self.service_metadata.getMetadata(version)
+                binding = getUtility(IMetadataService).getMetadata(version)
             except BindingError:
                 return
             if binding is None:
