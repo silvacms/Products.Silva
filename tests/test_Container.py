@@ -237,21 +237,23 @@ class ContainerTestCase(ContainerBaseTestCase):
                           l)
 
     def test_is_id_valid(self):
-        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('__this_is_wrong', 'Wrong')
-        self.assert_(not hasattr(self.root, '__this_is_wrong'))
-        r = self.root.manage_addProduct['Silva'].manage_addFolder('this$iswrong', 'This is wrong too')
-        self.assert_(not hasattr(self.root, 'this$iswrong'))
-        r = self.root.manage_addProduct['Silva'].manage_addFolder('.this__', 'Cannot be')
-        self.assert_(not hasattr(self.root, '.this__'))
-        r = self.root.manage_addProduct['SilvaDocument'].manage_addDocument('.foo_', 'This should not work')
-        self.assert_(not hasattr(self.root, '.foo_'))
+        factory = self.root.manage_addProduct['SilvaDocument']
+        self.assertRaises(
+            ValueError, factory.manage_addDocument, '__this_is_wrong', 'Wrong')
+        self.assertRaises(
+            ValueError,
+            factory.manage_addDocument, '.foo_', 'This should not work')
+        factory = self.root.manage_addProduct['Silva']
+        self.assertRaises(
+            ValueError,
+            factory.manage_addFolder, '.this__', 'Cannot be')
+
         # issues189/321
         factory = self.root.manage_addProduct['SilvaDocument']
         for bad_id in ('service_foo', 'edit', 'manage_main', 'index_html'):
-            factory.manage_addDocument(bad_id, 'This should not work')
-            obj = getattr(self.root, bad_id, None)
-            self.assert_(not IVersionedContent.providedBy(obj),
-                         'should not have created document with id '+bad_id)
+            self.assertRaises(
+                ValueError,
+                factory.manage_addDocument, bad_id, 'This should not work')
 
         # during rename
         self.root.action_rename('doc1', '_doc')
