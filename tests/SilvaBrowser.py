@@ -79,8 +79,8 @@ class SilvaBrowser(object):
         """
         try:
             form = self.browser.get_form('md.container')
-            addables = list(form.get_control(
-                'md.container.field.content').value_options)
+            addables = list(
+                form.get_control('md.container.field.content').options)
             addables.remove('none')
         except:
             # there probably is no 'meta_type' control
