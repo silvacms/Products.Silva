@@ -7,10 +7,11 @@ import warnings
 # Zope 3
 from five import grok
 from zope import component
+from zope.interface import Interface
 from zope.app.container.interfaces import IObjectMovedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.i18n import translate
-from zope.interface import alsoProvides, providedBy
+from zope.interface import alsoProvides
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
@@ -40,8 +41,8 @@ from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
+from infrae.wsgi.errors import DefaultError
 from silva.core.conf.utils import getSilvaViewFor
-from silva.core.layout.utils import queryMultiAdapterWithInterface
 from silva.core.services.interfaces import ICataloging
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.views.interfaces import IPreviewLayer
@@ -171,8 +172,9 @@ class SilvaObject(TitledObject, Security, ViewCode):
         request = self.REQUEST
         error = kwargs.get('error_value', None)
         if error:
-            page = queryMultiAdapterWithInterface(
-                (providedBy(error), request,), self, name='error.html')
+            context = DefaultError(error).__of__(self)
+            page = component.queryMultiAdapter(
+                (context, request), Interface, name='error.html')
             if page is not None:
                 return page()
         if hasattr(self, 'default_standard_error_message'):
