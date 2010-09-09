@@ -5,6 +5,7 @@
 from AccessControl.SecurityManagement import newSecurityManager
 import Products.Silva
 
+from infrae.testbrowser.browser import Browser as NewBrowser
 from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
@@ -88,6 +89,9 @@ class SilvaLayer(BrowserLayer):
         """Return the application, here the Silva Root.
         """
         return self._silva_root
+
+    def get_browser(self):
+        return NewBrowser(self._test_wsgi_application)
 
 
 FunctionalLayer = SilvaLayer(Products.Silva)

@@ -5,7 +5,6 @@
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
-from infrae.testbrowser.browser import Browser
 
 Z3C_CONTENTS = []
 
@@ -36,7 +35,7 @@ class SilvaBrowser(object):
         self.new_browser()
 
     def new_browser(self):
-        self.browser = Browser(FunctionalLayer._test_wsgi_application)
+        self.browser = FunctionalLayer.get_browser()
 
     def click_button_labeled(self, value_name):
         """Click on a button or pseudo button (an href) with a
