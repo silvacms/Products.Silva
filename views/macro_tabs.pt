@@ -60,6 +60,14 @@
       </a>
     </tal:block>
   </div>
+  <span tal:replace="nothing"><!-- _______ help link _______ --></span>
+  <a class="normal"
+    title="Silva access keys: alt-?"
+    accesskey="?"
+    tal:condition="exists:here/help_url"
+    tal:attributes="href string:${here/help_url}"
+    i18n:attributes="title"
+    ></a>
 
 <!-- ______________ Matrix tabs ______________ -->
 <div class="tabs">
@@ -73,14 +81,6 @@
     i18n:translate="">
     view...
   </a>
-  <span tal:replace="nothing"><!-- _______ help link _______ --></span>
-  <a class="normal"
-    title="Silva access keys: alt-?"
-    accesskey="?"
-    tal:condition="exists:here/help_url"
-    tal:attributes="href string:${here/help_url}"
-    i18n:attributes="title"
-    ></a>
   <tal:repeat tal:repeat="item tabs">
     <tal:define define="
       tab_info python:here.get_tab_info(item);
@@ -107,7 +107,7 @@
       </a>
       <a tal:content="structure string:${tab_info/tab_name}"
         tal:attributes="href tab_info/tab_url;
-          class python:is_selected_tab and ((active_tab and active_tab != 'tab_preview') and 'recede' or 'selected') or '';
+          class python:is_selected_tab and ((active_tab and active_tab != 'tab_preview') and 'tab recede' or 'tab selected') or 'tab';
           title tab_info/tab_title;
           accesskey tab_key;"
           i18n:translate=""
