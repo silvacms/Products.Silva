@@ -603,7 +603,7 @@ class ImagePublishTraverse(SilvaPublishTraverse):
                 img = self.context.thumbnail_image
             else:
                 img = self.context.image
-            view = getMultiAdapter((img, request), Interface, name='index')
+            view = getMultiAdapter((img, request), Interface, name='index.html')
             view.__parent__ = img
             method = {'GET': tuple(), 'HEAD': ('HEAD',)}.get(request.method)
             return (view, method)

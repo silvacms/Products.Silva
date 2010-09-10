@@ -356,7 +356,7 @@ class ZODBFileView(silvaviews.View):
     """
     grok.context(ZODBFile)
     grok.require('zope2.View')
-    grok.name('index')
+    grok.name('index.html')
 
     def render(self):
         self.response.setHeader(
@@ -455,7 +455,7 @@ class BlobFileView(silvaviews.View):
     """
     grok.context(BlobFile)
     grok.require('zope2.View')
-    grok.name('index')
+    grok.name('index.html')
 
     def render(self):
         header = self.request.environ.get('HTTP_IF_MODIFIED_SINCE', None)
@@ -521,7 +521,7 @@ InitializeClass(FileSystemFile)
 class FileSystemFileView(silvaviews.View):
     grok.context(FileSystemFile)
     grok.require('zope2.View')
-    grok.name('index')
+    grok.name('index.html')
 
     def render(self):
         self.response.setHeader(
@@ -543,7 +543,7 @@ def FileStorageTypeVocabulary(context):
 directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 
-class IFileAddFields(ITitledContent):
+class IFileAddSchema(ITitledContent):
 
     file = silvaschema.Bytes(title=_(u"file"), required=True)
 
@@ -554,7 +554,7 @@ class FileAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.IFile)
     grok.name(u'Silva File')
 
-    fields = silvaforms.Fields(IFileAddFields)
+    fields = silvaforms.Fields(IFileAddSchema)
     fields['id'].required = False
     fields['title'].required = False
 
