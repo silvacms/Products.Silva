@@ -90,7 +90,6 @@
       up_key tab_info/uplink_accesskey | nothing;
       ">
       <a class="left"
-        id="tree_up"
         tal:condition="tab_info/toplink_url"
         tal:attributes="href tab_info/toplink_url;
           title tab_info/toplink_title;
@@ -116,7 +115,6 @@
         tab name
       </a>
       <a class="right"
-        id="level_up"
         tal:condition="tab_info/uplink_url"
         tal:attributes="href tab_info/uplink_url;
           title tab_info/uplink_title;
