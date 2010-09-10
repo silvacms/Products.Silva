@@ -90,8 +90,11 @@ class SilvaLayer(BrowserLayer):
         """
         return self._silva_root
 
-    def get_browser(self):
-        return NewBrowser(self._test_wsgi_application)
+    def get_browser(self, settings=None):
+        browser = NewBrowser(self._test_wsgi_application)
+        if settings is not None:
+            settings(browser)
+        return browser
 
 
 FunctionalLayer = SilvaLayer(Products.Silva)
