@@ -29,16 +29,12 @@
   <tal:block content="title">title</tal:block> &#8211;
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
-<tal:block replace="nothing"> _______ base tag to handle Five methods with .. _______ </tal:block>
 <base tal:attributes="href string:${model/absolute_url}/edit/" target="_parent" />
 <link rel="shortcut icon"
   tal:attributes="href string:$root_url/globals/silvacon.ico"
 />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<style media="all"
-  type="text/css"
-  tal:content="string: @import url(${root_url}/++resource++silva.core.smi/smi.css);">
-</style>
+<tal:resource tal:replace="structure provider:resources" />
 <link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />
 <link rel="copyright" href="globals/copyright" title="Silva copyright info" i18n:attributes="title" />
 <link href="globals/silvaContentStyle.css"
