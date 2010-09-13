@@ -1,186 +1,268 @@
+# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 
-from SilvaTestCase import SilvaFunctionalTestCase
-from SilvaBrowser import SilvaBrowser
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
+from Products.Silva.testing import FunctionalLayer, smi_settings
+from Products.Silva.tests.helpers import test_filename
+from silva.core.references.reference import get_content_id
 
-class ContentTypeInFolderTestCase(SilvaFunctionalTestCase):
-    """Each role make each content type in a folder
+
+class ContentTypeInFolderTestCase(unittest.TestCase):
+    """Each role make each content type in a folder.
     """
+    layer = FunctionalLayer
 
-    def create_content_and_logout(self, sb, content_type, username, **fields):
-        """Make content type, logout
-        """
-        sb.login(username, url='http://nohost/root/edit')
-        self.failUnless('logout' in sb.browser.contents,
-                        "logout not found on browser page. Test failed login")
-        sb.make_content(content_type, **fields)
-        self.failUnless(fields['id'] in sb.get_content_ids())
-        sb.logout()
-        return fields['id']
+    def setUp(self):
+        self.root = self.layer.get_application()
 
-    def create_content_delete_logout(self, sb, content_type, username,
-                                     existing_content, **fields):
-        """Click into a container, make content type, delete content
-        type, logout
-        """
-        sb.login(username, url='http://nohost/root/edit')
-        self.failUnless('logout' in sb.browser.contents,
-                        "logout not found on browser page. Test failed login")
-        sb.click_href_labeled(existing_content)
-        sb.make_content(content_type, **fields)
-        self.failUnless(fields['id'] in sb.get_content_ids())
-        status, url = sb.select_delete_content(fields['id'])
-        self.failIf(fields['id'] in sb.get_content_ids())
-        sb.logout()
+    def test_document(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
 
-    def login_delete_logout(self, sb, username, existing_content):
-        """ login, select existing content, delete, logout
-        """
-        sb.login(username, url='http://nohost/root/edit')
-        sb.select_delete_content(existing_content)
-        self.failIf(existing_content in sb.get_content_ids())
-        sb.logout()
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
 
-    def test_silva_document_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva Document', username,
-                                              existing_content,
-                                              id='test_document',
-                                              title='Test document')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
 
-    def test_silva_folder_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva Folder', username,
-                                              existing_content,
-                                              id='test_folder',
-                                              title='Test folder',
-                                              policy='Silva Document')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Document', id='documentation', title='Documentation')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'documentation'])
+            browser.macros.delete('documentation')
 
-    def test_silva_publication_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor']:
-            self.create_content_delete_logout(sb, 'Silva Publication', username,
-                                              existing_content,
-                                              id='test_publication',
-                                              title='Test publication',
-                                              policy='Silva Document')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
 
-    def test_silva_image_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva Image', username,
-                                              existing_content,
-                                              id='test_image',
-                                              title='Test image',
-                                              image='torvald.jpg')
-        self.login_delete_logout(sb, 'manager', existing_content)
+    def test_folder(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
 
-    def test_silva_file_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva File', username,
-                                              existing_content,
-                                              id='test_file',
-                                              title='Test file',
-                                              file='test.txt')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
 
-    def test_silva_find_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor']:
-            self.create_content_delete_logout(sb, 'Silva Find', username,
-                                              existing_content,
-                                              id='test_find',
-                                              title='Test find')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
 
-    def test_silva_ghost_in_folder(self):
-        sb = SilvaBrowser()
-        intid = getUtility(IIntIds)
-        refid = str(intid.register(self.root.index))
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva Ghost', username,
-                                              existing_content,
-                                              id='test_ghost',
-                                              reference=refid)
-        self.login_delete_logout(sb, 'manager', existing_content)
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Folder',
+                id='folder', title='Second Folder', default_item='Silva Document')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'folder'])
+            browser.macros.delete('folder')
 
-    def test_silva_indexer_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor']:
-            self.create_content_delete_logout(sb, 'Silva Indexer', username,
-                                              existing_content,
-                                              id='test_indexer',
-                                              title='Test indexer')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
 
-    def test_silva_link_in_folder(self):
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva Link', username,
-                                              existing_content,
-                                              id='test_link',
-                                              title='Test link',
-                                              url='http://www.infrae.com')
-        self.login_delete_logout(sb, 'manager', existing_content)
+    def test_publication(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
 
-    def test_silva_autotoc_in_folder(self):
-        # toggle relative
-        sb = SilvaBrowser()
-        existing_content = self.create_content_and_logout(
-            sb, 'Silva Folder', 'manager',
-            id='test_folder1', title='Test folder 1',
-            policy='Silva Document')
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_delete_logout(sb, 'Silva AutoTOC', username,
-                                              existing_content,
-                                              id='test_autotoc',
-                                              title='Test AutoTOC',
-                                              depth='-1')
-        self.login_delete_logout(sb, 'manager', existing_content)
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Publication',
+                id='publication', title='Second Publication', default_item='Silva Document')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'publication'])
+            browser.macros.delete('publication')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_image(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            image = test_filename('torvald.jpg')
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Image', id='image', title='Torvald', file=image)
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'image'])
+            browser.macros.delete('image')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_file(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            image = test_filename('torvald.jpg')
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva File', id='file', title='Text File', file=image)
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'file'])
+            browser.macros.delete('file')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_find(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Find', id='search', title='Search')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'search'])
+            browser.macros.delete('search')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_ghost(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Ghost',
+                id='ghost', haunted=get_content_id(self.root.index))
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'ghost'])
+            browser.macros.delete('ghost')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_indexer(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Indexer', id='indexes', title='Indexes')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'indexes'])
+            browser.macros.delete('indexes')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_link(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva Link',
+                id='infrae', title='Infrae', url='http://infrae.com')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'infrae'])
+            browser.macros.delete('infrae')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
+    def test_autotoc(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/edit'), 200)
+        browser.macros.create(
+            'Silva Folder',
+            id='folder', title='First Folder', default_item='Silva Document')
+
+        self.assertEqual(
+            browser.inspect.navigation['First Folder'].click(), 200)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            browser.macros.create(
+                'Silva AutoTOC', id='sitemap', title='Sitemap')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'sitemap'])
+            browser.macros.delete('sitemap')
+
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        browser.macros.delete('folder')
+
 
 def test_suite():
     suite = unittest.TestSuite()

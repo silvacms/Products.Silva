@@ -4,6 +4,7 @@
 
 from AccessControl.SecurityManagement import newSecurityManager
 import Products.Silva
+from Products.Silva.ftesting import smi_settings
 
 from infrae.testbrowser.browser import Browser as NewBrowser
 from infrae.testing import TestCase, suite_from_package
@@ -12,24 +13,6 @@ from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
 import transaction
-
-
-def smi_settings(browser):
-    browser.inspect.add(
-        'feedback',
-        '//div[@id="feedback"]/div/span', type='text')
-    browser.inspect.add(
-        'tabs',
-        '//div[@class="tabs"]/a[contains(@class, "tab")]', type='link')
-    browser.inspect.add(
-        'subtabs',
-        '//div[@class="middleground"]/div[@class="transporter"]/a', type='link')
-    browser.inspect.add(
-        'navigation_root',
-        '(//div[@class="navigation"]//td)[1]/div/a', type='link')
-    browser.inspect.add(
-        'navigation',
-        '//div[@class="navigation"]//td/div/a', type='link')
 
 
 class SilvaLayer(BrowserLayer):
