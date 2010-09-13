@@ -304,6 +304,7 @@ SilvaLinkTool.prototype.updateLink = function (
                 linkel.setAttribute('silva_reference', 'new');
             }
             linkel.removeAttribute('silva_href');
+            linkel.removeAttribute('style');
         } else {
             /* We have an old style link*/
             linkel.href = url;
