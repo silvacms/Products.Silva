@@ -239,10 +239,6 @@
     </a>
   </xsl:template>
 
-  <!-- <xsl:template match="doc:link" mode="text-content"> -->
-  <!--   <a href="{@href|@url}"><xsl:apply-templates mode="text-content" /></a> -->
-  <!-- </xsl:template> -->
-
   <xsl:template match="doc:abbr" mode="text-content">
     <abbr title="{@title}">
       <xsl:copy-of select="./node()" />
