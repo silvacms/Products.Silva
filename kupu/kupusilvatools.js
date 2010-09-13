@@ -305,7 +305,7 @@ SilvaLinkTool.prototype.updateLink = function (
             }
             linkel.removeAttribute('silva_href');
             if (url != '0') {
-                linkel.removeAttribute('style');
+                linkel.removeAttribute('class');
             };
         } else {
             /* We have an old style link*/

@@ -223,20 +223,25 @@
     <sub><xsl:apply-templates mode="text-content" /></sub>
   </xsl:template>
 
-  <xsl:template match="doc:link[@target]" mode="text-content">
-    <!-- @rewritten_url is used for silvaxml, but snippets (e.g. using
-    the kupupopupwindow don't go through the same pre-xslt pipeline
-    and so don't have a @rewritten_url; fallback to @url.  (sylvain:
-    dat is not good for references).  -->
-    <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}"><xsl:apply-templates mode="text-content" /></a>
+  <xsl:template match="doc:link" mode="text-content">
+    <a href="{@href|@url}" title="{@title}">
+      <xsl:if test="@class">
+        <xsl:attribute name="class">
+          <xsl:value-of select="@class" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@target">
+        <xsl:attribute name="target">
+          <xsl:value-of select="@target" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="text-content" />
+    </a>
   </xsl:template>
 
-  <xsl:template match="doc:link" mode="text-content">
-    <!-- @rewritten_url is used for silvaxml, but snippets (e.g. using
-    the kupupopupwindow don't go through the same pre-xslt pipeline
-    and so don't have a @rewritten_url; fallback to @url -->
-    <a href="{@rewritten_url|@url}"><xsl:apply-templates mode="text-content" /></a>
-  </xsl:template>
+  <!-- <xsl:template match="doc:link" mode="text-content"> -->
+  <!--   <a href="{@href|@url}"><xsl:apply-templates mode="text-content" /></a> -->
+  <!-- </xsl:template> -->
 
   <xsl:template match="doc:abbr" mode="text-content">
     <abbr title="{@title}">
@@ -257,13 +262,13 @@
         <xsl:choose>
           <xsl:when test="starts-with($image/@alignment, 'image-')">
             <div class="{$image/@alignment}">
-              <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+              <a href="{@href|@url}" title="{@title}" target="{@target}">
                 <xsl:apply-templates mode="image-content" />
               </a>
             </div>
           </xsl:when>
           <xsl:otherwise>
-            <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+            <a href="{@href|@url}" title="{@title}" target="{@target}">
               <xsl:apply-templates mode="image-content" />
             </a>
           </xsl:otherwise>

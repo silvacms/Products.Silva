@@ -86,7 +86,7 @@
   <xsl:template match="doc:link">
     <xsl:if test="ancestor::doc:table">
       <xsl:variable name="image" select="doc:image" />
-      <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+      <a href="{@href|@url}" title="{@title}" target="{@target}">
         <xsl:apply-templates mode="image-content" />
       </a>
     </xsl:if>
@@ -111,7 +111,7 @@
 
   <xsl:template match="doc:link" mode="images">
     <xsl:variable name="image" select="doc:image" />
-    <a href="{@rewritten_url|@url}" title="{@title}" target="{@target}">
+    <a href="{@href|@url}" title="{@title}" target="{@target}">
       <xsl:apply-templates mode="image-content" />
     </a>
     <br />
