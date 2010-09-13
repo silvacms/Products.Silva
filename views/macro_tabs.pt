@@ -39,7 +39,8 @@
     </a>
     <a name="top"> </a>
     <tal:block tal:repeat="breadcrumb model/@@absolute_url/breadcrumbs">
-      <a tal:content="breadcrumb/name"
+      <a class="breadcrumb"
+         tal:content="breadcrumb/name"
         tal:attributes="href string:${breadcrumb/url}/edit/${screen_id}">
         name
       </a>
