@@ -201,6 +201,7 @@ class IAutoTOCSchema(interface.Interface):
         title=_(u"sort order"),
         description=_(u"The order items in a container will be sorted"),
         source=sort_order_source,
+        default='silva',
         required=True)
 
 
