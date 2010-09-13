@@ -22,6 +22,12 @@ a.index {
   background-color: PaleGoldenRod;
 }
 
+a.broken-link {
+  color: red !important;
+  background: url('/++resource++silva.icons/exclamation.png') no-repeat top left;
+  padding-left: 18px;
+}
+
 div.toc {
   background-color: PaleGoldenRod;
 }
