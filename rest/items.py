@@ -27,6 +27,7 @@ class Items(rest.REST):
     """Return information about an item.
     """
     grok.context(interfaces.ISilvaObject)
+    grok.require('silva.ReadSilvaContent')
     grok.name('items')
 
     def __init__(self, context, request):
@@ -62,7 +63,21 @@ class Items(rest.REST):
 
     def GET(self, intid=None, interface=None):
         if intid is not None:
-            content = self.intid.getObject(int(intid))
+            try:
+                content = self.intid.getObject(int(intid))
+            except KeyError:
+                # Invalid content id
+                return self.json_response({
+                        'id': 'broken',
+                        'type': 'Broken',
+                        'intid': '0',
+                        'url': '', 'path': '',
+                        'icon': '/'.join(
+                            (self.root_url,
+                             '++resource++silva.icons/exclamation.png')),
+                        'implements': False,
+                        'folderish': False,
+                        'title': 'Broken'})
             return self.json_response(self.get_item_details(content))
         require = interfaces.ISilvaObject
         if interface is not None:
