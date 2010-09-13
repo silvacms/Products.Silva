@@ -14,6 +14,24 @@ from zope.site.hooks import setSite, setHooks
 import transaction
 
 
+def smi_settings(browser):
+    browser.inspect.add(
+        'feedback',
+        '//div[@id="feedback"]/div/span', type='text')
+    browser.inspect.add(
+        'tabs',
+        '//div[@class="tabs"]/a[contains(@class, "tab")]', type='link')
+    browser.inspect.add(
+        'subtabs',
+        '//div[@class="middleground"]/div[@class="transporter"]/a', type='link')
+    browser.inspect.add(
+        'navigation_root',
+        '(//div[@class="navigation"]//td)[1]/div/a', type='link')
+    browser.inspect.add(
+        'navigation',
+        '//div[@class="navigation"]//td/div/a', type='link')
+
+
 class SilvaLayer(BrowserLayer):
     """Test layer inside Silva.
     """
