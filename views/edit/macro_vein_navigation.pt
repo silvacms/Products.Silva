@@ -20,6 +20,7 @@ macro vein
 macro plateau
 
 <metal:define-macro define-macro="vein">
+<div class="navigation">
 <table class="listing" cellspacing="0">
   <thead>
     <tr>
@@ -97,6 +98,7 @@ macro plateau
     </tal:condition>
   </tbody>
 </table>
+</div>
 </metal:define-macro>
 
 
