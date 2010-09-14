@@ -120,7 +120,6 @@ def install(root):
     installSubscriptions(root)
 
 def uninstall(root):
-    unregisterViews(root.service_view_registry)
     root.service_views.manage_delObjects(['Silva'])
     if hasattr(root, 'service_resources'):
         # XXX this can happen always if service_resources is
@@ -409,6 +408,10 @@ def registerViews(reg):
                  ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva File',
                  ['edit', 'Asset', 'File'])
+    reg.register('edit', 'Silva Ghost',
+                 ['edit', 'VersionedContent', 'Ghost'])
+    reg.register('edit', 'Silva Ghost Folder',
+                 ['edit', 'Container', 'GhostFolder'])
     # five compatibility for edit
     reg.register('edit', 'Five Asset',
                  ['edit', 'Asset', 'FiveAsset'])
@@ -418,15 +421,6 @@ def registerViews(reg):
                  ['edit', 'VersionedContent', 'FiveVersionedContent'])
     reg.register('edit', 'Five Content',
                  ['edit', 'Content', 'SimpleContent', 'FiveContent'])
-
-
-def unregisterViews(reg):
-    for meta_type in ['Silva Folder',
-                      'Silva Publication',
-                      'Silva Image',
-                      'Silva File',
-                      'Silva Root']:
-        reg.unregister('edit', meta_type)
 
 
 def configureContainerPolicies(root):
