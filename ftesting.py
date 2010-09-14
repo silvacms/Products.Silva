@@ -54,6 +54,10 @@ def smi_settings(browser):
     browser.inspect.add(
         'subtabs',
         '//div[@class="middleground"]/div[@class="transporter"]/a', type='link')
+    # Breadcrumb
+    browser.inspect.add(
+        'breadcrumbs',
+        '//div[@class="pathbar"]/a[@class="breadcrumb"]', type='link')
     # Sidebar navigation
     browser.inspect.add(
         'navigation_root',
@@ -68,7 +72,8 @@ def smi_settings(browser):
     # Zeam Form errors
     browser.inspect.add(
         'form_errors',
-        '//form[contains(@class,"zeam-form")]//div[@class="error"]', type='text')
+        '//form[contains(@class,"zeam-form")]//div[@class="error"]',
+        type='text')
 
     browser.macros.add('create', smi_create_content)
     browser.macros.add('delete', smi_delete_content)

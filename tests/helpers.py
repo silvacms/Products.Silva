@@ -59,7 +59,7 @@ def open_test_file(filename, globs=None, mode='rb'):
     """Open the given test file.
     """
     try:
-        fd = open(test_filename(filename), mode)
+        fd = open(test_filename(filename, globs=globs), mode)
     except Exception:
         raise
     return fd
