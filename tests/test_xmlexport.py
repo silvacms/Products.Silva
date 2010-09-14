@@ -75,12 +75,13 @@ class XMLExportTestCase(SilvaXMLTestCase):
             'folder', 'This is <boo>a</boo> folder',
             policy_name='Silva AutoTOC')
 
-    def test_folder(self):
+    def test_folder_autotoc_index(self):
         """Export a folder.
         """
-        self.root.folder.manage_addProduct['Silva'].manage_addFolder(
-            'folder', 'This is &another; a subfolder',
-            policy_name='Silva AutoTOC')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'This is &another; a subfolder')
+        factory = self.root.folder.folder.manage_addProduct['Silva']
+        factory.manage_addAutoTOC('index', 'This is &another; a subfolder')
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_folder.silvaxml')
@@ -152,6 +153,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addGhostFolder(
             'ghost', None, haunted=self.root.folder.container)
         factory = self.root.folder.container.manage_addProduct['Silva']
+        factory.manage_addAutoTOC('index', 'Content')
         factory.manage_addLink(
             'link', 'Infrae', url='http://infrae.com', relative=False)
         factory.manage_addFile('file', 'Torvald blob')

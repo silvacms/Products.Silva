@@ -318,11 +318,11 @@ class AutoTOCProducer(SilvaBaseProducer):
         self.startElement(
             'auto_toc',
             {'id': self.context.id,
-             'depth': str(self.context.toc_depth()),
+             'depth': str(self.context.get_toc_depth()),
              'types': ','.join(self.context.get_local_types()),
-             'sort_order': self.context.sort_order(),
-             'show_icon': str(self.context.show_icon()),
-             'display_desc_flag': str(self.context.display_desc_flag())})
+             'sort_order': self.context.get_sort_order(),
+             'show_icon': str(self.context.get_show_icon()),
+             'display_desc_flag': str(self.context.get_display_desc_flag())})
         self.metadata()
         self.endElement('auto_toc')
 

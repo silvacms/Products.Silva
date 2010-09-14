@@ -46,54 +46,6 @@
    </set>
   </metadata>
   <content>
-   <default>
-    <auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder">
-     <metadata>
-      <set id="silva-content">
-       <silva-content:maintitle>
-        This is &lt;boo&gt;a&lt;/boo&gt; folder
-       </silva-content:maintitle>
-       <silva-content:shorttitle>
-       </silva-content:shorttitle>
-      </set>
-      <set id="silva-extra">
-       <silva-extra:comment>
-       </silva-extra:comment>
-       <silva-extra:contactemail>
-       </silva-extra:contactemail>
-       <silva-extra:contactname>
-       </silva-extra:contactname>
-       <silva-extra:content_description>
-       </silva-extra:content_description>
-       <silva-extra:creationtime>
-        YYYY-MM-DDTHH:MM:SS
-       </silva-extra:creationtime>
-       <silva-extra:creator>
-        author
-       </silva-extra:creator>
-       <silva-extra:expirationtime>
-       </silva-extra:expirationtime>
-       <silva-extra:hide_from_tocs>
-        do not hide
-       </silva-extra:hide_from_tocs>
-       <silva-extra:keywords>
-       </silva-extra:keywords>
-       <silva-extra:language>
-       </silva-extra:language>
-       <silva-extra:lastauthor>
-        author
-       </silva-extra:lastauthor>
-       <silva-extra:modificationtime>
-        YYYY-MM-DDTHH:MM:SS
-       </silva-extra:modificationtime>
-       <silva-extra:publicationtime>
-       </silva-extra:publicationtime>
-       <silva-extra:subject>
-       </silva-extra:subject>
-      </set>
-     </metadata>
-    </auto_toc>
-   </default>
    <indexer id="indexer">
     <metadata>
      <set id="silva-content">
@@ -130,7 +82,7 @@
       <silva-extra:language>
       </silva-extra:language>
       <silva-extra:lastauthor>
-       unknown
+       author
       </silva-extra:lastauthor>
       <silva-extra:modificationtime>
        YYYY-MM-DDTHH:MM:SS
