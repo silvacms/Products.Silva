@@ -405,14 +405,10 @@ def registerViews(reg):
                  ['edit', 'Container', 'Publication'])
     reg.register('edit', 'Silva Publication',
                  ['edit', 'Container', 'Publication'])
-    reg.register('edit', 'Silva Ghost',
-                 ['edit', 'VersionedContent', 'Ghost'])
     reg.register('edit', 'Silva Image',
                  ['edit', 'Asset', 'Image'])
     reg.register('edit', 'Silva File',
                  ['edit', 'Asset', 'File'])
-    reg.register('edit', 'Silva Ghost Folder',
-                 ['edit', 'Container', 'GhostFolder'])
     # five compatibility for edit
     reg.register('edit', 'Five Asset',
                  ['edit', 'Asset', 'FiveAsset'])
@@ -429,11 +425,7 @@ def unregisterViews(reg):
                       'Silva Publication',
                       'Silva Image',
                       'Silva File',
-                      'Silva Indexer',
-                      'Silva Ghost',
-                      'Silva Root',
-                      'Silva Simple Member',
-                      'Silva Ghost Folder']:
+                      'Silva Root']:
         reg.unregister('edit', meta_type)
 
 
