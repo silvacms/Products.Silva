@@ -19,7 +19,6 @@ from silva.core.services.interfaces import ICataloging
 
 from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
-from Products.Silva.AutoTOC import AutoTOCPolicy
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
 from Products.Silva import subscriptionservice
@@ -424,6 +423,8 @@ def registerViews(reg):
 
 
 def configureContainerPolicies(root):
+    from Products.Silva.AutoTOC import AutoTOCPolicy
+
     # create container policy registry
     if not hasattr(root, 'service_containerpolicy'):
         factory = root.manage_addProduct['Silva']
