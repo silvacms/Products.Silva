@@ -16,6 +16,11 @@
   i18n:domain="silva">
 
 <metal:block use-macro="here/macro_index/macros/master">
+
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_publish_extra" />
+  </metal:block>
+
 <metal:block fill-slot="main">
 
 <table class="columns columns2">
@@ -95,15 +100,6 @@
       </tr>
       <tr class="top-controls">
         <td colspan="2">
-          <a class="transporter"
-            style="float: right;"
-            href="tab_edit_import"
-            title="over to the import screen: alt-i"
-            accesskey="i"
-            i18n:attributes="title"
-            i18n:translate="">
-            import...
-          </a>
           <h3 i18n:translate="">
             export
           </h3>
@@ -119,7 +115,7 @@
         <th i18n:translate="">
           setting
         </th>
-      </tr>  
+      </tr>
       <tr class="odd">
         <td class="designator">
           <label for="with_sub_publications"
