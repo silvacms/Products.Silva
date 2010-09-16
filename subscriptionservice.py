@@ -12,36 +12,41 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS import Folder
 from OFS.CopySupport import _cb_encode, _cb_decode
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 # Silva
-from Products.Silva import helpers
 from Products.Silva import SilvaPermissions
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva import subscriptionerrors as errors
 from Products.Silva.adapters import subscribable
 from Products.Silva.mail import sendmail
+from Products.Silva.install import add_helper, fileobject_add_helper
 
-from silva.core.interfaces import IHaunted
-from silva.core.services.base import SilvaService
+from five import grok
 from silva.core import conf as silvaconf
+from silva.core.interfaces import IHaunted, IVersionedContent
+from silva.core.interfaces.events import IContentPublishedEvent
+from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import ISubscriptionService
+from silva.translations import translate as _
+from zope.component import queryUtility
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zeam.form import silva as silvaforms
 
 
 class SubscriptionService(Folder.Folder, SilvaService):
     """Subscription Service
     """
-    security = ClassSecurityInfo()
+    grok.implements(ISubscriptionService)
+    default_service_identifier = 'service_subscriptions'
 
     meta_type = "Silva Subscription Service"
+    silvaconf.icon('www/subscription_service.png')
 
     manage_options = (
-        ({'label':'Edit', 'action':'manage_editSubscriptionServiceForm'}, ) +
-        Folder.Folder.manage_options
-        )
+        {'label':'Edit', 'action':'manage_subscriptions'}
+        ,) + Folder.Folder.manage_options
 
-    silvaconf.icon('www/subscription_service.png')
-    silvaconf.factory('manage_addSubscriptionServiceForm')
-    silvaconf.factory('manage_addSubscriptionService')
+    security = ClassSecurityInfo()
 
     # subscriptions are disabled by default
     _enabled = False
@@ -49,48 +54,11 @@ class SubscriptionService(Folder.Folder, SilvaService):
     # ZMI methods
 
     security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'manage_editSubscriptionServiceForm')
-    manage_editSubscriptionServiceForm = PageTemplateFile(
-        "www/subscriptionServiceEdit.pt", globals(),
-        __name__='manage_editSubscriptionServiceForm')
-
-    security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'isMaildropHostAvailable')
-    def isMaildropHostAvailable(self):
-        return MAILDROPHOST_AVAILABLE
-
-    security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'isMaildropHostInstalled')
-    def isMaildropHostInstalled(self):
-        silvaroot = self.get_root()
-        mailhost =  getattr(silvaroot, MAILHOST_ID, None)
-        return mailhost is not None and mailhost.meta_type == 'Maildrop Host'
-
-    security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'installMaildropHost')
-    def installMaildropHost(self):
-        """Called TTW from ZMI to install a maildrophost object
-        """
-        silvaroot = self.get_root()
-        if hasattr(silvaroot, MAILHOST_ID):
-            silvaroot.manage_delObjects([MAILHOST_ID, ])
-        from Products import MaildropHost
-        MaildropHost.manage_addMaildropHost(
-            silvaroot, MAILHOST_ID, 'Spool based mail delivery')
-        return self.manage_editSubscriptionServiceForm(
-            manage_tabs_message=(
-                'New mailhost object installed. '
-                'The system adminstator should take care of '
-                'starting the mail delivery process'))
-
-    security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'enableSubscriptions')
     def enableSubscriptions(self):
         """Called TTW from ZMI to enable the feature
         """
         self._enabled = True
-        return self.manage_editSubscriptionServiceForm(
-            manage_tabs_message=('Subscriptions enabled'))
 
     security.declareProtected(
         SilvaPermissions.ViewManagementScreens, 'disableSubscriptions')
@@ -98,8 +66,6 @@ class SubscriptionService(Folder.Folder, SilvaService):
         """Called TTW from ZMI to disable the feature
         """
         self._enabled = False
-        return self.manage_editSubscriptionServiceForm(
-            manage_tabs_message=('Subscriptions disabled'))
 
     security.declareProtected(SilvaPermissions.View, 'subscriptionsEnabled')
     def subscriptionsEnabled(self):
@@ -198,26 +164,6 @@ class SubscriptionService(Folder.Folder, SilvaService):
         if not subscr.isValidCancellation(emailaddress, token):
             raise errors.CancellationError()
         subscr.unsubscribe(emailaddress)
-
-    # Notification trigger
-
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'sendPublishNotification')
-    def sendPublishNotification(self, content):
-        if not self._enabled:
-            return
-        if not content.get_viewable():
-            #content isn't published.  How could this method be called then?
-            # on the status tab, if you set the expiration to an earlier date
-            # than the publication date.
-            return
-        # first send notification for content
-        self._sendNotificationEmail(content)
-        # now send email for potential haunting ghosts
-        adapted = IHaunted(content)
-        thehaunting = adapted.getHaunting()
-        for haunting in thehaunting:
-            self._sendNotificationEmail(haunting)
 
     # Helpers
 
@@ -319,17 +265,104 @@ class SubscriptionService(Folder.Folder, SilvaService):
 
 InitializeClass(SubscriptionService)
 
-manage_addSubscriptionServiceForm = PageTemplateFile(
-    "www/subscriptionServiceAdd.pt", globals(),
-    __name__='manage_addSubscriptionServiceForm')
 
-def manage_addSubscriptionService(context,
-       id='service_subscriptions', title='', REQUEST=None):
-    """Add subscription service.
+class SubscriptionServiceManagementView(silvaforms.ZMIComposedForm):
+    """Edit File Serivce.
     """
-    service = SubscriptionService(id)
-    service.title = 'Subscription Service'
-    context._setObject(id, service)
-    service = getattr(context, id)
-    helpers.add_and_edit(context, id, REQUEST)
-    return ''
+    grok.require('zope2.ViewManagementScreens')
+    grok.name('manage_subscriptions')
+    grok.context(SubscriptionService)
+
+    label = _(u"Configure subscriptions")
+
+
+class SubscriptionServiceActivateForm(silvaforms.ZMISubForm):
+    grok.context(SubscriptionService)
+    silvaforms.view(SubscriptionServiceManagementView)
+    silvaforms.order(20)
+
+    label = _(u"Activate subscriptions")
+    description = _(u"Activate sending emails notifications")
+
+    def available(self):
+        return not self.context.subscriptionsEnabled()
+
+    @silvaforms.action(_(u'Activate'))
+    def action_activate(self):
+        self.context.enableSubscriptions()
+        self.status = _(u"Subscriptions activated.")
+        return silvaforms.SUCCESS
+
+
+class SubscriptionServiceDisableForm(silvaforms.ZMISubForm):
+    grok.context(SubscriptionService)
+    silvaforms.view(SubscriptionServiceManagementView)
+    silvaforms.order(25)
+
+    label = _(u"Disable subscriptions")
+    description = _(u"Disable sending emails notifications")
+
+    def available(self):
+        return self.context.subscriptionsEnabled()
+
+    @silvaforms.action(_(u'Disable'))
+    def action_disable(self):
+        self.context.disableSubscriptions()
+        self.status = _(u"Subscriptions disabled.")
+        return silvaforms.SUCCESS
+
+
+class SubscriptionServiceInstallMaildropHostForm(silvaforms.ZMISubForm):
+    grok.context(SubscriptionService)
+    silvaforms.view(SubscriptionServiceManagementView)
+    silvaforms.order(30)
+
+    label = _(u"Install MaildropHost")
+    description = _(u"Install a MaildropHost service to send emails")
+
+    def available(self):
+        if not MAILDROPHOST_AVAILABLE:
+            return False
+        root = self.context.get_root()
+        mailhost =  getattr(root, MAILHOST_ID, None)
+        return mailhost is None or mailhost.meta_type != 'Maildrop Host'
+
+    @silvaforms.action(_(u'Install'))
+    def action_install(self):
+        root = self.context.get_root()
+        if hasattr(root, MAILHOST_ID):
+            root.manage_delObjects([MAILHOST_ID, ])
+        factory = root.manage_addProduct['MaildropHost']
+        factory.manage_addMaildropHost(
+            MAILHOST_ID, 'Spool based mail delivery')
+        self.status = (
+            u'New mailhost object installed. '
+            u'The system adminstator should take care of '
+            u'starting the mail delivery process.')
+
+
+@grok.subscribe(ISubscriptionService, IObjectCreatedEvent)
+def service_created(service, event):
+    """Add all default templates to the service.
+    """
+    for identifier in [
+        'subscription_confirmation_template',
+        'already_subscribed_template',
+        'cancellation_confirmation_template',
+        'not_subscribed_template',
+        'publication_event_template']:
+        add_helper(
+            service, identifier, globals(), fileobject_add_helper, True)
+
+
+@grok.subscribe(IVersionedContent, IContentPublishedEvent)
+def content_published(content, event):
+    """Content have been published. Send notifications.
+    """
+    service = queryUtility(ISubscriptionService)
+    if service is not None:
+        # first send notification for content
+        service._sendNotificationEmail(content)
+        # now send email for potential haunting ghosts
+        for haunting in IHaunted(content).getHauting():
+            service._sendNotificationEmail(haunting)

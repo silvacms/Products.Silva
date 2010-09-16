@@ -21,7 +21,6 @@ from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
 from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
-from Products.Silva import subscriptionservice
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva.ExtensionRegistry import extensionRegistry
 
@@ -115,8 +114,6 @@ def install(root):
     configureMiscServices(root)
 
     configureContainerPolicies(root)
-
-    installSubscriptions(root)
 
 def uninstall(root):
     root.service_views.manage_delObjects(['Silva'])
@@ -227,6 +224,9 @@ def configureMiscServices(root):
     # add service_typo_chars
     if 'service_typo_chars' not in installed_ids:
         factory.manage_addTypographicalService('service_typo_chars')
+    # service subscription
+    if 'service_subscriptions' not in installed_ids:
+        factory.manage_addSubscriptionService('service_subscriptions')
 
     # add service_references
     factory = root.manage_addProduct['silva.core.references']
@@ -236,16 +236,28 @@ def configureMiscServices(root):
     if 'service_toc_filter' not in installed_ids:
         filter_service = TOCFilterService()
         root._setObject(filter_service.id, filter_service)
-    #add a cache manager for /globals, and anything else that
-    #is "static"
+    # add a cache manager for /globals, and anything else that
+    # is "static"
     if not hasattr(root, 'service_static_cache_manager'):
         manage_addAcceleratedHTTPCacheManager(root, 'service_static_cache_manager')
         sscm = getattr(root, 'service_static_cache_manager')
-        sscm.manage_editProps(title="Cache Manager for static filesystem objects",
-                              settings={"anonymous_only": 0,
-                                        "interval": 604800, #set expires to 1 week
-                                        "notify_urls": []}
-                               )
+        sscm.manage_editProps(
+            title="Cache Manager for static filesystem objects",
+            settings={"anonymous_only": 0,
+                      "interval": 604800, #set expires to 1 week
+                      "notify_urls": []})
+
+    # setup mailhost
+    if not MAILHOST_ID in root.objectIds():
+        if MAILDROPHOST_AVAILABLE:
+            from Products.MaildropHost import manage_addMaildropHost
+            manage_addMaildropHost(root, MAILHOST_ID,
+                                   'Spool based mail delivery')
+        else:
+            from Products.MailHost.MailHost import manage_addMailHost
+            manage_addMailHost(root, MAILHOST_ID,
+                               'Mail Delivery Service')
+
 
 def configureSecurity(root):
     """Update the security tab settings to the Silva defaults.
@@ -464,30 +476,6 @@ def installSilvaFind(root):
     if extensionRegistry.have('SilvaFind'):
         root.service_extensions.install('SilvaFind')
 
-
-def installSubscriptions(root):
-    # Setup infrastructure for subscriptions feature.
-    if not 'service_subscriptions' in root.objectIds():
-        subscriptionservice.manage_addSubscriptionService(root)
-
-    if not MAILHOST_ID in root.objectIds():
-        if MAILDROPHOST_AVAILABLE:
-            from Products.MaildropHost import manage_addMaildropHost
-            manage_addMaildropHost(root, MAILHOST_ID,
-                                   'Spool based mail delivery')
-        else:
-            from Products.MailHost.MailHost import manage_addMailHost
-            manage_addMailHost(root, MAILHOST_ID,
-                               'Mail Delivery Service')
-
-    for id in (
-        'subscription_confirmation_template',
-        'already_subscribed_template',
-        'cancellation_confirmation_template',
-        'not_subscribed_template',
-        'publication_event_template'):
-        add_helper(
-            root.service_subscriptions, id, globals(), fileobject_add_helper, True)
 
 def installKupu(root):
     """Install kupu.

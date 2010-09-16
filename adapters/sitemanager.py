@@ -11,29 +11,26 @@ from silva.core import interfaces
 
 
 class SiteManager(grok.Adapter):
-
     grok.implements(interfaces.ISiteManager)
     grok.context(interfaces.IPublication)
     grok.require('zope2.ViewManagementScreens')
 
     def makeSite(self):
         if self.isSite():
-            raise ValueError, 'Already a local site.'
+            raise ValueError(u'Already a local site.')
         make_objectmanager_site(self.context)
 
     def deleteSite(self):
         if not self.isSite():
-            raise ValueError, 'Not a local site.'
+            raise ValueError(u'Not a local site.')
         if interfaces.IRoot.providedBy(self.context):
-            raise ValueError, "Can't disable local site on Silva Root."
+            raise ValueError(u"Can't disable local site on Silva Root.")
         sm = ISite(self.context).getSiteManager()
         if list(sm.registeredAdapters()):
-            raise ValueError, 'Still have registered adapters.'
+            raise ValueError(u'Still have registered customizations.')
         if list(sm.registeredUtilities()):
-            raise ValueError, 'Still have registered utilities.'
+            raise ValueError(u'Still have registered services.')
         disableSite(self.context)
 
     def isSite(self):
         return ISite.providedBy(self.context)
-
-

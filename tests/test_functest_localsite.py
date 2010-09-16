@@ -81,7 +81,7 @@ class LocalSiteTestCase(unittest.TestCase):
         self.assertEqual(form.controls['form.action.delete_site'].click(), 200)
         self.assertEqual(
             browser.inspect.feedback,
-            ['Still have registered utilities.'])
+            ['Still have registered services.'])
 
         self.root.publication.manage_delObjects(['service_customization',])
 

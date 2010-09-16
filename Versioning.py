@@ -525,7 +525,6 @@ class Versioning(object):
                     getattr(self, self._public_version[0])))
             # index approved version that is now public
             self._index_version(self._public_version[0])
-            self._trigger_subscriptions()
         # get expiration datetime of public version
         expiration_datetime = self._public_version[2]
         # expire public version if expiration datetime reached
@@ -539,13 +538,6 @@ class Versioning(object):
                     getattr(self, self._previous_versions[-1][0])))
             # remove from index
             self._unindex_version(self._previous_versions[-1][0])
-
-
-    def _trigger_subscriptions(self):
-        subscription_service = getattr(self, 'service_subscriptions', None)
-        if subscription_service is None:
-            return
-        subscription_service.sendPublishNotification(self)
 
     # ACCESSORS
 

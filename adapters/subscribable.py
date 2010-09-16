@@ -26,7 +26,6 @@ ACQUIRE_SUBSCRIBABILITY = 2
 
 
 class Subscription(object):
-
     grok.implements(interfaces.ISubscription)
 
     def __init__(self, emailaddress, contentsubscribedto):
