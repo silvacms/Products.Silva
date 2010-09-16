@@ -116,26 +116,12 @@ class Publication(Folder.Folder):
         """
         return AcquisitionMethod(self, 'validate_wanted_quota')
 
-
     def _verify_quota(self, REQUEST=None):
-
-        quota = self.get_current_quota()
-        if quota and self.used_space > (quota * 1024 * 1024):
-            # XXX Should be update to use an error page. When error
-            # pages will work.
-            if (not REQUEST) and hasattr(self, 'REQUEST'):
-                REQUEST = self.REQUEST
-            if REQUEST:
-                transaction.abort()
-                REQUEST.form.clear()
-                REQUEST.form['message_type'] = 'error'
-                REQUEST.form['message'] = _('You are overquota.')
-                REQUEST.RESPONSE.setHeader('Content-Type', 'text/html')
-                REQUEST.RESPONSE.setStatus(500)
-                REQUEST.RESPONSE.write(
-                    unicode(REQUEST.PARENTS[0].index_html()).encode('utf-8'))
-            raise OverQuotaException
-
+        quota = self.get_current_quota() * 1024 * 1024
+        if quota and self.used_space > quota:
+            excess = self.used_space - quota
+            transaction.abort()
+            raise OverQuotaException(excess)
 
     # ACCESSORS
 

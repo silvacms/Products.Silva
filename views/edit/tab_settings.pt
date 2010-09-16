@@ -233,16 +233,18 @@
           <td class="designator"
             style="width:33%">
             <span class="matchlabel"
-              i18n:translate="">
+                  i18n:translate="">
               space used in this folder
             </span>
           </td>
           <td class="field">
-            <span tal:attributes="title string: ${model/used_space} Bytes"
-              tal:content="python:mangle.Bytes(model.used_space)" />
-            <span tal:define="quota model/get_current_quota"
-              tal:condition="quota"
-              i18n:translate="">
+            <span id="space-used"
+                  tal:attributes="title string: ${model/used_space} Bytes"
+                  tal:content="python:mangle.Bytes(model.used_space)" />
+            <span id="space-quota"
+                  tal:define="quota model/get_current_quota"
+                  tal:condition="quota"
+                  i18n:translate="">
               (The quota for this area is set to <span tal:replace="quota" i18n:name="quota" /> MB.)
             </span>
           </td>

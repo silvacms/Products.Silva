@@ -21,7 +21,7 @@
         </h2>
 
         <h3 i18n:translate="">General actions</h3>
-        <form action="#" method="post"
+        <form action="#" method="post" name="general"
               tal:define="root context/get_root"
               tal:attributes="action request/URL">
           <input type="submit" name="refresh_all" value="refresh all"

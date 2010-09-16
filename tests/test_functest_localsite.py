@@ -40,10 +40,25 @@ class LocalSiteTestCase(unittest.TestCase):
         self.assertEqual(form.controls['form.action.make_site'].click(), 200)
         self.assertEqual(browser.inspect.feedback, ['Local site activated.'])
 
+        # You now have a services tab in ZMI
+        self.assertEqual(browser.get_link('manage...').click(), 200)
+        self.assertEqual(browser.location, '/root/publication/manage_main')
+        self.assertTrue('Services' in browser.inspect.zmi_tabs)
+        self.assertEqual(browser.inspect.zmi_tabs['Services'].click(), 200)
+        self.assertEqual(browser.location, '/root/publication/manage_services')
+        self.assertEqual(browser.inspect.zmi_tabs['edit'].click(), 200)
+        self.assertEqual(browser.location, '/root/publication/edit')
+        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertEqual(browser.inspect.subtabs['local site'].click(), 200)
+
         form = browser.get_form('form')
         self.assertEqual(form.controls['form.action.delete_site'].click(), 200)
-        # TODO: check new tab Services in ZMI
         self.assertEqual(browser.inspect.feedback, ['Local site deactivated.'])
+
+        # The service tab is gone
+        self.assertEqual(browser.get_link('manage...').click(), 200)
+        self.assertEqual(browser.location, '/root/publication/manage_main')
+        self.assertFalse('Services' in browser.inspect.zmi_tabs)
 
     def test_localsite_still_in_use(self):
         """We test to disable a local site but it's in use.

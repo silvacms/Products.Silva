@@ -75,5 +75,23 @@ def smi_settings(browser):
         '//form[contains(@class,"zeam-form")]//div[@class="error"]',
         type='text')
 
+    # ZMI
+    browser.inspect.add(
+        'zmi_tabs',
+        '//td[@class="tab-small"]//a',
+        type='link')
+    browser.inspect.add(
+        'zmi_listing',
+        '//tr[@class="row-hilite" or @class="row-normal"]'
+        '//div[@class="list-item"]/a',
+        type='link')
+    browser.inspect.add(
+        'zmi_title',
+        '//h2')
+    browser.inspect.add(
+        'zmi_feedback',
+        '//div[@class="system-msg"]')
+
+
     browser.macros.add('create', smi_create_content)
     browser.macros.add('delete', smi_delete_content)

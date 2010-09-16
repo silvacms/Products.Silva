@@ -3,309 +3,246 @@
 # $Id$
 
 import unittest
-from SilvaBrowser import SilvaBrowser
-from SilvaTestCase import SilvaFunctionalTestCase
 
-class QuotaTestCase(SilvaFunctionalTestCase):
+from Products.Silva.tests.helpers import test_filename
+from Products.Silva.testing import FunctionalLayer, smi_settings
+
+
+def smi_set_quota(browser, quota, should_fail=False):
+    """Set the quota value, and expect a reply or an error.
     """
-       [x]login manager
-       [x]enable quota
-       [x]put on file
-       [x]check parameters/settings screen
-       [x]set a quota
-       [x]check changes
-       [x]go back on contents
-       [x]add a folder
-         [x]add a publication
-           [x]add a folder
-             [x]add a file
-             [x]add a publication
-       [x]go on parameters/settings screen
-       [x]check acquired quota
-       [x]put a correct quota
-       [x]check screen
-       [x]put 0/empty quota
-       [x]check screen
-       [x]put an invalid quota
-       [x]check screen (should get an error)
-    """
+    assert browser.inspect.tabs['properties'].click() == 200
+    assert browser.inspect.subtabs['settings'].click() == 200
 
-    # default message reported by the interface.
-    quota_report = 'The quota for this area is set to %d MB.'
-    quota_error = "The quota can't be negative or bigger than the quota of the parent container."
+    form = browser.get_form('form')
+    form.get_control('silva-quota.quota:record').value = quota
+    assert form.get_control('save_metadata:method').click() == 200
+    if should_fail:
+        assert browser.inspect.form_error == [
+            "The quota can't be negative or bigger than " \
+                "the quota of the parent container."]
+    else:
+        assert browser.inspect.form_error == []
+        assert browser.inspect.feedback == ['Metadata saved.']
 
-    def container_tree(self):
-	"""
-            content = {
-	        first: {
-                    'type': 'Silva Folder',
-                    'id': 'folder1',
-                    'title': 'folder 1',
-                    'policy': 'Silva Document',
-                },
-            }
 
-            for item in content:
-                make_content()
-                self.failUnless(new content isn't in browser)
-                click_href_labeled(new content)
+def quota_settings(browser):
+    smi_settings(browser)
+    browser.inspect.add('used_space', '//span[@id="space-used"]')
+    browser.inspect.add('quota_space', '//span[@id="space-quota"]')
+    browser.inspect.add('form_error', '//span[@class="error"]')
+    browser.macros.add('set_quota', smi_set_quota)
 
-	    make_content(folder1)
-	    test content
-	    click_href_labeled(folder1)
-	    test inside content
-            make_content(folder2)
-	"""
 
-    def util_goOnSettings(self):
-        """Go on the settings tab of an item.
-        """
-        # go on properties tab
-        self.sb.click_href_labeled('properties')
-        self.failUnless(self.sb.get_listing_h2().startswith('properties of'))
-        # access to the settings tab
-        self.sb.click_href_labeled('settings...')
-        self.failUnless(self.sb.get_listing_h2().startswith('settings for'))
+class QuotaFunctionalTestCase(unittest.TestCase):
+    layer = FunctionalLayer
 
-    def set_quota(self, quota, expected_quota=None, expect_error=False):
-        """Set the quota value, and expect a reply or an error.
-        """
-        self.sb.browser.getControl(
-            name='silva-quota.quota:record').value = quota
-        # There is several save metadata button, but they should all
-        # do the same.
-        self.sb.browser.getControl(
-            name='save_metadata:method', index=0).click()
-        if not (expected_quota is None):
-            msg = self.quota_report % expected_quota
-            self.failUnless(
-                msg in self.sb.browser.contents,
-                'No message "%s" in browser.' % msg)
-        if expect_error:
-            self.failUnless(self.quota_error in self.sb.browser.contents)
-        else:
-            self.failIf(self.quota_error in self.sb.browser.contents)
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
 
-    def build_browser(self):
-        """Create a SilvaBrowser.
-        """
-        # initializes silva browser
-        self.sb = SilvaBrowser()
-        status, url = self.sb.login('manager', 'secret', self.sb.smi_url())
-        self.assertEqual(status, 200)
-        url = self.sb.get_root_url()
-        url = url + '/manage_main'
-        self.sb.go(url)
-
-    def enable_quota(self):
+    def test_enable_quota(self):
         """Go in ZMI, and on service_extension enable the quota system.
         """
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.open('/root/manage_main'), 200)
 
-        self.failUnless('Silva /edit...' in self.sb.browser.contents)
-        self.sb.click_href_labeled('Services')
-        self.assertEquals(
-            self.sb.get_url(),
-            'http://nohost/root/manage_services')
-        self.sb.click_href_labeled('Services')
-        self.assertEquals(
-            self.sb.get_url(),
-            'http://nohost/root/manage_services')
-        self.sb.click_href_labeled(
-            'service_extensions (Silva Product and Extension Configuration)')
-        self.failUnless('Silva Services' in self.sb.browser.contents)
-        self.sb.click_button_labeled('enable quota subsystem')
-        self.failUnless('Quota sub-system enabled' in self.sb.browser.contents)
-        self.sb.click_href_labeled('root')
-        self.failUnless('Silva Root\n' in self.sb.browser.contents)
-        self.sb.click_href_labeled('Silva /edit...')
-        self.assertEquals(self.sb.get_url(), 'http://nohost/root/edit')
+        self.assertTrue('service' in browser.inspect.zmi_tabs)
+        self.assertEqual(browser.inspect.zmi_tabs['service'].click(), 200)
+        self.assertEqual(browser.location, '/root/manage_services')
+        self.assertEqual(
+            browser.inspect.zmi_listing['service_extensions'].click(),
+            200)
+        self.assertEqual(
+            browser.inspect.zmi_title,
+            ['Configure Silva Extension Products'])
 
+        form = browser.get_form('general')
+        self.assertEqual(
+            form.get_control('enable_quota_subsystem').click(),
+            200)
+        self.assertEqual(
+            browser.inspect.zmi_feedback,
+            ['Quota sub-system enabled'])
 
-    """
-    def test_overquota(self):
-        #Test that when you add/edit a file and you are
-        #overquota you get the corresponding error.
-        #
+    def test_disable_quota(self):
+        """Disable the quota system.
+        """
+        self.root.service_extensions.enable_quota_subsystem()
 
-        self.build_browser()
-        self.enable_quota()
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+        self.assertEqual(browser.open('/root/manage_main'), 200)
 
-        # go on settings and check the acquired quota
-        self.util_goOnSettings()
+        self.assertTrue('service' in browser.inspect.zmi_tabs)
+        self.assertEqual(browser.inspect.zmi_tabs['service'].click(), 200)
+        self.assertEqual(browser.location, '/root/manage_services')
+        self.assertEqual(
+            browser.inspect.zmi_listing['service_extensions'].click(),
+            200)
+        self.assertEqual(
+            browser.inspect.zmi_title,
+            ['Configure Silva Extension Products'])
 
+        form = browser.get_form('general')
+        self.assertEqual(
+            form.get_control('disable_quota_subsystem').click(),
+            200)
+        self.assertEqual(
+            browser.inspect.zmi_feedback,
+            ['Quota sub-system disabled'])
 
-        # check and set quota
-	byte_span = '<span title=" 0 Bytes">'
-        self.failUnless(byte_span in self.sb.browser.contents)
-        self.set_quota('10', 'quota for this area set to 10 MB')
-        self.sb.click_href_labeled('contents')
+    def test_add_asset_overquota(self):
+        """Test adding an asset (file and image) being overquota.
+        """
+        self.root.service_extensions.enable_quota_subsystem()
 
-        # create a folder and a publication
+        browser = self.layer.get_browser(quota_settings)
+        browser.login('manager', 'manager')
 
-        # create a folder, called folder1
-        self.sb.make_content('Silva Folder', id='folder1', title='Folder 1',
-                                        policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Folder'))
-        self.sb.click_href_labeled('folder1')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
+        self.assertEqual(browser.open('/root/edit'), 200)
 
-        #create a publication inside of folder1, called publication1
-        self.sb.make_content('Silva Publication', id='publication1', title='Publication 1',
-                                        policy='Silva Document')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Publication'))
-        self.sb.click_href_labeled('publication1')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Publication'))
+        # Set quota to 1MB
+        browser.macros.set_quota(1)
+        self.assertEqual(browser.inspect.used_space, ['0'])
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 1 MB.)'])
 
-        # go on settings and check the acquired quota
-        self.util_goOnSettings()
+        # Add a file and check the used space changed
+        self.assertEqual(browser.inspect.tabs['contents'].click(), 200)
 
-        # check acquired quota
-        self.failUnless('quota for this area set to 10 MB' in self.sb.browser.contents)
+        form = browser.get_form('md.container')
+        form.controls['md.container.field.content'].value = 'Silva File'
+        self.assertEqual(form.controls['md.container.action.new'].click(), 200)
 
-        #set the quota for the publication
-        self.set_quota('1', 'quota for this area set to 1 MB')
-        self.sb.click_href_labeled('contents')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Publication'))
+        odt_filename = test_filename('docs_export_2008-06-11.odt')
+        form = browser.get_form('addform')
+        form.get_control('addform.field.file').value = odt_filename
+        self.assertEqual(form.get_control('addform.action.save').click(), 200)
 
-        # upload a small file
-        self.sb.make_content('Silva Image', image='torvald.jpg',
-                                            id='file1', title='File 1')
-        self.failUnless(self.sb.get_status_feedback().startswith('Added Silva Image'))
+        # Add you have an error.
+        self.assertEqual(
+            browser.html.xpath(
+                'normalize-space(//body/div[contains(@class,"simple-page")]/h1/text())'),
+            "Over Quota")
+        self.assertEqual(
+            browser.html.xpath(
+                'normalize-space(//body/div[contains(@class,"simple-page")]/p[1]/text())'),
+            "A quota is applied on the container you are working on, "
+            "and the current operation would require 387.1 k more space.")
 
-        # upload a 2nd bigger file
-        self.sb.browser.handleErrors = False
-        self.sb.make_content('Silva File', id='file2', title='File 2',
-                                      file='beameruserguide.pdf')
-        self.failUnless(self.sb.get_alert_feedback().startswith('You are overquota'))
+        self.assertEqual(
+            browser.get_link('click here to continue').click(),
+            200)
+        self.assertEqual(browser.location, '/root/edit')
+        self.assertFalse('odt' in browser.inspect.folder_listing)
 
+    def test_add_asset(self):
+        """Test adding an asset while the quota is on.
+        """
+        self.root.service_extensions.enable_quota_subsystem()
 
+        browser = self.layer.get_browser(quota_settings)
+        browser.login('manager', 'manager')
 
-        #logout
-        status, url = self.sb.click_href_labeled('logout')
-        self.assertEquals(status, 401)
-    """
+        self.assertEqual(browser.open('/root/edit'), 200)
 
-    def test_setquota(self):
+        # Set quota to 10MB
+        browser.macros.set_quota(10)
+        self.assertEqual(browser.inspect.used_space, ['0'])
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
+
+        # Add a file and check the used space changed
+        self.assertEqual(browser.inspect.tabs['contents'].click(), 200)
+        browser.macros.create(
+            'Silva File', id='odt', title='ODT Document',
+            file=test_filename('docs_export_2008-06-11.odt'))
+        self.assertEqual(browser.inspect.folder_listing['odt'].click(), 200)
+        self.assertEqual(browser.location, '/root/odt/edit/tab_edit')
+
+        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertEqual(browser.inspect.subtabs['settings'].click(), 200)
+        self.assertEqual(browser.location, '/root/odt/edit/tab_settings')
+        self.assertEqual(browser.inspect.used_space, ['1.4 MB'])
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
+
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        self.assertEqual(browser.location, '/root/edit/tab_settings')
+        self.assertEqual(browser.inspect.used_space, ['1.4 MB'])
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
+
+    def test_set_quota(self):
         """Test modification of the quota's value.
         """
+        self.root.service_extensions.enable_quota_subsystem()
 
-        self.build_browser()
-        self.enable_quota()
+        browser = self.layer.get_browser(quota_settings)
+        browser.login('manager', 'manager')
 
-        self.util_goOnSettings()
+        self.assertEqual(browser.open('/root/edit'), 200)
+        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertEqual(browser.inspect.subtabs['settings'].click(), 200)
+
+        self.assertEqual(browser.location, '/root/edit/tab_settings')
+        self.assertEqual(browser.inspect.used_space, ['0'])
+        self.assertEqual(browser.inspect.quota_space, [])
 
         # check and set quota
-	byte_span = '<span title=" 0 Bytes">'
-        self.failUnless(byte_span in self.sb.browser.contents)
-        self.set_quota('10', expected_quota=10)
-        self.sb.click_href_labeled('contents')
+        browser.macros.set_quota(10)
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
 
-        self.sb.browser.handleErrors = False
-        self.sb.make_content(
-            'Silva File', id='quota_test', title='q test',
-            file='docs_export_2008-06-11.odt')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva File'))
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addPublication('publication', 'Publication')
 
+        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
+        self.assertEqual(browser.inspect.navigation['publication'].click(), 200)
 
-        # try to get the size of the added file in order to see if
-        # it's really here check changes
+        self.assertEqual(browser.location, '/root/publication/edit/tab_settings')
+        self.assertEqual(browser.inspect.used_space, ['0'])
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
 
-        self.sb.click_href_labeled('test')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva File'))
-        self.sb.click_href_labeled('properties')
-        self.failUnless(self.sb.get_listing_h2().startswith('properties of'))
+        # put a correct quota, which is smaller than the parent one, 10MB.
+        browser.macros.set_quota(5)
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 5 MB.)'])
 
-        self.sb.click_href_labeled('settings...')
-        byte_span = '<span title=" 1444981 Bytes">'
-        self.failUnless(byte_span in self.sb.browser.contents)
+        # put a quota to 0, the value of the parent one is expected.
+        browser.macros.set_quota(0)
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
+        browser.macros.set_quota('')
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
 
-
-        # this allows me to come back to the Silva root page
-        # go back on contents = 3 times go back browser button
-
-        self.sb.go_back()
-        self.sb.go_back()
-        self.sb.go_back()
-
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Root'))
-
-        # create a folder, called folder1
-        self.sb.make_content('Silva Folder', id='folder1', title='Folder 1',
-                             policy='Silva Document')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva Folder'))
-        self.sb.click_href_labeled('folder1')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
-
-        # create a publication inside of folder1, called publication1
-        self.sb.make_content(
-            'Silva Publication', id='publication1', title='Publication 1',
-            policy='Silva Document')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva Publication'))
-        self.sb.click_href_labeled('publication1')
-        self.failUnless(
-            self.sb.get_listing_h2().startswith('Silva Publication'))
-
-        # create a folder inside of publication1, called folder2
-        self.sb.make_content('Silva Folder', id='folder2', title='Folder 2',
-                             policy='Silva Document')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva Folder'))
-        self.sb.click_href_labeled('folder2')
-        self.failUnless(self.sb.get_listing_h2().startswith('Silva Folder'))
-
-        # add a publication
-        self.sb.make_content(
-            'Silva Publication', id='publication2', title='Publication 2',
-                             policy='Silva Document')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva Publication'))
-
-        # add a file
-        self.sb.make_content('Silva File', id='file1', title='File 1',
-                             file='docs_export_2008-06-11.odt')
-        self.failUnless(
-            self.sb.get_status_feedback().startswith('Added Silva File'))
-
-        # go back to publication 1
-        self.sb.browser.getLink('Publication 1').click()
-
-        # go on settings and check the acquired quota
-        self.util_goOnSettings()
-
-        # check acquired quota
-        self.failUnless((self.quota_report % 10) in self.sb.browser.contents)
-
-        # put a correct quota
-        self.set_quota('5', expected_quota=5)
-
-        # put a quota == 0
-        self.set_quota('0', expected_quota=10)
-        self.set_quota('', expected_quota=10)
-
-        # put a quota which is too big
-        self.set_quota('100', expect_error=True)
-        # reset error
-        self.set_quota('', expected_quota=10)
+        # put a quota of 100Mb which is bigger than the one of the parent
+        browser.macros.set_quota(100, should_fail=True)
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
 
         # put a quota which is negative
-        self.set_quota('-3', expect_error=True)
-        # reset error
-        self.set_quota('', expected_quota=10)
+        browser.macros.set_quota(-3, should_fail=True)
+        self.assertEqual(
+            browser.inspect.quota_space,
+            ['(The quota for this area is set to 10 MB.)'])
 
-        #logout
-        status, url = self.sb.click_href_labeled('logout')
-        self.assertEquals(status, 401)
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(QuotaTestCase))
+    suite.addTest(unittest.makeSuite(QuotaFunctionalTestCase))
     return suite
-
-
-
-
-
-
