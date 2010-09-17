@@ -30,6 +30,7 @@ class SilvaLayer(BrowserLayer):
         'ParsedXML',
         'ProxyIndex',
         'MaildropHost',
+        'MailHost',
         'ExtFile',
         'Groups',
         'SilvaFind',

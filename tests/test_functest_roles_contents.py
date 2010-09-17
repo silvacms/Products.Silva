@@ -1,103 +1,305 @@
+# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
-from SilvaBrowser import SilvaBrowser
-from SilvaTestCase import SilvaFunctionalTestCase
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
+
+from Products.Silva.testing import FunctionalLayer, smi_settings
+from Products.Silva.tests.helpers import test_filename
+from silva.core.references.reference import get_content_id
 
 
-class ContentTypeTestCase(SilvaFunctionalTestCase):
-    """ each role make each content type
+class ContentCreationTestCase(unittest.TestCase):
+    """For each role make each content in a folder.
     """
+    layer = FunctionalLayer
 
-    def create_content_and_delete(self, sb, content_type, username,
-                                  **fields):
-        """ make content type, delete content type, logout
-        """
-        sb.login(username, url='http://nohost/root/edit')
-        self.failUnless('logout' in sb.browser.contents,
-                        "logout not found on browser page. Test failed login")
-        sb.make_content(content_type, **fields)
-        self.failUnless(fields['id'] in sb.get_content_ids())
-        status, url = sb.select_delete_content(fields['id'])
-        self.failIf(fields['id'] in sb.get_content_ids())
-        sb.logout()
+    def setUp(self):
+        self.root = self.layer.get_application()
 
-    def test_silva_document(self):
-        sb = SilvaBrowser()
-        for username in ['manager', 'chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva Document', username,
-                                           id='test_document',
-                                           title='Test document')
+    def test_document(self):
+        browser = self.layer.get_browser(smi_settings)
 
-    def test_silva_folder(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva Folder', username,
-                                           id='test_folder',
-                                           title='Test folder',
-                                           policy='Silva Document')
-    def test_silva_publication(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor']:
-            self.create_content_and_delete(sb, 'Silva Publication', username,
-                                           id='test_publication',
-                                           title='Test publication',
-                                           policy='Silva Document')
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Document', id='documentation', title='Documentation')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'documentation'])
 
-    def test_silva_image(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva Image', username,
-                                           id='test_image',
-                                           title='Test image',
-                                           image='torvald.jpg')
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.documentation
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
 
-    def test_silva_file(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva File', username,
-                                           id='test_file',
-                                           title='Test file',
-                                           file='test.txt')
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['documentation'].click(), 200)
+            self.assertEqual(
+                browser.url, '/root/documentation/edit/tab_edit')
+            self.assertEqual(
+                browser.inspect.breadcrumbs,
+                ['root', 'documentation'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('documentation')
 
-    def test_silva_find(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor']:
-            self.create_content_and_delete(sb, 'Silva Find', username,
-                                           id='test_find',
-                                           title='Test find')
+    def test_folder(self):
+        browser = self.layer.get_browser(smi_settings)
 
-    def test_silva_ghost(self):
-        sb = SilvaBrowser()
-        intid = getUtility(IIntIds)
-        refid = str(intid.register(self.root.index))
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva Ghost', username,
-                                           id='test_ghost',
-                                           reference=refid)
-    def test_silva_indexer(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor']:
-            self.create_content_and_delete(sb, 'Silva Indexer', username,
-                                           id='test_indexer',
-                                           title='Test indexer')
-    def test_silva_link(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva Link', username,
-                                           id='test_link',
-                                           title='Test link',
-                                           url='http://www.infrae.com')
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Folder',
+                id='folder',
+                title='Second Folder',
+                default_item='Silva Document')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'folder'])
 
-    def test_silva_autotoc(self):
-        sb = SilvaBrowser()
-        for username in ['manager','chiefeditor', 'editor', 'author']:
-            self.create_content_and_delete(sb, 'Silva AutoTOC', username,
-                                           id='test_autotoc',
-                                           title='Test AutoTOC',
-                                           depth='-1')
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.folder
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['folder'].click(),
+                200)
+            self.assertEqual(
+                browser.url, '/root/folder/edit/tab_edit')
+            self.assertEqual(
+                browser.inspect.breadcrumbs,
+                ['root', 'Second Folder'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('folder')
+
+    def test_publication(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Publication',
+                id='publication',
+                title='Second Publication',
+                default_item='Silva Document')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'publication'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.publication
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['publication'].click(),
+                200)
+            self.assertEqual(
+                browser.inspect.breadcrumbs,
+                ['root', 'Second Publication'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('publication')
+
+    def test_image(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            image = test_filename('torvald.jpg')
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Image', id='image', title='Torvald', file=image)
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'image'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.image
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['image'].click(),
+                200)
+            self.assertEqual(browser.url, '/root/image/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Torvald'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('image')
+
+    def test_file(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            image = test_filename('test.txt')
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva File', id='file', title='Text File', file=image)
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'file'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.file
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['file'].click(),
+                200)
+            self.assertEqual(browser.url, '/root/file/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Text File'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('file')
+
+    def test_find(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Find', id='search', title='Search')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'search'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.search
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['search'].click(),
+                200)
+            self.assertEqual(browser.url, '/root/search/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Search'])
+            browser.inspect.breadcrumbs['root'].click()
+            browser.macros.delete('search')
+
+    def test_ghost(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Ghost',
+                id='ghost', haunted=get_content_id(self.root.index))
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'ghost'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.ghost
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit page
+            self.assertEqual(
+                browser.inspect.folder_listing['ghost'].click(),
+                200)
+            self.assertEqual(browser.url, '/root/ghost/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'ghost'])
+            form = browser.get_form('editform')
+            self.assertEqual(
+                form.get_control('editform.action.cancel').click(), 200)
+            browser.macros.delete('ghost')
+
+    def test_indexer(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Indexer', id='indexes', title='Indexes')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'indexes'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.indexes
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit form
+            self.assertEqual(
+                browser.inspect.folder_listing['indexes'].click(), 200)
+            self.assertEqual(browser.url, '/root/indexes/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Indexes'])
+            form = browser.get_form('form')
+            self.assertEqual(
+                form.get_control('form.action.cancel').click(), 200)
+            browser.macros.delete('indexes')
+
+    def test_link(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva Link',
+                id='infrae', title='Infrae', url='http://infrae.com')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'infrae'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.infrae
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit form
+            self.assertEqual(
+                browser.inspect.folder_listing['infrae'].click(), 200)
+            self.assertEqual(browser.url, '/root/infrae/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'infrae'])
+            form = browser.get_form('editform')
+            self.assertEqual(
+                form.get_control('editform.action.cancel').click(), 200)
+            browser.macros.delete('infrae')
+
+    def test_autotoc(self):
+        browser = self.layer.get_browser(smi_settings)
+
+        for user in ['manager', 'chiefeditor', 'editor', 'author']:
+            browser.login(user, user)
+            self.assertEqual(browser.open('/root/edit'), 200)
+            browser.macros.create(
+                'Silva AutoTOC', id='sitemap', title='Sitemap')
+            self.assertEqual(
+                browser.inspect.folder_listing, ['index', 'sitemap'])
+
+            # The user should by the last author on the content and container.
+            content = self.root
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+            content = self.root.sitemap
+            self.assertEqual(content.sec_get_last_author_info().userid(), user)
+
+            # Visit the edit form
+            self.assertEqual(
+                browser.inspect.folder_listing['sitemap'].click(), 200)
+            self.assertEqual(browser.url, '/root/sitemap/edit/tab_edit')
+            self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Sitemap'])
+            form = browser.get_form('editform')
+            self.assertEqual(
+                form.get_control('editform.action.cancel').click(), 200)
+            browser.macros.delete('sitemap')
+
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ContentTypeTestCase))
+    suite.addTest(unittest.makeSuite(ContentCreationTestCase))
     return suite

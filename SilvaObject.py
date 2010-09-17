@@ -545,10 +545,17 @@ def update_content_author_info(content, event):
     # XXX ObjectCopiedEvent should not be ignored but content is not in
     # Zope tree when it is triggered, so metadata service doesn't
     # work.
-    if IRoot.providedBy(content) or IObjectCopiedEvent.providedBy(event):
+    if IObjectCopiedEvent.providedBy(event):
         return
-    content.sec_update_last_author_info()
-
+    if IRoot.providedBy(content):
+        # If we are on the root we swallow errors, as root might not
+        # be fully installed, this might not work.
+        try:
+            content.sec_update_last_author_info()
+        except:
+            pass
+    else:
+        content.sec_update_last_author_info()
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def index_added_content(content, event):

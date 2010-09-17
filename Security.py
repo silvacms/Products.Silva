@@ -254,16 +254,12 @@ class Security(AccessManager):
         """
         version = self.get_editable()
         if version is not None:
-            service = getUtility(IMemberService)
             user_id = getSecurityManager().getUser().getId()
-            user = service.get_cached_member(user_id, location=self)
+            member = getUtility(IMemberService)
+            user = member.get_cached_member(user_id, location=self)
             version._last_author_userid = user_id
             version._last_author_info = aq_base(user)
-            # XXX performance issue?
-            try:
-                binding = getUtility(IMetadataService).getMetadata(version)
-            except BindingError:
-                return
+            binding = getUtility(IMetadataService).getMetadata(version)
             if binding is None:
                 return
             now = DateTime()

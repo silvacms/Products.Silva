@@ -13,7 +13,7 @@ from OFS import Image
 from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
     import manage_addAcceleratedHTTPCacheManager
 
-# sibling
+# Silva
 from silva.core.interfaces import IRoot
 from silva.core.services.interfaces import ICataloging
 
@@ -112,7 +112,6 @@ def install(root):
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
-
     configureContainerPolicies(root)
 
 def uninstall(root):
@@ -250,13 +249,13 @@ def configureMiscServices(root):
     # setup mailhost
     if not MAILHOST_ID in root.objectIds():
         if MAILDROPHOST_AVAILABLE:
-            from Products.MaildropHost import manage_addMaildropHost
-            manage_addMaildropHost(root, MAILHOST_ID,
-                                   'Spool based mail delivery')
+            factory = root.manage_addProduct['MaildropHost']
+            factory.manage_addMaildropHost(
+                MAILHOST_ID, 'Spool based mail delivery')
         else:
-            from Products.MailHost.MailHost import manage_addMailHost
-            manage_addMailHost(root, MAILHOST_ID,
-                               'Mail Delivery Service')
+            factory = root.manage_addProduct['MailHost']
+            factory.manage_addMailHost(
+                MAILHOST_ID, 'Mail Delivery Service')
 
 
 def configureSecurity(root):
