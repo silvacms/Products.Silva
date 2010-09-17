@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import SilvaTestCase
 import unittest
 
 from Products.Silva.testing import FunctionalLayer
