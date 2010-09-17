@@ -225,7 +225,10 @@ def configureMiscServices(root):
         factory.manage_addTypographicalService('service_typo_chars')
     # service subscription
     if 'service_subscriptions' not in installed_ids:
-        factory.manage_addSubscriptionService('service_subscriptions')
+        factory.manage_addSubscriptionService()
+    # service message
+    if 'service_messages' not in installed_ids:
+        factory.manage_addEmailMessageService()
 
     # add service_references
     factory = root.manage_addProduct['silva.core.references']
@@ -347,10 +350,6 @@ def configureMembership(root):
 
     if 'Members' not in installed_ids:
         root.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder('Members')
-
-    if 'service_messages' not in installed_ids:
-        factory.manage_addEmailMessageService(
-            'service_messages', 'Silva Message Service')
 
 # helpers to add various objects to the root from the layout directory
 # these won't add FS objects but genuine ZMI managed code

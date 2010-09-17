@@ -5,7 +5,6 @@
 # Python
 import re
 import urllib
-from smtplib import SMTPException
 
 # Zope
 from AccessControl import ClassSecurityInfo
@@ -43,8 +42,8 @@ class SubscriptionService(Folder.Folder, SilvaService):
     silvaconf.icon('www/subscription_service.png')
 
     manage_options = (
-        {'label':'Edit', 'action':'manage_subscriptions'}
-        ,) + Folder.Folder.manage_options
+        {'label':'Settings', 'action':'manage_settings'},
+        ) + Folder.Folder.manage_options
 
     security = ClassSecurityInfo()
 
@@ -241,12 +240,7 @@ class SubscriptionService(Folder.Folder, SilvaService):
 
     def _sendEmail(self, template, data):
         message = template % data
-        try:
-            sendmail(self, message)
-        except SMTPException:
-            import sys, zLOG
-            zLOG.LOG('Silva service_subscriptions', zLOG.PROBLEM,
-                     'sending mail failed', sys.exc_info())
+        sendmail(self, message)
 
     def _create_ref(self, content):
         """Create encoded reference to object.
@@ -270,10 +264,10 @@ class SubscriptionServiceManagementView(silvaforms.ZMIComposedForm):
     """Edit File Serivce.
     """
     grok.require('zope2.ViewManagementScreens')
-    grok.name('manage_subscriptions')
+    grok.name('manage_settings')
     grok.context(SubscriptionService)
 
-    label = _(u"Configure subscriptions")
+    label = _(u"Service Subscriptions Configuration")
 
 
 class SubscriptionServiceActivateForm(silvaforms.ZMISubForm):
@@ -320,18 +314,23 @@ class SubscriptionServiceInstallMaildropHostForm(silvaforms.ZMISubForm):
     label = _(u"Install MaildropHost")
     description = _(u"Install a MaildropHost service to send emails")
 
-    def available(self):
+    def is_installable(self):
         if not MAILDROPHOST_AVAILABLE:
             return False
         root = self.context.get_root()
         mailhost =  getattr(root, MAILHOST_ID, None)
         return mailhost is None or mailhost.meta_type != 'Maildrop Host'
 
-    @silvaforms.action(_(u'Install'))
+    def available(self):
+        return self.status or self.is_installable()
+
+    @silvaforms.action(
+        _(u'Install'),
+        available=lambda form:form.is_installable())
     def action_install(self):
         root = self.context.get_root()
         if hasattr(root, MAILHOST_ID):
-            root.manage_delObjects([MAILHOST_ID, ])
+            root.manage_delObjects([MAILHOST_ID,])
         factory = root.manage_addProduct['MaildropHost']
         factory.manage_addMaildropHost(
             MAILHOST_ID, 'Spool based mail delivery')

@@ -589,7 +589,7 @@ class FilesService(SilvaService):
     storage = FieldProperty(interfaces.IFilesService['storage'])
 
     manage_options = (
-        {'label':'Manage', 'action':'manage_filesservice'},
+        {'label':'Settings', 'action':'manage_settings'},
         ) + SilvaService.manage_options
 
     security.declarePrivate('new_file')
@@ -612,7 +612,7 @@ class FileServiceManagementView(silvaforms.ZMIComposedForm):
     """Edit File Serivce.
     """
     grok.require('zope2.ViewManagementScreens')
-    grok.name('manage_filesservice')
+    grok.name('manage_settings')
     grok.context(FilesService)
 
     label = _(u"Configure file storage")
@@ -625,7 +625,7 @@ class FileServiceSettings(silvaforms.ZMISubForm):
 
     label = _(u"Select storage")
     fields = silvaforms.Fields(interfaces.IFilesService)
-    actions = silvaforms.Actions(silvaforms.EditAction(_(u"Change")))
+    actions = silvaforms.Actions(silvaforms.EditAction())
     ignoreContent = False
 
 

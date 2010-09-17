@@ -12,7 +12,6 @@ from zExceptions import BadRequest
 from Products.Silva import File
 from silva.core import interfaces
 from Products.Silva.Image import havePIL
-from Products.Silva.File import FILESYSTEM_STORAGE_AVAILABLE
 from Products.Silva.tests import helpers
 from Products.Silva.testing import FunctionalLayer, TestCase
 
@@ -32,7 +31,7 @@ class FileServicesTest(TestCase):
         root/folder1/folder1in1/folder1in1in1/service_files
         root/folder2
         """
-        root = self.root = self.layer.get_application()
+        self.root = self.layer.get_application()
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder1', 'Folder 1')
         factory.manage_addFolder('folder2', 'Folder 2')
@@ -119,7 +118,7 @@ class FileServicesTest(TestCase):
         file_data = self.root.testfile.get_content()
         form = component.getMultiAdapter(
             (self.root.service_files, self.root.REQUEST),
-            name='manage_filesservice').subforms[1]
+            name='manage_settings').subforms[1]
 
         # Convert to Blobs
         self.root.service_files.storage = File.BlobFile

@@ -57,16 +57,13 @@ silvaconf.extensionName('Silva')
 silvaconf.extensionTitle('Silva Core')
 silvaconf.extensionDepends(None)
 
-#----------------------------------------
-# Initialize subscription feature, part 1
-#----------------------------------------
 try:
     from Products.MaildropHost import MaildropHost
     MAILDROPHOST_AVAILABLE = True
 except ImportError:
     MAILDROPHOST_AVAILABLE = False
 
-MAILHOST_ID = 'service_subscriptions_mailhost'
+MAILHOST_ID = 'service_mailhost'
 
 AccessControl.allow_module('Products.Silva.adapters')
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
