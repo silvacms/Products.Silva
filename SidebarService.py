@@ -18,24 +18,10 @@ from Products.Silva.helpers import add_and_edit
 
 # Silva interfaces
 from silva.core import conf as silvaconf
+from silva.core.cache.store import Store
 from silva.core.services.base import SilvaService
 from silva.core.interfaces import (ISidebarService, IInvalidateSidebarEvent,
     ISilvaObject, IPublication, IRoot)
-
-
-from GenericCache.GenericCache import GenericCache
-
-
-class SidebarCache(object):
-    """The actual storage of the cache.
-    """
-
-    def __init__(self):
-        self.sidebar_cache = GenericCache(maxsize=125)
-        self.path_mapping = GenericCache(maxsize=125)
-
-
-cache = SidebarCache()
 
 
 class SidebarService(SilvaService):
@@ -74,7 +60,7 @@ class SidebarService(SilvaService):
         abs_url = pub.absolute_url()
         ph_path = pub.getPhysicalPath()
 
-        sidebar_cache = cache.sidebar_cache
+        sidebar_cache = Store('sidebar_cache', 'shared')
         cached_template = sidebar_cache.get(abs_url)
         if cached_template is None:
             cached_template = self._render_template(pub)
@@ -83,10 +69,8 @@ class SidebarService(SilvaService):
             # now add the abs_url to the path_mapping of the storage so we
             # can find it for invalidation when the invalidation is done
             # from another virtual host.
-            mapping = cache.path_mapping
-            if not mapping.has_key(ph_path):
-                mapping[ph_path] = ()
-            abs_urls = mapping[ph_path] + (abs_url,)
+            mapping = Store('sidebar_paths', 'shared')
+            abs_urls = mapping.get(ph_path, tuple()) + (abs_url,)
             mapping[ph_path] = abs_urls
 
         return self._finalize_template(
@@ -99,15 +83,20 @@ class SidebarService(SilvaService):
         """
         pub = obj.get_publication()
         ph_path = pub.getPhysicalPath()
-        abs_urls = cache.path_mapping.get(ph_path)
+        sidebar_paths = Store('sidebar_paths', 'shared')
+        abs_urls = sidebar_paths.get(ph_path)
 
-        if abs_urls is None:
+        if sidebar_paths is None:
             return
-        for abs_url in abs_urls:
-            if abs_url in cache.sidebar_cache:
-                del cache.sidebar_cache[abs_url]
-        if ph_path in cache.path_mapping:
-            del cache.path_mapping[ph_path]
+
+        sidebar_cache = Store('sidebar_cache', 'shared')
+
+        for url in  abs_urls:
+            if url in sidebar_cache:
+                del sidebar_cache[url]
+
+        if ph_path in sidebar_cache:
+            del sidebar_cache[ph_path]
 
     def _render_template(self, pub):
         """Actually render the pagetemplate
