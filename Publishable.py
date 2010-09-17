@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import warnings
-
 # Zope 3
 from zope.interface import implements
 
