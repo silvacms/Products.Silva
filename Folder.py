@@ -39,8 +39,7 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
-    INonPublishable, IContainer, IFolder, IPublication, IRoot,
-    InvalidateSidebarEvent)
+    INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent)
 
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
