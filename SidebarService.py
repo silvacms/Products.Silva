@@ -86,17 +86,16 @@ class SidebarService(SilvaService):
         sidebar_paths = Store('sidebar_paths', 'shared')
         abs_urls = sidebar_paths.get(ph_path)
 
-        if sidebar_paths is None:
+        if abs_urls is None:
             return
 
         sidebar_cache = Store('sidebar_cache', 'shared')
-
         for url in  abs_urls:
             if url in sidebar_cache:
                 del sidebar_cache[url]
 
-        if ph_path in sidebar_cache:
-            del sidebar_cache[ph_path]
+        if ph_path in sidebar_paths:
+            del sidebar_paths[ph_path]
 
     def _render_template(self, pub):
         """Actually render the pagetemplate
