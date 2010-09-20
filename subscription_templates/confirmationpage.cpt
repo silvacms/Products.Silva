@@ -1,0 +1,12 @@
+<tal:subscription i18n:domain="silva">
+  <h1 i18n:translate="">
+    subscription result to <span tal:replace="context.get_title_or_id()"
+                                 i18n:name="title_or_id"/>
+  </h1>
+  <p class="subscription-result"
+     tal:content="view.status">Result</p>
+  <a href="#"
+     tal:attributes="href path:context/@@absolute_url">
+    View the related page.
+  </a>
+</tal:subscription>

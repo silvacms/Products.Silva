@@ -145,4 +145,3 @@ def initialize_icons():
             '++resource++silva.icons/%s' % icon_name)
 
 initialize_icons()
-
