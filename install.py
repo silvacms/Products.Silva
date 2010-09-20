@@ -224,8 +224,8 @@ def configureMiscServices(root):
     if 'service_typo_chars' not in installed_ids:
         factory.manage_addTypographicalService('service_typo_chars')
     # service subscription
-    if 'service_subscriptions' not in installed_ids:
-        factory.manage_addSubscriptionService()
+    # if 'service_subscriptions' not in installed_ids:
+    #     factory.manage_addSubscriptionService()
     # service message
     if 'service_messages' not in installed_ids:
         factory.manage_addEmailMessageService()
