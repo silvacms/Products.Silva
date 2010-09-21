@@ -2,21 +2,18 @@
 # See also LICENSE.txt
 # $Id$
 
-# Python
+import itertools
 import hashlib
-import time, datetime
+import time
+import datetime
 
-# Zope 2
-from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from App.class_init import InitializeClass
 from BTrees.OOBTree import OOBTree
-import Acquisition
+from Acquisition import aq_parent
 
-# Silva
 from silva.core import interfaces
-from Products.Silva import SilvaPermissions
-
 from five import grok
+
 
 TIMEOUTINDAYS =  3
 
@@ -24,31 +21,31 @@ NOT_SUBSCRIBABLE = 0
 SUBSCRIBABLE = 1
 ACQUIRE_SUBSCRIBABILITY = 2
 
+def generate_token(*args):
+    hash = hashlib.md5()
+    for arg in args:
+        hash.update(str(args))
+    return hash.hexdigest()
 
 class Subscription(object):
     grok.implements(interfaces.ISubscription)
 
-    def __init__(self, emailaddress, contentsubscribedto):
-        self._emailaddress = emailaddress
-        self._contentsubscribedto = contentsubscribedto
-
-    def emailaddress(self):
-        return self._emailaddress
-
-    def contentSubscribedTo(self):
-        return self._contentsubscribedto
+    def __init__(self, email, content):
+        self.email = email
+        self.content = content
 
 
-class Subscribable(Acquisition.Explicit, grok.Adapter):
+class Subscribable(grok.Adapter):
     """Subscribable adapters potentially subscribable content and container
     Silva objects and encapsulates the necessary API for
     handling subscriptions.
     """
-    grok.context(interfaces.IVersionedContent)
+    grok.context(interfaces.ISilvaObject)
     grok.implements(interfaces.ISubscribable)
     grok.provides(interfaces.ISubscribable)
 
-    security = ClassSecurityInfo()
+    subscribability_possibilities = [
+        NOT_SUBSCRIBABLE, SUBSCRIBABLE, ACQUIRE_SUBSCRIBABILITY]
 
     def __init__(self, context):
         super(Subscribable, self).__init__(context)
@@ -59,31 +56,40 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
         if not hasattr(context, '__pending_subscription_tokens__'):
             context.__pending_subscription_tokens__ = OOBTree()
 
-    # ACCESSORS FOR UI
+    # ACCESSORS
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'isSubscribable')
-    def isSubscribable(self):
-        if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
+    def is_subscribable(self):
+        subscribability = self.context.__subscribability__
+        if subscribability == NOT_SUBSCRIBABLE:
             return False
-        subscribables = self._buildSubscribablesList()
-        return bool(subscribables)
+        if subscribability == SUBSCRIBABLE:
+            return True
+        parent = interfaces.ISubscribable(aq_parent(self.context))
+        return parent.is_subscribable()
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'subscribability')
-    def subscribability(self):
-        return self.context.__subscribability__
+    @apply
+    def subscribability():
+        def getter(self):
+            return self.context.__subscribability__
+        def setter(self, flag):
+            assert flag in self.subscribability_possibilities
+            self.context.__subscribability__ = flag
+        return property(getter, setter)
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'getSubscribedEmailaddresses')
-    def getSubscribedEmailaddresses(self):
-        emailaddresses = list(self.context.__subscriptions__.keys())
-        return emailaddresses
+    @apply
+    def locally_subscribed_emails():
+        def getter(self):
+            return set(self.context.__subscriptions__.keys())
+        def setter(self, emails):
+            # XXX Should not this be a set ??? (Need an upgrader)
+            subscriptions = self.context.__subscriptions__
+            subscriptions.clear()
+            subscriptions.update(
+                zip(emails, itertools.repeat(None, len(emails))))
+        return property(getter, setter)
 
     # ACCESSORS
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'getSubscriptions')
     def getSubscriptions(self):
         return self._getSubscriptions().values()
 
@@ -93,7 +99,7 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
         subscriptions = {}
         subscribables = self._buildSubscribablesList()
         for subscribable in subscribables:
-            for emailaddress in subscribable.getSubscribedEmailaddresses():
+            for emailaddress in subscribable.locally_subscribed_emails:
                 if not subscriptions.has_key(emailaddress):
                     subscriptions[emailaddress] = Subscription(
                         emailaddress, self.context)
@@ -103,103 +109,74 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
         if subscribables is None:
             subscribables = []
         if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
-            # Empty list from the point without explicit subscribability onwards.
+            # Empty list from the point without explicit
+            # subscribability onwards.
             del subscribables[marker:]
             return subscribables
         subscribables.append(self)
         if self.context.__subscribability__ == SUBSCRIBABLE:
             # Keep a marker for the object with explicit subscribability set.
             marker = len(subscribables)
-        # Use aq_inner first, to unwrap the adapter-containment.
-        parent = self.context.aq_inner.aq_parent
-        subscr = getSubscribable(parent)
-        return subscr._buildSubscribablesList(subscribables, marker)
+        parent = interfaces.ISubscribable(aq_parent(self.context))
+        return parent._buildSubscribablesList(subscribables, marker)
 
-    security.declarePrivate('isValidSubscription')
-    def isValidSubscription(self, emailaddress, token):
-        return self._validate(emailaddress, token)
-
-    security.declarePrivate('isValidCancellation')
-    def isValidCancellation(self, emailaddress, token):
-        return self._validate(emailaddress, token)
-
-    security.declarePrivate('isSubscribed')
-    def isSubscribed(self, emailaddress):
+    def isSubscribed(self, email):
         subscriptions = self.context.__subscriptions__
-        return bool(subscriptions.has_key(emailaddress))
+        return bool(subscriptions.has_key(email))
 
-    security.declarePrivate('getSubscription')
-    def getSubscription(self, emailaddress):
+    def getSubscription(self, email):
         subscriptions = self._getSubscriptions()
-        return subscriptions.get(emailaddress, None)
+        return subscriptions.get(email, None)
 
     # MODIFIERS
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'setSubscribability')
-    def setSubscribability(self, flag):
-        self.context.__subscribability__ = flag
-
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'subscribe')
-    def subscribe(self, emailaddress):
+    def subscribe(self, email):
         subscriptions = self.context.__subscriptions__
-        subscriptions[emailaddress] = None
+        subscriptions[email] = None
 
-    security.declareProtected(
-        SilvaPermissions.ApproveSilvaContent, 'unsubscribe')
     def unsubscribe(self, emailaddress):
         subscriptions = self.context.__subscriptions__
         if subscriptions.has_key(emailaddress):
             del subscriptions[emailaddress]
 
-    security.declarePrivate('generateConfirmationToken')
-    def generateConfirmationToken(self, emailaddress):
+    def generateConfirmationToken(self, email):
         tokens = self.context.__pending_subscription_tokens__
-        timestamp = time.time()
-        token = self._generateToken(emailaddress, '%f' % timestamp)
-        tokens[emailaddress] = (timestamp, token)
+        timestamp = '%f' % time.time()
+        token = generate_token(email, timestamp)
+        tokens[email] = (timestamp, token)
         return token
 
-    def _generateToken(self, *args):
-        s = hashlib.md5()
-        for arg in args:
-            s.update(arg)
-        return s.hexdigest()
-
-    def _validate(self, emailaddress, token):
+    def _validate(self, email, token):
         # The current implementation will keep items in the
         # pending list indefinitly if _validate is not called (end user
         # doesn't follow up on confirmantion email), or _validate is called,
         # but the supplied token is not valid.
         tokens = self.context.__pending_subscription_tokens__
-        timestamp, validation_token = tokens.get(emailaddress,(None, None))
+        timestamp, validation_token = tokens.get(email, (None, None))
         if timestamp is None or validation_token is None:
             return False
         now = datetime.datetime.now()
         then = datetime.datetime.fromtimestamp(timestamp)
         delta = now - then
         if delta.days > TIMEOUTINDAYS:
-            del tokens[emailaddress]
+            del tokens[email]
             return False
         if token == validation_token:
-            del tokens[emailaddress]
+            del tokens[email]
             return True
         return False
+
+    isValidSubscription = _validate
+    isValidCancellation = _validate
 
 
 InitializeClass(Subscribable)
 
 
-class SubscribableContainer(Subscribable):
-    """Subscribable container.
-    """
-    grok.context(interfaces.IContainer)
-
-
 class SubscribableRoot(Subscribable):
-
     grok.context(interfaces.IRoot)
+
+    subscribability_possibilities = [NOT_SUBSCRIBABLE, SUBSCRIBABLE]
 
     def __init__(self, context):
         if not hasattr(context, '__subscribability__'):
@@ -211,24 +188,9 @@ class SubscribableRoot(Subscribable):
         if subscribables is None:
             subscribables = []
         if self.context.__subscribability__ == NOT_SUBSCRIBABLE:
-            # Empty list from the point without explicit subscribability onwards.
+            # Empty list from the point without explicit
+            # subscribability onwards.
             del subscribables[marker:]
             return subscribables
         subscribables.append(self)
         return subscribables
-
-
-# Jumping through security hoops to get the adapter
-# somewhat accessible to Python scripts
-
-__allow_access_to_unprotected_subobjects__ = 1
-
-module_security = ModuleSecurityInfo('Products.Silva.adapters.subscribable')
-
-module_security.declareProtected(
-    SilvaPermissions.ApproveSilvaContent, 'getSubscribable')
-def getSubscribable(context):
-    adapter = interfaces.ISubscribable(context, None)
-    if adapter is not None:
-        return adapter.__of__(context)
-    return None
