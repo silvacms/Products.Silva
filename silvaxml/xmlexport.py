@@ -43,6 +43,9 @@ class SilvaBaseProducer(xmlexport.Producer):
         settings = self.getSettings()
         root = settings.getExportRoot()
         if not settings.externalRendering():
+            if not reference.target_id:
+                # The reference is broken. Return an empty path.
+                return ""
             if not reference.is_target_inside_container(root):
                 raise ExternalReferenceError(
                     self.context, reference.target, root)
