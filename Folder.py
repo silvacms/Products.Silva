@@ -512,11 +512,10 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                               'get_silva_addables_allowed_in_container')
     def get_silva_addables_allowed_in_container(self):
         current = self
-        while not IRoot.providedBy(current):
-            if IContainer.providedBy(current):
-                addables = current._addables_allowed_in_container
-                if addables is not None:
-                    return addables
+        while IContainer.providedBy(current):
+            addables = current._addables_allowed_in_container
+            if addables is not None:
+                return addables
             current = aq_parent(current)
         return self.get_silva_addables_all()
 
@@ -558,8 +557,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         root = self.get_root()
         return (
             not root.is_silva_addable_forbidden(addable_dict['name']) and
-            extensionRegistry.is_installed(addable_dict['product'], root)
-            )
+            extensionRegistry.is_installed(addable_dict['product'], root))
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed')
