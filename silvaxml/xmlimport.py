@@ -51,6 +51,9 @@ def parse_date(date):
 def resolve_path(setter, info, target_path):
     """Resolve target_path from root, and set it using setter.
     """
+    if not target_path:
+        # target_path == '' means the reference is broken.
+        return
     root = info.importRoot()
     imported_target_path = info.getImportedPath(canonical_path(target_path))
     if imported_target_path is None:
