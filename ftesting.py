@@ -21,7 +21,7 @@ def smi_create_content(browser, content_type, **fields):
         form.controls['addform.field.' + name].value = value
 
     assert form.controls['addform.action.save'].click() == 200
-    assert browser.inspect.feedback == ['Added ' + content_type], \
+    assert browser.inspect.feedback == ['Added ' + content_type + '.'], \
         u"Unexpected feedback on add form: %s" % (
         ', '.join(browser.inspect.feedback))
 
