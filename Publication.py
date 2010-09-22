@@ -258,7 +258,7 @@ class ManageLocalSite(silvaforms.SMIForm):
             self.send_message(str(e), type=u"error")
             return silvaforms.FAILURE
         else:
-            self.status = _("Local site activated.")
+            self.send_message(_("Local site activated."), type=u"feedback")
             return silvaforms.SUCCESS
 
     def can_be_normal_again(self):
@@ -278,7 +278,7 @@ class ManageLocalSite(silvaforms.SMIForm):
             self.send_message(str(e), type=u"error")
             return silvaforms.FAILURE
         else:
-            self.status = _("Local site deactivated.")
+            self.send_message(_("Local site deactivated."), type=u"feedback")
             return silvaforms.SUCCESS
 
 
