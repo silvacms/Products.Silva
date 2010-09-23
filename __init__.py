@@ -5,26 +5,10 @@
 import os
 import urlparse
 
-
 #### Hack of the day: don't fuck up your all DB if an interface is broken.
 
-class NullIterator(object):
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        return StopIteration
-
-
-class SafelyBrokenInterface(type):
-
-    def __iro__(cls):
-        return NullIterator()
-
-
-from ZODB.broken import Broken
-Broken.__metaclass__ = SafelyBrokenInterface
+from OFS.Uninstalled import BrokenClass
+BrokenClass.__iro__ = tuple()
 
 #### End of hack of the day
 
