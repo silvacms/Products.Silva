@@ -5,8 +5,31 @@
 import os
 import urlparse
 
-# add some scheme to urlparse
 
+#### Hack of the day: don't fuck up your all DB if an interface is broken.
+
+class NullIterator(object):
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        return StopIteration
+
+
+class SafelyBrokenInterface(type):
+
+    def __iter__(cls):
+        return NullIterator()
+
+
+from ZODB.broken import Broken
+Broken.__metaclass__ = SafelyBrokenInterface
+
+#### End of hack of the day
+
+
+# add some scheme to urlparse
 
 SCHEME_HTTP_LIKE_CAPABILITIES = [
     'uses_relative',
