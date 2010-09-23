@@ -19,7 +19,7 @@ class NullIterator(object):
 
 class SafelyBrokenInterface(type):
 
-    def __iter__(cls):
+    def __iro__(cls):
         return NullIterator()
 
 
