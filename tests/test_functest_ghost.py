@@ -5,10 +5,9 @@
 
 import unittest
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, smi_settings
 from Products.Silva.tests.helpers import publish_object
 from silva.core.references.reference import get_content_id
-from infrae.testbrowser.browser import Browser
 
 
 class BaseTest(unittest.TestCase):
@@ -25,9 +24,8 @@ class BaseTest(unittest.TestCase):
         self.document = self.root.publication.document
 
         self.layer.logout()
-        self.browser = Browser(self.layer._test_wsgi_application)
+        self.browser = self.layer.get_browser(smi_settings)
         self.browser.login('manager', 'manager')
-        self.browser.inspect.add('feedback', '//div[@id="feedback"]/div/span')
 
 
 class TestGhostAdd(BaseTest):
@@ -50,7 +48,7 @@ class TestGhostAdd(BaseTest):
         self.assertEqual(form.submit(name='addform.action.save'), 200)
 
         self.assertTrue('someghost' in self.root.objectIds())
-        self.assertEqual(self.browser.inspect.feedback, ['Added Silva Ghost'])
+        self.assertEqual(self.browser.inspect.feedback, ['Added Silva Ghost.'])
         self.assertEqual(self.browser.url, '/root/edit')
 
     def test_add_ghost_save_and_edit(self):
@@ -61,7 +59,7 @@ class TestGhostAdd(BaseTest):
         self.assertEqual(form.submit(name='addform.action.save_edit'), 200)
 
         self.assertTrue('someghost' in self.root.objectIds())
-        self.assertEqual(self.browser.inspect.feedback, ['Added Silva Ghost'])
+        self.assertEqual(self.browser.inspect.feedback, ['Added Silva Ghost.'])
         self.assertEqual(self.browser.url, '/root/someghost/edit')
 
     def test_add_ghost_cancel(self):
@@ -104,7 +102,7 @@ class TestGhostEdit(BaseTest):
         form.get_control('editform.field.haunted').value = other_id
         self.assertEqual(form.submit(name='editform.action.save-changes'), 200)
 
-        self.assertEqual(self.browser.inspect.feedback, ['Modification saved'])
+        self.assertEqual(self.browser.inspect.feedback, ['Changes saved.'])
         version = self.ghost.get_editable()
         self.assertEqual(version.get_haunted(), self.other)
 
