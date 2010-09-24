@@ -3126,7 +3126,8 @@ SilvaPropertyTool.prototype._buildButtonCallback = function(form, data) {
 };
 
 SilvaPropertyTool.prototype.loadProperties = function(data) {
-    var form = $('<form method="post" enctype="multipart/form-data" />');
+    var form = $('<form method="post" enctype="multipart/form-data" '+
+                 'class="zeam-form zeam-inline-validation" />');
     this.data.empty();
     this.data.append(form);
     if (data['label']) {
@@ -3145,11 +3146,7 @@ SilvaPropertyTool.prototype.loadProperties = function(data) {
         };
         form.append(button);
     };
-    form.find('.field-datetime').each(function(index) {
-        // Initiliaze date time widgets
-        var date_field = new ZeamDateField($(this));
-        date_field.initialize();
-    });
+    form.trigger('zeam-form-ready');
     this.toolbox.enable();
 };
 
