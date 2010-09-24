@@ -114,12 +114,14 @@ class ILinkSchema(interface.Interface):
                       u"it is the target of the link."),
         required=False)
 
-    # @interface.invariant
-    # def url_validation(obj):
-    #     if obj.relative and not obj.target:
-    #         raise interface.Invalid(_("Relative link selected without target"))
-    #     if not obj.relative and not obj.url:
-    #         raise interface.Invalid(_("Absolute link selected without URL"))
+    @interface.invariant
+    def url_validation(content):
+        if content.relative and not content.target:
+            raise interface.Invalid(
+                _("Relative link selected without target."))
+        if not content.relative and not content.url:
+            raise interface.Invalid(
+                _("Absolute link selected without URL."))
 
 
 class LinkAddForm(silvaforms.SMIAddForm):
