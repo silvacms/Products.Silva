@@ -370,12 +370,8 @@ def pt_add_helper(root, id, text):
         root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
             id, text=text)
 
-def zpt_add_helper(root, id, text):
-    if hasattr(root.aq_base, id):
-        getattr(root, id).write(text)
-    else:
-        root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
-            id, text=text)
+# BBB
+zpt_add_helper = pt_add_helper
 
 def dtml_add_helper(root, id, text):
     if hasattr(root.aq_base, id):
