@@ -5,6 +5,9 @@
 import os
 import urlparse
 
+# prevent a circular import in Zope 2.12
+import AccessControl
+
 #### Hack of the day: don't fuck up your all DB if an interface is broken.
 
 from OFS.Uninstalled import BrokenClass
@@ -40,9 +43,6 @@ def update_url_parse_schemes():
         add_scheme(scheme, caps)
 
 update_url_parse_schemes()
-
-# prevent a circular import in Zope 2.12
-import AccessControl
 
 # register FileSystemSite directories
 from Products.FileSystemSite.DirectoryView import (
