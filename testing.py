@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+import re
+import email
+
 from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
@@ -18,20 +21,47 @@ import transaction
 
 
 class MockMail(object):
-    """A sent mail.
+    """A sent mail. We can access data about this email for testing
+    purpose as well.
     """
 
     def __init__(self, mfrom, mto, message):
         self.mfrom = mfrom
         self.mto = mto
         self.message = message
+        self.__parsed = email.parser.Parser().parsestr(message)
+
+    @property
+    def subject(self):
+        return self.__parsed.get('Subject')
+
+    @property
+    def headers(self):
+        return dict(self.__parsed)
+
+    @property
+    def content_type(self):
+        return self.__parsed.get_content_type()
+
+    @property
+    def charset(self):
+        return self.__parsed.get_content_charset()
+
+    @property
+    def text(self):
+        return self.__parsed.get_payload()
+
+    @property
+    def urls(self):
+        URLS = re.compile(r'(mailto\:|news|(ht|f)tp(s?)\://){1}\S+')
+        return [m.group() for m in re.finditer(URLS, self.text)]
 
     def __repr__(self):
         return '<Message from %s to %s>' % (self.mfrom, ', '.join(self.mto))
 
 
 class MockMailHost(SimpleItem):
-    """A fake mail host.
+    """A fake mail host that retains its email for testing purpose.
     """
     meta_type = 'Mock Mail Host'
 

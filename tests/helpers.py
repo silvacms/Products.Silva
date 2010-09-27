@@ -29,7 +29,7 @@ def approve_object(obj):
     obj.approve_version()
 
 
-def publish_object(obj):
+def publish_content(obj):
     """Publish object.
     """
     now = DateTime.DateTime()
@@ -37,7 +37,8 @@ def publish_object(obj):
     obj.approve_version()
 
 # We are going to convert all API not to use camelcase anymore.
-publishObject = publish_object
+publish_object = publish_content
+publishObject = publish_content
 approveObject = approve_object
 
 def publishApprovedObject(obj):
