@@ -17,7 +17,11 @@ from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
+from zope.testing import cleanup
 import transaction
+
+
+SENT_MAILS = []
 
 
 class MockMail(object):
@@ -69,18 +73,26 @@ class MockMailHost(SimpleItem):
         super(MockMailHost, self).__init__(id)
         self.reset()
 
-    def reset(self):
-        self.messages = []
+    @property
+    def messages(self):
+        return list(SENT_MAILS)
+
+    @staticmethod
+    def reset():
+        del SENT_MAILS[:]
 
     def read_last_message(self):
         message = None
-        if self.messages:
-            message = self.messages[-1]
+        if SENT_MAILS:
+            message = SENT_MAILS[-1]
         self.reset()
         return message
 
     def _send(self, mfrom, mto, message):
-        self.messages.append(MockMail(mfrom=mfrom, mto=mto, message=message))
+        SENT_MAILS.append(MockMail(mfrom=mfrom, mto=mto, message=message))
+
+
+cleanup.addCleanUp(MockMailHost.reset)
 
 
 class SilvaLayer(BrowserLayer):
