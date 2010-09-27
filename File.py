@@ -232,25 +232,43 @@ class File(Asset):
         return '<a href="%s" title="%s %s" %s>%s</a>' % (
             src, tooltip, self.id, named, self.get_title_or_id())
 
+    # checks where the mime type is text/* or javascript
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'can_edit_text')
+    def can_edit_text(self):
+        mt = self.get_mime_type()
+        if ((mt.startswith('text/') and mt != 'text/rtf') or \
+                mt in ('application/x-javascript',)):
+            return True
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_editable_size')
     def is_editable_size(self):
         #size is editable if it is less than 150 KB
         return not self.get_file_size() > 153600
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_text_content')
     def get_text_content(self):
         if not self.can_edit_text():
             raise TypeError("Content of Silva File is not text")
         return self.get_content()
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content')
     def get_content(self):
         fd = self.get_content_fd()
         data = fd.read()
         fd.close()
         return data
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content_fd')
     def get_content_fd(self):
         raise NotImplementedError
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content_type')
     def content_type(self):
         return self._file.content_type
 
@@ -281,16 +299,13 @@ class File(Asset):
         """Return path on filesystem for containing File"""
         return None
 
-    # checks where the mime type is text/* or javascript
-    def can_edit_text(self):
-        mt = self.get_mime_type()
-        if ((mt.startswith('text/') and mt != 'text/rtf') or \
-                mt in ('application/x-javascript',)):
-            return True
-
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_type')
     def set_content_type(self, content_type):
         self._file.content_type = content_type
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
     def set_text_file_data(self, datastr):
         ct = self._file.content_type
         datafile = StringIO()
@@ -322,6 +337,7 @@ class ZODBFile(File):
     """
     grok.implements(interfaces.IZODBFile)
     grok.baseclass()
+    security = ClassSecurityInfo()
 
     def __init__(self, id):
         super(ZODBFile, self).__init__(id)
@@ -339,12 +355,16 @@ class ZODBFile(File):
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content')
     def get_content(self):
         data = self._file.data
         if isinstance(data, StringTypes):
             return data
         return str(data)
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content_fd')
     def get_content_fd(self):
         return StringIO(self.get_content())
 
@@ -368,7 +388,6 @@ class ZODBFileView(silvaviews.View):
 class BlobFile(File):
     """Silva File object, storage using blobs.
     """
-
     grok.implements(interfaces.IBlobFile)
     grok.baseclass()
     security = ClassSecurityInfo()
@@ -419,6 +438,8 @@ class BlobFile(File):
         ICataloging(self).reindex()
         self.update_quota()
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_type')
     def set_content_type(self, content_type):
         self._content_type = content_type
 
@@ -500,6 +521,8 @@ class FileSystemFile(File):
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
 
+    security.declareProtected(
+        SilvaPermissions.View, 'get_content_fd')
     def get_content_fd(self):
         return open(self._get_filename(), 'rb')
 
