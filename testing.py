@@ -17,7 +17,6 @@ from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.wsgi.testing import BrowserLayer, Browser, http
 from zope.site.hooks import setSite, setHooks
-from zope.testing import cleanup
 import transaction
 
 
@@ -90,9 +89,6 @@ class MockMailHost(SimpleItem):
 
     def _send(self, mfrom, mto, message):
         SENT_MAILS.append(MockMail(mfrom=mfrom, mto=mto, message=message))
-
-
-cleanup.addCleanUp(MockMailHost.reset)
 
 
 class SilvaLayer(BrowserLayer):
