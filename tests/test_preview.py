@@ -2,53 +2,63 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.tests.helpers import publishObject
-from Products.Silva.tests.SilvaBrowser import SilvaBrowser
-from Products.Silva.tests import SilvaTestCase
+import unittest
 
-class PreviewTest(SilvaTestCase.SilvaFunctionalTestCase):
+from Products.Silva.tests.helpers import publish_content
+from Products.Silva.testing import FunctionalLayer
 
 
-    def afterSetUp(self):
+class PreviewTestCase(unittest.TestCase):
+    """Test preview access.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
         """Create some contents for testing:
 
         root
         |-- doc
         `-- doc2
         """
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
 
-        self.doc = self.add_document(self.root, 'doc', u'Test Document')
-        publishObject(self.doc)
-        self.doc2 = self.add_document(self.root, 'doc2', u'Test Second Document')
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('info', u'Information')
+        factory.manage_addDocument('contact', u'Contact')
+        publish_content(self.root.info)
 
-    def test_preview(self):
-        browser = SilvaBrowser()
-        # Look at the front page. We should not see the unpublish document.
-        code, url = browser.go('http://localhost/root')
-        self.assertEqual(200, code)
-        self.failUnless('Test Document' in browser.contents)
-        self.failIf('Test Second Document' in browser.contents)
-        link_doc = browser.get_href_named('Test Document')
-        self.assertEqual(link_doc.url, 'http://localhost/root/doc')
+    def test_preview_links(self):
+        """In preview, we see not yet published content.
+        """
+        browser = self.layer.get_browser()
 
-        # In preview, we should be logged
-        code, url = browser.go('http://localhost/root/++preview++')
-        self.assertEqual(401, code)
-        browser.login()
-        code, url = browser.go('http://localhost/root/++preview++')
-        self.assertEqual(200, code)
-        self.failUnless('Test Document' in browser.contents)
-        self.failUnless('Test Second Document' in browser.contents)
+        self.assertEqual(browser.open('http://localhost/root'), 200)
 
-        # Link should to be rewritten using ++preview++
-        link_doc = browser.get_href_named('Test Document')
-        self.assertEqual(link_doc.url, 'http://localhost/root/++preview++/doc')
-        link_doc2 = browser.get_href_named('Test Second Document')
-        self.assertEqual(link_doc2.url, 'http://localhost/root/++preview++/doc2')
+        link = browser.get_link('Information')
+        self.assertEqual(link.url, 'http://localhost/root/info')
+        self.assertRaises(AssertionError, browser.get_link, u'Contact')
 
-import unittest
+        # Access preview. We need to be reader for it.
+        self.assertEqual(browser.open('http://localhost/root/++preview++'), 401)
+
+        browser.login('viewer', 'viewer')
+        self.assertEqual(browser.open('http://localhost/root/++preview++'), 401)
+
+        browser.login('reader', 'reader')
+        self.assertEqual(browser.open('http://localhost/root/++preview++'), 200)
+
+        # We now see both pages (unpublished as well), links are rewritten.
+        link = browser.get_link('Information')
+        self.assertEqual(link.url, 'http://localhost/root/++preview++/info')
+        link = browser.get_link('Contact')
+        self.assertEqual(link.url, 'http://localhost/root/++preview++/contact')
+
+        # XXX Should add some content on published/unpublished version
+        # and check we see the unpublished in preview.
+
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(PreviewTest))
+    suite.addTest(unittest.makeSuite(PreviewTestCase))
     return suite
-
