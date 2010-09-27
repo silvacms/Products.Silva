@@ -168,6 +168,7 @@ class SilvaLayer(BrowserLayer):
         setSite(None)
         setHooks()
         self._silva_root = None
+        MockMailHost.reset()
 
         super(SilvaLayer, self).testTearDown()
 
