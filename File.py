@@ -268,7 +268,7 @@ class File(Asset):
         raise NotImplementedError
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_content_type')
+        SilvaPermissions.View, 'content_type')
     def content_type(self):
         return self._file.content_type
 
