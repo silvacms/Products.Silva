@@ -44,8 +44,8 @@ class DefaultImageTestCase(TestCase):
         """Test image content.
         """
         content = self.root.test_image
-        self.failUnless(verifyObject(interfaces.IAsset, content))
-        self.failUnless(verifyObject(interfaces.IImage, content))
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IImage, content))
 
         # Asset methods
         self.assertEquals(content.content_type(), 'image/tiff')
@@ -59,7 +59,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEquals(str(content.get_orientation()), "portrait")
         content.set_web_presentation_properties('JPEG', '100x100', '')
         self.assertRaises(ValueError, content.get_image, hires=0, webformat=0)
-        self.failUnless(content.tag() is not None)
+        self.assertTrue(content.tag() is not None)
 
         data = StringIO(content.get_image(hires=0, webformat=1))
         pil_image = PILImage.open(data)
@@ -90,7 +90,7 @@ class DefaultImageTestCase(TestCase):
         token = self.root.manage_copyObjects(['test_image'])
         self.root.manage_pasteObjects(token)
 
-        self.failUnless('copy_of_test_image' in self.root.objectIds())
+        self.assertTrue('copy_of_test_image' in self.root.objectIds())
         copy_of_content = self.root.copy_of_test_image
         self.assertEquals(
             copy_of_content.get_filename(),
@@ -100,7 +100,7 @@ class DefaultImageTestCase(TestCase):
         """Test AssetData adapter.
         """
         asset_data = interfaces.IAssetData(self.root.test_image)
-        self.failUnless(verifyObject(interfaces.IAssetData, asset_data))
+        self.assertTrue(verifyObject(interfaces.IAssetData, asset_data))
         self.assertEquals(self.image_data, asset_data.getData())
 
     def test_http_view(self):
@@ -112,7 +112,7 @@ class DefaultImageTestCase(TestCase):
         self.assertEqual(
             headers['Content-Disposition'], 'inline;filename=test_image.tiff')
         self.assertEqual(headers['Content-Type'], 'image/tiff')
-        self.failUnless('Last-Modified' in headers)
+        self.assertTrue('Last-Modified' in headers)
         image_data = response.getBody()
         pil_image = PILImage.open(StringIO(image_data))
         self.assertEqual((960, 1280), pil_image.size)
@@ -160,7 +160,7 @@ class DefaultImageTestCase(TestCase):
             headers['Content-Disposition'], 'inline;filename=test_image.tiff')
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Length'], str(self.image_size))
-        self.failUnless('Last-Modified' in headers)
+        self.assertTrue('Last-Modified' in headers)
         self.assertEquals(response.getBody(), '')
 
     def test_http_head_thumbnail(self):
@@ -251,6 +251,7 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertRaises(
             ValueError,
             factory.manage_addImage, 'badimage', 'Bad Image', image_file)
+        self.assertFalse('badimage' in self.root.objectIds())
 
     def test_get_crop_box(self):
         """Test get_crop_box method that either return or parse a crop_box.

@@ -62,16 +62,25 @@ havePIL = 1
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image.
     """
+    try:
+        PILImage.open(file)
+    except IOError, error:
+        raise ValueError(error.args[-1].capitalize())
+    file.seek(0)
+
     content = image_factory(context, id, None, file)
     if content is None:
-        return None
-    id = content.id
+        raise ValueError(_(u"Invalid computed identifier."))
+    id = content.getId()
+    if id in context.objectIds():
+        raise ValueError(
+            _(u"Duplicate id. Please give an explicit id."))
     context._setObject(id, content)
     content = getattr(context, id)
     content.set_title(title)
-    notify(ObjectCreatedEvent(content))
     if file:
         content.set_image(file)
+    notify(ObjectCreatedEvent(content))
     return content
 
 
@@ -438,8 +447,8 @@ class Image(Asset):
         image_reference = img.get_content_fd()
         try:
             image = PILImage.open(image_reference)
-        except IOError, e:
-            raise ValueError, e.args[-1]
+        except IOError, error:
+            raise ValueError(error.args[-1].capitalize())
         return image
 
 

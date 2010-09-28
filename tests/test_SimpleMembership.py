@@ -58,10 +58,10 @@ class SimpleMembershipTestCase(SilvaTestCase.SilvaTestCase):
     def test_avatar(self):
         service_members = self.root.service_members
         alpha = service_members.get_member('alpha')
-        self.assertEquals('', alpha.avatar())
+        self.assertEquals(None, alpha.avatar())
         string = '<img src="' + self.root.get_root_url() + '/globals/avatar.png" alt="alpha\'s avatar" title="alpha\'s avatar" style="height: 32px; width: 32px" />'
         self.assertEquals(string, alpha.avatar_tag())
-        alpha.set_avatar('user@example.com')
+        alpha.set_email('user@example.com')
         self.assertEquals('user@example.com', alpha.avatar())
         string = '<img src="https://secure.gravatar.com/avatar.php?default=' + urllib.quote(self.root.get_root_url(),'') + '%2Fglobals%2Favatar.png&size=32&gravatar_id=b58996c504c5638798eb6b511e6f49af" alt="alpha\'s avatar" title="alpha\'s avatar" style="height: 32px; width: 32px" />'
         self.assertEquals(string, alpha.avatar_tag())

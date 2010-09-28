@@ -221,8 +221,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         move_ids = move_ids_in_order
         move_ids.reverse()
         for move_id in move_ids:
-            self._invalidate_sidebar(getattr(self, move_id))
             ids.insert(index, move_id)
+        self._invalidate_sidebar(self)
         ids = [id for id in ids if id is not None]
         self._ordered_ids = ids
         return 1
