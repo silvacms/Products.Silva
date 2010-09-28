@@ -38,11 +38,11 @@ installProduct('Formulator')
 installProduct('FileSystemSite')
 installProduct('ParsedXML')
 installProduct('ProxyIndex')
+installProduct('MailHost')
 if hasProduct('MaildropHost'):
     installProduct('MaildropHost')
 if hasProduct('ExtFile'):
     installProduct('ExtFile')
-installProduct('Groups')
 installProduct('SilvaFind')
 installProduct('SilvaMetadata')
 installProduct('SilvaViews')
