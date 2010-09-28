@@ -120,16 +120,19 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'Accept-Ranges', None)
 
 
-def manage_addFile(self, id, title=None, file=None):
+def manage_addFile(context, id, title=None, file=None):
     """Add a File
     """
 
-    content = file_factory(self, id, DEFAULT_MIMETYPE, file)
+    content = file_factory(context, id, DEFAULT_MIMETYPE, file)
     if content is None:
-        return None
-    id = content.id
-    self._setObject(id, content)
-    content = getattr(self, id)
+        raise ValueError(_(u"Invalid computed identifier."))
+    id = content.getId()
+    if id in context.objectIds():
+        raise ValueError(
+            _(u"Duplicate id. Please give an explicit id."))
+    context._setObject(id, content)
+    content = getattr(context, id)
     if title:
         content.set_title(title)
     notify(ObjectCreatedEvent(content))
