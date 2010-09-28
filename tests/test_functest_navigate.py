@@ -6,8 +6,7 @@
 from FunctionalTestMixin import *
 import SilvaTestCase
 
-class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase,
-                       MixinRoleContent, MixinNavigate):
+class NavigateTestCase(SilvaTestCase.SilvaFunctionalTestCase, MixinNavigate):
     """
         test navigation tabs as manager at Silva root
     """

@@ -78,54 +78,6 @@ class MixinLoginLogout(BaseMixin):
             self.fail()
 
 
-class MixinFieldParameters(BaseMixin):
-
-    def fill_create_file_fields(self, browser):
-        self.fill_create_title_field(browser)
-        self.fill_create_file_field(browser)
-
-    def fill_create_image_fields(self, browser):
-        self.fill_create_title_field(browser)
-        self.fill_create_image_field(browser)
-
-    def fill_create_link_fields(self, browser):
-        self.fill_create_title_field(browser)
-        self.fill_create_url_field(browser)
-        self.fill_create_link_type_field(browser)
-
-    def fill_create_depth_field(self, browser):
-        self.fill_create_title_field(browser)
-        browser.getControl(name='field_depth').value = '-1'
-
-    def fill_create_file_field(self, browser):
-        browser.getControl(name='field_file').add_file(openTestFile('test.txt'), 'text/plain', 'test.txt')
-
-    def fill_create_folderish_field(self, browser):
-        self.fill_create_title_field(browser)
-        browser.getControl(name='field_policy_name').value = ['Silva Document']
-
-    def fill_create_ghost_url_field(self, browser):
-        browser.getControl(name='field_content_url').value = 'index'
-
-    def fill_create_image_field(self, browser):
-        browser.getControl(name='field_file').add_file(openTestFile('torvald.jpg'), 'image/jpeg', 'torvald.jpg')
-
-    def fill_create_link_type_field(self, browser):
-        browser.getControl(name='field_link_type').value = ['absolute']
-
-    def fill_create_properties_title_field(self, browser):
-        browser.getControl(name='silva-content.maintitle:record').value = 'test content€'
-
-    def fill_create_title_field(self, browser):
-        browser.getControl(name='field_object_title').value = 'test content€'
-        # other unicode characters to choose from '€ ‚ ‘ ’ „ “ ” « » — – · ©'
-
-    #def fill_create_title_field2(self, browser):
-    #    browser.getControl(name='field_object_title').value = 'test content2'
-
-    def fill_create_url_field(self, browser):
-        browser.getControl(name='field_url').value = 'index'
-
 class MixinRoleContent(MixinLoginLogout):
 
     def role_logout(self, browser):
@@ -211,7 +163,7 @@ class MixinRoleContent(MixinLoginLogout):
         self.do_delete_content(browser)
         self.role_logout(browser)
 
-class MixinNavigate(MixinLoginLogout):
+class MixinNavigate(MixinRoleContent):
     """
         methods that simulate or support navigating the smi
     """
