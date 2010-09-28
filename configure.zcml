@@ -20,6 +20,7 @@
   <include package="silva.translations" />
   <include package="zeam.form.silva" />
 
+  <include package="Products.Formulator" />
   <include package="Products.SilvaMetadata" />
   <include package="Products.SilvaDocument" />
   <include package="Products.SilvaFind" />
