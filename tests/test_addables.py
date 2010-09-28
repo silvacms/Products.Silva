@@ -15,15 +15,19 @@ class AddablesTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addPublication('publication', 'Publication')
+        factory.manage_addPublication('folder', 'Folder')
 
     def test_set_and_get_addables(self):
-        """Test that if you set addables you get what you set.
+        """Test that if you set addables you get what you set. Setting
+        should be acquired too.
         """
         addables = ['Silva Image']
-        self.root.publication.set_silva_addables_allowed_in_container(addables)
+        self.root.set_silva_addables_allowed_in_container(addables)
         self.assertEquals(
-            self.root.publication.get_silva_addables_allowed_in_container(),
+            self.root.get_silva_addables_allowed_in_container(),
+            ['Silva Image'])
+        self.assertEquals(
+            self.root.folder.get_silva_addables_allowed_in_container(),
             ['Silva Image'])
 
     def test_root_not_addables(self):
@@ -36,7 +40,7 @@ class AddablesTestCase(unittest.TestCase):
             self.root.get_silva_addables_allowed_in_container())
         self.failIf(
             'Silva Root' in
-            self.root.publication.get_silva_addables_allowed_in_container())
+            self.root.folder.get_silva_addables_allowed_in_container())
 
 
 def test_suite():
