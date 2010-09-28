@@ -130,7 +130,7 @@ def manage_addFile(context, id, title=None, file=None):
     id = content.getId()
     if id in context.objectIds():
         raise ValueError(
-            _(u"Duplicate id. Please give an explicit id."))
+            _(u"Duplicate id. Please provide an explicit id."))
     context._setObject(id, content)
     content = getattr(context, id)
     if title:
