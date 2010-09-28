@@ -62,11 +62,13 @@ havePIL = 1
 def manage_addImage(context, id, title, file=None, REQUEST=None):
     """Add an Image.
     """
-    try:
-        PILImage.open(file)
-    except IOError, error:
-        raise ValueError(error.args[-1].capitalize())
-    file.seek(0)
+    if file is not None:
+        try:
+            PILImage.open(file)
+        except IOError, error:
+            raise ValueError(error.args[-1].capitalize())
+        # We have to be able to do seek.
+        file.seek(0)
 
     content = image_factory(context, id, None, file)
     if content is None:
