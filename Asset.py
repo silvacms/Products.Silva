@@ -6,6 +6,7 @@ import logging
 
 # Zope 3
 from five import grok
+from zope.interface import Interface
 from zope import component
 from zope.traversing.browser import absoluteURL
 
@@ -17,9 +18,10 @@ import OFS.interfaces
 
 # Silva
 from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.mangle import Bytes
 from Products.Silva import SilvaPermissions
 
-from silva.core import interfaces
+from silva.core.interfaces import IAsset, IImage, IVersion
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
 from silva.core.smi.smi import SMIPortletManager
@@ -31,7 +33,7 @@ logger = logging.getLogger('silva.core')
 
 class Asset(SilvaObject, SimpleItem.SimpleItem):
     grok.baseclass()
-    grok.implements(interfaces.IAsset)
+    grok.implements(IAsset)
 
     security = ClassSecurityInfo()
 
@@ -51,7 +53,7 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
             return
 
         parent = self.aq_parent
-        if not interfaces.IImage.providedBy(parent):
+        if not IImage.providedBy(parent):
             new_size = self.get_file_size()
             delta = new_size - self._old_size
             parent.update_quota(delta)
@@ -80,8 +82,8 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
     def version_status(self):
         return 'public'
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                            'fulltext')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
         fulltextlist = [self.id, self.get_title()]
         return fulltextlist
@@ -95,11 +97,18 @@ class Asset(SilvaObject, SimpleItem.SimpleItem):
     def get_mime_type(self):
         raise NotImplementedError
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
+    def get_file_system_path(self):
+        """Return path of the file containing the data on the filesystem.
+        """
+        return None
+
 
 InitializeClass(Asset)
 
 
-@grok.subscribe(interfaces.IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
+@grok.subscribe(IAsset, OFS.interfaces.IObjectWillBeMovedEvent)
 def asset_moved_update_quota(asset, event):
     """Event called on Asset when they are moved to update quota on
     parents folders.
@@ -134,12 +143,48 @@ def asset_moved_update_quota(asset, event):
         event.newParent.update_quota(size)
 
 
-class ReferencedBy(silvaviews.Viewlet):
+class SMIAssetMetadata(silvaviews.ViewletManager):
+    """Report information on assets.
+    """
+    grok.context(IAsset)
+    grok.view(Interface)
+
+
+class AssetSize(silvaviews.Viewlet):
+    """Report size of this asset.
+    """
+    grok.context(IAsset)
+    grok.layer(ISMILayer)
+    grok.order(80)
+    grok.viewletmanager(SMIAssetMetadata)
+
+    def update(self):
+        self.size = Bytes(self.context.get_file_size())
+
+
+class AssetPath(silvaviews.Viewlet):
+    """Give filesystem path to that asset.
+    """
+    grok.context(IAsset)
+    grok.layer(ISMILayer)
+    grok.order(90)
+    grok.require('zope2.ViewManagementScreens')
+    grok.viewletmanager(SMIAssetMetadata)
+
+    def update(self):
+        self.path = None
+        path = self.context.get_file_system_path()
+        if path is not None:
+            self.path = path.replace('/', ' / ')
+
+
+class AssetReferencedBy(silvaviews.Viewlet):
     """Report usage of this asset
     """
-    grok.context(interfaces.IAsset)
+    grok.context(IAsset)
     grok.layer(ISMILayer)
-    grok.viewletmanager(SMIPortletManager)
+    grok.order(100)
+    grok.viewletmanager(SMIAssetMetadata)
 
     def update(self):
         self.references = []
@@ -149,7 +194,7 @@ class ReferencedBy(silvaviews.Viewlet):
             source_title = source.get_title_or_id()
             source_url = component.getMultiAdapter(
                 (source, self.request), ISilvaURL).preview()
-            if interfaces.IVersion.providedBy(source):
+            if IVersion.providedBy(source):
                 source_title += ' (%s)' % source.id
                 source = source.get_content()
             edit_url = absoluteURL(source, self.request) + '/edit'

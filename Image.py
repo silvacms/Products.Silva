@@ -381,10 +381,10 @@ class Image(Asset):
         return True
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'getFileSystemPath')
-    def getFileSystemPath(self):
+        'get_file_system_path')
+    def get_file_system_path(self):
         """return path on filesystem for containing image"""
-        return self.hires_image.getFileSystemPath()
+        return self.hires_image.get_file_system_path()
 
     security.declareProtected(SilvaPermissions.View, 'get_orientation')
     def get_orientation(self):

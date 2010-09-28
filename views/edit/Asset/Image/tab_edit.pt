@@ -95,44 +95,13 @@
         square or portrait
       </span>
     </p>
-    <h4 i18n:translate="">file size</h4>
-    <p tal:define="
-      size model/get_file_size;
-      scaled_size model/get_scaled_file_size;
-      ">
-      <span tal:attributes="title string: ${size} bytes"
-        tal:content="python:mangle.Bytes(size)">size</span>
-      <tal:block tal:condition="model/canScale">
-        <br />
-        <tal:condition condition="python: size != scaled_size">
-         <span
-           tal:attributes="title string:${scaled_size} bytes"
-           tal:content="python:mangle.Bytes(scaled_size)" />
-           <span i18n:translate="" tal:omit-tag="">scaled</span>
-        </tal:condition>
-      </tal:block>
-    </p>
-    <p tal:condition="not: model/canScale">
-      <tal:block i18n:translate="">Note: Silva can provide image scaling and conversion with the help of PIL</tal:block>
-      (<a href="http://www.pythonware.com/products/pil/">Python Imaging Library</a>).
-      <tal:block i18n:translate="">PIL doesn't seem to be installed.</tal:block>
-    </p>
-    <tal:if tal:condition="python:user.has_role(['Manager'], model)">
-      <tal:if tal:define="path model/getFileSystemPath"
-         tal:condition="path">
-      <h4 i18n:translate="">file system path</h4>
-      <p>
-        <span tal:replace="structure python:  ' / '.join(path.split('/'))" />
-      </p>
-      </tal:if>
-    </tal:if>
-    <tal:portlets tal:replace="structure provider:smiportletmanager" />
+    <tal:portlets tal:replace="structure provider:smiassetmetadata" />
   </div>
 </metal:fill-slot>
 
 <metal:fill-slot fill-slot="additional_tools">
   <form method="post"
-    name="form"
+    name="editform.scaling"
     action="."
     enctype="multipart/form-data"
     tal:condition="model/canScale">

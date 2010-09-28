@@ -294,9 +294,10 @@ class File(Asset):
         self._filename = filename
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
-    def getFileSystemPath(self):
-        """Return path on filesystem for containing File"""
+        SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
+    def get_file_system_path(self):
+        """Return path on filesystem for containing File.
+        """
         return None
 
     security.declareProtected(
@@ -468,6 +469,14 @@ class BlobFile(File):
     def get_content_fd(self):
         return self._file.open()
 
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
+    def get_file_system_path(self):
+        desc = self._file.open()
+        filename = desc.name
+        desc.close()
+        return filename
+
 
 InitializeClass(BlobFile)
 
@@ -532,8 +541,8 @@ class FileSystemFile(File):
         return self._file.static_url()
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getFileSystemPath')
-    def getFileSystemPath(self):
+        SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
+    def get_file_system_path(self):
         """return path on filesystem for containing image"""
         # full path from /:
         return self._file.get_filename()

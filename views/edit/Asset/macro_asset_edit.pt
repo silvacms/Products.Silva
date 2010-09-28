@@ -2,12 +2,17 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva">
 
-<metal:define-editor-macro define-macro="editor" 
+<metal:define-editor-macro define-macro="editor"
    tal:define="global maintitlecolspan string:2">
 
  <metal:use-editor-macro use-macro="here/macro_edit/macros/editor">
+
+  <metal:block metal:fill-slot="middleground">
+    <tal:buttons tal:replace="structure model/@@tab_edit_extra" />
+  </metal:block>
+
   <metal:fill-editor-slot fill-slot="main">
-   <metal:use-three-col-layout 
+   <metal:use-three-col-layout
           use-macro="here/macro_edit/macros/three-col-layout">
 
    <metal:fill-main-head fill-slot="main-head">
@@ -98,7 +103,7 @@
 <metal:define-macro define-macro="uploader">
 <form method="post"
   action="."
-  name="form"
+  name="editform.upload"
   enctype="multipart/form-data">
   <table class="listing">
     <thead>
