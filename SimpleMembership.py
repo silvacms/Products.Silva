@@ -184,7 +184,6 @@ class SimpleMemberService(SilvaService):
     title = 'Silva Membership Service'
     default_service_identifier = 'service_members'
     _use_direct_lookup = False
-    _allow_authentication_requests = False
 
     grok.implements(IMemberService)
     silvaconf.icon('www/members.png')
@@ -248,32 +247,6 @@ class SimpleMemberService(SilvaService):
     def use_direct_lookup(self):
         return self._use_direct_lookup
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'allow_authentication_requests')
-    def allow_authentication_requests(self):
-        return self._allow_authentication_requests
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
-                              'set_allow_authentication_requests')
-    def set_allow_authentication_requests(self, value):
-        """sets allow_authentication_requests"""
-        self._allow_authentication_requests = value
-
-    security.declareProtected('View management screens',
-                              'manage_allowAuthenticationRequests')
-    def manage_allowAuthenticationRequests(self, REQUEST):
-        """manage method to set allow_authentication_requests"""
-        self.set_allow_authentication_requests(int(REQUEST['allow_authentication_requests']))
-        return self.manage_editForm(manage_tabs_message='Changed settings')
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_authentication_requests_url')
-    def get_authentication_requests_url(self):
-        """Return the url for the authentication_requests form, relative from resources
-        directory (so including the escaped productname!!)
-        """
-        return None
-
     security.declarePublic('logout')
     def logout(self, came_from=None, REQUEST=None):
         """Logout the user.
@@ -294,9 +267,6 @@ class IServiceSetting(interface.Interface):
     _use_direct_lookup = schema.Bool(
         title=_(u"Use direct lookup?"),
         description=_(u"Disable search feature to affect a role to a user."))
-    _allow_authentication_requests = schema.Bool(
-        title=_(u"Allow membership requests on this site ?"),
-        description=_(u"Proprose to users to request for roles on content."))
 
 
 class EditMemberService(silvaforms.ZMIForm):

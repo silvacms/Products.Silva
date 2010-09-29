@@ -220,14 +220,6 @@
   <a name="bottom">
     &nbsp;
   </a>
-  <a title="Request an additional role in this location: alt-,"
-    accesskey=","
-    tal:condition="here/service_members/allow_authentication_requests"
-    tal:attributes="href string:public/request_roles?last_url=$url/edit/${template/id}"
-    i18n:attributes="title"
-    i18n:translate="">
-    request access
-  </a>
 </div>
 <div id="remote-form-dialog">
 </div>
