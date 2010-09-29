@@ -38,7 +38,9 @@ class FeedsTestCase(unittest.TestCase):
         form = browser.get_form('settingsform')
         self.assertEqual(form.get_control('allow_feeds').checked, False)
         form.get_control('allow_feeds').checked = True
-        form.get_control('tab_settings_save_feeds:method').click()
+        self.assertEqual(
+            form.get_control('tab_settings_save_feeds:method').click(),
+            200)
         self.assertEqual(browser.inspect.feedback, ['Feed settings saved.'])
 
         self.assertEqual(browser.open('/root/folder/atom.xml'), 200)
@@ -49,5 +51,5 @@ class FeedsTestCase(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(PropertiesFolderTestCase))
+    suite.addTest(unittest.makeSuite(FeedsTestCase))
     return suite

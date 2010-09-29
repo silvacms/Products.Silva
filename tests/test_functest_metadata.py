@@ -4,73 +4,117 @@
 # $Id$
 
 import unittest
-from SilvaBrowser import SilvaBrowser
-from SilvaTestCase import SilvaFunctionalTestCase
 
-class ManagerPropertiesSilvaDocTestCase(SilvaFunctionalTestCase):
-    """
-        login manager
-        select silva document
-        make silva document
-        click properties tab
-        fill in all property fields
-        submit
-    """
+from Products.Silva.testing import FunctionalLayer, smi_settings
 
-    def test_manager_properties(self):
-        sb = SilvaBrowser()
-        # login
-        status, url = sb.login('manager', 'secret', sb.smi_url())
-        self.assertEquals(status, 200)
-        sb.make_content('Silva Document', id='test_document', title='Test document')
-        self.failUnless('test_document' in sb.get_content_ids())
-        # click into the silva document
-        sb.click_href_labeled('test_document')
-        tab_name = sb.get_tab_named('edit')
-        self.assertEquals(tab_name, 'edit')
-        sb.click_tab_named('properties')
-        self.assertEquals(sb.browser.url,
-                          'http://nohost/root/test_document/edit/tab_metadata')
-        tab_name = sb.get_middleground_button_named('settings...')
-        self.failUnless(tab_name, 'settings...')
 
-        ## fill fields
-        sb.browser.getControl(name='silva-content.maintitle:record').value = 'test content€ new'
-        sb.browser.getControl(name='silva-content.shorttitle:record').value = 'test content€ shorttitle'
-        sb.browser.getControl(name='save_metadata:method', index=0).click()
-        self.failUnless('test content€ new' in sb.browser.contents)
-        self.failUnless('test content€ shorttitle' in sb.browser.contents)
-        sb.browser.getControl(name='silva-extra.subject:record').value = 'test content€ subject'
-        sb.browser.getControl(name='silva-extra.keywords:record').value = 'keyword€1 keyword€2'
-        sb.browser.getControl(name='silva-extra.content_description:record').value = 'keyword€1 keyword€2 keyword€1 keyword€2'
-        sb.browser.getControl(name='silva-extra.comment:record').value = 'comment€ comment€ comment€ comment€'
-        sb.browser.getControl(name='silva-extra.contactname:record').value = 'test name€'
-        sb.browser.getControl(name='silva-extra.contactemail:record').value = 'testemail@example.com'
-        sb.browser.getControl(name='silva-extra.hide_from_tocs:record').value = ['hide']
-        sb.browser.getControl(name='save_metadata:method', index=1).click()
-        self.failUnless('test content€ subject' in sb.browser.contents)
-        self.failUnless('keyword€1 keyword€2' in sb.browser.contents)
-        self.failUnless('keyword€1 keyword€2 keyword€1 keyword€2' in sb.browser.contents)
-        self.failUnless('comment€ comment€ comment€ comment€' in sb.browser.contents)
-        self.failUnless('test name€' in sb.browser.contents)
-        self.failUnless('testemail@example.com' in sb.browser.contents)
-        self.failUnless('checked="checked"' in sb.browser.contents)
-        sb.browser.getControl(name='silva-extra.language:record').value = ['ab']
-        sb.browser.getControl(name='save_metadata:method', index=1).click()
-        sb.browser.getControl(name='silva-extra.language:record').value
-        f = sb.browser.getControl('Abkhazian').selected
-        self.assertEquals(f, True)
-        sb.go(sb.smi_url())
-        data = sb.get_content_data()
-        self.assertEquals(data[1]['id'], u'test_document')
-        sb.select_delete_content('test_document')
-        data = sb.get_content_ids()
-        self.failIf('test_document' in data)
-        status, url = sb.click_href_labeled('logout')
-        self.assertEquals(status, 401)
+class AuthorMetadataTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+    username = 'author'
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('document', 'Document')
+
+    def test_metadata(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login(self.username, self.username)
+
+        self.assertEqual(browser.open('/root/document/edit'), 200)
+
+        self.assertTrue('properties' in browser.inspect.tabs)
+        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertEqual(browser.url, '/root/document/edit/tab_metadata')
+
+        # Metadata main set.
+        form = browser.get_form('form')
+        form.get_control('silva-content.maintitle:record').value = \
+            u'content €€€€ title'
+        form.get_control('silva-content.shorttitle:record').value = \
+            u'content €€€€ shorttitle'
+        self.assertEqual(
+            form.get_control('save_metadata:method').click(),
+            200)
+        self.assertEqual(
+            browser.inspect.feedback,
+            ['Metadata saved.'])
+
+        form = browser.get_form('form')
+        self.assertEqual(
+            form.get_control('silva-content.maintitle:record').value,
+            u'content €€€€ title')
+        self.assertEqual(
+            form.get_control('silva-content.shorttitle:record').value,
+            u'content €€€€ shorttitle')
+
+        # Metadata extra set.
+        form = browser.get_form('form')
+        form.get_control('silva-extra.subject:record').value = \
+            u'content €€€€ subject'
+        form.get_control('silva-extra.keywords:record').value = \
+            u'keyword ¥¥¥¥ value'
+        form.get_control('silva-extra.content_description:record').value = \
+            u'description in $$$ and €€€€ and ££££ and ¥¥¥¥'
+        form.get_control('silva-extra.comment:record').value = \
+            u'comment value in ££££'
+        form.get_control('silva-extra.contactname:record').value = \
+            u'wim $$$$'
+        form.get_control('silva-extra.contactemail:record').value = \
+            u'wim@example.com'
+        self.assertEqual(
+            form.get_control('silva-extra.hide_from_tocs:record').options,
+            ['do not hide', 'hide'])
+        form.get_control('silva-extra.hide_from_tocs:record').value = 'hide'
+        self.assertEqual(
+            form.get_control('save_metadata:method').click(),
+            200)
+        self.assertEqual(
+            browser.inspect.feedback,
+            ['Metadata saved.'])
+
+
+        form = browser.get_form('form')
+        self.assertEqual(
+            form.get_control('silva-extra.subject:record').value,
+            u'content €€€€ subject')
+        self.assertEqual(
+            form.get_control('silva-extra.keywords:record').value,
+            u'keyword ¥¥¥¥ value')
+        self.assertEqual(
+            form.get_control('silva-extra.content_description:record').value,
+            u'description in $$$ and €€€€ and ££££ and ¥¥¥¥')
+        self.assertEqual(
+            form.get_control('silva-extra.comment:record').value,
+            u'comment value in ££££')
+        self.assertEqual(
+            form.get_control('silva-extra.contactname:record').value,
+            u'wim $$$$')
+        self.assertEqual(
+            form.get_control('silva-extra.contactemail:record').value,
+            u'wim@example.com')
+        self.assertEqual(
+            form.get_control('silva-extra.hide_from_tocs:record').value,
+            'hide')
+
+
+class EditorMetadataTestCase(AuthorMetadataTestCase):
+    username = 'editor'
+
+
+class ChiefEditorMetadataTestCase(EditorMetadataTestCase):
+    username = 'chiefeditor'
+
+
+class ManagerMetadataTestCase(ChiefEditorMetadataTestCase):
+    username = 'manager'
+
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ManagerPropertiesSilvaDocTestCase))
+    suite.addTest(unittest.makeSuite(AuthorMetadataTestCase))
+    suite.addTest(unittest.makeSuite(EditorMetadataTestCase))
+    suite.addTest(unittest.makeSuite(ChiefEditorMetadataTestCase))
+    suite.addTest(unittest.makeSuite(ManagerMetadataTestCase))
     return suite
-
