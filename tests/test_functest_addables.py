@@ -90,6 +90,11 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertEqual(
             browser.html.xpath('//dl[@class="new-content-listing"]//a/text()'),
             ['Silva Folder', 'Silva File', 'Silva Image'])
+        self.assertEqual(
+            browser.html.xpath('//dl[@class="new-content-listing"]//a/@href'),
+            ['http://localhost/root/edit/+/Silva Folder',
+             'http://localhost/root/edit/+/Silva File',
+             'http://localhost/root/edit/+/Silva Image'])
 
         # Access something which is not addable makes a redirect to +
         self.assertEqual(browser.open('/root/edit/+/Silva Document'), 200)
