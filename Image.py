@@ -64,10 +64,12 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     """
     if file is not None:
         try:
+            # Try to validate file format.
+            file.seek(0)
             PILImage.open(file)
         except IOError, error:
             raise ValueError(error.args[-1].capitalize())
-        # We have to be able to do seek.
+        # Come back at the begining..
         file.seek(0)
 
     content = image_factory(context, id, None, file)
