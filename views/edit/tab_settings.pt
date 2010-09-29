@@ -31,7 +31,7 @@
       <tal:block replace="nothing">_____________________ main _____________________</tal:block>
       <td class="main">
 
-<form action="." method="post">
+<form action="." method="post" name="settingsform">
   <table class="listing"
     tal:define="
       editable model/get_editable;
