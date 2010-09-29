@@ -65,7 +65,8 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
     if file is not None:
         try:
             # Try to validate file format.
-            file.seek(0)
+            if hasattr(file, 'seek'):
+                file.seek(0)
             PILImage.open(file)
         except IOError, error:
             raise ValueError(error.args[-1].capitalize())
