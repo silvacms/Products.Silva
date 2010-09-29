@@ -1,47 +1,53 @@
+# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
-from SilvaBrowser import SilvaBrowser
-from SilvaTestCase import SilvaFunctionalTestCase
 
-class ManagerPropertiesSilvaFolderTestCase(SilvaFunctionalTestCase):
-    """
-        as manager change the properties of a folder for the settings page
-    """
+from Products.Silva.testing import FunctionalLayer, smi_settings
 
-    def test_manager_properties_folder(self):
-        sb = SilvaBrowser()
-        # login
-        sb.login('manager', 'secret', sb.smi_url())
-        # create silva folder
-        sb.make_content('Silva Folder', id='test_folder', title='Test folder',
-                        policy='Silva Document')
-        data = sb.get_content_ids()
-        self.failUnless('test_folder' in data)
-        sb.click_href_labeled('test_folder')
-        self.assertEquals(sb.browser.url,
-                          'http://nohost/root/test_folder/edit/tab_edit')
-        sb.click_tab_named('properties')
-        tab_name = sb.get_middleground_button_named('settings...')
-        self.assertEquals(tab_name, 'settings...')
-        sb.click_tab_named('settings...')
-        self.assertEquals(sb.browser.url,
-                          'http://nohost/root/test_folder/edit/tab_settings')
-        ## click convert to publication
-        sb.browser.getControl(name='tab_edit_to_publication:method').click()
-        self.failUnless('Changed into publication' in sb.browser.contents)
-        ## click convert to folder
-        sb.browser.getControl(name='tab_edit_to_folder:method').click()
-        self.failUnless('Changed into folder' in sb.browser.contents)
-        ## click rss feed checkbox
-        sb.browser.getControl(name='allow_feeds').value = ['checked']
-        sb.browser.getControl(name='tab_settings_save_feeds:method').click()
-        self.failUnless('Feed settings saved.' in sb.browser.contents)
-        sb.go(sb.smi_url())
-        sb.select_delete_content('test_folder')
-        sb.click_href_labeled('logout')
+
+class FeedsTestCase(unittest.TestCase):
+    """Test properties tab of a Folder.
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Test Folder')
+
+    def test_feeds(self):
+        browser = self.layer.get_browser(smi_settings)
+        browser.login('manager', 'manager')
+
+        self.assertEqual(browser.open('/root/folder/atom.xml'), 404)
+        self.assertEqual(browser.open('/root/folder/rss.xml'), 404)
+
+        self.assertEqual(browser.open('/root/folder/edit'), 200)
+
+        self.assertTrue('properties' in browser.inspect.tabs)
+        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertEqual(browser.location, '/root/folder/edit/tab_metadata')
+
+        self.assertTrue('settings' in browser.inspect.subtabs)
+        self.assertEqual(browser.inspect.subtabs['settings'].click(), 200)
+        self.assertEqual(browser.location, '/root/folder/edit/tab_settings')
+
+        form = browser.get_form('settingsform')
+        self.assertEqual(form.get_control('allow_feeds').checked, False)
+        form.get_control('allow_feeds').checked = True
+        form.get_control('tab_settings_save_feeds:method').click()
+        self.assertEqual(browser.inspect.feedback, ['Feed settings saved.'])
+
+        self.assertEqual(browser.open('/root/folder/atom.xml'), 200)
+        self.assertEqual(browser.content_type, 'text/xml;charset=UTF-8')
+        self.assertEqual(browser.open('/root/folder/rss.xml'), 200)
+        self.assertEqual(browser.content_type, 'text/xml;charset=UTF-8')
+
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ManagerPropertiesSilvaFolderTestCase))
+    suite.addTest(unittest.makeSuite(PropertiesFolderTestCase))
     return suite
-
-
