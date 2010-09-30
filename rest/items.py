@@ -74,7 +74,7 @@ class Items(rest.REST):
                         'url': '', 'path': '',
                         'icon': '/'.join(
                             (self.root_url,
-                             '++resource++silva.icons/exclamation.png')),
+                             '++resource++Products.Silva/exclamation.png')),
                         'implements': False,
                         'folderish': False,
                         'title': 'Broken'})

@@ -1,12 +1,11 @@
 <?xml version="1.0" ?>
 <kupu:feature
     name="drawers"
-    implementation="silva"
+    implementation="silva-tool"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    >
+    xmlns:tal="http://xml.zope.org/namespaces/tal">
 
   <kupu:part name="styles">
     <link href="kupu_silva/kupudrawerstyles.css" rel="stylesheet" type="text/css" 

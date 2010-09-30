@@ -596,33 +596,33 @@ function initSilvaPopupKupu(iframe) {
     var dltool = new DefinitionListTool('kupu-list-dl-addbutton');
     kupu.registerTool('dltool', dltool);
 
-    var linktool = new SilvaLinkTool();
-    kupu.registerTool('linktool', linktool);
-    var linktoolbox = new SilvaLinkToolBox(
-        "kupu-link-input", 'kupu-linktarget-select', 'kupu-linktarget-input',
-        "kupu-link-addbutton", 'kupu-link-updatebutton',
-        'kupu-link-delbutton', 'kupu-toolbox-links', 'kupu-toolbox',
-        'kupu-toolbox-active');
-    linktool.registerToolBox("linktoolbox", linktoolbox);
+    // var linktool = new SilvaLinkTool();
+    // kupu.registerTool('linktool', linktool);
+    // var linktoolbox = new SilvaLinkToolBox(
+    //     "kupu-link-input", 'kupu-linktarget-select', 'kupu-linktarget-input',
+    //     "kupu-link-addbutton", 'kupu-link-updatebutton',
+    //     'kupu-link-delbutton', 'kupu-toolbox-links', 'kupu-toolbox',
+    //     'kupu-toolbox-active');
+    // linktool.registerToolBox("linktoolbox", linktoolbox);
 
-    var indextool = new SilvaIndexTool(
-        'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton',
-        'kupu-index-updatebutton', 'kupu-index-deletebutton',
-        'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
-    kupu.registerTool('indextool', indextool);
+    // var indextool = new SilvaIndexTool(
+    //     'kupu-index-title', 'kupu-index-name', 'kupu-index-addbutton',
+    //     'kupu-index-updatebutton', 'kupu-index-deletebutton',
+    //     'kupu-toolbox-indexes', 'kupu-toolbox', 'kupu-toolbox-active');
+    // kupu.registerTool('indextool', indextool);
 
-    var abbrtool = new SilvaAbbrTool('kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
-        'kupu-abbr-radiorow', 'kupu-abbr-title',
-        'kupu-abbr-addbutton', 'kupu-abbr-updatebutton',
-        'kupu-abbr-deletebutton', 'kupu-toolbox-abbr',
-        'kupu-toolbox', 'kupu-toolbox-active');
+    var abbrtool = new SilvaAbbrTool(
+        'kupu-abbr-type-abbr', 'kupu-abbr-type-acronym',
+        'kupu-abbr-title', 'kupu-abbr-addbutton',
+        'kupu-abbr-updatebutton', 'kupu-abbr-deletebutton',
+        'kupu-toolbox-abbr', 'kupu-toolbox', 'kupu-toolbox-active');
     kupu.registerTool('abbrtool', abbrtool);
 
     var showpathtool = new ShowPathTool();
     kupu.registerTool('showpathtool', showpathtool);
 
-    var sourceedittool = new SourceEditTool('kupu-source-button',
-        'kupu-editor-textarea');
+    var sourceedittool = new SourceEditTool(
+        'kupu-source-button', 'kupu-editor-textarea');
     kupu.registerTool('sourceedittool', sourceedittool);
 
     var cleanupexpressions = new CleanupExpressionsTool(

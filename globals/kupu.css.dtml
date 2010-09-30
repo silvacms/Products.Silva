@@ -24,7 +24,7 @@ a.index {
 
 a.broken-link {
   color: red !important;
-  background: url('/++resource++silva.icons/exclamation.png') no-repeat top left;
+  background: url('/++resource++Products.Silva/exclamation.png') no-repeat top left;
   padding-left: 18px;
 }
 
@@ -54,7 +54,7 @@ div.externalsource div.parameters {
 /* using a :hover sudo-selector would be nice, but it seems that IE7 wonn't
     doesn't recognize this selector within designMode */
 div.externalsource.active {
-  background: url("/silva/globals/btn-lock.png") no-repeat top right;
+  background: url("/++resource++Products.Silva/lock.png") no-repeat top right;
   background-color: white;
   padding: 1px;
   border: 1px solid #fbab37;

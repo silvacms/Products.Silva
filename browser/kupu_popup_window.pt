@@ -34,7 +34,9 @@
       for (var i=0; i < toolboxes.length; i++) {
         var tname = toolboxes[i];
         var t = doc.getElementById(tname);
-        t.style.display = 'none';
+        if (t != undefined) {
+          t.style.display = 'none';
+        }
       }
       /* hide text styles */
       var styles = settings[1];

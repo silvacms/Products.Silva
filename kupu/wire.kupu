@@ -2,8 +2,7 @@
 <kupu:wire
     implementation="silva"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-    xmlns:metal="http://xml.zope.org/namespaces/metal"
-    >
+    xmlns:metal="http://xml.zope.org/namespaces/metal">
 
   <!--
     This file defines the wiring of this implementation. Wiring means

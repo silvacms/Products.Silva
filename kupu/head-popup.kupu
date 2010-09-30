@@ -1,15 +1,14 @@
 <?xml version="1.0" ?>
 <kupu:feature
     name="head"
-    implementation="silva-form"
+    implementation="silva-popup"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    >
+    xmlns:tal="http://xml.zope.org/namespaces/tal">
 
   <kupu:part name="jsincludes">
     <script type="text/javascript" src="sarissa.js"
-            tal:attributes="src string:${root_url}/service_kupu/sarissa.js"> </script>
+            tal:attributes="src string:${root_url}/service_kupu_silva/sarissa.js"> </script>
     <script type="text/javascript" src="kupuhelpers.js"
             tal:attributes="src string:${root_url}/service_kupu/kupuhelpers.js"> </script>
     <script type="text/javascript" src="kupunoi18n.js"
@@ -28,7 +27,7 @@
             tal:attributes="src string:${root_url}/service_kupu/kupusourceedit.js"> </script>
     <script type="text/javascript" src="kupucleanupexpressions.js"
             tal:attributes="src string:${root_url}/service_kupu/kupucleanupexpressions.js"> </script>
-    <!-- 
+    <!--
     <script type="text/javascript" src="kupuspellchecker.js"
             tal:attributes="src string:${root_url}/service_kupu/kupuspellchecker.js"> </script>
     -->
@@ -43,16 +42,16 @@
     <script type="text/javascript" src="kupusilvainit.js"
             tal:attributes="src string:${root_url}/service_kupu_silva/kupusilvainit.js"> </script>
     <script type="text/javascript">
-	var kupu = null;
-	var kupuui = null;
-	function startKupu() {
-	    var frame = getFromSelector('kupu-editor'); 
-	    kupu = initSilvaPopupKupu(frame); 
-	    kupuui = kupu.getTool('ui'); 
-	    kupu.initialize();
-	};
-        // register the function to the unload registry
-        window.onload_registry.register(startKupu);
+    var kupu = null;
+    var kupuui = null;
+    function startKupu() {
+        var frame = getFromSelector('kupu-editor');
+        kupu = initSilvaPopupKupu(frame);
+        kupuui = kupu.getTool('ui');
+        kupu.initialize();
+    };
+    // register the function to the unload registry
+    window.onload_registry.register(startKupu);
     </script>
   </kupu:part>
 

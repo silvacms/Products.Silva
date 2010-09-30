@@ -1,10 +1,10 @@
+<?xml version="1.0" ?>
 <kupu:feature
     name="toolbar"
-    implementation="silva"
+    implementation="silva-tool"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    >
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <kupu:part name="select-styles">
     <select id="kupu-tb-styles">

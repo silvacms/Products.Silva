@@ -430,9 +430,11 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
 };
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool')
-        .getNearestExternalSource(selNode)) {
-        return;
+    var extsourcetool = this.editor.getTool('extsourcetool');
+    if (extsourcetool != undefined) {
+        if (extsourcetool.getNearestExternalSource(selNode)) {
+            return;
+        };
     };
     var self = this;
     var currnode = selNode;
@@ -573,10 +575,12 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
 
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool')
-        .getNearestExternalSource(selNode)) {
-        return;
-    }
+    var extsourcetool = this.editor.getTool('extsourcetool');
+    if (extsourcetool != undefined) {
+        if (extsourcetool.getNearestExternalSource(selNode)) {
+            return;
+        };
+    };
     var image = this.editor.getNearestParentOfType(selNode, 'img');
     if (image) {
          /* the rest of the image tool was originally designed to
@@ -1646,9 +1650,11 @@ SilvaTableToolBox.prototype.delTableRow = function delTableRow() {
 
 SilvaTableToolBox.prototype.updateState = function(selNode) {
     /* update the state (add/edit) and update the pulldowns (if required) */
-    if (this.editor.getTool('extsourcetool')
-            .getNearestExternalSource(selNode)) {
-        return;
+    var extsourcetool = this.editor.getTool('extsourcetool');
+    if (extsourcetool != undefined) {
+        if (extsourcetool.getNearestExternalSource(selNode)) {
+            return;
+        };
     };
     var table = this.editor.getNearestParentOfType(selNode, 'table');
     if (table) {
@@ -2031,9 +2037,11 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
 };
 
 SilvaIndexTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool')
-            .getNearestExternalSource(selNode)) {
-        return;
+    var extsourcetool = this.editor.getTool('extsourcetool');
+    if (extsourcetool != undefined) {
+        if (extsourcetool.getNearestExternalSource(selNode)) {
+            return;
+        };
     };
     var indexel = this.editor.getNearestParentOfType(selNode, 'A');
     if (indexel && !indexel.getAttribute('href') && indexel.getAttribute('name')) {
@@ -2092,9 +2100,11 @@ SilvaAbbrTool.prototype.initialize = function(editor) {
 };
 
 SilvaAbbrTool.prototype.updateState = function(selNode, event) {
-    if (this.editor.getTool('extsourcetool')
-            .getNearestExternalSource(selNode)) {
-        return;
+    var extsourcetool = this.editor.getTool('extsourcetool');
+    if (extsourcetool != undefined) {
+        if (extsourcetool.getNearestExternalSource(selNode)) {
+            return;
+        };
     };
     var element = this.getNearestAbbrAcronym(selNode);
     if (element) {

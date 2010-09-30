@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <kupu:feature
     name="toolboxes"
-    implementation="silva"
+    implementation="silva-tool"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"

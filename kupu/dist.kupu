@@ -1,7 +1,7 @@
+<?xml version="1.0" ?>
 <kupu:dist
   xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  >
+  xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <!-- Include implementations -->
   <xi:include href="include.kupu" />
@@ -14,6 +14,7 @@
   <!-- Define an implementation order -->
   <kupu:implementation-order>
     <kupu:implementation name="silva" />
+    <kupu:implementation name="silva-tool" />
     <kupu:implementation name="default" />
   </kupu:implementation-order>
 

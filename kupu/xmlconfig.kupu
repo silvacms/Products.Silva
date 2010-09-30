@@ -1,9 +1,9 @@
+<?xml version="1.0" ?>
 <kupu:feature
     name="xmlconfig"
-    implementation="silva"
+    implementation="silva-tool"
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-    >
+    xmlns:kupu="http://kupu.oscom.org/namespaces/dist">
 
   <!-- Silva specific configuration -->
   <kupu:part name="defaultconfig">

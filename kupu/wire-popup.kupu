@@ -1,9 +1,8 @@
 <?xml version="1.0" ?>
 <kupu:wire
-    implementation="silva-form"
+    implementation="silva-popup"
     xmlns:kupu="http://kupu.oscom.org/namespaces/dist"
-    xmlns:metal="http://xml.zope.org/namespaces/metal"
-    >
+    xmlns:metal="http://xml.zope.org/namespaces/metal">
 
   <!--
     This file defines the wiring of this implementation. Wiring means
@@ -29,9 +28,9 @@
   </kupu:fill-slot>
 
   <kupu:fill-slot name="fulleditor">
-<!--    <kupu:insert-part feature="drawers" part="styles" />
-    <kupu:insert-part feature="saveonpart" part="jsincludes" />
-    <kupu:insert-part feature="contextmenu" part="jsincludes" />-->
+    <!-- <kupu:insert-part feature="drawers" part="styles" /> -->
+    <!-- <kupu:insert-part feature="saveonpart" part="jsincludes" /> -->
+    <!-- <kupu:insert-part feature="contextmenu" part="jsincludes" /> -->
   </kupu:fill-slot>
 
   <kupu:fill-slot name="fulleditor-toolbar">
@@ -43,6 +42,7 @@
   </kupu:fill-slot>
 
   <kupu:fill-slot name="fulleditor-frame">
+    <kupu:insert-part feature="i18n" part="i18nblock" />
     <kupu:insert-part feature="body" part="editorframe" />
   </kupu:fill-slot>
 
@@ -60,19 +60,21 @@
   </kupu:fill-slot>
 
   <kupu:fill-slot name="toolboxes">
-    <kupu:insert-part feature="toolboxes" part="links" />
-    <kupu:insert-part feature="toolboxes" part="indexes" />
-    <kupu:insert-part feature="toolboxes" part="images" />
+    <!-- <kupu:insert-part feature="toolboxes" part="comment" /> -->
+    <!-- <kupu:insert-part feature="toolboxes" part="properties" /> -->
+    <!-- <kupu:insert-part feature="toolboxes" part="links" /> -->
+    <!-- <kupu:insert-part feature="toolboxes" part="indexes" /> -->
+    <!-- <kupu:insert-part feature="toolboxes" part="images" /> -->
     <kupu:insert-part feature="toolboxes" part="abbr" />
     <kupu:insert-part feature="toolboxes" part="cleanupexpressions" />
-    <kupu:insert-part feature="toolboxes" part="external_source" />
-    <kupu:insert-part feature="toolboxes" part="tables" />
+    <!-- <kupu:insert-part feature="toolboxes" part="external_source" /> -->
+    <!-- <kupu:insert-part feature="toolboxes" part="tables" /> -->
     <kupu:insert-part feature="toolboxes" part="typochars" />
-    <kupu:insert-part feature="toolboxes" part="save" />
+    <!-- <kupu:insert-part feature="toolboxes" part="save" /> -->
   </kupu:fill-slot>
 
-<!--  <kupu:fill-slot name="drawers">
-    <kupu:insert-part feature="drawers" part="librarydrawer" />
-  </kupu:fill-slot>-->
+  <kupu:fill-slot name="drawers">
+    <!-- <kupu:insert-part feature="drawers" part="librarydrawer" /> -->
+  </kupu:fill-slot>
 
 </kupu:wire>
