@@ -165,21 +165,6 @@ class AuthorContentTestCase(unittest.TestCase):
 
         self.assertEqual(browser.open('/root/edit/+/Silva Publication'), 401)
 
-    def test_find(self):
-        """Find content are not available.
-        """
-        browser = self.layer.get_browser(smi_settings)
-        browser.login(self.username, self.username)
-
-        self.assertEqual(browser.open('/root/edit'), 200)
-
-        form = browser.get_form('md.container')
-        self.assertFalse(
-            'Silva Indexer' in
-            form.controls['md.container.field.content'].options)
-
-        self.assertEqual(browser.open('/root/edit/+/Silva Find'), 401)
-
     def test_image(self):
         """Test create / edit / remove an image.
         """
@@ -438,35 +423,6 @@ class EditorContentTestCase(AuthorContentTestCase):
             ['root', 'Second Publication'])
         browser.inspect.breadcrumbs['root'].click()
         browser.macros.delete('publication')
-
-    def test_find(self):
-        """Test create remove a find object.
-        """
-        browser = self.layer.get_browser(smi_settings)
-
-        browser.login(self.username, self.username)
-        self.assertEqual(browser.open('/root/edit'), 200)
-        browser.macros.create(
-            'Silva Find', id='search', title='Search')
-        self.assertEqual(
-            browser.inspect.folder_listing, ['index', 'search'])
-
-        # The user should by the last author on the content and container.
-        self.assertEqual(
-            self.root.sec_get_last_author_info().userid(),
-            self.username)
-        self.assertEqual(
-            self.root.search.sec_get_last_author_info().userid(),
-            self.username)
-
-        # Visit the edit page
-        self.assertEqual(
-            browser.inspect.folder_listing['search'].click(),
-            200)
-        self.assertEqual(browser.url, '/root/search/edit/tab_edit')
-        self.assertEqual(browser.inspect.breadcrumbs, ['root', 'Search'])
-        browser.inspect.breadcrumbs['root'].click()
-        browser.macros.delete('search')
 
 
 class ChiefEditorContentTestCase(EditorContentTestCase):
