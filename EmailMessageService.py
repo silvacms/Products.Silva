@@ -133,10 +133,10 @@ class EmailMessageService(SilvaService):
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'send_email_enabled')
     def send_email_enabled(self):
-        return self._send_email_enabled
+        return self._enabled
 
     def _send_email(self, toaddr, msg, header={}):
-        if not self._send_email_enabled:
+        if not self._enabled:
             return
         header['To'] = toaddr
         if not header.has_key('From'):
