@@ -34,10 +34,11 @@ from zeam.form import silva as silvaforms
 logger = logging.getLogger('silva.core')
 
 
-def index_content(self, obj, reindex=False):
+def index_content(parent, reindex=False):
     """Recursively index or index Silva Content.
     """
-    for count, content in enumerate(walk_silva_tree(obj)):
+    count = 0
+    for count, content in enumerate(walk_silva_tree(parent)):
         if count and count % 500 == 0:
             transaction.commit()
             logger.info('indexing: %d objects indexed' % count)
@@ -145,8 +146,8 @@ class ExtensionService(Folder, SilvaService):
                 self.refresh(name)
 
     security.declareProtected(
-        'View management screens', 'refresh_catalog')
-    def refresh_catalog(self):
+        'View management screens', 'reindex_all')
+    def reindex_all(self):
         """Refresh the silva catalog.
         """
         root = self.get_root()
@@ -254,7 +255,6 @@ def manage_addExtensionService(self, id, title='', REQUEST=None):
 class IPartialUpgrade(interface.Interface):
     """Data needed to do a partial upgrade.
     """
-
     path = schema.TextLine(
         title=_(u"Absolute path to object to upgrade"),
         required=True)
@@ -336,7 +336,7 @@ class ManageExtensions(silvaviews.ZMIView):
         return _(u'Silva and all installed extensions have been refreshed')
 
     def refresh_catalog(self):
-        self.context.refresh_catalog()
+        self.context.reindex_all()
         return _(u'Catalog refreshed')
 
     def disable_quota_subsystem(self):

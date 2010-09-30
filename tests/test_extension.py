@@ -7,17 +7,23 @@ import unittest
 
 from zope.interface.verify import verifyObject
 
+from Products.Silva.testing import FunctionalLayer
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from silva.core.interfaces.extension import IExtensionRegistry, \
-    IExtension, IExtensionInstaller
+from silva.core.interfaces.extension import (
+    IExtensionRegistry, IExtension, IExtensionInstaller)
 
-from silva.core.conf.installer import DefaultInstaller, SystemExtensionInstaller
+from silva.core.conf.installer import SystemExtensionInstaller
 from silva.core.conf.registry import getRegistry
 
-import SilvaTestCase
 
+class ExtensionRegistryTestCase(unittest.TestCase):
+    """Test extension registry/service
+    """
+    layer = FunctionalLayer
 
-class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
 
     def test_registry(self):
         # We can get the registry using the registry API
@@ -46,13 +52,12 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEquals(extensionRegistry.get_name_for_class(Link), 'Silva')
         self.assertEquals(extensionRegistry.get_name_for_class(URLopener), None)
 
-    def test_extension(self):
+    def test_extension_broken(self):
         # If you ask an unknown extension, you will get None
         extension = extensionRegistry.get_extension('SilvaInvalidExtension')
         self.assertEqual(extension, None)
 
-        # If you ask a known extension, you will get one.
-        # First, a zope product.
+    def test_extension_product(self):
         extension = extensionRegistry.get_extension('SilvaDocument')
         self.assertNotEqual(extension, None)
 
@@ -62,13 +67,12 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
         self.assertEqual(extension.product, 'SilvaDocument')
         self.assertEqual(extension.module_name, 'Products.SilvaDocument')
 
-        contents = extension.get_content()
         self.assertEqual([c['name'] for c in extension.get_content()],
                          ['Silva Document', 'Silva Document Version'])
         self.assertEqual([c['product'] for c in extension.get_content()],
                          ['SilvaDocument', 'SilvaDocument'])
 
-        # After, an egg.
+    def test_extension_egg(self):
         extension = extensionRegistry.get_extension('silva.core.layout')
         self.assertNotEqual(extension, None)
 
@@ -87,8 +91,35 @@ class ExtensionRegistryTest(SilvaTestCase.SilvaTestCase):
 
         # Other test on installer are done with grok tests.
 
+
+class ExtensionServiceTestCase(unittest.TestCase):
+    """Test extension registry/service
+    """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
+
+    def test_reindex(self):
+        # Empty reindexing.
+        self.root.service_extensions.reindex_all()
+
+        # Add some content:
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('documentation', 'Documentation')
+        factory.manage_addDocument('extra', 'Extra')
+        factory.manage_addDocument('contact', 'Contact')
+
+        # Reindex new content.
+        self.root.service_extensions.reindex_all()
+
+    def test_reindex_partial(self):
+        self.root.service_extensions.reindex_subtree('/')
+
+
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ExtensionRegistryTest))
+    suite.addTest(unittest.makeSuite(ExtensionRegistryTestCase))
+    suite.addTest(unittest.makeSuite(ExtensionServiceTestCase))
     return suite
-
