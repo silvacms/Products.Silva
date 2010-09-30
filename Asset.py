@@ -24,7 +24,6 @@ from Products.Silva import SilvaPermissions
 from silva.core.interfaces import IAsset, IImage, IVersion
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
-from silva.core.smi.smi import SMIPortletManager
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.references.interfaces import IReferenceService
 

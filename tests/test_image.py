@@ -16,6 +16,7 @@ from silva.core import interfaces
 
 from Products.Silva import File
 from Products.Silva.testing import FunctionalLayer, http, TestCase
+from Products.Silva.testing import assertTriggersEvents
 from Products.Silva.tests.helpers import open_test_file
 
 
@@ -245,7 +246,24 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('author')
 
+    def test_empty_image(self):
+        """Test an image that doesn't store an image.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        with assertTriggersEvents('ObjectCreatedEvent'):
+            factory.manage_addImage('image', 'Image')
+
+        image = self.root.image
+        self.assertTrue(verifyObject(interfaces.IImage, image))
+        self.assertEqual(image.get_mime_type(), 'application/octet-stream')
+        self.assertEqual(image.content_type(), 'application/octet-stream')
+        self.assertEqual(image.get_filename(), 'image')
+        self.assertEqual(image.get_file_size(), 0)
+        self.assertEqual(image.get_scaled_file_size(), 0)
+
     def test_invalid_image(self):
+        """Try to add an non-image.
+        """
         image_file = StringIO('invalid-image-format')
         factory = self.root.manage_addProduct['Silva']
         self.assertRaises(

@@ -140,7 +140,8 @@ class Image(Asset):
     silvaconf.icon('www/silvaimage.gif')
     silvaconf.factory('manage_addImage')
 
-
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_web_presentation_properties')
     def set_web_presentation_properties(self, web_format, web_scale, web_crop):
         """Sets format and scaling for web presentation.
 
@@ -422,21 +423,37 @@ class Image(Asset):
             return "landscape"
         return "portrait"
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_filename')
     def get_filename(self):
+        if self.image is None:
+            return self.getId()
         return self.image.get_filename()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_mime_type')
     def get_mime_type(self):
+        if self.image is None:
+            return 'application/octet-stream'
         return self.image.get_mime_type()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'content_type')
     def content_type(self):
+        if self.image is None:
+            return 'application/octet-stream'
         return self.image.content_type()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_file_size')
     def get_file_size(self):
+        if self.image is None:
+            return 0
         return self.image.get_file_size()
 
-    security.declareProtected(SilvaPermissions.View, 'get_scaled_file_size')
-    def get_scaled_file_size(self):
-        return self.image.get_file_size()
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_scaled_file_size')
+    get_scaled_file_size = get_file_size
 
     ##########
     ## private
