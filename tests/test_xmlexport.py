@@ -215,6 +215,18 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertRaises(
             ExternalReferenceError, xmlexport.exportToString, self.root.folder)
 
+    def test_broken_references(self):
+        """Test export of broken references.
+        """
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addLink('link', 'Broken Link', relative=True)
+        factory.manage_addGhost('ghost', None)
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_broken_references.silvaxml')
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(info.getAssetPaths(), [])
+
 
 class ZipTestCase(TestCase):
     """Test Zip import/export.

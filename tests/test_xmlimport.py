@@ -15,7 +15,8 @@ from silva.core import interfaces
 from silva.core.interfaces.events import IContentImported
 
 from Products.Silva.silvaxml import xmlimport
-from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaMetadata.interfaces import IMetadataService
 
@@ -71,10 +72,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
         publication = self.root.publication
         binding = self.metadata.getMetadata(publication)
 
-        self.failUnless(interfaces.IPublication.providedBy(publication))
-        self.assertEquals(publication.get_title(), u'Test Publication')
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'admin')
-        self.assertEquals(
+        self.assertTrue(interfaces.IPublication.providedBy(publication))
+        self.assertEqual(publication.get_title(), u'Test Publication')
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'admin')
+        self.assertEqual(
             binding.get('silva-content', 'maintitle'), u'Test Publication')
 
     def test_folder(self):
@@ -90,24 +91,24 @@ class XMLImportTestCase(SilvaXMLTestCase):
         folder = self.root.folder
         binding = self.metadata.getMetadata(folder)
 
-        self.failUnless(interfaces.IFolder.providedBy(folder))
-        self.assertEquals(folder.get_title(), u'Test Folder')
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'admin')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'admin')
-        self.assertEquals(
+        self.assertTrue(interfaces.IFolder.providedBy(folder))
+        self.assertEqual(folder.get_title(), u'Test Folder')
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'admin')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'admin')
+        self.assertEqual(
             binding.get('silva-extra', 'contactname'), u'Henri McArthur')
-        self.assertEquals(
+        self.assertEqual(
             binding.get('silva-extra', 'content_description'),
             u'This folder have been created only in testing purpose.')
-        self.assertEquals(
+        self.assertEqual(
             binding.get('silva-content', 'maintitle'), u'Test Folder')
 
         subfolder = folder.subfolder
         binding = self.metadata.getMetadata(subfolder)
 
-        self.assertEquals(subfolder.get_title(), u'Second test folder')
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'henri')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'henri')
+        self.assertEqual(subfolder.get_title(), u'Second test folder')
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'henri')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'henri')
 
     def test_link_to_file(self):
         """Import a link that is linked to a file.
@@ -130,33 +131,33 @@ class XMLImportTestCase(SilvaXMLTestCase):
         link = self.root.folder.new.link
         datafile = self.root.folder.file
 
-        self.failUnless(interfaces.ILink.providedBy(link))
-        self.failUnless(interfaces.IFile.providedBy(datafile))
-        self.assertEquals(datafile.get_title(),  u'Torvald file')
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
 
         version = link.get_editable()
-        self.failIf(version is None)
+        self.assertFalse(version is None)
         self.assertEqual(link.get_viewable(), None)
         self.assertEqual(version.get_title(), u'Last file')
-        self.assertEquals(
+        self.assertEqual(
             DateTime('2004-04-23T16:13:39Z'),
             version.get_modification_datetime())
 
         binding = self.metadata.getMetadata(version)
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'henri')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'henri')
-        self.assertEquals(
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'henri')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'henri')
+        self.assertEqual(
             binding.get('silva-extra', 'content_description'),
             u'Link to the lastest file.')
 
-        self.assertEquals(version.get_relative(), True)
-        self.assertEquals(version.get_target(), datafile)
-        self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
+        self.assertEqual(version.get_relative(), True)
+        self.assertEqual(version.get_target(), datafile)
+        self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
 
         binding = self.metadata.getMetadata(datafile)
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'pauline')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'pauline')
-        self.assertEquals(
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'pauline')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'pauline')
+        self.assertEqual(
             binding.get('silva-extra', 'comment'),
             u'This file contains Torvald lastest whereabouts.')
 
@@ -166,7 +167,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_zip('test_import_link.zip', replace=True)
         self.assertEventsAre(
@@ -176,7 +177,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/new',
              'ContentImported for /root/folder/new/link'],
             IContentImported)
-        self.failUnless(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertTrue(interfaces.IFolder.providedBy(self.root.folder))
         self.assertListEqual(
             self.root.folder.objectIds(),
             ['file', 'index', 'new'])
@@ -187,14 +188,14 @@ class XMLImportTestCase(SilvaXMLTestCase):
         link = self.root.folder.new.link
         datafile = self.root.folder.file
 
-        self.failUnless(interfaces.ILink.providedBy(link))
-        self.failUnless(interfaces.IFile.providedBy(datafile))
-        self.assertEquals(datafile.get_title(),  u'Torvald file')
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
 
         version = link.get_editable()
-        self.assertEquals(version.get_relative(), True)
-        self.assertEquals(version.get_target(), datafile)
-        self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
+        self.assertEqual(version.get_relative(), True)
+        self.assertEqual(version.get_target(), datafile)
+        self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
 
     def test_link_to_file_existing_rename(self):
         """Import a link to file in a folder that already exists. The
@@ -203,7 +204,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
         indexer = self.root.folder
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_zip('test_import_link.zip')
         self.assertEventsAre(
@@ -213,10 +214,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/import_of_folder/new',
              'ContentImported for /root/import_of_folder/new/link'],
             IContentImported)
-        self.failUnless(
+        self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
-        self.assertEquals(indexer, self.root.folder)
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertEqual(indexer, self.root.folder)
         self.assertListEqual(
             self.root.import_of_folder.objectIds(),
             ['file', 'index', 'new'])
@@ -227,14 +228,14 @@ class XMLImportTestCase(SilvaXMLTestCase):
         link = self.root.import_of_folder.new.link
         datafile = self.root.import_of_folder.file
 
-        self.failUnless(interfaces.ILink.providedBy(link))
-        self.failUnless(interfaces.IFile.providedBy(datafile))
-        self.assertEquals(datafile.get_title(),  u'Torvald file')
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
 
         version = link.get_editable()
-        self.assertEquals(version.get_relative(), True)
-        self.assertEquals(version.get_target(), datafile)
-        self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
+        self.assertEqual(version.get_relative(), True)
+        self.assertEqual(version.get_target(), datafile)
+        self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
 
     def test_link_to_file_existing_rename_twice(self):
         """Import a link to file in a folder that already exists two times. The
@@ -242,7 +243,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_zip('test_import_link.zip')
         self.assertEventsAre(
@@ -252,9 +253,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/import_of_folder/new',
              'ContentImported for /root/import_of_folder/new/link'],
             IContentImported)
-        self.failUnless(
+        self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         clearEvents()
 
@@ -266,33 +267,33 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/import2_of_folder/new',
              'ContentImported for /root/import2_of_folder/new/link'],
             IContentImported)
-        self.failUnless(
+        self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import2_of_folder))
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         link = self.root.import_of_folder.new.link
         datafile = self.root.import_of_folder.file
 
-        self.failUnless(interfaces.ILink.providedBy(link))
-        self.failUnless(interfaces.IFile.providedBy(datafile))
-        self.assertEquals(datafile.get_title(),  u'Torvald file')
+        self.assertTrue(interfaces.ILink.providedBy(link))
+        self.assertTrue(interfaces.IFile.providedBy(datafile))
+        self.assertEqual(datafile.get_title(),  u'Torvald file')
 
         version = link.get_editable()
-        self.assertEquals(version.get_relative(), True)
-        self.assertEquals(version.get_target(), datafile)
-        self.assertEquals(aq_chain(version.get_target()), aq_chain(datafile))
+        self.assertEqual(version.get_relative(), True)
+        self.assertEqual(version.get_target(), datafile)
+        self.assertEqual(aq_chain(version.get_target()), aq_chain(datafile))
 
         link2 = self.root.import2_of_folder.new.link
         datafile2 = self.root.import2_of_folder.file
 
-        self.failUnless(interfaces.ILink.providedBy(link2))
-        self.failUnless(interfaces.IFile.providedBy(datafile2))
-        self.assertEquals(datafile2.get_title(),  u'Torvald file')
+        self.assertTrue(interfaces.ILink.providedBy(link2))
+        self.assertTrue(interfaces.IFile.providedBy(datafile2))
+        self.assertEqual(datafile2.get_title(),  u'Torvald file')
 
         version2 = link2.get_editable()
-        self.assertEquals(version2.get_relative(), True)
-        self.assertEquals(version2.get_target(), datafile2)
-        self.assertEquals(aq_chain(version2.get_target()), aq_chain(datafile2))
+        self.assertEqual(version2.get_relative(), True)
+        self.assertEqual(version2.get_target(), datafile2)
+        self.assertEqual(aq_chain(version2.get_target()), aq_chain(datafile2))
 
     def test_link_url(self):
         """Import a link set with an URL.
@@ -310,19 +311,19 @@ class XMLImportTestCase(SilvaXMLTestCase):
         link = self.root.folder.link
 
         version = link.get_viewable()
-        self.failIf(version is None)
+        self.assertFalse(version is None)
         self.assertEqual(link.get_editable(), None)
         self.assertEqual(version.get_title(), u'Best website')
 
         binding = self.metadata.getMetadata(version)
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'wimbou')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'wimbou')
-        self.assertEquals(
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'wimbou')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'wimbou')
+        self.assertEqual(
             binding.get('silva-extra', 'content_description'),
             u'Best website in the world.')
 
-        self.assertEquals(version.get_relative(), False)
-        self.assertEquals(version.get_url(), 'http://wimbou.be')
+        self.assertEqual(version.get_relative(), False)
+        self.assertEqual(version.get_url(), 'http://wimbou.be')
 
     def test_broken_metadata(self):
         """Import a file that refer to unknown metadata set and
@@ -334,7 +335,27 @@ class XMLImportTestCase(SilvaXMLTestCase):
             IContentImported)
 
         publication = self.root.publication
-        self.failUnless(interfaces.IPublication.providedBy(publication))
+        self.assertTrue(interfaces.IPublication.providedBy(publication))
+
+    def test_broken_references(self):
+        """Import a file with broken references.
+        """
+        self.import_file('test_import_broken_references.silvaxml')
+        self.assertEventsAre(
+            ['ContentImported for /root/folder',
+             'ContentImported for /root/folder/ghost',
+             'ContentImported for /root/folder/link'],
+            IContentImported)
+
+        ghost_version = self.root.folder.ghost.get_editable()
+        self.assertNotEqual(ghost_version, None)
+        self.assertEqual(ghost_version.get_haunted(), None)
+        self.assertEqual(ghost_version.get_link_status(), ghost_version.LINK_EMPTY)
+
+        link_version = self.root.folder.link.get_editable()
+        self.assertNotEqual(link_version, None)
+        self.assertEqual(link_version.get_relative(), True)
+        self.assertEqual(link_version.get_target(), None)
 
     def test_fallback(self):
         """Import an archive that contain a ZEXP.
@@ -345,9 +366,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/zope2folder'],
             IContentImported)
         folder = self.root.folder
-        self.assertEquals(folder.get_title(), u"Stuff's container")
-        self.assertEquals(folder.objectIds(), ['zope2folder'])
-        self.assertEquals(folder.zope2folder.meta_type, 'Folder')
+        self.assertEqual(folder.get_title(), u"Stuff's container")
+        self.assertEqual(folder.objectIds(), ['zope2folder'])
+        self.assertEqual(folder.zope2folder.meta_type, 'Folder')
 
     def test_fallback_existing(self):
         """Import an archive that contain a ZEXP with an object that
@@ -366,9 +387,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
             IContentImported)
 
         folder = self.root.import_of_folder
-        self.assertEquals(folder.get_title(), u"Stuff's container")
-        self.assertEquals(folder.objectIds(), ['zope2folder'])
-        self.assertEquals(folder.zope2folder.meta_type, 'Folder')
+        self.assertEqual(folder.get_title(), u"Stuff's container")
+        self.assertEqual(folder.objectIds(), ['zope2folder'])
+        self.assertEqual(folder.zope2folder.meta_type, 'Folder')
 
     def test_fallback_existing_replace(self):
         """Import an archive that contain a ZEXP with an object that
@@ -387,9 +408,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
             IContentImported)
 
         folder = self.root.folder
-        self.assertEquals(folder.get_title(), u"Stuff's container")
-        self.assertEquals(folder.objectIds(), ['zope2folder'])
-        self.assertEquals(folder.zope2folder.meta_type, 'Folder')
+        self.assertEqual(folder.get_title(), u"Stuff's container")
+        self.assertEqual(folder.objectIds(), ['zope2folder'])
+        self.assertEqual(folder.zope2folder.meta_type, 'Folder')
 
     def test_ghost_to_image(self):
         """Import a ghost to an image.
@@ -410,11 +431,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         image = self.root.folder.torvald_jpg
         ghost = self.root.folder.images.ghost_of_torvald_jpg
-        self.failUnless(interfaces.IImage.providedBy(image))
-        self.failUnless(interfaces.IGhost.providedBy(ghost))
+        self.assertTrue(interfaces.IImage.providedBy(image))
+        self.assertTrue(interfaces.IGhost.providedBy(ghost))
 
         version = ghost.get_viewable()
-        self.failIf(version is None)
+        self.assertFalse(version is None)
         self.assertEqual(ghost.get_editable(), None)
         self.assertEqual(version.get_title(), u'Torvald picture')
         self.assertEqual(image.get_title(), u'Torvald picture')
@@ -422,9 +443,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(aq_chain(version.get_haunted()), aq_chain(image))
 
         binding = self.metadata.getMetadata(image)
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'pauline')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'pauline')
-        self.assertEquals(
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'pauline')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'pauline')
+        self.assertEqual(
             binding.get('silva-extra', 'comment'),
             u'Torvald public face.')
 
@@ -433,7 +454,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_zip('test_import_ghost.zip', replace=True)
         self.assertEventsAre(
@@ -442,7 +463,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/images/ghost_of_torvald_jpg',
              'ContentImported for /root/folder/torvald_jpg'],
             IContentImported)
-        self.failUnless(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertTrue(interfaces.IFolder.providedBy(self.root.folder))
         self.assertListEqual(
             self.root.folder.objectIds(),
             ['images', 'torvald_jpg'])
@@ -452,8 +473,8 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         image = self.root.folder.torvald_jpg
         ghost = self.root.folder.images.ghost_of_torvald_jpg
-        self.failUnless(interfaces.IImage.providedBy(image))
-        self.failUnless(interfaces.IGhost.providedBy(ghost))
+        self.assertTrue(interfaces.IImage.providedBy(image))
+        self.assertTrue(interfaces.IGhost.providedBy(ghost))
 
         version = ghost.get_viewable()
         self.assertEqual(version.get_haunted(), image)
@@ -464,7 +485,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_zip('test_import_ghost.zip')
         self.assertEventsAre(
@@ -473,8 +494,8 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/import_of_folder/images/ghost_of_torvald_jpg',
              'ContentImported for /root/import_of_folder/torvald_jpg'],
             IContentImported)
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
-        self.failUnless(
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
         self.assertListEqual(
             self.root.import_of_folder.objectIds(),
@@ -485,8 +506,8 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         image = self.root.import_of_folder.torvald_jpg
         ghost = self.root.import_of_folder.images.ghost_of_torvald_jpg
-        self.failUnless(interfaces.IImage.providedBy(image))
-        self.failUnless(interfaces.IGhost.providedBy(ghost))
+        self.assertTrue(interfaces.IImage.providedBy(image))
+        self.assertTrue(interfaces.IGhost.providedBy(ghost))
 
         version = ghost.get_viewable()
         self.assertEqual(version.get_haunted(), image)
@@ -503,16 +524,16 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertListEqual(self.root.folder.objectIds(), ['indexer'])
 
         indexer = self.root.folder.indexer
-        self.failUnless(interfaces.IIndexer.providedBy(indexer))
+        self.assertTrue(interfaces.IIndexer.providedBy(indexer))
         self.assertEqual(indexer.get_title(), u'Index of this site')
 
         binding = self.metadata.getMetadata(indexer)
-        self.assertEquals(binding.get('silva-extra', 'creator'), u'antoine')
-        self.assertEquals(binding.get('silva-extra', 'lastauthor'), u'antoine')
-        self.assertEquals(
+        self.assertEqual(binding.get('silva-extra', 'creator'), u'antoine')
+        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'antoine')
+        self.assertEqual(
             binding.get('silva-extra', 'comment'),
             u'Nothing special is required.')
-        self.assertEquals(
+        self.assertEqual(
             binding.get('silva-extra', 'content_description'),
             u'Index the content of your website.')
 
@@ -534,7 +555,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         folder = self.root.folder.ghost
         container = self.root.folder.container
-        self.failUnless(interfaces.IGhostFolder.providedBy(folder))
+        self.assertTrue(interfaces.IGhostFolder.providedBy(folder))
         self.assertEqual(folder.get_haunted(), container)
         self.assertEqual(aq_chain(folder.get_haunted()), aq_chain(container))
         self.assertListEqual(folder.objectIds(), container.objectIds())
@@ -544,7 +565,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addIndexer('folder', 'Folder')
-        self.failIf(interfaces.IFolder.providedBy(self.root.folder))
+        self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
 
         self.import_file('test_import_ghostfolder.silvaxml')
         self.assertEventsAre(
@@ -554,9 +575,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/import_of_folder/container/link',
              'ContentImported for /root/import_of_folder/ghost'],
             IContentImported)
-        self.failIf(
+        self.assertFalse(
             interfaces.IFolder.providedBy(self.root.folder))
-        self.failUnless(
+        self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
         self.assertListEqual(
             self.root.import_of_folder.objectIds(),
@@ -567,7 +588,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         folder = self.root.import_of_folder.ghost
         container = self.root.import_of_folder.container
-        self.failUnless(interfaces.IGhostFolder.providedBy(folder))
+        self.assertTrue(interfaces.IGhostFolder.providedBy(folder))
         self.assertEqual(folder.get_haunted(), container)
         self.assertEqual(aq_chain(folder.get_haunted()), aq_chain(container))
         self.assertListEqual(folder.objectIds(), container.objectIds())
@@ -585,8 +606,8 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         assets = self.root.folder.assets
         containers = self.root.folder.index
-        self.failUnless(interfaces.IAutoTOC.providedBy(assets))
-        self.failUnless(interfaces.IAutoTOC.providedBy(containers))
+        self.assertTrue(interfaces.IAutoTOC.providedBy(assets))
+        self.assertTrue(interfaces.IAutoTOC.providedBy(containers))
         self.assertEqual(assets.get_title(), u'Local assets')
         self.assertEqual(containers.get_title(), u'Containers')
 

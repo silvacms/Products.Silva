@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" datetime="2004-04-23T16:13:39Z" path="/root/folder" url="http://foo/root/folder">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Exported folder
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          author
+        </silva-extra:creator>
+        <silva-extra:expirationtime>
+        </silva-extra:expirationtime>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+      </set>
+    </metadata>
+    <content>
+      <link id="link">
+        <workflow>
+          <version id="0">
+            <status>
+              unapproved
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Private document.
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:content_description>
+                You cannot see that document so I broke it.
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                wimbou da hacker
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:lastauthor>
+                wimbou
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+            </set>
+          </metadata>
+          <target>
+          </target>
+        </content>
+      </link>
+      <ghost id="ghost">
+        <workflow>
+          <version id="0">
+            <status>
+              unapproved
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <haunted>
+          </haunted>
+        </content>
+      </ghost>
+    </content>
+  </folder>
+</silva>
