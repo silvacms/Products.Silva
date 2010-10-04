@@ -470,6 +470,10 @@ def registerViews(reg):
     reg.register('public', 'Silva Image', ['public', 'Image', 'view'])
     reg.register('public', 'Silva File', ['public', 'File'])
     reg.register('public', 'Silva Ghost Folder', ['public', 'Folder', 'view'])
+    reg.register('public', 'Five Asset', ['public'])
+    reg.register('public', 'Five Container', ['public', 'Folder', 'view'])
+    reg.register('public', 'Five VersionedContent', ['public'])
+    reg.register('public', 'Five Content', ['public'])
 
     # add
     reg.register('add', 'Silva Folder', ['add', 'Folder'])
@@ -588,15 +592,6 @@ def installSubscriptions(root):
             from Products.MailHost.MailHost import manage_addMailHost
             manage_addMailHost(root, MAILHOST_ID,
                                'Mail Delivery Service')
-
-    for id in (
-        'subscription_confirmation_template',
-        'already_subscribed_template',
-        'cancellation_confirmation_template',
-        'not_subscribed_template',
-        'publication_event_template'):
-        add_helper(
-            root.service_subscriptions, id, globals(), fileobject_add_helper, True)
 
 def installKupu(root):
     try:
