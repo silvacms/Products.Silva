@@ -1,0 +1,19 @@
+To: <tal:to tal:replace="structure options/to" />
+From: <tal:from tal:replace="structure options/from" />
+Subject: Subscription cancellation to "<tal:title tal:replace="context/get_title_or_id" />"
+Content-Type: text/plain; charset=utf-8
+
+
+You (or someone using your email address) requested a cancellation for
+receiving change notifications for the page:
+
+URL: <tal:url tal:replace="structure context/@@absolute_url" />
+
+title: <tal:title tal:replace="context/get_title_or_id" />
+
+
+However, your email is currently *not* subscribed. No further action
+is taken.
+
+-- 
+<tal:name tal:replace="options/sitename" /> notification service
