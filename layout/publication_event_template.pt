@@ -1,0 +1,25 @@
+To: <tal:to tal:replace="structure options/to" />
+From: <tal:from tal:replace="structure options/from" />
+Subject: Change notification for "<tal:title tal:replace="context/get_title_or_id" />"
+Content-Type: text/plain; charset=utf-8
+
+
+The following page just changed:
+
+URL: <tal:url tal:replace="structure context/@@absolute_url" />
+
+title: <tal:title tal:replace="context/get_title_or_id" />
+subject: <tal:subject tal:replace="options/metadata/silva-extra/subject" />
+description: <tal:subject tal:replace="options/metadata/silva-extra/content_description" />
+
+You're receiving this notification message because you're subscribed
+to changes for this URL:
+
+<tal:url tal:replace="structure options/subscribed_content/@@absolute_url" />
+
+If you want to cancel your subscription, please follow this link:
+
+<tal:url tal:replace="structure options/service_url" />
+
+-- 
+<tal:name tal:replace="options/sitename" /> notification service
