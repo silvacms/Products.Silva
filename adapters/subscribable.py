@@ -45,7 +45,7 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
     handling subscriptions.
     """
 
-    grok.context(interfaces.IVersionedContent)
+    grok.context(interfaces.IContent)
     grok.implements(interfaces.ISubscribable)
     grok.provides(interfaces.ISubscribable)
 
@@ -97,7 +97,7 @@ class Subscribable(Acquisition.Explicit, grok.Adapter):
             for emailaddress in subscribable.getSubscribedEmailaddresses():
                 if not subscriptions.has_key(emailaddress):
                     subscriptions[emailaddress] = Subscription(
-                        emailaddress, self.context)
+                        emailaddress, subscribable.context)
         return subscriptions
 
     def _buildSubscribablesList(self, subscribables=None, marker=0):

@@ -14,9 +14,9 @@ def sendmail(context, message, mto=None, mfrom=None, subject=None):
     """Send a fraking mail, should work with regular Zope Mailhost,
     and MaildropHost.
     """
-
     mh = getattr(context.get_root(), MAILHOST_ID)
+    if isinstance(message, unicode):
+        message = message.encode('utf-8')
     messageText, mto, mfrom = _mungeHeaders(message, mto, mfrom, subject)
     messageText = _encode(messageText, None)
     mh._send(mfrom, mto, messageText)
-
