@@ -1,0 +1,33 @@
+To: <tal:to tal:replace="structure options/to" />
+From: <tal:from tal:replace="structure options/from" />
+Subject: Subscription confirmation to "<tal:title tal:replace="context/get_title_or_id" />"
+Content-Type: text/plain; charset=utf-8
+
+
+You (or someone using your email address) requested a subscription for
+receiving notifications for the page:
+
+URL: <tal:url tal:replace="structure context/@@absolute_url" />
+
+title: <tal:title tal:replace="context/get_title_or_id" />
+
+
+However, this email is *already* subscribed for this URL:
+
+<tal:url tal:replace="structure options/subscribed_content/@@absolute_url" />
+
+which means you would already be notified of changes. You can still
+confirm your subscription request by going to this URL (usually this
+URL is clickable):
+
+<tal:url tal:replace="structure options/confirmation_url" />
+
+
+This URL will be valid for <tal:delay tal:replace="structure options/confirmation_delay" /> days.
+
+If you want to cancel your existing subscription, please follow this link:
+
+<tal:url tal:replace="structure options/service_url" />
+
+-- 
+<tal:name tal:replace="options/sitename" /> notification service
