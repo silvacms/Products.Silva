@@ -1,0 +1,25 @@
+To: <tal:to tal:replace="structure options/to" />
+From: <tal:from tal:replace="structure options/from" />
+Subject: Subscription confirmation to "<tal:title tal:replace="context/get_title_or_id" />"
+Content-Type: text/plain; charset=utf-8
+
+
+You (or someone using your email address) requested a subscription for
+receiving change notifications for the page:
+
+URL: <tal:url tal:replace="structure context/@@absolute_url" />
+
+title: <tal:title tal:replace="context/get_title_or_id" />
+
+
+This request needs to be confirmed. You can confirm this request by
+going to this URL (usually this URL is clickable):
+
+<tal:url tal:replace="structure options/confirmation_url" />
+
+
+This URL will be valid for <tal:delay tal:replace="structure options/confirmation_delay" /> days. If you do not want to subscribe,
+you can safely ignore this message.
+
+-- 
+<tal:name tal:replace="options/sitename" /> notification service
