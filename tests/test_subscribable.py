@@ -45,8 +45,6 @@ class SubscribableTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(isinstance(subscr, subscribable.Subscribable))
         subscr = subscribable.getSubscribable(self.image)
         self.assertEquals(None, subscr)
-        subscr = subscribable.getSubscribable(self.indexer)
-        self.assertEquals(None, subscr)
         
     def test_subscribability(self):
         subscr = subscribable.getSubscribable(self.doc)
