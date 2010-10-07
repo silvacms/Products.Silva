@@ -274,6 +274,10 @@ margin:0.5em 0;
 }
 
 /* ______________________________________________________________ links _____ */
+span.breadcrumb {
+  display: block;
+  margin-left: 80px;
+}
 
 span.breadcrumb a {
   text-decoration: none;

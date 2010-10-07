@@ -95,19 +95,9 @@
 <metal:slot define-slot="header">
 <!-- Start header slot -->
 <div class="header">
-  <a class="icon"
-    href="http://www.infrae.com/products/silva"
-    title="Silva info on the Infrae site: alt-i"
-    accesskey="i"
-    i18n:attributes="title"
-    >
-    <img src="silva_32.png" width="32" height="32" border="0" alt="Silva"
-      tal:attributes="src here/globals/silva_32.png/absolute_url | nothing" />
-  </a>
   <metal:slot define-slot="top_navigation">
   <!-- Begin top_navigation slot -->
-  <span class="breadcrumb"
-     style="display:block;">
+  <span class="breadcrumb">
     <span tal:repeat="item python:here.get_breadcrumbs(ignore_index=1)" tal:omit-tag="">
       <a tal:content="python: item.get_short_title() or item.get_title_or_id()"
         tal:attributes="href item/absolute_url">Name</a>
