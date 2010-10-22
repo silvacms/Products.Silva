@@ -136,6 +136,8 @@ class Security(AccessManager):
     def sec_get_creator_info(self):
         service = getUtility(IMemberService)
         user_id = self.getOwner().getId()
+        if not user_id:
+            return noneMember.__of__(self)
         return service.get_cached_member(user_id, location=self)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
