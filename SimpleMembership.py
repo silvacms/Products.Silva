@@ -220,7 +220,7 @@ class SimpleMemberService(SilvaService):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_member')
     def get_member(self, userid, location=None):
-        if not self.is_user(userid, location=None):
+        if not self.is_user(userid, location=location):
             return None
         # get member, add it if it doesn't exist yet
         members = self.Members.aq_inner.aq_explicit
