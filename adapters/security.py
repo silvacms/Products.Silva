@@ -277,12 +277,14 @@ class AuthorizationManager(grok.Adapter):
         """Return all current authorizations at this level, and
         authorization objects for given users/groups or other.
         """
-        auth = {}
+        authorizations = {}
         for identifier in identifiers:
-            if identifier not in auth:
-                auth[identifier] = self.get_authorization(
+            if identifier not in authorizations:
+                authorization = self.get_authorization(
                     identifier, dont_acquire=dont_acquire)
-        return auth
+                if authorization is not None:
+                    authorizations[identifier] = authorization
+        return authorizations
 
     def get_defined_authorizations(self, dont_acquire=False):
         """Return current all authorizations at this level.

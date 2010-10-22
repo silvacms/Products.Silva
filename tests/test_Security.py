@@ -351,12 +351,13 @@ class AcquiredUserAccessSecurityTestCase(unittest.TestCase):
         access = IAuthorizationManager(self.folder)
 
         authorizations = access.get_authorizations(
-            ['reader', 'viewer', 'editor'])
+            ['reader', 'viewer', 'editor', 'hacker'])
         self.assertEqual(len(authorizations), 3)
         self.assertTrue('reader' in authorizations.keys())
         self.assertTrue('viewer' in authorizations.keys())
         self.assertTrue('editor' in authorizations.keys())
         self.assertFalse('manager' in authorizations.keys())
+        self.assertFalse('hacker' in authorizations.keys())
 
         authorization = authorizations['reader']
         self.assertEqual(authorization.local_role, 'Manager')
