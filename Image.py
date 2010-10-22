@@ -466,6 +466,10 @@ class Image(Asset):
         """
         if img is None:
             img = self.image
+            if img is None:
+                img = self.hires_image
+                if img is None:
+                    raise ValueError(u"Image missing.")
         image_reference = img.get_content_fd()
         try:
             image = PILImage.open(image_reference)
