@@ -38,20 +38,3 @@ another version can be edited at the same time.
 
 Silva is extensible with new document types and other types of content
 objects.
-
-Using Silva
-===========
-
-After installing Silva in your Zope, you can go there by an URL such as::
-
-  http://mysite.org/silva
-
-this will show the public page of the silva root; just a simple demo
-page.
-
-To see Silva in its full glory, type /edit after the url (you can do
-this for any Silva object)::
-
-  http://mysite.org/silva/edit
-
-

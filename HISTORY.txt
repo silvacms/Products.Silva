@@ -1,14 +1,48 @@
 Changes
 =======
 
-Silva 2.3 (unreleased)
-----------------------
+Silva 2.3b2 (2010/10/27)
+------------------------
 
 - Members folder is a BTreeFolder, that improve performances on site
-  with lot of users.
+  with lot of users. service_members is now an utility.
 
 - Issues with PIL usages and libmagic have been fixed to work properly
   on native Windows.
+
+- tab access have reimplemented in ``silva.core.smi``. Request role
+  feature have been dropped. The API to add/remove member access have
+  been completely reviewed.
+
+- Groups support have been removed in favor of ``silva.pas.base``
+  implementation.
+
+- Import/Export of broken references via Silva XML is now possible.
+
+- The subscription feature moved to a different package
+  ``silva.app.subscriptions``. It can now be reused in your
+  application to manage email notification.
+
+- Sidebar cache now uses ``silva.core.cache``.
+
+- Publication actions (Approve, Reject, Withdraw, Publish) now trigger
+  Zope events.
+
+- Kupu properties tool have been rebuilt using a REST Zeam Form with
+  the help of ``zeam.form.silva``. It is now easy to integrate a
+  regular edit form inside Kupu.
+
+- User settings (change name, email address) have been rebuilt using a
+  REST form with the help of ``zeam.form.silva``.
+
+- More test have been improved and modernized, specially functional
+  tests, using ``infrae.testbrowser``. SilvaBrowser have been removed.
+
+- More views got modernized with Zope views.
+
+- General usability on refactored screen have been improved
+  (description, access keys, translations).
+
 
 Silva 2.3b1 (2010/07/16)
 ------------------------
@@ -27,7 +61,7 @@ Silva 2.3b1 (2010/07/16)
 
 - Silva now uses Python 2.6 and Zope 2.12.
 
-- Most of Silva contents now properly triggers Zope event when being 
+- Most of Silva contents now properly triggers Zope event when being
   added/edited.
 
 - More parts of the SMI have been replaced by Zope views and forms.
