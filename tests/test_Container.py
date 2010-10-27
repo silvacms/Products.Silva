@@ -6,11 +6,10 @@
 from DateTime import DateTime
 
 # Silva
-from silva.core.interfaces import IVersionedContent, IContent
 from Products.Silva.mangle import Id
+from Products.Silva.tests import SilvaTestCase
 from Products.Silva.tests.helpers import open_test_file
-
-import SilvaTestCase
+from silva.core.interfaces import IContent
 
 def _rotten_index_helper(folder):
     """ helper for test_rotten_index """

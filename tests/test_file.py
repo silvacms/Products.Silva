@@ -5,7 +5,6 @@
 from cStringIO import StringIO
 import unittest
 
-from zope import component
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File

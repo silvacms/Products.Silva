@@ -11,7 +11,6 @@ import re
 from Products.Five.testbrowser import Browser
 
 # Silva
-from Products.Silva.tests.helpers import openTestFile
 from Products.Silva.tests import SilvaTestCase
 
 # Expected state of creation
