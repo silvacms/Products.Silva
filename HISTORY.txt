@@ -4,17 +4,17 @@ Changes
 Silva 2.3b2 (2010/10/27)
 ------------------------
 
-- Members folder is a BTreeFolder, that improve performances on site
+- Members folder is now a BTreeFolder, that improve performance on sites
   with lot of users. service_members is now an utility.
 
 - Issues with PIL usages and libmagic have been fixed to work properly
   on native Windows.
 
-- tab access have reimplemented in ``silva.core.smi``. Request role
-  feature have been dropped. The API to add/remove member access have
-  been completely reviewed.
+- tab access has been reimplemented in ``silva.core.smi``. The request role
+  feature has been dropped. The API to add/remove member access has
+  been completely revised.
 
-- Groups support have been removed in favor of ``silva.pas.base``
+- Groups support has been removed in favor of the ``silva.pas.base``
   implementation.
 
 - Import/Export of broken references via Silva XML is now possible.
@@ -28,19 +28,19 @@ Silva 2.3b2 (2010/10/27)
 - Publication actions (Approve, Reject, Withdraw, Publish) now trigger
   Zope events.
 
-- Kupu properties tool have been rebuilt using a REST Zeam Form with
-  the help of ``zeam.form.silva``. It is now easy to integrate a
+- Kupu properties tool has been rebuilt using a REST Zeam Form with
+  the help of ``zeam.form.silva``. It is now much easier to integrate a
   regular edit form inside Kupu.
 
-- User settings (change name, email address) have been rebuilt using a
+- User settings (change name / email address) have been rebuilt using a
   REST form with the help of ``zeam.form.silva``.
 
-- More test have been improved and modernized, specially functional
-  tests, using ``infrae.testbrowser``. SilvaBrowser have been removed.
+- More tests have been improved and modernized, specially functional
+  tests, using ``infrae.testbrowser``. SilvaBrowser has been removed.
 
-- More views got modernized with Zope views.
+- More views got modernized into Zope views.
 
-- General usability on refactored screen have been improved
+- General usability on refactored screens has been improved
   (description, access keys, translations).
 
 
@@ -91,7 +91,7 @@ Silva 2.2 (2010-03-31)
 
 - The formulator lookupwindow field changed to a textarea to address the same
   concerns as the link toolbox in kupu mentioned above.
-  
+
 Silva 2.2b1 (2010-02-01)
 ------------------------
 
