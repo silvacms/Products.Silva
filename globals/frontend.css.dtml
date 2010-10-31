@@ -28,7 +28,7 @@ body {
   margin: 0;
   color: #2d374c;
   /* make an absolute path to the image to prevent duplicate caching */
-  background-image: url(<dtml-var root_url>/globals/skyfade.gif); 
+  background-image: url(<dtml-var root_url>/globals/skyfade.gif);
   background-repeat: repeat-x;
   background-color: #dde5ee;
   font: 70% Verdana, Helvetica, Arial, sans-serif;
@@ -38,7 +38,7 @@ body {
 /* _____________________________________________________________ layout _____ */
 
 div.header {
-  margin: 2em 2.1em 0 0;  
+  margin: 2em 2.1em 0 0;
 }
 
 div.header a.icon {
@@ -141,10 +141,10 @@ h6.minor, h6.sub /* in kupu*/ {
 
 .subhead {
   color: #333767;
-  font-weight: bold;  
+  font-weight: bold;
   font-family: verdana, arial, helvetica, sans-serif;
   line-height: 1.6em;
-} 
+}
 
 p {
   margin: 0.5em 0em;
@@ -153,13 +153,13 @@ p {
 ul {
   margin: 0.5em 0em;
   /* override default indent */
-  padding-left: 1.4em; 
+  padding-left: 1.4em;
 }
 
 ol {
   margin: 0.5em 0em;
   /* override default indent */
-  padding-left: 1.9em; 
+  padding-left: 1.9em;
 }
 
 dt {
@@ -231,22 +231,22 @@ span.underline {
 ul.disc {
   list-style-type: disc;
 }
-  
+
 ul.square {
   list-style-type: square;
-} 
+}
 
 ul.circle {
   list-style-type: circle;
-} 
+}
 
-ul.nobullet {    
-  list-style-type: none;   
+ul.nobullet {
+  list-style-type: none;
 }
 
 ol.decimal {
   list-style-type: decimal;
-} 
+}
 
 ol.upper-roman {
   list-style-type: upper-roman;
@@ -281,13 +281,13 @@ span.breadcrumb {
 
 span.breadcrumb a {
   text-decoration: none;
-}  
+}
 span.breadcrumb a:hover {
   text-decoration: underline;
-}  
+}
 
 /* highlighting index links */
-/* keep this if you markup text with index elements, this overrides the 
+/* keep this if you markup text with index elements, this overrides the
    highlighting in the editor */
 a.index-element {
   background-color: transparent;
@@ -313,7 +313,7 @@ div.public a:hover {
 a img {
   border: 0;
 }
-  
+
 /* _________________________________________________ silva table styles _____ */
 
 table.silvatable {
@@ -326,10 +326,10 @@ border-spacing:0;
 }
 table.silvatable tr {
   vertical-align: top;
-} 
+}
 table.silvatable tr.rowheading {
   font-weight: bold;
-} 
+}
 table.silvatable th.align-left, table.silvatable td.align-left {
   text-align: left;
 }
@@ -350,24 +350,24 @@ table.datagrid, table.plain, table.list, table.grid {
 
 table.plain {
   border: none;
-} 
- 
+}
+
 table.list th {
   border: 2px solid #444444;
   border-style: solid none;
-} 
+}
 table.list td {
   border: 1px solid #444444;
   border-style: solid none;
-} 
+}
 
 table.grid th, table.grid td {
   border: 1px solid #444444;
-} 
-  
+}
+
 table.datagrid th, table.datagrid td {
   border: 2px solid #444444;
-} 
+}
 
 table.simple {
   border-style: none;
@@ -377,36 +377,36 @@ table.simple thead th {
   font-weight: normal;
 }
 
-/* ____________________________ various table layouts _____ */ 
+/* ____________________________ various table layouts _____ */
 
 table.black_border td,
 table.black1 td,
-table.red td, 
+table.red td,
 table.green td {
   padding: 0 5px;
 }
 
-table.black_border { 
+table.black_border {
   border: 1px solid black;
 }
 
-table.black_border td { 
+table.black_border td {
   border: 1px solid black;
 }
 
-table.black_border tr.odd td { 
-  background-color: #c1c1c1; 
+table.black_border tr.odd td {
+  background-color: #c1c1c1;
 }
 
-table.black1 tbody { 
-  border-right: 1px solid black; 
+table.black1 tbody {
+  border-right: 1px solid black;
 }
 
 table.black1 td {
   border: 1px solid black;
 }
 
-table.red { 
+table.red {
   border: 1px solid #8b0000;
 }
 
@@ -438,7 +438,7 @@ div.listingBar {
 
 div.listingBar .next {
   margin-left: 5em;
-} 
+}
 
 div.listingBar .previous {
   margin-right: 5em;
@@ -511,7 +511,7 @@ div.backlink {
   margin-top: 1.5em;
 }
 
-/* ____________________________ login/openid forms _____ */ 
+/* ____________________________ login/openid forms _____ */
 
 div.access label {
   display:block;
@@ -538,6 +538,10 @@ table.access {
   border-spacing:0;
 }
 
+table.access td.form-label {
+  width: 7em;
+}
+
 table.access input {
   margin-top:0.5em;
 }
@@ -546,7 +550,7 @@ table.access input {
 
 /* render a bigger link target for more details in the error page */
 div.public a.transport {
-  padding:0.5em 0; 
+  padding:0.5em 0;
 }
 
 /* lose the bullets in the search results ul */
@@ -555,7 +559,7 @@ div.searchresults ul {
   padding-left:0;
 }
 
-/* _____________________________________________________ CSS2 selectors _____ */ 
+/* _____________________________________________________ CSS2 selectors _____ */
 
 acronym[title], abbr[title] {
   cursor:help;
