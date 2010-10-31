@@ -530,7 +530,7 @@ table.listing td.field-title {
 table.listing tbody a {
   display: block;
 }
-/* make inline in designation descriptions, new screen headings, and 
+/* make inline in designation descriptions, new screen headings, and
    optionally in tbody, row with unblock class */
 table.listing tbody p a, table.listing tbody div.subhead a,
 table.listing tbody.unblock a, table.listing tr.unblock a {
@@ -735,7 +735,7 @@ input.store, textarea.store {
 }
 
 /* ie7 valid css hack */
-*:first-child+html input.store, 
+*:first-child+html input.store,
 *:first-child+html textarea.store {
   width:97%;
 }
@@ -798,7 +798,7 @@ input.button, button.button, input.manipulator {
 }
 
 /* used in conflict situations where public view css would win */
-button.button { 
+button.button {
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
 
@@ -864,7 +864,7 @@ table.listing td.field p {
   margin:0;
   color:#667;
 }
-table.listing tr:hover td.designator p, 
+table.listing tr:hover td.designator p,
 table.listing tr:hover td.designator ul:hover,
 table.listing tr:hover td.field p {
   color:#333;
@@ -1035,22 +1035,21 @@ input[type="submit"]:focus, input[type="button"]:focus {
   color: #bfffd3;
   background-color: #008a8a;
 }
-*/ 
- 
+*/
+
 
 /* ________________________________________________ info + clipboard _______ */
 
 div.info {
   margin: -1px 0 0;
-  padding: 0.2em 0.4em 0.4em;
+  padding: 0.2em 0.4em 0.3em;
   border: 1px solid #789;
   color: #336;
   background-color: #c6d2dd;
 }
 
 div.info h3 {
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  margin: 0.2em 0;
   color: #336;
 }
 
@@ -1058,9 +1057,13 @@ div.info h3 img {
   vertical-align:top;
 }
 
+div.info h4 {
+  margin:0.6em 0 0;
+  font-size:100%;
+}
+
 div.info p {
-  margin-top: 0.6em;
-  margin-bottom: 0em;
+  margin:0 0 0.3em;
 }
 
 div.info p span.orientation {
@@ -1069,17 +1072,14 @@ div.info p span.orientation {
   border: 1px dotted black;
   text-align: center;
 }
-
 div.info p span.portrait {
   width: 4.5em;
   height: 6em;
 }
-
 div.info p span.landscape {
   width: 6.5em;
   height: 3.5em;
 }
-
 div.info p span.square {
   width: 4em;
   height: 4em;
@@ -1531,7 +1531,7 @@ div.listingbar .previous {
   float:left;
   clear:left;
   margin-left:0.2em;
-  margin-bottom:0.3em;  
+  margin-bottom:0.3em;
 }
 
 /* styles for the dynamic reference lookup window (from
@@ -1579,6 +1579,7 @@ button.kupu-link-reference:hover {
 button.calendar-button {
   background-image: url("calendar.gif");
   background-repeat:no-repeat;
+  background-position:3px -1px;
   margin-top:2px;
   border:none;
 }
