@@ -546,6 +546,11 @@ table.access input {
   margin-top:0.5em;
 }
 
+table.access input[type="submit"] {
+  width: 8em;
+  float: right;
+}
+
 /* ____________________________ various selectors _______ */
 
 /* render a bigger link target for more details in the error page */
