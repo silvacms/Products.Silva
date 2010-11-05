@@ -155,12 +155,11 @@ class SubscriptionService(Folder.Folder, SilvaService):
             self._send_confirmation(
                 content, subscription.contentSubscribedTo(), emailaddress, token,
                 'already_subscribed_template', 'confirm_subscription')
-            raise errors.AlreadySubscribedError()
-
-        # send confirmation email to emailaddress
-        self._send_confirmation(
-            content, content, emailaddress, token,
-            'subscription_confirmation_template', 'confirm_subscription')
+        else:
+            # send confirmation email to emailaddress
+            self._send_confirmation(
+                content, content, emailaddress, token,
+                'subscription_confirmation_template', 'confirm_subscription')
 
     security.declareProtected(SilvaPermissions.View, 'requestCancellation')
     def requestCancellation(self, content, emailaddress):
