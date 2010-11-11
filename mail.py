@@ -7,7 +7,7 @@ from smtplib import SMTPException
 
 # Zope
 from AccessControl import ModuleSecurityInfo
-from Products.MailHost.MailHost import _encode, _mungeHeaders
+from Products.MailHost.MailHost import _mungeHeaders
 from Products.Silva import MAILHOST_ID
 
 logger = logging.getLogger('silva.email')
@@ -21,8 +21,7 @@ def sendmail(context, message, mto=None, mfrom=None, subject=None):
     """
 
     mh = getattr(context.get_root(), MAILHOST_ID)
-    messageText, mto, mfrom = _mungeHeaders(message, mto, mfrom, subject)
-    messageText = _encode(messageText, None)
+    messageText, mto, mfrom = _mungeHeaders(message, mto, mfrom, subject, charset='utf-8')
     try:
         mh._send(mfrom, mto, messageText)
     except SMTPException as error:
