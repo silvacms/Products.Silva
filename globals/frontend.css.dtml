@@ -547,7 +547,7 @@ table.access input {
 }
 
 table.access input[type="submit"] {
-  width: 8em;
+  padding: 0 1.5em;
   float: right;
 }
 
