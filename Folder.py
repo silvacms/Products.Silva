@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-import urllib
-
 from five import grok
 from zope import schema
 from zope.component import getUtility
@@ -31,7 +29,6 @@ from Products.Silva.Ghost import ghost_factory
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
-from Products.Silva import Copying
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
 
@@ -46,6 +43,15 @@ from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
+
+
+def meta_types_for_interface(interface):
+    """Return a list of meta_type who implements the given interface.
+    """
+    # XXX This could directly belongs to extensionRegistry
+    return [addable['name']
+            for addable in extensionRegistry.get_addables()
+            if interface.implementedBy(addable['instance'])]
 
 
 class Folder(SilvaObject, Publishable, BaseFolder):
@@ -532,7 +538,8 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         result = []
         allowed = self.get_silva_addables_allowed()
         for addable in extensionRegistry.get_addables():
-            if (addable['name'] in allowed and
+            if (addable['name'] not in result and
+                addable['name'] in allowed and
                 self._is_silva_addable(addable)):
                 result.append(addable)
         return result
@@ -697,27 +704,17 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         return filter(lambda o: not isinstance(o, BrokenClass),
                       map(self._getOb, self._ordered_ids))
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_asset_types')
-    def get_silva_asset_types(self):
-        result = [addable_dict['name']
-                  for addable_dict in extensionRegistry.get_addables()
-                    if IAsset.implementedBy(addable_dict['instance'])]
-        return result
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_assets')
     def get_assets(self):
-        result = []
-        for object in self.objectValues(self.get_silva_asset_types()):
-            result.append(object)
+        result = self.objectValues(meta_types_for_interface(IAsset))
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'get_non_publishables')
     def get_non_publishables(self):
-        result = [
-            item for item in self.objectValues()
-            if INonPublishable.providedBy(item)]
+        result = self.objectValues(meta_types_for_interface(INonPublishable))
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
@@ -737,16 +734,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 continue
             result.append(object)
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
-        return result
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_assets_of_type')
-    def get_assets_of_type(self, meta_type):
-        result = []
-        assets = self.get_assets()
-        for object in assets:
-            if object.meta_type == meta_type:
-                result.append(object)
         return result
 
     # FIXME: what if the objects returned are not accessible with my
@@ -847,30 +834,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 continue
             if (depth == -1 or indent < depth) and item.is_transparent():
                 item._get_status_tree_helper(l, indent+1, depth)
-
-    def create_ref(self, obj):
-        """Create a moniker for the object.
-        """
-        return Copying.create_ref(obj)
-
-    def resolve_ref(self, ref):
-        """Resolve reference to object.
-        """
-        return Copying.resolve_ref(self.getPhysicalRoot(), ref)
-
-
-    security.declarePublic('url_encode')
-    def url_encode(self, string):
-        """A wrapper for the urllib.quote function
-
-        to be used in Python scripts and PT's
-        """
-        return urllib.quote(string)
-
-    security.declarePublic('url_decode')
-    def url_decode(self, string):
-        """A wrapper for the urllib.unquote_plus function"""
-        return urllib.unquote_plus(string)
 
 
 InitializeClass(Folder)

@@ -5,6 +5,7 @@
 # Zope
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
+from OFS.CopySupport import _cb_encode, _cb_decode
 import Globals
 
 from zope.interface import implements
@@ -117,8 +118,8 @@ class ViewCode(object):
         return (status, status_style, public_status)
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'get_processed_items')
-    def get_processed_items(self):
+        SilvaPermissions.ReadSilvaContent, 'get_processed_publishables')
+    def get_processed_publishables(self):
         default = self.get_default()
         if default is not None:
             publishables = [default]
@@ -168,12 +169,12 @@ class ViewCode(object):
         return result
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'get_processed_assets')
-    def get_processed_assets(self):
+        SilvaPermissions.ReadSilvaContent, 'get_processed_non_publishables')
+    def get_processed_non_publishables(self):
         result = []
         render_icon = self.render_icon
 
-        for asset in self.get_assets():
+        for asset in self.get_non_publishables():
             title = asset.get_title()
             modification_datetime = asset.get_modification_datetime()
             d = {
@@ -194,7 +195,6 @@ class ViewCode(object):
                 d['blacklink_class'] = 'closed'
             result.append(d)
         return result
-
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'get_processed_status_tree')
@@ -261,6 +261,19 @@ class ViewCode(object):
                     str_datetime = mangle.DateTime(datetime).toDateStr()
                     info['public_version_expiration_datetime'] = str_datetime
         return ret
+
+    # XXX Those two miss a valid security declaration: there is a
+    # security issue with resolve_ref. Don't know how to exploit it
+    # yet.
+    def create_ref(self, obj):
+        """Create a moniker for the object.
+        """
+        return _cb_encode(obj.getPhysicalPath())
+
+    def resolve_ref(self, ref):
+        """Resolve reference to object.
+        """
+        return self.getPhysicalRoot().unrestrictedTraverse(_cb_decode(ref))
 
     # this is a Python script that used to be located in the widgets dir of
     # SilvaDocument but had to be moved because of a change in Zope's

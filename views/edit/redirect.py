@@ -8,7 +8,8 @@
 ##title=
 ##
 model = context.REQUEST.model
-content_url = model.content_url() + '/edit/tab_edit'
+content = model.get_content()
+content_url = content.absolute_url() + '/edit/tab_edit'
 
 agent = context.REQUEST['HTTP_USER_AGENT']
 if agent.startswith('Mozilla/4.77'):

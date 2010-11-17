@@ -158,7 +158,7 @@ class SilvaObject(TitledObject, Security, ViewCode):
     public = ViewAttribute('public', 'render')
 
     def __init__(self, id):
-        self.id = id
+        TitledObject.__init__(self, id)
         self._v_creation_datetime = DateTime()
 
     # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.

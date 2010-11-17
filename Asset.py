@@ -17,7 +17,7 @@ from OFS import SimpleItem
 import OFS.interfaces
 
 # Silva
-from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 from Products.Silva import SilvaPermissions
 
@@ -30,7 +30,7 @@ from silva.core.references.interfaces import IReferenceService
 logger = logging.getLogger('silva.core')
 
 
-class Asset(SilvaObject, SimpleItem.SimpleItem):
+class Asset(NonPublishable, SimpleItem.SimpleItem):
     grok.baseclass()
     grok.implements(IAsset)
 

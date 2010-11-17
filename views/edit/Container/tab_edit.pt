@@ -12,8 +12,8 @@
     model request/model;
     mangle  modules/Products/Silva/mangle;
     default_document model/get_default;
-    publishables model/get_processed_items;
-    assets model/get_processed_assets;
+    publishables model/get_processed_publishables;
+    assets model/get_processed_non_publishables;
     published python:[p for p in publishables if p['is_published']];
     editables python:[p for p in publishables if p['is_editable']];
     closed python:[p for p in publishables if p['is_closed']];

@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-# Zope 3
-from zope.interface import implements
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -11,18 +9,29 @@ from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva import SilvaPermissions
+from Products.Silva.SilvaObject import SilvaObject
 
+from five import grok
 from silva.core.interfaces import (
-    IPublishable, IContent, IVersioning, IContainer, IPublication)
+    IPublishable, INonPublishable, IContent, IVersioning, IContainer, IPublication)
 
 
-class Publishable(object):
-    """Mixin class that can be provided to implement the Publishable
-    interface.
+class NonPublishable(SilvaObject):
+    """Base content which is not a published content in Silva. It
+    doesn't appear in navigation, and is not ordered.
     """
-    security = ClassSecurityInfo()
+    grok.baseclass()
+    grok.implements(INonPublishable)
 
-    implements(IPublishable)
+
+
+class Publishable(SilvaObject):
+    """Base content that can be published and ordered in Silva.
+    """
+    grok.baseclass()
+    grok.implements(IPublishable)
+
+    security = ClassSecurityInfo()
 
     # ACCESSORS
 
@@ -263,6 +272,5 @@ class Publishable(object):
                     return node
 
                 node = objects[-1][1]
-
 
 InitializeClass(Publishable)

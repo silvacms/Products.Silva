@@ -2,22 +2,22 @@
 # See also LICENSE.txt
 # $Id$
 
-# Zope
-from zope.interface import implements
+import warnings
 
+# Zope
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass # Zope 2.12
 
 # Silva
-from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IContent
 from silva.core import conf as silvaconf
+from zope.interface import implements
 
 
-class Content(Publishable, SilvaObject):
+class Content(Publishable):
 
     silvaconf.baseclass()
     security = ClassSecurityInfo()
@@ -41,16 +41,20 @@ class Content(Publishable, SilvaObject):
 
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content_url')
+    def content_url(self):
+        """Get content URL."""
+        warnings.warn('content_url() will be removed in Silva 2.4. '
+                      'Please use @@absolute_url instead on the result of get_content.',
+                      DeprecationWarning, stacklevel=2)
+        return self.absolute_url()
+
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_cacheable')
     def is_cacheable(self):
         return 1
 
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'content_url')
-    def content_url(self):
-        """Get content URL."""
-        return self.absolute_url()
 
 InitializeClass(Content)
 
