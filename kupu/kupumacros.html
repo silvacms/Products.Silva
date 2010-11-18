@@ -554,7 +554,7 @@
 	          <option value="" i18n:translate="">select source:</option>
             <tal:block repeat="extsource sorted_objects">
               <tal:block define="id python: extsource[0]; object python:extsource[1]">
-                <option tal:attributes="value id;title object/description" tal:content="python:object.get_title() or id"></option>
+                <option tal:attributes="value id;                                         title object/get_description" tal:content="python:object.get_title() or id"></option>
               </tal:block>
             </tal:block>
           </select>
