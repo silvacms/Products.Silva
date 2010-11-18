@@ -92,10 +92,12 @@ class ContainerItems(Items):
 
     def get_context_details(self, require):
         details = super(ContainerItems, self).get_context_details(require)
-        for content in self.context.objectValues():
-            if require.providedBy(content) \
-                    or interfaces.IContainer.providedBy(content):
-                details.append(self.get_item_details(content, require=require))
+        for provider in (self.context.get_ordered_publishables,
+                         self.context.get_non_publishables):
+            for content in provider():
+                if (require.providedBy(content) or
+                    interfaces.IContainer.providedBy(content)):
+                    details.append(self.get_item_details(content, require=require))
         return details
 
 
