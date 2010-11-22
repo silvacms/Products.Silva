@@ -44,7 +44,6 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 from infrae.wsgi.errors import DefaultError
 from silva.core.conf.utils import getSilvaViewFor
 from silva.core.services.interfaces import ICataloging
-from silva.core.smi.interfaces import ISMILayer
 from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
@@ -76,7 +75,10 @@ class Zope3ViewAttribute(ViewAttribute):
         # expect to have request['model']
         request['model'] = context
 
-        applySkin(request, ISMILayer)
+        root = context.get_root()
+        smi_skin = component.getUtility(Interface, root._smi_skin)
+
+        applySkin(request, smi_skin)
         view = component.queryMultiAdapter((context, request), name=name)
         if view:
             return view

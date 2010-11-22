@@ -116,6 +116,13 @@ class Root(Publication, site.Site):
     silvaconf.factory('manage_addRootForm')
     silvaconf.factory('manage_addRoot')
 
+    _smi_skin = 'silva.core.smi.interfaces.ISMILayer'
+    _properties = Publication._properties + (
+        {'id': '_smi_skin',
+         'label': 'Skin SMI',
+         'type': 'string',
+         'mode': 'w'},)
+
     def __init__(self, id):
         super(Root, self).__init__(id)
         # if we add a new root, version starts out as the software version
