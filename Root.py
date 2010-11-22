@@ -116,7 +116,7 @@ class Root(Publication, site.Site):
     silvaconf.factory('manage_addRootForm')
     silvaconf.factory('manage_addRoot')
 
-    _smi_skin = 'silva.core.smi.interfaces.ISMILayer'
+    _smi_skin = 'silva.core.smi.interfaces.ISMISilvaLayer'
     _properties = Publication._properties + (
         {'id': '_smi_skin',
          'label': 'Skin SMI',
