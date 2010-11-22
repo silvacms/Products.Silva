@@ -73,7 +73,6 @@ def add_fss_directory_view(obj, name, base, *args):
 
 
 def installFromScratch(root):
-    configureProperties(root)
     configureCoreFolders(root)
     configureViews(root)
     configureSecurity(root)
@@ -164,21 +163,6 @@ def configureMetadata(root):
 
     # Reindex the Silva root
     ICataloging(root).reindex()
-
-
-def configureProperties(root):
-    """Configure properties on the root folder.
-    XXX Probably we'll get rid of most properties in the future.
-    """
-    #title is now defered to metadata
-    #root.manage_changeProperties(title='Silva')
-    property_info = [
-        ('help_url', '/%s/globals/accesskeys' % root.absolute_url(1), 'string'),
-        ('comment', "This is just a place for local notes.", 'string'),
-        ('access_restriction', 'allowed_ip_addresses: ALL', 'string'),
-        ]
-    for prop_id, value, prop_type in property_info:
-        root.manage_addProperty(prop_id, value, prop_type)
 
 def configureCoreFolders(root):
     """A bunch of core directory views.
