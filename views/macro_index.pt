@@ -43,12 +43,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
 <tal:resource tal:replace="structure provider:resources" />
-<link href="globals/silvaContentStyle.css"
-  rel="stylesheet"
-  type="text/css"
-  tal:condition="python: not model.implements_container()"
-  tal:attributes="href string:$root_url/globals/silvaContentStyle.css"
-/>
 
 <tal:block replace="nothing"> _______ use frontend.css in preview _______ </tal:block>
 <metal:block define-slot="frontend" />
@@ -58,9 +52,6 @@
 <metal:block define-slot="metatype_css" />
 <tal:block replace="nothing"> _______ hook for application specific stylesheet _______ </tal:block>
 <metal:block define-slot="extension_css" />
-<link rel="stylesheet" type="text/css" 
-  tal:condition="exists:context/local-smi-styles.css"
-  tal:attributes="href context/local-smi-styles.css/absolute_url" />
 <tal:block replace="nothing"> _______ hook for refresh function _______ </tal:block>
 <metal:block define-slot="refresher" />
 <tal:block replace="nothing"> _______ XXX turned off, doesn't work _______ </tal:block>
