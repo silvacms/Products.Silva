@@ -338,7 +338,7 @@ class Image(Asset):
     getImage = get_image
 
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, hires=0, thumbnail=0, **kw):
+    def tag(self, hires=0, thumbnail=0, **extra_attributes):
         """ return xhtml tag
 
         Since 'class' is a Python reserved word, it cannot be passed in
@@ -352,11 +352,11 @@ class Image(Asset):
         width, height = self.getDimensions(image)
         named = []
 
-        if kw.has_key('css_class'):
-            kw['class'] = kw['css_class']
-            del kw['css_class']
+        if extra_attributes.has_key('css_class'):
+            extra_attributes['class'] = extra_attributes['css_class']
+            del extra_attributes['css_class']
 
-        for name, value in kw.items():
+        for name, value in extra_attributes.items():
             named.append('%s="%s"' % (escape(name, 1), escape(value, 1)))
         named = ' '.join(named)
         return '<img src="%s" width="%s" height="%s" alt="%s" %s />' % (
