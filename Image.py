@@ -368,8 +368,8 @@ class Image(Asset):
         image, img_src = self._get_image_and_src(hires, thumbnail)
         return img_src
 
-    security.declareProtected(SilvaPermissions.View, 'getWebFormat')
-    def getWebFormat(self):
+    security.declareProtected(SilvaPermissions.View, 'get_web_format')
+    def get_web_format(self):
         """Return file format of web presentation image
         """
         try:
@@ -378,11 +378,17 @@ class Image(Asset):
             # XXX i18n - should we translate this?
             return 'unknown'
 
-    security.declareProtected(SilvaPermissions.View, 'getWebScale')
-    def getWebScale(self):
+    security.declareProtected(SilvaPermissions.View, 'getWebFormat')
+    getWebFormat = get_web_format
+
+    security.declareProtected(SilvaPermissions.View, 'get_web_scale')
+    def get_web_scale(self):
         """Return scale percentage / WxH of web presentation image
         """
         return str(self.web_scale)
+
+    security.declareProtected(SilvaPermissions.View, 'getWebScale')
+    getWebScale = get_web_scale
 
     security.declareProtected(SilvaPermissions.View, 'getWebCrop')
     def getWebCrop(self):
