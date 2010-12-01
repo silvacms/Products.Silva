@@ -13,7 +13,6 @@ from zope.component import getUtility
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import roleinfo
-from Products.Silva.AccessManager import AccessManager
 from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces import IVersion, IRoot
@@ -30,7 +29,7 @@ class UnauthorizedRoleAssignement(SecurityError):
     """This roles can be assigned.
     """
 
-class Security(AccessManager):
+class Security(object):
     """Can be mixed in with an object to support Silva security.
     (built on top of Zope security)
     Methods prefixed with sec_ so as not to disrupt similarly named
