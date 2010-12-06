@@ -7,14 +7,16 @@ import warnings
 # Zope 3
 from five import grok
 from zope import component
-from zope.interface import Interface
-from zope.app.container.interfaces import IObjectMovedEvent
-from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.container.interfaces import IContainerModifiedEvent
 from zope.i18n import translate
+from zope.interface import Interface
 from zope.interface import alsoProvides
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
+from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 from zope.publisher.browser import applySkin
 from zope.publisher.interfaces.browser import IBrowserPage
 from zope.publisher.interfaces.browser import IBrowserView
@@ -25,6 +27,7 @@ from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
 from Acquisition import aq_base, aq_inner
 from App.class_init import InitializeClass
 from DateTime import DateTime
+from OFS.interfaces import IObjectClonedEvent
 from OFS.interfaces import IObjectWillBeAddedEvent
 from OFS.interfaces import IObjectWillBeMovedEvent
 
@@ -539,15 +542,22 @@ def content_will_be_moved(content, event):
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
+@grok.subscribe(ISilvaObject, IObjectClonedEvent)
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
 def update_content_author_info(content, event):
     """A content have been created of modifed. Update its author
     information.
     """
-    # XXX ObjectCopiedEvent should not be ignored but content is not in
+    # ObjectCopiedEvent should not be ignored but content is not in
     # Zope tree when it is triggered, so metadata service doesn't
-    # work.
+    # work. We use IObjectClonedEvent instead.
     if IObjectCopiedEvent.providedBy(event):
+        return
+    # In the same way, we discard event on versioned content if they
+    # are about adding or removing a version.
+    # XXX Modify versioning code not to have _index_version but
+    # let it handle by this here.
+    if IVersionedContent.providedBy(content) and IContainerModifiedEvent.providedBy(event):
         return
     if IRoot.providedBy(content):
         # If we are on the root we swallow errors, as root might not
@@ -558,13 +568,16 @@ def update_content_author_info(content, event):
             pass
     else:
         content.sec_update_last_author_info()
+        # Index newly added content.
+        ICataloging(content).index()
+
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
-def index_added_content(content, event):
-    """We index all newly moved or added content (but not removed
-    one).
+def index_moved_content(content, event):
+    """We index all added content (due to a move).
     """
-    if not IObjectRemovedEvent.providedBy(event):
+    if (not IObjectAddedEvent.providedBy(event) and
+        not IObjectRemovedEvent.providedBy(event)):
         ICataloging(content).index()
 
 
