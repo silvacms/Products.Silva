@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.3b2'
+version = '2.3b3'
 
 tests_require = [
     'silva.export.opendocument',
