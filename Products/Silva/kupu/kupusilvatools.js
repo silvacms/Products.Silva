@@ -188,16 +188,26 @@ ExternalSourceLoader.prototype.preload_callback = function(request) {
 ExternalSourceLoader.prototype.onMouseOverHandler = function() {
     /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
        doesn't recognize this selector within designMode */
-    if (this.div.className.search("active")==-1) {
-        this.div.className += " active"
+    var current_source = null;
+    if (this.extsourcetool._currentExternalSource) {
+        current_source = this.extsourcetool._currentExternalSource.get(0);
+    };
+    var source = this.div
+    if (!(current_source === source)) {
+        $(source).addClass('active');
     };
 };
 
 ExternalSourceLoader.prototype.onMouseOutHandler = function(event) {
     /* using a :hover sudo-selector would be nice, but it seems that IE7 can't
        doesn't recognize this selector within designMode */
-    if (this.extsourcetool._insideExternalSource != this.div) {
-        this.div.className = this.div.className.replace(/ active/,'');
+    var current_source = null;
+    if (this.extsourcetool._currentExternalSource) {
+        current_source = this.extsourcetool._currentExternalSource.get(0);
+    };
+    var source = this.div
+    if (!(current_source == source)) {
+        $(source).removeClass('active');
     };
 };
 
@@ -219,6 +229,10 @@ SilvaToolBox.prototype.open = function () {
         };
         this.options.show();
     };
+};
+
+SilvaToolBox.prototype.set_title = function(new_title) {
+    $(this.toolbox).children('h1').text(new_title);
 };
 
 SilvaToolBox.prototype.close = function () {
@@ -294,6 +308,10 @@ SilvaLinkTool.prototype.updateLink = function (
         linkel.removeAttribute('href');
         linkel.setAttribute('name', name);
     } else {
+        if (type && type == 'internal') {
+            /* Internal don't have an url. However it was set to prevent a new link to lose its text */
+            url = '';
+        };
         if (type && type == 'reference') {
             /* We have a reference. Href is set to something to
              * prevent SilvaIndexTool to get contol over the link */
@@ -313,7 +331,7 @@ SilvaLinkTool.prototype.updateLink = function (
             linkel.setAttribute('silva_href', url);
             linkel.removeAttribute('silva_reference');
             linkel.removeAttribute('silva_target');
-        }
+        };
         if (linkel.innerHTML == "") {
             var doc = this.editor.getInnerDocument();
             linkel.appendChild(doc.createTextNode(title || url || name));
@@ -390,6 +408,10 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
 };
 
 SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
+    if (this.editor.suspended) {
+        return;
+    };
+
     var content = this.content;
     var external_href = this.external_href.val();
     var anchor = this.anchor.val();
@@ -421,29 +443,42 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
         this.tool.createLink(external_href, 'external', anchor, target, title);
     }
     else {
-        /* anchor only */
+        /* Anchor only. Set URL to #anchor otherwise an empty link will be generated. */
         title = this.title.val();
-        this.tool.createLink('', 'internal', anchor, target, title);
+        this.tool.createLink('#' + anchor, 'internal', anchor, target, title);
     };
     this.editor.content_changed = true;
     this.editor.updateState();
 };
 
+SilvaLinkToolBox.prototype.resetTool = function() {
+    this.addbutton.style.display = 'inline';
+    this.updatebutton.style.display = 'none';
+    this.delbutton.style.display = 'none';
+    this.title.val('');
+    this.anchor.val('');
+    this.external_href.val('');
+    this.toolbox.close();
+    this.content.clear();
+    this.target.clear();
+}
+
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
+    /* reset image link settings */
+    this.content.show();
+    this.image = null;
+    this.imageoptions.hide()
+    this.imagehires.val(false);
+
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
-        if (extsourcetool.getNearestExternalSource(selNode)) {
+        if (extsourcetool.getNearestExternalSource(selNode, event)) {
+            this.resetTool()
             return;
         };
     };
     var self = this;
     var currnode = selNode;
-
-    /* reset image link settings */
-    this.content.show();        /* no link display content selector */
-    this.image = null;
-    this.imageoptions.hide()
-    this.imagehires.val(false);
 
     /* look for a link (or an image) */
     while (currnode) {
@@ -493,15 +528,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
         currnode = currnode.parentNode;
     };
     /* We have no link. Reset the toolbox to add state */
-    this.addbutton.style.display = 'inline';
-    this.updatebutton.style.display = 'none';
-    this.delbutton.style.display = 'none';
-    this.title.val('');
-    this.anchor.val('');
-    this.external_href.val('');
-    this.toolbox.close();
-    this.content.clear();
-    this.target.clear();
+    this.resetTool();
 };
 
 function SilvaImageTool(
@@ -512,6 +539,7 @@ function SilvaImageTool(
     this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
     this.alignment = $('#' + alignid);
     this.resizePollingInterval = null;
+    this.image = null;
 
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
@@ -525,7 +553,91 @@ SilvaImageTool.prototype.initialize = function(editor) {
     addEventHandler(this.addbutton, 'click', this.createImageHandler, this);
     addEventHandler(this.updatebutton, 'click', this.createImageHandler, this);
     addEventHandler(this.resizebutton, 'click', this.finalizeResizeImage, this);
+    addEventHandler(this.editor.getInnerDocument(), 'keydown', this.handleKeyPressOnImage, this);
     this.editor.logMessage('Image tool initialized');
+};
+
+SilvaImageTool.prototype.getImageOrLink = function () {
+    if (this.image == null) {
+        return $([]);
+    }
+    var element = $(this.image);
+    if (element.parent().get(0).nodeName == 'A') {
+        // If a link is wrapped around the image, return the link.
+        return element.parent();
+    };
+    return element;
+};
+
+SilvaImageTool.prototype.handleKeyPressOnImage = function(event) {
+    var current = this.getImageOrLink()
+    if (!current.length) {
+        return;
+    };
+    var keyCode = event.keyCode;
+
+    if (keyCode == 8 || keyCode == 46) {
+        /* 8=backspace, 46=delete */
+        if (confirm("Are you sure you want to delete this image?")) {
+            this.deleteImage();
+        };
+    }
+    else {
+        var collapseToEnd = false;
+        var next =  $([]);
+
+        if (keyCode == 9 || keyCode == 13 || keyCode == 34 || keyCode == 39 || keyCode == 40) {
+            /* 9 = tab; 13 = enter; 34 = page down; 39 = right; 40 = down; */
+            next = current.next()
+            if (!next.length) {
+                next = $('<p>&nbsp;</p>');
+                next.insertAfter(current);
+                next = current.next()
+                this.editor.content_changed = true;
+            };
+            this.resetTool();
+        } else if (keyCode == 37 || keyCode == 38) {
+            /* 33=page up; 37=left arrow, 38=up arrow */
+            next = current.prev();
+            if (!next.length) {
+                next = $('<p>&nbsp;</p>');
+                next.insertBefore(current);
+                next = current.prev();
+                this.editor.content_changed = true;
+            };
+            collapseToEnd = true;
+            this.resetTool();
+        };
+        if (next.length) {
+            var item = next.get(0);
+            var selection = this.editor.getSelection();
+
+            selection.selectNodeContents(item);
+            selection.collapse(collapseToEnd);
+        };
+    };
+    if (event.preventDefault) {
+        event.preventDefault();
+    };
+    event.returnValue = false;
+    return false;
+};
+
+SilvaImageTool.prototype.deleteImage = function() {
+    var current = this.getImageOrLink();
+    if (!current.length) {
+        return;
+    };
+    var next = current.next();
+    current.remove();
+    if (next.length) {
+        var selection = this.editor.getSelection();
+
+        selection.selectNodeContents(next.get(0));
+        selection.collapse();
+    };
+    this.editor.content_changed = true;
+    this.resetTool()
 };
 
 SilvaImageTool.prototype.createContextMenuElements = function(selNode, event) {
@@ -533,6 +645,10 @@ SilvaImageTool.prototype.createContextMenuElements = function(selNode, event) {
 };
 
 SilvaImageTool.prototype.createImageHandler = function(event) {
+    if (this.editor.suspended) {
+        return;
+    };
+
     /* create an image */
     var reference = this.content.reference();
     if (!reference) {
@@ -573,11 +689,30 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
     this.editor.updateState();
 };
 
+SilvaImageTool.prototype.resetTool = function () {
+    if (this.resizebutton.style.display != 'none' && this.image) {
+        /* image has been resized, so prompt user to
+           confirm resizing */
+        if (confirm(
+            "Image has been resized in kupu, but not confirmed. " +
+                "Really resize?")) {
+            this.finalizeResizeImage();
+        };
+    };
+    this.stopResizePolling();
+    this.toolbox.close();
+    this.addbutton.style.display = 'inline';
+    this.updatebutton.style.display = 'none';
+    this.resizebutton.style.display='none';
+    this.content.clear();
+    this.image = null;
+};
 
 SilvaImageTool.prototype.updateState = function(selNode, event) {
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
-        if (extsourcetool.getNearestExternalSource(selNode)) {
+        if (extsourcetool.getNearestExternalSource(selNode, event)) {
+            this.resetTool();
             return;
         };
     };
@@ -590,7 +725,7 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             tool */
         this.addbutton.style.display = 'none';
         this.updatebutton.style.display = 'inline';
-        this.resizebutton.style.display = 'none';
+        /* Do not change style of the resize  button as we might already have resized the image */
         this.image = image;
         this.toolbox.open();
 
@@ -604,83 +739,55 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
         }
         this.startResizePolling(image);
     } else {
-        if (this.resizebutton.style.display != 'none' && this.image) {
-            /* image has been resized, so prompt user to
-               confirm resizing */
-            if (confirm(
-                "Image has been resized in kupu, but not confirmed. " +
-                "Really resize?")) {
-              this.finalizeResizeImage();
-            };
-        };
-        this.stopResizePolling();
-        this.toolbox.close();
-        this.addbutton.style.display = 'inline';
-        this.updatebutton.style.display = 'none';
-        this.resizebutton.style.display='none';
-        this.content.clear();
-        this.image = null;
+        this.resetTool();
     };
 };
 
 SilvaImageTool.prototype.finalizeResizeImage = function() {
-    this.stopResizePolling(); /* pause polling during resize */
     var image = this.image;
     if (!image) {
-        this.editor.logMessage('No image selected!  unable to resize');
+        this.editor.logMessage('No image selected!  unable to resize.');
         return;
     };
-    var width = image.style.width.replace(/px/,'');
-    var height = image.style.height.replace(/px/,'');
 
-    var _finalizeResizeImageCallback = function(object, image, width, height) {
-        if (request.readyState == 4) {
-            if (request.status != '200') {
-                if (request.status == '500') {
-                    alert('error on server.  body returned:\n' +
-                          request.responseText);
-                };
-            };
-            var finish = function(object) {
-                /* The width/height styles (style attribute) cannot be removed
-                   immediately after repointing the src to the resized image,
-                   or the screen will flicker, so do it onload */
+    this.stopResizePolling(); /* pause polling during resize */
+
+    var self = this;
+    var width = image.width;
+    var height = image.height;
+    var image_url = image.src.replace(/\?.*/,'');
+
+    $.post(
+        image_url + '/++rest++image.resize',
+        {"width": width,
+         "height": height},
+        function(data) {
+            // Load the new resized image
+            var resized_image = new Image();
+            $(resized_image).bind('load', function () {
                 image.onload = "this.removeAttribute('style')";
-                image.src = tmpimg.src;
-                object.editor.content_changed = true;
-                object.resizebutton.style.display='none';
-                object.editor.updateState();
-                object.editor.focusDocument();
-            };
-            var tmpimg = new Image();
-            addEventHandler(tmpimg, 'load', finish, this, object);
-            /* add the dimensions on to the src url, to bypass browser
-               caching.  This is OK, because every image (even newly created
-               ones) have a silva_src attribute, which is used when saving */
-            tmpimg.src = image.src.replace(/\?.*/,'') + '?'+width+'x'+height;
-        };
-    };
-    var url =
-        image.src.replace(/\?.*/,'') +
-        '/@@resize_image_from_kupu?width=' + width + '&height=' + height;
-    var request = new XMLHttpRequest();
-    request.open('GET',url, true);
-    var callback = new ContextFixer(
-        _finalizeResizeImageCallback, request, this, image, width, height);
-    request.onreadystatechange = callback.execute;
-    request.send(null);
+                image.src = resized_image.src;
+                self.resizebutton.style.display='none';
+            });
+            // Add with and height to prevent image being cached by the browser
+            resized_image.src = image.src.replace(/\?.*/,'') + '?' + width + 'x' + height;
+        });
+
     this.startResizePolling(image);
 };
 
 SilvaImageTool.prototype.startResizePolling = function(image) {
-    if (this.resizePollingInterval) return;
-    var image_style = [image.style.width, image.style.height];
+    if (this.resizePollingInterval)
+        return;
+
+    var image_size = [image.width, image.height];
     var self = this;
+
     function polling() {
-        var newstyle = [image.style.width, image.style.height];
-        if (!(image_style[0]==newstyle[0] && image_style[1]==newstyle[1])) {
+        var new_image_size = [image.width, image.height];
+        if (!(image_size[0]==new_image_size[0] && image_size[1]==new_image_size[1])) {
             self.resizebutton.style.display='inline';
-            image_style = newstyle;
+            image_size = new_image_size;
         };
     };
     this.resizePollingInterval = setInterval(polling, 300);
@@ -1648,11 +1755,22 @@ SilvaTableToolBox.prototype.delTableRow = function delTableRow() {
     this.tool.delTableRow(current);
 };
 
+SilvaTableToolBox.prototype.resetTool = function() {
+    this.edittablediv.style.display = "none";
+    this.addtablediv.style.display = "block";
+    this.alignselect.selectedIndex = 0;
+    this.classselect.selectedIndex = 0;
+    if (this.toolboxel) {
+        this.toolboxel.className = this.plainclass;
+    };
+};
+
 SilvaTableToolBox.prototype.updateState = function(selNode) {
     /* update the state (add/edit) and update the pulldowns (if required) */
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
         if (extsourcetool.getNearestExternalSource(selNode)) {
+            this.resetTool();
             return;
         };
     };
@@ -1698,13 +1816,7 @@ SilvaTableToolBox.prototype.updateState = function(selNode) {
             this.toolboxel.className = this.activeclass;
         };
     } else {
-        this.edittablediv.style.display = "none";
-        this.addtablediv.style.display = "block";
-        this.alignselect.selectedIndex = 0;
-        this.classselect.selectedIndex = 0;
-        if (this.toolboxel) {
-            this.toolboxel.className = this.plainclass;
-        };
+        this.resetTool();
     };
 };
 
@@ -2036,10 +2148,20 @@ SilvaIndexTool.prototype.handleKeyPressOnIndex = function(event) {
     return false;
 };
 
+SilvaIndexTool.prototype.resetTool = function() {
+    this.toolbox.close();
+    this.nameinput.value = '';
+    this.titleinput.value = '';
+    this.updatebutton.style.display = 'none';
+    this.deletebutton.style.display = 'none';
+    this.addbutton.style.display = 'inline';
+};
+
 SilvaIndexTool.prototype.updateState = function(selNode, event) {
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
-        if (extsourcetool.getNearestExternalSource(selNode)) {
+        if (extsourcetool.getNearestExternalSource(selNode, event)) {
+            this.resetTool();
             return;
         };
     };
@@ -2052,12 +2174,7 @@ SilvaIndexTool.prototype.updateState = function(selNode, event) {
         this.updatebutton.style.display = 'inline';
         this.deletebutton.style.display = 'inline';
     } else {
-        this.toolbox.close();
-        this.nameinput.value = '';
-        this.titleinput.value = '';
-        this.updatebutton.style.display = 'none';
-        this.deletebutton.style.display = 'none';
-        this.addbutton.style.display = 'inline';
+        this.resetTool();
     };
 };
 
@@ -2102,7 +2219,7 @@ SilvaAbbrTool.prototype.initialize = function(editor) {
 SilvaAbbrTool.prototype.updateState = function(selNode, event) {
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
-        if (extsourcetool.getNearestExternalSource(selNode)) {
+        if (extsourcetool.getNearestExternalSource(selNode, event)) {
             return;
         };
     };
@@ -2258,9 +2375,7 @@ function SilvaExternalSourceTool(
     this.cancelbutton = getFromSelector(cancelbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
     this.delbutton = getFromSelector(delbuttonid);
-    this.toolbox = getFromSelector(toolboxid);
-    this.plainclass = plainclass;
-    this.activeclass = activeclass;
+    this.toolbox = new SilvaToolBox(toolboxid, activeclass, plainclass);
     this.is_enabled = getFromSelector(isenabledid).value == 'True';
     this.disabled_text = getFromSelector(disabledtextid);
     this.nosources_text = getFromSelector(nosourcestextid);
@@ -2269,7 +2384,7 @@ function SilvaExternalSourceTool(
     this._url = null;
     this._id = null;
     this._form = null;
-    this._insideExternalSource = false;
+    this._currentExternalSource = null;
 
     /* no external sources found, so hide add and select */
     if (this.idselect.options.length==1) {
@@ -2303,18 +2418,8 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
     addEventHandler(this.cancelbutton, 'click', this.resetTool, this);
     addEventHandler(
         this.updatebutton, 'click', this.startExternalSourceAddEdit, this);
-    addEventHandler(this.delbutton, 'click', this.delExternalSource, this);
-    addEventHandler(
-        editor.getInnerDocument(), 'keypress',
-        this.handleKeyPressOnExternalSource, this);
-    if (this.editor.getBrowserName() == 'IE') {
-        addEventHandler(
-            editor.getInnerDocument(), 'keydown',
-            this.handleKeyPressOnExternalSource, this);
-        addEventHandler(
-            editor.getInnerDocument(), 'keyup',
-            this.handleKeyPressOnExternalSource, this);
-    };
+    addEventHandler(this.delbutton, 'click', this.deleteExternalSource, this);
+    addEventHandler(this.editor.getInnerDocument(), 'keydown', this.handleKeyPressOnExternalSource, this);
 
     // search for a special serialized identifier of the current document
     // which is used to send to the ExternalSource element when sending
@@ -2339,162 +2444,93 @@ SilvaExternalSourceTool.prototype.initialize = function(editor) {
 };
 
 SilvaExternalSourceTool.prototype.updateState = function(selNode, event) {
-    var extsource = this.getNearestExternalSource(selNode);
-    if (!extsource) {
-        /* if the externalsource element's preview is _only_ a floated
-            div, in at least FF, clicking anywhere but inside the div
-            will cause selNode to be the body (resulting in extsource==undefined)
-            */
-        var e = event || window.event;
-        /* updateState is not always called on an event (like a mouse click
-           sometimes it is during initialization */
-        if (e) {
-            var target = e.srcElement || e.target;
-            extsource = this.getNearestExternalSource(target);
-        } else {
-            var selNode = this.editor.getSelectedNode();
-            extsource = this.getNearestExternalSource(selNode);
-        };
-    };
-    var heading = this.toolbox.getElementsByTagName('h1')[0];
-    if (extsource) {
-        if (this._insideExternalSource == extsource) {
+    var source = $(this.getNearestExternalSource(selNode, event));
+
+    if (source.length) {
+        if (this._currentExternalSource == source) {
             return;
         };
-        /* if an external source is already active, remove it's active status */
-        if (this._insideExternalSource) {
-            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
+        if (this._currentExternalSource) {
+            this._currentExternalSource.removeClass('active');
         };
-        this._insideExternalSource = extsource;
-        if (extsource.className.search("active")==-1) {
-            extsource.className += " active";
-        };
-        selectSelectItem(this.idselect, extsource.getAttribute('source_id'));
+        this._currentExternalSource = source;
+        this._currentExternalSource.addClass('active');
+
+        var source_id = source.attr('source_id');
+
+        selectSelectItem(this.idselect, source_id);
         this.addbutton.style.display = 'none';
         this.cancelbutton.style.display = 'none';
         this.updatebutton.style.display = 'inline';
         this.delbutton.style.display = 'inline';
-        this.startExternalSourceUpdate(extsource);
         this.disabled_text.style.display = 'none';
-        if (this.toolbox) {
-            this.toolbox.className = this.activeclass;
-        };
-        /* now do the new heading */
-        title = extsource.getAttribute('source_title') ||
-            extsource.getAttribute('source_id');
-        span = document.createElement('span');
-        span.setAttribute(
-            'title', 'source id: ' + extsource.getAttribute('source_id'));
-        span.appendChild(document.createTextNode('es \xab' + title + '\xbb'));
-        heading.replaceChild(span, heading.firstChild);
-        /* if the tool is collapsed, uncollapse it */
-        var toolbody = getFromSelector(
-            '#' + this.toolbox.id + ' div.kupu-tooltray');
-        if (toolbody) {
-            if (toolbody.style.display == 'none') {
-                toolbody.style.display = 'block';
-            };
-        };
+        this.toolbox.open();
+        this.editor.suspendEditing();
+
+        this.startExternalSourceUpdate(source_id);
+
+        /* update source title */
+        this.toolbox.set_title('es \xab' + source.attr('source_title') + '\xbb');
     } else {
-        if (this._insideExternalSource) {
-            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
-            this._insideExternalSource = false;
-            this.resetTool();
-            if (this.toolbox) {
-                this.toolbox.className = this.plainclass;
-            };
-        };
+        this.resetTool();
     };
 };
 
-SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource =
-        function(event) {
-    if (!this._insideExternalSource) {
+SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(event) {
+    if (this._currentExternalSource == null) {
         return;
     };
     var keyCode = event.keyCode;
-    var selNode = this.editor.getSelectedNode();
-    var div = this.getNearestExternalSource(selNode);
-    var doc = this.editor.getInnerDocument();
-    var selection = this.editor.getSelection();
-    var collapseToEnd = false;
-    var sel;
-    /* 13=enter -- add a new paragraph after*/
-    if (keyCode == 13) {
-        sel = doc.createElement('p');
-        sel.appendChild(doc.createTextNode('\xa0'));
-        if (!div.nextSibling) {
-            div.parentNode.appendChild(sel);
-        } else {
-            div.parentNode.insertBefore(sel,div.nextSibling);
-        };
-        this.editor.content_changed = true;
-        if (this._insideExternalSource) {
-            this._insideExternalSource.className = this._insideExternalSource.className.replace(/ active/,'');
-        };
-        this._insideExternalSource = false;
-    } else if (keyCode == 9 || keyCode == 39 || keyCode == 40) {
-        /* 9=tab; 39=right; 40=down; */
-        if (div.nextSibling) {
-            sel = div.nextSibling;
-        } else {
-            sel = doc.createElement('p');
-            sel.appendChild(doc.createTextNode('\xa0'));
-            div.parentNode.appendChild(sel);
-            this.editor.content_changed = true;
-        };
-        if (this._insideExternalSource) {
-            this._insideExternalSource.className =
-                this._insideExternalSource.className.replace(/ active/,'');
-        };
-        this._insideExternalSource = false;
-    } else if (keyCode == 37 || keyCode == 38) {
-        /* 37 = leftarrow, 38 = uparrow */
-        sel = div.previousSibling;
-        if (!sel) {
-            sel = doc.createElement('p');
-            sel.appendChild(doc.createTextNode('\xa0'));
-            div.parentNode.insertBefore(sel,div);
-            this.editor.content_changed = true;
-        };
-        collapseToEnd = true;
-        if (this._insideExternalSource) {
-            this._insideExternalSource.className =
-                this._insideExternalSource.className.replace(
-                    / active/, '');
-        };
-        this._insideExternalSource = false;
-    } else if (keyCode == 8 || keyCode == 46) { /* 8=backspace, 46=delete */
+    var source = this._currentExternalSource;
+
+    if (keyCode == 8 || keyCode == 46) {
+        /* 8=backspace, 46=delete */
         if (confirm("Are you sure you want to delete this external source?")) {
-            sel = div.nextSibling;
-            if (!sel) {
-                sel = doc.createElement('p');
-                sel.appendChild(doc.createTextNode('\xa0'));
-                doc.appendChild(sel);
-            };
-            div.parentNode.removeChild(div);
-            this.editor.content_changed = true;
-            if (this._insideExternalSource) {
-                this._insideExternalSource.className =
-                    this._insideExternalSource.className.replace(
-                        / active/, '');
-            };
-            this._insideExternalSource = false;
+            this.deleteExternalSource();
         };
-    };
-    if (sel) {
-        selection.selectNodeContents(sel);
-        selection.collapse(collapseToEnd);
-    };
-    if (sel && sel.nodeName.toLowerCase() == 'div' &&
-            sel.className == 'externalsource') {
-        this.updateState(sel);
+    }
+    else {
+        var collapseToEnd = false;
+        var next =  $([]);
+
+        if (keyCode == 9 || keyCode == 13 || keyCode == 34 || keyCode == 39 || keyCode == 40) {
+            /* 9 = tab; 13 = enter; 34 = page down; 39 = right; 40 = down; */
+            next = source.next()
+            if (!next.length) {
+                next = $('<p>&nbsp;</p>');
+                next.insertAfter(source);
+                next = source.next()
+                this.editor.content_changed = true;
+            };
+            this.resetTool();
+        } else if (keyCode == 37 || keyCode == 38) {
+            /* 33=page up; 37=left arrow, 38=up arrow */
+            next = source.prev();
+            if (!next.length) {
+                next = $('<p>&nbsp;</p>');
+                next.insertBefore(source);
+                next = source.prev();
+                this.editor.content_changed = true;
+            };
+            collapseToEnd = true;
+            this.resetTool();
+        };
+        if (next.length) {
+            var item = next.get(0);
+            var selection = this.editor.getSelection();
+
+            selection.selectNodeContents(item);
+            selection.collapse(collapseToEnd);
+            if (item.nodeName.toLowerCase() == 'div' && item.className == 'externalsource') {
+                this.updateState(item);
+            };
+        };
     };
     if (event.preventDefault) {
         event.preventDefault();
-    } else {
-        event.returnValue = false;
     };
+    event.returnValue = false;
+    return false;
 };
 
 SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
@@ -2530,37 +2566,29 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
 };
 
 SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
-    // you should not be allowed to add external sources inside
-    // headers or table cells
-	  if (!this._editing) {
-      /* these checks are only needed when not currently editing */
-    var selNode = this.editor.getSelectedNode();
-    if (selNode.tagName == 'H4' && selNode.parentNode.tagName == 'DIV' &&
-            (selNode.parentNode.className=='externalsource' ||
-                selNode.parentNode.className=='externalsourcepreview')) {
-        selNode = selNode.parentNode;
-    };
-    var not_allowed_parent_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-    for (i=0; i < not_allowed_parent_tags.length; i++){
-        if (selNode.tagName == not_allowed_parent_tags[i]){
-            alert('Code source is not allowed inside a header.')
-            return
-        };
-    };
-    if (selNode.tagName == 'TD'){
-        alert('Code source is not allowed inside a table cell.')
-        return
-    };
-    };
-    // get the appropriate form and display it
+    /* if this._editing is true, we edit a source, if false we add a new one */
     if (!this._editing) {
-        /* the 0 position is 'select source' and
-            not a valid option */
+        /* Source 0 position is 'select source' and not a valid source */
         if (this.idselect.selectedIndex == 0) {
             return;
         };
-        var id = this.idselect.options[this.idselect.selectedIndex].value;
-        this.getUrlAndContinue(id, this._continueStartExternalSourceEdit);
+        var source_id = this.idselect.options[this.idselect.selectedIndex].value;
+
+        /* Verify that the user is not adding a source in a table or an header */
+        var node = $(this.editor.getSelectedNode());
+        if (node.parents('table').length) {
+            alert('Code source are not allowed inside a table.');
+            return
+        };
+        var not_allowed_header_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
+        for (i=0; i < not_allowed_header_tags.length; i++){
+            if (node.get(0).tagName == not_allowed_header_tags[i]){
+                alert('Code source is not allowed inside an header.');
+                return
+            };
+        };
+
+        this.getUrlAndContinue(source_id, this._continueStartExternalSourceEdit);
     } else {
         this._validateAndSubmit();
     };
@@ -2601,10 +2629,8 @@ SilvaExternalSourceTool.prototype._continueStartExternalSourceEdit =
     this._editing = true;
 };
 
-SilvaExternalSourceTool.prototype.startExternalSourceUpdate =
-        function(extsource) {
-    var id = extsource.getAttribute('source_id');
-    this.getUrlAndContinue(id, this._continueStartExternalSourceUpdate);
+SilvaExternalSourceTool.prototype.startExternalSourceUpdate = function(source_id) {
+    this.getUrlAndContinue(source_id, this._continueStartExternalSourceUpdate);
 };
 
 SilvaExternalSourceTool.prototype._continueStartExternalSourceUpdate =
@@ -2821,18 +2847,17 @@ SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
     };
 };
 
-SilvaExternalSourceTool.prototype.delExternalSource = function() {
-    var selNode = this.editor.getSelectedNode();
-    var source = this.getNearestExternalSource(selNode);
-    if (!source) {
-        this.editor.logMessage('Not inside external source!', 1);
+SilvaExternalSourceTool.prototype.deleteExternalSource = function() {
+    var source = this._currentExternalSource;
+    if (source == null) {
         return;
     };
-    var nextsibling = source.nextSibling;
-    source.parentNode.removeChild(source);
-    if (nextsibling) {
+    var next = source.next();
+    source.remove();
+    if (next.length) {
         var selection = this.editor.getSelection();
-        selection.selectNodeContents(nextsibling);
+
+        selection.selectNodeContents(next.get(0));
         selection.collapse();
     };
     this.editor.content_changed = true;
@@ -2840,31 +2865,34 @@ SilvaExternalSourceTool.prototype.delExternalSource = function() {
 };
 
 SilvaExternalSourceTool.prototype.resetTool = function() {
-    while (this.formcontainer.hasChildNodes()) {
-        this.formcontainer.removeChild(this.formcontainer.firstChild);
+    if (this._currentExternalSource) {
+        this._currentExternalSource.removeClass('active');
+        this._currentExternalSource = null;
+        this.toolbox.close();
+        this.editor.resumeEditing();
+
+        while (this.formcontainer.hasChildNodes()) {
+            this.formcontainer.removeChild(this.formcontainer.firstChild);
+        };
+        if (!this.is_enabled) {
+            this.updatebutton.style.display = 'none';
+            this.delbutton.style.display = 'none';
+            this.cancelbutton.style.display = 'none';
+            this.disabled_text.style.display='block';
+            this.addbutton.style.display = 'none';
+            this.idselect.style.display = 'none';
+        } else {
+            this.idselect.style.display = 'inline';
+            selectSelectItem(this.idselect, '');
+            this.addbutton.style.display = 'inline';
+            this.cancelbutton.style.display = 'none';
+            this.updatebutton.style.display = 'none';
+            this.delbutton.style.display = 'none';
+            this.toolbox.set_title('external source');
+        };
+        //this.editor.updateState();
+        this._editing = false;
     };
-    if (!this.is_enabled) {
-        this.updatebutton.style.display = 'none';
-        this.delbutton.style.display = 'none';
-        this.cancelbutton.style.display = 'none';
-        this.disabled_text.style.display='block';
-        this.addbutton.style.display = 'none';
-        this.idselect.style.display = 'none';
-    } else {
-        this.idselect.style.display = 'inline';
-        selectSelectItem(this.idselect, '');
-        this.addbutton.style.display = 'inline';
-        this.cancelbutton.style.display = 'none';
-        this.updatebutton.style.display = 'none';
-        this.delbutton.style.display = 'none';
-        var heading = this.toolbox.getElementsByTagName('h1')[0];
-        heading.replaceChild(
-            document.createTextNode('external source'),
-            heading.firstChild
-        );
-    };
-    //this.editor.updateState();
-    this._editing = false;
 };
 
 SilvaExternalSourceTool.prototype._gatherFormData = function() {
@@ -2972,18 +3000,35 @@ SilvaExternalSourceTool.prototype._gatherFormDataFromElement =
     return ret.join('&');
 };
 
-SilvaExternalSourceTool.prototype.getNearestExternalSource =
-        function(selNode) {
+SilvaExternalSourceTool.prototype.getNearestExternalSource = function(selNode, event) {
 
-    var currnode = selNode;
-    while (currnode) {
-        if (currnode.nodeName.toLowerCase() == 'div' &&
-                currnode.className.search(
-                    /(^externalsource$)|(^externalsource\s+)/) > -1) {
-            return currnode;
+    var getSource = function(selNode) {
+        var node = $(selNode);
+
+        if (node.get(0).nodeName == 'DIV' && node.hasClass('externalsource')) {
+            return node.get(0)
         };
-        currnode = currnode.parentNode;
+        return $(node).parents('div.externalsource').get(0);
     };
+    source = getSource(selNode);
+
+    if (!source && event) {
+        /* if the externalsource element's preview is _only_ a floated
+            div, in at least FF, clicking anywhere but inside the div
+            will cause selNode to be the body (resulting in extsource==undefined)
+            */
+        var event = event || window.event;
+        /* updateState is not always called on an event (like a mouse click
+           sometimes it is during initialization */
+        if (event) {
+            var target = event.srcElement || event.target;
+            return getSource(target);
+        } else {
+            return getSource(this.editor.getSelectedNode());
+        };
+    };
+
+    return source;
 };
 
 function SilvaKupuUI(textstyleselectid) {
@@ -3075,7 +3120,6 @@ SilvaKupuUI.prototype.setTextStyle = function(style) {
 };
 
 function SilvaPropertyTool(toolboxid, activeclass, plainclass) {
-    this.header = $('#' + toolboxid).find('h1');
     this.data = $('#' + toolboxid + '-data');
     this.url = $('#' + toolboxid + '-base').attr('href') +
         '/++rest++kupu-properties';
@@ -3141,7 +3185,7 @@ SilvaPropertyTool.prototype.loadProperties = function(data) {
     this.data.empty();
     this.data.append(form);
     if (data['label']) {
-        this.header.text(data['label']);
+        this.toolbox.set_title(data['label']);
     };
     form.attr('action', this.url);
     form.append(data['widgets']);
@@ -3193,7 +3237,6 @@ SilvaCharactersTool.prototype.addCharacter = function() {
     selection.replaceWithNode(span);
     var selection = this.editor.getSelection();
     selection.selectNodeContents(span);
-    selection.moveEnd(1);
     selection.collapse(true);
     this.editor.logMessage('Character ' + c + ' inserted');
     this.editor.getDocument().getWindow().focus();

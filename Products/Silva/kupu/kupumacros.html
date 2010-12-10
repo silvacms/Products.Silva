@@ -398,9 +398,12 @@
               <ul class="reference-dialog-data">
               </ul>
             </div>
-            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit content" tal:attributes="id string:${widget_id}-edit-link" i18n:attributes="title">
+              <img src="/++resource++Products.Silva/edit.png" />
+            </a>
+            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger" title="Lookup a content to link to" i18n:attributes="title">
             </button>
-            <a class="kupu-reference-link" href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link"></a>
+            <a class="kupu-reference-link" target="_blank" id="#" tal:attributes="id string:${widget_id}-link"></a>
             <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;name string:${widget_id}_value" />
             <input type="hidden" value="#" id="#" tal:define="container model/get_container" tal:attributes="id string:${widget_id}-base;                                    value container/absolute_url" />
             <textarea class="store" id="#" cols="32" rows="2" tal:attributes="id string:${widget_id}-href">
@@ -473,7 +476,10 @@
               <ul class="reference-dialog-data">
               </ul>
             </div>
-            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger">
+            <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit image" tal:attributes="id string:${widget_id}-edit-link" i18n:attributes="title">
+              <img src="/++resource++Products.Silva/edit.png" />
+            </a>
+            <button class="kupu-button kupu-link-lookupbutton reference-dialog-trigger" title="Lookup an image to insert" i18n:attributes="title">
             </button>
             <a class="kupu-reference-link" href="" id="#" target="_blank" tal:attributes="id string:${widget_id}-link">none</a>
             <input type="hidden" value="" id="#" name="#" tal:attributes="id string:${widget_id}-value;                                    name string:${widget_id}_value" />

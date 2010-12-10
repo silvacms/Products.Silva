@@ -13,7 +13,7 @@
       <img class="icon" alt="edit content"
            height="16" width="16" style="float:right"
            i18n:attributes="alt"
-           tal:attributes="src static/edit-find.png"
+           tal:attributes="src static/edit.png"
            />
     </a>
     <a tal:attributes="href reference/url;

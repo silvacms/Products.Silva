@@ -83,12 +83,4 @@
      permission="zope2.View"
      />
 
-  <!-- view for resizing images from kupu -->
-  <browser:page
-     for="silva.core.interfaces.IImage"
-     name="resize_image_from_kupu"
-     class=".image.resize_image_from_kupu"
-     permission="silva.ChangeSilvaContent"
-     />
-
 </configure>
