@@ -32,19 +32,15 @@ div.toc {
   background-color: PaleGoldenRod;
 }
 
+/* border have same color than background for IE */
 div.externalsource {
-  /* padding of 2px here, when hovered border of 1px, padding of 1px */
-  padding: 2px;
+  width: 99%;
+  border: 1px solid #dde5ee;
+  padding: 1px;
   position: relative;
-  /* establish a new block-formatting context so floated blocks
-     in the preview don't flow outside of the ES div */
-  /* this is actually done inside the preloader, so the "real"
-     height can be computed.  An \xa0 (&nbsp;) is added if
-     the height is 4 (padding-top + padding-bottom) */
-  //overflow: auto;
 }
 
-div.externalsource h4, 
+div.externalsource h4,
 div.externalsource p,
 div.externalsource div.parameters {
   display: none;
