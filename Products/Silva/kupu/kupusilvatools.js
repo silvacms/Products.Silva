@@ -2465,7 +2465,7 @@ SilvaExternalSourceTool.prototype.updateState = function(selNode, event) {
         this.delbutton.style.display = 'inline';
         this.disabled_text.style.display = 'none';
         this.toolbox.open();
-        this.editor.suspendEditing();
+        //this.editor.suspendEditing();
 
         this.startExternalSourceUpdate(source_id);
 
@@ -2869,7 +2869,7 @@ SilvaExternalSourceTool.prototype.resetTool = function() {
         this._currentExternalSource.removeClass('active');
         this._currentExternalSource = null;
         this.toolbox.close();
-        this.editor.resumeEditing();
+        //this.editor.resumeEditing();
 
         while (this.formcontainer.hasChildNodes()) {
             this.formcontainer.removeChild(this.formcontainer.firstChild);
