@@ -86,7 +86,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
             ['ContentImported for /root/folder',
              'ContentImported for /root/folder/subfolder'],
             IContentImported)
-        self.assertListEqual(self.root.folder.objectIds(), ['subfolder'])
+        self.assertItemsEqual(self.root.folder.objectIds(), ['subfolder'])
 
         folder = self.root.folder
         binding = self.metadata.getMetadata(folder)
@@ -121,10 +121,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/new',
              'ContentImported for /root/folder/new/link'],
             IContentImported)
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(),
             ['file', 'index', 'new'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.new.objectIds(),
             ['link'])
 
@@ -178,10 +178,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/new/link'],
             IContentImported)
         self.assertTrue(interfaces.IFolder.providedBy(self.root.folder))
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(),
             ['file', 'index', 'new'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.new.objectIds(),
             ['link'])
 
@@ -218,10 +218,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
             interfaces.IFolder.providedBy(self.root.import_of_folder))
         self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
         self.assertEqual(indexer, self.root.folder)
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.objectIds(),
             ['file', 'index', 'new'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.new.objectIds(),
             ['link'])
 
@@ -304,7 +304,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/index',
              'ContentImported for /root/folder/link'],
             IContentImported)
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(),
             ['index', 'link'])
 
@@ -422,10 +422,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/images/ghost_of_torvald_jpg',
              'ContentImported for /root/folder/torvald_jpg'],
             IContentImported)
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(),
             ['images', 'torvald_jpg'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.images.objectIds(),
             ['ghost_of_torvald_jpg'])
 
@@ -464,10 +464,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/torvald_jpg'],
             IContentImported)
         self.assertTrue(interfaces.IFolder.providedBy(self.root.folder))
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(),
             ['images', 'torvald_jpg'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.images.objectIds(),
             ['ghost_of_torvald_jpg'])
 
@@ -497,10 +497,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertFalse(interfaces.IFolder.providedBy(self.root.folder))
         self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.objectIds(),
             ['images', 'torvald_jpg'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.images.objectIds(),
             ['ghost_of_torvald_jpg'])
 
@@ -521,7 +521,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
             ['ContentImported for /root/folder',
              'ContentImported for /root/folder/indexer'],
             IContentImported)
-        self.assertListEqual(self.root.folder.objectIds(), ['indexer'])
+        self.assertItemsEqual(self.root.folder.objectIds(), ['indexer'])
 
         indexer = self.root.folder.indexer
         self.assertTrue(interfaces.IIndexer.providedBy(indexer))
@@ -548,9 +548,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/container/link',
              'ContentImported for /root/folder/ghost'],
             IContentImported)
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(), ['container', 'ghost'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.container.objectIds(), ['indexer', 'link'])
 
         folder = self.root.folder.ghost
@@ -558,7 +558,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertTrue(interfaces.IGhostFolder.providedBy(folder))
         self.assertEqual(folder.get_haunted(), container)
         self.assertEqual(aq_chain(folder.get_haunted()), aq_chain(container))
-        self.assertListEqual(folder.objectIds(), container.objectIds())
+        self.assertItemsEqual(folder.objectIds(), container.objectIds())
 
     def test_ghost_folder_existing_rename(self):
         """Import a ghost folder with an ID of a already existing element.
@@ -579,10 +579,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
             interfaces.IFolder.providedBy(self.root.folder))
         self.assertTrue(
             interfaces.IFolder.providedBy(self.root.import_of_folder))
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.objectIds(),
             ['container', 'ghost'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.import_of_folder.container.objectIds(),
             ['indexer', 'link'])
 
@@ -591,7 +591,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertTrue(interfaces.IGhostFolder.providedBy(folder))
         self.assertEqual(folder.get_haunted(), container)
         self.assertEqual(aq_chain(folder.get_haunted()), aq_chain(container))
-        self.assertListEqual(folder.objectIds(), container.objectIds())
+        self.assertItemsEqual(folder.objectIds(), container.objectIds())
 
     def test_autotoc(self):
         """Import some autotoc.
@@ -602,7 +602,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
              'ContentImported for /root/folder/assets',
              'ContentImported for /root/folder/index'],
             IContentImported)
-        self.assertListEqual(self.root.folder.objectIds(), ['assets', 'index'])
+        self.assertItemsEqual(self.root.folder.objectIds(), ['assets', 'index'])
 
         assets = self.root.folder.assets
         containers = self.root.folder.index
@@ -615,10 +615,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(containers.get_show_icon(), False)
         self.assertEqual(assets.get_toc_depth(), -1)
         self.assertEqual(containers.get_toc_depth(), 42)
-        self.assertListEqual(
+        self.assertItemsEqual(
             assets.get_local_types(),
             [u'Silva File', u'Silva Image'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             containers.get_local_types(),
             [u'Silva Folder', u'Silva Publication'])
 
