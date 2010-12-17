@@ -112,6 +112,13 @@ div.kupu-tb {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/subscript.png");
  background-color: #b3d4bf;
 }
+#kupu-tb-buttons button.kupu-strike {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/strikethrough.png");
+}
+#kupu-tb-buttons button.kupu-strike-pressed {
+ background-image: url("<dtml-var root_url>/service_kupu/kupuimages/strikethrough.png");
+ background-color: #b3d4bf;
+}
 #kupu-tb-buttons button.kupu-superscript {
  background-image: url("<dtml-var root_url>/service_kupu/kupuimages/superscript.png");
 }

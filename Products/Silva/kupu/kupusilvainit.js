@@ -313,6 +313,14 @@ function initSilvaKupu(iframe) {
         'kupu-underline-pressed');
     kupu.registerTool('underlinebutton', underlinebutton);
 
+    var strikechecker = ParentWithStyleChecker(new Array('strike'));
+    var strikebutton = new KupuStateButton('kupu-strike-button',
+        execCommand('strikethrough'),
+        strikechecker,
+        'kupu-strike',
+        'kupu-strike-pressed');
+    kupu.registerTool('strikebutton', strikebutton);
+
     var subscriptchecker = ParentWithStyleChecker(new Array('sub'));
     var subscriptbutton = new KupuStateButton('kupu-subscript-button',
         execCommand('subscript'),
@@ -566,6 +574,14 @@ function initSilvaPopupKupu(iframe) {
         'kupu-underline',
         'kupu-underline-pressed');
     kupu.registerTool('underlinebutton', underlinebutton);
+
+    var strikechecker = ParentWithStyleChecker(new Array('strike'));
+    var strikebutton = new KupuStateButton('kupu-strike-button',
+        execCommand('strikethrough'),
+        strikechecker,
+        'kupu-strike',
+        'kupu-strike-pressed');
+    kupu.registerTool('strikebutton', strikebutton);
 
     var subscriptchecker = ParentWithStyleChecker(new Array('sub'));
     var subscriptbutton = new KupuStateButton('kupu-subscript-button',

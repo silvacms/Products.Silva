@@ -211,6 +211,10 @@
     <strong><xsl:apply-templates mode="text-content" /></strong>
   </xsl:template>
 
+  <xsl:template match="doc:strike" mode="text-content">
+    <strike><xsl:apply-templates mode="text-content" /></strike>
+  </xsl:template>
+
   <xsl:template match="doc:em" mode="text-content">
     <em><xsl:apply-templates mode="text-content" /></em>
   </xsl:template>
