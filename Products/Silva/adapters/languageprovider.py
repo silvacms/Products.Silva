@@ -82,13 +82,13 @@ class LanguageProvider(grok.Adapter):
 
     def setPreferredLanguage(self, language):
         response = self.request.response
-        root = IVirtualSite(self.request).get_root()
-        path = '/'.join(root.getPhysicalPath())
+        path = IVirtualSite(self.request).get_root().absolute_url_path()
         if not language:
             response.expireCookie('silva_language', path=path)
             return
-        response.setCookie('silva_language', language,
-                           path=path, expires=(DateTime()+365).rfc822())
+        response.setCookie(
+            'silva_language', language,
+            path=path, expires=(DateTime()+365).rfc822())
 
     def getPreferredLanguage(self):
         langs = IUserPreferredLanguages(self.request).getPreferredLanguages()
