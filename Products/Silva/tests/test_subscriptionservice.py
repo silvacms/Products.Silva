@@ -54,9 +54,7 @@ class SubscriptionServiceTestCase(SilvaTestCase.SilvaTestCase):
         subscr = subscribable.getSubscribable(self.doc)
         subscr.setSubscribability(subscribable.SUBSCRIBABLE)
         subscr.subscribe(emailaddress)
-        self.assertRaises(
-            errors.AlreadySubscribedError, 
-            self.service.requestSubscription, self.doc, emailaddress)
+        self.service.requestSubscription(self.doc, emailaddress)
 
     def test_requestCancellation(self):
         # XXX only test the exception-raising code paths, since I don't
