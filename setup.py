@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.2dev'
+version = '2.2.1'
 
 def product_readme(filename):
     return open(os.path.join("Products", "Silva", filename)).read()

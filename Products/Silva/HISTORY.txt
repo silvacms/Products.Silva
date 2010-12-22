@@ -1,11 +1,11 @@
 Silva changes
 =============
 
-Silva 2.2.1 (unreleased)
+Silva 2.2.1 (2010/12/22)
 ------------------------
 
 - Fix an error when ctypes is installed but libmagic is not (ported
-  from trunk).
+  from 2.3).
 
 - Add icons for new offices documents. Fix an icon lookup error in the
   lookup window.
@@ -18,11 +18,17 @@ Silva 2.2.1 (unreleased)
   sizing. Made unused buttons display:none. Adjusted toolbox title
   rollover tooltips.
 
-- Updated opacity settings for image crop window (ported from trunk).
+- Updated opacity settings for image crop window (ported from 2.3).
 
 - Fixed issue in request PathAdapter which stripped absolute urls even
   if the url was for netloc other than the silva server (or vhost)
 
+- Update subscription service to be able to reuse it in extensions (ported
+  from 2.3).
+
+- Various CSS changes in Kupu UI.
+
+- Changes in legacy layout CSS (forms, logo).
 
 Silva 2.2 (2010-03-31)
 ----------------------
