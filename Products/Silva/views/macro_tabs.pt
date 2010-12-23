@@ -39,13 +39,14 @@
     </a>
     <a name="top"> </a>
     <tal:block tal:repeat="breadcrumb model/@@absolute_url/breadcrumbs">
-      <a class="breadcrumb"
+      <a class=""
          tal:content="breadcrumb/name"
-        tal:attributes="href string:${breadcrumb/url}/edit/${screen_id}">
+        tal:attributes="href string:${breadcrumb/url}/edit/${screen_id};
+         class python: repeat['breadcrumb'].end and 'breadcrumb breadcrumb-last' or 'breadcrumb'">
         name
       </a>
       <tal:block tal:condition="not:repeat/breadcrumb/end">
-        &middot;
+        &rsaquo;
       </tal:block>
     </tal:block>
     <span tal:replace="nothing"><!-- _______ manage link _______ --></span>
@@ -57,7 +58,7 @@
         i18n:attributes="title"
         i18n:translate=""
       >
-        &middot; manage...
+        &rsaquo; manage...
       </a>
     </tal:block>
   </div>
