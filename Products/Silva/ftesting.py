@@ -57,7 +57,7 @@ def smi_settings(browser):
     # Breadcrumb
     browser.inspect.add(
         'breadcrumbs',
-        '//div[@class="pathbar"]/a[@class="breadcrumb"]', type='link')
+        '//div[@class="pathbar"]/a[contains(@class, "breadcrumb")]', type='link')
     # Sidebar navigation
     browser.inspect.add(
         'navigation_root',
