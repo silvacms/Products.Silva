@@ -19,8 +19,7 @@
   ______________ stack publication row ______________ 
 </tr>
 <tr>
-  <td class="{__class__}"
-    style="border-top:none;">
+  <td class="{__class__}">
     <a class="right slide-links" 
       title="slide to the publish screen"
       tal:attributes="href string:${publication/absolute_url}/edit/tab_status"
@@ -103,8 +102,7 @@
   </tr>
   <tr class="controls"
     tal:condition="repeat/indent_item/end">
-    <td style="border-top:1px solid #abc">
-    </td>
+    <td></td>
   </tr>
 </tal:block>
 
