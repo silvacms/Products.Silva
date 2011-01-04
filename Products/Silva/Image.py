@@ -533,7 +533,6 @@ class Image(Asset):
         new_image_data.seek(0)
         self._image_factory('image', new_image_data, ct)
 
-
     def _createThumbnail(self):
         try:
             image = self._getPILImage(self.hires_image)
@@ -559,7 +558,13 @@ class Image(Asset):
 
         changed, thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
+        try:
         thumb.save(thumb_data, self.web_format)
+        except:
+            # Some images can not be saved as thumbnail. Bug in PIL.
+            self.thumbnail_image = None
+            return
+
         ct = self._web2ct[self.web_format]
         thumb_data.seek(0)
         self._image_factory('thumbnail_image', thumb_data, ct)
