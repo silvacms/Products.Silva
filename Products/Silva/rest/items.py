@@ -117,3 +117,15 @@ class ParentItems(Items):
             details.append(self.get_item_details(content))
         details.reverse()
         return self.json_response(details)
+
+
+class Addables(rest.REST):
+    """ Return addables in folder
+    """
+    grok.context(interfaces.IContainer)
+    grok.name('addables')
+
+    def GET(self):
+        meta_types = self.context.get_silva_addables_allowed_in_container()
+        return self.json_response(meta_types)
+
