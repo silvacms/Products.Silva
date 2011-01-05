@@ -32,7 +32,7 @@ class AuthorAddablesTestCase(unittest.TestCase):
     def test_rest_api(self):
         browser = self.layer.get_browser()
         browser.login(self.username)
-        self.assertEqual(browser.open('/root/++rest++addables'), 200)
+        self.assertEqual(browser.open('/root/folder/++rest++addables'), 200)
         self.assertEqual('application/json', browser.content_type)
         data = json.loads(browser.contents)
         self.assertTrue(isinstance(data, list))
