@@ -29,7 +29,7 @@ class AuthorAddablesTestCase(unittest.TestCase):
         # XXX when the addable tab will be reimplemented, going on it
         # will trigger 401
 
-    def test_rest_api(self):
+    def test_rest_addables_api(self):
         browser = self.layer.get_browser()
         browser.login(self.username)
         self.assertEqual(browser.open('/root/folder/++rest++addables'), 200)
