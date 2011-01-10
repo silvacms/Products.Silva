@@ -34,7 +34,7 @@ function onloadResizeTopFrame() {
 -->
 </script>
 </head>
-<frameset rows="50px,*" id="preview_frameset" frameborder="0" framespacing="0" border="0" marginwidth="0" marginheight="0" onload="onloadResizeTopFrame()">
+<frameset id="preview_frameset" frameborder="0" framespacing="0" border="0" marginwidth="0" marginheight="0" onload="onloadResizeTopFrame()">
  <frame id="preview_frame_top" scrolling="no"
    tal:attributes="src python:'%s/edit/tab_preview_frame_top?message=%s&message_type=%s'%(model.absolute_url(),message or '',message_type or '')" />
  <frame id="preview_frame_bottom"
