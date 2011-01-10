@@ -71,8 +71,22 @@
                tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
             <div id="#" title="select link reference" class="ui-widget reference-dialog"
               tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
+              <div class="content-list-actions">
+                <div class="content-list-action content-list-action-refresh">
+                  <a href="#" name="refresh" i18n:translate="">refresh</a>
+                </div>
+                <div class="content-list-action content-list-action-add">
+                  <select>
+                    <option value="" i18n:translate="">select:</option>
+                  </select>
+                  <a href="#" name="add" i18n:translate="">add</a>
+                </div>
+              </div>
+              <div class="path-list"></div>
+              <table class="content-list source-list">
+              </table>
+              <table class="content-list selection-list">
+              </table>
             </div>
             <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit content"
                tal:attributes="id string:${widget_id}-edit-link"
@@ -165,8 +179,22 @@
             <div id="#" title="select image reference" class="ui-widget reference-dialog"
                  tal:attributes="id string:${widget_id}-dialog"
                  i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
+                <div class="content-list-actions">
+                  <div class="content-list-action content-list-action-refresh">
+                    <a href="#" name="refresh" i18n:translate="">refresh</a>
+                  </div>
+                  <div class="content-list-action content-list-action-add">
+                    <select>
+                      <option value="" i18n:translate="">select:</option>
+                    </select>
+                    <a href="#" name="add" i18n:translate="">add</a>
+                  </div>
+                </div>
+                <div class="path-list"></div>
+                <table class="content-list source-list">
+                </table>
+                <table class="content-list selection-list">
+                </table>
             </div>
             <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit image"
                tal:attributes="id string:${widget_id}-edit-link"
