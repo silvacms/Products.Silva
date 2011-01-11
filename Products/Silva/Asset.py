@@ -3,6 +3,7 @@
 # $Id$
 
 import logging
+import bisect
 
 # Zope 3
 from five import grok
@@ -190,23 +191,33 @@ class AssetReferencedBy(silvaviews.Viewlet):
         service = component.getUtility(IReferenceService)
         for reference in service.get_references_to(self.context):
             source = reference.source
+            source_versions = []
+            if IVersion.providedBy(source):
+                source_versions.append(source.id)
+                source = source.get_content()
+
+            edit_url = absoluteURL(source, self.request) + '/edit'
+            if edit_url in references and source_versions:
+                previous_versions = references[edit_url]['versions']
+                if previous_versions[-1] > source_versions[0]:
+                    bisect.insort_right(previous_versions, source_versions[0])
+                    continue
+                else:
+                    source_versions = previous_versions + source_versions
+
             source_title = source.get_title_or_id()
             source_url = component.getMultiAdapter(
                 (source, self.request), ISilvaURL).preview()
-            source_version = ''
-            if IVersion.providedBy(source):
-                source_version = source.id
-                source_title += ' (%s)' % source.id
-                source = source.get_content()
-            edit_url = absoluteURL(source, self.request) + '/edit'
-            if edit_url in references and source_version:
-                if references[edit_url]['version'] > source_version:
-                    continue
             references[edit_url] = {'title': source_title,
                                     'url': source_url,
                                     'path': '/'.join(source.getPhysicalPath()),
                                     'edit_url': edit_url,
                                     'icon': self.view.get_icon(source),
-                                    'version': source_version}
+                                    'versions': source_versions}
+
         self.references = references.values()
         self.references.sort(key=lambda info: info['title'].lower())
+
+        for info in self.references:
+            if info['versions']:
+                info['title'] += '(' + ', '.join(info['versions']) + ')'
