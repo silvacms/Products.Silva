@@ -186,20 +186,27 @@ class AssetReferencedBy(silvaviews.Viewlet):
     grok.viewletmanager(SMIAssetMetadata)
 
     def update(self):
-        self.references = []
+        references = {}
         service = component.getUtility(IReferenceService)
         for reference in service.get_references_to(self.context):
             source = reference.source
             source_title = source.get_title_or_id()
             source_url = component.getMultiAdapter(
                 (source, self.request), ISilvaURL).preview()
+            source_version = ''
             if IVersion.providedBy(source):
+                source_version = source.id
                 source_title += ' (%s)' % source.id
                 source = source.get_content()
             edit_url = absoluteURL(source, self.request) + '/edit'
-            self.references.append(
-                {'title': source_title,
+            if edit_url in references and source_version:
+                if references[edit_url]['version'] < source_version:
+                    continue
+            references[edit_url] = {'title': source_title,
                  'url': source_url,
                  'path': '/'.join(source.getPhysicalPath()),
                  'edit_url': edit_url,
-                 'icon': self.view.get_icon(source)})
+                                    'icon': self.view.get_icon(source),
+                                    'version': [source_version]}
+        self.references = references.values()
+        self.references.sort(key=lambda info: info['title'].lower())
