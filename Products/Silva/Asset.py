@@ -200,13 +200,13 @@ class AssetReferencedBy(silvaviews.Viewlet):
                 source = source.get_content()
             edit_url = absoluteURL(source, self.request) + '/edit'
             if edit_url in references and source_version:
-                if references[edit_url]['version'] < source_version:
+                if references[edit_url]['version'] > source_version:
                     continue
             references[edit_url] = {'title': source_title,
                                     'url': source_url,
                                     'path': '/'.join(source.getPhysicalPath()),
                                     'edit_url': edit_url,
                                     'icon': self.view.get_icon(source),
-                                    'version': [source_version]}
+                                    'version': source_version}
         self.references = references.values()
         self.references.sort(key=lambda info: info['title'].lower())
