@@ -393,17 +393,18 @@
               <a class="rollover"><span class="tooltip" i18n:translate="">Make the image link to its high resolution version.</span><span xmlns:tal="http://xml.zope.org/namespaces/tal" tal:omit-tag="" i18n:translate="">link to hires image</span></a>
             </label>
           </div>
+
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
-            <div style="display:none" id="#" title="select link reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
+            <div id="#" title="select link reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
               <div class="content-list-actions">
                 <div class="content-list-action content-list-action-refresh">
-                  <a href="#" name="refresh" i18n:translate="">refresh</a>
+                  <a href="#" name="refresh" i18n:translate="" id="refresh">refresh</a>
                 </div>
                 <div class="content-list-action content-list-action-add">
                   <select>
                     <option value="" i18n:translate="">select:</option>
                   </select>
-                  <a href="#" name="add" i18n:translate="">add</a>
+                  <a href="#" name="add" i18n:translate="" id="add">add</a>
                 </div>
               </div>
               <div class="path-list"></div>
@@ -486,23 +487,23 @@
       <div class="kupu-tooltray">
         <form name="kupu_image_form" onsubmit="return false" id="kupu_image_form">
           <div xmlns:tal="http://xml.zope.org/namespaces/tal" class="reference-widget" id="#" tal:define="widget_id string:kupu-image-input" tal:attributes="id widget_id">
-            <div style="display:none" id="#" title="select image reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
-              <div class="content-list-actions">
-                <div class="content-list-action content-list-action-refresh">
-                  <a href="#" name="refresh" i18n:translate="">refresh</a>
+            <div id="#" title="select image reference" class="ui-widget reference-dialog" tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
+                <div class="content-list-actions">
+                  <div class="content-list-action content-list-action-refresh">
+                    <a href="#" name="refresh" i18n:translate="" id="refresh">refresh</a>
+                  </div>
+                  <div class="content-list-action content-list-action-add">
+                    <select>
+                      <option value="" i18n:translate="">select:</option>
+                    </select>
+                    <a href="#" name="add" i18n:translate="" id="add">add</a>
+                  </div>
                 </div>
-                <div class="content-list-action content-list-action-add">
-                  <select>
-                    <option value="" i18n:translate="">select:</option>
-                  </select>
-                  <a href="#" name="add" i18n:translate="">add</a>
-                </div>
-              </div>
-              <div class="path-list"></div>
-              <table class="content-list source-list">
-              </table>
-              <table class="content-list selection-list">
-              </table>
+                <div class="path-list"></div>
+                <table class="content-list source-list">
+                </table>
+                <table class="content-list selection-list">
+                </table>
             </div>
             <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit image" tal:attributes="id string:${widget_id}-edit-link" i18n:attributes="title">
               <img src="/++resource++Products.Silva/edit.png" />
@@ -532,7 +533,7 @@
           <div class="kupu-toolbox-actions">
             <input type="button" class="button" value="add image" id="kupu-image-addbutton" i18n:attributes="value" />
             <input type="button" class="button" value="update" id="kupu-image-updatebutton" i18n:attributes="value" />
-            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" i18n:attributes="value" />
+            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" style="display: none;" i18n:attributes="value" />
           </div>
         </form>
       </div>

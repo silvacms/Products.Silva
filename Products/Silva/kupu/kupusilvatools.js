@@ -1032,7 +1032,7 @@ SilvaTableTool.prototype.removeCell = function(widthinput) {
     var row = currcell.parentNode;
     row.removeChild(currcell);
     if (!row.hasChildNodes())
-	row.parentNode.removeChild(row);
+    row.parentNode.removeChild(row);
 
     table.removeAttribute('_silva_column_info');
     this._getColumnInfo();
