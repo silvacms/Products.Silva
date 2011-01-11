@@ -99,7 +99,7 @@ ExternalSourceLoader.prototype.createPreview =
        ES preview lower in the document (each DIV has a lower number.
        Cannot be negative. */
     parentDiv.style.zIndex = this.mynumber;
-}
+};
 
 ExternalSourceLoader.prototype.preload_callback = function(request) {
     if (request.readyState == 4) {
@@ -317,7 +317,8 @@ SilvaLinkTool.prototype.updateLink = function (
              * prevent SilvaIndexTool to get contol over the link */
             linkel.href = 'reference';
             linkel.setAttribute('_silva_target', url);
-            if (!linkel.hasAttribute('_silva_reference')) {
+            var reference = linkel.getAttribute('_silva_reference');
+            if (!reference) {
                 linkel.setAttribute('_silva_reference', 'new');
             }
             linkel.removeAttribute('_silva_href');
@@ -459,7 +460,7 @@ SilvaLinkToolBox.prototype.resetTool = function() {
     this.toolbox.close();
     this.content.clear();
     this.target.clear();
-}
+};
 
 SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     /* reset image link settings */
@@ -570,7 +571,7 @@ SilvaImageTool.prototype.getImageOrLink = function () {
 SilvaImageTool.prototype.handleKeyPressOnImage = function(event) {
     var current = this.getImageOrLink();
     if (!current.length) {
-        return false;
+        return;
     };
     var keyCode = event.keyCode;
 
@@ -944,20 +945,20 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
     if (newtype.toUpperCase() == currCell.nodeName) {
         this.editor.logMessage('Table cell unchanged');
     } else {
-	var doc = this.editor.getInnerDocument();
-	var newCell = doc.createElement(newtype);
-	for (var i=0; i < currCell.childNodes.length; i++) {
-	    newCell.appendChild(currCell.firstChild);
-	}
-	if (currCell.getAttribute('class'))
-	    newCell.setAttribute('class',currCell.getAttribute('class'));
-	if (currCell.getAttribute('align'))
-	    newCell.setAttribute('align',currCell.getAttribute('align'));
-	if (currCell.getAttribute('width'))
-	    newCell.setAttribute('width',currCell.getAttribute('width'));
-	if (currCell.getAttribute('colspan'))
-	    newCell.setAttribute('colspan',currCell.getAttribute('colspan'));
-	currCell.parentNode.replaceChild(newCell,currCell);
+    var doc = this.editor.getInnerDocument();
+    var newCell = doc.createElement(newtype);
+    for (var i=0; i < currCell.childNodes.length; i++) {
+        newCell.appendChild(currCell.firstChild);
+    }
+    if (currCell.getAttribute('class'))
+        newCell.setAttribute('class',currCell.getAttribute('class'));
+    if (currCell.getAttribute('align'))
+        newCell.setAttribute('align',currCell.getAttribute('align'));
+    if (currCell.getAttribute('width'))
+        newCell.setAttribute('width',currCell.getAttribute('width'));
+    if (currCell.getAttribute('colspan'))
+        newCell.setAttribute('colspan',currCell.getAttribute('colspan'));
+    currCell.parentNode.replaceChild(newCell,currCell);
         this.editor.content_changed = true;
     }
     var selection = this.editor.getSelection();
@@ -987,9 +988,9 @@ SilvaTableTool.prototype.addCell = function(before, widthinput) {
     var newcell = doc.createElement(currcell.tagName);
     newcell.appendChild(doc.createTextNode('\u00a0'));
     if (before) {
-	currcell.parentNode.insertBefore(newcell, currcell);
+    currcell.parentNode.insertBefore(newcell, currcell);
     } else {
-	currcell.parentNode.insertBefore(newcell, currcell.nextSibling);
+    currcell.parentNode.insertBefore(newcell, currcell.nextSibling);
     }
     var selection = this.editor.getSelection();
     selection.selectNodeContents(newcell);
@@ -1046,7 +1047,7 @@ SilvaTableTool.prototype.changeCellType = function(newtype) {
     var currNode = this.editor.getSelectedNode();
     var currCell = this.editor.getNearestParentOfType(currNode, 'td');
     if (!currCell) {
-        var currCell = this.editor.getNearestParentOfType(currNode,'th');
+        currCell = this.editor.getNearestParentOfType(currNode,'th');
     };
     if (!currCell) {
         this.editor.logMessage('Not inside a cell!', 1);
@@ -1092,7 +1093,7 @@ SilvaTableTool.prototype.addTableColumn = function(currnode) {
     var body = table.getElementsByTagName('tbody')[0];
     var currcell = this.editor.getNearestParentOfType(currnode, 'td');
     if (!currcell) {
-        var currcell = this.editor.getNearestParentOfType(currnode, 'th');
+        currcell = this.editor.getNearestParentOfType(currnode, 'th');
         if (!currcell) {
             this.editor.logMessage('Not inside a cell!', 1);
             return;
@@ -1960,7 +1961,8 @@ SilvaTableToolBox.prototype.fixTable = function(event) {
                 continue;
             };
             node.setAttribute('rowspan', '1');
-            if (!node.hasAttribute('colspan')) {
+            var colspan = node.getAttribute('colspan');
+            if (!colspan) {
                 node.setAttribute('colspan', '1');
             };
             newrow.appendChild(node);
@@ -2493,11 +2495,11 @@ SilvaExternalSourceTool.prototype.handleKeyPressOnExternalSource = function(even
 
         if (keyCode == 9 || keyCode == 13 || keyCode == 34 || keyCode == 39 || keyCode == 40) {
             /* 9 = tab; 13 = enter; 34 = page down; 39 = right; 40 = down; */
-            next = source.next()
+            next = source.next();
             if (!next.length) {
                 next = $('<p>&nbsp;</p>');
                 next.insertAfter(source);
-                next = source.next()
+                next = source.next();
                 this.editor.content_changed = true;
             };
             this.resetTool();
@@ -2542,7 +2544,7 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
     request.open('GET', url, true);
     var callback = new ContextFixer(function() {
         if (request.readyState == 4) {
-            var status_code = request.status.toString()
+            var status_code = request.status.toString();
             if (status_code == '200') {
                 var returl = request.responseText;
                 this._id = id;
@@ -2576,13 +2578,13 @@ SilvaExternalSourceTool.prototype.startExternalSourceAddEdit = function() {
         var node = $(this.editor.getSelectedNode());
         if (node.parents('table').length) {
             alert('Code source are not allowed inside a table.');
-            return
+            return;
         };
         var not_allowed_header_tags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
-        for (i=0; i < not_allowed_header_tags.length; i++){
+        for (var i=0; i < not_allowed_header_tags.length; i++){
             if (node.get(0).tagName == not_allowed_header_tags[i]){
                 alert('Code source is not allowed inside an header.');
-                return
+                return;
             };
         };
 
@@ -2714,7 +2716,7 @@ SilvaExternalSourceTool.prototype._showFormInWindow =
         doc.write(responseText);
         doc.close();
     };
-    addEventHandler(win, 'load', loadme, this)
+    addEventHandler(win, 'load', loadme, this);
 };
 
 SilvaExternalSourceTool.prototype._addExternalSourceIfValidated =
@@ -2859,7 +2861,7 @@ SilvaExternalSourceTool.prototype.deleteExternalSource = function() {
         selection.collapse();
     };
     this.editor.content_changed = true;
-    this.resetTool()
+    this.resetTool();
 };
 
 SilvaExternalSourceTool.prototype.resetTool = function() {
@@ -3004,18 +3006,18 @@ SilvaExternalSourceTool.prototype.getNearestExternalSource = function(selNode, e
         var node = $(selNode);
 
         if (node.get(0).nodeName == 'DIV' && node.hasClass('externalsource')) {
-            return node.get(0)
+            return node.get(0);
         };
         return $(node).parents('div.externalsource').get(0);
     };
-    source = getSource(selNode);
+    var source = getSource(selNode);
 
     if (!source && event) {
         /* if the externalsource element's preview is _only_ a floated
             div, in at least FF, clicking anywhere but inside the div
             will cause selNode to be the body (resulting in extsource==undefined)
             */
-        var event = event || window.event;
+        event = event || window.event;
         /* updateState is not always called on an event (like a mouse click
            sometimes it is during initialization */
         if (event) {
