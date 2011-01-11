@@ -559,7 +559,7 @@ class Image(Asset):
         changed, thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
         try:
-        thumb.save(thumb_data, self.web_format)
+            thumb.save(thumb_data, self.web_format)
         except:
             # Some images can not be saved as thumbnail. Bug in PIL.
             self.thumbnail_image = None
