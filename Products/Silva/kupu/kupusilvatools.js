@@ -304,7 +304,6 @@ SilvaLinkTool.prototype = new LinkTool();
 
 SilvaLinkTool.prototype.updateLink = function (
         linkel, url, type, name, target, title) {
-    console.log('update');
     if (type && type == 'anchor') {
         linkel.removeAttribute('href');
         linkel.setAttribute('name', name);
