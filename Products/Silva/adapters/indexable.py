@@ -7,28 +7,20 @@ from silva.core import interfaces
 
 
 class IndexableAdapter(grok.Adapter):
-
-    grok.implements(interfaces.IIndexable)
+    grok.implements(interfaces.IIndexEntries)
     grok.context(interfaces.ISilvaObject)
 
-    def __init__(self, context):
-        self.context = context
-
-    def getTitle(self):
+    def get_title(self):
         return self.context.get_title()
 
-    def getPath(self):
-        return self.context.getPhysicalPath()
-
-    def getIndexes(self):
+    def get_entries(self):
         return []
 
 
 class GhostIndexableAdapter(IndexableAdapter):
-
     grok.context(interfaces.IGhost)
 
-    def getIndexes(self):
+    def get_entries(self):
         if self.context == None:
             return []
         version = self.context.get_viewable()
@@ -38,13 +30,12 @@ class GhostIndexableAdapter(IndexableAdapter):
             haunted = version.get_haunted()
             if not haunted:
                 return []
-        return interfaces.IIndexable(haunted).getIndexes()
+        return interfaces.IIndexEntries(haunted).get_entries()
 
 
 class ContainerIndexableAdapter(IndexableAdapter):
-
     grok.context(interfaces.IContainer)
 
-    def getIndexes(self):
+    def get_entries(self):
         index = self.context.index
-        return interfaces.IIndexable(index).getIndexes()
+        return interfaces.IIndexEntries(index).get_entries()

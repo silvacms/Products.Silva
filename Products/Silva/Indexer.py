@@ -20,7 +20,7 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core.smi.interfaces import IEditTabIndex
-from silva.core.interfaces import IIndexable, IIndexer
+from silva.core.interfaces import IIndexEntries, IIndexer
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
 from silva.core.views import views as silvaviews
@@ -84,7 +84,7 @@ class Indexer(Content, SimpleItem):
         result = [(title, path, name) for _, title, path, name in result]
         return result
 
-    def _getIndexables(self):
+    def _getIndexEntries(self):
         """Returns all indexables from the container containing this
         Indexer object, including and its subcontainers
         """
@@ -105,13 +105,13 @@ class Indexer(Content, SimpleItem):
         reference_service = getUtility(IReferenceService)
 
         # get tree of all subobjects
-        for content in self._getIndexables():
-            indexable = IIndexable(content)
-            indexes = indexable.getIndexes()
+        for content in self._getIndexEntries():
+            indexable = IIndexEntries(content)
+            indexes = indexable.get_entries()
             if not indexes:
                 continue
 
-            title = indexable.getTitle()
+            title = indexable.get_title()
             references = reference_service.get_references_between(
                 self, content, name="indexer")
             try:
