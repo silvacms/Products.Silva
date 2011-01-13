@@ -159,7 +159,7 @@ def silva_content_types(context):
 
 
 class IAutoTOCSchema(interface.Interface):
-    _local_types = schema.List(
+    _local_types = schema.Set(
         title=_(u"types to list"),
         description=_(
             u"Select here the content types you wish to see in "
