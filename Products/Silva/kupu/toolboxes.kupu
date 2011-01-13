@@ -69,14 +69,14 @@
 
           <div class="reference-widget" id="#"
                tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
-            <div id="#" title="select link reference" class="ui-widget reference-dialog"
+            <div style="display: none" id="#" title="select link reference" class="ui-widget reference-dialog"
               tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
               <div class="content-list-actions">
                 <div class="content-list-action content-list-action-refresh">
                   <a href="#" name="refresh" i18n:translate="">refresh</a>
                 </div>
                 <div class="content-list-action content-list-action-add">
-                  <select>
+                  <select disabled="disabled">
                     <option value="" i18n:translate="">select:</option>
                   </select>
                   <a href="#" name="add" i18n:translate="">add</a>
@@ -176,7 +176,7 @@
           <div class="reference-widget" id="#"
                tal:define="widget_id string:kupu-image-input"
                tal:attributes="id widget_id">
-            <div id="#" title="select image reference" class="ui-widget reference-dialog"
+            <div style="display: none" id="#" title="select image reference" class="ui-widget reference-dialog"
                  tal:attributes="id string:${widget_id}-dialog"
                  i18n:attributes="title">
                 <div class="content-list-actions">
@@ -184,7 +184,7 @@
                     <a href="#" name="refresh" i18n:translate="">refresh</a>
                   </div>
                   <div class="content-list-action content-list-action-add">
-                    <select>
+                    <select disabled="disabled">
                       <option value="" i18n:translate="">select:</option>
                     </select>
                     <a href="#" name="add" i18n:translate="">add</a>
