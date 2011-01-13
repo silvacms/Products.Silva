@@ -167,7 +167,7 @@ class IAutoTOCSchema(interface.Interface):
             u"(e.g. Folder and Publication) in order for the TOC to "
             u"display their contents."),
         value_type=schema.Choice(source=silva_content_types),
-        default=['Silva Document', 'Silva Folder', 'Silva Publication'],
+        default=set(['Silva Document', 'Silva Folder', 'Silva Publication']),
         required=True)
     _toc_depth = schema.Int(
         title=_(u"depth"),
