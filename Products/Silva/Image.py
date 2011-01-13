@@ -24,7 +24,7 @@ from zope.i18n import translate
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
-import zope.app.container.interfaces
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -732,8 +732,7 @@ contentObjectFactoryRegistry.registerFactory(
     _should_create_image)
 
 
-@silvaconf.subscribe(
-    interfaces.IImage, zope.app.container.interfaces.IObjectMovedEvent)
+@silvaconf.subscribe(interfaces.IImage, IObjectMovedEvent)
 def image_added(image, event):
     if image is not event.object or event.newName is None:
         return
