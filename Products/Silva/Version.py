@@ -8,8 +8,8 @@ import warnings
 from five import grok
 from zope import component
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from zope.app.container.interfaces import IObjectMovedEvent
-from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.lifecycleevent.interfaces import IObjectMovedEvent
+from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
