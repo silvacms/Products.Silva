@@ -4,8 +4,9 @@ from five import grok
 import Acquisition 
 
 from Products.Silva.interfaces import (ISilvaObject, 
-                                       IVersionedContent, 
-                                       IVersionedAsset)
+                                       IVersionedContent, )
+
+#                                       IVersionedAsset)
 
 #in Silva 2.1, grok views STILL need to be zope 2 - acquisition
 # enabled (i.e. inherit from Acquisition.Implicit

@@ -159,7 +159,7 @@ class TOCRenderingAdapter(adapter.Adapter):
             if interfaces.IContainer.providedBy(item):
                 url += '/'
             html.append(a_templ%(
-                item.absolute_url(),
+                url,
                 escape(title)))
             if display_desc_flag:
                 v = public and item.get_viewable() or item.get_previewable()
