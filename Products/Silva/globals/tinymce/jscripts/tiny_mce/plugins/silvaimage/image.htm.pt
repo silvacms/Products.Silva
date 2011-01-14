@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>{#silvaimage_dlg.dialog_title}</title>
+  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="../../utils/mctabs.js"></script>
+  <script type="text/javascript" src="../../utils/form_utils.js"></script>
+  <script type="text/javascript" src="../../utils/validate.js"></script>
+  <script type="text/javascript" src="../../utils/editable_selects.js"></script>
+  <script type="text/javascript" src="js/image.js"></script>
+  <link href="css/silvaimage.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../../../../../service_views/Silva/reference.js"></script>
+  </head>
+<body id="silvaimage" style="display: none">
+  <form onsubmit="ImageDialog.insert();return false;" action="#"> 
+    <div class="tabs">
+      <ul>
+        <li id="silva_tab" class="current"><span><a href="javascript:mcTabs.displayTab('silva_tab','silva_panel');" onmousedown="return false;">{#silvaimage_dlg.tab_silva}</a></span></li>
+        <li id="ext_tab"><span><a href="javascript:mcTabs.displayTab('ext_tab','ext_panel');" onmousedown="return false;">{#silvaimage_dlg.tab_ext}</a></span></li>
+        <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#silvaimage_dlg.tab_advanced}</a></span></li>
+      </ul>
+    </div>
+
+  <div class="panel_wrapper">
+    <div id="silva_panel" class="panel current">
+      <fieldset>
+        <legend>{#silvaimage_dlg.silva}</legend>
+        
+        <table class="properties">
+          <tr>
+            <td class="column1"><label id="silvasrclabel" for="silvasrc">{#silvaimage_dlg.silvasrc}</label></td>
+            <td colspan="2">
+              <input type="button" class="reference-lookup" onclick="ImageDialog.lookupSilvaImage('silvasrc');return false;" title="{#silvaimage_dlg.silvaget_reference}" />
+<!--              <button class="reference-lookup" onclick="ImageDialog.lookupSilvaImage();return false;" title="{#silvaimage_dlg.silvaget_reference}"></button>-->
+              <input name="silvasrc" type="text" id="silvasrc" value="" class="mceFocus" onchange="ImageDialog.resetImageSettings('ext');ImageDialog.showPreviewImage('silva', this.value);" />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="silvasize">{#silvaimage_dlg.silvasize}</label></td>
+            <td>
+              <select id="silvasize" name="silvasize" onchange="ImageDialog.showPreviewImage('silva', document.forms[0].elements.silvasrc.value);">
+                <option value="webformat">{#silvaimage_dlg.silvasize_web}</option>
+                <option value="thumbnail">{#silvaimage_dlg.silvasize_thumbnail}</option>
+                <option value="hires">{#silvaimage_dlg.silvasize_hires}</option>
+              </select>
+            </td>
+          </tr>
+          <tr> 
+            <td class="column1"><label id="titlelabel" for="silvatitle">{#silvaimage_dlg.title}</label></td> 
+            <td colspan="2"><input id="silvatitle" disabled="disabled" name="silvatitle" type="text" value="" /></td> 
+          </tr>
+          <tr>
+            <td><label for="silvaclass_list">{#class_name}</label></td>
+            <td colspan="2"><select id="silvaclass_list" class="classlist" name="silvaclass_list"></select></td>
+          </tr>
+          <tr> 
+            <td class="column1" style="vertical-align: top"><label id="silvaalignlabel" for="silvaalign">{#silvaimage_dlg.align}</label></td> 
+            <td>
+              <div class="alignPreview silvaAlignPreview">
+                <img id="silvaAlignSampleImg" src="img/sample.gif" alt="{#silvaimage_dlg.example_img}" />
+                Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit.
+              </div>
+
+              <select id="silvaalign" class="align" name="silvaalign" onchange="ImageDialog.updateStyle('align');ImageDialog.changeAppearance('silva');"> 
+                <option value="">{#not_set}</option> 
+                <option value="baseline">{#silvaimage_dlg.align_baseline}</option>
+                <option value="top">{#silvaimage_dlg.align_top}</option>
+                <option value="middle">{#silvaimage_dlg.align_middle}</option>
+                <option value="bottom">{#silvaimage_dlg.align_bottom}</option>
+                <option value="text-top">{#silvaimage_dlg.align_texttop}</option>
+                <option value="text-bottom">{#silvaimage_dlg.align_textbottom}</option>
+                <option value="left">{#silvaimage_dlg.align_left}</option>
+                <option value="right">{#silvaimage_dlg.align_right}</option>
+              </select> 
+            </td>
+          </tr>
+          <tr>
+            <td rowspan="6" valign="top">
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>{#silvaimage_dlg.preview}</legend>
+        <div id="silvaprev"></div>
+      </fieldset>
+
+      </div>
+    
+    <div id="ext_panel" class="panel">
+      <fieldset>
+        <legend>{#silvaimage_dlg.ext}</legend>
+
+        <table class="properties">
+          <tr>
+            <td class="column1"><label id="extsrclabel" for="src">{#silvaimage_dlg.extsrc}</label></td>
+            <td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td><input name="extsrc" type="text" id="extsrc" value="" class="mceFocus" onchange="ImageDialog.resetImageSettings('silva');ImageDialog.showPreviewImage('ext', this.value);" /></td> 
+              </tr>
+            </table></td>
+          </tr>
+          <tr> 
+            <td class="column1"><label id="exttitlelabel" for="title">{#silvaimage_dlg.title}</label></td> 
+            <td colspan="2"><input id="exttitle" name="exttitle" type="exttext" value="" /></td> 
+          </tr>
+          <tr> 
+            <td class="column1"><label id="extaltlabel" for="alt">{#silvaimage_dlg.alt}</label></td> 
+            <td colspan="2"><input id="extalt" name="extalt" type="text" value="" /></td> 
+          </tr> 
+          <tr>
+            <td><label for="extclass_list">{#class_name}</label></td>
+            <td colspan="2"><select id="extclass_list" class="classlist" name="extclass_list"></select></td>
+          </tr>
+
+          <tr> 
+            <td class="column1"><label id="extalignlabel" for="extalign">{#silvaimage_dlg.align}</label></td> 
+            <td><select id="extalign" name="extalign" class="align" onchange="ImageDialog.updateStyle('align');ImageDialog.changeAppearance('ext');"> 
+              <option value="">{#not_set}</option> 
+              <option value="baseline">{#silvaimage_dlg.align_baseline}</option>
+              <option value="top">{#silvaimage_dlg.align_top}</option>
+              <option value="middle">{#silvaimage_dlg.align_middle}</option>
+              <option value="bottom">{#silvaimage_dlg.align_bottom}</option>
+              <option value="text-top">{#silvaimage_dlg.align_texttop}</option>
+              <option value="text-bottom">{#silvaimage_dlg.align_textbottom}</option>
+              <option value="left">{#silvaimage_dlg.align_left}</option>
+              <option value="right">{#silvaimage_dlg.align_right}</option>
+            </select> 
+            </td>
+            
+            <td rowspan="6" valign="top">
+              <div class="alignPreview">
+                <img id="extAlignSampleImg" src="img/sample.gif" alt="{#silvaimage_dlg.example_img}" />
+                Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
+                nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
+                edipiscing elit.
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="column1"><label id="extwidthlabel" for="extwidth">{#silvaimage_dlg.dimensions}</label></td>
+            <td class="nowrap">
+              <input name="extwidth" type="text" id="extwidth" value="" size="5" maxlength="5" class="size" onchange="ImageDialog.changeWidth(false);ImageDialog.changeHeight(true);" /> x 
+              <input name="extheight" type="text" id="extheight" value="" size="5" maxlength="5" class="size" onchange="ImageDialog.changeHeight(false);ImageDialog.changeWidth(true);" /> px
+            </td>
+          </tr>
+        
+          <tr>
+            <td>&nbsp;</td>
+            <td><table border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><input id="extconstrain" type="checkbox" name="extconstrain" class="checkbox" /></td>
+                <td><label id="extconstrainlabel" for="extconstrain">{#silvaimage_dlg.constrain_proportions}</label></td>
+              </tr>
+            </table></td>
+          </tr>          
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>{#silvaimage_dlg.preview}</legend>
+        <div id="extprev"></div>
+      </fieldset>
+    </div>
+
+    <div id="advanced_panel" class="panel">
+      <fieldset>
+        <legend>{#silvaimage_dlg.swap_image}</legend>
+  
+        <input type="checkbox" id="onmousemovecheck" name="onmousemovecheck" class="checkbox" onclick="ImageDialog.setSwapImage(this.checked);" />
+        <label id="onmousemovechecklabel" for="onmousemovecheck">{#silvaimage_dlg.alt_image}</label>
+      
+        <table border="0" cellpadding="4" cellspacing="0" width="100%">
+          <tr>
+            <td class="column1"><label id="onmouseoversrclabel" for="onmouseoversrc">{#silvaimage_dlg.mouseover}</label></td> 
+            <td>
+              <input type="button" id="onmouseoversrclookup" class="reference-lookup" onclick="ImageDialog.lookupSilvaImage('onmouseoversrc');return false;" title="{#silvaimage_dlg.silvaget_reference}" />
+              <input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" /> 
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <fieldset>
+        <legend>{#silvaimage_dlg.misc}</legend>
+    
+        <table border="0" cellpadding="4" cellspacing="0">
+          <tr>
+            <td class="column1"><label id="idlabel" for="id">{#silvaimage_dlg.id}</label></td> 
+            <td><input id="id" name="id" type="text" value="" /></td> 
+          </tr>
+          <tr>
+            <td class="column1"><label id="stylelabel" for="style">{#silvaimage_dlg.style}</label></td> 
+            <td><input id="style" name="style" type="text" value="" /></td> 
+          </tr>
+      
+          <tr>
+            <td class="column1"><label id="longdesclabel" for="longdesc">{#silvaimage_dlg.long_desc}</label></td>
+            <td><table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><input id="longdesc" name="longdesc" type="text" value="" /></td>
+                <td id="longdesccontainer">&nbsp;</td>
+              </tr>
+            </table></td> 
+          </tr>
+        </table>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="mceActionPanel">
+    <div style="float: left">
+      <input type="submit" id="insert" name="insert" value="{#insert}" />
+    </div>
+
+    <div style="float: right">
+      <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+    </div>
+  </div>
+</form>
+</body> 
+</html> 

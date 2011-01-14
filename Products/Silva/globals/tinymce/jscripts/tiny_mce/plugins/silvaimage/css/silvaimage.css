@@ -1,0 +1,24 @@
+.mceActionPanel {margin-top:7px;}
+.panel_wrapper { overflow: auto; height: 305px; }
+.panel_wrapper div.current {height:305px;}
+
+.alignPreview {border:1px solid #000; width:160px; height:75px; overflow:hidden; padding:5px;}
+.silvaAlignPreview { float: right; width: 180x;}
+
+#silvaprev, #extprev {margin:0 4px 4px; border:1px solid #000; height:150px; overflow:auto;}
+
+.align {width:100px;}
+.classlist {width:180px;}
+.checkbox {border:0;}
+
+#extwidth, #extheight {vertical-align:middle; width:50px; text-align:center;}
+input {width: 200px;}
+input[disabled] { background: #EEE; }
+#extconstrain, #onmousemovecheck {width:auto;}
+#id, #longdesc {width:200px;}
+
+input.reference-lookup {
+    width: 20px;
+    background: url(../../themes/advanced/img/magnifier.png) no-repeat center;
+    height: 20px;
+}
