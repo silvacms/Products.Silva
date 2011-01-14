@@ -2,9 +2,11 @@
 
 <metadata_set id="silva-extra" ns_uri="http://infrae.com/namespace/metadata/silva-extra" ns_prefix="silva-extra">
 <title>Silva Meta</title>
+<category></category>
 <description></description>
 <i18n_domain>silva</i18n_domain>
-<metadata_element id="subject">
+<minimalrole></minimalrole>
+  <metadata_element id="content_description">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
@@ -21,49 +23,124 @@
      <expr></expr>
    </write_guard>
    <field_values>
-      <value key="alternate_name" type="str" value="" />
-      <value key="hidden" type="int" value="0" />
-      <value key="unicode" type="int" value="1" />
-      <value key="max_linelength" type="str" value="" />
-      <value key="max_lines" type="str" value="" />
-      <value key="width" type="int" value="40" />
-      <value key="external_validator" type="str" value="" />
-      <value key="height" type="int" value="2" />
-      <value key="required" type="int" value="0" />
-      <value key="css_class" type="str" value="store" />
-      <value key="default" type="str" value="" />
-      <value key="title" type="str" value="subject" />
-      <value key="description" type="str" value="Subject of content in this area." />
-      <value key="max_length" type="str" value="" />
-      <value key="whitespace_preserve" type="int" value="0" />
-      <value key="extra" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="description" type="str" value="Description of content in this area." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="3" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="title" type="str" value="description" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_linelength"></value>
-     <value key="max_lines"></value>
-     <value key="width"></value>
-     <value key="external_validator"></value>
-     <value key="height"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="description"></value>
      <value key="max_length"></value>
+     <value key="description"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="title"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
- </metadata_element>
- <metadata_element id="keywords">
+  </metadata_element>
+  <metadata_element id="subject">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>TextAreaField</field_type>
+   <acquire_p>1</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="max_length" type="str" value="" />
+        <value key="description" type="str" value="Subject of content in this area." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="2" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="title" type="str" value="subject" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="max_length"></value>
+     <value key="description"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
+     <value key="whitespace_preserve"></value>
+     <value key="title"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+     <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="keywords">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
    <field_type>TextAreaField</field_type>
@@ -80,108 +157,57 @@
      <expr></expr>
    </write_guard>
    <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_linelength" type="str" value="" />
-     <value key="max_lines" type="str" value="" />
-     <value key="width" type="int" value="40" />
-     <value key="external_validator" type="str" value="" />
-     <value key="height" type="int" value="3" />
-     <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="keywords" />
-     <value key="description" type="str" value="Keywords relating to content." />
-     <value key="max_length" type="str" value="" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="description" type="str" value="Keywords relating to content." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="3" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="title" type="str" value="keywords" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_linelength"></value>
-     <value key="max_lines"></value>
-     <value key="width"></value>
-     <value key="external_validator"></value>
-     <value key="height"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="description"></value>
      <value key="max_length"></value>
+     <value key="description"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="title"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
-   </index_args>
- </metadata_element>
- <metadata_element id="content_description">
-   <index_type>ZCTextIndex</index_type>
-   <index_p>0</index_p>
-   <field_type>TextAreaField</field_type>
-   <acquire_p>1</acquire_p>
-   <read_only_p>0</read_only_p>
-   <read_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </read_guard>
-   <write_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </write_guard>
-   <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_linelength" type="str" value="" />
-     <value key="max_lines" type="str" value="" />
-     <value key="width" type="int" value="40" />
-     <value key="external_validator" type="str" value="" />
-     <value key="height" type="int" value="3" />
-     <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="description" />
-     <value key="description" type="str" value="Description of content in this area." />
-     <value key="max_length" type="str" value="" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
-   </field_values>
-   <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_linelength"></value>
-     <value key="max_lines"></value>
-     <value key="width"></value>
-     <value key="external_validator"></value>
-     <value key="height"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="description"></value>
-     <value key="max_length"></value>
-     <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
-   </field_tales>
-   <field_messages>
-   </field_messages>
-   <index_args>
+     <value key="doc_attr">proxy_value</value>
      <value key="lexicon_id">silva_lexicon</value>
-     <value key="index_type">Cosine Measure</value>
    </index_args>
- </metadata_element>
- <metadata_element id="language">
+  </metadata_element>
+  <metadata_element id="language">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>ListField</field_type>
@@ -198,95 +224,58 @@
      <expr></expr>
    </write_guard>
    <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_linelength" type="str" value="" />
-     <value key="max_lines" type="str" value="" />
-     <value key="width" type="int" value="40" />
-     <value key="external_validator" type="str" value="" />
-     <value key="height" type="int" value="3" />
-     <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="language" />
-     <value key="items" type="list" value="[('Select a Language:' ,''),
-       ('Abkhazian', 'ab'), ('Afan Oromo', 'om'), ('Afar', 'aa'), 
-       ('Afrikaans', 'af'), ('Albanian', 'sq'), ('Amharic', 'am'), 
-       ('Arabic', 'ar'), ('Armenian', 'hy'), ('Assamese', 'as'), 
-       ('Aymara', 'ay'), ('Azerbaijani', 'az'), ('Bangla Bengali', 'bn'), 
-       ('Bashkir', 'ba'), ('Basque', 'eu'), ('Bhutani', 'dz'), 
-       ('Bihari', 'bh'), ('Bislama', 'bi'), ('Breton', 'br'), 
-       ('Bulgarian', 'bg'), ('Burmese', 'my'), ('Byelorussian', 'be'), 
-       ('Cambodian', 'km'), ('Catalan', 'ca'), ('Chinese', 'zh'), 
-       ('Corsican', 'co'), ('Croatian', 'hr'), ('Czech', 'cs'), 
-       ('Danish', 'da'), ('Dutch', 'nl'), ('English', 'en'), 
-       ('Esperanto', 'eo'), ('Estonian', 'et'), ('Faeroese', 'fo'), 
-       ('Fiji', 'fj'), ('Finnish', 'fi'), ('French', 'fr'), 
-       ('Frisian', 'fy'), ('Gaelic Scots Gaelic', 'gd'), ('Galician', 'gl'),
-       ('Georgian', 'ka'), ('German', 'de'), ('Greek', 'el'), 
-       ('Greenlandic', 'kl'), ('Guarani', 'gn'), ('Gujarati', 'gu'), 
-       ('Hausa', 'ha'), ('Hebrew', 'iw'), ('Hindi', 'hi'), 
-       ('Hungarian', 'hu'), ('Icelandic', 'is'), ('Indonesian', 'in'), 
-       ('Interlingua', 'ia'), ('Interlingue', 'ie'), ('Inupiak', 'ik'), 
-       ('Irish', 'ga'), ('Italian', 'it'), ('Japanese', 'ja'), 
-       ('Javanese', 'jw'), ('Kannada', 'kn'), ('Kashmiri', 'ks'), 
-       ('Kazakh', 'kk'), ('Kinyarwanda', 'rw'), ('Kirghiz', 'ky'), 
-       ('Kirundi', 'rn'), ('Korean', 'ko'), ('Kurdish', 'ku'), 
-       ('Laothian', 'lo'), ('Latin', 'la'), ('Lettish Latvian', 'lv'), 
-       ('Lingala', 'ln'), ('Lithuanian', 'lt'), ('Macedonian', 'mk'), 
-       ('Malagasy', 'mg'), ('Malayalam', 'ml'), ('Malay', 'ms'), 
-       ('Maltese', 'mt'), ('Maori', 'mi'), ('Marathi', 'mr'), 
-       ('Moldavian', 'mo'), ('Mongolian', 'mn'), ('Nauru', 'na'), 
-       ('Nepali', 'ne'), ('Norwegian', 'no'), ('Occitan', 'oc'), 
-       ('Oriya', 'or'), ('Persian', 'fa'), ('Polish', 'pl'), 
-       ('Portuguese', 'pt'), ('Punjabi', 'pa'), ('Pushto Pashto', 'ps'), 
-       ('Quechua', 'qu'), ('Rhaeto-Romance', 'rm'), ('Romanian', 'ro'), 
-       ('Russian', 'ru'), ('Samoan', 'sm'), ('Sangro', 'sg'), 
-       ('Sanskrit', 'sa'), ('Serbian', 'sr'), ('Serbo-Croatian', 'sh'), 
-       ('Sesotho', 'st'), ('Setswana', 'tn'), ('Shona', 'sn'), 
-       ('Sindhi', 'sd'), ('Singhalese', 'si'), ('Siswati', 'ss'), 
-       ('Slovak', 'sk'), ('Slovenian', 'sl'), ('Somali', 'so'), 
-       ('Spanish', 'es'), ('Sudanese', 'su'), ('Swahili', 'sw'), 
-       ('Swedish', 'sv'), ('Tagalog', 'tl'), ('Tajik', 'tg'), 
-       ('Tamil', 'ta'), ('Tatar', 'tt'), ('Tegulu', 'te'), ('Thai', 'th'), 
-       ('Tibetan', 'bo'), ('Tigrinya', 'ti'), ('Tonga', 'to'), 
-       ('Tsonga', 'ts'), ('Turkish', 'tr'), ('Turkmen', 'tk'), 
-       ('Twi', 'tw'), ('Ukrainian', 'uk'), ('Urdu', 'ur'), ('Uzbek', 'uz'),
-       ('Vietnamese', 'vi'), ('Volapuk', 'vo'), ('Welsh', 'cy'), 
-       ('Wolof', 'wo'), ('Xhosa', 'xh'), ('Yiddish', 'ji'), 
-       ('Yoruba', 'yo'), ('Zulu', 'zu')]" />
-     <value key="description" type="str" value="Language of content in this area." />
-     <value key="max_length" type="str" value="" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="description" type="str" value="Language of content in this area." />
+        <value key="first_item" type="int" value="0" />
+        <value key="title" type="str" value="language" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="3" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="max_length" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="items" type="list" value="[('Select a Language:', ''), ('Abkhazian', 'ab'), ('Afan Oromo', 'om'), ('Afar', 'aa'), ('Afrikaans', 'af'), ('Albanian', 'sq'), ('Amharic', 'am'), ('Arabic', 'ar'), ('Armenian', 'hy'), ('Assamese', 'as'), ('Aymara', 'ay'), ('Azerbaijani', 'az'), ('Bangla Bengali', 'bn'), ('Bashkir', 'ba'), ('Basque', 'eu'), ('Bhutani', 'dz'), ('Bihari', 'bh'), ('Bislama', 'bi'), ('Breton', 'br'), ('Bulgarian', 'bg'), ('Burmese', 'my'), ('Byelorussian', 'be'), ('Cambodian', 'km'), ('Catalan', 'ca'), ('Chinese', 'zh'), ('Corsican', 'co'), ('Croatian', 'hr'), ('Czech', 'cs'), ('Danish', 'da'), ('Dutch', 'nl'), ('English', 'en'), ('Esperanto', 'eo'), ('Estonian', 'et'), ('Faeroese', 'fo'), ('Fiji', 'fj'), ('Finnish', 'fi'), ('French', 'fr'), ('Frisian', 'fy'), ('Gaelic Scots Gaelic', 'gd'), ('Galician', 'gl'), ('Georgian', 'ka'), ('German', 'de'), ('Greek', 'el'), ('Greenlandic', 'kl'), ('Guarani', 'gn'), ('Gujarati', 'gu'), ('Hausa', 'ha'), ('Hebrew', 'iw'), ('Hindi', 'hi'), ('Hungarian', 'hu'), ('Icelandic', 'is'), ('Indonesian', 'in'), ('Interlingua', 'ia'), ('Interlingue', 'ie'), ('Inupiak', 'ik'), ('Irish', 'ga'), ('Italian', 'it'), ('Japanese', 'ja'), ('Javanese', 'jw'), ('Kannada', 'kn'), ('Kashmiri', 'ks'), ('Kazakh', 'kk'), ('Kinyarwanda', 'rw'), ('Kirghiz', 'ky'), ('Kirundi', 'rn'), ('Korean', 'ko'), ('Kurdish', 'ku'), ('Laothian', 'lo'), ('Latin', 'la'), ('Lettish Latvian', 'lv'), ('Lingala', 'ln'), ('Lithuanian', 'lt'), ('Macedonian', 'mk'), ('Malagasy', 'mg'), ('Malayalam', 'ml'), ('Malay', 'ms'), ('Maltese', 'mt'), ('Maori', 'mi'), ('Marathi', 'mr'), ('Moldavian', 'mo'), ('Mongolian', 'mn'), ('Nauru', 'na'), ('Nepali', 'ne'), ('Norwegian', 'no'), ('Occitan', 'oc'), ('Oriya', 'or'), ('Persian', 'fa'), ('Polish', 'pl'), ('Portuguese', 'pt'), ('Punjabi', 'pa'), ('Pushto Pashto', 'ps'), ('Quechua', 'qu'), ('Rhaeto-Romance', 'rm'), ('Romanian', 'ro'), ('Russian', 'ru'), ('Samoan', 'sm'), ('Sangro', 'sg'), ('Sanskrit', 'sa'), ('Serbian', 'sr'), ('Serbo-Croatian', 'sh'), ('Sesotho', 'st'), ('Setswana', 'tn'), ('Shona', 'sn'), ('Sindhi', 'sd'), ('Singhalese', 'si'), ('Siswati', 'ss'), ('Slovak', 'sk'), ('Slovenian', 'sl'), ('Somali', 'so'), ('Spanish', 'es'), ('Sudanese', 'su'), ('Swahili', 'sw'), ('Swedish', 'sv'), ('Tagalog', 'tl'), ('Tajik', 'tg'), ('Tamil', 'ta'), ('Tatar', 'tt'), ('Tegulu', 'te'), ('Thai', 'th'), ('Tibetan', 'bo'), ('Tigrinya', 'ti'), ('Tonga', 'to'), ('Tsonga', 'ts'), ('Turkish', 'tr'), ('Turkmen', 'tk'), ('Twi', 'tw'), ('Ukrainian', 'uk'), ('Urdu', 'ur'), ('Uzbek', 'uz'), ('Vietnamese', 'vi'), ('Volapuk', 'vo'), ('Welsh', 'cy'), ('Wolof', 'wo'), ('Xhosa', 'xh'), ('Yiddish', 'ji'), ('Yoruba', 'yo'), ('Zulu', 'zu')]" />
+        <value key="extra_item" type="str" value="" />
+        <value key="size" type="int" value="5" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_linelength"></value>
-     <value key="max_lines"></value>
-     <value key="width"></value>
-     <value key="external_validator"></value>
-     <value key="height"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
      <value key="description"></value>
-     <value key="max_length"></value>
+     <value key="first_item"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="external_validator"></value>
+     <value key="alternate_name"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="hidden"></value>
+     <value key="items"></value>
+     <value key="extra_item"></value>
+     <value key="size"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="unknown_selection">You selected an item that was not in the list.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
- </metadata_element>
- <metadata_element id="comment">
+  </metadata_element>
+  <metadata_element id="comment">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>TextAreaField</field_type>
@@ -303,49 +292,57 @@
      <expr></expr>
    </write_guard>
    <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_linelength" type="str" value="" />
-     <value key="max_lines" type="str" value="" />
-     <value key="width" type="int" value="40" />
-     <value key="external_validator" type="str" value="" />
-     <value key="height" type="int" value="3" />
-     <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="comment" />
-     <value key="description" type="str" value="Internal comments." />
-     <value key="max_length" type="str" value="" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="description" type="str" value="Internal comments." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="3" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="title" type="str" value="comment" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_linelength"></value>
-     <value key="max_lines"></value>
-     <value key="width"></value>
-     <value key="external_validator"></value>
-     <value key="height"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="description"></value>
      <value key="max_length"></value>
+     <value key="description"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="title"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
- </metadata_element>
- <metadata_element id="creationtime">
+  </metadata_element>
+  <metadata_element id="creationtime">
    <index_type>DateIndex</index_type>
    <index_p>0</index_p>
    <field_type>DateTimeField</field_type>
@@ -362,229 +359,60 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="input_style" type="str" value="text" />
-        <value key="hidden" type="int" value="0" />
-        <value key="input_order" type="str" value="dmy" />
-        <value key="time_separator" type="str" value=":" />
-        <value key="date_separator" type="str" value="/" />
-        <value key="external_validator" type="str" value="" />
         <value key="date_only" type="int" value="0" />
-        <value key="default_now" type="int" value="0" />
         <value key="ampm_time_style" type="int" value="0" />
-        <value key="required" type="int" value="0" />
-        <value key="allow_empty_time" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
+        <value key="description" type="str" value="Automatically set." />
+        <value key="alternate_name" type="str" value="" />
         <value key="title" type="str" value="creation time" />
-        <value key="description" type="str" value="Automatically set." />
-        <value key="unicode" type="int" value="1" />
-   </field_values>
-   <field_tales>
-     <value key="alternate_name"></value>
-     <value key="input_style"></value>
-     <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_separator">string:/</value>
-     <value key="end_datetime"></value>
-     <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
-     <value key="required"></value>
-     <value key="allow_empty_time"></value>
-     <value key="css_class"></value>
-     <value key="default">nothing</value>
-     <value key="title"></value>
-     <value key="description"></value>
-     <value key="start_datetime"></value>
-   </field_tales>
-   <field_messages>
-   </field_messages>
-   <index_args>
-   </index_args>
- </metadata_element>
- <metadata_element id="modificationtime">
-   <index_type>DateIndex</index_type>
-   <index_p>0</index_p>
-   <field_type>DateTimeField</field_type>
-   <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
-   <read_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </read_guard>
-   <write_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </write_guard>
-   <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="input_style" type="str" value="text" />
-        <value key="hidden" type="int" value="0" />
-        <value key="input_order" type="str" value="dmy" />
-        <value key="time_separator" type="str" value=":" />
-        <value key="date_separator" type="str" value="/" />
-        <value key="external_validator" type="str" value="" />
-        <value key="date_only" type="int" value="0" />
-        <value key="default_now" type="int" value="0" />
-        <value key="ampm_time_style" type="int" value="0" />
-        <value key="required" type="int" value="0" />
-        <value key="allow_empty_time" type="int" value="0" />
         <value key="css_class" type="str" value="" />
-        <value key="title" type="str" value="modification time" />
-        <value key="description" type="str" value="Automatically set." />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="hide_day" type="int" value="0" />
+        <value key="external_validator" type="str" value="" />
+        <value key="date_separator" type="str" value="/" />
+        <value key="input_style" type="str" value="text" />
         <value key="unicode" type="int" value="1" />
+        <value key="default_now" type="int" value="0" />
+        <value key="time_separator" type="str" value=":" />
+        <value key="input_order" type="str" value="dmy" />
+        <value key="hidden" type="int" value="0" />
+        <value key="allow_empty_time" type="int" value="0" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="input_style"></value>
-     <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_separator">string:/</value>
-     <value key="end_datetime"></value>
-     <value key="external_validator"></value>
      <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
-     <value key="required"></value>
-     <value key="allow_empty_time"></value>
-     <value key="css_class"></value>
-     <value key="default">nothing</value>
-     <value key="title"></value>
-     <value key="description"></value>
      <value key="start_datetime"></value>
+     <value key="ampm_time_style"></value>
+     <value key="description"></value>
+     <value key="alternate_name"></value>
+     <value key="title"></value>
+     <value key="default">nothing</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="hide_day"></value>
+     <value key="external_validator"></value>
+     <value key="input_style"></value>
+     <value key="end_datetime"></value>
+     <value key="date_separator">string:/</value>
+     <value key="default_now"></value>
+     <value key="time_separator">string::</value>
+     <value key="input_order"></value>
+     <value key="hidden"></value>
+     <value key="allow_empty_time"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="not_datetime">You did not enter a valid date and time.</message>
+     <message name="datetime_out_of_range">The date and time you entered were out of range.</message>
    </field_messages>
    <index_args>
    </index_args>
   </metadata_element>
- <metadata_element id="publicationtime">
+  <metadata_element id="modificationtime">
    <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
-   <field_type>DateTimeField</field_type>
-   <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
-   <read_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </read_guard>
-   <write_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </write_guard>
-   <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="input_style" type="str" value="text" />
-        <value key="hidden" type="int" value="0" />
-        <value key="input_order" type="str" value="dmy" />
-        <value key="time_separator" type="str" value=":" />
-        <value key="date_separator" type="str" value="/" />
-        <value key="external_validator" type="str" value="" />
-        <value key="date_only" type="int" value="0" />
-        <value key="default_now" type="int" value="0" />
-        <value key="ampm_time_style" type="int" value="0" />
-        <value key="required" type="int" value="0" />
-        <value key="allow_empty_time" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
-        <value key="title" type="str" value="publication time" />
-        <value key="description" type="str" value="" />
-        <value key="unicode" type="int" value="1" />
-   </field_values>
-   <field_tales>
-     <value key="alternate_name"></value>
-     <value key="input_style"></value>
-     <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_separator">string:/</value>
-     <value key="end_datetime"></value>
-     <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
-     <value key="required"></value>
-     <value key="allow_empty_time"></value>
-     <value key="css_class"></value>
-     <value key="default">content/publication_datetime | nothing</value>
-     <value key="title"></value>
-     <value key="description"></value>
-     <value key="start_datetime"></value>
-   </field_tales>
-   <field_messages>
-   </field_messages>
-   <index_args>
-   </index_args>
- </metadata_element>
- <metadata_element id="expirationtime">
-   <index_type>DateIndex</index_type>
-   <index_p>1</index_p>
-   <field_type>DateTimeField</field_type>
-   <acquire_p>0</acquire_p>
-   <read_only_p>1</read_only_p>
-   <read_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </read_guard>
-   <write_guard>
-     <roles></roles>
-     <permissions></permissions>
-     <expr></expr>
-   </write_guard>
-   <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="input_style" type="str" value="text" />
-        <value key="hidden" type="int" value="0" />
-        <value key="input_order" type="str" value="dmy" />
-        <value key="time_separator" type="str" value=":" />
-        <value key="date_separator" type="str" value="/" />
-        <value key="external_validator" type="str" value="" />
-        <value key="date_only" type="int" value="0" />
-        <value key="default_now" type="int" value="0" />
-        <value key="ampm_time_style" type="int" value="0" />
-        <value key="required" type="int" value="0" />
-        <value key="allow_empty_time" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
-        <value key="title" type="str" value="expiration time" />
-        <value key="description" type="str" value="" />
-        <value key="unicode" type="int" value="1" />
-   </field_values>
-   <field_tales>
-     <value key="alternate_name"></value>
-     <value key="input_style"></value>
-     <value key="hidden"></value>
-     <value key="input_order"></value>
-     <value key="time_separator">string::</value>
-     <value key="date_separator">string:/</value>
-     <value key="end_datetime"></value>
-     <value key="external_validator"></value>
-     <value key="date_only"></value>
-     <value key="default_now"></value>
-     <value key="ampm_time_style"></value>
-     <value key="required"></value>
-     <value key="allow_empty_time"></value>
-     <value key="css_class"></value>
-     <value key="default">content/expiration_datetime | nothing</value>
-     <value key="title"></value>
-     <value key="description"></value>
-     <value key="start_datetime"></value>
-   </field_tales>
-   <field_messages>
-   </field_messages>
-   <index_args>
-   </index_args>
- </metadata_element>
- <metadata_element id="creator">
-   <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
-   <field_type>StringField</field_type>
+   <field_type>DateTimeField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>1</read_only_p>
    <read_guard>
@@ -598,47 +426,191 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_length" type="str" value="" />
-        <value key="external_validator" type="str" value="" />
-        <value key="display_maxwidth" type="str" value="" />
-        <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="creator" />
-        <value key="truncate" type="int" value="0" />
+        <value key="date_only" type="int" value="0" />
+        <value key="ampm_time_style" type="int" value="0" />
         <value key="description" type="str" value="Automatically set." />
-        <value key="whitespace_preserve" type="int" value="0" />
-        <value key="extra" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="title" type="str" value="modification time" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="hide_day" type="int" value="0" />
+        <value key="external_validator" type="str" value="" />
+        <value key="date_separator" type="str" value="/" />
+        <value key="input_style" type="str" value="text" />
+        <value key="unicode" type="int" value="1" />
+        <value key="default_now" type="int" value="0" />
+        <value key="time_separator" type="str" value=":" />
+        <value key="input_order" type="str" value="dmy" />
+        <value key="hidden" type="int" value="0" />
+        <value key="allow_empty_time" type="int" value="0" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_length"></value>
-     <value key="external_validator"></value>
-     <value key="display_maxwidth"></value>
-     <value key="display_width"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default">python: content.sec_get_creator_info().fullname()</value>
-     <value key="title"></value>
-     <value key="truncate"></value>
+     <value key="date_only"></value>
+     <value key="start_datetime"></value>
+     <value key="ampm_time_style"></value>
      <value key="description"></value>
-     <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="alternate_name"></value>
+     <value key="title"></value>
+     <value key="default">nothing</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="hide_day"></value>
+     <value key="external_validator"></value>
+     <value key="input_style"></value>
+     <value key="end_datetime"></value>
+     <value key="date_separator">string:/</value>
+     <value key="default_now"></value>
+     <value key="time_separator">string::</value>
+     <value key="input_order"></value>
+     <value key="hidden"></value>
+     <value key="allow_empty_time"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="not_datetime">You did not enter a valid date and time.</message>
+     <message name="datetime_out_of_range">The date and time you entered were out of range.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
-     <value key="index_type">Cosine Measure</value>
    </index_args>
- </metadata_element>
- <metadata_element id="lastauthor">
+  </metadata_element>
+  <metadata_element id="publicationtime">
+   <index_type>DateIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>DateTimeField</field_type>
+   <acquire_p>0</acquire_p>
+   <read_only_p>1</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="date_only" type="int" value="0" />
+        <value key="ampm_time_style" type="int" value="0" />
+        <value key="description" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="title" type="str" value="publication time" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="hide_day" type="int" value="0" />
+        <value key="external_validator" type="str" value="" />
+        <value key="date_separator" type="str" value="/" />
+        <value key="input_style" type="str" value="text" />
+        <value key="unicode" type="int" value="1" />
+        <value key="default_now" type="int" value="0" />
+        <value key="time_separator" type="str" value=":" />
+        <value key="input_order" type="str" value="dmy" />
+        <value key="hidden" type="int" value="0" />
+        <value key="allow_empty_time" type="int" value="0" />
+   </field_values>
+   <field_tales>
+     <value key="date_only"></value>
+     <value key="start_datetime"></value>
+     <value key="ampm_time_style"></value>
+     <value key="description"></value>
+     <value key="alternate_name"></value>
+     <value key="title"></value>
+     <value key="default">content/publication_datetime | nothing</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="hide_day"></value>
+     <value key="external_validator"></value>
+     <value key="input_style"></value>
+     <value key="end_datetime"></value>
+     <value key="date_separator">string:/</value>
+     <value key="default_now"></value>
+     <value key="time_separator">string::</value>
+     <value key="input_order"></value>
+     <value key="hidden"></value>
+     <value key="allow_empty_time"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="not_datetime">You did not enter a valid date and time.</message>
+     <message name="datetime_out_of_range">The date and time you entered were out of range.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="expirationtime">
+   <index_type>DateIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>DateTimeField</field_type>
+   <acquire_p>0</acquire_p>
+   <read_only_p>1</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="date_only" type="int" value="0" />
+        <value key="ampm_time_style" type="int" value="0" />
+        <value key="description" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="title" type="str" value="expiration time" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="hide_day" type="int" value="0" />
+        <value key="external_validator" type="str" value="" />
+        <value key="date_separator" type="str" value="/" />
+        <value key="input_style" type="str" value="text" />
+        <value key="unicode" type="int" value="1" />
+        <value key="default_now" type="int" value="0" />
+        <value key="time_separator" type="str" value=":" />
+        <value key="input_order" type="str" value="dmy" />
+        <value key="hidden" type="int" value="0" />
+        <value key="allow_empty_time" type="int" value="0" />
+   </field_values>
+   <field_tales>
+     <value key="date_only"></value>
+     <value key="start_datetime"></value>
+     <value key="ampm_time_style"></value>
+     <value key="description"></value>
+     <value key="alternate_name"></value>
+     <value key="title"></value>
+     <value key="default">content/expiration_datetime | nothing</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="hide_day"></value>
+     <value key="external_validator"></value>
+     <value key="input_style"></value>
+     <value key="end_datetime"></value>
+     <value key="date_separator">string:/</value>
+     <value key="default_now"></value>
+     <value key="time_separator">string::</value>
+     <value key="input_order"></value>
+     <value key="hidden"></value>
+     <value key="allow_empty_time"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="not_datetime">You did not enter a valid date and time.</message>
+     <message name="datetime_out_of_range">The date and time you entered were out of range.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="creator">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>StringField</field_type>
@@ -655,47 +627,116 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="alternate_name" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
-        <value key="unicode" type="int" value="1" />
-        <value key="max_length" type="str" value="" />
-        <value key="external_validator" type="str" value="" />
-        <value key="display_maxwidth" type="str" value="" />
-        <value key="display_width" type="int" value="20" />
-        <value key="required" type="int" value="0" />
-        <value key="css_class" type="str" value="" />
-        <value key="default" type="str" value="" />
-        <value key="title" type="str" value="last author" />
-        <value key="truncate" type="int" value="0" />
-        <value key="description" type="str" value="User who last edited this content." />
-        <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="Automatically set." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="creator" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_length"></value>
-     <value key="external_validator"></value>
-     <value key="display_maxwidth"></value>
-     <value key="display_width"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default">python:content.sec_get_last_author_info(version=content).fullname() or "n/a" </value>
-     <value key="title"></value>
-     <value key="truncate"></value>
-     <value key="description"></value>
-     <value key="whitespace_preserve"></value>
      <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default">python: content.sec_get_creator_info().fullname()</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="display_maxwidth"></value>
+     <value key="external_validator"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="whitespace_preserve"></value>
+     <value key="hidden"></value>
+     <value key="display_width"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
- </metadata_element>
- <metadata_element id="contactname">
+  </metadata_element>
+  <metadata_element id="lastauthor">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>StringField</field_type>
+   <acquire_p>0</acquire_p>
+   <read_only_p>1</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="User who last edited this content." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="last author" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default">python:content.sec_get_last_author_info().fullname() or &quot;n/a&quot;</value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="display_maxwidth"></value>
+     <value key="external_validator"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="whitespace_preserve"></value>
+     <value key="hidden"></value>
+     <value key="display_width"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="contactname">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>StringField</field_type>
@@ -712,47 +753,53 @@
      <expr></expr>
    </write_guard>
    <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_length" type="str" value="" />
-     <value key="external_validator" type="str" value="" />
-     <value key="display_maxwidth" type="str" value="" />
-     <value key="display_width" type="int" value="20" />
-     <value key="required" type="int" value="0" />
-     <value key="description" type="str" value="Name of contact person." />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="contact name" />
-     <value key="truncate" type="int" value="0" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="Name of contact person." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="contact name" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_length"></value>
-     <value key="external_validator"></value>
-     <value key="display_maxwidth"></value>
-     <value key="display_width"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="truncate"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
      <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="display_maxwidth"></value>
+     <value key="external_validator"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="hidden"></value>
+     <value key="display_width"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
- </metadata_element>
- <metadata_element id="contactemail">
+  </metadata_element>
+  <metadata_element id="contactemail">
    <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>EmailField</field_type>
@@ -769,102 +816,109 @@
      <expr></expr>
    </write_guard>
    <field_values>
-     <value key="alternate_name" type="str" value="" />
-     <value key="hidden" type="int" value="0" />
-     <value key="unicode" type="int" value="1" />
-     <value key="max_length" type="str" value="" />
-     <value key="external_validator" type="str" value="" />
-     <value key="display_maxwidth" type="str" value="" />
-     <value key="display_width" type="int" value="20" />
-     <value key="required" type="int" value="0" />
-     <value key="description" type="str" value="Email address of contact person." />
-     <value key="css_class" type="str" value="store" />
-     <value key="default" type="str" value="" />
-     <value key="title" type="str" value="contact email" />
-     <value key="truncate" type="int" value="0" />
-     <value key="whitespace_preserve" type="int" value="0" />
-     <value key="extra" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="Email address of contact person." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="contact email" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="enabled" type="int" value="1" />
+        <value key="display_maxwidth" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
-     <value key="alternate_name"></value>
-     <value key="hidden"></value>
-     <value key="unicode"></value>
-     <value key="max_length"></value>
-     <value key="external_validator"></value>
-     <value key="display_maxwidth"></value>
-     <value key="display_width"></value>
-     <value key="required"></value>
-     <value key="css_class"></value>
-     <value key="default"></value>
-     <value key="title"></value>
-     <value key="truncate"></value>
+     <value key="extra">string: id=&quot;${here/id}&quot;</value>
      <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="display_maxwidth"></value>
+     <value key="external_validator"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
      <value key="whitespace_preserve"></value>
-     <value key="extra"></value>
+     <value key="hidden"></value>
+     <value key="display_width"></value>
+     <value key="alternate_name"></value>
    </field_tales>
    <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+     <message name="not_email">You did not enter an email address.</message>
    </field_messages>
    <index_args>
-     <value key="lexicon_id">silva_lexicon</value>
      <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
    </index_args>
   </metadata_element>
   <metadata_element id="hide_from_tocs">
-    <index_type>ZCTextIndex</index_type>
-    <index_p>0</index_p>
-    <field_type>RadioField</field_type>
-    <acquire_p>0</acquire_p>
-    <read_only_p>0</read_only_p>
-    <read_guard>
-      <roles></roles>
-      <permissions></permissions>
-      <expr></expr>
-    </read_guard>
-    <write_guard>
-      <roles></roles>
-      <permissions></permissions>
-      <expr></expr>
-    </write_guard>
-    <field_values>
-      <value key="description" type="str" value="If this is enabled, this content (and anything it contains!) will not show up in tables of content." />
-      <value key="first_item" type="int" value="0" />
-      <value key="title" type="str" value="hide from tables of content" />
-      <value key="default" type="str" value="do not hide" />
-      <value key="items" type="list" value="[('do not hide', 'do not hide'), ('hide', 'hide')]" />
-      <value key="required" type="int" value="1" />
-      <value key="enabled" type="int" value="1" />
-      <value key="whitespace_preserve" type="int" value="0" />
-      <value key="external_validator" type="str" value="" />
-      <value key="extra_item" type="str" value="" />
-      <value key="unicode" type="int" value="1" />
-      <value key="css_class" type="str" value="" />
-      <value key="hidden" type="int" value="0" />
-      <value key="alternate_name" type="str" value="" />
-      <value key="orientation" type="str" value="vertical" />
-    </field_values>
-    <field_tales>
-      <value key="description"></value>
-      <value key="first_item"></value>
-      <value key="title"></value>
-      <value key="default"></value>
-      <value key="css_class"></value>
-      <value key="required"></value>
-      <value key="enabled"></value>
-      <value key="external_validator"></value>
-      <value key="extra_item"></value>
-      <value key="unicode"></value>
-      <value key="whitespace_preserve"></value>
-      <value key="hidden"></value>
-      <value key="items"></value>
-      <value key="alternate_name"></value>
-      <value key="orientation"></value>
-    </field_tales>
-    <field_messages>
-      <message name="external_validator_failed">The input failed the external validator.</message>
-      <message name="required_not_found">Input is required but no input given.</message>
-      <message name="unknown_selection">You selected an item that was not in the list.</message>
-    </field_messages>
-    <index_args>
-    </index_args>
+   <index_type>TextIndex</index_type>
+   <index_p>0</index_p>
+   <field_type>RadioField</field_type>
+   <acquire_p>0</acquire_p>
+   <read_only_p>0</read_only_p>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="description" type="str" value="If this is enabled, this content (and anything it contains!) will not show up in tables of content." />
+        <value key="first_item" type="int" value="0" />
+        <value key="title" type="str" value="hide from tables of content" />
+        <value key="default" type="str" value="do not hide" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="enabled" type="int" value="1" />
+        <value key="external_validator" type="str" value="" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="whitespace_preserve" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="items" type="list" value="[('do not hide', 'do not hide'), ('hide', 'hide')]" />
+        <value key="extra_item" type="str" value="" />
+        <value key="orientation" type="str" value="vertical" />
+   </field_values>
+   <field_tales>
+     <value key="description"></value>
+     <value key="first_item"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="enabled"></value>
+     <value key="external_validator"></value>
+     <value key="alternate_name"></value>
+     <value key="unicode"></value>
+     <value key="whitespace_preserve"></value>
+     <value key="hidden"></value>
+     <value key="items"></value>
+     <value key="extra_item"></value>
+     <value key="orientation"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="unknown_selection">You selected an item that was not in the list.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
   </metadata_element>
 </metadata_set>
