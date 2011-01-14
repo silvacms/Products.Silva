@@ -264,7 +264,7 @@ ol.lower-alpha {
   list-style-type: lower-alpha;
 }
 
-ul.toc-list {
+ul.toc {
   margin:0;
   line-height:130%;
 }
