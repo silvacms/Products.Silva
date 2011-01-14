@@ -176,9 +176,10 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         self._metadata_multivalue = trueOrFalse
 
     def setWorkflowVersion(
-        self, version_id, publication_time, expiration_time, status):
+        self, version_id, last_author, publication_time, expiration_time, status):
 
         self.parentHandler()._workflow[version_id.strip()] = (
+            last_author,
             parse_date(publication_time),
             parse_date(expiration_time),
             status)
@@ -186,12 +187,20 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     def getWorkflowVersion(self, version_id):
         return self.parentHandler()._workflow[version_id]
 
+    def setAuthor(self, obj, parent, last_author):
+        if isinstance(last_author, UnicodeType):
+            last_author = escape(last_author)
+        obj._last_author_userid = last_author
+        obj._last_author_info = parent.sec_get_member(last_author).aq_base
+        
     def storeWorkflow(self):
         content = self.result()
         version_id = content.id
-        publicationtime, expirationtime, status = self.getWorkflowVersion(
+        last_author, publicationtime, expirationtime, status = self.getWorkflowVersion(
             version_id)
         version = (version_id, publicationtime, expirationtime)
+        if last_author:
+            self.setAuthor(content, content, last_author)
         if status == 'unapproved':
             self.parent()._unapproved_version = version
         elif status == 'approved':
@@ -249,6 +258,10 @@ class FolderHandler(SilvaBaseHandler):
         if name == (NS_URI, 'folder'):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addFolder(uid, '')
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -266,6 +279,10 @@ class PublicationHandler(SilvaBaseHandler):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addPublication(
                 uid, '')
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -296,6 +313,10 @@ class AutoTOCHandler(SilvaBaseHandler):
                 obj.set_show_icon(attrs[(None,'show_icon')]=='True')
             if (attrs.get((None,'sort_order'),None)):
                 obj.set_sort_order(attrs[(None,'sort_order')])
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'auto_toc'):
@@ -312,6 +333,10 @@ class IndexerHandler(SilvaBaseHandler):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addIndexer(
                 uid, '')
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -338,10 +363,12 @@ class VersionHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'version'):
             self.setData('id', attrs[(None, 'id')])
+            self.setData('last_author', attrs.get((None, 'last_author'),None))
 
     def endElementNS(self, name, qname):
         self.setWorkflowVersion(
             self.getData('id'),
+            self.getData('last_author'),
             self.getData('publication_datetime'),
             self.getData('expiration_datetime'),
             self.getData('status'))
@@ -479,6 +506,10 @@ class LinkHandler(SilvaBaseHandler):
             uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
             self.parent().manage_addProduct['Silva'].manage_addLink(
                 uid, '', no_default_version=True)
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
             self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -500,6 +531,10 @@ class LinkVersionHandler(SilvaBaseHandler):
                 uid = attrs[(None, 'version_id')].encode('utf8')
                 self.parent().manage_addProduct['Silva'].manage_addLinkVersion(
                     uid, '')
+                last_author = attrs.get((None, 'last_author'),None)
+                if last_author:
+                    self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                                   last_author)
                 self.setResultId(uid)
 
     def endElementNS(self, name, qname):
@@ -531,6 +566,7 @@ class ImageHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'image_asset'):
             self.setData('id', attrs[(None, 'id')])
+            self.setData('last_author', attrs.get((None, 'last_author'),None))
             self.setData('web_format', attrs.get((None, 'web_format')))
             self.setData('web_scale', attrs.get((None, 'web_scale')))
             self.setData('web_crop', attrs.get((None, 'web_crop')))
@@ -540,9 +576,20 @@ class ImageHandler(SilvaBaseHandler):
             uid = self.generateOrReplaceId()
             import_image = self.getInfo().getFileFromZIP(
                 'assets/' + self.getData('zip_id'))
+            title = self.getMetadata('silva-content', 'maintitle')
+            if title is not None:
+                # metadata delivers utf-8, but we need unicode
+                title = unicode(title, 'utf-8')
+            else:
+                title = ''
             self.parent().manage_addProduct['Silva'].manage_addImage(
-                uid, '', import_image)
+                uid, title, import_image)
             self.setResultId(uid)
+
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
 
             web_format = self.getData('web_format')
             web_scale = self.getData('web_scale')
@@ -566,7 +613,8 @@ class FileHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'file_asset'):
             self.setData('id', attrs[(None, 'id')])
-
+            self.setData('last_author', attrs.get((None, 'last_author'),None))
+            
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'file_asset'):
             uid = self.generateOrReplaceId()
@@ -574,6 +622,10 @@ class FileHandler(SilvaBaseHandler):
                 'assets/' + self.getData('zip_id'))
             self.parent().manage_addProduct['Silva'].manage_addFile(
                 uid, '', import_file)
+            last_author = attrs.get((None, 'last_author'),None)
+            if last_author:
+                self.setAuthor(getattr(self.parent(), uid), self.parent(),
+                               last_author)
             self.setResultId(uid)
             self.storeMetadata()
             self.notifyImport()

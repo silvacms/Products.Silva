@@ -127,7 +127,8 @@ class VersionedContentProducer(SilvaBaseProducer):
         are arbitrary)
         """
         id, publication_datetime, expiration_datetime = version
-        self.startElement('version', {'id':id})
+        self.startElement('version', {'id':id,
+                                      'last_author': self.context.sec_get_last_author_userid()})
         self.startElement('status')
         self.handler.characters(status)
         self.endElement('status')
@@ -178,7 +179,8 @@ class FolderProducer(SilvaBaseProducer):
     grok.adapts(interfaces.IFolder, Interface)
 
     def sax(self):
-        self.startElement('folder', {'id': self.context.id})
+        self.startElement('folder', {'id': self.context.id,
+                                     'last_author': self.context.sec_get_last_author_userid()})
         self.metadata()
         self.startElement('content')
         default = self.context.get_default()
@@ -206,7 +208,8 @@ class PublicationProducer(SilvaBaseProducer):
     grok.adapts(interfaces.IPublication, Interface)
 
     def sax(self):
-        self.startElement('publication', {'id': self.context.id})
+        self.startElement('publication', {'id': self.context.id,
+                                          'last_author': self.context.sec_get_last_author_userid()})
         self.metadata()
         self.startElement('content')
         default = self.context.get_default()
@@ -234,7 +237,8 @@ class LinkProducer(VersionedContentProducer):
     grok.adapts(interfaces.ILink, Interface)
 
     def sax(self):
-        self.startElement('link', {'id': self.context.id})
+        self.startElement('link', {'id': self.context.id,
+                                   'last_author': self.context.sec_get_last_author_userid()})
         self.workflow()
         self.versions()
         self.endElement('link')
@@ -246,7 +250,8 @@ class LinkVersionProducer(SilvaBaseProducer):
     grok.adapts(interfaces.ILinkVersion, Interface)
 
     def sax(self):
-        self.startElement('content', {'version_id': self.context.id})
+        self.startElement('content', {'version_id': self.context.id,
+                                      'last_author': self.context.sec_get_last_author_userid()})
         self.metadata()
         if self.context.get_relative():
             tag = 'target'
@@ -268,7 +273,8 @@ class GhostProducer(VersionedContentProducer):
     grok.adapts(interfaces.IGhost, Interface)
 
     def sax(self):
-        self.startElement('ghost', {'id': self.context.id})
+        self.startElement('ghost', {'id': self.context.id,
+                                    'last_author': self.context.sec_get_last_author_userid()})
         self.workflow()
         self.versions()
         self.endElement('ghost')
@@ -282,7 +288,8 @@ class GhostVersionProducer(SilvaBaseProducer):
     grok.adapts(interfaces.IGhostVersion, Interface)
 
     def sax(self):
-        self.startElement('content', {'version_id': self.context.id})
+        self.startElement('content', {'version_id': self.context.id,
+                                      'last_author': self.context.sec_get_last_author_userid()})
         self.startElement('haunted')
         self.handler.characters(self.reference(u'haunted'))
         self.endElement('haunted')
@@ -303,7 +310,8 @@ class GhostFolderProducer(SilvaBaseProducer):
     grok.adapts(interfaces.IGhostFolder, Interface)
 
     def sax(self):
-        self.startElement('ghost_folder', {'id': self.context.id})
+        self.startElement('ghost_folder', {'id': self.context.id,
+                                           'last_author': self.context.sec_get_last_author_userid()})
         self.startElement('content')
         self.startElement('haunted')
         self.handler.characters(self.reference(u'haunted'))
@@ -321,6 +329,7 @@ class AutoTOCProducer(SilvaBaseProducer):
         self.startElement(
             'auto_toc',
             {'id': self.context.id,
+             'last_author': self.context.sec_get_last_author_userid(),
              'depth': str(self.context.get_toc_depth()),
              'types': ','.join(self.context.get_local_types()),
              'sort_order': self.context.get_sort_order(),
@@ -337,7 +346,8 @@ class FileProducer(SilvaBaseProducer):
 
     def sax(self):
         path = self.context.getPhysicalPath()
-        self.startElement('file_asset', {'id': self.context.id})
+        self.startElement('file_asset', {'id': self.context.id,
+                                         'last_author': self.context.sec_get_last_author_userid()})
         self.metadata()
         self.getInfo().addAssetPath(path)
         self.startElement('asset_id')
@@ -355,6 +365,7 @@ class ImageProducer(SilvaBaseProducer):
         path = self.context.getPhysicalPath()
         self.startElement('image_asset', {
             'id': self.context.id,
+            'last_author': self.context.sec_get_last_author_userid(),
             'web_format': self.context.getWebFormat(),
             'web_scale': self.context.getWebScale(),
             'web_crop': self.context.getWebCrop(),
@@ -373,7 +384,8 @@ class IndexerProducer(SilvaBaseProducer):
     grok.adapts(interfaces.IIndexer, Interface)
 
     def sax(self):
-        self.startElement('indexer', {'id': self.context.id})
+        self.startElement('indexer', {'id': self.context.id,
+                                      'last_author': self.context.sec_get_last_author_userid()})
         self.metadata()
         self.endElement('indexer')
 
