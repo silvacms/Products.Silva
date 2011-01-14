@@ -143,7 +143,7 @@ class GhostFolder(GhostBase, Folder.Folder):
     meta_type = 'Silva Ghost Folder'
 
     grok.implements(IGhostFolder)
-    silvaconf.icon('icons/silvaghost_folder.gif')
+    silvaconf.icon('icons/silvaghost_folder.png')
 
     security = ClassSecurityInfo()
 

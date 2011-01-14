@@ -137,7 +137,7 @@ class Image(Asset):
     }
 
     silvaconf.priority(-3)
-    silvaconf.icon('www/silvaimage.gif')
+    silvaconf.icon('www/silvaimage.png')
     silvaconf.factory('manage_addImage')
 
     security.declareProtected(

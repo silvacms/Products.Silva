@@ -69,7 +69,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     object_type = 'container'
 
     grok.implements(IFolder)
-    silvaconf.icon('www/silvafolder.gif')
+    silvaconf.icon('www/silvafolder.png')
     silvaconf.priority(-5)
 
     @property

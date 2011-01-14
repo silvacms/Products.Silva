@@ -153,7 +153,7 @@ class Ghost(CatalogedVersionedContent):
     security = ClassSecurityInfo()
 
     grok.implements(IGhost)
-    silvaconf.icon('icons/silvaghost.gif')
+    silvaconf.icon('icons/silvaghost.png')
     silvaconf.versionClass('GhostVersion')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
