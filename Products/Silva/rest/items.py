@@ -26,10 +26,7 @@ class ItemDetails(object):
         self._metadata = self._query.metadata.getMetadata(self.context)
 
     def get_title(self):
-        title = self._metadata.get('silva-content', 'maintitle')
-        if not title or not title.strip():
-            return self.context.getId()
-        return title
+        return self.context.get_title_or_id()
 
     def get_description(self):
         return self._metadata.get('silva-extra', 'content_description')
@@ -63,7 +60,7 @@ class ItemDetails(object):
         'intid': get_intid,
         'path': get_path,
         'description': get_description,
-        'modification': get_modification,
+        'modified': get_modification,
         'author': get_author,
         'folderish': is_folderish,
         'url': get_url,
@@ -75,7 +72,7 @@ class ItemDetails(object):
         'reference_listing_description': [
             'intid', 'url', 'path', 'icon', 'folderish', 'title', 'description'],
         'folder_listing': [
-            'title', 'modification', 'author']
+            'title', 'modified', 'author', 'folderish']
         }
 
     def __call__(self, name):
