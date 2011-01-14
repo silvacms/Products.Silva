@@ -183,8 +183,8 @@
        tal:attributes="href string:${model/@@absolute_url}/++rest++userinfo"
        i18n:attributes="title">
       <img border="0"
-           height="9"
-           width="9"
+           height="16"
+           width="16"
            alt="user icon"
            tal:attributes="src string:$root_url/globals/user.png"
            />

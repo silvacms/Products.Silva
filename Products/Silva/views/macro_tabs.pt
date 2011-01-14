@@ -39,14 +39,18 @@
     </a>
     <a name="top"> </a>
     <tal:block tal:repeat="breadcrumb model/@@absolute_url/breadcrumbs">
-      <a class="breadcrumb"
-         tal:content="breadcrumb/name"
-        tal:attributes="href string:${breadcrumb/url}/edit/${screen_id}">
-        name
+      <span class="breadcrumb-item">
+      <span class="breadcrumb-sep" title="display direct-tab access for breadcrumb item"
+         i18n:translate="title">
+         &raquo;
+      </span>
+      <a tal:define="roles python:breadcrumb['obj'].sec_get_all_roles()"
+        tal:attributes="href string:${breadcrumb/url}/edit/${screen_id}"
+        tal:omit-tag="python: not len([val for val in context.roles_helper() if val in roles])"
+        tal:content="breadcrumb/name">
+        <!--<span tal:replace="python:'%s%s'%(breadcrumb['name'],item.id=='index' and ' (index)' or '')" />-->
       </a>
-      <tal:block tal:condition="not:repeat/breadcrumb/end">
-        &middot;
-      </tal:block>
+      </span>
     </tal:block>
     <span tal:replace="nothing"><!-- _______ manage link _______ --></span>
     <tal:block condition="python:user.has_role(['Manager'], object=model)">
@@ -57,7 +61,7 @@
         i18n:attributes="title"
         i18n:translate=""
       >
-        &middot; manage...
+        manage...
       </a>
     </tal:block>
   </div>
