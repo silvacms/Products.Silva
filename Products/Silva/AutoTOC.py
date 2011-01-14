@@ -45,12 +45,13 @@ class AutoTOC(Content, SimpleItem):
     silvaconf.icon('www/autotoc.png')
     silvaconf.priority(0.2)
 
-    _local_types = ['Silva Document', 'Silva Publication', 'Silva Folder']
+    _local_types = ['Silva Document', 'Silva Publication', 'Silva Folder', 
+                    'Silva File']
     _toc_depth = -1
-    _display_desc_flag = False
+    _display_desc_flag = True
     # values: 'silva', 'alpha', 'reversealpha', 'chronmod', 'rchronmod'
-    _sort_order = 'silva'
-    _show_icon = False
+    _sort_order = 'alpha'
+    _show_icon = True
     _show_container_link = False
 
     # ACCESSORS
