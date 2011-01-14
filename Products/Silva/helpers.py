@@ -58,7 +58,8 @@ def unapprove_close_helper(object):
             object.close_version()
     if interfaces.IContainer.providedBy(object):
         default = object.get_default()
-        if default:
+        # skip over default objects wich are the container (e.g. Silva Galleries)
+        if default and default != object:
             unapprove_close_helper(default)
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)

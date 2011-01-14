@@ -93,6 +93,7 @@ class Id(object):
     _reserved_ids = (
         'Members',
         'REQUEST',
+        'request',
         'acl_users',
         'cached',
         'cancel',

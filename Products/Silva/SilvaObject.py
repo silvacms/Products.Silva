@@ -140,7 +140,7 @@ class TitledObject(object):
         """Get title or id if not available.
         """
         title = self.get_title()
-        if not title.strip():
+        if not (title and title.strip()):
             title = self.get_silva_object().id
         return title
 
@@ -248,7 +248,7 @@ class SilvaObject(TitledObject, Security, ViewCode):
         return self.get_title()
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
+        SilvaPermissions.AccessContentsInformation, 'get_short_title_editable')
     def get_short_title_editable(self):
         """Get the short title of the editable version if possible.
         """

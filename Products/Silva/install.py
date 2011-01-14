@@ -139,10 +139,11 @@ def configureMetadata(root):
     silva_docs = os.path.join(os.path.dirname(__file__), 'doc')
 
     metadata_sets_types = [
-        (('silva-content', 'silva-extra'),
+        (('silva-content', 'silva-extra', 'syndication'),
          ('Silva Folder', 'Silva File', 'Silva Image', 'Silva Root',
           'Silva Publication', 'Silva Indexer', 'Silva AutoTOC',
           'Silva Link Version')),
+    #XXXaa add Silva Page Asset Version, Silva Page Version to the above list
         (('silva-layout',),
          ('Silva Root', 'Silva Publication'))]
 
@@ -292,6 +293,8 @@ def configureSecurity(root):
     root.manage_permission('Delete objects', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
+    
+    root.manage_permission('Add Silva Sticky Content Services', roleinfo.CHIEF_ROLES)
 
     # this is necessary to let authors use external editor
     try:
