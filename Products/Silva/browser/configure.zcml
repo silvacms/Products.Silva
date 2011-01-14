@@ -4,6 +4,13 @@
    xmlns:five="http://namespaces.zope.org/five">
 
   <browser:page
+    for="Products.Silva.interfaces.IRoot"
+    name="audit_catalog_objects"
+    class=".audit.CatalogObjectAudit"
+    permission="silva.ChangeSilvaContent"
+  />
+
+  <browser:page
      for="silva.core.interfaces.ISilvaObject"
      name="object_lookup"
      class=".lookup.ObjectLookup"

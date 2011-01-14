@@ -152,6 +152,12 @@ class TOCRenderingAdapter(adapter.Adapter):
             if show_icon:
                 html.append(self.context.render_icon(item))
             title = (public and item.get_title() or item.get_title_editable()) or item.id
+            url = item.absolute_url()
+            #containers SHOULD have a trailing slash, so search analytics recognize
+            # them AS containers
+            #XXXaa is this needed if absolute_url() appends the slash?
+            if interfaces.IContainer.providedBy(item):
+                url += '/'
             html.append(a_templ%(
                 item.absolute_url(),
                 escape(title)))
