@@ -51,7 +51,8 @@ class Items(rest.REST):
             'icon': '/'.join((self.root_url, get_icon(content))),
             'implements': require and require.providedBy(content) or False,
             'folderish': interfaces.IContainer.providedBy(content),
-            'title': content.get_title_or_id()}
+            'title': content.get_title_or_id(),
+            'short_title': content.get_short_title()}
 
     def get_context_details(self, require):
         details = [self.get_item_details(
@@ -77,7 +78,8 @@ class Items(rest.REST):
                              '++resource++Products.Silva/exclamation.png')),
                         'implements': False,
                         'folderish': False,
-                        'title': 'Broken'})
+                        'title': 'Broken',
+                        'short_title': 'Broken'})
             return self.json_response(self.get_item_details(content))
         require = interfaces.ISilvaObject
         if interface is not None:
