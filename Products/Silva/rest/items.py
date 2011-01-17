@@ -29,10 +29,13 @@ class ItemDetails(object):
         return self.context.get_title_or_id()
 
     def get_description(self):
-        return self._metadata.get('silva-extra', 'content_description')
+        self._metadata.get('silva-extra', 'content_description')
 
     def get_modification(self):
-        return self._metadata.get('silva-extra', 'modificationtime')
+        date = self._metadata.get('silva-extra', 'modificationtime')
+        if date:
+            return date.ISO()
+        return ''
 
     def get_author(self):
         return self._metadata.get('silva-extra', 'lastauthor')
