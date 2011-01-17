@@ -43,7 +43,7 @@ ExternalSourceLoader.number = 200;
 
 ExternalSourceLoader.prototype.initialize = function() {
     var request = new XMLHttpRequest();
-    var url = this.docurl + "@@render_extsource";
+    var url = this.docurl + "/++rest++Products.SilvaExternalSources.kupu.preview";
 
     request.open("POST", url, true);
     var callback = new ContextFixer(this.preload_callback, this, request);
@@ -2540,7 +2540,7 @@ SilvaExternalSourceTool.prototype.getUrlAndContinue = function(id, handler) {
         return;
     };
     var request = new XMLHttpRequest();
-    var url = this._baseurl + '/edit/get_extsource_url?id=' + id;
+    var url = this._baseurl + '/++rest++Products.SilvaExternalSources.kupu.url?id=' + id;
     request.open('GET', url, true);
     var callback = new ContextFixer(function() {
         if (request.readyState == 4) {
@@ -2600,7 +2600,7 @@ SilvaExternalSourceTool.prototype._validateAndSubmit =
     var formdata = this._gatherFormData();
     var doc = window.document;
     var request = new XMLHttpRequest();
-    request.open('POST', this._url + '/validate_form_to_request', true);
+    request.open('POST', this._url + '/++rest++Products.SilvaExternalSources.kupu.validate', true);
     var callback = new ContextFixer(
         this._addExternalSourceIfValidated, request, this, ignorefocus);
     request.onreadystatechange = callback.execute;
@@ -2612,7 +2612,7 @@ SilvaExternalSourceTool.prototype._validateAndSubmit =
 
 SilvaExternalSourceTool.prototype._continueStartExternalSourceEdit =
         function(url) {
-    url = url + '/get_rendered_form_for_editor?docref=' + this.docref;
+    url = url + '/++rest++Products.SilvaExternalSources.kupu.form?docref=' + this.docref;
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     var callback = new ContextFixer(this._addFormToTool, request, this);
@@ -2635,7 +2635,7 @@ SilvaExternalSourceTool.prototype.startExternalSourceUpdate = function(source_id
 
 SilvaExternalSourceTool.prototype._continueStartExternalSourceUpdate =
         function(url) {
-    url = url + '/get_rendered_form_for_editor';
+    url = url + '/++rest++Products.SilvaExternalSources.kupu.form';
     var formdata = this._gatherFormDataFromElement();
     formdata += '&docref=' + this.docref;
     var request = new XMLHttpRequest();
