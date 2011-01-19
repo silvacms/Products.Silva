@@ -38,6 +38,7 @@ from Products.Silva.ViewCode import ViewCode
 from Products.Silva.utility import interfaces as utility_interfaces
 from Products.Silva.transform.interfaces import IRenderable
 from Products.SilvaViews.ViewRegistry import ViewAttribute
+from Products.Silva.errors import NotViewable
 
 # Silva adapters
 from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
@@ -132,6 +133,21 @@ class TitledObject(object):
                 self, 'silva-content', 'maintitle')
         if not title.strip():
             title = self.get_silva_object().id
+        return title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_nav_title')
+    def get_nav_title(self):
+        """Get the nav title of the silva object.
+        """
+        gmv = self.service_metadata.getMetadataValue
+        title = gmv(self, 'silva-content', 'navtitle')
+        if not title:
+            title = gmv(self, 'silva-content', 'shorttitle')
+        if not title:
+            title = gmv(self, 'silva-content', 'maintitle')
+        if not title:
+            title = self.id
         return title
 
     security.declareProtected(
@@ -253,6 +269,13 @@ class SilvaObject(TitledObject, Security, ViewCode):
         """Get the short title of the editable version if possible.
         """
         return self.get_short_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_nav_title_editable')
+    def get_nav_title_editable(self):
+        """Get the nav title of the editable version if possible.
+        """
+        return self.get_nav_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_or_id_editable')
@@ -427,9 +450,7 @@ class SilvaObject(TitledObject, Security, ViewCode):
 
         # No version
         if version is None:
-            msg = _('Sorry, this ${meta_type} is not viewable.',
-                    mapping={'meta_type': self.meta_type})
-            return '<p>%s</p>' % translate(msg, context=request)
+            raise NotViewable(self)
 
         # Search for an XSLT renderer
         result = IRenderable(version).view(request)
