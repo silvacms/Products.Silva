@@ -372,8 +372,8 @@ function SilvaLinkToolBox(
     this.anchor = $('#' + inputid + '-anchor');
     /* the next three options are for image link support */
     this.image = null;
-    this.imageoptions = $('#' + imageid + '-options');
-    this.imagehires = $('#' + imageid + '-hires');
+    this.image_options = $('#' + imageid + '-options');
+    this.image_hires = $('#' + imageid + '-hires');
     /* buttons */
     this.addbutton = getFromSelector(addbuttonid);
     this.updatebutton = getFromSelector(updatebuttonid);
@@ -386,7 +386,7 @@ SilvaLinkToolBox.prototype.initialize = function(tool, editor) {
     var self = this;
     this.tool = tool;
     this.editor = editor;
-    this.imagehires.change(function() {
+    this.image_hires.change(function() {
         self.content.toggle();
     });
     this.content.change(function(event, info) {
@@ -421,7 +421,7 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
 
     if (this.image) {
         // We are in an image
-        var hires = this.imagehires.attr('checked');
+        var hires = this.image_hires.attr('checked');
         if (hires) {
             // Reuse content selector from the image tool box if hires selected
             content = this.editor.getTool('imagetool').content;
@@ -466,8 +466,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     /* reset image link settings */
     this.content.show();
     this.image = null;
-    this.imageoptions.hide();
-    this.imagehires.val(false);
+    this.image_options.hide();
+    this.image_hires.val(false);
 
     var extsourcetool = this.editor.getTool('extsourcetool');
     if (extsourcetool != undefined) {
@@ -483,8 +483,8 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
     while (currnode) {
         if (currnode.nodeName == 'IMG') {
             this.image = currnode;
-            this.imageoptions.show();
-            this.imagehires.attr('checked', '');
+            this.image_options.show();
+            this.image_hires.attr('checked', '');
         };
         if (currnode.nodeName == 'A' && !currnode.getAttribute('name')) {
 
@@ -508,7 +508,7 @@ SilvaLinkToolBox.prototype.updateState = function(selNode, event) {
                 if (this.image) {
                     var image_tool = this.editor.getTool('imagetool');
                     if (image_tool.content.reference() == reference) {
-                        this.imagehires.attr('checked', 'checked');
+                        this.image_hires.attr('checked', 'checked');
                         this.content.hide();
                     };
                 };
@@ -540,19 +540,49 @@ function SilvaImageTool(
     this.resizePollingInterval = null;
     this.image = null;
 
-    this.addbutton = getFromSelector(addbuttonid);
-    this.updatebutton = getFromSelector(updatebuttonid);
-    this.resizebutton = getFromSelector(resizebuttonid);
+    this.add_button = $('#' + addbuttonid);
+    this.update_button = $('#' + updatebuttonid);
+    this.resize_button = $('#' + resizebuttonid);
 };
 
 SilvaImageTool.prototype = new ImageTool();
 
 SilvaImageTool.prototype.initialize = function(editor) {
     this.editor = editor;
-    addEventHandler(this.addbutton, 'click', this.createImageHandler, this);
-    addEventHandler(this.updatebutton, 'click', this.createImageHandler, this);
-    addEventHandler(this.resizebutton, 'click', this.finalizeResizeImage, this);
+
+    var bindButtonEvent = function(button, handler, object) {
+        addEventHandler(button.get(0), 'click', handler, object);
+    };
+
+    bindButtonEvent(this.add_button, this.createImageHandler, this);
+    bindButtonEvent(this.update_button, this.createImageHandler, this);
+    bindButtonEvent(this.resize_button, this.confirmResizeHandler, this);
     addEventHandler(this.editor.getInnerDocument(), 'keydown', this.handleKeyPressOnImage, this);
+
+    // Hide all buttons by default
+    this.add_button.hide();
+    this.update_button.hide();
+    this.resize_button.hide();
+
+    // If there is an reference selected display add or update button correspondantly
+    var self = this;
+
+    this.content.change(function(event, info) {
+        if (info['path']) {
+            if (self.image) {
+                // We have a new reference and an existing image
+                self.add_button.hide();
+                self.update_button.show();
+            } else {
+                self.update_button.hide();
+                self.add_button.show();
+            };
+        } else {
+            // Nothing selected
+            self.update_button.hide();
+            self.add_button.hide();
+        };
+    });
     this.editor.logMessage('Image tool initialized');
 };
 
@@ -657,52 +687,63 @@ SilvaImageTool.prototype.createImageHandler = function(event) {
 
     var default_title = this.content.title();
     var url = this.content.url();
-    var image = null;
-    var is_new = true;
+    var self = this;
+
+    var update_attributes = function(image) {
+        /* set image information */
+        image.removeAttribute('height');
+        image.removeAttribute('width');
+        image.removeAttribute('style');
+        image.setAttribute('_silva_target', reference);
+        reference = image.getAttribute('_silva_reference');
+        if (!reference) {
+            image.setAttribute('_silva_reference', 'new');
+        };
+        image.setAttribute('alt', default_title);
+        image.setAttribute('alignment', self.alignment.val());
+        image.setAttribute('src', url);
+    };
 
     if (this.image) {
+        // It will restart on update when updateState is called. We
+        // don't hide the button as it might have been resized.
         this.stopResizePolling();
-        image = this.image;
-        is_new = false;
-    }
-    else {
-        image = this.editor.getInnerDocument().createElement('img');
-    }
 
-    /* set image information */
-    image.setAttribute('_silva_target', reference);
-    reference = image.getAttribute('_silva_reference');
-    if (!reference) {
-        image.setAttribute('_silva_reference', 'new');
-    }
-    image.setAttribute('alt', default_title);
-    image.setAttribute('alignment', this.alignment.val());
-    image.setAttribute('src', url);
-    image.removeAttribute('height');
-    image.removeAttribute('width');
+        update_attributes(this.image);
 
-    if (is_new) {
-        this.editor.insertNodeAtSelection(image, 1);
+        this.editor.content_changed = true;
+        this.editor.updateState();
+    } else {
+        var cache_image = new Image();
+
+        $(cache_image).bind('load', function () {
+            var image = self.editor.getInnerDocument().createElement('img');
+
+            update_attributes(image);
+
+            self.editor.insertNodeAtSelection(image, 1);
+
+            self.editor.content_changed = true;
+            self.editor.updateState();
+        });
+        cache_image.src = url;
     }
-    this.editor.content_changed = true;
-    this.editor.updateState();
 };
 
 SilvaImageTool.prototype.resetTool = function () {
-    if (this.resizebutton.style.display != 'none' && this.image) {
+    this.stopResizePolling();
+
+    if (this.resize_button.is(':visible') && this.image) {
         /* image has been resized, so prompt user to
            confirm resizing */
+        this.resize_button.hide();
         if (confirm(
             "Image has been resized in kupu, but not confirmed. " +
                 "Really resize?")) {
-            this.finalizeResizeImage();
+            this.resizeImage(false);
         };
     };
-    this.stopResizePolling();
     this.toolbox.close();
-    this.addbutton.style.display = 'inline';
-    this.updatebutton.style.display = 'none';
-    this.resizebutton.style.display='none';
     this.content.clear();
     this.image = null;
 };
@@ -722,17 +763,15 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
             feature needs to know what image was active, after is it
             no longer selected.  So store it as a property of the image
             tool */
-        this.addbutton.style.display = 'none';
-        this.updatebutton.style.display = 'inline';
-        /* Do not change style of the resize  button as we might already have resized the image */
         this.image = image;
         this.toolbox.open();
 
         var reference = image.getAttribute('_silva_target');
+        var alignment = image.getAttribute('alignment');
+
         if (reference) {
             this.content.fetch(reference);
         }
-        var alignment = image.getAttribute('alignment');
         if (alignment) {
             this.alignment.val(alignment);
         }
@@ -742,14 +781,20 @@ SilvaImageTool.prototype.updateState = function(selNode, event) {
     };
 };
 
-SilvaImageTool.prototype.finalizeResizeImage = function() {
+SilvaImageTool.prototype.confirmResizeHandler = function() {
+    this.resizeImage(true);
+};
+
+SilvaImageTool.prototype.resizeImage = function(continue_polling) {
     var image = this.image;
+
     if (!image) {
         this.editor.logMessage('No image selected!  unable to resize.');
         return;
     };
-
-    this.stopResizePolling(); /* pause polling during resize */
+    /* Pause polling during resize */
+    this.stopResizePolling();
+    this.resize_button.hide();
 
     var self = this;
     var width = image.width;
@@ -761,18 +806,20 @@ SilvaImageTool.prototype.finalizeResizeImage = function() {
         {"width": width,
          "height": height},
         function(data) {
-            // Load the new resized image
-            var resized_image = new Image();
-            $(resized_image).bind('load', function () {
+            // Load the new resized image into a cache
+            var cache_image = new Image();
+
+            $(cache_image).bind('load', function () {
                 image.onload = "this.removeAttribute('style')";
-                image.src = resized_image.src;
-                self.resizebutton.style.display='none';
+                image.src = cache_image.src;
+                if (continue_polling) {
+                    // Start polling when the image is loaded.
+                    self.startResizePolling(image);
+                };
             });
             // Add with and height to prevent image being cached by the browser
-            resized_image.src = image.src.replace(/\?.*/,'') + '?' + width + 'x' + height;
+            cache_image.src = image.src.replace(/\?.*/,'') + '?' + width + 'x' + height;
         });
-
-    this.startResizePolling(image);
 };
 
 SilvaImageTool.prototype.startResizePolling = function(image) {
@@ -784,8 +831,11 @@ SilvaImageTool.prototype.startResizePolling = function(image) {
 
     function polling() {
         var new_image_size = [image.width, image.height];
-        if (!(image_size[0]==new_image_size[0] && image_size[1]==new_image_size[1])) {
-            self.resizebutton.style.display='inline';
+
+        if (!(image_size[0] == new_image_size[0] &&
+              image_size[1] == new_image_size[1])) {
+            // The image have just been resized.
+            self.resize_button.show();
             image_size = new_image_size;
         };
     };
@@ -793,8 +843,10 @@ SilvaImageTool.prototype.startResizePolling = function(image) {
 };
 
 SilvaImageTool.prototype.stopResizePolling = function() {
-    clearInterval(this.resizePollingInterval);
-    this.resizePollingInterval = null;
+    if (this.resizePollingInterval) {
+        clearInterval(this.resizePollingInterval);
+        this.resizePollingInterval = null;
+    };
 };
 
 
@@ -920,7 +972,7 @@ SilvaTableTool.prototype.changeCellColspan = function(newcolspan) {
     var currNode = this.editor.getSelectedNode();
     var currCell = this.editor.getNearestParentOfType(currNode, 'td');
     if (!currCell) {
-       var currCell = this.editor.getNearestParentOfType(currNode,'th');
+       currCell = this.editor.getNearestParentOfType(currNode,'th');
     }
     if (!currCell) {
         this.editor.logMessage('Not inside a cell!', 1);
@@ -1015,7 +1067,7 @@ SilvaTableTool.prototype.removeCell = function(widthinput) {
     };
     var currcell = this.editor.getNearestParentOfType(currnode, 'td');
     if (!currcell) {
-        var currcell = this.editor.getNearestParentOfType(currnode, 'th');
+        currcell = this.editor.getNearestParentOfType(currnode, 'th');
         if (!currcell) {
             this.editor.logMessage('Not inside a row!', 1);
             return;
@@ -1395,7 +1447,7 @@ SilvaTableTool.prototype._addColHelper =
         var added = false;
         var col = null;
         for (var j=0; j < cols.length; j++) {
-            var col = cols[j];
+            col = cols[j];
             var cell = doc.createElement(col.nodeName);
             cell.appendChild(doc.createTextNode('\ufeff'));
             if (index <= currindex) {
