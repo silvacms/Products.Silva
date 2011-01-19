@@ -7,7 +7,7 @@
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   tal:define="
-    global vein string:compare;
+    global vein string:preview;
     global active_tab string:tab_status;
     global parent_screen_name string:tab_status;
     version1 options/version1;
@@ -34,9 +34,11 @@ tr {
 td.preview-compare-left {
   padding-right: 1.5em;
   border-right: 1px solid #678;
+  vertical-align: top;
 }
 td.preview-compare-right {
   padding-left: 1.5em;
+  vertical-align: top;
 }
 </style>
 </metal:block>

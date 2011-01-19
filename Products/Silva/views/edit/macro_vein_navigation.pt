@@ -30,6 +30,7 @@ macro plateau
           publication            model/get_publication;
           publication_is_root    python: model.get_publication() == model.get_root();
           containing_publication publication/../get_publication | publication;
+          roles                  python:(publication_is_root and publication or containing_publication).sec_get_all_roles();
           query_string           python: request.get('QUERY_STRING');
           query_string           query_string | string:;
           startpath              startpath | string:;
@@ -42,7 +43,7 @@ macro plateau
         <a class="up"
           title="up one level: alt-]"
           accesskey="]"
-          tal:condition="not: model_is_root"
+          tal:condition="python: (not model_is_root) and len([val for val in context.roles_helper() if val in roles])"
           tal:attributes="href string:${up}${edit}$vein_id"
           i18n:attributes="title">
           <img width="9"
@@ -56,7 +57,7 @@ macro plateau
           title="up to containing publication: alt-["
           accesskey="["
           i18n:attributes="title"
-          tal:condition="not: model_is_root"
+          tal:condition="python: (not model_is_root) and len([val for val in context.roles_helper() if val in roles])"
           tal:attributes="href python: publication_is_root and (publication.absolute_url() + edit + vein_id) or (containing_publication.absolute_url() + edit + vein_id)">
           <img width="9"
             height="9"

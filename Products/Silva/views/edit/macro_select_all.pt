@@ -30,9 +30,9 @@
     tal:attributes="for string:all_${aid_postfix};"
     ><img alt="select all"
       border="0"
-      width="8"
-      height="8"
-      tal:attributes="src string:${root_url}/globals/checkselect.gif"
+      width="16"
+      height="16"
+      tal:attributes="src string:${root_url}/globals/checkmark.png"
       i18n:attributes="alt"
     /></label>
   <script type="text/javascript"

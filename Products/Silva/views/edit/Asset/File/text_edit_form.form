@@ -31,7 +31,7 @@
           <required type="int">1</required>
           <title>Text Context</title>
           <extra>id="text"</extra>
-          <unicode type="int">0</unicode>
+          <unicode type="int">1</unicode>
           <whitespace_preserve type="int">0</whitespace_preserve>
           <width type="int">50</width>
         </values>

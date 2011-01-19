@@ -61,9 +61,9 @@
           i18n:attributes="title"
           ><img alt="select all"
             border="0"
-            width="8"
-            height="8"
-            tal:attributes="src string:${root_url}/globals/checkselect.gif"
+            width="16"
+            height="16"
+            tal:attributes="src string:${root_url}/globals/checkmark.png"
             i18n:attributes="alt"
           /></label>
       </th>
@@ -197,7 +197,7 @@
           <tal:block replace="nothing">
             _______ shift symbols _______
           </tal:block>
-          <td class="listing-right">
+          <td>
             <a style="float:left"
               title="content approved, or published..."
               tal:condition="item_info/is_published_or_approved"
@@ -205,9 +205,21 @@
                 href item_info/item_url;"
               i18n:attributes="title">
               <img alt="content approved or published"
-                width="12"
-                height="10"
+                width="16"
+                height="16"
                 tal:attributes="src string:${root_url}/globals/checkmark.png"
+                i18n:attributes="alt"
+              />
+            </a>
+            <a style="float:left" 
+              title="content hidden from table of contents..."
+              tal:condition="python:item_info['hide_from_tocs']"
+              tal:attributes="href item_info/item_url;"
+              i18n:attributes="title">
+              <img alt="content hidden or not hidden from table of contents..."
+                width="16"
+                height="16"
+                tal:attributes="src string:${root_url}/globals/hidden-from-tocs.png"
                 i18n:attributes="alt"
               />
             </a>
