@@ -131,6 +131,7 @@ class ViewCode(object):
 
         result = []
         render_icon = self.render_icon
+        gmv = self.service_metadata.getMetadataValue
         for item in publishables:
             status = item.get_object_status()
             modification_datetime = item.get_modification_datetime()
@@ -139,6 +140,10 @@ class ViewCode(object):
             is_approved = status[0] == 'approved'
             is_closed = status[2] == 'closed'
             is_versioned_content = IVersionedContent.providedBy(item)
+            try:
+                hidden = gmv(item.get_viewable(), 'silva-extra', 'hide_from_tocs') == 'hide'
+            except AttributeError:
+                hidden = False
             d = {
                 'number': i,
                 'item': item,
@@ -163,6 +168,7 @@ class ViewCode(object):
                 'is_closed': is_closed,
                 'is_published_or_approved': is_published or is_approved,
                 'rendered_icon': render_icon(item),
+                'hide_from_tocs': hidden,
                 }
             result.append(d)
             i += 1
@@ -179,6 +185,7 @@ class ViewCode(object):
             modification_datetime = asset.get_modification_datetime()
             d = {
                 'asset_id': asset.id,
+                'asset': asset,
                 'asset_url': asset.absolute_url(),
                 'meta_type': asset.meta_type,
                 'last_author': asset.sec_get_last_author_info().fullname(),
