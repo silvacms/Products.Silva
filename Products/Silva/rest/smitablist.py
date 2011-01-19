@@ -3,8 +3,8 @@ from five import grok
 
 import Acquisition 
 
-from Products.Silva.interfaces import (ISilvaObject, 
-                                       IVersionedContent, )
+from silva.core.interfaces import (ISilvaObject, 
+                                   IVersionedContent, )
 
 #                                       IVersionedAsset)
 

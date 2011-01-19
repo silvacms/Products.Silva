@@ -207,7 +207,7 @@
               <img alt="content approved or published"
                 width="12"
                 height="10"
-                tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                tal:attributes="src string:${root_url}/globals/checkmark.png"
                 i18n:attributes="alt"
               />
             </a>
