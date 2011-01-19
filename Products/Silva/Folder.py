@@ -31,6 +31,7 @@ from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
+from Products.Silva.errors import NoDefaultDocument
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
@@ -912,8 +913,7 @@ class ContainerView(silvaviews.View):
         default = self.context.get_default()
         if default is not None:
             return default.view()
-        return _(u'This container as no index.')
-
+        raise NoDefaultDocument
 
 class IPhotoGallery(ICustomizableTag):
     """Container as a photo gallery
