@@ -120,6 +120,28 @@ class VersionedContent(Content, Versioning, BaseFolder):
             return "[No (short) title available]"
         return previewable.get_short_title()
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_nav_title')
+    def get_nav_title(self):
+        """Get nav_title for public use, from published version.
+        """
+        # Analogous to get_title
+        viewable = self.get_viewable()
+        if viewable is None:
+            return self.id
+        return viewable.get_nav_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_nav_title_editable')
+    def get_nav_title_editable(self):
+        """Get nav_title for editable or previewable use
+        """
+        # Analogous to get_title_editable
+        previewable = self.get_previewable()
+        if previewable is None:
+            return "[No (nav) title available]"
+        return previewable.get_nav_title()
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):

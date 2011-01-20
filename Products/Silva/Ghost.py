@@ -101,6 +101,22 @@ class GhostBase(object):
         if not short_title:
             return self.get_title()
         return short_title
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_nav_title')
+    def get_nav_title(self):
+        """Get nav title.
+        """
+        content = self.get_haunted()
+        if content is None:
+            return ("Ghost target is broken")
+        else:
+            nav_title = content.get_nav_title()
+        if not nav_title:
+            nav_title = content.get_short_title()
+        if not nav_title:
+            return self.get_title()
+        return nav_title
     # /those should go away
 
     security.declareProtected(
