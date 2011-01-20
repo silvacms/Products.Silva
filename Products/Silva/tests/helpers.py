@@ -21,7 +21,7 @@ def enablePreview(content):
     if not IPreviewLayer.providedBy(content.REQUEST):
         alsoProvides(content.REQUEST, IPreviewLayer)
 
-def approve_object(obj):
+def approve_content(obj):
     """Publish object.
     """
     now = DateTime.DateTime()
@@ -36,16 +36,18 @@ def publish_content(obj):
     obj.set_unapproved_version_publication_datetime(now - 10)
     obj.approve_version()
 
-# We are going to convert all API not to use camelcase anymore.
-publish_object = publish_content
-publishObject = publish_content
-approveObject = approve_object
-
-def publishApprovedObject(obj):
+def publish_approved_content(obj):
     """Publish the approved object.
     """
     now = DateTime.DateTime()
     obj.set_approved_version_publication_datetime(now - 10)
+
+# We are going to convert all API not to use camelcase anymore.
+publish_object = publish_content
+publishObject = publish_content
+approveObject = approve_content
+approve_object = approve_content
+publishApprovedObject = publish_approved_content
 
 def test_filename(filename, globs=None):
     """Return the filename of a test file.
