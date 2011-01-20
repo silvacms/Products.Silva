@@ -137,8 +137,14 @@ class Addables(rest.REST):
         if interface is not None:
             required = component.getUtility(IInterface, name=interface)
             ifaces = self.always_allow[:]
-            if required not in ifaces:
+            # dont append required if it more specific
+            # than one in always_allowed
+            for iface in ifaces:
+                if required.isOrExtends(iface):
+                    break
+            else:
                 ifaces.insert(0, required)
+
             meta_types = []
             for iface in ifaces:
                 for meta_type in meta_types_for_interface(iface):
