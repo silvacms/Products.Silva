@@ -42,6 +42,28 @@ def smi_delete_content(browser, identifier):
         ', '.join(browser.inspect.feedback))
 
 
+def zmi_settings(browser):
+    # ZMI
+    browser.inspect.add(
+        'zmi_tabs',
+        '//td[@class="tab-small"]//a',
+        type='link')
+    browser.inspect.add(
+        'zmi_listing',
+        '//tr[@class="row-hilite" or @class="row-normal"]'
+        '//div[@class="list-item"]/a',
+        type='link')
+    browser.inspect.add(
+        'zmi_title',
+        '//h2')
+    browser.inspect.add(
+        'zmi_feedback',
+        '//div[@class="system-msg"]')
+    browser.inspect.add(
+        'zmi_status',
+        '//p[@class="system-msg"]')
+
+
 def smi_settings(browser):
     browser.inspect.add(
         'feedback',
@@ -75,23 +97,7 @@ def smi_settings(browser):
         '//form[contains(@class,"zeam-form")]//div[@class="error"]',
         type='text')
 
-    # ZMI
-    browser.inspect.add(
-        'zmi_tabs',
-        '//td[@class="tab-small"]//a',
-        type='link')
-    browser.inspect.add(
-        'zmi_listing',
-        '//tr[@class="row-hilite" or @class="row-normal"]'
-        '//div[@class="list-item"]/a',
-        type='link')
-    browser.inspect.add(
-        'zmi_title',
-        '//h2')
-    browser.inspect.add(
-        'zmi_feedback',
-        '//div[@class="system-msg"]')
-
+    zmi_settings(browser)
 
     browser.macros.add('create', smi_create_content)
     browser.macros.add('delete', smi_delete_content)
