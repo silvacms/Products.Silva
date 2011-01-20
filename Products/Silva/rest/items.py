@@ -14,6 +14,7 @@ from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
 from Products.Silva.icon import registry as icons
+from Products.Silva.Folder import meta_types_for_interface
 
 
 def get_icon(content):
@@ -127,7 +128,29 @@ class Addables(rest.REST):
     grok.context(interfaces.IContainer)
     grok.name('addables')
 
-    def GET(self):
-        meta_types = self.context.get_silva_addables_allowed_in_container()
-        return self.json_response(meta_types)
+    always_allow = [interfaces.IContainer]
+
+    def GET(self, interface=None):
+        allowed_meta_types = \
+            self.context.get_silva_addables_allowed_in_container()
+
+        if interface is not None:
+            required = component.getUtility(IInterface, name=interface)
+            ifaces = self.always_allow[:]
+            # dont append required if it more specific
+            # than one in always_allowed
+            for iface in ifaces:
+                if required.isOrExtends(iface):
+                    break
+            else:
+                ifaces.insert(0, required)
+
+            meta_types = []
+            for iface in ifaces:
+                for meta_type in meta_types_for_interface(iface):
+                    if meta_type in allowed_meta_types and \
+                            not meta_type in meta_types:
+                        meta_types.append(meta_type)
+            return self.json_response(meta_types)
+        return self.json_response(allowed_meta_types)
 
