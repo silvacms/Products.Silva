@@ -35,7 +35,6 @@ from OFS.interfaces import IObjectWillBeMovedEvent
 from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security
 from Products.Silva.ViewCode import ViewCode
-from Products.Silva.utility import interfaces as utility_interfaces
 from Products.Silva.transform.interfaces import IRenderable
 from Products.SilvaViews.ViewRegistry import ViewAttribute
 
@@ -470,33 +469,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
         """
         return False
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'export_content')
-    def export_content(self, export_format,
-                       with_sub_publications=0,
-                       last_version=0):
-        """Export content using the exporter export_format.
-        """
-        from Products.Silva.silvaxml import xmlexport
-        settings = xmlexport.ExportSettings()
-        settings.setWithSubPublications(with_sub_publications)
-        settings.setLastVersion(last_version)
-
-        utility = component.getUtility(utility_interfaces.IExportUtility)
-        exporter = utility.createContentExporter(self, export_format)
-        return exporter.export(settings)
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'export_content_format')
-    def export_content_format(self, ref=None):
-        """Retrieve a list of export format.
-        """
-        context = self
-        if ref:
-            context =  self.resolve_ref(ref)
-        utility = component.getUtility(utility_interfaces.IExportUtility)
-        return utility.listContentExporter(context)
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
     def is_deletable(self):
@@ -548,9 +520,9 @@ def update_content_author_info(content, event):
     """A content have been created of modifed. Update its author
     information.
     """
-    # XXX ObjectCopiedEvent should not be ignored but content is not in
+    # ObjectCopiedEvent should not be ignored but content is not in
     # Zope tree when it is triggered, so metadata service doesn't
-    # work.
+    # work. We use IObjectClonedEvent instead.
     if IObjectCopiedEvent.providedBy(event):
         return
     # In the same way, we discard event on versioned content if they

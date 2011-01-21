@@ -3,7 +3,7 @@
 # $Id$
 
 import unittest
-
+import json
 from Products.Silva.testing import FunctionalLayer, smi_settings
 
 
@@ -28,6 +28,29 @@ class AuthorAddablesTestCase(unittest.TestCase):
         self.assertFalse('addables' in browser.inspect.subtabs)
         # XXX when the addable tab will be reimplemented, going on it
         # will trigger 401
+
+    def test_rest_addables_api(self):
+        browser = self.layer.get_browser()
+        browser.login(self.username)
+        self.assertEqual(browser.open('/root/folder/++rest++addables'), 200)
+        self.assertEqual('application/json', browser.content_type)
+        data = json.loads(browser.contents)
+        self.assertTrue(isinstance(data, list))
+        self.assertTrue(len(data) > 0)
+
+    def test_rest_addables_with_required_interface(self):
+        browser = self.layer.get_browser()
+        browser.login(self.username)
+        self.assertEqual(
+            200,
+            browser.open('/root/folder/++rest++addables',
+                query={'interface': 'silva.core.interfaces.content.IImage'}))
+        self.assertEqual('application/json', browser.content_type)
+        data = json.loads(browser.contents)
+        self.assertTrue(isinstance(data, list))
+        self.assertTrue('Silva Image' in data)
+        self.assertTrue('Silva Folder' in data)
+        self.assertFalse('Silva Link' in data)
 
 
 class EditorAddablesTestCase(AuthorAddablesTestCase):

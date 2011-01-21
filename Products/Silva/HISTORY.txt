@@ -1,10 +1,39 @@
 Changes
 =======
 
-Silva 2.3 (unreleased)
-----------------------
+Silva 2.3.1 (unreleased)
+------------------------
 
 - ...
+
+Silva 2.3 (2010/12/20)
+----------------------
+
+- Improve tab preview.
+
+- Add a NonPublishable base class. Asset inherit from it. In a folder
+  listing, non publishables objects are displayed with assets.
+
+In Kupu:
+
+- Improve Code Source preview, and navigation out of it.
+
+- Fix suppression of Code Source and Images in IE.
+
+- Fix image resizing.
+
+- Add strikethrough.
+
+Bug fixes:
+
+- Fix cataloging to catalog every Silva content by default.
+
+- Fix sending unicode emails.
+
+- Fix order of items listed in reference widgets.
+
+- Remove unused code (like *AccessManager*).
+
 
 Silva 2.3b2 (2010/10/27)
 ------------------------

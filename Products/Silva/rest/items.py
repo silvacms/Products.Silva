@@ -9,12 +9,14 @@ from infrae import rest
 from silva.core import interfaces
 from silva.core.views.interfaces import IVirtualSite
 from zope.interface.interfaces import IInterface
-from zope.component import getUtility
+from zope import component
 from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
 from Products.Silva.icon import registry as icons
 from Products.SilvaMetadata.interfaces import IMetadataService
+from Products.Silva.Folder import meta_types_for_interface
+
 
 
 class ItemDetails(object):
@@ -27,6 +29,9 @@ class ItemDetails(object):
 
     def get_title(self):
         return self.context.get_title_or_id()
+
+    def get_short_title(self):
+        return self.context.get_short_title()
 
     def get_description(self):
         self._metadata.get('silva-extra', 'content_description')
@@ -60,6 +65,7 @@ class ItemDetails(object):
 
     PROVIDERS = {
         'title': get_title,
+        'short_title': get_short_title,
         'intid': get_intid,
         'path': get_path,
         'description': get_description,
@@ -71,7 +77,7 @@ class ItemDetails(object):
 
     FORMATS = {
         'reference_listing': [
-            'intid', 'url', 'path', 'icon', 'folderish', 'title'],
+            'intid', 'url', 'path', 'icon', 'folderish', 'title', 'short_title'],
         'reference_listing_description': [
             'intid', 'url', 'path', 'icon', 'folderish', 'title', 'description'],
         'folder_listing': [
@@ -97,8 +103,8 @@ class Items(rest.REST):
         self.root_path = '/'.join(self.root.getPhysicalPath())
         self.root_path_len = len(self.root_path)
         self.root_url = absoluteURL(self.root, self.request)
-        self.intid = getUtility(IIntIds)
-        self.metadata = getUtility(IMetadataService)
+        self.intid = component.getUtility(IIntIds)
+        self.metadata = component.getUtility(IMetadataService)
 
     def get_item_details(self, format, content, content_id=None, require=None):
         if content_id is None:
@@ -138,11 +144,12 @@ class Items(rest.REST):
                              '++resource++Products.Silva/exclamation.png')),
                         'implements': False,
                         'folderish': False,
-                        'title': 'Broken'})
-            return self.json_response(self.get_item_details(format, content))
+                        'title': 'Broken',
+                        'short_title': 'Broken'})
+            return self.json_response(self.get_item_details(content))
         require = interfaces.ISilvaObject
         if interface is not None:
-            require = getUtility(IInterface, name=interface)
+            require = component.getUtility(IInterface, name=interface)
         return self.json_response(self.get_context_details(format, require=require))
 
 
@@ -178,3 +185,37 @@ class ParentItems(Items):
             details.append(self.get_item_details(format, content))
         details.reverse()
         return self.json_response(details)
+
+
+class Addables(rest.REST):
+    """ Return addables in folder
+    """
+    grok.context(interfaces.IContainer)
+    grok.name('addables')
+
+    always_allow = [interfaces.IContainer]
+
+    def GET(self, interface=None):
+        allowed_meta_types = \
+            self.context.get_silva_addables_allowed_in_container()
+
+        if interface is not None:
+            required = component.getUtility(IInterface, name=interface)
+            ifaces = self.always_allow[:]
+            # dont append required if it more specific
+            # than one in always_allowed
+            for iface in ifaces:
+                if required.isOrExtends(iface):
+                    break
+            else:
+                ifaces.insert(0, required)
+
+            meta_types = []
+            for iface in ifaces:
+                for meta_type in meta_types_for_interface(iface):
+                    if meta_type in allowed_meta_types and \
+                            not meta_type in meta_types:
+                        meta_types.append(meta_type)
+            return self.json_response(meta_types)
+        return self.json_response(allowed_meta_types)
+

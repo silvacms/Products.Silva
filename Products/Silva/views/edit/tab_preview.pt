@@ -25,7 +25,7 @@ function onloadResizeTopFrame() {
   frame = document.getElementById("preview_frameset");
   tf_height = window.frames[0].document.height;
   /* XXX make this dynamically pull the real height */
-  tf_def_height = 50;
+  tf_def_height = 101;
 
   if (tf_height > tf_def_height) {
     frame.setAttribute("rows",tf_height + "px,*");
@@ -34,7 +34,7 @@ function onloadResizeTopFrame() {
 -->
 </script>
 </head>
-<frameset rows="50px,*" id="preview_frameset" frameborder="0" framespacing="0" border="0" marginwidth="0" marginheight="0" onload="onloadResizeTopFrame()">
+<frameset rows="101px,*" id="preview_frameset" frameborder="0" framespacing="0" border="0" marginwidth="0" marginheight="0" onload="">
  <frame id="preview_frame_top" scrolling="no"
    tal:attributes="src python:'%s/edit/tab_preview_frame_top?message=%s&message_type=%s'%(model.absolute_url(),message or '',message_type or '')" />
  <frame id="preview_frame_bottom"
