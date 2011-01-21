@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.3.1dev'
+version = '2.4dev'
 
 tests_require = [
     'silva.export.opendocument',
@@ -71,6 +71,7 @@ setup(name='Products.Silva',
         'silvatheme.standardissue',
         'zeam.form.silva',
         'zope.annotation',
+        'zope.app.schema',
         'zope.component',
         'zope.contenttype',
         'zope.event',

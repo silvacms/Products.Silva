@@ -221,3 +221,5 @@ class AssetReferencedBy(silvaviews.Viewlet):
         for info in self.references:
             if info['versions']:
                 info['title'] += ' (' + ', '.join(info['versions']) + ')'
+
+

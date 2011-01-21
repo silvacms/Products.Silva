@@ -238,7 +238,7 @@
             <input type="button" class="button" value="update" id="kupu-image-updatebutton"
                    i18n:attributes="value" />
             <input type="button" class="button executor" id="kupu-image-resizebutton"
-                   value="confirm resize"
+                   value="confirm resize" style="display: none;"
                    i18n:attributes="value" />
           </div>
         </form>

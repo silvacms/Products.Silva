@@ -77,7 +77,7 @@ class SidebarService(SilvaService):
             cached_template, obj, tab_name, vein)
 
     security.declareProtected(
-        SilvaPermissions.ViewAuthenticated, 'invalidate')
+        SilvaPermissions.View, 'invalidate')
     def invalidate(self, obj):
         """Invalidate the cache for a specific object
         """

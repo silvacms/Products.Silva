@@ -339,7 +339,7 @@ class ViewCode(object):
         return IVersionedContent.providedBy(self)
 
     security.declareProtected(
-        SilvaPermissions.ViewAuthenticated, 'security_trigger')
+        SilvaPermissions.ReadSilvaContent, 'security_trigger')
     def security_trigger(self):
         """This is equivalent to activate_security_hack(), however this
         method's name is less, er, hackish... (e.g. when visible in error
