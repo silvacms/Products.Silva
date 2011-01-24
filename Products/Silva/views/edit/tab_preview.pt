@@ -21,9 +21,7 @@
   <tal:resource tal:replace="structure provider:resources" />
   <base href="#" target="_parent"
         tal:attributes="href string:${context/@@absolute_url}/edit" />
-        <link rel="shortcut icon"
-          tal:attributes="href string:$root_url/globals/silvacon.ico"
-        />
+  <tal:favicon replace="structure provider:favicon" />
 </head>
 <tal:block replace="structure request/model/@@previewframeset" />
 </html>
