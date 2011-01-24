@@ -146,7 +146,7 @@ class Items(rest.REST):
                         'folderish': False,
                         'title': 'Broken',
                         'short_title': 'Broken'})
-            return self.json_response(self.get_item_details(content))
+            return self.json_response(self.get_item_details(format, content))
         require = interfaces.ISilvaObject
         if interface is not None:
             require = component.getUtility(IInterface, name=interface)
