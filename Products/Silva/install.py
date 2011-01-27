@@ -97,6 +97,7 @@ def install(root):
     # create the core views from filesystem
     add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
     add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
+    add_favicon(root)
 
     # also register views
     registerViews(root.service_view_registry)
@@ -379,9 +380,11 @@ def fileobject_add_helper(context, id, text):
 def read_file(id, info, folder):
     filename = os.path.join(os.path.dirname(info['__file__']), folder, id)
     f = open(filename, 'rb')
-    text = f.read()
-    f.close()
-    return text
+    try:
+        return f.read()
+    finally:
+        f.close()
+
 
 def registerViews(reg):
     """Register core views on registry.
@@ -473,6 +476,17 @@ def setInitialSkin(silvaroot, default_skinid):
     if not currentskin:
         binding = metadataservice.getMetadata(silvaroot)
         binding.setValues(setid, {'skin': default_skinid})
+
+
+def add_favicon(root):
+    filename = 'favicon.ico'
+    if hasattr(root.aq_base, filename):
+        return
+    data = read_file(filename, globals(), 'globals')
+    if hasattr(root.aq_base, filename):
+        getattr(root, filename).update_data(data)
+    else:
+        Image.manage_addFile(root, filename, data, content_type='image/x-icon')
 
 
 if __name__ == '__main__':
