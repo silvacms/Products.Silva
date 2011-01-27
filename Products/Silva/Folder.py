@@ -27,6 +27,7 @@ import OFS.interfaces
 # Silva
 from Products.Silva.Ghost import ghost_factory
 from Products.Silva.ExtensionRegistry import extensionRegistry
+from Products.Silva.ExtensionRegistry import meta_types_for_interface
 from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
@@ -43,15 +44,6 @@ from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
-
-
-def meta_types_for_interface(interface):
-    """Return a list of meta_type who implements the given interface.
-    """
-    # XXX This could directly belongs to extensionRegistry
-    return [addable['name']
-            for addable in extensionRegistry.get_addables()
-            if interface.implementedBy(addable['instance'])]
 
 
 class Folder(SilvaObject, Publishable, BaseFolder):

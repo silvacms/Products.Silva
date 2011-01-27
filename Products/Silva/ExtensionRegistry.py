@@ -17,6 +17,14 @@ from silva.core.conf.registry import Registry
 from silva.core import interfaces
 
 
+def meta_types_for_interface(interface):
+    """Return a list of meta_type who implements the given interface.
+    """
+    return [addable['name']
+            for addable in extensionRegistry.get_addables()
+            if interface.implementedBy(addable['instance'])]
+
+
 class Addable(object):
 
     def __init__(self, meta_type, priority=0.0):
