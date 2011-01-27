@@ -17,6 +17,7 @@ from Products.Silva.Versioning import Versioning
 from Products.Silva.VersionedContent import VersionedContentCataloging
 
 from silva.core.interfaces import IVersionedAsset, ICatalogedVersionedAsset, IVersioning
+from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 
 class VersionedAsset(SilvaObject, Versioning, BaseFolder):
     security = ClassSecurityInfo()
