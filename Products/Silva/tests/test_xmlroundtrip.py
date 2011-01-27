@@ -108,7 +108,7 @@ class ImportExportTripTestCase(TestCase):
         zip_export2 = ZipFile(StringIO(export2))
 
         self.failUnless('silva.xml' in zip_export1.namelist())
-        self.assertListEqual(zip_export1.namelist(), zip_export2.namelist())
+        self.assertItemsEqual(zip_export1.namelist(), zip_export2.namelist())
         silva_export1 = zip_export1.read('silva.xml')
         silva_export2 = zip_export2.read('silva.xml')
 

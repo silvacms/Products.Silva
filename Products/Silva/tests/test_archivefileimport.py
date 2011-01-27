@@ -89,7 +89,7 @@ class ArchiveFileImportTestCase(TestCase):
         importer = interfaces.IArchiveFileImporter(folder)
         succeeded, failed = importer.importArchive(open_test_file('test1.zip'))
 
-        self.assertListEqual(succeeded,
+        self.assertItemsEqual(succeeded,
                              ['testzip/foo/bar/baz/image5.jpg',
                               'testzip/foo/bar/image4.jpg',
                               'testzip/foo/image3.jpg',
@@ -97,7 +97,7 @@ class ArchiveFileImportTestCase(TestCase):
                               'testzip/image1.jpg',
                               'testzip/sound1.mp3',
                               'testzip/Clock.swf'])
-        self.assertListEqual([], failed)
+        self.assertItemsEqual([], failed)
 
         self.assert_(folder['testzip'])
         self.assert_(folder['testzip']['bar'])
@@ -123,14 +123,14 @@ class ArchiveFileImportTestCase(TestCase):
         importer = interfaces.IArchiveFileImporter(folder)
         succeeded, failed = importer.importArchive(open_test_file('test2.zip'))
 
-        self.assertListEqual(
+        self.assertItemsEqual(
             succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
-        self.assertListEqual(failed, [])
+        self.assertItemsEqual(failed, [])
 
-        self.assertListEqual(
+        self.assertItemsEqual(
             succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
-        self.assertListEqual([], failed)
-        self.assertListEqual(
+        self.assertItemsEqual([], failed)
+        self.assertItemsEqual(
             folder.objectIds(), ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
         self.failUnless(interfaces.IImage.providedBy(folder['image1.jpg']))
         self.failUnless(interfaces.IFile.providedBy(folder['sound1.mp3']))
@@ -144,7 +144,7 @@ class ArchiveFileImportTestCase(TestCase):
         succeeded, failed = importer.importArchive(
             open_test_file('test1.zip'), assettitle=u'Daarhelemali')
 
-        self.assertListEqual(failed, [])
+        self.assertItemsEqual(failed, [])
         self.assertEquals(
             u'Daarhelemali',
             folder['testzip']['bar']['image2.jpg'].get_title())
@@ -161,13 +161,13 @@ class ArchiveFileImportTestCase(TestCase):
         succeeded, failed = importer.importArchive(
             open_test_file('test1.zip'), recreatedirs=0)
 
-        self.assertListEqual(
+        self.assertItemsEqual(
             succeeded,
             ['testzip/foo/bar/baz/image5.jpg', 'testzip/foo/bar/image4.jpg',
              'testzip/foo/image3.jpg', 'testzip/bar/image2.jpg',
              'testzip/image1.jpg', 'testzip/sound1.mp3', 'testzip/Clock.swf'])
-        self.assertListEqual(failed, [])
-        self.assertListEqual(
+        self.assertItemsEqual(failed, [])
+        self.assertItemsEqual(
             folder.objectIds(),
             ['testzip_Clock.swf', 'testzip_bar_image2.jpg',
              'testzip_foo_bar_baz_image5.jpg', 'testzip_foo_bar_image4.jpg',
@@ -190,10 +190,10 @@ class ArchiveFileImportTestCase(TestCase):
         succeeded, failed = importer.importArchive(
             open_test_file('test2.zip'), recreatedirs=0)
 
-        self.assertListEqual(
+        self.assertItemsEqual(
             succeeded, ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
-        self.assertListEqual([], failed)
-        self.assertListEqual(
+        self.assertItemsEqual([], failed)
+        self.assertItemsEqual(
             folder.objectIds(), ['Clock.swf', 'image1.jpg', 'sound1.mp3'])
         self.failUnless(interfaces.IImage.providedBy(folder['image1.jpg']))
         self.failUnless(interfaces.IFile.providedBy(folder['sound1.mp3']))
@@ -207,11 +207,11 @@ class ArchiveFileImportTestCase(TestCase):
         importer = interfaces.IArchiveFileImporter(folder)
         succeeded, failed = importer.importArchive(open_test_file('test3.zip'))
 
-        self.assertListEqual(succeeded, ['imgs/c16.png', 'imgs/c17.png'])
-        self.assertListEqual([], failed)
+        self.assertItemsEqual(succeeded, ['imgs/c16.png', 'imgs/c17.png'])
+        self.assertItemsEqual([], failed)
 
-        self.assertListEqual(folder.objectIds(), ['imgs'])
-        self.assertListEqual(folder.imgs.objectIds(), ['c16.png', 'c17.png'])
+        self.assertItemsEqual(folder.objectIds(), ['imgs'])
+        self.assertItemsEqual(folder.imgs.objectIds(), ['c16.png', 'c17.png'])
 
         self.failUnless(interfaces.IImage.providedBy(
                 folder['imgs']['c16.png']))

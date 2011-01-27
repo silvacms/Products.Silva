@@ -1,5 +1,5 @@
-.pyc
 .pyo
+.pyc
+.egg-info
 ~
 #
-.egg-info

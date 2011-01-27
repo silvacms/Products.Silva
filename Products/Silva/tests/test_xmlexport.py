@@ -246,20 +246,20 @@ class ZipTestCase(TestCase):
         zip_import = open_test_file('test1.zip')
         importer = interfaces.IArchiveFileImporter(self.root.folder)
         succeeded, failed = importer.importArchive(zip_import)
-        self.assertListEqual(
+        self.assertItemsEqual(
             succeeded,
             ['testzip/Clock.swf', 'testzip/bar/image2.jpg',
              'testzip/foo/bar/baz/image5.jpg', 'testzip/foo/bar/image4.jpg',
              'testzip/foo/image3.jpg', 'testzip/image1.jpg',
              'testzip/sound1.mp3'])
-        self.assertListEqual(failed, [])
+        self.assertItemsEqual(failed, [])
 
         exporter = getAdapter(
             self.root.folder, interfaces.IContentExporter, name='zip')
         export = StringIO(exporter.export())
 
         zip_export = ZipFile(export, 'r')
-        self.assertListEqual(
+        self.assertItemsEqual(
             ['assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg',
              'assets/4.jpg', 'assets/5.swf', 'assets/6.jpg',
              'assets/7.mp3', 'silva.xml'],
