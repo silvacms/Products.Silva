@@ -3,6 +3,8 @@
 # $Id$
 
 # Python
+import mimetypes
+import os
 import urllib
 
 # Zope
@@ -10,6 +12,29 @@ import zope.deferredimport
 
 # Silva core
 from silva.core import interfaces
+
+# Load mime.types
+mimetypes.init()
+
+
+def create_new_filename(file, basename):
+    """Compute and set a new filename for an file. It is composed of
+    the given id, basename, where the file extension is changed in
+    order to match the format of the file.
+    """
+    if not file.get_file_size():
+        return
+    extension = None
+    if '.' in basename:
+        basename, extension = os.path.splitext(basename)
+        extension = '.' + extension
+    guessed_extension = mimetypes.guess_extension(file.content_type())
+    if guessed_extension is not None:
+        extension = guessed_extension
+    if extension is not None:
+        basename += extension
+    file.set_filename(basename)
+
 
 zope.deferredimport.deprecated(
     'Please import directly from silva.core.conf.utils '
@@ -36,17 +61,6 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
         REQUEST.RESPONSE.redirect(u+'/manage_main')
 
 
-def unapprove_helper(object):
-    """Unapprove object and anything unapprovable contained by it.
-    """
-    if interfaces.IVersioning.providedBy(object):
-        if object.is_version_approved():
-            object.unapprove_version()
-    if interfaces.IContainer.providedBy(object):
-        for item in object.get_ordered_publishables():
-            unapprove_helper(item)
-
-
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable
     contained by it.
@@ -62,13 +76,6 @@ def unapprove_close_helper(object):
             unapprove_close_helper(default)
         for item in object.get_ordered_publishables():
             unapprove_close_helper(item)
-
-
-# this is a bit of a hack; using implementation details of ParsedXML..
-from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAttr
-
-translateCdata = _translateCdata
-translateCdataAttr = _translateCdataAttr
 
 
 def fix_content_type_header(uploaded_file):

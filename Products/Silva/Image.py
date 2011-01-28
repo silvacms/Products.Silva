@@ -7,7 +7,6 @@ from __future__ import absolute_import
 
 # Python
 import re
-import os
 import logging
 import mimetypes
 from cStringIO import StringIO
@@ -34,6 +33,7 @@ from App.class_init import InitializeClass
 from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.ContentObjectFactoryRegistry import (
     contentObjectFactoryRegistry)
 
@@ -48,9 +48,6 @@ from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
 
 from zeam.form import silva as silvaforms
 from zeam.form.base import NO_VALUE
-
-# Load mime.types
-mimetypes.init()
 
 try:
     from PIL import Image as PILImage
@@ -87,23 +84,6 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
         content.set_image(file)
     notify(ObjectCreatedEvent(content))
     return content
-
-
-def set_image_filename(image, basename):
-    """Compute and set a new filename for the image. It is composed of
-    the given id, basename, where the file extension is changed in
-    order to match the format of the image.
-    """
-    extension = None
-    if '.' in basename:
-        basename, extension = os.path.splitext(basename)
-        extension = '.' + extension
-    guessed_extension = mimetypes.guess_extension(image.content_type())
-    if guessed_extension is not None:
-        extension = guessed_extension
-    if extension is not None:
-        basename += extension
-    image.set_filename(basename)
 
 
 class Image(Asset):
@@ -586,7 +566,7 @@ class Image(Asset):
         new_image.set_file_data(image_file)
         if content_type is not None:
             new_image.set_content_type(content_type)
-        set_image_filename(new_image, self.getId())
+        create_new_filename(new_image, self.getId())
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
@@ -737,7 +717,7 @@ contentObjectFactoryRegistry.registerFactory(
     _should_create_image)
 
 
-@silvaconf.subscribe(interfaces.IImage, IObjectMovedEvent)
+@grok.subscribe(interfaces.IImage, IObjectMovedEvent)
 def image_added(image, event):
     if image is not event.object or event.newName is None:
         return
@@ -745,4 +725,4 @@ def image_added(image, event):
         image_file = getattr(image, file_id, None)
         if image_file is None:
             continue
-        set_image_filename(image_file, event.newName)
+        create_new_filename(image_file, event.newName)
