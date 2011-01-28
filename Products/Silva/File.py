@@ -26,9 +26,12 @@ from zope.location.interfaces import ISite
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+import zope.container.interfaces
+import zope.lifecycleevent.interfaces
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from webdav.common import rfc1123_date
 from ZPublisher.Iterators import IStreamIterator
@@ -41,6 +44,7 @@ from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
 from Products.Silva.helpers import fix_content_type_header
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.converters import get_converter_for_mimetype
 
 # Storages
@@ -284,10 +288,9 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)
-        #XXX should be event below
-        notify(ObjectModifiedEvent(self))
-        ICataloging(self).reindex()
-        self.update_quota()
+        if not interfaces.IImage.providedBy(aq_parent(self)):
+            # If we are not a storage of an image, trigger an event.
+            notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_filename')
@@ -751,3 +754,19 @@ contentObjectFactoryRegistry.registerFactory(
     file_factory,
     lambda id, ct, body: True,
     -1)
+
+
+@grok.subscribe(
+    interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
+def file_changed(file, event):
+    create_new_filename(file, file.getId())
+    file.update_quota()
+    ICataloging(file).reindex()
+
+
+@grok.subscribe(
+    interfaces.IFile, zope.container.interfaces.IObjectMovedEvent)
+def file_added(file, event):
+    if file is not event.object or event.newName is None:
+        return
+    create_new_filename(file, event.newName)
