@@ -95,23 +95,23 @@ InitializeClass(LinkVersion)
 
 class ILinkSchema(interface.Interface):
 
+    url = schema.URI(
+        title=_(u"url"),
+        description=_(u"If the link goes to an external resource, fill in the "
+                      u"location, including the protocol, e.g. 'http://'."),
+        required=False)
+
     relative = schema.Bool(
         title=_(u"relative link"),
-        description=_(u"If selected, the link will to the selected "
-                      u"relative content."),
+        description=_(u"If the link goes to content in Silva, put a checkmark "
+                      u"here and lookup the target below."),
         default=False,
         required=True)
 
-    url = schema.URI(
-        title=_(u"url"),
-        description=_(u"If the link is not relative, "
-                      u"it is the absolute link url."),
-        required=False)
-
     target = Reference(interfaces.ISilvaObject,
         title=_("target of relative link"),
-        description=_(u"If the link is relative, "
-                      u"it is the target of the link."),
+        description=_(u"Make a reference to internal content by looking it up. "
+                      u"Click the search icon to choose a target."),
         required=False)
 
     @interface.invariant
