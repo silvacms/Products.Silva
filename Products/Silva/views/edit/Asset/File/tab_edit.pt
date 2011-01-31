@@ -34,6 +34,9 @@
     </p>
     <tal:portlets tal:replace="structure provider:smiassetmetadata" />
   </div>
+
+  <tal:portlets tal:content="structure provider:smiportletmanager" />
+
 </metal:fill-slot>
 
 <metal:fill-slot fill-slot="additional_tools">

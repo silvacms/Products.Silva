@@ -21,7 +21,7 @@
 
 <metal:block fill-slot="main">
 
-  <table class="columns columns2">
+  <table class="columns columns3">
     <tbody>
       <tr>
         <tal:block replace="nothing">
@@ -51,6 +51,9 @@
             </metal:block>
           </tal:block>
 
+        </td>
+        <td class="right"
+            tal:content="structure provider:smiportletmanager">
         </td>
       </tr>
     </tbody>
