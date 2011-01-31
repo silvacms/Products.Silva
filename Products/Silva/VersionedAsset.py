@@ -25,6 +25,10 @@ class VersionedAsset(SilvaObject, Versioning, BaseFolder):
     grok.implements(ICatalogedVersionedAsset)
     grok.baseclass()
     
+    # there is always at least a single version to start with,
+    # created by the object's factory function
+    _version_count = 1
+
     # MANIPULATORS
     
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
