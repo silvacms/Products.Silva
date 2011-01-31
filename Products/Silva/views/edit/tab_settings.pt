@@ -36,6 +36,7 @@
     tal:define="
       editable model/get_editable;
       iscontainer model/implements_container;
+      isnotroot python:model.meta_type != 'Silva Root';
       isfolder python: type == 'Silva Folder';
       ispublication python: type == 'Silva Publication' or type == 'Silva Root';
       isghostfolder python: type == 'Silva Ghost Folder';
@@ -56,6 +57,7 @@
       </tr>
     </thead>
     <tbody>
+    <tal:if condition="isnotroot">
       <tr class="top-controls"
         tal:condition="iscontainer">
         <td colspan="2">
@@ -107,7 +109,7 @@
           />
         </td>
       </tr>
-
+    </tal:if>
       <tr tal:condition="iscontainer">
         <td class="separator"
           colspan="2">
@@ -187,7 +189,7 @@
               <tal:block i18n:translate="">The feed url is</tal:block>
                 <a title="RSS feed"
                   tal:attributes="href string:${model/absolute_url}/atom.xml"
-                  >atom.xml</a> / <a title="Atom feed" 
+                  >atom.xml</a> / <a title="Atom feed"
                   tal:attributes="href string:${model/absolute_url}/rss.xml">rss.xml</a>.
               </p>
             </td>
