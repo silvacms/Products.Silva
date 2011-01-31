@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+  <title></title>
+  <name>tab_status_form</name>
+  <action></action>
+  <enctype></enctype>
+  <method></method>
+  <i18n_domain>silva</i18n_domain>
+  <i18n>tab_status_form_change_settings</i18n>
+
+  <groups multiple="true">
+    <group>
+      <title>default</title>
+      <fields multiple="true">
+
+      <field><id>publish_datetime</id> <type>DateTimeField</type>
+        <values>
+          <date_only type="int">0</date_only>
+          <alternate_name></alternate_name>
+          <input_style>text</input_style>
+          <css_class></css_class>
+          <input_order>dmy</input_order>
+          <hidden type="int">0</hidden>
+          <time_separator>:</time_separator>
+          <date_separator>/</date_separator>
+          <external_validator></external_validator>
+          <required type="int">1</required>
+          <default_now type="int">0</default_now>
+          <title>publish time</title>
+          <description></description>
+          <allow_empty_time type="int">1</allow_empty_time>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
+        </values>
+        <tales>
+          <time_separator>python:form.get_time_punctuation()</time_separator>
+          <date_separator>python:form.get_date_punctuation()</date_separator>
+        </tales>
+      </field>
+      <field><id>expiration_datetime</id> <type>DateTimeField</type>
+        <values>
+          <date_only type="int">0</date_only>
+          <alternate_name></alternate_name>
+          <input_style>text</input_style>
+          <css_class></css_class>
+          <hidden type="int">0</hidden>
+          <input_order>dmy</input_order>
+          <time_separator>:</time_separator>
+          <date_separator>/</date_separator>
+          <external_validator></external_validator>
+          <required type="int">0</required>
+          <default_now type="int">0</default_now>
+          <title>expiration time</title>
+          <description>If this document should expire, set the time.</description>
+          <allow_empty_time type="int">1</allow_empty_time>
+          <calendar_picker type="int">1</calendar_picker>
+          <calendar_start>0</calendar_start>
+        </values>
+        <tales>
+          <time_separator>python:form.get_time_punctuation()</time_separator>
+          <date_separator>python:form.get_date_punctuation()</date_separator>
+        </tales>
+      </field>
+      <field><id>clear_expiration</id> <type>CheckBoxField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <hidden type="int">0</hidden>
+          <css_class></css_class>
+          <default type="int">0</default>
+          <title>clear expiration</title>
+          <description></description>
+          <external_validator></external_validator>
+          <extra></extra>
+        </values>
+        <tales>
+        </tales>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>

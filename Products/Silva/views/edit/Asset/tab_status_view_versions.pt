@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="
+    global vein string:preview;
+    global active_tab string:tab_status;
+    global parent_screen_name string:tab_status;
+    version1 options/version1;
+    version2 options/version2;
+    "
+  i18n:domain="silva">
+
+<metal:block use-macro="here/macro_index/macros/master">
+
+<metal:block fill-slot="frontend">
+<link rel="stylesheet"
+  type="text/css"
+  tal:attributes="href here/frontend.css/absolute_url | nothing"
+/>
+</metal:block>
+<metal:block fill-slot="style">
+<style type="text/css">
+div.preview-compare {
+  margin: 0 16px 1em 16px;
+}
+tr {
+  vertical-align: top;
+}
+td.preview-compare-left {
+  padding-right: 1.5em;
+  border-right: 1px solid #678;
+  vertical-align: top;
+}
+td.preview-compare-right {
+  padding-left: 1.5em;
+  vertical-align: top;
+}
+</style>
+</metal:block>
+
+<metal:block fill-slot="main">
+<div class="preview-compare">
+  <table cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="preview-compare-left">
+          <strong i18n:translate="">Older version (<tal:block i18n:name="version_id" tal:content="version2/id" />)</strong>
+          <tal:block content="structure python: model.view_version(version2)" />
+        </td>
+        <td class="preview-compare-right">
+          <strong i18n:translate="">Newer version (<tal:block i18n:name="version_id" tal:content="version1/id" />)</strong>
+          <tal:block content="structure python: model.view_version(version1)" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</metal:block>
+
+</metal:block>
+
+</html>

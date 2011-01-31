@@ -17,7 +17,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces.adapters import IVersionManagement
-from silva.core.interfaces import IVersionedContent, IVersion
+from silva.core.interfaces import IVersionedContent, IVersion, IVersionedAsset
 from silva.core.services.interfaces import IMemberService
 from silva.translations import translate as _
 
@@ -305,8 +305,12 @@ class VersionManagement(grok.Adapter):
 
 
 InitializeClass(VersionManagement)
+class VersionAssetManagement(VersionManagement):
+    """Adapter to manage Silva versionedasset versions
+    """
+    grok.context(IVersionedAsset)
 
-
+    
 def __allow_access_to_unprotected_subobjects__(name,value=None):
     return name in ('getVersionManagementAdapter')
 
