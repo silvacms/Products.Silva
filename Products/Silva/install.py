@@ -294,8 +294,6 @@ def configureSecurity(root):
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
     
-#    root.manage_permission('Add Silva Sticky Content Services', roleinfo.CHIEF_ROLES)
-
     # this is necessary to let authors use external editor
     try:
         root.manage_permission('Use external editor', roleinfo.AUTHOR_ROLES)
