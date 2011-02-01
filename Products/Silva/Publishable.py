@@ -301,6 +301,7 @@ class ContentReferencedBy(silvaviews.Viewlet):
     def update(self):
         references = {}
         service = component.getUtility(IReferenceService)
+        self.icon_url = get_icon_url(self.context, self.request)
         for reference in service.get_references_to(self.context):
             source = reference.source
             source_versions = []

@@ -1,10 +1,18 @@
 <div class="info" i18n:domain="silva">
   <h3 title="list of contents that refer to this content"
-      i18n:attributes="title"
-      i18n:translate="">references</h3>
+      i18n:attributes="title">
+    <img class="icon" alt="#"
+         height="16" width="16"
+         i18n:attributes="alt"
+         tal:attributes="src viewlet/icon_url;
+                         title context/meta_type"
+         />
+    <tal:title i18n:translate="">references</tal:title>
+  </h3>
   <p tal:condition="not:viewlet/references"
      i18n:translate="">
-    No content refers to this <span i18n:name="content_type" tal:replace="context/meta_type" />.
+    No content refers to this <span i18n:name="content_type"
+                                    tal:replace="context/meta_type" />.
   </p>
   <tal:references tal:condition="viewlet/references">
     <p>This content is referenced by:</p>
