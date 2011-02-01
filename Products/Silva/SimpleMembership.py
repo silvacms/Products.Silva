@@ -21,7 +21,7 @@ from Products.Silva.Membership import cloneMember, Member
 from Products.Silva.Security import Security
 from Products.Silva.helpers import add_and_edit
 
-from silva.core.services.interfaces import IMemberService, MemberLookupError
+from silva.core.services.interfaces import IMemberService
 from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
