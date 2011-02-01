@@ -37,6 +37,8 @@
           <input type="submit" name="enable_quota_subsystem" value="enable quota subsystem"
                  tal:condition="not:context/get_quota_subsystem_status"
                  i18n:attributes="value"/>
+          <input type="submit" name="purge_old_versions" value="purge old versions"
+                 i18n:attributes="value"/>
           <input type="submit" name="upgrade_all" value="upgrade content"
                  onclick="if (!confirm('This will upgrade all Silva content, and may take a long time on a large site.\nThis is, however, necessary to make old Silva content work with new versions.\nAre you sure you want to continue?')) return false;"
                  i18n:attributes="value" />
