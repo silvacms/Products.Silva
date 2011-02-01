@@ -864,7 +864,7 @@
    </index_args>
   </metadata_element>
   <metadata_element id="hide_from_tocs">
-   <index_type>TextIndex</index_type>
+   <index_type>ZCTextIndex</index_type>
    <index_p>0</index_p>
    <field_type>RadioField</field_type>
    <acquire_p>0</acquire_p>
