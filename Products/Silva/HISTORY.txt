@@ -4,7 +4,14 @@ Changes
 Silva 2.3.1 (unreleased)
 ------------------------
 
-- ...
+- Apparently as of Silva 2.3 container objects inherit a priority from
+  SilvaFolder or SilvaPublication. They must have their priority explicitly set
+  to zero in order to appear correctly in the default alphabetical listing.
+  Changed Silva GhostFolder (and SilvaForum in a separate ci). Removed the
+  priority from SilvaFile so it defaults to zero.
+
+- Added css to shorten the multi-action textline fields and better arrange
+  the listing of the references portlet.
 
 Silva 2.3 (2010/12/20)
 ----------------------
