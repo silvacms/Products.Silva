@@ -225,7 +225,7 @@ class VersionableCataloging(Cataloging):
     def unindex(self):
         if self._catalog is None:
             return
-        super(VersionedContentCataloging, self).unindex()
+        super(VersionableCataloging, self).unindex()
         for version in self.get_indexable_versions():
             path = '/'.join((self._path, version.getId(),))
             self._catalog.uncatalog_object(path)
