@@ -16,13 +16,13 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Versioning import Versioning
 from Products.Silva.VersionedContent import VersionedContentCataloging
 
-from silva.core.interfaces import IVersionedAsset, ICatalogedVersionedAsset, IVersioning
+from silva.core.interfaces import IVersionedAsset, IVersioning
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 
 class VersionedAsset(SilvaObject, Versioning, BaseFolder):
     security = ClassSecurityInfo()
     
-    grok.implements(ICatalogedVersionedAsset)
+    grok.implements(IVersionedAsset)
     grok.baseclass()
     
     # there is always at least a single version to start with,
@@ -253,36 +253,10 @@ class VersionedAsset(SilvaObject, Versioning, BaseFolder):
     
 InitializeClass(VersionedAsset)
 
-class CatalogedVersionedAsset(VersionedAsset):
-    """This class merely exists to mix VersionedAsset with CatalogedVersioning
-    """
-    grok.implements(ICatalogedVersionedAsset)
-    grok.baseclass()
-    
-    def _index_version(self, version_id):
-        version = getattr(self, version_id, None)
-        if version is not None:
-            # XXX Update this
-            ICataloging(version).index()
-
-    def _reindex_version(self, version_id):
-        version = getattr(self, version_id, None)
-        if version is not None:
-            # XXX Update this
-            ICataloging(version).reindex()
-
-    def _unindex_version(self, version_id):
-        version = getattr(self, version_id, None)
-        if version is not None:
-            # XXX Update this
-            ICataloging(version).unindex()
-
-InitializeClass(CatalogedVersionedAsset)
-
 class VersionedAssetCataloging(VersionedContentCataloging):
     """Cataloging support for versioned assets.
        The implementation (would be) the same as the base class,
        so we just inherit from the base class and define the grok
        content (adding VersionedAsset)
     """
-    grok.context(ICatalogedVersionedAsset)
+    grok.context(IVersionedAsset)
