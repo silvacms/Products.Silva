@@ -57,7 +57,7 @@
       </tr>
     </thead>
     <tbody>
-    <tal:if condition="isnotroot">
+    <tal:if condition="python:isnotroot and (ispublication or isfolder or isghostfolder)">
       <tr class="top-controls"
         tal:condition="iscontainer">
         <td colspan="2">
@@ -67,21 +67,21 @@
         </td>
       </tr>
       <tr class="odd">
-        <td colspan="2">
-          <tal:block condition="isghostfolder"
-             i18n:translate="">
+        <td class="designator" colspan="2">
+          <p tal:condition="isghostfolder"
+            i18n:translate="">
             This Ghost Folder can be converted to a normal
             Publication or Folder. All ghosted content will be
             duplicated and can then be edited.
-          </tal:block>
-          <tal:block condition="isfolder"
-             i18n:translate="">
-            This Silva Folder can be converted to a Publication
-          </tal:block>
-          <tal:block condition="ispublication"
+          </p>
+          <p tal:condition="isfolder"
             i18n:translate="">
-            This Silva Publication can be converted to a Silva Folder
-          </tal:block>
+            This Silva Folder can be converted to a Publication.
+          </p>
+          <p tal:condition="ispublication"
+            i18n:translate="">
+            This Silva Publication can be converted to a Silva Folder.
+          </p>
         </td>
       </tr>
       <tr class="controls"
