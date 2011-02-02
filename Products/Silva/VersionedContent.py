@@ -18,7 +18,6 @@ from Products.Silva.Versionable import Versionable
 from Products.Silva.Content import Content
 
 from silva.core.interfaces import IVersionedContent, ICatalogedVersionedContent
-from silva.core.services.catalog import Cataloging
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 
 
@@ -94,34 +93,3 @@ class CatalogedVersionedContent(VersionedContent):
 InitializeClass(CatalogedVersionedContent)
 
 
-class VersionedContentCataloging(Cataloging):
-    """Cataloging support for versioned content.
-    """
-    grok.context(ICatalogedVersionedContent)
-
-    def get_indexable_versions(self):
-        version_ids = [
-            self.context.get_next_version(),
-            self.context.get_public_version(),]
-        for version_id in version_ids:
-            if version_id is None:
-                continue
-            if hasattr(aq_base(self.context), version_id):
-                yield getattr(self.context, version_id)
-
-    def index(self, indexes=None):
-        if self._catalog is None:
-            return
-        super(VersionedContentCataloging, self).index(indexes=indexes)
-        for version in self.get_indexable_versions():
-            attributes = ICatalogingAttributes(version)
-            path = '/'.join((self._path, version.getId(),))
-            self._catalog.catalog_object(attributes, path)
-
-    def unindex(self):
-        if self._catalog is None:
-            return
-        super(VersionedContentCataloging, self).unindex()
-        for version in self.get_indexable_versions():
-            path = '/'.join((self._path, version.getId(),))
-            self._catalog.uncatalog_object(path)

@@ -13,14 +13,12 @@ from App.class_init import InitializeClass
 # Silva
 from Products.Silva.Publishable import PublishableBase
 from Products.Silva import SilvaPermissions
-from Products.Silva.Versioning import Versioning
-from Products.Silva.VersionedContent import VersionedContentCataloging
+from Products.Silva.Versionable import Versionable
 
 from silva.core.interfaces import IVersionedAsset, IVersioning
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 
-#XXX CREATE AN IBASEPUBLISHABLE/BASEPUBLISHABLE VersionedAsset(SilvaObject, Versioning, BaseFolder):
-class VersionedAsset(PublishableBase, Versioning, BaseFolder):
+class VersionedAsset(Versionable, PublishableBase, BaseFolder):
     security = ClassSecurityInfo()
     
     grok.implements(IVersionedAsset)
@@ -84,11 +82,3 @@ class VersionedAsset(PublishableBase, Versioning, BaseFolder):
         return self.get_container()    
     
 InitializeClass(VersionedAsset)
-
-class VersionedAssetCataloging(VersionedContentCataloging):
-    """Cataloging support for versioned assets.
-       The implementation (would be) the same as the base class,
-       so we just inherit from the base class and define the grok
-       content (adding VersionedAsset)
-    """
-    grok.context(IVersionedAsset)
