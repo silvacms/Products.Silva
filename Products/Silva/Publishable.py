@@ -12,8 +12,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import SilvaObject
 
 from five import grok
-from silva.core.interfaces import (
-    IPublishable, INonPublishable, IContent, IVersioning, IContainer, IPublication)
+from silva.core.interfaces import (IPublishable, INonPublishable, IContent, 
+                                   IVersioning, IContainer, IPublication,
+                                   IPublishableBase)
 
 
 class NonPublishable(SilvaObject):
@@ -23,20 +24,24 @@ class NonPublishable(SilvaObject):
     grok.baseclass()
     grok.implements(INonPublishable)
 
-
-
-class Publishable(SilvaObject):
-    """Base content that can be published and ordered in Silva.
+class PublishableBase(SilvaObject):
+    """Base publishable class.  In Silva, there is ambiguity in the word 
+       "publishable".  The `Publishable` class is for objects which are 
+       directly accessed in your browser (i.e. content).  However, Silva also
+       has the notion of versioned objects, which have a 'published' state.
+       Not everything which has versions is directly accessed via a browser.
+       (e.g. VersionedAssets)
+       
+       
+       PublishableBase exists to support Publishable content in the sense of
+       versioning, to disambiguate what is "Publishable", since the 
+       Publishable class is used for content.
     """
     grok.baseclass()
-    grok.implements(IPublishable)
+    grok.implements(IPublishableBase)
 
     security = ClassSecurityInfo()
 
-    # ACCESSORS
-
-    # XXX: those two methods is_published and is_approved are only
-    # used in VersionedContent. They should move there.
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
     def is_published(self):
@@ -54,13 +59,6 @@ class Publishable(SilvaObject):
             # never be approved if there is no versioning
             return 0
 
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """Analogous to is_deletable() (?)
-        """
-        return not self.is_published() and not self.is_approved()
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_real_container')
     def get_real_container(self):
@@ -71,6 +69,17 @@ class Publishable(SilvaObject):
         Can be used with acquisition to get the 'nearest' container.
         """
         return self.get_container()
+InitializeClass(PublishableBase)
+
+class Publishable(PublishableBase):
+    """Base content that can be published and ordered in Silva.
+    """
+    grok.baseclass()
+    grok.implements(IPublishable)
+
+    security = ClassSecurityInfo()
+
+    # ACCESSORS
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_document_navigation_links')

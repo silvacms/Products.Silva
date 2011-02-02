@@ -6,15 +6,10 @@ from zope.contentprovider.interfaces import IContentProvider
 import Acquisition 
 
 from infrae.rest import REST
-from silva.core.interfaces import (ISilvaObject, 
-                                   IVersionedContent, )
-#                                       IVersionedAsset)
+from silva.core.interfaces import ISilvaObject
 from silva.core.smi.interfaces import ISMILayer
 
-#in Silva 2.1, grok views STILL need to be zope 2 - acquisition
-# enabled (i.e. inherit from Acquisition.Implicit
-#XXXaa still needed in 2.3?
-class SMITabList(REST, Acquisition.Implicit):
+class SMITabList(REST):
     """REST API to retrieve a JSON-formatted list of
        this silva object's (context) tab info (name, id)
     """

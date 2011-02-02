@@ -13,11 +13,9 @@ from DateTime import DateTime
 
 # Silva
 from Products.Silva import mangle, SilvaPermissions
-
 from silva.core.interfaces import events
 from silva.core.interfaces import IVersioning
 from silva.translations import translate as _
-
 
 class VersioningError(Exception):
     pass

@@ -112,6 +112,12 @@ class Security(object):
         else:
             return info.__of__(self)
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'sec_get_last_author_userid')
+    def sec_get_last_author_userid(self):
+        """return just the userid of the last author"""
+        return self.sec_get_last_author_info().userid()
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')
     def sec_update_last_author_info(self):
