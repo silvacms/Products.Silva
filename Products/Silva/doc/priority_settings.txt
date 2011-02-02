@@ -1,4 +1,4 @@
-Copyright (c) 2007-2010 Infrae. All rights reserved.
+Copyright (c) 2007-2011 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Priority settings
@@ -17,11 +17,11 @@ list any new priority numbers here.
 A few notes about reserved priority numbers:
 1. negatives are reserved for Silva core metatypes
 2. the 3 range is reserved for SilvaNewsNetwork
-3. if in doubt, don't set a priority
+3. if in doubt, set it explicitly to zero
 
 If an addable has no priority setting, thus defaulting to zero, it'll appear in
 the middle of a listing, after the negatives and before any positives. Addables
-with the same priority (e.g. 0) are presented in alphabetical order, as below. 
+with the same priority (e.g. 0) are presented in alphabetical order, as below.
 
 Probably it's better not to set a priority, because whether an item is an
 extension or not is only important to developers. For Authors, if the listing
@@ -29,19 +29,28 @@ is alphabetical they'll look for an addable accordingly. However if you create
 an extension with multiple addables, and you want to group them together, then
 it makes sense to add priorities.
 
+Silva 2.3 and later
+-------------------
+
+However, as of Silva 2.3 container objects inherit a priority from SilvaFolder
+or SilvaPublication. They must have their priority explicitly set to zero in
+order to appear correctly in the default alphabetical listing. For an example
+see SilvaForum which has:
+
+    silvaconf.priority(0)
+
 Product and priority
 --------------------
 Silva Document: -6
 Silva Folder: -5
 Silva Publication: -5
 Silva Image: -4
-Silva File: -3
-Silva Abstract Document: -1
+Silva File: None
 Silva Find: None
 Silva Flash: None
-Silva Forum: None
+Silva Forum: 0
 Silva Ghost: None
-Silva Ghost Folder: None
+Silva Ghost Folder: 0
 Silva Indexer: None
 Silva Link: None
 Silva Mailing: None
@@ -60,7 +69,7 @@ Silva 3rd Party Extension Page: 10
 
 Metatypes that only appear in addable restricted containers
 -----------------------------------------------------------
-These may not need a priority but are listed here for completeness: 
+These may not need a priority but are listed here for completeness:
 Silva Article (SNN): 3.7
 Silva Agenda Item (SNN): 3.8
 Silva Topic (Silva Forum): None
