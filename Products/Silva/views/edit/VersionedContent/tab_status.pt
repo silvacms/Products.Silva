@@ -198,13 +198,13 @@ _______ manual close section here _______
             id
           </label>
         </td>
-        <td tal:content="structure python: mangle.DateTime(modificationtime).toShortStr() or '-'">
+        <td tal:content="structure python: modificationtime is not None and mangle.DateTime(modificationtime).toShortStr() or '-'">
           modificationtime
         </td>
-        <td tal:content="structure python: mangle.DateTime(publicationtime).toShortStr() or '-'">
+        <td tal:content="structure python: publicationtime is not None and mangle.DateTime(publicationtime).toShortStr() or '-'">
           publication time
         </td>
-        <td tal:content="structure python: mangle.DateTime(expirationtime).toShortStr() or '-'">
+        <td tal:content="structure python: expirationtime is not None and mangle.DateTime(expirationtime).toShortStr() or '-'">
           expiration time
         </td>
         <td>
