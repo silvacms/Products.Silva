@@ -3,11 +3,10 @@
 ##bind context=context
 ##bind namespace=
 ##bind script=script
-##bind subpath=traverse_subpath
-##bind view=view
 ##parameters=
 ##title=
 ##
+
 from Products.Silva import mangle
 from Products.Formulator.Errors import FormValidationError
 from Products.Silva.i18n import translate as _

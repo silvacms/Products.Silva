@@ -3,8 +3,6 @@
 ##bind context=context
 ##bind namespace=
 ##bind script=script
-##bind subpath=traverse_subpath
-##bind view=view
 ##parameters=
 ##title=
 ##
