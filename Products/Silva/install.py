@@ -309,7 +309,7 @@ def configureLegacyLayout(root, default_if_existent=0):
     for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
                'default_standard_error_message', 'copyright', 'head_inject',
                'standard_unauthorized_message',]:
-        add_helper(root, id, globals(), zpt_add_helper, default_if_existent)
+        add_helper(root, id, globals(), pt_add_helper, default_if_existent)
 
     for id in ['index_html.py', 'preview_html.py',
                'get_metadata_element.py', ]:
@@ -340,7 +340,7 @@ def configureMembership(root):
 # these won't add FS objects but genuine ZMI managed code
 def add_helper(root, id, info, add_func, default_if_existent=0, folder='layout'):
     filename = id
-    if add_func == py_add_helper or add_func == pt_add_helper:
+    if add_func == py_add_helper:
         id = os.path.splitext(id)[0]
     if default_if_existent and hasattr(root.aq_base, id):
         id = 'default_' + id
@@ -354,9 +354,6 @@ def pt_add_helper(root, id, text):
     else:
         root.manage_addProduct['PageTemplates'].manage_addPageTemplate(
             id, text=text)
-
-# BBB
-zpt_add_helper = pt_add_helper
 
 def dtml_add_helper(root, id, text):
     if hasattr(root.aq_base, id):

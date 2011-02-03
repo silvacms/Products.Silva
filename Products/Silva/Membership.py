@@ -119,8 +119,11 @@ class CachedMember(Persistent, Acquisition.Implicit):
         """Extra information.
         """
         # fall back on actual member object, don't cache
-        return self.service_members.get_member(self.id).extra(name)
-
+        member = self.service_members.get_member(self.id)
+        if member is not None:
+            # the member might not exist anymore
+            return member.extra(name)
+        return None
 
     security.declarePrivate('allowed_roles')
     def allowed_roles(self):
