@@ -24,8 +24,10 @@ manual_close.........Manual close
 <span tal:replace="nothing"> _______ Notice of previous version times _______ </span>
 <metal:block define-macro="datetime_info"
   tal:define="
-    start_time python: mangle.DateTime(model.get_public_version_publication_datetime()).toStr();
-    end_time python: mangle.DateTime(model.get_public_version_expiration_datetime()).toStr()"
+    publication_datetime model/get_public_version_publication_datetime;
+    start_time python: publication_datetime is not None and mangle.DateTime(publication_datetime).toStr() or '-';
+    expiration_datetime model/get_public_version_expiration_datetime;
+    end_time python: expiration_datetime is not None and mangle.DateTime(expiration_datetime).toStr() or '-'"
   tal:condition="start_time">
 <br />
 <p>
@@ -62,7 +64,8 @@ messages
   i18n:translate="">
 <span tal:replace="python:model.get_approval_requester()" i18n:name="author_id">author id</span>
 sent a message on
-<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()"
+<span tal:define="request_datetime model/get_approval_request_datetime"
+      tal:replace="structure python:request_datetime is not None and mangle.DateTime(request_datetime).toStr() or '-'"
   i18n:name="some_date">some date</span>
 <tal:if condition="python:model.get_approval_request_message()"
   i18n:name="with_comments">
@@ -92,7 +95,9 @@ sent a message on
 <td class="feedback" colspan="2" i18n:translate="">
 A previous request for approval has been rejected / withdrawn by
 <span tal:replace="python:model.get_approval_requester()" i18n:name="requester" /> on
-<span tal:replace="structure python:mangle.DateTime(model.get_approval_request_datetime()).toStr()" i18n:name="some_date">some date</span>.
+<span
+   tal:define="request_datetime model/get_approval_request_datetime"
+   tal:replace="structure python:request_datetime is not None and mangle.DateTime(request_datetime).toStr() or '-'" i18n:name="some_date">some date</span>.
 The last message regarding this issue is:
 </td>
 </tr>
