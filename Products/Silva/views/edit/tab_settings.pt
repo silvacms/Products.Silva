@@ -36,9 +36,8 @@
     tal:define="
       editable model/get_editable;
       iscontainer model/implements_container;
-      isnotroot python:model.meta_type != 'Silva Root';
       isfolder python: type == 'Silva Folder';
-      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+      ispublication python: type == 'Silva Publication';
       isghostfolder python: type == 'Silva Ghost Folder';
       rendererservice context/service_renderer_registry;
       renderers python: rendererservice.getFormRenderersList(type);"
@@ -57,9 +56,8 @@
       </tr>
     </thead>
     <tbody>
-    <tal:if condition="python:isnotroot and (ispublication or isfolder or isghostfolder)">
-      <tr class="top-controls"
-        tal:condition="iscontainer">
+    <tal:if condition="python:ispublication or isfolder or isghostfolder">
+      <tr class="top-controls">
         <td colspan="2">
           <h3>
             <span i18n:translate="">container type</span>
@@ -84,8 +82,7 @@
           </p>
         </td>
       </tr>
-      <tr class="controls"
-        tal:condition="iscontainer">
+      <tr class="controls">
         <td colspan="2">
           <input class="button"
             style="float:right"
@@ -109,12 +106,12 @@
           />
         </td>
       </tr>
-    </tal:if>
-      <tr tal:condition="iscontainer">
+      <tr>
         <td class="separator"
           colspan="2">
         </td>
       </tr>
+    </tal:if>
 
       <tr class="top-controls">
         <td colspan="2">
