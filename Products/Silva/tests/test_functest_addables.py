@@ -84,7 +84,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertTrue('Silva Folder' in addables.options)
         self.assertTrue('Silva Publication' in addables.options)
 
-        addables.value = ['Silva Folder', 'Silva File', 'Silva Image']
+        addables.value = ['Silva Folder', 'Silva Image', 'Silva File']
         self.assertEqual(form.get_control('form_submitted').click(), 200)
         self.assertEqual(
             browser.inspect.feedback,
@@ -93,7 +93,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         form = browser.get_form('form')
         self.assertEqual(
             form.get_control('field_addables').value,
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
 
         # Go back on container view.
         self.assertEqual(browser.inspect.tabs['contents'].click(), 200)
@@ -103,7 +103,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         form = browser.get_form('md.container')
         self.assertEqual(
             form.get_control('md.container.field.content').options,
-            ['none', 'Silva Folder', 'Silva File', 'Silva Image'])
+            ['none', 'Silva Folder', 'Silva Image', 'Silva File'])
         self.assertEqual(
             form.get_control('md.container.action.new').click(),
             200)
@@ -112,12 +112,12 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertEqual(browser.url, '/root/edit/+')
         self.assertEqual(
             browser.html.xpath('//dl[@class="new-content-listing"]//a/text()'),
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
         self.assertEqual(
             browser.html.xpath('//dl[@class="new-content-listing"]//a/@href'),
             ['http://localhost/root/edit/+/Silva Folder',
-             'http://localhost/root/edit/+/Silva File',
-             'http://localhost/root/edit/+/Silva Image'])
+             'http://localhost/root/edit/+/Silva Image',
+             'http://localhost/root/edit/+/Silva File'])
 
         # Access something which is not addable makes a redirect to +
         self.assertEqual(browser.open('/root/edit/+/Silva Document'), 200)
@@ -142,7 +142,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
             True)
         self.assertEqual(
             form.get_control('field_addables').value,
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
 
 
 class ManagerAddablesTestCase(ChiefEditorAddablesTestCase):
