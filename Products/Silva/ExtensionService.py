@@ -335,7 +335,7 @@ class PartialReindexForm(silvaforms.ZMIForm):
                     u"For big trees this may take a long time.")
 
     @silvaforms.action(_("Reindex"))
-    def reindex(self, path):
+    def reindex(self):
         data, errors = self.extractData()
         if errors:
             return
@@ -343,9 +343,9 @@ class PartialReindexForm(silvaforms.ZMIForm):
         try:
             self.context.reindex_subtree(path)
         except KeyError:
-            self.status = _(u"Invalid path")
+            self.status = _(u"Invalid path.")
         else:
-            self.status = _(u"Partial catalog refreshed")
+            self.status = _(u"Partial catalog refreshed.")
 
 
 class ManageExtensions(silvaviews.ZMIView):
