@@ -18,7 +18,7 @@
           <display_maxwidth></display_maxwidth>
           <alternate_name></alternate_name>
           <hidden type="int">0</hidden>
-          <display_width type="int">44</display_width>
+          <display_width type="int">35</display_width>
           <css_class>store</css_class>
           <default></default>
           <title>file</title>
