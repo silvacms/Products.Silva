@@ -54,6 +54,9 @@ window._ = function _(msgid, interpolations) {
 
 function initialize_i18n() {
     var i18nblock = document.getElementById('kupui18nblock');
+    if (!i18nblock) {
+        return;
+    }
     var messages = i18nblock.getElementsByTagName('message');
     for (var i=0; i < messages.length; i++) {
         var id = messages[i].getElementsByTagName('id')[0]
