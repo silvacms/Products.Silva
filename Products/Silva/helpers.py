@@ -44,12 +44,10 @@ def create_new_filename(file, basename):
 
     if '.' in basename:
         basename, extension = os.path.splitext(basename)
-        extension = '.' + extension
         if extension in _EXT_CONTENT_ENCODING and '.' in basename:
             if content_encoding is None:
                 content_encoding = _EXT_CONTENT_ENCODING[extension]
             basename, extension = os.path.splitext(basename)
-            extension = '.' + extension
 
     guessed_extension = mimetypes.guess_extension(content_type)
     # Compression extension are not reconized by mimetypes use an
