@@ -21,12 +21,12 @@
        tal:content="mime_type">
       mime type
     </p>
-    <tal:condition="model/content_encoding">
+    <tal:encoding tal:condition="model/content_encoding">
       <h4 i18n:translate="">file encoding</h4>
       <p tal:content="model/content_encoding">
         content encoding
       </p>
-    </tal:condition>
+    </tal:encoding>
     <h4 i18n:translate="">link to file</h4>
     <p>
       <a class="underline"
