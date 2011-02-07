@@ -16,9 +16,9 @@ from silva.core import interfaces
 # Load mime.types
 mimetypes.init()
 
-_EXTRA_MIMETYPE_TO_EXT = {
-    'application/x-gzip': '.gz',
-    'application/x-bzip2': '.bz',
+_ENCODING_MIMETYPE_TO_ENCODING = {
+    'application/x-gzip': 'gzip',
+    'application/x-bzip2': 'bzip2',
     }
 _CONTENT_ENCODING_EXT = {
     'gzip': '.gz',
@@ -53,17 +53,20 @@ def create_new_filename(file, basename):
     # Compression extension are not reconized by mimetypes use an
     # extra table for them.
     if guessed_extension is None:
-        if content_type in _EXTRA_MIMETYPE_TO_EXT:
+        if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
+            content_encoding is None):
             # Compression extension often are used with some other
             # extension. Unfortunately, at this point we might have
             # lost that other extension. The editor has to rename
             # properly the file.
-            extension = _EXTRA_MIMETYPE_TO_EXT[content_type]
+            content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
     elif guessed_extension is not None:
         extension = guessed_extension
-        if content_encoding is not None:
-            if content_encoding in _CONTENT_ENCODING_EXT:
-                extension += _CONTENT_ENCODING_EXT[content_encoding]
+    if content_encoding is not None:
+        if content_encoding in _CONTENT_ENCODING_EXT:
+            if extension is None:
+                extension = ''
+            extension += _CONTENT_ENCODING_EXT[content_encoding]
     if extension is not None:
         basename += extension
     file.set_filename(basename)

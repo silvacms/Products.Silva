@@ -186,8 +186,14 @@ class CreateNewFilenameTestCase(unittest.TestCase):
     def test_tar_gz_filename(self):
         testfile = self.create_file('images.tar.gz')
 
-        create_new_filename(testfile, 'files.tar')
+        create_new_filename(testfile, 'files')
         self.assertEqual(testfile.get_filename(), 'files.gz')
+
+    def test_tar_gz_filename_with_partial_extension(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files.tar')
+        self.assertEqual(testfile.get_filename(), 'files.tar.gz')
 
     def test_tar_gz_filename_with_extension(self):
         testfile = self.create_file('images.tar.gz')
