@@ -324,6 +324,8 @@ SilvaLinkTool.prototype.updateLink = function (
             linkel.removeAttribute('_silva_href');
             if (url != '0') {
                 linkel.removeAttribute('class');
+            } else {
+                linkel.setAttribute('class', 'broken-link');
             };
         } else {
             /* We have an old style link*/
@@ -331,6 +333,7 @@ SilvaLinkTool.prototype.updateLink = function (
             linkel.setAttribute('_silva_href', url);
             linkel.removeAttribute('_silva_reference');
             linkel.removeAttribute('_silva_target');
+            linkel.removeAttribute('class');
         };
         if (linkel.innerHTML == "") {
             var document = this.editor.getInnerDocument();
@@ -433,7 +436,7 @@ SilvaLinkToolBox.prototype.createLinkHandler = function(event) {
         alert('No content selected as link target, or no anchor!');
         return;
     };
-    if (reference) {
+    if (reference && reference != '0') {
         title = this.title.val() || content.title();
         this.tool.createLink(reference, 'reference', anchor, target, title);
     }
