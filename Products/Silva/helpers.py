@@ -20,19 +20,37 @@ _EXTRA_MIMETYPE_TO_EXT = {
     'application/x-gzip': '.gz',
     'application/x-bzip2': '.bz',
     }
+_CONTENT_ENCODING_EXT = {
+    'gzip': '.gz',
+    'bzip2': '.bz'
+    }
+_EXT_CONTENT_ENCODING = {
+    '.gz': 'gzip',
+    '.bz': 'bzip2'
+    }
 
 def create_new_filename(file, basename):
     """Compute and set a new filename for an file. It is composed of
     the given id, basename, where the file extension is changed in
     order to match the format of the file.
     """
+    # This function is here to be usable by File and Image
     if not file.get_file_size():
         return
+
     extension = None
+    content_type = file.content_type()
+    content_encoding = file.content_encoding()
+
     if '.' in basename:
         basename, extension = os.path.splitext(basename)
         extension = '.' + extension
-    content_type = file.content_type()
+        if extension in _EXT_CONTENT_ENCODING and '.' in basename:
+            if content_encoding is None:
+                content_encoding = _EXT_CONTENT_ENCODING[extension]
+            basename, extension = os.path.splitext(basename)
+            extension = '.' + extension
+
     guessed_extension = mimetypes.guess_extension(content_type)
     # Compression extension are not reconized by mimetypes use an
     # extra table for them.
@@ -45,6 +63,9 @@ def create_new_filename(file, basename):
             extension = _EXTRA_MIMETYPE_TO_EXT[content_type]
     elif guessed_extension is not None:
         extension = guessed_extension
+        if content_encoding is not None:
+            if content_encoding in _CONTENT_ENCODING_EXT:
+                extension += _CONTENT_ENCODING_EXT[content_encoding]
     if extension is not None:
         basename += extension
     file.set_filename(basename)

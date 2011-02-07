@@ -115,6 +115,9 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
             'Content-Type', self.context.content_type())
+        if self.context.content_encoding():
+            self.response.setHeader(
+                'Content-Encoding', self.context.content_encoding())
         self.response.setHeader(
             'Content-Length', self.context.get_file_size())
         self.response.setHeader(
@@ -159,6 +162,7 @@ class File(Asset):
 
     # Default values
     _filename = None
+    _content_encoding = None
 
     # ACCESSORS
 
@@ -181,7 +185,7 @@ class File(Asset):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_mime_type')
     def get_mime_type(self):
-        """
+        """Return the content mimetype.
         """
         # possibly strip out charset encoding
         return self.content_type().split(';')[0].strip()
@@ -278,6 +282,11 @@ class File(Asset):
     def content_type(self):
         return self._file.content_type
 
+    security.declareProtected(
+        SilvaPermissions.View, 'content_encoding')
+    def content_encoding(self):
+        return self._content_encoding
+
     # MODIFIERS
 
     security.declareProtected(
@@ -309,6 +318,11 @@ class File(Asset):
         SilvaPermissions.ChangeSilvaContent, 'set_content_type')
     def set_content_type(self, content_type):
         self._file.content_type = content_type
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_encoding')
+    def set_content_encoding(self, content_encoding):
+        self._content_encoding = content_encoding
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
@@ -353,13 +367,14 @@ class ZODBFile(File):
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
-        content_type = MAGIC.guess(
+        content_type, content_encoding = MAGIC.guess(
             id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
             default=DEFAULT_MIMETYPE)
         self._file.update_data(data, content_type, size)
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
+        self._content_encoding = content_encoding
 
     security.declareProtected(
         SilvaPermissions.View, 'get_content')
@@ -407,7 +422,7 @@ class BlobFile(File):
         id  = getattr(file, 'filename', self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
-        self._content_type = MAGIC.guess(
+        self._content_type, self._content_encoding = MAGIC.guess(
             id=id,
             filename=blob_filename,
             default=content_type)

@@ -17,10 +17,16 @@
     </h3>
     <h4 i18n:translate="">file mime type</h4>
     <p tal:define="mime_type model/get_mime_type"
-      tal:condition="mime_type"
-      tal:content="mime_type">
+       tal:condition="mime_type"
+       tal:content="mime_type">
       mime type
     </p>
+    <tal:condition="model/content_encoding">
+      <h4 i18n:translate="">file encoding</h4>
+      <p tal:content="model/content_encoding">
+        content encoding
+      </p>
+    </tal:condition>
     <h4 i18n:translate="">link to file</h4>
     <p>
       <a class="underline"

@@ -13,13 +13,17 @@ class IdGuess(object):
     def guess(self, id=None, filename=None, buffer=None, default=None):
         if id:
             type, enc = mimetypes.guess_type(id)
-            if type:
-                return type
-        if filename:
-            return self.file(filename)
-        if buffer:
-            return self.buffer(buffer)
-        return default or 'application/octet-stream'
+            if type is not None:
+                return type, enc
+        if filename is not None:
+            type = self.file(filename)
+        elif buffer is not None:
+            type = self.buffer(buffer)
+        if type is not None:
+            return type, None
+        if default is not None:
+            return default, None
+        return 'application/octet-stream', None
 
     def buffer(self, buffer):
         return None

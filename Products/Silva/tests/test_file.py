@@ -59,7 +59,6 @@ class DefaultFileImplementationTestCase(TestCase):
             get_event_names(),
             ['ObjectModifiedEvent'])
 
-
     def test_content(self):
         """Test base content methods.
         """
@@ -68,6 +67,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.failUnless(verifyObject(interfaces.IFile, content))
 
         self.assertEquals(content.content_type(), 'image/tiff')
+        self.assertEquals(content.content_encoding(), None)
         self.assertEquals(content.get_file_size(), self.file_size)
         self.assertEquals(content.get_filename(), 'testfile.tiff')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
@@ -186,7 +186,7 @@ class CreateNewFilenameTestCase(unittest.TestCase):
     def test_tar_gz_filename(self):
         testfile = self.create_file('images.tar.gz')
 
-        create_new_filename(testfile, 'files')
+        create_new_filename(testfile, 'files.tar')
         self.assertEqual(testfile.get_filename(), 'files.gz')
 
     def test_tar_gz_filename_with_extension(self):
