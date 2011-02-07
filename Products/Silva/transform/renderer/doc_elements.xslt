@@ -368,7 +368,7 @@
   </xsl:template>
 
   <xsl:template match="doc:col" mode="table-contents">
-    <col width="{@width}" class="{@class}" />
+    <col width="{@width}" />
   </xsl:template>
 
   <xsl:template match="doc:field" mode="tablerow-contents">
@@ -388,6 +388,11 @@
       <xsl:if test="@colspan">
        <xsl:attribute name="colspan">
          <xsl:value-of select="@colspan" />
+       </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@class">
+       <xsl:attribute name="class">
+         <xsl:value-of select="@class" />
        </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates select="." mode="field-contents" />
