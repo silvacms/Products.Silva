@@ -1,17 +1,42 @@
 Changes
 =======
 
-Silva 2.3.1 (unreleased)
+Silva 2.3.1 (2010-02-08)
 ------------------------
 
-- Apparently as of Silva 2.3 container objects inherit a priority from
-  SilvaFolder or SilvaPublication. They must have their priority explicitly set
-  to zero in order to appear correctly in the default alphabetical listing.
-  Changed Silva GhostFolder (and SilvaForum in a separate ci). Removed the
-  priority from SilvaFile so it defaults to zero.
+- Review content priority in the addable list.
 
-- Added css to shorten the multi-action textline fields and better arrange
-  the listing of the references portlet.
+- Add support to automatically compute file extension like for images
+  to files, by adding the correct file extension to the file
+  identifier.
+
+- Add support for file encoding (gzip, bzip2) to files (this is not
+  charset !).
+
+- Improve Kupu Silva tools (Link and specially Image tool). Don't show
+  the update button if you can't update / nothing changed in the Image
+  tool.
+
+- Use the new member service API MemberLookupError to report error in
+  the UI while searching for users.
+
+- Add a compatibility fix for Zope 2.12 and old stored template in the
+  ZODB.
+
+- Fix installation of the legacy layout.
+
+- A reference box have been added in the publish tab to show which
+  content use the current content.
+
+- The reference lookup widget have been improved to be able to propose
+  the user to add content. For this a new REST API permitting to list
+  addable in a container have been added.
+
+- The HTML code of the SMI have been improved to be more easily
+  skinable using only CSS (remove hardcoded style for instance).
+
+- Fix various small bugs.
+
 
 Silva 2.3 (2010/12/20)
 ----------------------
