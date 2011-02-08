@@ -750,6 +750,7 @@ class FileStorageConverter(object):
         id = content.getId()
         title = content.get_title()
         content_type = content.content_type()
+        content_encoding = content.content_encoding()
 
         new_file = self.service.new_file(id)
         container = content.aq_parent
@@ -758,6 +759,7 @@ class FileStorageConverter(object):
         new_file.set_title(title)
         new_file.set_file_data(data)
         new_file.set_content_type(content_type)
+        new_file.set_content_encoding(content_encoding)
 
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
