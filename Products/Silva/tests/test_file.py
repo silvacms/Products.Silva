@@ -8,6 +8,7 @@ import unittest
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.testing import (
     FunctionalLayer, TestCase, http, get_event_names)
 from Products.Silva.tests import helpers
@@ -58,7 +59,6 @@ class DefaultFileImplementationTestCase(TestCase):
             get_event_names(),
             ['ObjectModifiedEvent'])
 
-
     def test_content(self):
         """Test base content methods.
         """
@@ -67,6 +67,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.failUnless(verifyObject(interfaces.IFile, content))
 
         self.assertEquals(content.content_type(), 'image/tiff')
+        self.assertEquals(content.content_encoding(), None)
         self.assertEquals(content.get_file_size(), self.file_size)
         self.assertEquals(content.get_filename(), 'testfile.tiff')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
@@ -157,8 +158,59 @@ class FFSFileImplementationTestCase(DefaultFileImplementationTestCase):
     implementation = File.FileSystemFile
 
 
+class CreateNewFilenameTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+
+    def create_file(self, filename):
+        with helpers.open_test_file(filename) as file_handle:
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFile('testfile', 'Test File', file_handle)
+            return self.root.testfile
+
+    def test_image_png_filename(self):
+        testfile = self.create_file('photo.tif')
+
+        create_new_filename(testfile, 'image')
+        self.assertEqual(testfile.get_filename(), 'image.tiff')
+
+    def test_image_png_filename_with_extension(self):
+        testfile = self.create_file('photo.tif')
+
+        create_new_filename(testfile, 'image.jpg')
+        self.assertEqual(testfile.get_filename(), 'image.tiff')
+
+    def test_tar_gz_filename(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files')
+        self.assertEqual(testfile.get_filename(), 'files.gz')
+
+    def test_tar_gz_filename_with_partial_extension(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files.tar')
+        self.assertEqual(testfile.get_filename(), 'files.tar.gz')
+
+    def test_tar_gz_filename_with_extension(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files.tar.gz')
+        self.assertEqual(testfile.get_filename(), 'files.tar.gz')
+
+    def test_zip_filename(self):
+        testfile = self.create_file('test1.zip')
+
+        create_new_filename(testfile, 'files')
+        self.assertEqual(testfile.get_filename(), 'files.zip')
+
+
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(CreateNewFilenameTestCase))
     suite.addTest(unittest.makeSuite(DefaultFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(BlobFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(ZODBFileImplementationTestCase))

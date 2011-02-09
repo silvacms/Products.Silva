@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import bisect
+
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -9,11 +11,22 @@ from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva import SilvaPermissions
+from Products.Silva.icon import get_icon_url
 from Products.Silva.SilvaObject import SilvaObject
 
 from five import grok
-from silva.core.interfaces import (
-    IPublishable, INonPublishable, IContent, IVersioning, IContainer, IPublication)
+from silva.core.interfaces.content import (
+    IPublishable, INonPublishable, IContent, IVersioning,
+    IVersion, IContainer, IPublication, ISilvaObject)
+from silva.core.references.interfaces import IReferenceService
+from silva.core.smi.interfaces import ISMILayer
+from silva.core.smi.interfaces import IPropertiesTabIndex, IEditTabIndex
+from silva.core.smi.smi import SMIPortletManager
+from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import ISilvaURL
+from zope import component
+from zope.traversing.browser import absoluteURL
+
 
 
 class NonPublishable(SilvaObject):
@@ -274,3 +287,56 @@ class Publishable(SilvaObject):
                 node = objects[-1][1]
 
 InitializeClass(Publishable)
+
+
+class ContentReferencedBy(silvaviews.Viewlet):
+    """Report reference usage of this publishable
+    """
+    grok.context(ISilvaObject)
+    grok.layer(ISMILayer)
+    grok.order(100)
+    grok.view(IPropertiesTabIndex)
+    grok.viewletmanager(SMIPortletManager)
+
+    def update(self):
+        references = {}
+        service = component.getUtility(IReferenceService)
+        self.icon_url = get_icon_url(self.context, self.request)
+        for reference in service.get_references_to(self.context):
+            source = reference.source
+            source_versions = []
+            if IVersion.providedBy(source):
+                source_versions.append(source.id)
+                source = source.get_content()
+
+            edit_url = absoluteURL(source, self.request) + '/edit'
+            if edit_url in references and source_versions:
+                previous_versions = references[edit_url]['versions']
+                if previous_versions[-1] > source_versions[0]:
+                    bisect.insort_right(
+                        previous_versions, source_versions[0])
+                    continue
+                else:
+                    source_versions = previous_versions + source_versions
+
+            source_title = source.get_title_or_id()
+            source_url = component.getMultiAdapter(
+                (source, self.request), ISilvaURL).preview()
+            references[edit_url] = {
+                'title': source_title,
+                'url': source_url,
+                'path': '/'.join(source.getPhysicalPath()),
+                'edit_url': edit_url,
+                'icon': get_icon_url(source, self.request),
+                'versions': source_versions}
+
+        self.references = references.values()
+        self.references.sort(key=lambda info: info['title'].lower())
+
+        for info in self.references:
+            if info['versions']:
+                info['title'] += ' (' + ', '.join(info['versions']) + ')'
+
+
+class EditContentReferencedBy(ContentReferencedBy):
+    grok.view(IEditTabIndex)

@@ -16,20 +16,51 @@ from silva.core import interfaces
 # Load mime.types
 mimetypes.init()
 
+_ENCODING_MIMETYPE_TO_ENCODING = {
+    'application/x-gzip': 'gzip',
+    'application/x-bzip2': 'bzip2',
+    }
+_CONTENT_ENCODING_EXT = {
+    'gzip': '.gz',
+    'bzip2': '.bz'
+    }
+_EXT_CONTENT_ENCODING = {
+    '.gz': 'gzip',
+    '.bz': 'bzip2'
+    }
 
 def create_new_filename(file, basename):
     """Compute and set a new filename for an file. It is composed of
     the given id, basename, where the file extension is changed in
     order to match the format of the file.
     """
+    # This function is here to be usable by File and Image
     if not file.get_file_size():
         return
+
     extension = None
+    content_type = file.content_type()
+    content_encoding = file.content_encoding()
+
     if '.' in basename:
         basename, extension = os.path.splitext(basename)
-        extension = '.' + extension
-    guessed_extension = mimetypes.guess_extension(file.content_type())
-    if guessed_extension is not None:
+        if extension in _EXT_CONTENT_ENCODING and '.' in basename:
+            if content_encoding is None:
+                content_encoding = _EXT_CONTENT_ENCODING[extension]
+            basename, extension = os.path.splitext(basename)
+
+    guessed_extension = mimetypes.guess_extension(content_type)
+    # Compression extension are not reconized by mimetypes use an
+    # extra table for them.
+    if guessed_extension is None:
+        if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
+            content_encoding is None):
+            # Compression extension often are used with some other
+            # extension. Unfortunately, at this point we might have
+            # lost that other extension. The editor has to rename
+            # properly the file.
+            content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
+    elif guessed_extension is not None:
         extension = guessed_extension
     if extension is not None:
         basename += extension
@@ -88,6 +119,7 @@ def fix_content_type_header(uploaded_file):
     if hasattr(uploaded_file, 'headers'):
         if uploaded_file.headers.has_key('content-type'):
             del uploaded_file.headers['content-type']
+
 
 
 # this class used to be in SilvaDocument.upgrade, but was moved
