@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 
 
 <metadata_set id="syndication" ns_uri="https://bethel.edu/namespaces/syndication" ns_prefix="syn">
@@ -10,6 +10,7 @@
   <metadata_element id="teaser">
    <index_type>ZCTextIndex</index_type>
    <index_p>1</index_p>
+   <metadata_in_catalog_p>0</metadata_in_catalog_p>
    <field_type>TextAreaField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
@@ -24,23 +25,23 @@
      <expr></expr>
    </write_guard>
    <field_values>
-        <value key="extra" type="str" value="" />
-        <value key="height" type="int" value="5" />
-        <value key="max_lines" type="str" value="" />
-        <value key="unicode" type="int" value="1" />
-        <value key="alternate_name" type="str" value="" />
-        <value key="title" type="str" value="teaser" />
-        <value key="width" type="int" value="40" />
         <value key="max_length" type="str" value="" />
-        <value key="max_linelength" type="str" value="" />
-        <value key="hidden" type="int" value="0" />
         <value key="description" type="str" value="A short description of the resource." />
+        <value key="extra" type="str" value="" />
         <value key="default" type="str" value="" />
         <value key="css_class" type="str" value="store" />
         <value key="required" type="int" value="0" />
         <value key="enabled" type="int" value="1" />
+        <value key="height" type="int" value="5" />
         <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
         <value key="whitespace_preserve" type="int" value="0" />
+        <value key="title" type="str" value="teaser" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
    </field_values>
    <field_tales>
      <value key="max_length"></value>
@@ -77,6 +78,7 @@
   <metadata_element id="img-preview">
    <index_type>FieldIndex</index_type>
    <index_p>1</index_p>
+   <metadata_in_catalog_p>0</metadata_in_catalog_p>
    <field_type>LookupWindowField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
@@ -93,7 +95,7 @@
    <field_values>
         <value key="required_rows" type="int" value="0" />
         <value key="hidden" type="int" value="0" />
-        <value key="onclick" type="str" value="{ var myid = this.getAttribute('id').replace(/^button/,'input'); reference.getReference( function(path, id, title) { document.getElementById(myid).value = path;; }, '%(url)s', 'Silva Image', true, '%(selected_path)s', '%(sourcepath)s')}" />
+        <value key="onclick" type="str" value="{ var myid = this.getAttribute('id').replace(/^button/,'input'); reference.getReference( function(path, id, title) { document.getElementById(myid).value = path;; }, '%(url)s', 'Silva Image', true, '%(selected_path)s')}" />
         <value key="title" type="str" value="preview image" />
         <value key="default" type="str" value="" />
         <value key="show_edit_button" type="int" value="1" />
@@ -145,6 +147,7 @@
   <metadata_element id="img-feature">
    <index_type>FieldIndex</index_type>
    <index_p>1</index_p>
+   <metadata_in_catalog_p>0</metadata_in_catalog_p>
    <field_type>LookupWindowField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
@@ -161,12 +164,7 @@
    <field_values>
         <value key="required_rows" type="int" value="0" />
         <value key="hidden" type="int" value="0" />
-        <value key="onclick" type="str" value="{
-var myid = this.getAttribute('id').replace(/^button/,'input');
-reference.getReference(
-function(path, id, title) {
-document.getElementById(myid).value = path;;
-}, '%(url)s', 'Silva Image', true, '%(selected_path)s', '%(sourcepath)s')}" />
+        <value key="onclick" type="str" value="{ var myid = this.getAttribute('id').replace(/^button/,'input'); reference.getReference( function(path, id, title) { document.getElementById(myid).value = path;; }, '%(url)s', 'Silva Image', true, '%(selected_path)s')}" />
         <value key="title" type="str" value="Feature" />
         <value key="default" type="str" value="" />
         <value key="show_edit_button" type="int" value="1" />
@@ -218,6 +216,7 @@ document.getElementById(myid).value = path;;
   <metadata_element id="img-featurehover">
    <index_type>FieldIndex</index_type>
    <index_p>1</index_p>
+   <metadata_in_catalog_p>0</metadata_in_catalog_p>
    <field_type>LookupWindowField</field_type>
    <acquire_p>0</acquire_p>
    <read_only_p>0</read_only_p>
@@ -233,27 +232,22 @@ document.getElementById(myid).value = path;;
    </write_guard>
    <field_values>
         <value key="required_rows" type="int" value="0" />
-        <value key="required" type="int" value="0" />
-        <value key="onclick" type="str" value="{
-var myid = this.getAttribute('id').replace(/^button/,'input');
-reference.getReference(
-function(path, id, title) {
-document.getElementById(myid).value = path;;
-}, '%(url)s', 'Silva Image', true, '%(selected_path)s', '%(sourcepath)s')}" />
+        <value key="hidden" type="int" value="0" />
+        <value key="onclick" type="str" value="{ var myid = this.getAttribute('id').replace(/^button/,'input'); reference.getReference( function(path, id, title) { document.getElementById(myid).value = path;; }, '%(url)s', 'Silva Image', true, '%(selected_path)s')}" />
         <value key="title" type="str" value="Feature Hover" />
         <value key="default" type="str" value="" />
         <value key="show_edit_button" type="int" value="1" />
         <value key="whitespace_preserve" type="int" value="0" />
         <value key="extra" type="str" value="" />
         <value key="enabled" type="int" value="1" />
-        <value key="button_label" type="str" value="get reference..." />
         <value key="display_maxwidth" type="str" value="" />
         <value key="external_validator" type="str" value="" />
         <value key="max_rows" type="int" value="1" />
         <value key="unicode" type="int" value="1" />
-        <value key="display_width" type="int" value="20" />
-        <value key="hidden" type="int" value="0" />
         <value key="css_class" type="str" value="store" />
+        <value key="required" type="int" value="0" />
+        <value key="display_width" type="int" value="20" />
+        <value key="button_label" type="str" value="get reference..." />
         <value key="show_add_remove" type="int" value="0" />
         <value key="alternate_name" type="str" value="" />
         <value key="description" type="str" value="Size: 460 x 290px.  This is the feature hover image (primary used for the branding galleries)." />
@@ -261,22 +255,22 @@ document.getElementById(myid).value = path;;
    <field_tales>
      <value key="required_rows"></value>
      <value key="description"></value>
-     <value key="display_width"></value>
      <value key="title"></value>
      <value key="default"></value>
      <value key="css_class"></value>
+     <value key="whitespace_preserve"></value>
      <value key="required"></value>
      <value key="enabled"></value>
+     <value key="show_add_remove"></value>
      <value key="display_maxwidth"></value>
      <value key="external_validator"></value>
-     <value key="show_edit_button"></value>
      <value key="max_rows"></value>
      <value key="onclick"></value>
-     <value key="whitespace_preserve"></value>
-     <value key="hidden"></value>
+     <value key="show_edit_button"></value>
+     <value key="display_width"></value>
      <value key="button_label"></value>
      <value key="extra"></value>
-     <value key="show_add_remove"></value>
+     <value key="hidden"></value>
      <value key="alternate_name"></value>
    </field_tales>
    <field_messages>

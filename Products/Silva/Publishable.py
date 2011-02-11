@@ -17,7 +17,7 @@ from Products.Silva.SilvaObject import SilvaObject
 from five import grok
 from silva.core.interfaces import (IPublishable, INonPublishable, IContent, 
                                    IVersioning, IContainer, IPublication,
-                                   IPublishableBase)
+                                   IPublishableBase, ISilvaObject)
 from silva.core.references.interfaces import IReferenceService
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.smi.interfaces import IPropertiesTabIndex, IEditTabIndex
