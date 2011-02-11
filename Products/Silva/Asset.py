@@ -7,8 +7,6 @@ import logging
 # Zope 3
 from five import grok
 from zope.interface import Interface
-from zope import component
-from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -21,11 +19,9 @@ from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 from Products.Silva import SilvaPermissions
 
-from silva.core.interfaces import IAsset, IImage, IVersion
+from silva.core.interfaces import IAsset, IImage
 from silva.core.views import views as silvaviews
-from silva.core.views.interfaces import ISilvaURL
 from silva.core.smi.interfaces import ISMILayer
-from silva.core.references.interfaces import IReferenceService
 
 logger = logging.getLogger('silva.core')
 
@@ -177,29 +173,3 @@ class AssetPath(silvaviews.Viewlet):
             self.path = path.replace('/', ' / ')
 
 
-class AssetReferencedBy(silvaviews.Viewlet):
-    """Report usage of this asset
-    """
-    grok.context(IAsset)
-    grok.layer(ISMILayer)
-    grok.order(100)
-    grok.viewletmanager(SMIAssetMetadata)
-
-    def update(self):
-        self.references = []
-        service = component.getUtility(IReferenceService)
-        for reference in service.get_references_to(self.context):
-            source = reference.source
-            source_title = source.get_title_or_id()
-            source_url = component.getMultiAdapter(
-                (source, self.request), ISilvaURL).preview()
-            if IVersion.providedBy(source):
-                source_title += ' (%s)' % source.id
-                source = source.get_content()
-            edit_url = absoluteURL(source, self.request) + '/edit'
-            self.references.append(
-                {'title': source_title,
-                 'url': source_url,
-                 'path': '/'.join(source.getPhysicalPath()),
-                 'edit_url': edit_url,
-                 'icon': self.view.get_icon(source)})

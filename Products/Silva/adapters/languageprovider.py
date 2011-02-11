@@ -5,6 +5,7 @@
 # Zope
 from zope.component import getUtility
 from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.publisher.http import HTTPCharsets as ZopeHTTPCharsets
 from zope.i18n.interfaces import ITranslationDomain, IUserPreferredLanguages
 from zope.publisher.browser import BrowserLanguages
 from zope.i18n.locales import locales, LoadLocaleError
@@ -23,6 +24,18 @@ def canonalize_language(code):
         language_id, language_variant = code.split('_')
         return '%s-%s' % (language_id, language_variant.lower())
     return code
+
+
+class HTTPCharsets(ZopeHTTPCharsets, grok.Adapter):
+    grok.context(IBrowserRequest)
+
+    def getPreferredCharsets(self):
+        # Fix HTTPCharsets like done in zope.publisher 3.12.5, to
+        # prevent UnicodeDecodeError in page templates.
+        charsets = ZopeHTTPCharsets.getPreferredCharsets(self)
+        if charsets == []:
+            charsets = ['utf-8']
+        return charsets
 
 
 class LanguageProvider(grok.Adapter):

@@ -26,9 +26,12 @@ from zope.location.interfaces import ISite
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.schema.fieldproperty import FieldProperty
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+import zope.container.interfaces
+import zope.lifecycleevent.interfaces
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from webdav.common import rfc1123_date
 from ZPublisher.Iterators import IStreamIterator
@@ -41,6 +44,7 @@ from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
 from Products.Silva.helpers import fix_content_type_header
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.converters import get_converter_for_mimetype
 
 # Storages
@@ -111,6 +115,9 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
             'Content-Type', self.context.content_type())
+        if self.context.content_encoding():
+            self.response.setHeader(
+                'Content-Encoding', self.context.content_encoding())
         self.response.setHeader(
             'Content-Length', self.context.get_file_size())
         self.response.setHeader(
@@ -150,12 +157,12 @@ class File(Asset):
     meta_type = "Silva File"
 
     grok.implements(interfaces.IFile)
-    silvaconf.priority(-3)
     silvaconf.icon('www/silvafile.png')
     silvaconf.factory('manage_addFile')
 
     # Default values
     _filename = None
+    _content_encoding = None
 
     # ACCESSORS
 
@@ -178,7 +185,7 @@ class File(Asset):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_mime_type')
     def get_mime_type(self):
-        """
+        """Return the content mimetype.
         """
         # possibly strip out charset encoding
         return self.content_type().split(';')[0].strip()
@@ -275,6 +282,11 @@ class File(Asset):
     def content_type(self):
         return self._file.content_type
 
+    security.declareProtected(
+        SilvaPermissions.View, 'content_encoding')
+    def content_encoding(self):
+        return self._content_encoding
+
     # MODIFIERS
 
     security.declareProtected(
@@ -284,10 +296,9 @@ class File(Asset):
         """
         self._p_changed = 1
         self._set_file_data_helper(file)
-        #XXX should be event below
-        notify(ObjectModifiedEvent(self))
-        ICataloging(self).reindex()
-        self.update_quota()
+        if not interfaces.IImage.providedBy(aq_parent(self)):
+            # If we are not a storage of an image, trigger an event.
+            notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_filename')
@@ -307,6 +318,11 @@ class File(Asset):
         SilvaPermissions.ChangeSilvaContent, 'set_content_type')
     def set_content_type(self, content_type):
         self._file.content_type = content_type
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_content_encoding')
+    def set_content_encoding(self, content_encoding):
+        self._content_encoding = content_encoding
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
@@ -351,13 +367,14 @@ class ZODBFile(File):
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
-        content_type = MAGIC.guess(
+        content_type, content_encoding = MAGIC.guess(
             id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
             default=DEFAULT_MIMETYPE)
         self._file.update_data(data, content_type, size)
         if self._file.content_type == 'text/plain':
             self._file.content_type = 'text/plain; charset=utf-8'
+        self._content_encoding = content_encoding
 
     security.declareProtected(
         SilvaPermissions.View, 'get_content')
@@ -405,7 +422,7 @@ class BlobFile(File):
         id  = getattr(file, 'filename', self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
-        self._content_type = MAGIC.guess(
+        self._content_type, self._content_encoding = MAGIC.guess(
             id=id,
             filename=blob_filename,
             default=content_type)
@@ -733,6 +750,7 @@ class FileStorageConverter(object):
         id = content.getId()
         title = content.get_title()
         content_type = content.content_type()
+        content_encoding = content.content_encoding()
 
         new_file = self.service.new_file(id)
         container = content.aq_parent
@@ -741,6 +759,7 @@ class FileStorageConverter(object):
         new_file.set_title(title)
         new_file.set_file_data(data)
         new_file.set_content_type(content_type)
+        new_file.set_content_encoding(content_encoding)
 
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
@@ -751,3 +770,19 @@ contentObjectFactoryRegistry.registerFactory(
     file_factory,
     lambda id, ct, body: True,
     -1)
+
+
+@grok.subscribe(
+    interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
+def file_changed(file, event):
+    create_new_filename(file, file.getId())
+    file.update_quota()
+    ICataloging(file).reindex()
+
+
+@grok.subscribe(
+    interfaces.IFile, zope.container.interfaces.IObjectMovedEvent)
+def file_added(file, event):
+    if file is not event.object or event.newName is None:
+        return
+    create_new_filename(file, event.newName)

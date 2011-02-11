@@ -443,7 +443,7 @@ div.listingBar .previous {
 
 /* ____________________________________________________ form controls _______ */
 
-input, textarea, select {
+textarea, select {
   padding: 0.1em;
   border: 1px solid #78797a;
   color: #337;
@@ -451,33 +451,18 @@ input, textarea, select {
   font: normal 100% verdana, helvetica, arial, sans-serif;
 }
 
-input[type="submit"], input.button /*4 IE*/ {
-  margin: 0.5em 0 0;
-  padding: 0 0.2em;
-  border: 1px solid #78797a;
-  color: #337;
-  background-color: #e4e5e6;
-  cursor: pointer;
-}
-
-input:hover, textarea:hover, select:hover {
+textarea:hover, select:hover {
   border-color : #444546;
   background-color: #f8f9fa;
 }
 
-input:focus, textarea:focus, select:focus {
+textarea:focus, select:focus {
   border-color : #444546;
   background-color: #ffe;
 }
 
-input:focus:hover, textarea:focus:hover, select:focus:hover {
+textarea:focus:hover, select:focus:hover {
   background-color: #ffe;
-}
-
-input[type="submit"]:hover, button[type="button"]:hover {
-  border-color: #444546;
-  color: #16168b;
-  background-color: #f7f8f9;
 }
 
 /* ____________________________ subscription forms _______ */

@@ -3,7 +3,7 @@
 # $Id$
 
 import unittest
-
+import json
 from Products.Silva.testing import FunctionalLayer, smi_settings
 
 
@@ -28,6 +28,29 @@ class AuthorAddablesTestCase(unittest.TestCase):
         self.assertFalse('addables' in browser.inspect.subtabs)
         # XXX when the addable tab will be reimplemented, going on it
         # will trigger 401
+
+    def test_rest_addables_api(self):
+        browser = self.layer.get_browser()
+        browser.login(self.username)
+        self.assertEqual(browser.open('/root/folder/++rest++addables'), 200)
+        self.assertEqual('application/json', browser.content_type)
+        data = json.loads(browser.contents)
+        self.assertTrue(isinstance(data, list))
+        self.assertTrue(len(data) > 0)
+
+    def test_rest_addables_with_required_interface(self):
+        browser = self.layer.get_browser()
+        browser.login(self.username)
+        self.assertEqual(
+            200,
+            browser.open('/root/folder/++rest++addables',
+                query={'interface': 'silva.core.interfaces.content.IImage'}))
+        self.assertEqual('application/json', browser.content_type)
+        data = json.loads(browser.contents)
+        self.assertTrue(isinstance(data, list))
+        self.assertTrue('Silva Image' in data)
+        self.assertTrue('Silva Folder' in data)
+        self.assertFalse('Silva Link' in data)
 
 
 class EditorAddablesTestCase(AuthorAddablesTestCase):
@@ -61,7 +84,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertTrue('Silva Folder' in addables.options)
         self.assertTrue('Silva Publication' in addables.options)
 
-        addables.value = ['Silva Folder', 'Silva File', 'Silva Image']
+        addables.value = ['Silva Folder', 'Silva Image', 'Silva File']
         self.assertEqual(form.get_control('form_submitted').click(), 200)
         self.assertEqual(
             browser.inspect.feedback,
@@ -70,7 +93,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         form = browser.get_form('form')
         self.assertEqual(
             form.get_control('field_addables').value,
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
 
         # Go back on container view.
         self.assertEqual(browser.inspect.tabs['contents'].click(), 200)
@@ -80,7 +103,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         form = browser.get_form('md.container')
         self.assertEqual(
             form.get_control('md.container.field.content').options,
-            ['none', 'Silva Folder', 'Silva File', 'Silva Image'])
+            ['none', 'Silva Folder', 'Silva Image', 'Silva File'])
         self.assertEqual(
             form.get_control('md.container.action.new').click(),
             200)
@@ -89,12 +112,12 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertEqual(browser.url, '/root/edit/+')
         self.assertEqual(
             browser.html.xpath('//dl[@class="new-content-listing"]//a/text()'),
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
         self.assertEqual(
             browser.html.xpath('//dl[@class="new-content-listing"]//a/@href'),
             ['http://localhost/root/edit/+/Silva Folder',
-             'http://localhost/root/edit/+/Silva File',
-             'http://localhost/root/edit/+/Silva Image'])
+             'http://localhost/root/edit/+/Silva Image',
+             'http://localhost/root/edit/+/Silva File'])
 
         # Access something which is not addable makes a redirect to +
         self.assertEqual(browser.open('/root/edit/+/Silva Document'), 200)
@@ -119,7 +142,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
             True)
         self.assertEqual(
             form.get_control('field_addables').value,
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Image', 'Silva File'])
 
 
 class ManagerAddablesTestCase(ChiefEditorAddablesTestCase):

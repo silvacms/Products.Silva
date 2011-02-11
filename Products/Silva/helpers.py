@@ -3,6 +3,8 @@
 # $Id$
 
 # Python
+import mimetypes
+import os
 import urllib
 
 # Zope
@@ -10,6 +12,65 @@ import zope.deferredimport
 
 # Silva core
 from silva.core import interfaces
+
+# Load mime.types
+mimetypes.init()
+
+_ENCODING_MIMETYPE_TO_ENCODING = {
+    'application/x-gzip': 'gzip',
+    'application/x-bzip2': 'bzip2',
+    }
+_CONTENT_ENCODING_EXT = {
+    'gzip': '.gz',
+    'bzip2': '.bz'
+    }
+_EXT_CONTENT_ENCODING = {
+    '.gz': 'gzip',
+    '.bz': 'bzip2'
+    }
+
+def create_new_filename(file, basename):
+    """Compute and set a new filename for an file. It is composed of
+    the given id, basename, where the file extension is changed in
+    order to match the format of the file.
+    """
+    # This function is here to be usable by File and Image
+    if not file.get_file_size():
+        return
+
+    extension = None
+    content_type = file.content_type()
+    content_encoding = file.content_encoding()
+
+    if '.' in basename:
+        basename, extension = os.path.splitext(basename)
+        if extension in _EXT_CONTENT_ENCODING and '.' in basename:
+            if content_encoding is None:
+                content_encoding = _EXT_CONTENT_ENCODING[extension]
+            basename, extension = os.path.splitext(basename)
+
+    guessed_extension = mimetypes.guess_extension(content_type)
+    # Compression extension are not reconized by mimetypes use an
+    # extra table for them.
+    if guessed_extension is None:
+        if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
+            content_encoding is None):
+            # Compression extension often are used with some other
+            # extension. Unfortunately, at this point we might have
+            # lost that other extension. The editor has to rename
+            # properly the file.
+            content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
+    elif guessed_extension is not None:
+        extension = guessed_extension
+    if content_encoding is not None:
+        if content_encoding in _CONTENT_ENCODING_EXT:
+            if extension is None:
+                extension = ''
+            extension += _CONTENT_ENCODING_EXT[content_encoding]
+    if extension is not None:
+        basename += extension
+    file.set_filename(basename)
+
 
 zope.deferredimport.deprecated(
     'Please import directly from silva.core.conf.utils '
@@ -35,18 +96,6 @@ def add_and_edit(self, id, REQUEST, screen='manage_main'):
     else:
         REQUEST.RESPONSE.redirect(u+'/manage_main')
 
-
-def unapprove_helper(object):
-    """Unapprove object and anything unapprovable contained by it.
-    """
-    if interfaces.IVersioning.providedBy(object):
-        if object.is_version_approved():
-            object.unapprove_version()
-    if interfaces.IContainer.providedBy(object):
-        for item in object.get_ordered_publishables():
-            unapprove_helper(item)
-
-
 def unapprove_close_helper(object):
     """Unapprove/close object and anything unapprovable/closeable
     contained by it.
@@ -65,13 +114,6 @@ def unapprove_close_helper(object):
             unapprove_close_helper(item)
 
 
-# this is a bit of a hack; using implementation details of ParsedXML..
-from Products.ParsedXML.PrettyPrinter import _translateCdata, _translateCdataAttr
-
-translateCdata = _translateCdata
-translateCdataAttr = _translateCdataAttr
-
-
 def fix_content_type_header(uploaded_file):
     """Deletes the content-type header on the uploaded_file.
 
@@ -82,6 +124,7 @@ def fix_content_type_header(uploaded_file):
     if hasattr(uploaded_file, 'headers'):
         if uploaded_file.headers.has_key('content-type'):
             del uploaded_file.headers['content-type']
+
 
 
 # this class used to be in SilvaDocument.upgrade, but was moved

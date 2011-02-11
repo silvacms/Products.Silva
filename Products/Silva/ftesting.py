@@ -42,39 +42,7 @@ def smi_delete_content(browser, identifier):
         ', '.join(browser.inspect.feedback))
 
 
-def smi_settings(browser):
-    browser.inspect.add(
-        'feedback',
-        '//div[@id="feedback"]/div/span', type='text')
-    # Top tabs navigation
-    browser.inspect.add(
-        'tabs',
-        '//div[@class="tabs"]/a[contains(@class, "tab")]', type='link')
-    # Second navigation (buttons in middleground)
-    browser.inspect.add(
-        'subtabs',
-        '//div[@class="middleground"]/div[@class="transporter"]/a', type='link')
-    # Breadcrumb
-    browser.inspect.add(
-        'breadcrumbs',
-        '//div[@class="pathbar"]/a[@class="breadcrumb"]', type='link')
-    # Sidebar navigation
-    browser.inspect.add(
-        'navigation_root',
-        '(//div[@class="navigation"]//td)[1]/div/a', type='link')
-    browser.inspect.add(
-        'navigation',
-        '//div[@class="navigation"]//td/div/a', type='link')
-    # Container tab edit listing
-    browser.inspect.add(
-        'folder_listing',
-        '//form[@name="silvaObjects"]/*/tbody/tr/td[2]/a[last()]', type='link')
-    # Zeam Form errors
-    browser.inspect.add(
-        'form_errors',
-        '//form[contains(@class,"zeam-form")]//div[@class="error"]',
-        type='text')
-
+def zmi_settings(browser):
     # ZMI
     browser.inspect.add(
         'zmi_tabs',
@@ -91,7 +59,61 @@ def smi_settings(browser):
     browser.inspect.add(
         'zmi_feedback',
         '//div[@class="system-msg"]')
+    browser.inspect.add(
+        'zmi_status',
+        '//p[@class="system-msg"]')
 
+
+def smi_settings(browser):
+    browser.inspect.add(
+        'feedback',
+        '//div[@id="feedback"]/div/span',
+        type='text')
+    # Top tabs navigation
+    browser.inspect.add(
+        'tabs',
+        '//div[@class="tabs"]/a[contains(@class, "tab")]',
+        type='link')
+    # Second navigation (buttons in middleground)
+    browser.inspect.add(
+        'subtabs',
+        '//div[@class="middleground"]/div[@class="transporter"]/a',
+        type='link')
+    # Breadcrumb
+    browser.inspect.add(
+        'breadcrumbs',
+        '//div[@class="pathbar"]/a[contains(@class, "breadcrumb")]',
+        type='link')
+    # Sidebar navigation
+    browser.inspect.add(
+        'navigation_root',
+        '(//div[@class="navigation"]//td)[1]/div/a',
+        type='link')
+    browser.inspect.add(
+        'navigation',
+        '//div[@class="navigation"]//td/div/a',
+        type='link')
+    # Container tab edit listing
+    browser.inspect.add(
+        'folder_listing',
+        '//form[@name="silvaObjects"]/*/tbody/tr/td[2]/a[last()]',
+        type='link')
+    # Zeam Form errors
+    browser.inspect.add(
+        'form_errors',
+        '//form[contains(@class,"zeam-form")]//div[@class="error"]',
+        type='text')
+   # Simple layout pages / errors
+    browser.inspect.add(
+        'error_title',
+        '//body/div[contains(@class,"simple-page")]/*/h1',
+        type='text')
+    browser.inspect.add(
+        'error_text',
+        '//body/div[contains(@class,"simple-page")]/*/p[1]',
+        type='normalized-text')
+
+    zmi_settings(browser)
 
     browser.macros.add('create', smi_create_content)
     browser.macros.add('delete', smi_delete_content)

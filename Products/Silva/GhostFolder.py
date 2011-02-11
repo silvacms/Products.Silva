@@ -144,6 +144,7 @@ class GhostFolder(GhostBase, Folder.Folder):
 
     grok.implements(IGhostFolder)
     silvaconf.icon('icons/silvaghost_folder.png')
+    silvaconf.priority(0)
 
     security = ClassSecurityInfo()
 

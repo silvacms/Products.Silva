@@ -1,0 +1,2 @@
+[default]
+interface = silva.core.smi.interfaces.IEditTabIndex

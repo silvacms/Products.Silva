@@ -49,6 +49,29 @@ def index_content(parent, reindex=False):
     logger.info('catalog indexing: %d objects indexed' % count)
 
 
+def purge_old_versions(parent):
+    count = 0
+    for count, content in enumerate(walk_silva_tree(parent)):
+        if not interfaces.IVersionedContent.providedBy(content):
+            continue
+        versions = content._previous_versions
+        if not versions:
+            continue
+        if count and count % 500 == 0:
+            # Commit now and when
+            transaction.commit()
+
+        removable_versions = versions[:-1]
+        content._previous_versions = versions[-1:]
+
+        contained_ids = content.objectIds()
+        removable_version_ids = set([
+            str(version[0]) for version in removable_versions
+            if version[0] in contained_ids])
+
+        content.manage_delObjects(list(removable_version_ids))
+
+
 def compute_used_space(content):
     """Recursively compute the used space by asset in the given content.
     """
@@ -308,11 +331,11 @@ class PartialReindexForm(silvaforms.ZMIForm):
     """
     grok.name('manage_partialReindex')
     fields = silvaforms.Fields(IPartialReindex)
-    description = _(u"Reindex a subtree of the site in the Silva Catalog."
+    description = _(u"Reindex a subtree of the site in the Silva Catalog. "
                     u"For big trees this may take a long time.")
 
     @silvaforms.action(_("Reindex"))
-    def reindex(self, path):
+    def reindex(self):
         data, errors = self.extractData()
         if errors:
             return
@@ -320,9 +343,9 @@ class PartialReindexForm(silvaforms.ZMIForm):
         try:
             self.context.reindex_subtree(path)
         except KeyError:
-            self.status = _(u"Invalid path")
+            self.status = _(u"Invalid path.")
         else:
-            self.status = _(u"Partial catalog refreshed")
+            self.status = _(u"Partial catalog refreshed.")
 
 
 class ManageExtensions(silvaviews.ZMIView):
@@ -346,6 +369,11 @@ class ManageExtensions(silvaviews.ZMIView):
     def enable_quota_subsystem(self):
         self.context.enable_quota_subsystem()
         return _(u'Quota sub-system enabled')
+
+    def purge_old_versions(self):
+        root = self.context.get_root()
+        purge_old_versions(root)
+        return _(u'Old version of documents purged')
 
     def upgrade_all(self):
         root = self.context.get_root()
@@ -378,7 +406,8 @@ class ManageExtensions(silvaviews.ZMIView):
     def update(self):
         methods = ['refresh_all', 'install_documentation',
                    'refresh_catalog', 'disable_quota_subsystem',
-                   'enable_quota_subsystem', 'upgrade_all', 'install_layout']
+                   'enable_quota_subsystem', 'upgrade_all',
+                   'install_layout', 'purge_old_versions']
         for method in methods:
             if method in self.request.form:
                 self.status = getattr(self, method)()

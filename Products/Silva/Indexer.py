@@ -167,18 +167,18 @@ class IndexerEditForm(silvaforms.SMIForm):
 
     description = _(
         u"An index is not editable. "
-        u"However, you can update the index to include recent added content.")
+        u"However, you can update the index to include recently added content.")
     actions = silvaforms.Actions(silvaforms.CancelEditAction())
 
     @silvaforms.action(
         _(u"update index"),
         accesskey=u"u",
-        description=_(u"Update index to include recent added content: alt-u"))
+        description=_(u"Update index to include recently added content: alt-u"))
     def update_index(self):
         self.context.update()
         notify(ObjectModifiedEvent(self.context))
         self.send_message(
-            _(u"Index content have been successfully updated."),
+            _(u"The index has been successfully updated."),
             type="feedback")
 
 

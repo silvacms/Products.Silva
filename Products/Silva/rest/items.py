@@ -14,6 +14,7 @@ from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
 from Products.Silva.icon import registry as icons
+from Products.Silva.Folder import meta_types_for_interface
 
 
 def get_icon(content):
@@ -51,7 +52,8 @@ class Items(rest.REST):
             'icon': '/'.join((self.root_url, get_icon(content))),
             'implements': require and require.providedBy(content) or False,
             'folderish': interfaces.IContainer.providedBy(content),
-            'title': content.get_title_or_id()}
+            'title': content.get_title_or_id(),
+            'short_title': content.get_short_title()}
 
     def get_context_details(self, require):
         details = [self.get_item_details(
@@ -77,7 +79,8 @@ class Items(rest.REST):
                              '++resource++Products.Silva/exclamation.png')),
                         'implements': False,
                         'folderish': False,
-                        'title': 'Broken'})
+                        'title': 'Broken',
+                        'short_title': 'Broken'})
             return self.json_response(self.get_item_details(content))
         require = interfaces.ISilvaObject
         if interface is not None:
@@ -117,3 +120,37 @@ class ParentItems(Items):
             details.append(self.get_item_details(content))
         details.reverse()
         return self.json_response(details)
+
+
+class Addables(rest.REST):
+    """ Return addables in folder
+    """
+    grok.context(interfaces.IContainer)
+    grok.name('addables')
+
+    always_allow = [interfaces.IContainer]
+
+    def GET(self, interface=None):
+        allowed_meta_types = \
+            self.context.get_silva_addables_allowed_in_container()
+
+        if interface is not None:
+            required = component.getUtility(IInterface, name=interface)
+            ifaces = self.always_allow[:]
+            # dont append required if it more specific
+            # than one in always_allowed
+            for iface in ifaces:
+                if required.isOrExtends(iface):
+                    break
+            else:
+                ifaces.insert(0, required)
+
+            meta_types = []
+            for iface in ifaces:
+                for meta_type in meta_types_for_interface(iface):
+                    if meta_type in allowed_meta_types and \
+                            not meta_type in meta_types:
+                        meta_types.append(meta_type)
+            return self.json_response(meta_types)
+        return self.json_response(allowed_meta_types)
+

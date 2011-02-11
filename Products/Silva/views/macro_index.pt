@@ -37,9 +37,7 @@
 </title>
 <tal:block replace="nothing"> _______ base tag to handle Five methods with .. _______ </tal:block>
 <base tal:attributes="href string:${model/absolute_url}/edit/" />
-<link rel="shortcut icon"
-  tal:attributes="href string:$root_url/globals/silvacon.ico"
-/>
+<tal:favicon replace="structure provider:favicon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
 <tal:resource tal:replace="structure provider:resources" />

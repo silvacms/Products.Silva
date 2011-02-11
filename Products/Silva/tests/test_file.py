@@ -8,6 +8,7 @@ import unittest
 from zope.interface.verify import verifyObject
 
 from Products.Silva import File
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.testing import (
     FunctionalLayer, TestCase, http, get_event_names)
 from Products.Silva.tests import helpers
@@ -22,7 +23,9 @@ class DefaultFileImplementationTestCase(TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        file_handle = helpers.openTestFile('photo.tif')
+        self.layer.login('author')
+
+        file_handle = helpers.open_test_file('photo.tif')
         self.file_data = file_handle.read()
         self.file_size = file_handle.tell()
         file_handle.seek(0)
@@ -56,7 +59,6 @@ class DefaultFileImplementationTestCase(TestCase):
             get_event_names(),
             ['ObjectModifiedEvent'])
 
-
     def test_content(self):
         """Test base content methods.
         """
@@ -65,8 +67,9 @@ class DefaultFileImplementationTestCase(TestCase):
         self.failUnless(verifyObject(interfaces.IFile, content))
 
         self.assertEquals(content.content_type(), 'image/tiff')
+        self.assertEquals(content.content_encoding(), None)
         self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'testfile')
+        self.assertEquals(content.get_filename(), 'testfile.tiff')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
         self.assertHashEqual(content.get_content(), self.file_data)
         self.failUnless(content.get_download_url() is not None)
@@ -88,7 +91,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=testfile')
+                          'inline;filename=testfile.tiff')
         self.failUnless('Last-Modified' in headers)
 
     def test_not_modified(self):
@@ -99,7 +102,6 @@ class DefaultFileImplementationTestCase(TestCase):
             parsed=True,
             headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
         self.assertEquals(response.getStatus(), 304)
-        headers = response.getHeaders()
         self.assertEquals(len(response.getBody()), 0)
 
     def test_head_request(self):
@@ -113,7 +115,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=testfile')
+                          'inline;filename=testfile.tiff')
         self.failUnless('Last-Modified' in headers)
         self.assertEquals(len(response.getBody()), 0)
 
@@ -124,6 +126,18 @@ class DefaultFileImplementationTestCase(TestCase):
         assetdata = interfaces.IAssetData(content)
         self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
         self.assertHashEqual(self.file_data, assetdata.getData())
+
+    def test_rename_filename(self):
+        """If you rename the file, the filename gets updated, and
+        replace any existing wrong extension.
+        """
+        self.root.manage_renameObject('testfile', 'renamedfile')
+        testfile = self.root['renamedfile']
+        self.assertEqual(testfile.get_filename(), 'renamedfile.tiff')
+
+        self.root.manage_renameObject('renamedfile', 'customfile.pdf')
+        testfile = self.root['customfile.pdf']
+        self.assertEqual(testfile.get_filename(), 'customfile.tiff')
 
 
 class BlobFileImplementationTestCase(DefaultFileImplementationTestCase):
@@ -144,8 +158,59 @@ class FFSFileImplementationTestCase(DefaultFileImplementationTestCase):
     implementation = File.FileSystemFile
 
 
+class CreateNewFilenameTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('author')
+
+    def create_file(self, filename):
+        with helpers.open_test_file(filename) as file_handle:
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFile('testfile', 'Test File', file_handle)
+            return self.root.testfile
+
+    def test_image_png_filename(self):
+        testfile = self.create_file('photo.tif')
+
+        create_new_filename(testfile, 'image')
+        self.assertEqual(testfile.get_filename(), 'image.tiff')
+
+    def test_image_png_filename_with_extension(self):
+        testfile = self.create_file('photo.tif')
+
+        create_new_filename(testfile, 'image.jpg')
+        self.assertEqual(testfile.get_filename(), 'image.tiff')
+
+    def test_tar_gz_filename(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files')
+        self.assertEqual(testfile.get_filename(), 'files.gz')
+
+    def test_tar_gz_filename_with_partial_extension(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files.tar')
+        self.assertEqual(testfile.get_filename(), 'files.tar.gz')
+
+    def test_tar_gz_filename_with_extension(self):
+        testfile = self.create_file('images.tar.gz')
+
+        create_new_filename(testfile, 'files.tar.gz')
+        self.assertEqual(testfile.get_filename(), 'files.tar.gz')
+
+    def test_zip_filename(self):
+        testfile = self.create_file('test1.zip')
+
+        create_new_filename(testfile, 'files')
+        self.assertEqual(testfile.get_filename(), 'files.zip')
+
+
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(CreateNewFilenameTestCase))
     suite.addTest(unittest.makeSuite(DefaultFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(BlobFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(ZODBFileImplementationTestCase))

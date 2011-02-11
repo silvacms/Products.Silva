@@ -123,18 +123,13 @@ class QuotaFunctionalTestCase(unittest.TestCase):
         self.assertEqual(form.get_control('addform.action.save').click(), 200)
 
         # Add you have an error.
+        self.assertEqual(browser.inspect.error_title, ["Over Quota"])
         self.assertEqual(
-            browser.html.xpath(
-                'normalize-space(//body/div[contains(@class,"simple-page")]/h1/text())'),
-            "Over Quota")
+            browser.inspect.error_text,
+            ["Sorry, a quota is applied to the container you are working in, "
+             "and the current operation would require 387.1 k more space."])
         self.assertEqual(
-            browser.html.xpath(
-                'normalize-space(//body/div[contains(@class,"simple-page")]/p[1]/text())'),
-            "A quota is applied on the container you are working on, "
-            "and the current operation would require 387.1 k more space.")
-
-        self.assertEqual(
-            browser.get_link('click here to continue').click(),
+            browser.get_link('Return to the previous screen...').click(),
             200)
         self.assertEqual(browser.location, '/root/edit')
         self.assertFalse('odt' in browser.inspect.folder_listing)

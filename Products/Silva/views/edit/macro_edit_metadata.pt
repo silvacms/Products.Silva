@@ -49,7 +49,7 @@
             <tr class="divider"
               tal:condition="not:repeat/set_name/start">
               <td colspan="3"
-                tal:attributes="style python:model.implements_container() and 'background-color:#c4d6e7' or 'background-color:#c5d4ca'">
+                tal:attributes="class python:model.implements_container() and 'separator separator-container' or 'separator'">
               </td>
             </tr>
             <tr tal:replace="nothing">

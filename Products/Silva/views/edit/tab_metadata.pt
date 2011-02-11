@@ -18,7 +18,7 @@
 </metal:block>
 
 <metal:block fill-slot="main">
-  <table class="columns columns2">
+  <table class="columns columns3">
     <tbody>
       <tr>
         <tal:block replace="nothing">
@@ -110,6 +110,9 @@
               <metal:block use-macro="here/macro_edit_metadata/macros/metadata" />
             </tal:block>
           </tal:block>
+        </td>
+        <td class="right"
+            tal:content="structure provider:smiportletmanager">
         </td>
       </tr>
     </tbody>

@@ -214,8 +214,7 @@ ______________ macro plateau: level navigation ______________
 </tr>
 <tr class="controls"
   tal:condition="repeat/item/end">
-  <td style="border-top:1px solid #abc">
-  </td>
+  <td></td>
 </tr>
 
   </tal:define>

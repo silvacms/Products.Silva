@@ -12,32 +12,16 @@
     message options/message|nothing"
 >
 <head>
- <title>
+  <title>
    <tal:block content="title">title</tal:block> &#8211;
    <tal:block i18n:translate="">preview</tal:block>
- </title>
-<link rel="shortcut icon"
-  tal:attributes="href string:$root_url/globals/silvacon.ico"
-/>
-<script type="text/javascript">
-<!--
-function onloadResizeTopFrame() {
-  var frame = document.getElementById("preview_frameset"),
-  tf_height = window.frames[0].document.height;
-  /* XXX make this dynamically pull the real height */
-  tf_def_height = 119;
-
-  if (tf_height > tf_def_height) {
-    frame.setAttribute("rows",tf_height + "px,*");
-  }
-}
--->
-</script>
+  </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Silva" />
+  <tal:resource tal:replace="structure provider:resources" />
+  <base href="#" target="_parent"
+        tal:attributes="href string:${context/@@absolute_url}/edit" />
+  <tal:favicon replace="structure provider:favicon" />
 </head>
-<frameset rows="119px,*" id="preview_frameset" frameborder="0" framespacing="0" border="0" marginwidth="0" marginheight="0" onload="onloadResizeTopFrame()">
- <frame id="preview_frame_top" scrolling="no"
-   tal:attributes="src python:'%s/edit/tab_preview_frame_top?message=%s&message_type=%s'%(model.absolute_url(),message or '',message_type or '')" />
- <frame id="preview_frame_bottom"
-   tal:attributes="src request/model/@@absolute_url/preview" />
-</frameset>
+<tal:block replace="structure request/model/@@previewframeset" />
 </html>

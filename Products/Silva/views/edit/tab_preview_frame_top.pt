@@ -30,9 +30,7 @@
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
 <base tal:attributes="href string:${model/absolute_url}/edit/" target="_parent" />
-<link rel="shortcut icon"
-  tal:attributes="href string:$root_url/globals/silvacon.ico"
-/>
+<tal:favicon replace="structure provider:favicon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <tal:resource tal:replace="structure provider:resources" />
 <link rel="help" href="globals/accesskeys" title="Help with access keys" i18n:attributes="title" />

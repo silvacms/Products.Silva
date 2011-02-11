@@ -21,7 +21,7 @@ from Products.Silva.Membership import cloneMember, Member
 from Products.Silva.Security import Security
 from Products.Silva.helpers import add_and_edit
 
-from silva.core.services.interfaces import IMemberService
+from silva.core.services.interfaces import IMemberService, MemberLookupError
 from silva.core.services.base import SilvaService, ZMIObject
 from silva.core import interfaces
 from silva.core import conf as silvaconf
@@ -199,6 +199,10 @@ class SimpleMemberService(SilvaService):
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'find_members')
     def find_members(self, search_string, location=None):
+        if len(search_string) < 2:
+            raise MemberLookupError(
+                _(u"The search input is too short. "
+                  u"Please enter two or more characters."))
         # XXX: get_valid_userids is evil: will break with other user
         # folder implementations.
         userids = self.get_valid_userids()

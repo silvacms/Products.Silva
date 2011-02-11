@@ -37,7 +37,7 @@
       editable model/get_editable;
       iscontainer model/implements_container;
       isfolder python: type == 'Silva Folder';
-      ispublication python: type == 'Silva Publication' or type == 'Silva Root';
+      ispublication python: type == 'Silva Publication';
       isghostfolder python: type == 'Silva Ghost Folder';
       rendererservice context/service_renderer_registry;
       renderers python: rendererservice.getFormRenderersList(type);"
@@ -56,8 +56,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="top-controls"
-        tal:condition="iscontainer">
+    <tal:if condition="python:ispublication or isfolder or isghostfolder">
+      <tr class="top-controls">
         <td colspan="2">
           <h3>
             <span i18n:translate="">container type</span>
@@ -65,25 +65,24 @@
         </td>
       </tr>
       <tr class="odd">
-        <td colspan="2">
-          <tal:block condition="isghostfolder"
-             i18n:translate="">
+        <td class="designator" colspan="2">
+          <p tal:condition="isghostfolder"
+            i18n:translate="">
             This Ghost Folder can be converted to a normal
             Publication or Folder. All ghosted content will be
             duplicated and can then be edited.
-          </tal:block>
-          <tal:block condition="isfolder"
-             i18n:translate="">
-            This Silva Folder can be converted to a Publication
-          </tal:block>
-          <tal:block condition="ispublication"
+          </p>
+          <p tal:condition="isfolder"
             i18n:translate="">
-            This Silva Publication can be converted to a Silva Folder
-          </tal:block>
+            This Silva Folder can be converted to a Publication.
+          </p>
+          <p tal:condition="ispublication"
+            i18n:translate="">
+            This Silva Publication can be converted to a Silva Folder.
+          </p>
         </td>
       </tr>
-      <tr class="controls"
-        tal:condition="iscontainer">
+      <tr class="controls">
         <td colspan="2">
           <input class="button"
             style="float:right"
@@ -107,12 +106,12 @@
           />
         </td>
       </tr>
-
-      <tr tal:condition="iscontainer">
+      <tr>
         <td class="separator"
           colspan="2">
         </td>
       </tr>
+    </tal:if>
 
       <tr class="top-controls">
         <td colspan="2">
@@ -187,7 +186,7 @@
               <tal:block i18n:translate="">The feed url is</tal:block>
                 <a title="RSS feed"
                   tal:attributes="href string:${model/absolute_url}/atom.xml"
-                  >atom.xml</a> / <a title="Atom feed" 
+                  >atom.xml</a> / <a title="Atom feed"
                   tal:attributes="href string:${model/absolute_url}/rss.xml">rss.xml</a>.
               </p>
             </td>

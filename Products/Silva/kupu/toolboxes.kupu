@@ -69,10 +69,24 @@
 
           <div class="reference-widget" id="#"
                tal:define="widget_id string:kupu-link-input" tal:attributes="id widget_id">
-            <div id="#" title="select link reference" class="ui-widget reference-dialog"
+            <div style="display: none" id="#" title="select link reference" class="ui-widget reference-dialog"
               tal:attributes="id string:${widget_id}-dialog" i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
+              <div class="content-list-actions">
+                <div class="content-list-action content-list-action-refresh">
+                  <button name="refresh" i18n:translate="">refresh</button>
+                </div>
+                <div class="content-list-action content-list-action-add">
+                  <select disabled="disabled">
+                    <option value="" i18n:translate="">select:</option>
+                  </select>
+                  <button name="add" i18n:translate="">add</button>
+                </div>
+              </div>
+              <div class="path-list"></div>
+              <table class="content-list source-list">
+              </table>
+              <table class="content-list selection-list">
+              </table>
             </div>
             <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit content"
                tal:attributes="id string:${widget_id}-edit-link"
@@ -162,11 +176,25 @@
           <div class="reference-widget" id="#"
                tal:define="widget_id string:kupu-image-input"
                tal:attributes="id widget_id">
-            <div id="#" title="select image reference" class="ui-widget reference-dialog"
+            <div style="display: none" id="#" title="select image reference" class="ui-widget reference-dialog"
                  tal:attributes="id string:${widget_id}-dialog"
                  i18n:attributes="title">
-              <ul class="reference-dialog-data">
-              </ul>
+                <div class="content-list-actions">
+                  <div class="content-list-action content-list-action-refresh">
+                    <button name="refresh" i18n:translate="">refresh</button>
+                  </div>
+                  <div class="content-list-action content-list-action-add">
+                    <select disabled="disabled">
+                      <option value="" i18n:translate="">select:</option>
+                    </select>
+                    <button name="add" i18n:translate="">add</button>
+                  </div>
+                </div>
+                <div class="path-list"></div>
+                <table class="content-list source-list">
+                </table>
+                <table class="content-list selection-list">
+                </table>
             </div>
             <a class="kupu-reference-edit-link" target="_blank" id="#" title="Edit image"
                tal:attributes="id string:${widget_id}-edit-link"
@@ -205,9 +233,13 @@
           </div>
 
           <div class="kupu-toolbox-actions">
-            <input type="button" class="button" value="add image" id="kupu-image-addbutton" i18n:attributes="value" />
-            <input type="button" class="button" value="update" id="kupu-image-updatebutton" i18n:attributes="value" />
-            <input type="button" class="button executor" id="kupu-image-resizebutton" value="confirm resize" i18n:attributes="value" />
+            <input type="button" class="button" value="add image" id="kupu-image-addbutton"
+                   i18n:attributes="value" />
+            <input type="button" class="button" value="update" id="kupu-image-updatebutton"
+                   i18n:attributes="value" />
+            <input type="button" class="button executor" id="kupu-image-resizebutton"
+                   value="confirm resize"
+                   i18n:attributes="value" />
           </div>
         </form>
       </div>
