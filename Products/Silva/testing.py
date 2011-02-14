@@ -121,7 +121,8 @@ class SilvaLayer(BrowserLayer):
         'silva.core.views',
         'silva.core.layout',
         'silvatheme.standardissue',
-        'silva.core.services',
+        'silva.core.services'
+        'silva.core.contentlayout',
         ]
     default_users = {
         'editor': ['Editor'],
