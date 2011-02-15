@@ -31,10 +31,10 @@ from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
-from Products.Silva.errors import NoDefaultDocument
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
+from silva.core.layout.errors import NoDefaultDocument
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
     INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent)
@@ -913,6 +913,9 @@ class ContainerView(silvaviews.View):
         default = self.context.get_default()
         if default is not None:
             return default.view()
+        #this is now actually happening in silva.core.layout.default.Page's
+        # update(), since we need this error to be raised at the earliest
+        # possible moment
         raise NoDefaultDocument
 
 class IPhotoGallery(ICustomizableTag):
