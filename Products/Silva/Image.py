@@ -11,6 +11,7 @@ import logging
 import mimetypes
 from cStringIO import StringIO
 from cgi import escape
+import os.path
 
 logger = logging.getLogger('silva.image')
 
@@ -697,10 +698,14 @@ mt  = [mt for mt in mt if mt.startswith('image')]
 assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
 
 
-def image_factory(self, id, content_type, body):
+def image_factory(self, id, content_type, file):
     """Create an Image.
     """
-    id = mangle.Id(self, id, file=body, interface=interfaces.IAsset)
+    filename = None
+    if hasattr(file, 'name'):
+        filename = os.path.basename(file.name)
+    id = mangle.Id(self, id or filename,
+        file=file, interface=interfaces.IAsset)
     id.cook()
     if not id.isValid():
         return None

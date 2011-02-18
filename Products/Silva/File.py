@@ -5,6 +5,7 @@
 
 # Python
 import os
+import os.path
 import logging
 from types import StringTypes
 from cgi import escape
@@ -620,8 +621,11 @@ class FileAddForm(silvaforms.SMIAddForm):
 def file_factory(self, id, content_type, file):
     """Create a File.
     """
-
-    id = mangle.Id(self, id, file=file, interface=interfaces.IAsset)
+    filename = None
+    if hasattr(file, 'name'):
+        filename = os.path.basename(file.name)
+    id = mangle.Id(self, id or filename,
+        file=file, interface=interfaces.IAsset)
     id.cook()
     if not id.isValid():
         return None
