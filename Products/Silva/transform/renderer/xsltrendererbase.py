@@ -65,7 +65,8 @@ class XSLTTransformer(object):
 
     def transform(self, context, request):
         source = getMultiAdapter((context, request), IXMLSource)
-        return self.transform_xml(source.getXML(image_link_res='hires'))
+        return self.transform_xml(source.getXML(
+                options={'image_link_res': 'hires'}))
 
     def transform_xml(self, text):
         style = self.stylesheet()
