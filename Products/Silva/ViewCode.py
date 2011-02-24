@@ -20,7 +20,7 @@ from silva.translations import translate as _
 from silva.core.views.interfaces import IVirtualSite
 from silva.core.interfaces import (
     IPublishable, IAsset, IImage, IContent, IContainer, IPublication, IRoot,
-    IVersioning, IVersionedContent)
+    IVersioning, IVersionedContent, IVersionedAsset)
 
 
 class ViewCode(object):
@@ -174,6 +174,51 @@ class ViewCode(object):
             i += 1
         return result
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'get_processed_assets')
+    def get_processed_assets(self):
+        result = []
+        render_icon = self.render_icon
+
+        for asset in self.get_assets():
+            title = asset.get_title()
+            modification_datetime = asset.get_modification_datetime()
+            d = {
+                'asset_id': asset.id,
+                'asset': asset,
+                'asset_url': asset.absolute_url(),
+                'meta_type': asset.meta_type,
+                'last_author': asset.sec_get_last_author_info().fullname(),
+                'title': title,
+                'editor_link': self.get_editor_link(asset),
+                'rendered_icon': render_icon(asset),
+                'has_modification_time': modification_datetime,
+                'modification_time': mangle.DateTime(modification_datetime).toShortStr(),
+                'is_versioned_asset': IVersionedAsset.providedBy(asset),
+                }
+            if title:
+                d['blacklink_class'] = 'blacklink'
+            else:
+                d['blacklink_class'] = 'closed'
+                
+            if d['is_versioned_asset']:
+                status = asset.get_object_status()
+                is_editable = status[0] in ['draft', 'pending', 'approved']
+                is_published = status[2] == 'published'
+                is_approved = status[0] == 'approved'
+                is_closed = status[2] == 'closed'
+                d.update({
+                'is_editable': is_editable,
+                'is_published': is_published,
+                'is_approved': is_approved,
+                'is_closed': is_closed,
+                'blacklink_class': status[1],
+                'is_published_or_approved': is_published or is_approved,
+                'title_editable': asset.get_title_editable(),
+                })
+            result.append(d)
+        return result
+    
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'get_processed_non_publishables')
     def get_processed_non_publishables(self):
