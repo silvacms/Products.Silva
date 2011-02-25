@@ -91,15 +91,9 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         service = component.getUtility(IMessageService)
         service.send(
             _(u"New Silva site ${identifier} added.", mapping=data),
-            self.request, namespace=type)
+            self.request)
         self.redirect(absoluteURL(root, self.request) + '/edit')
         return silvaforms.SUCCESS
-
-
-class SilvaGlobals(grok.DirectoryResource):
-    # This export the globals directory using Zope 3 technology.
-    grok.path('globals')
-    grok.name('silva.globals')
 
 
 class Root(Publication, site.Site):

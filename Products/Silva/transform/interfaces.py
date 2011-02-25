@@ -5,30 +5,11 @@
 from zope.interface import Interface
 
 
-class IRenderable(Interface):
-    """I'm implemented by objects that can be rendered."""
-
-    def preview():
-        """Display the preview of this object using the selected renderer.
-
-        Returns the rendered content or None if no renderer can be
-        found.
-        """
-
-    def view():
-        """Display the view of this object using the selected renderer.
-
-        Returns the rendered content or None if no renderer can be
-        found.
-        """
-
-
 class IXMLSource(Interface):
     """I'm implemented by objects that use XML as their source content."""
 
     def getXML():
         """Return the XML content."""
-
 
 
 class IRenderer(Interface):

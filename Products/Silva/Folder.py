@@ -37,7 +37,7 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
-    INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent)
+    INonPublishable, IContainer, IFolder, IRoot)
 
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
@@ -141,25 +141,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             REQUEST.RESPONSE.redirect(
                 absoluteURL(self, self.REQUEST) + '/manage_main')
 
-    def _invalidate_sidebar(self, item):
-        # invalidating sidebar also takes place for folder when index gets
-        # changed
-        if item.id == 'index':
-            item = item.get_container()
-        if not IContainer.providedBy(item):
-            return
-
-        notify(InvalidateSidebarEvent(item))
-
     # MANIPULATORS
-
-    security.declarePrivate('titleMutationTrigger')
-    def titleMutationTrigger(self):
-        """This trigger is called upon save of Silva Metadata. More
-        specifically, when the silva-content - defining titles - set is
-        being editted for this object.
-        """
-        self._invalidate_sidebar(self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'move_object_up')

@@ -98,8 +98,6 @@
               </ul>
               <input type="submit" name="refresh" value="refresh"
                      i18n:attributes="value"/>
-              <input type="submit" name="install_layout" value="install legacy layout"
-                     i18n:attributes="value"/>
             </tal:cond>
           </form>
         </div>

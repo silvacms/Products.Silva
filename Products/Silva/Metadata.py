@@ -42,23 +42,4 @@ def register_access_handlers():
     registerAccessHandler(GhostVersion.meta_type, ghost_access_handler)
     registerAccessHandler(GhostFolder.meta_type, ghostfolder_access_handler)
 
-def register_initialize_handlers():
-    """Set initialize handlers which set mutation triggers on everything
-    for the silva-content set. This takes care of sidebar cache invalidation
-    upon (short)title changes.
-    """
-    # use None for content type registers initializer for all content
-    # types
-    registerInitHandler(None, _initialize_handler)
-
-def _initialize_handler(object, bind_data):
-    set_id = 'silva-content'
-    set_triggers = {
-        'maintitle': 'titleMutationTrigger',
-        'shortitle': 'titleMutationTrigger',
-        }
-
-    bind_data[Binding.MutationTrigger] = {set_id: set_triggers}
-
 register_access_handlers()
-register_initialize_handlers()

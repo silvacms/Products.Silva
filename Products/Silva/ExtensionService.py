@@ -19,7 +19,6 @@ import transaction
 # Silva
 from Products.Silva.helpers import add_and_edit
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
@@ -126,13 +125,6 @@ class ExtensionService(Folder, SilvaService):
 
     # MANIPULATORS
 
-    def _update_views(self, root):
-        productsWithView = [
-            inst_name for inst_name in extensionRegistry.get_names()
-            if (extensionRegistry.is_installed(inst_name, root) and
-                (inst_name in root.service_views.objectIds()))]
-        root.service_view_registry.set_trees(productsWithView)
-
     security.declareProtected(
         'View management screens', 'install')
     def install(self, name):
@@ -140,7 +132,6 @@ class ExtensionService(Folder, SilvaService):
         """
         root = self.get_root()
         extensionRegistry.install(name, root)
-        self._update_views(root)
 
     security.declareProtected(
         'View management screens', 'uninstall')
@@ -149,7 +140,6 @@ class ExtensionService(Folder, SilvaService):
         """
         root = self.get_root()
         extensionRegistry.uninstall(name, root)
-        self._update_views(root)
 
     security.declareProtected(
         'View management screens', 'refresh')
@@ -386,11 +376,6 @@ class ManageExtensions(silvaviews.ZMIView):
         install_documentation(self.context.get_root())
         return _(u'Documentation installed')
 
-    def install_layout(self):
-        root = self.context.get_root()
-        install.configureLegacyLayout(root, 1)
-        return _(u'Default legacy layout code installed')
-
     def install(self, name):
         self.context.install(name)
         return '%s installed' % name
@@ -407,7 +392,7 @@ class ManageExtensions(silvaviews.ZMIView):
         methods = ['refresh_all', 'install_documentation',
                    'refresh_catalog', 'disable_quota_subsystem',
                    'enable_quota_subsystem', 'upgrade_all',
-                   'install_layout', 'purge_old_versions']
+                   'purge_old_versions']
         for method in methods:
             if method in self.request.form:
                 self.status = getattr(self, method)()

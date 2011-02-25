@@ -19,6 +19,7 @@
   <include package="infrae.rest" />
   <include package="silva.translations" />
   <include package="zeam.form.silva" />
+  <include package="silva.ui" />
 
   <include package="Products.Formulator" />
   <include package="Products.SilvaMetadata" />
@@ -41,21 +42,6 @@
           zope.publisher.interfaces.browser.IBrowserRequest"
      factory=".Image.ImagePublishTraverse"
      provides="zope.publisher.interfaces.browser.IBrowserPublisher"
-     />
-
-  <adapter
-     for="silva.core.interfaces.ISilvaObject
-          silva.core.smi.interfaces.ISMILayer"
-     factory=".ViewCode.FakeView"
-     provides="Products.FileSystemSite.interfaces.IFakeView"
-     />
-
-  <!-- lookup window edit button support -->
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="resolve_and_redirect_editor"
-     class=".lookupwindowfield.EditButtonRedirector"
-     permission="silva.ReadSilvaContent"
      />
 
   <!-- Setd default view on Application to get a welcome page -->

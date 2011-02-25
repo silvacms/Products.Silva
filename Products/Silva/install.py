@@ -10,97 +10,31 @@ import os
 # Zope 2
 from DateTime import DateTime
 from OFS import Image
-from Products.StandardCacheManagers.AcceleratedHTTPCacheManager \
-    import manage_addAcceleratedHTTPCacheManager
 
 # Silva
 from silva.core.interfaces import IRoot
 from silva.core.services.interfaces import ICataloging
 
-from Products.FileSystemSite.DirectoryView import manage_addDirectoryView
-from Products.FileSystemSite.utils import minimalpath, expandpath
 from Products.Silva.tocfilter import TOCFilterService
 from Products.Silva import roleinfo
 from Products.Silva import MAILDROPHOST_AVAILABLE, MAILHOST_ID
 from Products.Silva.ExtensionRegistry import extensionRegistry
 
 
-def add_fss_directory_view(obj, name, base, *args):
-    """ add a FSS-DirectoryView object with lots of sanity checks.
-
-    obj         where the new directory-object will be accessible
-    name        name of the new zope object
-    base        dirname(base) is taken as the base for the following
-                relative path
-    *args       directory names which form the relative path
-                to our content directory
-
-    This method tries to provide a sane interface independent of FSS
-    path munging.
-
-    Note that the the resulting path (joined from base and *args) must be
-    below an already registered FSS-path (i.e. you must have issued
-    a 'registerDirectory' on the to-be-registered directory or on one
-    of its parents).
-
-    """
-    from os.path import isdir, dirname, join, normpath, normcase
-
-    base = dirname(base)
-
-    # --- sanity checks ---
-    if not isdir(base):
-        raise ValueError, "base %s not an existing directory" % base
-    abs_path = join(base, *args)
-    if not isdir(abs_path):
-        raise ValueError, "path %s not a directory" % abs_path
-    # --- end sanity checks ---
-
-    # we probe FSS to get the correct 'short path' to use
-    fss_base = minimalpath(base)
-    path = join(fss_base, *args)
-
-    # -- sanity check --
-    exp_path = expandpath(path)
-
-    if normcase(normpath(exp_path)) != normcase(normpath(abs_path)):
-        raise ValueError("detected FSS minimalpath/expandpath error, "+
-                         "path: %s, FSS path: %s" % ( abs_path, exp_path ))
-    # -- end sanity check --
-
-    # FSS should eat the path now and work correctly with it
-    manage_addDirectoryView(obj, path, name)
-
-
 def installFromScratch(root):
-    configureCoreFolders(root)
-    configureViews(root)
     configureSecurity(root)
     # now do the uinstallable stuff (views)
     install(root)
     setInitialSkin(root, 'Standard Issue')
     installSilvaExternalSources(root)
-    installKupu(root)
     installSilvaDocument(root)
     installSilvaFind(root)
 
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
-    # if necessary, create service_resources
-    # XXX this could move to installFromScratch later once all installs
-    # have been upgraded
-    if not hasattr(root, 'service_resources'):
-        # folder containing some extra views and resources
-        root.manage_addFolder('service_resources')
-
-    # create the core views from filesystem
-    add_fss_directory_view(root.service_views, 'Silva', __file__, 'views')
-    add_fss_directory_view(root.service_resources, 'Silva', __file__, 'resources')
-    add_favicon(root)
-
-    # also register views
-    registerViews(root.service_view_registry)
+    root.manage_addProduct['Silva'].manage_addExtensionService(
+        'service_extensions', 'Silva Product and Extension Configuration')
 
     # add or update service metadata and catalog
     configureMetadata(root)
@@ -115,11 +49,7 @@ def install(root):
     configureContainerPolicies(root)
 
 def uninstall(root):
-    root.service_views.manage_delObjects(['Silva'])
-    if hasattr(root, 'service_resources'):
-        # XXX this can happen always if service_resources is
-        # assumed to be just there in the future (like service_views)
-        root.service_resources.manage_delObjects(['Silva'])
+    pass
 
 def is_installed(root):
     return IRoot.providedBy(root)
@@ -165,28 +95,6 @@ def configureMetadata(root):
     # Reindex the Silva root
     ICataloging(root).reindex()
 
-def configureCoreFolders(root):
-    """A bunch of core directory views.
-    """
-    # images, stylesheets, etc
-    add_fss_directory_view(root, 'globals', __file__, 'globals')
-    # folder containing some extra views and resources
-    root.manage_addFolder('service_resources', 'Silva Product Resources')
-
-def configureViews(root):
-    """The view infrastructure for Silva.
-    """
-    # view registry
-    root.manage_addProduct['SilvaViews'].manage_addMultiViewRegistry(
-        'service_view_registry')
-    root.manage_addProduct['Silva'].manage_addExtensionService(
-        'service_extensions', 'Silva Product and Extension Configuration')
-    # folder contains the various view trees
-    root.manage_addFolder('service_views', 'Silva View Machinery')
-    # and set Silva tree
-    # (does not need to be more polite to extension packages;
-    #  they will be installed later on)
-    root.service_view_registry.set_trees(['Silva'])
 
 
 def configureMiscServices(root):
@@ -197,20 +105,6 @@ def configureMiscServices(root):
     # add service_files
     if 'service_files' not in installed_ids:
         factory.manage_addFilesService('service_files')
-    # add service_sidebar
-    if 'service_sidebar' not in installed_ids:
-        factory.manage_addSidebarService(
-            'service_sidebar', 'Silva Content Tree Navigation')
-    # add service_renderer_registry
-    if 'service_renderer_registry' not in installed_ids:
-        factory.manage_addRendererRegistryService(
-            'service_renderer_registry', 'Silva Renderer Registry')
-    # add service_typo_chars
-    if 'service_typo_chars' not in installed_ids:
-        factory.manage_addTypographicalService('service_typo_chars')
-    # service subscription
-    # if 'service_subscriptions' not in installed_ids:
-    #     factory.manage_addSubscriptionService()
     # service message
     if 'service_messages' not in installed_ids:
         factory.manage_addEmailMessageService()
@@ -223,16 +117,6 @@ def configureMiscServices(root):
     if 'service_toc_filter' not in installed_ids:
         filter_service = TOCFilterService()
         root._setObject(filter_service.id, filter_service)
-    # add a cache manager for /globals, and anything else that
-    # is "static"
-    if not hasattr(root, 'service_static_cache_manager'):
-        manage_addAcceleratedHTTPCacheManager(root, 'service_static_cache_manager')
-        sscm = getattr(root, 'service_static_cache_manager')
-        sscm.manage_editProps(
-            title="Cache Manager for static filesystem objects",
-            settings={"anonymous_only": 0,
-                      "interval": 604800, #set expires to 1 week
-                      "notify_urls": []})
 
     # setup mailhost
     if not MAILHOST_ID in root.objectIds():
@@ -257,7 +141,6 @@ def configureSecurity(root):
     app.__ac_roles__ = tuple(roles)
 
     # now configure permissions
-
     add_permissions = [
         'Add Documents, Images, and Files',
         'Add Silva Folders',
@@ -300,26 +183,6 @@ def configureSecurity(root):
     # hail to Zope and its string exceptions!!
     except:
         pass
-
-def configureLegacyLayout(root, default_if_existent=0):
-    """Install common layout code into root.
-    If the default_if_existent argument is true, ids will be prefixed with
-    default_ if the id already exists in the root.
-    """
-    for id in ['layout_macro.html', 'content.html', 'rename-to-override.html',
-               'default_standard_error_message', 'copyright', 'head_inject',
-               'standard_unauthorized_message',]:
-        add_helper(root, id, globals(), pt_add_helper, default_if_existent, keep_extension=True)
-
-    for id in ['index_html.py', 'preview_html.py',
-               'get_metadata_element.py', ]:
-        add_helper(root, id, globals(), py_add_helper, default_if_existent)
-
-    add_helper(root, 'frontend.css', globals(),
-               dtml_add_helper, default_if_existent)
-
-    add_helper(root, 'print.css', globals(),
-               dtml_add_helper, default_if_existent)
 
 def configureMembership(root):
     """Install membership code into root.
@@ -382,36 +245,6 @@ def read_file(id, info, folder):
     finally:
         f.close()
 
-
-def registerViews(reg):
-    """Register core views on registry.
-    """
-    # edit
-    reg.register('edit', 'Silva Folder',
-                 ['edit', 'Container', 'Folder'])
-    reg.register('edit', 'Silva Root',
-                 ['edit', 'Container', 'Publication'])
-    reg.register('edit', 'Silva Publication',
-                 ['edit', 'Container', 'Publication'])
-    reg.register('edit', 'Silva Image',
-                 ['edit', 'Asset', 'Image'])
-    reg.register('edit', 'Silva File',
-                 ['edit', 'Asset', 'File'])
-    reg.register('edit', 'Silva Ghost',
-                 ['edit', 'VersionedContent', 'Ghost'])
-    reg.register('edit', 'Silva Ghost Folder',
-                 ['edit', 'Container', 'GhostFolder'])
-    # five compatibility for edit
-    reg.register('edit', 'Five Asset',
-                 ['edit', 'Asset', 'FiveAsset'])
-    reg.register('edit', 'Five Container',
-                 ['edit', 'Container', 'FiveContainer'])
-    reg.register('edit', 'Five VersionedContent',
-                 ['edit', 'VersionedContent', 'FiveVersionedContent'])
-    reg.register('edit', 'Five Content',
-                 ['edit', 'Content', 'SimpleContent', 'FiveContent'])
-
-
 def configureContainerPolicies(root):
     from Products.Silva.AutoTOC import AutoTOCPolicy
 
@@ -455,17 +288,6 @@ def installSilvaFind(root):
         root.service_extensions.install('SilvaFind')
 
 
-def installKupu(root):
-    """Install kupu.
-    """
-    from Products import kupu
-    if not hasattr(root, 'service_kupu'):
-        add_fss_directory_view(root, 'service_kupu',
-                               kupu.__file__, 'common')
-    if not hasattr(root, 'service_kupu_silva'):
-        add_fss_directory_view(root, 'service_kupu_silva',
-                               __file__, 'kupu')
-
 def setInitialSkin(silvaroot, default_skinid):
     setid = 'silva-layout'
     metadataservice = silvaroot.service_metadata
@@ -473,17 +295,6 @@ def setInitialSkin(silvaroot, default_skinid):
     if not currentskin:
         binding = metadataservice.getMetadata(silvaroot)
         binding.setValues(setid, {'skin': default_skinid})
-
-
-def add_favicon(root):
-    filename = 'favicon.ico'
-    if hasattr(root.aq_base, filename):
-        return
-    data = read_file(filename, globals(), 'globals')
-    if hasattr(root.aq_base, filename):
-        getattr(root, filename).update_data(data)
-    else:
-        Image.manage_addFile(root, filename, data, content_type='image/x-icon')
 
 
 if __name__ == '__main__':

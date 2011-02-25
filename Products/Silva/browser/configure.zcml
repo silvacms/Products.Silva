@@ -4,54 +4,6 @@
    xmlns:five="http://namespaces.zope.org/five">
 
   <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="object_lookup"
-     class=".lookup.ObjectLookup"
-     permission="silva.ReadSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="kupu_popup_window"
-     template="kupu_popup_window.pt"
-     permission="silva.ChangeSilvaContent"
-     />
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="kupu_popup_iframe"
-     template="kupu_popup_iframe.pt"
-     permission="silva.ChangeSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="sidebar"
-     class=".lookup.SidebarView"
-     permission="silva.ReadSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="additional_export_action"
-     class=".emptyaction.EmptyAction"
-     permission="silva.ChangeSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="additional_status_action"
-     class=".emptyaction.EmptyAction"
-     permission="silva.ChangeSilvaContent"
-     />
-
-  <browser:page
-     for="silva.core.interfaces.ISilvaObject"
-     name="additional_metadata"
-     class=".emptyaction.EmptyAction"
-     permission="silva.ChangeSilvaContent"
-     />
-
-  <browser:page
      for="*"
      name="set_content_type_and_nocache"
      class="Products.Silva.browser.headers.Headers"

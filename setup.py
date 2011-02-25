@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.4dev'
+version = '3.0dev'
 
 tests_require = [
     'silva.export.opendocument',
@@ -42,15 +42,11 @@ setup(name='Products.Silva',
       zip_safe=False,
       install_requires=[
         'PIL',
-        'Products.FileSystemSite',
-        'Products.Formulator',
         'Products.ParsedXML',
         'Products.SilvaDocument',
         'Products.SilvaExternalSources',
         'Products.SilvaFind',
-        'Products.SilvaKupu',
         'Products.SilvaMetadata',
-        'Products.SilvaViews',
         'Sprout',
         'ZODB3 >= 3.9',
         'Zope2',

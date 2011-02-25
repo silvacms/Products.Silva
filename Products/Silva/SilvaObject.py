@@ -2,14 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-import warnings
 
 # Zope 3
 from five import grok
 from zope import component
 from zope.container.interfaces import IContainerModifiedEvent
 from zope.i18n import translate
-from zope.interface import Interface
 from zope.interface import alsoProvides
 from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
@@ -17,9 +15,6 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
-from zope.publisher.browser import applySkin
-from zope.publisher.interfaces.browser import IBrowserPage
-from zope.publisher.interfaces.browser import IBrowserView
 from zope.traversing.browser import absoluteURL
 
 # Zope 2
@@ -34,61 +29,17 @@ from OFS.interfaces import IObjectWillBeMovedEvent
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security
-from Products.Silva.ViewCode import ViewCode
-from Products.Silva.transform.interfaces import IRenderable
-from Products.SilvaViews.ViewRegistry import ViewAttribute
 
 # Silva adapters
-from Products.Silva.adapters.virtualhosting import getVirtualHostingAdapter
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
-from infrae.wsgi.errors import DefaultError
-from silva.core.conf.utils import getSilvaViewFor
 from silva.core.services.interfaces import ICataloging
 from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
 from silva.core.interfaces import (
-    ISilvaObject, IPublishable, IContent, IRoot, IVersionedContent, IFolder)
-
-
-
-class NoViewError(Exception):
-    """No view defined.
-    """
-
-
-class Zope3ViewAttribute(ViewAttribute):
-    """A view attribute that tries to look up Zope 3 views for fun and
-    profit.
-
-    It will also try to look up Zope 3 views and favour them, so that
-    you can define e.g. 'tab_edit' for your content type and it will
-    work.
-    """
-
-    def __getitem__(self, name):
-        """Lookup an adapter before to ask the view machinery.
-        """
-        context = self.aq_parent
-        request = self.REQUEST
-        # All SMI views end up including SilvaViews templates, that
-        # expect to have request['model']
-        request['model'] = context
-
-        root = context.get_root()
-        smi_skin = component.getUtility(Interface, root._smi_skin)
-
-        applySkin(request, smi_skin)
-        view = component.queryMultiAdapter((context, request), name=name)
-        if view:
-            return view
-        else:
-            # Default behaviour of ViewAttribute, but look at a Five
-            # views if the asked one doesn't exists.
-            view = getSilvaViewFor(self, self._view_type, context)
-            return getattr(view, name)
+    ISilvaObject, IPublishable, IContent, IRoot, IVersionedContent)
 
 
 class TitledObject(object):
@@ -147,19 +98,10 @@ class TitledObject(object):
 InitializeClass(TitledObject)
 
 
-class SilvaObject(TitledObject, Security, ViewCode):
+class SilvaObject(TitledObject, Security):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
-
-    # allow edit view on this object
-    edit = Zope3ViewAttribute('edit', 'tab_edit')
-
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'edit')
-
-    # allow public view on this object
-    public = ViewAttribute('public', 'render')
 
     def __init__(self, id):
         TitledObject.__init__(self, id)
@@ -168,24 +110,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
     # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.
     def absolute_url(self, relative=None):
         return absoluteURL(self, self.REQUEST)
-
-    # Query for an error page. We redefine it to have a correct object
-    # as context, and not an interface ... which does not make code
-    # really reusable.
-    def standard_error_message(self, **kwargs):
-        request = self.REQUEST
-        error = kwargs.get('error_value', None)
-        if error:
-            context = DefaultError(error).__of__(self)
-            page = component.queryMultiAdapter(
-                (context, request), Interface, name='error.html')
-            if page is not None:
-                return page()
-        if hasattr(self, 'default_standard_error_message'):
-            # Fallback on ZMI views if available
-            return self.default_standard_error_message(**kwargs)
-        # Last resort
-        return '<html><body>An error happened.</body></html>'
 
     # MANIPULATORS
 
@@ -207,27 +131,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
             if old is None:
                 timings[elem] = ctime
         binding.setValues('silva-extra', timings)
-
-
-    security.declarePrivate('titleMutationTrigger')
-    def titleMutationTrigger(self):
-        """This trigger is called upon save of Silva Metadata. More
-        specifically, when the silva-content - defining titles - set is
-        being editted for this object.
-        """
-        if self.getId() == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_renderer_name')
-    def set_renderer_name(self, renderer_name):
-        """Set the name of the renderer selected for object.
-        """
-        if renderer_name == '(Default)':
-            renderer_name = None
-        self.get_editable()._renderer_name = renderer_name
-
 
     # ACCESSORS
 
@@ -284,42 +187,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
         return  component.getUtility(IMetadataService).getMetadataValue(
             version, 'silva-extra', 'modificationtime')
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_breadcrumbs')
-    def get_breadcrumbs(self, ignore_index=1):
-        """Get information used to display breadcrumbs. This is a
-        list of items from the Silva Root or the object being the root of
-        the virtual host - which ever comes first.
-        """
-        warnings.warn('get_breadcrumbs() will be removed in Silva 2.4. '
-                      'Please use @@absolute_url/breadcrumbs instead.',
-                      DeprecationWarning, stacklevel=2)
-        adapter = getVirtualHostingAdapter(self)
-        root = adapter.getVirtualRoot()
-        if root is None:
-            root = self.get_root()
-
-        result = []
-        item = self
-        while ISilvaObject.providedBy(item):
-            if ignore_index: # Should the index be included?
-                if not (IContent.providedBy(item) and item.is_default()):
-                    result.append(item)
-            else:
-                result.append(item)
-
-            if item == root: # XXX does equality always work in Zope?
-                break
-            item = item.aq_parent
-            #if using Legacy layout, eventually an items parent will be the
-            #view class.  This needs to be skipped over.  I'm not sure
-            #which is the "correct" interface (IBrowserView or IBrowserPage),
-            #but they both seem to work.
-            if IBrowserView.providedBy(item) or IBrowserPage.providedBy(item):
-                item = item.aq_parent.aq_parent
-        result.reverse()
-        return result
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'get_editable')
     def get_editable(self):
@@ -342,14 +209,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
         """
         return self
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
-    def get_renderer_name(self):
-        """Get the name of the renderer selected for object.
-
-        Returns None if default is used.
-        """
-        return getattr(self, '_renderer_name', None)
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
@@ -407,7 +266,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
     def view_version(self, version=None):
         # XXX Should be a view.
         request = self.REQUEST
-        view_type = 'public'
         if IPreviewLayer.providedBy(self.REQUEST):
             manager = getSecurityManager()
             if not manager.checkPermission(
@@ -420,7 +278,6 @@ class SilvaObject(TitledObject, Security, ViewCode):
                     version = getattr(self, preview_name)
                 else:
                     version = self.get_previewable()
-            view_type = 'preview'
         if version is None:
             version = self.get_viewable()
 
@@ -430,34 +287,11 @@ class SilvaObject(TitledObject, Security, ViewCode):
                     mapping={'meta_type': self.meta_type})
             return '<p>%s</p>' % translate(msg, context=request)
 
-        # Search for an XSLT renderer
-        result = IRenderable(version).view(request)
-        if result is not None:
-            return result
-
-        request.model = version
-        request.other['model'] = version
-
         # Search for a five view
-        view = component.queryMultiAdapter(
+        view = component.getMultiAdapter(
             (self, request), name=u'content.html')
-        if not (view is None):
-            return view()
+        return view()
 
-        # Fallback on a Silva view
-        try:
-            view = self.service_view_registry.get_view(
-                view_type, version.meta_type)
-        except KeyError:
-            msg = 'no %s view defined' % view_type
-            raise NoViewError, msg
-        else:
-            rendered = view.render()
-            try:
-                del request.model
-            except AttributeError:
-                pass
-            return rendered
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_default')
@@ -491,8 +325,7 @@ def content_moved(content, event):
         IContent.providedBy(content) and content.is_default())):
         newParent._add_ordered_id(content)
 
-    if event.newName == 'index':
-        newParent._invalidate_sidebar(newParent)
+    # XXX invalidation cache
     if not IVersionedContent.providedBy(content):
         content._set_creation_datetime()
 
@@ -507,10 +340,7 @@ def content_will_be_moved(content, event):
     if (IPublishable.providedBy(content) and not (
         IContent.providedBy(content) and content.is_default())):
         container._remove_ordered_id(content)
-    if IFolder.providedBy(content):
-        container._invalidate_sidebar(content)
-    if event.oldName == 'index':
-        container._invalidate_sidebar(container)
+    # XXX cache invalidation
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)

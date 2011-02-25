@@ -2,11 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
 import urlparse
 
 # prevent a circular import in Zope 2.12
-import AccessControl
+#import AccessControl
 
 #### Hack of the day: don't fuck up your all DB if an interface is broken.
 
@@ -44,20 +43,6 @@ def update_url_parse_schemes():
 
 update_url_parse_schemes()
 
-# register FileSystemSite directories
-from Products.FileSystemSite.DirectoryView import (
-    registerDirectory, registerFileExtension)
-from Products.FileSystemSite.FSImage import FSImage
-from Products import kupu
-
-registerDirectory('%s/common' % os.path.dirname(kupu.__file__), globals())
-registerDirectory('%s/kupu' % os.path.dirname(__file__), globals())
-registerDirectory('views', globals())
-registerDirectory('resources', globals())
-registerDirectory('globals', globals())
-# enable .ico support for FileSystemSite
-registerFileExtension('ico', FSImage)
-
 # register this extension
 from silva.core import conf as silvaconf
 silvaconf.extensionName('Silva')
@@ -72,6 +57,7 @@ except ImportError:
 
 MAILHOST_ID = 'service_mailhost'
 
+import AccessControl
 AccessControl.allow_module('Products.Silva.adapters')
 AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
 AccessControl.allow_module('Products.Silva.adapters.cleanup')
@@ -84,6 +70,7 @@ AccessControl.allow_module('Products.Silva.mail')
 AccessControl.allow_module('Products.Silva.mangle')
 AccessControl.allow_module('Products.Silva.roleinfo')
 AccessControl.allow_module('zope.i18n') # zope.i18n.translate
+
 
 def initialize_icons():
     from Products.Silva.icon import registry
