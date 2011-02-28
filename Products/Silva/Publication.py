@@ -3,7 +3,6 @@
 # $Id$
 
 # Zope 3
-from zope.cachedescriptors.property import CachedProperty
 from five import grok
 
 # Zope 2
@@ -18,13 +17,10 @@ import transaction
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
 
-from silva.core.smi.interfaces import IPropertiesTab
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IPublication, IRoot, ISiteManager, IInvisibleService)
 from silva.translations import translate as _
-from zeam.form import silva as silvaforms
-from zeam.form.silva.interfaces import IRemoverAction
 
 
 class OverQuotaException(BadRequest):
@@ -223,63 +219,6 @@ class Publication(Folder.Folder):
         return result
 
 InitializeClass(Publication)
-
-
-class ManageLocalSite(silvaforms.SMIForm):
-    """This form let enable (or disable) a Publication as a local
-    site.
-    """
-    grok.name('tab_localsite')
-    grok.require('zope2.ViewManagementScreens')
-    grok.implements(IPropertiesTab)
-
-    label = _(u"Local site")
-    description = _(u"Here you can enable/disable a local site (or subsite). "
-                    u"By making a local site, you will be able to add "
-                    u"local services to the publication. Those services "
-                    u"will only affect elements inside that publication.")
-
-    @CachedProperty
-    def manager(self):
-        return ISiteManager(self.context)
-
-    def can_be_a_local_site(self):
-        return IPublication.providedBy(self.context) and \
-            not self.manager.isSite()
-
-    @silvaforms.action(
-        _("make local site"),
-        identifier="make_site",
-        available=lambda form: form.can_be_a_local_site())
-    def make_site(self):
-        try:
-            self.manager.makeSite()
-        except ValueError, e:
-            self.send_message(str(e), type=u"error")
-            return silvaforms.FAILURE
-        else:
-            self.send_message(_("Local site activated."), type=u"feedback")
-            return silvaforms.SUCCESS
-
-    def can_be_normal_again(self):
-        return IPublication.providedBy(self.context) and \
-            self.manager.isSite() and \
-            not IRoot.providedBy(self.context)
-
-    @silvaforms.action(
-        _("remove local site"),
-        identifier="delete_site",
-        available=lambda form: form.can_be_normal_again(),
-        implements=IRemoverAction)
-    def delete_site(self):
-        try:
-            self.manager.deleteSite()
-        except ValueError, e:
-            self.send_message(str(e), type=u"error")
-            return silvaforms.FAILURE
-        else:
-            self.send_message(_("Local site deactivated."), type=u"feedback")
-            return silvaforms.SUCCESS
 
 
 class PublicationAddForm(Folder.FolderAddForm):
