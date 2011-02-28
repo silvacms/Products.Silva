@@ -1,10 +1,7 @@
 <tal:def xmlns:i18n="http://xml.zope.org/namespaces/i18n"
          i18n:domain="silva">
-
-  <h2 tal:content="content/get_title_or_id | default"
-      i18n:translate="">
-    Index
-  </h2>
+         
+  <tal:block replace="structure provider:contenttitle" />
 
   <table class="silvatable indexer"
          tal:define="indexTitles content/getIndexNames">

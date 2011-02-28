@@ -1,11 +1,5 @@
 <tal:toc>
-  <h2 class="heading"
-      tal:define="heading context/get_title"
-      tal:condition="not:request/other/suppress_title | nothing"
-      tal:content="heading"
-      tal:omit-tag="not:heading">
-    Title
-  </h2>
+  <tal:block replace="structure provider:contenttitle" />
 
   <p class="content-description"
      tal:condition="view/description"
