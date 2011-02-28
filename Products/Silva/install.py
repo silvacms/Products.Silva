@@ -1,13 +1,10 @@
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
-
-"""Install for Silva Core
-"""
-# Python
 import os
 
 # Zope 2
+from Acquisition import aq_base
 from DateTime import DateTime
 from OFS import Image
 
@@ -259,26 +256,22 @@ def configureContainerPolicies(root):
 def installSilvaDocument(root):
     """Install SilvaDocument
     """
-    from Products.SilvaDocument.install import install
-    install(root)
-    if not hasattr(root.aq_explicit, 'index'):
-        # create index page
-        root.sec_update_last_author_info()
-        root.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'index',
-            'Welcome to Silva!')
-        doc = root.index
-        version = doc.get_editable()
-        # TODO: add a code source in the default document
-        version.content.manage_edit('<doc><p type="normal">Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <link url="edit">click this link</link>).</p><source id="cs_toc"><parameter type="string" key="paths">%s</parameter><parameter type="boolean" key="show_icon">0</parameter><parameter type="list" key="toc_types">[\'Silva Document\', \'Silva Folder\', \'Silva Ghost Folder\', \'Silva Publication\', \'Silva Root\', \'Silva Ghost\', \'Silva Indexer\', \'Silva Link\', \'Silva AutoTOC\', \'Silva Find\']</parameter><parameter type="string" key="css_class"/><parameter type="string" key="sort_on">alpha</parameter><parameter type="string" key="capsule_title"/><parameter type="string" key="depth">-1</parameter><parameter type="boolean" key="display_headings">0</parameter><parameter type="string" key="alignment"/><parameter type="string" key="css_style"/><parameter type="string" key="order">normal</parameter><parameter type="boolean" key="link_headings">0</parameter><parameter type="boolean" key="show_desc">0</parameter></source></doc>' % '/'.join(root.getPhysicalPath()))
-        doc.set_unapproved_version_publication_datetime(DateTime())
-        doc.approve_version()
+    if extensionRegistry.have('silva.app.document'):
+        root.service_extensions.install('silva.app.document')
+        if not hasattr(aq_base(root), 'index'):
+            root.manage_addProduct['silva.app.document'].manage_addDocument('index', 'Welcome to Silva!')
+            document = root.index
+            version = document.get_editable()
+            version.body.save_raw_text('<div><h1>Welcome to Silva!</h1><p>Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <a href="edit">click this link</a>).</p>')
+            document.set_unapproved_version_publication_datetime(DateTime())
+            document.approve_version()
 
 
 def installSilvaExternalSources(root):
     """Install SilvaExternalSources
     """
-    root.service_extensions.install('SilvaExternalSources')
+    if extensionRegistry.have('SilvaExternalSources'):
+        root.service_extensions.install('SilvaExternalSources')
 
 
 def installSilvaFind(root):
