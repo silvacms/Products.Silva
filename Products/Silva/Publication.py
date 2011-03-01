@@ -7,10 +7,10 @@ from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from App.special_dtml import DTMLFile
 from App.class_init import InitializeClass
 from zExceptions import BadRequest
-import Acquisition
 import transaction
 
 # Silva
@@ -27,19 +27,6 @@ class OverQuotaException(BadRequest):
     """Exception triggered when you're overquota.
     """
     pass
-
-
-class AcquisitionMethod(Acquisition.Explicit):
-    """This class let you have an acquisition context on a method.
-    """
-    def __init__(self, parent, method_name):
-        self.parent = parent
-        self.method_name = method_name
-
-    def __call__(self, *args, **kwargs):
-        instance = self.parent.aq_inner
-        method = getattr(instance, self.method_name)
-        return method(*args, **kwargs)
 
 
 class Publication(Folder.Folder):
@@ -62,7 +49,6 @@ class Publication(Folder.Folder):
 
     @property
     def manage_options(self):
-        # A hackish way to get a Silva tab in between the standard ZMI tabs
         base_options = super(Publication, self).manage_options
         manage_options = (base_options[0], )
         if ISiteManager(self).isSite():
@@ -100,17 +86,11 @@ class Publication(Folder.Folder):
         if (not value) or IRoot.providedBy(self):
             return True         # 0 means no quota, Root don't have
                                 # any parents.
-        parent = self.aq_parent.get_publication()
+        parent = aq_parent(self).get_publication()
         quota = parent.get_current_quota()
         if quota and quota < value:
             return False
         return True
-
-    def get_wanted_quota_validator(self):
-        """Return the quota validator with an acquisition context
-        (needed to be used in Formulator).
-        """
-        return AcquisitionMethod(self, 'validate_wanted_quota')
 
     def _verify_quota(self, REQUEST=None):
         quota = self.get_current_quota() * 1024 * 1024
@@ -147,7 +127,7 @@ class Publication(Folder.Folder):
             return int(binding.get('silva-quota', element_id='quota') or 0)
         except KeyError:        # This publication object doesn't have
                                 # this metadata set
-            return self.aq_parent.get_current_quota()
+            return aq_parent(self).get_current_quota()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_publication')
