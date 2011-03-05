@@ -11,6 +11,8 @@ from Acquisition import aq_base
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
 from zExceptions import NotFound
+from DateTime import DateTime
+from datetime import datetime
 
 # Silva
 from Products.Silva import SilvaPermissions
@@ -18,8 +20,10 @@ from Products.Silva.Versioning import Versioning
 from Products.Silva.Content import Content
 
 from silva.core.interfaces import IVersionedContent, ICatalogedVersionedContent
+from silva.core.interfaces import IPublicationWorkflow, PublicationWorkflowError
 from silva.core.services.catalog import Cataloging
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
+from silva.translations import translate as _
 
 
 class VersionedContent(Content, Versioning, BaseFolder):
@@ -259,3 +263,68 @@ class VersionedContentCataloging(Cataloging):
         for version in self.get_indexable_versions():
             path = '/'.join((self._path, version.getId(),))
             self._catalog.uncatalog_object(path)
+
+
+class VersionedContentPublicationWorkflow(grok.Adapter):
+    grok.context(IVersionedContent)
+    grok.implements(IPublicationWorkflow)
+
+    def new_version(self):
+        if self.context.get_unapproved_version() is not None:
+            raise PublicationWorkflowError(
+                _("This content already has a new version."))
+        self.context.create_copy()
+        self.context.sec_update_last_author_info()
+        return True
+
+    def request_approval(self, message):
+        # XXX add checkout publication datetime
+        if self.context.get_unapproved_version() is None:
+            raise PublicationWorkflowError(
+                _('There is no unapproved version.'))
+        if self.context.is_version_approval_requested():
+            raise PublicationWorkflowError(
+                _('Approval has already been requested.'))
+        self.context.request_version_approval(message)
+        return True
+
+    def _check_withdraw_or_reject(self):
+        if self.context.get_unapproved_version() is None:
+            if self.context.get_public_version() is not None:
+                raise PublicationWorkflowError(
+                    _("This content is already public."))
+            else:
+                raise PublicationWorkflowError(
+                    _("This content is already approved."))
+        if not self.context.is_version_approval_requested():
+            raise PublicationWorkflowError(
+                _("No request for approval is pending for this content."))
+
+    def withdraw_request(self, message):
+        self._check_withdraw_or_reject()
+        self.context.withdraw_version_approval(message)
+        return True
+
+    def reject_request(self, message):
+        self._check_withdraw_or_reject()
+        self.context.reject_version_approval(message)
+        return True
+
+    def close(self):
+        if self.context.get_public_version() is None:
+            raise PublicationWorkflowError(
+                _("There is no public version to close"))
+        self.context.close_version()
+        return True
+
+    def approve(self, time=None):
+        if time is None:
+            time = DateTime()
+        elif isinstance(time, datetime):
+            time = DateTime(time)
+        if self.context.get_unapproved_version() is None:
+            raise PublicationWorkflowError(
+                _("There is no unapproved version to approve."))
+        self.context.set_unapproved_version_publication_datetime(time)
+        self.context.approve_version()
+        return True
