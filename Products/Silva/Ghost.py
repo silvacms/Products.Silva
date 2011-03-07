@@ -18,9 +18,7 @@ from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import SilvaPermissions
 
-from zeam.form.base.fields import Fields
-from zeam.form.silva.form import SMIAddForm
-from zeam.form.silva.form import SMIEditForm
+from zeam.form import silva as silvaforms
 
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent
@@ -249,13 +247,13 @@ class IGhostSchema(IIdentifiedContent):
             required=True)
 
 
-class GhostAddForm(SMIAddForm):
+class GhostAddForm(silvaforms.SMIAddForm):
     """Add form for a ghost
     """
     grok.name(u"Silva Ghost")
     grok.context(IGhost)
 
-    fields = Fields(IGhostSchema)
+    fields = silvaforms.Fields(IGhostSchema)
 
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
@@ -263,11 +261,11 @@ class GhostAddForm(SMIAddForm):
             data['id'], 'Ghost', haunted=data['haunted'])
 
 
-class GhostEditForm(SMIEditForm):
+class GhostEditForm(silvaforms.SMIEditForm):
     """ Edit form for Ghost
     """
     grok.context(IGhost)
-    fields = Fields(IGhostSchema).omit('id')
+    fields = silvaforms.Fields(IGhostSchema).omit('id')
 
 
 class GhostView(silvaviews.View):

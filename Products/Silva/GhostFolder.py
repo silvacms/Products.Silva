@@ -31,9 +31,7 @@ from silva.core.smi.interfaces import ISMILayer
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
-from zeam.form.base.actions import Action
-from zeam.form.base.fields import Fields
-from zeam.form.silva.form import SMIAddForm
+from zeam.form import silva as silvaforms
 
 
 class Sync(object):
@@ -372,7 +370,7 @@ class IGhostFolderSchema(IIdentifiedContent):
             required=True)
 
 
-class SyncAction(Action):
+class SyncAction(silvaforms.Action):
 
     description = _(u"Synchronize target and ghost folder content")
     ignoreRequest = True
@@ -390,12 +388,12 @@ class SyncAction(Action):
         form.redirect("%s/edit" % form.context.absolute_url())
 
 
-class GhostFolderAddForm(SMIAddForm):
+class GhostFolderAddForm(silvaforms.SMIAddForm):
     """ Add form for ghost folders
     """
     grok.name(u'Silva Ghost Folder')
 
-    fields = Fields(IGhostFolderSchema)
+    fields = silvaforms.Fields(IGhostFolderSchema)
 
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
@@ -430,7 +428,7 @@ class GhostFolderEditForm(GhostEditForm):
     grok.template('smieditform')
     grok.context(IGhostFolder)
 
-    fields = Fields(IGhostFolderSchema).omit('id')
+    fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
     actions = GhostEditForm.actions + SyncAction(_(u'synchronize'))
 
 
