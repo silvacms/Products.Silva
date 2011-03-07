@@ -21,10 +21,10 @@ from silva.core.interfaces.content import (
 from silva.core.references.interfaces import IReferenceService
 from silva.core.smi.interfaces import ISMILayer
 from silva.core.smi.interfaces import IPropertiesTabIndex, IEditTabIndex
-from silva.core.smi.smi import SMIPortletManager
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
 from zope import component
+from zope.interface import Interface
 from zope.traversing.browser import absoluteURL
 
 
@@ -296,7 +296,7 @@ class ContentReferencedBy(silvaviews.Viewlet):
     grok.layer(ISMILayer)
     grok.order(100)
     grok.view(IPropertiesTabIndex)
-    grok.viewletmanager(SMIPortletManager)
+    grok.viewletmanager(Interface)
 
     def update(self):
         references = {}
