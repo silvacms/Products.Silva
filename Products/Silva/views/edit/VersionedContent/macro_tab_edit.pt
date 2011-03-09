@@ -54,9 +54,11 @@
         </tal:block>
         <span tal:replace="nothing"> ___ or preview document ___ </span>
         <tal:block condition="preview_mode">
+          <metal:block define-slot="preview_content">
           <div class="public"
                tal:content="structure model/preview">
           </div>
+          </metal:block>
         </tal:block>
       </metal:fill-slot>
 
