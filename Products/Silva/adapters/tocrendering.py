@@ -9,7 +9,6 @@ from App.class_init import InitializeClass
 import Products
 
 # Silva
-from Products.Silva.adapters import adapter
 from silva.core import interfaces
 from silva.core.views.interfaces import IPreviewLayer
 
@@ -30,10 +29,13 @@ def compute_default_show_types():
     return defaults
 
 
-class TOCRenderingAdapter(adapter.Adapter):
+class TOCRenderingAdapter(object):
     """ Adapter for TOCs (autotoc, document toc) to render"""
     # XXX again too much
     __allow_access_to_unprotected_subobjects__ = 1
+
+    def __init__(self, context):
+        self.context = context
 
     #Special "fastie quickie" autotoc rendering code...
     #NOTE: get_tree_iterator and get_public_tree_iterator are just

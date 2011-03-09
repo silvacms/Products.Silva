@@ -8,7 +8,6 @@ import os
 version = '3.0dev'
 
 tests_require = [
-    'silva.export.opendocument',
     'infrae.testing',
     'infrae.testbrowser',
     'infrae.wsgi [test]',

@@ -105,7 +105,6 @@ class Id(object):
         'elements',
         'form',
         'fulltext',
-        'getDocmaFormatName',
         'globals',
         'home',
         'index_html',
