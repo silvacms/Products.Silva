@@ -21,7 +21,7 @@ from silva.core.interfaces.content import (
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
-from silva.core.smi.properties.metadata import PropertiesTab
+from silva.core.smi.content.metadata import PropertiesTab
 from zeam.form import silva as silvaforms
 from zope import component
 from zope.traversing.browser import absoluteURL
