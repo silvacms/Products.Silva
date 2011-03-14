@@ -1,0 +1,10 @@
+<div class="portlet"
+     tal:condition="viewlet.path"
+     i18n:domain="silva">
+  <h4 title="File system path to this asset on the server"
+      i18n:attributes="title"
+      i18n:translate="">File system path</h4>
+  <p tal:content="viewlet.path">
+    path
+  </p>
+</div>

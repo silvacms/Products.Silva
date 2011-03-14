@@ -20,7 +20,6 @@ from five import grok
 from zope import component
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.i18n import translate
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
@@ -33,10 +32,10 @@ from App.class_init import InitializeClass
 # Silva
 from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
-from Products.Silva.Asset import Asset
+from Products.Silva.Asset import Asset, SMIAssetPortlet
 from Products.Silva.helpers import create_new_filename
-from Products.Silva.ContentObjectFactoryRegistry import (
-    contentObjectFactoryRegistry)
+from Products.Silva.ContentObjectFactoryRegistry import \
+    contentObjectFactoryRegistry
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
@@ -174,8 +173,8 @@ class Image(Asset):
         # XXX Should be on event
         self.update_quota()
 
-    security.declareProtected(SilvaPermissions.View, 'getCanonicalWebScale')
-    def getCanonicalWebScale(self, scale=None):
+    security.declareProtected(SilvaPermissions.View, 'get_canonical_web_scale')
+    def get_canonical_web_scale(self, scale=None):
         """returns (width, height) of web image"""
         if scale is None:
             scale = self.web_scale
@@ -186,28 +185,26 @@ class Image(Asset):
                 msg = _("'${scale}' is not a valid scale identifier. "
                         "Probably a percent symbol is missing.",
                         mapping={'scale': scale})
-                msg = translate(msg)
-                raise ValueError, msg
-            cropbox = self.getCropBox()
+                raise ValueError(msg)
+            cropbox = self.get_crop_box()
             if cropbox:
                 x1, y1, x2, y2 = cropbox
                 width = x2 - x1
                 height = y2 - y1
             else:
-                width, height = self.getDimensions()
+                width, height = self.get_dimensions()
             percentage = float(m.group(1))/100.0
             width = int(width * percentage)
             height = int(height * percentage)
         else:
-            img_w, img_h = self.getDimensions()
+            img_w, img_h = self.get_dimensions()
             width = m.group(1)
             height = m.group(2)
             if width == height == '*':
                 msg = _("'${scale} is not a valid scale identifier. "
                         "At least one number is required.",
                         mapping={'scale': scale})
-                msg = translate(msg)
-                raise ValueError, msg
+                raise ValueError(msg)
             if width == '*':
                 height = int(height)
                 width = img_w * height / img_h
@@ -231,8 +228,7 @@ class Image(Asset):
         if m is None:
             msg = _("'${crop} is not a valid crop identifier",
                     mapping={'crop': crop})
-            msg = translate(msg)
-            raise ValueError, msg
+            raise ValueError(msg)
         x1 = int(m.group(1))
         y1 = int(m.group(2))
         x2 = int(m.group(3))
@@ -257,12 +253,8 @@ class Image(Asset):
         if x1 >= x2 or y1 >= y2:
             msg = _("'${crop}' defines an impossible cropping",
                     mapping={'crop': crop})
-            msg = translate(msg)
-            raise ValueError, msg
+            raise ValueError(msg)
         return (x1, y1, x2, y2)
-
-    security.declareProtected(SilvaPermissions.View, 'getCropBox')
-    getCropBox = get_crop_box
 
     security.declareProtected(SilvaPermissions.View, 'get_dimensions')
     def get_dimensions(self, img=None):
@@ -284,17 +276,11 @@ class Image(Asset):
             return (0, 0)
         return width, height
 
-    security.declareProtected(SilvaPermissions.View, 'getDimensions')
-    getDimensions = get_dimensions
-
     security.declareProtected(SilvaPermissions.View, 'get_format')
     def get_format(self):
         """Returns image format.
         """
         return self._getPILImage(self.hires_image).format
-
-    security.declareProtected(SilvaPermissions.View, 'getFormat')
-    getFormat = get_format
 
     security.declareProtected(SilvaPermissions.View, 'get_image')
     def get_image(self, hires=1, webformat=0):
@@ -311,12 +297,10 @@ class Image(Asset):
             pil_image.save(image_data, self.web_format)
             return image_data.getvalue()
         elif not hires and not webformat:
-            raise ValueError, _(u"Low resolution image in original format is "
-                                u"not supported")
+            raise ValueError(_(u"Low resolution image in original format is "
+                               u"not supported"))
         return image.get_content()
 
-    security.declareProtected(SilvaPermissions.View, 'getImage')
-    getImage = get_image
 
     security.declareProtected(SilvaPermissions.View, 'tag')
     def tag(self, hires=0, thumbnail=0, **extra_attributes):
@@ -330,7 +314,7 @@ class Image(Asset):
         """
         image, img_src = self._get_image_and_src(hires, thumbnail)
         title = self.get_title_or_id()
-        width, height = self.getDimensions(image)
+        width, height = self.get_dimensions(image)
         named = []
 
         if extra_attributes.has_key('css_class'):
@@ -359,28 +343,17 @@ class Image(Asset):
             # XXX i18n - should we translate this?
             return 'unknown'
 
-    security.declareProtected(SilvaPermissions.View, 'getWebFormat')
-    getWebFormat = get_web_format
-
     security.declareProtected(SilvaPermissions.View, 'get_web_scale')
     def get_web_scale(self):
         """Return scale percentage / WxH of web presentation image
         """
         return str(self.web_scale)
 
-    security.declareProtected(SilvaPermissions.View, 'getWebScale')
-    getWebScale = get_web_scale
-
-    security.declareProtected(SilvaPermissions.View, 'getWebCrop')
-    def getWebCrop(self):
+    security.declareProtected(SilvaPermissions.View, 'get_web_crop')
+    def get_web_crop(self):
         """Return crop identifier
         """
         return str(self.web_crop)
-
-    security.declareProtected(SilvaPermissions.View, 'canScale')
-    def canScale(self):
-        """returns if scaling/converting is possible"""
-        return True
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'get_file_system_path')
@@ -392,23 +365,12 @@ class Image(Asset):
     def get_orientation(self):
         """Returns translated Image orientation (string).
         """
-        return _(self.getOrientationClass())
-
-    security.declareProtected(SilvaPermissions.View, 'getOrientation')
-    getOrientation = get_orientation
-
-    security.declareProtected(SilvaPermissions.View, 'getOrientationClass')
-    def getOrientationClass(self):
-        """ returns Image orientation
-
-            untranslated string that can be used as class name
-        """
-        width, height = self.getDimensions()
+        width, height = self.get_dimensions()
         if width == height:
-            return "square"
+            return _("square")
         elif width > height:
-            return "landscape"
-        return "portrait"
+            return _("landscape")
+        return _("portrait")
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_filename')
@@ -437,10 +399,6 @@ class Image(Asset):
         if self.image is None:
             return 0
         return self.image.get_file_size()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_scaled_file_size')
-    get_scaled_file_size = get_file_size
 
     ##########
     ## private
@@ -480,13 +438,13 @@ class Image(Asset):
             return
 
         changed = False
-        cropbox = self.getCropBox()
+        cropbox = self.get_crop_box()
         if cropbox:
             image = image.crop(cropbox)
             changed = True
 
         if self.web_scale != '100%':
-            width, height = self.getCanonicalWebScale()
+            width, height = self.get_canonical_web_scale()
             image = image.resize((width, height), PILImage.ANTIALIAS)
             changed = True
 
@@ -601,6 +559,8 @@ class Image(Asset):
 InitializeClass(Image)
 
 
+# Views
+
 class DefaultImageView(silvaviews.View):
     """View a Image in the SMI / preview. For this just return a
     tag.
@@ -637,6 +597,59 @@ class ImagePublishTraverse(SilvaPublishTraverse):
         return content, method
 
 
+# SMI forms
+
+class IImageAddFields(ITitledContent):
+
+    file = silvaschema.Bytes(title=_(u"image"), required=True)
+
+
+class ImageAddForm(silvaforms.SMIAddForm):
+    """Add form for an image.
+    """
+    grok.context(interfaces.IImage)
+    grok.name(u'Silva Image')
+
+    fields = silvaforms.Fields(IImageAddFields)
+    fields['id'].required = False
+
+    def _add(self, parent, data):
+        default_id = data['id'] is not NO_VALUE and data['id'] or u''
+        factory = parent.manage_addProduct['Silva']
+        return factory.manage_addImage(
+            default_id, data['title'], file=data['file'])
+
+
+class InfoPortlet(SMIAssetPortlet):
+    grok.context(interfaces.IImage)
+    grok.order(10)
+
+    def update(self):
+        self.format = self.context.web_format.lower()
+        self.dimensions = None
+        try:
+            self.dimensions = dict(
+                zip(['width', 'height'],
+                    self.context.get_dimensions()))
+        except ValueError:
+            pass
+        self.scaling = None
+        if self.context.hires_image is not None:
+            try:
+                self.scaling = dict(
+                    zip(['width', 'height'],
+                        self.context.get_canonical_web_scale()))
+            except ValueError:
+                pass
+        self.thumbnail = None
+        if self.context.thumbnail_image:
+            self.thumbnail = self.context.tag(thumbnail=1)
+        self.original =self.context.url(hires=1)
+        self.orientation = self.context.get_orientation()
+        self.orientation_cls = unicode(self.orientation)
+
+# Management helpers
+
 class ImageStorageConverter(object):
     """Convert image storage.
     """
@@ -668,29 +681,6 @@ class ImageStorageConverter(object):
             "Storage for image %s converted" %
             '/'.join(image.getPhysicalPath()))
         return image
-
-
-class IImageAddFields(ITitledContent):
-
-    file = silvaschema.Bytes(title=_(u"image"), required=True)
-
-
-
-class ImageAddForm(silvaforms.SMIAddForm):
-    """Add form for an image.
-    """
-
-    grok.context(interfaces.IImage)
-    grok.name(u'Silva Image')
-
-    fields = silvaforms.Fields(IImageAddFields)
-    fields['id'].required = False
-
-    def _add(self, parent, data):
-        default_id = data['id'] is not NO_VALUE and data['id'] or u''
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addImage(
-            default_id, data['title'], file=data['file'])
 
 
 mt = mimetypes.types_map.values()

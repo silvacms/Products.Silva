@@ -27,7 +27,6 @@ from silva.core.interfaces import (
     IPublication, ISilvaObject, IGhostFolder, IGhostAware)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
-from silva.core.smi.interfaces import ISMILayer
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 
@@ -403,7 +402,6 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
 
 class GhostFolderListingProvider(silvaviews.ContentProvider):
     grok.context(IGhostFolder)
-    grok.layer(ISMILayer)
     grok.name('ghost_folder_listing')
 
     def get_icon_url(self):

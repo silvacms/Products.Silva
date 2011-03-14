@@ -1,0 +1,45 @@
+<div class="portlet"
+     i18n:domain="silva">
+  <h4 i18n:translate="">Format</h4>
+  <p i18n:translate="">
+    <span i18n:name="format" tal:replace="viewlet.format" /> image.
+  </p>
+
+  <h4 i18n:translate="">Dimensions</h4>
+  <p tal:condition="not:viewlet.dimensions"
+     i18n:translate="">
+    unknown
+  </p>
+  <p tal:condition="viewlet.dimensions">
+    <!-- Template is not properly indented to prevent a spaces before 'x' and '.' -->
+    <tal:original i18n:translate="">
+      <span tal:replace="viewlet.dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.dimensions.height" i18n="height" /> pixels</tal:original>
+    <tal:scaled tal:condition="viewlet.scaling"
+                i18n:translate="">
+      scaled to <span tal:replace="viewlet.scaling.width" i18n:name="width"/>x<span tal:replace="viewlet.scaling.height" i18n="height" /> pixels</tal:scaled>.
+  </p>
+
+  <tal:thumbnail tal:condition="viewlet.thumbnail">
+    <h4 i18n:translate="">Thumbnail</h4>
+    <p>
+      <img tal:replace="structure viewlet.thumbnail" />
+    </p>
+  </tal:thumbnail>
+
+  <h4 i18n:translate="">Original</h4>
+  <p>
+    <a title="View the original image" target="_blank" href="#"
+       tal:attributes="href viewlet.original"
+       i18n:attributes="title"
+       i18n:translate="">view unscaled image</a>.
+  </p>
+
+  <h4 i18n:translate="">Orientation</h4>
+  <p>
+    <span tal:content="viewlet.orientation"
+          tal:attributes="class string:${viewlet.orientation_cls} orientation">
+      square or portrait
+    </span>
+  </p>
+
+</div>

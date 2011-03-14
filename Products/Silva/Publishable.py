@@ -19,12 +19,11 @@ from silva.core.interfaces.content import (
     IPublishable, INonPublishable, IContent, IVersioning,
     IVersion, IContainer, IPublication, ISilvaObject)
 from silva.core.references.interfaces import IReferenceService
-from silva.core.smi.interfaces import ISMILayer
-from silva.core.smi.interfaces import IPropertiesTabIndex, IEditTabIndex
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
+from silva.core.smi.properties.metadata import PropertiesTab
+from zeam.form import silva as silvaforms
 from zope import component
-from zope.interface import Interface
 from zope.traversing.browser import absoluteURL
 
 
@@ -292,11 +291,10 @@ InitializeClass(Publishable)
 class ContentReferencedBy(silvaviews.Viewlet):
     """Report reference usage of this publishable
     """
+    grok.template('contentreferencedby')
     grok.context(ISilvaObject)
-    grok.layer(ISMILayer)
-    grok.order(100)
-    grok.view(IPropertiesTabIndex)
-    grok.viewletmanager(Interface)
+    grok.view(PropertiesTab)
+    grok.viewletmanager(silvaforms.SMIFormPortlets)
 
     def update(self):
         references = {}
@@ -338,5 +336,3 @@ class ContentReferencedBy(silvaviews.Viewlet):
                 info['title'] += ' (' + ', '.join(info['versions']) + ')'
 
 
-class EditContentReferencedBy(ContentReferencedBy):
-    grok.view(IEditTabIndex)

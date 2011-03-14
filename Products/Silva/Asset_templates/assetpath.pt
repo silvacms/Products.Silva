@@ -1,9 +1,0 @@
-<tal:path i18n:domain="silva"
-          tal:condition="viewlet/path">
-  <h4 title="file system path to this asset on the server"
-      i18n:attributes="title"
-      i18n:translate="">file system path</h4>
-  <p tal:content="viewlet/path">
-    path
-  </p>
-</tal:path>

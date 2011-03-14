@@ -4,20 +4,17 @@
 
 import logging
 
-# Zope 3
 from five import grok
-from zope.interface import Interface
 
-# Zope 2
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS import SimpleItem
 import OFS.interfaces
 
-# Silva
+from Products.Silva import SilvaPermissions
+from Products.Silva.Publishable import ContentReferencedBy
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
-from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IAsset, IImage
 from silva.core.views import views as silvaviews
@@ -149,19 +146,11 @@ class AssetEditTab(silvaforms.SMIComposedForm):
     label = _('Edit')
 
 
-class SMIAssetPortlets(silvaviews.ViewletManager):
-    """Report information on assets.
-    """
-    grok.context(IAsset)
-    grok.view(AssetEditTab)
-    grok.name('portlets')
-
-
 class SMIAssetPortlet(silvaviews.Viewlet):
     grok.baseclass()
     grok.context(IAsset)
     grok.view(AssetEditTab)
-    grok.viewletmanager(SMIAssetPortlets)
+    grok.viewletmanager(silvaforms.SMIFormPortlets)
 
 
 class AssetSize(SMIAssetPortlet):
@@ -186,3 +175,7 @@ class AssetPath(SMIAssetPortlet):
             self.path = path.replace('/', ' / ')
 
 
+class AssetReferencedBy(ContentReferencedBy):
+    grok.order(100)
+    grok.context(IAsset)
+    grok.view(AssetEditTab)

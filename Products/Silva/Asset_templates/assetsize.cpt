@@ -1,0 +1,9 @@
+<div class="portlet"
+     i18n:domain="silva">
+  <h4 title="Size of this asset"
+      i18n:attributes="title"
+      i18n:translate="">File size</h4>
+  <p tal:content="viewlet.size">
+    Size
+  </p>
+</div>

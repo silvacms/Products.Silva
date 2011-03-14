@@ -1,0 +1,35 @@
+<div class="portlet" i18n:domain="silva">
+  <h4 title="List of contents that refer to this content"
+    i18n:attributes="title">
+    References
+  </h4>
+  <p tal:condition="not:viewlet.references"
+     i18n:translate="">
+    No content refers to this
+    <span i18n:name="content_type" tal:replace="context.meta_type" />.
+  </p>
+  <tal:references tal:condition="viewlet.references">
+    <p>This content is referenced by:</p>
+    <div class="refitem"
+      tal:repeat="reference viewlet.references">
+      <a title="edit content"
+        tal:attributes="href reference.edit_url"
+        i18n:attributes="title">
+        <img class="icon" alt="edit content"
+          height="16" width="16" style="float:right"
+          i18n:attributes="alt"
+          tal:attributes="src static['edit.png']()"
+        />
+      </a>
+      <a tal:attributes="href reference.url;
+                         title reference.path">
+        <img class="icon" alt="view content"
+          height="16" width="16"
+          i18n:attributes="alt"
+          tal:attributes="src reference.icon"
+        />
+        <p tal:content="reference.title"/>
+      </a>
+    </div>
+  </tal:references>
+</div>
