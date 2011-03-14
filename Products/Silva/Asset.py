@@ -21,7 +21,8 @@ from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IAsset, IImage
 from silva.core.views import views as silvaviews
-from silva.core.smi.interfaces import ISMILayer
+from silva.translations import translate as _
+from zeam.form import silva as silvaforms
 
 logger = logging.getLogger('silva.core')
 
@@ -138,33 +139,45 @@ def asset_moved_update_quota(asset, event):
         event.newParent.update_quota(size)
 
 
-class SMIAssetMetadata(silvaviews.ViewletManager):
+class AssetEditTab(silvaforms.SMIComposedForm):
+    """ Edit tab
+    """
+    grok.context(IAsset)
+    grok.name('silva.ui.content')
+    grok.require('silva.ChangeSilvaContent')
+
+    label = _('Edit')
+
+
+class SMIAssetPortlets(silvaviews.ViewletManager):
     """Report information on assets.
     """
     grok.context(IAsset)
-    grok.view(Interface)
+    grok.view(AssetEditTab)
+    grok.name('portlets')
 
 
-class AssetSize(silvaviews.Viewlet):
+class SMIAssetPortlet(silvaviews.Viewlet):
+    grok.baseclass()
+    grok.context(IAsset)
+    grok.view(AssetEditTab)
+    grok.viewletmanager(SMIAssetPortlets)
+
+
+class AssetSize(SMIAssetPortlet):
     """Report size of this asset.
     """
-    grok.context(IAsset)
-    grok.layer(ISMILayer)
     grok.order(80)
-    grok.viewletmanager(SMIAssetMetadata)
 
     def update(self):
         self.size = Bytes(self.context.get_file_size())
 
 
-class AssetPath(silvaviews.Viewlet):
+class AssetPath(SMIAssetPortlet):
     """Give filesystem path to that asset.
     """
-    grok.context(IAsset)
-    grok.layer(ISMILayer)
     grok.order(90)
     grok.require('zope2.ViewManagementScreens')
-    grok.viewletmanager(SMIAssetMetadata)
 
     def update(self):
         self.path = None
