@@ -1,0 +1,22 @@
+<div class="portlet"
+     i18n:domain="silva">
+  <tal:mime_type tal:condition="viewlet.mime_type">
+    <h4 i18n:translate="">File mime type</h4>
+    <p tal:content="viewlet.mime_type">mime type</p>
+  </tal:mime_type>
+
+  <tal:content_encoding tal:condition="viewlet.content_encoding">
+    <h4 i18n:translate="">File encoding</h4>
+    <p tal:content="viewlet.content_encoding">content encoding</p>
+  </tal:content_encoding>
+
+  <h4 i18n:translate="">Link to file</h4>
+    <p>
+      <a title="Download" target="_blank"
+         tal:content="context.get_title_or_id()"
+         tal:attributes="href path:context/@@absolute_url"
+         i18n:attributes="title">
+        link
+      </a>
+    </p>
+</div>

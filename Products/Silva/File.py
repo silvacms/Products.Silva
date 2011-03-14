@@ -39,7 +39,7 @@ from ZPublisher.Iterators import IStreamIterator
 # Silva
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
-from Products.Silva.Asset import Asset
+from Products.Silva.Asset import Asset, SMIAssetPortlet
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
@@ -582,18 +582,7 @@ class FileSystemFileView(silvaviews.View):
         return self.context._file.index_html(
             REQUEST=self.request, RESPONSE=self.response)
 
-
-def FileStorageTypeVocabulary(context):
-    terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
-             SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
-    if FILESYSTEM_STORAGE_AVAILABLE:
-        terms += [SimpleTerm(value=FileSystemFile,
-                             title='FileSystem File (Legacy)',
-                             token='FileSystemFile'),]
-    return SimpleVocabulary(terms)
-
-directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
-
+# SMI forms
 
 class IFileAddSchema(ITitledContent):
 
@@ -618,6 +607,16 @@ class FileAddForm(silvaforms.SMIAddForm):
             default_id, default_title, data['file'])
 
 
+class InfoPortlet(SMIAssetPortlet):
+    grok.context(interfaces.IFile)
+
+    def update(self):
+        self.mime_type = self.context.get_mime_type()
+        self.content_encoding = self.context.content_encoding()
+
+
+# ZMI service and file creation
+
 def file_factory(self, id, content_type, file):
     """Create a File.
     """
@@ -631,6 +630,18 @@ def file_factory(self, id, content_type, file):
         return None
     service_files = component.getUtility(interfaces.IFilesService)
     return service_files.new_file(str(id))
+
+
+def FileStorageTypeVocabulary(context):
+    terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
+             SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
+    if FILESYSTEM_STORAGE_AVAILABLE:
+        terms += [SimpleTerm(value=FileSystemFile,
+                             title='FileSystem File (Legacy)',
+                             token='FileSystemFile'),]
+    return SimpleVocabulary(terms)
+
+directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 
 class FilesService(SilvaService):
