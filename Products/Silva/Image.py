@@ -164,7 +164,7 @@ class Image(Asset):
         """Set the image object.
         """
         self._image_factory('hires_image', file)
-        format = self.getFormat()
+        format = self.get_format()
         if format in self.web_formats:
             self.web_format = format
         self._createDerivedImages()
