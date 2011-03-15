@@ -145,12 +145,12 @@ class Image(Asset):
                 self.web_format = web_format
                 update_cache = 1
         # check if web_scale can be parsed:
-        self.getCanonicalWebScale(web_scale)
+        self.get_canonical_web_scale(web_scale)
         if self.web_scale != web_scale:
             update_cache = 1
             self.web_scale = web_scale
         # check if web_crop can be parsed:
-        self.getCropBox(web_crop)
+        self.get_crop_box(web_crop)
         if self.web_crop != web_crop:
             update_cache = 1
             self.web_crop = web_crop
