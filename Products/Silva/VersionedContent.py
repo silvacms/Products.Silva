@@ -274,11 +274,11 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
             raise PublicationWorkflowError(
                 _("This content already has a new version."))
         self.context.create_copy()
-        self.context.sec_update_last_author_info()
         return True
 
     def request_approval(self, message):
         # XXX add checkout publication datetime
+        # set_unapproved_version_publication_datetime(DateTime())
         if self.context.get_unapproved_version() is None:
             raise PublicationWorkflowError(
                 _('There is no unapproved version.'))
@@ -310,12 +310,12 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.reject_version_approval(message)
         return True
 
-    def close(self):
-        if self.context.get_public_version() is None:
-            raise PublicationWorkflowError(
-                _("There is no public version to close"))
-        self.context.close_version()
-        return True
+    def revoke_approval(self):
+        if self.get_approved_version():
+            self.context.unapprove_version()
+            return True
+        raise PublicationWorkflowError(
+            _(u"This content is not approved."))
 
     def approve(self, time=None):
         if time is None:
@@ -327,4 +327,22 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
                 _("There is no unapproved version to approve."))
         self.context.set_unapproved_version_publication_datetime(time)
         self.context.approve_version()
+        return True
+
+    def publish(self, time=None):
+        # Do the same job than approve, but works on closed content as
+        # well.
+        if not self.context.get_unapproved_version():
+            if self.context.is_version_published():
+                raise PublicationWorkflowError(
+                    _("There is no unapproved version to approve."))
+            self.context.create_copy()
+        self.approve(time)
+        return True
+
+    def close(self):
+        if self.context.get_public_version() is None:
+            raise PublicationWorkflowError(
+                _("There is no public version to close"))
+        self.context.close_version()
         return True
