@@ -13,9 +13,7 @@
   <p tal:condition="viewlet.dimensions">
     <!-- Template is not properly indented to prevent a spaces before 'x' and '.' -->
     <tal:original i18n:translate="">
-      <span tal:replace="viewlet.dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.dimensions.height" i18n="height" /> pixels</tal:original>
-    <tal:scaled tal:condition="viewlet.scaling"
-                i18n:translate="">
+      <span tal:replace="viewlet.dimensions.width" i18n:name="width"/>x<span tal:replace="viewlet.dimensions.height" i18n="height" /> pixels</tal:original><tal:scaled tal:condition="viewlet.scaling" i18n:translate="">
       scaled to <span tal:replace="viewlet.scaling.width" i18n:name="width"/>x<span tal:replace="viewlet.scaling.height" i18n="height" /> pixels</tal:scaled>.
   </p>
 

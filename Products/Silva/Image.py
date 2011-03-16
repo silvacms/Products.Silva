@@ -704,19 +704,18 @@ class InfoPortlet(SMIAssetPortlet):
         self.format = self.context.web_format.lower()
         self.dimensions = None
         try:
-            self.dimensions = dict(
-                zip(['width', 'height'],
-                    self.context.get_dimensions()))
+            dimensions = self.context.get_dimensions()
+            self.dimensions = dict(zip(['width', 'height'], dimensions))
         except ValueError:
-            pass
+            dimensions = None
         self.scaling = None
         if self.context.hires_image is not None:
             try:
-                self.scaling = dict(
-                    zip(['width', 'height'],
-                        self.context.get_canonical_web_scale()))
+                scaled_dimensions = self.context.get_canonical_web_scale()
+                if scaled_dimensions != dimensions:
+                    self.scaling = dict(zip(['width', 'height'], scaled_dimensions))
             except ValueError:
-                pass
+                scaled_dimensions = None
         self.thumbnail = None
         if self.context.thumbnail_image:
             self.thumbnail = self.context.tag(thumbnail=1)
