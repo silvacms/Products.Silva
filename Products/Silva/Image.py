@@ -635,7 +635,7 @@ class ImageEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IImageAddFields).omit('id')
-    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
 
 image_formats = SimpleVocabulary([SimpleTerm(title=u'jpg', value='JPEG'),
                                   SimpleTerm(title=u'png', value='PNG'),

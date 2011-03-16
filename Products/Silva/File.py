@@ -556,7 +556,7 @@ class FileEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileAddFields).omit('id')
-    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
 
 
 class IFileTextFields(Interface):
@@ -578,7 +578,7 @@ class FileTextEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileTextFields)
-    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
 
     def available(self):
         return self.context.is_text_editable()
