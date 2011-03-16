@@ -551,7 +551,7 @@ class FileEditForm(silvaforms.SMISubForm):
     grok.view(AssetEditTab)
     grok.order(10)
 
-    label = _(u'Edit')
+    label = _(u'Edit file content')
     ignoreContent = False
     dataManager = silvaforms.SilvaDataManager
 
