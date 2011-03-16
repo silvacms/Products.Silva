@@ -17,10 +17,11 @@ logger = logging.getLogger('silva.file')
 from ZODB import blob
 from five import grok
 from zope import component
+from zope import schema
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.datetime import time as time_from_datetime
 from zope.event import notify
-from zope.interface import directlyProvides
+from zope.interface import Interface, directlyProvides
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.location.interfaces import ISite
@@ -40,21 +41,15 @@ from ZPublisher.Iterators import IStreamIterator
 from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva.Asset import Asset, SMIAssetPortlet
+from Products.Silva.Asset import AssetEditTab
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
-from Products.Silva.helpers import fix_content_type_header
 from Products.Silva.helpers import create_new_filename
 from Products.Silva.converters import get_converter_for_mimetype
 
 # Storages
 from OFS import Image                            # For ZODB storage
-try:                                             #
-    from Products.ExtFile.ExtFile import ExtFile # For Filesystem storage;
-    FILESYSTEM_STORAGE_AVAILABLE = 1             # try to see if it is
-except:                                          # available for import
-    FILESYSTEM_STORAGE_AVAILABLE = 0             #
-
 from Products.Silva.magic import MagicGuess
 
 from silva.core import conf as silvaconf
@@ -244,23 +239,24 @@ class File(Asset):
 
     # checks where the mime type is text/* or javascript
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'can_edit_text')
-    def can_edit_text(self):
-        mt = self.get_mime_type()
-        if ((mt.startswith('text/') and mt != 'text/rtf') or \
-                mt in ('application/x-javascript',)):
+        SilvaPermissions.AccessContentsInformation, 'is_text')
+    def is_text(self):
+        mimetype = self.get_mime_type()
+        if ((mimetype.startswith('text/') and mimetype != 'text/rtf') or 
+            mimetype in ('application/x-javascript',)):
             return True
+        return False
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'is_editable_size')
-    def is_editable_size(self):
+        SilvaPermissions.AccessContentsInformation, 'is_text_editable')
+    def is_text_editable(self):
         #size is editable if it is less than 150 KB
-        return not self.get_file_size() > 153600
+        return self.is_text() and (not self.get_file_size() > 153600)
 
     security.declareProtected(
         SilvaPermissions.View, 'get_text_content')
     def get_text_content(self):
-        if not self.can_edit_text():
+        if not self.is_text():
             raise TypeError("Content of Silva File is not text")
         return self.get_content()
 
@@ -524,68 +520,9 @@ class BlobFileView(silvaviews.View):
                         return u''
         return FDIterator(self.context.get_content_fd())
 
-
-class FileSystemFile(File):
-    """Silva File object, storage in ZODB. Contains the ExtFile object
-    from the ExtFile Product - if available.
-    """
-    grok.implements(interfaces.IFileSystemFile)
-    grok.baseclass()
-    security = ClassSecurityInfo()
-
-    def __init__(self, id):
-        super(FileSystemFile, self).__init__(id)
-        self._file = ExtFile(id, redirect_default_view=1)
-
-    def _get_filename(self):
-        path = self._file.get_filename()
-        if not os.path.isfile(path):
-            path += '.tmp'
-        return path
-
-    def _set_file_data_helper(self, file):
-        # XXX fix that's
-        fix_content_type_header(file)
-        self._file.manage_file_upload(file=file)
-        if self._file.content_type == 'text/plain':
-            self._file.content_type = 'text/plain; charset=utf-8'
-
-    security.declareProtected(
-        SilvaPermissions.View, 'get_content_fd')
-    def get_content_fd(self):
-        return open(self._get_filename(), 'rb')
-
-    security.declareProtected(
-        SilvaPermissions.View, 'get_download_url')
-    def get_download_url(self):
-        return self._file.static_url()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'get_file_system_path')
-    def get_file_system_path(self):
-        """return path on filesystem for containing image"""
-        # full path from /:
-        return self._file.get_filename()
-
-InitializeClass(FileSystemFile)
-
-
-class FileSystemFileView(silvaviews.View):
-    grok.context(FileSystemFile)
-    grok.require('zope2.View')
-    grok.name('index.html')
-
-    def render(self):
-        self.response.setHeader(
-            'Content-Disposition',
-            'inline;filename=%s' % (self.context.get_filename()))
-        return self.context._file.index_html(
-            REQUEST=self.request, RESPONSE=self.response)
-
 # SMI forms
 
-class IFileAddSchema(ITitledContent):
-
+class IFileAddFields(ITitledContent):
     file = silvaschema.Bytes(title=_(u"file"), required=True)
 
 
@@ -595,7 +532,7 @@ class FileAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.IFile)
     grok.name(u'Silva File')
 
-    fields = silvaforms.Fields(IFileAddSchema)
+    fields = silvaforms.Fields(IFileAddFields)
     fields['id'].required = False
     fields['title'].required = False
 
@@ -605,6 +542,46 @@ class FileAddForm(silvaforms.SMIAddForm):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addFile(
             default_id, default_title, data['file'])
+
+
+class FileEditForm(silvaforms.SMISubForm):
+    """Edit file.
+    """
+    grok.context(interfaces.IFile)
+    grok.view(AssetEditTab)
+    grok.order(10)
+
+    label = _(u'Edit')
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    fields = silvaforms.Fields(IFileAddFields).omit('id')
+    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+
+
+class IFileTextFields(Interface):
+    text_content = schema.Text(
+        title=_(u'Text content'),
+        description=_(u'Text contained in the file'),
+        required=True)
+
+
+class FileTextEditForm(silvaforms.SMISubForm):
+    """Edit content as a text file.
+    """
+    grok.context(interfaces.IFile)
+    grok.view(AssetEditTab)
+    grok.order(20)
+
+    label = _(u'Edit text content')
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    fields = silvaforms.Fields(IFileTextFields)
+    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+
+    def available(self):
+        return self.context.is_text_editable()
 
 
 class InfoPortlet(SMIAssetPortlet):
@@ -635,10 +612,6 @@ def file_factory(self, id, content_type, file):
 def FileStorageTypeVocabulary(context):
     terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
              SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
-    if FILESYSTEM_STORAGE_AVAILABLE:
-        terms += [SimpleTerm(value=FileSystemFile,
-                             title='FileSystem File (Legacy)',
-                             token='FileSystemFile'),]
     return SimpleVocabulary(terms)
 
 directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)

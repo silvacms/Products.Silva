@@ -18,12 +18,14 @@ logger = logging.getLogger('silva.image')
 # Zope 3
 from five import grok
 from zope import component
+from zope import schema
 from zope.component import getMultiAdapter
 from zope.event import notify
 from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -33,6 +35,7 @@ from App.class_init import InitializeClass
 from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset, SMIAssetPortlet
+from Products.Silva.Asset import AssetEditTab
 from Products.Silva.helpers import create_new_filename
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
@@ -618,6 +621,79 @@ class ImageAddForm(silvaforms.SMIAddForm):
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addImage(
             default_id, data['title'], file=data['file'])
+
+
+class ImageEditForm(silvaforms.SMISubForm):
+    """ Edit image attributes
+    """
+    grok.context(interfaces.IImage)
+    grok.view(AssetEditTab)
+    grok.order(10)
+
+    label = _(u'Edit')
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    fields = silvaforms.Fields(IImageAddFields).omit('id')
+    actions  = silvaforms.Actions(silvaforms.EditAction(), silvaforms.CancelEditAction())
+
+image_formats = SimpleVocabulary([SimpleTerm(title=u'jpg', value='JPEG'),
+                                  SimpleTerm(title=u'png', value='PNG'),
+                                  SimpleTerm(title=u'gif', value='GIF')])
+
+
+class IFormatAndScalingFields(Interface):
+    web_format = schema.Choice(
+        source=image_formats,
+        title=_(u"web format"),
+        description=_(u"Image format for web."))
+    web_scale = schema.TextLine(
+        title=_(u"scaling"),
+        description=_(u'Image scaling for web: use width x  '
+                      u'height in pixels, or one axis length, ',
+                      u'or a percentage (100x200, 100x*, *x200, 40%).'),
+        required=False)
+    web_crop = silvaschema.CropCoordinates(
+        title=_(u"cropping"),
+        description=_(u"Image cropping for web: use the"
+                      u" ‘set crop coordinates’ "
+                      u"button, or enter X1xY1-X2xY2"
+                      u" to define the cropping box."),
+        required=False)
+
+
+class ImageFormatAndScalingForm(silvaforms.SMISubForm):
+    """ form to resize / change format of image.
+    """
+    grok.context(interfaces.IImage)
+    grok.view(AssetEditTab)
+    grok.order(20)
+
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    label = _('Format and scaling')
+    fields = silvaforms.Fields(IFormatAndScalingFields)
+    fields['web_format'].mode = 'radio'
+    fields['web_scale'].defaultValue = '100%'
+
+    @silvaforms.action(title=_('Change'),
+                       identifier=_('set_properties'))
+    def set_properties(self):
+        data, errors = self.extractData()
+        if errors:
+            return silvaforms.FAILURE
+        try:
+            self.context.set_web_presentation_properties(
+                data.getWithDefault('web_format'),
+                data.getWithDefault('web_scale'),
+                data.getWithDefault('web_crop'))
+        except ValueError as e:
+            self.send_message(unicode(e), type='error')
+        else:
+            self.send_message(_('Scaling and/or format changed.'),
+                type='feedback')
+        return silvaforms.SUCCESS
 
 
 class InfoPortlet(SMIAssetPortlet):

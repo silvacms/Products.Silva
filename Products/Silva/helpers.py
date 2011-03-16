@@ -109,19 +109,6 @@ def unapprove_close_helper(object):
             unapprove_close_helper(item)
 
 
-def fix_content_type_header(uploaded_file):
-    """Deletes the content-type header on the uploaded_file.
-
-    This ensures consistent mimetype assignment for the Silva application
-    since Zope will now fallback to the Python database for resolving
-    a mimetype.
-    """
-    if hasattr(uploaded_file, 'headers'):
-        if uploaded_file.headers.has_key('content-type'):
-            del uploaded_file.headers['content-type']
-
-
-
 # this class used to be in SilvaDocument.upgrade, but was moved
 # here when Folder._to_folder_or_publication_helper began using it.
 class SwitchClass(object):
