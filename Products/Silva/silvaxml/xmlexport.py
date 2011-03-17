@@ -191,11 +191,8 @@ class FolderProducer(SilvaBaseProducer):
                     not self.getSettings().withSubPublications()):
                 continue
             self.subsax(object)
-        for object in self.context.get_assets():
+        for object in self.context.get_non_publishables():
             self.subsax(object)
-        if self.getSettings().otherContent():
-            for object in self.context.get_other_content():
-                self.subsax(object)
         self.endElement('content')
         self.endElement('folder')
 
@@ -219,11 +216,8 @@ class PublicationProducer(SilvaBaseProducer):
                     not self.getSettings().withSubPublications()):
                 continue
             self.subsax(object)
-        for object in self.context.get_assets():
+        for object in self.context.get_non_publishables():
             self.subsax(object)
-        if self.getSettings().otherContent():
-            for object in self.context.get_other_content():
-                self.subsax(object)
         self.endElement('content')
         self.endElement('publication')
 
@@ -427,13 +421,11 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,
-                 withSubPublications=True, otherContent=True,
-                 options={}, request=None):
+                 withSubPublications=True, options={}, request=None):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._version = allVersions and ALL_VERSION or PREVIEWABLE_VERSION
         self._with_sub_publications = withSubPublications
-        self._other_content = otherContent
         self._render_external = False
         self._export_root = None
         self.options = options
@@ -472,9 +464,6 @@ class ExportSettings(xmlexport.BaseSettings):
 
     def withSubPublications(self):
         return self._with_sub_publications
-
-    def otherContent(self):
-        return self._other_content
 
     def externalRendering(self):
         return self._render_external

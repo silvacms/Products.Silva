@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import operator
+
 from five import grok
 from zope import schema
 from zope.component import getUtility
@@ -35,7 +37,7 @@ from Products.Silva import helpers, mangle
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
-from silva.core.interfaces import (
+from silva.core.interfaces import (IAddableContents,
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
     INonPublishable, IContainer, IFolder, IRoot)
 
@@ -262,16 +264,15 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         """Change id of object with id orig_id.
         """
         # check if new_id is valid
-        if not mangle.Id(self, new_id,
-                instance=getattr(self, orig_id)).isValid():
-            return
+        if not mangle.Id(self, new_id, instance=getattr(self, orig_id)).isValid():
+            return False
         # check if renaming (which in essence is the deletion of a url)
         # is allowed
         if not self.is_delete_allowed(orig_id):
-            return
+            return False
         # only change id if necessary
         if orig_id == new_id:
-            return
+            return False
         oids = self._ordered_ids
         try:
             publishable_id = oids.index(orig_id)
@@ -284,7 +285,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         self.manage_renameObject(orig_id, new_id)
         if publishable_id is not None:
             self.move_to([new_id], publishable_id)
-        return 1
+        return True
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_delete')
@@ -491,62 +492,12 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_silva_addables_allowed_in_container')
     def get_silva_addables_allowed_in_container(self):
-        current = self
-        while IContainer.providedBy(current):
-            addables = current._addables_allowed_in_container
-            if addables is not None:
-                return addables
-            current = aq_parent(current)
-        return self.get_silva_addables_all()
+        return self._addables_allowed_in_container
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addables_acquired')
     def is_silva_addables_acquired(self):
         return self._addables_allowed_in_container is None
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables')
-    def get_silva_addables(self):
-        """Get a list of addable Silva objects.
-        """
-        result = []
-        allowed = self.get_silva_addables_allowed()
-        for addable in extensionRegistry.get_addables():
-            if (addable['name'] not in result and
-                addable['name'] in allowed and
-                self._is_silva_addable(addable)):
-                result.append(addable)
-        return result
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_all')
-    def get_silva_addables_all(self):
-        return [addable_dict['name']
-                for addable_dict in extensionRegistry.get_addables()
-                if self._is_silva_addable(addable_dict)]
-
-    def _is_silva_addable(self, addable_dict):
-        """Given a dictionary from filtered_meta_types, check whether this
-        specifies a silva addable.
-        """
-        if not (addable_dict.has_key('instance') and
-                ISilvaObject.implementedBy(addable_dict['instance'])):
-            return False
-        if IRoot.implementedBy(addable_dict['instance']):
-            return False
-
-        root = self.get_root()
-        return (
-            not root.is_silva_addable_forbidden(addable_dict['name']) and
-            extensionRegistry.is_installed(addable_dict['product'], root))
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed')
-    def get_silva_addables_allowed(self):
-        secman = getSecurityManager()
-        addables = self.get_silva_addables_allowed_in_container()
-        allowed = [name for name in addables if secman.checkPermission('Add %ss' % name, self)]
-        return allowed
 
     # get_container API
 
@@ -594,10 +545,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         # are published.
         default = self.get_default()
         if default:
-            if default.aq_explicit.is_published():
-                return 1
-            else:
-                return 0
+            return default.is_published()
         for object in self.get_ordered_publishables():
             if object.is_published():
                 return 1
@@ -608,24 +556,13 @@ class Folder(SilvaObject, Publishable, BaseFolder):
     def is_approved(self):
         # Folder is approved if anything inside is approved
         default = self.get_default()
-        if default and self.get_default().is_approved():
+        if default and default.is_approved():
             return 1
         for object in self.get_ordered_publishables():
             if object.is_approved():
                 return 1
         return 0
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_delete_allowed')
-    def is_delete_allowed(self, id):
-        """Delete is only allowed if the object with id:
-           - does not have an approved version
-           - does not have a published version
-           - if it is a container, does not contain anything of the
-             above, recursively
-        """
-        object = getattr(self, id)
-        return object.is_deletable()
 
     def is_deletable(self):
         """deletable if all containing objects are deletable
@@ -679,34 +616,9 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                       map(self._getOb, self._ordered_ids))
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_assets')
-    def get_assets(self):
-        result = self.objectValues(meta_types_for_interface(IAsset))
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
-        return result
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_non_publishables')
     def get_non_publishables(self):
         result = self.objectValues(meta_types_for_interface(INonPublishable))
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
-        return result
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_other_content')
-    def get_other_content(self):
-        result = []
-        assets = self.get_assets()
-        publishables = self.get_ordered_publishables()
-        default = self.get_default()
-        for object in self.objectValues():
-            if object in publishables:
-                continue
-            if object in assets:
-                continue
-            if object == default:
-                continue
-            result.append(object)
         result.sort(lambda x,y: cmp(x.getId(), y.getId()))
         return result
 
@@ -811,6 +723,58 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
 
 InitializeClass(Folder)
+
+
+class AddableContents(grok.Adapter):
+    grok.context(IContainer)
+    grok.implements(IAddableContents)
+    grok.provides(IAddableContents)
+
+    def get_authorized_addables(self):
+        """Get a list of addable Silva objects.
+        """
+        check_permission = getSecurityManager().checkPermission
+        can_add = lambda name: check_permission('Add %ss' % name, self.context)
+
+        return filter(can_add, self.get_container_addables())
+
+    def get_container_addables(self):
+        all_addables = self.get_all_addables()
+
+        # Check for restriction on the container
+        locally_addables = self._get_locally_addables()
+        if locally_addables is not None:
+            is_locally_addable = lambda name: name in locally_addables
+            return filter(is_locally_addable, all_addables)
+
+        return all_addables
+
+    def get_all_addables(self):
+        return map(operator.itemgetter('name'),
+                   filter(self._is_addable, extensionRegistry.get_addables()))
+
+    def _get_locally_addables(self):
+        container = self.context
+        while IContainer.providedBy(container):
+            addables = container.get_silva_addables_allowed_in_container()
+            if addables is not None:
+                return addables
+            container = aq_parent(container)
+        return None
+
+    def _is_addable(self, addable):
+        if 'instance' in addable:
+            if not ISilvaObject.implementedBy(addable['instance']):
+                return False
+            if IRoot.implementedBy(addable['instance']):
+                return False
+
+            root = self.context.get_root()
+            return (
+                not root.is_silva_addable_forbidden(addable['name']) and
+                extensionRegistry.is_installed(addable['product'], root))
+
+        return False
 
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)

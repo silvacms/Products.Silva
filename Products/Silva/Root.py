@@ -27,7 +27,7 @@ from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
-from silva.core.interfaces import IRoot
+from silva.core.interfaces import IRoot, IAddableContents
 from silva.core.messages.interfaces import IMessageService
 from silva.core.services import site
 from silva.translations import translate as _
@@ -171,27 +171,6 @@ class Root(Publication, site.Site):
         """Get url of root of site.
         """
         return self.aq_inner.absolute_url()
-
-    def get_other_content(self):
-        """Gets non-asset, non-publishable content.
-
-        Overrides the implementation in Folder to not return Silva internal
-        files.
-        """
-        return ()
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_silva_addables_allowed_in_container')
-    def get_silva_addables_allowed_in_container(self):
-        # allow everything in silva by default, unless things are restricted
-        # explicitly
-        if not hasattr(self,'_addables_allowed_in_container'):
-            self._addables_allowed_in_container = None
-        addables = self._addables_allowed_in_container
-        if addables is None:
-            return self.get_silva_addables_all()
-        else:
-            return addables
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addable_forbidden')
