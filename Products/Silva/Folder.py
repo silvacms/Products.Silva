@@ -35,9 +35,10 @@ from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
 
+from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
-from silva.core.interfaces import (IAddableContents,
+from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
     INonPublishable, IContainer, IFolder, IRoot)
 
@@ -125,8 +126,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             notify(ObjectWillBeRemovedEvent(ob, self, identifier))
 
         for identifier, ob in deleted_objects:
-            self._objects = tuple(
-                [i for i in self._objects if i['id'] != identifier])
+            self._objects = tuple([i for i in self._objects if i['id'] != identifier])
             self._delOb(identifier)
             try:
                 ob._v__object_deleted__ = 1
@@ -136,12 +136,13 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         for identifier, ob in deleted_objects:
             notify(ObjectRemovedEvent(ob, self, identifier))
 
-        notifyContainerModified(self)
+        if deleted_objects:
+            notifyContainerModified(self)
 
         if REQUEST is not None:
             # For ZMI
             REQUEST.RESPONSE.redirect(
-                absoluteURL(self, self.REQUEST) + '/manage_main')
+                absoluteURL(self, REQUEST) + '/manage_main')
 
     # MANIPULATORS
 
@@ -287,33 +288,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             self.move_to([new_id], publishable_id)
         return True
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_delete')
-    def action_delete(self, ids):
-        """Delete objects.
-        """
-        # check whether deletion is allowed
-        deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
-        self.manage_delObjects(deletable_ids)
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_cut')
-    def action_cut(self, ids, REQUEST):
-        """Cut objects.
-        """
-        # check whether deletion is allowed
-        deletable_ids = [id for id in ids if self.is_delete_allowed(id)]
-        # FIXME: need to do unit tests for this
-        # FIXME: would this lead to a sensible user interface?
-        if len(deletable_ids) > 0:
-          self.manage_cutObjects(deletable_ids, REQUEST)
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'action_copy')
-    def action_copy(self, ids, REQUEST):
-        """Copy objects.
-        """
-        self.manage_copyObjects(ids, REQUEST)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_paste')
@@ -402,7 +376,15 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                         paste_id = 'copy%s_of_%s' % (add, org_paste_id)
                     else:
                         paste_id = 'ghost%s_of_%s' % (add, org_paste_id)
-                self._ghost_paste(paste_id, item)
+
+                if IAsset.providedBy(item):
+                    # this is an object that just needs to be copied
+                    item = item._getCopy(self)
+                    item._setId(paste_id)
+                    self._setObject(paste_id, item)
+                else:
+                    ghost_factory(self, paste_id, item)
+
                 msg = _('pasted &#xab;${id}&#xbb;', mapping={'id': paste_id})
                 messages.append(translate(msg))
             else:
@@ -411,15 +393,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 messages.append(translate(msg))
                 message_type = 'error'
         return message_type, ', '.join(messages).capitalize()
-
-    def _ghost_paste(self, paste_id, item, REQUEST=None):
-        if IAsset.providedBy(item):
-            # this is an object that just needs to be copied
-            item = item._getCopy(self)
-            item._setId(paste_id)
-            self._setObject(paste_id, item)
-        else:
-            ghost_factory(self, paste_id, item)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_allow_feeds')
@@ -725,14 +698,98 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 InitializeClass(Folder)
 
 
+def comethod(func):
+
+    class wrapper(object):
+
+        def __init__(self, iterator):
+            self.__iterator = iterator
+            self.__iterator.send(None)
+
+        def add(self, value):
+            return self.__iterator.send(value)
+
+        def finish(self):
+            try:
+                self.__iterator.send(None)
+            except StopIteration:
+                return True
+            return False
+
+    def wrapped(*args):
+        return wrapper(func(*args))
+
+    return wrapped
+
+
+class ContainerManager(grok.Adapter):
+    grok.context(IContainer)
+    grok.implements(interfaces.IContainerManager)
+    grok.provides(interfaces.IContainerManager)
+
+    def rename(self, content, new_identifier, new_title=None):
+        pass
+
+    def copy(self, contents):
+        pass
+
+    def move(self, contents):
+        pass
+
+    def ghost(self, contents):
+        pass
+
+    @comethod
+    def delete(self):
+        to_delete = []
+        container_ids = set(self.context.objectIds())
+
+        try:
+            protected = self._reserved_names
+        except:
+            protected = ()
+
+        content = yield None
+        while content is not None:
+            status = False
+            if content.is_deletable():
+                content_id = content.getId()
+                if content_id in container_ids and content_id not in protected:
+                    to_delete.append((content_id, content))
+                    status = True
+            content = yield status
+
+        for identifier, content in to_delete:
+            compatibilityCall('manage_beforeDelete', content, content, self.context)
+            notify(ObjectWillBeRemovedEvent(content, self.context, identifier))
+
+        for identifier, content in to_delete:
+            self.context._objects = tuple(
+                [i for i in self.context._objects if i['id'] != identifier])
+            self.context._delOb(identifier)
+            try:
+                content._v__object_deleted__ = 1
+            except:
+                pass
+
+        for identifier, content in to_delete:
+            notify(ObjectRemovedEvent(content, self.context, identifier))
+
+        if to_delete:
+            notifyContainerModified(self.context)
+
+
 class AddableContents(grok.Adapter):
     grok.context(IContainer)
-    grok.implements(IAddableContents)
-    grok.provides(IAddableContents)
+    grok.implements(interfaces.IAddableContents)
+    grok.provides(interfaces.IAddableContents)
+
+    def __init__(self, context):
+        self.context = context
+        self.root = context.get_root()
+        self._is_forbidden = self.root.is_silva_addable_forbidden
 
     def get_authorized_addables(self):
-        """Get a list of addable Silva objects.
-        """
         check_permission = getSecurityManager().checkPermission
         can_add = lambda name: check_permission('Add %ss' % name, self.context)
 
@@ -769,10 +826,9 @@ class AddableContents(grok.Adapter):
             if IRoot.implementedBy(addable['instance']):
                 return False
 
-            root = self.context.get_root()
             return (
-                not root.is_silva_addable_forbidden(addable['name']) and
-                extensionRegistry.is_installed(addable['product'], root))
+                not self._is_forbidden(addable['name']) and
+                extensionRegistry.is_installed(addable['product'], self.root))
 
         return False
 
