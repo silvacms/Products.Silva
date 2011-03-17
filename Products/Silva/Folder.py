@@ -292,66 +292,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             self.move_to([new_id], publishable_id)
         return True
 
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'action_paste')
-    def action_paste(self, REQUEST):
-        """Paste objects on clipboard.
-
-            Note: the return value of this method has changed in Silva 1.2
-        """
-        # HACK
-        # determine if we're cut-paste or copy-pasting, wish we
-        # didn't have to..
-        if not REQUEST.has_key('__cp') or REQUEST['__cp'] is None:
-            return
-        op, ref = _cb_decode(REQUEST['__cp'])
-
-        # copy-paste operation
-        # items on clipboard should be unapproved & closed, but
-        # only the *copies*
-        # (actually in case of a cut-paste the original
-        # should not be approved, too)
-        messages = []
-        message_type = 'feedback'
-        paths = []
-        for item in self.cb_dataItems():
-            if ((op == 0 or item.get_container().is_delete_allowed(item.id))
-                    and item.meta_type in [addable['name'] for
-                        addable in self.get_silva_addables()]):
-                paths.append(item.getPhysicalPath())
-            elif item.meta_type not in [addable['name'] for
-                    addable in self.get_silva_addables()]:
-                msg = _(('pasting &#xab;${id}&#xbb; is not allowed in '
-                         'this type of container'), mapping={'id': item.id})
-                messages.append(translate(msg))
-                message_type = 'error'
-
-        if len(paths) == 0:
-            return message_type, ', '.join(messages).capitalize()
-
-        # now we do the paste
-        # encode the paths the way they came in, without the removed items
-        # however, the result is a list of mappings with 'new_id' as
-        # one of the keys
-        result = self.manage_pasteObjects(_cb_encode((op, paths)))
-
-        # now unapprove & close everything just pasted
-        # first get the newly pasted ids
-        paste_ids = [i['new_id'] for i in result]
-        for paste_id in paste_ids:
-            object = getattr(self, paste_id)
-            helpers.unapprove_close_helper(object)
-            object.sec_update_last_author_info()
-            msg = _('pasted &#xab;${id}&#xbb;', mapping={'id': paste_id})
-            messages.append(translate(msg))
-
-        # on cut/paste, clear the clipboard when done
-        if op == 1:
-            REQUEST['__cp'] = None
-
-        return message_type, ', '.join(messages).capitalize()
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'action_paste_to_ghost')
     def action_paste_to_ghost(self, REQUEST=None):
@@ -823,8 +763,12 @@ class ContainerManager(grok.Adapter):
         if any_moves:
             notifyContainerModified(self.context)
 
-    def rename(self, content, new_identifier, new_title=None):
-        pass
+    def renamer(self):
+        data = yield
+        while data is not None:
+            content, identifier, title = data
+            result = False, None
+            data = yield result
 
     def ghost(self, contents):
         pass
