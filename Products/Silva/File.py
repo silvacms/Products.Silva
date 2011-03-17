@@ -431,11 +431,13 @@ class BlobFile(File):
         SilvaPermissions.ChangeSilvaContent, 'set_file_data')
     def set_file_data(self, file):
         desc = self._file.open('w')
-        data = file.read(CHUNK_SIZE)
-        while data:
-            desc.write(data)
+        try:
             data = file.read(CHUNK_SIZE)
-        desc.close()
+            while data:
+                desc.write(data)
+                data = file.read(CHUNK_SIZE)
+        finally:
+            desc.close()
         self._set_content_type(file, DEFAULT_MIMETYPE)
         notify(ObjectModifiedEvent(self))
 
