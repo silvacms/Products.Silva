@@ -6,23 +6,28 @@ import operator
 
 from five import grok
 from zope import schema
+from zope.cachedescriptors.property import CachedProperty
 from zope.component import getUtility
+from zope.lifecycleevent import ObjectCopiedEvent
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
 from zope.i18n import translate
 from zope.lifecycleevent import ObjectRemovedEvent
+from zope.lifecycleevent import ObjectMovedEvent
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.traversing.browser import absoluteURL
 
 # Zope
-from Acquisition import aq_parent
+from Acquisition import aq_parent, aq_inner, aq_base
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
-from OFS.CopySupport import _cb_decode, _cb_encode # HACK
+from OFS.CopySupport import sanity_check as move_check
 from OFS.Folder import Folder as BaseFolder
 from OFS.Uninstalled import BrokenClass
+from OFS.event import ObjectWillBeMovedEvent
 from OFS.event import ObjectWillBeRemovedEvent
+from OFS.event import ObjectClonedEvent
 from OFS.subscribers import compatibilityCall
 import OFS.interfaces
 
@@ -35,10 +40,9 @@ from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
 
-from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
-from silva.core.interfaces import (
+from silva.core.interfaces import (IContainerManager, IAddableContents,
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
     INonPublishable, IContainer, IFolder, IRoot)
 
@@ -705,6 +709,14 @@ def comethod(func):
         def __init__(self, iterator):
             self.__iterator = iterator
             self.__iterator.send(None)
+            self.__done = False
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            if exc_type is None and not self.__done:
+                self.finish()
 
         def add(self, value):
             return self.__iterator.send(value)
@@ -713,6 +725,7 @@ def comethod(func):
             try:
                 self.__iterator.send(None)
             except StopIteration:
+                self.__done = True
                 return True
             return False
 
@@ -724,32 +737,109 @@ def comethod(func):
 
 class ContainerManager(grok.Adapter):
     grok.context(IContainer)
-    grok.implements(interfaces.IContainerManager)
-    grok.provides(interfaces.IContainerManager)
+    grok.implements(IContainerManager)
+    grok.provides(IContainerManager)
+
+    @CachedProperty
+    def _addables(self):
+        return set(IAddableContents(self.context).get_authorized_addables())
+
+    @comethod
+    def copier(self):
+        addables = self._addables
+
+        def make_copy(content):
+            # XXX Update _get_id
+            identifier = self.context._get_id(content.getId())
+
+            copy = content._getCopy(self.context)
+            copy._setId(identifier)
+            notify(ObjectCopiedEvent(copy, content))
+
+            self.context._setObject(identifier, copy)
+            copy = self.context._getOb(identifier)
+
+            compatibilityCall('manage_afterClone', copy, copy)
+            notify(ObjectClonedEvent(copy))
+
+            # Close, maybe should be in a event
+            helpers.unapprove_close_helper(copy)
+            return copy
+
+        content = yield
+        while content is not None:
+            result = False, None
+            if (content.cb_isCopyable() and
+                content.meta_type in addables):
+                result = True, make_copy(content)
+            content = yield result
+
+    @comethod
+    def mover(self):
+        addables = self._addables
+        any_moves = False
+
+        def do_move(from_container, content):
+            # XXX Update _get_id
+            from_identifier = content.getId()
+            to_identifier = self.context._get_id(from_identifier)
+
+            notify(ObjectWillBeMovedEvent(
+                    content, from_container, from_identifier,
+                    self.context, to_identifier))
+
+            content.manage_changeOwnershipType(explicit=1)
+
+            from_container._delObject(
+                from_identifier, suppress_events=True)
+            content = aq_base(content)
+            content._setId(to_identifier)
+            self.context._setObject(
+                to_identifier, content, set_owner=0, suppress_events=True)
+            content = self.context._getOb(to_identifier)
+
+            notify(ObjectMovedEvent(
+                    content, from_container, from_identifier,
+                    self.context, to_identifier))
+
+            # Close, maybe should be in a event
+            helpers.unapprove_close_helper(content)
+
+            notifyContainerModified(from_container)
+            return content
+
+        content = yield
+        while content is not None:
+            result = False, None
+            if (content.cb_isMoveable() and
+                move_check(self.context, content) and
+                content.meta_type in addables):
+                from_container = aq_parent(aq_inner(content))
+                if (aq_base(from_container) is not aq_base(self.context)):
+                    result = True, do_move(from_container, content)
+                    any_moves = True
+            content = yield result
+
+        if any_moves:
+            notifyContainerModified(self.context)
 
     def rename(self, content, new_identifier, new_title=None):
-        pass
-
-    def copy(self, contents):
-        pass
-
-    def move(self, contents):
         pass
 
     def ghost(self, contents):
         pass
 
     @comethod
-    def delete(self):
+    def deleter(self):
         to_delete = []
         container_ids = set(self.context.objectIds())
 
         try:
-            protected = self._reserved_names
+            protected = self.context._reserved_names
         except:
             protected = ()
 
-        content = yield None
+        content = yield
         while content is not None:
             status = False
             if content.is_deletable():
@@ -781,8 +871,8 @@ class ContainerManager(grok.Adapter):
 
 class AddableContents(grok.Adapter):
     grok.context(IContainer)
-    grok.implements(interfaces.IAddableContents)
-    grok.provides(interfaces.IAddableContents)
+    grok.implements(IAddableContents)
+    grok.provides(IAddableContents)
 
     def __init__(self, context):
         self.context = context
