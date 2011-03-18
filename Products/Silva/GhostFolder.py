@@ -219,7 +219,6 @@ class GhostFolder(GhostBase, Folder.Folder):
             updater.finish()
 
         self._publish_ghosts()
-        self._invalidate_sidebar(self)
 
     def _haunt_diff(self, haunted, ghost):
         """diffes two containers

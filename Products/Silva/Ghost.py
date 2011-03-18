@@ -275,22 +275,17 @@ class GhostView(silvaviews.View):
                        u"Please inform the site manager.")
 
     def render(self):
-        # FIXME what if we get circular ghosts?
-        self.request.other['ghost_model'] = aq_inner(self.context)
-        try:
-            content = self.content.get_haunted()
-            if content is None:
-                return self.broken_message
-            if content.get_viewable() is None:
-                return self.broken_message
-            permission = self.is_preview and 'Read Silva content' or 'View'
-            if getSecurityManager().checkPermission(permission, content):
-                return content.view()
-            raise Unauthorized(
-                u"You do not have permission to "
-                u"see the target of this ghost")
-        finally:
-            del self.request.other['ghost_model']
+        content = self.content.get_haunted()
+        if content is None:
+            return self.broken_message
+        if content.get_viewable() is None:
+            return self.broken_message
+        permission = self.is_preview and 'Read Silva content' or 'View'
+        if getSecurityManager().checkPermission(permission, content):
+            return content.view()
+        raise Unauthorized(
+            u"You do not have permission to "
+            u"see the target of this ghost")
 
 
 def ghost_factory(container, identifier, target):
@@ -308,7 +303,7 @@ def ghost_factory(container, identifier, target):
     factory = container.manage_addProduct['Silva']
     if IContainer.providedBy(target):
         if IGhostFolder.providedBy(target):
-            target = target.get_hauted()
+            target = target.get_haunted()
         factory = factory.manage_addGhostFolder
     elif IContent.providedBy(target):
         if IGhost.providedBy(target):

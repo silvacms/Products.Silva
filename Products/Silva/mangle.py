@@ -13,6 +13,8 @@ from types import StringType, UnicodeType
 # Zope
 from AccessControl import ModuleSecurityInfo
 from DateTime import DateTime as _DateTime
+from OFS.ObjectManager import checkValidId
+from zExceptions import BadRequest
 
 # Silva
 from silva.core.interfaces import ISilvaObject, IAsset
@@ -259,6 +261,12 @@ class Id(object):
             if not hasattr(attr, 'meta_type'):
                 # not a zope object (guessing ...)
                 return self.RESERVED
+
+        try:
+            # Call Zope verification function
+            checkValidId(folder, maybe_id, allow_dup)
+        except BadRequest:
+            return self.CONTAINS_BAD_CHARS
 
         return self.OK
 

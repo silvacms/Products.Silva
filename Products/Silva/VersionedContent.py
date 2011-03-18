@@ -54,9 +54,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
         if editable is None:
             return
         editable.set_title(title)
-        if self.id == 'index':
-            container = self.get_container()
-            container._invalidate_sidebar(container)
 
     # ACCESSORS
     security.declareProtected(

@@ -181,7 +181,7 @@ class SilvaObject(TitledObject, Security):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_modification_datetime')
-    def get_modification_datetime(self, update_status=1):
+    def get_modification_datetime(self):
         """Return modification datetime."""
         version = self.get_previewable()
         return  component.getUtility(IMetadataService).getMetadataValue(
