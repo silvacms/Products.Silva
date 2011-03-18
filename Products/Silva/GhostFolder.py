@@ -24,7 +24,7 @@ from Products.Silva.icon import get_icon_url
 from silva.core import conf as silvaconf
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
-    IPublication, ISilvaObject, IGhostFolder, IGhostAware)
+    IPublication, IGhostFolder, IGhostAware)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
 from silva.core.views import views as silvaviews
@@ -331,12 +331,6 @@ class GhostFolder(GhostBase, Folder.Folder):
             return self.aq_inner
         return self.aq_inner.aq_parent.get_publication()
 
-    def implements_publication(self):
-        content = self.get_haunted()
-        if ISilvaObject.providedBy(content):
-            return content.implements_publication()
-        return 0
-
     def is_deletable(self):
         return 1
 
@@ -361,7 +355,6 @@ InitializeClass(GhostFolder)
 
 
 class IGhostFolderSchema(IIdentifiedContent):
-
     haunted = Reference(IContainer,
             title=_(u"target"),
             description=_(u"The silva object the ghost is mirroring"),
@@ -369,21 +362,20 @@ class IGhostFolderSchema(IIdentifiedContent):
 
 
 class SyncAction(silvaforms.Action):
-
     description = _(u"Synchronize target and ghost folder content")
     ignoreRequest = True
 
     def __call__(self, form):
-        gf = form.context
-        if gf.get_link_status() == gf.LINK_OK:
-            gf.haunt()
-            form.send_message(_(u'Ghost Folder synchronized'),
-                              type=u'feedback')
-        else:
-            form.send_message(_(u'Ghost Folder was not synchronized, '
-                                 'because the target is invalid.'),
-                              type=u'error')
-        form.redirect("%s/edit" % form.context.absolute_url())
+        folder = form.context
+        if folder.get_link_status() == folder.LINK_OK:
+            folder.haunt()
+            form.send_message(
+                _(u'Ghost Folder synchronized'), type='feedback')
+            return silvaforms.SUCCESS
+        form.send_message(
+            _(u'Ghost Folder was not synchronized, because the target is invalid.'),
+            type='error')
+        return silvaforms.FAILURE
 
 
 class GhostFolderAddForm(silvaforms.SMIAddForm):
@@ -422,11 +414,10 @@ class GhostFolderListingProvider(silvaviews.ContentProvider):
 class GhostFolderEditForm(GhostEditForm):
     """ Edit form Ghost Folder
     """
-    grok.template('smieditform')
     grok.context(IGhostFolder)
 
     fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
-    actions = GhostEditForm.actions + SyncAction(_(u'synchronize'))
+    actions = GhostEditForm.actions + SyncAction(_(u'Synchronize'))
 
 
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)

@@ -4,8 +4,6 @@
 
 from Products.SilvaMetadata.Access import registerAccessHandler
 from Products.SilvaMetadata.Access import default_accessor
-from Products.SilvaMetadata.Initialize import registerInitHandler
-from Products.SilvaMetadata import Binding
 
 
 #################################
