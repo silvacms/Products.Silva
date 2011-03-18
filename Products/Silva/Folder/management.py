@@ -124,7 +124,7 @@ class ContainerManager(grok.Adapter):
         return (content.cb_isCopyable() and
                 content.meta_type in self.__addables)
 
-    def _is_moveable(self, content):
+    def __is_moveable(self, content):
         return (content.is_deletable() and
                 content.cb_isMoveable() and
                 move_check(self.context, content) and
