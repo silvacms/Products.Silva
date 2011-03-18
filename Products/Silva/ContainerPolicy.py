@@ -12,7 +12,7 @@ from App.class_init import InitializeClass
 from Persistence import Persistent
 
 # Silva
-from silva.core.interfaces import IContainerPolicy
+from silva.core.interfaces import IContainerPolicy, IAddableContents
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.services.base import SilvaService
 
@@ -58,7 +58,7 @@ class ContainerPolicyRegistry(SilvaService):
     security.declareProtected(
         'Access contents information', 'list_addable_policies')
     def list_addable_policies(self, content):
-        allowed_addables = content.get_silva_addables_allowed()
+        allowed_addables = IAddableContents(content).get_authorized_addables()
         return [p for p in self.list_policies()
                 if p in allowed_addables or p == 'None']
 
