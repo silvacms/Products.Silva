@@ -261,10 +261,9 @@ class Id(object):
             if not hasattr(attr, 'meta_type'):
                 # not a zope object (guessing ...)
                 return self.RESERVED
-
         try:
             # Call Zope verification function
-            checkValidId(folder, maybe_id, allow_dup)
+            checkValidId(folder, str(maybe_id), allow_dup)
         except BadRequest:
             return self.CONTAINS_BAD_CHARS
 
