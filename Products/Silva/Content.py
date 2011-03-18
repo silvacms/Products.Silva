@@ -50,11 +50,5 @@ class Content(Publishable):
         return self.absolute_url()
 
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_cacheable')
-    def is_cacheable(self):
-        return 1
-
-
 InitializeClass(Content)
 

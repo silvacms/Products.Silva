@@ -42,7 +42,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
         ({'label': 'Silva /edit...', 'action':'edit'},)+
         BaseFolder.manage_options[1:])
 
-
     # MANIPULATORS
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -178,14 +177,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
             if version is None:
                 raise NotFound(version_name)
         return super(VersionedContent, self).view_version(version)
-
-    security.declareProtected(SilvaPermissions.View, 'is_cacheable')
-    def is_cacheable(self):
-        """Return true if the result of the view method can be safely
-        cached.
-        """
-        # by default nothing is safely cacheable
-        return 0
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
         'is_deletable')

@@ -93,7 +93,7 @@ class LinkVersion(CatalogedVersion):
 InitializeClass(LinkVersion)
 
 
-class ILinkSchema(interface.Interface):
+class ILinkSchema(ITitledContent):
 
     url = schema.URI(
         title=_(u"url"),
@@ -130,7 +130,7 @@ class LinkAddForm(silvaforms.SMIAddForm):
     grok.context(interfaces.ILink)
     grok.name(u'Silva Link')
 
-    fields = silvaforms.Fields(ITitledContent, ILinkSchema)
+    fields = silvaforms.Fields(ILinkSchema)
 
 
 class LinkEditForm(silvaforms.SMIEditForm):

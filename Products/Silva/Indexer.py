@@ -169,9 +169,9 @@ class IndexerEditForm(silvaforms.SMIForm):
     actions = silvaforms.Actions(silvaforms.CancelEditAction())
 
     @silvaforms.action(
-        _(u"update index"),
+        _(u"Update index"),
         accesskey=u"u",
-        description=_(u"Update index to include recent added content: alt-u"))
+        description=_(u"Update index to include recent added content"))
     def update_index(self):
         self.context.update()
         notify(ObjectModifiedEvent(self.context))

@@ -3,7 +3,7 @@
 # $Id$
 
 from five import grok
-from zope import schema, interface
+from zope import schema
 from zope.component import getUtility
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
@@ -54,15 +54,6 @@ class AutoTOC(Content, SimpleItem):
     _show_container_link = False
 
     # ACCESSORS
-    security.declareProtected(
-        SilvaPermissions.View, 'is_cacheable')
-    def is_cacheable(self):
-        """Return true if this document is cacheable.
-        That means the document contains no dynamic elements like
-        code, toc, etc.
-        """
-        return 0
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'can_set_title')
     def can_set_title(self):
@@ -158,7 +149,7 @@ def silva_content_types(context):
     return SimpleVocabulary(contents)
 
 
-class IAutoTOCSchema(interface.Interface):
+class IAutoTOCSchema(ITitledContent):
     _local_types = schema.Set(
         title=_(u"types to list"),
         description=_(
@@ -211,7 +202,7 @@ class AutoTOCAddForm(silvaforms.SMIAddForm):
     grok.context(IAutoTOC)
     grok.name(u'Silva AutoTOC')
 
-    fields = silvaforms.Fields(ITitledContent, IAutoTOCSchema)
+    fields = silvaforms.Fields(IAutoTOCSchema)
 
 
 class AutoTOCEditForm(silvaforms.SMIEditForm):
@@ -219,7 +210,7 @@ class AutoTOCEditForm(silvaforms.SMIEditForm):
     """
     grok.context(IAutoTOC)
 
-    fields = silvaforms.Fields(IAutoTOCSchema)
+    fields = silvaforms.Fields(IAutoTOCSchema).omit('id')
 
 
 class AutoTOCView(silvaviews.View):
