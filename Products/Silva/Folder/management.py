@@ -23,7 +23,8 @@ from OFS.subscribers import compatibilityCall
 from Products.Silva import helpers, mangle
 from Products.Silva.Ghost import ghost_factory
 
-from silva.core.interfaces import IContainerManager, IAddableContents
+from silva.core.interfaces import IContainerManager, IOrderManager
+from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainer, IAsset
 
 
@@ -183,6 +184,7 @@ class ContainerManager(grok.Adapter):
     @comethod
     def renamer(self):
         any_renames = False
+        ordering = IOrderManager(self.context, None)
 
         data = yield
         while data is not None:
@@ -195,15 +197,14 @@ class ContainerManager(grok.Adapter):
                 self.__is_moveable(content) and
                 mangle.Id(self.context, to_identifier, instance=content).isValid()):
 
-                try:
-                    order = self.context._ordered_ids.index(from_identifier)
-                except ValueError:
-                    order = None
+                position = ordering.get_position(content) if ordering is not None else -1
 
                 content = self.__move(
                     content, self.context, from_identifier, to_identifier)
-                if order is not None:
-                    self.context.move_to([to_identifier], order)
+
+                if position > 0:
+                    ordering.move(content, position)
+
                 result = content
                 any_renames = True
 
