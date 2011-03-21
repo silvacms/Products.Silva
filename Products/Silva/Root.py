@@ -27,7 +27,7 @@ from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
-from silva.core.interfaces import IRoot, IAddableContents
+from silva.core.interfaces import IRoot
 from silva.core.messages.interfaces import IMessageService
 from silva.core.services import site
 from silva.translations import translate as _
@@ -64,20 +64,20 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         self.is_dev = Globals.DevelopmentMode
         self.version = extensionRegistry.get_extension('Silva').version
 
-    def isAllowedToAddSilvaRoot(self):
+    def is_allowed_to_add_root(self):
         return getSecurityManager().checkPermission(
             'View Management Screens', self.context)
 
     @silvaforms.action(
         _(u"Authenticate first to add a new site"),
-        available=lambda form:not form.isAllowedToAddSilvaRoot())
+        available=lambda form:not form.is_allowed_to_add_root())
     def login(self):
-        if not self.isAllowedToAddSilvaRoot():
+        if not self.is_allowed_to_add_root():
             raise Unauthorized("You must authenticate to add a new Silva Site")
 
     @silvaforms.action(
         _(u"Add a new site"),
-        available=lambda form:form.isAllowedToAddSilvaRoot())
+        available=lambda form:form.is_allowed_to_add_root())
     def new_root(self):
         data, errors = self.extractData()
         if errors:
@@ -164,13 +164,6 @@ class Root(Publication, site.Site):
         'nearest' Silva root.
         """
         return self.aq_inner
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_root_url')
-    def get_root_url(self):
-        """Get url of root of site.
-        """
-        return self.aq_inner.absolute_url()
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_silva_addable_forbidden')

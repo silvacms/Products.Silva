@@ -391,26 +391,6 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
             data['id'], 'Ghost', haunted=data['haunted'])
 
 
-class GhostFolderListingProvider(silvaviews.ContentProvider):
-    grok.context(IGhostFolder)
-    grok.name('ghost_folder_listing')
-
-    def get_icon_url(self):
-        return get_icon_url(self.context, self.request)
-
-    def get_editor_link(self, item):
-        return "%s/edit" % item.absolute_url()
-
-    def get_item_icon_url(self, item):
-        return get_icon_url(item, self.request)
-
-    def display_datetime(self, datetime):
-        return mangle.DateTime(datetime).toShortStr()
-
-    def root_url(self):
-        return self.context.get_root_url()
-
-
 class GhostFolderEditForm(GhostEditForm):
     """ Edit form Ghost Folder
     """
