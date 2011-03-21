@@ -31,7 +31,7 @@ from silva.core import conf as silvaconf
 from silva.translations import translate as _
 
 
-class Folder(SilvaObject, Publishable, BaseFolder):
+class Folder(Publishable, BaseFolder):
     __doc__ = _("""The presentation of the information within a
        publication is structured with folders. They determine the visual
        hierarchy that a Visitor sees. Folders on the top level
