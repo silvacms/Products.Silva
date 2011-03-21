@@ -52,10 +52,10 @@ class OrderManager(grok.Annotation):
         return False
 
     def move(self, content, position):
-        if position > 0 and position < len(self.order):
+        if position >= 0 and position < len(self.order):
             old_position = self.get_position(content)
             identifier = self.order[old_position]
-            if old_position < 0:
+            if old_position >= 0:
                 del self.order[old_position]
                 self.order.insert(position, identifier)
                 notify(ContentOrderChangedEvent(
