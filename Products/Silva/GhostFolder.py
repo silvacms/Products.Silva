@@ -17,17 +17,16 @@ from DateTime import DateTime
 # silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
-from Products.Silva import mangle
 from Products.Silva.Ghost import GhostBase, GhostEditForm
-from Products.Silva.icon import get_icon_url
 
 from silva.core import conf as silvaconf
+from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
     IPublication, IGhostFolder, IGhostAware)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
-from silva.core.views import views as silvaviews
+from silva.ui.menu import ContentMenuItem
 from silva.translations import translate as _
 
 from zeam.form import silva as silvaforms
@@ -391,10 +390,19 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
             data['id'], 'Ghost', haunted=data['haunted'])
 
 
+
+class AccessMenu(ContentMenuItem):
+    grok.context(IGhostFolder)
+    grok.order(15)
+    name = _(u'Edit')
+    screen = 'edit'
+
+
 class GhostFolderEditForm(GhostEditForm):
     """ Edit form Ghost Folder
     """
     grok.context(IGhostFolder)
+    grok.name('silva.ui.edit')
 
     fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
     actions = GhostEditForm.actions + SyncAction(_(u'Synchronize'))
@@ -403,3 +411,19 @@ class GhostFolderEditForm(GhostEditForm):
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)
 def haunt_created_folder(folder, event):
     aq_inner(folder).haunt()
+
+
+class AddableContents(grok.Adapter):
+    grok.context(IGhostFolder)
+    grok.implements(IAddableContents)
+    grok.provides(IAddableContents)
+
+    def get_authorized_addables(self):
+        return []
+
+    def get_container_addables(self):
+        return []
+
+    def get_all_addables(self):
+        return []
+
