@@ -12,7 +12,6 @@ from zope.traversing.browser import absoluteURL
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
-from OFS.Uninstalled import BrokenClass
 from OFS.event import ObjectWillBeRemovedEvent
 from OFS.subscribers import compatibilityCall
 import OFS.interfaces
@@ -25,8 +24,8 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import helpers
 
 from silva.core.interfaces import (
-    IContentImporter, IPublishable, IContent,
-    INonPublishable, IContainer, IFolder, IRoot)
+    IContentImporter, INonPublishable, IPublishable, IOrderManager,
+    IFolder, IRoot)
 
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
@@ -63,7 +62,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
     def __init__(self, id):
         super(Folder, self).__init__(id)
-        self._ordered_ids = []
         self._addables_allowed_in_container = None
 
     # override ObjectManager implementation, so that additional filtering
@@ -128,117 +126,6 @@ class Folder(SilvaObject, Publishable, BaseFolder):
                 absoluteURL(self, REQUEST) + '/manage_main')
 
     # MANIPULATORS
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'move_object_up')
-    def move_object_up(self, id):
-        """Move object up. Returns true if move succeeded.
-        """
-        ids = self._ordered_ids
-        try:
-            i = ids.index(id)
-        except ValueError:
-            return 0
-        if i == 0:
-            return 0
-        ids[i], ids[i - 1] = ids[i - 1], ids[i]
-        self._ordered_ids = ids
-        return 1
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'move_object_down')
-    def move_object_down(self, id):
-        """move object down.
-        """
-        ids = self._ordered_ids
-        try:
-            i = ids.index(id)
-        except ValueError:
-            return 0
-        if i == len(ids) - 1:
-            return 0
-        ids[i], ids[i + 1] = ids[i + 1], ids[i]
-        self._ordered_ids = ids
-        return 1
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'move_to')
-    def move_to(self, move_ids, index):
-        ids = self._ordered_ids
-        # check whether all move_ids are known
-        for move_id in move_ids:
-            if move_id not in ids:
-                return 0
-        for id in move_ids:
-            if ids.index(id) < index:
-                index += 1
-                break
-        ids_without_moving_ids = []
-        move_ids_in_order = []
-        for id in ids:
-            if id in move_ids:
-                move_ids_in_order.append(id)
-                ids_without_moving_ids.append(None)
-            else:
-                ids_without_moving_ids.append(id)
-        ids = ids_without_moving_ids
-        move_ids = move_ids_in_order
-        move_ids.reverse()
-        for move_id in move_ids:
-            ids.insert(index, move_id)
-        ids = [id for id in ids if id is not None]
-        self._ordered_ids = ids
-        return 1
-
-    def _add_ordered_id(self, item):
-        """Add item to the end of the list of ordered ids.
-        """
-        # this already happens to do what we want
-        # this works in case of active objects that were added
-        # (they're added to the list of ordered ids)
-        # and also for inactive objects
-        # (they're not added to the list; nothing happens)
-        if not IPublishable.providedBy(item):
-            return
-        if IContent.providedBy(item) and item.is_default():
-            return
-        ids = self._ordered_ids
-        id = item.id
-        if id not in ids:
-            ids.append(id)
-            self._ordered_ids = ids
-            self._p_changed = 1
-
-    def _remove_ordered_id(self, item):
-        if not IPublishable.providedBy(item):
-            return
-        if IContent.providedBy(item) and item.is_default():
-            return
-        ids = self._ordered_ids
-        if item.id in ids:
-            ids.remove(item.id)
-            self._ordered_ids = ids
-            self._p_changed = 1
-
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
-                              'refresh_active_publishables')
-    def refresh_active_publishables(self):
-        """Clean up all ordered ids in this container and all subcontainers.
-        This method normally does not need to be called, but if something is
-        wrong, this can be called in emergency situations. WARNING: all
-        ordering information is lost!
-        """
-        ids = []
-        for object in self.objectValues():
-            if not IPublishable.providedBy(object):
-                continue
-            if IContent.providedBy(object) and object.is_default():
-                continue
-            ids.append(object.id)
-            if IContainer.providedBy(object):
-                object.refresh_active_publishables()
-        self._ordered_ids = ids
-
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'set_allow_feeds')
     def set_allow_feeds(self, allow):
@@ -405,32 +292,14 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         else:
             return getattr(self, 'index')
 
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_default_viewable')
-    def get_default_viewable(self):
-        """Get the viewable version of the default content object
-        of this container.
-        """
-        # Returns None if there's no default, or the default has no
-        # viewable version.
-        default = self.get_default()
-        if default is None:
-            return None
-        return default.get_viewable()
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')
     def get_ordered_publishables(self):
-        def get_publishable(key):
-            try:
-                content = self._getOb(key)
-            except AttributeError:
-                return None
-            if isinstance(content, BrokenClass):
-                return None
-            return content
-        return filter(lambda o: o is not None,
-                      map(get_publishable, self._ordered_ids))
+        result = filter(
+            lambda content: not content.is_default(),
+            self.objectValues(meta_types_for_interface(IPublishable)))
+        result.sort(key=IOrderManager(self).get_position)
+        return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_non_publishables')

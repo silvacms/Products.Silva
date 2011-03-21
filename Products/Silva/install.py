@@ -20,6 +20,8 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 
 def installFromScratch(root):
     configureSecurity(root)
+    root.manage_addProduct['Silva'].manage_addExtensionService(
+        'service_extensions', 'Silva Product and Extension Configuration')
     # now do the uinstallable stuff (views)
     install(root)
     setInitialSkin(root, 'Standard Issue')
@@ -30,9 +32,6 @@ def installFromScratch(root):
 
 # silva core install/uninstall are really only used at one go in refresh
 def install(root):
-    root.manage_addProduct['Silva'].manage_addExtensionService(
-        'service_extensions', 'Silva Product and Extension Configuration')
-
     # add or update service metadata and catalog
     configureMetadata(root)
 
@@ -42,14 +41,16 @@ def install(root):
     configureSecurity(root)
 
     # set up/refresh some mandatory services
-    configureMiscServices(root)
-    configureContainerPolicies(root)
+    configureServices(root)
+
 
 def uninstall(root):
     pass
 
+
 def is_installed(root):
     return IRoot.providedBy(root)
+
 
 def configureMetadata(root):
     installed_ids = root.objectIds()
@@ -93,24 +94,35 @@ def configureMetadata(root):
     ICataloging(root).reindex()
 
 
-
-def configureMiscServices(root):
+def configureServices(root):
     """Set up required Services
     """
     factory = root.manage_addProduct['Silva']
     installed_ids = root.objectIds()
-    # add service_files
+
+    # service files
     if 'service_files' not in installed_ids:
         factory.manage_addFilesService('service_files')
+
     # service message
     if 'service_messages' not in installed_ids:
         factory.manage_addEmailMessageService()
 
-    # add service_references
+    # service container policy
+    if 'service_containerpolicy' not in installed_ids:
+        factory.manage_addContainerPolicyRegistry()
+
+        # XXX Should move in a event service added
+        from Products.Silva.AutoTOC import AutoTOCPolicy
+        root.service_containerpolicy.register(
+            'Silva AutoTOC', AutoTOCPolicy, 0)
+
+    # service references
     factory = root.manage_addProduct['silva.core.references']
     if 'service_references' not in installed_ids:
         factory.manage_addReferenceService('service_references')
 
+    # service toc filter
     if 'service_toc_filter' not in installed_ids:
         filter_service = TOCFilterService()
         root._setObject(filter_service.id, filter_service)
@@ -174,12 +186,6 @@ def configureSecurity(root):
     root.manage_permission('Manage properties', roleinfo.AUTHOR_ROLES)
     root.manage_permission('Read Silva content', roleinfo.READER_ROLES)
 
-    # this is necessary to let authors use external editor
-    try:
-        root.manage_permission('Use external editor', roleinfo.AUTHOR_ROLES)
-    # hail to Zope and its string exceptions!!
-    except:
-        pass
 
 def configureMembership(root):
     """Install membership code into root.
@@ -234,6 +240,7 @@ def fileobject_add_helper(context, id, text):
     else:
         Image.manage_addFile(context, id, text, content_type='text/plain')
 
+
 def read_file(id, info, folder):
     filename = os.path.join(os.path.dirname(info['__file__']), folder, id)
     f = open(filename, 'rb')
@@ -241,16 +248,6 @@ def read_file(id, info, folder):
         return f.read()
     finally:
         f.close()
-
-def configureContainerPolicies(root):
-    from Products.Silva.AutoTOC import AutoTOCPolicy
-
-    # create container policy registry
-    if not hasattr(root, 'service_containerpolicy'):
-        factory = root.manage_addProduct['Silva']
-        factory.manage_addContainerPolicyRegistry()
-    cpr = root.service_containerpolicy
-    cpr.register('Silva AutoTOC', AutoTOCPolicy, 0)
 
 
 def installSilvaDocument(root):
