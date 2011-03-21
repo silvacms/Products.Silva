@@ -313,34 +313,16 @@ class SilvaObject(TitledObject, Security):
 InitializeClass(SilvaObject)
 
 
-@grok.subscribe(ISilvaObject, IObjectMovedEvent)
-def content_moved(content, event):
+@grok.subscribe(ISilvaObject, IObjectCreatedEvent)
+@grok.subscribe(ISilvaObject, IObjectClonedEvent)
+def content_created(content, event):
     if (content != event.object or
-        IObjectRemovedEvent.providedBy(event) or
+        IObjectCopiedEvent.providedBy(event) or
+        IVersionedContent.providedBy(content) or
         IRoot.providedBy(content)):
         return
-    newParent = event.newParent
 
-    if (IPublishable.providedBy(content) and not (
-        IContent.providedBy(content) and content.is_default())):
-        newParent._add_ordered_id(content)
-
-    # XXX invalidation cache
-    if not IVersionedContent.providedBy(content):
-        content._set_creation_datetime()
-
-
-@grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
-def content_will_be_moved(content, event):
-    if (content != event.object or
-        IObjectWillBeAddedEvent.providedBy(event) or
-        IRoot.providedBy(content)):
-        return
-    container = event.oldParent
-    if (IPublishable.providedBy(content) and not (
-        IContent.providedBy(content) and content.is_default())):
-        container._remove_ordered_id(content)
-    # XXX cache invalidation
+    content._set_creation_datetime()
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
@@ -359,7 +341,8 @@ def update_content_author_info(content, event):
     # are about adding or removing a version.
     # XXX Modify versioning code not to have _index_version but
     # let it handle by this here.
-    if IVersionedContent.providedBy(content) and IContainerModifiedEvent.providedBy(event):
+    if (IVersionedContent.providedBy(content) and
+        IContainerModifiedEvent.providedBy(event)):
         return
     if IRoot.providedBy(content):
         # If we are on the root we swallow errors, as root might not
@@ -370,7 +353,6 @@ def update_content_author_info(content, event):
             pass
     else:
         content.sec_update_last_author_info()
-        # Index newly added content.
         ICataloging(content).index()
 
 

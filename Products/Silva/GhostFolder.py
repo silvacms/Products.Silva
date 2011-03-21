@@ -56,16 +56,10 @@ class Sync(object):
         pass
 
     def _do_update(self):
-        raise NotImplementedError, "implemented in subclasses"
+        raise NotImplementedError
 
     def _do_create(self):
-        raise NotImplementedError, "implemented in subclasses"
-
-    def __repr__(self):
-        return "<%s %s.%s -> %s.%s>" % (
-            str(self.__class__).split('.')[-1],
-            self.h_container.getId(), self.h_id,
-            self.g_container.getId(), self.g_id)
+        raise NotImplementedError
 
 
 class SyncContainer(Sync):

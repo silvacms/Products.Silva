@@ -6,8 +6,10 @@
 from five import grok
 from zope.event import notify
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
+from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 
 from OFS.interfaces import IObjectWillBeMovedEvent
+from OFS.interfaces import IObjectWillBeAddedEvent
 
 from silva.core.interfaces import IOrderableContainer
 from silva.core.interfaces import IOrderManager
@@ -66,13 +68,14 @@ class OrderManager(grok.Annotation):
             return -1
         try:
             return self.order.index(content.getId())
-        except IndexError:
+        except ValueError:
             return -1
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def content_added(content, event):
-    if event.object != content:
+    if (event.object != content or
+        IObjectRemovedEvent.providedBy(event)):
         return
     if IOrderableContainer.providedBy(event.newParent):
         manager = IOrderManager(event.newParent)
@@ -81,7 +84,8 @@ def content_added(content, event):
 
 @grok.subscribe(ISilvaObject, IObjectWillBeMovedEvent)
 def content_removed(content, event):
-    if event.object != content:
+    if (event.object != content or
+        IObjectWillBeAddedEvent.providedBy(event)):
         return
     if IOrderableContainer.providedBy(event.newParent):
         manager = IOrderManager(event.newParent)
