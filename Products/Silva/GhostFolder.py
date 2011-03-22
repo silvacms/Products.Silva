@@ -26,7 +26,7 @@ from silva.core.interfaces import (
     IPublication, IGhostFolder, IGhostAware)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
-from silva.ui.menu import ContentMenuItem
+from silva.ui.menu import ContentMenu, MenuItem
 from silva.translations import translate as _
 
 from zeam.form import silva as silvaforms
@@ -385,8 +385,8 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
 
 
 
-class AccessMenu(ContentMenuItem):
-    grok.context(IGhostFolder)
+class AccessMenu(MenuItem):
+    grok.adapts(ContentMenu, IGhostFolder)
     grok.order(15)
     name = _(u'Edit')
     screen = 'edit'
