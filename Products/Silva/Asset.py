@@ -12,12 +12,12 @@ from OFS import SimpleItem
 import OFS.interfaces
 
 from Products.Silva import SilvaPermissions
-from Products.Silva.Publishable import ContentReferencedBy
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 
 from silva.core.interfaces import IAsset, IImage
 from silva.core.views import views as silvaviews
+from silva.core.smi.content.metadata import ContentReferencedBy
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
