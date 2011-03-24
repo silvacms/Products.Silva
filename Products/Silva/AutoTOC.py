@@ -142,7 +142,8 @@ def sort_order_source():
 @grok.provider(IContextSourceBinder)
 def silva_content_types(context):
     contents = []
-    for addable in IAddableContents(context).get_container_addables():
+    container = context.get_container()
+    for addable in IAddableContents(container).get_container_addables():
         contents.append(SimpleTerm(
                 value=addable,
                 token=addable,
