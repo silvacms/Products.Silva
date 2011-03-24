@@ -21,6 +21,7 @@ from Products.Silva.adapters import tocrendering
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core import conf as silvaconf
+from silva.core.interfaces import IAddableContents
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.interfaces import IAutoTOC, IContainerPolicy
 from silva.core.views import views as silvaviews
@@ -141,11 +142,11 @@ def sort_order_source():
 @grok.provider(IContextSourceBinder)
 def silva_content_types(context):
     contents = []
-    for addable in context.get_silva_addables():
+    for addable in IAddableContents(context).get_container_addables():
         contents.append(SimpleTerm(
-                value=addable['name'],
-                token=addable['name'],
-                title=addable['name']))
+                value=addable,
+                token=addable,
+                title=addable))
     return SimpleVocabulary(contents)
 
 
