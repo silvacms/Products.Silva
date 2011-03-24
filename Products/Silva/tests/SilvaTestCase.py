@@ -262,8 +262,3 @@ class SilvaTestCase(ZopeTestCase.Sandboxed, ZopeTestCase.ZopeTestCase):
         zope.component.eventtesting.clearEvents()
 
 
-class SilvaFunctionalTestCase(ZopeTestCase.FunctionalTestCase, SilvaTestCase):
-    """Base class for functional tests.
-    """
-
-    layer = SilvaFunctionalLayer

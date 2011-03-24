@@ -3,6 +3,7 @@
 # $Revision$
 import SilvaTestCase
 
+import unittest
 from DateTime import DateTime
 
 class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
@@ -69,23 +70,7 @@ class SilvaObjectTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(self.root.get_modification_datetime() < now)
         self.assert_(self.folder.index.get_modification_datetime() < now)
 
-    def test_get_breadcrumbs(self):
-        self.assertEquals([self.root],
-                          self.root.get_breadcrumbs())
-        self.assertEquals([self.root, self.document],
-                          self.document.get_breadcrumbs())
-        self.assertEquals([self.root, self.publication],
-                          self.publication.get_breadcrumbs())
-        self.assertEquals([self.root, self.folder],
-                          self.folder.get_breadcrumbs())
-        self.assertEquals([self.root, self.folder, self.subfolder],
-                          self.subfolder.get_breadcrumbs())
-        self.assertEquals([self.root, self.folder,
-                           self.subfolder, self.subsubdoc],
-                          self.subsubdoc.get_breadcrumbs())
 
-
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(SilvaObjectTestCase))

@@ -142,11 +142,6 @@ class SilvaLayer(ZopeLiteLayer):
         cleanUp()
 
 
-class SilvaFunctionalLayer(SilvaLayer):
-    """Separate test from functional tests (for the moment).
-    """
-
-
 def setUp(test):
     """Setup before each tests.
     """

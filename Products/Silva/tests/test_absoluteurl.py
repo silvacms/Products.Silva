@@ -2,20 +2,22 @@
 # See also LICENSE.txt
 # $Id$
 
+import unittest
+
 from zope.interface.verify import verifyObject
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope import component
 
-from Products.Silva.tests.helpers import enablePreview, resetPreview
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.helpers import enable_preview, reset_preview
 
 from silva.core.views.interfaces import ISilvaURL
 
-import SilvaTestCase
 
-class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
+class AbsoluteURLTestCase(unittest.TestCase):
+    layer = FunctionalLayer
 
-
-    def afterSetUp(self):
+    def setUp(self):
         """Create some contents for testing:
 
         root
@@ -47,12 +49,12 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEqual(abs_url.preview(),
                          'http://nohost/root/++preview++/publication')
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(str(abs_url),
                          'http://nohost/root/++preview++/publication')
         self.assertEqual(abs_url(),
                          'http://nohost/root/++preview++/publication')
-        resetPreview(self.root)
+        reset_preview(self.root)
 
         # On root
         abs_url = self.get_absolute_url(self.root)
@@ -63,12 +65,12 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEqual(abs_url.preview(),
                          'http://nohost/root/++preview++')
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(str(abs_url),
                          'http://nohost/root/++preview++')
         self.assertEqual(abs_url(),
                          'http://nohost/root/++preview++')
-        resetPreview(self.root)
+        reset_preview(self.root)
 
         # On document 2
         abs_url = self.get_absolute_url(self.doc2)
@@ -79,52 +81,52 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
         self.assertEqual(abs_url.preview(),
                          'http://nohost/root/++preview++/publication/folder/doc2')
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(str(abs_url),
                          'http://nohost/root/++preview++/publication/folder/doc2')
         self.assertEqual(abs_url(),
                          'http://nohost/root/++preview++/publication/folder/doc2')
-        resetPreview(self.root)
+        reset_preview(self.root)
 
 
     def test_breadcrumbs(self):
         # On publication
         abs_url = self.get_absolute_url(self.publication)
         self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root', 'name': 'root'}, 
+                         ({'url': 'http://nohost/root', 'name': 'root'},
                           {'url': 'http://nohost/root/publication', 'name': u'Test Publication'}))
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'}, 
+                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'},
                           {'url': 'http://nohost/root/++preview++/publication', 'name': u'Test Publication'}))
-        resetPreview(self.root)
+        reset_preview(self.root)
 
         # On root
         abs_url = self.get_absolute_url(self.root)
         self.assertEqual(abs_url.breadcrumbs(),
                          ({'url': 'http://nohost/root', 'name': 'root'},))
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(abs_url.breadcrumbs(),
                          ({'url': 'http://nohost/root/++preview++', 'name': 'root'},))
-        resetPreview(self.root)
+        reset_preview(self.root)
 
         # On document 2
         abs_url = self.get_absolute_url(self.doc2)
         self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/publication', 'name': u'Test Publication'}, 
-                          {'url': 'http://nohost/root/publication/folder', 'name': u'Test Folder'}, 
+                         ({'url': 'http://nohost/root', 'name': 'root'},
+                          {'url': 'http://nohost/root/publication', 'name': u'Test Publication'},
+                          {'url': 'http://nohost/root/publication/folder', 'name': u'Test Folder'},
                           {'url': 'http://nohost/root/publication/folder/doc2', 'name': 'doc2'}))
 
-        enablePreview(self.root)
+        enable_preview(self.root)
         self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/++preview++/publication', 'name': u'Test Publication'}, 
-                          {'url': 'http://nohost/root/++preview++/publication/folder', 'name': u'Test Folder'}, 
+                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'},
+                          {'url': 'http://nohost/root/++preview++/publication', 'name': u'Test Publication'},
+                          {'url': 'http://nohost/root/++preview++/publication/folder', 'name': u'Test Folder'},
                           {'url': 'http://nohost/root/++preview++/publication/folder/doc2', 'name': 'doc2'}))
-        resetPreview(self.root)
+        reset_preview(self.root)
 
 
     def test_traverse(self):
@@ -132,10 +134,9 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
         self.failUnless(verifyObject(ISilvaURL, abs_url))
 
 
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(AbsoluteURLTest))
+    suite.addTest(unittest.makeSuite(AbsoluteURLTestCase))
     return suite
 
 

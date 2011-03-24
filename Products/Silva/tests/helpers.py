@@ -9,13 +9,13 @@ from silva.core.views.interfaces import IPreviewLayer
 
 import DateTime
 
-def resetPreview(content):
+def reset_review(content):
     """Reset preview mode.
     """
     if IPreviewLayer.providedBy(content.REQUEST):
         noLongerProvides(content.REQUEST, IPreviewLayer)
 
-def enablePreview(content):
+def enable_preview(content):
     """Enable preview mode.
     """
     if not IPreviewLayer.providedBy(content.REQUEST):
