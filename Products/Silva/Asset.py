@@ -140,7 +140,7 @@ class AssetEditTab(silvaforms.SMIComposedForm):
     """ Edit tab
     """
     grok.context(IAsset)
-    grok.name('silva.ui.content')
+    grok.name('content')
     grok.require('silva.ChangeSilvaContent')
 
     label = _('Edit')
