@@ -3,23 +3,8 @@
 # $Id$
 
 import os.path
-
-from zope.interface import noLongerProvides, alsoProvides
-from silva.core.views.interfaces import IPreviewLayer
-
 import DateTime
 
-def reset_preview(content):
-    """Reset preview mode.
-    """
-    if IPreviewLayer.providedBy(content.REQUEST):
-        noLongerProvides(content.REQUEST, IPreviewLayer)
-
-def enable_preview(content):
-    """Enable preview mode.
-    """
-    if not IPreviewLayer.providedBy(content.REQUEST):
-        alsoProvides(content.REQUEST, IPreviewLayer)
 
 def approve_content(obj):
     """Publish object.
