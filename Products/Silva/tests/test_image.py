@@ -231,12 +231,6 @@ class BlobImageTestCase(DefaultImageTestCase):
     implementation = File.BlobFile
 
 
-class FFSImageTestCase(DefaultImageTestCase):
-    """Test image with ZODB storage.
-    """
-    implementation = File.FileSystemFile
-
-
 class MiscellaneousImageTestCase(unittest.TestCase):
     """Test miscellaneous image features.
     """
@@ -307,7 +301,5 @@ def test_suite():
     suite.addTest(unittest.makeSuite(DefaultImageTestCase))
     suite.addTest(unittest.makeSuite(ZODBImageTestCase))
     suite.addTest(unittest.makeSuite(BlobImageTestCase))
-    if File.FILESYSTEM_STORAGE_AVAILABLE:
-        suite.addTest(unittest.makeSuite(FFSImageTestCase))
     suite.addTest(unittest.makeSuite(MiscellaneousImageTestCase))
     return suite

@@ -35,17 +35,12 @@ installProduct('ZCTextIndex')
 installProduct('PythonScripts')
 installProduct('PageTemplates')
 installProduct('Formulator')
-installProduct('FileSystemSite')
 installProduct('ParsedXML')
-installProduct('ProxyIndex')
 installProduct('MailHost')
 if hasProduct('MaildropHost'):
     installProduct('MaildropHost')
-if hasProduct('ExtFile'):
-    installProduct('ExtFile')
 installProduct('SilvaFind')
 installProduct('SilvaMetadata')
-installProduct('SilvaViews')
 if hasProduct('SilvaExternalSources'):
     installProduct('SilvaExternalSources')
 installProduct('SilvaDocument')

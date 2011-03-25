@@ -152,12 +152,6 @@ class ZODBFileImplementationTestCase(DefaultFileImplementationTestCase):
     implementation = File.ZODBFile
 
 
-class FFSFileImplementationTestCase(DefaultFileImplementationTestCase):
-    """Test file system file implementation.
-    """
-    implementation = File.FileSystemFile
-
-
 class CreateNewFilenameTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
@@ -214,6 +208,4 @@ def test_suite():
     suite.addTest(unittest.makeSuite(DefaultFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(BlobFileImplementationTestCase))
     suite.addTest(unittest.makeSuite(ZODBFileImplementationTestCase))
-    if File.FILESYSTEM_STORAGE_AVAILABLE:
-        suite.addTest(unittest.makeSuite(FFSFileImplementationTestCase))
     return suite

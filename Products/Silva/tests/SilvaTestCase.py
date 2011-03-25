@@ -10,7 +10,7 @@ from Testing import ZopeTestCase
 import transaction
 import zope.component.eventtesting
 
-from Products.Silva.tests.layer import SilvaLayer, SilvaFunctionalLayer
+from Products.Silva.tests.layer import SilvaLayer
 from Products.Silva.tests.layer import user_name, user_password
 from Products.Silva.tests.layer import users, setUp, tearDown
 
