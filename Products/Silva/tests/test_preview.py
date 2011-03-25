@@ -4,9 +4,9 @@
 
 import unittest
 
-from Products.Silva.tests.helpers import publish_content
 from Products.Silva.testing import FunctionalLayer
 
+from silva.core.interfaces import IPublicationWorkflow
 
 class PreviewTestCase(unittest.TestCase):
     """Test preview access.
@@ -23,16 +23,17 @@ class PreviewTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
-        factory = self.root.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('info', u'Information')
-        factory.manage_addDocument('contact', u'Contact')
-        publish_content(self.root.info)
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addIndexer('indexes', 'Indexes')
+        factory.manage_addGhost('info', u'Information', haunted=self.root.indexes)
+        factory.manage_addGhost('contact', u'Contact', haunted=self.root.indexes)
+        IPublicationWorkflow(self.root.info).publish()
 
     def test_preview_links(self):
         """In preview, we see not yet published content.
         """
         browser = self.layer.get_browser()
-
+        browser.options.handle_errors = False
         self.assertEqual(browser.open('http://localhost/root'), 200)
 
         link = browser.get_link('Information')
@@ -53,9 +54,6 @@ class PreviewTestCase(unittest.TestCase):
         self.assertEqual(link.url, 'http://localhost/root/++preview++/info')
         link = browser.get_link('Contact')
         self.assertEqual(link.url, 'http://localhost/root/++preview++/contact')
-
-        # XXX Should add some content on published/unpublished version
-        # and check we see the unpublished in preview.
 
 
 def test_suite():

@@ -6,15 +6,16 @@
 import unittest
 
 from silva.core.interfaces import IContainerManager
+from silva.core.interfaces import IPublicationWorkflow
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
 
 
-class EditorFolderManagementTestCase(unittest.TestCase):
+class AuthorFolderDeletionTestCase(unittest.TestCase):
     layer = FunctionalLayer
-    user = 'editor'
+    user = 'author'
 
     def setUp(self):
         self.root = self.layer.get_application()
@@ -29,6 +30,9 @@ class EditorFolderManagementTestCase(unittest.TestCase):
         factory.manage_addFolder('subfolder', 'Sub Folder')
         factory.manage_addAutoTOC('toc', 'AutoTOC')
         factory.manage_addLink('link', 'Link')
+        factory.manage_addLink('published_link', 'Published Link')
+
+        IPublicationWorkflow(self.root.folder.published_link).publish()
 
     def test_implementation(self):
         manager = IContainerManager(self.root.folder, None)
@@ -37,6 +41,35 @@ class EditorFolderManagementTestCase(unittest.TestCase):
 
         manager = IContainerManager(self.root.toc, None)
         self.assertEqual(manager, None)
+
+    def test_delete_published(self):
+        """An author cannot delete published content.
+        """
+        manager = IContainerManager(self.root.folder)
+
+        with assertNotTriggersEvents(
+            'ObjectWillBeRemovedEvent',
+            'ObjectRemovedEvent',
+            'ContainerModifiedEvent'):
+            with manager.deleter() as deleter:
+                self.assertEqual(False, deleter.add(self.root.folder.published_link))
+
+        self.assertTrue('published_link' in self.root.folder.objectIds())
+
+    def test_delete_published_recursive(self):
+        """An author cannot delete a folder that contains published
+        content.
+        """
+        manager = IContainerManager(self.root)
+
+        with assertNotTriggersEvents(
+            'ObjectWillBeRemovedEvent',
+            'ObjectRemovedEvent',
+            'ContainerModifiedEvent'):
+            with manager.deleter() as deleter:
+                self.assertEqual(False, deleter.add(self.root.folder))
+
+        self.assertTrue('folder' in self.root.objectIds())
 
     def test_delete_single(self):
         manager = IContainerManager(self.root.folder)
@@ -81,13 +114,47 @@ class EditorFolderManagementTestCase(unittest.TestCase):
         self.assertTrue('folder' in self.root.objectIds())
 
 
-class ChiefEditorFolderManagementTestCase(EditorFolderManagementTestCase):
+class EditorFolderDeletionTestCase(AuthorFolderDeletionTestCase):
+    """Test folder delete as an editor.
+    """
+    user = 'editor'
+
+    def test_delete_published(self):
+        """An editor can delete published content.
+        """
+        manager = IContainerManager(self.root.folder)
+
+        with assertTriggersEvents(
+            'ObjectWillBeRemovedEvent',
+            'ObjectRemovedEvent',
+            'ContainerModifiedEvent'):
+            with manager.deleter() as deleter:
+                self.assertEqual(True, deleter.add(self.root.folder.published_link))
+
+        self.assertFalse('published_link' in self.root.folder.objectIds())
+
+    def test_delete_published_recursive(self):
+        """An editor can delete a folder that contains published content.
+        """
+        manager = IContainerManager(self.root)
+
+        with assertTriggersEvents(
+            'ObjectWillBeRemovedEvent',
+            'ObjectRemovedEvent',
+            'ContainerModifiedEvent'):
+            with manager.deleter() as deleter:
+                self.assertEqual(True, deleter.add(self.root.folder))
+
+        self.assertFalse('folder' in self.root.objectIds())
+
+
+class ChiefEditorFolderDeletionTestCase(EditorFolderDeletionTestCase):
     """Test folder management as a chiefeditor.
     """
     user = 'chiefeditor'
 
 
-class ManagerFolderManagementTestCase(ChiefEditorFolderManagementTestCase):
+class ManagerFolderDeletionTestCase(ChiefEditorFolderDeletionTestCase):
     """Test folder management as a manager.
     """
     user = 'manager'
@@ -95,7 +162,8 @@ class ManagerFolderManagementTestCase(ChiefEditorFolderManagementTestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(EditorFolderManagementTestCase))
-    suite.addTest(unittest.makeSuite(ChiefEditorFolderManagementTestCase))
-    suite.addTest(unittest.makeSuite(ManagerFolderManagementTestCase))
+    suite.addTest(unittest.makeSuite(AuthorFolderDeletionTestCase))
+    suite.addTest(unittest.makeSuite(EditorFolderDeletionTestCase))
+    suite.addTest(unittest.makeSuite(ChiefEditorFolderDeletionTestCase))
+    suite.addTest(unittest.makeSuite(ManagerFolderDeletionTestCase))
     return suite

@@ -22,7 +22,7 @@ def sort_addables(a, b):
 def check_valid_id(*args, **kw):
     return Id(*args, **kw).validate()
 
-class ContainerBaseTestCase(SilvaTestCase.SilvaTestCase):
+class ContainerTestCase(SilvaTestCase.SilvaTestCase):
 
     def afterSetUp(self):
         self.doc1 = self.add_document(self.root, 'doc1', 'Doc1')
@@ -46,10 +46,6 @@ class ContainerBaseTestCase(SilvaTestCase.SilvaTestCase):
                 self.root, 'image2', 'Image2', file=test_image)
         # adding role for action_rename may succeed
         self.setRoles(['Manager'])
-
-class ContainerTestCase(ContainerBaseTestCase):
-    """Test the Container interface.
-    """
 
     def test_convert_to_folder(self):
         #create a folder to test conversion with
@@ -184,39 +180,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id',
                                          allow_dup=1),
                           Id.RESERVED_PREFIX)
-
-
-
-    def test_get_default(self):
-        # add default to root
-        index = getattr(self.root, 'index', None)
-        if index is None:
-            self.root.manage_addProduct['Silva'].manage_addGhost('index', 'Default')
-            index = self.root.index
-        self.assertEquals(index, self.root.get_default())
-        # issue 47: index created by test user
-        # XXX should strip the '(not in ldap)' if using LDAPUserManagement?
-        self.assertEquals('test_user_1_',
-                          self.folder4.index.sec_get_last_author_info().userid())
-        self.assertEquals('test_user_1_',
-                          self.publication5.index.sec_get_last_author_info().userid())
-        # delete default object
-        self.folder4.action_delete(['index'])
-        self.assertEquals(None, self.folder4.get_default())
-
-
-    def test_rotten_default(self):
-        # test for issue 85: if default is something odd,
-        # "is_published" should not create endless loop.
-        # actually this has been an issue if the "index" does not have a "is_published"
-        # and acquired it from container itself, causing the endless loop.
-
-        self.root.manage_addProduct['Silva'].manage_addFolder('folder6','Folder with broken index')
-        folder = self.root.folder6
-        folder.manage_addDocument('index','DTML Document to trigger an error')
-
-        self.assert_(self.root.folder6.get_default())
-        self.assertRaises(AttributeError, self.root.folder6.is_published)
 
 
 
