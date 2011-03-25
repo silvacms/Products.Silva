@@ -7,7 +7,6 @@ import unittest
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
 
-
 from DateTime import DateTime
 from Products.Silva import Versioning
 from Products.Silva.Content import Content

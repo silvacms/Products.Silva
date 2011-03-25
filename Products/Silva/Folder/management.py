@@ -55,8 +55,8 @@ def comethod(func):
                 return True
             return False
 
-    def wrapped(*args):
-        return wrapper(func(*args))
+    def wrapped(self):
+        return wrapper(func(self))
 
     return wrapped
 
@@ -248,7 +248,9 @@ class ContainerManager(grok.Adapter):
             status = False
             if content.is_deletable():
                 content_id = content.getId()
-                if content_id in container_ids and content_id not in protected:
+                if (content_id in container_ids and
+                    content_id not in protected and
+                    aq_base(self.context) is aq_base(aq_parent(content))):
                     to_delete.append((content_id, content))
                     status = True
             content = yield status

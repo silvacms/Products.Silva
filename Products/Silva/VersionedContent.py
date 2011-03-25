@@ -256,6 +256,7 @@ class VersionedContentCataloging(Cataloging):
 class VersionedContentPublicationWorkflow(grok.Adapter):
     grok.context(IVersionedContent)
     grok.implements(IPublicationWorkflow)
+    grok.provides(IPublicationWorkflow)
 
     def new_version(self):
         if self.context.get_unapproved_version() is not None:

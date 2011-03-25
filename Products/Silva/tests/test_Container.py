@@ -93,13 +93,6 @@ class ContainerTestCase(ContainerBaseTestCase):
         self.assertEquals(self.folder4.get_ordered_publishables(),
                           l)
 
-    def test_get_assets(self):
-        self.assertEquals(self.root.get_assets(), [self.image1, self.image2])
-        # assets should be sorted by id
-        self.root.action_rename('image2','aimage')
-        self.assertEquals(self.root.get_assets(), [self.image2, self.image1])
-        # FIXME: more tests with assets
-
     def test_get_tree(self):
         l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
              (0, self.folder4), (1, self.subdoc), (1, self.subfolder),
@@ -133,107 +126,6 @@ class ContainerTestCase(ContainerBaseTestCase):
             (1, self.subdoc), (1, self.subfolder), (2, self.subfolder.index),
             (2, self.subfolder.subsubdoc), (0, self.root.publication5)]
         self.assertEquals(self.root.get_status_tree(), l)
-
-    def test_move_object_up(self):
-        r = self.root.move_object_up('doc2')
-        l = [self.doc2, self.doc1, self.doc3, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(r)
-        r = self.root.move_object_up('doc2')
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(not r)
-
-        r = self.root.move_object_up('folder4')
-        l = [self.doc2, self.doc1, self.folder4, self.doc3, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(r)
-
-    def test_move_object_down(self):
-        r = self.root.move_object_down('doc2')
-        l = [self.doc1, self.doc3, self.doc2, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(r)
-        r = self.root.move_object_down('publication5')
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(not r)
-
-        r = self.root.move_object_down('folder4')
-        l = [self.doc1, self.doc3, self.doc2, self.publication5, self.folder4]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        self.assert_(r)
-
-    def test_move_to_single_item_down(self):
-        # move of a single item down
-        r = self.root.move_to(['doc2'], 4)
-        self.assert_(r)
-        l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-    def test_move_to_single_item_up(self):
-        # move of a single item up
-        r = self.root.move_to(['doc3'], 1)
-        self.assert_(r)
-        l = [self.doc1, self.doc3, self.doc2, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_multiple_consecutive(self):
-        # move of multiple consecutive items
-        r = self.root.move_to(['doc3', 'folder4'], 0)
-        self.assert_(r)
-        l = [self.doc3, self.folder4, self.doc1, self.doc2, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_multiple_consecutive_wrong_order(self):
-        r = self.root.move_to(['folder4', 'doc3'], 0)
-        self.assert_(r)
-        l = [self.doc3, self.folder4, self.doc1, self.doc2, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_multiple_nonconsecutive(self):
-        r = self.root.move_to(['doc1', 'publication5', 'doc3'], 4)
-        self.assert_(r)
-        l = [self.doc2, self.folder4, self.doc1, self.doc3, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_all(self):
-        r = self.root.move_to(['doc1', 'doc2', 'doc3', 'folder4', 'publication5'], 1)
-        self.assert_(r)
-        l = [self.doc1, self.doc2, self.doc3, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_end(self):
-        r = self.root.move_to(['doc2'], 5)
-        self.assert_(r)
-        l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_to_wrong_indexes(self):
-        r = self.root.move_to(['doc2'], 100)
-        self.assert_(r)
-        l = [self.doc1, self.doc3, self.folder4, self.publication5, self.doc2]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-
-    def test_move_wrong_ids(self):
-        r = self.root.move_to(['foo'], 1)
-        self.assert_(not r)
-        r = self.root.move_to(['doc2', 'foo'], 1)
-        self.assert_(not r)
-        l = [self.doc1, self.doc2, self.doc3, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
 
     def test_is_id_valid(self):
         factory = self.root.manage_addProduct['SilvaDocument']
