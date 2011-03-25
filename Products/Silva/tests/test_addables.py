@@ -69,7 +69,9 @@ class AddablesTestCase(unittest.TestCase):
         self.assertEqual(addables.get_all_addables(), DEFAULT_ALL_ADDABLES)
 
     def test_addables_container(self):
-        """Test adapter: get all addables in a given container
+        """Test adapter: get all addables in a given container.
+
+        (Even if you don't have the right to add them).
         """
         folder_addables = IAddableContents(self.root.folder)
         self.assertTrue(verifyObject(IAddableContents, folder_addables))
@@ -89,7 +91,10 @@ class AddablesTestCase(unittest.TestCase):
             ['Silva Publication', 'Silva File'])
 
     def test_addables_authorized(self):
-        """Test adapter: get all authorized addables in a given container.
+        """Test adapter: get all authorized addables in a given
+        container.
+
+        Author doesn't have the right to add publications.
         """
         folder_addables = IAddableContents(self.root.folder)
         self.assertTrue(verifyObject(IAddableContents, folder_addables))
@@ -111,15 +116,21 @@ class AddablesTestCase(unittest.TestCase):
     def test_root_not_addable(self):
         """Silva Root should never be addable.
         """
-        addables = IAddableContents(self.root)
-        self.assertFalse('Silva Root' in addables.get_container_addables())
-        self.assertFalse('Silva Root' in addables.get_authorized_addables())
-        self.assertFalse('Silva Root' in addables.get_all_addables())
+        root_addables = IAddableContents(self.root)
+        self.assertFalse(
+            'Silva Root' in root_addables.get_container_addables())
+        self.assertFalse(
+            'Silva Root' in root_addables.get_authorized_addables())
+        self.assertFalse(
+            'Silva Root' in root_addables.get_all_addables())
 
-        addables = IAddableContents(self.root.folder)
-        self.assertFalse('Silva Root' in addables.get_container_addables())
-        self.assertFalse('Silva Root' in addables.get_authorized_addables())
-        self.assertFalse('Silva Root' in addables.get_all_addables())
+        folder_addables = IAddableContents(self.root.folder)
+        self.assertFalse(
+            'Silva Root' in folder_addables.get_container_addables())
+        self.assertFalse(
+            'Silva Root' in folder_addables.get_authorized_addables())
+        self.assertFalse(
+            'Silva Root' in folder_addables.get_all_addables())
 
 
 def test_suite():
