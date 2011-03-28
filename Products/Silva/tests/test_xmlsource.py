@@ -9,7 +9,7 @@ from zope.interface.verify import verifyObject
 from zope.publisher.browser import TestRequest
 from zope.component import getMultiAdapter
 
-from Products.Silva.transform.interfaces import IXMLSource
+from silva.core.interfaces import IXMLSource
 from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
 
 

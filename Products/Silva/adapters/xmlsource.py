@@ -3,11 +3,9 @@
 # $Id$
 
 from five import grok
-from silva.core import interfaces
 from zope.publisher.interfaces.browser import IBrowserRequest
-
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.transform.interfaces import IXMLSource
+from silva.core.interfaces import IXMLSource, ISilvaObject, IVersion
 
 
 class XMLSourceAdapter(grok.MultiAdapter):
@@ -15,13 +13,13 @@ class XMLSourceAdapter(grok.MultiAdapter):
     """
     grok.implements(IXMLSource)
     grok.provides(IXMLSource)
-    grok.adapts(interfaces.ISilvaObject, IBrowserRequest)
+    grok.adapts(ISilvaObject, IBrowserRequest)
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
-    def getXML(self, version=xmlexport.PREVIEWABLE_VERSION, options={}):
+    def get_XML(self, version=xmlexport.PREVIEWABLE_VERSION, options={}):
         settings = xmlexport.ExportSettings(request=self.request,
                                             options=options)
         settings.setVersion(version)
@@ -34,6 +32,6 @@ class XMLSourceAdapter(grok.MultiAdapter):
 class XMLSourceVersionAdapter(XMLSourceAdapter):
     """XMLSourceAdapter for content version.
     """
-    grok.adapts(interfaces.IVersion, IBrowserRequest)
+    grok.adapts(IVersion, IBrowserRequest)
 
 
