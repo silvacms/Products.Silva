@@ -9,15 +9,7 @@ from DateTime import DateTime
 from Products.Silva.mangle import Id
 from Products.Silva.tests import SilvaTestCase
 from Products.Silva.tests.helpers import open_test_file
-from silva.core.interfaces import IContent
 
-def _rotten_index_helper(folder):
-    """ helper for test_rotten_index """
-    folder.manage_addDocument('index','DTML Document to trigger an error')
-
-def sort_addables(a, b):
-    """Sorts addables by name"""
-    return cmp(a['name'], b['name'])
 
 def check_valid_id(*args, **kw):
     return Id(*args, **kw).validate()

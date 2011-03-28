@@ -21,6 +21,7 @@ from Products.Silva.Ghost import GhostBase, GhostEditForm
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IAddableContents
+from silva.core.interfaces import IOrderManager
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
     IPublication, IGhostFolder, IGhostAware)
@@ -65,10 +66,10 @@ class Sync(object):
 class SyncContainer(Sync):
 
     def finish(self):
-        ordered_ids = [ ob.getId()
-            for ob in self.h_ob.get_ordered_publishables() ]
-        for index, id in zip(range(len(ordered_ids)), ordered_ids):
-            self.g_ob.move_to([id], index)
+        ## XXX: I don't think that works (like ever worked)
+        orderer = IOrderManager(self.g_ob)
+        for index, content in enumerate(self.h_ob.get_ordered_publishables()):
+            orderer.move(content, index)
 
     def _do_create(self):
         self.g_container.manage_addProduct['Silva'].manage_addGhostFolder(
@@ -254,9 +255,7 @@ class GhostFolder(GhostBase, Folder.Folder):
             elif h_id > g_id:
                 ids.append((None, g_id))
                 del g_ids[0]
-        objects = [ (haunted,h_id, ghost, g_id)
-            for (h_id, g_id) in ids ]
-        return objects
+        return [(haunted, h_id, ghost, g_id) for (h_id, g_id) in ids]
 
     security.declareProtected(SilvaPermissions.View,'get_link_status')
     def get_link_status(self):

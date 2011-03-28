@@ -211,13 +211,13 @@ class PublicationProducer(SilvaBaseProducer):
             self.startElement('default')
             self.subsax(default)
             self.endElement('default')
-        for object in self.context.get_ordered_publishables():
-            if (interfaces.IPublication.providedBy(object) and
-                    not self.getSettings().withSubPublications()):
+        for content in self.context.get_ordered_publishables():
+            if (interfaces.IPublication.providedBy(content) and
+                not self.getSettings().withSubPublications()):
                 continue
-            self.subsax(object)
-        for object in self.context.get_non_publishables():
-            self.subsax(object)
+            self.subsax(content)
+        for content in self.context.get_non_publishables():
+            self.subsax(content)
         self.endElement('content')
         self.endElement('publication')
 
@@ -349,9 +349,9 @@ class ImageProducer(SilvaBaseProducer):
         path = self.context.getPhysicalPath()
         self.startElement('image_asset', {
             'id': self.context.id,
-            'web_format': self.context.getWebFormat(),
-            'web_scale': self.context.getWebScale(),
-            'web_crop': self.context.getWebCrop(),
+            'web_format': self.context.get_web_format(),
+            'web_scale': self.context.get_web_scale(),
+            'web_crop': self.context.get_web_crop(),
             })
         self.metadata()
         self.getInfo().addAssetPath(path)
