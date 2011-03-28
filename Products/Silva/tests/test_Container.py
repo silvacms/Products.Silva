@@ -73,22 +73,6 @@ class ContainerTestCase(SilvaTestCase.SilvaTestCase):
                      "folder converted to publication is not in objectIds('Silva Folder') and should be")
         self.root.manage_delObjects([cf2p_id])
 
-    def test_get_default_2(self):
-        doc = self.folder4.get_default()
-        self.assertEquals(doc.get_title(), 'Folder4')
-        self.assert_(IContent.providedBy(doc),
-                     'doc is not a Content object')
-        self.assert_(doc.is_default(),
-                     'Default document is_default gives false')
-
-    def test_get_ordered_publishables(self):
-        l = [self.doc1, self.doc2, self.doc3, self.folder4, self.publication5]
-        self.assertEquals(self.root.get_ordered_publishables(),
-                          l)
-        l = [self.subdoc, self.subfolder]
-        self.assertEquals(self.folder4.get_ordered_publishables(),
-                          l)
-
     def test_get_tree(self):
         l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
              (0, self.folder4), (1, self.subdoc), (1, self.subfolder),

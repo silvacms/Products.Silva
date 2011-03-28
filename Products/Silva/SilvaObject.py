@@ -38,8 +38,7 @@ from silva.core.services.interfaces import ICataloging
 from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
-from silva.core.interfaces import (
-    ISilvaObject, IPublishable, IContent, IRoot, IVersionedContent)
+from silva.core.interfaces import ISilvaObject, IRoot, IVersionedContent
 
 
 class TitledObject(object):
@@ -328,7 +327,7 @@ def content_created(content, event):
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
 @grok.subscribe(ISilvaObject, IObjectClonedEvent)
 @grok.subscribe(ISilvaObject, IObjectModifiedEvent)
-def update_content_author_info(content, event):
+def index_and_update_author_modified_content(content, event):
     """A content have been created of modifed. Update its author
     information.
     """

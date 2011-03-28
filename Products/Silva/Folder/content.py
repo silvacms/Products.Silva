@@ -312,25 +312,23 @@ InitializeClass(Folder)
 
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
-def folder_moved_update_quota(obj, event):
+def folder_moved_update_quota(content, event):
     """Event called on folder, when they are moved, we want to update
     the quota on parents folders.
     """
-    if obj != event.object:
+    if content != event.object or IRoot.providedBy(content):
+        # Root is being destroyed, we don't care about quota anymore.
         return
-    if IRoot.providedBy(obj):
-        return                  # Root is being destroyed, we don't
-                                # care about quota anymore.
-    if event.newParent is event.oldParent: # For rename event, we
-                                           # don't need to do
-                                           # something.
+
+    if event.newParent is event.oldParent:
+        # For rename event, we don't need to do something.
         return
 
     context = event.newParent or event.oldParent
     if not context.service_extensions.get_quota_subsystem_status():
         return
 
-    size = obj.used_space
+    size = content.used_space
     if not size:
         return
     if event.oldParent:

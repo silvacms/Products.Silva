@@ -57,7 +57,6 @@ from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.conf import schema as silvaschema
 from silva.core.services.base import SilvaService
-from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
@@ -441,10 +440,6 @@ class BlobFile(File):
         self._set_content_type(file, DEFAULT_MIMETYPE)
         notify(ObjectModifiedEvent(self))
 
-        #XXX should be event below
-        ICataloging(self).reindex()
-        self.update_quota()
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
     def set_text_file_data(self, filestr):
@@ -452,10 +447,6 @@ class BlobFile(File):
         desc.write(filestr)
         desc.close()
         notify(ObjectModifiedEvent(self))
-
-        #XXX should be event below
-        ICataloging(self).reindex()
-        self.update_quota()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_content_type')
@@ -761,15 +752,13 @@ contentObjectFactoryRegistry.registerFactory(
 
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
-def file_changed(file, event):
-    create_new_filename(file, file.getId())
-    file.update_quota()
-    ICataloging(file).reindex()
-
+def file_modified(content, event):
+    create_new_filename(content, content.getId())
+    content.update_quota()
 
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectMovedEvent)
-def file_added(file, event):
-    if file is not event.object or event.newName is None:
+def file_added(content, event):
+    if content is not event.object or event.newName is None:
         return
-    create_new_filename(file, event.newName)
+    create_new_filename(content, event.newName)

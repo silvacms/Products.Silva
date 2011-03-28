@@ -62,6 +62,11 @@ def create_new_filename(file, basename):
             content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
     elif guessed_extension is not None:
         extension = guessed_extension
+    if content_encoding is not None:
+        if content_encoding in _CONTENT_ENCODING_EXT:
+            if extension is None:
+                extension = ''
+            extension += _CONTENT_ENCODING_EXT[content_encoding]
     if extension is not None:
         basename += extension
     file.set_filename(basename)

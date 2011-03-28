@@ -7,6 +7,7 @@ import logging
 from five import grok
 
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from OFS import SimpleItem
 import OFS.interfaces
@@ -45,12 +46,13 @@ class Asset(NonPublishable, SimpleItem.SimpleItem):
         if not self.service_extensions.get_quota_subsystem_status():
             return
 
-        parent = self.aq_parent
+        parent = aq_parent(self)
         if not IImage.providedBy(parent):
             new_size = self.get_file_size()
             delta = new_size - self._old_size
-            parent.update_quota(delta)
-            self._old_size = new_size
+            if delta:
+                parent.update_quota(delta)
+                self._old_size = new_size
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'reset_quota')
