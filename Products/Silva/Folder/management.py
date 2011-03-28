@@ -99,7 +99,7 @@ class ContainerManager(grok.Adapter):
                  from_container, from_identifier,
                  self.context, to_identifier))
 
-        self.context._delObject(
+        from_container._delObject(
             from_identifier, suppress_events=True)
 
         content = aq_base(content)
