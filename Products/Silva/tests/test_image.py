@@ -253,7 +253,6 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         self.assertEqual(image.content_type(), 'application/octet-stream')
         self.assertEqual(image.get_filename(), 'image')
         self.assertEqual(image.get_file_size(), 0)
-        self.assertEqual(image.get_scaled_file_size(), 0)
 
     def test_invalid_image(self):
         """Try to add an non-image.
