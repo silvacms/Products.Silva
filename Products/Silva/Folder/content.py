@@ -18,7 +18,6 @@ import OFS.interfaces
 
 # Silva
 from Products.Silva.ExtensionRegistry import meta_types_for_interface
-from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers

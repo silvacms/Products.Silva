@@ -1,0 +1,174 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2011 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+import unittest
+
+from silva.core.interfaces import IContainerManager
+from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import IAutoTOC, ILink, IFolder
+from zope.interface.verify import verifyObject
+
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
+
+
+class AuthorFolderMovingTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+    user = 'author'
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login(self.user)
+
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('source', 'Source Folder')
+        factory.manage_addFolder('target', 'Target Folder')
+
+        factory = self.root.source.manage_addProduct['Silva']
+        factory.manage_addAutoTOC('toc', 'AutoTOC')
+        factory.manage_addLink('link', 'Link')
+        factory.manage_addLink('published_link', 'Published Link')
+        factory.manage_addFolder('folder', 'Folder')
+
+        IPublicationWorkflow(self.root.source.published_link).publish()
+
+    def test_move_content(self):
+        """Move a single item.
+        """
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.source.toc),
+                    None)
+
+        self.assertFalse('toc' in self.root.source.objectIds())
+        self.assertTrue('toc' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IAutoTOC, self.root.target.toc))
+
+    def test_move_multiple(self):
+        """Move multiple content in one time (one container, one
+        unpublished content).
+        """
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.source.folder),
+                    None)
+                self.assertNotEqual(
+                    mover.add(self.root.source.link),
+                    None)
+
+        self.assertFalse('folder' in self.root.source.objectIds())
+        self.assertTrue('folder' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IFolder, self.root.target.folder))
+        self.assertFalse('link' in self.root.source.objectIds())
+        self.assertTrue('link' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(ILink, self.root.target.link))
+
+    def test_move_published_content(self):
+        """Move a single published content.
+
+        Authors doesn't have the right to do it. The link stays published.
+        """
+        manager = IContainerManager(self.root.target)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertEqual(
+                    mover.add(self.root.source.published_link),
+                    None)
+
+        self.assertTrue('published_link' in self.root.source.objectIds())
+        self.assertFalse('published_link' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(ILink, self.root.source.published_link))
+        self.assertNotEqual(self.root.source.published_link.get_viewable(), None)
+
+    def test_move_published_container(self):
+        """Move a single published container.
+
+        Authors doesn't have the right to do it.
+        """
+        manager = IContainerManager(self.root.target)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertEqual(
+                    mover.add(self.root.source),
+                    None)
+
+        self.assertTrue('source' in self.root.objectIds())
+        self.assertFalse('source' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IFolder, self.root.source))
+
+
+class EditorFolderMovingTestCase(AuthorFolderMovingTestCase):
+    user = 'editor'
+
+    def test_move_published_content(self):
+        """Move a single published content.
+
+        Editors can do it. The link stays published.
+        """
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.source.published_link),
+                    None)
+
+        self.assertFalse('published_link' in self.root.source.objectIds())
+        self.assertTrue('published_link' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(ILink, self.root.target.published_link))
+        self.assertNotEqual(self.root.target.published_link.get_viewable(), None)
+
+    def test_move_published_container(self):
+        """Move a single published container.
+
+        Authors doesn't have the right to do it.
+        """
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.source),
+                    None)
+
+        self.assertFalse('source' in self.root.objectIds())
+        self.assertTrue('source' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IFolder, self.root.target.source))
+        # Inner content is still there and published.
+        self.assertItemsEqual(
+            self.root.target.source.objectIds(),
+            ['toc', 'link', 'published_link', 'folder'])
+        self.assertNotEqual(self.root.target.source.published_link.get_viewable(), None)
+
+
+class ChiefEditorFolderMovingTestCase(EditorFolderMovingTestCase):
+    user = 'chiefeditor'
+
+
+class ManagerMovingTestCase(ChiefEditorFolderMovingTestCase):
+    user = 'manager'
+
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(AuthorFolderMovingTestCase))
+    suite.addTest(unittest.makeSuite(EditorFolderMovingTestCase))
+    suite.addTest(unittest.makeSuite(ChiefEditorFolderMovingTestCase))
+    suite.addTest(unittest.makeSuite(ManagerMovingTestCase))
+    return suite

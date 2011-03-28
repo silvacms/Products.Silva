@@ -162,19 +162,16 @@ class ContainerManager(grok.Adapter):
 
             content.manage_changeOwnershipType(explicit=0)
 
-            # Close, maybe should be in a event
-            helpers.unapprove_close_helper(content)
-
             notifyContainerModified(from_container)
             return content
 
         content = yield
         while content is not None:
-            result = False, None
+            result = None
             if self.__is_moveable(content):
                 from_container = aq_parent(aq_inner(content))
                 if (aq_base(from_container) is not aq_base(self.context)):
-                    result = True, do_move(from_container, content)
+                    result = do_move(from_container, content)
                     any_moves = True
             content = yield result
 
