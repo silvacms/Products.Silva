@@ -3,12 +3,13 @@
 # $Id$
 
 from five import grok
-from silva.core import interfaces
+from silva.core.interfaces import IIndexEntries, ISilvaObject, IGhost, IContainer
 
 
 class IndexableAdapter(grok.Adapter):
-    grok.implements(interfaces.IIndexEntries)
-    grok.context(interfaces.ISilvaObject)
+    grok.implements(IIndexEntries)
+    grok.provides(IIndexEntries)
+    grok.context(ISilvaObject)
 
     def get_title(self):
         return self.context.get_title()
@@ -18,7 +19,7 @@ class IndexableAdapter(grok.Adapter):
 
 
 class GhostIndexableAdapter(IndexableAdapter):
-    grok.context(interfaces.IGhost)
+    grok.context(IGhost)
 
     def get_entries(self):
         if self.context == None:
@@ -30,12 +31,14 @@ class GhostIndexableAdapter(IndexableAdapter):
             haunted = version.get_haunted()
             if not haunted:
                 return []
-        return interfaces.IIndexEntries(haunted).get_entries()
+        return IIndexEntries(haunted).get_entries()
 
 
 class ContainerIndexableAdapter(IndexableAdapter):
-    grok.context(interfaces.IContainer)
+    grok.context(IContainer)
 
     def get_entries(self):
-        index = self.context.index
-        return interfaces.IIndexEntries(index).get_entries()
+        default = self.context.get_default()
+        if default is not None:
+            return IIndexEntries(default).get_entries()
+        return []

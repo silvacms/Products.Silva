@@ -19,9 +19,10 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IIndexEntries, IIndexer
+from silva.core.interfaces import IIndexEntries, IIndexer, IPublishable
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
+from silva.core.services.utils import advanced_walk_silva_tree
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
@@ -60,39 +61,23 @@ class Indexer(Content, SimpleItem):
         self._index = {}
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'getIndexNames')
-    def getIndexNames(self):
+                              'get_index_names')
+    def get_index_names(self):
         """Returns a list of all index entry names in the index, sorted
         alphabetically.
         """
-        result = [(item.lower(), item) for item in self._index.keys()]
-        result.sort()
-        result = [second for first, second in result]
+        result = self._index.keys()
+        result.sort(key=lambda i: i.lower())
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'getIndexEntry')
-    def getIndexEntry(self, indexTitle):
+                              'get_index_entry')
+    def get_index_entry(self, entry):
         """Returns a list of (title, path) tuples for an entry name in the
         index, sorted alphabetically on title
         """
-        result = []
-        for path, (name, title) in self._index[indexTitle].items():
-            result.append((title.lower(), title, path, name,))
-        result.sort()
-        result = [(title, path, name) for _, title, path, name in result]
-        return result
-
-    def _getIndexEntries(self):
-        """Returns all indexables from the container containing this
-        Indexer object, including and its subcontainers
-        """
-        container = self.get_container()
-        default_obj = container.get_default()
-        result = []
-        if default_obj:
-            result.append(default_obj)
-        result.extend([item for i, item in container.get_public_tree_all()])
+        result = [(title, path, name) for path, (name, title) in self._index[entry].items()]
+        result.sort(key=lambda i: i[0].lower())
         return result
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -101,10 +86,20 @@ class Indexer(Content, SimpleItem):
         """Update the index.
         """
         result = {}
+        want_next = None
         reference_service = getUtility(IReferenceService)
+        walker = advanced_walk_silva_tree(self.get_container(), IPublishable)
 
         # get tree of all subobjects
-        for content in self._getIndexEntries():
+        while True:
+            try:
+                content = walker.send(want_next)
+            except StopIteration:
+                break
+            want_next = content.is_published()
+            if not want_next:
+                continue
+
             indexable = IIndexEntries(content)
             indexes = indexable.get_entries()
             if not indexes:

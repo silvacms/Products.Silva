@@ -7,7 +7,7 @@
   </h2>
 
   <table class="silvatable indexer"
-         tal:define="indexTitles content/getIndexNames">
+         tal:define="titles content/get_index_names">
     <thead>
       <tr>
         <th class="align-left"
@@ -20,16 +20,16 @@
         </th>
       </tr>
     </thead>
-    <tbody tal:condition="indexTitles">
-      <tal:loop tal:repeat="indexTitle indexTitles">
-        <tal:def tal:define="iterate repeat/indexTitle/odd;
-                             indexEntry python:content.getIndexEntry(indexTitle);">
+    <tbody tal:condition="titles">
+      <tal:loop tal:repeat="title titles">
+        <tal:def tal:define="iterate repeat/title/odd;
+                             entry python:content.get_index_entry(title);">
           <tr tal:attributes="class python:iterate and 'even' or 'odd'">
-            <td tal:content="indexTitle">
+            <td tal:content="title">
               Term
             </td>
             <td>
-              <tal:index tal:repeat="link python:view.links(indexEntry)">
+              <tal:index tal:repeat="link python:view.links(entry)">
                 <tal:link tal:content="structure link" />
                 <br />
               </tal:index>
@@ -38,7 +38,7 @@
         </tal:def>
       </tal:loop>
     </tbody>
-    <tbody tal:condition="not:indexTitles">
+    <tbody tal:condition="not:titles">
       <tr>
         <td colspan="2"
             i18n:translate="">
