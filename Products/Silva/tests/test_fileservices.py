@@ -114,7 +114,7 @@ class FileServicesTest(TestCase):
         self.isZODBFile(self.root.testfile)
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
-        image_data = self.root.testimage.getImage(hires=1)
+        image_data = self.root.testimage.get_image(hires=1)
         file_data = self.root.testfile.get_content()
         form = component.getMultiAdapter(
             (self.root.service_files, self.root.REQUEST),
@@ -131,7 +131,7 @@ class FileServicesTest(TestCase):
         self.isBlobFile(self.root.testfile)
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
-        converted_image_data = self.root.testimage.getImage(hires=1)
+        converted_image_data = self.root.testimage.get_image(hires=1)
         self.assertEquals(image_data, converted_image_data)
         converted_file_data = self.root.testfile.get_content()
         self.assertEquals(file_data, converted_file_data)
@@ -147,7 +147,7 @@ class FileServicesTest(TestCase):
         self.isZODBFile(self.root.testfile)
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
-        converted_image_data = self.root.testimage.getImage(hires=1)
+        converted_image_data = self.root.testimage.get_image(hires=1)
         self.assertHashEqual(image_data, converted_image_data)
         converted_file_data = self.root.testfile.get_content()
         self.assertHashEqual(file_data, converted_file_data)
