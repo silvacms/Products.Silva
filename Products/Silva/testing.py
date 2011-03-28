@@ -16,6 +16,7 @@ from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
 from infrae.wsgi.testing import BrowserLayer, Browser, http
+from fanstatic.wsgi import Fanstatic
 from zope.site.hooks import setSite, setHooks
 import transaction
 
@@ -170,7 +171,11 @@ class SilvaLayer(BrowserLayer):
         return self._silva_root
 
     def get_browser(self, settings=None):
-        browser = NewBrowser(self._test_wsgi_application)
+        application = Fanstatic(
+            self._test_wsgi_application,
+            publisher_signature='++static++',
+            debug=True)
+        browser = NewBrowser(application)
         if settings is not None:
             settings(browser)
         return browser
