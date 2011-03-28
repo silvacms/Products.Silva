@@ -37,12 +37,18 @@ class FolderTestCase(unittest.TestCase):
     def test_is_published(self):
         """A folder is published if there is a published index.
         """
-        self.assertEqual(self.root.folder.is_published(), False)
+        self.assertFalse(self.root.folder.is_published())
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addLink('index', 'Link')
-        self.assertEqual(self.root.folder.is_published(), False)
+        self.assertFalse(self.root.folder.is_published())
+
+        # Publish the default to publish the folder
         IPublicationWorkflow(self.root.folder.get_default()).publish()
-        self.assertEqual(self.root.folder.is_published(), True)
+        self.assertTrue(self.root.folder.is_published())
+
+        # Close the default close the folder.
+        IPublicationWorkflow(self.root.folder.get_default()).close()
+        self.assertFalse(self.root.folder.is_published())
 
     def test_get_ordered_publishables_empty(self):
         """Test get_ordered_publishables without content.

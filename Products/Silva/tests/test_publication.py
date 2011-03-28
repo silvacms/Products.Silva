@@ -42,19 +42,46 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IPublicationWorkflow, publisher))
 
     def test_publish_unapproved(self):
+        """Publish an unapproved content.
+        """
         content = self.root.content
         self.assertEqual(content.get_public_version(), None)
         self.assertEqual(content.get_approved_version(), None)
         self.assertEqual(content.get_unapproved_version(), '0')
+        self.assertEqual(content.get_last_closed_version(), None)
 
+        publisher = IPublicationWorkflow(content)
+        publisher.publish()
+
+        self.assertTrue(content.is_published())
+
+        self.assertEqual(content.get_public_version(), '0')
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), None)
+        self.assertEqual(content.get_last_closed_version(), None)
+
+    def test_close_published(self):
+        """Close a published content
+        """
+        content = self.root.content
+        # Need to publish content first.
         publisher = IPublicationWorkflow(content)
         publisher.publish()
 
         self.assertEqual(content.get_public_version(), '0')
         self.assertEqual(content.get_approved_version(), None)
         self.assertEqual(content.get_unapproved_version(), None)
+        self.assertEqual(content.get_last_closed_version(), None)
 
+        publisher = IPublicationWorkflow(content)
+        publisher.close()
 
+        self.assertFalse(content.is_published())
+
+        self.assertEqual(content.get_public_version(), None)
+        self.assertEqual(content.get_approved_version(), None)
+        self.assertEqual(content.get_unapproved_version(), None)
+        self.assertEqual(content.get_last_closed_version(), '0')
 
 
 def test_suite():
