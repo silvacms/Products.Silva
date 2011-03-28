@@ -209,8 +209,9 @@ class ContainerManager(grok.Adapter):
                 any_renames = True
 
             # Update title
-            if content.get_title() != to_title:
-                content.set_title(to_title)
+            editable = content.get_editable()
+            if to_title != None and editable != None and editable.get_title() != to_title:
+                editable.set_title(to_title)
                 result = content
 
             data = yield result
