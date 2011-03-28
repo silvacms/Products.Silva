@@ -82,6 +82,21 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
         self.assertTrue(verifyObject(IAutoTOC, self.root.folder.toc))
         self.assertEqual(self.root.folder.toc.get_title(), 'New AutoTOC')
 
+    def test_rename_id_already_in_use(self):
+        manager = IContainerManager(self.root.folder)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.renamer() as renamer:
+                self.assertEqual(
+                    renamer.add((self.root.folder.toc, 'link', None)),
+                    None)
+
+        self.assertTrue('toc' in self.root.folder.objectIds())
+        self.assertTrue('link' in self.root.folder.objectIds())
+        self.assertTrue(verifyObject(IAutoTOC, self.root.folder.toc))
+        self.assertTrue(verifyObject(ILink, self.root.folder.link))
+
     def test_rename_multiple(self):
         """Rename multipe content in one time.
         """

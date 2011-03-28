@@ -91,6 +91,7 @@ class ContainerManager(grok.Adapter):
 
         compatibilityCall('manage_afterClone', copy, copy)
         notify(ObjectClonedEvent(copy))
+        return copy
 
     def __move(self, content, from_container, from_identifier, to_identifier):
         # Move a content into the container
@@ -114,7 +115,6 @@ class ContainerManager(grok.Adapter):
                 content,
                 from_container, from_identifier,
                 self.context, to_identifier))
-
         return content
 
     @CachedProperty
@@ -144,9 +144,9 @@ class ContainerManager(grok.Adapter):
 
         content = yield
         while content is not None:
-            result = False, None
+            result = None
             if self.__is_copyable(content):
-                result = True, make_copy(content)
+                result = make_copy(content)
             content = yield result
 
     @comethod

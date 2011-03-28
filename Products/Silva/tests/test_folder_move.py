@@ -15,6 +15,8 @@ from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
 
 
 class AuthorFolderMovingTestCase(unittest.TestCase):
+    """Test API to move content between folders.
+    """
     layer = FunctionalLayer
     user = 'author'
 
@@ -49,6 +51,41 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
         self.assertFalse('toc' in self.root.source.objectIds())
         self.assertTrue('toc' in self.root.target.objectIds())
         self.assertTrue(verifyObject(IAutoTOC, self.root.target.toc))
+
+    def test_move_content_id_already_in_use(self):
+        """Move a content with an id that is already in use in the
+        target folder.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addLink('toc', 'Link to AutoTOC')
+        manager = IContainerManager(self.root.target)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.source.toc),
+                    None)
+
+        self.assertFalse('toc' in self.root.source.objectIds())
+        self.assertTrue('toc' in self.root.target.objectIds())
+        self.assertTrue('move_of_toc' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(ILink, self.root.target.toc))
+        self.assertTrue(verifyObject(IAutoTOC, self.root.target.move_of_toc))
+
+        # Now if we move it back, the move_of_ will be stripped
+        manager = IContainerManager(self.root.source)
+        with assertTriggersEvents('ObjectWillBeMovedEvent',
+                                  'ObjectMovedEvent',
+                                  'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertNotEqual(
+                    mover.add(self.root.target.move_of_toc),
+                    None)
+
+        self.assertTrue('toc' in self.root.source.objectIds())
+        self.assertFalse('move_of_toc' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IAutoTOC, self.root.source.toc))
 
     def test_move_multiple(self):
         """Move multiple content in one time (one container, one
