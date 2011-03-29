@@ -131,25 +131,25 @@ class Versioning(object):
             self._reindex_version(self._approved_version[0])
 
         # send messages
-        info = self._get_editable_rfa_info()
-        if info.requester is None:
-            return # no requester found, so don't send messages
-        if publish_now:
-            publication_date_str="The version has been published right now.\n"
-        else:
-            publication_date_str = 'The version will be published at %s\n' % \
-                                  _format_date_helper(publication_datetime)
-        if expiration_datetime is None:
-            expiration_date_str=''
-        else:
-            expiration_date_str = 'The version will expire at %s\n' % \
-                                  _format_date_helper(expiration_datetime)
+        # info = self._get_editable_rfa_info()
+        # if info.requester is None:
+        #     return # no requester found, so don't send messages
+        # if publish_now:
+        #     publication_date_str="The version has been published right now.\n"
+        # else:
+        #     publication_date_str = 'The version will be published at %s\n' % \
+        #                           _format_date_helper(publication_datetime)
+        # if expiration_datetime is None:
+        #     expiration_date_str=''
+        # else:
+        #     expiration_date_str = 'The version will expire at %s\n' % \
+        #                           _format_date_helper(expiration_datetime)
 
-        editor = getSecurityManager().getUser().getId()
-        text = u"\nVersion was approved for publication by %s.\n%s%s" % \
-                (editor, publication_date_str, expiration_date_str)
-        self._send_message(editor, info.requester,
-                           "Version approved", text)
+        # editor = getSecurityManager().getUser().getId()
+        # text = u"\nVersion was approved for publication by %s.\n%s%s" % \
+        #         (editor, publication_date_str, expiration_date_str)
+        # self._send_message(editor, info.requester,
+        #                    "Version approved", text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'unapprove_version')
@@ -175,13 +175,13 @@ class Versioning(object):
 
         # send messages to editor
         # XXX should the last author be informed, too?
-        author = getSecurityManager().getUser().getId()
-        text = u"\nVersion was unapproved by %s." % author
-        self._send_message_to_editors(author, 'Unapproved', text)
-        if self._request_for_approval_info.requester is not None:
-            self._send_message(author,
-                               self._request_for_approval_info.requester,
-                               'Unapproved', text)
+        # author = getSecurityManager().getUser().getId()
+        # text = u"\nVersion was unapproved by %s." % author
+        # self._send_message_to_editors(author, 'Unapproved', text)
+        # if self._request_for_approval_info.requester is not None:
+        #     self._send_message(author,
+        #                        self._request_for_approval_info.requester,
+        #                        'Unapproved', text)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'close_version')
@@ -269,8 +269,6 @@ class Versioning(object):
             raise VersioningError,\
                   _('The version is already requested for approval.')
 
-        last_author = self.sec_get_last_author_info()
-
         info = self._get_editable_rfa_info()
         info.requester = getSecurityManager().getUser().getId()
         info.request_date = DateTime()
@@ -278,29 +276,30 @@ class Versioning(object):
         self._set_approval_request_message(message)
         notify(events.ContentRequestApprovalEvent(
                 getattr(self, self._unapproved_version[0])))
-        publication_datetime = self._unapproved_version[1]
-        if publication_datetime is None:
-            publication_date_str=''
-        else:
-            publication_date_str = \
-                     'The version has a proposed publication date of %s\n' % \
-                     _format_date_helper(publication_datetime)
-        expiration_datetime = self._unapproved_version[2]
-        if expiration_datetime is None:
-            expiration_date_str=''
-        else:
-            expiration_date_str = \
-               'The version has a proposed expiration date of %s\n' % \
-               _format_date_helper(expiration_datetime)
-        # send messages
-        text = u"\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
-                (info.requester,
-                 publication_date_str, expiration_date_str, message)
-        self._send_message_to_editors(info.requester,
-                                      'Approval requested', text)
-        # XXX inform user, too (?)
-        self._send_message(info.requester, last_author.userid(),
-                           'Approval requested', text)
+        # last_author = self.sec_get_last_author_info()
+        # publication_datetime = self._unapproved_version[1]
+        # if publication_datetime is None:
+        #     publication_date_str=''
+        # else:
+        #     publication_date_str = \
+        #              'The version has a proposed publication date of %s\n' % \
+        #              _format_date_helper(publication_datetime)
+        # expiration_datetime = self._unapproved_version[2]
+        # if expiration_datetime is None:
+        #     expiration_date_str=''
+        # else:
+        #     expiration_date_str = \
+        #        'The version has a proposed expiration date of %s\n' % \
+        #        _format_date_helper(expiration_datetime)
+        # # send messages
+        # text = u"\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
+        #         (info.requester,
+        #          publication_date_str, expiration_date_str, message)
+        # self._send_message_to_editors(info.requester,
+        #                               'Approval requested', text)
+        # # XXX inform user, too (?)
+        # self._send_message(info.requester, last_author.userid(),
+        #                    'Approval requested', text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'withdraw_version_approval')
@@ -320,19 +319,19 @@ class Versioning(object):
             raise VersioningError,\
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
-        orginal_requester = info.requester
         info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
         notify(events.ContentApprovalRequestCanceledEvent(
                 getattr(self, self._unapproved_version[0])))
+        # orginal_requester = info.requester
         # send messages
-        text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
-               % (info.requester, message)
-        self._send_message_to_editors(info.requester,
-                                      'Approval withdrawn by author', text)
-        self._send_message(info.requester, orginal_requester,
-                           'Approval withdrawn by author', text)
+        # text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
+        #        % (info.requester, message)
+        # self._send_message_to_editors(info.requester,
+        #                               'Approval withdrawn by author', text)
+        # self._send_message(info.requester, orginal_requester,
+        #                    'Approval withdrawn by author', text)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'reject_version_approval')
@@ -352,17 +351,17 @@ class Versioning(object):
             raise VersioningError,\
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
-        original_requester = info.requester
         info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
         notify(events.ContentApprovalRequestRefusedEvent(
                 getattr(self, self._unapproved_version[0])))
+        # original_requester = info.requester
         # send message back to requester
-        text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
-               % (info.requester, message)
-        self._send_message(info.requester, original_requester,
-                           "Approval rejected by editor", text)
+        # text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
+        #        % (info.requester, message)
+        # self._send_message(info.requester, original_requester,
+        #                    "Approval rejected by editor", text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_publication_datetime')
