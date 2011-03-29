@@ -5,6 +5,7 @@
 
 import unittest
 
+from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder
@@ -85,6 +86,27 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
 
         self.assertTrue('toc' in self.root.source.objectIds())
         self.assertFalse('move_of_toc' in self.root.target.objectIds())
+        self.assertTrue(verifyObject(IAutoTOC, self.root.source.toc))
+
+    def test_move_not_addable_content(self):
+        """Move a content that is not addable in the target folder.
+
+        This should not be possible (for everybody).
+        """
+        self.root.target.set_silva_addables_allowed_in_container(
+            ['Silva Image', 'Silva File'])
+
+        manager = IContainerManager(self.root.target)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertEqual(
+                    mover.add(self.root.source.toc),
+                    None)
+
+        self.assertTrue('toc' in self.root.source.objectIds())
+        self.assertEqual(self.root.target.objectIds(), [])
         self.assertTrue(verifyObject(IAutoTOC, self.root.source.toc))
 
     def test_move_multiple(self):

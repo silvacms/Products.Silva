@@ -87,6 +87,25 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
         self.assertTrue('copy2_of_folder' in self.root.target.objectIds())
         self.assertTrue(verifyObject(IFolder, self.root.target.copy2_of_folder))
 
+    def test_copy_not_addable_content(self):
+        """Move a content that is not addable in the target folder.
+
+        This should not be possible (for everybody).
+        """
+        self.root.target.set_silva_addables_allowed_in_container(
+            ['Silva Image', 'Silva File'])
+
+        manager = IContainerManager(self.root.target)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.copier() as copier:
+                self.assertEqual(
+                    copier.add(self.root.source.toc),
+                    None)
+
+        self.assertEqual(self.root.target.objectIds(), [])
+
     def test_copy_published_content(self):
         """Copy a content that is published. It is copied, but the
         copy will be closed.
