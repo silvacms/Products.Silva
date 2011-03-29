@@ -15,12 +15,8 @@ from DateTime import DateTime
 from Products.Silva import mangle, SilvaPermissions
 
 from silva.core.interfaces import events
-from silva.core.interfaces import IVersioning
+from silva.core.interfaces import IVersioning, VersioningError
 from silva.translations import translate as _
-
-
-class VersioningError(Exception):
-    pass
 
 empty_version = (None, None, None)
 

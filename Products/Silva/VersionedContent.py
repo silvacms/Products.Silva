@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+import operator
+
 # Zope 3
 from five import grok
 
@@ -19,7 +21,8 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Versioning import Versioning
 from Products.Silva.Content import Content
 
-from silva.core.interfaces import IVersionedContent, ICatalogedVersionedContent
+from silva.core.interfaces import IVersion
+from silva.core.interfaces import IVersionedContent
 from silva.core.interfaces import IPublicationWorkflow, PublicationWorkflowError
 from silva.core.services.catalog import Cataloging
 from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
@@ -192,15 +195,6 @@ class VersionedContent(Content, Versioning, BaseFolder):
             return True
         return not self.is_published() and not self.is_approved()
 
-
-InitializeClass(VersionedContent)
-
-class CatalogedVersionedContent(VersionedContent):
-    """VersionedContent from those versions are in the catalog.
-    """
-    grok.implements(ICatalogedVersionedContent)
-    grok.baseclass()
-
     def _index_version(self, version_id):
         version = getattr(self, version_id, None)
         if version is not None:
@@ -219,18 +213,19 @@ class CatalogedVersionedContent(VersionedContent):
             # XXX Update this
             ICataloging(version).unindex()
 
-InitializeClass(CatalogedVersionedContent)
+
+InitializeClass(VersionedContent)
 
 
 class VersionedContentCataloging(Cataloging):
     """Cataloging support for versioned content.
     """
-    grok.context(ICatalogedVersionedContent)
+    grok.context(IVersionedContent)
 
     def get_indexable_versions(self):
         version_ids = [
             self.context.get_next_version(),
-            self.context.get_public_version(),]
+            self.context.get_public_version()]
         for version_id in version_ids:
             if version_id is None:
                 continue
@@ -337,3 +332,12 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
                 _("There is no public version to close"))
         self.context.close_version()
         return True
+
+    def get_versions(self, sort_attribute='id'):
+        versions = filter(IVersion.providedBy, self.context.objectValues())
+        if sort_attribute == 'id':
+            versions.sort(key=lambda a: int(a.id))
+        elif sort_attribute:
+            versions.sort(key=operator.attrgetter(sort_attribute))
+        return versions
+

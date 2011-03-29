@@ -14,8 +14,8 @@ from App.class_init import InitializeClass
 from zExceptions import Unauthorized
 
 # Silva
-from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.Version import CatalogedVersion
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
 from Products.Silva import SilvaPermissions
 
 from zeam.form import silva as silvaforms
@@ -137,7 +137,7 @@ class GhostBase(object):
         return self.LINK_OK
 
 
-class Ghost(CatalogedVersionedContent):
+class Ghost(VersionedContent):
     __doc__ = _("""Ghosts are special documents that function as a
        placeholder for an item in another location (like an alias,
        symbolic link, shortcut). Unlike a hyperlink, which takes the
@@ -220,7 +220,7 @@ class Ghost(CatalogedVersionedContent):
 InitializeClass(Ghost)
 
 
-class GhostVersion(GhostBase, CatalogedVersion):
+class GhostVersion(GhostBase, Version):
     """Ghost version.
     """
     meta_type = 'Silva Ghost Version'

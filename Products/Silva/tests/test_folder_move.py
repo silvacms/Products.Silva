@@ -5,7 +5,6 @@
 
 import unittest
 
-from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder

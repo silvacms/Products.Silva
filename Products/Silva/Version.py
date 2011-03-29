@@ -2,11 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-import warnings
-
 # Zope 3
 from five import grok
-from zope import component
+from zope.component import getUtility
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
 from zope.lifecycleevent.interfaces import IObjectRemovedEvent
@@ -24,89 +22,25 @@ from Products.Silva.SilvaObject import TitledObject
 from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
-from silva.core.interfaces import IVersion, ICatalogedVersion
+from silva.translations import translate as _
+from silva.core.interfaces import IVersionManager
+from silva.core.interfaces import IVersion, VersioningError
 from silva.core.services.interfaces import ICataloging
 
 
 class Version(TitledObject, SimpleItem):
-
+    """A Version of a versioned content.
+    """
     grok.implements(IVersion)
 
     security = ClassSecurityInfo()
-
-    object_type = 'versioned_content'
 
     def __init__(self, id):
         self.id = id
         self._v_creation_datetime = DateTime()
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_renderer_name')
-    def get_renderer_name(self):
-        """Get the name of the renderer selected for object.
-
-        Returns None if default is used.
-        """
-        return getattr(self, '_renderer_name', None)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'version_status')
-    def version_status(self):
-        """Returns the status of the current version
-        Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
-        """
-        status = None
-        unapproved_version = self.get_unapproved_version(0)
-        approved_version = self.get_approved_version(0)
-        public_version = self.get_public_version(0)
-        previous_versions = self.get_previous_versions()
-        if unapproved_version and unapproved_version == self.id:
-            status = "unapproved"
-        elif approved_version and approved_version == self.id:
-            status = "approved"
-        elif public_version and public_version == self.id:
-            status = "public"
-        else:
-            if previous_versions and previous_versions[-1] == self.id:
-                status = "last_closed"
-            elif self.id in previous_versions:
-                status = "closed"
-            else:
-                # this is a completely new version not even registered
-                # with the machinery yet
-                status = 'unapproved'
-        return status
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'object_path')
-    def object_path(self):
-        """Returns the physical path of the object
-        (for identification-purposes)
-        """
-        return self.aq_inner.aq_parent.getPhysicalPath()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'version')
-    def version(self):
-        """Returns the version
-        """
-        return (self.id,
-                self.publication_datetime(),
-                self.expiration_datetime())
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'object')
-    def object(self):
-        """Returns the object this version belongs to
-        """
-        warnings.warn('object() will be removed in Silva 2.4. '
-                      'Please use get_content instead.',
-                      DeprecationWarning, stacklevel=2)
-        return self.aq_inner.aq_parent
-
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'object')
+        SilvaPermissions.AccessContentsInformation, 'get_version')
     def get_version(self):
         """Returns itself. Used by acquisition to get the
            neared version.
@@ -114,77 +48,125 @@ class Version(TitledObject, SimpleItem):
         return self.aq_inner
 
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'publication_datetime')
-    def publication_datetime(self):
-        """Returns the publication_datetime of this version (if any)
-        """
-        status = self.version_status()
-        if status == 'closed' or status == 'last_closed':
-            return None
-        else:
-            return getattr(self,
-                           'get_%s_version_publication_datetime' % status)(0)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'expiration_datetime')
-    def expiration_datetime(self):
-        """Returns the expiration_datetime of this version (if any)
-        """
-        status = self.version_status()
-        if status == 'closed' or status == 'last_closed':
-            return None
-        else:
-            return getattr(self,
-                           'get_%s_version_expiration_datetime' % status)(0)
-
 InitializeClass(Version)
 
 
-class CatalogedVersion(Version):
-    """Base class for cataloged version objects"""
+class VersionManager(grok.Adapter):
+    """Adapter to manage Silva versions
+    """
+    grok.implements(IVersionManager)
+    grok.provides(IVersionManager)
+    grok.context(IVersion)
 
-    grok.implements(ICatalogedVersion)
+    def __init__(self, version):
+        self.version = version
+        self.content = version.get_content()
 
-    # XXX: TODO ICataloging for ICataloged Version
-    # def index_object(self):
-    #     """Index"""
-    #     catalog = getattr(self, 'service_catalog', None)
-    #     if catalog is not None:
-    #         catalog.catalog_object(self, self.getPath())
-    #         if self.version_status() in ('unapproved','approved','public'):
-    #             #search for Ghost objects in the catalog
-    #             # that have this object's path as the haunted_path
-    #             # these Ghost objects need to be reindexed
-    #             # NOTE: this will change published and unpublished
-    #             # Ghost versions.
-    #             res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
-    #             for r in res:
-    #                 r.getObject().index_object()
+    def make_editable(self):
+        """Make the version editable.
+        """
+        approved_version = self.content.get_approved_version(False)
+        if approved_version is not None:
+            raise VersioningError(_('An approved version is already available'))
+
+        current_version = self.content.get_unapproved_version(False)
+        if current_version is not None:
+            # move the current editable version to _previous_versions
+            if self.content.is_version_approval_requested():
+                raise VersioningError(_('A version is waiting approval'))
+
+            version_tuple = self.content._unapproved_version
+            if self.content._previous_versions is None:
+                self.content._previous_versions = []
+            self.content._previous_versions.append(version_tuple)
+            # XXX should be event
+            self.content._unindex_version(current_version)
+
+        new_version_id = self.content.get_new_version_id()
+        self.content.manage_clone(self.version, new_version_id)
+        self.content._unapproved_version = (new_version_id, None, None)
+        self.content._index_version(new_version_id)
+
+    def delete(self):
+        """Delete the version
+        """
+        versionid = self.version.id
+
+        if self.content.get_approved_version(False) == versionid:
+            raise VersioningError(_(u"Version is approved"))
+        if self.content.get_public_version(False) == versionid:
+            raise VersioningError(_(u"Version is published"))
+
+        if self.content.get_unapproved_version(False) == versionid:
+            self.content._unapproved_version = (None, None, None)
+        else:
+            for version in self.content._previous_versions:
+                if version[0] == versionid:
+                    self.content._previous_versions.remove(version)
+        self.content.manage_delObjects([versionid])
+        return True
+
+    def get_modification_datetime(self):
+        return getUtility(IMetadataService).getMetadataValue(
+            self.version, 'silva-extra', 'modificationtime')
+
+    def __get_version_tuple(self):
+        versionid = self.version.id
+        if self.content.get_unapproved_version(False) == versionid:
+            return self.content._unapproved_version
+        elif self.content.get_approved_version(False) == versionid:
+            return self.content._approved_version
+        elif self.content.get_public_version(False) == versionid:
+            return self.content._public_version
+        elif self.content._previous_versions:
+            for info in self.context._previous_versions:
+                if info[0] == versionid:
+                    return info
+        return (None, None, None)
+
+    def get_publication_datetime(self):
+        return self.__get_version_tuple()[1]
+
+    def get_expiration_datetime(self):
+        return self.__get_version_tuple()[2]
+
+    def get_last_author(self):
+        return self.content.sec_get_last_author_info(self.version)
+
+    def get_status(self):
+        """Returns the status of a version as a string
+
+            return value can be one of the following strings:
+
+                unapproved
+                pending
+                approved
+                published
+                last_closed
+                closed
+        """
+        versionid = self.version.id
+        if self.content.get_unapproved_version(False) == versionid:
+            if self.content.is_version_approval_requested():
+                return 'pending'
+            return 'unapproved'
+        elif self.content.get_approved_version(False) == versionid:
+            return 'approved'
+        elif self.content.get_public_version(False) == versionid:
+            return 'published'
+        else:
+            if self.content._previous_versions:
+                if self.content._previous_versions[-1][0] == versionid:
+                    return 'last_closed'
+                else:
+                    for (vid, vpt, vet) in self.content._previous_versions:
+                        if vid == versionid:
+                            return 'closed'
+        raise VersioningError(
+            _('No such version ${version}',
+              mapping={'version': versionid}))
 
 
-    # def reindex_object(self):
-    #     """Reindex."""
-    #     catalog = getattr(self, 'service_catalog', None)
-    #     if catalog is None:
-    #         return
-    #     path = self.getPath()
-    #     catalog.uncatalog_object(path)
-    #     catalog.catalog_object(self, path)
-    #     if self.version_status() in ('unapproved','approved','public'):
-    #         #search for Ghost objects in the catalog
-    #         # that have this object's path as the haunted_path
-    #         # these Ghost objects need to be reindexed
-    #         # NOTE: this will change published and unpublished
-    #         # Ghost versions.
-    #         res = catalog(haunted_path={'query':(self.get_content().getPhysicalPath(),)})
-    #         for r in res:
-    #             r.getObject().index_object()
-
-
-InitializeClass(CatalogedVersion)
-
-def _(s): pass
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),
                  _('closed'), _('draft'), _('pending'), _('public'),)
 
@@ -195,7 +177,7 @@ def version_modified(version, event):
     version.get_content().sec_update_last_author_info()
 
 
-@grok.subscribe(ICatalogedVersion, IObjectWillBeRemovedEvent)
+@grok.subscribe(IVersion, IObjectWillBeRemovedEvent)
 def catalog_version_removed(version, event):
     if version != event.object:
         # Only interested about version removed by hand.
@@ -212,8 +194,7 @@ def version_moved(version, event):
     if ctime is None:
         return
     try:
-        service_metadata = component.getUtility(IMetadataService)
-        binding = service_metadata.getMetadata(version)
+        binding = getUtility(IMetadataService).getMetadata(version)
     except BindingError:
         return
     if binding is None:

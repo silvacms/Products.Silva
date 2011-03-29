@@ -14,8 +14,8 @@ from Acquisition import aq_inner
 from App.class_init import InitializeClass
 
 # Silva
-from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.Version import CatalogedVersion
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
@@ -29,7 +29,7 @@ from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
 
-class Link(CatalogedVersionedContent):
+class Link(VersionedContent):
     __doc__ = _("""A Silva Link makes it possible to create links that show up
     in navigation or a Table of Contents. The links can be absolute or relative.
     Absolute links go to external sites while relative links go to content
@@ -43,7 +43,7 @@ class Link(CatalogedVersionedContent):
     silvaconf.versionClass('LinkVersion')
 
 
-class LinkVersion(CatalogedVersion):
+class LinkVersion(Version):
     security = ClassSecurityInfo()
 
     meta_type = "Silva Link Version"

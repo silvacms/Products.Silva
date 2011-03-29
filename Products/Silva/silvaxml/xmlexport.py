@@ -12,7 +12,7 @@ from DateTime import DateTime
 
 from sprout.saxext import xmlexport
 from silva.core import interfaces
-from silva.core.interfaces.adapters import IVersionManagement
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import canonical_path
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -152,7 +152,7 @@ class VersionedContentProducer(SilvaBaseProducer):
         """
         wanted = self.getSettings().version
         if wanted is ALL_VERSION:
-            for version in IVersionManagement(self.context).getVersions():
+            for version in IPublicationWorkflow(self.context).get_versions():
                 # getVersions will order by id - most recent last.
                 self.subsax(version)
         else:
