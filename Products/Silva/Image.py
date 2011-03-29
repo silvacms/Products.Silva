@@ -604,7 +604,7 @@ class ImagePublishTraverse(SilvaPublishTraverse):
 
 class IImageAddFields(ITitledContent):
 
-    file = silvaschema.Bytes(title=_(u"image"), required=True)
+    image = silvaschema.Bytes(title=_(u"image"), required=True)
 
 
 class ImageAddForm(silvaforms.SMIAddForm):
