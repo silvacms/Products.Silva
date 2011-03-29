@@ -4,9 +4,6 @@
 
 import urlparse
 
-# prevent a circular import in Zope 2.12
-#import AccessControl
-
 #### Hack of the day: don't fuck up your all DB if an interface is broken.
 
 from OFS.Uninstalled import BrokenClass
@@ -56,20 +53,6 @@ except ImportError:
     MAILDROPHOST_AVAILABLE = False
 
 MAILHOST_ID = 'service_mailhost'
-
-import AccessControl
-AccessControl.allow_module('Products.Silva.adapters')
-AccessControl.allow_module('Products.Silva.adapters.archivefileimport')
-AccessControl.allow_module('Products.Silva.adapters.cleanup')
-AccessControl.allow_module('Products.Silva.adapters.path')
-AccessControl.allow_module('Products.Silva.adapters.renderable')
-AccessControl.allow_module('Products.Silva.adapters.version_management')
-AccessControl.allow_module('Products.Silva.adapters.zipfileimport')
-AccessControl.allow_module('Products.Silva.i18n')
-AccessControl.allow_module('Products.Silva.mail')
-AccessControl.allow_module('Products.Silva.mangle')
-AccessControl.allow_module('Products.Silva.roleinfo')
-AccessControl.allow_module('zope.i18n') # zope.i18n.translate
 
 
 def initialize_icons():

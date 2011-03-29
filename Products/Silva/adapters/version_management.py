@@ -2,18 +2,15 @@
 # See also LICENSE.txt
 # $Id$
 
+import operator
 from datetime import datetime, timedelta
 
 from five import grok
 from zope.component import getUtility
 
-from Acquisition import aq_inner
-from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
 from DateTime import DateTime
 
 from Products.Silva.Versioning import VersioningError
-from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
 from silva.core.interfaces.adapters import IVersionManagement
@@ -28,59 +25,38 @@ class VersionManagement(grok.Adapter):
     grok.implements(IVersionManagement)
     grok.context(IVersionedContent)
     grok.provides(IVersionManagement)
-    security = ClassSecurityInfo()
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionById')
     def getVersionById(self, id):
         return getattr(self.context, id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getPublishedVersion')
     def getPublishedVersion(self):
         id = self.context.get_public_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getUnapprovedVersion')
     def getUnapprovedVersion(self):
         id = self.context.get_unapproved_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getApprovedVersion')
     def getApprovedVersion(self):
         id = self.context.get_approved_version()
         if id is not None:
             return getattr(self.context, id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionIds')
     def getVersionIds(self):
         ret = [v.id for v in self.getVersions()]
         return ret
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersions')
     def getVersions(self, sort_attribute='id'):
         objects = [o for o in self.context.objectValues() if
-                    IVersion.providedBy(o)]
+                   IVersion.providedBy(o)]
         if sort_attribute == 'id':
             objects.sort(lambda a, b: cmp(int(a.id), int(b.id)))
         elif sort_attribute:
-            objects.sort(
-                lambda a, b:
-                    cmp(
-                        getattr(a, sort_attribute),
-                        getattr(b, sort_attribute)
-                    )
-                )
+            objects.sort(key=operator.attrgetter(sort_attribute))
         return objects
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'revertPreviousToEditable')
     def revertPreviousToEditable(self, copy_id):
         if not hasattr(self.context, copy_id):
             raise AttributeError, copy_id
@@ -104,14 +80,11 @@ class VersionManagement(grok.Adapter):
             self.context._unindex_version(current_version_id)
         # just hope for the best... scary API
         new_version_id = self._createUniqueId()
-        # This is need because of the __of__ of getVersionManagementAdapter
-        content = aq_inner(self.context)
+        content = self.context
         content.manage_clone(getattr(content, copy_id), new_version_id)
         self.context._unapproved_version = (new_version_id, None, None)
         self.context._index_version(new_version_id)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'deleteVersions')
     def deleteVersions(self, ids):
         """Delete a number of versions
 
@@ -121,7 +94,7 @@ class VersionManagement(grok.Adapter):
             a successful deletion).
         """
         if len(ids) == len(self.getVersionIds()):
-            raise VersioningError, _('Can not delete all versions')
+            raise VersioningError(_('Can not delete all versions'))
         ret = []
         delids = []
         for id in ids:
@@ -157,14 +130,12 @@ class VersionManagement(grok.Adapter):
         version_ids = self.getVersionIds()
         if unapproved is not None and unapproved.id in version_ids:
             version_ids.remove(unapproved.id)
-        if approved is not None and unapproved.id in version_ids:
+        if approved is not None and approved.id in version_ids:
             version_ids.remove(approved.id)
         if public is not None and public.id in version_ids:
             version_ids.remove(public.id)
         return version_ids
 
-    security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'deleteOldVersions')
     def deleteOldVersions(self, number_to_keep=0):
         version_ids = self._getOldVersionIds()
         if len(version_ids) > number_to_keep:
@@ -172,8 +143,6 @@ class VersionManagement(grok.Adapter):
                 version_ids = version_ids[:-number_to_keep]
             self.context.manage_delObjects(version_ids)
 
-    security.declareProtected(
-        SilvaPermissions.ViewManagementScreens, 'deleteOldVersionsByAge')
     def deleteOldVersionsByAge(self, max_age, number_to_keep=None):
         """Delete old versions.
 
@@ -197,8 +166,6 @@ class VersionManagement(grok.Adapter):
         if number_to_keep is not None:
             self.deleteOldVersions(number_to_keep)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionModificationTime')
     def getVersionModificationTime(self, versionid):
         version = getattr(self.context, versionid)
         return self.context.service_metadata.getMetadataValue(
@@ -208,8 +175,6 @@ class VersionManagement(grok.Adapter):
     # implementation, hopefully in the future we can change the underlying
     # Versioning and VersionedContent layers and store these times on the
     # version objects rather then on the VersionedContent
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionPublicationTime')
     def getVersionPublicationTime(self, versionid):
         if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
@@ -226,8 +191,6 @@ class VersionManagement(grok.Adapter):
                     if verid == versionid:
                         return pubtime
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionExpirationTime')
     def getVersionExpirationTime(self, versionid):
         if (self.context._unapproved_version[0] is not None and
                 self.context._unapproved_version[0] == versionid):
@@ -244,8 +207,6 @@ class VersionManagement(grok.Adapter):
                     if verid == versionid:
                         return exptime
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionLastAuthorInfo')
     def getVersionLastAuthorInfo(self, versionid):
         version = self.getVersionById(versionid)
         info = getattr(version, '_last_author_info', None)
@@ -254,8 +215,6 @@ class VersionManagement(grok.Adapter):
         else:
             return info.__of__(self.context)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionCreatorInfo')
     def getVersionCreatorInfo(self, versionid):
         version = self.getVersionById(versionid)
         service = getUtility(IMemberService)
@@ -263,8 +222,6 @@ class VersionManagement(grok.Adapter):
             version.getOwner().getId(),
             location=self.context)
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'getVersionStatus')
     def getVersionStatus(self, versionid):
         """Returns the status of a version as a string
 
@@ -303,17 +260,4 @@ class VersionManagement(grok.Adapter):
     def _createUniqueId(self):
         return self.context.get_new_version_id()
 
-
-InitializeClass(VersionManagement)
-
-
-def __allow_access_to_unprotected_subobjects__(name,value=None):
-    return name in ('getVersionManagementAdapter')
-
-
-def getVersionManagementAdapter(context):
-    adapter = IVersionManagement(context, None)
-    if adapter is not None:
-        adapter.__parent__ = context
-    return adapter
 
