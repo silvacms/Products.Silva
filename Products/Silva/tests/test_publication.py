@@ -22,8 +22,11 @@ class MockupVersionedContent(VersionedContent):
 
     def __init__(self, *args):
         super(MockupVersionedContent, self).__init__(*args)
-        self._setObject('0', MockupVersion('0'))
-        self.create_version('0', None, None)
+        self.create_mockup_version('0')
+
+    def create_mockup_version(self, version_id):
+        self._setObject(str(version_id), MockupVersion(str(version_id)))
+        self.create_version(str(version_id), None, None)
 
 
 class PublicationWorkflowTestCase(unittest.TestCase):
