@@ -86,6 +86,7 @@ class VersionManager(grok.Adapter):
         self.content.manage_clone(self.version, new_version_id)
         self.content._unapproved_version = (new_version_id, None, None)
         self.content._index_version(new_version_id)
+        return True
 
     def delete(self):
         """Delete the version

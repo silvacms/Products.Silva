@@ -6,9 +6,7 @@
 import unittest
 
 from DateTime import DateTime
-
-from Products.Silva.VersionedContent import VersionedContent
-from Products.Silva.Version import Version
+from Products.Silva.tests.mockers import install_mockers
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IPublicationWorkflow
@@ -16,82 +14,135 @@ from silva.core.interfaces import IVersionManager, VersioningError
 from zope.interface.verify import verifyObject
 
 
-class MockupVersion(Version):
-    meta_type='MockupVersion'
-
-
-class MockupVersionedContent(VersionedContent):
-    meta_type='MockupVersionedContent'
-
-    def __init__(self, *args):
-        super(MockupVersionedContent, self).__init__(*args)
-        self.create_mockup_version('0')
-
-    def create_mockup_version(self, version_id):
-        self._setObject(str(version_id), MockupVersion(str(version_id)))
-        self.create_version(str(version_id), None, None)
-
-
 class VersionManagerTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
         self.root = self.layer.get_application()
+        install_mockers(self.root)
         self.layer.login('author')
 
-        self.root._setObject('content', MockupVersionedContent('content'))
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('test', 'Test Content')
 
+        publisher = IPublicationWorkflow(self.root.test)
         for version_id in range(1, 5):
-            IPublicationWorkflow(self.root.content).publish()
-            self.root.content.create_mockup_version(str(version_id))
+            publisher.publish()
+            publisher.new_version()
 
     def test_implementation(self):
-        published = self.root.content.get_viewable()
+        published = self.root.test.get_viewable()
         manager = IVersionManager(published)
         self.assertTrue(verifyObject(IVersionManager, manager))
 
     def test_get_publication_datetime(self):
         """Verify get_publication_datetime
         """
-        manager = IVersionManager(self.root.content.get_editable())
+        manager = IVersionManager(self.root.test.get_editable())
         self.assertEqual(manager.get_publication_datetime(), None)
 
         now = DateTime()
-        self.root.content.set_unapproved_version_publication_datetime(now)
+        self.root.test.set_unapproved_version_publication_datetime(now)
         self.assertEqual(manager.get_publication_datetime(), now)
+
+        # Published version already have a publication date since they
+        # are published.
+        manager = IVersionManager(self.root.test.get_viewable())
+        self.assertNotEqual(manager.get_publication_datetime(), None)
 
     def test_get_expiration_datetime(self):
         """Verify get_expiration_datetime
         """
-        manager = IVersionManager(self.root.content.get_editable())
+        manager = IVersionManager(self.root.test.get_editable())
         self.assertEqual(manager.get_expiration_datetime(), None)
 
         now = DateTime()
-        self.root.content.set_unapproved_version_expiration_datetime(now)
+        self.root.test.set_unapproved_version_expiration_datetime(now)
         self.assertEqual(manager.get_expiration_datetime(), now)
+
+    def test_get_last_author(self):
+        """Return the last author who change the version.
+        """
+        manager = IVersionManager(self.root.test.get_viewable())
+        self.assertNotEqual(manager.get_last_author(), None)
 
     def test_delete_unapproved_version(self):
         """Delete an unapproved version.
         """
-        self.assertEqual(len(self.root.content.objectIds('MockupVersion')), 5)
+        content = self.root.test
+        self.assertEqual(len(content.objectIds('Mockup Version')), 5)
 
-        manager = IVersionManager(self.root.content.get_editable())
+        manager = IVersionManager(content.get_editable())
         self.assertTrue(manager.delete())
 
-        self.assertEqual(self.root.content.get_editable(), None)
-        self.assertEqual(len(self.root.content.objectIds('MockupVersion')), 4)
+        self.assertEqual(content.get_editable(), None)
+        self.assertEqual(len(content.objectIds('Mockup Version')), 4)
 
     def test_delete_published_version(self):
         """Delete a published version. This is not possible and should
         trigger an error.
         """
-        self.assertEqual(len(self.root.content.objectIds('MockupVersion')), 5)
+        content = self.root.test
+        self.assertEqual(len(content.objectIds('Mockup Version')), 5)
 
-        manager = IVersionManager(self.root.content.get_viewable())
+        manager = IVersionManager(content.get_viewable())
         with self.assertRaises(VersioningError):
             manager.delete()
 
-        self.assertEqual(len(self.root.content.objectIds('MockupVersion')), 5)
+        self.assertEqual(len(content.objectIds('Mockup Version')), 5)
+
+    def test_delete_closed_version(self):
+        """Delete a previously closed version.
+        """
+        content = self.root.test
+        self.assertEqual(len(content.objectIds('Mockup Version')), 5)
+
+        manager = IVersionManager(content.get_mockup_version(0))
+        manager.delete()
+
+        self.assertEqual(len(content.objectIds('Mockup Version')), 4)
+
+        manager = IVersionManager(content.get_mockup_version(1))
+        manager.delete()
+
+        self.assertEqual(len(content.objectIds('Mockup Version')), 3)
+
+    def test_get_status(self):
+        """Get status of different version.
+        """
+        content = self.root.test
+        manager = IVersionManager(content.get_mockup_version(1))
+        self.assertEqual(manager.get_status(), 'closed')
+
+        manager = IVersionManager(content.get_mockup_version(2))
+        self.assertEqual(manager.get_status(), 'last_closed')
+
+        manager = IVersionManager(content.get_mockup_version(3))
+        self.assertEqual(manager.get_status(), 'published')
+
+        manager = IVersionManager(content.get_mockup_version(4))
+        self.assertEqual(manager.get_status(), 'unapproved')
+
+    def test_make_editable_with_unapproved(self):
+        """Make an old version editable while having an unapproved
+        version.
+        """
+        content = self.root.test
+        manager = IVersionManager(content.get_mockup_version(1))
+        self.assertTrue(manager.make_editable())
+        self.assertEqual(len(content.objectIds('Mockup Version')), 6)
+
+    def test_make_editable_with_approved(self):
+        """Make an old version editable while having an approved and
+        yet not published version. This will not work.
+        """
+        content = self.root.test
+        publisher = IPublicationWorkflow(content)
+        publisher.approve(DateTime() + 50)
+        manager = IVersionManager(content.get_mockup_version(1))
+        with self.assertRaises(VersioningError):
+            manager.make_editable()
+        self.assertEqual(len(content.objectIds('Mockup Version')), 5)
 
 
 def test_suite():

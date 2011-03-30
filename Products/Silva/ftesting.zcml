@@ -1,5 +1,6 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope">
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:grok="http://namespaces.zope.org/grok">
 
   <!-- Silva do dependent on the WSGI for the tests -->
   <include package="infrae.wsgi" />
@@ -8,5 +9,8 @@
   <!-- silva.core.views as a test ZCML file to register things for the
        mocking request TestRequest -->
   <include package="silva.core.views" file="ftesting.zcml" />
+
+  <!-- Grok some mockers used during the tests -->
+  <grok:grok package=".tests.mockers" />
 
 </configure>
