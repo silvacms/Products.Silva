@@ -4,6 +4,7 @@
 
 import unittest
 
+from Products.Silva.tests.mockers import install_mockers
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IPublicationWorkflow
@@ -21,21 +22,20 @@ class PreviewTestCase(unittest.TestCase):
         `-- doc2
         """
         self.root = self.layer.get_application()
+        install_mockers(self.root)
         self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addIndexer('indexes', 'Indexes')
-        factory.manage_addGhost('info', u'Information', haunted=self.root.indexes)
-        factory.manage_addGhost('contact', u'Contact', haunted=self.root.indexes)
+        factory.manage_addMockupVersionedContent('info', u'Information')
+        factory.manage_addMockupVersionedContent('contact', u'Contact')
         IPublicationWorkflow(self.root.info).publish()
 
     def test_preview_links(self):
         """In preview, we see not yet published content.
         """
         browser = self.layer.get_browser()
-        browser.options.handle_errors = False
-        self.assertEqual(browser.open('http://localhost/root'), 200)
 
+        self.assertEqual(browser.open('http://localhost/root'), 200)
         link = browser.get_link('Information')
         self.assertEqual(link.url, 'http://localhost/root/info')
         self.assertRaises(AssertionError, browser.get_link, u'Contact')
@@ -46,7 +46,7 @@ class PreviewTestCase(unittest.TestCase):
         browser.login('viewer', 'viewer')
         self.assertEqual(browser.open('http://localhost/root/++preview++'), 401)
 
-        browser.login('reader', 'reader')
+        browser.login('manager', 'manager')
         self.assertEqual(browser.open('http://localhost/root/++preview++'), 200)
 
         # We now see both pages (unpublished as well), links are rewritten.

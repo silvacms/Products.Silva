@@ -56,9 +56,6 @@ class ImportExportTripTestCase(TestCase):
         factory.manage_addGhost(
             'nice', None, haunted=self.root.publication.pictures.torvald)
 
-        factory = self.root.publication.manage_addProduct['PythonScripts']
-        factory.manage_addPythonScript('kikoo.py')
-
         # 2. export
         exporter1 = getAdapter(
             self.root.publication,
@@ -81,7 +78,6 @@ class ImportExportTripTestCase(TestCase):
             ['ContentImported for /root/folder/publication',
              'ContentImported for /root/folder/publication/assets',
              'ContentImported for /root/folder/publication/infrae',
-             'ContentImported for /root/folder/publication/kikoo.py',
              'ContentImported for /root/folder/publication/nice',
              'ContentImported for /root/folder/publication/pictures',
              'ContentImported for /root/folder/publication/pictures/tobesorted',

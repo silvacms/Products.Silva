@@ -132,7 +132,7 @@ class IndexerTestCase(SilvaTestCase.SilvaTestCase):
         self.resolver = resolver
 
     def test_indexer(self):
-        verifyObject(IIndexer, self.indexer)
+        self.assertTrue(verifyObject(IIndexer, self.indexer))
 
     def test_getIndexNames(self):
         self.assertEquals(

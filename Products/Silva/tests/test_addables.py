@@ -10,6 +10,7 @@ from silva.core.interfaces import IAddableContents
 from zope.interface.verify import verifyObject
 
 DEFAULT_ALL_ADDABLES = [
+    'Mockup VersionedContent',
     'Silva Folder',
     'Silva Publication',
     'Silva Image',
