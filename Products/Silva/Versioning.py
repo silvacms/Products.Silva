@@ -301,6 +301,7 @@ class Versioning(object):
         self._set_approval_request_message(message)
         notify(events.ContentApprovalRequestRefusedEvent(
                 getattr(self, self._unapproved_version[0]),
+                self._get_editable_rfa_info(),
                 original_requester))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
