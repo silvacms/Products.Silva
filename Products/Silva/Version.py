@@ -25,7 +25,7 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.translations import translate as _
 from silva.core.interfaces import IVersionManager
 from silva.core.interfaces import IVersion, VersioningError
-from silva.core.services.interfaces import ICataloging
+from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 
 
 class Version(TitledObject, SimpleItem):

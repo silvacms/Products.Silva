@@ -72,11 +72,6 @@ class Asset(NonPublishable, SimpleItem.SimpleItem):
         """
         return {}
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'version_status')
-    def version_status(self):
-        return 'public'
-
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
