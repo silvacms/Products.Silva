@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="vein string:sticky content;
+              active_tab string:tab_metadata;
+              parent_screen_name string:properties;
+              action_prefix string:tab_sticky_content"
+  i18n:domain="silva">
+<metal:use use-macro="here/macro_index/macros/master">
+
+<metal:fill fill-slot="style">
+<style type="text/css">
+table.sticky tbody a {
+  display: inline;
+}
+table.sticky tbody h3 {
+ font-size: 130%;
+ margin-bottom: 1ex;
+}
+table.sticky tbody h4, table.sticky tbody h5, table.sticky tbody h6 {
+ margin-bottom: 1ex;
+ margin-top: 1ex;
+}
+table.sticky tbody h4 {
+  font-size: 125%;
+}
+table.sticky tbody h5 {
+  font-size: 110%;
+  font-weight: normal;
+  border-top: 1px solid #CECECE;
+}
+</style>
+</metal:fill>
+
+<metal:block metal:fill-slot="middleground">
+  <tal:buttons tal:replace="structure model/@@tab_metadata_extra" />
+</metal:block>
+
+<metal:fill fill-slot="main">
+
+<form action="."
+  method="post"
+  name="silvaObjects"
+  tal:define="model request/model;
+              global service nocall:model/service_sticky_content/aq_inner;
+              atThisLevel python:service.aq_parent == model">
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_sticky_content', vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+<table class="listing sticky">
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="6">
+        <h2 tal:attributes="title string:id: ${model/id}">
+          <img tal:replace="structure icon" />
+          sticky content within &#xab;<span tal:replace="title">title</span>&#xbb;
+        </h2>
+      </td>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <tr class="top-controls">
+      <td colspan="6">
+        <h3 i18n:translate="">
+          Sticky Content Layout
+        </h3>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tal:block replace="nothing">
+      ___container has a sticky content service___
+    </tal:block>
+    <tal:cond condition="atThisLevel">
+     <tr>
+      <th colspan="2" class="listing-left">
+       Manage Sticky Content
+      </th>
+     </tr>
+     <tal:def define="templates python:list(context.service_content_templates.getTemplates())">
+      <tr tal:repeat="index python:range(0, len(templates), 2)"
+          tal:attributes="class python:repeat['index'].odd() and 'odd' or 'even'">
+       <tal:def define="global cl_template python:templates[index]"> 
+        <td metal:use-macro="service/stickyMacros/macros/sticky_t" />
+       </tal:def>
+       <tal:cond condition="python:index+1 < len(templates)">
+        <tal:def define="global cl_template python:templates[index+1]"> 
+         <td metal:use-macro="service/stickyMacros/macros/sticky_t" />
+        </tal:def>
+       </tal:cond>
+       <tal:cond condition="python:index+1 >= len(templates)">
+        <td>&nbsp;</td>
+       </tal:cond>
+      </tr>
+     </tal:def>
+    </tal:cond>
+    
+    <tal:block replace="nothing">
+      ___container DOES NOT have a sticky content service___
+    </tal:block>
+    <tal:cond condition="not:atThisLevel">
+     <tr>
+      <th class="listing-left">
+       Create Local Sticky Content Service
+      </th>
+     </tr>
+     <tr class="even">
+      <td>This container does not have a <i>sticky content service</i>.<br />
+        To manage sticky content <i>in this container</i>, please <a style="display:inline" tal:attributes="href string:tab_sticky_content_create"><b>create</b></a> a <i>sticky
+        content service</i>.<br />
+        <tal:cond condition="not:model/implements_root">Or, <a style="display:inline" tal:attributes="href string:${model/aq_parent/service_sticky_content/aq_parent/absolute_url}/edit/tab_sticky_content"><b>jump</b></a> to the nearest container with a <i>sticky content service</i>.</tal:cond>
+      </td>
+     </tr>
+    </tal:cond>
+
+  </tbody>
+  <tfoot>
+    <tr class="inter-controls">
+      <tal:block replace="nothing">
+        ______________ publication time controls ______________
+      </tal:block>
+      <td class="align-right"
+        style="padding-right:0.5em;"
+        colspan="6">
+        <input class="button"
+          style="float:right"
+          type="submit"
+          name="tab_sticky_content_create:method"
+          value="create"
+          title="create sticky content service"
+          tal:condition="not:atThisLevel"
+          i18n:attributes="title" />
+        &nbsp;
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+</form>
+</metal:fill>
+</metal:use>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:omit-tag=""
+  lang="en"
+  xml:lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  tal:define="vein string:sticky content;
+              action_prefix string:tab_sticky_content;"
+  i18n:domain="silva">
+<metal:use use-macro="here/macro_index/macros/master">
+
+<metal:block fill-slot="script">
+  <script type="text/javascript"
+            tal:attributes="src context/reference.js/absolute_url"></script>
+</metal:block>
+
+<metal:fill fill-slot="main">
+
+<form action="."
+  method="post"
+  name="silvaObjects"
+  tal:define="model request/model;
+              global service nocall:model/service_sticky_content/aq_inner;
+              fields context/tab_sticky_content_add_form/get_fields">
+<table class="columns columns2">
+  <tbody>
+    <tr>
+      <tal:block replace="nothing">
+        _____________________ sidebar _____________________
+      </tal:block>
+      <td class="left">
+        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+          <metal:fill-slot fill-slot="sidebar">
+            <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_sticky_content', vein)" />
+          </metal:fill-slot>
+        </metal:use-macro>
+      </td>
+
+      <tal:block replace="nothing">
+        _____________________ main _____________________
+      </tal:block>
+      <td class="main">
+
+<table class="listing sticky">
+  <thead>
+    <tal:block replace="nothing">
+      ______________ vein + title row ______________
+    </tal:block>
+    <tr>
+      <td class="top"
+        colspan="6">
+        <h2 tal:attributes="title string:id: ${model/id}">
+          <img tal:replace="structure icon" />
+          add sticky content within &#xab;<span tal:replace="title">title</span>&#xbb;
+        </h2>
+      </td>
+    </tr>
+    <tal:block replace="nothing">
+      ______________ top controls row ______________
+    </tal:block>
+    <tr class="top-controls">
+      <td colspan="6">
+        <h3 i18n:translate="">
+          Add Sticky Content
+        </h3>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tal:block replace="nothing">
+      ___container has a sticky content service___
+    </tal:block>
+     <tr>
+      <th style="width:33%">
+        element
+      </th>
+      <th>
+        value
+      </th>
+     </tr>
+     
+    <tal:rep repeat="field fields">
+     <tal:cond condition="not:field/hidden">
+      <tr tal:attributes="class python:repeat['field'].odd() and 'odd' or 'even'">
+       <td class="designator">
+        <label tal:attributes="for field/generate_field_key" tal:content="field/title" />
+        <span class="warning" tal:condition="field/is_required">*</span>
+        <p tal:define="note field/description"
+           tal:condition="python:note != 'False'"
+           tal:content="structure note"
+           i18n:translate="" />
+       </td>
+       <td class="field">
+        <input tal:replace="structure python:field.render(request.get(field.id,None), request)" />
+       </td>
+      </tr>
+     </tal:cond>
+    </tal:rep>
+  </tbody>
+  <tfoot>
+    <tr class="inter-controls">
+      <td colspan="1">&nbsp;</td>
+      <td>
+       <tal:rep repeat="field fields">
+        <input tal:condition="field/hidden"
+               tal:replace="structure python:field.render(request.get(field.id,None), request)" />
+       </tal:rep>
+       <input class="button"
+         type="submit"
+         name="tab_sticky_content_add_submit:method"
+         value="add sticky content"
+         title="Add local sticky content"
+         i18n:attributes="title" />
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+</form>
+</metal:fill>
+</metal:use>
+</html>

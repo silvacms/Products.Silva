@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<form>
+  <title>Sticky</title>
+  <row_length>4</row_length>
+  <name>sticky</name>
+  <action></action>
+  <method>POST</method>
+  <enctype></enctype>
+  <encoding>UTF-8</encoding>
+  <stored_encoding>ISO-8859-1</stored_encoding>
+  <unicode_mode>false</unicode_mode>
+  <i18n_domain></i18n_domain>
+  <groups>
+    <group>
+      <title>Default</title>
+      <fields>
+
+      <field><id>layout-title</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class>store</css_class>
+          <default></default>
+          <description>The layout this sticky content will be added to.</description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra>readonly="readonly"</extra>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <required type="int">1</required>
+          <title>Layout</title>
+          <truncate type="int">0</truncate>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+        </values>
+        <tales>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">The input failed the external validator.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      <field><id>slot</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class></css_class>
+          <default></default>
+          <description>The slot this sticky content will be added to.</description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra>readonly="readonly"</extra>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <required type="int">1</required>
+          <title>Slot</title>
+          <truncate type="int">0</truncate>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+        </values>
+        <tales>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">The input failed the external validator.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      <field><id>page-asset</id> <type>LookupWindowField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class>store</css_class>
+          <default></default>
+          <description>The page asset to insert as sticky content.</description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra></extra>
+          <hidden type="int">0</hidden>
+          <max_length></max_length>
+          <onclick>{
+var myid = this.getAttribute('id').replace(/^button/,'input');
+reference.getReference(
+    function(path, id, title) {
+        document.getElementById(myid).value = path;
+        }, '%(url)s', 'Silva Page Asset', true, '%(selected_path)s', '%(sourcepath)s')}</onclick>
+          <required type="int">1</required>
+          <show_add_remove type="int">0</show_add_remove>
+          <show_edit_button type="int">0</show_edit_button>
+          <title>Sticky Content</title>
+          <truncate type="int">0</truncate>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+        </values>
+        <tales>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">The input failed the external validator.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      <field><id>placement</id> <type>ListField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class>store</css_class>
+          <default></default>
+          <description>Where in the slot this sticky content should be placed.</description>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra></extra>
+          <extra_item></extra_item>
+          <first_item type="int">0</first_item>
+          <hidden type="int">0</hidden>
+          <items type="list">[('Above', 'above'), ('Below', 'below')]</items>
+          <required type="int">1</required>
+          <size type="int">1</size>
+          <title>Placement</title>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+        </values>
+        <tales>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">The input failed the external validator.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="unknown_selection">You selected an item that was not in the list.</message>
+        </messages>
+      </field>
+      <field><id>layout</id> <type>StringField</type>
+        <values>
+          <alternate_name></alternate_name>
+          <css_class></css_class>
+          <default></default>
+          <description>The layout this sticky content will be added to</description>
+          <display_maxwidth></display_maxwidth>
+          <display_width type="int">20</display_width>
+          <enabled type="int">1</enabled>
+          <external_validator></external_validator>
+          <extra></extra>
+          <hidden type="int">1</hidden>
+          <max_length></max_length>
+          <required type="int">1</required>
+          <title>Layout</title>
+          <truncate type="int">0</truncate>
+          <unicode type="int">0</unicode>
+          <whitespace_preserve type="int">0</whitespace_preserve>
+        </values>
+        <tales>
+        </tales>
+        <messages>
+          <message name="external_validator_failed">The input failed the external validator.</message>
+          <message name="required_not_found">Input is required but no input given.</message>
+          <message name="too_long">Too much input was given.</message>
+        </messages>
+      </field>
+      </fields>
+    </group>
+  </groups>
+</form>
