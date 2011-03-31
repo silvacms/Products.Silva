@@ -297,7 +297,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         return True
 
     def revoke_approval(self):
-        if self.get_approved_version():
+        if self.context.get_approved_version():
             self.context.unapprove_version()
             return True
         raise PublicationWorkflowError(

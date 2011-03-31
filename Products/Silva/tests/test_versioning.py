@@ -347,7 +347,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
 
-        with assertTriggersEvents('ContentApprovalRequestCanceledEvent'):
+        with assertTriggersEvents('ContentApprovalRequestWithdrawnEvent'):
             versioning.withdraw_version_approval('Withdraw message')
 
         self.assertEqual(versioning.get_public_version(), None)

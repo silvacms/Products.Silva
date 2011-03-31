@@ -111,6 +111,7 @@ class Versioning(object):
                                         self._unapproved_version[2])
         else:
             publish_now = 0
+
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
         if self._request_for_approval_info != empty_request_for_approval_info:
@@ -248,7 +249,6 @@ class Versioning(object):
                 getattr(self, self._unapproved_version[0]),
                 self._get_editable_rfa_info()))
 
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'withdraw_version_approval')
     def withdraw_version_approval(self, message):
@@ -271,7 +271,7 @@ class Versioning(object):
         info.requester = getSecurityManager().getUser().getId()
         info.request_pending=None
         self._set_approval_request_message(message)
-        notify(events.ContentApprovalRequestCanceledEvent(
+        notify(events.ContentApprovalRequestWithdrawnEvent(
                 getattr(self, self._unapproved_version[0]),
                 self._get_editable_rfa_info(),
                 original_requester))

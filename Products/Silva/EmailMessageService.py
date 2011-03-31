@@ -57,7 +57,6 @@ class EmailMessageService(SilvaService):
         SilvaPermissions.AccessContentsInformation, 'send_pending_messages')
     def send_pending_messages(self):
         logger.debug("Sending pending messages...")
-
         get_member = self.service_members.get_member
 
         if not hasattr(self.aq_base, '_v_messages'):
