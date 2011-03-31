@@ -11,11 +11,11 @@ from Products.Silva import MAILHOST_ID
 from Products.Silva.ftesting import smi_settings
 import Products.Silva
 
-from infrae.testbrowser.browser import Browser as NewBrowser
+from infrae.testbrowser.browser import Browser
 from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
-from infrae.wsgi.testing import BrowserLayer, Browser, http
+from infrae.wsgi.testing import BrowserLayer
 from fanstatic.wsgi import Fanstatic
 from zope.site.hooks import setSite, setHooks
 import transaction
@@ -170,12 +170,14 @@ class SilvaLayer(BrowserLayer):
         """
         return self._silva_root
 
-    def get_browser(self, settings=None):
-        application = Fanstatic(
+    def get_wsgi_application(self):
+        return Fanstatic(
             self._test_wsgi_application,
             publisher_signature='++static++',
             debug=True)
-        browser = NewBrowser(application)
+
+    def get_browser(self, settings=None):
+        browser = Browser(self.get_wsgi_application())
         if settings is not None:
             settings(browser)
         return browser
@@ -186,6 +188,5 @@ FunctionalLayer = SilvaLayer(Products.Silva)
 
 __all__ = ['FunctionalLayer', 'SilvaLayer',
            'TestCase', 'suite_from_package',
-           'Browser', 'http', 'smi_settings',
-           'get_event_names', 'clear_events', 'get_events',
+           'smi_settings', 'get_event_names', 'clear_events', 'get_events',
            'assertNotTriggersEvents', 'assertTriggersEvents',]
