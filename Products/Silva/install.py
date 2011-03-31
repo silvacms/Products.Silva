@@ -117,6 +117,11 @@ def configureServices(root):
         root.service_containerpolicy.register(
             'Silva AutoTOC', AutoTOCPolicy, 0)
 
+    # service UI
+    factory = root.manage_addProduct['silva.ui']
+    if 'service_ui' not in installed_ids:
+        factory.manage_addUIService('service_ui')
+
     # service references
     factory = root.manage_addProduct['silva.core.references']
     if 'service_references' not in installed_ids:
