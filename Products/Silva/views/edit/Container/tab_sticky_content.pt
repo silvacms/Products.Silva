@@ -56,9 +56,9 @@ table.sticky tbody h5 {
         _____________________ sidebar _____________________
       </tal:block>
       <td class="left">
-        <metal:use-macro use-macro="view/macro_vein_navigation/macros/vein">
+        <metal:use-macro use-macro="here/macro_vein_navigation/macros/vein">
           <metal:fill-slot fill-slot="sidebar">
-            <tal:plug replace="structure python: view.service_sidebar.render(model, 'tab_sticky_content', vein)" />
+            <tal:plug replace="structure python: here.service_sidebar.render(model, 'tab_status', vein)" />
           </metal:fill-slot>
         </metal:use-macro>
       </td>
@@ -103,15 +103,15 @@ table.sticky tbody h5 {
        Manage Sticky Content
       </th>
      </tr>
-     <tal:def define="templates python:list(context.service_content_templates.getTemplates())">
+     <tal:def define="templates python:list(context.service_contentlayout.get_templates())">
       <tr tal:repeat="index python:range(0, len(templates), 2)"
           tal:attributes="class python:repeat['index'].odd() and 'odd' or 'even'">
        <tal:def define="global cl_template python:templates[index]"> 
-        <td metal:use-macro="service/stickyMacros/macros/sticky_t" />
+        <td metal:use-macro="service/@@stickymacros/macros/sticky_t" />
        </tal:def>
        <tal:cond condition="python:index+1 < len(templates)">
         <tal:def define="global cl_template python:templates[index+1]"> 
-         <td metal:use-macro="service/stickyMacros/macros/sticky_t" />
+<!--         <td metal:use-macro="service/stickyMacros/macros/sticky_t" />-->
         </tal:def>
        </tal:cond>
        <tal:cond condition="python:index+1 >= len(templates)">

@@ -88,7 +88,7 @@ var myid = this.getAttribute('id').replace(/^button/,'input');
 reference.getReference(
     function(path, id, title) {
         document.getElementById(myid).value = path;
-        }, '%(url)s', 'Silva Page Asset', true, '%(selected_path)s', '%(sourcepath)s')}</onclick>
+        }, '%(url)s', 'Silva Page Asset', true, '%(selected_path)s')}</onclick>
           <required type="int">1</required>
           <show_add_remove type="int">0</show_add_remove>
           <show_edit_button type="int">0</show_edit_button>
