@@ -12,6 +12,7 @@ from Products.Silva.ftesting import smi_settings
 import Products.Silva
 
 from infrae.testbrowser.browser import Browser
+from infrae.testbrowser.selenium.browser import Browser as SeleniumBrowser
 from infrae.testing import TestCase, suite_from_package
 from infrae.testing import get_event_names, clear_events, get_events
 from infrae.testing import assertNotTriggersEvents, assertTriggersEvents
@@ -156,7 +157,15 @@ class SilvaLayer(BrowserLayer):
         setSite(self._silva_root)
         setHooks()
 
+        # List of created browsers
+        self._browsers = []
+
     def testTearDown(self):
+        # Clean browsers
+        for browser in self._browsers:
+            browser.close()
+        self._browsers = []
+
         # Reset local site to None
         setSite(None)
         setHooks()
@@ -180,7 +189,16 @@ class SilvaLayer(BrowserLayer):
         browser = Browser(self.get_wsgi_application())
         if settings is not None:
             settings(browser)
+        self._browsers.append(browser)
         return browser
+
+    def get_selenium_browser(self, settings=None):
+        browser = SeleniumBrowser(self.get_wsgi_application())
+        if settings is not None:
+            settings(browser)
+        self._browsers.append(browser)
+        return browser
+
 
 
 FunctionalLayer = SilvaLayer(Products.Silva)
