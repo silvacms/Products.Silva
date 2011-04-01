@@ -9,7 +9,7 @@ version = '3.0a1dev'
 
 tests_require = [
     'infrae.testing',
-    'infrae.testbrowser',
+    'infrae.testbrowser [selenium]',
     'infrae.wsgi [test]',
     'zope.testing',
     ]
