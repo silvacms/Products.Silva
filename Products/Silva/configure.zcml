@@ -5,6 +5,13 @@
    xmlns:browser="http://namespaces.zope.org/browser"
    i18n_domain="silva">
 
+  <!-- this zope2 permission does not exist in Five, so define it here
+       (it's used in bethel.wufoo.core and bethel.app.tod -->
+  <permission
+    id="zope2.ViewAuthenticated"
+    title="View Authenticated"
+    />
+  
   <include package="five.grok" />
 
   <!-- Include dependencies -->

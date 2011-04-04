@@ -4,7 +4,7 @@
    xmlns:five="http://namespaces.zope.org/five">
 
   <browser:page
-    for="Products.Silva.interfaces.IRoot"
+    for="silva.core.interfaces.IRoot"
     name="audit_catalog_objects"
     class=".audit.CatalogObjectAudit"
     permission="silva.ChangeSilvaContent"
