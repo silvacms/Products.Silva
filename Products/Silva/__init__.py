@@ -142,7 +142,7 @@ def initialize_icons():
         ('ghostfolder', 'folder', 'silvaghost_folder.gif'),
         ('ghostfolder', 'publication', 'silvaghost_publication.gif'),
         ('ghostfolder', 'link_broken', 'silvaghost_broken.png'),
-        ('ghost', 'link_ok', 'silvaghost.gif'),
+        ('ghost', 'link_ok', 'silvaghost.png'),
         ('ghost', 'link_broken', 'silvaghost_broken.png'),
     ]
     for klass, kind, icon_name in misc_icons:
