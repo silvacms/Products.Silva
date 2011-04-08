@@ -4,6 +4,7 @@
 
 from five import grok
 from zope import component
+from zope.interface import Interface
 from zope.traversing.browser import absoluteURL
 
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -12,19 +13,24 @@ from zExceptions import NotFound
 from silva.core import interfaces
 
 
-class ContainerFeedProvider(grok.Adapter):
+class ContainerFeedProvider(grok.MultiAdapter):
     """This default feed provider provides feed the immediate content
     of a container.
     """
-    grok.context(interfaces.IContainer)
+    grok.adapts(interfaces.IContainer, Interface)
     grok.provides(interfaces.IFeedEntryProvider)
     grok.implements(interfaces.IFeedEntryProvider)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
 
     def entries(self):
         for item in self.context.get_ordered_publishables():
             if not item.is_published():
                 continue
-            entry = interfaces.IFeedEntry(item, None)
+            entry = component.queryMultiAdapter(
+                (item, self.request), interfaces.IFeedEntry)
             if entry is not None:
                 yield entry
 
@@ -44,7 +50,9 @@ class FeedBase(grok.View):
         metadata = service_metadata.getMetadata(self.context)
         date_updated = metadata.get('silva-extra', 'creationtime')
 
-        provider = interfaces.IFeedEntryProvider(self.context.aq_inner)
+        provider = component.getMultiAdapter(
+            (self.context.aq_inner, self.request),
+            interfaces.IFeedEntryProvider)
         for entry in provider.entries():
             entry_updated = entry.date_published()
             entries.append((entry_updated.asdatetime(), entry))
