@@ -208,7 +208,6 @@ class SilvaObject(TitledObject, Security):
         """
         return self
 
-
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
         """Render this as preview with the public view.

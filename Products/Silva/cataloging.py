@@ -17,7 +17,7 @@ class CatalogingAttributesPublishable(CatalogingAttributes):
 
     @property
     def version_status(self):
-        if self.context.is_published():
+        if self.context.is_published(update_status=False):
             return 'public'
         else:
             return 'unapproved'
@@ -31,11 +31,12 @@ class CatalogingAttributesVersion(CatalogingAttributes):
         """Returns the status of the current version
         Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
         """
+        content = self.context.get_content()
         status = None
-        unapproved_version = self.context.get_unapproved_version(0)
-        approved_version = self.context.get_approved_version(0)
-        public_version = self.context.get_public_version(0)
-        previous_versions = self.context.get_previous_versions()
+        unapproved_version = content.get_unapproved_version(False)
+        approved_version = content.get_approved_version(False)
+        public_version = content.get_public_version(False)
+        previous_versions = content.get_previous_versions()
         if unapproved_version and unapproved_version == self.context.id:
             status = "unapproved"
         elif approved_version and approved_version == self.context.id:

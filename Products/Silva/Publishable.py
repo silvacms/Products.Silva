@@ -40,17 +40,17 @@ class Publishable(SilvaObject):
     # used in VersionedContent. They should move there.
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
-    def is_published(self):
+    def is_published(self, update_status=True):
         if IVersioning.providedBy(self):
-            return self.is_version_published()
+            return self.is_version_published(update_status=update_status)
         else:
             return 1
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
-    def is_approved(self):
+    def is_approved(self, update_status=True):
         if IVersioning.providedBy(self):
-            return self.is_version_approved()
+            return self.is_version_approved(update_status=update_status)
         else:
             # never be approved if there is no versioning
             return 0

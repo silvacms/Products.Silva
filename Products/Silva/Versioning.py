@@ -479,18 +479,20 @@ class Versioning(object):
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_version_approved')
-    def is_version_approved(self):
+    def is_version_approved(self, update_status=True):
         """Check whether version is approved.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._approved_version != empty_version
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_version_published')
-    def is_version_published(self):
+    def is_version_published(self, update_status=True):
         """Check whether version is published.
         """
-        self._update_publication_status()
+        if update_status:
+            self._update_publication_status()
         return self._public_version != empty_version
 
 

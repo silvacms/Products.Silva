@@ -243,27 +243,27 @@ class Folder(Publishable, BaseFolder):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
-    def is_published(self):
+    def is_published(self, update_status=True):
         # Folder is published if its default document is published, or,
         # when no default document exists, if any of the objects it contains
         # are published.
         default = self.get_default()
         if default:
-            return default.is_published()
+            return default.is_published(update_status=update_status)
         for object in self.get_ordered_publishables():
-            if object.is_published():
+            if object.is_published(update_status=update_status):
                 return 1
         return 0
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'is_approved')
-    def is_approved(self):
+    def is_approved(self, update_status=True):
         # Folder is approved if anything inside is approved
         default = self.get_default()
-        if default and default.is_approved():
+        if default and default.is_approved(update_status=update_status):
             return 1
         for object in self.get_ordered_publishables():
-            if object.is_approved():
+            if object.is_approved(update_status=update_status):
                 return 1
         return 0
 
