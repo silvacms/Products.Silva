@@ -70,7 +70,17 @@ class LookupWindowValidator(StringBaseValidator):
     required_not_met = 'Not enough references.'
 
     def validate(self, field, key, REQUEST):
-        pad = getPathAdapter(REQUEST)
+        #during silva xml import, the REQUEST object is a dictionary,
+        # and NOT an IHTTPRequest.  In this case, getPathAdapter will fail
+        # with a TypeError.  When this happens use a "dummy" path adapter, which
+        # just returns it's own value
+        class dummyPAD(object):
+            def urlToPath(self, val):
+                return val
+        try:
+            pad = getPathAdapter(REQUEST)
+        except TypeError:
+            pad = dummyPAD()
 
         values = REQUEST.get(key, [])
         # NOTE: a hack to deal with single item selections
@@ -84,7 +94,7 @@ class LookupWindowValidator(StringBaseValidator):
                 value = value.strip()
             res = pad.urlToPath(value)
             if res:
-                result.append(pad.urlToPath(value))
+                result.append(res)
 
         maxrows = field.get_value('max_rows')
         if maxrows > 0 and len(result) > maxrows:

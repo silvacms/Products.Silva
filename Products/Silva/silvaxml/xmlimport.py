@@ -6,6 +6,7 @@ from StringIO import StringIO
 import logging
 import warnings
 from types import UnicodeType
+from cgi import escape
 
 from five import grok
 from zope.event import notify
@@ -116,6 +117,13 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (
                                 elements[element_name], element_name, set_id))
+                    except TypeError, err:
+                        binding._setData(
+                            namespace_key=set_obj.metadata_uri,
+                            data={
+                                element_name: field.validator.deserializeValue(
+                                    field, elements[element_name])},
+                            reindex=0)
                     if errors:
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (
@@ -192,7 +200,9 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
         if isinstance(last_author, UnicodeType):
             last_author = escape(last_author)
         obj._last_author_userid = last_author
-        obj._last_author_info = parent.sec_get_member(last_author).aq_base
+        author = parent.service_members.get_cached_member(last_author, 
+                                                          location=parent)
+        obj._last_author_info = author.aq_base
         
     def storeWorkflow(self):
         content = self.result()
@@ -587,7 +597,7 @@ class ImageHandler(SilvaBaseHandler):
                 uid, title, import_image)
             self.setResultId(uid)
 
-            last_author = attrs.get((None, 'last_author'),None)
+            last_author = self.getData('last_author')
             if last_author:
                 self.setAuthor(getattr(self.parent(), uid), self.parent(),
                                last_author)
@@ -623,7 +633,7 @@ class FileHandler(SilvaBaseHandler):
                 'assets/' + self.getData('zip_id'))
             self.parent().manage_addProduct['Silva'].manage_addFile(
                 uid, '', import_file)
-            last_author = attrs.get((None, 'last_author'),None)
+            last_author = self.getData("last_author")
             if last_author:
                 self.setAuthor(getattr(self.parent(), uid), self.parent(),
                                last_author)
