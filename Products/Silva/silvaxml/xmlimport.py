@@ -5,6 +5,7 @@
 from StringIO import StringIO
 import logging
 import warnings
+from types import UnicodeType
 
 from five import grok
 from zope.event import notify
