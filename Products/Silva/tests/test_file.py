@@ -9,8 +9,7 @@ from zope.interface.verify import verifyObject
 
 from Products.Silva import File
 from Products.Silva.helpers import create_new_filename
-from Products.Silva.testing import (
-    FunctionalLayer, TestCase, http, get_event_names)
+from Products.Silva.testing import FunctionalLayer, TestCase, get_event_names
 from Products.Silva.tests import helpers
 from silva.core import interfaces
 
@@ -82,42 +81,44 @@ class DefaultFileImplementationTestCase(TestCase):
     def test_download(self):
         """Test downloading file.
         """
-        response = http('GET /root/testfile HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        downloaded_data = response.getBody()
-        self.assertEquals(len(downloaded_data), self.file_size)
-        self.assertHashEqual(downloaded_data, self.file_data)
-        self.assertEquals(int(headers['Content-Length']), self.file_size)
-        self.assertEquals(headers['Content-Type'], 'image/tiff')
-        self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=testfile.tiff')
-        self.failUnless('Last-Modified' in headers)
+        with self.layer.get_browser() as browser:
+            self.assertEquals(browser.open('/root/testfile'), 200)
+            self.assertEquals(len(browser.contents), self.file_size)
+            self.assertHashEqual(browser.contents, self.file_data)
+            self.assertEquals(
+                int(browser.headers['Content-Length']),
+                self.file_size)
+            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEquals(
+                browser.headers['Content-Disposition'],
+                'inline;filename=testfile.tiff')
+            self.failUnless('Last-Modified' in browser.headers)
 
     def test_not_modified(self):
         """Test downloading a file if it as been modified after a date.
         """
-        response = http(
-            'GET /root/testfile HTTP/1.1',
-            parsed=True,
-            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
-        self.assertEquals(response.getStatus(), 304)
-        self.assertEquals(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            browser.set_request_header(
+                'If-Modified-Since', 'Sat, 29 Oct 2094 19:43:31 GMT')
+            self.assertEquals(browser.open('/root/testfile'), 304)
+            self.assertEquals(len(browser.contents), 0)
 
     def test_head_request(self):
         """Test HEAD requests on Files.
         """
-        response = http('HEAD /root/testfile HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        # Even on HEAD requests where there is no body, Content-Lenght
-        # should be the size of the file.
-        self.assertEquals(int(headers['Content-Length']), self.file_size)
-        self.assertEquals(headers['Content-Type'], 'image/tiff')
-        self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=testfile.tiff')
-        self.failUnless('Last-Modified' in headers)
-        self.assertEquals(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            self.assertEquals(browser.open('/root/testfile', method='HEAD'), 200)
+            # Even on HEAD requests where there is no body, Content-Lenght
+            # should be the size of the file.
+            self.assertEquals(
+                int(browser.headers['Content-Length']),
+                self.file_size)
+            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEquals(
+                browser.headers['Content-Disposition'],
+                'inline;filename=testfile.tiff')
+            self.failUnless('Last-Modified' in browser.headers)
+            self.assertEquals(len(browser.contents), 0)
 
     def test_asset_data(self):
         """Test asset data adapter implementation.
