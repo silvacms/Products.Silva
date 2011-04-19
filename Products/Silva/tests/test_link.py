@@ -9,7 +9,6 @@ from zope.interface.verify import verifyObject
 
 from Acquisition import aq_chain
 from Products.Silva.testing import FunctionalLayer, assertTriggersEvents
-from Products.Silva.tests.helpers import publish_object
 
 
 class LinkTestCase(unittest.TestCase):
@@ -38,7 +37,7 @@ class LinkTestCase(unittest.TestCase):
         factory.manage_addLink(
             'infrae', 'Infrae', relative=False, url='http://infrae.com')
 
-        publish_object(self.root.infrae)
+        interfaces.IPublicationWorkflow(self.root.infrae).publish()
         link = self.root.infrae.get_viewable()
         self.assertEqual(link.get_url(), 'http://infrae.com')
         self.assertEqual(link.get_relative(), False)
@@ -60,7 +59,7 @@ class LinkTestCase(unittest.TestCase):
         factory.manage_addLink(
             'infrae', 'Infrae', relative=True, target=self.root.test)
 
-        publish_object(self.root.infrae)
+        interfaces.IPublicationWorkflow(self.root.infrae).publish()
         link = self.root.infrae.get_viewable()
         self.assertEqual(link.get_target(), self.root.test)
         self.assertEqual(
