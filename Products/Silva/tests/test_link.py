@@ -54,19 +54,18 @@ class LinkTestCase(unittest.TestCase):
     def test_link_relative(self):
         """Test absolute links.
         """
-        factory = self.root.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('document', 'Document')
         factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('test', 'Test Content')
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addLink(
-            'infrae', 'Infrae', relative=True, target=self.root.document)
+            'infrae', 'Infrae', relative=True, target=self.root.test)
 
         publish_object(self.root.infrae)
         link = self.root.infrae.get_viewable()
-        self.assertEqual(link.get_target(), self.root.document)
+        self.assertEqual(link.get_target(), self.root.test)
         self.assertEqual(
             aq_chain(link.get_target()),
-            aq_chain(self.root.document))
+            aq_chain(self.root.test))
         self.assertEqual(link.get_relative(), True)
 
         browser = self.layer.get_browser()
@@ -75,17 +74,17 @@ class LinkTestCase(unittest.TestCase):
         self.assertTrue('Location' in browser.headers)
         self.assertEqual(
             browser.headers['Location'],
-            'http://localhost/root/document')
+            'http://localhost/root/test')
 
         # If we move the document around, the link will still work
-        token = self.root.manage_cutObjects(['document'])
+        token = self.root.manage_cutObjects(['test'])
         self.root.folder.manage_pasteObjects(token)
 
         self.assertEqual(browser.open('/root/infrae'), 302)
         self.assertTrue('Location' in browser.headers)
         self.assertEqual(
             browser.headers['Location'],
-            'http://localhost/root/folder/document')
+            'http://localhost/root/folder/test')
 
 
 def test_suite():

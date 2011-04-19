@@ -9,6 +9,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from OFS.SimpleItem import SimpleItem
 from Products.Silva import MAILHOST_ID
 from Products.Silva.ftesting import smi_settings
+from Products.Silva.tests.mockers import install_mockers
 import Products.Silva
 
 from infrae.testbrowser.browser import Browser
@@ -144,6 +145,8 @@ class SilvaLayer(BrowserLayer):
         if MAILHOST_ID in app.root.objectIds():
             app.root.manage_delObjects([MAILHOST_ID])
             app.root._setObject(MAILHOST_ID, MockMailHost(MAILHOST_ID))
+
+        install_mockers(app.root)
 
         # Commit changes
         transaction.commit()

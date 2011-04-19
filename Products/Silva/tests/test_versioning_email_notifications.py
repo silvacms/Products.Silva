@@ -6,7 +6,6 @@ from zope.component import getUtility
 from Products.Silva.testing import FunctionalLayer
 from silva.core import interfaces
 from silva.core.services import interfaces as service_interfaces
-from Products.Silva.tests.mockers import install_mockers
 
 
 class EmailNotificationVersioningTestCase(unittest.TestCase):
@@ -25,8 +24,6 @@ class EmailNotificationVersioningTestCase(unittest.TestCase):
         message_service._enabled = True
         message_service._fromaddr = 'silva@example.com'
 
-        install_mockers(self.root)
-
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         factory = self.root.folder.manage_addProduct['Silva']
@@ -35,7 +32,6 @@ class EmailNotificationVersioningTestCase(unittest.TestCase):
         authorization = auth_manager.get_authorization(
             'reader', self.root.folder)
         authorization.grant('ChiefEditor')
-
         self.layer.logout()
 
         self.layer.login('author')

@@ -5,7 +5,6 @@
 
 import unittest
 
-from Products.Silva.tests.mockers import install_mockers
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IPublicationWorkflow, PublicationWorkflowError
@@ -17,7 +16,6 @@ class PublicationWorkflowTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        install_mockers(self.root)
         self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']

@@ -38,5 +38,7 @@ class MockupView(silvaviews.View):
 
 def install_mockers(root):
     root.manage_permission('Add Mockup Versions', roleinfo.AUTHOR_ROLES)
+    root.manage_permission('Add Mockup VersionedContents', roleinfo.AUTHOR_ROLES)
     root.service_metadata.addTypesMapping(
         ['Mockup Version'], ('silva-content', 'silva-extra',))
+
