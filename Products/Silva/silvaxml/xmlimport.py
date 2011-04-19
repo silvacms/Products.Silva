@@ -117,13 +117,6 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (
                                 elements[element_name], element_name, set_id))
-                    except TypeError, err:
-                        binding._setData(
-                            namespace_key=set_obj.metadata_uri,
-                            data={
-                                element_name: field.validator.deserializeValue(
-                                    field, elements[element_name])},
-                            reindex=0)
                     if errors:
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (
@@ -198,7 +191,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
 
     def setAuthor(self, obj, parent, last_author):
         if isinstance(last_author, UnicodeType):
-            last_author = escape(last_author)
+            last_author = last_author.encode('utf-8')
         obj._last_author_userid = last_author
         author = parent.service_members.get_cached_member(last_author, 
                                                           location=parent)
