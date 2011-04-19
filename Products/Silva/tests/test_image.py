@@ -15,7 +15,7 @@ from zope.interface.verify import verifyObject
 from silva.core import interfaces
 
 from Products.Silva import File
-from Products.Silva.testing import FunctionalLayer, http, TestCase
+from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.testing import assertTriggersEvents
 from Products.Silva.tests.helpers import open_test_file
 
@@ -107,116 +107,127 @@ class DefaultImageTestCase(TestCase):
     def test_http_view(self):
         """Retrieve the image, check the headers.
         """
-        response = http('GET /root/test_image HTTP/1.1', parsed=True)
-        self.assertEqual(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEqual(
-            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEqual(headers['Content-Type'], 'image/tiff')
-        self.assertTrue('Last-Modified' in headers)
-        image_data = response.getBody()
-        pil_image = PILImage.open(StringIO(image_data))
-        self.assertEqual((960, 1280), pil_image.size)
-        self.assertEqual('TIFF', pil_image.format)
-        self.assertHashEqual(self.image_data, image_data)
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/test_image'), 200)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.tiff')
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertTrue('Last-Modified' in browser.headers)
+            image_data = browser.contents
+            pil_image = PILImage.open(StringIO(image_data))
+            self.assertEqual((960, 1280), pil_image.size)
+            self.assertEqual('TIFF', pil_image.format)
+            self.assertHashEqual(self.image_data, image_data)
 
     def test_http_view_hires(self):
         """Retrieve the image, check the headers.
         """
-        response = http('GET /root/test_image?hires HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(
-            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEquals(
-            headers['Content-Type'], 'image/tiff')
-        image_data = response.getBody()
-        pil_image = PILImage.open(StringIO(image_data))
-        self.assertEquals((960, 1280), pil_image.size)
-        self.assertEquals('TIFF', pil_image.format)
-        self.assertHashEqual(self.image_data, image_data)
+        with self.layer.get_browser() as browser:
+            self.assertEquals(browser.open('/root/test_image?hires'), 200)
+            self.assertEquals(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.tiff')
+            self.assertEquals(
+                browser.headers['Content-Type'],
+                'image/tiff')
+            image_data = browser.contents
+            pil_image = PILImage.open(StringIO(image_data))
+            self.assertEquals((960, 1280), pil_image.size)
+            self.assertEquals('TIFF', pil_image.format)
+            self.assertHashEqual(self.image_data, image_data)
 
     def test_http_view_thumbnail(self):
         """Retrieve image thumbnail, check the headers.
         """
-        response = http('GET /root/test_image?thumbnail HTTP/1.1', parsed=True)
-        self.assertEqual(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEqual(
-            headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
-        self.assertEqual(headers['Content-Type'], 'image/jpeg')
-        body = response.getBody()
-        self.assertEqual(headers['Content-Length'], str(len(body)))
-        pil_image = PILImage.open(StringIO(body))
-        self.assertEqual((90, 120), pil_image.size)
-        self.assertEqual('JPEG', pil_image.format)
+        with self.layer.get_browser() as browser:
+            self.assertEqual(browser.open('/root/test_image?thumbnail'), 200)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.jpeg')
+            self.assertEqual(
+                browser.headers['Content-Type'],
+                'image/jpeg')
+            body = browser.contents
+            self.assertEqual(browser.headers['Content-Length'], str(len(body)))
+            pil_image = PILImage.open(StringIO(body))
+            self.assertEqual((90, 120), pil_image.size)
+            self.assertEqual('JPEG', pil_image.format)
 
     def test_http_head(self):
         """Do an HEAD request.
         """
-        response = http('HEAD /root/test_image HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(
-            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEquals(headers['Content-Type'], 'image/tiff')
-        self.assertEquals(headers['Content-Length'], str(self.image_size))
-        self.assertTrue('Last-Modified' in headers)
-        self.assertEquals(response.getBody(), '')
+        with self.layer.get_browser() as browser:
+            self.assertEquals(browser.open('/root/test_image', method='HEAD'), 200)
+            self.assertEquals(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.tiff')
+            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEquals(
+                browser.headers['Content-Length'],
+                str(self.image_size))
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEquals(browser.contents, '')
 
     def test_http_head_thumbnail(self):
         """Do an HEAD request on a thumbnail.
         """
-        response = http('HEAD /root/test_image?thumbnail HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEquals(
-            headers['Content-Disposition'], 'inline;filename=test_image.jpeg')
-        self.assertEquals(headers['Content-Type'], 'image/jpeg')
-        self.assertNotEqual(headers['Content-Length'], '0')
-        self.assertEquals(response.getBody(), '')
+        with self.layer.get_browser() as browser:
+            self.assertEquals(
+                browser.open('/root/test_image?thumbnail', method='HEAD'),
+                200)
+            self.assertEquals(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.jpeg')
+            self.assertEquals(browser.headers['Content-Type'], 'image/jpeg')
+            self.assertNotEqual(browser.headers['Content-Length'], '0')
+            self.assertEquals(browser.contents, '')
 
     def test_http_head_hires(self):
         """Do an HEAD request.
         """
-        response = http('HEAD /root/test_image?hires HTTP/1.1', parsed=True)
-        self.assertEquals(response.getStatus(), 200)
-        headers = response.getHeaders()
-        self.assertEqual(
-            headers['Content-Disposition'], 'inline;filename=test_image.tiff')
-        self.assertEqual(headers['Content-Type'], 'image/tiff')
-        self.assertEqual(headers['Content-Length'], str(self.image_size))
-        self.assertEqual(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            self.assertEquals(
+                browser.open('/root/test_image?hires', method='HEAD'),
+                200)
+            self.assertEqual(
+                browser.headers['Content-Disposition'],
+                'inline;filename=test_image.tiff')
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
+                browser.headers['Content-Length'],
+                str(self.image_size))
+            self.assertEqual(len(browser.contents), 0)
 
     def test_http_not_modified(self):
         """Retrieve the image if it has been modified after a certain date.
         """
-        response = http(
-            'GET /root/test_image HTTP/1.1',
-            parsed=True,
-            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
-        self.assertEqual(response.getStatus(), 304)
-        self.assertEqual(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            browser.set_request_header(
+                'If-Modified-Since',
+                'Sat, 29 Oct 2094 19:43:31 GMT')
+            self.assertEqual(browser.open('/root/test_image'), 304)
+            self.assertEqual(len(browser.contents), 0)
 
     def test_http_not_modified_thumbmail(self):
         """Retrieve the image if it has been modified after a certain date.
         """
-        response = http(
-            'GET /root/test_image?thumbnail HTTP/1.1',
-            parsed=True,
-            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
-        self.assertEqual(response.getStatus(), 304)
-        self.assertEqual(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            browser.set_request_header(
+                'If-Modified-Since',
+                'Sat, 29 Oct 2094 19:43:31 GMT')
+            self.assertEqual(browser.open('/root/test_image?thumbnail'), 304)
+            self.assertEqual(len(browser.contents), 0)
 
     def test_http_not_modified_hires(self):
         """Retrieve the image if it has been modified after a certain date.
         """
-        response = http(
-            'GET /root/test_image?hires HTTP/1.1',
-            parsed=True,
-            headers={'If-Modified-Since': 'Sat, 29 Oct 2094 19:43:31 GMT'})
-        self.assertEqual(response.getStatus(), 304)
-        self.assertEqual(len(response.getBody()), 0)
+        with self.layer.get_browser() as browser:
+            browser.set_request_header(
+                'If-Modified-Since',
+                'Sat, 29 Oct 2094 19:43:31 GMT')
+            self.assertEqual(browser.open('/root/test_image?hires'), 304)
+            self.assertEqual(len(browser.contents), 0)
 
 
 class ZODBImageTestCase(DefaultImageTestCase):
