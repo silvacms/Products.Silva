@@ -2,16 +2,13 @@
 # See also LICENSE.txt
 # $Id$
 
-from silva.core import conf as silvaconf
-from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.Version import CatalogedVersion
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
 
 
-class MyVersionContent(CatalogedVersion):
-
+class MyVersionContent(Version):
     meta_type = 'My Version Content'
 
 
-class MyVersionedContent(CatalogedVersionedContent):
-
+class MyVersionedContent(VersionedContent):
     meta_type = 'My Versioned Content'

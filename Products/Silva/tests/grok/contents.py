@@ -45,19 +45,17 @@
 
 """
 
-from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.Version import CatalogedVersion
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
 from Products.Silva.helpers import add_and_edit
 
 from silva.core import conf as silvaconf
 
-class ArticleVersion(CatalogedVersion):
-
+class ArticleVersion(Version):
     meta_type = 'My Article Version'
 
 
-class Article(CatalogedVersionedContent):
-
+class Article(VersionedContent):
     meta_type = 'My Article'
 
     silvaconf.versionClass(ArticleVersion)

@@ -3,7 +3,7 @@
 # $Id$
 """
 
-    >>> browser = Browser()
+    >>> browser = get_browser()
     >>> browser.login('manager', 'manager')
 
  We grok this test file:

@@ -7,13 +7,12 @@ import doctest
 import unittest
 
 from Products.Silva.testing import FunctionalLayer, suite_from_package
-from infrae.testbrowser.browser import Browser
 from zope.interface.verify import verifyObject
 
 
 globs = {
-    'Browser': lambda: Browser(FunctionalLayer._test_wsgi_application),
     'verifyObject': verifyObject,
+    'get_browser': FunctionalLayer.get_browser,
     'get_root': FunctionalLayer.get_application,
     'grok': FunctionalLayer.grok,}
 
