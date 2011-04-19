@@ -23,6 +23,7 @@ DEFAULT_ALL_ADDABLES = [
     'Silva AutoTOC',
     'Silva CSV Source']
 AUTHOR_ALL_ADDABLES = [
+    'Mockup VersionedContent',
     'Silva Folder',
     'Silva Image',
     'Silva File',
