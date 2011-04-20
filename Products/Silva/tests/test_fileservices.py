@@ -4,13 +4,14 @@
 
 import unittest
 
+from silva.core import interfaces
+from silva.core.services.interfaces import IFilesService
 from zope import component
 from zope.interface.verify import verifyObject
 
 from zExceptions import BadRequest
 
 from Products.Silva import File
-from silva.core import interfaces
 from Products.Silva.Image import havePIL
 from Products.Silva.tests import helpers
 from Products.Silva.testing import FunctionalLayer, TestCase
@@ -65,19 +66,19 @@ class FileServicesTest(TestCase):
         self.isZODBFile(image.hires_image)
 
     def isZODBFile(self, file):
-        self.failUnless(interfaces.IZODBFile.providedBy(file))
+        self.assertTrue(interfaces.IZODBFile.providedBy(file))
 
     def isBlobImage(self, image):
         self.isBlobFile(image.hires_image)
 
     def isBlobFile(self, file):
-        self.failUnless(interfaces.IBlobFile.providedBy(file))
+        self.assertTrue(interfaces.IBlobFile.providedBy(file))
 
     def test_service(self):
-        service = component.getUtility(interfaces.IFilesService)
+        service = component.getUtility(IFilesService)
         self.assertEquals(self.root.service_files, service)
-        self.failUnless(
-            verifyObject(interfaces.IFilesService, service))
+        self.assertTrue(
+            verifyObject(IFilesService, service))
 
         service.storage = File.ZODBFile
         zodb_file = service.new_file('test')

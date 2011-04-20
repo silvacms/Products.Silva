@@ -57,6 +57,7 @@ from silva.core import interfaces
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.conf import schema as silvaschema
 from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import IFilesService
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.core.views.httpheaders import HTTPResponseHeaders
@@ -598,7 +599,7 @@ def file_factory(self, id, content_type, file):
     id.cook()
     if not id.isValid():
         return None
-    service_files = component.getUtility(interfaces.IFilesService)
+    service_files = component.getUtility(IFilesService)
     return service_files.new_file(str(id))
 
 
@@ -615,10 +616,10 @@ class FilesService(SilvaService):
     default_service_identifier = 'service_files'
     silvaconf.icon('www/files_service.gif')
 
-    grok.implements(interfaces.IFilesService)
+    grok.implements(IFilesService)
     security = ClassSecurityInfo()
 
-    storage = FieldProperty(interfaces.IFilesService['storage'])
+    storage = FieldProperty(IFilesService['storage'])
 
     manage_options = (
         {'label':'Settings', 'action':'manage_settings'},
@@ -641,7 +642,7 @@ InitializeClass(FilesService)
 
 
 class FileServiceManagementView(silvaforms.ZMIComposedForm):
-    """Edit File Serivce.
+    """Edit File Service.
     """
     grok.require('zope2.ViewManagementScreens')
     grok.name('manage_settings')
@@ -656,7 +657,7 @@ class FileServiceSettings(silvaforms.ZMISubForm):
     silvaforms.order(10)
 
     label = _(u"Select storage")
-    fields = silvaforms.Fields(interfaces.IFilesService)
+    fields = silvaforms.Fields(IFilesService)
     actions = silvaforms.Actions(silvaforms.EditAction())
     ignoreContent = False
 
@@ -701,7 +702,7 @@ class StorageConverterHelper(object):
 
         if ISite.providedBy(context):
             for obj in context.objectValues():
-                if interfaces.IFilesService.providedBy(obj):
+                if IFilesService.providedBy(obj):
                     raise StopIteration()
         return False
 
