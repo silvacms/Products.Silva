@@ -8,16 +8,19 @@ from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from Products.Silva.tests.helpers import publish_object
-from Products.Silva.tests import SilvaTestCase
 
 from Products.Silva.Ghost import ghost_factory
+from Products.Silva.testing import FunctionalLayer
 from silva.core.interfaces import IIndexer
 from silva.core.references.interfaces import IReferenceService
 
 
-class IndexerTestCase(SilvaTestCase.SilvaTestCase):
+class IndexerTestCase(unittest.TestCase):
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
+    def setUp(self):
+        self.root = self.layer.get_application()
+
         self.pub = self.add_folder(self.root, 'pub', 'Publication')
         self.toghost  = self.add_document(self.root, 'toghost', 'To be Haunted')
         self.gamma  = gamma = self.add_document(self.pub, 'gamma', 'Gamma')

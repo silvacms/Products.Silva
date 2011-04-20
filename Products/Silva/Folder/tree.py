@@ -58,7 +58,7 @@ class TreeContent(grok.Adapter):
                 item.is_transparent()):
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
-                    item._get_tree_helper(l, indent + 1, depth)
+                    ITreeContents(item)._get_tree_helper(l, indent + 1, depth)
             else:
                 l.append((indent, item))
 
@@ -69,15 +69,16 @@ class TreeContent(grok.Adapter):
             if item.is_transparent():
                 l.append((indent, item))
                 if depth == -1 or indent < depth:
-                    item._get_container_tree_helper(l, indent + 1, depth)
+                    ITreeContents(item)._get_container_tree_helper(
+                        l, indent + 1, depth)
             else:
                 l.append((indent, item))
 
     def _get_public_tree_helper(self, l, indent, depth, include_non_transparent_containers=0):
-        for item in self.get_context.ordered_publishables():
+        for item in self.context.get_ordered_publishables():
             if not item.is_published():
                 continue
-            if self.service_toc_filter.filter(item):
+            if self.context.service_toc_filter.filter(item):
                 continue
             if (IContainer.providedBy(item) and
                 (item.is_transparent() or include_non_transparent_containers)):

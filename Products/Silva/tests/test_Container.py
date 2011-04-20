@@ -36,8 +36,6 @@ class ContainerTestCase(SilvaTestCase.SilvaTestCase):
                 self.root, 'image1', 'Image1', file=test_image)
             self.image2 = self.add_image(
                 self.root, 'image2', 'Image2', file=test_image)
-        # adding role for action_rename may succeed
-        self.setRoles(['Manager'])
 
     def test_convert_to_folder(self):
         #create a folder to test conversion with
@@ -64,40 +62,6 @@ class ContainerTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(cf2p_id in self.root.objectIds('Silva Folder'),
                      "folder converted to publication is not in objectIds('Silva Folder') and should be")
         self.root.manage_delObjects([cf2p_id])
-
-    def test_get_tree(self):
-        l = [(0, self.doc1), (0, self.doc2), (0, self.doc3),
-             (0, self.folder4), (1, self.subdoc), (1, self.subfolder),
-             (2, self.subfolder.subsubdoc), (0, self.publication5)]
-        self.assertEquals(self.root.get_tree(),
-                          l)
-        l = [(0, self.folder4), (1, self.subfolder),
-             (0, self.publication5)]
-        self.assertEquals(self.root.get_container_tree(),
-                          l)
-    def test_get_public_tree(self):
-        l = [(0, self.folder4), (1, self.subfolder), (0,
-            self.publication5)]
-        self.assertEquals(self.root.get_public_tree(), l)
-        self.assertEquals(self.root.get_public_tree(1), l)
-
-        l = [(0, self.folder4), (0, self.publication5)]
-        self.assertEquals(self.root.get_public_tree(0), l)
-
-    def test_get_public_tree_all(self):
-        self.subdoc2.set_unapproved_version_publication_datetime(DateTime())
-        self.subdoc2.approve_version()
-
-        l = [(0, self.folder4), (1, self.subfolder),
-             (0, self.publication5), (1, self.subdoc2),]
-        self.assertEquals(self.root.get_public_tree_all(), l)
-
-    def test_get_status_tree(self):
-        l = [(0, self.root.index), (0, self.doc1), (0, self.doc2),
-            (0, self.doc3), (0, self.folder4), (1, self.folder4.index),
-            (1, self.subdoc), (1, self.subfolder), (2, self.subfolder.index),
-            (2, self.subfolder.subsubdoc), (0, self.root.publication5)]
-        self.assertEquals(self.root.get_status_tree(), l)
 
     def test_is_id_valid(self):
         factory = self.root.manage_addProduct['SilvaDocument']

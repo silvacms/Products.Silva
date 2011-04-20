@@ -142,61 +142,6 @@ class Publication(Folder.Folder):
     def is_transparent(self):
         return 0
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_document_chapter_links')
-    def get_document_chapter_links(self, depth=0):
-        """returns a dict for document links (accessibility).
-
-        This will return chapter, section, subsection and subsubsection
-        links in a dictionary.
-
-        These can be used by Mozilla in the accessibility toolbar.
-        """
-        types = ['chapter', 'section', 'subsection', 'subsubsection']
-
-        result = {}
-        tree = self.get_container_tree(depth)
-        for depth, container in tree:
-            if not container.is_published():
-                continue
-            if not result.has_key(types[depth]):
-                result[types[depth]] = []
-            result[types[depth]].append({
-                'title': container.get_title(),
-                'url': container.absolute_url()
-                })
-        return result
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_document_index_links')
-    def get_document_index_links(self, toc_id='index', index_id=None):
-        """Returns a dictionary for document links.
-
-        This will return the contents and index links, if
-        available.
-
-        These can be used by Mozilla in the accessibility toolbar.
-        """
-        result = {}
-        # get the table of contents
-        contents = self._getOb(toc_id, None)
-        if contents is not None and contents.is_published():
-            result['contents'] = contents.absolute_url()
-
-        # get the index
-        if index_id is None:
-            indexers = self.objectValues(['Silva Indexer'])
-            if indexers:
-                index = indexers[0]
-            else:
-                index = None
-        else:
-             index = self._getOb(index_id, None)
-
-        if index is not None and index.is_published():
-            result['index'] = index.absolute_url()
-
-        return result
 
 InitializeClass(Publication)
 

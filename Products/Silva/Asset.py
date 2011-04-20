@@ -62,16 +62,6 @@ class Asset(NonPublishable, SimpleItem.SimpleItem):
 
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_navigation_links')
-    def get_navigation_links(self):
-        """
-        Create a dictionary with top, up, first, previous, next, last links.
-
-        This can be used by Mozilla in the accessibility toolbar.
-        """
-        return {}
-
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
