@@ -49,7 +49,6 @@ class GhostBase(object):
     LINK_NO_FOLDER = 7 # link doesn't point to a folder
     LINK_CIRC = 8 # Link results in a ghost haunting itself
 
-    # those should go away
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
     def set_title(self, title):
@@ -64,7 +63,7 @@ class GhostBase(object):
         """
         content = self.get_haunted()
         if content is None:
-            return ("Ghost target is broken")
+            return _(u"Ghost target is broken")
         else:
             return content.get_title()
 
@@ -75,7 +74,7 @@ class GhostBase(object):
         """
         content = self.get_haunted()
         if content is None:
-            return ("Ghost target is broken")
+            return _(u"Ghost target is broken")
         else:
             return content.get_title_editable()
 
@@ -93,13 +92,12 @@ class GhostBase(object):
         """
         content = self.get_haunted()
         if content is None:
-            return ("Ghost target is broken")
+            return _(u"Ghost target is broken")
         else:
             short_title = content.get_short_title()
         if not short_title:
             return self.get_title()
         return short_title
-    # /those should go away
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
@@ -128,12 +126,14 @@ class GhostBase(object):
         content = self.get_haunted()
         if content is None:
             return self.LINK_EMPTY
+        if content == self.get_content():
+            return self.LINK_CIRC
+        if IGhostAware.providedBy(content):
+            return self.LINK_GHOST
         if IContainer.providedBy(content):
             return self.LINK_FOLDER
         if not IContent.providedBy(content):
             return self.LINK_NO_CONTENT
-        if IGhostAware.providedBy(content):
-            return self.LINK_GHOST
         return self.LINK_OK
 
 
@@ -152,10 +152,10 @@ class Ghost(VersionedContent):
 
     grok.implements(IGhost)
     silvaconf.icon('icons/silvaghost.gif')
-    silvaconf.versionClass('GhostVersion')
+    silvaconf.version_class('GhostVersion')
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                                'get_title_editable')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
     def get_title_editable(self):
         """Get title for editable or previewable use
         """
@@ -203,18 +203,16 @@ class Ghost(VersionedContent):
             return False
         return haunted.is_published()
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                                'get_modification_datetime')
-    def get_modification_datetime(self, update_status=1):
-        """Return modification datetime."""
-        super_method = Ghost.inheritedAttribute(
-            'get_modification_datetime')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_modification_datetime')
+    def get_modification_datetime(self):
+        """Return modification datetime.
+        """
         content = self.getLastVersion().get_haunted()
 
         if content is not None:
-            return content.get_modification_datetime(update_status)
-        else:
-            return super_method(self, update_status)
+            return content.get_modification_datetime()
+        return super(Ghost, self).get_modification_datetime()
 
 
 InitializeClass(Ghost)
