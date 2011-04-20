@@ -193,7 +193,7 @@ class Ghost(VersionedContent):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
-    def is_published(self):
+    def is_published(self, update_status=True):
         public_id = self.get_public_version()
         if not public_id:
             return False
@@ -201,7 +201,7 @@ class Ghost(VersionedContent):
         haunted = public.get_haunted()
         if haunted is None:
             return False
-        return haunted.is_published()
+        return haunted.is_published(update_status=True)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_modification_datetime')
