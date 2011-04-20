@@ -43,6 +43,7 @@ from Products.Silva.ContentObjectFactoryRegistry import \
 from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
+from silva.core.services.interfaces import IFilesService
 from silva.core.conf import schema as silvaschema
 from silva.core.views import views as silvaviews
 from silva.core.views.traverser import SilvaPublishTraverse
@@ -521,7 +522,7 @@ class Image(Asset):
         return False, image
 
     def _image_factory(self, image_id, image_file, content_type=None):
-        service_files = component.getUtility(interfaces.IFilesService)
+        service_files = component.getUtility(IFilesService)
         new_image = service_files.new_file(image_id)
         setattr(self, image_id, new_image)
         new_image = getattr(self, image_id)
@@ -543,9 +544,6 @@ class Image(Asset):
             img_src += '?thumbnail'
         else:
             image = self.image
-        if interfaces.IFileSystemFile.providedBy(image):
-            # apache rewrite in effect
-            img_src = image.get_download_url()
         return image, img_src
 
     def _image_is_hires(self):
