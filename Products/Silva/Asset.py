@@ -31,7 +31,6 @@ class Asset(NonPublishable, SimpleItem.SimpleItem):
 
     security = ClassSecurityInfo()
 
-    object_type = 'asset'
     _old_size = 0               # Old size of the object.
 
     # MANIPULATORS

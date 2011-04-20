@@ -39,14 +39,13 @@ class Folder(Publishable, BaseFolder):
        can see through them in the sidebar tree navigation and the Publish
        screen.
     """)
-    security = ClassSecurityInfo()
-
     meta_type = "Silva Folder"
-    object_type = 'container'
 
     grok.implements(IFolder)
     silvaconf.icon('www/silvafolder.gif')
     silvaconf.priority(-5)
+
+    security = ClassSecurityInfo()
 
     @property
     def manage_options(self):

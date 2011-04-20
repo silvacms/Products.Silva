@@ -8,7 +8,7 @@ class CatalogingAttributes(MetadataCatalogingAttributes):
     grok.context(interfaces.ISilvaObject)
 
     @property
-    def version_status(self):
+    def publication_status(self):
         return 'public'
 
 
@@ -16,18 +16,19 @@ class CatalogingAttributesPublishable(CatalogingAttributes):
     grok.context(interfaces.IPublishable)
 
     @property
-    def version_status(self):
+    def publication_status(self):
         if self.context.is_published(update_status=False):
             return 'public'
-        else:
-            return 'unapproved'
+        if self.context.is_approved(update_status=False):
+            return 'approved'
+        return 'unapproved'
 
 
 class CatalogingAttributesVersion(CatalogingAttributes):
     grok.context(interfaces.IVersion)
 
     @property
-    def version_status(self):
+    def publication_status(self):
         """Returns the status of the current version
         Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
         """
