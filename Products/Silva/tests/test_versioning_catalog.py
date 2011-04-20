@@ -85,7 +85,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.assertItemsEqual(
             self.search('/root'),
             [('/root', 'unapproved'),
-             ('/root/document', 'unapproved'),
+             ('/root/document', 'public'),
              ('/root/document/1', 'public')])
 
     def test_rename(self):
