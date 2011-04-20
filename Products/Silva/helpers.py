@@ -102,9 +102,9 @@ def unapprove_close_helper(object):
     contained by it.
     """
     if interfaces.IVersioning.providedBy(object):
-        if object.is_version_approved():
+        if object.is_approved():
             object.unapprove_version()
-        if object.is_version_published():
+        if object.is_published():
             object.close_version()
     if interfaces.IContainer.providedBy(object):
         default = object.get_default()

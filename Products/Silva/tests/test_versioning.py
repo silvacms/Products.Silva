@@ -56,7 +56,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
-        self.assertEqual(versioning.is_version_published(), False)
+        self.assertEqual(versioning.is_published(), False)
 
         # approve it
         with assertTriggersEvents(
@@ -66,7 +66,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), '0')
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), None)
-        self.assertEqual(versioning.is_version_published(), True)
+        self.assertEqual(versioning.is_published(), True)
 
         # already approved
         self.assertRaises(
@@ -105,7 +105,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
-        self.assertEqual(versioning.is_version_approved(), False)
+        self.assertEqual(versioning.is_approved(), False)
 
         # no version to unapprove
         self.assertRaises(
@@ -118,7 +118,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), '0')
         self.assertEqual(versioning.get_unapproved_version(), None)
-        self.assertEqual(versioning.is_version_approved(), True)
+        self.assertEqual(versioning.is_approved(), True)
 
         # unapprove it
         with assertTriggersEvents('ContentUnApprovedEvent'):
@@ -126,7 +126,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
-        self.assertEqual(versioning.is_version_approved(), False)
+        self.assertEqual(versioning.is_approved(), False)
 
         # change the time to something in the past, so it'll be published
         versioning.set_unapproved_version_publication_datetime(DateTime() - 10)
@@ -140,7 +140,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), None)
         # (version is published)
-        self.assertEqual(versioning.is_version_approved(), False)
+        self.assertEqual(versioning.is_approved(), False)
 
     def test_create_new_version_published(self):
         versioning = self.versioning
@@ -251,15 +251,15 @@ class VersioningTestCase(unittest.TestCase):
         def _check_state(approved=0, approval_request=0, published=0):
             # helper method to check consistency of the version state
             self.assertEqual(
-                approved, versioning.is_version_approved())
+                approved, versioning.is_approved())
             self.assertEqual(
                 approved and versioning.get_next_version() or None,
                 self.versioning.get_approved_version())
             self.assertEqual(
-                published, versioning.is_version_published())
+                published, versioning.is_published())
             self.assertEqual(
                 approval_request and not approved,
-                versioning.is_version_approval_requested())
+                versioning.is_approval_requested())
             self.assertEqual(
                 (not approved) and versioning.get_next_version() or None,
                 versioning.get_unapproved_version())
@@ -297,13 +297,13 @@ class VersioningTestCase(unittest.TestCase):
             Versioning.VersioningError,
             versioning.request_version_approval, 'Request message')
 
-        self.assertEqual(versioning.is_version_approval_requested(), False)
+        self.assertEqual(versioning.is_approval_requested(), False)
 
         versioning.create_version('0', DateTime() + 10, None)
         with assertTriggersEvents('ContentRequestApprovalEvent'):
             versioning.request_version_approval('Request test message')
 
-        self.assertEqual(versioning.is_version_approval_requested(), True)
+        self.assertEqual(versioning.is_approval_requested(), True)
         self.assertEqual(versioning.get_approval_requester(), 'manager')
         self.assertEqual(
             versioning.get_approval_request_message(),
@@ -321,7 +321,7 @@ class VersioningTestCase(unittest.TestCase):
         with assertTriggersEvents('ContentApprovedEvent'):
             versioning.approve_version()
 
-        self.assertEqual(versioning.is_version_approval_requested(), False)
+        self.assertEqual(versioning.is_approval_requested(), False)
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), '0')
         self.assertEqual(versioning.get_unapproved_version(), None)
@@ -407,7 +407,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertRaises(
             Versioning.VersioningError,
             versioning.reject_version_approval, 'Reject message')
-        self.assertEqual(versioning.is_version_approval_requested(), False)
+        self.assertEqual(versioning.is_approval_requested(), False)
 
         self.versioning.set_approved_version_publication_datetime(
             DateTime() - 10)
@@ -426,7 +426,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertRaises(
             Versioning.VersioningError,
             versioning.reject_version_approval, 'Reject message')
-        self.assertEqual(versioning.is_version_approval_requested(), False)
+        self.assertEqual(versioning.is_approval_requested(), False)
 
         versioning.close_version()
         self.assertEqual(versioning.get_public_version(), None)
@@ -444,7 +444,7 @@ class VersioningTestCase(unittest.TestCase):
         self.assertRaises(
             Versioning.VersioningError,
             versioning.reject_version_approval, 'Reject message')
-        self.assertEqual(versioning.is_version_approval_requested(), False)
+        self.assertEqual(versioning.is_approval_requested(), False)
 
 
 def test_suite():

@@ -236,7 +236,7 @@ class Versioning(object):
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
 
-        if self.is_version_approval_requested():
+        if self.is_approval_requested():
             raise VersioningError,\
                   _('The version is already requested for approval.')
 
@@ -263,7 +263,7 @@ class Versioning(object):
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
 
-        if not self.is_version_approval_requested():
+        if not self.is_approval_requested():
             raise VersioningError,\
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
@@ -290,7 +290,7 @@ class Versioning(object):
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
 
-        if not self.is_version_approval_requested():
+        if not self.is_approval_requested():
             raise VersioningError,\
                   _('The version is not requested for approval.')
         info = self._get_editable_rfa_info()
@@ -477,18 +477,18 @@ class Versioning(object):
 
     # ACCESSORS
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_version_approved')
-    def is_version_approved(self, update_status=True):
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'is_approved')
+    def is_approved(self, update_status=True):
         """Check whether version is approved.
         """
         if update_status:
             self._update_publication_status()
         return self._approved_version != empty_version
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_version_published')
-    def is_version_published(self, update_status=True):
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_published')
+    def is_published(self, update_status=True):
         """Check whether version is published.
         """
         if update_status:
@@ -496,9 +496,9 @@ class Versioning(object):
         return self._public_version != empty_version
 
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_version_approval_requested')
-    def is_version_approval_requested(self):
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'is_approval_requested')
+    def is_approval_requested(self):
         """Check if there exists an unapproved version
         which has a request for approval.
         """
@@ -615,7 +615,7 @@ class Versioning(object):
         """
         # XXX i18n - should we translate these?
         if self.get_unapproved_version() is not None:
-            if self.is_version_approval_requested():
+            if self.is_approval_requested():
                 return "request_pending"
             else:
                 return "not_approved"

@@ -192,8 +192,8 @@ class Ghost(VersionedContent):
         return version
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'is_version_published')
-    def is_version_published(self):
+        SilvaPermissions.AccessContentsInformation, 'is_published')
+    def is_published(self):
         public_id = self.get_public_version()
         if not public_id:
             return False

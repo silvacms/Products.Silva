@@ -11,8 +11,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import SilvaObject
 
 from five import grok
-from silva.core.interfaces.content import (
-    IPublishable, INonPublishable, IVersioning)
+from silva.core.interfaces.content import IPublishable, INonPublishable
 
 
 class NonPublishable(SilvaObject):
@@ -34,24 +33,15 @@ class Publishable(SilvaObject):
 
     # ACCESSORS
 
-    # XXX: those two methods is_published and is_approved are only
-    # used in VersionedContent. They should move there.
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
     def is_published(self, update_status=True):
-        if IVersioning.providedBy(self):
-            return self.is_version_published(update_status=update_status)
-        else:
-            return 1
+        return 1
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'is_approved')
     def is_approved(self, update_status=True):
-        if IVersioning.providedBy(self):
-            return self.is_version_approved(update_status=update_status)
-        else:
-            # never be approved if there is no versioning
-            return 0
+        return 0
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')

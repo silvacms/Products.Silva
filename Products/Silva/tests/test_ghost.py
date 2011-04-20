@@ -101,6 +101,27 @@ class GhostTestCase(unittest.TestCase):
             self.root.ghost.get_title(),
             u'Ghost target is broken')
 
+    def test_ghost_is_published(self):
+        """Test whenever a Ghost is published or not. This depends if
+        the ghosted content is published or not.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addGhost('ghost', 'Ghost')
+        self.assertFalse(self.root.ghost.is_published())
+
+        IPublicationWorkflow(self.root.ghost).publish()
+        self.assertFalse(self.root.ghost.is_published())
+        self.assertEqual(self.root.ghost.get_editable(), None)
+
+        self.root.ghost.get_viewable().set_haunted(self.root.document)
+        self.assertFalse(self.root.ghost.is_published())
+
+        IPublicationWorkflow(self.root.document).publish()
+        self.assertTrue(self.root.ghost.is_published())
+
+        IPublicationWorkflow(self.root.document).close()
+        self.assertFalse(self.root.ghost.is_published())
+
     def test_ghost_link_status(self):
         """Test ghost get_link_status.
         """

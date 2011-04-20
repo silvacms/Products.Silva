@@ -29,7 +29,7 @@ from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
 from silva.translations import translate as _
 
 
-class VersionedContent(Content, Versioning, BaseFolder):
+class VersionedContent(Versioning, Content, BaseFolder):
     security = ClassSecurityInfo()
 
     grok.implements(IVersionedContent)
@@ -268,7 +268,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         if self.context.get_unapproved_version() is None:
             raise PublicationWorkflowError(
                 _('There is no unapproved version.'))
-        if self.context.is_version_approval_requested():
+        if self.context.is_approval_requested():
             raise PublicationWorkflowError(
                 _('Approval has already been requested.'))
         self.context.request_version_approval(message)
@@ -282,7 +282,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
             else:
                 raise PublicationWorkflowError(
                     _("This content is already approved."))
-        if not self.context.is_version_approval_requested():
+        if not self.context.is_approval_requested():
             raise PublicationWorkflowError(
                 _("No request for approval is pending for this content."))
 
@@ -319,7 +319,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         # Do the same job than approve, but works on closed content as
         # well.
         if not self.context.get_unapproved_version():
-            if self.context.is_version_published():
+            if self.context.is_published():
                 raise PublicationWorkflowError(
                     _("There is no unapproved version to approve."))
             self.context.create_copy()

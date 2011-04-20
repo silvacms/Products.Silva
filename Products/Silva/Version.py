@@ -72,7 +72,7 @@ class VersionManager(grok.Adapter):
         current_version = self.content.get_unapproved_version(False)
         if current_version is not None:
             # move the current editable version to _previous_versions
-            if self.content.is_version_approval_requested():
+            if self.content.is_approval_requested():
                 raise VersioningError(_('A version is waiting approval'))
 
             version_tuple = self.content._unapproved_version
@@ -148,7 +148,7 @@ class VersionManager(grok.Adapter):
         """
         versionid = self.version.id
         if self.content.get_unapproved_version(False) == versionid:
-            if self.content.is_version_approval_requested():
+            if self.content.is_approval_requested():
                 return 'pending'
             return 'unapproved'
         elif self.content.get_approved_version(False) == versionid:
