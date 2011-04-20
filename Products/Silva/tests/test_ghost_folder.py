@@ -11,11 +11,10 @@ from zope.component import getUtility
 from DateTime import DateTime
 from Acquisition import aq_chain
 
-from Products.Silva.Ghost import GhostVersion
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import publish_object
 
-from silva.core.interfaces import IGhost, IGhostVersion
+from silva.core.interfaces import IGhostFolder
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.references.reference import BrokenReferenceError
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
@@ -33,7 +32,7 @@ class GhostTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('document', 'Document')
         factory.manage_addFolder('folder', 'Folder')
-        factory.manage_addImage('image', 'Image')
+        factory.manage_addPublication('publication', 'Publication')
 
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addFolder('ghost', 'Ghost')
@@ -47,9 +46,6 @@ class GhostTestCase(unittest.TestCase):
             title = 'Doc%d' % i
             factory(self.root, 'SilvaDocument').manage_addDocument(id, title)
             setattr(self, id, getattr(self.root, id))
-
-        factory(self.root).manage_addFolder('folder4', 'Folder4')
-        self.folder4 = getattr(self.root, 'folder4')
 
         factory(self.root).\
             manage_addPublication('publication5', 'Publication5')
@@ -70,7 +66,7 @@ class GhostTestCase(unittest.TestCase):
             manage_addDocument('subdoc2', 'Subdoc2')
         self.subdoc2 = getattr(self.publication5, 'subdoc2')
 
-    def test_ghostfolder(self):
+    def test_ghost_folder(self):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
             'gf1', 'GhostFolder', haunted=self.publication5)
@@ -80,9 +76,6 @@ class GhostTestCase(unittest.TestCase):
             'gf2', 'GhostFolder2', haunted=self.folder4)
         gffold = getattr(self.root, 'gf2')
 
-        self.assertTrue(gfpub.implements_container())
-        self.assertTrue(gfpub.implements_publication())
-        self.assertTrue(not gffold.implements_publication())
         self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
         self.assertEquals(gffold.get_link_status(), gffold.LINK_OK)
 
@@ -114,7 +107,7 @@ class GhostTestCase(unittest.TestCase):
 
         self.assertTrue(not gfpub.is_published())
 
-    def test_ghostfolder_topub(self):
+    def test_ghost_folder_to_publication(self):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
             'gf1', 'GhostFolder', haunted=self.publication5)
@@ -133,7 +126,7 @@ class GhostTestCase(unittest.TestCase):
         self.assertEquals(metadata_newpub.get('silva-content', 'maintitle'),
             'snafu')
 
-    def test_circular_links(self):
+    def test_ghost_folder_circular(self):
         # add some content in a tree
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('f', 'F')
@@ -188,7 +181,7 @@ class GhostTestCase(unittest.TestCase):
             gf2.LINK_OK,
             gf2.get_link_status())
 
-    def test_modification_time(self):
+    def test_ghost_folder_modification_time(self):
         # https://infrae.com/issue/silva/issue1645
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost(

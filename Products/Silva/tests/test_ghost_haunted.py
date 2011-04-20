@@ -27,12 +27,13 @@ class HauntedTestCase(unittest.TestCase):
         """
         self.root = self.layer.get_application()
         self.layer.login('editor')
-        factory = self.root.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('document', u'Test Document')
+
         factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('document', u'Test Document')
         factory.manage_addPublication('publication', u'Test Publication')
         factory.manage_addGhost('ghost', None, haunted=self.root.document)
         factory.manage_addLink('link', u'Test Link')
+
         factory = self.root.publication.manage_addProduct['Silva']
         factory.manage_addFolder('folder', u'Test Folder')
 
@@ -43,12 +44,9 @@ class HauntedTestCase(unittest.TestCase):
         self.assertRaises(TypeError, IHaunted, self.root.publication)
 
         # Test getting an adapter for content
-        self.failUnless(
-            verifyObject(IHaunted, IHaunted(self.root.document)))
-        self.failUnless(
-            verifyObject(IHaunted, IHaunted(self.root.link)))
-        self.failUnless(
-            verifyObject(IHaunted, IHaunted(self.root.ghost)))
+        self.assertTrue(verifyObject(IHaunted, IHaunted(self.root.document)))
+        self.assertTrue(verifyObject(IHaunted, IHaunted(self.root.link)))
+        self.assertTrue(verifyObject(IHaunted, IHaunted(self.root.ghost)))
 
         self.assertEqual(
             list(IHaunted(self.root.document).getHaunting()),

@@ -101,7 +101,6 @@ class GhostTestCase(unittest.TestCase):
             self.root.ghost.get_title(),
             u'Ghost target is broken')
 
-
     def test_ghost_link_status(self):
         """Test ghost get_link_status.
         """
@@ -130,8 +129,10 @@ class GhostTestCase(unittest.TestCase):
         """Test that the ghost modification_time is the same than the document.
         """
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.document)
+        factory.manage_addGhost('ghost', 'Ghost')
+        self.assertEqual(self.root.ghost.get_modification_datetime(), None)
 
+        self.root.ghost.get_editable().set_haunted(self.root.document)
         self.assertEqual(
             self.root.ghost.get_modification_datetime(),
             self.root.document.get_modification_datetime())
