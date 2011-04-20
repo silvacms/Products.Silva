@@ -20,8 +20,7 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 
 def installFromScratch(root):
     configureSecurity(root)
-    root.manage_addProduct['Silva'].manage_addExtensionService(
-        'service_extensions', 'Silva Product and Extension Configuration')
+    root.manage_addProduct['Silva'].manage_addExtensionService()
     # now do the uinstallable stuff (views)
     install(root)
     setInitialSkin(root, 'Standard Issue')

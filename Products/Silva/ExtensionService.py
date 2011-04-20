@@ -17,14 +17,13 @@ from OFS.Folder import Folder
 import transaction
 
 # Silva
-from Products.Silva.helpers import add_and_edit
 from Products.Silva.ExtensionRegistry import extensionRegistry
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import ICataloging, IExtensionService
 from silva.core.services.utils import walk_silva_tree
-from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
@@ -104,9 +103,11 @@ def install_documentation(container):
 
 class ExtensionService(Folder, SilvaService):
     meta_type = 'Silva Extension Service'
+    default_service_identifier = 'service_extensions'
+    grok.implements(IExtensionService)
+    silvaconf.icon('www/silva.png')
 
     security = ClassSecurityInfo()
-
     manage_options = (
         {'label':'Extensions', 'action':'manage_extensions'},
         {'label':'Partial upgrades', 'action':'manage_partialUpgrade'},
@@ -114,14 +115,7 @@ class ExtensionService(Folder, SilvaService):
         {'label': 'Logs', 'action':'manage_main'},
         ) + SilvaService.manage_options
 
-    silvaconf.icon('www/silva.png')
-    silvaconf.factory('manage_addExtensionService')
-
     _quota_enabled = False
-
-    def __init__(self, id, title):
-        self.id = id
-        self.title = title
 
     # MANIPULATORS
 
@@ -254,15 +248,6 @@ class ExtensionService(Folder, SilvaService):
 
 
 InitializeClass(ExtensionService)
-
-
-def manage_addExtensionService(self, id, title='', REQUEST=None):
-    """Add extension service."""
-    object = ExtensionService(id, title)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    add_and_edit(self, id, REQUEST)
-    return ''
 
 
 class IPartialUpgrade(interface.Interface):
