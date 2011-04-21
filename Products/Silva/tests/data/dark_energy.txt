@@ -1,0 +1,32 @@
+In physical cosmology, astronomy and celestial mechanics, dark energy
+is a hypothetical form of energy that permeates all of space and tends
+to increase the rate of expansion of the universe. Dark energy is the
+most accepted theory to explain recent observations and experiments
+that the universe appears to be expanding at an accelerating rate. In
+the standard model of cosmology, dark energy currently accounts for
+73% of the total mass-energy of the universe.
+
+Two proposed forms for dark energy are the cosmological constant, a
+constant energy density filling space homogeneously, and scalar fields
+such as quintessence or moduli, dynamic quantities whose energy
+density can vary in time and space. Contributions from scalar fields
+that are constant in space are usually also included in the
+cosmological constant. The cosmological constant is physically
+equivalent to vacuum energy. Scalar fields which do change in space
+can be difficult to distinguish from a cosmological constant because
+the change may be extremely slow.
+
+High-precision measurements of the expansion of the universe are
+required to understand how the expansion rate changes over time. In
+general relativity, the evolution of the expansion rate is
+parameterized by the cosmological equation of state (the relationship
+between temperature, pressure, and combined matter, energy, and vacuum
+energy density for any region of space). Measuring the equation of
+state of dark energy is one of the biggest efforts in observational
+cosmology today.
+
+Adding the cosmological constant to cosmology's standard FLRW metric
+leads to the Lambda-CDM model, which has been referred to as the
+"standard model" of cosmology because of its precise agreement with
+observations. Dark energy has been used as a crucial ingredient in a
+recent attempt to formulate a cyclic model for the universe.

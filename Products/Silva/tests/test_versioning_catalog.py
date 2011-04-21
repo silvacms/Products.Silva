@@ -117,7 +117,8 @@ class CatalogVersioningTestCase(unittest.TestCase):
         """Test moving published elements into a folder.
         """
         IPublicationWorkflow(self.root.document).publish()
-        self.root.manage_addProduct['Silva'].manage_addFolder('folder', 'Folder')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
         token = self.root.manage_cutObjects(['document'])
         self.root.folder.manage_pasteObjects(token)
         self.assertItemsEqual(
