@@ -23,7 +23,8 @@ class FolderCatalogTestCase(unittest.TestCase):
                    self.root.service_catalog(**kwargs))
 
     def test_unapproved(self):
-        """If a folder doesn't have an index it is unapproved in the catalog.
+        """If a folder doesn't have an index it is unapproved in the
+        catalog.
         """
         self.assertItemsEqual(
             self.search(path='/root'),
@@ -31,7 +32,8 @@ class FolderCatalogTestCase(unittest.TestCase):
              ('/root/folder', 'unapproved')])
 
     def test_public(self):
-        """A folder is public in the catalog if it is_published (have an index).
+        """A folder is public in the catalog if it is_published (have
+        an index).
         """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addAutoTOC('index', 'Index')

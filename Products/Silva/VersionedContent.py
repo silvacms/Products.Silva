@@ -72,7 +72,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         """
         viewable = self.get_viewable()
         if viewable is None:
-            return self.id
+            return ""
         return viewable.get_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -87,7 +87,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         # screens.
         previewable = self.get_previewable()
         if previewable is None:
-            return "[No title available]"
+            return ""
         return previewable.get_title()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -98,8 +98,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         title = self.get_title_editable()
         if title.strip() == '':
             return self.id
-        else:
-            return title
+        return title
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
@@ -120,7 +119,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         # Analogous to get_title_editable
         previewable = self.get_previewable()
         if previewable is None:
-            return "[No (short) title available]"
+            return self.id
         return previewable.get_short_title()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,

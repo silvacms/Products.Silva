@@ -79,11 +79,11 @@ class GhostTestCase(unittest.TestCase):
 
         self.root.ghost.get_editable().set_haunted(self.root.document)
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_title(), 'ghost')
+        self.assertEqual(self.root.ghost.get_title(), '')
 
         IPublicationWorkflow(self.root.document).publish()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_title(), 'ghost')
+        self.assertEqual(self.root.ghost.get_title(), '')
 
         IPublicationWorkflow(self.root.ghost).publish()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
@@ -91,7 +91,7 @@ class GhostTestCase(unittest.TestCase):
 
         IPublicationWorkflow(self.root.document).close()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_title(), 'document')
+        self.assertEqual(self.root.ghost.get_title(), '')
 
         self.root.ghost.get_viewable().set_haunted(0)
         self.assertEqual(

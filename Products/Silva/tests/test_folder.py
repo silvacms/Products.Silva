@@ -25,6 +25,41 @@ class FolderTestCase(unittest.TestCase):
     def test_implementation(self):
         self.assertTrue(verifyObject(IFolder, self.root.folder))
 
+    def test_get_creation_datetime(self):
+        """Test get_creation_datetime
+        """
+        self.assertNotEqual(
+            self.root.folder.get_creation_datetime(),
+            None)
+        self.assertNotEqual(
+            self.root.get_creation_datetime(),
+            None)
+
+    def test_get_modification_datetime(self):
+        """Test get_creation_datetime
+        """
+        current_datetime = self.root.folder.get_modification_datetime()
+        self.assertNotEqual(current_datetime, None)
+        self.assertNotEqual(self.root.get_modification_datetime(), None)
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addAutoTOC('index', 'Index')
+        self.assertNotEqual(
+            self.root.folder.get_modification_datetime(),
+            current_datetime)
+
+    def test_set_title(self):
+        """Test set/get title.
+        """
+        folder = self.root.folder
+        self.assertEqual(folder.get_title(), 'Folder')
+        self.assertEqual(folder.get_title_or_id(), 'Folder')
+        self.assertEqual(folder.get_short_title(), 'Folder')
+
+        folder.set_title('Renamed Folder')
+        self.assertEqual(folder.get_title(), 'Renamed Folder')
+        self.assertEqual(folder.get_title_or_id(), 'Renamed Folder')
+        self.assertEqual(folder.get_short_title(), 'Renamed Folder')
+
     def test_get_default(self):
         """get_default return the index object of the container if it
         exist or None.

@@ -83,6 +83,8 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
         self.assertEqual(self.root.folder.toc.get_title(), 'New AutoTOC')
 
     def test_rename_id_already_in_use(self):
+        """Rename a content to an id which is already in use.
+        """
         manager = IContainerManager(self.root.folder)
         with assertNotTriggersEvents('ObjectWillBeMovedEvent',
                                      'ObjectMovedEvent',
