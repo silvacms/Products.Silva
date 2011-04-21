@@ -7,16 +7,12 @@ from cStringIO import StringIO
 from zipfile import ZipFile
 import unittest
 
+from silva.core import interfaces
 from zope.component import getAdapter, queryAdapter
 from zope.interface.verify import verifyObject
 
-# Silva
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
-
-from AccessControl import getSecurityManager
-from Products.Silva.adapters.zipfileimport import getZipfileImportAdapter
-from silva.core import interfaces
 
 
 class ZipTestCase(TestCase):
@@ -52,20 +48,6 @@ class ZipTestCase(TestCase):
         with open_test_file('test_import_link.zip') as test_archive:
             self.assertEqual(importer.isFullmediaArchive(test_archive), True)
 
-    def test_import_smi_adapter(self):
-        """Test adapter query for SMI / SMI right.
-        """
-        importer = getZipfileImportAdapter(self.root.folder)
-        self.failUnless(verifyObject(interfaces.IZipFileImporter, importer))
-
-        security = getSecurityManager()
-        self.failUnless(
-            security.checkPermission(
-                "Change Silva content", importer))
-
-        importer = getZipfileImportAdapter(self.root.link)
-        self.assertEqual(importer, None)
-
     def test_export(self):
         """Import/export a Zip file.
         """
@@ -75,9 +57,12 @@ class ZipTestCase(TestCase):
         succeeded, failed = importer.importArchive(zip_import)
         self.assertItemsEqual(
             succeeded,
-            ['testzip/Clock.swf', 'testzip/bar/image2.jpg',
-             'testzip/foo/bar/baz/image5.jpg', 'testzip/foo/bar/image4.jpg',
-             'testzip/foo/image3.jpg', 'testzip/image1.jpg',
+            ['testzip/Clock.swf',
+             'testzip/bar/image2.jpg',
+             'testzip/foo/bar/baz/image5.jpg',
+             'testzip/foo/bar/image4.jpg',
+             'testzip/foo/image3.jpg',
+             'testzip/image1.jpg',
              'testzip/sound1.mp3'])
         self.assertItemsEqual(failed, [])
 

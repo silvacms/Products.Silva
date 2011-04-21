@@ -6,18 +6,13 @@ from zipfile import ZipFile
 
 from five import grok
 
-# Zope
-from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
-
 # Silva
 from Products.Silva.silvaxml import xmlimport
-from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import IZipFileImporter, IContainer
 
 
-class ZipFileImportAdapter(grok.Adapter):
+class ZipFileImporter(grok.Adapter):
     """ Adapter for silva objects to facilitate
     the full media import from zipfiles.
     """
@@ -25,9 +20,6 @@ class ZipFileImportAdapter(grok.Adapter):
     grok.provides(IZipFileImporter)
     grok.context(IContainer)
 
-    security = ClassSecurityInfo()
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'isFullmediaArchive')
     def isFullmediaArchive(self, input_archive):
         """Returns true if the archive is a fullmedia archive
         """
@@ -39,8 +31,6 @@ class ZipFileImportAdapter(grok.Adapter):
         finally:
             archive.close()
 
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'importFromZip')
     def importFromZip(self, input_archive, replace=0):
         """ imports fullmedia zipfile
         """
@@ -64,17 +54,3 @@ class ZipFileImportAdapter(grok.Adapter):
             source_file.close()
             archive.close()
 
-
-InitializeClass(ZipFileImportAdapter)
-
-
-def __allow_access_to_unprotected_subobjects__(name,value=None):
-    return name in ('getZipfileImportAdapter')
-
-
-def getZipfileImportAdapter(context):
-    adapter = IZipFileImporter(context, None)
-    if adapter is not None:
-        # For ZODB-script security
-        adapter.__parent__ = context
-    return adapter

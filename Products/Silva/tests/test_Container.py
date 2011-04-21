@@ -88,40 +88,6 @@ class ContainerTestCase(SilvaTestCase.SilvaTestCase):
         self.assert_(not hasattr(self.root, '_doc'))
 
 
-    def test_check_valid_id(self):
-        # XXX this test is duplicate to MangleIdTest.test_validate
-        self.assertEquals(check_valid_id(self.folder4, 'doc2'),
-                          Id.OK)
-        self.assertEquals(check_valid_id(self.folder4, self.folder4.id),
-                          Id.OK)
-        self.assertEquals(check_valid_id(self.folder4, 'subdoc'),
-                          Id.IN_USE_CONTENT)
-        self.assertEquals(check_valid_id(self.folder4, 'subdoc',
-                                         allow_dup=1),
-                          Id.OK)
-        self.assertEquals(check_valid_id(self.folder4, 'service_foo'),
-                          Id.RESERVED_PREFIX)
-        self.assertEquals(check_valid_id(self.folder4, 'edit'),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'edit',
-                                         allow_dup=1),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'manage'),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'title'),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'index_html'),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'index_html',
-                                         allow_dup=1),
-                          Id.RESERVED)
-        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id'),
-                          Id.RESERVED_PREFIX)
-        self.assertEquals(check_valid_id(self.folder4, 'get_title_or_id',
-                                         allow_dup=1),
-                          Id.RESERVED_PREFIX)
-
-
 
 import unittest
 def test_suite():

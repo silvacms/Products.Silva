@@ -8,26 +8,17 @@ import os.path
 import re
 import zipfile
 
-# Zope
-from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
-
 from five import grok
+from silva.core import interfaces
 from zope import contenttype
 
 # Silva
-from Products.Silva import SilvaPermissions
-from Products.Silva import assetregistry
+from Products.Silva.MimetypeRegistry import mimetypeRegistry
 from Products.Silva import mangle
 from Products.Silva import File
-from silva.core import interfaces
 
 
-# BBB only
-BadZipfile = zipfile.BadZipfile
-
-
-class ZipFileImport(grok.Adapter):
+class ZipFileImporter(grok.Adapter):
     """ Adapter for container-like objects to facilitate
     the import of archive files (e.g. zipfiles) and create
     Assets out of its contents and, optionally, to recreate
@@ -37,15 +28,12 @@ class ZipFileImport(grok.Adapter):
     grok.provides(interfaces.IArchiveFileImporter)
     grok.context(interfaces.IContainer)
 
-    security = ClassSecurityInfo()
-
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'importArchive')
     def importArchive(self, archive, assettitle='', recreatedirs=1, replace=0):
         zip = zipfile.ZipFile(archive)
 
-        # Lists the names of the files in the archive which were succesfully
-        # added (or, if something went wrong, list it in failed_list).
+        # Lists the names of the files in the archive which were
+        # succesfully added (or, if something went wrong, list it in
+        # failed_list).
         succeeded_list = []
         failed_list = []
 
@@ -78,7 +66,7 @@ class ZipFileImport(grok.Adapter):
                 container = self.context
 
             # Actually add object...
-            factory = self._getFactoryForMimeType(mimetype)
+            factory = mimetypeRegistry.get(mimetype, File.manage_addFile)
 
             id = self._makeId(filename, container, extracted_file, replace)
             added_object = factory(
@@ -132,22 +120,3 @@ class ZipFileImport(grok.Adapter):
         id.cook().unique()
         return str(id)
 
-    def _getFactoryForMimeType(self, mimetype):
-        root = self.context.get_root()
-        factory = assetregistry.getFactoryForMimetype(root, mimetype)
-        if factory is None:
-            return File.manage_addFile
-        return factory
-
-
-InitializeClass(ZipFileImport)
-
-
-def __allow_access_to_unprotected_subobjects__(name,value=None):
-    return name in ('getArchiveFileImportAdapter')
-
-
-def getArchiveFileImportAdapter(context):
-    adapter = interfaces.IArchiveFileImporter(context)
-    adapter.__parent__ = context
-    return adapter

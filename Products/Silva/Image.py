@@ -32,10 +32,10 @@ from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 
 # Silva
-from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset, SMIAssetPortlet
 from Products.Silva.Asset import AssetEditTab
+from Products.Silva.MimetypeRegistry import mimetypeRegistry
 from Products.Silva.helpers import create_new_filename
 
 from silva.core.conf.interfaces import ITitledContent
@@ -760,9 +760,9 @@ class ImageStorageConverter(object):
         return image
 
 
-mt = mimetypes.types_map.values()
-mt  = [mt for mt in mt if mt.startswith('image')]
-assetregistry.registerFactoryForMimetypes(mt, manage_addImage, 'Silva')
+for mimetype in mimetypes.types_map.values():
+    if mimetype.startswith('image'):
+        mimetypeRegistry.register(mimetype, manage_addImage, 'Silva')
 
 
 def image_factory(self, id, content_type, file):

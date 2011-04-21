@@ -144,7 +144,6 @@ class EggExtension(BaseExtension):
 
 
 class ExtensionRegistry(Registry):
-
     implements(interfaces.IExtensionRegistry)
 
     def __init__(self):
