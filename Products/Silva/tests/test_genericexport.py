@@ -2,14 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
-"""Test the generic export feature.
-"""
+import unittest
 
-__author__ ="sylvain@infrae.com"
-__format__ ="plaintext"
-__version__ ="$Id$"
-
-# Zope 3
 from zope.interface import implements
 from zope.interface.verify import verifyObject
 from zope.component import getGlobalSiteManager, getUtility
@@ -19,7 +13,6 @@ from zope.schema.interfaces import IVocabulary
 # Silva
 from silva.core import interfaces
 from Products.Silva.utility import interfaces as interfaces_utility
-from Products.SilvaDocument import interfaces as interfaces_document
 
 import SilvaTestCase
 
@@ -60,14 +53,14 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
         voc = self.root.export_content_format()
         self.failUnless(verifyObject(IVocabulary, voc),
                         "List exporter doesn't return a vocabulary")
-        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+        self.assertEqual([(u'zip', 'Full Media (zip)'),
                           (u'odt', 'Open Document (odt)')],
                          [(v.value, v.title) for v in voc])
 
         # You can list them against a ref
         ref = self.root.create_ref(self.root.testdocument)
         voc = self.root.export_content_format(ref)
-        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+        self.assertEqual([(u'zip', 'Full Media (zip)'),
                           (u'odt', 'Open Document (odt)')],
                          [(v.value, v.title) for v in voc])
 
@@ -80,7 +73,7 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
 
         # Folder will stay unchanged
         voc = self.root.export_content_format()
-        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+        self.assertEqual([(u'zip', 'Full Media (zip)'),
                           (u'odt', 'Open Document (odt)')],
                          [(v.value, v.title) for v in voc])
 
@@ -97,18 +90,18 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
                               interfaces.IContentExporter,
                               'dummy')
 
-        
+
     def test_exportUtility(self):
 
         # There is an utility which manage export feature
         utility = getUtility(interfaces_utility.IExportUtility)
-        self.failUnless(verifyObject(interfaces_utility.IExportUtility, 
+        self.failUnless(verifyObject(interfaces_utility.IExportUtility,
                                      utility),)
 
         # We have a function to list exporter (see test_listExport),
         # which return a vocabulary
         voc = utility.listContentExporter(self.root)
-        self.assertEqual([(u'zip', 'Full Media (zip)'), 
+        self.assertEqual([(u'zip', 'Full Media (zip)'),
                           (u'odt', 'Open Document (odt)'),],
                          [(v.value, v.title) for v in voc],)
 
@@ -118,13 +111,10 @@ class ExportTestCase(SilvaTestCase.SilvaTestCase):
                                      zip_exporter),)
 
         # A non-existant exporter give a lookup error error
-        self.assertRaises(ComponentLookupError, 
+        self.assertRaises(ComponentLookupError,
                           utility.createContentExporter, self.root, 'invalid')
 
-
-
-import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(ExportTestCase))
-    return suite    
+    return suite

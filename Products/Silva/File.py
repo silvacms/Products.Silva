@@ -42,8 +42,6 @@ from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
 from Products.Silva.Asset import Asset, SMIAssetPortlet
 from Products.Silva.Asset import AssetEditTab
-from Products.Silva.ContentObjectFactoryRegistry import \
-    contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
 from Products.Silva.helpers import create_new_filename
 from Products.Silva.converters import get_converter_for_mimetype
@@ -122,23 +120,28 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'Accept-Ranges', None)
 
 
-def manage_addFile(context, id, title=None, file=None):
+def manage_addFile(context, identifier, title=None, file=None):
     """Add a File
     """
-
-    content = file_factory(context, id, DEFAULT_MIMETYPE, file)
-    if content is None:
+    filename = None
+    if hasattr(file, 'name'):
+        filename = os.path.basename(file.name)
+    identifier = mangle.Id(
+        context, identifier or filename, file=file, interface=interfaces.IAsset)
+    identifier.cook()
+    if not identifier.isValid():
         raise ValueError(_(u"Invalid computed identifier."))
-    id = content.getId()
-    if id in context.objectIds():
+    identifier = str(identifier)
+    if identifier in context.objectIds():
         raise ValueError(
             _(u"Duplicate id. Please provide an explicit id."))
-    context._setObject(id, content)
-    content = getattr(context, id)
-    if title:
+    service = component.getUtility(IFilesService)
+    context._setObject(identifier, service.new_file(identifier))
+    content = getattr(context, identifier)
+    if title is not None:
         content.set_title(title)
     notify(ObjectCreatedEvent(content))
-    if file:
+    if file is not None:
         content.set_file_data(file)
     return content
 
@@ -572,7 +575,9 @@ class FileTextEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileTextFields)
-    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
+    actions  = silvaforms.Actions(
+        silvaforms.CancelEditAction(),
+        silvaforms.EditAction())
 
     def available(self):
         return self.context.is_text_editable()
@@ -587,20 +592,6 @@ class InfoPortlet(SMIAssetPortlet):
 
 
 # ZMI service and file creation
-
-def file_factory(self, id, content_type, file):
-    """Create a File.
-    """
-    filename = None
-    if hasattr(file, 'name'):
-        filename = os.path.basename(file.name)
-    id = mangle.Id(self, id or filename,
-        file=file, interface=interfaces.IAsset)
-    id.cook()
-    if not id.isValid():
-        return None
-    service_files = component.getUtility(IFilesService)
-    return service_files.new_file(str(id))
 
 
 def FileStorageTypeVocabulary(context):
@@ -743,12 +734,6 @@ class FileStorageConverter(object):
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
         return new_file
-
-
-contentObjectFactoryRegistry.registerFactory(
-    file_factory,
-    lambda id, ct, body: True,
-    -1)
 
 
 @grok.subscribe(

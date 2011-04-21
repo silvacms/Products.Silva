@@ -37,8 +37,6 @@ from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset, SMIAssetPortlet
 from Products.Silva.Asset import AssetEditTab
 from Products.Silva.helpers import create_new_filename
-from Products.Silva.ContentObjectFactoryRegistry import \
-    contentObjectFactoryRegistry
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
@@ -60,7 +58,7 @@ except ImportError:
 havePIL = 1
 
 
-def manage_addImage(context, id, title, file=None, REQUEST=None):
+def manage_addImage(context, identifier, title=None, file=None):
     """Add an Image.
     """
     if file is not None:
@@ -74,17 +72,23 @@ def manage_addImage(context, id, title, file=None, REQUEST=None):
         # Come back at the begining..
         file.seek(0)
 
-    content = image_factory(context, id, None, file)
-    if content is None:
+    filename = None
+    if hasattr(file, 'name'):
+        filename = os.path.basename(file.name)
+    identifier = mangle.Id(
+        context, identifier or filename, file=file, interface=interfaces.IAsset)
+    identifier.cook()
+    if not identifier.isValid():
         raise ValueError(_(u"Invalid computed identifier."))
-    id = content.getId()
-    if id in context.objectIds():
+    identifier = str(identifier)
+    if identifier in context.objectIds():
         raise ValueError(
             _(u"Duplicate id. Please provide an explicit id."))
-    context._setObject(id, content)
-    content = getattr(context, id)
-    content.set_title(title)
-    if file:
+    context._setObject(identifier, Image(identifier))
+    content = getattr(context, identifier)
+    if title is not None:
+        content.set_title(title)
+    if file is not None:
         content.set_image(file)
     notify(ObjectCreatedEvent(content))
     return content
@@ -775,14 +779,6 @@ def image_factory(self, id, content_type, file):
     img = Image(str(id)).__of__(self)
     return img
 
-
-def _should_create_image(id, content_type, body):
-    return content_type.startswith('image/')
-
-
-contentObjectFactoryRegistry.registerFactory(
-    image_factory,
-    _should_create_image)
 
 
 @grok.subscribe(interfaces.IImage, IObjectMovedEvent)

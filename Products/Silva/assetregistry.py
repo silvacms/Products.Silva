@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-"""mimetype-to-asset-factory registry"""
-
 _mimetype_to_factory = {}
 
 def getFactoryForMimetype(context, mimetype):
@@ -12,18 +10,17 @@ def getFactoryForMimetype(context, mimetype):
     if context.service_extensions.is_installed(extension):
         # Check to see if the extension is actually installed
         return factory
-    else:
-        return None
+    return None
 
 def registerFactoryForMimetype(mimetype, factory, silvaextension):
     # This will overwrite earlier registration for the same mimetype
     _mimetype_to_factory[mimetype] = (factory, silvaextension)
-    
+
 def registerFactoryForMimetypes(mimetypes, factory, silvaextension):
     # Utility for lists of mimetypes
     for mimetype in mimetypes:
         registerFactoryForMimetype(mimetype, factory, silvaextension)
-        
+
 def unregisterFactory(factory):
     types = []
     for type, spec in _mimetype_to_factory.items():
@@ -32,7 +29,7 @@ def unregisterFactory(factory):
             types.append(type)
     for type in types:
         unregisterMimetype(type)
-            
+
 def unregisterMimetype(mimetype):
     if _mimetype_to_factory.has_key(mimetype):
         del _mimetype_to_factory[mimetype]
