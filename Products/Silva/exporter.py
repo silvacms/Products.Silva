@@ -7,26 +7,23 @@ from five import grok
 from zope.component import getAdapter, getAdapters
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
-from silva.core.interfaces.adapters import IContentExporter, \
-    IDefaultContentExporter
-from Products.Silva.utility.interfaces import IExportUtility
+from silva.core.interfaces import IContentExporter, IDefaultContentExporter
+from silva.core.interfaces import IContentExporterRegistry
 
 
 class ExportUtility(grok.GlobalUtility):
     """Utility to manage export.
     """
+    grok.implements(IContentExporterRegistry)
 
-    grok.implements(IExportUtility)
-
-    def createContentExporter(self, context, name):
+    def get(self, context, name):
         """Create a content exporter.
         """
         return getAdapter(context, IContentExporter, name=name)
 
-    def listContentExporter(self, context):
+    def list(self, context):
         """List available exporter.
         """
-
         default = None
         all = []
         for adapter in getAdapters((context,), IContentExporter):

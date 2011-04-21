@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-"""Silva icon registry"""
-
 from five import grok
 from zope.annotation.interfaces import IAnnotations
 

@@ -7,14 +7,13 @@ import os.path
 import pkg_resources
 import types
 
+from five import grok
+from silva.core import interfaces
 from zope.configuration.name import resolve
 from zope.interface import implements
 from zope.testing import cleanup
 
 import Products
-
-from silva.core.conf.registry import Registry
-from silva.core import interfaces
 
 
 def meta_types_for_interface(interface):
@@ -143,8 +142,8 @@ class EggExtension(BaseExtension):
         return self._module_name
 
 
-class ExtensionRegistry(Registry):
-    implements(interfaces.IExtensionRegistry)
+class ExtensionRegistry(object):
+    grok.implements(interfaces.IExtensionRegistry)
 
     def __init__(self):
         self.clear_registry()
