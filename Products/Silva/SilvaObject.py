@@ -161,7 +161,7 @@ class SilvaObject(TitledObject, Security):
         """Get the object. Can be used with acquisition to get the Silva
         Document for a Version object.
         """
-        return self.aq_inner
+        return self
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
@@ -208,6 +208,19 @@ class SilvaObject(TitledObject, Security):
         """
         return self
 
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'is_default')
+    def is_default(self):
+        """returns True if the SilvaObject is a default document
+        """
+        return False
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'is_deletable')
+    def is_deletable(self):
+        """always deletable"""
+        return True
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
         """Render this as preview with the public view.
@@ -219,38 +232,6 @@ class SilvaObject(TitledObject, Security):
         if not IPreviewLayer.providedBy(self.REQUEST):
             alsoProvides(self.REQUEST, IPreviewLayer)
         return aq_inner(self).view_version()
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'public_preview')
-    def public_preview(self):
-        """Public preview.
-
-        By default this does the same as preview, but can be overridden.
-        """
-
-        # Be sure that nothing is cached by the browser.
-
-        REQUEST = self.REQUEST
-
-        response = REQUEST.RESPONSE
-        headers = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-                    ('Last-Modified',
-                        DateTime("GMT").strftime("%a, %d %b %Y %H:%M:%S GMT")),
-                    ('Cache-Control', 'no-cache, must-revalidate'),
-                    ('Cache-Control', 'post-check=0, pre-check=0'),
-                    ('Pragma', 'no-cache'),
-                    ]
-
-        placed = []
-        for key, value in headers:
-            if key not in placed:
-                response.setHeader(key, value)
-                placed.append(key)
-            else:
-                response.addHeader(key, value)
-
-
-        return self.preview()
 
     security.declareProtected(SilvaPermissions.View, 'view')
     def view(self):
@@ -289,23 +270,6 @@ class SilvaObject(TitledObject, Security):
         view = component.getMultiAdapter(
             (self, request), name=u'content.html')
         return view()
-
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_default')
-    def is_default(self):
-        """returns True if the SilvaObject is a default document
-
-            by default return False, overridden on Content where an actual
-            check is done
-        """
-        return False
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'is_deletable')
-    def is_deletable(self):
-        """always deletable"""
-        return 1
 
 
 InitializeClass(SilvaObject)
