@@ -208,13 +208,6 @@ class SilvaObject(TitledObject, Security):
         """
         return self
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_default')
-    def is_default(self):
-        """returns True if the SilvaObject is a default document
-        """
-        return False
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
         'is_deletable')
     def is_deletable(self):

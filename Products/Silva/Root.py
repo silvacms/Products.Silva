@@ -106,7 +106,7 @@ class Root(Publication, site.Site):
     # We do not want to register Root automaticaly.
     grok.implements(IRoot)
     silvaconf.icon('www/silva.png')
-    silvaconf.zmiAddable(True)
+    silvaconf.zmi_addable(True)
     silvaconf.factory('manage_addRootForm')
     silvaconf.factory('manage_addRoot')
 
@@ -249,6 +249,8 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         title = unicode(title, 'latin1')
     id = str(id)
     root = Root(id)
+    # backup creation datetime to restore it later (ZODB cache)
+    creation_datetime = root._v_creation_datetime
     container = self.Destination()
     container._setObject(id, root)
     root = getattr(container, id)
@@ -258,6 +260,10 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     try:
         # now set it all up
         install.installFromScratch(root)
+        # after installed we have metadata. we can set the title and
+        # the creation date.
+        root._v_creation_datetime = creation_datetime
+        root._set_creation_datetime()
         root.set_title(title)
 
         if add_search:

@@ -13,7 +13,7 @@ from OFS.interfaces import IObjectWillBeAddedEvent
 
 from silva.core.interfaces import IOrderableContainer
 from silva.core.interfaces import IOrderManager
-from silva.core.interfaces import ISilvaObject, IPublishable, IContent
+from silva.core.interfaces import ISilvaObject, IPublishable
 from silva.core.interfaces import ContentOrderChangedEvent
 
 
@@ -30,7 +30,7 @@ class OrderManager(grok.Annotation):
 
     def _is_valid(self, content):
         return (self.order_only.providedBy(content) and
-                not (IContent.providedBy(content) and content.is_default()))
+                not (IPublishable.providedBy(content) and content.is_default()))
 
     def add(self, content):
         """Add content to the end of the list of ordered ids.

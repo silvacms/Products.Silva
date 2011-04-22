@@ -31,24 +31,27 @@ class Publishable(SilvaObject):
 
     security = ClassSecurityInfo()
 
-    # ACCESSORS
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'is_default')
+    def is_default(self):
+        """returns True if the SilvaObject is a default document
+        """
+        return False
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
     def is_published(self, update_status=True):
-        return 1
+        return True
 
     security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'is_approved')
+        SilvaPermissions.AccessContentsInformation, 'is_approved')
     def is_approved(self, update_status=True):
-        return 0
+        return False
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
     def can_set_title(self):
-        """Analogous to is_deletable() (?)
-        """
-        return not self.is_published() and not self.is_approved()
+        return True
 
 
 InitializeClass(Publishable)
