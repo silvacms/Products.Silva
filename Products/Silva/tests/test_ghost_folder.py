@@ -8,7 +8,6 @@ import unittest
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
-from DateTime import DateTime
 from Acquisition import aq_chain
 
 from Products.Silva.testing import FunctionalLayer
@@ -300,28 +299,29 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addGhostFolder('ghost', 'Ghost')
 
         ghost = self.root.target.ghost
-        self.assertEqual(ghost.get_title(), u'Ghost target is broken')
+        self.assertEqual(ghost.get_title_editable(), u'Ghost target is broken')
         self.assertEqual(ghost.get_short_title(), u'Ghost target is broken')
+        self.assertEqual(ghost.get_title(), u'Ghost target is broken')
 
-    def test_ghost_sync_twice(self):
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'ghostfolder', 'Ghost Folder', haunted=self.folder4)
-        ghostfolder = self.root.ghostfolder
-        ghostfolder.haunt()
-        ghost = ghostfolder.subdoc
-        self.assertEquals('Silva Ghost', ghost.meta_type)
-        ghost_version = ghost.get_viewable()
-        self.assertEquals(self.subdoc, ghost_version.get_haunted())
-        self.assertEquals('public',
-                          ghost_version.version_status())
-        self.subdoc.set_unapproved_version_publication_datetime(
-            DateTime() - 10)
-        self.subdoc.approve_version()
-        ghostfolder.haunt()
-        ghost_version2 = ghost.get_viewable()
-        self.assertEquals(ghost_version, ghost_version2)
-        self.assertEquals('public', ghost_version.version_status())
+        ghost.set_haunted(self.root.folder)
+        self.assertEqual(ghost.get_title_editable(), 'Folder')
+        self.assertEqual(ghost.get_short_title(), 'Folder')
+        self.assertEqual(ghost.get_title(), 'Folder')
+
+        self.root.folder.set_title('Renamed Folder')
+        self.assertEqual(ghost.get_title_editable(), 'Renamed Folder')
+        self.assertEqual(ghost.get_short_title(), 'Renamed Folder')
+        self.assertEqual(ghost.get_title(), 'Renamed Folder')
+
+    def test_ghost_haunt_differences(self):
+        """Test modifications haunting in the source folder.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+
+        # Do some modifications
+        self.root.folder.manage_delObjects(['index', 'folder'])
+
 
 def test_suite():
     suite = unittest.TestSuite()
