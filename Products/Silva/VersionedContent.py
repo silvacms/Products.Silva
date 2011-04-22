@@ -88,7 +88,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
         previewable = self.get_previewable()
         if previewable is None:
             return ""
-        return previewable.get_title()
+        return previewable.get_title_editable()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_title_or_id_editable')
@@ -105,7 +105,6 @@ class VersionedContent(Versioning, Content, BaseFolder):
     def get_short_title(self):
         """Get short_title for public use, from published version.
         """
-        # Analogous to get_title
         viewable = self.get_viewable()
         if viewable is None:
             return self.id
@@ -116,7 +115,6 @@ class VersionedContent(Versioning, Content, BaseFolder):
     def get_short_title_editable(self):
         """Get short_title for editable or previewable use
         """
-        # Analogous to get_title_editable
         previewable = self.get_previewable()
         if previewable is None:
             return self.id

@@ -10,7 +10,7 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_inner
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from DateTime import DateTime
 
@@ -149,17 +149,14 @@ class GhostFolder(GhostBase, Folder.Folder):
         (None, None, SyncCopy),
         ]
 
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'haunt')
     def haunt(self):
         """populate the the ghost folder with ghosts
         """
         haunted = self.get_haunted()
-        if haunted is None:
-            return
         if self.get_link_status() != self.LINK_OK:
-            return
+            raise ValueError(_(u"Ghost Folder is not refreshed as it have an invalid target."))
         ghost = self
         assert IContainer.providedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
@@ -257,37 +254,6 @@ class GhostFolder(GhostBase, Folder.Folder):
                 del g_ids[0]
         return [(haunted, h_id, ghost, g_id) for (h_id, g_id) in ids]
 
-    security.declareProtected(SilvaPermissions.View,'get_link_status')
-    def get_link_status(self):
-        """return an error code if this version of the ghost is broken.
-        returning None means the ghost is Ok.
-        """
-        content = self.get_haunted()
-        if content is None:
-            return self.LINK_VOID
-        if IGhostAware.providedBy(content):
-            return self.LINK_GHOST
-        if IContent.providedBy(content):
-            return self.LINK_CONTENT
-        if not IContainer.providedBy(content):
-            return self.LINK_NO_FOLDER
-        if self.isReferencingSelf(content):
-            return self.LINK_CIRC
-        return self.LINK_OK
-
-    def isReferencingSelf(self, content):
-        """returns True if ghost folder references self or a ancestor of self
-        """
-        if content is None:
-            content = self.get_haunted()
-            if content is None:
-                # if we're not referencing anything it is not a circular
-                # reference for sure
-                return False
-        content_path = content.getPhysicalPath()
-        self_path = self.getPhysicalPath()
-        return content_path == self_path[:len(content_path)]
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'to_publication')
     def to_publication(self):
@@ -316,12 +282,13 @@ class GhostFolder(GhostBase, Folder.Folder):
             return content.is_transparent()
         return 0
 
+    security.declareProtected(SilvaPermissions.View,'get_publication')
     def get_publication(self):
         """returns self if haunted object is a publication"""
         content = self.get_haunted()
         if IPublication.providedBy(content):
-            return self.aq_inner
-        return self.aq_inner.aq_parent.get_publication()
+            return self
+        return aq_parent(self).get_publication()
 
     def is_deletable(self):
         return 1
@@ -403,7 +370,10 @@ class GhostFolderEditForm(GhostEditForm):
 
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)
 def haunt_created_folder(folder, event):
-    aq_inner(folder).haunt()
+    # If the ghost folder is in a valid state after creation, haunt
+    # its content.
+    if folder.get_link_status() == folder.LINK_OK:
+        folder.haunt()
 
 
 class AddableContents(grok.Adapter):

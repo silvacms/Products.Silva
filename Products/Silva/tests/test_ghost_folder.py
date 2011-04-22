@@ -12,15 +12,15 @@ from DateTime import DateTime
 from Acquisition import aq_chain
 
 from Products.Silva.testing import FunctionalLayer
-from Products.Silva.tests.helpers import publish_object
 
-from silva.core.interfaces import IGhostFolder
+from silva.core.interfaces import IGhostFolder, IGhost
+from silva.core.interfaces import IPublication, IFolder
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.references.reference import BrokenReferenceError
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 
 
-class GhostTestCase(unittest.TestCase):
+class GhostFolderTestCase(unittest.TestCase):
     """Test the Ghost object.
     """
     layer = FunctionalLayer
@@ -30,176 +30,280 @@ class GhostTestCase(unittest.TestCase):
         self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('document', 'Document')
         factory.manage_addFolder('folder', 'Folder')
-        factory.manage_addPublication('publication', 'Publication')
+        factory.manage_addFolder('target', 'Target Folder')
 
         factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addFolder('ghost', 'Ghost')
-        return
+        factory.manage_addAutoTOC('index', 'Index')
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addPublication('publication', 'Publication')
+        factory.manage_addMockupVersionedContent('document', 'Document')
 
-        def factory(obj, product="Silva"):
-            return obj.manage_addProduct[product]
+        factory = self.root.folder.folder.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('document', 'Document')
 
-        for i in range(1,4):
-            id = 'doc%d' % i
-            title = 'Doc%d' % i
-            factory(self.root, 'SilvaDocument').manage_addDocument(id, title)
-            setattr(self, id, getattr(self.root, id))
-
-        factory(self.root).\
-            manage_addPublication('publication5', 'Publication5')
-        self.publication5 = getattr(self.root, 'publication5')
-
-        factory(self.folder4, 'SilvaDocument').\
-            manage_addDocument('subdoc', 'Subdoc')
-        self.subdoc = getattr(self.folder4, 'subdoc')
-
-        factory(self.folder4).manage_addFolder('subfolder', 'Subfolder')
-        self.subfolder = getattr(self.folder4, 'subfolder')
-
-        factory(self.subfolder, 'SilvaDocument').\
-            manage_addDocument('subsubdoc', 'Subsubdoc')
-        self.subsubdoc = getattr(self.subfolder, 'subsubdoc')
-
-        factory(self.publication5, 'SilvaDocument').\
-            manage_addDocument('subdoc2', 'Subdoc2')
-        self.subdoc2 = getattr(self.publication5, 'subdoc2')
+        factory = self.root.folder.publication.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('document', 'Document')
+        factory.manage_addFolder('folder', 'Folder')
 
     def test_ghost_folder(self):
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'gf1', 'GhostFolder', haunted=self.publication5)
-        gfpub = getattr(self.root, 'gf1')
+        """Test a Ghost Folder haunting to a Folder.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
 
-        factory.manage_addGhostFolder(
-            'gf2', 'GhostFolder2', haunted=self.folder4)
-        gffold = getattr(self.root, 'gf2')
-
-        self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
-        self.assertEquals(gffold.get_link_status(), gffold.LINK_OK)
-
-        metadata_pub = self.root.service_metadata.getMetadata(
-            self.root.publication5)
-        metadata_gf = self.root.service_metadata.getMetadata(gfpub)
-        metadata_pub.setValues('silva-content', {'maintitle': 'snafu'})
-        self.assertEquals(metadata_gf.get('silva-content', 'maintitle'),
-            'snafu')
-
-        gfpub.haunt()
-
-        # the publication's 'subdoc2' document is not published, so the ghost
-        # folder should say it's not published either no matter what the
-        # status of the contained ghost that points to the doc
-        self.assertTrue(not gfpub.is_published())
-
-        # the ghost's documents are published on creation, so if we publish
-        # the haunted document is_published() should return true
-        doc = self.subdoc2
-        publish_object(doc)
-
-        self.assertTrue(gfpub.is_published())
-
-        # now if we close the haunted document, is_published() should return
-        # false again
-        ghostdoc = gfpub.subdoc2
-        ghostdoc.close_version()
-
-        self.assertTrue(not gfpub.is_published())
-
-    def test_ghost_folder_to_publication(self):
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'gf1', 'GhostFolder', haunted=self.publication5)
-        gfpub = getattr(self.root, 'gf1')
-
-        self.assertTrue(gfpub.implements_container())
-        self.assertTrue(gfpub.implements_publication())
-        self.assertEquals(gfpub.get_link_status(), gfpub.LINK_OK)
-        metadata_pub = self.root.service_metadata.getMetadata(
-            self.root.publication5)
-        metadata_pub.setValues('silva-content', {'maintitle': 'snafu'})
-        gfpub.to_publication()
-        pub = self.root.gf1
-        self.assertEquals(pub.meta_type, 'Silva Publication')
-        metadata_newpub = self.root.service_metadata.getMetadata(pub)
-        self.assertEquals(metadata_newpub.get('silva-content', 'maintitle'),
-            'snafu')
-
-    def test_ghost_folder_circular(self):
-        # add some content in a tree
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('f', 'F')
-        f = getattr(self.root, 'f')
-
-        factory = f.manage_addProduct['Silva']
-        factory.manage_addFolder('g', 'G')
-        g = getattr(f, 'g')
-
-        factory = g.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('foo', 'Foo')
-
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('h', 'H')
-        h = getattr(self.root, 'h')
-
-        factory.manage_addGhostFolder(
-            'gf1', 'Ghost forlder 1', haunted=g)
-
-        self.assertEquals(g, self.root.gf1.get_haunted())
-        self.assertEquals(self.root.gf1.LINK_OK,
-                          self.root.gf1.get_link_status())
-
-        # now change link to circular
-        self.root.gf1.set_haunted(self.root)
-        self.assertEquals(self.root.gf1.LINK_CIRC,
-                          self.root.gf1.get_link_status())
-
-        # set up some more complicated circular setup
-        factory = g.manage_addProduct['Silva']
-        factory.manage_addGhostFolder(
-            'gf2', 'Ghost folder2', haunted=g)
-        gf2 = getattr(g, 'gf2')
-
-        self.assertEquals(
-            gf2.LINK_CIRC,
-            gf2.get_link_status())
-        gf2.set_haunted(gf2)
-        self.assertEquals(
-            gf2.LINK_GHOST,
-            gf2.get_link_status())
-        gf2.set_haunted(g)
-        self.assertEquals(
-            gf2.LINK_CIRC,
-            gf2.get_link_status())
-        gf2.set_haunted(self.root)
-        self.assertEquals(
-            gf2.LINK_CIRC,
-            gf2.get_link_status())
-        gf2.set_haunted(h)
-        self.assertEquals(
-            gf2.LINK_OK,
-            gf2.get_link_status())
-
-    def test_ghost_folder_modification_time(self):
-        # https://infrae.com/issue/silva/issue1645
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addGhost(
-            'ghost1', 'Ghost 1', haunted=self.doc1)
-        ghost = getattr(self.root, 'ghost1')
-
+        ghost = self.root.target.ghost
+        self.assertTrue(verifyObject(IGhostFolder, ghost))
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
         self.assertEqual(
-            ghost.get_modification_datetime(),
-            self.doc1.get_modification_datetime())
+            ghost.get_haunted(),
+            self.root.folder)
+        self.assertEqual(
+            aq_chain(ghost.get_haunted()),
+            aq_chain(self.root.folder))
 
-        # Let's delete the haunted object;
-        # `get_modification_datetime` should still work
-        service = getUtility(IReferenceService)
-        service.delete_reference(ghost.get_editable(), name=u'haunted')
-        self.root.manage_delObjects(['doc1'])
+        # Content have been ghost with the same IDS
+        self.assertEqual(
+            ghost.objectIds(),
+            ['document', 'folder', 'index', 'publication'])
+
+        # Folderish content made Ghost folders
+        self.assertTrue(verifyObject(IGhostFolder, ghost.folder))
+        self.assertEqual(
+            ghost.folder.get_haunted(),
+            self.root.folder.folder)
+        self.assertEqual(
+            aq_chain(ghost.folder.get_haunted()),
+            aq_chain(self.root.folder.folder))
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertEqual(
+            ghost.publication.get_haunted(),
+            self.root.folder.publication)
+        self.assertEqual(
+            aq_chain(ghost.publication.get_haunted()),
+            aq_chain(self.root.folder.publication))
+
+        # Regular content are ghosts
+        self.assertTrue(verifyObject(IGhost, ghost.index))
+        self.assertEqual(
+            ghost.index.get_haunted(),
+            self.root.folder.index)
+        self.assertTrue(verifyObject(IGhost, ghost.document))
+        self.assertEqual(
+            ghost.document.get_haunted(),
+            self.root.folder.document)
+
+        # Ghosted folder was published so the ghost is published as well.
+        self.assertTrue(ghost.is_published())
+
+        # Ghost is done recursively
+        self.assertEqual(
+            ghost.folder.objectIds(),
+            ['document'])
+
+        # Ghosted target of this subfodler was not published, so his the ghost
+        self.assertFalse(ghost.folder.is_published())
+
+        # Asking the publication on a ghost folder will not return
+        # itself (it is not a publication).
+        self.assertEqual(ghost.get_publication(), self.root)
+        self.assertEqual(ghost.folder.get_publication(), self.root)
+
+    def test_ghost_publication(self):
+        """Test a Ghost Folder haunting to a Publication.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder(
+            'ghost', 'Ghost', haunted=self.root.folder.publication)
+
+        ghost = self.root.target.ghost
+        self.assertTrue(verifyObject(IGhostFolder, ghost))
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
+        self.assertEqual(
+            ghost.get_haunted(),
+            self.root.folder.publication)
+        self.assertEqual(
+            aq_chain(ghost.get_haunted()),
+            aq_chain(self.root.folder.publication))
+
+        # Content have been ghost with the same IDS
+        self.assertEqual(
+            ghost.objectIds(),
+            ['document', 'folder'])
+
+        # If you ask the publication on the ghost folder it will
+        # return itself (and if done on a lower ghost folder ghost a
+        # folder as well).
+        self.assertEqual(ghost.get_publication(), ghost)
+        self.assertEqual(ghost.folder.get_publication(), ghost)
+
+    def test_ghost_reference(self):
+        """Test the reference created by the ghost.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        reference = getUtility(IReferenceService).get_reference(
+            ghost, name=u"haunted")
+        self.assertTrue(verifyObject(IReferenceValue, reference))
+        self.assertEqual(
+            aq_chain(reference.target),
+            aq_chain(self.root.folder))
+        self.assertEqual(
+            aq_chain(reference.source),
+            aq_chain(ghost))
+
+    def test_ghost_to_publication(self):
+        """Test convertion of a Ghost Folder to a Publication.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        self.assertFalse(IPublication.providedBy(ghost))
+        self.assertTrue(verifyObject(IGhostFolder, ghost))
+        self.assertEqual(
+            self.root.target.objectValues('Silva Ghost Folder'),
+            [ghost])
+        self.assertEqual(
+            self.root.target.objectValues('Silva Publication'),
+            [])
+
+        ghost.to_publication()
+
+        ghost = self.root.target.ghost
+        self.assertTrue(verifyObject(IPublication, ghost))
+        self.assertFalse(IGhostFolder.providedBy(ghost))
+        self.assertEqual(
+            self.root.target.objectValues('Silva Ghost Folder'),
+            [])
+        self.assertEqual(
+            self.root.target.objectValues('Silva Publication'),
+            [ghost])
+
+        # Content is still there
+        self.assertEqual(
+            ghost.objectIds(),
+            ['document', 'folder', 'index', 'publication'])
+
+        # And there are still ghosts
+        self.assertTrue(verifyObject(IGhostFolder, ghost.folder))
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertTrue(verifyObject(IGhost, ghost.index))
+        self.assertTrue(verifyObject(IGhost, ghost.document))
+
+    def test_ghost_to_folder(self):
+        """Test Ghost Folder convertion to a regular Folder.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
+
+        ghost = self.root.target.ghost
+        self.assertTrue(verifyObject(IGhostFolder, ghost))
+        self.assertEqual(
+            self.root.target.objectValues('Silva Ghost Folder'),
+            [ghost])
+        self.assertEqual(
+            self.root.target.objectValues('Silva Folder'),
+            [])
+
+        ghost.to_folder()
+
+        ghost = self.root.target.ghost
+        self.assertTrue(verifyObject(IFolder, ghost))
+        self.assertFalse(IGhostFolder.providedBy(ghost))
+        self.assertEqual(
+            self.root.target.objectValues('Silva Ghost Folder'),
+            [])
+        self.assertEqual(
+            self.root.target.objectValues('Silva Folder'),
+            [ghost])
+
+        # Content is still there
+        self.assertEqual(
+            ghost.objectIds(),
+            ['document', 'folder', 'index', 'publication'])
+
+        # And there are still ghosts
+        self.assertTrue(verifyObject(IGhostFolder, ghost.folder))
+        self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
+        self.assertTrue(verifyObject(IGhost, ghost.index))
+        self.assertTrue(verifyObject(IGhost, ghost.document))
+
+    def test_ghost_modification_time(self):
+        """Test Ghost Folder that the modification time is the same
+        than the Folder.
+        """
+        # XXX I don't think this should be the case, maybe more likely
+        # the modification datetime of the ghost folder itself, so,
+        # the datetime of the last sync.
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost')
+
+        ghost = self.root.target.ghost
         self.assertEqual(ghost.get_modification_datetime(), None)
 
-    def test_ghost_folder_sync_twice(self):
+        ghost.set_haunted(self.root.folder)
+        self.assertEqual(
+            ghost.get_modification_datetime(),
+            self.root.folder.get_modification_datetime())
+
+        ghost.set_haunted(0)
+        self.assertEqual(ghost.get_modification_datetime(), None)
+
+    def test_ghost_link_status(self):
+        """Test Ghost Folder get_link_status. You cannot haunt a Ghost
+        Folder unless is link status is correct.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost')
+
+        ghost = self.root.target.ghost
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_EMPTY)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+        ghost.set_haunted(self.root.folder.document)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_CONTENT)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+        ghost.set_haunted(self.root)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+        ghost.set_haunted(self.root.target.ghost)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+        ghost.set_haunted(self.root.target.folder)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
+        ghost.haunt()
+
+        ghost.set_haunted(self.root.target.ghost.folder)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+        ghost.set_haunted(0)
+        self.assertEqual(ghost.get_link_status(), ghost.LINK_EMPTY)
+        with self.assertRaises(ValueError):
+            ghost.haunt()
+
+    def test_ghost_title(self):
+        """Test Ghost Folder title.
+        """
+        factory = self.root.target.manage_addProduct['Silva']
+        factory.manage_addGhostFolder('ghost', 'Ghost')
+
+        ghost = self.root.target.ghost
+        self.assertEqual(ghost.get_title(), u'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title(), u'Ghost target is broken')
+
+    def test_ghost_sync_twice(self):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhostFolder(
             'ghostfolder', 'Ghost Folder', haunted=self.folder4)
@@ -221,5 +325,5 @@ class GhostTestCase(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(GhostTestCase))
+    suite.addTest(unittest.makeSuite(GhostFolderTestCase))
     return suite

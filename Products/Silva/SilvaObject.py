@@ -93,6 +93,28 @@ class TitledObject(object):
             title = self.get_silva_object().id
         return title
 
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
+    def get_title_editable(self):
+        """Get the title of the editable version if possible.
+        """
+        return self.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
+    def get_short_title_editable(self):
+        """Get the short title of the editable version if possible.
+        """
+        return self.get_short_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_or_id_editable')
+    def get_title_or_id_editable(self):
+        """Get the title of the editable version if possible, or id if
+        not available.
+        """
+        return self.get_title_or_id()
+
 
 InitializeClass(TitledObject)
 
@@ -140,28 +162,6 @@ class SilvaObject(TitledObject, Security):
         Document for a Version object.
         """
         return self.aq_inner
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
-    def get_title_editable(self):
-        """Get the title of the editable version if possible.
-        """
-        return self.get_title()
-
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
-    def get_short_title_editable(self):
-        """Get the short title of the editable version if possible.
-        """
-        return self.get_short_title()
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title_or_id_editable')
-    def get_title_or_id_editable(self):
-        """Get the title of the editable version if possible, or id if
-        not available.
-        """
-        return self.get_title_or_id()
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')

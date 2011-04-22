@@ -9,7 +9,6 @@ from zope.component import getUtility
 
 from Acquisition import aq_chain
 
-from Products.Silva.Ghost import GhostVersion
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IGhost, IGhostVersion
@@ -42,8 +41,8 @@ class GhostTestCase(unittest.TestCase):
         factory.manage_addGhost('ghost', 'Ghost', haunted=self.root.document)
 
         version = self.root.ghost.get_editable()
-        self.failUnless(verifyObject(IGhost, self.root.ghost))
-        self.failUnless(verifyObject(IGhostVersion, version))
+        self.assertTrue(verifyObject(IGhost, self.root.ghost))
+        self.assertTrue(verifyObject(IGhostVersion, version))
 
         self.assertEqual(version.get_haunted(), self.root.document)
         self.assertEqual(
@@ -65,9 +64,13 @@ class GhostTestCase(unittest.TestCase):
         ghost = self.root.ghost.get_editable()
         reference = getUtility(IReferenceService).get_reference(
             ghost, name=u"haunted")
-        self.failUnless(verifyObject(IReferenceValue, reference))
-        self.assertEqual(aq_chain(reference.target), aq_chain(self.root.document))
-        self.assertEqual(aq_chain(reference.source), aq_chain(ghost))
+        self.assertTrue(verifyObject(IReferenceValue, reference))
+        self.assertEqual(
+            aq_chain(reference.target),
+            aq_chain(self.root.document))
+        self.assertEqual(
+            aq_chain(reference.source),
+            aq_chain(ghost))
 
     def test_ghost_title(self):
         """Test ghost get_title. It should return the title of the target.
@@ -79,23 +82,30 @@ class GhostTestCase(unittest.TestCase):
 
         self.root.ghost.get_editable().set_haunted(self.root.document)
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
+        self.assertEqual(self.root.ghost.get_short_title(), 'document')
         self.assertEqual(self.root.ghost.get_title(), '')
 
         IPublicationWorkflow(self.root.document).publish()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
+        self.assertEqual(self.root.ghost.get_short_title(), 'Document')
         self.assertEqual(self.root.ghost.get_title(), '')
 
         IPublicationWorkflow(self.root.ghost).publish()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
+        self.assertEqual(self.root.ghost.get_short_title(), 'Document')
         self.assertEqual(self.root.ghost.get_title(), 'Document')
 
         IPublicationWorkflow(self.root.document).close()
         self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
+        self.assertEqual(self.root.ghost.get_short_title(), 'document')
         self.assertEqual(self.root.ghost.get_title(), '')
 
         self.root.ghost.get_viewable().set_haunted(0)
         self.assertEqual(
             self.root.ghost.get_title_editable(),
+            u'Ghost target is broken')
+        self.assertEqual(
+            self.root.ghost.get_short_title(),
             u'Ghost target is broken')
         self.assertEqual(
             self.root.ghost.get_title(),
@@ -129,25 +139,29 @@ class GhostTestCase(unittest.TestCase):
         factory.manage_addGhost('ghost', 'Ghost')
 
         version = self.root.ghost.get_editable()
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_EMPTY)
+        self.assertEqual(version.get_link_status(), version.LINK_EMPTY)
 
         version.set_haunted(self.root.folder)
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_FOLDER)
+        self.assertEqual(version.get_link_status(), version.LINK_FOLDER)
 
         version.set_haunted(self.root.folder.ghost)
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_GHOST)
+        self.assertEqual(version.get_link_status(), version.LINK_GHOST)
 
         version.set_haunted(self.root.image)
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_NO_CONTENT)
+        self.assertEqual(version.get_link_status(), version.LINK_NO_CONTENT)
 
         version.set_haunted(self.root.ghost)
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_CIRC)
+        self.assertEqual(version.get_link_status(), version.LINK_CIRC)
+
+        version.set_haunted(self.root.document)
+        self.assertEqual(version.get_link_status(), version.LINK_OK)
 
         version.set_haunted(0)
-        self.assertEqual(version.get_link_status(), GhostVersion.LINK_EMPTY)
+        self.assertEqual(version.get_link_status(), version.LINK_EMPTY)
 
     def test_ghost_modification_time(self):
-        """Test that the ghost modification_time is the same than the document.
+        """Test that the ghost modification_time is the same than the
+        document.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost('ghost', 'Ghost')

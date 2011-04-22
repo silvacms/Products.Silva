@@ -41,7 +41,6 @@ class GhostBase(object):
     # be returned.
     LINK_OK = None   # link is ok
     LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
-    LINK_VOID = 2    # object pointed to does not exist
     LINK_FOLDER = 3  # link points to folder
     LINK_GHOST = 4   # link points to another ghost
     LINK_NO_CONTENT = 5 # link points to something which is not a content
@@ -56,27 +55,25 @@ class GhostBase(object):
         """
         pass
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_title')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title')
     def get_title(self):
         """Get title.
         """
         content = self.get_haunted()
         if content is None:
             return _(u"Ghost target is broken")
-        else:
-            return content.get_title()
+        return content.get_title()
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_editable')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
     def get_title_editable(self):
         """Get title.
         """
         content = self.get_haunted()
         if content is None:
             return _(u"Ghost target is broken")
-        else:
-            return content.get_title_editable()
+        return content.get_title_editable()
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
@@ -93,11 +90,7 @@ class GhostBase(object):
         content = self.get_haunted()
         if content is None:
             return _(u"Ghost target is broken")
-        else:
-            short_title = content.get_short_title()
-        if not short_title:
-            return self.get_title()
-        return short_title
+        return content.get_short_title()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
@@ -120,20 +113,38 @@ class GhostBase(object):
 
     security.declareProtected(SilvaPermissions.View, 'get_link_status')
     def get_link_status(self):
-        """return an error code if this version of the ghost is broken.
+        """Return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
-        content = self.get_haunted()
-        if content is None:
+        haunted = self.get_haunted()
+        if haunted is None:
             return self.LINK_EMPTY
-        if content == self.get_content():
-            return self.LINK_CIRC
-        if IGhostAware.providedBy(content):
+        # Check for cicular reference. You cannot select an ancestor
+        # or descandant of the ghost (or the ghost)
+        haunted_path = haunted.getPhysicalPath()
+        ghost_path = self.get_silva_object().getPhysicalPath()
+        if haunted_path > ghost_path:
+            if ghost_path == haunted_path[:len(ghost_path)]:
+                return self.LINK_CIRC
+        elif haunted_path == ghost_path[:len(haunted_path)]:
+                return self.LINK_CIRC
+        # Check other cases.
+        if IGhostAware.providedBy(haunted):
             return self.LINK_GHOST
-        if IContainer.providedBy(content):
-            return self.LINK_FOLDER
-        if not IContent.providedBy(content):
-            return self.LINK_NO_CONTENT
+        if IContainer.providedBy(self):
+            # If we are a container, we expect to have a container as
+            # target.
+            if IContent.providedBy(haunted):
+                return self.LINK_CONTENT
+            if not IContainer.providedBy(haunted):
+                return self.LINK_NO_FOLDER
+        else:
+            # If we are not a container, we expect to have a content
+            # as target.
+            if IContainer.providedBy(haunted):
+                return self.LINK_FOLDER
+            if not IContent.providedBy(haunted):
+                return self.LINK_NO_CONTENT
         return self.LINK_OK
 
 
@@ -155,19 +166,12 @@ class Ghost(VersionedContent):
     silvaconf.version_class('GhostVersion')
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
-    def get_title_editable(self):
-        """Get title for editable or previewable use
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_short_title(self):
+        """Get short_title for public use, from published version.
         """
-        # Ask for 'previewable', which will return either the 'next version'
-        # (which may be under edit, or is approved), or the public version,
-        # or, as a last resort, the closed version.
-        # This to be able to show at least some title in the Silva edit
-        # screens.
-        previewable = self.get_previewable()
-        if previewable is None:
-            return "[No title available]"
-        return previewable.get_title_editable()
+        version = self.getLastVersion()
+        return version.get_short_title()
 
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'can_set_title')
@@ -194,10 +198,9 @@ class Ghost(VersionedContent):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
     def is_published(self, update_status=True):
-        public_id = self.get_public_version()
-        if not public_id:
+        public = self.get_viewable()
+        if public is None:
             return False
-        public = getattr(self, public_id)
         haunted = public.get_haunted()
         if haunted is None:
             return False
