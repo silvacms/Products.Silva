@@ -410,6 +410,12 @@ class ViewCode(object):
         is_manager = getSecurityManager().getUser().has_role(
             ['Manager'], object=self)
         return Globals.DevelopmentMode and is_manager
+    
+    def roles_helper(self):
+        """helper method, copied from views/roles_helper.py, to improve
+           support for the object lookup window"""
+        from Products.Silva.roleinfo import READER_ROLES
+        return list(READER_ROLES)
 
 InitializeClass(ViewCode)
 
@@ -457,5 +463,6 @@ class FakeView(object):
         icon_path = '%s/%s' % (self.root_url, content_icon)
         return tag % {'icon_path': icon_path, 'alt': content.meta_type}
 
-
+    
+    
 InitializeClass(FakeView)

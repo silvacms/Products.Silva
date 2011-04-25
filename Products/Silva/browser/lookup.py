@@ -21,6 +21,8 @@ from silva.core.interfaces import (IContent, IContainer, IAsset,
 strip_poss_re = re.compile('\&?possible_container=[^\&]*')
 repl_sel_path_re = re.compile('(\&?selected_path=)[^\&]*')
 
+from zope.interface import alsoProvides
+from silva.core.smi.interfaces import ISMILayer
 
 class ObjectLookup(BrowserView):
     """View that allows browsing and searching for objects.
@@ -28,6 +30,8 @@ class ObjectLookup(BrowserView):
     render_lookup = ViewPageTemplateFile('object_lookup.pt')
 
     def __call__(self):
+        
+        alsoProvides(self.request, ISMILayer)
         psp = self.request.get('possible_container',None)
         if psp:
             scheme, netloc, ppath, parameters, query, fragment = urlparse(psp)

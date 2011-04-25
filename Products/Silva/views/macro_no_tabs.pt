@@ -29,18 +29,8 @@
 <title tal:content="title">
   Title
 </title>
-<link href="globals/favicon.ico"
-  rel="shortcut icon"
-  tal:attributes="href string:${root_url}/globals/favicon.ico"
-/>
-<style media="all"
-  type="text/css"
-  xml:space="preserve"
-  tal:content="string: @import url(${root_url}/++resource++silva.core.smi/smi.css)">
-</style>
-<link rel="stylesheet" type="text/css" 
-  tal:condition="exists:context/local-smi-styles.css"
-  tal:attributes="href context/local-smi-styles.css/absolute_url" />
+<tal:favicon replace="structure provider:favicon" />
+<tal:resource replace="structure provider:resources" />
 <metal:block define-slot="extension_css" />
 <tal:block replace="nothing"> _______ hooks for refresh function _______ </tal:block>
 <metal:block define-slot="meta" />
