@@ -30,7 +30,7 @@ class MockupVersionedContent(VersionedContent):
 class MockupView(silvaviews.View):
     """View mockup a Version.
     """
-    silvaconf.context(MockupVersion)
+    silvaconf.context(MockupVersionedContent)
 
     def render(self):
         return self.content.get_title()
