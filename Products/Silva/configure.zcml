@@ -23,9 +23,6 @@
 
   <include package="Products.Formulator" />
   <include package="Products.SilvaMetadata" />
-  <include package="Products.SilvaDocument" />
-  <include package="Products.SilvaFind" />
-  <include package="Products.SilvaExternalSources" />
 
   <include package=".browser" />
 
