@@ -12,12 +12,14 @@ from DateTime import DateTime
 
 from sprout.saxext import xmlexport
 from silva.core import interfaces
-from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import IPublicationWorkflow, IExportSettings
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import canonical_path
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
+from Products.Silva.silvaxml import ImportExportSettingsErrors
+
 
 NS_SILVA = 'http://infrae.com/namespace/silva'
 NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
@@ -417,7 +419,8 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
         self.endElement('silva')
 
 
-class ExportSettings(xmlexport.BaseSettings):
+class ExportSettings(xmlexport.BaseSettings, ImportExportSettingsErrors):
+    grok.implements(IExportSettings)
 
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,

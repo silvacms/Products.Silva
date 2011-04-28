@@ -14,12 +14,13 @@ from DateTime import DateTime
 from Products.Formulator.Errors import ValidationError
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import ISilvaObject
+from silva.core.interfaces import ISilvaObject, IImportSettings
 from silva.core.interfaces.events import ContentImported, IContentImported
 from silva.core.references.reference import canonical_path
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade.silvaxml import upgradeXMLOnFD
 from sprout.saxext import xmlimport, collapser
+from Products.Silva.silvaxml import ImportExportSettingsErrors
 
 
 NS_URI = 'http://infrae.com/namespace/silva'
@@ -617,7 +618,8 @@ def make_character_handler(name, handler):
     return CharacterHandler
 
 
-class ImportSettings(xmlimport.BaseSettings):
+class ImportSettings(xmlimport.BaseSettings, ImportExportSettingsErrors):
+    grok.implements(IImportSettings)
 
     def __init__(self, replace_objects=False):
         xmlimport.BaseSettings.__init__(
