@@ -148,7 +148,7 @@
           <td>
             <a title="preview"
               tal:attributes="
-                href string:${item_info/item_url}/edit/tab_preview;
+                href string:${item_info/item_url}edit/tab_preview;
                 class item_info/status_style;"
               i18n:attributes="title"
               tal:content="python:(item_info['title_editable'] or default)">
@@ -162,7 +162,7 @@
             <a class="blacklink"
               title="properties"
               tal:condition="item_info/has_modification_time"
-              tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
+              tal:attributes="href string:${item_info/item_url}edit/tab_metadata"
               tal:content="structure item_info/modification_time"
               i18n:attributes="title">
               date
@@ -170,7 +170,7 @@
             <a class="closed"
               title="properties"
               tal:condition="not:item_info/has_modification_time"
-              tal:attributes="href string:${item_info/item_url}/edit/tab_metadata"
+              tal:attributes="href string:${item_info/item_url}edit/tab_metadata"
               i18n:attributes="title">
               <em i18n:translate="">n/a</em>
             </a>
@@ -183,7 +183,7 @@
             <a class="blacklink"
               title="publish"
               tal:condition="is_clickable"
-              tal:attributes="href string:${item_info/item_url}/edit/tab_status"
+              tal:attributes="href string:${item_info/item_url}edit/tab_status"
               tal:content="structure item_info/last_author"
               i18n:attributes="title">
               authorname
@@ -225,7 +225,7 @@
             </a>
             <tal:block condition="python:may_change_content and not item_info['is_default']">
               <a style="float:right" title="move up"
-                tal:attributes="href string:${url}/edit/tab_edit_move_up?id=${item_info/item_id}"
+                tal:attributes="href string:${url}edit/tab_edit_move_up?id=${item_info/item_id}"
                 i18n:attributes="title"
                 ><img alt="move up"
                   height="12"
@@ -233,7 +233,7 @@
                   tal:attributes="src string:${root_url}/globals/up.gif"
                   i18n:attributes="alt"
                 /></a><a style="float:right" title="move down"
-                tal:attributes="href string:${url}/edit/tab_edit_move_down?id=${item_info/item_id}"
+                tal:attributes="href string:${url}edit/tab_edit_move_down?id=${item_info/item_id}"
                 i18n:attributes="title"
                 ><img alt="move down"
                   height="12"
@@ -323,7 +323,7 @@
             <a title="preview"
               tal:content="python: asset_info['title'] or default"
               tal:attributes="
-                href string:${asset_info/asset_url}/edit/tab_preview;
+                href string:${asset_info/asset_url}edit/tab_preview;
                 class asset_info/blacklink_class"
               i18n:attributes="title">
               <em i18n:translate="">view</em>
@@ -336,7 +336,7 @@
             <a class="blacklink"
               title="properties"
               tal:condition="asset_info/has_modification_time"
-              tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
+              tal:attributes="href string:${asset_info/asset_url}edit/tab_metadata"
               tal:content="structure asset_info/modification_time"
               i18n:attributes="title">
               date
@@ -344,7 +344,7 @@
             <a class="closed"
               title="properties"
               tal:condition="not: asset_info/has_modification_time"
-              tal:attributes="href string:${asset_info/asset_url}/edit/tab_metadata"
+              tal:attributes="href string:${asset_info/asset_url}edit/tab_metadata"
               i18n:attributes="title">
               <em i18n:translate="">
                 unknown

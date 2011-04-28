@@ -115,7 +115,7 @@ ______________ macro plateau: level navigation ______________
   items              python: default_doc_list + model.get_ordered_publishables() + model.get_non_publishables();
   container          model/aq_parent/get_container;
   container_url      string:${container/absolute_url};
-  container_vein_url string:${container/absolute_url}/edit/$vein_id;
+  container_vein_url string:${container/absolute_url}edit/$vein_id;
   ">
 
 <tr tal:replace="nothing">
@@ -136,7 +136,7 @@ ______________ macro plateau: level navigation ______________
     <div class="normal">
       <a class="right"
         title="slide to the publish screen"
-        tal:attributes="href string:$container_url/edit/tab_status"
+        tal:attributes="href string:${container_url}edit/tab_status"
         i18n:attributes="title">
         &nbsp;
       </a>
@@ -168,7 +168,7 @@ ______________ macro plateau: level navigation ______________
   <tal:define define="
     is_default    python: item is default_document;
     item_url      item/absolute_url;
-    item_vein_url string:$item_url/edit/$vein_id;
+    item_vein_url string:${item_url}edit/$vein_id;
     status_style  python:item.get_object_status()[1];
     location      python: model.id == item.id and 'selected' or 'unselected';
   ">
@@ -179,7 +179,7 @@ ______________ macro plateau: level navigation ______________
     <a class="right"
       title="slide to the publish screen"
       tal:condition="python:item.implements_versioning() or item.implements_container()"
-      tal:attributes="href string:$item_url/edit/tab_status"
+      tal:attributes="href string:${item_url}edit/tab_status"
       i18n:attributes="title">
       &nbsp;
     </a>

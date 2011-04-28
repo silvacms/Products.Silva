@@ -6,11 +6,11 @@ tab_name, tab_id, tab_up_id, toplink_accesskey, tab_accesskey, uplink_accesskey 
 
 if tab_up_id is not None:
     if model != model.get_root():
-        uplink_url = model.aq_parent.absolute_url() + '/edit/' + tab_up_id
+        uplink_url = model.aq_parent.absolute_url() + 'edit/' + tab_up_id
     else:
         uplink_url = None
     if model != model.get_root():
-        toplink_url = model.aq_parent.get_publication().absolute_url() + '/edit/' + tab_up_id
+        toplink_url = model.aq_parent.get_publication().absolute_url() + 'edit/' + tab_up_id
     else:
         toplink_url = None
 else:
@@ -18,7 +18,10 @@ else:
     toplink_url = None
 
 if tab_id:
-    tab_url = model.absolute_url() + '/edit/' + tab_id
+    u = model.absolute_url()
+    if not u.endswith('/'):
+        u += '/'
+    tab_url = model.absolute_url() + 'edit/' + tab_id
 else:
     tab_url = None
 
