@@ -11,8 +11,6 @@ from zope.event import notify
 
 from DateTime import DateTime
 
-from Products.Formulator.Errors import ValidationError
-
 from silva.core import conf as silvaconf
 from silva.core.interfaces import ISilvaObject, IImportSettings
 from silva.core.interfaces.events import ContentImported, IContentImported
@@ -105,17 +103,12 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                     field = set_obj.getElement(element_name).field
 
                     # Set data
-                    try:
-                        errors = binding._setData(
-                            namespace_key=set_obj.metadata_uri,
-                            data={
-                                element_name: field.validator.deserializeValue(
-                                    field, elements[element_name])},
-                            reindex=0)
-                    except ValidationError:
-                        logger.warn(
-                            u"value %s is not allowed for %s in set %s." % (
-                                elements[element_name], element_name, set_id))
+                    errors = binding._setData(
+                        namespace_key=set_obj.metadata_uri,
+                        data={
+                            element_name: field.validator.deserializeValue(
+                                field, elements[element_name])},
+                        reindex=0)
                     if errors:
                         logger.warn(
                             u"value %s is not allowed for %s in set %s." % (

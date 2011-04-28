@@ -21,7 +21,6 @@
   <include package="zeam.form.silva" />
   <include package="silva.ui" />
 
-  <include package="Products.Formulator" />
   <include package="Products.SilvaMetadata" />
 
   <include package=".browser" />
