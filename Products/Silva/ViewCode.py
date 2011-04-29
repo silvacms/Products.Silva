@@ -47,10 +47,7 @@ class ViewCode(object):
             SilvaPermissions.ChangeSilvaContent, target):
             tab = 'tab_preview'
 
-        url = target.absolute_url()
-        if not url.endswith('/'):
-            url += '/'
-        return '%sedit/%s' % (url, tab)
+        return '%s/edit/%s' % (target.absolute_url(), tab)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'render_icon')

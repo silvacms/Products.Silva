@@ -134,7 +134,7 @@ table.sticky tbody h5 {
       <td>This container does not have a <i>sticky content service</i>.<br />
         To manage sticky content <i>in this container</i>, please <a style="display:inline" tal:attributes="href string:tab_sticky_content_create"><b>create</b></a> a <i>sticky
         content service</i>.<br />
-        <tal:cond condition="not:model/implements_root">Or, <a style="display:inline" tal:attributes="href string:${model/aq_parent/service_sticky_content/aq_parent/absolute_url}edit/tab_sticky_content"><b>jump</b></a> to the nearest container with a <i>sticky content service</i>.</tal:cond>
+        <tal:cond condition="not:model/implements_root">Or, <a style="display:inline" tal:attributes="href string:${model/aq_parent/service_sticky_content/aq_parent/absolute_url}/edit/tab_sticky_content"><b>jump</b></a> to the nearest container with a <i>sticky content service</i>.</tal:cond>
       </td>
      </tr>
     </tal:cond>

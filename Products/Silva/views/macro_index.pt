@@ -36,7 +36,7 @@
   <tal:block content="string:$vein" i18n:translate="">vein</tal:block>
 </title>
 <tal:block replace="nothing"> _______ base tag to handle Five methods with .. _______ </tal:block>
-<base tal:attributes="href string:${model/absolute_url}edit/" />
+<base tal:attributes="href string:${model/absolute_url}/edit/" />
 <tal:favicon replace="structure provider:favicon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <metal:block define-slot="meta" />
