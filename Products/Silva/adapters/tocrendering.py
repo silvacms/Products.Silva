@@ -13,16 +13,23 @@ from silva.core.views.interfaces import IPreviewLayer
 from silva.core.views import views as silvaviews
 from zope.traversing.browser import absoluteURL
 from zope.contentprovider.interfaces import ITALNamespaceData
-from zope.interface import Interface, Attribute, directlyProvides
+from zope.interface import Interface, directlyProvides
+from zope import schema
 
 
 class ITOCRenderingOptions(Interface):
-    toc_container = Attribute(u'Container to render.')
-    toc_depth = Attribute(u'TOC depth')
-    toc_sort_order = Attribute(u'TOC sorting order')
-    toc_content_types = Attribute(u'TOC content type to show')
-    toc_show_description = Attribute(u"Show content description")
-    toc_show_icon = Attribute(u"Show content icon")
+    toc_container = schema.Object(
+        title=u'Container to render', schema=IContainer)
+    toc_depth = schema.Int(
+        title=u'TOC depth')
+    toc_sort_order = schema.TextLine(
+        title=u'TOC sorting order')
+    toc_content_types = schema.List(
+        title=u'TOC content type to show', value_type=schema.TextLine())
+    toc_show_description = schema.Bool(
+        title=u"Show content description")
+    toc_show_icon = schema.Bool(
+        title=u"Show content icon")
 
 directlyProvides(ITOCRenderingOptions, ITALNamespaceData)
 
@@ -108,10 +115,7 @@ class TOCRendering(silvaviews.ContentProvider):
     def render(self):
         public = not IPreviewLayer.providedBy(self.request)
 
-        #func is either a generator function that returns the public items
-        #or all items to render in this TOC.  The functions use yields
-        #to generate the lists.  Rendering is sped up since the list
-        #is only iterated through once.
+        # XXX This code should be made readable.
         is_displayable = public and self.is_public_displayable or self.is_preview_displayable
         html = []
         a_templ = '<a href="%s">%s</a>'
@@ -121,7 +125,6 @@ class TOCRendering(silvaviews.ContentProvider):
         gmv = self.context.service_metadata.getMetadataValue
         item = None
         for (depth, item) in self.list_toc_items(self.toc_container, 0, is_displayable):
-            print depth, item
             pd = prev_depth[-1]
             if pd < depth: #down one level
                 html.append('<ul class="toc">')

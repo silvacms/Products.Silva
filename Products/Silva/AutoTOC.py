@@ -17,12 +17,11 @@ from Persistence import Persistent
 # Silva
 from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
-from Products.Silva.adapters import tocrendering
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IAddableContents
 from silva.core.conf.interfaces import ITitledContent
+from silva.core.interfaces import IAddableContents, IPublishable
 from silva.core.interfaces import IAutoTOC, IContainerPolicy
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
@@ -143,7 +142,8 @@ def sort_order_source():
 def silva_content_types(context):
     contents = []
     container = context.get_container()
-    for addable in IAddableContents(container).get_container_addables():
+    addables = IAddableContents(container)
+    for addable in addables.get_container_addables(IPublishable):
         contents.append(SimpleTerm(
                 value=addable,
                 token=addable,
@@ -219,12 +219,6 @@ class AutoTOCView(silvaviews.View):
     grok.context(IAutoTOC)
 
     def update(self):
-        # self.tree = renderer.render_tree(
-        #     toc_depth=self.context.get_toc_depth(),
-        #     display_desc_flag=self.context.get_display_desc_flag(),
-        #     sort_order=self.context.get_sort_order(),
-        #     show_types=self.context.get_local_types(),
-        #     show_icon=self.context.get_show_icon())
         metadata = getUtility(IMetadataService)
         self.description = metadata.getMetadataValue(
             self.context, 'silva-extra', 'content_description', acquire=0)

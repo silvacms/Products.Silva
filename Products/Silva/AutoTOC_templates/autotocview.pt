@@ -1,4 +1,11 @@
-<tal:toc>
+<tal:toc
+   tal:define="toc_container context/get_container;
+               toc_depth context/get_toc_depth;
+               toc_sort_order context/get_sort_order;
+               toc_content_types context/get_local_types;
+               toc_show_icon context/get_show_icon;
+               toc_show_description context/get_display_desc_flag">
+  <!-- This is not a Chameleon templates as ITALNamespaceData doesn't work in Chameleon -->
   <h2 class="heading"
       tal:define="heading context/get_title"
       tal:content="heading"
@@ -11,9 +18,8 @@
      tal:content="view/description" />
 
   <h3 tal:condition="context/get_show_container_link">
-    <a tal:define="container context/get_container"
-       tal:attributes="href container/@@absolute_url"
-       tal:content="container/get_title" />
+    <a tal:attributes="href toc_container/@@absolute_url"
+       tal:content="toc_container/get_title" />
   </h3>
   <tal:toc tal:replace="structure provider:toc" />
 </tal:toc>
