@@ -4,142 +4,124 @@
 
 from xml.sax.saxutils import escape
 
-# Zope
-from App.class_init import InitializeClass
-import Products
+from Products.Silva.icon import get_icon_url
 
-# Silva
-from silva.core import interfaces
+from five import grok
+from silva.core.interfaces import ISilvaObject, IContainer, IPublishable
+from silva.core.interfaces import IAddableContents, IOrderManager
 from silva.core.views.interfaces import IPreviewLayer
+from silva.core.views import views as silvaviews
+from zope.traversing.browser import absoluteURL
+from zope.contentprovider.interfaces import ITALNamespaceData
+from zope.interface import Interface, Attribute, directlyProvides
 
 
-_marker = []
-default_show_types = None
-def compute_default_show_types():
-    global default_show_types
-    if default_show_types:
-        return default_show_types
-    mts = Products.meta_types
-    defaults = []
-    for mt in mts:
-        if mt.has_key('instance') and \
-           interfaces.IPublishable.implementedBy(mt['instance']):
-            defaults.append(mt['name'])
-    default_show_types = defaults
-    return defaults
+class ITOCRenderingOptions(Interface):
+    toc_container = Attribute(u'Container to render.')
+    toc_depth = Attribute(u'TOC depth')
+    toc_sort_order = Attribute(u'TOC sorting order')
+    toc_content_types = Attribute(u'TOC content type to show')
+    toc_show_description = Attribute(u"Show content description")
+    toc_show_icon = Attribute(u"Show content icon")
+
+directlyProvides(ITOCRenderingOptions, ITALNamespaceData)
 
 
-class TOCRenderingAdapter(object):
-    """ Adapter for TOCs (autotoc, document toc) to render"""
-    # XXX again too much
-    __allow_access_to_unprotected_subobjects__ = 1
+class TOCRendering(silvaviews.ContentProvider):
+    """Render a toc.
+    """
+    grok.name('toc')
+    grok.context(ISilvaObject)
+    grok.implements(ITOCRenderingOptions)
 
-    def __init__(self, context):
-        self.context = context
+    def __init__(self, *args):
+        super(TOCRendering, self).__init__(*args)
+        self.toc_container = None
+        self.toc_depth = -1
+        self.toc_sort_order = 'silva'
+        self.toc_content_types = None
+        self.toc_show_description = False
+        self.toc_show_icon = False
 
-    #Special "fastie quickie" autotoc rendering code...
-    #NOTE: get_tree_iterator and get_public_tree_iterator are just
-    #      modified forms of Folder._get_tree_helper and
-    #      Folder._get_public_tree_helper
+    def update(self):
+        if self.toc_container is None:
+            self.toc_container = self.context.get_container()
+        if self.toc_content_types is None:
+            addables = IAddableContents(self.toc_container)
+            self.toc_content_types = addables.get_container_addables(IPublishable)
 
-    def _get_container_items(self, container, sort_order, show_types):
-        items = container.objectItems(show_types)
-        if sort_order in ('alpha','reversealpha'):
-            #get_title could be blank, then use id
-            items = [ (o[1].get_title() or o[1].id,o) for o in items ]
-            items.sort(reverse=(sort_order == "reversealpha"))
-            items = [ o[1] for o in items ]
-        elif sort_order=='silva': #determine silva sorting
-            ordered_ids = set(container._ordered_ids)
-            nonordered_items = []
-            items_to_order = []
-            for i in items:
-                if i[0] not in ordered_ids:
-                    nonordered_items.append(i)
-                else:
-                    items_to_order.append(i)
-            items_to_order = dict(items_to_order)
-            ordered_items = filter(lambda (x, y): y is not None,
-                                   map(lambda x: (x, items_to_order.get(x, None)),
-                                       container._ordered_ids))
-            items = ordered_items + nonordered_items
-        else: # chronologically by modification date
-            items = [ (o[1].get_modification_datetime(),o) for o in items ]
-            items.sort(reverse=(sort_order.startswith('r')))
-            items = [ o[1] for o in items ]
+    def list_container_items(self, container, is_displayable):
+        """List the given container items that are a candidates to be
+        listed in the TOC.
+        """
+        reverse_sort = self.toc_sort_order.startswith('r')
+        items = filter(
+            is_displayable,
+            container.objectValues(self.toc_content_types))
+        if self.toc_sort_order in ('alpha','reversealpha'):
+            items.sort(
+                key=lambda o: o.get_title_or_id(),
+                reverse=reverse_sort)
+        elif self.toc_sort_order in ('silva', 'reversesilva'):
+            # determine silva sorting.
+            # we should only have publishable content
+            items.sort(
+                key=IOrderManager(container).get_position,
+                reverse=reverse_sort)
+        else:
+            # chronologically by modification date
+            items.sort(
+                key=lambda o: o.get_modification_datetime(),
+                reverse=reverse_sort)
         return items
 
+    def is_preview_displayable(self, item):
+        """Return true if the item is displayable in preview mode.
+        """
+        return IPublishable.providedBy(item) and not item.is_default()
 
-    def _get_tree_iterator(
-        self, container, indent=0, toc_depth=-1, sort_order='silva',
-        show_types=_marker):
+    def is_public_displayable(self, item):
+        """Return true if the item is displayable in public mode.
+        """
+        return (IPublishable.providedBy(item) and
+                (not item.is_default()) and
+                item.is_published())
+
+    def list_toc_items(self, container, level, is_displayable):
         """Yield for every element in this toc.  The 'depth' argument
         limits the number of levels, defaults to unlimited.
         """
-        if show_types == _marker:
-            show_types = compute_default_show_types()
-
-        items = self._get_container_items(container, sort_order, show_types)
-
-        for (name,item) in items:
-            if name == 'index': #do not include indexes
-                # default document should not be inserted
-                continue
-            #preview doesn't obey toc_filters?
-            yield (indent, item)
-            if interfaces.IContainer.providedBy(item) and \
-                   item.is_transparent() and \
-                   (toc_depth == -1 or indent < toc_depth):
-                for (dep,o) in self._get_tree_iterator(item, indent + 1, toc_depth=toc_depth,sort_order=sort_order,show_types=show_types):
-                    yield (dep,o)
-
-    def _get_public_tree_iterator(
-        self, container, indent=0, include_non_transparent_containers=0,
-        toc_depth=-1, sort_order='silva', show_types=_marker):
-        if show_types == _marker:
-            show_types = compute_default_show_types()
-
         toc_filter = self.context.service_toc_filter
-        items = self._get_container_items(container, sort_order, show_types)
-        for (name,item) in items:
-            if not (item.is_published() or
-                    interfaces.IAsset.providedBy(item)) or \
-                   (name=='index'):
-                continue
+        can_recurse = self.toc_depth == -1 or level < self.toc_depth
+
+        for item in self.list_container_items(
+            container, is_displayable):
+
             if toc_filter.filter(item):
                     continue
-            yield (indent, item)
-            if (interfaces.IContainer.providedBy(item) and \
-                (item.is_transparent() or \
-                 include_non_transparent_containers))  and \
-                (toc_depth == -1 or indent < toc_depth):
-                for (dep,o) in self._get_public_tree_iterator(item, indent+1,
-                                                   include_non_transparent_containers,toc_depth=toc_depth,sort_order=sort_order,show_types=show_types):
-                    yield (dep,o)
+            yield (level, item)
 
-    def render_tree(self, toc_depth=-1, display_desc_flag=False,
-                    sort_order="silva", show_types=_marker,
-                    show_icon=False):
+            if IContainer.providedBy(item) and can_recurse:
+                for data in self.list_toc_items(item, level + 1, is_displayable):
+                    yield data
 
-        if show_types == _marker:
-            show_types = compute_default_show_types()
-
-        # This should be a view ...
-        public = not IPreviewLayer.providedBy(self.context.REQUEST)
+    def render(self):
+        public = not IPreviewLayer.providedBy(self.request)
 
         #func is either a generator function that returns the public items
         #or all items to render in this TOC.  The functions use yields
         #to generate the lists.  Rendering is sped up since the list
         #is only iterated through once.
-        func = public and self._get_public_tree_iterator or self._get_tree_iterator
+        is_displayable = public and self.is_public_displayable or self.is_preview_displayable
         html = []
         a_templ = '<a href="%s">%s</a>'
 
+        depth = -1
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
-        depth = -1
         item = None
-        for (depth,item) in func(container=self.context, toc_depth=toc_depth, sort_order=sort_order, show_types=show_types):
+        for (depth, item) in self.list_toc_items(self.toc_container, 0, is_displayable):
+            print depth, item
             pd = prev_depth[-1]
             if pd < depth: #down one level
                 html.append('<ul class="toc">')
@@ -151,15 +133,13 @@ class TOCRenderingAdapter(object):
             elif pd == depth: #same level
                 html.append('</li>')
             html.append('<li>')
-            if show_icon:
-                html.append(self.context.render_icon(item))
+            if self.toc_show_icon:
+                html.append('<img src="%s" />' % get_icon_url(item , self.request))
             title = (public and item.get_title() or item.get_title_editable()) or item.id
-            html.append(a_templ%(
-                item.absolute_url(),
-                escape(title)))
-            if display_desc_flag:
+            html.append(a_templ % (absoluteURL(item, self.request), escape(title)))
+            if self.toc_show_description:
                 v = public and item.get_viewable() or item.get_previewable()
-                desc = v and gmv(v,'silva-extra','content_description',acquire=0)
+                desc = v and gmv(v,'silva-extra','content_description', acquire=0)
                 if desc:
                     html.append('<p>%s</p>'%desc)
         else:
@@ -170,18 +150,4 @@ class TOCRenderingAdapter(object):
             while depth >= 0:
                 html.append('</li></ul>')
                 depth -= 1
-        return '\n'.join(html)
-
-
-InitializeClass(TOCRenderingAdapter)
-
-
-def __allow_access_to_unprotected_subobjects__(name,value=None):
-    return name in ('getTOCRenderingAdapter','compute_default_show_types')
-
-#NOTE: can pass in any Silva object.  If object isn't a container
-#      this will acquire the nearest container
-def getTOCRenderingAdapter(container):
-    if not interfaces.IContainer.providedBy(container):
-        container = container.get_container()
-    return TOCRenderingAdapter(container)
+        return u'\n'.join(html)

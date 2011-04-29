@@ -25,14 +25,14 @@ class AddableContents(grok.Adapter):
         self.root = context.get_root()
         self._is_forbidden = self.root.is_silva_addable_forbidden
 
-    def get_authorized_addables(self):
+    def get_authorized_addables(self, require=None):
         check_permission = getSecurityManager().checkPermission
         can_add = lambda name: check_permission('Add %ss' % name, self.context)
 
-        return filter(can_add, self.get_container_addables())
+        return filter(can_add, self.get_container_addables(require))
 
-    def get_container_addables(self):
-        all_addables = self.get_all_addables()
+    def get_container_addables(self, require=None):
+        all_addables = self.get_all_addables(require)
 
         # Check for restriction on the container
         locally_addables = self._get_locally_addables()
@@ -42,9 +42,11 @@ class AddableContents(grok.Adapter):
 
         return all_addables
 
-    def get_all_addables(self):
-        return map(operator.itemgetter('name'),
-                   filter(self._is_addable, extensionRegistry.get_addables()))
+    def get_all_addables(self, require=None):
+        addables = filter(self._is_addable, extensionRegistry.get_addables())
+        if require is not None:
+            addables = filter(lambda a: require.implementedBy(a['instance']), addables)
+        return map(operator.itemgetter('name'), addables)
 
     def _get_locally_addables(self):
         container = self.context

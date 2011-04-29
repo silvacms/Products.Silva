@@ -219,13 +219,12 @@ class AutoTOCView(silvaviews.View):
     grok.context(IAutoTOC)
 
     def update(self):
-        renderer = tocrendering.getTOCRenderingAdapter(self.context)
-        self.tree = renderer.render_tree(
-            toc_depth=self.context.get_toc_depth(),
-            display_desc_flag=self.context.get_display_desc_flag(),
-            sort_order=self.context.get_sort_order(),
-            show_types=self.context.get_local_types(),
-            show_icon=self.context.get_show_icon())
+        # self.tree = renderer.render_tree(
+        #     toc_depth=self.context.get_toc_depth(),
+        #     display_desc_flag=self.context.get_display_desc_flag(),
+        #     sort_order=self.context.get_sort_order(),
+        #     show_types=self.context.get_local_types(),
+        #     show_icon=self.context.get_show_icon())
         metadata = getUtility(IMetadataService)
         self.description = metadata.getMetadataValue(
             self.context, 'silva-extra', 'content_description', acquire=0)

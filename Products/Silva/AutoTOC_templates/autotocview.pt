@@ -1,9 +1,8 @@
 <tal:toc>
   <h2 class="heading"
       tal:define="heading context/get_title"
-      tal:condition="not:request/other/suppress_title | nothing"
       tal:content="heading"
-      tal:omit-tag="not:heading">
+      tal:condition="heading">
     Title
   </h2>
 
@@ -16,5 +15,5 @@
        tal:attributes="href container/@@absolute_url"
        tal:content="container/get_title" />
   </h3>
-  <ul tal:replace="structure view/tree" />
+  <tal:toc tal:replace="structure provider:toc" />
 </tal:toc>
