@@ -130,10 +130,11 @@ class SimpleMember(Member, Security, ZMIObject):
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'avatar')
     def avatar(self):
-        """Return the email address to be used by gravatar. Return '' if
-        no address has been specified.
+        """Return the email address to be used by gravatar. Return email
+           as default.  Use email() method rather than _email attribute, as
+           some members (e.g. PASMember) may not use _email
         """
-        return self._avatar if self._avatar is not None else ''
+        return self._avatar if self._avatar is not None else self.email()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'avatar_tag')
