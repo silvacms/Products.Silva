@@ -622,7 +622,7 @@ class ImageAddForm(silvaforms.SMIAddForm):
         default_id = data['id'] is not NO_VALUE and data['id'] or u''
         factory = parent.manage_addProduct['Silva']
         return factory.manage_addImage(
-            default_id, data['title'], file=data['file'])
+            default_id, data['title'], file=data['image'])
 
 
 class ImageEditForm(silvaforms.SMISubForm):
