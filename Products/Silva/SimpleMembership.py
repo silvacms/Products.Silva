@@ -133,7 +133,7 @@ class SimpleMember(Member, Security, ZMIObject):
         """Return the email address to be used by gravatar. Return '' if
         no address has been specified.
         """
-        return self._avatar if self._avatar is not None else self._email
+        return self._avatar if self._avatar is not None else ''
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'avatar_tag')
