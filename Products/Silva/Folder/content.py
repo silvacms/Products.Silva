@@ -303,7 +303,7 @@ class Folder(Publishable, BaseFolder):
                               'get_non_publishables')
     def get_non_publishables(self):
         result = self.objectValues(meta_types_for_interface(INonPublishable))
-        result.sort(lambda x,y: cmp(x.getId(), y.getId()))
+        result.sort(key=lambda o: o.getId())
         return result
 
 InitializeClass(Folder)
