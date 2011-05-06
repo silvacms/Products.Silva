@@ -38,7 +38,8 @@ class TOCRendering(silvaviews.ContentProvider):
     """Render a toc.
     """
     grok.name('toc')
-    grok.context(ISilvaObject)
+    grok.context(Interface)
+    grok.view(Interface)
     grok.implements(ITOCRenderingOptions)
 
     def __init__(self, *args):
@@ -53,6 +54,7 @@ class TOCRendering(silvaviews.ContentProvider):
     def update(self):
         if self.toc_container is None:
             self.toc_container = self.context.get_container()
+        assert IContainer.providedBy(self.toc_container)
         if self.toc_content_types is None:
             addables = IAddableContents(self.toc_container)
             self.toc_content_types = addables.get_container_addables(IPublishable)
