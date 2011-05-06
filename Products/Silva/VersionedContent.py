@@ -221,8 +221,8 @@ class VersionedContentCataloging(Cataloging):
 
     def get_indexable_versions(self):
         version_ids = [
-            self.context.get_next_version(update_status=False),
-            self.context.get_public_version(update_status=False)]
+            self.context.get_next_version(),
+            self.context.get_public_version()]
         for version_id in version_ids:
             if version_id is None:
                 continue

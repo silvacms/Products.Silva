@@ -40,12 +40,12 @@ class Publishable(SilvaObject):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
-    def is_published(self, update_status=True):
+    def is_published(self):
         return True
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_approved')
-    def is_approved(self, update_status=True):
+    def is_approved(self):
         return False
 
     security.declareProtected(

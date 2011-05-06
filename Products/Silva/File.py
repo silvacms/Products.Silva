@@ -137,7 +137,7 @@ def manage_addFile(context, identifier, title=None, file=None):
             _(u"Duplicate id. Please provide an explicit id."))
     service = component.getUtility(IFilesService)
     context._setObject(identifier, service.new_file(identifier))
-    content = getattr(context, identifier)
+    content = context._getOb(identifier)
     if title is not None:
         content.set_title(title)
     notify(ObjectCreatedEvent(content))
@@ -724,9 +724,8 @@ class FileStorageConverter(object):
         content_type = content.content_type()
 
         new_file = self.service.new_file(id)
-        container = content.aq_parent
-        setattr(container, id, new_file)
-        new_file = getattr(container, id)
+        container = aq_parent(content)
+        new_file = container._getOb(id)
         new_file.set_title(title)
         new_file.set_file_data(data)
         new_file.set_content_type(content_type)

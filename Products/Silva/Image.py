@@ -85,7 +85,7 @@ def manage_addImage(context, identifier, title=None, file=None):
         raise ValueError(
             _(u"Duplicate id. Please provide an explicit id."))
     context._setObject(identifier, Image(identifier))
-    content = getattr(context, identifier)
+    content = context._getOb(identifier)
     if title is not None:
         content.set_title(title)
     if file is not None:

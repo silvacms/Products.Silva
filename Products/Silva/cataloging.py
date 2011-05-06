@@ -17,9 +17,9 @@ class CatalogingAttributesPublishable(CatalogingAttributes):
 
     @property
     def publication_status(self):
-        if self.context.is_published(update_status=False):
+        if self.context.is_published():
             return 'public'
-        if self.context.is_approved(update_status=False):
+        if self.context.is_approved():
             return 'approved'
         return 'unapproved'
 
@@ -34,9 +34,9 @@ class CatalogingAttributesVersion(CatalogingAttributes):
         """
         content = self.context.get_content()
         status = None
-        unapproved_version = content.get_unapproved_version(False)
-        approved_version = content.get_approved_version(False)
-        public_version = content.get_public_version(False)
+        unapproved_version = content.get_unapproved_version()
+        approved_version = content.get_approved_version()
+        public_version = content.get_public_version()
         previous_versions = content.get_previous_versions()
         if unapproved_version and unapproved_version == self.context.id:
             status = "unapproved"

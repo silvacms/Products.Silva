@@ -87,7 +87,7 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
             data.getDefault('title'),
             data.getDefault('add_documentation'),
             data.getDefault('add_search'))
-        root = getattr(self.context, data['identifier'])
+        root = self.context._getOb(data['identifier'])
         service = component.getUtility(IMessageService)
         service.send(
             _(u"New Silva site ${identifier} added.", mapping=data),
@@ -148,15 +148,6 @@ class Root(Publication, site.Site):
         self._addables_forbidden = {}
 
     # ACCESSORS
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'serviceIds')
-    def serviceIds(self):
-        """Show all service ids.
-        """
-        return [id for id in Root.inheritedAttribute('objectIds')(self)
-                if id.startswith('service_')]
-
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_root')
     def get_root(self):
@@ -192,37 +183,6 @@ class Root(Publication, site.Site):
         """
         return getattr(self, '_content_version', 'before 0.9.2')
 
-    security.declareProtected(SilvaPermissions.ViewManagementScreens,
-                              'status_update')
-    def status_update(self):
-        """Updates status for objects that need status updated
-
-        Searches the ZCatalog for objects that should be published or closed
-        and updates the status accordingly
-        """
-        if not getattr(self, 'service_catalog', None):
-            return 'No catalog found!'
-
-        # first get all approved objects that should be published
-        query = {'silva-extrapublicationtime':
-                     {'query': DateTime(), 'range': 'max'},
-                 'version_status': 'approved'}
-
-        result = self.service_catalog(query)
-
-        # now get all published objects that should be closed
-        query = {'silva-extraexpirationtime':
-                     {'query': DateTime(), 'range': 'max'},
-                 'version_status': 'public'}
-
-        result += self.service_catalog(query)
-
-        for item in result:
-            ob = item.getObject()
-            ob.get_content()._update_publication_status()
-
-        return 'Status updated'
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_real_container')
     def get_real_container(self):
@@ -253,7 +213,7 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
     creation_datetime = root._v_creation_datetime
     container = self.Destination()
     container._setObject(id, root)
-    root = getattr(container, id)
+    root = container._getOb(id)
     # this root is the new local site
     setSite(root)
     setHooks()

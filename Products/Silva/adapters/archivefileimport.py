@@ -95,7 +95,7 @@ class ZipFileImporter(grok.Adapter):
         container = context
         for id in path:
             if replace and id in container.objectIds():
-                container = getattr(container, id)
+                container = container._getOb(id)
             else:
                 container = self._addSilvaContainer(container, id)
         return container

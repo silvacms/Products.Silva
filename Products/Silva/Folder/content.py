@@ -24,10 +24,13 @@ from Products.Silva import helpers
 
 from silva.core.interfaces import (
     IContentImporter, INonPublishable, IPublishable, IOrderManager,
-    IFolder, IRoot)
+    IVersionedContent, IFolder, IRoot)
 
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
+
+
+_marker = object()
 
 
 class Folder(Publishable, BaseFolder):
@@ -122,6 +125,19 @@ class Folder(Publishable, BaseFolder):
             # For ZMI
             REQUEST.RESPONSE.redirect(
                 absoluteURL(self, REQUEST) + '/manage_main')
+
+    # Override ObjectManager _getOb to publish any approved for future
+    # content. This is the only entry point available when the content
+    # is fetched from the database.
+    def _getOb(self, id, default=_marker):
+        content = super(Folder, self)._getOb(id, default)
+        if content is _marker:
+            raise AttributeError(id)
+        if IVersionedContent.providedBy(content):
+            if not hasattr(content, '_v_publication_status_updated'):
+                content._update_publication_status()
+                content._v_publication_status_updated = True
+        return content
 
     # MANIPULATORS
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -242,29 +258,29 @@ class Folder(Publishable, BaseFolder):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'is_published')
-    def is_published(self, update_status=True):
+    def is_published(self):
         # Folder is published if its default document is published, or,
         # when no default document exists, if any of the objects it contains
         # are published.
         default = self.get_default()
         if default:
-            return default.is_published(update_status=update_status)
-        for object in self.get_ordered_publishables():
-            if object.is_published(update_status=update_status):
-                return 1
-        return 0
+            return default.is_published()
+        for content in self.get_ordered_publishables():
+            if content.is_published():
+                return True
+        return False
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'is_approved')
-    def is_approved(self, update_status=True):
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'is_approved')
+    def is_approved(self):
         # Folder is approved if anything inside is approved
         default = self.get_default()
-        if default and default.is_approved(update_status=update_status):
-            return 1
-        for object in self.get_ordered_publishables():
-            if object.is_approved(update_status=update_status):
-                return 1
-        return 0
+        if default and default.is_approved():
+            return True
+        for content in self.get_ordered_publishables():
+            if content.is_approved():
+                return True
+        return False
 
     def is_deletable(self):
         """deletable if all containing objects are deletable
@@ -273,22 +289,18 @@ class Folder(Publishable, BaseFolder):
         """
         default = self.get_default()
         if default and not default.is_deletable():
-            return 0
-        for object in self.get_ordered_publishables():
-            if not object.is_deletable():
-                return 0
-        return 1
+            return False
+        for content in self.get_ordered_publishables():
+            if not content.is_deletable():
+                return False
+        return True
 
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_default')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_default')
     def get_default(self):
         """Get the default content object of the folder.
         """
-        if not hasattr(self.aq_base, 'index'):
-            return None
-        else:
-            return getattr(self, 'index')
+        return self._getOb('index', None)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')

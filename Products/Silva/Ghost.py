@@ -197,14 +197,14 @@ class Ghost(VersionedContent):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
-    def is_published(self, update_status=True):
+    def is_published(self):
         public = self.get_viewable()
         if public is None:
             return False
         haunted = public.get_haunted()
         if haunted is None:
             return False
-        return haunted.is_published(update_status=True)
+        return haunted.is_published()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_modification_datetime')
@@ -311,4 +311,4 @@ def ghost_factory(container, identifier, target):
             target = target.getLastVersion().get_haunted()
         factory = factory.manage_addGhost
     factory(identifier, None, haunted=target)
-    return getattr(container, identifier)
+    return container._getOb(identifier)

@@ -65,11 +65,11 @@ class VersionManager(grok.Adapter):
     def make_editable(self):
         """Make the version editable.
         """
-        approved_version = self.content.get_approved_version(False)
+        approved_version = self.content.get_approved_version()
         if approved_version is not None:
             raise VersioningError(_('An approved version is already available'))
 
-        current_version = self.content.get_unapproved_version(False)
+        current_version = self.content.get_unapproved_version()
         if current_version is not None:
             # move the current editable version to _previous_versions
             if self.content.is_approval_requested():
@@ -93,12 +93,12 @@ class VersionManager(grok.Adapter):
         """
         versionid = self.version.id
 
-        if self.content.get_approved_version(False) == versionid:
+        if self.content.get_approved_version() == versionid:
             raise VersioningError(_(u"Version is approved"))
-        if self.content.get_public_version(False) == versionid:
+        if self.content.get_public_version() == versionid:
             raise VersioningError(_(u"Version is published"))
 
-        if self.content.get_unapproved_version(False) == versionid:
+        if self.content.get_unapproved_version() == versionid:
             self.content._unapproved_version = (None, None, None)
         else:
             for version in self.content._previous_versions:
@@ -113,11 +113,11 @@ class VersionManager(grok.Adapter):
 
     def __get_version_tuple(self):
         versionid = self.version.id
-        if self.content.get_unapproved_version(False) == versionid:
+        if self.content.get_unapproved_version() == versionid:
             return self.content._unapproved_version
-        elif self.content.get_approved_version(False) == versionid:
+        elif self.content.get_approved_version() == versionid:
             return self.content._approved_version
-        elif self.content.get_public_version(False) == versionid:
+        elif self.content.get_public_version() == versionid:
             return self.content._public_version
         elif self.content._previous_versions:
             for info in self.context._previous_versions:
@@ -147,13 +147,13 @@ class VersionManager(grok.Adapter):
                 closed
         """
         versionid = self.version.id
-        if self.content.get_unapproved_version(False) == versionid:
+        if self.content.get_unapproved_version() == versionid:
             if self.content.is_approval_requested():
                 return 'pending'
             return 'unapproved'
-        elif self.content.get_approved_version(False) == versionid:
+        elif self.content.get_approved_version() == versionid:
             return 'approved'
-        elif self.content.get_public_version(False) == versionid:
+        elif self.content.get_public_version() == versionid:
             return 'published'
         else:
             if self.content._previous_versions:
