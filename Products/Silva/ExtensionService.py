@@ -101,10 +101,11 @@ def install_documentation(container):
         interfaces.IZipfileImporter(container).importFromZip(documentation)
 
 
-class ExtensionService(Folder, SilvaService):
+class ExtensionService(SilvaService, Folder):
     meta_type = 'Silva Extension Service'
-    default_service_identifier = 'service_extensions'
     grok.implements(IExtensionService)
+    grok.name('service_extensions')
+    silvaconf.default_service()
     silvaconf.icon('www/silva.png')
 
     security = ClassSecurityInfo()
@@ -197,13 +198,13 @@ class ExtensionService(Folder, SilvaService):
         root = self.get_root()
 
         # Setup metadata for quota
-        silva_docs = os.path.join(os.path.dirname(__file__), 'doc')
+        schema = os.path.join(os.path.dirname(__file__), 'schema')
 
         collection = root.service_metadata.getCollection()
         if 'silva-quota' in collection.objectIds():
             collection.manage_delObjects(['silva-quota'])
 
-        xml_file = os.path.join(silva_docs, 'silva-quota.xml')
+        xml_file = os.path.join(schema, 'silva-quota.xml')
         fh = open(xml_file, 'r')
         collection.importSet(fh)
 

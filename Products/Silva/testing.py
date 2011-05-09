@@ -105,22 +105,20 @@ class SilvaLayer(BrowserLayer):
         'PythonScripts',
         'PageTemplates',
         'Formulator',
-        'ParsedXML',
-        'ProxyIndex',
+        'GenericSetup',
+        'PluggableAuthService',
         'MaildropHost',
         'MailHost',
-        'SilvaFind',
         'SilvaMetadata',
-        'SilvaExternalSources',
-        'SilvaDocument',
         'Silva',
         ]
     default_packages = BrowserLayer.default_packages + [
         'silva.core.references',
         'silva.core.views',
         'silva.core.layout',
-        'silvatheme.standardissue',
         'silva.core.services',
+        'silvatheme.standardissue',
+        'silva.pas.base',
         ]
     default_users = {
         'editor': ['Editor'],

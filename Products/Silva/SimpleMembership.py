@@ -181,11 +181,10 @@ def manage_addSimpleMember(self, id, REQUEST=None):
 
 class SimpleMemberService(SilvaService):
     meta_type = 'Silva Simple Member Service'
-    title = 'Silva Membership Service'
-    default_service_identifier = 'service_members'
     _use_direct_lookup = False
 
     grok.implements(IMemberService)
+    grok.baseclass()
     silvaconf.icon('www/members.png')
     security = ClassSecurityInfo()
 

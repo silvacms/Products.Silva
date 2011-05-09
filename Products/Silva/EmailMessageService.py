@@ -27,10 +27,10 @@ class EmailMessageService(SilvaService):
     """Simple implementation of IMemberMessageService that sends email
     messages.
     """
-    grok.implements(interfaces.IMessageService)
-    default_service_identifier = 'service_messages'
-
     meta_type = 'Silva Message Service'
+    grok.implements(interfaces.IMessageService)
+    grok.name('service_messages')
+    silvaconf.default_service()
     silvaconf.icon('www/message_service.png')
 
     manage_options = (

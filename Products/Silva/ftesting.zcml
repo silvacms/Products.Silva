@@ -5,6 +5,7 @@
   <!-- Silva do dependent on the WSGI for the tests -->
   <include package="infrae.wsgi" />
   <include package="Products.Silva" />
+  <include package="silva.pas.base" />
 
   <!-- silva.core.views as a test ZCML file to register things for the
        mocking request TestRequest -->

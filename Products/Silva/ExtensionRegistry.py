@@ -12,6 +12,8 @@ from silva.core import interfaces
 from zope.configuration.name import resolve
 from zope.interface import implements
 from zope.testing import cleanup
+from zope.event import notify
+from silva.core.interfaces.events import InstalledExtensionEvent
 
 import Products
 
@@ -239,7 +241,9 @@ class ExtensionRegistry(object):
         self._extensions_order = result
 
     def install(self, name, root):
-        self._extensions[name].installer.install(root)
+        installer = self._extensions[name].installer
+        installer.install(root)
+        notify(InstalledExtensionEvent(installer, root))
 
     def uninstall(self, name, root):
         self._extensions[name].installer.uninstall(root)

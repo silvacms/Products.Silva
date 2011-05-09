@@ -7,14 +7,16 @@ from xml.sax.saxutils import escape
 from Products.Silva.icon import get_icon_url
 
 from five import grok
-from silva.core.interfaces import ISilvaObject, IContainer, IPublishable
 from silva.core.interfaces import IAddableContents, IOrderManager
-from silva.core.views.interfaces import IPreviewLayer
+from silva.core.interfaces import IContainer, IPublishable
+from silva.core.services.interfaces import IContentFilteringService
 from silva.core.views import views as silvaviews
-from zope.traversing.browser import absoluteURL
+from silva.core.views.interfaces import IPreviewLayer
+from zope import schema
+from zope.component import getUtility
 from zope.contentprovider.interfaces import ITALNamespaceData
 from zope.interface import Interface, directlyProvides
-from zope import schema
+from zope.traversing.browser import absoluteURL
 
 
 class ITOCRenderingOptions(Interface):
@@ -100,13 +102,13 @@ class TOCRendering(silvaviews.ContentProvider):
         """Yield for every element in this toc.  The 'depth' argument
         limits the number of levels, defaults to unlimited.
         """
-        toc_filter = self.context.service_toc_filter
+        content_filter = getUtility(IContentFilteringService)
         can_recurse = self.toc_depth == -1 or level < self.toc_depth
 
         for item in self.list_container_items(
             container, is_displayable):
 
-            if toc_filter.filter(item):
+            if content_filter.filter(item):
                     continue
             yield (level, item)
 

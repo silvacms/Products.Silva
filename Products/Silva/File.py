@@ -604,10 +604,11 @@ directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
 
 class FilesService(SilvaService):
     meta_type = 'Silva Files Service'
-    default_service_identifier = 'service_files'
+    grok.implements(IFilesService)
+    grok.name('service_files')
+    silvaconf.default_service()
     silvaconf.icon('www/files_service.gif')
 
-    grok.implements(IFilesService)
     security = ClassSecurityInfo()
 
     storage = FieldProperty(IFilesService['storage'])

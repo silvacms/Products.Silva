@@ -3,15 +3,18 @@
 # $Id$
 
 # Zope 3
+from five import grok
 from zope import schema, interface, component
+from zope.event import notify
+from zope.lifecycleevent import ObjectAddedEvent
+from zope.lifecycleevent import ObjectCreatedEvent
 from zope.site.hooks import setSite, setHooks
 from zope.traversing.browser import absoluteURL
-from five import grok
+from five.localsitemanager import make_site
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager
 from App.class_init import InitializeClass
-from DateTime import DateTime
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Application import Application
 from zExceptions import Unauthorized
@@ -23,13 +26,13 @@ from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import SilvaPermissions
-from Products.Silva import install
 
 from silva.core import conf as silvaconf
 from silva.core.conf import schema as silvaschema
 from silva.core.interfaces import IRoot
+from silva.core.interfaces.events import InstallRootEvent
+from silva.core.interfaces.events import InstallRootServicesEvent
 from silva.core.messages.interfaces import IMessageService
-from silva.core.services import site
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 
@@ -96,7 +99,7 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         return silvaforms.SUCCESS
 
 
-class Root(Publication, site.Site):
+class Root(Publication):
     """Root of Silva site.
     """
     security = ClassSecurityInfo()
@@ -209,26 +212,31 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         title = unicode(title, 'latin1')
     id = str(id)
     root = Root(id)
-    # backup creation datetime to restore it later (ZODB cache)
-    creation_datetime = root._v_creation_datetime
     container = self.Destination()
-    container._setObject(id, root)
+
+    # We suppress events are no local utility is present event
+    # handlers all fails.
+    container._setObject(id, root, suppress_events=True)
     root = container._getOb(id)
-    # this root is the new local site
+    # This root is the new local site where all local utilities (Silva
+    # services) will be installed.
+    make_site(root)
     setSite(root)
     setHooks()
     try:
-        # now set it all up
-        install.installFromScratch(root)
-        # after installed we have metadata. we can set the title and
-        # the creation date.
-        root._v_creation_datetime = creation_datetime
-        root._set_creation_datetime()
+        notify(InstallRootServicesEvent(root))
+        notify(InstallRootEvent(root))
+
+        # Now every is ready, we trigger the events we previously
+        # suppressed.
+        notify(ObjectAddedEvent(root, container, id))
+        notify(ObjectCreatedEvent(container))
+
         root.set_title(title)
 
         if add_search:
             # install a silva find instance
-            factory = root .manage_addProduct['SilvaFind']
+            factory = root.manage_addProduct['SilvaFind']
             factory.manage_addSilvaFind('search', 'Search this site')
 
         if add_docs:
@@ -243,4 +251,4 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         setSite(None)
         setHooks()
         raise
-    return ''
+    return root

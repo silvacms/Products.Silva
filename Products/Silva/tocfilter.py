@@ -2,10 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-from OFS.SimpleItem import SimpleItem
-from zope import interface
 
-from silva.core.interfaces import IInvisibleService, ISilvaObject
+from five import grok
+from silva.core import conf as silvaconf
+from silva.core.interfaces import ISilvaObject
+from silva.core.services.base import SilvaService
+from silva.core.services.interfaces import IContentFilteringService
 
 _filters = []
 
@@ -30,13 +32,11 @@ def hideFromTOC(context):
 _filters.append(hideFromTOC)
 
 
-class TOCFilterService(SimpleItem):
-    interface.implements(IInvisibleService)
+class TOCFilterService(SilvaService):
     meta_type = 'Silva TOC Filter Service'
-
-    def __init__(self):
-        self.id = 'service_toc_filter'
-        self._title = self.meta_type
+    grok.implements(IContentFilteringService)
+    grok.name('service_filtering')
+    silvaconf.default_service()
 
     def filter(self, context):
         for filter in _filters:

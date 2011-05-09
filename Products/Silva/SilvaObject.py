@@ -38,7 +38,7 @@ from silva.core.services.interfaces import ICataloging
 from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
 
-from silva.core.interfaces import ISilvaObject, IRoot, IVersionedContent
+from silva.core.interfaces import ISilvaObject, IVersionedContent
 
 
 class TitledObject(object):
@@ -123,10 +123,6 @@ class SilvaObject(TitledObject, Security):
     """Inherited by all Silva objects.
     """
     security = ClassSecurityInfo()
-
-    def __init__(self, id):
-        TitledObject.__init__(self, id)
-        self._v_creation_datetime = DateTime()
 
     # Use regular Zope 3 absoluteURL lookup instead of Zope 2 one.
     def absolute_url(self, relative=None):
@@ -273,11 +269,13 @@ InitializeClass(SilvaObject)
 def content_created(content, event):
     if (content != event.object or
         IObjectCopiedEvent.providedBy(event) or
-        IVersionedContent.providedBy(content) or
-        IRoot.providedBy(content)):
+        IVersionedContent.providedBy(content)):
         return
 
-    content._set_creation_datetime()
+    service = component.getUtility(IMetadataService)
+    binding = service.getMetadata(content)
+    if binding is not None:
+        binding.setValues('silva-extra', {'creationtime': DateTime()})
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
@@ -299,16 +297,8 @@ def index_and_update_author_modified_content(content, event):
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return
-    if IRoot.providedBy(content):
-        # If we are on the root we swallow errors, as root might not
-        # be fully installed, this might not work.
-        try:
-            content.sec_update_last_author_info()
-        except:
-            pass
-    else:
-        content.sec_update_last_author_info()
-        ICataloging(content).index()
+    content.sec_update_last_author_info()
+    ICataloging(content).index()
 
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)

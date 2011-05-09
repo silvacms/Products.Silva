@@ -12,6 +12,7 @@ from App.class_init import InitializeClass
 from Persistence import Persistent
 
 # Silva
+from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy, IAddableContents
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.services.base import SilvaService
@@ -30,15 +31,15 @@ class _Policy:
 
 
 class ContainerPolicyRegistry(SilvaService):
-
-    grok.implements(IContainerPolicyService)
-    default_service_identifier = 'service_containerpolicy'
     meta_type = 'Silva Container Policy Registry'
+    grok.implements(IContainerPolicyService)
+    grok.name('service_containerpolicy')
+    silvaconf.default_service()
 
     security = ClassSecurityInfo()
 
-    def __init__(self, identifier):
-        super(ContainerPolicyRegistry, self).__init__(identifier)
+    def __init__(self, *args, **kwargs):
+        super(ContainerPolicyRegistry, self).__init__(*args, **kwargs)
         self.__policies = {}
         self.register('None', NothingPolicy, 100)
 
