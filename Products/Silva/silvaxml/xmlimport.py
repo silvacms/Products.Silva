@@ -12,7 +12,8 @@ from zope.event import notify
 from DateTime import DateTime
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import ISilvaObject, IImportSettings
+from silva.core.interfaces import (ISilvaObject, IImportSettings,
+    ISilvaXMLImportHandler)
 from silva.core.interfaces.events import ContentImported, IContentImported
 from silva.core.references.reference import canonical_path
 from silva.core.services.interfaces import ICataloging
@@ -67,6 +68,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
     provides helpers to set Silva properties and metadatas.
     """
     grok.baseclass()
+    grok.implements(ISilvaXMLImportHandler)
 
     def __init__(self, parent, parent_handler, settings=None, info=None):
         xmlimport.BaseHandler.__init__(
@@ -614,12 +616,13 @@ def make_character_handler(name, handler):
 class ImportSettings(xmlimport.BaseSettings, ImportExportSettingsErrors):
     grok.implements(IImportSettings)
 
-    def __init__(self, replace_objects=False):
+    def __init__(self, replace_objects=False, request=None):
         xmlimport.BaseSettings.__init__(
             self,
             ignore_not_allowed=True,
             import_filter_factory=collapser.CollapsingHandler)
         self._replace_objects = replace_objects
+        self.request = request
 
     def replaceObjects(self):
         return self._replace_objects
@@ -713,10 +716,11 @@ def updateVersionCount(versionhandler):
     parent._version_count = vc
 
 
-def importFromFile(source_file, context, info=None, replace=False):
+def importFromFile(source_file, context, info=None, replace=False,
+        request=None):
     source_file = upgradeXMLOnFD(source_file)
 
-    settings = ImportSettings(replace_objects=replace)
+    settings = ImportSettings(replace_objects=replace, request=request)
     info = info or ImportInfo()
     info.setImportRoot(context)
     theXMLImporter.importFromFile(
@@ -729,8 +733,11 @@ def importFromFile(source_file, context, info=None, replace=False):
     return context
 
 
-def importReplaceFromFile(source_file, context, info=None):
+def importReplaceFromFile(source_file, context, info=None, request=None):
     warnings.warn('use directly importFromFile with replace=True. '
                   'importeReplaceFromFile will be removed in Silva 2.4.',
                   DeprecationWarning, stacklevel=2)
-    importFromFile(source_file, context, info=info, replace=True)
+    importFromFile(source_file, context, info=info,
+        replace=True, request=request)
+
+

@@ -12,7 +12,8 @@ from DateTime import DateTime
 
 from sprout.saxext import xmlexport
 from silva.core import interfaces
-from silva.core.interfaces import IPublicationWorkflow, IExportSettings
+from silva.core.interfaces import (IPublicationWorkflow, IExportSettings,
+    ISilvaXMLExportHandler)
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import canonical_path
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -33,6 +34,7 @@ class ExternalReferenceError(xmlexport.XMLExportError):
 
 class SilvaBaseProducer(xmlexport.Producer):
     grok.baseclass()
+    grok.implements(ISilvaXMLExportHandler)
 
     def reference(self, name):
         """Return a path to refer an object in the export of a
