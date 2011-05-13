@@ -57,7 +57,9 @@ def resolve_path(setter, info, target_path):
     root = info.importRoot()
     imported_target_path = info.getImportedPath(canonical_path(target_path))
     if imported_target_path is None:
-        raise ImportReferenceError(target_path)
+        # raise ImportReferenceError(target_path)
+        # XXX : report this failure
+        return
     path = map(str, imported_target_path.split('/'))
     target = root.unrestrictedTraverse(path)
     setter(target)
