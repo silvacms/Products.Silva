@@ -229,8 +229,7 @@ class Image(Asset):
         """return crop box"""
         if crop is None:
             crop = self.web_crop
-        crop = crop.strip()
-        if crop == '':
+        if crop is None or crop.strip() == '':
             return None
         m = self.re_box.match(crop)
         if m is None:
