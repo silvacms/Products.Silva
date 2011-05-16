@@ -481,7 +481,7 @@ class Image(Asset):
 
     def _createThumbnail(self):
         try:
-            image = self._getPILImage(self.hires_image)
+            image = self._getPILImage(self.image)
         except ValueError, e:
             logger.info("Thumbnail creation failed for %s with %s" %
                         ('/'.join(self.getPhysicalPath()), str(e)))
