@@ -15,13 +15,11 @@ DEFAULT_ALL_ADDABLES = [
     'Silva Publication',
     'Silva Image',
     'Silva File',
-    'Silva Find',
     'Silva Ghost',
     'Silva Ghost Folder',
     'Silva Indexer',
     'Silva Link',
-    'Silva AutoTOC',
-    'Silva CSV Source']
+    'Silva AutoTOC']
 AUTHOR_ALL_ADDABLES = [
     'Mockup VersionedContent',
     'Silva Folder',
@@ -29,9 +27,7 @@ AUTHOR_ALL_ADDABLES = [
     'Silva File',
     'Silva Ghost',
     'Silva Link',
-    'Silva AutoTOC',
-    'Silva CSV Source'
-    ]
+    'Silva AutoTOC']
 
 
 class AddablesTestCase(unittest.TestCase):
