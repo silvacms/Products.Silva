@@ -230,7 +230,7 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         # Now every is ready, we trigger the events we previously
         # suppressed.
         notify(ObjectAddedEvent(root, container, id))
-        notify(ObjectCreatedEvent(container))
+        notify(ObjectCreatedEvent(root))
 
         root.set_title(title)
 

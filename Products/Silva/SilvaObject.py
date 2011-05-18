@@ -130,25 +130,6 @@ class SilvaObject(TitledObject, Security):
 
     # MANIPULATORS
 
-    def _set_creation_datetime(self):
-        timings = {}
-        ctime = getattr(self, '_v_creation_datetime', None)
-        if ctime is None:
-            return
-        try:
-            service_metadata = component.getUtility(IMetadataService)
-            binding = service_metadata.getMetadata(self)
-        except BindingError:
-            # Non metadata object, don't do anything
-            return
-        if binding is None:
-            return
-        for elem in ('creationtime', 'modificationtime'):
-            old = binding.get('silva-extra', element_id=elem)
-            if old is None:
-                timings[elem] = ctime
-        binding.setValues('silva-extra', timings)
-
     # ACCESSORS
 
     security.declareProtected(
