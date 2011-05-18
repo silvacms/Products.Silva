@@ -29,17 +29,6 @@ class ExtensionRegistryTestCase(unittest.TestCase):
         # Check that the registry implements it's interface
         self.assertTrue(verifyObject(IExtensionRegistry, extensionRegistry))
 
-        # Test get_names. SilvaDocument is installed by default.
-        self.assertTrue('SilvaFind' in extensionRegistry.get_names())
-
-        # Test is_installed. By default those extension are installed.
-        self.assertEquals(
-            extensionRegistry.is_installed('SilvaFind', self.root),
-            True)
-        self.assertEquals(
-            extensionRegistry.is_installed('SilvaExternalSources', self.root),
-            True)
-
         # Test get_name_for_class.
         from Products.Silva.Link import Link
         self.assertEquals(extensionRegistry.get_name_for_class(Link), 'Silva')
@@ -51,19 +40,59 @@ class ExtensionRegistryTestCase(unittest.TestCase):
         self.assertEqual(extension, None)
 
     def test_extension_product(self):
-        extension = extensionRegistry.get_extension('SilvaDocument')
+        extension = extensionRegistry.get_extension('Silva')
         self.assertNotEqual(extension, None)
 
         self.assertTrue(verifyObject(IExtension, extension))
-        self.assertEqual(extension.name, 'SilvaDocument')
-        self.assertEqual(extension.description, 'Silva Document')
-        self.assertEqual(extension.product, 'SilvaDocument')
-        self.assertEqual(extension.module_name, 'Products.SilvaDocument')
+        self.assertEqual(extension.name, 'Silva')
+        self.assertEqual(extension.description, 'Silva Core')
+        self.assertEqual(extension.product, 'Silva')
+        self.assertEqual(extension.module_name, 'Products.Silva')
 
-        self.assertEqual([c['name'] for c in extension.get_content()],
-                         ['Silva Document', 'Silva Document Version'])
-        self.assertEqual([c['product'] for c in extension.get_content()],
-                         ['SilvaDocument', 'SilvaDocument'])
+        self.assertEqual(
+            [c['name'] for c in extension.get_content()],
+            ['Silva AutoTOC',
+             'Silva Container Policy Registry',
+             'Silva Message Service',
+             'Silva Extension Service',
+             'Silva File',
+             'Silva Files Service',
+             'Silva Folder',
+             'Silva Ghost',
+             'Silva Ghost Version',
+             'Silva Ghost Folder',
+             'Silva Image',
+             'Silva Indexer',
+             'Silva Link',
+             'Silva Link Version',
+             'Silva Publication',
+             'Silva Root',
+             'Silva Simple Member',
+             'Silva TOC Filter Service',
+             'Mockup VersionedContent',
+             'Mockup Version'])
+        self.assertEqual(
+            [c['product'] for c in extension.get_content()],
+            ['Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva',
+             'Silva'])
 
     def test_extension_egg(self):
         extension = extensionRegistry.get_extension('silva.core.layout')
