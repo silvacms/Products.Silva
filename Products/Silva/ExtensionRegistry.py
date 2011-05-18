@@ -160,9 +160,8 @@ class ExtensionRegistry(object):
         self._extensions_by_module = {}
         self._silva_addables = []
 
-    def register(self, name, description, context, modules,
-                 install_module=None, module_path=None,
-                 depends_on=(u'Silva',)):
+    def register(self, name, description,
+                 install_module=None, module_path=None, depends_on=(u'Silva',)):
         # Figure out which is the extension path.
         path = None
         assert not ((install_module is None) and (module_path is None))
@@ -200,10 +199,7 @@ class ExtensionRegistry(object):
         # Try to order based on dependencies
         self._orderExtensions()
 
-        for module in modules:
-            self.registerClass(context, module)
-
-    def addAddable(self, meta_type, priority):
+    def add_addable(self, meta_type, priority):
         """Allow adding an addable to silva without using the
         registerClass shortcut method.
         """
@@ -268,9 +264,6 @@ class ExtensionRegistry(object):
 
     def get_extension(self, name):
         return self._extensions.get(name, None)
-
-    def have(self, name):
-        return name in self._extensions_order
 
     def is_installed(self, name, root):
         extension = self.get_extension(name)

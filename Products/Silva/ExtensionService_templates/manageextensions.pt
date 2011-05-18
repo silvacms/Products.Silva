@@ -27,7 +27,7 @@
           <input type="submit" name="refresh_all" value="refresh all"
                  i18n:attributes="value"/>
           <input type="submit" name="install_documentation" value="install documentation"
-                 tal:condition="python:context.is_installed('SilvaDocument') and not hasattr(context, 'silva_docs_2_1')"
+                 tal:condition="python:context.is_installed('SilvaDocument') and not hasattr(context, 'silva_docs')"
                  i18n:attributes="value"/>
           <input type="submit" name="refresh_catalog" value="rebuild catalog"
                  i18n:attributes="value"/>
