@@ -30,3 +30,4 @@ class SeleniumTestCase(unittest.TestCase):
         control.value = 'Folder'
 
         browser.inspect.form_controls['save'].click()
+

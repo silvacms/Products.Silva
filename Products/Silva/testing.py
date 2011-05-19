@@ -99,8 +99,8 @@ class SilvaLayer(BrowserLayer):
     """
     default_products = BrowserLayer.default_products + [
         'BTreeFolder2',
-        'ZCatalog',
         'TemporaryFolder',
+        'ZCatalog',
         'ZCTextIndex',
         'PythonScripts',
         'PageTemplates',

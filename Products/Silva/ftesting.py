@@ -3,6 +3,7 @@
 # See also LICENSE.txt
 # $Id$
 
+import time
 
 def zmi_settings(browser):
     # ZMI
@@ -52,10 +53,15 @@ def smi_settings(browser):
     def wait_for_smi(browser, session, element, value):
         session.execute("if (smi) smi.ready.call(arguments[0]); else arguments[0]();", [])
 
+    def wait_for_initial_smi(browser, session):
+        time.sleep(0.5)
+
     # Login support
     logger = LoginFormHandler('/root')
     browser.handlers.add('login', logger, False)
     browser.handlers.add('close', logger.logout)
+    browser.handlers.add('open', wait_for_initial_smi)
+
     browser.handlers.add('onclick', wait_for_smi)
     browser.handlers.add('onsubmit', wait_for_smi)
 
@@ -63,6 +69,7 @@ def smi_settings(browser):
     browser.inspect.add('content_tabs', css='ol.content-tabs a.top-entry', type='link')
     browser.inspect.add('content_subtabs', css='ol.content-tabs ol a.open-screen', type='link')
 
+    browser.inspect.add('feedback', css='div.notification p')
     # Form
     browser.inspect.add('form_controls', css="div.form-controls a.form-control", type='link')
 
