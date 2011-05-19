@@ -79,40 +79,15 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
             form.get_control('form.field.addables').value,
             ['Silva Folder', 'Silva File', 'Silva Image'])
 
-        return
-        # Go back on container view.
-        self.assertEqual(browser.inspect.tabs['contents'].click(), 200)
-        self.assertEqual(browser.url, '/root/edit/tab_edit')
+        # Now check the add menu: only the three selected are there
+        self.assertTrue('add' in browser.inspect.content_tabs)
 
-        # Only Folder, File and Image are addable now.
-        form = browser.get_form('md.container')
-        self.assertEqual(
-            form.get_control('md.container.field.content').options,
-            ['none', 'Silva Folder', 'Silva File', 'Silva Image'])
-        self.assertEqual(
-            form.get_control('md.container.action.new').click(),
-            200)
-
-        # Go on generic add view, it is the same.
-        self.assertEqual(browser.url, '/root/edit/+')
-        self.assertEqual(
-            browser.html.xpath('//dl[@class="new-content-listing"]//a/text()'),
+        browser.inspect.content_tabs['add'].click()
+        self.assertItemsEqual(
+            browser.inspect.content_subtabs.keys(),
             ['Silva Folder', 'Silva File', 'Silva Image'])
-        self.assertEqual(
-            browser.html.xpath('//dl[@class="new-content-listing"]//a/@href'),
-            ['http://localhost/root/edit/+/Silva Folder',
-             'http://localhost/root/edit/+/Silva File',
-             'http://localhost/root/edit/+/Silva Image'])
 
-        # Access something which is not addable makes a redirect to +
-        self.assertEqual(browser.open('/root/edit/+/Silva Document'), 200)
-        self.assertEqual(browser.url, '/root/edit/+')
-
-        # Go on folder content, child of this root. Settings are acquired.
-        self.assertEqual(browser.inspect.tabs['content'].click(), 200)
-        self.assertEqual(browser.inspect.folder_listing['folder'].click(), 200)
-        self.assertEqual(browser.url, '/root/folder/edit/tab_edit')
-
+        return
         # Visit addable tab on this folder.
         self.assertTrue('properties' in browser.inspect.tabs)
         self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
