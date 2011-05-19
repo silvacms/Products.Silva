@@ -5,7 +5,8 @@
 
 import unittest
 
-from Products.Silva.testing import FunctionalLayer
+from Products.Silva.testing import FunctionalLayer, smi_settings
+
 
 class SeleniumTestCase(unittest.TestCase):
     layer = FunctionalLayer
@@ -14,18 +15,18 @@ class SeleniumTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
 
     def test_boot(self):
-        browser = self.layer.get_selenium_browser()
+        browser = self.layer.get_selenium_browser(smi_settings)
         browser.login('manager')
         browser.open('/root/edit')
         self.assertEqual(browser.location, '/root/edit')
-        self.assertEqual(browser.url, 'http://localhost:8000/root/edit')
-        browser.inspect.add('screens', xpath='//a[contains(@class, "open-screen")]', type='link')
-        browser.inspect.add('controls', xpath='//a[contains(@class, "form-control")]', type='link')
-        browser.inspect.screens['add'].click()
-        browser.inspect.screens['silva folder'].click()
+
+        browser.inspect.content_tabs['add'].click()
+        browser.inspect.content_subtabs['silva folder'].click()
+
         form = browser.get_form('addform')
         control = form.get_control('addform.field.id')
         control.value = 'folder'
         control = form.get_control('addform.field.title')
         control.value = 'Folder'
-        browser.inspect.controls['save'].click()
+
+        browser.inspect.form_controls['save'].click()
