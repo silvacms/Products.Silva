@@ -4,6 +4,8 @@
 # $Id$
 
 import time
+import transaction
+
 
 def zmi_settings(browser):
     # ZMI
@@ -50,8 +52,11 @@ def smi_settings(browser):
             browser.open(self.smi_url + '/service_members/logout')
 
 
+    def commit_local_changes(*args):
+        transaction.commit()
+
     def wait_for_smi(browser, session, element, value):
-        session.execute("if (smi) smi.ready.call(arguments[0]); else arguments[0]();", [])
+        session.execute("if (window.smi) window.smi.ready.call(arguments[0]); else arguments[0]();", [])
 
     def wait_for_initial_smi(browser, session):
         time.sleep(0.5)
@@ -60,15 +65,25 @@ def smi_settings(browser):
     logger = LoginFormHandler('/root')
     browser.handlers.add('login', logger, False)
     browser.handlers.add('close', logger.logout)
+
+    commit_local_changes()
     browser.handlers.add('open', wait_for_initial_smi)
 
     browser.handlers.add('onclick', wait_for_smi)
     browser.handlers.add('onsubmit', wait_for_smi)
 
     # SMI
-    browser.inspect.add('content_tabs', css='ol.content-tabs a.top-entry', type='link')
-    browser.inspect.add('content_subtabs', css='ol.content-tabs ol a.open-screen', type='link')
-    browser.inspect.add('feedback', css='div.notification p')
+    browser.inspect.add(
+        'content_tabs',
+        css='ol.content-tabs a.top-entry',
+        type='link')
+    browser.inspect.add(
+        'content_subtabs',
+        css='ol.content-tabs ol a.open-screen',
+        type='link')
+    browser.inspect.add(
+        'feedback',
+        css='div.notification p')
 
     # Folder listing
 
@@ -125,7 +140,10 @@ def smi_settings(browser):
         xpath='//dl[@class="listing"]/dd[@class="assets"]//tr[@class="item"]/td[6]')
 
     # Form
-    browser.inspect.add('form_controls', css="div.form-controls a.form-control", type='link')
+    browser.inspect.add(
+        'form_controls',
+        css="div.form-controls a.form-control",
+        type='link')
 
 
 

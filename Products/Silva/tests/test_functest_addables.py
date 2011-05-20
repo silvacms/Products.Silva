@@ -3,7 +3,6 @@
 # $Id$
 
 import unittest
-import transaction
 from Products.Silva.testing import FunctionalLayer, smi_settings
 
 
@@ -18,7 +17,6 @@ class AuthorAddablesTestCase(unittest.TestCase):
         self.layer.login('manager')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
-        transaction.commit()
 
     def test_addables(self):
         browser = self.layer.get_selenium_browser(smi_settings)
@@ -61,18 +59,24 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
 
         browser.inspect.content_subtabs['addables'].click()
 
-        # Addables form: change addables
+        # Addables form
         form = browser.get_form('form')
         addables = form.get_control('form.field.addables')
         self.assertTrue('Silva File' in addables.options)
         self.assertTrue('Silva Image' in addables.options)
         self.assertTrue('Silva Folder' in addables.options)
+        self.assertTrue('Silva Link' in addables.options)
+        self.assertTrue('Silva AutoTOC' in addables.options)
         self.assertTrue('Silva Publication' in addables.options)
 
+        # Uninstalled products are not addables
+        self.assertFalse('Silva Find' in addables.options)
+
+        # Change the addables
         addables.value = ['Silva Folder', 'Silva File', 'Silva Image']
         browser.inspect.form_controls['save'].click()
 
-        self.assertListEqual(
+        self.assertItemsEqual(
             browser.inspect.feedback,
             ['Changes to addables content types saved.'])
 
@@ -80,6 +84,9 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertItemsEqual(
             form.get_control('form.field.addables').value,
             ['Silva Folder', 'Silva File', 'Silva Image'])
+
+        # There is no acquire option on the root.
+        self.assertTrue('form.field.acquire' not in form.controls)
 
         # Now check the add menu: only the three selected are there
         self.assertTrue('add' in browser.inspect.content_tabs)
@@ -97,6 +104,14 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
         self.assertEqual(browser.inspect.folder_identifier, ['folder'])
         browser.inspect.folder_goto[0].click()
 
+        # And we can only add acquired values
+        self.assertTrue('add' in browser.inspect.content_tabs)
+
+        browser.inspect.content_tabs['add'].click()
+        self.assertItemsEqual(
+            browser.inspect.content_subtabs.keys(),
+            ['Silva Folder', 'Silva File', 'Silva Image'])
+
         self.assertTrue('settings' in browser.inspect.content_tabs)
 
         browser.inspect.content_tabs['settings'].click()
@@ -106,6 +121,7 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
 
         # There is a form, where settings are acquired.
         form = browser.get_form('form')
+        addables = form.get_control('form.field.addables')
         self.assertEqual(
             form.get_control('form.field.acquire').checked,
             True)
@@ -113,13 +129,31 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
             form.get_control('form.field.addables').value,
             ['Silva Folder', 'Silva File', 'Silva Image'])
 
-        # And we can only add acquired values
+        # Now change the values
+        form.get_control('form.field.acquire').checked = False
+        form.get_control('form.field.addables').value = [
+            'Silva Folder', 'Silva Link', 'Silva AutoTOC']
+        browser.inspect.form_controls['save'].click()
+
+        self.assertItemsEqual(
+            browser.inspect.feedback,
+            ['Changes to addables content types saved.'])
+
+        form = browser.get_form('form')
+        self.assertItemsEqual(
+            form.get_control('form.field.addables').value,
+            ['Silva Folder', 'Silva Link', 'Silva AutoTOC'])
+        self.assertEqual(
+            form.get_control('form.field.acquire').checked,
+            False)
+
+        # Entries in the add menu changed
         self.assertTrue('add' in browser.inspect.content_tabs)
 
         browser.inspect.content_tabs['add'].click()
         self.assertItemsEqual(
             browser.inspect.content_subtabs.keys(),
-            ['Silva Folder', 'Silva File', 'Silva Image'])
+            ['Silva Folder', 'Silva Link', 'Silva AutoTOC'])
 
 
 class ManagerAddablesTestCase(ChiefEditorAddablesTestCase):
