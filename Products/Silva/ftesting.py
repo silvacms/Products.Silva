@@ -72,6 +72,21 @@ def smi_settings(browser):
     browser.handlers.add('onclick', wait_for_smi)
     browser.handlers.add('onsubmit', wait_for_smi)
 
+    # Macros
+    def set_datetime(browser, form, prefix, dt):
+        mapping = {
+            'day': lambda d: d.day,
+            'month': lambda d: d.month,
+            'year': lambda d: d.year,
+            'hour': lambda d: d.hour,
+            'min': lambda d: d.minute}
+
+        for name, callback in mapping.items():
+            control = form.get_control(".".join([prefix, name]))
+            control.value = callback(dt)
+
+    browser.macros.add('set_datetime', set_datetime)
+
     # SMI
     browser.inspect.add(
         'content_tabs',

@@ -7,24 +7,40 @@ from Products.Silva.VersionedContent import VersionedContent
 from Products.Silva.Version import Version
 from Products.Silva import roleinfo
 
+from five import grok
 from silva.core import conf as silvaconf
 from silva.core.views import views as silvaviews
+from zeam.form import silva as silvaforms
 
 
 class MockupVersion(Version):
-    meta_type='Mockup Version'
+    meta_type = 'Mockup Version'
 
 
 class MockupVersionedContent(VersionedContent):
-    meta_type='Mockup VersionedContent'
+    meta_type = 'Mockup VersionedContent'
     silvaconf.priority(-10)
     silvaconf.version_class(MockupVersion)
+    silvaconf.icon('tests/mockers.png')
 
     def __init__(self, *args):
         super(MockupVersionedContent, self).__init__(*args)
 
     def get_mockup_version(self, version_id):
         return self._getOb(str(version_id))
+
+
+class MockupAddForm(silvaforms.SMIAddForm):
+    """Add form for a Mockup VersionedContent
+    """
+    grok.context(MockupVersionedContent)
+    grok.name(u'Silva Link')
+
+
+class MockupEditForm(silvaforms.SMIEditForm):
+    """Add form for a Mockup VersionedContent
+    """
+    grok.context(MockupVersionedContent)
 
 
 class MockupView(silvaviews.View):
