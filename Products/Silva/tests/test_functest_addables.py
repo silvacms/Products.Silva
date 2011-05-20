@@ -3,6 +3,7 @@
 # $Id$
 
 import unittest
+import transaction
 from Products.Silva.testing import FunctionalLayer, smi_settings
 
 
@@ -17,6 +18,7 @@ class AuthorAddablesTestCase(unittest.TestCase):
         self.layer.login('manager')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
+        transaction.commit()
 
     def test_addables(self):
         browser = self.layer.get_selenium_browser(smi_settings)
@@ -87,21 +89,36 @@ class ChiefEditorAddablesTestCase(EditorAddablesTestCase):
             browser.inspect.content_subtabs.keys(),
             ['Silva Folder', 'Silva File', 'Silva Image'])
 
-        return
         # Visit addable tab on this folder.
-        self.assertTrue('properties' in browser.inspect.tabs)
-        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
+        self.assertTrue('content' in browser.inspect.content_tabs)
+        browser.inspect.content_tabs['content'].click()
 
-        self.assertTrue('addables' in browser.inspect.subtabs)
-        self.assertEqual(browser.inspect.subtabs['addables'].click(), 200)
-        self.assertEqual(browser.url, '/root/folder/edit/tab_addables')
+        # We have one folder, with an addable tab as well
+        self.assertEqual(browser.inspect.folder_identifier, ['folder'])
+        browser.inspect.folder_goto[0].click()
 
+        self.assertTrue('settings' in browser.inspect.content_tabs)
+
+        browser.inspect.content_tabs['settings'].click()
+        self.assertTrue('addables' in browser.inspect.content_subtabs)
+
+        browser.inspect.content_subtabs['addables'].click()
+
+        # There is a form, where settings are acquired.
         form = browser.get_form('form')
         self.assertEqual(
-            form.get_control('field_acquire_addables').checked,
+            form.get_control('form.field.acquire').checked,
             True)
-        self.assertEqual(
-            form.get_control('field_addables').value,
+        self.assertItemsEqual(
+            form.get_control('form.field.addables').value,
+            ['Silva Folder', 'Silva File', 'Silva Image'])
+
+        # And we can only add acquired values
+        self.assertTrue('add' in browser.inspect.content_tabs)
+
+        browser.inspect.content_tabs['add'].click()
+        self.assertItemsEqual(
+            browser.inspect.content_subtabs.keys(),
             ['Silva Folder', 'Silva File', 'Silva Image'])
 
 

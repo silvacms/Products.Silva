@@ -68,11 +68,64 @@ def smi_settings(browser):
     # SMI
     browser.inspect.add('content_tabs', css='ol.content-tabs a.top-entry', type='link')
     browser.inspect.add('content_subtabs', css='ol.content-tabs ol a.open-screen', type='link')
-
     browser.inspect.add('feedback', css='div.notification p')
+
+    # Folder listing
+
+    browser.inspect.add(
+        'folder_identifier',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[3]')
+    browser.inspect.add(
+        'folder_title',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[4]')
+    browser.inspect.add(
+        'folder_modified',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[5]')
+    browser.inspect.add(
+        'folder_author',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[6]')
+
+    browser.inspect.add(
+        'folder_goto',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[7]/div/ol/li/a/span',
+        type='clickable')
+    browser.inspect.add(
+        'folder_goto_dropdown',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[7]//div[@class="dropdown-icon"]',
+        type='clickable')
+    browser.inspect.add(
+        'folder_goto_actions',
+        xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[7]//div[@class="dropdown"]/a',
+        type='clickable')
+
+    browser.inspect.add(
+        'folder_publishables_identifier',
+        xpath='//dl[@class="listing"]/dd[@class="publishables"]//tr[@class="item"]/td[3]')
+    browser.inspect.add(
+        'folder_publishables_title',
+        xpath='//dl[@class="listing"]/dd[@class="publishables"]//tr[@class="item"]/td[4]')
+    browser.inspect.add(
+        'folder_publishables_modified',
+        xpath='//dl[@class="listing"]/dd[@class="publishables"]//tr[@class="item"]/td[5]')
+    browser.inspect.add(
+        'folder_publishables_author',
+        xpath='//dl[@class="listing"]/dd[@class="publishables"]//tr[@class="item"]/td[6]')
+
+    browser.inspect.add(
+        'folder_assets_identifier',
+        xpath='//dl[@class="listing"]/dd[@class="assets"]//tr[@class="item"]/td[3]')
+    browser.inspect.add(
+        'folder_assets_title',
+        xpath='//dl[@class="listing"]/dd[@class="assets"]//tr[@class="item"]/td[4]')
+    browser.inspect.add(
+        'folder_assets_modified',
+        xpath='//dl[@class="listing"]/dd[@class="assets"]//tr[@class="item"]/td[5]')
+    browser.inspect.add(
+        'folder_assets_author',
+        xpath='//dl[@class="listing"]/dd[@class="assets"]//tr[@class="item"]/td[6]')
+
     # Form
     browser.inspect.add('form_controls', css="div.form-controls a.form-control", type='link')
-
 
 
 
