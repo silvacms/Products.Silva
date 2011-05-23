@@ -79,13 +79,10 @@ class VersionManager(grok.Adapter):
             if self.content._previous_versions is None:
                 self.content._previous_versions = []
             self.content._previous_versions.append(version_tuple)
-            # XXX should be event
-            self.content._unindex_version(current_version)
 
         new_version_id = self.content.get_new_version_id()
         self.content.manage_clone(self.version, new_version_id)
         self.content._unapproved_version = (new_version_id, None, None)
-        self.content._index_version(new_version_id)
         return True
 
     def delete(self):

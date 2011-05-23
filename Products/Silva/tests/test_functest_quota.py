@@ -11,8 +11,6 @@ from Products.Silva.testing import FunctionalLayer, smi_settings
 def smi_set_quota(browser, quota, should_fail=False):
     """Set the quota value, and expect a reply or an error.
     """
-    assert browser.inspect.tabs['properties'].click() == 200
-    assert browser.inspect.subtabs['settings'].click() == 200
 
     form = browser.get_form('form')
     form.get_control('silva-quota.quota:record').value = quota
@@ -28,13 +26,16 @@ def smi_set_quota(browser, quota, should_fail=False):
 
 def quota_settings(browser):
     smi_settings(browser)
-    browser.inspect.add('used_space', '//span[@id="space-used"]')
-    browser.inspect.add('quota_space', '//span[@id="space-quota"]')
-    browser.inspect.add('form_error', '//span[@class="error"]')
+    browser.inspect.add(
+        'used_space',
+        xpath='//div[@data-field-prefix="form.quotaform.field.size"]/div[@class="form-field"]')
+    browser.inspect.add(
+        'quota_space',
+        xpath='//div[@data-field-prefix="form.quotaform.field.quota"]/div[@class="form-field"]')
     browser.macros.add('set_quota', smi_set_quota)
 
 
-class QuotaFunctionalTestCase(unittest.TestCase):
+class EnableQuotaFunctionalTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
@@ -44,51 +45,52 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_enable_quota(self):
         """Go in ZMI, and on service_extension enable the quota system.
         """
-        browser = self.layer.get_browser(smi_settings)
-        browser.login('manager', 'manager')
-        self.assertEqual(browser.open('/root/manage_main'), 200)
+        browser = self.layer.get_selenium_browser(smi_settings)
+        browser.login('manager')
+        browser.open('/root/manage_main')
 
         self.assertTrue('service' in browser.inspect.zmi_tabs)
-        self.assertEqual(browser.inspect.zmi_tabs['service'].click(), 200)
+        browser.inspect.zmi_tabs['service'].click()
         self.assertEqual(browser.location, '/root/manage_services')
-        self.assertEqual(
-            browser.inspect.zmi_listing['service_extensions'].click(),
-            200)
+        browser.inspect.zmi_listing['service_extensions'].click()
         self.assertEqual(
             browser.inspect.zmi_title,
             ['Configure Silva Extension Products'])
 
         form = browser.get_form('general')
-        self.assertEqual(
-            form.get_control('enable_quota_subsystem').click(),
-            200)
+        form.get_control('enable_quota_subsystem').click()
         self.assertEqual(
             browser.inspect.zmi_feedback,
             ['Quota sub-system enabled'])
 
+class QuotaFunctionalTestCase(unittest.TestCase):
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('manager')
+        # Enable the quota system
+        self.root.service_extensions.enable_quota_subsystem()
+        factory = self.root.manage_addProduct['Silva']
+        # Create test content
+        factory.manage_addPublication('publication', 'Publication')
+
     def test_disable_quota(self):
         """Disable the quota system.
         """
-        self.root.service_extensions.enable_quota_subsystem()
-
-        browser = self.layer.get_browser(smi_settings)
-        browser.login('manager', 'manager')
-        self.assertEqual(browser.open('/root/manage_main'), 200)
+        browser = self.layer.get_selenium_browser(smi_settings)
+        browser.login('manager')
+        browser.open('/root/manage_main')
 
         self.assertTrue('service' in browser.inspect.zmi_tabs)
-        self.assertEqual(browser.inspect.zmi_tabs['service'].click(), 200)
-        self.assertEqual(browser.location, '/root/manage_services')
-        self.assertEqual(
-            browser.inspect.zmi_listing['service_extensions'].click(),
-            200)
+        browser.inspect.zmi_tabs['service'].click()
+        browser.inspect.zmi_listing['service_extensions'].click()
         self.assertEqual(
             browser.inspect.zmi_title,
             ['Configure Silva Extension Products'])
 
         form = browser.get_form('general')
-        self.assertEqual(
-            form.get_control('disable_quota_subsystem').click(),
-            200)
+        form.get_control('disable_quota_subsystem').click()
         self.assertEqual(
             browser.inspect.zmi_feedback,
             ['Quota sub-system disabled'])
@@ -96,12 +98,9 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_add_asset_overquota(self):
         """Test adding an asset (file and image) being overquota.
         """
-        self.root.service_extensions.enable_quota_subsystem()
-
-        browser = self.layer.get_browser(quota_settings)
-        browser.login('manager', 'manager')
-
-        self.assertEqual(browser.open('/root/edit'), 200)
+        browser = self.layer.get_selenium_browser(quota_settings)
+        browser.login('manager')
+        browser.open('/root/edit')
 
         # Set quota to 1MB
         browser.macros.set_quota(1)
@@ -142,10 +141,8 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_add_asset(self):
         """Test adding an asset while the quota is on.
         """
-        self.root.service_extensions.enable_quota_subsystem()
-
-        browser = self.layer.get_browser(quota_settings)
-        browser.login('manager', 'manager')
+        browser = self.layer.get_selenium_browser(quota_settings)
+        browser.login('manager')
 
         self.assertEqual(browser.open('/root/edit'), 200)
 
@@ -182,16 +179,16 @@ class QuotaFunctionalTestCase(unittest.TestCase):
     def test_set_quota(self):
         """Test modification of the quota's value.
         """
-        self.root.service_extensions.enable_quota_subsystem()
+        browser = self.layer.get_selenium_browser(quota_settings)
+        browser.login('manager')
 
-        browser = self.layer.get_browser(quota_settings)
-        browser.login('manager', 'manager')
+        browser.open('/root/edit')
 
-        self.assertEqual(browser.open('/root/edit'), 200)
-        self.assertEqual(browser.inspect.tabs['properties'].click(), 200)
-        self.assertEqual(browser.inspect.subtabs['settings'].click(), 200)
+        self.assertTrue('settings' in browser.inspect.content_tabs)
+        browser.inspect.content_tabs['settings'].click()
+        self.assertTrue('settings' in browser.inspect.content_subtabs)
+        browser.inspect.content_subtabs['settings'].click()
 
-        self.assertEqual(browser.location, '/root/edit/tab_settings')
         self.assertEqual(browser.inspect.used_space, ['0'])
         self.assertEqual(browser.inspect.quota_space, [])
 
@@ -201,13 +198,16 @@ class QuotaFunctionalTestCase(unittest.TestCase):
             browser.inspect.quota_space,
             ['(The quota for this area is set to 10 MB.)'])
 
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addPublication('publication', 'Publication')
+        # go to the publication
+        browser.inspect.content_tabs['contents'].click()
+        self.assertEqual(browser.inspect.folder_identifier, ['publication'])
+        browser.inspect.folder_goto[0].click()
 
-        self.assertEqual(browser.inspect.navigation['root'].click(), 200)
-        self.assertEqual(browser.inspect.navigation['publication'].click(), 200)
+        self.assertTrue('settings' in browser.inspect.content_tabs)
+        browser.inspect.content_tabs['settings'].click()
+        self.assertTrue('settings' in browser.inspect.content_subtabs)
+        browser.inspect.content_subtabs['settings'].click()
 
-        self.assertEqual(browser.location, '/root/publication/edit/tab_settings')
         self.assertEqual(browser.inspect.used_space, ['0'])
         self.assertEqual(
             browser.inspect.quota_space,
@@ -244,5 +244,6 @@ class QuotaFunctionalTestCase(unittest.TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(EnableQuotaFunctionalTestCase))
     suite.addTest(unittest.makeSuite(QuotaFunctionalTestCase))
     return suite

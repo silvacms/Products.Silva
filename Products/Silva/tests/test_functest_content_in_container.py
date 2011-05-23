@@ -458,6 +458,6 @@ class ContentInPublicationTestCase(ContentInFolderTestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ContentInFolderTestCase))
-    suite.addTest(unittest.makeSuite(ContentInPublicationTestCase))
+    #suite.addTest(unittest.makeSuite(ContentInFolderTestCase))
+    #suite.addTest(unittest.makeSuite(ContentInPublicationTestCase))
     return suite

@@ -93,6 +93,10 @@ def smi_settings(browser):
         css='ol.content-tabs a.top-entry',
         type='link')
     browser.inspect.add(
+        'content_views',
+        css='div.view-actions a',
+        type='link')
+    browser.inspect.add(
         'content_subtabs',
         css='ol.content-tabs ol a.open-screen',
         type='link')

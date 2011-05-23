@@ -9,25 +9,6 @@ from Products.Silva.tests.helpers import test_filename
 from silva.core.references.reference import get_content_id
 
 
-class ReaderContentTestCase(unittest.TestCase):
-    layer = FunctionalLayer
-
-    def test_add_content(self):
-        """A reader can't add anything.
-        """
-        browser = self.layer.get_browser(smi_settings)
-        browser.login('reader', 'reader')
-
-        self.assertEqual(browser.open('/root/edit'), 200)
-        self.assertRaises(AssertionError, browser.get_form, 'md.container')
-
-        # Our reader has hacker genes. He is trying.
-        self.assertEqual(browser.open('/root/edit/+'), 401)
-        self.assertEqual(browser.open('/root/edit/+/Silva Document'), 401)
-        self.assertEqual(browser.open('/root/edit/+/Silva Folder'), 401)
-        self.assertEqual(browser.open('/root/edit/+/Silva Publication'), 401)
-
-
 class AuthorContentTestCase(unittest.TestCase):
     """For each role make each content in a folder.
     """
@@ -37,68 +18,6 @@ class AuthorContentTestCase(unittest.TestCase):
     def setUp(self):
         self.root = self.layer.get_application()
         self.layer.login('manager')
-
-    def test_generic_add_view(self):
-        """We should be able to the default generic add view which
-           to each content type add form.
-        """
-        browser = self.layer.get_browser()
-        browser.inspect.add(
-            'content',
-            '//dl[@class="new-content-listing"]/dt/a',
-            type='link')
-        browser.login(self.username, self.username)
-
-        self.assertEqual(browser.open('/root/edit/+'), 200)
-        # We could check more content type here.
-        self.assertTrue('Silva Document' in browser.inspect.content)
-        self.assertEqual(
-            browser.inspect.content['Silva Document'].url,
-            'http://localhost/root/edit/+/Silva Document')
-        self.assertTrue('Silva Folder' in browser.inspect.content)
-        self.assertEqual(
-            browser.inspect.content['Silva Folder'].url,
-            'http://localhost/root/edit/+/Silva Folder')
-
-        # We have a drop-down. We should have the same options
-        # (except for the none of the drop-down).
-        form = browser.get_form('md.container')
-        self.assertEqual(
-            sorted(browser.inspect.content.keys()),
-            sorted(filter(
-                    lambda x: x != 'none',
-                    form.controls['md.container.field.content'].options)))
-
-    def test_document(self):
-        """We should be able to add/remove a document.
-        """
-        browser = self.layer.get_browser(smi_settings)
-        browser.login(self.username, self.username)
-
-        self.assertEqual(browser.open('/root/edit'), 200)
-        browser.macros.create(
-            'Silva Document', id='documentation', title='Documentation')
-        self.assertEqual(
-            browser.inspect.folder_listing, ['index', 'documentation'])
-
-        # The user should by the last author on the content and container.
-        self.assertEqual(
-            self.root.sec_get_last_author_info().userid(),
-            self.username)
-        self.assertEqual(
-            self.root.documentation.sec_get_last_author_info().userid(),
-            self.username)
-
-        # Visit the edit page
-        self.assertEqual(
-            browser.inspect.folder_listing['documentation'].click(), 200)
-        self.assertEqual(
-            browser.url, '/root/documentation/edit/tab_edit')
-        self.assertEqual(
-            browser.inspect.breadcrumbs,
-            ['root', 'documentation'])
-        browser.inspect.breadcrumbs['root'].click()
-        browser.macros.delete('documentation')
 
     def test_folder(self):
         """We should be able to add/remove a folder.
@@ -439,9 +358,8 @@ class ManagerContentTestCase(ChiefEditorContentTestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ReaderContentTestCase))
-    suite.addTest(unittest.makeSuite(AuthorContentTestCase))
-    suite.addTest(unittest.makeSuite(EditorContentTestCase))
-    suite.addTest(unittest.makeSuite(ChiefEditorContentTestCase))
-    suite.addTest(unittest.makeSuite(ManagerContentTestCase))
+    #suite.addTest(unittest.makeSuite(AuthorContentTestCase))
+    #suite.addTest(unittest.makeSuite(EditorContentTestCase))
+    #suite.addTest(unittest.makeSuite(ChiefEditorContentTestCase))
+    #suite.addTest(unittest.makeSuite(ManagerContentTestCase))
     return suite

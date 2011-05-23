@@ -31,7 +31,6 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Security import Security
 
 # Silva adapters
-from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.core.services.interfaces import ICataloging
@@ -257,6 +256,7 @@ def content_created(content, event):
     binding = service.getMetadata(content)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
+    ICataloging(content).index()
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)
@@ -273,8 +273,6 @@ def index_and_update_author_modified_content(content, event):
         return
     # In the same way, we discard event on versioned content if they
     # are about adding or removing a version.
-    # XXX Modify versioning code not to have _index_version but
-    # let it handle by this here.
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return

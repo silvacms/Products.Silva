@@ -44,7 +44,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         IPublicationWorkflow(self.root.document).publish()
         self.assertItemsEqual(
             self.search('/root'),
-            [('/root', 'unapproved'),
+            [('/root', 'public'),
              ('/root/document', 'public'),
              ('/root/document/0', 'public')])
 
@@ -84,7 +84,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         IPublicationWorkflow(self.root.document).publish()
         self.assertItemsEqual(
             self.search('/root'),
-            [('/root', 'unapproved'),
+            [('/root', 'public'),
              ('/root/document', 'public'),
              ('/root/document/1', 'public')])
 
@@ -95,7 +95,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.root.manage_renameObject('document', 'renamed_document')
         self.assertItemsEqual(
             self.search('/root'),
-            [('/root', 'unapproved'),
+            [('/root', 'public'),
              ('/root/renamed_document', 'public'),
              ('/root/renamed_document/0', 'public')])
 
@@ -107,7 +107,7 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.root.manage_pasteObjects(token)
         self.assertItemsEqual(
             self.search('/root'),
-            [('/root', 'unapproved'),
+            [('/root', 'public'),
              ('/root/document', 'public'),
              ('/root/document/0', 'public'),
              ('/root/copy_of_document', 'unapproved'),
@@ -123,10 +123,10 @@ class CatalogVersioningTestCase(unittest.TestCase):
         self.root.folder.manage_pasteObjects(token)
         self.assertItemsEqual(
             self.search('/root'),
-            [('/root', 'unapproved'),
-             ('/root/folder', 'unapproved'),
-             ('/root/folder/document', 'unapproved'),
-             ('/root/folder/document/0', 'unapproved')])
+            [('/root', 'public'),
+             ('/root/folder', 'public'),
+             ('/root/folder/document', 'public'),
+             ('/root/folder/document/0', 'public')])
 
     def test_deletion(self):
         """Test deleting a document.

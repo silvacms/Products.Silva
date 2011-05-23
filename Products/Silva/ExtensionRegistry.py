@@ -271,8 +271,8 @@ class ExtensionRegistry(object):
             return extension.installer.is_installed(root)
         return False
 
-    def get_name_for_class(self, class_):
-        path = class_.__module__
+    def get_name_for_class(self, cls):
+        path = cls.__module__
         for module in self._extensions_by_module.keys():
             if (path.startswith(module) and
                 (len(path) == len(module) or
