@@ -99,12 +99,20 @@ else
         css='ol.content-tabs a.top-entry',
         type='link')
     browser.inspect.add(
+        'content_subtabs',
+        css='ol.content-tabs ol a.open-screen',
+        type='link')
+    browser.inspect.add(
+        'content_activetabs',
+        css="ol.content-tabs a.active",
+        type='link')
+    browser.inspect.add(
         'content_views',
         css='div.view-actions a',
         type='link')
     browser.inspect.add(
-        'content_subtabs',
-        css='ol.content-tabs ol a.open-screen',
+        'content_activeviews',
+        css='div.view-actions a.active',
         type='link')
     browser.inspect.add(
         'feedback',
