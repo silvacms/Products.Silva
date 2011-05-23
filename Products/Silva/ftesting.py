@@ -184,9 +184,8 @@ else
     # Form
     browser.inspect.add(
         'form_controls',
-        css="div.form-controls a.form-control",
+        css="div.form-controls a",
         type='link')
-
 
 
 
