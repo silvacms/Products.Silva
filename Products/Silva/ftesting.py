@@ -56,7 +56,13 @@ def smi_settings(browser):
         transaction.commit()
 
     def wait_for_smi(browser, session, element, value):
-        session.execute("if (window.smi) window.smi.ready.call(arguments[0]); else arguments[0]();", [])
+        return session.execute(
+            """
+if (window.smi)
+   window.smi.ready.call(arguments[0]);
+else
+   arguments[0]();
+""", [])
 
     def wait_for_initial_smi(browser, session):
         time.sleep(0.5)
@@ -131,6 +137,15 @@ def smi_settings(browser):
         'folder_goto_actions',
         xpath='//dl[@class="listing"]//tr[contains(@class,"item")]/td[7]//div[@class="dropdown"]/a',
         type='clickable')
+
+    browser.inspect.add(
+        'folder',
+        compound={'title': 'folder_title',
+                  'identifier': 'folder_identifier',
+                  'modified': 'folder_modified',
+                  'author': 'folder_author',
+                  'goto': 'folder_goto',
+                  'goto_dropdown': 'folder_goto_dropdown'})
 
     browser.inspect.add(
         'folder_publishables_identifier',
