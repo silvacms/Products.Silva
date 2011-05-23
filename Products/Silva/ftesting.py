@@ -96,23 +96,31 @@ else
     # SMI
     browser.inspect.add(
         'content_tabs',
-        css='ol.content-tabs a.top-entry',
+        css='div.metadata ol.content-tabs a.top-entry',
         type='link')
     browser.inspect.add(
         'content_subtabs',
-        css='ol.content-tabs ol a.open-screen',
+        css='div.metadata ol.content-tabs ol a.open-screen',
         type='link')
     browser.inspect.add(
         'content_activetabs',
-        css="ol.content-tabs a.active",
+        css="div.metadata ol.content-tabs a.active",
         type='link')
     browser.inspect.add(
         'content_views',
-        css='div.view-actions a',
+        css='div.metadata div.view-actions a',
         type='link')
     browser.inspect.add(
         'content_activeviews',
-        css='div.view-actions a.active',
+        css='div.metadata div.view-actions a.active',
+        type='link')
+    browser.inspect.add(
+        'content_title',
+        css='div.metadata h2',
+        type='text')
+    browser.inspect.add(
+        'content_parent',
+        css="div.metadata div.admin-actions a.parent",
         type='link')
     browser.inspect.add(
         'feedback',
