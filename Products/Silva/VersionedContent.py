@@ -91,5 +91,3 @@ class CatalogedVersionedContent(VersionedContent):
             ICataloging(version).unindex()
 
 InitializeClass(CatalogedVersionedContent)
-
-

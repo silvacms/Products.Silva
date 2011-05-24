@@ -15,8 +15,8 @@ from Products.Silva.Publishable import PublishableBase
 from Products.Silva import SilvaPermissions
 from Products.Silva.Versionable import Versionable
 
-from silva.core.interfaces import IVersionedAsset, IVersioning
-from silva.core.services.interfaces import ICataloging, ICatalogingAttributes
+from silva.core.interfaces import IVersionedAsset, ICatalogedVersionedAsset, IVersioning
+from silva.core.services.interfaces import ICataloging
 
 class VersionedAsset(Versionable, PublishableBase, BaseFolder):
     security = ClassSecurityInfo()
@@ -82,3 +82,29 @@ class VersionedAsset(Versionable, PublishableBase, BaseFolder):
         return self.get_container()    
     
 InitializeClass(VersionedAsset)
+
+class CatalogedVersionedAsset(VersionedAsset):
+    """VersionedAsset from those versions are in the catalog.
+    """
+    grok.implements(ICatalogedVersionedAsset)
+    grok.baseclass()
+
+    def _index_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            # XXX Update this
+            ICataloging(version).index()
+
+    def _reindex_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            # XXX Update this
+            ICataloging(version).reindex()
+
+    def _unindex_version(self, version_id):
+        version = getattr(self, version_id, None)
+        if version is not None:
+            # XXX Update this
+            ICataloging(version).unindex()
+
+InitializeClass(CatalogedVersionedAsset)

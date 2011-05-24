@@ -34,3 +34,16 @@ class HauntedGhost(Haunted):
         if None:
             yield None
 
+
+
+class HauntedVersionedAsset(Haunted):
+    """Adapted content for retrieving the 'iterator' of versioned assets (page
+    assets).
+    """
+    grok.context(interfaces.IVersionedAsset)
+
+    def getHaunting(self):
+        # Nothing to look for - versioned assets cannot be haunted. Don't yield anything
+        # XXX how to not yield anything??
+        if None:
+            yield None
