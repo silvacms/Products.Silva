@@ -4,7 +4,11 @@ Changes
 Silva 2.3.2 (unreleased)
 ------------------------
 
-- ....
+- Fix an Acquisition issue while looking for users in service Members.
+
+- Fix image display in XSLT renderer to high resolution.
+
+- Improve SMI template.
 
 Silva 2.3.1 (2010-02-08)
 ------------------------
