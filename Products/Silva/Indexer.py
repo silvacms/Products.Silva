@@ -155,9 +155,9 @@ class IndexerAddForm(silvaforms.SMIAddForm):
 class IndexerEditForm(silvaforms.SMIForm):
     """Edit form for an indexer. There is not that much to edit however.
     """
-    grok.name('silva.ui.content')
     grok.context(IIndexer)
 
+    label = _("Update Silva Indexer")
     description = _(
         u"An index is not editable. "
         u"However, you can update the index to include recent added content.")
