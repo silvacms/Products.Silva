@@ -173,7 +173,7 @@ def manage_addSimpleMember(self, id, REQUEST=None):
     """Add a Simple Member."""
     user = SimpleMember(id)
     self._setObject(id, user)
-    user = getattr(self, id)
+    user = self._getOb(id)
     user.manage_addLocalRoles(id, ['ChiefEditor'])
     add_and_edit(self, id, REQUEST)
     return ''
@@ -226,11 +226,11 @@ class SimpleMemberService(SilvaService):
         if not self.is_user(userid, location=location):
             return None
         # get member, add it if it doesn't exist yet
-        members = self.Members.aq_inner.aq_explicit
-        member = getattr(members, userid, None)
+        members = self.Members
+        member = members._getOb(userid, None)
         if member is None:
             members.manage_addProduct['Silva'].manage_addSimpleMember(userid)
-            member = getattr(members, userid)
+            member = members._getOb(userid)
         return member
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,

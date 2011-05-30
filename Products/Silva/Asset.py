@@ -16,6 +16,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 
+from silva.core.smi.content import IEditScreen
 from silva.core.interfaces import IAsset, IImage
 from silva.core.views import views as silvaviews
 from silva.core.smi.content.metadata import ContentReferencedBy
@@ -128,6 +129,7 @@ class AssetEditTab(silvaforms.SMIComposedForm):
     grok.context(IAsset)
     grok.name('content')
     grok.require('silva.ChangeSilvaContent')
+    grok.implements(IEditScreen)
 
     label = _('Edit')
 

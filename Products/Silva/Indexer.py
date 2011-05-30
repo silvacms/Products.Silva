@@ -19,6 +19,7 @@ from Products.Silva.Content import Content
 from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
+from silva.core.smi.content import IEditScreen
 from silva.core.interfaces import IIndexEntries, IIndexer, IPublishable
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
@@ -156,6 +157,8 @@ class IndexerEditForm(silvaforms.SMIForm):
     """Edit form for an indexer. There is not that much to edit however.
     """
     grok.context(IIndexer)
+    grok.require('silva.ChangeSilvaContent')
+    grok.implements(IEditScreen)
 
     label = _("Update Silva Indexer")
     description = _(
