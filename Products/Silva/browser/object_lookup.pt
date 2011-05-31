@@ -296,7 +296,7 @@
                               title="content is published"
                               tal:define="is_published item/is_version_published | nothing"
                               tal:condition="is_published"
-                              tal:attributes="src string:${root_url}/globals/checkmark.gif"
+                              tal:attributes="src string:${root_url}/globals/checkmark.png"
                               i18n:attributes="alt"
                             />
                             <span tal:omit-tag=""

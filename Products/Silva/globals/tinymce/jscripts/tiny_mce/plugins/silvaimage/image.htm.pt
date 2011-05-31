@@ -9,7 +9,7 @@
   <script type="text/javascript" src="../../utils/editable_selects.js"></script>
   <script type="text/javascript" src="js/image.js"></script>
   <link href="css/silvaimage.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../../../../../service_views/Silva/reference.js"></script>
+  <script type="text/javascript" src="../../../../../../++resource++Products.Silva.browser.scripts/reference.js"></script>
   </head>
 <body id="silvaimage" style="display: none">
   <form onsubmit="ImageDialog.insert();return false;" action="#"> 

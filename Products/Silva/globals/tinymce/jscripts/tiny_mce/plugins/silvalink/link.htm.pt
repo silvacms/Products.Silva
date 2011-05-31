@@ -9,7 +9,7 @@
   <script type="text/javascript" src="js/silvalink.js"></script>
 <script type="text/javascript">
 </script>
-  <script type="text/javascript" src="../../../../../../service_views/Silva/reference.js"></script>
+  <script type="text/javascript" src="../../../../../../++resource++Products.Silva.browser.scripts/reference.js"></script>
   <link href="css/silvalink.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="silvalink" style="display: none">
