@@ -26,7 +26,7 @@
         <value key="first_item" type="int" value="1" />
         <value key="title" type="str" value="skin" />
         <value key="default" type="str" value="" />
-        <value key="css_class" type="str" value="store" />
+        <value key="css_class" type="str" value="field" />
         <value key="required" type="int" value="0" />
         <value key="enabled" type="int" value="1" />
         <value key="external_validator" type="str" value="" />

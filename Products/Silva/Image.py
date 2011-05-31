@@ -679,7 +679,7 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
     fields['web_scale'].defaultValue = '100%'
 
     @silvaforms.action(title=_('Change'),
-                       identifier=_('set_properties'))
+                       implements=silvaforms.IDefaultAction)
     def set_properties(self):
         data, errors = self.extractData()
         if errors:
@@ -691,9 +691,10 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
                 data.getWithDefault('web_crop'))
         except ValueError as e:
             self.send_message(unicode(e), type='error')
-        else:
-            self.send_message(_('Scaling and/or format changed.'),
-                type='feedback')
+            return silvaforms.FAILURE
+
+        self.send_message(_('Scaling and/or format changed.'),
+                          type='feedback')
         return silvaforms.SUCCESS
 
 

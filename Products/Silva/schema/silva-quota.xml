@@ -32,7 +32,7 @@
      <value key="display_width" type="int" value="20" />
      <value key="required" type="int" value="0" />
      <value key="description" type="str" value="Maximum space allowed for this container, including sub-containers, in MB." />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="quota" />
      <value key="truncate" type="int" value="0" />

@@ -30,7 +30,7 @@
       <value key="external_validator" type="str" value="" />
       <value key="height" type="int" value="2" />
       <value key="required" type="int" value="0" />
-      <value key="css_class" type="str" value="store" />
+      <value key="css_class" type="str" value="field" />
       <value key="default" type="str" value="" />
       <value key="title" type="str" value="subject" />
       <value key="description" type="str" value="Subject of content in this area." />
@@ -89,7 +89,7 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="keywords" />
      <value key="description" type="str" value="Keywords relating to content." />
@@ -148,7 +148,7 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="description" />
      <value key="description" type="str" value="Description of content in this area." />
@@ -207,7 +207,7 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="language" />
      <value key="items" type="list" value="[('Select a Language:' ,''),
@@ -312,7 +312,7 @@
      <value key="external_validator" type="str" value="" />
      <value key="height" type="int" value="3" />
      <value key="required" type="int" value="0" />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="comment" />
      <value key="description" type="str" value="Internal comments." />
@@ -721,7 +721,7 @@
      <value key="display_width" type="int" value="20" />
      <value key="required" type="int" value="0" />
      <value key="description" type="str" value="Name of contact person." />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="contact name" />
      <value key="truncate" type="int" value="0" />
@@ -778,7 +778,7 @@
      <value key="display_width" type="int" value="20" />
      <value key="required" type="int" value="0" />
      <value key="description" type="str" value="Email address of contact person." />
-     <value key="css_class" type="str" value="store" />
+     <value key="css_class" type="str" value="field" />
      <value key="default" type="str" value="" />
      <value key="title" type="str" value="contact email" />
      <value key="truncate" type="int" value="0" />
