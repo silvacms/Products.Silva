@@ -912,7 +912,7 @@ class ContainerView(silvaviews.View):
         default = self.context.get_default()
         if default is not None:
             return default.view()
-        return _(u'This container as no index.')
+        return _(u'This container has no index.')
 
 
 class IPhotoGallery(ICustomizableTag):
