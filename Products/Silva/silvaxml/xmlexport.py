@@ -14,6 +14,7 @@ from sprout.saxext import xmlexport
 from silva.core import interfaces
 from silva.core.interfaces import (IPublicationWorkflow, IExportSettings,
     ISilvaXMLExportHandler)
+from silva.core.interfaces.errors import ExternalReferenceError
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import canonical_path
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -25,11 +26,6 @@ from Products.Silva.silvaxml import ImportExportSettingsErrors
 NS_SILVA = 'http://infrae.com/namespace/silva'
 NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
 NS_SILVA_EXTRA = 'http://infrae.com/namespace/metadata/silva-extra'
-
-
-class ExternalReferenceError(xmlexport.XMLExportError):
-    """A reference outside of the exported  tree is being exported.
-    """
 
 
 class SilvaBaseProducer(xmlexport.Producer):

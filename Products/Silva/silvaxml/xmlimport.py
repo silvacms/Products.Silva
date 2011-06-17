@@ -29,11 +29,6 @@ silvaconf.namespace(NS_URI)
 theXMLImporter = xmlimport.Importer()
 logger = logging.getLogger('silva.xml')
 
-class ImportReferenceError(xmlimport.XMLImportError):
-    """The imported content refer to a non-existing other imported
-    content.
-    """
-
 
 @grok.subscribe(ISilvaObject, IContentImported)
 def reindex_import_content(content, event):
@@ -111,7 +106,7 @@ class SilvaBaseHandler(xmlimport.BaseHandler):
                         namespace_key=set_obj.metadata_uri,
                         data={
                             element_name: field.validator.deserializeValue(
-                                field, elements[element_name])},
+                                field, elements[element_name], self)},
                         reindex=0)
                     if errors:
                         logger.warn(
