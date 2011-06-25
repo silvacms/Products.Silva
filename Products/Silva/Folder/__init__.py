@@ -4,5 +4,4 @@
 # $Id$
 
 from Products.Silva.Folder.content import Folder
-from Products.Silva.Folder.views import IPhotoGallery
 from Products.Silva.Folder.views import FolderAddForm

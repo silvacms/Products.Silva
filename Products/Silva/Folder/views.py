@@ -11,13 +11,11 @@ from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 from silva.core.conf.interfaces import ITitledContent
-from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import IContainer, IFolder
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
-
 
 
 @grok.provider(IContextSourceBinder)
@@ -68,15 +66,3 @@ class ContainerView(silvaviews.View):
         return _(u'This container has no index.')
 
 
-class IPhotoGallery(ICustomizableTag):
-    """Container as a photo gallery
-    """
-
-
-class PhotoGalleryView(silvaviews.View):
-    grok.context(IPhotoGallery)
-
-    def update(self):
-        self.photos = []
-        if IFolder.providedBy(self.context):
-            self.photos = self.context.objectValues('Silva Image')
