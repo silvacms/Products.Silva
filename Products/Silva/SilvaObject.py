@@ -69,6 +69,9 @@ class Zope3ViewAttribute(ViewAttribute):
     you can define e.g. 'tab_edit' for your content type and it will
     work.
     """
+    
+    def getId(self):
+        return self._view_type
 
     def __getitem__(self, name):
         """Lookup an adapter before to ask the view machinery.
@@ -85,6 +88,10 @@ class Zope3ViewAttribute(ViewAttribute):
         applySkin(request, smi_skin)
         view = component.queryMultiAdapter((context, request), name=name)
         if view:
+            #the view's parent is now the container, which is incorrect.
+            #  the view actually needs to have this viewattribute as 
+            #  the parent, so do a reparent here to fix this situation
+            view.__parent__ = self
             return view
         else:
             # Default behaviour of ViewAttribute, but look at a Five
