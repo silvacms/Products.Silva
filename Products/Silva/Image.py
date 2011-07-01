@@ -166,7 +166,8 @@ class Image(Asset):
         self.get_crop_box(web_crop)
         if self.web_crop != web_crop:
             update_cache = 1
-            self.web_crop = web_crop
+            # if web_crop is None it should be replaced by an empty string
+            self.web_crop = web_crop and web_crop or ''
         if self.hires_image is not None and update_cache:
             self._createDerivedImages()
         notify(ObjectModifiedEvent(self))
@@ -645,7 +646,8 @@ class ImageEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IImageAddFields).omit('id')
-    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
+    actions  = silvaforms.Actions(silvaforms.CancelEditAction(),
+                                  silvaforms.EditAction())
 
 image_formats = SimpleVocabulary([SimpleTerm(title=u'jpg', value='JPEG'),
                                   SimpleTerm(title=u'png', value='PNG'),
@@ -683,6 +685,7 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     label = _('Format and scaling')
+    actions = silvaforms.Actions(silvaforms.CancelEditAction())
     fields = silvaforms.Fields(IFormatAndScalingFields)
     fields['web_format'].mode = 'radio'
     fields['web_scale'].defaultValue = '100%'
@@ -699,7 +702,7 @@ class ImageFormatAndScalingForm(silvaforms.SMISubForm):
                 data.getWithDefault('web_scale'),
                 data.getWithDefault('web_crop'))
         except ValueError as e:
-            self.send_message(unicode(e), type='error')
+            self.send_message(e.args[0], type='error')
             return silvaforms.FAILURE
 
         self.send_message(_('Scaling and/or format changed.'),
