@@ -58,19 +58,24 @@ except ImportError:
 havePIL = 1
 
 
+def validate_image(file):
+    """Validate that file contains an image which is openable by PIL.
+    """
+    try:
+        # Try to validate file format.
+        file.seek(0)
+        PILImage.open(file)
+    except IOError, error:
+        raise ValueError(error.args[-1].capitalize())
+    # Come back at the begining..
+    file.seek(0)
+
+
 def manage_addImage(context, identifier, title=None, file=None):
     """Add an Image.
     """
     if file is not None:
-        try:
-            # Try to validate file format.
-            if hasattr(file, 'seek'):
-                file.seek(0)
-            PILImage.open(file)
-        except IOError, error:
-            raise ValueError(error.args[-1].capitalize())
-        # Come back at the begining..
-        file.seek(0)
+        validate_image(file)
 
     filename = None
     if hasattr(file, 'name'):
@@ -114,9 +119,9 @@ class Image(Asset):
     hires_image = None
     thumbnail_image = None
     web_scale = '100%'
+    web_crop = ''
     web_format = 'JPEG'
     web_formats = ('JPEG', 'GIF', 'PNG',)
-    web_crop = ''
 
     _web2ct = {
         'JPEG': 'image/jpeg',
@@ -171,10 +176,14 @@ class Image(Asset):
     def set_image(self, file):
         """Set the image object.
         """
+        validate_image(file)
         self._image_factory('hires_image', file)
+        # Image change, reset scale, crop box: they can be invalid for this new image.
         format = self.get_format()
         if format in self.web_formats:
             self.web_format = format
+        self.web_scale = '100%'
+        self.web_crop = ''
         self._createDerivedImages()
         notify(ObjectModifiedEvent(self))
 
@@ -258,7 +267,7 @@ class Image(Asset):
         if y2 > bbox[3]:
             y2 = bbox[3]
         if x1 >= x2 or y1 >= y2:
-            msg = _("'${crop}' defines an impossible cropping",
+            msg = _("'${crop}' defines an impossible cropping for the current image",
                     mapping={'crop': crop})
             raise ValueError(msg)
         return (x1, y1, x2, y2)
@@ -473,7 +482,7 @@ class Image(Asset):
                 self.image = self.hires_image
                 return
             else:
-                raise ValueError, str(e)
+                raise ValueError(str(e))
 
         ct = self._web2ct[self.web_format]
         new_image_data.seek(0)
@@ -500,7 +509,7 @@ class Image(Asset):
                 self.thumbnail_image = None
                 return
             else:
-                raise ValueError, str(e)
+                raise ValueError(str(e))
 
         changed, thumb = self._prepareWebFormat(thumb)
         thumb_data = StringIO()
