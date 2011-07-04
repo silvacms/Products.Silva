@@ -46,6 +46,8 @@ class IconRegistry(object):
         elif interfaces.ISilvaObject.providedBy(content):
             identifier = ('meta_type', content.meta_type)
         else:
+            if content is None:
+                return '++static++/silva.icons/missing.png'
             if interfaces.IAuthorization.providedBy(content):
                 content = content.source
             meta_type = getattr(content, 'meta_type', None)
