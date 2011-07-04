@@ -4,10 +4,8 @@
 
 from xml.sax.saxutils import escape
 
-from Products.Silva.icon import get_icon_url
-
 from five import grok
-from silva.core.interfaces import IAddableContents, IOrderManager
+from silva.core.interfaces import IAddableContents, IOrderManager, IIconResolver
 from silva.core.interfaces import IContainer, IPublishable
 from silva.core.services.interfaces import IContentFilteringService
 from silva.core.views import views as silvaviews
@@ -128,6 +126,7 @@ class TOCRendering(silvaviews.ContentProvider):
         prev_depth = [-1]
         gmv = self.context.service_metadata.getMetadataValue
         item = None
+        get_icon_tag = IIconResolver(self.request).get_tag
         for (depth, item) in self.list_toc_items(self.toc_container, 0, is_displayable):
             pd = prev_depth[-1]
             if pd < depth: #down one level
@@ -141,7 +140,7 @@ class TOCRendering(silvaviews.ContentProvider):
                 html.append('</li>')
             html.append('<li>')
             if self.toc_show_icon:
-                html.append('<img src="%s" />' % get_icon_url(item , self.request))
+                html.append(get_icon_tag(item))
             title = (public and item.get_title() or item.get_title_editable()) or item.id
             html.append(a_templ % (absoluteURL(item, self.request), escape(title)))
             if self.toc_show_description:

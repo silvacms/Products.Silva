@@ -3,11 +3,13 @@
 # $Id$
 
 from five import grok
-from zope.annotation.interfaces import IAnnotations
+from zope.cachedescriptors.property import CachedProperty
+from zope.publisher.interfaces.browser import IBrowserRequest
 
 # Silva
 from silva.core import interfaces
 from silva.core.views.interfaces import IVirtualSite
+from silva.core.interfaces.adapters import IIconResolver
 
 
 class SilvaIcons(grok.DirectoryResource):
@@ -68,36 +70,31 @@ class IconRegistry(object):
 
 registry = IconRegistry()
 
-def _get_icon_base_url(request):
-    annotations = IAnnotations(request)
-    base_url = annotations.get('silva.icon.baseurl')
-    if base_url is None:
-        site = IVirtualSite(request)
-        base_url = site.get_root_url()
-        annotations['silva.icon.baseurl'] = base_url
-    return base_url
 
+class IconResolver(grok.Adapter):
+    grok.context(IBrowserRequest)
+    grok.implements(IIconResolver)
 
-def get_icon_url(content, request):
-    """Return a content icon URL.
-    """
-    try:
-        icon = registry.getIcon(content)
-    except ValueError:
-        icon = 'globals/silvageneric.gif'
-    return "/".join(( _get_icon_base_url(request), icon,))
+    def __init__(self, request):
+        self.request = request
 
+    @CachedProperty
+    def _base_url(self):
+        site = IVirtualSite(self.request)
+        return site.get_root_url()
 
-def get_meta_type_icon(meta_type):
-    """Return a content icon from its meta_type.
-    """
-    try:
-        return registry.getIconByIdentifier(('meta_type', meta_type))
-    except ValueError:
-        return 'globals/silvageneric.gif'
+    def get_tag(self, content):
+        return """<img height="16" width="16" src="%s" alt="%s" />""" % (
+            self.get_content_url(content),
+            getattr(content, 'meta_type', ''))
 
-def get_meta_type_icon_url(meta_type, request):
-    """Return a content icon URL from its meta_type.
-    """
-    return "/".join(
-        (_get_icon_base_url(request), get_meta_type_icon(meta_type)))
+    def get_content(self, content):
+        try:
+            return registry.getIcon(content)
+        except ValueError:
+            return '++static++/silva.icons/silvageneric.gif'
+
+    def get_content_url(self, content):
+        """Return a content icon URL.
+        """
+        return "/".join((self._base_url, self.get_content(content),))
