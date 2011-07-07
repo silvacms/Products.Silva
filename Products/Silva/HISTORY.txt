@@ -1,6 +1,11 @@
 Changes
 =======
 
+Silva 2.3.1-bethel.1 (2011-06-07)
+--------------------------------
+
+- First tagged release of Bethel's Products.Silva 2.3
+
 Silva 2.3.1 (2010-02-08)
 ------------------------
 
