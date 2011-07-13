@@ -93,7 +93,8 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         root = self.context._getOb(data['identifier'])
         service = component.getUtility(IMessageService)
         service.send(
-            _(u"New Silva site ${identifier} added.", mapping=data),
+            _(u"New Silva site ${identifier} added.",
+              mapping={'identifier': data['identifier']}),
             self.request)
         self.redirect(absoluteURL(root, self.request) + '/edit')
         return silvaforms.SUCCESS
