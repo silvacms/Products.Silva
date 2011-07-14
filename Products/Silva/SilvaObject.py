@@ -46,6 +46,7 @@ class TitledObject(object):
     security = ClassSecurityInfo()
 
     def __init__(self, id):
+        super(TitledObject, self)
         self.id = id
 
     security.declareProtected(

@@ -6,8 +6,9 @@
 from five import grok
 from zope.component import getUtility
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from zope.lifecycleevent.interfaces import IObjectMovedEvent
-from zope.lifecycleevent.interfaces import IObjectRemovedEvent
+from OFS.interfaces import IObjectClonedEvent
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -19,7 +20,6 @@ from OFS.interfaces import IObjectWillBeRemovedEvent
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.SilvaObject import TitledObject
-from Products.SilvaMetadata.Exceptions import BindingError
 from Products.SilvaMetadata.interfaces import IMetadataService
 
 from silva.translations import translate as _
@@ -32,12 +32,7 @@ class Version(TitledObject, SimpleItem):
     """A Version of a versioned content.
     """
     grok.implements(IVersion)
-
     security = ClassSecurityInfo()
-
-    def __init__(self, id):
-        self.id = id
-        self._v_creation_datetime = DateTime()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_version')
@@ -182,23 +177,16 @@ def catalog_version_removed(version, event):
         return
     ICataloging(version).unindex()
 
+@grok.subscribe(IVersion, IObjectCreatedEvent)
+@grok.subscribe(IVersion, IObjectClonedEvent)
+def content_created(content, event):
+    if (content != event.object or
+        IObjectCopiedEvent.providedBy(event)):
+        return
 
-@grok.subscribe(IVersion, IObjectMovedEvent)
-def version_moved(version, event):
-    if version != event.object or IObjectRemovedEvent.providedBy(event):
-        return
-    timings = {}
-    ctime = getattr(version, '_v_creation_datetime', None)
-    if ctime is None:
-        return
-    try:
-        binding = getUtility(IMetadataService).getMetadata(version)
-    except BindingError:
-        return
-    if binding is None:
-        return
-    for elem in ('creationtime', 'modificationtime'):
-        old = binding.get('silva-extra', element_id=elem)
-        if old is None:
-            timings[elem] = ctime
-    binding.setValues('silva-extra', timings)
+    service = getUtility(IMetadataService)
+    binding = service.getMetadata(content)
+    if binding is not None:
+        binding.setValues('silva-extra', {'creationtime': DateTime()})
+    ICataloging(content).index()
+
