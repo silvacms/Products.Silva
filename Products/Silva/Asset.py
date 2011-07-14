@@ -13,6 +13,7 @@ from OFS import SimpleItem
 import OFS.interfaces
 
 from Products.Silva import SilvaPermissions
+from Products.Silva.SilvaObject import ViewableObject
 from Products.Silva.Publishable import NonPublishable
 from Products.Silva.mangle import Bytes
 
@@ -26,7 +27,7 @@ from zeam.form import silva as silvaforms
 logger = logging.getLogger('silva.core')
 
 
-class Asset(NonPublishable, SimpleItem.SimpleItem):
+class Asset(NonPublishable, ViewableObject, SimpleItem.SimpleItem):
     grok.baseclass()
     grok.implements(IAsset)
 

@@ -170,6 +170,21 @@ class SilvaObject(TitledObject, Security):
         """
         return self
 
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+        'is_deletable')
+    def is_deletable(self):
+        """always deletable"""
+        return True
+
+
+InitializeClass(SilvaObject)
+
+
+class ViewableObject(object):
+    """Content that can be displayed to the public.
+    """
+    security = ClassSecurityInfo()
+
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_previewable')
     def get_previewable(self):
@@ -184,12 +199,6 @@ class SilvaObject(TitledObject, Security):
         no versioning).
         """
         return self
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-        'is_deletable')
-    def is_deletable(self):
-        """always deletable"""
-        return True
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
     def preview(self):
@@ -242,7 +251,7 @@ class SilvaObject(TitledObject, Security):
         return view()
 
 
-InitializeClass(SilvaObject)
+InitializeClass(ViewableObject)
 
 
 @grok.subscribe(ISilvaObject, IObjectCreatedEvent)

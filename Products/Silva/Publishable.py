@@ -8,7 +8,7 @@ from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.SilvaObject import SilvaObject
+from Products.Silva.SilvaObject import SilvaObject, ViewableObject
 
 from five import grok
 from silva.core.interfaces.content import IPublishable, INonPublishable
@@ -23,7 +23,7 @@ class NonPublishable(SilvaObject):
 
 
 
-class Publishable(SilvaObject):
+class Publishable(SilvaObject, ViewableObject):
     """Base content that can be published and ordered in Silva.
     """
     grok.baseclass()
