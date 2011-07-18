@@ -112,7 +112,7 @@ class VersionManager(grok.Adapter):
         elif self.content.get_public_version() == versionid:
             return self.content._public_version
         elif self.content._previous_versions:
-            for info in self.context._previous_versions:
+            for info in self.content._previous_versions:
                 if info[0] == versionid:
                     return info
         return (None, None, None)
