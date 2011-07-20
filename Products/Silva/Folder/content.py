@@ -304,16 +304,18 @@ class Folder(Publishable, BaseFolder):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_ordered_publishables')
-    def get_ordered_publishables(self):
+    def get_ordered_publishables(self, interface=IPublishable):
+        assert interface.isOrExtends(IPublishable), u"Invalid interface"
         result = filter(
             lambda content: not content.is_default(),
-            self.objectValues(meta_types_for_interface(IPublishable)))
+            self.objectValues(meta_types_for_interface(interface)))
         result.sort(key=IOrderManager(self).get_position)
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_non_publishables')
-    def get_non_publishables(self):
+    def get_non_publishables(self, interface=INonPublishable):
+        assert interface.isOrExtends(INonPublishable), u"Invalid interface"
         result = self.objectValues(meta_types_for_interface(INonPublishable))
         result.sort(key=lambda o: o.getId())
         return result

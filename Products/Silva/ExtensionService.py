@@ -327,7 +327,7 @@ class PartialReindexForm(silvaforms.ZMIForm):
 class ManageExtensions(silvaviews.ZMIView):
     """Form to activate, deactivate, refresh extensions.
     """
-    silvaconf.name('manage_extensions')
+    grok.name('manage_extensions')
     status = None
 
     def refresh_all(self):
