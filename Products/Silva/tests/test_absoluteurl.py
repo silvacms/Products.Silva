@@ -90,40 +90,60 @@ class AbsoluteURLTest(SilvaTestCase.SilvaFunctionalTestCase):
     def test_breadcrumbs(self):
         # On publication
         abs_url = self.get_absolute_url(self.publication)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/publication', 'name': u'Test Publication'}))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root',
+              'name': 'root'},
+             {'url': 'http://nohost/root/publication',
+              'name': u'Test Publication'}))
 
         enablePreview(self.root)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/++preview++/publication', 'name': u'Test Publication'}))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root/++preview++',
+              'name': 'root'},
+             {'url': 'http://nohost/root/++preview++/publication',
+              'name': u'Test Publication'}))
         resetPreview(self.root)
 
         # On root
         abs_url = self.get_absolute_url(self.root)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root', 'name': 'root'},))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root',
+              'name': 'root'},))
 
         enablePreview(self.root)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'},))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root/++preview++',
+              'name': 'root'},))
         resetPreview(self.root)
 
         # On document 2
         abs_url = self.get_absolute_url(self.doc2)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/publication', 'name': u'Test Publication'}, 
-                          {'url': 'http://nohost/root/publication/folder', 'name': u'Test Folder'}, 
-                          {'url': 'http://nohost/root/publication/folder/doc2', 'name': 'doc2'}))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root',
+              'name': 'root'},
+             {'url': 'http://nohost/root/publication',
+              'name': u'Test Publication'},
+             {'url': 'http://nohost/root/publication/folder',
+              'name': u'Test Folder'},
+             {'url': 'http://nohost/root/publication/folder/doc2',
+              'name': 'doc2'}))
 
         enablePreview(self.root)
-        self.assertEqual(abs_url.breadcrumbs(),
-                         ({'url': 'http://nohost/root/++preview++', 'name': 'root'}, 
-                          {'url': 'http://nohost/root/++preview++/publication', 'name': u'Test Publication'}, 
-                          {'url': 'http://nohost/root/++preview++/publication/folder', 'name': u'Test Folder'}, 
-                          {'url': 'http://nohost/root/++preview++/publication/folder/doc2', 'name': 'doc2'}))
+        self.assertEqual(
+            abs_url.breadcrumbs(),
+            ({'url': 'http://nohost/root/++preview++',
+              'name': 'root'},
+             {'url': 'http://nohost/root/++preview++/publication',
+              'name': u'Test Publication'},
+             {'url': 'http://nohost/root/++preview++/publication/folder',
+              'name': u'Test Folder'},
+             {'url': 'http://nohost/root/++preview++/publication/folder/doc2',
+              'name': 'Test Document 2'}))
         resetPreview(self.root)
 
 
