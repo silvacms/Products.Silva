@@ -5,6 +5,8 @@
 import os.path
 import mimetypes
 
+mimetypes.init()
+
 class IdGuess(object):
 
     def __init__(self, *kw):
