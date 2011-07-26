@@ -1,6 +1,11 @@
 Changes
 =======
 
+Silva 2.3.1-bethel.2 (2011-07-26)
+--------------------------------
+
+- added back silva-extra:hide_from_sitemap metadata field
+
 Silva 2.3.1-bethel.1 (2011-06-07)
 --------------------------------
 
