@@ -1,12 +1,16 @@
 Changes
 =======
 
-Silva 2.3.2 (unreleased)
+Silva 2.3.2 (2011-07-27)
 ------------------------
 
 - Fix an Acquisition issue while looking for users in service Members.
 
 - Fix image display in XSLT renderer to high resolution.
+
+- Fix a cache issue on the Welcome page.
+
+- Update forms to correctly display multi-choice widgets.
 
 - Improve SMI template.
 
