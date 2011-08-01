@@ -311,7 +311,7 @@ class PartialReindexForm(silvaforms.ZMIForm):
                     u"For big trees this may take a long time.")
 
     @silvaforms.action(_("Reindex"))
-    def reindex(self, path):
+    def reindex(self):
         data, errors = self.extractData()
         if errors:
             return
