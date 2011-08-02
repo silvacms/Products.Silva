@@ -42,9 +42,9 @@ update_url_parse_schemes()
 
 # register this extension
 from silva.core import conf as silvaconf
-silvaconf.extensionName('Silva')
-silvaconf.extensionTitle('Silva Core')
-silvaconf.extensionDepends(None)
+silvaconf.extension_name('Silva')
+silvaconf.extension_title('Silva Core')
+silvaconf.extension_depends(None)
 
 try:
     from Products.MaildropHost import MaildropHost

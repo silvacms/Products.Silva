@@ -24,7 +24,7 @@
         <value key="extra" type="str" value="" />
         <value key="description" type="str" value="Select skin or 'look &amp;amp; feel' for this publication." />
         <value key="first_item" type="int" value="1" />
-        <value key="title" type="str" value="skin" />
+        <value key="title" type="str" value="desktop skin" />
         <value key="default" type="str" value="" />
         <value key="css_class" type="str" value="field" />
         <value key="required" type="int" value="0" />
@@ -52,7 +52,7 @@
      <value key="extra_item"></value>
      <value key="unicode"></value>
      <value key="items">
-       python: [('not set (acquire setting)', '')] + modules['silva.core.layout.helpers'].getAvailableSkins()
+       python: [('not set (acquire setting)', '')] + modules['silva.core.layout.lookup'].get_available_skins()
      </value>
      <value key="hidden"></value>
      <value key="alternate_name"></value>

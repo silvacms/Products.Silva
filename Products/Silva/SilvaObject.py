@@ -19,7 +19,7 @@ from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
-from Acquisition import aq_base, aq_inner
+from Acquisition import aq_base, aq_inner, aq_parent
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.interfaces import IObjectClonedEvent
@@ -33,11 +33,11 @@ from Products.Silva.Security import Security
 # Silva adapters
 from Products.SilvaMetadata.interfaces import IMetadataService
 
+from silva.core.interfaces import IContainer
+from silva.core.interfaces import ISilvaObject, IVersionedContent
 from silva.core.services.interfaces import ICataloging
 from silva.core.views.interfaces import IPreviewLayer
 from silva.translations import translate as _
-
-from silva.core.interfaces import ISilvaObject, IVersionedContent
 
 
 class TitledObject(object):
@@ -259,7 +259,8 @@ InitializeClass(ViewableObject)
 def content_created(content, event):
     if (content != event.object or
         IObjectCopiedEvent.providedBy(event) or
-        IVersionedContent.providedBy(content)):
+        IVersionedContent.providedBy(content) or
+        not IContainer.providedBy(aq_parent(content))):
         return
 
     service = component.getUtility(IMetadataService)
@@ -286,6 +287,9 @@ def index_and_update_author_modified_content(content, event):
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return
+    # We don't care about object not in containers
+    if not IContainer.providedBy(aq_parent(content)):
+        return
     content.sec_update_last_author_info()
     ICataloging(content).index()
 
@@ -296,6 +300,9 @@ def index_moved_content(content, event):
     """
     if (not IObjectAddedEvent.providedBy(event) and
         not IObjectRemovedEvent.providedBy(event)):
+        # We don't care about objects not in containers
+        if not IContainer.providedBy(aq_parent(content)):
+            return
         ICataloging(content).index()
 
 
@@ -305,4 +312,7 @@ def unindex_removed_content(content, event):
     deleted.
     """
     if not IObjectWillBeAddedEvent.providedBy(event):
+        # We don't care about object not in containers
+        if not IContainer.providedBy(aq_parent(content)):
+            return
         ICataloging(content).unindex()
