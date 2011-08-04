@@ -29,7 +29,7 @@
       tal:repeat="keyword item/keywords"
       tal:attributes="term keyword" />
     <summary type="xhtml">
-      <div tal:content="structure string:${item/html_description}      " />
+      <div tal:content="structure item/html_description" />
     </summary>
   </entry>
 </feed>

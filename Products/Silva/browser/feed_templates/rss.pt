@@ -25,7 +25,7 @@
     <item tal:attributes="rdf:about item/url">
       <title tal:content="item/title" />
       <link tal:content="item/url" />
-      <description tal:content="item/description" />
+      <description tal:content="item/html_description" />
       <dc:subject tal:define="subject item/subject"
                   tal:condition="subject"
                   tal:content="item/subject" />
