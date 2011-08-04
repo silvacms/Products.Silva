@@ -23,8 +23,6 @@
 
   <include package="Products.SilvaMetadata" />
 
-  <include package=".browser" />
-
   <!-- Grok Silva -->
   <grok:grok package="." />
 
