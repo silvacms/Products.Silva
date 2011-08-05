@@ -403,7 +403,7 @@ class ManageExtensions(silvaviews.ZMIView):
         """Return system extensions
         """
         names = extensionRegistry.get_names()
-        for name in names:
+        for name in sorted(names):
             extension = extensionRegistry.get_extension(name)
             if interfaces.ISystemExtension.providedBy(extension):
                 yield extension
