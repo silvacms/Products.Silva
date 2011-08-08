@@ -13,9 +13,6 @@ def ghost_access_handler(tool, content_type, content):
     target_content = content.get_haunted()
     if target_content is None:
         return None
-    target_content = target_content.get_viewable()
-    if target_content is None:
-        return None
     ct = target_content.meta_type
     return default_accessor(tool, ct, target_content, read_only=True)
 
