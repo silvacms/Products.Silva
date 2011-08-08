@@ -136,12 +136,6 @@ class Indexer(Content, SimpleItem):
         """always deletable"""
         return 1
 
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """return 1 so the title can be set"""
-        return 1
-
 
 InitializeClass(Indexer)
 

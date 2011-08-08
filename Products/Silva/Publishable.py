@@ -48,11 +48,6 @@ class Publishable(SilvaObject, ViewableObject):
     def is_approved(self):
         return False
 
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        return True
-
 
 InitializeClass(Publishable)
 

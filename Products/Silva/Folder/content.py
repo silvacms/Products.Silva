@@ -9,7 +9,7 @@ from zope.lifecycleevent import ObjectRemovedEvent
 from zope.traversing.browser import absoluteURL
 
 # Zope
-from AccessControl import ClassSecurityInfo, getSecurityManager
+from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
 from OFS.event import ObjectWillBeRemovedEvent
@@ -108,7 +108,8 @@ class Folder(Publishable, BaseFolder):
             notify(ObjectWillBeRemovedEvent(ob, self, identifier))
 
         for identifier, ob in deleted_objects:
-            self._objects = tuple([i for i in self._objects if i['id'] != identifier])
+            self._objects = tuple([i for i in self._objects
+                                   if i['id'] != identifier])
             self._delOb(identifier)
             try:
                 ob._v__object_deleted__ = 1
@@ -184,22 +185,6 @@ class Folder(Publishable, BaseFolder):
         if not IRoot.providedBy(self):
             self.aq_parent.update_quota(delta)
 
-
-    # ACCESSORS
-
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """Check to see if the title can be set by user, meaning:
-        * he is Editor/ChiefEditor/Manager, or
-        * he is Author _and_ the Folder does not contain published content
-          or approved content recursively (self.is_published()).
-        """
-        user = getSecurityManager().getUser()
-        if user.has_permission(SilvaPermissions.ApproveSilvaContent, self):
-            return True
-
-        return not self.is_published() and not self.is_approved()
 
     # Silva addables
 

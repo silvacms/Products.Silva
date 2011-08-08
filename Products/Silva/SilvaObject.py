@@ -140,13 +140,6 @@ class SilvaObject(TitledObject, Security):
         """
         return self
 
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """Check to see if the title can be set
-        """
-        return 1
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_creation_datetime')
     def get_creation_datetime(self):

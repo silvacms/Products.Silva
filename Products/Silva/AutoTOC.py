@@ -53,14 +53,6 @@ class AutoTOC(Content, SimpleItem):
     _show_icon = False
     _show_container_link = False
 
-    # ACCESSORS
-    security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """always settable"""
-        # XXX: we badly need Publishable type objects to behave right.
-        return 1
-
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_toc_depth')
     def set_toc_depth(self, depth):

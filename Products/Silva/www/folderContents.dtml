@@ -2,7 +2,7 @@
 <dtml-var manage_tabs>
 
 <script type="text/javascript">
-<!-- 
+<!--
 
 isSelected = false;
 
@@ -19,7 +19,7 @@ function toggleSelect() {
       document.objectItemsContents.elements[i].checked = false ;
       isSelected = false;
       document.objectItemsContents.selectButton.value = "Select All";
-      return isSelected;       
+      return isSelected;
   }
 }
 
@@ -39,7 +39,7 @@ function toggleSelect() {
   <div class="form-element">
   <form action="&dtml-URL1;/" method="get">
   <dtml-if "_.len(filtered_meta_types) > 1">
-    <select class="form-element" name=":action" 
+    <select class="form-element" name=":action"
      onChange="location.href='&dtml-URL1;/'+this.options[this.selectedIndex].value">
     <option value="manage_workspace" disabled>Select type to add...</option>
     <dtml-in filtered_meta_types mapping sort=name>
@@ -64,36 +64,36 @@ function toggleSelect() {
 <dtml-if objectItemsContents>
 <table width="100%" cellspacing="0" cellpadding="2" border="0">
 <tr class="list-header">
-  <td width="5%" align="right" colspan="2"><div 
-   class="list-item"><a href="./manage_main?skey=meta_type<dtml-if 
+  <td width="5%" align="right" colspan="2"><div
+   class="list-item"><a href="./manage_main?skey=meta_type<dtml-if
    "rkey == ''">&rkey=meta_type</dtml-if>"
    onMouseOver="window.status='Sort objects by type'; return true"
-   onMouseOut="window.status=''; return true"><dtml-if 
+   onMouseOut="window.status=''; return true"><dtml-if
    "skey == 'meta_type' or rkey == 'meta_type'"
    ><strong>Type</strong><dtml-else>Type</dtml-if></a></div>
   </td>
-  <td width="50%" align="left"><div class="list-item"><a 
-   href="./manage_main?skey=id<dtml-if 
+  <td width="50%" align="left"><div class="list-item"><a
+   href="./manage_main?skey=id<dtml-if
    "rkey == ''">&rkey=id</dtml-if>"
    onMouseOver="window.status='Sort objects by name'; return true"
-   onMouseOut="window.status=''; return true"><dtml-if 
+   onMouseOut="window.status=''; return true"><dtml-if
    "skey == 'id' or rkey == 'id'"
    ><strong>Name</strong><dtml-else>Name</dtml-if></a></div>
   </td>
-  <td width="15%" align="left"><div class="list-item"><a 
-   href="./manage_main?skey=get_size<dtml-if 
+  <td width="15%" align="left"><div class="list-item"><a
+   href="./manage_main?skey=get_size<dtml-if
    "rkey == ''">&rkey=get_size</dtml-if>"
    onMouseOver="window.status='Sort objects by size'; return true"
-   onMouseOut="window.status=''; return true"><dtml-if 
+   onMouseOut="window.status=''; return true"><dtml-if
    "skey == 'get_size' or rkey == 'get_size'"
    ><strong>Size</strong><dtml-else>Size</dtml-if></a></div>
   </td>
-  <td width="29%" align="left"><div class="list-item"><a 
-   href="./manage_main?skey=bobobase_modification_time<dtml-if 
+  <td width="29%" align="left"><div class="list-item"><a
+   href="./manage_main?skey=bobobase_modification_time<dtml-if
    "rkey == ''">&rkey=bobobase_modification_time</dtml-if
    >"
    onMouseOver="window.status='Sort objects by modification time'; return true"
-   onMouseOut="window.status=''; return true"><dtml-if 
+   onMouseOut="window.status=''; return true"><dtml-if
    "skey == 'bobobase_modification_time' or rkey == 'bobobase_modification_time'"
    ><strong>Last Modified</strong><dtml-else>Last Modified</dtml-if></a></div>
   </td>
@@ -112,13 +112,13 @@ function toggleSelect() {
   <dtml-if om_icons>
   <a href="&dtml.url_quote-sequence-key;/manage_workspace">
   <dtml-in om_icons mapping>
-  <img src="&dtml-BASEPATH1;/&dtml.url_quote-path;" alt="&dtml.missing-alt;" 
+  <img src="&dtml-BASEPATH1;/&dtml.url_quote-path;" alt="&dtml.missing-alt;"
    title="&dtml.missing-title;" border="0" /></dtml-in></a>
   <dtml-else>
 
   <dtml-if icon>
   <a href="&dtml.url_quote-sequence-key;/manage_workspace">
-  <img src="&dtml-BASEPATH1;/&dtml-icon;" alt="&dtml-meta_type;" 
+  <img src="&dtml-BASEPATH1;/&dtml-icon;" alt="&dtml-meta_type;"
    title="&dtml-meta_type;" border="0" /></a>
   <dtml-else>
   &nbsp;
@@ -188,28 +188,28 @@ function toggleSelect() {
   <td align="left" valign="top">
   <div class="form-element">
   <dtml-unless dontAllowCopyAndPaste>
-  <input class="form-element" type="submit" name="manage_renameForm:method" 
+  <input class="form-element" type="submit" name="manage_renameForm:method"
    value="Rename" />
-  <input class="form-element" type="submit" name="manage_cutObjects:method" 
-   value="Cut" /> 
-  <input class="form-element" type="submit" name="manage_copyObjects:method" 
+  <input class="form-element" type="submit" name="manage_cutObjects:method"
+   value="Cut" />
+  <input class="form-element" type="submit" name="manage_copyObjects:method"
    value="Copy" />
   <dtml-if cb_dataValid>
-  <input class="form-element" type="submit" name="manage_pasteObjects:method" 
+  <input class="form-element" type="submit" name="manage_pasteObjects:method"
    value="Paste" />
   </dtml-if>
   </dtml-unless>
   <dtml-if "_.SecurityCheckPermission('Delete objects',this())">
-  <input class="form-element" type="submit" name="manage_delObjects:method" 
+  <input class="form-element" type="submit" name="manage_delObjects:method"
    value="Delete" />
   </dtml-if>
   <dtml-if "_.SecurityCheckPermission('Import/Export objects', this())">
-  <input class="form-element" type="submit" 
-   name="manage_importExportForm:method" 
+  <input class="form-element" type="submit"
+   name="manage_importExportForm:method"
    value="Import/Export" />
   </dtml-if>
 <script type="text/javascript">
-<!-- 
+<!--
 if (document.forms[0]) {
   document.write('<input class="form-element" type="submit" name="selectButton" value="Select All" onClick="toggleSelect(); return false">')
   }
@@ -231,7 +231,7 @@ There are currently no items in <em>&dtml-title_or_id;</em>
 <dtml-unless dontAllowCopyAndPaste>
 <dtml-if cb_dataValid>
 <div class="form-element">
-<input class="form-element" type="submit" name="manage_pasteObjects:method" 
+<input class="form-element" type="submit" name="manage_pasteObjects:method"
  value="Paste" />
 </div>
 </dtml-if>

@@ -49,13 +49,6 @@ class VersionedContent(Versioning, Content, BaseFolder):
         editable.set_title(title)
 
     # ACCESSORS
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'can_set_title')
-    def can_set_title(self):
-        """Check to see if the title can be set
-        """
-        return bool(self.get_editable())
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                              'get_title')
     def get_title(self):

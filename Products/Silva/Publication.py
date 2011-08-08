@@ -60,11 +60,25 @@ class Publication(Folder.Folder):
     manage_main = DTMLFile(
         'www/folderContents', globals())
 
+    security.declarePublic('objectItemsContents')
+    def objectItemsContents(self, spec=None):
+        """Don't display services by default in the Silva root.
+        """
+        return [item for item in super(Publication, self).objectItems()
+                if not item[0].startswith('service_')]
+
     security.declareProtected(SilvaPermissions.ViewManagementScreens,
                               'manage_services')
     manage_services = DTMLFile(
         'www/folderServices', globals())
 
+    security.declarePublic('objectItemsServices')
+    def objectItemsServices(self, spec=None):
+        """Display services separately.
+        """
+        return [item for item in super(Publication, self).objectItems()
+                if item[0].startswith('service_')
+                and not IInvisibleService.providedBy(item[1])]
 
     # MANIPULATORS
 
@@ -100,21 +114,6 @@ class Publication(Folder.Folder):
             raise OverQuotaException(excess)
 
     # ACCESSORS
-
-    security.declarePublic('objectItemsContents')
-    def objectItemsContents(self, spec=None):
-        """Don't display services by default in the Silva root.
-        """
-        return [item for item in super(Publication, self).objectItems()
-                if not item[0].startswith('service_')]
-
-    security.declarePublic('objectItemsServices')
-    def objectItemsServices(self, spec=None):
-        """Display services separately.
-        """
-        return [item for item in super(Publication, self).objectItems()
-                if item[0].startswith('service_')
-                and not IInvisibleService.providedBy(item[1])]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_current_quota')
