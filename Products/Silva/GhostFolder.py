@@ -24,7 +24,7 @@ from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IOrderManager
 from silva.core.interfaces import (
     IContainer, IContent, IGhost, IVersionedContent,
-    IPublication, IGhostFolder, IGhostAware)
+    IPublication, IGhostFolder)
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.references.reference import Reference
 from silva.ui.menu import ContentMenu, MenuItem
@@ -351,13 +351,6 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
 
 
 
-class AccessMenu(MenuItem):
-    grok.adapts(ContentMenu, IGhostFolder)
-    grok.order(15)
-    name = _(u'Edit')
-    screen = 'edit'
-
-
 class GhostFolderEditForm(GhostEditForm):
     """ Edit form Ghost Folder
     """
@@ -366,6 +359,13 @@ class GhostFolderEditForm(GhostEditForm):
 
     fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
     actions = GhostEditForm.actions + SyncAction(_(u'Synchronize'))
+
+
+class GhostFolderEditMenu(MenuItem):
+    grok.adapts(ContentMenu, IGhostFolder)
+    grok.order(15)
+    name = _(u'Edit')
+    screen = GhostFolderEditForm
 
 
 @grok.subscribe(IGhostFolder, IObjectCreatedEvent)

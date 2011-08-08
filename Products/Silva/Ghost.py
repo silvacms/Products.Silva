@@ -176,8 +176,8 @@ class Ghost(VersionedContent):
         version_id = self.get_public_version()
         if version_id is None:
             version_id = self.get_next_version()
-        if version_id is None:
-            version_id = self.get_last_closed_version()
+            if version_id is None:
+                version_id = self.get_last_closed_version()
         version = getattr(self, version_id)
         return version
 
