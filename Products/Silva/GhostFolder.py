@@ -17,7 +17,8 @@ from DateTime import DateTime
 # silva
 from Products.Silva import Folder
 from Products.Silva import SilvaPermissions
-from Products.Silva.Ghost import GhostBase, GhostEditForm
+from Products.Silva.Ghost import GhostBase
+from Products.Silva.Ghost import TargetValidator
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IAddableContents
@@ -155,10 +156,10 @@ class GhostFolder(GhostBase, Folder.Folder):
         """populate the the ghost folder with ghosts
         """
         haunted = self.get_haunted()
-        if self.get_link_status() != self.LINK_OK:
-            raise ValueError(_(u"Ghost Folder is not refreshed as it have an invalid target."))
+        if self.get_link_status():
+            raise ValueError(
+                _(u"Ghost Folder is not refreshed as it have an invalid target."))
         ghost = self
-        assert IContainer.providedBy(haunted)
         object_list = self._haunt_diff(haunted, ghost)
         upd = SyncContainer(self, None, haunted, None, self)
         updaters = [upd]
@@ -314,6 +315,7 @@ InitializeClass(GhostFolder)
 
 
 class IGhostFolderSchema(IIdentifiedContent):
+
     haunted = Reference(IContainer,
             title=_(u"target"),
             description=_(u"The silva object the ghost is mirroring"),
@@ -326,7 +328,7 @@ class SyncAction(silvaforms.Action):
 
     def __call__(self, form):
         folder = form.context
-        if folder.get_link_status() == folder.LINK_OK:
+        if folder.get_link_status() is None:
             folder.haunt()
             form.send_message(
                 _(u'Ghost Folder synchronized'), type='feedback')
@@ -343,6 +345,8 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva Ghost Folder')
 
     fields = silvaforms.Fields(IGhostFolderSchema)
+    dataValidators = [
+        TargetValidator('haunted', is_folderish=True, adding=True)]
 
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
@@ -350,15 +354,16 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
             data['id'], 'Ghost', haunted=data['haunted'])
 
 
-
-class GhostFolderEditForm(GhostEditForm):
+class GhostFolderEditForm(silvaforms.SMIEditForm):
     """ Edit form Ghost Folder
     """
     grok.context(IGhostFolder)
     grok.name('silva.ui.edit')
 
     fields = silvaforms.Fields(IGhostFolderSchema).omit('id')
-    actions = GhostEditForm.actions + SyncAction(_(u'Synchronize'))
+    dataValidators = [
+        TargetValidator('haunted', is_folderish=True, adding=False)]
+    actions = silvaforms.SMIEditForm.actions + SyncAction(_(u'Synchronize'))
 
 
 class GhostFolderEditMenu(MenuItem):
@@ -372,7 +377,7 @@ class GhostFolderEditMenu(MenuItem):
 def haunt_created_folder(folder, event):
     # If the ghost folder is in a valid state after creation, haunt
     # its content.
-    if folder.get_link_status() == folder.LINK_OK:
+    if folder.get_link_status() is None:
         folder.haunt()
 
 

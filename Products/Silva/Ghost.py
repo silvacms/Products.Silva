@@ -14,39 +14,90 @@ from App.class_init import InitializeClass
 from zExceptions import Unauthorized
 
 # Silva
+from Products.SilvaMetadata.Binding import DefaultMetadataBindingFactory
 from Products.Silva.VersionedContent import VersionedContent
 from Products.Silva.Version import Version
 from Products.Silva import SilvaPermissions
 
+from zope.schema.interfaces import InvalidValue
 from zeam.form import silva as silvaforms
+from zeam.form.base.errors import Error
+from zeam.form.base.widgets import widget_id
 
+from silva.core.views.interfaces import IPreviewLayer
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import IIdentifiedContent
 from silva.core.interfaces import (
-    IContainer, IContent, IGhost, IGhostFolder, IGhostAware, IGhostVersion)
-from silva.core.references.reference import Reference, get_content_id
+    IContainer, IContent, IGhost, IGhostAware, IGhostVersion)
+from silva.core.references.reference import Reference
+from silva.core.references.reference import get_content_id, get_content_from_id
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
+
+# status codes as returned by get_link_status
+LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
+LINK_FOLDER = 3  # link points to folder
+LINK_GHOST = 4 # link points to ghost
+LINK_NO_CONTENT = 5 # link points to something which is not a content
+LINK_CONTENT = 6 # link points to content
+LINK_NO_FOLDER = 7 # link doesn't point to a folder
+LINK_CIRC = 8 # Link results in a ghost haunting itself
+
+
+class InvalidTarget(InvalidValue):
+
+    def doc(self):
+        err_code, = self.args
+        if err_code == LINK_EMPTY:
+            return _(u"Missing required ghost target.")
+        if err_code == LINK_CIRC:
+            return _(u"Ghost target creates a circular reference.")
+        if err_code == LINK_GHOST:
+            return _(u"Ghost target is a ghost.")
+        if err_code == LINK_CONTENT or err_code == LINK_NO_FOLDER:
+            return _(u"Ghost target should be a container.")
+        if err_code == LINK_FOLDER or err_code ==  LINK_NO_CONTENT:
+            return _(u"Ghost target should not be a container.")
+        return _("Invalid ghost target.")
+
+
+def validate_target(ghost, target, is_folderish=False, adding=False):
+    """Validate a ghost for its given target.
+    """
+    if target is None:
+        return InvalidTarget(LINK_EMPTY)
+    # Check for cicular reference. You cannot select an ancestor
+    # or descandant of the ghost (or the ghost)
+    target_path = target.getPhysicalPath()
+    ghost_path = ghost.getPhysicalPath()
+    if target_path > ghost_path and not adding:
+        if ghost_path == target_path[:len(ghost_path)]:
+            return InvalidTarget(LINK_CIRC)
+    elif target_path == ghost_path[:len(target_path)]:
+            return InvalidTarget(LINK_CIRC)
+    if IGhostAware.providedBy(target):
+        return InvalidTarget(LINK_GHOST)
+    if is_folderish:
+        # If we are a container, we expect to have a container as
+        # target.
+        if IContent.providedBy(target):
+            return InvalidTarget(LINK_CONTENT)
+        if not IContainer.providedBy(target):
+            return InvalidTarget(LINK_NO_FOLDER)
+    else:
+        # If we are not a container, we expect to have a content
+        # as target.
+        if IContainer.providedBy(target):
+            return InvalidTarget(LINK_FOLDER)
+        if not IContent.providedBy(target):
+            return InvalidTarget(LINK_NO_CONTENT)
 
 
 class GhostBase(object):
     """baseclass for Ghosts (or Ghost versions if it's versioned)
     """
     security = ClassSecurityInfo()
-
-    # status codes as returned by get_link_status
-    # NOTE: LINK_FOLDER (and alike) must *only* be returned if it is an error
-    # for the link to point to a folder. If it is not an error LINK_OK must
-    # be returned.
-    LINK_OK = None   # link is ok
-    LINK_EMPTY = 1   # no link entered (XXX this cannot happen)
-    LINK_FOLDER = 3  # link points to folder
-    LINK_GHOST = 4   # link points to another ghost
-    LINK_NO_CONTENT = 5 # link points to something which is not a content
-    LINK_CONTENT = 6 # link points to content
-    LINK_NO_FOLDER = 7 # link doesn't point to a folder
-    LINK_CIRC = 8 # Link results in a ghost haunting itself
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_title')
@@ -66,16 +117,6 @@ class GhostBase(object):
         return content.get_title()
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
-    def get_title_editable(self):
-        """Get title.
-        """
-        content = self.get_haunted()
-        if content is None:
-            return _(u"Ghost target is broken")
-        return content.get_title_editable()
-
-    security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get short title.
@@ -84,6 +125,16 @@ class GhostBase(object):
         if content is None:
             return _(u"Ghost target is broken")
         return content.get_short_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_title_editable')
+    def get_title_editable(self):
+        """Get title.
+        """
+        content = self.get_haunted()
+        if content is None:
+            return _(u"Ghost target is broken")
+        return content.get_title_editable()
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_haunted')
@@ -109,36 +160,23 @@ class GhostBase(object):
         """Return an error code if this version of the ghost is broken.
         returning None means the ghost is Ok.
         """
-        haunted = self.get_haunted()
-        if haunted is None:
-            return self.LINK_EMPTY
-        # Check for cicular reference. You cannot select an ancestor
-        # or descandant of the ghost (or the ghost)
-        haunted_path = haunted.getPhysicalPath()
-        ghost_path = self.get_silva_object().getPhysicalPath()
-        if haunted_path > ghost_path:
-            if ghost_path == haunted_path[:len(ghost_path)]:
-                return self.LINK_CIRC
-        elif haunted_path == ghost_path[:len(haunted_path)]:
-                return self.LINK_CIRC
-        # Check other cases.
-        if IGhostAware.providedBy(haunted):
-            return self.LINK_GHOST
-        if IContainer.providedBy(self):
-            # If we are a container, we expect to have a container as
-            # target.
-            if IContent.providedBy(haunted):
-                return self.LINK_CONTENT
-            if not IContainer.providedBy(haunted):
-                return self.LINK_NO_FOLDER
-        else:
-            # If we are not a container, we expect to have a content
-            # as target.
-            if IContainer.providedBy(haunted):
-                return self.LINK_FOLDER
-            if not IContent.providedBy(haunted):
-                return self.LINK_NO_CONTENT
-        return self.LINK_OK
+        return validate_target(
+            self,
+            self.get_haunted(),
+            IContainer.providedBy(self))
+
+
+class GhostMetadataBindingFactory(DefaultMetadataBindingFactory):
+    grok.context(IGhostAware)
+    read_only = True
+
+    def get_content(self):
+        haunted = self.context.get_haunted()
+        if haunted is not None:
+            if IPreviewLayer.providedBy(haunted.REQUEST):
+                return haunted.get_previewable()
+            return haunted.get_viewable()
+        return None
 
 
 class Ghost(VersionedContent):
@@ -160,26 +198,34 @@ class Ghost(VersionedContent):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_short_title')
+    def get_title(self):
+        """Get short_title for public use, from published version.
+        """
+        content = self.get_haunted()
+        if content is None:
+            return _(u"Ghost target is broken")
+        return content.get_title()
+
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_short_title')
     def get_short_title(self):
         """Get short_title for public use, from published version.
         """
-        version = self.getLastVersion()
-        return version.get_short_title()
+        content = self.get_haunted()
+        if content is None:
+            return _(u"Ghost target is broken")
+        return content.get_short_title()
 
-    security.declarePrivate('getLastVersion')
-    def getLastVersion(self):
-        """returns `latest' version of ghost
-
-            ghost: Silva Ghost intance
-            returns GhostVersion
-        """
-        version_id = self.get_public_version()
-        if version_id is None:
-            version_id = self.get_next_version()
-            if version_id is None:
-                version_id = self.get_last_closed_version()
-        version = getattr(self, version_id)
-        return version
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'get_haunted')
+    def get_haunted(self):
+        if IPreviewLayer.providedBy(self.REQUEST):
+            version = self.get_previewable()
+        else:
+            version = self.get_viewable()
+        if version is not None:
+            return version.get_haunted()
+        return None
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_published')
@@ -197,7 +243,7 @@ class Ghost(VersionedContent):
     def get_modification_datetime(self):
         """Return modification datetime.
         """
-        content = self.getLastVersion().get_haunted()
+        content = self.get_haunted()
 
         if content is not None:
             return content.get_modification_datetime()
@@ -228,10 +274,40 @@ class GhostVersion(GhostBase, Version):
 
 class IGhostSchema(IIdentifiedContent):
 
-    haunted = Reference(IContent,
-            title=_(u"target"),
-            description=_(u"The silva object the ghost is mirroring."),
-            required=True)
+    haunted = Reference(
+        IContent,
+        title=_(u"target"),
+        description=_(u"The silva object the ghost is mirroring."),
+        required=True)
+
+
+def TargetValidator(field_name, is_folderish=False, adding=False):
+
+    class Validator(object):
+
+        def __init__(self, form, fields):
+            self.form = form
+            self.fields = fields
+
+        def validate(self, data):
+            """Validate ghost target before setting it.
+            """
+            # This is not beauty, but it works.
+            content_id = data.get(field_name)
+            if content_id is silvaforms.NO_VALUE:
+                # If there value is required it is already checked
+                return []
+            error = validate_target(
+                self.form.context,
+                get_content_from_id(content_id),
+                is_folderish,
+                adding)
+            if error is not None:
+                identifier = widget_id(self.form, self.fields[field_name])
+                return [Error(error.doc(), identifier)]
+            return []
+
+    return Validator
 
 
 class GhostAddForm(silvaforms.SMIAddForm):
@@ -241,6 +317,8 @@ class GhostAddForm(silvaforms.SMIAddForm):
     grok.context(IGhost)
 
     fields = silvaforms.Fields(IGhostSchema)
+    dataValidators = [
+        TargetValidator('haunted', is_folderish=False, adding=True)]
 
     def _add(self, parent, data):
         factory = parent.manage_addProduct['Silva']
@@ -253,19 +331,19 @@ class GhostEditForm(silvaforms.SMIEditForm):
     """
     grok.context(IGhost)
     fields = silvaforms.Fields(IGhostSchema).omit('id')
+    dataValidators = [
+        TargetValidator('haunted', is_folderish=False, adding=False)]
 
 
 class GhostView(silvaviews.View):
     grok.context(IGhost)
 
-    broken_message = _(u"This 'ghost' document is broken. "
+    broken_message = _(u"This 'ghost' is unavailable. "
                        u"Please inform the site manager.")
 
     def render(self):
         content = self.content.get_haunted()
         if content is None:
-            return self.broken_message
-        if content.get_viewable() is None:
             return self.broken_message
         permission = self.is_preview and 'Read Silva content' or 'View'
         if getSecurityManager().checkPermission(permission, content):
@@ -288,13 +366,13 @@ def ghost_factory(container, identifier, target):
         on IVersionedContent a Ghost is created
     """
     factory = container.manage_addProduct['Silva']
-    if IContainer.providedBy(target):
-        if IGhostFolder.providedBy(target):
-            target = target.get_haunted()
-        factory = factory.manage_addGhostFolder
-    elif IContent.providedBy(target):
-        if IGhost.providedBy(target):
-            target = target.getLastVersion().get_haunted()
-        factory = factory.manage_addGhost
-    factory(identifier, None, haunted=target)
-    return container._getOb(identifier)
+    if IGhostAware.providedBy(target):
+        target = target.get_haunted()
+    if target is not None:
+        if IContainer.providedBy(target):
+            factory = factory.manage_addGhostFolder
+        elif IContent.providedBy(target):
+            factory = factory.manage_addGhost
+        factory(identifier, None, haunted=target)
+        return container._getOb(identifier)
+    return None

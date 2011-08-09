@@ -26,12 +26,7 @@ class IconRegistry(object):
 
     def getIcon(self, content):
         if interfaces.IGhost.providedBy(content):
-            version = content.getLastVersion()
-            if version.get_link_status() == version.LINK_OK:
-                kind = 'link_ok'
-            else:
-                kind = 'link_broken'
-            identifier = ('ghost', kind)
+            identifier = ('ghost', 'link_ok')
         elif interfaces.IGhostFolder.providedBy(content):
             if content.get_link_status() == content.LINK_OK:
                 if interfaces.IPublication.providedBy(content):

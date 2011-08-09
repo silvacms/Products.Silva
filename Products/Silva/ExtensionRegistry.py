@@ -26,11 +26,22 @@ def meta_types_for_interface(interface):
             if interface.implementedBy(addable['instance'])]
 
 
+def _get_product_meta_type(content_type):
+    meta_types = Products.meta_types
+    for mt_dict in meta_types:
+        if mt_dict['name'] == content_type:
+            mt_dict['doc'] = mt_dict['instance'].__doc__
+            return mt_dict
+    return None
+
+
 class Addable(object):
 
-    def __init__(self, meta_type, priority=0.0):
+    def __init__(self, meta_type, content_type, priority=0.0):
+        # meta_type is the main class, content_type the version class
         self.meta_type = meta_type
         self.priority = priority
+        self.content_type = content_type
 
     def __cmp__(self, other):
         sort = cmp(self.priority, other.priority)
@@ -199,15 +210,19 @@ class ExtensionRegistry(object):
         # Try to order based on dependencies
         self._orderExtensions()
 
-    def add_addable(self, meta_type, priority):
+    def add_addable(self, meta_type, priority, content_type):
         """Allow adding an addable to silva without using the
         registerClass shortcut method.
         """
-        meta_types = Products.meta_types
-        for mt_dict in meta_types:
-            if mt_dict['name'] == meta_type:
-                mt_dict['doc'] = mt_dict['instance'].__doc__
-                insort_right(self._silva_addables, Addable(mt_dict, priority))
+        meta_type = _get_product_meta_type(meta_type)
+        if content_type is not None:
+            content_type = _get_product_meta_type(content_type)
+        else:
+            content_type = meta_type
+        if meta_type is not None and content_type is not None:
+            insort_right(
+                self._silva_addables,
+                Addable(meta_type, content_type, priority))
 
     def _orderExtensions(self):
         """Reorder extensions based on depends_on constraints.
@@ -282,6 +297,9 @@ class ExtensionRegistry(object):
 
     def get_addables(self):
         return [addable.meta_type for addable in self._silva_addables]
+
+    def get_contents(self):
+        return [addable.content_type for addable in self._silva_addables]
 
     def get_addable(self, content_type):
         for addable in self._silva_addables:
