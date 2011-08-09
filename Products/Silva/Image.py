@@ -38,6 +38,7 @@ from Products.Silva.Asset import AssetEditTab
 from Products.Silva.MimetypeRegistry import mimetypeRegistry
 from Products.Silva.helpers import create_new_filename
 
+from silva.ui.rest.container import ListingPreview
 from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
@@ -587,6 +588,13 @@ class DefaultImageView(silvaviews.View):
 
     def render(self):
         return self.content.tag()
+
+
+class ImageListingPreview(ListingPreview):
+    grok.context(interfaces.IImage)
+
+    def preview(self):
+        return self.context.tag(thumbnail=1)
 
 
 class ImagePublishTraverse(SilvaPublishTraverse):
