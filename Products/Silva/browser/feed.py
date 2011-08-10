@@ -10,6 +10,7 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 from zExceptions import NotFound
 
 from silva.core import interfaces
+from silva.core.views.views import HTTPHeaderView
 
 
 class ContainerFeedProvider(grok.Adapter):
@@ -29,8 +30,9 @@ class ContainerFeedProvider(grok.Adapter):
                 yield entry
 
 
-class FeedBase(grok.View):
+class FeedBase(HTTPHeaderView, grok.View):
     """Base class for feed representation.
+       Extends HTTPHeaderView to provide support for HEAD requests.
     """
     grok.baseclass()
     grok.require('zope2.View')

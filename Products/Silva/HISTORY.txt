@@ -1,6 +1,13 @@
 Changes
 =======
 
+Silva 2.3.1-bethel.3 (2011-08-10)
+--------------------------------
+
+- support HTTP HEAD requests to feed views (atom, rss)
+
+- fix creating sticky content service from sticky content service tab
+
 Silva 2.3.1-bethel.2 (2011-07-26)
 --------------------------------
 
