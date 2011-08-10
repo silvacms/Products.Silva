@@ -253,13 +253,6 @@
   </table>
 </form>
 
-    </td>
-  </tr>
-
-    <tr>
-      <tal:block replace="nothing">_____________________ main 2 _____________________</tal:block>
-      <td class="main">
-
 <tal:block replace="nothing">______________ settings ______________</tal:block>
 <tal:block
   repeat="category python:('layout', 'settings',)"

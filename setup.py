@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2008-2010 Infrae. All rights reserved.
+# Copyright (c) 2008-2011 Infrae. All rights reserved.
 # See also LICENSE.txt
 
 
 from setuptools import setup, find_packages
 import os
 
-version = '2.3.1-bethel.3'
+version = '2.3.2dev-bethel.2'
 
 tests_require = [
     'silva.export.opendocument',

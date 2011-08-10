@@ -141,7 +141,7 @@ Some Icons are Copyright &copy; <a href="http://p.yusukekamiyamane.com/">Yusuke 
     />
   </a>
   <span class="subhead">Silva <span tal:replace="here/get_silva_software_version" i18n:name="silva_version"/></span><br i18n:name="br" />
-  &#xa9; Copyright 2001-2010 Infrae. All rights reserved.
+  &#xa9; Copyright 2001-2011 Infrae. All rights reserved.
 </p>
 
 </div>

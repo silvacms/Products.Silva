@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# Copyright (c) 2002-2011 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
 
@@ -90,7 +90,8 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
         root = getattr(self.context, data['identifier'])
         service = component.getUtility(IMessageService)
         service.send(
-            _(u"New Silva site ${identifier} added.", mapping=data),
+            _(u"New Silva site ${identifier} added.",
+              mapping={'identifier': data['identifier']}),
             self.request, namespace=type)
         self.redirect(absoluteURL(root, self.request) + '/edit')
         return silvaforms.SUCCESS
