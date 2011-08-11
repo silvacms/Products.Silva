@@ -57,7 +57,7 @@ class Versioning(object):
                        expiration_datetime):
         """Add unapproved version
         """
-        self._update_publication_status()
+        # self._update_publication_status()
         if self._approved_version != empty_version:
             msg = _(
                 'There is an approved version already; unapprove it. (${id})',
@@ -91,7 +91,7 @@ class Versioning(object):
     def approve_version(self):
         """Aprove the current unapproved version.
         """
-        self._update_publication_status()
+        # self._update_publication_status()
         if self._unapproved_version == empty_version:
             raise VersioningError,\
                   _('There is no unapproved version to approve.')
@@ -101,15 +101,6 @@ class Versioning(object):
         if self._unapproved_version[1] is None:
             raise VersioningError,\
                   _('Cannot approve version without publication datetime.')
-        # turn any publication dates in the past into now
-        # this is to avoid odd caching behavior
-        if not self._unapproved_version[1].isFuture():
-            publish_now = 1
-            self._unapproved_version = (self._unapproved_version[0],
-                                        DateTime(),
-                                        self._unapproved_version[2])
-        else:
-            publish_now = 0
 
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
@@ -121,17 +112,15 @@ class Versioning(object):
                 getattr(self, self._approved_version[0]),
                 self._get_editable_rfa_info()))
 
-        # update publication status; we may be published by now
-        # will take care of indexing
-        if publish_now:
-            self._update_publication_status()
+        # We may be published now
+        self._update_publication_status()
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'unapprove_version')
     def unapprove_version(self):
         """Unapprove an approved but not yet public version.
         """
-        self._update_publication_status()
+        # self._update_publication_status()
         if self._approved_version == empty_version:
             raise VersioningError,\
                   _('No approved version to unapprove.')
@@ -152,7 +141,7 @@ class Versioning(object):
     def close_version(self):
         """Close public version.
         """
-        self._update_publication_status()
+        # self._update_publication_status()
         if self._public_version == empty_version:
             raise VersioningError,\
                   _('No public version to close.')
@@ -219,7 +208,7 @@ class Versioning(object):
         or it is already approved.
         Returns None otherwise
         """
-        # called implicitely: self._update_publication_status()
+        # self._update_publication_status()
         if self.get_unapproved_version() is None:
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
@@ -246,7 +235,7 @@ class Versioning(object):
         or if there is no unapproved version.
         """
 
-        self._update_publication_status()
+        # self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
@@ -273,7 +262,7 @@ class Versioning(object):
         or if there is no unapproved version.
         """
 
-        self._update_publication_status()
+        # self._update_publication_status()
         if self.get_unapproved_version is None:
             raise VersioningError,\
                   _('There is no unapproved version to request approval for.')
@@ -284,7 +273,7 @@ class Versioning(object):
         info = self._get_editable_rfa_info()
         original_requester = info.requester
         info.requester = getSecurityManager().getUser().getId()
-        info.request_pending=None
+        info.request_pending = None
 
         self._set_approval_request_message(message)
         notify(events.ContentApprovalRequestRefusedEvent(
@@ -328,8 +317,6 @@ class Versioning(object):
         if dt is None:
             raise VersioningError,\
                   _('Must specify publication datetime.')
-        if not dt.isFuture():
-            dt = DateTime()
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, dt, expiration_datetime
@@ -347,6 +334,8 @@ class Versioning(object):
         version_id, publication_datetime, expiration_datetime = \
                     self._approved_version
         self._approved_version = version_id, publication_datetime, dt
+        # may become closed, update publication status
+        self._update_publication_status()
 
     security.declareProtected(
         SilvaPermissions.ApproveSilvaContent, 'set_public_version_expiration_datetime')
@@ -359,7 +348,7 @@ class Versioning(object):
         version_id, publication_datetime, expiration_datetime = \
             self._public_version
         self._public_version = version_id, publication_datetime, dt
-        # may become closed, update publication status
+        # may become expired, update publication status
         self._update_publication_status()
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
@@ -415,6 +404,7 @@ class Versioning(object):
         info.request_messages.append(message)
 
     def _update_publication_status(self):
+        # Publish what need to be publish, expire what need to be expired
         now = DateTime()
         # get publication datetime of approved version
         publication_datetime = self._approved_version[1]
