@@ -70,18 +70,19 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
             _(u"This content is not approved."))
 
     def approve(self, time=None):
-        if time is None:
-            time = DateTime()
-        elif isinstance(time, datetime):
-            time = DateTime(time)
         if self.context.get_unapproved_version() is None:
             raise PublicationWorkflowError(
                 _("There is no unapproved version to approve."))
-        self.context.set_unapproved_version_publication_datetime(time)
+        if time is not None:
+            if isinstance(time, datetime):
+                time = DateTime(time)
+            self.context.set_unapproved_version_publication_datetime(time)
+        elif self.context.get_unapproved_version_publication_datetime() is None:
+            self.context.set_unapproved_version_publication_datetime(DateTime())
         self.context.approve_version()
         return True
 
-    def publish(self, time=None):
+    def publish(self):
         # Do the same job than approve, but works on closed content as
         # well.
         if not self.context.get_unapproved_version():
@@ -89,7 +90,11 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
                 raise PublicationWorkflowError(
                     _("There is no unapproved version to approve."))
             self.context.create_copy()
-        self.approve(time)
+        current = self.context.get_unapproved_version_publication_datetime()
+        if current is None or current.isFuture():
+            # If the publication date is in the future, set it correct to now.
+            self.context.set_unapproved_version_publication_datetime(DateTime())
+        self.context.approve_version()
         return True
 
     def close(self):
