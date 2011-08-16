@@ -6,7 +6,7 @@
 
 from five import grok
 from zope import schema
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
@@ -62,7 +62,8 @@ class ContainerView(silvaviews.View):
     def render(self):
         default = self.context.get_default()
         if default is not None:
-            return default.view()
+            return getMultiAdapter(
+                (default, self.request), name="content.html")()
         return _(u'This container has no index.')
 
 

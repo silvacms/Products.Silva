@@ -5,13 +5,13 @@
 
 # Zope 3
 from five import grok
-from zope.component import getUtility
+from zope.component import getUtility, getMultiAdapter
 
 # Zope 2
 from Acquisition import aq_inner, aq_base
 from AccessControl import ClassSecurityInfo, getSecurityManager
+from AccessControl import Unauthorized
 from App.class_init import InitializeClass
-from zExceptions import Unauthorized
 
 # Silva
 from Products.SilvaMetadata.Binding import DefaultMetadataBindingFactory
@@ -347,7 +347,8 @@ class GhostView(silvaviews.View):
             return self.broken_message
         permission = self.is_preview and 'Read Silva content' or 'View'
         if getSecurityManager().checkPermission(permission, content):
-            return content.view()
+            return getMultiAdapter(
+                (content, self.request), name="content.html")()
         raise Unauthorized(
             u"You do not have permission to "
             u"see the target of this ghost")

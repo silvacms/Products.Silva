@@ -5,10 +5,8 @@
 
 # Zope 3
 from five import grok
-from zope import component
+from zope.component import getUtility
 from zope.container.interfaces import IContainerModifiedEvent
-from zope.i18n import translate
-from zope.interface import alsoProvides
 from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
@@ -18,8 +16,8 @@ from zope.lifecycleevent.interfaces import IObjectRemovedEvent
 from zope.traversing.browser import absoluteURL
 
 # Zope 2
-from AccessControl import ClassSecurityInfo, getSecurityManager, Unauthorized
-from Acquisition import aq_base, aq_inner, aq_parent
+from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.interfaces import IObjectClonedEvent
@@ -36,8 +34,6 @@ from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core.interfaces import IContainer
 from silva.core.interfaces import ISilvaObject, IVersionedContent
 from silva.core.services.interfaces import ICataloging
-from silva.core.views.interfaces import IPreviewLayer
-from silva.translations import translate as _
 
 
 class TitledObject(object):
@@ -57,7 +53,7 @@ class TitledObject(object):
         # FIXME: Ugh. I get unicode from formulator but this will not validate
         # when using the metadata system. So first make it into utf-8 again..
         title = title.encode('utf-8')
-        binding = component.getUtility(IMetadataService).getMetadata(self)
+        binding = getUtility(IMetadataService).getMetadata(self)
         binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 
     security.declareProtected(
@@ -65,7 +61,7 @@ class TitledObject(object):
     def get_title(self):
         """Get the title of the silva object.
         """
-        return component.getUtility(IMetadataService).getMetadataValue(
+        return getUtility(IMetadataService).getMetadataValue(
             self, 'silva-content', 'maintitle')
 
     security.declareProtected(
@@ -73,7 +69,7 @@ class TitledObject(object):
     def get_short_title(self):
         """Get the title of the silva object.
         """
-        service = component.getUtility(IMetadataService)
+        service = getUtility(IMetadataService)
         title = service.getMetadataValue(
             self, 'silva-content', 'shorttitle')
         if not title.strip():
@@ -128,8 +124,6 @@ class SilvaObject(TitledObject, Security):
     def absolute_url(self, relative=None):
         return absoluteURL(self, self.REQUEST)
 
-    # MANIPULATORS
-
     # ACCESSORS
 
     security.declareProtected(
@@ -145,7 +139,7 @@ class SilvaObject(TitledObject, Security):
     def get_creation_datetime(self):
         """Return creation datetime."""
         version = self.get_previewable()
-        return  component.getUtility(IMetadataService).getMetadataValue(
+        return getUtility(IMetadataService).getMetadataValue(
             version, 'silva-extra', 'creationtime')
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
@@ -153,7 +147,7 @@ class SilvaObject(TitledObject, Security):
     def get_modification_datetime(self):
         """Return modification datetime."""
         version = self.get_previewable()
-        return  component.getUtility(IMetadataService).getMetadataValue(
+        return getUtility(IMetadataService).getMetadataValue(
             version, 'silva-extra', 'modificationtime')
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -178,8 +172,8 @@ class ViewableObject(object):
     """
     security = ClassSecurityInfo()
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_previewable')
+    security.declareProtected(
+        SilvaPermissions.ReadSilvaContent, 'get_previewable')
     def get_previewable(self):
         """Get the previewable version (may be the object itself if no
         versioning).
@@ -193,57 +187,6 @@ class ViewableObject(object):
         """
         return self
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent, 'preview')
-    def preview(self):
-        """Render this as preview with the public view.
-
-        If this is no previewable, should return something indicating this.
-        """
-        # XXX Should be a view
-        # XXX Only keep for compatibility
-        if not IPreviewLayer.providedBy(self.REQUEST):
-            alsoProvides(self.REQUEST, IPreviewLayer)
-        return aq_inner(self).view_version()
-
-    security.declareProtected(SilvaPermissions.View, 'view')
-    def view(self):
-        """Render this with the public view. If there is no viewable,
-        should return something indicating this.
-        """
-        return aq_inner(self).view_version()
-
-    security.declareProtected(
-        SilvaPermissions.ReadSilvaContent, 'view_version')
-    def view_version(self, version=None):
-        # XXX Should be a view.
-        request = self.REQUEST
-        if IPreviewLayer.providedBy(self.REQUEST):
-            manager = getSecurityManager()
-            if not manager.checkPermission(
-                SilvaPermissions.ReadSilvaContent, self):
-                raise Unauthorized()
-            preview_name = request.other.get('SILVA_PREVIEW_NAME', None)
-            if version is None:
-                if (preview_name is not None and
-                    hasattr(aq_base(self), preview_name)):
-                    version = getattr(self, preview_name)
-                else:
-                    version = self.get_previewable()
-        if version is None:
-            version = self.get_viewable()
-
-        # No version
-        if version is None:
-            msg = _('Sorry, this ${meta_type} is not viewable.',
-                    mapping={'meta_type': self.meta_type})
-            return '<p>%s</p>' % translate(msg, context=request)
-
-        # Search for a five view
-        view = component.getMultiAdapter(
-            (self, request), name=u'content.html')
-        return view()
-
-
 InitializeClass(ViewableObject)
 
 
@@ -256,7 +199,7 @@ def content_created(content, event):
         not IContainer.providedBy(aq_parent(content))):
         return
 
-    service = component.getUtility(IMetadataService)
+    service = getUtility(IMetadataService)
     binding = service.getMetadata(content)
     if binding is not None:
         binding.setValues('silva-extra', {'creationtime': DateTime()})
