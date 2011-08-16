@@ -1,21 +1,29 @@
-from DateTime import DateTime
+
+import logging
 
 from five import grok
-from zope.component import getUtility
+from zope.component import queryUtility
 
 from AccessControl import getSecurityManager
+from DateTime import DateTime
 
 from silva.core import interfaces
 from silva.core.interfaces import events
 from Products.Silva import mangle
 
 
+logger = logging.getLogger('silva.core.message')
+
+
 def format_date(date):
     return mangle.DateTime(date).toStr()
 
-def send_message_to_editors(target, from_userid, subject, text,
-        message_service=None):
-    message_service = message_service or getUtility(interfaces.IMessageService)
+
+def send_message_to_editors(target, from_userid, subject, text):
+    message_service = queryUtility(interfaces.IMessageService)
+    if message_service is None:
+        logger.info(u'Message service missing skipping message.')
+        return
     # find out some information about the object and add it to the
     # message
     text = "Object: %s\n%s/edit/tab_preview\n%s" % (
@@ -42,10 +50,12 @@ def send_message_to_editors(target, from_userid, subject, text,
         message_service.send_message(
             from_userid, userid, subject, text)
 
-def send_message(target, from_userid, to_userid, subject, text,
-        message_service=None):
-    message_service = message_service or getUtility(interfaces.IMessageService)
-    if from_userid==to_userid:
+def send_message(target, from_userid, to_userid, subject, text):
+    if from_userid == to_userid:
+        return
+    message_service = queryUtility(interfaces.IMessageService)
+    if message_service is None:
+        logger.info(u'Message service missing skipping message.')
         return
     # find out some information about the object and add it to the
     # message
@@ -62,6 +72,11 @@ def send_messages_approved(content, event):
 
     if info.requester is None:
         return # no requester found, so don't send messages
+
+    message_service = queryUtility(interfaces.IMessageService)
+    if message_service is None:
+        logger.info(u'Message service missing skipping message.')
+        return
 
     now = DateTime()
     publication_datetime = manager.get_publication_datetime()
@@ -81,21 +96,17 @@ def send_messages_approved(content, event):
     text = u"\nVersion was approved for publication by %s.\n%s%s" % \
             (editor, publication_date_str, expiration_date_str)
 
-    message_service = getUtility(interfaces.IMessageService)
-    message_service.send_message(editor, info.requester,
-                       "Version approved", text)
+    message_service.send_message(
+        editor, info.requester, "Version approved", text)
 
 @grok.subscribe(interfaces.IVersion, events.IContentUnApprovedEvent)
 def send_messages_unapproved(content, event):
     # send messages to editor
     author = getSecurityManager().getUser().getId()
     text = u"\nVersion was unapproved by %s." % author
-    message_service = getUtility(interfaces.IMessageService)
-    send_message_to_editors(content, author, 'Unapproved', text,
-        message_service=message_service)
+    send_message_to_editors(content, author, 'Unapproved', text)
     if event.info.requester is not None:
-        send_message(content, author, event.info.requester, 'Unapproved', text,
-            message_service=message_service)
+        send_message(content, author, event.info.requester, 'Unapproved', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentRequestApprovalEvent)
@@ -123,14 +134,13 @@ def send_messages_request_approval(content, event):
     text = u"\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
             (info.requester,
              publication_date_str, expiration_date_str, message)
-    message_service = getUtility(interfaces.IMessageService)
-    send_message_to_editors(content, info.requester,
-                            'Approval requested', text,
-                            message_service=message_service)
+
+    send_message_to_editors(
+        content, info.requester, 'Approval requested', text)
     # XXX inform user, too (?)
-    send_message(content, info.requester, last_author.userid(),
-                 'Approval requested', text,
-                 message_service=message_service)
+    send_message(
+        content, info.requester, last_author.userid(),
+        'Approval requested', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentApprovalRequestWithdrawnEvent)
@@ -142,13 +152,12 @@ def send_messages_content_approval_request_withdrawn(content, event):
     # send messages
     text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
            % (info.requester, message)
-    message_service = getUtility(interfaces.IMessageService)
-    send_message_to_editors(content, info.requester,
-                            'Approval withdrawn by author', text,
-                            message_service=message_service)
-    send_message(content, info.requester, original_requester,
-                       'Approval withdrawn by author', text,
-                       message_service=message_service)
+    send_message_to_editors(
+        content, info.requester,
+        'Approval withdrawn by author', text)
+    send_message(
+        content, info.requester, original_requester,
+        'Approval withdrawn by author', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentApprovalRequestRefusedEvent)
