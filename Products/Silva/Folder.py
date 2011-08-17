@@ -12,6 +12,7 @@ from zope.lifecycleevent import ObjectRemovedEvent
 from zope.schema.interfaces import IContextSourceBinder
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.traversing.browser import absoluteURL
+from zope.cachedescriptors.property import CachedProperty
 
 # Zope
 from Acquisition import aq_parent
@@ -25,6 +26,7 @@ from OFS.subscribers import compatibilityCall
 import OFS.interfaces
 
 # Silva
+from silva.core.smi.interfaces import IPropertiesTab
 from Products.Silva.Ghost import ghost_factory
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.SilvaObject import SilvaObject
@@ -37,13 +39,15 @@ from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.layout.errors import NoDefaultDocument
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
-    INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent)
+    INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent,
+    ISiteManager)
 
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
+from zeam.form.silva.interfaces import IRemoverAction
 
 
 def meta_types_for_interface(interface):
@@ -839,6 +843,62 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
 InitializeClass(Folder)
 
+
+class ManageLocalSite(silvaforms.SMIForm):
+    """This form let enable (or disable) a folder/container as a local
+    site.
+    """
+    grok.name('tab_localsite')
+    grok.require('zope2.ViewManagementScreens')
+    grok.implements(IPropertiesTab)
+
+    label = _(u"Local site")
+    description = _(u"Here you can enable/disable a local site (or subsite). "
+                    u"By making a local site, you will be able to add "
+                    u"local services to the publication. Those services "
+                    u"will only affect elements inside that publication.")
+
+    @CachedProperty
+    def manager(self):
+        return ISiteManager(self.context)
+
+    def can_be_a_local_site(self):
+        return IContainer.providedBy(self.context) and \
+            not self.manager.isSite()
+
+    @silvaforms.action(
+        _("make local site"),
+        identifier="make_site",
+        available=lambda form: form.can_be_a_local_site())
+    def make_site(self):
+        try:
+            self.manager.makeSite()
+        except ValueError, e:
+            self.send_message(str(e), type=u"error")
+            return silvaforms.FAILURE
+        else:
+            self.send_message(_("Local site activated."), type=u"feedback")
+            return silvaforms.SUCCESS
+
+    def can_be_normal_again(self):
+        return IContainer.providedBy(self.context) and \
+            self.manager.isSite() and \
+            not IRoot.providedBy(self.context)
+
+    @silvaforms.action(
+        _("remove local site"),
+        identifier="delete_site",
+        available=lambda form: form.can_be_normal_again(),
+        implements=IRemoverAction)
+    def delete_site(self):
+        try:
+            self.manager.deleteSite()
+        except ValueError, e:
+            self.send_message(str(e), type=u"error")
+            return silvaforms.FAILURE
+        else:
+            self.send_message(_("Local site deactivated."), type=u"feedback")
+            return silvaforms.SUCCESS
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
 def folder_moved_update_quota(obj, event):

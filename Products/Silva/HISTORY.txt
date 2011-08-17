@@ -1,12 +1,29 @@
 Changes
 =======
 
+Silva 2.3.2dev-bethel.3 (2011-08-17)
+------------------------------------
+
+- improved support for localsites; now available for any container
+
+
 Silva 2.3.2dev-bethel.2 (2011-08-10)
---------------------------------
+------------------------------------
 
 - support HTTP HEAD requests to feed views (atom, rss)
 
 - fix creating sticky content service from sticky content service tab
+
+- merge of Products.Silva default branch (cid: a3b80422fc71)
+
+Silva 2.3.2dev-bethel.1 (2011-07-13)
+------------------------------------
+
+- was a merge of Products.Silva, but the merge was never pushed out and was lost
+  (sigh)
+  
+- includes a fix to prevent the form from being pickled in the cache
+  (which broke when memcache was used)
 
 Silva 2.3.2 (unreleased)
 ------------------------

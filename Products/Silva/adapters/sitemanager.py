@@ -12,7 +12,7 @@ from silva.core import interfaces
 
 class SiteManager(grok.Adapter):
     grok.implements(interfaces.ISiteManager)
-    grok.context(interfaces.IPublication)
+    grok.context(interfaces.IContainer)
     grok.require('zope2.ViewManagementScreens')
 
     def makeSite(self):
