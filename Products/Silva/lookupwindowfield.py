@@ -171,7 +171,13 @@ reference.getReference(
         if field.field_record:
             key = key.replace(':record',':record:list')
         ret = ['<table class="kupu-link-reference-table">']
-        values = value.split(', ')
+        #when used within a page asset / sticky content, the values are 
+        #persisted as the actual data structures (NOT strings), so value is
+        #already a list
+        if isinstance(value,ListType):
+            values = value
+        else:
+            values = value.split(', ')
         reqrows = field.get_value('required_rows')
         if reqrows > 0 and reqrows > len(values):
             #somehow the number of required rows exceeds the number of values, so

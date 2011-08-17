@@ -6,6 +6,8 @@ Silva 2.3.2dev-bethel.3 (2011-08-17)
 
 - improved support for localsites; now available for any container
 
+- improved lookupwindow rendering so that an actual list can be passed in as the
+  'list of paths'
 
 Silva 2.3.2dev-bethel.2 (2011-08-10)
 ------------------------------------
