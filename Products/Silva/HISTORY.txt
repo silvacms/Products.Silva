@@ -1,6 +1,12 @@
 Changes
 =======
 
+Silva 2.3.2dev-bethel.4 (unreleased)
+------------------------------------
+
+- add missing import to lookupwindow.py
+
+
 Silva 2.3.2dev-bethel.3 (2011-08-17)
 ------------------------------------
 

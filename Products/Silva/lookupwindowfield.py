@@ -12,6 +12,7 @@ NOTE:  The reference lookup window field and the
 """
 
 from urllib import quote
+from types import ListType
 from Products.Formulator.FieldRegistry import FieldRegistry
 from Products.Formulator.DummyField import fields
 from Products.Formulator.StandardFields import StringField
