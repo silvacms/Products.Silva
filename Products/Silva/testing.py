@@ -164,7 +164,10 @@ class SilvaLayer(BrowserLayer):
     def testTearDown(self):
         # Clean browsers
         for browser in self._browsers:
-            browser.close()
+            try:
+                browser.close()
+            except:
+                pass
         self._browsers = []
 
         # Reset local site to None
