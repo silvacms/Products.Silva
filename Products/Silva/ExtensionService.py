@@ -268,6 +268,7 @@ class PartialUpgradesForm(silvaforms.ZMIForm):
     """
     grok.name('manage_partialUpgrade')
     fields = silvaforms.Fields(IPartialUpgrade)
+    label = _(u"Upgrade site")
     description = _(u"Below you find a form that allows you to specify "
                     u"an object to upgrade, and which version the object "
                     u"is in now. When you enter values in those fields and "
@@ -307,6 +308,7 @@ class PartialReindexForm(silvaforms.ZMIForm):
     """
     grok.name('manage_partialReindex')
     fields = silvaforms.Fields(IPartialReindex)
+    label = _(u"Reindex site")
     description = _(u"Reindex a subtree of the site in the Silva Catalog."
                     u"For big trees this may take a long time.")
 
