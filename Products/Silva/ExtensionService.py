@@ -394,10 +394,14 @@ class ManageExtensions(silvaviews.ZMIView):
         """Return non-system extensions
         """
         names = extensionRegistry.get_names()
+        get_extension = extensionRegistry.get_extension
+        root = self.context.get_root()
         for name in names:
-            extension = extensionRegistry.get_extension(name)
+            extension = get_extension(name)
             if not interfaces.ISystemExtension.providedBy(extension):
-                yield extension
+                yield {'info': extension,
+                       'is_installed': extension.installer.is_installed(root),
+                       'dependencies': map(get_extension, extension.depends)}
 
     def system_extensions(self):
         """Return system extensions

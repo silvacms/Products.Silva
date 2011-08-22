@@ -6,6 +6,7 @@ from bisect import insort_right
 import os.path
 import pkg_resources
 import types
+import email
 
 from five import grok
 from silva.core import interfaces
@@ -55,8 +56,9 @@ class BaseExtension(object):
     """
 
     def __init__(self, name, install, path,
-                 description=None, depends=(u'Silva',)):
+                 title=None, description=None, depends=(u'Silva',)):
         self._name = name
+        self._title = title or name
         self._description = description
         self._install = install
         self._module_name = path
@@ -70,6 +72,10 @@ class BaseExtension(object):
     @property
     def name(self):
         return self._name
+
+    @property
+    def title(self):
+        return self._title
 
     @property
     def product(self):
@@ -119,9 +125,9 @@ class ProductExtension(BaseExtension):
     implements(interfaces.IExtension)
 
     def __init__(self, name, install, path,
-                 description=None, depends=(u'Silva',)):
-        super(ProductExtension, self).__init__(name, install, path,
-                                               description, depends)
+                 title=None, description=None, depends=(u'Silva',)):
+        super(ProductExtension, self).__init__(
+            name, install, path, title, description, depends)
         assert path.startswith('Products.')
         self._product = path.split('.')[1]
         self._version = open(os.path.join(
@@ -137,10 +143,13 @@ class EggExtension(BaseExtension):
     """
     implements(interfaces.IExtension)
 
-    def __init__(self, egg, name, install, path,
+    def __init__(self, egg, name, install, path, title=None,
                  description=None, depends=(u'Silva',)):
+        if description is None:
+            info = email.message_from_string(egg.get_metadata('PKG-INFO'))
+            description = info.get('Summary')
         super(EggExtension, self).__init__(
-            name, install, path, description, depends)
+            name, install, path, title, description, depends)
         # We assume that the name of this egg is the name of the
         # python extension.
         if path.startswith('Products.'):
@@ -171,7 +180,7 @@ class ExtensionRegistry(object):
         self._extensions_by_module = {}
         self._silva_addables = []
 
-    def register(self, name, description,
+    def register(self, name, title,
                  install_module=None, module_path=None, depends_on=(u'Silva',)):
         # Figure out which is the extension path.
         path = None
@@ -195,14 +204,14 @@ class ExtensionRegistry(object):
                 path[len(egg.location)] == os.path.sep):
                 ext = EggExtension(
                     egg, name, install_module, module_path,
-                    description, depends_on)
+                    title, None, depends_on)
                 break
 
         # Otherwise, that's a product.
         if ext is None:
             ext = ProductExtension(
                 name, install_module, module_path,
-                description, depends_on)
+                title, None, depends_on)
 
         self._extensions[ext.name] = ext
         self._extensions_by_module[ext.module_name] = ext

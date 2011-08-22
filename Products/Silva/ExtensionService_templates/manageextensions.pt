@@ -52,48 +52,44 @@
       </div>
 
       <tal:extension
-         tal:define="root context/get_root"
          tal:repeat="extension view/extensions">
-        <div tal:define="is_installed python:extension.installer.is_installed(root);
-                         bg_color python:is_installed and  'White' or 'LightGrey'"
+        <div tal:define="bg_color python:extension['is_installed'] and  'White' or 'LightGrey'"
              tal:attributes="style string:width:70%;; border:solid 1px;; padding:1ex;; margin:1ex;; background:${bg_color};;" >
           <div style="float:right; width:40%;">
             <h4 class="form-title"
                 style="margin: 0">Dependencies</h4>
-            <ul tal:define="dependencies extension/depends"
-                style="padding-left: 0;list-style-position:inside;margin-top:0;">
+            <ul style="padding-left: 0;list-style-position:inside;margin-top:0;">
               <li class="list-item"
-                  tal:repeat="dependency dependencies">
-                <span tal:content="dependency" />
+                  tal:repeat="dependency extension/dependencies">
+                <span tal:content="dependency/title" />
               </li>
-              <li class="list-item"
-                  tal:condition="not:dependencies">None</li>
             </ul>
           </div>
 
-          <h3 style="margin: 0 0 0.5ex;" tal:content="extension/description" />
-          <p style="margin: 0 0 1ex;" tal:content="extension/version"/>
+          <h3 style="margin: 0 0 0.5ex;" tal:content="extension/info/title" />
+          <p style="margin: 0 0 1ex;" tal:content="extension/info/version"/>
+          <p style="margin: 0 0 1ex;" tal:content="extension/info/description"/>
 
           <form action="#" name="#" method="post" style="margin-bottom: 0;"
-                tal:define="name extension/name"
+                tal:define="name extension/info/name"
                 tal:attributes="name name;
                                 action request/URL">
             <input type="hidden" name="name"
                    tal:attributes="value name" />
             <tal:cond tal:condition="python:name != 'Silva'">
               <input type="submit"
-                     tal:define="method python:is_installed and 'uninstall' or 'install'"
-                     tal:attributes="name method;
-                                     value python:is_installed and 'deactivate' or 'activate';"
+                     tal:attributes="name python:extension['is_installed'] and 'uninstall' or 'install';
+                                     value python:extension['is_installed'] and 'deactivate' or 'activate';"
                      i18n:attributes="value" />
               <input type="submit" name="refresh" value="refresh"
-                     tal:condition="is_installed"
+                     tal:condition="extension/is_installed"
                      i18n:attributes="value" />
             </tal:cond>
             <tal:cond tal:condition="python:name == 'Silva'">
               <ul>
                 <li tal:repeat="system_ext view/system_extensions">
-                  <span tal:replace="system_ext/name" /> (<span tal:replace="system_ext/version" />)
+                  <span tal:replace="system_ext/name" />
+                  (<span tal:replace="system_ext/version" />)
                 </li>
               </ul>
               <input type="submit" name="refresh" value="refresh"
