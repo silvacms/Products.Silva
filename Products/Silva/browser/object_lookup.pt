@@ -116,14 +116,14 @@
                             name="meta_type"
                             id="meta_type"
                             title="select a new item: alt-s"
-                            tal:attributes="onChange string:location.href='${url}/edit/add_object?return_url='+this.form.return_url.value+'&meta_type='+this.options[this.selectedIndex].value+'&lookup_mode:int=1'"
+                            tal:attributes="onChange string:location.href='${url}/edit/+/'+this.options[this.selectedIndex].value + '?addform.field.return_url='+this.form.return_url.value"
                             i18n:attributes="title"
                             >
                             <option value="None" i18n:translate="">
                               select:
                             </option>
                             <tal:block tal:repeat="addable context/get_silva_addables">
-                              <option tal:condition="python:context.service_view_registry.has_view('add', addable['name']) and addable['name'] in addable_types"
+                              <option tal:condition="python:addable['name'] in addable_types"
                                 tal:content="python: addable['name'] == 'Silva AutoTOC' and 'Silva Automatic Table of Contents' or addable['name']"
                                 tal:attributes="value addable/name" />
                             </tal:block>
