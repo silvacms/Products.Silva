@@ -195,8 +195,7 @@ InitializeClass(ViewableObject)
 def content_created(content, event):
     if (content != event.object or
         IObjectCopiedEvent.providedBy(event) or
-        IVersionedContent.providedBy(content) or
-        not IContainer.providedBy(aq_parent(content))):
+        IVersionedContent.providedBy(content)):
         return
 
     service = getUtility(IMetadataService)
@@ -223,9 +222,6 @@ def index_and_update_author_modified_content(content, event):
     if (IVersionedContent.providedBy(content) and
         IContainerModifiedEvent.providedBy(event)):
         return
-    # We don't care about object not in containers
-    if not IContainer.providedBy(aq_parent(content)):
-        return
     content.sec_update_last_author_info()
     ICataloging(content).index()
 
@@ -236,9 +232,6 @@ def index_moved_content(content, event):
     """
     if (not IObjectAddedEvent.providedBy(event) and
         not IObjectRemovedEvent.providedBy(event)):
-        # We don't care about objects not in containers
-        if not IContainer.providedBy(aq_parent(content)):
-            return
         ICataloging(content).index()
 
 
@@ -248,7 +241,4 @@ def unindex_removed_content(content, event):
     deleted.
     """
     if not IObjectWillBeAddedEvent.providedBy(event):
-        # We don't care about object not in containers
-        if not IContainer.providedBy(aq_parent(content)):
-            return
         ICataloging(content).unindex()

@@ -87,15 +87,23 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
             return silvaforms.FAILURE
         self.context.manage_addProduct['Silva'].manage_addRoot(
             data['identifier'],
-            data.getDefault('title'),
-            data.getDefault('add_documentation'),
-            data.getDefault('add_search'))
+            data.getDefault('title'))
         root = self.context._getOb(data['identifier'])
         service = component.getUtility(IMessageService)
         service.send(
             _(u"New Silva site ${identifier} added.",
               mapping={'identifier': data['identifier']}),
             self.request)
+
+        if data.getDefault('add_search'):
+            # install a silva find instance
+            factory = root.manage_addProduct['SilvaFind']
+            factory.manage_addSilvaFind('search', 'Search this site')
+
+        if data.getDefault('add_documentation'):
+            # install the user documentation .zexp
+            install_documentation(root, self.request)
+
         self.redirect(absoluteURL(root, self.request) + '/edit')
         return silvaforms.SUCCESS
 
@@ -211,7 +219,7 @@ InitializeClass(Root)
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')
 
-def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
+def manage_addRoot(self, id, title, REQUEST=None):
     """Add a Silva root.
     """
     if not title:
@@ -241,15 +249,6 @@ def manage_addRoot(self, id, title, add_docs=0, add_search=0, REQUEST=None):
         notify(ObjectCreatedEvent(root))
 
         root.set_title(title)
-
-        if add_search:
-            # install a silva find instance
-            factory = root.manage_addProduct['SilvaFind']
-            factory.manage_addSilvaFind('search', 'Search this site')
-
-        if add_docs:
-            # install the user documentation .zexp
-            install_documentation(root)
 
         if REQUEST is not None:
             add_and_edit(self, id, REQUEST)

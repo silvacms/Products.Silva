@@ -31,7 +31,7 @@
       <ghost_folder id="ghost">
         <content>
           <haunted>
-            folder/container
+            folder/container/link
           </haunted>
         </content>
       </ghost_folder>

@@ -11,6 +11,7 @@ from silva.core.interfaces.events import IContentImported
 from zope.component import getAdapter
 from zope.component.eventtesting import clearEvents
 from zope.interface.verify import verifyObject
+from zope.publisher.browser import TestRequest
 
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
@@ -54,7 +55,7 @@ class ImportExportTripTestCase(TestCase):
 
         factory = self.root.publication.manage_addProduct['Silva']
         factory.manage_addGhost(
-            'nice', None, haunted=self.root.publication.pictures.torvald)
+            'nice', None, haunted=self.root.publication.infrae)
 
         # 2. export
         exporter1 = getAdapter(
@@ -72,7 +73,7 @@ class ImportExportTripTestCase(TestCase):
         self.failUnless(verifyObject(interfaces.IZipFileImporter, importer))
 
         clearEvents()
-        importer.importFromZip(StringIO(export1))
+        importer.importFromZip(StringIO(export1), TestRequest())
 
         self.assertEventsAre(
             ['ContentImported for /root/folder/publication',
@@ -87,10 +88,10 @@ class ImportExportTripTestCase(TestCase):
             IContentImported)
 
         imported_ghost = self.root.folder.publication.nice
-        imported_image = self.root.folder.publication.pictures.torvald
+        imported_link = self.root.folder.publication.infrae
         self.assertEqual(
             imported_ghost.get_editable().get_haunted(),
-            imported_image)
+            imported_link)
 
         # 4. export
         exporter2 = getAdapter(

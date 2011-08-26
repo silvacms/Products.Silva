@@ -28,13 +28,6 @@
       </set>
     </metadata>
     <content>
-      <ghost_folder id="ghost">
-        <content>
-          <haunted>
-            folder/container
-          </haunted>
-        </content>
-      </ghost_folder>
       <folder id="container">
         <metadata>
           <set id="silva-content">
@@ -137,6 +130,24 @@
           </indexer>
         </content>
       </folder>
+      <ghost id="ghost">
+        <workflow>
+          <version id="0">
+            <status>
+              public
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <haunted>
+            folder/container
+          </haunted>
+        </content>
+      </ghost>
     </content>
   </folder>
 </silva>

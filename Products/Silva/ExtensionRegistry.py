@@ -15,6 +15,7 @@ from zope.interface import implements
 from zope.testing import cleanup
 from zope.event import notify
 from silva.core.interfaces.events import InstalledExtensionEvent
+from silva.core.interfaces import ISilvaObject
 
 import Products
 
@@ -22,14 +23,15 @@ import Products
 def meta_types_for_interface(interface):
     """Return a list of meta_type who implements the given interface.
     """
-    return [addable['name']
-            for addable in extensionRegistry.get_addables()
+    addables = Products.meta_types
+    if interface.extends(ISilvaObject):
+        addables = extensionRegistry.get_addables()
+    return [addable['name'] for addable in addables
             if interface.implementedBy(addable['instance'])]
 
 
 def _get_product_meta_type(content_type):
-    meta_types = Products.meta_types
-    for mt_dict in meta_types:
+    for mt_dict in Products.meta_types:
         if mt_dict['name'] == content_type:
             mt_dict['doc'] = mt_dict['instance'].__doc__
             return mt_dict

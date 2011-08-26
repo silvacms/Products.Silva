@@ -63,8 +63,7 @@ class Security(object):
         info = getattr(version, '_last_author_info', None)
         if info is None:
             return noneMember.__of__(self)
-        else:
-            return info.__of__(self)
+        return info.__of__(self)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'sec_update_last_author_info')

@@ -24,8 +24,6 @@
     <silva-extra:creator>
      author
     </silva-extra:creator>
-    <silva-extra:expirationtime>
-    </silva-extra:expirationtime>
     <silva-extra:hide_from_tocs>
      do not hide
     </silva-extra:hide_from_tocs>
@@ -39,18 +37,14 @@
     <silva-extra:modificationtime>
      YYYY-MM-DDTHH:MM:SS
     </silva-extra:modificationtime>
-    <silva-extra:publicationtime>
-    </silva-extra:publicationtime>
     <silva-extra:subject>
     </silva-extra:subject>
    </set>
   </metadata>
   <content>
-   <unknown_content id="zope2folder" meta_type="Folder">
-    <zexp_id>
-     1.zexp
-    </zexp_id>
-   </unknown_content>
+   <unknown_content id="mockup" meta_type="Mockup VersionedContent">
+    <zexp id="1.zexp">
+    </zexp>
   </content>
  </folder>
 </silva>

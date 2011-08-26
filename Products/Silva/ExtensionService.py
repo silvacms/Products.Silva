@@ -92,13 +92,14 @@ def compute_used_space(content):
     return total
 
 
-def install_documentation(container):
+def install_documentation(container, request):
     """Install documentation in the given container.
     """
     documentation_path = os.path.join(
         os.path.dirname(__file__), 'doc', 'silva_docs.zip')
     with open(documentation_path, 'rb') as documentation:
-        interfaces.IZipfileImporter(container).importFromZip(documentation)
+        interfaces.IZipfileImporter(container).importFromZip(
+            documentation, request)
 
 
 class ExtensionService(SilvaService, Folder):
@@ -361,7 +362,7 @@ class ManageExtensions(silvaviews.ZMIView):
         return  _(u'Content upgrade succeeded. See log in Logs tab for details')
 
     def install_documentation(self):
-        install_documentation(self.context.get_root())
+        install_documentation(self.context.get_root(), self.request)
         return _(u'Documentation installed')
 
     def install(self, name):
