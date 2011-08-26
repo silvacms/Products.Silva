@@ -3,6 +3,7 @@
 # $Id$
 
 from zipfile import ZipFile
+from cStringIO import StringIO
 
 from five import grok
 
@@ -31,18 +32,17 @@ class ZipFileImporter(grok.Adapter):
         finally:
             archive.close()
 
-    def importFromZip(self, input_archive, replace=0):
+    def importFromZip(self, input_archive, request, replace=0):
         """ imports fullmedia zipfile
         """
         existing_objects = self.context.objectIds()
 
         archive = ZipFile(input_archive, 'r')
-        info = xmlimport.ImportInfo()
-        info.setZIPFile(archive)
-        source_file = info.getFileFromZIP('silva.xml')
+        source_file = StringIO(archive.read('silva.xml'))
         try:
             imported = xmlimport.importFromFile(
-                source_file, self.context, info=info, replace=replace)
+                source_file, self.context, request,
+                zip_file=archive, replace=replace)
 
             succeeded = []
             failed = []

@@ -28,13 +28,6 @@
       </set>
     </metadata>
     <content>
-      <ghost_folder id="ghost">
-        <content>
-          <haunted>
-            folder/container
-          </haunted>
-        </content>
-      </ghost_folder>
       <folder id="container">
         <metadata>
           <set id="silva-content">
@@ -61,6 +54,13 @@
           </set>
         </metadata>
         <content>
+          <ghost_folder id="ghost">
+            <content>
+              <haunted>
+                folder/container
+              </haunted>
+            </content>
+          </ghost_folder>
           <link id="link">
             <workflow>
               <version id="0">

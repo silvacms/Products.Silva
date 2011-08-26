@@ -58,7 +58,7 @@ class InvalidTarget(InvalidValue):
         if err_code == LINK_CONTENT or err_code == LINK_NO_FOLDER:
             return _(u"Ghost target should be a container.")
         if err_code == LINK_FOLDER or err_code ==  LINK_NO_CONTENT:
-            return _(u"Ghost target should not be a container.")
+            return _(u"Ghost target should be a content.")
         return _("Invalid ghost target.")
 
 

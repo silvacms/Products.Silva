@@ -36,29 +36,6 @@ Add a Silva Root.
     </td>
   </tr>
 
-  <tr tal:condition="modules/Products/SilvaFind | nothing">
-    <td align="left" valign="top" class="form-text">
-    <div class="form-label">
-    Add Search object?
-    </div>
-    </td>
-    <td align="left" valign="top">
-    <input type="checkbox" name="add_search" />
-    </td>
-  </tr>
-
-  <tr tal:condition="modules/Products/SilvaDocument | nothing">
-    <td align="left" valign="top" class="form-text">
-    <div class="form-label">
-    Add Silva documentation?
-    </div>
-    (this will take a while)
-    </td>
-    <td align="left" valign="top">
-    <input type="checkbox" name="add_docs" />
-    </td>
-  </tr>
-
   <tr>
     <td align="left" valign="top">
     </td>

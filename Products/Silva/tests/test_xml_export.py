@@ -92,14 +92,14 @@ class XMLExportTestCase(SilvaXMLTestCase):
         """Test the fallback exporter: create a Zope 2 folder in a
         Silva folder and export it.
         """
-        self.root.folder.manage_addProduct['OFS'].manage_addFolder(
-            'zope2folder', 'Zope 2 Folder')
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('mockup', 'Mockup Content')
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_fallback.silvaxml')
         self.assertEqual(
             info.getZexpPaths(),
-            [(('', 'root', 'folder', 'zope2folder'), '1.zexp')])
+            [(('', 'root', 'folder', 'mockup'), '1.zexp')])
         self.assertEqual(info.getAssetPaths(), [])
 
     def test_indexer(self):

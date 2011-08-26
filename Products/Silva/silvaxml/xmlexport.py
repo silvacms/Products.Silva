@@ -10,25 +10,23 @@ from five import grok
 from Acquisition import aq_base
 from DateTime import DateTime
 
-from sprout.saxext import xmlexport
+from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core import interfaces
-from silva.core.interfaces import (IPublicationWorkflow, IExportSettings,
-    ISilvaXMLExportHandler)
+from silva.core.interfaces import IExportSettings
+from silva.core.interfaces import ISilvaXMLExportHandler, IXMLZEXPExportable
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces.errors import ExternalReferenceError
 from silva.core.references.interfaces import IReferenceService
-from silva.core.references.reference import canonical_path
-from Products.SilvaMetadata.interfaces import IMetadataService
+from silva.core.references.utils import canonical_path
+from sprout.saxext import xmlexport
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva.silvaxml import ImportExportSettingsErrors
+from Products.Silva.ExtensionRegistry import meta_types_for_interface
+from Products.Silva.silvaxml import NS_SILVA_URI
+from Products.Silva.silvaxml import NS_SILVA_CONTENT_URI, NS_SILVA_EXTRA_URI
 
 
-NS_SILVA = 'http://infrae.com/namespace/silva'
-NS_SILVA_CONTENT = 'http://infrae.com/namespace/metadata/silva-content'
-NS_SILVA_EXTRA = 'http://infrae.com/namespace/metadata/silva-extra'
-
-
-class SilvaBaseProducer(xmlexport.Producer):
+class SilvaProducer(xmlexport.Producer):
     grok.baseclass()
     grok.implements(ISilvaXMLExportHandler)
 
@@ -40,9 +38,9 @@ class SilvaBaseProducer(xmlexport.Producer):
         reference = service.get_reference(self.context, name=name)
         if reference is None:
             return None
-        settings = self.getSettings()
-        root = settings.getExportRoot()
-        if not settings.externalRendering():
+        info = self.getInfo()
+        root = info.root
+        if not self.getSettings().externalRendering():
             if not reference.target_id:
                 # The reference is broken. Return an empty path.
                 return ""
@@ -54,15 +52,14 @@ class SilvaBaseProducer(xmlexport.Producer):
             return canonical_path('/'.join(relative_path))
         else:
             # Return url to the target
-            return absoluteURL(reference.target, settings.request)
+            return absoluteURL(reference.target, info.request)
 
     def metadata(self):
         """Export the metadata
         """
         binding = getUtility(IMetadataService).getMetadata(self.context)
-        settings = self.getSettings()
         # Don't acquire metadata only for the root of the xmlexport
-        acquire_metadata = int(settings.isExportRoot(self.context))
+        acquire_metadata = int(self.getInfo().root is self.context)
 
         self.startElement('metadata')
         set_ids = binding.collection.keys()
@@ -71,8 +68,8 @@ class SilvaBaseProducer(xmlexport.Producer):
         for set_id in set_ids:
             set_obj = binding.collection[set_id]
             prefix, namespace = set_obj.getNamespace()
-            if (namespace != NS_SILVA_CONTENT and
-                namespace != NS_SILVA_EXTRA):
+            if (namespace != NS_SILVA_CONTENT_URI and
+                namespace != NS_SILVA_EXTRA_URI):
                 self.handler.startPrefixMapping(prefix, namespace)
             self.startElement('set', {'id': set_id})
             items = binding._getData(set_id, acquire=acquire_metadata).items()
@@ -97,7 +94,7 @@ EDITABLE_VERSION = object()
 VIEWABLE_VERSION = object()
 
 
-class VersionedContentProducer(SilvaBaseProducer):
+class SilvaVersionedContentProducer(SilvaProducer):
     """Base Class for all versioned content
     """
     grok.baseclass()
@@ -172,39 +169,13 @@ class VersionedContentProducer(SilvaBaseProducer):
         return
 
 
-class FolderProducer(SilvaBaseProducer):
-    """Export a Silva Folder object to XML.
+class SilvaContainerProducer(SilvaProducer):
+    """Base to export a Silva container to XML.
     """
-    grok.adapts(interfaces.IFolder, Interface)
+    grok.baseclass()
 
-    def sax(self):
-        self.startElement('folder', {'id': self.context.id})
-        self.metadata()
-        self.startElement('content')
-        default = self.context.get_default()
-        if default is not None:
-            self.startElement('default')
-            self.subsax(default)
-            self.endElement('default')
-        for object in self.context.get_ordered_publishables():
-            if (interfaces.IPublication.providedBy(object) and
-                    not self.getSettings().withSubPublications()):
-                continue
-            self.subsax(object)
-        for object in self.context.get_non_publishables():
-            self.subsax(object)
-        self.endElement('content')
-        self.endElement('folder')
-
-
-class PublicationProducer(SilvaBaseProducer):
-    """Export a Silva Publication object to XML.
-    """
-    grok.adapts(interfaces.IPublication, Interface)
-
-    def sax(self):
-        self.startElement('publication', {'id': self.context.id})
-        self.metadata()
+    def contents(self):
+        settings = self.getSettings()
         self.startElement('content')
         default = self.context.get_default()
         if default is not None:
@@ -213,16 +184,43 @@ class PublicationProducer(SilvaBaseProducer):
             self.endElement('default')
         for content in self.context.get_ordered_publishables():
             if (interfaces.IPublication.providedBy(content) and
-                not self.getSettings().withSubPublications()):
+                not settings.withSubPublications()):
                 continue
             self.subsax(content)
         for content in self.context.get_non_publishables():
             self.subsax(content)
+        if settings.otherContent():
+            meta_types = meta_types_for_interface(IXMLZEXPExportable)
+            for content in self.context.objectValues(meta_types):
+                self.subsax(content)
         self.endElement('content')
+
+
+class FolderProducer(SilvaContainerProducer):
+    """Export a Silva Folder object to XML.
+    """
+    grok.adapts(interfaces.IFolder, Interface)
+
+    def sax(self):
+        self.startElement('folder', {'id': self.context.id})
+        self.metadata()
+        self.contents()
+        self.endElement('folder')
+
+
+class PublicationProducer(SilvaContainerProducer):
+    """Export a Silva Publication object to XML.
+    """
+    grok.adapts(interfaces.IPublication, Interface)
+
+    def sax(self):
+        self.startElement('publication', {'id': self.context.id})
+        self.metadata()
+        self.contents()
         self.endElement('publication')
 
 
-class LinkProducer(VersionedContentProducer):
+class LinkProducer(SilvaVersionedContentProducer):
     """Export a Silva Link object to XML.
     """
     grok.adapts(interfaces.ILink, Interface)
@@ -234,7 +232,7 @@ class LinkProducer(VersionedContentProducer):
         self.endElement('link')
 
 
-class LinkVersionProducer(SilvaBaseProducer):
+class LinkVersionProducer(SilvaProducer):
     """Export a version of a Silva Link object to XML.
     """
     grok.adapts(interfaces.ILinkVersion, Interface)
@@ -256,7 +254,7 @@ class LinkVersionProducer(SilvaBaseProducer):
         self.endElement('content')
 
 
-class GhostProducer(VersionedContentProducer):
+class GhostProducer(SilvaVersionedContentProducer):
     """Export a Silva Ghost object to XML.
     """
     grok.adapts(interfaces.IGhost, Interface)
@@ -268,7 +266,7 @@ class GhostProducer(VersionedContentProducer):
         self.endElement('ghost')
 
 
-class GhostVersionProducer(SilvaBaseProducer):
+class GhostVersionProducer(SilvaProducer):
     """Export a verson of a Silva Ghost object to XML.
     This actually exports the object the ghost refers to, with the ghost id and
     reference added as attributes.
@@ -291,7 +289,7 @@ class GhostVersionProducer(SilvaBaseProducer):
         self.endElement('content')
 
 
-class GhostFolderProducer(SilvaBaseProducer):
+class GhostFolderProducer(SilvaProducer):
     """Export a Silva Ghost Folder object to XML.
     """
     grok.adapts(interfaces.IGhostFolder, Interface)
@@ -306,7 +304,7 @@ class GhostFolderProducer(SilvaBaseProducer):
         self.endElement('ghost_folder')
 
 
-class AutoTOCProducer(SilvaBaseProducer):
+class AutoTOCProducer(SilvaProducer):
     """Export an AutoTOC object to XML.
     """
     grok.adapts(interfaces.IAutoTOC, Interface)
@@ -324,44 +322,44 @@ class AutoTOCProducer(SilvaBaseProducer):
         self.endElement('auto_toc')
 
 
-class FileProducer(SilvaBaseProducer):
+class FileProducer(SilvaProducer):
     """Export a File object to XML.
     """
     grok.adapts(interfaces.IFile, Interface)
 
     def sax(self):
         path = self.context.getPhysicalPath()
-        self.startElement('file_asset', {'id': self.context.id})
+        info = self.getInfo()
+        self.startElement('file', {'id': self.context.id})
         self.metadata()
-        self.getInfo().addAssetPath(path)
-        self.startElement('asset_id')
-        self.handler.characters(self.getInfo().getAssetPathId(path))
-        self.endElement('asset_id')
-        self.endElement('file_asset')
+        info.addAssetPath(path)
+        self.startElement('asset', {'id': info.getAssetPathId(path)})
+        self.endElement('asset')
+        self.endElement('file')
 
 
-class ImageProducer(SilvaBaseProducer):
+class ImageProducer(SilvaProducer):
     """Export an Image object to XML.
     """
     grok.adapts(interfaces.IImage, Interface)
 
     def sax(self):
         path = self.context.getPhysicalPath()
-        self.startElement('image_asset', {
+        info = self.getInfo()
+        self.startElement('image', {
             'id': self.context.id,
             'web_format': self.context.get_web_format(),
             'web_scale': self.context.get_web_scale(),
             'web_crop': self.context.get_web_crop(),
             })
         self.metadata()
-        self.getInfo().addAssetPath(path)
-        self.startElement('asset_id')
-        self.handler.characters(self.getInfo().getAssetPathId(path))
-        self.endElement('asset_id')
-        self.endElement('image_asset')
+        info.addAssetPath(path)
+        self.startElement('asset', {'id': info.getAssetPathId(path)})
+        self.endElement('asset')
+        self.endElement('image')
 
 
-class IndexerProducer(SilvaBaseProducer):
+class IndexerProducer(SilvaProducer):
     """Export an IndexerProducer to XML.
     """
     grok.adapts(interfaces.IIndexer, Interface)
@@ -372,7 +370,7 @@ class IndexerProducer(SilvaBaseProducer):
         self.endElement('indexer')
 
 
-class ZexpProducer(SilvaBaseProducer):
+class ZexpProducer(SilvaProducer):
     """Export any unknown content type to a zexp in the zip-file.
     """
     grok.baseclass()
@@ -388,10 +386,8 @@ class ZexpProducer(SilvaBaseProducer):
             self.startElement(
                 'unknown_content', {'id': id, 'meta_type': meta_type})
             info.addZexpPath(path)
-            path_id = self.getInfo().getZexpPathId(path)
-            self.startElement('zexp_id')
-            self.handler.characters(path_id)
-            self.endElement('zexp_id')
+            self.startElement('zexp', {'id': info.getZexpPathId(path)})
+            self.endElement('zexp')
             self.endElement('unknown_content')
 
 
@@ -417,29 +413,19 @@ class SilvaExportRootProducer(xmlexport.BaseProducer):
         self.endElement('silva')
 
 
-class ExportSettings(xmlexport.BaseSettings, ImportExportSettingsErrors):
+class ExportSettings(xmlexport.BaseSettings):
     grok.implements(IExportSettings)
 
     def __init__(self, asDocument=True, outputEncoding='utf-8',
                  workflow=True, allVersions=True,
-                 withSubPublications=True, options={}, request=None):
+                 withSubPublications=True, otherContent=True, options={}):
         xmlexport.BaseSettings.__init__(self, asDocument, outputEncoding)
         self._workflow = workflow
         self._version = allVersions and ALL_VERSION or PREVIEWABLE_VERSION
         self._with_sub_publications = withSubPublications
         self._render_external = False
-        self._export_root = None
+        self._other_content = otherContent
         self.options = options
-        self.request = request
-
-    def setExportRoot(self, root):
-        self._export_root = root
-
-    def getExportRoot(self):
-        return self._export_root
-
-    def isExportRoot(self, content):
-        return self._export_root is content
 
     def setWithSubPublications(self, with_sub_publications):
         self._with_sub_publications = with_sub_publications
@@ -466,17 +452,30 @@ class ExportSettings(xmlexport.BaseSettings, ImportExportSettingsErrors):
     def withSubPublications(self):
         return self._with_sub_publications
 
+    def otherContent(self):
+        return self._other_content
+
     def externalRendering(self):
         return self._render_external
 
 
-class ExportInfo(object):
+class ExportContext(object):
 
-    def __init__(self):
+    def __init__(self, root, request=None):
+        self.__root = root
+        self.__request = request
         self._asset_paths = {}
         self._zexp_paths = {}
         self._last_asset_id = 0
         self._last_zexp_id = 0
+
+    @property
+    def root(self):
+        return self.__root
+
+    @property
+    def request(self):
+        return self.__request
 
     def addAssetPath(self, path):
         self._asset_paths[path] = self._makeUniqueAssetId(path)
@@ -512,23 +511,29 @@ class ExportInfo(object):
 
 # Create and configuration the xml exporter
 
-theXMLExporter = xmlexport.Exporter(NS_SILVA)
-theXMLExporter.registerNamespace('silva-content', NS_SILVA_CONTENT)
-theXMLExporter.registerNamespace('silva-extra', NS_SILVA_EXTRA)
+theXMLExporter = xmlexport.Exporter(NS_SILVA_URI)
+theXMLExporter.registerNamespace('silva-content', NS_SILVA_CONTENT_URI)
+theXMLExporter.registerNamespace('silva-extra', NS_SILVA_EXTRA_URI)
 theXMLExporter.registerProducer(SilvaExportRoot, SilvaExportRootProducer)
 theXMLExporter.registerFallbackProducer(ZexpProducer)
 
+# Shortcuts
+registerNamespace = theXMLExporter.registerNamespace
 
-def exportToString(context, settings=None):
+
+def exportToString(context, request=None, settings=None):
     """Export a Silva Object to a XML string.
     """
     if settings is None:
         settings = ExportSettings()
-    info = ExportInfo()
-    settings.setExportRoot(context)
+    info = ExportContext(context, request=request)
 
     return theXMLExporter.exportToString(
         SilvaExportRoot(context),
         settings,
         info), info
 
+
+# BBB
+SilvaBaseProducer = SilvaProducer
+VersionedContentProducer = SilvaVersionedContentProducer

@@ -156,9 +156,8 @@ class GhostFolder(GhostBase, Folder.Folder):
         """populate the the ghost folder with ghosts
         """
         haunted = self.get_haunted()
-        if self.get_link_status():
-            raise ValueError(
-                _(u"Ghost Folder is not refreshed as it have an invalid target."))
+        if haunted is None:
+            return
         ghost = self
         object_list = self._haunt_diff(haunted, ghost)
         upd = SyncContainer(self, None, haunted, None, self)

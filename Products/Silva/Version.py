@@ -177,6 +177,7 @@ def catalog_version_removed(version, event):
         return
     ICataloging(version).unindex()
 
+
 @grok.subscribe(IVersion, IObjectCreatedEvent)
 @grok.subscribe(IVersion, IObjectClonedEvent)
 def content_created(content, event):
