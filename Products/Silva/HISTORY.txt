@@ -1,7 +1,7 @@
 Changes
 =======
 
-Silva 2.3.2dev-bethel.5 (2011-08-19)
+Silva 2.3.2dev-bethel.5 (2011-08-29)
 ------------------------------------
 
 - fix object lookup window add drop-down (to use the new adding view)
