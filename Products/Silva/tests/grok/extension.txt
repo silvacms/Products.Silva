@@ -26,7 +26,7 @@ You can now look for your extension, and check its parameters and installer:
   >>> my_extension = extensionRegistry.get_extension('SimpleTestExtension')
   >>> my_extension.name
   'SimpleTestExtension'
-  >>> my_extension.description
+  >>> my_extension.title
   'Simple Test Extension'
   >>> my_extension.module_name
   'Products.Silva.tests.grok.extension_simple'

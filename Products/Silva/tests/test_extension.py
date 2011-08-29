@@ -45,9 +45,12 @@ class ExtensionRegistryTestCase(unittest.TestCase):
 
         self.assertTrue(verifyObject(IExtension, extension))
         self.assertEqual(extension.name, 'Silva')
-        self.assertEqual(extension.description, 'Silva Core')
+        self.assertEqual(extension.title, 'Silva Core')
         self.assertEqual(extension.product, 'Silva')
         self.assertEqual(extension.module_name, 'Products.Silva')
+        self.assertEqual(
+            extension.description,
+            'Silva Content Management System')
 
         self.assertEqual(
             [c['name'] for c in extension.get_content()],
@@ -100,9 +103,12 @@ class ExtensionRegistryTestCase(unittest.TestCase):
 
         self.assertTrue(verifyObject(IExtension, extension))
         self.assertEqual(extension.name, 'silva.core.layout')
-        self.assertEqual(extension.description, 'Silva Core Layout')
+        self.assertEqual(extension.title, 'Silva Core Layout')
         self.assertEqual(extension.product, 'silva.core.layout')
         self.assertEqual(extension.module_name, 'silva.core.layout')
+        self.assertEqual(
+            extension.description,
+            'Layout system for Silva base on Zope Tool Kit and Grok')
 
     def test_installer(self):
         # First system extension installer.

@@ -46,7 +46,8 @@ class DefaultFileImplementationTestCase(TestCase):
             get_event_names(),
             ['ObjectWillBeAddedEvent', 'ObjectAddedEvent',
              'IntIdAddedEvent', 'ContainerModifiedEvent',
-             'ObjectCreatedEvent'])
+             'MetadataModifiedEvent',
+             'ObjectCreatedEvent', 'MetadataModifiedEvent'])
 
         self.root.file.set_file_data(StringIO("Some text file"))
         self.assertEquals(
