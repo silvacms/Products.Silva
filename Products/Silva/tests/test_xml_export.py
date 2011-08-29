@@ -12,11 +12,11 @@ from zope.component import getAdapter, getUtility
 
 # Silva
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.silvaxml.xmlexport import ExternalReferenceError
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core import interfaces
+from silva.core.interfaces.errors import ExternalReferenceError
 
 
 DATETIME_RE = re.compile(

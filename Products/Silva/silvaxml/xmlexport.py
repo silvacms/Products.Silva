@@ -48,8 +48,8 @@ class SilvaProducer(xmlexport.Producer):
                 raise ExternalReferenceError(
                     self.context, reference.target, root)
             # Add root path id as it is always mentioned in exports
-            relative_path = [root.getId()] + reference.relative_path_to(root)
-            return canonical_path('/'.join(relative_path))
+            return canonical_path('/'.join(
+                    [root.getId()] + reference.relative_path_to(root)))
         else:
             # Return url to the target
             return absoluteURL(reference.target, info.request)
