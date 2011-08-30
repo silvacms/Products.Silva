@@ -1,6 +1,13 @@
 Changes
 =======
 
+Silva 2.3.2dev-bethel.6 (unreleased)
+------------------------------------
+
+- adjusted the zope root default view so it is accessible to the public.  It now
+  displays a 'login to add a silva root' button, without the form.  Bethel needs
+  unauthenticated access to the root of zope for monitoring purposes
+
 Silva 2.3.2dev-bethel.5 (2011-08-29)
 ------------------------------------
 

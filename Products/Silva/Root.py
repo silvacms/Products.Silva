@@ -56,6 +56,7 @@ class ISilvaRootAddFields(interface.Interface):
 class ZopeWelcomePage(silvaforms.ZMIForm):
     grok.context(Application)
     grok.name('index.html')
+    grok.require('zope.Public')
 
     fields = silvaforms.Fields(ISilvaRootAddFields)
 
