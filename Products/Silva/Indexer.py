@@ -77,7 +77,8 @@ class Indexer(Content, SimpleItem):
         """Returns a list of (title, path) tuples for an entry name in the
         index, sorted alphabetically on title
         """
-        result = [(title, path, name) for path, (name, title) in self._index[entry].items()]
+        result = [(title, path, name) for path, (name, title) in
+                  self._index.get(entry, {}).items()]
         result.sort(key=lambda i: i[0].lower())
         return result
 
@@ -129,13 +130,6 @@ class Indexer(Content, SimpleItem):
         for indexes in self._index.itervalues():
             if indexes.has_key(reference_name):
                 del indexes[reference_name]
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'is_deletable')
-    def is_deletable(self):
-        """always deletable"""
-        return 1
-
 
 InitializeClass(Indexer)
 

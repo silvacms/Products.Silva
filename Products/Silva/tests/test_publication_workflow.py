@@ -165,7 +165,6 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         with self.assertRaises(PublicationWorkflowError):
             publisher.reject_request('u suck anyway')
 
-
     def test_reject_published(self):
         """ rejecting a published content must fail.
         """
