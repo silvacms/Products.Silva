@@ -1,7 +1,7 @@
 Changes
 =======
 
-Silva 2.3.2dev-bethel.6 (unreleased)
+Silva 2.3.2dev-bethel.6 (2011-08-31)
 ------------------------------------
 
 - adjusted the zope root default view so it is accessible to the public.  It now
