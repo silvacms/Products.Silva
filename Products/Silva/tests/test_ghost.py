@@ -8,9 +8,9 @@ from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from Acquisition import aq_chain
-
 from Products.Silva.testing import FunctionalLayer
 
+from silva.core.interfaces import errors
 from silva.core.interfaces import IGhost, IGhostVersion
 from silva.core.interfaces import IContainerManager, IPublicationWorkflow
 from silva.core.references.reference import BrokenReferenceError
@@ -79,37 +79,33 @@ class GhostTestCase(unittest.TestCase):
         # XXX Add get_short_title to the test as well
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost('ghost', 'Ghost')
+        ghost = self.root.ghost
+        target = self.root.document
 
-        self.root.ghost.get_editable().set_haunted(self.root.document)
-        self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_short_title(), 'document')
-        self.assertEqual(self.root.ghost.get_title(), '')
+        ghost.get_editable().set_haunted(target)
+        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
 
-        IPublicationWorkflow(self.root.document).publish()
-        self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_short_title(), 'Document')
-        self.assertEqual(self.root.ghost.get_title(), '')
+        IPublicationWorkflow(target).publish()
+        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
 
-        IPublicationWorkflow(self.root.ghost).publish()
-        self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_short_title(), 'Document')
-        self.assertEqual(self.root.ghost.get_title(), 'Document')
+        IPublicationWorkflow(ghost).publish()
+        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title(), 'Document')
+        self.assertEqual(ghost.get_title(), 'Document')
 
-        IPublicationWorkflow(self.root.document).close()
-        self.assertEqual(self.root.ghost.get_title_editable(), 'Document')
-        self.assertEqual(self.root.ghost.get_short_title(), 'document')
-        self.assertEqual(self.root.ghost.get_title(), '')
+        IPublicationWorkflow(target).close()
+        self.assertEqual(ghost.get_title_editable(), 'Document')
+        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
 
-        self.root.ghost.get_viewable().set_haunted(0)
-        self.assertEqual(
-            self.root.ghost.get_title_editable(),
-            u'Ghost target is broken')
-        self.assertEqual(
-            self.root.ghost.get_short_title(),
-            u'Ghost target is broken')
-        self.assertEqual(
-            self.root.ghost.get_title(),
-            u'Ghost target is broken')
+        ghost.get_viewable().set_haunted(0)
+        self.assertEqual(ghost.get_title_editable(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_short_title(), 'Ghost target is broken')
+        self.assertEqual(ghost.get_title(), 'Ghost target is broken')
 
     def test_ghost_is_published(self):
         """Test whenever a Ghost is published or not. This depends if
@@ -139,25 +135,39 @@ class GhostTestCase(unittest.TestCase):
         factory.manage_addGhost('ghost', 'Ghost')
 
         version = self.root.ghost.get_editable()
-        self.assertEqual(version.get_link_status(), version.LINK_EMPTY)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.EmptyInvalidTarget())
 
         version.set_haunted(self.root.folder)
-        self.assertEqual(version.get_link_status(), version.LINK_FOLDER)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.ContentInvalidTarget())
 
         version.set_haunted(self.root.folder.ghost)
-        self.assertEqual(version.get_link_status(), version.LINK_GHOST)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.GhostInvalidTarget())
 
         version.set_haunted(self.root.image)
-        self.assertEqual(version.get_link_status(), version.LINK_NO_CONTENT)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.ContentInvalidTarget())
 
         version.set_haunted(self.root.ghost)
-        self.assertEqual(version.get_link_status(), version.LINK_CIRC)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.CircularInvalidTarget())
 
         version.set_haunted(self.root.document)
-        self.assertEqual(version.get_link_status(), version.LINK_OK)
+        self.assertEqual(
+            version.get_link_status(),
+            None)
 
         version.set_haunted(0)
-        self.assertEqual(version.get_link_status(), version.LINK_EMPTY)
+        self.assertEqual(
+            version.get_link_status(),
+            errors.EmptyInvalidTarget())
 
     def test_ghost_modification_time(self):
         """Test that the ghost modification_time is the same than the
@@ -165,16 +175,26 @@ class GhostTestCase(unittest.TestCase):
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addGhost('ghost', 'Ghost')
-        self.assertEqual(self.root.ghost.get_modification_datetime(), None)
+        ghost = self.root.ghost
+        target = self.root.document
+        self.assertEqual(ghost.get_modification_datetime(), None)
 
-        self.root.ghost.get_editable().set_haunted(self.root.document)
+        ghost.get_editable().set_haunted(target)
+        self.assertEqual(ghost.get_modification_datetime(), None)
+
+        IPublicationWorkflow(ghost).publish()
         self.assertEqual(
-            self.root.ghost.get_modification_datetime(),
-            self.root.document.get_modification_datetime())
+            ghost.get_modification_datetime(),
+            target.get_modification_datetime())
 
-        self.root.ghost.get_editable().set_haunted(0)
-        self.assertEqual(self.root.ghost.get_modification_datetime(), None)
+        IPublicationWorkflow(ghost).new_version()
+        ghost.get_editable().set_haunted(0)
+        self.assertEqual(       # We still see publlised version
+            ghost.get_modification_datetime(),
+            target.get_modification_datetime())
 
+        IPublicationWorkflow(ghost).publish()
+        self.assertEqual(ghost.get_modification_datetime(), None)
 
 def test_suite():
     suite = unittest.TestSuite()

@@ -9,14 +9,13 @@ from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
 from Acquisition import aq_chain
-
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IGhostFolder, IGhost
 from silva.core.interfaces import IPublication, IFolder
-from silva.core.interfaces import IContainerManager, IPublicationWorkflow
-from silva.core.references.reference import BrokenReferenceError
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
+from silva.core.interfaces import errors
 
 
 class GhostFolderTestCase(unittest.TestCase):
@@ -52,14 +51,11 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addGhostFolder('ghost', 'Ghost', haunted=self.root.folder)
 
         ghost = self.root.target.ghost
+        folder = self.root.folder
         self.assertTrue(verifyObject(IGhostFolder, ghost))
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
-        self.assertEqual(
-            ghost.get_haunted(),
-            self.root.folder)
-        self.assertEqual(
-            aq_chain(ghost.get_haunted()),
-            aq_chain(self.root.folder))
+        self.assertEqual(ghost.get_link_status(), None)
+        self.assertEqual(ghost.get_haunted(), folder)
+        self.assertEqual(aq_chain(ghost.get_haunted()), aq_chain(folder))
 
         # Content have been ghost with the same IDS
         self.assertEqual(
@@ -68,29 +64,27 @@ class GhostFolderTestCase(unittest.TestCase):
 
         # Folderish content made Ghost folders
         self.assertTrue(verifyObject(IGhostFolder, ghost.folder))
-        self.assertEqual(
-            ghost.folder.get_haunted(),
-            self.root.folder.folder)
+        self.assertEqual(ghost.folder.get_haunted(), folder.folder)
         self.assertEqual(
             aq_chain(ghost.folder.get_haunted()),
-            aq_chain(self.root.folder.folder))
+            aq_chain(folder.folder))
         self.assertTrue(verifyObject(IGhostFolder, ghost.publication))
         self.assertEqual(
             ghost.publication.get_haunted(),
-            self.root.folder.publication)
+            folder.publication)
         self.assertEqual(
             aq_chain(ghost.publication.get_haunted()),
-            aq_chain(self.root.folder.publication))
+            aq_chain(folder.publication))
 
         # Regular content are ghosts
         self.assertTrue(verifyObject(IGhost, ghost.index))
         self.assertEqual(
             ghost.index.get_haunted(),
-            self.root.folder.index)
+            folder.index)
         self.assertTrue(verifyObject(IGhost, ghost.document))
         self.assertEqual(
             ghost.document.get_haunted(),
-            self.root.folder.document)
+            folder.document)
 
         # Ghosted folder was published so the ghost is published as well.
         self.assertTrue(ghost.is_published())
@@ -116,14 +110,12 @@ class GhostFolderTestCase(unittest.TestCase):
             'ghost', 'Ghost', haunted=self.root.folder.publication)
 
         ghost = self.root.target.ghost
+        publication = self.root.folder.publication
+
         self.assertTrue(verifyObject(IGhostFolder, ghost))
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
-        self.assertEqual(
-            ghost.get_haunted(),
-            self.root.folder.publication)
-        self.assertEqual(
-            aq_chain(ghost.get_haunted()),
-            aq_chain(self.root.folder.publication))
+        self.assertEqual(ghost.get_link_status(), None)
+        self.assertEqual(ghost.get_haunted(), publication)
+        self.assertEqual(aq_chain(ghost.get_haunted()), aq_chain(publication))
 
         # Content have been ghost with the same IDS
         self.assertEqual(
@@ -259,38 +251,39 @@ class GhostFolderTestCase(unittest.TestCase):
         factory.manage_addGhostFolder('ghost', 'Ghost')
 
         ghost = self.root.target.ghost
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_EMPTY)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.EmptyInvalidTarget())
 
         ghost.set_haunted(self.root.folder.document)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_CONTENT)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.ContainerInvalidTarget())
 
         ghost.set_haunted(self.root)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.CircularInvalidTarget())
 
         ghost.set_haunted(self.root.target.ghost)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.CircularInvalidTarget())
 
         ghost.set_haunted(self.root.target.folder)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_OK)
+        self.assertEqual(ghost.get_link_status(), None)
+        self.assertFalse('folder' in self.root.target.ghost.objectIds())
         ghost.haunt()
-
+        self.assertTrue('folder' in self.root.target.ghost.objectIds())
         ghost.set_haunted(self.root.target.ghost.folder)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_CIRC)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.CircularInvalidTarget())
 
         ghost.set_haunted(0)
-        self.assertEqual(ghost.get_link_status(), ghost.LINK_EMPTY)
-        with self.assertRaises(ValueError):
-            ghost.haunt()
+        self.assertEqual(
+            ghost.get_link_status(),
+            errors.EmptyInvalidTarget())
 
     def test_ghost_title(self):
         """Test Ghost Folder title.
