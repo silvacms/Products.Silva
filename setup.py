@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.3.2dev-bethel.6'
+version = '2.3.2dev-bethel.7'
 
 tests_require = [
     'silva.export.opendocument',

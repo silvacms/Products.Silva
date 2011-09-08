@@ -1,6 +1,11 @@
 Changes
 =======
 
+Silva 2.3.2dev-bethel.7 (unreleased)
+------------------------------------
+
+- add button styles to tinymce-content.css
+
 Silva 2.3.2dev-bethel.6 (2011-08-31)
 ------------------------------------
 
