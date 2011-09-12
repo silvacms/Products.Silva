@@ -2,43 +2,12 @@
 # See also LICENSE.txt
 # $Id$
 
-import urlparse
-
 #### Hack of the day: don't fuck up your all DB if an interface is broken.
 
 from OFS.Uninstalled import BrokenClass
 BrokenClass.__iro__ = tuple()
 
 #### End of hack of the day
-
-
-# add some scheme to urlparse
-
-SCHEME_HTTP_LIKE_CAPABILITIES = [
-    'uses_relative',
-    'uses_netloc',
-    'uses_params',
-    'uses_query',
-    'uses_fragment',
-]
-
-EXTRA_SCHEMES = [
-    ('itms',   SCHEME_HTTP_LIKE_CAPABILITIES),
-    ('webcal', SCHEME_HTTP_LIKE_CAPABILITIES),
-    ('tel', SCHEME_HTTP_LIKE_CAPABILITIES),
-]
-
-def add_scheme(scheme, capabilities):
-    for capability in capabilities:
-        schemes = getattr(urlparse, capability)
-        if not scheme in schemes:
-            schemes.append(scheme)
-
-def update_url_parse_schemes():
-    for (scheme, caps) in EXTRA_SCHEMES:
-        add_scheme(scheme, caps)
-
-update_url_parse_schemes()
 
 # register this extension
 from silva.core import conf as silvaconf
