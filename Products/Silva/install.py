@@ -201,6 +201,17 @@ def configureMiscServices(root):
     if 'service_sidebar' not in installed_ids:
         factory.manage_addSidebarService(
             'service_sidebar', 'Silva Content Tree Navigation')
+    catalog = root.service_catalog
+
+    existing_columns = catalog.schema()
+    for new_column in ['sidebar_position', 'sidebar_title']:
+        if new_column not in existing_columns:
+            catalog.addColumn(new_column)
+
+    existing_indexes = catalog.indexes()
+    if 'sidebar_parent' not in existing_indexes:
+        catalog.addIndex('sidebar_parent', 'FieldIndex')
+
     # add service_renderer_registry
     if 'service_renderer_registry' not in installed_ids:
         factory.manage_addRendererRegistryService(

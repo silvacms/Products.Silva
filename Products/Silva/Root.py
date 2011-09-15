@@ -21,6 +21,7 @@ import Globals
 from Products.Silva.ExtensionService import install_documentation
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.Publication import Publication
+from Products.Silva.Folder import FolderCatalogingAttributes
 from Products.Silva.helpers import add_and_edit
 from Products.Silva import SilvaPermissions
 from Products.Silva import install
@@ -271,6 +272,14 @@ class Root(Publication, site.Site):
 
 
 InitializeClass(Root)
+
+
+class RootCatalogingAttributes(FolderCatalogingAttributes):
+    grok.context(IRoot)
+
+    def sidebar_position(self):
+        return 0
+
 
 manage_addRootForm = PageTemplateFile("www/rootAdd", globals(),
                                       __name__='manage_addRootForm')

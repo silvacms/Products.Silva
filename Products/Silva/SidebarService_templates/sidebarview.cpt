@@ -1,0 +1,63 @@
+<html tal:omit-tag=""
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="silva"
+      tal:define="here_url context.absolute_url();">
+
+  <tr>
+    <td class="{__class__}"
+        style="border-top:none;">
+      <a class="right slide-links"
+         title="slide to the publish screen"
+         tal:attributes="href string:${here_url}/edit/tab_status"
+         i18n:attributes="title">
+        &nbsp;
+      </a>
+      <a class="navicon"
+         title="up to top contents of publication"
+         tal:attributes="href string:${here_url}/edit/{__vein_id__};"
+         i18n:attributes="title">
+        <img tal:replace="structure context.render_icon(context)" />
+      </a>
+      <div class="normal">
+        <a class="blacklink"
+           href="top"
+           title="up to top of publication"
+           tal:attributes="href string:${here_url}/edit/{__vein_id__}"
+           tal:content="context.get_short_title_editable() or context.id"
+           i18n:attributes="title">
+          Publication
+        </a>
+      </div>
+    </td>
+  </tr>
+  <tr tal:repeat="item view.get_tree()">
+    <td class="{__class__}">
+      <a class="right slide-links"
+         title="slide to the publish screen"
+         tal:attributes="href string:${item.url}/edit/tab_status"
+         i18n:attributes="title">&nbsp;</a>
+      <a class="left slide-links"
+         title="slide to the contents screen"
+         tal:attributes="href string:${item.url}/edit"
+         i18n:attributes="title">&nbsp;</a>
+      <a class="navicon"
+         tal:attributes="href string:${item.url}/edit/{__vein_id__};
+                         style string:padding-left: ${item.indent}px;
+                         title item.meta_type">
+        <img tal:replace="structure item.icon" /></a>
+      <div class="normal">
+        <a class="blacklink"
+           tal:attributes="href string:${item.url}/edit/{__vein_id__};
+                           title string:id: ${item.id};"
+           tal:content="item.title">no title</a>
+      </div>
+    </td>
+  </tr>
+  <tr class="controls">
+    <td style="border-top:1px solid #abc">
+    </td>
+  </tr>
+
+</html>

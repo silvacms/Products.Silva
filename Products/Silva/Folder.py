@@ -31,12 +31,13 @@ from Products.Silva.SilvaObject import SilvaObject
 from Products.Silva.Publishable import Publishable
 from Products.Silva import SilvaPermissions
 from Products.Silva import helpers, mangle
+from Products.SilvaMetadata.Index import MetadataCatalogingAttributes
 
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.layout.interfaces import ICustomizableTag
 from silva.core.interfaces import (
     IContentImporter, IPublishable, IContent, ISilvaObject, IAsset,
-    INonPublishable, IContainer, IFolder, IRoot, InvalidateSidebarEvent)
+    INonPublishable, IContainer, IFolder, IRoot, IPublication)
 
 from silva.core.services.interfaces import IContainerPolicyService
 from silva.core.views import views as silvaviews
@@ -149,15 +150,18 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             REQUEST.RESPONSE.redirect(
                 absoluteURL(self, self.REQUEST) + '/manage_main')
 
-    def _invalidate_sidebar(self, item):
+    def _invalidate_sidebar(self, item, delete=0, extra=None):
         # invalidating sidebar also takes place for folder when index gets
         # changed
         if item.id == 'index':
             item = item.get_container()
         if not IContainer.providedBy(item):
             return
-
-        notify(InvalidateSidebarEvent(item))
+        service_sidebar = self.aq_inner.service_sidebar
+        service_sidebar.invalidate(item, delete=delete, extra=extra)
+        if (IPublication.providedBy(item) and
+                not IRoot.providedBy(item)):
+            service_sidebar.invalidate(item.aq_inner.aq_parent)
 
     # MANIPULATORS
 
@@ -181,9 +185,14 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             return 0
         if i == 0:
             return 0
-        self._invalidate_sidebar(getattr(self, id))
         ids[i], ids[i - 1] = ids[i - 1], ids[i]
         self._ordered_ids = ids
+
+        containers = filter(
+            lambda c: IContainer.providedBy(c),
+            [getattr(self, id), getattr(self, ids[i])])
+        if containers:
+            self._invalidate_sidebar(containers[0], extra=containers[1:])
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -198,9 +207,14 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             return 0
         if i == len(ids) - 1:
             return 0
-        self._invalidate_sidebar(getattr(self, id))
         ids[i], ids[i + 1] = ids[i + 1], ids[i]
         self._ordered_ids = ids
+
+        containers = filter(
+            lambda c: IContainer.providedBy(c),
+            [getattr(self, id), getattr(self, ids[i])])
+        if containers:
+            self._invalidate_sidebar(containers[0], extra=containers[1:])
         return 1
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -228,9 +242,14 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         move_ids.reverse()
         for move_id in move_ids:
             ids.insert(index, move_id)
-        self._invalidate_sidebar(self)
         ids = [id for id in ids if id is not None]
         self._ordered_ids = ids
+
+        containers = filter(
+            lambda c: IContainer.providedBy(c),
+            map(lambda i: i is not None and getattr(self, i) or None, ids))
+        if containers:
+            self._invalidate_sidebar(containers[0], extra=containers[1:])
         return 1
 
     def _add_ordered_id(self, item):
@@ -837,6 +856,27 @@ class Folder(SilvaObject, Publishable, BaseFolder):
 
 
 InitializeClass(Folder)
+
+
+class FolderCatalogingAttributes(MetadataCatalogingAttributes):
+    grok.context(IContainer)
+
+    def sidebar_position(self):
+        parent = self.context.aq_parent
+        try:
+            return parent._ordered_ids.index(self.context.id)
+        except:
+            return 999
+
+    def sidebar_parent(self):
+        folder = self.context
+        if IPublication.providedBy(folder):
+            if not IRoot.providedBy(folder):
+                folder = folder.aq_parent
+        return '/'.join(folder.get_publication().getPhysicalPath())
+
+    def sidebar_title(self):
+        return self.context.get_short_title_editable()
 
 
 @silvaconf.subscribe(IFolder, OFS.interfaces.IObjectWillBeMovedEvent)
