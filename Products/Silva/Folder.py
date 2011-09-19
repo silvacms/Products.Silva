@@ -150,7 +150,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             REQUEST.RESPONSE.redirect(
                 absoluteURL(self, self.REQUEST) + '/manage_main')
 
-    def _invalidate_sidebar(self, item, delete=0, extra=None):
+    def _invalidate_sidebar(self, item, **kwargs):
         # invalidating sidebar also takes place for folder when index gets
         # changed
         if item.id == 'index':
@@ -158,7 +158,7 @@ class Folder(SilvaObject, Publishable, BaseFolder):
         if not IContainer.providedBy(item):
             return
         service_sidebar = self.aq_inner.service_sidebar
-        service_sidebar.invalidate(item, delete=delete, extra=extra)
+        service_sidebar.invalidate(item, **kwargs)
         if (IPublication.providedBy(item) and
                 not IRoot.providedBy(item)):
             service_sidebar.invalidate(item.aq_inner.aq_parent)
@@ -486,7 +486,9 @@ class Folder(SilvaObject, Publishable, BaseFolder):
             # to publication
             from Products.Silva.Publication import Publication
             sc = helpers.SwitchClass(Publication)
-        return sc.upgrade(self)
+        result = sc.upgrade(self)
+        self._invalidate_sidebar(result, recursive=1)
+        return result
 
 
     def _verify_quota(self):

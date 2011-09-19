@@ -28,11 +28,31 @@ from silva.core.interfaces import (ISidebarService, IInvalidateSidebarEvent,
     ISilvaObject)
 from silva.core.services.interfaces import ICataloging
 
-ICON_TAG = '<img src="%s" width="16" height="16" border="0" alt="%s" title="%s" />'
+ICON_TAG = '<img src="%s" width="16" height="16" border="0" '\
+    'alt="%s" title="%s" />'
 
 def render_icon(request, meta_type):
     icon = request['BASE1'] + '/' + get_meta_type_icon(meta_type)
     return  ICON_TAG % (icon, meta_type, meta_type)
+
+def get_content_to_reindex(start, extra=None, recursive=0):
+    if extra is not None:
+        for content in extra:
+            yield content
+    if recursive:
+        folder_types = meta_types_for_interface(IContainer)
+        to_list = [start]
+        while to_list:
+            content = to_list.pop(0)
+            yield content
+            container_ids = set(content.objectIds(folder_types))
+            for publishable_id in content._ordered_ids:
+                if publishable_id in container_ids:
+                    candidate = content._getOb(publishable_id)
+                    if recursive > 1 or candidate.is_transparent():
+                        to_list.insert(0, candidate)
+    else:
+        yield start
 
 
 class SidebarNode(object):
@@ -165,16 +185,15 @@ class SidebarService(SilvaService):
 
     security.declareProtected(
         SilvaPermissions.ViewAuthenticated, 'invalidate')
-    def invalidate(self, obj, delete=0, extra=None):
+    def invalidate(self, obj, delete=0, extra=None, recursive=0):
         """Invalidate the cache for a specific object
         """
         # Reindex the object in order to update sidebar_ attributes in
         # the catalog.
         if not delete:
-            ICataloging(obj).index()
-            if extra is not None:
-                for extra_obj in extra:
-                    ICataloging(extra_obj).index()
+            for content in get_content_to_reindex(
+                obj, extra=extra, recursive=recursive):
+                ICataloging(content).index()
 
         pub = obj.get_publication()
         ph_path = pub.getPhysicalPath()

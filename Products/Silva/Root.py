@@ -139,6 +139,13 @@ class Root(Publication, site.Site):
         """
         pass
 
+    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+                              'to_publication')
+    def to_publication(self):
+        """Don't do anything here. Can't do this with root.
+        """
+        pass
+
     security.declareProtected(SilvaPermissions.ChangeSilvaAccess,
                               'add_silva_addable_forbidden')
     def add_silva_addable_forbidden(self, meta_type):
