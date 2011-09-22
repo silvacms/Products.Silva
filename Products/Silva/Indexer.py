@@ -11,6 +11,7 @@ from zope.lifecycleevent import ObjectModifiedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from AccessControl.security import checkPermission
 from App.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 
@@ -145,7 +146,7 @@ class IndexerEditForm(silvaforms.SMIForm):
     """Edit form for an indexer. There is not that much to edit however.
     """
     grok.context(IIndexer)
-    grok.require('silva.ChangeSilvaContent')
+    grok.require('silva.ReadSilvaContent')
     grok.implements(IEditScreen)
 
     label = _("Update Silva Indexer")
@@ -154,9 +155,13 @@ class IndexerEditForm(silvaforms.SMIForm):
         u"However, you can update the index to include recent added content.")
     actions = silvaforms.Actions(silvaforms.CancelEditAction())
 
+    def update_index_available(self):
+        return checkPermission('silva.ChangeSilvaContent', self.context)
+
     @silvaforms.action(
         _(u"Update index"),
         accesskey=u"u",
+        available=update_index_available,
         description=_(u"Update index to include recent added content"))
     def update_index(self):
         self.context.update()

@@ -10,6 +10,7 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
+from AccessControl.security import checkPermission
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from DateTime import DateTime
@@ -324,6 +325,9 @@ class IGhostFolderSchema(IIdentifiedContent):
 class SyncAction(silvaforms.Action):
     description = _(u"Synchronize target and ghost folder content")
     ignoreRequest = True
+
+    def available(self, form):
+        return checkPermission('silva.ChangeSilvaContent', form.context)
 
     def __call__(self, form):
         folder = form.context
