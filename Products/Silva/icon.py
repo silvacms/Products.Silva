@@ -28,8 +28,8 @@ class IconRegistry(object):
         if interfaces.IGhost.providedBy(content):
             identifier = ('ghost', 'link_ok')
         elif interfaces.IGhostFolder.providedBy(content):
-            if content.get_link_status() == content.LINK_OK:
-                if interfaces.IPublication.providedBy(content):
+            if content.get_link_status() is None:
+                if interfaces.IPublication.providedBy(content.get_target()):
                     kind = 'publication'
                 else:
                     kind = 'folder'
