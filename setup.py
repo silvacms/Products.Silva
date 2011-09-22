@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.3.2dev-bethel.7'
+version = '2.3.2-bethel.1'
 
 tests_require = [
     'silva.export.opendocument',
@@ -71,6 +71,7 @@ setup(name='Products.Silva',
         'silva.core.views',
         'silva.translations',
         'silvatheme.standardissue',
+        'megrok.chameleon',
         'zeam.form.silva',
         'zope.annotation',
         'zope.component',

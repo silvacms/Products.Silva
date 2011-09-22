@@ -546,6 +546,7 @@ def content_moved(content, event):
     if (IPublishable.providedBy(content) and not (
         IContent.providedBy(content) and content.is_default())):
         newParent._add_ordered_id(content)
+        newParent._invalidate_sidebar(content)
 
     if event.newName == 'index':
         newParent._invalidate_sidebar(newParent)
@@ -564,7 +565,7 @@ def content_will_be_moved(content, event):
         IContent.providedBy(content) and content.is_default())):
         container._remove_ordered_id(content)
     if IFolder.providedBy(content):
-        container._invalidate_sidebar(content)
+        container._invalidate_sidebar(content, delete=1)
     if event.oldName == 'index':
         container._invalidate_sidebar(container)
 

@@ -6,6 +6,7 @@
    i18n_domain="silva">
   
   <include package="five.grok" />
+  <include package="megrok.chameleon" />
 
   <!-- Include dependencies -->
   <include package="zope.annotation" />

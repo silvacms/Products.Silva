@@ -128,6 +128,7 @@ class ViewCode(object):
             publishables = []
             i = 1
         publishables.extend(self.get_ordered_publishables())
+        has_permission = getSecurityManager().getUser().has_permission
 
         result = []
         render_icon = self.render_icon
@@ -144,14 +145,21 @@ class ViewCode(object):
                 hidden = gmv(item.get_viewable(), 'silva-extra', 'hide_from_tocs') == 'hide'
             except AttributeError:
                 hidden = False
+
+            url = item.absolute_url()
+            tab = 'tab_edit'
+            if not has_permission(SilvaPermissions.ChangeSilvaContent, item):
+                tab = 'tab_preview'
+            editor_url = url + '/edit/'+ tab
+
             d = {
                 'number': i,
                 'item': item,
                 'item_id': item.id,
                 'title_editable': item.get_title_editable(),
                 'meta_type': item.meta_type,
-                'item_url': item.absolute_url(),
-                'editor_link': self.get_editor_link(item),
+                'item_url': url,
+                'editor_link': editor_url,
                 'status_style': status[1],
                 'has_modification_time': modification_datetime,
                 'modification_time': mangle.DateTime(
@@ -224,18 +232,26 @@ class ViewCode(object):
     def get_processed_non_publishables(self):
         result = []
         render_icon = self.render_icon
+        has_permission = getSecurityManager().getUser().has_permission
 
         for asset in self.get_non_publishables():
             title = asset.get_title()
             modification_datetime = asset.get_modification_datetime()
+
+            url = asset.absolute_url()
+            tab = 'tab_edit'
+            if not has_permission(SilvaPermissions.ChangeSilvaContent, asset):
+                tab = 'tab_preview'
+            editor_url = url + '/edit/'+ tab
+
             d = {
                 'asset_id': asset.id,
                 'asset': asset,
-                'asset_url': asset.absolute_url(),
+                'asset_url': url,
                 'meta_type': asset.meta_type,
                 'last_author': asset.sec_get_last_author_info().fullname(),
                 'title': title,
-                'editor_link': self.get_editor_link(asset),
+                'editor_link': editor_url,
                 'rendered_icon': render_icon(asset),
                 'has_modification_time': modification_datetime,
                 'modification_time': mangle.DateTime(
