@@ -335,8 +335,7 @@ class VersionHandler(SilvaBaseHandler):
             self.getData('status'))
 
 
-class SetHandler(SilvaBaseHandler):
-
+class MetadataSetHandler(SilvaBaseHandler):
     grok.name('set')
 
     def startElementNS(self, name, qname, attrs):
@@ -368,7 +367,6 @@ class SetHandler(SilvaBaseHandler):
 
 
 class GhostHandler(SilvaBaseHandler):
-
     grok.name('ghost')
 
     def getOverrides(self):
@@ -387,7 +385,6 @@ class GhostHandler(SilvaBaseHandler):
 
 
 class GhostVersionHandler(SilvaBaseHandler):
-
     def getOverrides(self):
         return {
             (NS_SILVA_URI, 'haunted'): make_character_handler('haunted', self),}
