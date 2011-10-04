@@ -1,10 +1,13 @@
 Changes
 =======
 
-Silva 2.3.3 (unreleased)
+Silva 2.3.4 (2011/10/04)
 ------------------------
 
-- ...
+- Port a faster implementation for the sidebar service based on the
+  Zope catalog.
+
+- Small optimizations in folder listing to improve speed.
 
 Silva 2.3.2 (2011-07-27)
 ------------------------

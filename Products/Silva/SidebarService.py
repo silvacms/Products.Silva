@@ -49,7 +49,7 @@ def get_content_to_reindex(start, extra=None, recursive=0):
             for publishable_id in content._ordered_ids:
                 if publishable_id in container_ids:
                     candidate = content._getOb(publishable_id)
-                    if recursive > 1 or candidate.is_transparent():
+                    if candidate.is_transparent():
                         to_list.insert(0, candidate)
     else:
         yield start
