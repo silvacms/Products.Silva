@@ -18,6 +18,7 @@ from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces.errors import ExternalReferenceError
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.utils import canonical_path
+from silva.translations import translate as _
 from sprout.saxext import xmlexport
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
@@ -46,6 +47,7 @@ class SilvaProducer(xmlexport.Producer):
                 return ""
             if not reference.is_target_inside_container(root):
                 raise ExternalReferenceError(
+                    _(u"External references"),
                     self.context, reference.target, root)
             # Add root path id as it is always mentioned in exports
             return canonical_path('/'.join(
