@@ -94,11 +94,11 @@ class ContainerManager(grok.Adapter):
     def __verify_copyable(self, content):
         if not content.cb_isCopyable():
             return ContainerError(
-                _(u"Unauthorized to copy this content"),
+                _(u"Unauthorized to copy this content."),
                 content)
         if content.meta_type not in self.__addables:
             return ContainerError(
-                _(u"Cannot add this content type in this container"),
+                _(u"Cannot add this content type in this container."),
                 content)
         return None
 
@@ -109,15 +109,15 @@ class ContainerManager(grok.Adapter):
             return error
         if not content.cb_isMoveable():
             return ContainerError(
-                _(u"Unauthorized to move this content"),
+                _(u"Unauthorized to move this content."),
                 content)
         if not  move_check(self.context, content):
             return ContainerError(
-                _(u"Cannot move this content to this container"),
+                _(u"Cannot move this content to this container."),
                 content)
         if content.meta_type not in self.__addables:
             return ContainerError(
-                _(u"Cannot add this content type in this container"),
+                _(u"Cannot add this content type in this container."),
                 content)
         return None
 
