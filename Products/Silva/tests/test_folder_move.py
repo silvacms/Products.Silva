@@ -8,6 +8,7 @@ import unittest
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder
+from silva.core.interfaces import ContainerError, ContentError
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
@@ -100,9 +101,9 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ObjectMovedEvent',
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
-                self.assertEqual(
+                self.assertIsInstance(
                     mover(self.root.source.toc),
-                    None)
+                    ContainerError)
 
         self.assertTrue('toc' in self.root.source.objectIds())
         self.assertEqual(self.root.target.objectIds(), [])
@@ -141,9 +142,9 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ObjectMovedEvent',
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
-                self.assertEqual(
+                self.assertIsInstance(
                     mover(self.root.source.published_link),
-                    None)
+                    ContentError)
 
         self.assertTrue('published_link' in self.root.source.objectIds())
         self.assertFalse('published_link' in self.root.target.objectIds())
@@ -160,9 +161,9 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ObjectMovedEvent',
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
-                self.assertEqual(
+                self.assertIsInstance(
                     mover(self.root.source),
-                    None)
+                    ContentError)
 
         self.assertTrue('source' in self.root.objectIds())
         self.assertFalse('source' in self.root.target.objectIds())

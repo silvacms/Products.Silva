@@ -197,11 +197,10 @@ class ContainerManager(grok.Adapter):
                     any_renames = True
 
             # Update title
-            if result is None:
-                editable = content.get_editable()
-                if (to_title != None and
-                    editable != None and editable.get_title() != to_title):
-                    editable.set_title(to_title)
+            editable = content.get_editable()
+            if (to_title != None and
+                editable != None and editable.get_title() != to_title):
+                editable.set_title(to_title)
 
             if result is None:
                 result = content
@@ -251,8 +250,8 @@ class ContainerManager(grok.Adapter):
                     result = content
                 else:
                     result = ContentError(
-                        _(u"Cannot delete content.",
-                          content))
+                        _(u"Cannot delete content."),
+                        content)
             content = yield result
 
         # Event

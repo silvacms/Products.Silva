@@ -5,7 +5,7 @@
 
 import unittest
 
-from silva.core.interfaces import IContainerManager
+from silva.core.interfaces import IContainerManager, ContainerError
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IAutoTOC, ILink, IFolder
 from zope.interface.verify import verifyObject
@@ -100,9 +100,9 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                      'ObjectMovedEvent',
                                      'ContainerModifiedEvent'):
             with manager.copier() as copier:
-                self.assertEqual(
+                self.assertIsInstance(
                     copier(self.root.source.toc),
-                    None)
+                    ContainerError)
 
         self.assertEqual(self.root.target.objectIds(), [])
 

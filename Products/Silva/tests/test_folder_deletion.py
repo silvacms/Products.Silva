@@ -7,6 +7,7 @@ import unittest
 
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
+from silva.core.interfaces import ContainerError, ContentError
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
@@ -52,7 +53,9 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter(self.root.folder.published_link))
+                self.assertIsInstance(
+                    deleter(self.root.folder.published_link),
+                    ContentError)
 
         self.assertTrue('published_link' in self.root.folder.objectIds())
 
@@ -67,7 +70,9 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter(self.root.folder))
+                self.assertIsInstance(
+                    deleter(self.root.folder),
+                    ContentError)
 
         self.assertTrue('folder' in self.root.objectIds())
 
@@ -79,7 +84,9 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter(self.root.folder.toc))
+                self.assertEqual(
+                    deleter(self.root.folder.toc),
+                    self.root.folder.toc)
 
         self.assertFalse('toc' in self.root.folder.objectIds())
 
@@ -91,8 +98,12 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter(self.root.folder.toc))
-                self.assertEqual(True, deleter(self.root.folder.link))
+                self.assertEqual(
+                    deleter(self.root.folder.toc),
+                    self.root.folder.toc)
+                self.assertEqual(
+                    deleter(self.root.folder.link),
+                    self.root.folder.link)
 
         self.assertFalse('toc' in self.root.folder.objectIds())
         self.assertFalse('link' in self.root.folder.objectIds())
@@ -105,9 +116,15 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter(self.root.publication))
-                self.assertEqual(False, deleter(self.root.toc))
-                self.assertEqual(False, deleter(self.root.folder))
+                self.assertIsInstance(
+                    deleter(self.root.publication),
+                    ContentError)
+                self.assertIsInstance(
+                    deleter(self.root.toc),
+                    ContentError)
+                self.assertIsInstance(
+                    deleter(self.root.folder),
+                    ContentError)
 
         self.assertTrue('publication' in self.root.objectIds())
         self.assertTrue('toc' in self.root.objectIds())
@@ -129,7 +146,9 @@ class EditorFolderDeletionTestCase(AuthorFolderDeletionTestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter(self.root.folder.published_link))
+                self.assertEqual(
+                    deleter(self.root.folder.published_link),
+                    self.root.folder.published_link)
 
         self.assertFalse('published_link' in self.root.folder.objectIds())
 
@@ -143,7 +162,9 @@ class EditorFolderDeletionTestCase(AuthorFolderDeletionTestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter(self.root.folder))
+                self.assertEqual(
+                    deleter(self.root.folder),
+                    self.root.folder)
 
         self.assertFalse('folder' in self.root.objectIds())
 
