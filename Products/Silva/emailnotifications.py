@@ -1,3 +1,6 @@
+# Copyright (c) 2003-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 import logging
 
@@ -9,14 +12,14 @@ from DateTime import DateTime
 
 from silva.core import interfaces
 from silva.core.interfaces import events
-from Products.Silva import mangle
 
 
 logger = logging.getLogger('silva.core.message')
 
 
-def format_date(date):
-    return mangle.DateTime(date).toStr()
+def format_date(dt):
+    return "%02d %s %04d %02d:%02d" % (
+        dt.day(), dt.aMonth().lower(), dt.year(), dt.hour(), dt.minute())
 
 
 def send_message_to_editors(target, from_userid, subject, text):

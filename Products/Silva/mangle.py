@@ -257,30 +257,30 @@ class Id(object):
             return _(u'The id contains strange characters. It should only '
                      u'contain letters, digits and ‘_’ or ‘-’ or ‘.’ '
                      u'Spaces are not allowed and the id should start '
-                     u'with a letter or digit')
+                     u'with a letter or digit.')
         elif status == self.RESERVED_PREFIX:
             prefix = str(self._maybe_id).split('_')[0]+'_'
             return _(u"ids starting with ${prefix} are reserved for "
-                     u"internal use",
+                     u"internal use.",
                      mapping={'prefix': prefix})
         elif status == self.RESERVED:
-            return _(u"The id ${id} is reserved for internal use",
+            return _(u"The id ${id} is reserved for internal use.",
                      mapping={'id': self._maybe_id})
         elif status == self.IN_USE_CONTENT:
             return _(u"There is already an object with the id ${id} in this "
-                     u"container",
+                     u"container.",
                      mapping={'id': self._maybe_id})
         elif status == self.IN_USE_ASSET:
             return _(u"There is already an asset with the id ${id} in this "
-                     u"container", mapping={'id': self._maybe_id})
+                     u"container.", mapping={'id': self._maybe_id})
         elif status == self.RESERVED_POSTFIX:
-            return _(u"The id ${id} ends with invalid characters",
+            return _(u"The id ${id} ends with invalid characters.",
                      mapping={'id': self._maybe_id})
         elif status == self.IN_USE_ZOPE:
-            return _(u"The id ${id} is already in use by a Zope object",
+            return _(u"The id ${id} is already in use by a Zope object.",
                      mapping={'id': self._maybe_id})
         return _(u"(Internal Error): An invalid status ${status_code} occured "
-                 u"while checking the id ${id}",
+                 u"while checking the id ${id}.",
                  mapping={'status_code': status, 'id': self._maybe_id})
 
     def new(self):

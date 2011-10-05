@@ -90,70 +90,8 @@ class MangleIdTestCase(unittest.TestCase):
         self.assertEqual(str(id), 'Grose_Datei')
 
 
-
-class MangleTestCase(unittest.TestCase):
-
-    def test_unquote(self):
-        self.assertEquals(
-            mangle.unquote('Hello %3D Hell %26 o %3F'),
-            'Hello = Hell & o ?')
-
-    def test_urlencode(self):
-        self.assertEquals(
-            mangle.urlencode('http://google.com', q='world', s=12),
-            'http://google.com?q=world&s=12')
-        self.assertEquals(
-            mangle.urlencode('http://google.com'),
-            'http://google.com')
-
-    def test_path(self):
-        test_cases = [
-            ('/silva/foo', '/silva/foo/bar', 'bar'),
-            ('/silva/foo', '/silva/bar', '/silva/bar'),
-            ('/silva/foo', '/bar', '/bar'),
-           ]
-        for case in test_cases:
-            base_path, item_path, expected_result = case
-            base_path = base_path.split('/')
-            item_path = item_path.split('/')
-            expected_result = expected_result.split('/')
-            actual_result = mangle.Path(base_path, item_path)
-            __traceback_info__ = case
-            self.assertEquals(expected_result, actual_result)
-
-    def test_list(self):
-        self.assertEquals(mangle.List([]), '')
-        self.assertEquals(mangle.List(['foo']), 'foo')
-        self.assertEquals(mangle.List(['foo', 'bar']), 'foo and bar')
-        self.assertEquals(mangle.List(['foo', 'bar', 'baz']),
-            'foo, bar and baz')
-
-    def test_absolutize(self):
-        test_cases = [
-            ('/silva/a/s', 'foo/bar', '/silva/a/foo/bar'),
-            ('/silva/a/s/', 'foo/bar', '/silva/a/s/foo/bar'),
-            ('/silva/a/s/', './foo/bar', '/silva/a/s/foo/bar'),
-            ('/silva/a/s/', '/silva/bar', '/silva/bar'),
-            ('/silva/a/s/', '../../foo', '/silva/foo'),
-            ('/silva/a/s/', '../../../../../foo', '../../../../../foo')
-           ]
-        for case in test_cases:
-            base_path, item_path, expected_result = case
-            base_path = base_path.split('/')
-            item_path = item_path.split('/')
-            expected_result = expected_result.split('/')
-            actual_result = mangle.Path.toAbsolute(base_path, item_path)
-            __traceback_info__ = case
-            self.assertEquals(expected_result, actual_result)
-
-    def test_strip(self):
-        s = mangle.Path.strip(['', 'foo', '.', 'bar'])
-        self.assertEquals(s, ['', 'foo', 'bar'])
-
-
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(MangleIdTestCase))
-    suite.addTest(unittest.makeSuite(MangleTestCase))
     return suite
 

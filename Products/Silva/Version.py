@@ -62,13 +62,17 @@ class VersionManager(grok.Adapter):
         """
         approved_version = self.content.get_approved_version()
         if approved_version is not None:
-            raise VersioningError(_('An approved version is already available'))
+            raise VersioningError(
+                _('An approved version is already available'),
+                self)
 
         current_version = self.content.get_unapproved_version()
         if current_version is not None:
             # move the current editable version to _previous_versions
             if self.content.is_approval_requested():
-                raise VersioningError(_('A version is waiting approval'))
+                raise VersioningError(
+                    _('A version is waiting approval'),
+                    self)
 
             version_tuple = self.content._unapproved_version
             if self.content._previous_versions is None:
@@ -86,9 +90,14 @@ class VersionManager(grok.Adapter):
         versionid = self.version.id
 
         if self.content.get_approved_version() == versionid:
-            raise VersioningError(_(u"Version is approved"))
+            raise VersioningError(
+                _(u"Version is approved"),
+                self.content, self.version)
+
         if self.content.get_public_version() == versionid:
-            raise VersioningError(_(u"Version is published"))
+            raise VersioningError(
+                _(u"Version is published"),
+                self.content, self.version)
 
         if self.content.get_unapproved_version() == versionid:
             self.content._unapproved_version = (None, None, None)
@@ -157,7 +166,8 @@ class VersionManager(grok.Adapter):
                             return 'closed'
         raise VersioningError(
             _('No such version ${version}',
-              mapping={'version': versionid}))
+              mapping={'version': versionid}),
+            self.content)
 
 
 _i18n_markers = (_('unapproved'), _('approved'), _('last_closed'),

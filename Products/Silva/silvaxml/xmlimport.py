@@ -691,7 +691,7 @@ class ImportContext(object):
             except ImportWarning as error:
                 if messages is None:
                     messages = getUtility(IMessageService)
-                messages.send(error.reason(), self.request, namespace='error')
+                messages.send(error.reason, self.request, namespace='error')
         if clear is True:
             del self.__actions[:]
 

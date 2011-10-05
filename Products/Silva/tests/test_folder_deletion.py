@@ -7,7 +7,7 @@ import unittest
 
 from silva.core.interfaces import IContainerManager
 from silva.core.interfaces import IPublicationWorkflow
-from silva.core.interfaces import ContainerError, ContentError
+from silva.core.interfaces import ContentError
 from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
