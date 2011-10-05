@@ -53,6 +53,21 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
         self.assertTrue('toc' in self.root.target.objectIds())
         self.assertTrue(verifyObject(IAutoTOC, self.root.target.toc))
 
+    def test_move_content_same_container(self):
+        """Move a single content into the same container than it is
+        already there.
+        """
+        manager = IContainerManager(self.root.source)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.mover() as mover:
+                self.assertIsInstance(
+                    mover(self.root.source.toc),
+                    ContainerError)
+
+        self.assertTrue('toc' in self.root.source.objectIds())
+
     def test_move_content_id_already_in_use(self):
         """Move a content with an id that is already in use in the
         target folder.

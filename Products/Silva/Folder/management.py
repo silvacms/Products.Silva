@@ -163,6 +163,11 @@ class ContainerManager(grok.Adapter):
                 if (aq_base(from_container) is not aq_base(self.context)):
                     result = do_move(from_container, content)
                     any_moves = True
+                else:
+                    result = ContainerError(
+                        _(u"Content already in the target container."),
+                        content)
+
             content = yield result
 
         if any_moves:
