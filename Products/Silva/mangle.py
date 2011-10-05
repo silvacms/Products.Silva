@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -6,48 +6,22 @@
 # Python
 import string
 import re
-import cgi
-import urllib
 from types import StringType, UnicodeType
 
 # Zope
 from AccessControl import ModuleSecurityInfo
-from DateTime import DateTime as _DateTime
 from OFS.ObjectManager import checkValidId
 from zExceptions import BadRequest
 
 # Silva
-from silva.core.interfaces import ISilvaObject, IAsset
+from silva.translations import translate as _
+from silva.core.interfaces import ISilvaObject, IAsset, ContentError
 from Products.Silva import characters
 
 module_security = ModuleSecurityInfo('Products.Silva.mangle')
 
-__allow_access_to_unprotected_subobjects__ = 1
 
-
-module_security.declarePublic('unquote')
-def unquote(quoted):
-    """A very simplified urllib2 unquote, only handles ?, = and &
-    """
-    unquoted = quoted.replace(
-        '%3D', '=').replace('%26', '&').replace('%3F', '?')
-    return unquoted
-
-
-module_security.declarePublic('urlencode')
-def urlencode(base_url, **parameters):
-    """Encode an url and it's parameters.
-    """
-    url = base_url
-    if parameters:
-        url += '?' + urllib.urlencode(parameters)
-    return url
-
-
-class _Marker(object):
-    """A marker"""
-
-_marker = _Marker()
+_marker = object()
 
 module_security.declarePublic('Id')
 class Id(object):
@@ -201,6 +175,15 @@ class Id(object):
             self._validation_result = self._validate()
         return self._validation_result
 
+    def verify(self):
+        status = self.validate()
+        if status != self.OK:
+            content = self._folder
+            if self._instance is not None:
+                content = self._instance
+            return ContentError(self._report(status), content)
+        return None
+
     def _validate(self):
         """ test if the given id is valid, returning a status code
             about its validity or reason of invalidity
@@ -269,6 +252,37 @@ class Id(object):
 
         return self.OK
 
+    def _report(self, status):
+        if status == self.CONTAINS_BAD_CHARS:
+            return _(u'The id contains strange characters. It should only '
+                     u'contain letters, digits and ‘_’ or ‘-’ or ‘.’ '
+                     u'Spaces are not allowed and the id should start '
+                     u'with a letter or digit')
+        elif status == self.RESERVED_PREFIX:
+            prefix = str(self._maybe_id).split('_')[0]+'_'
+            return _(u"ids starting with ${prefix} are reserved for "
+                     u"internal use",
+                     mapping={'prefix': prefix})
+        elif status == self.RESERVED:
+            return _(u"The id ${id} is reserved for internal use",
+                     mapping={'id': self._maybe_id})
+        elif status == self.IN_USE_CONTENT:
+            return _(u"There is already an object with the id ${id} in this "
+                     u"container",
+                     mapping={'id': self._maybe_id})
+        elif status == self.IN_USE_ASSET:
+            return _(u"There is already an asset with the id ${id} in this "
+                     u"container", mapping={'id': self._maybe_id})
+        elif status == self.RESERVED_POSTFIX:
+            return _(u"The id ${id} ends with invalid characters",
+                     mapping={'id': self._maybe_id})
+        elif status == self.IN_USE_ZOPE:
+            return _(u"The id ${id} is already in use by a Zope object",
+                     mapping={'id': self._maybe_id})
+        return _(u"(Internal Error): An invalid status ${status_code} occured "
+                 u"while checking the id ${id}",
+                 mapping={'status_code': status, 'id': self._maybe_id})
+
     def new(self):
         """changes id based on the old id to get a potentially unique id
 
@@ -306,169 +320,6 @@ class Id(object):
     def __str__(self):
         return self._maybe_id
 
-class _Path(object):
-    """mangle path
-
-        i.e. /foo/bar, /foo/bar/baz -> baz
-
-        SINGLETON
-    """
-
-    __allow_access_to_unprotected_subobjects__ = 1
-
-    def __call__(self, base_path, item_path):
-        """mangle path"""
-        i = 0
-        absolute = 0
-        for i in range(0, min(len(item_path), len(base_path))):
-            if item_path[i] != base_path[i]:
-                absolute = 1
-                break
-        if not absolute:
-            item_path = item_path[len(base_path):]
-        return item_path
-
-    def fromObject(self, obj_context, obj):
-        """return mangled path from object's context and object
-
-            obj_context: str (path) or list
-            obj: instance
-
-            return str
-        """
-        if type(obj_context) == type(''):
-            obj_context = obj_context.split('/')
-        assert type(obj_context) in [list, tuple], \
-                        "obj_context is not list type"
-        obj_path = obj.getPhysicalPath()
-        rel_path = '/'.join(self(obj_context, obj_path))
-        if rel_path == '':
-            # points to same object, to avoid problems we return an absolute
-            # path
-            return '/'.join(obj_path)
-        return rel_path
-
-    def toAbsolute(self, context_path, relative_path):
-        """make a relative path absolute
-
-            context_path: the path in which the relative path should be made
-                absolute
-            relative_path: the relative path to be made absolute
-        """
-        relative_path_in = relative_path
-        context_path = self.strip(context_path)
-        relative_path = self.strip(relative_path)
-        if relative_path[0] == '':
-            # path is absolute, starting with '/'
-            return relative_path
-        # strip "document part":
-        del(context_path[-1])
-        # handle "crawl up"
-        while relative_path[0] == '..':
-            del(relative_path[0])
-            if not context_path:
-                return relative_path_in
-            del(context_path[-1])
-        # concatenate paths
-        abs_path = context_path + relative_path
-        return abs_path
-
-    def strip(self, path):
-        """strip 'foo/./bar' to 'foo/bar'"""
-        path = [ e for e in path if e != '.' ]
-        return path
-
-
-
-module_security.declarePublic('Path')
-Path = _Path()
-
-
-class _Entities(object):
-    """escape entities"""
-
-    def __call__(self, text):
-        """return text with &, >, < and " escaped by their html entities"""
-        return cgi.escape(text, 1)
-
-module_security.declarePublic('entities')
-entities = _Entities()
-
-module_security.declarePublic('DateTime')
-class DateTime(object):
-
-    __allow_access_to_unprotected_subobjects__ = 1
-
-    def __init__(self, dt):
-        self._dt = _DateTime(dt)
-
-    def toStr(self):
-        dt = self._dt
-        if dt is None:
-            return ''
-        return "%02d %s %04d %02d:%02d" % (dt.day(), dt.aMonth().lower(),
-            dt.year(), dt.hour(), dt.minute())
-    __str__ = toStr
-
-    def toDashedDateStr(self):
-        dt = self._dt
-        if dt is None:
-            return ''
-        return "%02d-%02d-%04d" % (dt.day(), dt.month(), dt.year())
-
-    def toDateStr(self):
-        dt = self._dt
-        if dt is None:
-            return ''
-        return "%02d %s %s" % (dt.day(), dt.aMonth().lower(), dt.yy())
-
-    def toShortStr(self):
-        dt = self._dt
-        if dt is None:
-            return ''
-        return "%02d&nbsp;%s&nbsp;%s&nbsp;%02d:%02d" % (dt.day(),
-            dt.aMonth().lower(), dt.yy(), dt.hour(), dt.minute())
-
-    def toDottedStr(self):
-        dt = self._dt
-        if dt is None:
-            return ''
-        return "%02d.%s.%s&middot;%02d:%02d" % (dt.day(), dt.aMonth().lower(),
-            dt.yy(), dt.hour(), dt.minute())
-
-    def toStrOptionalTime(self):
-        """returns self.toStr() unless time is 00:00, then it returns
-            a similar string without the time
-        """
-        dt = self._dt
-        if dt is None:
-            return ''
-        if int(dt.hour() == 0) and int(dt.minute()) == 0:
-            return '%02d %s %04d' % (dt.day(), dt.aMonth().lower(), dt.year())
-        return self.toStr()
-
-module_security.declarePublic('Now')
-class Now(DateTime):
-
-    def __init__(self):
-        self._dt = _DateTime()
-
-
-class _List(object):
-    """list mangler"""
-
-    __allow_access_to_unprotected_subobjects__ = 1
-
-    def __call__(self, elements):
-        if not elements:
-            return ''
-        if len(elements) == 1:
-            return elements[0]
-        return ', '.join(elements[:-1]) + ' and ' + elements[-1]
-
-module_security.declarePublic('List')
-List = _List()
-
 
 class _Bytes(object):
     """convert size to a human readable format
@@ -499,58 +350,3 @@ class _Bytes(object):
 
 module_security.declarePublic('Bytes')
 Bytes = _Bytes()
-
-class _String(object):
-    """ string manipulations and conversions
-    """
-
-    __allow_access_to_unprotected_subobjects__ = 1
-
-    _default_encoding = 'utf-8'
-
-    def inputConvert(self, text, preserve_whitespace=0):
-        """Turn input to unicode. Assume it is UTF-8.
-        """
-        if not preserve_whitespace:
-            text = ' '.join(text.split())
-        return unicode(text, self._default_encoding)
-
-    def reduceWhitespace(self, text):
-        return ' '.join(text.split())
-
-    def truncate(self, text, max_length):
-        if len(text) < max_length:
-            return text
-        return '%s...' % text[:(max_length - 3)]
-
-    def centeredTruncate(self, text, max_length):
-        if len(text) < max_length:
-            return text
-        part_length = (max_length - 3) / 2
-        return '%s...%s' % (text[:part_length], text[-part_length:])
-
-module_security.declarePublic('String')
-String = _String()
-
-def generateAnchorName(s):
-    """Generate a valid name for an anchor.
-
-    Anchors only accept the following characters [A-Z a-z 0-9 -_:.]
-
-    HTML 4 also requires the first character to be in [A-Z a-z].
-    """
-    # we do not really solve this now, so what we return is not
-    # XHTML compliant at all, but we must return the string for
-    # backwards compatibility (and XSLT compatibility, which doesn't
-    # use this code path at all..)
-    if isinstance(s, unicode):
-        s = s.encode('UTF-8')
-    new = ''
-    for c in s:
-        if c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_:.':
-            new += c
-        else:
-            new += '_'
-    return new
-
-module_security.declarePublic('generateAnchorName')

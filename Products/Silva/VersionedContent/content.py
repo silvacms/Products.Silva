@@ -16,7 +16,8 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.Versioning import Versioning
 from Products.Silva.Content import Content
 
-from silva.core.interfaces import IVersionedContent
+from silva.translations import translate as _
+from silva.core.interfaces import IVersionedContent, ContentError
 
 
 class VersionedContent(Versioning, Content, BaseFolder):
@@ -161,8 +162,15 @@ class VersionedContent(Versioning, Content, BaseFolder):
                 it's not approved
 
         """
-        if getSecurityManager().checkPermission('Approve Silva content', self):
-            return True
-        return not self.is_published() and not self.is_approved()
+        check_permission = getSecurityManager().checkPermission
+        if not check_permission('Approve Silva content', self):
+            if self.is_published():
+                raise ContentError(
+                    _(u"Content is published"),
+                    self)
+            if self.is_approved():
+                raise ContentError(
+                    _(u"Content is approved"),
+                    self)
 
 InitializeClass(VersionedContent)

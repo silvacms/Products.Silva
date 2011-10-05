@@ -161,7 +161,7 @@ class SilvaObject(TitledObject, Security):
         'is_deletable')
     def is_deletable(self):
         """always deletable"""
-        return True
+        pass
 
 
 InitializeClass(SilvaObject)

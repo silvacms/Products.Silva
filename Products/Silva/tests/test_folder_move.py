@@ -45,7 +45,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.source.toc),
+                    mover(self.root.source.toc),
                     None)
 
         self.assertFalse('toc' in self.root.source.objectIds())
@@ -64,7 +64,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.source.toc),
+                    mover(self.root.source.toc),
                     None)
 
         self.assertFalse('toc' in self.root.source.objectIds())
@@ -80,7 +80,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.target.move_of_toc),
+                    mover(self.root.target.move_of_toc),
                     None)
 
         self.assertTrue('toc' in self.root.source.objectIds())
@@ -101,7 +101,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertEqual(
-                    mover.add(self.root.source.toc),
+                    mover(self.root.source.toc),
                     None)
 
         self.assertTrue('toc' in self.root.source.objectIds())
@@ -118,10 +118,10 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.source.folder),
+                    mover(self.root.source.folder),
                     None)
                 self.assertNotEqual(
-                    mover.add(self.root.source.link),
+                    mover(self.root.source.link),
                     None)
 
         self.assertFalse('folder' in self.root.source.objectIds())
@@ -142,7 +142,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertEqual(
-                    mover.add(self.root.source.published_link),
+                    mover(self.root.source.published_link),
                     None)
 
         self.assertTrue('published_link' in self.root.source.objectIds())
@@ -161,7 +161,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertEqual(
-                    mover.add(self.root.source),
+                    mover(self.root.source),
                     None)
 
         self.assertTrue('source' in self.root.objectIds())
@@ -183,7 +183,7 @@ class EditorFolderMovingTestCase(AuthorFolderMovingTestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.source.published_link),
+                    mover(self.root.source.published_link),
                     None)
 
         self.assertFalse('published_link' in self.root.source.objectIds())
@@ -202,7 +202,7 @@ class EditorFolderMovingTestCase(AuthorFolderMovingTestCase):
                                   'ContainerModifiedEvent'):
             with manager.mover() as mover:
                 self.assertNotEqual(
-                    mover.add(self.root.source),
+                    mover(self.root.source),
                     None)
 
         self.assertFalse('source' in self.root.objectIds())

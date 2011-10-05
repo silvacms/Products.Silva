@@ -52,7 +52,7 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter.add(self.root.folder.published_link))
+                self.assertEqual(False, deleter(self.root.folder.published_link))
 
         self.assertTrue('published_link' in self.root.folder.objectIds())
 
@@ -67,7 +67,7 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter.add(self.root.folder))
+                self.assertEqual(False, deleter(self.root.folder))
 
         self.assertTrue('folder' in self.root.objectIds())
 
@@ -79,7 +79,7 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter.add(self.root.folder.toc))
+                self.assertEqual(True, deleter(self.root.folder.toc))
 
         self.assertFalse('toc' in self.root.folder.objectIds())
 
@@ -91,8 +91,8 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter.add(self.root.folder.toc))
-                self.assertEqual(True, deleter.add(self.root.folder.link))
+                self.assertEqual(True, deleter(self.root.folder.toc))
+                self.assertEqual(True, deleter(self.root.folder.link))
 
         self.assertFalse('toc' in self.root.folder.objectIds())
         self.assertFalse('link' in self.root.folder.objectIds())
@@ -105,9 +105,9 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(False, deleter.add(self.root.publication))
-                self.assertEqual(False, deleter.add(self.root.toc))
-                self.assertEqual(False, deleter.add(self.root.folder))
+                self.assertEqual(False, deleter(self.root.publication))
+                self.assertEqual(False, deleter(self.root.toc))
+                self.assertEqual(False, deleter(self.root.folder))
 
         self.assertTrue('publication' in self.root.objectIds())
         self.assertTrue('toc' in self.root.objectIds())
@@ -129,7 +129,7 @@ class EditorFolderDeletionTestCase(AuthorFolderDeletionTestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter.add(self.root.folder.published_link))
+                self.assertEqual(True, deleter(self.root.folder.published_link))
 
         self.assertFalse('published_link' in self.root.folder.objectIds())
 
@@ -143,7 +143,7 @@ class EditorFolderDeletionTestCase(AuthorFolderDeletionTestCase):
             'ObjectRemovedEvent',
             'ContainerModifiedEvent'):
             with manager.deleter() as deleter:
-                self.assertEqual(True, deleter.add(self.root.folder))
+                self.assertEqual(True, deleter(self.root.folder))
 
         self.assertFalse('folder' in self.root.objectIds())
 

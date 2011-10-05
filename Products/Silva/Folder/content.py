@@ -273,12 +273,10 @@ class Folder(Publishable, BaseFolder):
             NOTE: this will be horribly slow for large trees
         """
         default = self.get_default()
-        if default and not default.is_deletable():
-            return False
+        if default is not None:
+            default.is_deletable()
         for content in self.get_ordered_publishables():
-            if not content.is_deletable():
-                return False
-        return True
+            content.is_deletable()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_default')

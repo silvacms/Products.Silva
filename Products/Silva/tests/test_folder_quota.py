@@ -83,9 +83,9 @@ class ActivationQuotaTestCase(unittest.TestCase):
         # Do some changes
         manager = IContainerManager(folder1)
         with manager.deleter() as deleter:
-            deleter.add(folder1.subfolder)
+            deleter(folder1.subfolder)
         with manager.copier() as copier:
-            copier.add(self.root.folder2)
+            copier(self.root.folder2)
 
         # Nothing had change
         self.assertEqual(self.root.used_space, zip1_size + image1_size)
@@ -211,7 +211,7 @@ class QuotaTestCase(unittest.TestCase):
         # Try cut and paste
         manager2 = IContainerManager(folder2)
         with manager2.mover() as mover:
-            mover.add(folder1['subfolder1'])
+            mover(folder1['subfolder1'])
 
         # And check used space
         self.assertEqual(folder1.used_space, 0)
@@ -221,7 +221,7 @@ class QuotaTestCase(unittest.TestCase):
         # Try cut and ghost paste
         manager1 = IContainerManager(folder1)
         with manager1.ghoster() as ghoster:
-            ghoster.add(folder2['subfolder1'])
+            ghoster(folder2['subfolder1'])
 
         # And check used space
         self.assertEqual(folder1.used_space, zip1_size)
@@ -230,7 +230,7 @@ class QuotaTestCase(unittest.TestCase):
 
         # Delete the ghost
         with manager1.deleter() as deleter:
-            deleter.add(folder1['subfolder1'])
+            deleter(folder1['subfolder1'])
 
         # And check used space
         self.assertEqual(folder1.used_space, 0)
@@ -239,7 +239,7 @@ class QuotaTestCase(unittest.TestCase):
 
         # Try copy and paste
         with manager1.copier() as copier:
-            copier.add(folder2['image1.jpg'])
+            copier(folder2['image1.jpg'])
 
         # And check used space
         self.assertEqual(folder1.used_space, image1_size)
@@ -249,10 +249,10 @@ class QuotaTestCase(unittest.TestCase):
         # Clean, and check each time
         manager = IContainerManager(self.root)
         with manager.deleter() as deleter:
-            deleter.add(self.root['folder2'])
+            deleter(self.root['folder2'])
         self.assertEqual(self.root.used_space, image1_size)
         with manager.deleter() as deleter:
-            deleter.add(self.root['folder1'])
+            deleter(self.root['folder1'])
         self.assertEqual(self.root.used_space, 0)
 
     def test_zip_import(self):

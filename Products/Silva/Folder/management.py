@@ -23,42 +23,12 @@ from OFS.subscribers import compatibilityCall
 from Products.Silva import helpers, mangle
 from Products.Silva.Ghost import ghost_factory
 
+from infrae.comethods import comethod
 from silva.core.interfaces import IContainerManager, IOrderManager
 from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainer, IAsset
-
-
-def comethod(func):
-
-    class wrapper(object):
-
-        def __init__(self, iterator):
-            self.__iterator = iterator
-            self.__iterator.send(None)
-            self.__done = False
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc_val, exc_tb):
-            if exc_type is None and not self.__done:
-                self.finish()
-
-        def add(self, value):
-            return self.__iterator.send(value)
-
-        def finish(self):
-            try:
-                self.__iterator.send(None)
-            except StopIteration:
-                self.__done = True
-                return True
-            return False
-
-    def wrapped(self):
-        return wrapper(func(self))
-
-    return wrapped
+from silva.core.interfaces import ContainerError, ContentError
+from silva.translations import translate as _
 
 
 class ContainerManager(grok.Adapter):
@@ -121,15 +91,35 @@ class ContainerManager(grok.Adapter):
     def __addables(self):
         return set(IAddableContents(self.context).get_authorized_addables())
 
-    def __is_copyable(self, content):
-        return (content.cb_isCopyable() and
-                content.meta_type in self.__addables)
+    def __verify_copyable(self, content):
+        if not content.cb_isCopyable():
+            return ContainerError(
+                _(u"Unauthorized to copy this content"),
+                content)
+        if content.meta_type not in self.__addables:
+            return ContainerError(
+                _(u"Cannot add this content type in this container"),
+                content)
+        return None
 
-    def __is_moveable(self, content):
-        return (content.is_deletable() and
-                content.cb_isMoveable() and
-                move_check(self.context, content) and
-                content.meta_type in self.__addables)
+    def __verify_moveable(self, content):
+        try:
+            content.is_deletable()
+        except ContentError as error:
+            return error
+        if not content.cb_isMoveable():
+            return ContainerError(
+                _(u"Unauthorized to move this content"),
+                content)
+        if not  move_check(self.context, content):
+            return ContainerError(
+                _(u"Cannot move this content to this container"),
+                content)
+        if content.meta_type not in self.__addables:
+            return ContainerError(
+                _(u"Cannot add this content type in this container"),
+                content)
+        return None
 
     @comethod
     def copier(self):
@@ -144,8 +134,8 @@ class ContainerManager(grok.Adapter):
 
         content = yield
         while content is not None:
-            result = None
-            if self.__is_copyable(content):
+            result = self.__verify_copyable(content)
+            if result is None:
                 result = make_copy(content)
             content = yield result
 
@@ -167,8 +157,8 @@ class ContainerManager(grok.Adapter):
 
         content = yield
         while content is not None:
-            result = None
-            if self.__is_moveable(content):
+            result = self.__verify_moveable(content)
+            if result is None:
                 from_container = aq_parent(aq_inner(content))
                 if (aq_base(from_container) is not aq_base(self.context)):
                     result = do_move(from_container, content)
@@ -190,25 +180,30 @@ class ContainerManager(grok.Adapter):
 
             # Rename identifier
             from_identifier = content.getId()
-            if (from_identifier != to_identifier and
-                self.__is_moveable(content) and
-                mangle.Id(self.context, to_identifier, instance=content).isValid()):
+            if from_identifier != to_identifier:
+                result = self.__verify_moveable(content)
+                if result is None:
+                    result = mangle.Id(
+                        self.context, to_identifier, instance=content).verify()
+                if result is None:
+                    position = ordering.get_position(content) if ordering is not None else -1
 
-                position = ordering.get_position(content) if ordering is not None else -1
+                    content = self.__move(
+                        content, self.context, from_identifier, to_identifier)
 
-                content = self.__move(
-                    content, self.context, from_identifier, to_identifier)
+                    if position > 0:
+                        ordering.move(content, position)
 
-                if position > 0:
-                    ordering.move(content, position)
-
-                result = content
-                any_renames = True
+                    any_renames = True
 
             # Update title
-            editable = content.get_editable()
-            if to_title != None and editable != None and editable.get_title() != to_title:
-                editable.set_title(to_title)
+            if result is None:
+                editable = content.get_editable()
+                if (to_title != None and
+                    editable != None and editable.get_title() != to_title):
+                    editable.set_title(to_title)
+
+            if result is None:
                 result = content
 
             data = yield result
@@ -220,8 +215,8 @@ class ContainerManager(grok.Adapter):
     def ghoster(self):
         content = yield
         while content is not None:
-            result = False, None
-            if self.__is_copyable(content):
+            result = self.__verify_copyable(content)
+            if result is None:
                 if IAsset.providedBy(content):
                     identifier = self.__make_id('copy', content.getId())
                     result = self.__copy(content, identifier)
@@ -243,15 +238,22 @@ class ContainerManager(grok.Adapter):
 
         content = yield
         while content is not None:
-            status = False
-            if content.is_deletable():
+            try:
+                content.is_deletable()
+            except ContentError as error:
+                result = error
+            else:
                 content_id = content.getId()
                 if (content_id in container_ids and
                     content_id not in protected and
                     aq_base(self.context) is aq_base(aq_parent(content))):
                     to_delete.append((content_id, content))
-                    status = True
-            content = yield status
+                    result = content
+                else:
+                    result = ContentError(
+                        _(u"Cannot delete content.",
+                          content))
+            content = yield result
 
         # Event
         for identifier, content in to_delete:

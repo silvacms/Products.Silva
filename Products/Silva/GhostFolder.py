@@ -292,7 +292,7 @@ class GhostFolder(GhostBase, Folder.Folder):
         return aq_parent(self).get_publication()
 
     def is_deletable(self):
-        return 1
+        pass
 
     def _publish_ghosts(self):
         activate_list = self.objectValues()

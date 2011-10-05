@@ -13,7 +13,6 @@ from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import IGhostFolder, IGhost
 from silva.core.interfaces import IPublication, IFolder
-from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.interfaces import errors
 

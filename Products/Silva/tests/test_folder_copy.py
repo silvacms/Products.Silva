@@ -46,7 +46,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent',
                                   'ObjectClonedEvent'):
             with manager.copier() as copier:
-                self.assertNotEqual(copier.add(self.root.source.toc), None)
+                self.assertNotEqual(copier(self.root.source.toc), None)
 
         self.assertTrue('toc' in self.root.source.objectIds())
         self.assertTrue('toc' in self.root.target.objectIds())
@@ -67,7 +67,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent',
                                   'ObjectClonedEvent'):
             with manager.copier() as copier:
-                self.assertNotEqual(copier.add(self.root.source.folder), None)
+                self.assertNotEqual(copier(self.root.source.folder), None)
 
         self.assertTrue('folder' in self.root.source.objectIds())
         self.assertTrue('folder' in self.root.target.objectIds())
@@ -82,7 +82,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent',
                                   'ObjectClonedEvent'):
             with manager.copier() as copier:
-                self.assertNotEqual(copier.add(self.root.source.folder), None)
+                self.assertNotEqual(copier(self.root.source.folder), None)
 
         self.assertTrue('copy2_of_folder' in self.root.target.objectIds())
         self.assertTrue(verifyObject(IFolder, self.root.target.copy2_of_folder))
@@ -101,7 +101,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.copier() as copier:
                 self.assertEqual(
-                    copier.add(self.root.source.toc),
+                    copier(self.root.source.toc),
                     None)
 
         self.assertEqual(self.root.target.objectIds(), [])
@@ -117,7 +117,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent',
                                   'ObjectClonedEvent'):
             with manager.copier() as copier:
-                self.assertNotEqual(copier.add(self.root.source.published_link), None)
+                self.assertNotEqual(copier(self.root.source.published_link), None)
 
         self.assertTrue('published_link' in self.root.source.objectIds())
         self.assertTrue('published_link' in self.root.target.objectIds())
@@ -136,7 +136,7 @@ class AuthorFolderCopyTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent',
                                   'ObjectClonedEvent'):
             with manager.copier() as copier:
-                self.assertNotEqual(copier.add(self.root.source), None)
+                self.assertNotEqual(copier(self.root.source), None)
 
         self.assertTrue('source' in self.root.target.objectIds())
         self.assertItemsEqual(

@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import (IPublicationWorkflow,
-    PublicationWorkflowError, IVersion)
+    PublicationError, IVersion)
 from zope.interface.verify import verifyObject
 
 
@@ -42,7 +42,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(content.get_unapproved_version(), '0')
         self.assertEqual(content.get_last_closed_version(), None)
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.new_version()
 
         self.assertEqual(content.get_public_version(), None)
@@ -117,7 +117,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         content = self.root.test
         publisher = IPublicationWorkflow(content)
         publisher.publish()
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.request_approval("please approve.")
 
         self.assertFalse(content.is_approval_requested())
@@ -135,7 +135,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
 
         self.assertTrue(content.is_approval_requested())
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.request_approval("please approve.")
 
     def test_withdraw(self):
@@ -149,7 +149,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertTrue(publisher.withdraw_request('made a mistake'))
         self.assertFalse(content.is_approval_requested())
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.withdraw_request('make an other mistake')
 
     def test_reject(self):
@@ -162,7 +162,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertTrue(publisher.reject_request('u made a mistake'))
         self.assertFalse(content.is_approval_requested())
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.reject_request('u suck anyway')
 
     def test_reject_published(self):
@@ -176,7 +176,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
 
         self.assertFalse(content.is_approval_requested())
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.reject_request('u suck anyway')
 
     def test_revoke_approval(self):
@@ -211,7 +211,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(content.get_unapproved_version(), None)
         self.assertEqual(content.get_last_closed_version(), None)
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.revoke_approval()
 
         self.assertEqual(content.get_public_version(), '0')
@@ -230,7 +230,7 @@ class PublicationWorkflowTestCase(unittest.TestCase):
         self.assertEqual(content.get_unapproved_version(), '0')
         self.assertEqual(content.get_last_closed_version(), None)
 
-        with self.assertRaises(PublicationWorkflowError):
+        with self.assertRaises(PublicationError):
             publisher.revoke_approval()
 
         self.assertEqual(content.get_public_version(), None)

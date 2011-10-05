@@ -12,7 +12,7 @@ from datetime import datetime
 
 from silva.core.interfaces import IVersion
 from silva.core.interfaces import IVersionedContent
-from silva.core.interfaces import IPublicationWorkflow, PublicationWorkflowError
+from silva.core.interfaces import IPublicationWorkflow, PublicationError
 from silva.translations import translate as _
 
 
@@ -23,8 +23,9 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
 
     def new_version(self):
         if self.context.get_unapproved_version() is not None:
-            raise PublicationWorkflowError(
-                _("This content already has a new version."))
+            raise PublicationError(
+                _("This content already has a new version"),
+                self.context)
         self.context.create_copy()
         return True
 
@@ -32,25 +33,30 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         # XXX add checkout publication datetime
         # set_unapproved_version_publication_datetime(DateTime())
         if self.context.get_unapproved_version() is None:
-            raise PublicationWorkflowError(
-                _('There is no unapproved version.'))
+            raise PublicationError(
+                _('There is no unapproved version.'),
+                self.context)
         if self.context.is_approval_requested():
-            raise PublicationWorkflowError(
-                _('Approval has already been requested.'))
+            raise PublicationError(
+                _('Approval has already been requested.'),
+                self.context)
         self.context.request_version_approval(message)
         return True
 
     def _check_withdraw_or_reject(self):
         if self.context.get_unapproved_version() is None:
             if self.context.get_public_version() is not None:
-                raise PublicationWorkflowError(
-                    _("This content is already public."))
+                raise PublicationError(
+                    _("This content is already public"),
+                    self.context)
             else:
-                raise PublicationWorkflowError(
-                    _("This content is already approved."))
+                raise PublicationError(
+                    _("This content is already approved"),
+                    self.context)
         if not self.context.is_approval_requested():
-            raise PublicationWorkflowError(
-                _("No request for approval is pending for this content."))
+            raise PublicationError(
+                _("No request for approval is pending for this content"),
+                self.context)
 
     def withdraw_request(self, message):
         self._check_withdraw_or_reject()
@@ -66,13 +72,15 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         if self.context.get_approved_version():
             self.context.unapprove_version()
             return True
-        raise PublicationWorkflowError(
-            _(u"This content is not approved."))
+        raise PublicationError(
+            _(u"This content is not approved"),
+            self.context)
 
     def approve(self, time=None):
         if self.context.get_unapproved_version() is None:
-            raise PublicationWorkflowError(
-                _("There is no unapproved version to approve."))
+            raise PublicationError(
+                _("There is no unapproved version to approve"),
+                self.context)
         if time is not None:
             if isinstance(time, datetime):
                 time = DateTime(time)
@@ -87,8 +95,9 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         # well.
         if not self.context.get_unapproved_version():
             if self.context.is_published():
-                raise PublicationWorkflowError(
-                    _("There is no unapproved version to approve."))
+                raise PublicationError(
+                    _("There is no unapproved version to approve"),
+                    self.context)
             self.context.create_copy()
         current = self.context.get_unapproved_version_publication_datetime()
         if current is None or current.isFuture():
@@ -99,8 +108,9 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
 
     def close(self):
         if self.context.get_public_version() is None:
-            raise PublicationWorkflowError(
-                _("There is no public version to close"))
+            raise PublicationError(
+                _("There is no public version to close"),
+                self.context)
         self.context.close_version()
         return True
 

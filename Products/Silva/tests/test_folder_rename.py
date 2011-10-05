@@ -41,7 +41,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.toc, 'newtoc', 'New AutoTOC')),
+                    renamer((self.root.folder.toc, 'newtoc', 'New AutoTOC')),
                     None)
 
         self.assertFalse('toc' in self.root.folder.objectIds())
@@ -58,7 +58,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.toc, 'newtoc', None)),
+                    renamer((self.root.folder.toc, 'newtoc', None)),
                     None)
 
         self.assertFalse('toc' in self.root.folder.objectIds())
@@ -75,7 +75,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.toc, None, 'New AutoTOC')),
+                    renamer((self.root.folder.toc, None, 'New AutoTOC')),
                     None)
 
         self.assertTrue('toc' in self.root.folder.objectIds())
@@ -91,7 +91,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertEqual(
-                    renamer.add((self.root.folder.toc, 'link', None)),
+                    renamer((self.root.folder.toc, 'link', None)),
                     None)
 
         self.assertTrue('toc' in self.root.folder.objectIds())
@@ -108,10 +108,10 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.toc, 'newtoc', None)),
+                    renamer((self.root.folder.toc, 'newtoc', None)),
                     None)
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.link, 'nice_link', 'Nice Link')),
+                    renamer((self.root.folder.link, 'nice_link', 'Nice Link')),
                     None)
 
         self.assertFalse('toc' in self.root.folder.objectIds())
@@ -132,7 +132,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.link, 'nice_link', 'Nice Link')),
+                    renamer((self.root.folder.link, 'nice_link', 'Nice Link')),
                     None)
 
         self.assertFalse('link' in self.root.folder.objectIds())
@@ -151,7 +151,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertEqual(
-                    renamer.add((self.root.folder.published_link, 'updated_link', 'Updated Link')),
+                    renamer((self.root.folder.published_link, 'updated_link', 'Updated Link')),
                     None)
 
         self.assertTrue('published_link' in self.root.folder.objectIds())
@@ -170,7 +170,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
                                      'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder, 'archives', 'Archives')),
+                    renamer((self.root.folder, 'archives', 'Archives')),
                     None)
 
         self.assertTrue('folder' in self.root.objectIds())
@@ -194,7 +194,7 @@ class EditorFolderRenameTestCase(AuthorFolderRenameTestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder.published_link, 'updated_link', 'Updated Link')),
+                    renamer((self.root.folder.published_link, 'updated_link', 'Updated Link')),
                     None)
 
         self.assertFalse('published_link' in self.root.folder.objectIds())
@@ -214,7 +214,7 @@ class EditorFolderRenameTestCase(AuthorFolderRenameTestCase):
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertNotEqual(
-                    renamer.add((self.root.folder, 'archives', 'Archives')),
+                    renamer((self.root.folder, 'archives', 'Archives')),
                     None)
 
         self.assertFalse('folder' in self.root.objectIds())
