@@ -249,7 +249,8 @@ class File(Asset):
         mt = self.get_mime_type()
         if ((mt.startswith('text/') and mt != 'text/rtf') or \
                 mt in ('application/x-javascript',)):
-            return True
+            return self.content_encoding() is None
+        return False
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'is_editable_size')
