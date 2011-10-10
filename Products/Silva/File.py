@@ -245,9 +245,9 @@ class File(Asset):
         SilvaPermissions.AccessContentsInformation, 'is_text')
     def is_text(self):
         mimetype = self.get_mime_type()
-        if ((mimetype.startswith('text/') and mimetype != 'text/rtf') or 
+        if ((mimetype.startswith('text/') and mimetype != 'text/rtf') or
             mimetype in ('application/x-javascript',)):
-            return True
+            return self.content_encoding() is None
         return False
 
     security.declareProtected(
@@ -553,7 +553,9 @@ class FileEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileAddFields).omit('id')
-    actions  = silvaforms.Actions(silvaforms.CancelEditAction(), silvaforms.EditAction())
+    actions  = silvaforms.Actions(
+        silvaforms.CancelEditAction(),
+        silvaforms.EditAction())
 
 
 class IFileTextFields(Interface):
