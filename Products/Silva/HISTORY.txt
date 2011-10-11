@@ -1,10 +1,11 @@
 Changes
 =======
 
-Silva 2.3.5 (unreleased)
+Silva 2.3.6 (unreleased)
 ------------------------
 
-- ...
+- Improve tools support in Kupu to support more complex widget (used
+  in Silva news).
 
 Silva 2.3.4 (2011/10/04)
 ------------------------
