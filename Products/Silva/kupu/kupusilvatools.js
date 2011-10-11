@@ -3235,27 +3235,39 @@ SilvaPropertyTool.prototype._buildButtonCallback = function(form, data) {
 };
 
 SilvaPropertyTool.prototype.loadProperties = function(data) {
-    var form = $('<form method="post" enctype="multipart/form-data" '+
+    var $form = $('<form method="post" enctype="multipart/form-data" '+
                  'class="zeam-form zeam-inline-validation" />');
+    var self = this;
     this.data.empty();
-    this.data.append(form);
+
+    $form.attr('action', this.url);
+    $form.append(data['widgets']);
+    $form.find('input[type="submit"]').each(function() {
+        var $button = $(this);
+
+        $button.bind('click', self._buildButtonCallback(
+            $form,
+            {label: $button.attr('value'),
+             name: $button.attr('name'),
+             action: 'send'}
+        ));
+    });
+    for (var i=0; i < data['actions'].length; i++) {
+        var $button = $('<input class="button" type="submit" />');
+        $button.attr('value', data['actions'][i]['label']);
+        $button.attr('name', data['actions'][i]['name']);
+        var callback = this._buildButtonCallback($form, data['actions'][i]);
+        $button.bind('click', callback);
+        if (data['actions'][i]['name'] == data['default_action']) {
+            $form.bind('submit', callback);
+        };
+        $form.append($button);
+    };
+    this.data.append($form);
     if (data['label']) {
         this.toolbox.set_title(data['label']);
     };
-    form.attr('action', this.url);
-    form.append(data['widgets']);
-    for (var i=0; i < data['actions'].length; i++) {
-        var button = $('<input class="button" type="submit" />');
-        button.attr('value', data['actions'][i]['label']);
-        button.attr('name', data['actions'][i]['name']);
-        var callback = this._buildButtonCallback(form, data['actions'][i]);
-        button.bind('submit', callback);
-        if (data['actions'][i]['name'] == data['default_action']) {
-            form.bind('submit', callback);
-        };
-        form.append(button);
-    };
-    form.trigger('zeam-form-ready');
+    $form.trigger('zeam-form-ready');
     this.toolbox.enable();
 };
 
