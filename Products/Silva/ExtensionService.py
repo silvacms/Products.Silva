@@ -309,6 +309,8 @@ class PartialReindexForm(silvaforms.ZMIForm):
     """
     grok.name('manage_partialReindex')
     fields = silvaforms.Fields(IPartialReindex)
+    fields['path'].defaultValue = lambda form: '/'.join(
+        form.context.get_root().getPhysicalPath())
     label = _(u"Reindex site")
     description = _(u"Reindex a subtree of the site in the Silva Catalog."
                     u"For big trees this may take a long time.")

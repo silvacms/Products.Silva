@@ -1,21 +1,26 @@
+
 from five import grok
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
 
 from silva.core import interfaces
+
 from Products.SilvaMetadata.Index import MetadataCatalogingAttributes
 
 
 class CatalogingAttributes(MetadataCatalogingAttributes):
     grok.context(interfaces.ISilvaObject)
 
-    @property
     def publication_status(self):
         return 'public'
+
+    def content_intid(self):
+        return getUtility(IIntIds).register(self.context)
 
 
 class CatalogingAttributesPublishable(CatalogingAttributes):
     grok.context(interfaces.IPublishable)
 
-    @property
     def publication_status(self):
         if self.context.is_published():
             return 'public'
@@ -27,7 +32,9 @@ class CatalogingAttributesPublishable(CatalogingAttributes):
 class CatalogingAttributesVersion(CatalogingAttributes):
     grok.context(interfaces.IVersion)
 
-    @property
+    def content_intid(self):
+        return getUtility(IIntIds).register(self.context.get_content())
+
     def publication_status(self):
         """Returns the status of the current version
         Can be 'unapproved', 'approved', 'public', 'last_closed' or 'closed'
