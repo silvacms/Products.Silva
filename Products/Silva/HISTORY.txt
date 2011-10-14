@@ -7,6 +7,12 @@ Silva 2.3.6 (unreleased)
 - Improve tools support in Kupu to support more complex widget (used
   in Silva news).
 
+- fixed type in the code for the service_messages zmi screen, so that 
+  enabling the service will actually enable the service.  IF you use
+  the message service in Silva 2.3 (for emailing publication messages),
+  you need to go back into the zmi screen and re-enable.  The screen
+  showed it was enabled, but in reality it was not.
+
 Silva 2.3.4 (2011/10/04)
 ------------------------
 
