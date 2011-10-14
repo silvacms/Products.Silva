@@ -104,7 +104,7 @@ table.sticky tbody h5 {
       </th>
      </tr>
      <tal:def define="templates python:list(context.service_contentlayout.get_templates())">
-      <tr tal:repeat="index python:range(0, len(templates), 2)"
+      <tr tal:repeat="index python:range(0, len(templates))"
           tal:attributes="class python:repeat['index'].odd() and 'odd' or 'even'">
        <tal:def define="global cl_template python:templates[index]"> 
         <td metal:use-macro="service/@@stickymacros/macros/sticky_t" />
