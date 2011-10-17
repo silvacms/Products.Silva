@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
-# Python
 import os
 import os.path
 import logging
@@ -11,113 +9,38 @@ from types import StringTypes
 from cgi import escape
 from cStringIO import StringIO
 
-logger = logging.getLogger('silva.file')
-
 # Zope 3
 from ZODB import blob
 from five import grok
 from zope import component
-from zope import schema
-from zope.app.schema.vocabulary import IVocabularyFactory
-from zope.datetime import time as time_from_datetime
 from zope.event import notify
-from zope.interface import Interface, directlyProvides
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
-from zope.location.interfaces import ISite
-from zope.publisher.interfaces.browser import IBrowserRequest
-from zope.schema.fieldproperty import FieldProperty
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 import zope.lifecycleevent.interfaces
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_parent
 from App.class_init import InitializeClass
-from webdav.common import rfc1123_date
-from ZPublisher.Iterators import IStreamIterator
+from OFS import Image   # For ZODB storage
 
 # Silva
-from Products.Silva import mangle
 from Products.Silva import SilvaPermissions
-from Products.Silva.Asset import Asset, SMIAssetPortlet
-from Products.Silva.Asset import AssetEditTab
-from Products.Silva.Image import ImageStorageConverter
-from Products.Silva.helpers import create_new_filename
+from Products.Silva import mangle
+from Products.Silva.Asset import Asset
 from Products.Silva.converters import get_converter_for_mimetype
-
-# Storages
-from OFS import Image                            # For ZODB storage
+from Products.Silva.helpers import create_new_filename
 from Products.Silva.magic import MagicGuess
 
 from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.conf.interfaces import ITitledContent
-from silva.core.conf import schema as silvaschema
-from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import IFilesService
-from silva.core.upgrade import upgrade
-from silva.core.views import views as silvaviews
-from silva.core.views.httpheaders import HTTPResponseHeaders
 from silva.translations import translate as _
 
-from zeam.form import silva as silvaforms
-from zeam.form.base import NO_VALUE
-
-
-
+logger = logging.getLogger('silva.file')
 CHUNK_SIZE = 1<<16              # 64K
 DEFAULT_MIMETYPE = 'application/octet-stream'
 MAGIC = MagicGuess()
-
-
-class FDIterator(object):
-    """This object provides an iterator on file descriptors.
-    """
-    grok.implements(IStreamIterator)
-
-    def __init__(self, fd, close=True):
-        self.__fd = fd
-        self.__close = close
-        self.__closed = False
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        if self.__closed:
-            raise StopIteration
-        data = self.__fd.read(CHUNK_SIZE)
-        if not data:
-            if self.__close:
-                self.__fd.close()
-                self.__closed = True
-            raise StopIteration
-        return data
-
-
-class FileResponseHeaders(HTTPResponseHeaders):
-    """This reliably set HTTP headers on file serving, for GET and
-    HEAD requests.
-    """
-    grok.adapts(IBrowserRequest, interfaces.IFile)
-
-    def other_headers(self, headers):
-        self.response.setHeader(
-            'Content-Disposition',
-            'inline;filename=%s' % (self.context.get_filename()))
-        self.response.setHeader(
-            'Content-Type', self.context.content_type())
-        if self.context.content_encoding():
-            self.response.setHeader(
-                'Content-Encoding', self.context.content_encoding())
-        self.response.setHeader(
-            'Content-Length', self.context.get_file_size())
-        self.response.setHeader(
-            'Last-Modified',
-            rfc1123_date(self.context.get_modification_datetime()))
-        self.response.setHeader(
-            'Accept-Ranges', None)
 
 
 def manage_addFile(context, identifier, title=None, file=None):
@@ -336,20 +259,6 @@ class File(Asset):
 InitializeClass(File)
 
 
-class DefaultFileView(silvaviews.View):
-    """View a File in the SMI / preview. For this just return a tag.
-
-    Note that if you directly access the URL of the file, you will
-    download its content (See the independent index view below for
-    each storage).
-    """
-    grok.context(File)
-    grok.require('zope2.View')
-
-    def render(self):
-        return self.content.tag()
-
-
 class ZODBFile(File):
     """Silva File object, storage in Filesystem. Contains the
     OFS.Image.File.
@@ -389,20 +298,6 @@ class ZODBFile(File):
         return StringIO(self.get_content())
 
 InitializeClass(ZODBFile)
-
-
-class ZODBFileView(silvaviews.View):
-    """Download a ZODBFile
-    """
-    grok.context(ZODBFile)
-    grok.require('zope2.View')
-    grok.name('index.html')
-
-    def render(self):
-        self.response.setHeader(
-            'Content-Disposition',
-            'inline;filename=%s' % (self.context.get_filename()))
-        return self.context._file.index_html(self.request, self.response)
 
 
 class BlobFile(File):
@@ -492,250 +387,6 @@ class BlobFile(File):
 
 
 InitializeClass(BlobFile)
-
-class BlobFileView(silvaviews.View):
-    """Download a BlobFile.
-    """
-    grok.context(BlobFile)
-    grok.require('zope2.View')
-    grok.name('index.html')
-
-    def render(self):
-        header = self.request.environ.get('HTTP_IF_MODIFIED_SINCE', None)
-        if header is not None:
-            header = header.split(';')[0]
-            try:
-                mod_since = long(time_from_datetime(header))
-            except:
-                mod_since = None
-            if mod_since is not None:
-                last_mod = self.context.get_modification_datetime()
-                if last_mod is not None:
-                    last_mod = long(last_mod)
-                    if last_mod > 0 and last_mod <= mod_since:
-                        self.response.setStatus(304)
-                        return u''
-        return FDIterator(self.context.get_content_fd())
-
-# SMI forms
-
-class IFileAddFields(ITitledContent):
-    file = silvaschema.Bytes(title=_(u"file"), required=True)
-
-
-class FileAddForm(silvaforms.SMIAddForm):
-    """Add form for a file.
-    """
-    grok.context(interfaces.IFile)
-    grok.name(u'Silva File')
-
-    fields = silvaforms.Fields(IFileAddFields)
-    fields['id'].required = False
-    fields['title'].required = False
-
-    def _add(self, parent, data):
-        default_id = data['id'] is not NO_VALUE and data['id'] or u''
-        default_title = data['title'] is not NO_VALUE and data['title'] or u''
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addFile(
-            default_id, default_title, data['file'])
-
-
-class FileEditForm(silvaforms.SMISubForm):
-    """Edit file.
-    """
-    grok.context(interfaces.IFile)
-    grok.view(AssetEditTab)
-    grok.order(10)
-
-    label = _(u'Edit file content')
-    ignoreContent = False
-    dataManager = silvaforms.SilvaDataManager
-
-    fields = silvaforms.Fields(IFileAddFields).omit('id')
-    actions  = silvaforms.Actions(
-        silvaforms.CancelEditAction(),
-        silvaforms.EditAction())
-
-
-class IFileTextFields(Interface):
-    text_content = schema.Text(
-        title=_(u'Text content'),
-        description=_(u'Text contained in the file'),
-        required=True)
-
-
-class FileTextEditForm(silvaforms.SMISubForm):
-    """Edit content as a text file.
-    """
-    grok.context(interfaces.IFile)
-    grok.view(AssetEditTab)
-    grok.order(20)
-
-    label = _(u'Edit text content')
-    ignoreContent = False
-    dataManager = silvaforms.SilvaDataManager
-
-    fields = silvaforms.Fields(IFileTextFields)
-    actions  = silvaforms.Actions(
-        silvaforms.CancelEditAction(),
-        silvaforms.EditAction())
-
-    def available(self):
-        return self.context.is_text_editable()
-
-
-class InfoPortlet(SMIAssetPortlet):
-    grok.context(interfaces.IFile)
-
-    def update(self):
-        self.mime_type = self.context.get_mime_type()
-        self.content_encoding = self.context.content_encoding()
-
-
-# ZMI service and file creation
-
-
-def FileStorageTypeVocabulary(context):
-    terms = [SimpleTerm(value=ZODBFile, title='ZODB File', token='ZODBFile'),
-             SimpleTerm(value=BlobFile, title='Blob File', token='BlobFile'),]
-    return SimpleVocabulary(terms)
-
-directlyProvides(FileStorageTypeVocabulary, IVocabularyFactory)
-
-
-class FilesService(SilvaService):
-    meta_type = 'Silva Files Service'
-    grok.implements(IFilesService)
-    grok.name('service_files')
-    silvaconf.default_service()
-    silvaconf.icon('www/files_service.gif')
-
-    security = ClassSecurityInfo()
-
-    storage = FieldProperty(IFilesService['storage'])
-
-    manage_options = (
-        {'label':'Settings', 'action':'manage_settings'},
-        ) + SilvaService.manage_options
-
-    security.declarePrivate('new_file')
-    def new_file(self, id):
-        if self.storage is None:
-            return ZODBFile(id)
-        return self.storage(id)
-
-    def is_file_using_correct_storage(self, content):
-        storage = ZODBFile
-        if self.storage is not None:
-            storage = self.storage
-        return isinstance(content, storage)
-
-
-InitializeClass(FilesService)
-
-
-class FileServiceManagementView(silvaforms.ZMIComposedForm):
-    """Edit File Service.
-    """
-    grok.require('zope2.ViewManagementScreens')
-    grok.name('manage_settings')
-    grok.context(FilesService)
-
-    label = _(u"Configure file storage")
-
-
-class FileServiceSettings(silvaforms.ZMISubForm):
-    grok.context(FilesService)
-    silvaforms.view(FileServiceManagementView)
-    silvaforms.order(10)
-
-    label = _(u"Select storage")
-    fields = silvaforms.Fields(IFilesService)
-    actions = silvaforms.Actions(silvaforms.EditAction())
-    ignoreContent = False
-
-
-class FileServiceConvert(silvaforms.ZMISubForm):
-    grok.context(FilesService)
-    silvaforms.view(FileServiceManagementView)
-    silvaforms.order(20)
-
-    label = _(u"Convert stored files")
-    description = _(u"Convert all currently stored file to "
-                    u"the current set storage")
-
-    @silvaforms.action(_(u'Convert all files'))
-    def convert(self):
-        parent = self.context.get_publication()
-        service = self.context
-        upg = upgrade.UpgradeRegistry()
-        upg.registerUpgrader(
-            StorageConverterHelper(parent), '0.1', upgrade.AnyMetaType)
-        upg.registerUpgrader(
-            FileStorageConverter(service), '0.1', 'Silva File')
-        upg.registerUpgrader(
-            ImageStorageConverter(service), '0.1', 'Silva Image')
-        upg.upgradeTree(parent, '0.1')
-        self.status = _(u'Storage for Silva Files and Images converted. '
-                        u'Check the log for more details.')
-
-
-class StorageConverterHelper(object):
-    """The purpose of this converter is to stop convertion if there is
-    an another configuration.
-    """
-    grok.implements(interfaces.IUpgrader)
-
-    def __init__(self, publication):
-        self.startpoint = publication
-
-    def validate(self, context):
-        if context is self.startpoint:
-            return False
-
-        if ISite.providedBy(context):
-            for obj in context.objectValues():
-                if IFilesService.providedBy(obj):
-                    raise StopIteration()
-        return False
-
-    def upgrade(self, context):
-        return context
-
-
-class FileStorageConverter(object):
-    """Convert storage for a file.
-    """
-    grok.implements(interfaces.IUpgrader)
-
-    def __init__(self, service):
-        self.service = service
-
-    def validate(self, content):
-        if not interfaces.IFile.providedBy(content):
-            return False
-        if self.service.is_file_using_correct_storage(content):
-            # don't convert that are already correct
-            return False
-        return True
-
-    def upgrade(self, content):
-        data = content.get_content_fd()
-        id = content.getId()
-        title = content.get_title()
-        content_type = content.content_type()
-
-        new_file = self.service.new_file(id)
-        container = aq_parent(content)
-        new_file = container._getOb(id)
-        new_file.set_title(title)
-        new_file.set_file_data(data)
-        new_file.set_content_type(content_type)
-
-        logger.info("File %s migrated" %
-                    '/'.join(new_file.getPhysicalPath()))
-        return new_file
 
 
 @grok.subscribe(

@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+
+import logging
+
+from five import grok
+from zope import schema
+from zope.interface import Interface
+
+from Products.Silva.Asset import SMIAssetPortlet
+from Products.Silva.Asset import AssetEditTab
+from silva.core import interfaces
+from silva.core.conf.interfaces import ITitledContent
+from silva.core.conf import schema as silvaschema
+from silva.translations import translate as _
+from zeam.form import silva as silvaforms
+from zeam.form.base import NO_VALUE
+
+logger = logging.getLogger('silva.file')
+
+
+class IFileAddFields(ITitledContent):
+    file = silvaschema.Bytes(title=_(u"file"), required=True)
+
+
+class FileAddForm(silvaforms.SMIAddForm):
+    """Add form for a file.
+    """
+    grok.context(interfaces.IFile)
+    grok.name(u'Silva File')
+
+    fields = silvaforms.Fields(IFileAddFields)
+    fields['id'].required = False
+    fields['title'].required = False
+
+    def _add(self, parent, data):
+        default_id = data['id'] is not NO_VALUE and data['id'] or u''
+        default_title = data['title'] is not NO_VALUE and data['title'] or u''
+        factory = parent.manage_addProduct['Silva']
+        return factory.manage_addFile(
+            default_id, default_title, data['file'])
+
+
+class FileEditForm(silvaforms.SMISubForm):
+    """Edit file.
+    """
+    grok.context(interfaces.IFile)
+    grok.view(AssetEditTab)
+    grok.order(10)
+
+    label = _(u'Edit file content')
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    fields = silvaforms.Fields(IFileAddFields).omit('id')
+    actions  = silvaforms.Actions(
+        silvaforms.CancelEditAction(),
+        silvaforms.EditAction())
+
+
+class IFileTextFields(Interface):
+    text_content = schema.Text(
+        title=_(u'Text content'),
+        description=_(u'Text contained in the file'),
+        required=True)
+
+
+class FileTextEditForm(silvaforms.SMISubForm):
+    """Edit content as a text file.
+    """
+    grok.context(interfaces.IFile)
+    grok.view(AssetEditTab)
+    grok.order(20)
+
+    label = _(u'Edit text content')
+    ignoreContent = False
+    dataManager = silvaforms.SilvaDataManager
+
+    fields = silvaforms.Fields(IFileTextFields)
+    actions  = silvaforms.Actions(
+        silvaforms.CancelEditAction(),
+        silvaforms.EditAction())
+
+    def available(self):
+        return self.context.is_text_editable()
+
+
+class InfoPortlet(SMIAssetPortlet):
+    grok.context(interfaces.IFile)
+
+    def update(self):
+        self.mime_type = self.context.get_mime_type()
+        self.content_encoding = self.context.content_encoding()
+

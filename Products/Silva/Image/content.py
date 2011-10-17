@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2002-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
-from __future__ import absolute_import
-
-# Python
 import re
 import logging
 import mimetypes
@@ -13,19 +9,14 @@ from cStringIO import StringIO
 from cgi import escape
 import os.path
 
-logger = logging.getLogger('silva.image')
-
 # Zope 3
 from five import grok
 from zope import component
-from zope import schema
 from zope.component import getMultiAdapter
 from zope.event import notify
-from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent.interfaces import IObjectMovedEvent
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
@@ -33,30 +24,24 @@ from App.class_init import InitializeClass
 
 # Silva
 from Products.Silva import mangle, SilvaPermissions
-from Products.Silva.Asset import Asset, SMIAssetPortlet
-from Products.Silva.Asset import AssetEditTab
+from Products.Silva.Asset import Asset
 from Products.Silva.MimetypeRegistry import mimetypeRegistry
 from Products.Silva.helpers import create_new_filename
 
-from silva.ui.rest.container import ListingPreview
-from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.services.interfaces import IFilesService
-from silva.core.conf import schema as silvaschema
-from silva.core.views import views as silvaviews
-from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
 from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
-
-from zeam.form import silva as silvaforms
-from zeam.form.base import NO_VALUE
 
 try:
     from PIL import Image as PILImage
 except ImportError:
     import Image as PILImage
 havePIL = 1
+
+
+logger = logging.getLogger('silva.image')
 
 
 def validate_image(file):
@@ -180,7 +165,8 @@ class Image(Asset):
         """
         validate_image(file)
         self._image_factory('hires_image', file)
-        # Image change, reset scale, crop box: they can be invalid for this new image.
+        # Image change, reset scale, crop box: they can be invalid for
+        # this new image.
         format = self.get_format()
         if format in self.web_formats:
             self.web_format = format
@@ -574,177 +560,6 @@ class Image(Asset):
 InitializeClass(Image)
 
 
-# Views
-
-class DefaultImageView(silvaviews.View):
-    """View a Image in the SMI / preview. For this just return a
-    tag.
-
-    Note that if you ask directly the URL of the image, you will
-    get it, not this view (See the traverser below).
-    """
-    grok.context(Image)
-    grok.require('zope2.View')
-
-    def render(self):
-        return self.content.tag()
-
-
-class ImageListingPreview(ListingPreview):
-    grok.context(interfaces.IImage)
-
-    def preview(self):
-        return self.context.tag(thumbnail=1)
-
-
-class ImagePublishTraverse(SilvaPublishTraverse):
-
-    def browserDefault(self, request):
-        # We don't want to lookup five views if we have other than a
-        # GET or HEAD request, but delegate to the sub-object.
-        content, method = super(ImagePublishTraverse, self).browserDefault(
-            request)
-        if request.method in ('GET', 'HEAD',):
-            query = request.QUERY_STRING
-            if query == 'hires':
-                img = self.context.hires_image
-            elif query == 'thumbnail':
-                img = self.context.thumbnail_image
-            else:
-                img = self.context.image
-            view = getMultiAdapter((img, request), Interface, name='index.html')
-            view.__parent__ = img
-            method = {'GET': tuple(), 'HEAD': ('HEAD',)}.get(request.method)
-            return (view, method)
-        return content, method
-
-
-# SMI forms
-
-class IImageAddFields(ITitledContent):
-
-    image = silvaschema.Bytes(title=_(u"image"), required=True)
-
-
-class ImageAddForm(silvaforms.SMIAddForm):
-    """Add form for an image.
-    """
-    grok.context(interfaces.IImage)
-    grok.name(u'Silva Image')
-
-    fields = silvaforms.Fields(IImageAddFields)
-    fields['id'].required = False
-
-    def _add(self, parent, data):
-        default_id = data['id'] is not NO_VALUE and data['id'] or u''
-        factory = parent.manage_addProduct['Silva']
-        return factory.manage_addImage(
-            default_id, data['title'], file=data['image'])
-
-
-class ImageEditForm(silvaforms.SMISubForm):
-    """ Edit image attributes
-    """
-    grok.context(interfaces.IImage)
-    grok.view(AssetEditTab)
-    grok.order(10)
-
-    label = _(u'Edit')
-    ignoreContent = False
-    dataManager = silvaforms.SilvaDataManager
-
-    fields = silvaforms.Fields(IImageAddFields).omit('id')
-    actions  = silvaforms.Actions(silvaforms.CancelEditAction(),
-                                  silvaforms.EditAction())
-
-image_formats = SimpleVocabulary([SimpleTerm(title=u'jpg', value='JPEG'),
-                                  SimpleTerm(title=u'png', value='PNG'),
-                                  SimpleTerm(title=u'gif', value='GIF')])
-
-
-class IFormatAndScalingFields(Interface):
-    web_format = schema.Choice(
-        source=image_formats,
-        title=_(u"web format"),
-        description=_(u"Image format for web."))
-    web_scale = schema.TextLine(
-        title=_(u"scaling"),
-        description=_(u'Image scaling for web: use width x  '
-                      u'height in pixels, or one axis length, ',
-                      u'or a percentage (100x200, 100x*, *x200, 40%).'),
-        required=False)
-    web_crop = silvaschema.CropCoordinates(
-        title=_(u"cropping"),
-        description=_(u"Image cropping for web: use the"
-                      u" ‘set crop coordinates’ "
-                      u"button, or enter X1xY1-X2xY2"
-                      u" to define the cropping box."),
-        required=False)
-
-
-class ImageFormatAndScalingForm(silvaforms.SMISubForm):
-    """ form to resize / change format of image.
-    """
-    grok.context(interfaces.IImage)
-    grok.view(AssetEditTab)
-    grok.order(20)
-
-    ignoreContent = False
-    dataManager = silvaforms.SilvaDataManager
-
-    label = _('Format and scaling')
-    actions = silvaforms.Actions(silvaforms.CancelEditAction())
-    fields = silvaforms.Fields(IFormatAndScalingFields)
-    fields['web_format'].mode = 'radio'
-    fields['web_scale'].defaultValue = '100%'
-
-    @silvaforms.action(title=_('Change'),
-                       implements=silvaforms.IDefaultAction)
-    def set_properties(self):
-        data, errors = self.extractData()
-        if errors:
-            return silvaforms.FAILURE
-        try:
-            self.context.set_web_presentation_properties(
-                data.getWithDefault('web_format'),
-                data.getWithDefault('web_scale'),
-                data.getWithDefault('web_crop'))
-        except ValueError as e:
-            self.send_message(e.args[0], type='error')
-            return silvaforms.FAILURE
-
-        self.send_message(_('Scaling and/or format changed.'),
-                          type='feedback')
-        return silvaforms.SUCCESS
-
-
-class InfoPortlet(SMIAssetPortlet):
-    grok.context(interfaces.IImage)
-    grok.order(10)
-
-    def update(self):
-        self.format = self.context.web_format.lower()
-        self.dimensions = None
-        try:
-            dimensions = self.context.get_dimensions()
-            self.dimensions = dict(zip(['width', 'height'], dimensions))
-        except ValueError:
-            dimensions = None
-        self.scaling = None
-        if self.context.hires_image is not None:
-            try:
-                scaled_dimensions = self.context.get_canonical_web_scale()
-                if scaled_dimensions != dimensions:
-                    self.scaling = dict(zip(['width', 'height'], scaled_dimensions))
-            except ValueError:
-                scaled_dimensions = None
-        self.thumbnail = None
-        if self.context.thumbnail_image:
-            self.thumbnail = self.context.tag(thumbnail=1)
-        self.original =self.context.url(hires=1)
-        self.orientation = self.context.get_orientation()
-        self.orientation_cls = unicode(self.orientation)
-
 # Management helpers
 
 class ImageStorageConverter(object):
@@ -800,7 +615,6 @@ def image_factory(self, id, content_type, file):
     return img
 
 
-
 @grok.subscribe(interfaces.IImage, IObjectMovedEvent)
 def image_added(image, event):
     if image is not event.object or event.newName is None:
@@ -810,3 +624,4 @@ def image_added(image, event):
         if image_file is None:
             continue
         create_new_filename(image_file, event.newName)
+
