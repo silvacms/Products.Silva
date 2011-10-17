@@ -15,7 +15,6 @@ from zope import contenttype
 # Silva
 from Products.Silva.MimetypeRegistry import mimetypeRegistry
 from Products.Silva import mangle
-from Products.Silva import File
 
 
 class ZipFileImporter(grok.Adapter):
@@ -66,7 +65,7 @@ class ZipFileImporter(grok.Adapter):
                 container = self.context
 
             # Actually add object...
-            factory = mimetypeRegistry.get(mimetype, File.manage_addFile)
+            factory = mimetypeRegistry.get(mimetype)
 
             id = self._makeId(filename, container, extracted_file, replace)
             added_object = factory(

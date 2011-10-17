@@ -2,19 +2,22 @@
 # See also LICENSE.txt
 # $Id$
 
-from silva.core.services.interfaces import IExtensionService
-from silva.core.interfaces import IContentMimetypeRegistry
 from zope.interface import implements
 from zope.component import getUtility
+
+from silva.core.services.interfaces import IExtensionService
+from silva.core.interfaces import IContentMimetypeRegistry
 
 
 class ContentMimetypeRegistry(object):
     implements(IContentMimetypeRegistry)
 
+    DEFAULT=lambda ctxt, *args, **kwargs: ctxt.manage_addProduct['Silva'].manage_addFile(*args, **kwargs);
+
     def __init__(self):
         self._mimetype_to_factory = {}
 
-    def get(self, mimetype, default=None):
+    def get(self, mimetype, default=DEFAULT):
         factory, extension = self._mimetype_to_factory.get(
             mimetype, (None, None))
         if factory is not None:

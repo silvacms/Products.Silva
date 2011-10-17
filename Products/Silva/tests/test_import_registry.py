@@ -20,8 +20,7 @@ class MimetypeRegistryTestCase(unittest.TestCase):
         factory = object()
         mimetype = 'application/x-test-mimetype-1'
 
-        self.assertEqual(registry.get(mimetype), None)
-        self.assertEqual(registry.get(mimetype, marker), marker)
+        self.assertEqual(registry.get(mimetype), registry.DEFAULT.im_func)
 
         registry.register(mimetype, factory, 'Silva')
         self.assertEqual(registry.get(mimetype), factory)
@@ -42,8 +41,8 @@ class MimetypeRegistryTestCase(unittest.TestCase):
 
         registry.unregister(factory)
 
-        self.assertEqual(registry.get(mimetype), None)
-        self.assertEqual(registry.get(mimetype2), None)
+        self.assertEqual(registry.get(mimetype), registry.DEFAULT.im_func)
+        self.assertEqual(registry.get(mimetype2), registry.DEFAULT.im_func)
 
 
 def test_suite():

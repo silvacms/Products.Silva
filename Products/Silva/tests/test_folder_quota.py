@@ -180,7 +180,7 @@ class QuotaTestCase(unittest.TestCase):
         self.assertEqual(self.root.used_space, zip2_size)
 
         # Change file data
-        zip1.set_file_data(open_test_file('test1.zip'))
+        zip1.set_file(open_test_file('test1.zip'))
         zip1_size = test_file_size('test1.zip')
         self.assertEqual(zip1.get_file_size(), zip1_size)
         # And check used space
