@@ -159,7 +159,7 @@ InitializeClass(EmailMessageService)
 
 
 class IEmailMessageSettings(interface.Interface):
-    _enable = schema.Bool(
+    _enabled = schema.Bool(
         title=_(u'Enable'),
         description=_(u'Send emails when asked to.'),
         required=True)
