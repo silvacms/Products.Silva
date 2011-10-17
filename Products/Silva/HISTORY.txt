@@ -1,6 +1,18 @@
 Changes
 =======
 
+Silva 2.3.2-bethel.2 (2011-11-14)
+---------------------------------
+
+- fixed bug in EmailMessageService - the schema field for enabling
+  the message service was not named correctly.  It was '_enable' and
+  should have been '_enabled'.  This was preventing the email service
+  from ever actually being enabled (even though the ZMI form said
+  it was)
+
+- fixed sticky content tab, so it shows all layouts
+
+
 Silva 2.3.2-bethel.1 (2011-09-23)
 ---------------------------------
 
