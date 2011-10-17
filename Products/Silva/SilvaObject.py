@@ -17,7 +17,6 @@ from zope.traversing.browser import absoluteURL
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_parent
 from App.class_init import InitializeClass
 from DateTime import DateTime
 from OFS.interfaces import IObjectClonedEvent
@@ -31,7 +30,6 @@ from Products.Silva.Security import Security
 # Silva adapters
 from Products.SilvaMetadata.interfaces import IMetadataService
 
-from silva.core.interfaces import IContainer
 from silva.core.interfaces import ISilvaObject, IVersionedContent
 from silva.core.services.interfaces import ICataloging
 
@@ -52,9 +50,10 @@ class TitledObject(object):
         """
         # FIXME: Ugh. I get unicode from formulator but this will not validate
         # when using the metadata system. So first make it into utf-8 again..
-        title = title.encode('utf-8')
-        binding = getUtility(IMetadataService).getMetadata(self)
-        binding.setValues('silva-content', {'maintitle': title}, reindex=1)
+        if title is not None:
+            title = title.encode('utf-8')
+            binding = getUtility(IMetadataService).getMetadata(self)
+            binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_title')

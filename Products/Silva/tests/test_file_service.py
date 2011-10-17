@@ -12,7 +12,6 @@ from zope.interface.verify import verifyObject
 from zExceptions import BadRequest
 
 from Products.Silva import File
-from Products.Silva.Image import havePIL
 from Products.Silva.tests import helpers
 from Products.Silva.testing import FunctionalLayer, TestCase
 
@@ -54,10 +53,7 @@ class FileServicesTest(TestCase):
         file_handle.close()
 
     def add_test_image(self, id, context):
-        if havePIL:
-            file_handle = helpers.openTestFile('photo.tif')
-        else:
-            file_handle = helpers.openTestFile('silva.png')
+        file_handle = helpers.openTestFile('photo.tif')
         context.manage_addProduct['Silva'].manage_addImage(
             id, 'Test Image', file_handle)
         file_handle.close()
@@ -116,7 +112,7 @@ class FileServicesTest(TestCase):
         self.isZODBFile(self.root.folder1.folder1in1.testfile)
 
         image_data = self.root.testimage.get_image(hires=1)
-        file_data = self.root.testfile.get_content()
+        file_data = self.root.testfile.get_file()
         form = component.getMultiAdapter(
             (self.root.service_files, self.root.REQUEST),
             name='manage_settings').subforms[1]
@@ -134,7 +130,7 @@ class FileServicesTest(TestCase):
 
         converted_image_data = self.root.testimage.get_image(hires=1)
         self.assertEquals(image_data, converted_image_data)
-        converted_file_data = self.root.testfile.get_content()
+        converted_file_data = self.root.testfile.get_file()
         self.assertEquals(file_data, converted_file_data)
 
         # Convert back to ZODB
@@ -150,7 +146,7 @@ class FileServicesTest(TestCase):
 
         converted_image_data = self.root.testimage.get_image(hires=1)
         self.assertHashEqual(image_data, converted_image_data)
-        converted_file_data = self.root.testfile.get_content()
+        converted_file_data = self.root.testfile.get_file()
         self.assertHashEqual(file_data, converted_file_data)
 
 

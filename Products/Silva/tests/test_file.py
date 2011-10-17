@@ -49,109 +49,109 @@ class DefaultFileImplementationTestCase(TestCase):
 
         with assertTriggersEvents(
             'ObjectModifiedEvent'):
-            self.root.file.set_file_data(StringIO("Some text file"))
+            self.root.file.set_file(StringIO("Some text file"))
 
         with assertTriggersEvents(
             'ObjectModifiedEvent'):
-            self.root.file.set_text_file_data("Text to set as file content")
+            self.root.file.set_text("Text to set as file content")
 
     def test_content_image(self):
         """Test base content methods on a file that contains an image.
         """
         content = self.create_test_file()
-        self.failUnless(verifyObject(interfaces.IAsset, content))
-        self.failUnless(verifyObject(interfaces.IFile, content))
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
 
-        self.assertEquals(content.content_type(), 'image/tiff')
-        self.assertEquals(content.content_encoding(), None)
-        self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'photo.tiff')
-        self.assertEquals(content.get_mime_type(), 'image/tiff')
-        self.assertHashEqual(content.get_content(), self.file_data)
-        self.failUnless(content.get_download_url() is not None)
-        self.failUnless(content.tag() is not None)
+        self.assertEqual(content.get_content_type(), 'image/tiff')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_file_size(), self.file_size)
+        self.assertEqual(content.get_filename(), 'photo.tiff')
+        self.assertEqual(content.get_mime_type(), 'image/tiff')
+        self.assertHashEqual(content.get_file(), self.file_data)
+        self.assertTrue(content.get_download_url() is not None)
+        self.assertTrue(content.tag() is not None)
         # You cannot edit images as text
-        self.assertEquals(content.is_text(), False)
+        self.assertEqual(content.is_text(), False)
 
         # If you change the filename, you will get the new value afterward
         content.set_filename('image.tiff')
-        self.assertEquals(content.get_filename(), 'image.tiff')
+        self.assertEqual(content.get_filename(), 'image.tiff')
 
     def test_content_text(self):
         """Test base content methods on a file that contains text.
         """
         content = self.create_test_file('test_file_text.txt')
-        self.failUnless(verifyObject(interfaces.IAsset, content))
-        self.failUnless(verifyObject(interfaces.IFile, content))
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
 
-        self.assertEquals(content.content_type(), 'text/plain; charset=utf-8')
-        self.assertEquals(content.content_encoding(), None)
-        self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'test_file_text.txt')
-        self.assertEquals(content.get_mime_type(), 'text/plain')
-        self.assertHashEqual(content.get_content(), self.file_data)
-        self.failUnless(content.get_download_url() is not None)
-        self.failUnless(content.tag() is not None)
+        self.assertEqual(content.get_content_type(), 'text/plain; charset=utf-8')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_file_size(), self.file_size)
+        self.assertEqual(content.get_filename(), 'test_file_text.txt')
+        self.assertEqual(content.get_mime_type(), 'text/plain')
+        self.assertHashEqual(content.get_file(), self.file_data)
+        self.assertTrue(content.get_download_url() is not None)
+        self.assertTrue(content.tag() is not None)
         # You can edit text
-        self.assertEquals(content.is_text(), True)
+        self.assertEqual(content.is_text(), True)
 
         # If you change the filename, you will get the new value afterward
         content.set_filename('text.txt')
-        self.assertEquals(content.get_filename(), 'text.txt')
+        self.assertEqual(content.get_filename(), 'text.txt')
 
     def test_content_compressed_text(self):
         """Test base content methods on a file that contains
         compressed text.
         """
         content = self.create_test_file('test_file_text.txt.gz')
-        self.failUnless(verifyObject(interfaces.IAsset, content))
-        self.failUnless(verifyObject(interfaces.IFile, content))
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
 
-        self.assertEquals(content.content_type(), 'text/plain; charset=utf-8')
-        self.assertEquals(content.content_encoding(), 'gzip')
-        self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'test_file_text.txt.gz')
-        self.assertEquals(content.get_mime_type(), 'text/plain')
-        self.assertHashEqual(content.get_content(), self.file_data)
-        self.failUnless(content.get_download_url() is not None)
-        self.failUnless(content.tag() is not None)
+        self.assertEqual(content.get_content_type(), 'text/plain; charset=utf-8')
+        self.assertEqual(content.get_content_encoding(), 'gzip')
+        self.assertEqual(content.get_file_size(), self.file_size)
+        self.assertEqual(content.get_filename(), 'test_file_text.txt.gz')
+        self.assertEqual(content.get_mime_type(), 'text/plain')
+        self.assertHashEqual(content.get_file(), self.file_data)
+        self.assertTrue(content.get_download_url() is not None)
+        self.assertTrue(content.tag() is not None)
         # You cannot edit compressed files
-        self.assertEquals(content.is_text(), False)
+        self.assertEqual(content.is_text(), False)
 
     def test_content_xml(self):
         """Test base content methods on a file that contains xml.
         """
         content = self.create_test_file('test_document.xml')
-        self.failUnless(verifyObject(interfaces.IAsset, content))
-        self.failUnless(verifyObject(interfaces.IFile, content))
+        self.assertTrue(verifyObject(interfaces.IAsset, content))
+        self.assertTrue(verifyObject(interfaces.IFile, content))
 
-        self.assertEquals(content.content_type(), 'text/xml')
-        self.assertEquals(content.content_encoding(), None)
-        self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'test_document.xml')
-        self.assertEquals(content.get_mime_type(), 'text/xml')
-        self.assertHashEqual(content.get_content(), self.file_data)
-        self.failUnless(content.get_download_url() is not None)
-        self.failUnless(content.tag() is not None)
+        self.assertEqual(content.get_content_type(), 'text/xml')
+        self.assertEqual(content.get_content_encoding(), None)
+        self.assertEqual(content.get_file_size(), self.file_size)
+        self.assertEqual(content.get_filename(), 'test_document.xml')
+        self.assertEqual(content.get_mime_type(), 'text/xml')
+        self.assertHashEqual(content.get_file(), self.file_data)
+        self.assertTrue(content.get_download_url() is not None)
+        self.assertTrue(content.tag() is not None)
         # You can edit text
-        self.assertEquals(content.is_text(), True)
+        self.assertEqual(content.is_text(), True)
 
     def test_download(self):
         """Test downloading file.
         """
         self.create_test_file()
         with self.layer.get_browser() as browser:
-            self.assertEquals(browser.open('/root/photo.tif'), 200)
-            self.assertEquals(len(browser.contents), self.file_size)
+            self.assertEqual(browser.open('/root/photo.tif'), 200)
+            self.assertEqual(len(browser.contents), self.file_size)
             self.assertHashEqual(browser.contents, self.file_data)
-            self.assertEquals(
+            self.assertEqual(
                 int(browser.headers['Content-Length']),
                 self.file_size)
-            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
-            self.assertEquals(
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tiff')
-            self.failUnless('Last-Modified' in browser.headers)
+            self.assertTrue('Last-Modified' in browser.headers)
 
     def test_not_modified(self):
         """Test downloading a file if it as been modified after a date.
@@ -160,33 +160,33 @@ class DefaultFileImplementationTestCase(TestCase):
         with self.layer.get_browser() as browser:
             browser.set_request_header(
                 'If-Modified-Since', 'Sat, 29 Oct 2094 19:43:31 GMT')
-            self.assertEquals(browser.open('/root/photo.tif'), 304)
-            self.assertEquals(len(browser.contents), 0)
+            self.assertEqual(browser.open('/root/photo.tif'), 304)
+            self.assertEqual(len(browser.contents), 0)
 
     def test_head_request(self):
         """Test HEAD requests on Files.
         """
         self.create_test_file()
         with self.layer.get_browser() as browser:
-            self.assertEquals(browser.open('/root/photo.tif', method='HEAD'), 200)
+            self.assertEqual(browser.open('/root/photo.tif', method='HEAD'), 200)
             # Even on HEAD requests where there is no body, Content-Lenght
             # should be the size of the file.
-            self.assertEquals(
+            self.assertEqual(
                 int(browser.headers['Content-Length']),
                 self.file_size)
-            self.assertEquals(browser.headers['Content-Type'], 'image/tiff')
-            self.assertEquals(
+            self.assertEqual(browser.headers['Content-Type'], 'image/tiff')
+            self.assertEqual(
                 browser.headers['Content-Disposition'],
                 'inline;filename=photo.tiff')
-            self.failUnless('Last-Modified' in browser.headers)
-            self.assertEquals(len(browser.contents), 0)
+            self.assertTrue('Last-Modified' in browser.headers)
+            self.assertEqual(len(browser.contents), 0)
 
     def test_asset_data(self):
         """Test asset data adapter implementation.
         """
         content = self.create_test_file()
         assetdata = interfaces.IAssetData(content)
-        self.failUnless(verifyObject(interfaces.IAssetData, assetdata))
+        self.assertTrue(verifyObject(interfaces.IAssetData, assetdata))
         self.assertHashEqual(self.file_data, assetdata.getData())
 
     def test_rename_filename(self):

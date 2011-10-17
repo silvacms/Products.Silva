@@ -56,6 +56,7 @@ class FileEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileAddFields).omit('id')
+    fields['title'].required = False
     fields['file'].fileSetLabel = _(
         u"Click the Upload button to replace the current file with a new file.")
     actions  = silvaforms.Actions(
@@ -64,7 +65,7 @@ class FileEditForm(silvaforms.SMISubForm):
 
 
 class IFileTextFields(Interface):
-    text_content = schema.Text(
+    text = schema.Text(
         title=_(u'Text content'),
         description=_(u'Text contained in the file'),
         required=True)
@@ -95,5 +96,5 @@ class InfoPortlet(SMIAssetPortlet):
 
     def update(self):
         self.mime_type = self.context.get_mime_type()
-        self.content_encoding = self.context.content_encoding()
+        self.content_encoding = self.context.get_content_encoding()
 

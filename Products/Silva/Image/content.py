@@ -303,7 +303,7 @@ class Image(Asset):
         elif not hires and not webformat:
             raise ValueError(_(u"Low resolution image in original format is "
                                u"not supported"))
-        return image.get_content()
+        return image.get_file()
 
 
     security.declareProtected(SilvaPermissions.View, 'tag')
@@ -392,10 +392,10 @@ class Image(Asset):
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'content_type')
-    def content_type(self):
+    def get_content_type(self):
         if self.image is None:
             return 'application/octet-stream'
-        return self.image.content_type()
+        return self.image.get_content_type()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'get_file_size')
@@ -419,7 +419,7 @@ class Image(Asset):
                 img = self.hires_image
                 if img is None:
                     raise ValueError(u"Image missing.")
-        image_reference = img.get_content_fd()
+        image_reference = img.get_file_fd()
         try:
             image = PILImage.open(image_reference)
         except IOError, error:
@@ -526,7 +526,7 @@ class Image(Asset):
         new_image = service_files.new_file(image_id)
         setattr(self, image_id, new_image)
         new_image = getattr(self, image_id)
-        new_image.set_file_data(image_file)
+        new_image.set_file(image_file)
         if content_type is not None:
             new_image.set_content_type(content_type)
         create_new_filename(new_image, self.getId())
@@ -586,7 +586,7 @@ class ImageStorageConverter(object):
     def upgrade(self, image):
         image_file = image.hires_image
         content_type = image_file.get_mime_type()
-        data = image_file.get_content_fd()
+        data = image_file.get_file_fd()
         image._image_factory('hires_image', data, content_type)
         image._createDerivedImages()
         logger.info(

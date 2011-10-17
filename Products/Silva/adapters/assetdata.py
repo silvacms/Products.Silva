@@ -5,16 +5,16 @@
 from five import grok
 from silva.core import interfaces
 
-class FileData(grok.Adapter):
 
+class FileData(grok.Adapter):
     grok.implements(interfaces.IAssetData)
     grok.context(interfaces.IFile)
 
     def getData(self):
-        return self.context.get_content()
+        return self.context.get_file()
+
 
 class ImageData(grok.Adapter):
-
     grok.implements(interfaces.IAssetData)
     grok.context(interfaces.IImage)
 
@@ -24,5 +24,5 @@ class ImageData(grok.Adapter):
             # Fallback to 'normal' image, which, if there isn't a hires
             # version, should be the original.
             image = self.context.image
-        return image.get_content()
+        return image.get_file()
 

@@ -39,8 +39,8 @@ def create_new_filename(file, basename):
         return
 
     extension = None
-    content_type = file.content_type()
-    content_encoding = file.content_encoding()
+    content_type = file.get_content_type()
+    content_encoding = file.get_content_encoding()
 
     if '.' in basename:
         basename, extension = os.path.splitext(basename)

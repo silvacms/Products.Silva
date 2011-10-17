@@ -2,8 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from __future__ import absolute_import
-
 from StringIO import StringIO
 try:
     from PIL import Image as PILImage
@@ -49,7 +47,7 @@ class DefaultImageTestCase(TestCase):
         self.assertTrue(verifyObject(interfaces.IImage, content))
 
         # Asset methods
-        self.assertEquals(content.content_type(), 'image/tiff')
+        self.assertEquals(content.get_content_type(), 'image/tiff')
         self.assertEquals(content.get_file_size(), self.image_size)
         self.assertEquals(content.get_filename(), 'test_image.tiff')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
@@ -261,7 +259,7 @@ class MiscellaneousImageTestCase(unittest.TestCase):
         image = self.root.image
         self.assertTrue(verifyObject(interfaces.IImage, image))
         self.assertEqual(image.get_mime_type(), 'application/octet-stream')
-        self.assertEqual(image.content_type(), 'application/octet-stream')
+        self.assertEqual(image.get_content_type(), 'application/octet-stream')
         self.assertEqual(image.get_filename(), 'image')
         self.assertEqual(image.get_file_size(), 0)
 

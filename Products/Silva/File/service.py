@@ -157,16 +157,16 @@ class FileStorageConverter(object):
         return True
 
     def upgrade(self, content):
-        data = content.get_content_fd()
+        data = content.get_file_fd()
         id = content.getId()
         title = content.get_title()
-        content_type = content.content_type()
+        content_type = content.get_content_type()
 
         new_file = self.service.new_file(id)
         container = aq_parent(content)
         new_file = container._getOb(id)
         new_file.set_title(title)
-        new_file.set_file_data(data)
+        new_file.set_file(data)
         new_file.set_content_type(content_type)
 
         logger.info("File %s migrated" %

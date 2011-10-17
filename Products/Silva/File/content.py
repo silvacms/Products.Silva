@@ -65,7 +65,7 @@ def manage_addFile(context, identifier, title=None, file=None):
         content.set_title(title)
     notify(ObjectCreatedEvent(content))
     if file is not None:
-        content.set_file_data(file)
+        content.set_file(file)
     return content
 
 
@@ -109,7 +109,7 @@ class File(Asset):
         """Return the content mimetype.
         """
         # possibly strip out charset encoding
-        return self.content_type().split(';')[0].strip()
+        return self.get_content_type().split(';')[0].strip()
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
@@ -123,7 +123,7 @@ class File(Asset):
         if converter is None:
             return fulltextlist
 
-        file_data = self.get_content()
+        file_data = self.get_file()
         fulltext = None
         if file_data:
             fulltext = converter.convert(file_data, self.REQUEST)
@@ -170,7 +170,7 @@ class File(Asset):
         mimetype = self.get_mime_type()
         if ((mimetype.startswith('text/') and mimetype != 'text/rtf') or
             mimetype in ('application/x-javascript',)):
-            return self.content_encoding() is None
+            return self.get_content_encoding() is None
         return False
 
     security.declareProtected(
@@ -180,44 +180,44 @@ class File(Asset):
         return self.is_text() and (not self.get_file_size() > 153600)
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_text_content')
-    def get_text_content(self):
+        SilvaPermissions.View, 'get_text')
+    def get_text(self):
         if not self.is_text():
             raise TypeError("Content of Silva File is not text")
-        return self.get_content()
+        return self.get_file()
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_content')
-    def get_content(self):
-        fd = self.get_content_fd()
+        SilvaPermissions.View, 'get_file')
+    def get_file(self):
+        fd = self.get_file_fd()
         data = fd.read()
         fd.close()
         return data
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_content_fd')
-    def get_content_fd(self):
+        SilvaPermissions.View, 'get_file_fd')
+    def get_file_fd(self):
         raise NotImplementedError
 
     security.declareProtected(
-        SilvaPermissions.View, 'content_type')
-    def content_type(self):
+        SilvaPermissions.View, 'get_content_type')
+    def get_content_type(self):
         return self._file.content_type
 
     security.declareProtected(
-        SilvaPermissions.View, 'content_encoding')
-    def content_encoding(self):
+        SilvaPermissions.View, 'get_content_encoding')
+    def get_content_encoding(self):
         return self._content_encoding
 
     # MODIFIERS
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_file_data')
-    def set_file_data(self, file):
+        SilvaPermissions.ChangeSilvaContent, 'set_file')
+    def set_file(self, file):
         """Set data in _file object
         """
         self._p_changed = 1
-        self._set_file_data_helper(file)
+        self._set_file_helper(file)
         if not interfaces.IImage.providedBy(aq_parent(self)):
             # If we are not a storage of an image, trigger an event.
             notify(ObjectModifiedEvent(self))
@@ -247,12 +247,12 @@ class File(Asset):
         self._content_encoding = content_encoding
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
-    def set_text_file_data(self, datastr):
+        SilvaPermissions.ChangeSilvaContent, 'set_text')
+    def set_text(self, datastr):
         ct = self._file.content_type
         datafile = StringIO()
         datafile.write(datastr)
-        self.set_file_data(datafile)
+        self.set_file(datafile)
         datafile.close()
         self._file.content_type = ct
 
@@ -272,7 +272,7 @@ class ZODBFile(File):
         # Actual container of file data
         self._file = Image.File(id, id, '')
 
-    def _set_file_data_helper(self, file):
+    def _set_file_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
         content_type, content_encoding = MAGIC.guess(
@@ -285,17 +285,17 @@ class ZODBFile(File):
         self._content_encoding = content_encoding
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_content')
-    def get_content(self):
+        SilvaPermissions.View, 'get_file')
+    def get_file(self):
         data = self._file.data
         if isinstance(data, StringTypes):
             return data
         return str(data)
 
     security.declareProtected(
-        SilvaPermissions.View, 'get_content_fd')
-    def get_content_fd(self):
-        return StringIO(self.get_content())
+        SilvaPermissions.View, 'get_file_fd')
+    def get_file_fd(self):
+        return StringIO(self.get_file())
 
 InitializeClass(ZODBFile)
 
@@ -326,8 +326,8 @@ class BlobFile(File):
     # MODIFIERS
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_file_data')
-    def set_file_data(self, file):
+        SilvaPermissions.ChangeSilvaContent, 'set_file')
+    def set_file(self, file):
         desc = self._file.open('w')
         try:
             data = file.read(CHUNK_SIZE)
@@ -340,8 +340,8 @@ class BlobFile(File):
         notify(ObjectModifiedEvent(self))
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'set_text_file_data')
-    def set_text_file_data(self, filestr):
+        SilvaPermissions.ChangeSilvaContent, 'set_text')
+    def set_text(self, filestr):
         desc = self._file.open('w')
         desc.write(filestr)
         desc.close()
@@ -366,15 +366,15 @@ class BlobFile(File):
         return size
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'content_type')
-    def content_type(self):
-        """
+        SilvaPermissions.AccessContentsInformation, 'get_content_type')
+    def get_content_type(self):
+        """Return the content type
         """
         return self._content_type
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'get_text_content')
-    def get_content_fd(self):
+        SilvaPermissions.AccessContentsInformation, 'get_file_fd')
+    def get_file_fd(self):
         return self._file.open()
 
     security.declareProtected(

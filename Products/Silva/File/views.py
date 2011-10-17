@@ -52,10 +52,10 @@ class FileResponseHeaders(HTTPResponseHeaders):
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))
         self.response.setHeader(
-            'Content-Type', self.context.content_type())
-        if self.context.content_encoding():
+            'Content-Type', self.context.get_content_type())
+        if self.context.get_content_encoding():
             self.response.setHeader(
-                'Content-Encoding', self.context.content_encoding())
+                'Content-Encoding', self.context.get_content_encoding())
         self.response.setHeader(
             'Content-Length', self.context.get_file_size())
         self.response.setHeader(
@@ -88,6 +88,7 @@ class ZODBFileView(silvaviews.View):
     grok.name('index.html')
 
     def render(self):
+        # XXX This should not be required
         self.response.setHeader(
             'Content-Disposition',
             'inline;filename=%s' % (self.context.get_filename()))
@@ -116,5 +117,5 @@ class BlobFileView(silvaviews.View):
                     if last_mod > 0 and last_mod <= mod_since:
                         self.response.setStatus(304)
                         return u''
-        return FDIterator(self.context.get_content_fd())
+        return FDIterator(self.context.get_file_fd())
 
