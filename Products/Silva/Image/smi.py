@@ -30,6 +30,8 @@ class ImageAddForm(silvaforms.SMIAddForm):
 
     fields = silvaforms.Fields(IImageAddFields)
     fields['id'].required = False
+    fields['image'].fileNotSetLabel = _(
+        u"Click the Upload button to select an image.")
 
     def _add(self, parent, data):
         default_id = data['id'] is not NO_VALUE and data['id'] or u''
@@ -50,6 +52,8 @@ class ImageEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IImageAddFields).omit('id')
+    fields['image'].fileSetLabel = _(
+        u"Click the Upload button to replace the current image with a new image.")
     actions  = silvaforms.Actions(silvaforms.CancelEditAction(),
                                   silvaforms.EditAction())
 
@@ -66,7 +70,7 @@ class IFormatAndScalingFields(Interface):
     web_scale = schema.TextLine(
         title=_(u"Scaling"),
         description=_(u'Image scaling for web: use width x  '
-                      u'height in pixels, or one axis length, ',
+                      u'height in pixels, or one axis length, '
                       u'or a percentage (100x200, 100x*, *x200, 40%).'),
         required=False)
     web_crop = silvaschema.CropCoordinates(

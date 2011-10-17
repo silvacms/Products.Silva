@@ -34,8 +34,8 @@ class IContainerSchema(ITitledContent):
     """Add a select for the default item.
     """
     default_item = schema.Choice(
-        title=_(u"first item"),
-        description=_(u"Choose an item to be created within the container"),
+        title=_(u"First item"),
+        description=_(u"Choose an item to be created within the container."),
         source=silva_container_policy,
         required=True)
 

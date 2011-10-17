@@ -21,7 +21,7 @@ logger = logging.getLogger('silva.file')
 
 
 class IFileAddFields(ITitledContent):
-    file = silvaschema.Bytes(title=_(u"file"), required=True)
+    file = silvaschema.Bytes(title=_(u"File"), required=True)
 
 
 class FileAddForm(silvaforms.SMIAddForm):
@@ -33,6 +33,8 @@ class FileAddForm(silvaforms.SMIAddForm):
     fields = silvaforms.Fields(IFileAddFields)
     fields['id'].required = False
     fields['title'].required = False
+    fields['file'].fileNotSetLabel = _(
+        u"Click the Upload button to select a file.")
 
     def _add(self, parent, data):
         default_id = data['id'] is not NO_VALUE and data['id'] or u''
@@ -54,6 +56,8 @@ class FileEditForm(silvaforms.SMISubForm):
     dataManager = silvaforms.SilvaDataManager
 
     fields = silvaforms.Fields(IFileAddFields).omit('id')
+    fields['file'].fileSetLabel = _(
+        u"Click the Upload button to replace the current file with a new file.")
     actions  = silvaforms.Actions(
         silvaforms.CancelEditAction(),
         silvaforms.EditAction())

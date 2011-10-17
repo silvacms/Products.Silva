@@ -145,7 +145,7 @@ def silva_content_types(context):
 
 class IAutoTOCSchema(ITitledContent):
     _local_types = schema.Set(
-        title=_(u"types to list"),
+        title=_(u"Types to list"),
         description=_(
             u"Select here the content types you wish to see in "
             u"the table of content. You need to selected container types "
@@ -155,7 +155,7 @@ class IAutoTOCSchema(ITitledContent):
         default=set(['Silva Document', 'Silva Folder', 'Silva Publication']),
         required=True)
     _toc_depth = schema.Int(
-        title=_(u"depth"),
+        title=_(u"Depth"),
         description=_(
             u"The depth to which the Table of Contents will be rendered "
             u"(-1 means unlimited depth.)"),
@@ -163,27 +163,27 @@ class IAutoTOCSchema(ITitledContent):
         min=-1,
         required=True)
     _display_desc_flag = schema.Bool(
-        title=_(u"display description"),
+        title=_(u"Display description"),
         description=_(
             u"If selected, each item displayed will include its title "
             u"and metadata description, if available. "),
         default=False,
         required=True)
     _show_icon = schema.Bool(
-        title=_("show icon"),
+        title=_("Show icon"),
         description=_(
             u"If selected, each item displayed will include its icon. "),
         default=False,
         required=True)
     _show_container_link = schema.Bool(
-        title=_("show container link"),
+        title=_("Show container link"),
         description=_(
             u"If selected, there will be a link to the container "
             u"(as an H3) before the TOC list."),
         default=False,
         required=True)
     _sort_order = schema.Choice(
-        title=_(u"sort order"),
+        title=_(u"Sort order"),
         description=_(u"The order items in a container will be sorted"),
         source=sort_order_source,
         default='silva',
