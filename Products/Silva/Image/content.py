@@ -391,7 +391,7 @@ class Image(Asset):
         return self.image.get_mime_type()
 
     security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'content_type')
+        SilvaPermissions.AccessContentsInformation, 'get_content_type')
     def get_content_type(self):
         if self.image is None:
             return 'application/octet-stream'
