@@ -4,16 +4,19 @@
 
 from five import grok
 from zope import schema
+from zope.component import getMultiAdapter
 from zope.interface import Interface
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
-from Products.Silva.Asset import SMIAssetPortlet
 from Products.Silva.Asset import AssetEditTab
-from silva.ui.rest.container import ListingPreview
+from Products.Silva.Asset import SMIAssetPortlet
+from silva.core.conf import schema as silvaschema
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.interfaces import IImage
-from silva.core.conf import schema as silvaschema
+from silva.core.smi.preview import DirectlyRenderedPreview
 from silva.translations import translate as _
+from silva.ui.rest import PageREST
+from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
 from zeam.form.base import NO_VALUE
 
@@ -145,6 +148,19 @@ class InfoPortlet(SMIAssetPortlet):
         self.original =self.context.url(hires=1)
         self.orientation = self.context.get_orientation()
         self.orientation_cls = unicode(self.orientation)
+
+
+class ImageHiresPreview(PageREST):
+    grok.adapts(DirectlyRenderedPreview, IImage)
+    grok.name('hires')
+    grok.require('silva.ReadSilvaContent')
+
+    def payload(self):
+        content = getMultiAdapter(
+            (self.context, self.request), name='content.html')
+        content.hires = True
+        return {"ifaces": ["preview"],
+                "html": content()}
 
 
 class ImageListingPreview(ListingPreview):

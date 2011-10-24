@@ -22,8 +22,11 @@ class DefaultImageView(silvaviews.View):
     grok.context(IImage)
     grok.require('zope2.View')
 
+    hires = False
+    thumbnail = False
+
     def render(self):
-        return self.content.tag()
+        return self.content.tag(hires=self.hires, thumbnail=self.thumbnail)
 
 
 class ImagePublishTraverse(SilvaPublishTraverse):

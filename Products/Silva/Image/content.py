@@ -307,7 +307,7 @@ class Image(Asset):
 
 
     security.declareProtected(SilvaPermissions.View, 'tag')
-    def tag(self, hires=0, thumbnail=0, **extra_attributes):
+    def tag(self, hires=False, thumbnail=False, **extra_attributes):
         """ return xhtml tag
 
         Since 'class' is a Python reserved word, it cannot be passed in
@@ -532,7 +532,7 @@ class Image(Asset):
         create_new_filename(new_image, self.getId())
         return new_image
 
-    def _get_image_and_src(self, hires=0, thumbnail=0):
+    def _get_image_and_src(self, hires=False, thumbnail=False):
         request = self.REQUEST
         absolute_url = getMultiAdapter((self, request), ISilvaURL)
         img_src = absolute_url.url(preview=INonCachedLayer.providedBy(request))

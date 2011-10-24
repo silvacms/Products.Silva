@@ -26,8 +26,8 @@
 
   <h4 i18n:translate="">Original</h4>
   <p>
-    <a title="View the original image" target="_blank" href="#"
-       tal:attributes="href viewlet.original"
+    <a title="View the original image"
+       class="open-screen" rel="preview/hires"
        i18n:attributes="title"
        i18n:translate="">View unscaled image</a>
   </p>
