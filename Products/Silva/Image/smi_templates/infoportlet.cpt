@@ -25,12 +25,14 @@
   </tal:thumbnail>
 
   <h4 i18n:translate="">Original</h4>
-  <p>
+  <div class="external-controls">
     <a title="View the original image"
-       class="open-screen" rel="preview/hires"
-       i18n:attributes="title"
-       i18n:translate="">View unscaled image</a>
-  </p>
+       class="open-screen form-button ui-state-default" rel="preview/hires"
+       i18n:attributes="title">
+      <ins class="ui-icon ui-icon-search"></ins>
+      <tal:msg i18n:translate="">View unscaled image</tal:msg>
+    </a>
+  </div>
 
   <h4 i18n:translate="">Orientation</h4>
   <p>
