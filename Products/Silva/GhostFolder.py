@@ -348,6 +348,8 @@ class GhostFolderAddForm(silvaforms.SMIAddForm):
     grok.name(u'Silva Ghost Folder')
 
     fields = silvaforms.Fields(IGhostFolderSchema)
+    fields['haunted'].referenceNotSetLabel = _(
+        u"Click the Lookup button to select a container to haunt.")
     dataValidators = [
         TargetValidator('haunted', is_folderish=True, adding=True)]
 

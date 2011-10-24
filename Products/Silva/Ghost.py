@@ -291,6 +291,8 @@ class GhostAddForm(silvaforms.SMIAddForm):
     grok.context(IGhost)
 
     fields = silvaforms.Fields(IGhostSchema)
+    fields['haunted'].referenceNotSetLabel = _(
+        u"Click the Lookup button to select a content to haunt.")
     dataValidators = [
         TargetValidator('haunted', is_folderish=False, adding=True)]
 
