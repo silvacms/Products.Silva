@@ -2,8 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-# Zope 3
-from zope.interface import implements
+from datetime import datetime
+
+from five import grok
 from zope.event import notify
 
 # Zope 2
@@ -15,82 +16,89 @@ from DateTime import DateTime
 from Products.Silva import SilvaPermissions
 
 from silva.core.interfaces import events
-from silva.core.interfaces import IVersioning, VersioningError
+from silva.core.interfaces import IVersioning, IVersion, VersioningError
+from silva.core.interfaces import IRequestForApprovalStatus
 from silva.translations import translate as _
 
 empty_version = (None, None, None)
 
 
-class RequestForApprovalInfo(object):
-    """ simple helper class storing information about the
-    current request for approval
+class RequestForApprovalMessage(object):
+    """Message about the request for approval status.
     """
 
-    def __init__(self):
-        self.request_pending = None
-        self.requester = None
-        self.request_messages = []
-        self.request_date = None
+    def __init__(self, status, message):
+        self.user_id = getSecurityManager().getUser().getId()
+        self.date = datetime.now()
+        self.message = message
+        self.status = status
 
-empty_request_for_approval_info = RequestForApprovalInfo()
+
+class RequestForApprovalStatus(grok.Annotation):
+    """Simple helper class storing information about the current
+    request for approval.
+    """
+    grok.context(IVersion)
+    grok.implements(IRequestForApprovalStatus)
+
+    def __init__(self):
+        self.pending = False
+        self.messages = []
+
+    def comment(self, status, message=None):
+        self.messages.append(RequestForApprovalMessage(status, message))
+        self.pending = (status == 'request')
+
+    def validate(self):
+        if self.pending:
+            self.comment('approve')
+            self.pending = False
+
+    def reset(self):
+        self.pending = False
+        self.messages = []
 
 
 class Versioning(object):
     """Mixin baseclass to make object contents versioned.
     """
+    grok.implements(IVersioning)
     security = ClassSecurityInfo()
-
-    implements(IVersioning)
 
     _unapproved_version = empty_version
     _approved_version = empty_version
     _public_version = empty_version
     _previous_versions = None
-    _request_for_approval_info = empty_request_for_approval_info
     _first_publication_date = None
 
     # MANIPULATORS
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'create_version')
+    security.declarePrivate('create_version')
     def create_version(self, version_id,
                        publication_datetime,
                        expiration_datetime):
         """Add unapproved version
         """
-        # self._update_publication_status()
-        if self._approved_version != empty_version:
-            raise VersioningError(
-                _('There is an approved version already; unapprove it. (${id})',
-                  mapping={'id': self._approved_version[0]}),
-                self)
 
-        if self._unapproved_version != empty_version:
-            raise VersioningError(
-                _('There already is an unapproved version (${id}).',
-                  mapping={'id': self._unapproved_version[0]}),
-                self)
+        assert self._approved_version == empty_version, \
+            u'There is an approved version'
+
+        assert self._unapproved_version == empty_version, \
+            u'There is an unapproved version'
 
         # if a version with this name already exists, complain
-        if (self._public_version and
-            version_id == self._public_version[0]):
-            raise VersioningError(
-                _('The public version has that id already (${id}).',
-                  mapping={'id': self._public_version[0]}),
+        if self._public_version is not None:
+            assert version_id != self._public_version[0], \
+                u'There is already a public version with the same id'
 
-                self)
         previous_versions = self._previous_versions or []
         for previous_version in previous_versions:
-            if version_id == previous_version[0]:
-                raise VersioningError(
-                    _('A previous version has that id already (${id}).',
-                      {'id': self._previous_version[0]}),
-                    self)
+            assert version_id != previous_version[0], \
+                u'There is already a previous version with the same id'
 
         self._unapproved_version = (version_id,
                                     publication_datetime,
                                     expiration_datetime)
-        # overwrite possible previous info ...
-        self._request_for_approval_info = RequestForApprovalInfo()
+
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
@@ -115,13 +123,12 @@ class Versioning(object):
 
         self._approved_version = self._unapproved_version
         self._unapproved_version = empty_version
-        if self._request_for_approval_info != empty_request_for_approval_info:
-            self._request_for_approval_info.request_pending = None
-            self._request_for_approval_info = self._request_for_approval_info
 
-        notify(events.ContentApprovedEvent(
-                getattr(self, self._approved_version[0]),
-                self._get_editable_rfa_info()))
+        version = self._getOb(self._approved_version[0])
+        status = IRequestForApprovalStatus(version)
+        status.validate()
+
+        notify(events.ContentApprovedEvent(version, status))
 
         # We may be published now
         self._update_publication_status()
@@ -134,7 +141,7 @@ class Versioning(object):
         # self._update_publication_status()
         if self._approved_version == empty_version:
             raise VersioningError(
-                  _('No approved version to unapprove.'),
+                  _("This content is not approved."),
                   self)
 
         if self._unapproved_version != empty_version:
@@ -147,53 +154,69 @@ class Versioning(object):
 
         self._unapproved_version = self._approved_version
         self._approved_version = empty_version
-        notify(events.ContentUnApprovedEvent(
-                getattr(self, self._unapproved_version[0]),
-                self._get_editable_rfa_info()))
+
+        version = self._getOb(self._unapproved_version[0])
+        notify(events.ContentUnApprovedEvent(version))
+
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'close_version')
     def close_version(self):
         """Close public version.
         """
-        # self._update_publication_status()
         if self._public_version == empty_version:
-            raise VersioningError(_('No public version to close.'), self)
+            raise VersioningError(
+                _(u"There is no public version to close."),
+                self)
 
         previous_versions = self._previous_versions or []
         previous_versions.append(self._public_version)
         self._public_version = empty_version
         self._previous_versions = previous_versions
-        notify(events.ContentClosedEvent(
-                getattr(self, self._previous_versions[-1][0])))
+
+        version = self._getOb(self._previous_versions[-1][0])
+        notify(events.ContentClosedEvent(version))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'create_copy')
-    def create_copy(self):
+    def create_copy(self, from_version_id=None):
         """Create new version of public version.
         """
-        if self.get_next_version() is not None:
-            return
-        # get id of public version to copy
-        version_id_to_copy = self.get_public_version()
-        # if there is no public version, get id of last closed version
-        # (which should always be there)
-        if version_id_to_copy is None:
-            version_id_to_copy = self.get_last_closed_version()
-            # there is no old version left!
-            if version_id_to_copy is None:
-                # FIXME: could create new empty version..
-                raise VersioningError, "Should never happen!"
-        # copy published version
+        if self.get_approved_version() is not None:
+            raise VersioningError(
+                _('An approvaed version is already available.'),
+                self)
+        if self.get_unapproved_version() is not None:
+            raise VersioningError(
+                _('An new version is already available.'),
+                self)
+
+        if from_version_id is None:
+            # get id of public version to copy
+            from_version_id = self.get_public_version()
+            # if there is no public version, get id of last closed version
+            # (which should always be there)
+            if from_version_id is None:
+                from_version_id = self.get_last_closed_version()
+                # there is no old version left!
+                if from_version_id is None:
+                    # FIXME: could create new empty version..
+                    raise VersioningError(
+                        _(u"There is no version to create a version form."),
+                        self)
+
+        # Copy given version
         new_version_id = self.get_new_version_id()
-        # FIXME: this only works if versions are stored in a folder as
-        # objects; factory function for VersionedContent objects should
-        # create an initial version with name '0', too.
-        self.manage_clone(getattr(self, version_id_to_copy), new_version_id)
+        self.manage_clone(self._getOb(from_version_id), new_version_id)
+
+        # The version might have been copied. Clear its data.
+        version = self._getOb(new_version_id)
+        IRequestForApprovalStatus(version).reset()
+
+        # Register it
         self.create_version(new_version_id, None, None)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'get_new_version_id')
+    security.declarePrivate('get_new_version_id')
     def get_new_version_id(self):
         """get_new_version_id is used when a new version will be created,
         to get a new unique id.  This may or may not change internal
@@ -201,19 +224,6 @@ class Versioning(object):
         new_version_id = str(self._version_count)
         self._version_count = self._version_count + 1
         return str(new_version_id)
-
-    def _get_editable_rfa_info(self):
-        """ helper method: return the request for approval information,
-        this creates a new one, if necessary; notifes Zope that this
-        has changed in advance ... i.e. do not call this method
-        if You do not want to change the information.
-        """
-        if self._request_for_approval_info == empty_request_for_approval_info:
-            self._request_for_approval_info = RequestForApprovalInfo()
-        else:
-            # Zope should be notified that it has changed
-            self._request_for_approval_info = self._request_for_approval_info
-        return self._request_for_approval_info
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'request_version_approval')
@@ -223,25 +233,21 @@ class Versioning(object):
         or it is already approved.
         Returns None otherwise
         """
-        # self._update_publication_status()
-        if self.get_unapproved_version() is None:
+        version_id = self.get_unapproved_version()
+        if version_id is None:
             raise VersioningError(
-                _('There is no unapproved version to request approval for.'),
+                _("This content doesn't require approval."),
                 self)
 
-        if self.is_approval_requested():
+        version = self._getOb(version_id)
+        status = IRequestForApprovalStatus(version)
+        if status.pending:
             raise VersioningError(
                 _('The version is already requested for approval.'),
                 self)
 
-        info = self._get_editable_rfa_info()
-        info.requester = getSecurityManager().getUser().getId()
-        info.request_date = DateTime()
-        info.request_pending=1
-        self._set_approval_request_message(message)
-        notify(events.ContentRequestApprovalEvent(
-                getattr(self, self._unapproved_version[0]),
-                self._get_editable_rfa_info()))
+        status.comment('request', message)
+        notify(events.ContentRequestApprovalEvent(version, status))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'withdraw_version_approval')
@@ -251,27 +257,21 @@ class Versioning(object):
         currently unapproved version has no request for approval yet,
         or if there is no unapproved version.
         """
-
-        # self._update_publication_status()
-        if self.get_unapproved_version is None:
+        version_id = self.get_unapproved_version()
+        if version_id is None:
             raise VersioningError(
-                _('There is no unapproved version to request approval for.'),
+                _("This content doesn't require approval."),
                 self)
 
-        if not self.is_approval_requested():
+        version = self._getOb(version_id)
+        status = IRequestForApprovalStatus(version)
+        if not status.pending:
             raise VersioningError(
-                _('The version is not requested for approval.'),
+                _("No request for approval is pending for this content."),
                 self)
 
-        info = self._get_editable_rfa_info()
-        original_requester = info.requester
-        info.requester = getSecurityManager().getUser().getId()
-        info.request_pending=None
-        self._set_approval_request_message(message)
-        notify(events.ContentApprovalRequestWithdrawnEvent(
-                getattr(self, self._unapproved_version[0]),
-                self._get_editable_rfa_info(),
-                original_requester))
+        status.comment('withdraw', message)
+        notify(events.ContentApprovalRequestWithdrawnEvent(version, status))
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'reject_version_approval')
@@ -281,28 +281,21 @@ class Versioning(object):
         currently unapproved version has no request for approval yet,
         or if there is no unapproved version.
         """
-
-        # self._update_publication_status()
-        if self.get_unapproved_version is None:
+        version_id = self.get_unapproved_version()
+        if version_id is None:
             raise VersioningError(
-                _('There is no unapproved version to request approval for.'),
+                _("This content doesn't require approval."),
                 self)
 
-        if not self.is_approval_requested():
+        version = self._getOb(version_id)
+        status = IRequestForApprovalStatus(version)
+        if not status.pending:
             raise VersioningError(
-                _('The version is not requested for approval.'),
+                _("No request for approval is pending for this content."),
                 self)
 
-        info = self._get_editable_rfa_info()
-        original_requester = info.requester
-        info.requester = getSecurityManager().getUser().getId()
-        info.request_pending = None
-
-        self._set_approval_request_message(message)
-        notify(events.ContentApprovalRequestRefusedEvent(
-                getattr(self, self._unapproved_version[0]),
-                self._get_editable_rfa_info(),
-                original_requester))
+        status.comment('reject', message)
+        notify(events.ContentApprovalRequestRefusedEvent(version, status))
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_publication_datetime')
@@ -407,24 +400,6 @@ class Versioning(object):
         else:
             raise VersioningError(_('No next version.'), self)
 
-    def _set_approval_request_message(self, message):
-        """Allows to add a message concerning the
-        current request for approval.
-        setting the currently approved message
-        overwrites any previous message for this content.
-        The implementation cleans the message
-        if a new version is created.
-        """
-        # very weak check ... allows to call this method
-        # before or after requesting approval, or the like.
-        if self.get_next_version() is None:
-            raise VersioningError(
-                _("There is no version to add messages for."),
-                self)
-
-        info = self._get_editable_rfa_info()
-        info.request_messages.append(message)
-
     def _update_publication_status(self):
         # Publish what need to be publish, expire what need to be expired
         now = DateTime()
@@ -472,14 +447,19 @@ class Versioning(object):
         """
         return self._public_version != empty_version
 
-
     security.declareProtected(
         SilvaPermissions.ReadSilvaContent, 'is_approval_requested')
     def is_approval_requested(self):
         """Check if there exists an unapproved version
         which has a request for approval.
         """
-        return self._request_for_approval_info.request_pending is not None
+        version_id = self.get_unapproved_version()
+        if version_id is None:
+            return False
+
+        version = self._getOb(version_id)
+        status = IRequestForApprovalStatus(version)
+        return status.pending
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_unapproved_version')
@@ -645,38 +625,11 @@ class Versioning(object):
             return None
         return versions[-1]
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_approval_requester')
-    def get_approval_requester(self):
-        """Return the id of the user requesting approval
-        of the currently unapproved version."""
-        return self._request_for_approval_info.requester
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_approval_requester')
-    def get_approval_request_message(self):
-        """Get the current message associated with
-        request for approval; i.e. argument passed as message
-        on the last change to the approval status
-        ({request,withdraw,reject}_version_approval, or approve_version)
-        May be None, if there is currently no such message.
-        """
-        messages = self._request_for_approval_info.request_messages
-        if len(messages)==0:
-            return None
-        else:
-            return messages[-1]
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_approval_requester')
-    def get_approval_request_datetime(self):
-        """Get the date when the currently unapproved version
-        did get a request for approval as a DateTime object,
-        or None if there is no such version or request.
-        """
-        return self._request_for_approval_info.request_date
-
 
 InitializeClass(Versioning)
 
+
+# BBB Pickle for cleanup
+class RequestForApprovalInfo(object):
+    pass
 

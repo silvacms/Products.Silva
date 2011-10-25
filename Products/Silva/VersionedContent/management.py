@@ -22,64 +22,29 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
     grok.provides(IPublicationWorkflow)
 
     def new_version(self):
-        if self.context.get_unapproved_version() is not None:
-            raise PublicationError(
-                _("This content already has a new version"),
-                self.context)
         self.context.create_copy()
         return True
 
     def request_approval(self, message):
-        # XXX add checkout publication datetime
-        # set_unapproved_version_publication_datetime(DateTime())
-        if self.context.get_unapproved_version() is None:
-            raise PublicationError(
-                _('There is no unapproved version.'),
-                self.context)
-        if self.context.is_approval_requested():
-            raise PublicationError(
-                _('Approval has already been requested.'),
-                self.context)
         self.context.request_version_approval(message)
         return True
 
-    def _check_withdraw_or_reject(self):
-        if self.context.get_unapproved_version() is None:
-            if self.context.get_public_version() is not None:
-                raise PublicationError(
-                    _("This content is already public"),
-                    self.context)
-            else:
-                raise PublicationError(
-                    _("This content is already approved"),
-                    self.context)
-        if not self.context.is_approval_requested():
-            raise PublicationError(
-                _("No request for approval is pending for this content"),
-                self.context)
-
     def withdraw_request(self, message):
-        self._check_withdraw_or_reject()
         self.context.withdraw_version_approval(message)
         return True
 
     def reject_request(self, message):
-        self._check_withdraw_or_reject()
         self.context.reject_version_approval(message)
         return True
 
     def revoke_approval(self):
-        if self.context.get_approved_version():
-            self.context.unapprove_version()
-            return True
-        raise PublicationError(
-            _(u"This content is not approved"),
-            self.context)
+        self.context.unapprove_version()
+        return True
 
     def approve(self, time=None):
         if self.context.get_unapproved_version() is None:
             raise PublicationError(
-                _("There is no unapproved version to approve"),
+                _("There is no unapproved version to approve."),
                 self.context)
         if time is not None:
             if isinstance(time, datetime):
@@ -96,7 +61,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         if not self.context.get_unapproved_version():
             if self.context.is_published():
                 raise PublicationError(
-                    _("There is no unapproved version to approve"),
+                    _("There is no unapproved version to approve."),
                     self.context)
             self.context.create_copy()
         current = self.context.get_unapproved_version_publication_datetime()
@@ -107,10 +72,6 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         return True
 
     def close(self):
-        if self.context.get_public_version() is None:
-            raise PublicationError(
-                _("There is no public version to close"),
-                self.context)
         self.context.close_version()
         return True
 

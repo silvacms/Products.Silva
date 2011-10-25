@@ -69,12 +69,9 @@ def send_message(target, from_userid, to_userid, subject, text):
 
 @grok.subscribe(interfaces.IVersion, events.IContentApprovedEvent)
 def send_messages_approved(content, event):
-    # send messages
-    info = event.info
-    manager = interfaces.IVersionManager(content)
-
-    if info.requester is None:
-        return # no requester found, so don't send messages
+    if not len(event.status.messages) > 1:
+        return
+    message = event.status.messages[-2]
 
     message_service = queryUtility(interfaces.IMessageService)
     if message_service is None:
@@ -82,6 +79,7 @@ def send_messages_approved(content, event):
         return
 
     now = DateTime()
+    manager = interfaces.IVersionManager(content)
     publication_datetime = manager.get_publication_datetime()
     expiration_datetime = manager.get_expiration_datetime()
 
@@ -100,7 +98,7 @@ def send_messages_approved(content, event):
             (editor, publication_date_str, expiration_date_str)
 
     message_service.send_message(
-        editor, info.requester, "Version approved", text)
+        editor, message.user_id, "Version approved", text)
 
 @grok.subscribe(interfaces.IVersion, events.IContentUnApprovedEvent)
 def send_messages_unapproved(content, event):
@@ -108,18 +106,21 @@ def send_messages_unapproved(content, event):
     author = getSecurityManager().getUser().getId()
     text = u"\nVersion was unapproved by %s." % author
     send_message_to_editors(content, author, 'Unapproved', text)
-    if event.info.requester is not None:
-        send_message(content, author, event.info.requester, 'Unapproved', text)
+
+    if len(event.status.messages) > 1:
+        message = event.status.messages[-2]
+        send_message(content, author, message.user_id, 'Unapproved', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentRequestApprovalEvent)
 def send_messages_request_approval(content, event):
-    last_author = content.sec_get_last_author_info()
-    info = event.info
+    assert len(event.status.messages) >= 1, \
+        u"Event should not have been triggered"
+    message = event.status.messages[-1]
+
     manager = interfaces.IVersionManager(content)
     publication_datetime = manager.get_publication_datetime()
     expiration_datetime = manager.get_expiration_datetime()
-    message = info.request_messages[-1]
 
     if publication_datetime is None:
         publication_date_str=''
@@ -135,40 +136,47 @@ def send_messages_request_approval(content, event):
            format_date(expiration_datetime)
     # send messages
     text = u"\nApproval was requested by %s.\n%s%s\nMessage:\n%s" % \
-            (info.requester,
-             publication_date_str, expiration_date_str, message)
+            (message.user_id,
+             publication_date_str,
+             expiration_date_str,
+             message.message)
 
     send_message_to_editors(
-        content, info.requester, 'Approval requested', text)
-    # XXX inform user, too (?)
+        content, message.user_id, 'Approval requested', text)
+    last_author = content.sec_get_last_author_info().userid()
     send_message(
-        content, info.requester, last_author.userid(),
+        content, message.user_id, last_author,
         'Approval requested', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentApprovalRequestWithdrawnEvent)
 def send_messages_content_approval_request_withdrawn(content, event):
-    info = event.info
-    original_requester = event.original_requester
-    message = info.request_messages[-1]
+    assert len(event.status.messages) >= 2, \
+        u"Event should not have been triggered"
+    message = event.status.messages[-1]
+    original_requester = event.status.messages[-2].user_id
 
     # send messages
     text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
-           % (info.requester, message)
+           % (message.user_id, message.message)
     send_message_to_editors(
-        content, info.requester,
+        content, message.user_id,
         'Approval withdrawn by author', text)
     send_message(
-        content, info.requester, original_requester,
+        content, message.user_id, original_requester,
         'Approval withdrawn by author', text)
 
 @grok.subscribe(interfaces.IVersion,
                 events.IContentApprovalRequestRefusedEvent)
 def send_messages_content_approval_request_refused(content, event):
-    message = event.info.request_messages[-1]
+    assert len(event.status.messages) >= 2, \
+        u"Event should not have been triggered"
+    message = event.status.messages[-1]
+    original_requester = event.status.messages[-2].user_id
+
     text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
-           % (event.info.requester, message)
-    send_message(content, event.info.requester, event.original_requester,
+           % (message.user_id, message.message)
+    send_message(content, message.user_id, original_requester,
         "Approval rejected by editor", text)
 
 

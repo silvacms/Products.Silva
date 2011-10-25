@@ -142,17 +142,6 @@ class VersionedContent(Versioning, Content, BaseFolder):
         return getattr(self, version_id)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_last_closed')
-    def get_last_closed(self):
-        """Get the last closed version (may be the object itself if
-        no versioning).
-        """
-        version_id = self.get_last_closed_version()
-        if version_id is None:
-            return None # There is no public document
-        return getattr(self, version_id)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
         'is_deletable')
     def is_deletable(self):
         """is object deletable?

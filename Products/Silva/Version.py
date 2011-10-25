@@ -60,28 +60,21 @@ class VersionManager(grok.Adapter):
     def make_editable(self):
         """Make the version editable.
         """
-        approved_version = self.content.get_approved_version()
-        if approved_version is not None:
-            raise VersioningError(
-                _('An approved version is already available'),
-                self)
-
         current_version = self.content.get_unapproved_version()
         if current_version is not None:
             # move the current editable version to _previous_versions
             if self.content.is_approval_requested():
                 raise VersioningError(
-                    _('A version is waiting approval'),
+                    _('A version is already waiting approval.'),
                     self)
 
             version_tuple = self.content._unapproved_version
             if self.content._previous_versions is None:
                 self.content._previous_versions = []
             self.content._previous_versions.append(version_tuple)
+            self.content._unapproved_version = (None, None, None)
 
-        new_version_id = self.content.get_new_version_id()
-        self.content.manage_clone(self.version, new_version_id)
-        self.content._unapproved_version = (new_version_id, None, None)
+        self.content.create_copy(from_version_id=self.version.id)
         return True
 
     def delete(self):
@@ -91,12 +84,12 @@ class VersionManager(grok.Adapter):
 
         if self.content.get_approved_version() == versionid:
             raise VersioningError(
-                _(u"Version is approved"),
+                _(u"Version is approved."),
                 self.content, self.version)
 
         if self.content.get_public_version() == versionid:
             raise VersioningError(
-                _(u"Version is published"),
+                _(u"Version is published."),
                 self.content, self.version)
 
         if self.content.get_unapproved_version() == versionid:

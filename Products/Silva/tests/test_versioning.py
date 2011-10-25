@@ -9,25 +9,29 @@ from Products.Silva.testing import assertTriggersEvents, assertNotTriggersEvents
 
 from DateTime import DateTime
 from Products.Silva import Versioning
-from Products.Silva.Content import Content
-from OFS.SimpleItem import SimpleItem
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
+from silva.core.interfaces import IRequestForApprovalStatus
+
+_marker = object()
 
 
-class MockupVersion(SimpleItem):
+class MockupVersion(Version):
     meta_type='MockupVersion'
 
     def __init__(self, id):
         self.id = id
 
 
-class MockupVersionedContent(Versioning.Versioning, Content, SimpleItem):
+class MockupVersionedContent(VersionedContent):
     meta_type='MockupVersionedContent'
 
     def __init__(self, id):
         self.id = id
         for version in range(0, 5):
-            setattr(self, str(version), MockupVersion(str(version)))
-            getattr(self, str(version)).title = 'Version %d' % version
+            self._setObject(str(version), MockupVersion(str(version)))
+            self._getOb(str(version)).title = 'Version %d' % version
+
 
 
 class VersioningTestCase(unittest.TestCase):
@@ -304,14 +308,19 @@ class VersioningTestCase(unittest.TestCase):
             versioning.request_version_approval('Request test message')
 
         self.assertEqual(versioning.is_approval_requested(), True)
-        self.assertEqual(versioning.get_approval_requester(), 'manager')
-        self.assertEqual(
-            versioning.get_approval_request_message(),
-            'Request test message')
-
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
+
+        status = IRequestForApprovalStatus(versioning._getOb('0'))
+        self.assertEqual(len(status.messages), 1)
+        self.assertEqual(status.pending, True)
+
+        message = status.messages[0]
+        self.assertEqual(message.user_id, 'manager')
+        self.assertEqual(message.status, 'request')
+        self.assertEqual(message.message, 'Request test message')
+        self.assertNotEqual(message.date, None)
 
         # Cannot ask approval two times
         self.assertRaises(
@@ -325,6 +334,15 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), '0')
         self.assertEqual(versioning.get_unapproved_version(), None)
+
+        self.assertEqual(len(status.messages), 2)
+        self.assertEqual(status.pending, False)
+
+        response_message = status.messages[1]
+        self.assertEqual(response_message.user_id, 'manager')
+        self.assertEqual(response_message.status, 'approve')
+        self.assertEqual(response_message.message, None)
+        self.assertNotEqual(response_message.date, None)
 
         # It is approved, cannot ask to approve it again
         self.assertRaises(
@@ -347,12 +365,25 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
 
+        status = IRequestForApprovalStatus(versioning._getOb('0'))
+        self.assertEqual(len(status.messages), 1)
+        self.assertEqual(status.pending, True)
+
         with assertTriggersEvents('ContentApprovalRequestWithdrawnEvent'):
             versioning.withdraw_version_approval('Withdraw message')
 
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
+
+        self.assertEqual(len(status.messages), 2)
+        self.assertEqual(status.pending, False)
+
+        response_message = status.messages[1]
+        self.assertEqual(response_message.user_id, 'manager')
+        self.assertEqual(response_message.status, 'withdraw')
+        self.assertEqual(response_message.message, 'Withdraw message')
+        self.assertNotEqual(response_message.date, None)
 
         # Cannot withdraw version twice
         self.assertRaises(
@@ -375,12 +406,25 @@ class VersioningTestCase(unittest.TestCase):
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
 
+        status = IRequestForApprovalStatus(versioning._getOb('0'))
+        self.assertEqual(len(status.messages), 1)
+        self.assertEqual(status.pending, True)
+
         with assertTriggersEvents('ContentApprovalRequestRefusedEvent'):
             versioning.reject_version_approval('Reject message')
 
         self.assertEqual(versioning.get_public_version(), None)
         self.assertEqual(versioning.get_approved_version(), None)
         self.assertEqual(versioning.get_unapproved_version(), '0')
+
+        self.assertEqual(len(status.messages), 2)
+        self.assertEqual(status.pending, False)
+
+        response_message = status.messages[1]
+        self.assertEqual(response_message.user_id, 'manager')
+        self.assertEqual(response_message.status, 'reject')
+        self.assertEqual(response_message.message, 'Reject message')
+        self.assertNotEqual(response_message.date, None)
 
         # Cannot reject version twice
         self.assertRaises(
