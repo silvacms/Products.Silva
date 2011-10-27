@@ -5,6 +5,7 @@
 from five import grok
 from zope.container.contained import notifyContainerModified
 from zope.event import notify
+from zope.lifecycleevent import ObjectModifiedEvent
 from zope.lifecycleevent import ObjectRemovedEvent
 from zope.traversing.browser import absoluteURL
 
@@ -162,8 +163,9 @@ class Folder(Publishable, BaseFolder):
             # to publication
             from Products.Silva.Publication import Publication
             sc = helpers.SwitchClass(Publication)
-        return sc.upgrade(self)
-
+        content = sc.upgrade(self)
+        notify(ObjectModifiedEvent(self))
+        return content
 
     def _verify_quota(self):
         # Hook to check quota. Do nothing by default.
