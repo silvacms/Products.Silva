@@ -533,22 +533,6 @@ class Versioning(object):
         """Get version datetime."""
         return self._approved_version[2] or self._unapproved_version[2]
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'get_next_version_status')
-    def get_next_version_status(self):
-        """Get status of next version.
-        """
-        # XXX i18n - should we translate these?
-        if self.get_unapproved_version() is not None:
-            if self.is_approval_requested():
-                return "request_pending"
-            else:
-                return "not_approved"
-        elif self.get_approved_version() is not None:
-            return "approved"
-        else:
-            return "no_next_version"
-
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'get_public_version')
     def get_public_version(self):
@@ -584,16 +568,6 @@ class Versioning(object):
     def get_public_version_expiration_datetime(self):
         """Get version datetime."""
         return self._public_version[2]
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'get_public_version_status')
-    def get_public_version_status(self):
-        if self.get_public_version() is not None:
-            return "published"
-        elif self.get_previous_versions():
-            return "closed"
-        else:
-            return "no_public_version"
 
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'get_previous_versions')
