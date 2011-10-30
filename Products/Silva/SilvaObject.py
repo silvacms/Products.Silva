@@ -48,10 +48,12 @@ class TitledObject(object):
     def set_title(self, title):
         """Set the title of the silva object.
         """
-        # FIXME: Ugh. I get unicode from formulator but this will not validate
-        # when using the metadata system. So first make it into utf-8 again..
         if title is not None:
-            title = title.encode('utf-8')
+            # FIXME: Ugh. I get unicode from formulator but this will
+            # not validate when using the metadata system. So first
+            # make it into utf-8 again..
+            if isinstance(title, unicode):
+                title = title.encode('utf-8')
             binding = getUtility(IMetadataService).getMetadata(self)
             binding.setValues('silva-content', {'maintitle': title}, reindex=1)
 

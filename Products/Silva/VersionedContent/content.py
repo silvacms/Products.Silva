@@ -155,11 +155,11 @@ class VersionedContent(Versioning, Content, BaseFolder):
         if not check_permission('Approve Silva content', self):
             if self.is_published():
                 raise ContentError(
-                    _(u"Content is published"),
+                    _(u"Content is published."),
                     self)
             if self.is_approved():
                 raise ContentError(
-                    _(u"Content is approved"),
+                    _(u"Content is approved."),
                     self)
 
 InitializeClass(VersionedContent)

@@ -94,11 +94,11 @@ class ContainerManager(grok.Adapter):
     def __verify_copyable(self, content):
         if not content.cb_isCopyable():
             return ContainerError(
-                _(u"Unauthorized to copy this content."),
+                _(u"You are unauthorized to copy this content."),
                 content)
         if content.meta_type not in self.__addables:
             return ContainerError(
-                _(u"Cannot add this content type in this container."),
+                _(u"You cannot add this content type in this container."),
                 content)
         return None
 
@@ -185,7 +185,7 @@ class ContainerManager(grok.Adapter):
 
             # Rename identifier
             from_identifier = content.getId()
-            if from_identifier != to_identifier:
+            if to_identifier is not None and from_identifier != to_identifier:
                 result = self.__verify_moveable(content)
                 if result is None:
                     result = mangle.Id(
@@ -202,10 +202,17 @@ class ContainerManager(grok.Adapter):
                     any_renames = True
 
             # Update title
-            editable = content.get_editable()
-            if (to_title != None and
-                editable != None and editable.get_title() != to_title):
-                editable.set_title(to_title)
+            if to_title is not None:
+                if not isinstance(to_title, unicode):
+                    to_title = to_title.decode('utf-8')
+                editable = content.get_editable()
+                if editable is None:
+                    if result is None:
+                        result = ContentError(
+                            _(u"There is no editable version to set the title on."),
+                            content)
+                elif editable.get_title() != to_title:
+                    editable.set_title(to_title)
 
             if result is None:
                 result = content

@@ -146,19 +146,63 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
 
         An author can't do anything, nothing is done.
         """
+        link = self.root.folder.published_link
         manager = IContainerManager(self.root.folder)
         with assertNotTriggersEvents('ObjectWillBeMovedEvent',
                                      'ObjectMovedEvent',
                                      'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
                 self.assertIsInstance(
-                    renamer((self.root.folder.published_link, 'updated_link', 'Updated Link')),
+                    renamer((link, 'updated_link', 'Updated Link')),
                     ContentError)
 
+        self.assertEqual(link, self.root.folder.published_link)
         self.assertTrue('published_link' in self.root.folder.objectIds())
         self.assertFalse('updated_link' in self.root.folder.objectIds())
-        self.assertTrue(verifyObject(ILink, self.root.folder.published_link))
-        self.assertEqual(self.root.folder.published_link.get_title(), 'Published Link')
+        self.assertTrue(verifyObject(ILink, link))
+        self.assertEqual(link.get_title(), 'Published Link')
+
+    def test_rename_new_version_content_title(self):
+        """Rename only the title on a new version of a published content.
+
+        (The title is an utf-8 string, not unicode, to test encodings.)
+        """
+        link = self.root.folder.published_link
+        manager = IContainerManager(self.root.folder)
+        IPublicationWorkflow(link).new_version()
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.renamer() as renamer:
+                self.assertEqual(
+                    renamer((link, None, 'Updaté Link')),
+                    link)
+
+        self.assertEqual(link, self.root.folder.published_link)
+        self.assertTrue('published_link' in self.root.folder.objectIds())
+        self.assertTrue(verifyObject(ILink, link))
+        self.assertEqual(link.get_title(), 'Published Link')
+        self.assertEqual(link.get_editable().get_title(), u'Updaté Link')
+
+    def test_rename_published_content_title(self):
+        """Rename only the title on a published content. Nothing
+        happens (except an error).
+        """
+        link = self.root.folder.published_link
+        manager = IContainerManager(self.root.folder)
+        with assertNotTriggersEvents('ObjectWillBeMovedEvent',
+                                     'ObjectMovedEvent',
+                                     'ContainerModifiedEvent'):
+            with manager.renamer() as renamer:
+                self.assertIsInstance(
+                    renamer((link, None, 'Updated Link')),
+                    ContentError)
+
+        self.assertEqual(link, self.root.folder.published_link)
+        self.assertTrue('published_link' in self.root.folder.objectIds())
+        self.assertTrue(verifyObject(ILink, link))
+        self.assertEqual(link.get_title(), 'Published Link')
+        self.assertEqual(link.get_editable(), None)
 
     def test_rename_published_container_id_and_title(self):
         """Rename a published container it and title.
@@ -187,22 +231,25 @@ class EditorFolderRenameTestCase(AuthorFolderRenameTestCase):
     def test_rename_published_content_id_and_title(self):
         """Rename a published content id and title.
 
-        An Editor has the right to change both the id and title.
+        An Editor has the right to change the id, but not the title
+        (there is no unapproved version to set the title on).
         """
-        manager = IContainerManager(self.root.folder)
+        folder = self.root.folder
+        manager = IContainerManager(folder)
         with assertTriggersEvents('ObjectWillBeMovedEvent',
                                   'ObjectMovedEvent',
                                   'ContainerModifiedEvent'):
             with manager.renamer() as renamer:
-                self.assertNotEqual(
-                    renamer((self.root.folder.published_link, 'updated_link', 'Updated Link')),
-                    None)
+                self.assertIsInstance(
+                    renamer((folder.published_link, 'updated_link', 'Updated Link')),
+                    ContentError)
 
-        self.assertFalse('published_link' in self.root.folder.objectIds())
-        self.assertTrue('updated_link' in self.root.folder.objectIds())
-        self.assertTrue(verifyObject(ILink, self.root.folder.updated_link))
-        # The title is not changed (it changed only the editable version, there is None)
-        self.assertEqual(self.root.folder.updated_link.get_title(), 'Published Link')
+        self.assertFalse('published_link' in folder.objectIds())
+        self.assertTrue('updated_link' in folder.objectIds())
+        self.assertTrue(verifyObject(ILink, folder.updated_link))
+        # The title is not changed (it changed only the editable
+        # version, there is None)
+        self.assertEqual(folder.updated_link.get_title(), 'Published Link')
 
     def test_rename_published_container_id_and_title(self):
         """Rename a published container id and title.
