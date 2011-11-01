@@ -71,6 +71,19 @@ class OrderManager(grok.Annotation):
         except ValueError:
             return -1
 
+    def _fix(self, folder):
+        # Maintenance method that remove id that have been removed
+        # from the folder.
+        folder_ids = folder.objectIds()
+        remove_ids = []
+        for id in self.order:
+            if id not in folder_ids:
+                remove_ids.append(id)
+        if remove_ids:
+            for id in remove_ids:
+                self.order.remove(id)
+            self._p_changed = True
+
 
 @grok.subscribe(ISilvaObject, IObjectMovedEvent)
 def content_added(content, event):
