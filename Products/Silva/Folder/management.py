@@ -24,6 +24,7 @@ from Products.Silva import helpers, mangle
 from Products.Silva.Ghost import ghost_factory
 
 from infrae.comethods import comethod
+from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerManager, IOrderManager
 from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IContainer, IAsset
@@ -109,18 +110,19 @@ class ContainerManager(grok.Adapter):
             return error
         if not content.cb_isMoveable():
             return ContainerError(
-                _(u"Unauthorized to move this content."),
+                _(u"You are unauthorized to move this content."),
                 content)
         if not  move_check(self.context, content):
             return ContainerError(
-                _(u"Cannot move this content to this container."),
+                _(u"You Cannot move this content to this container."),
                 content)
         if content.meta_type not in self.__addables:
             return ContainerError(
-                _(u"Cannot add this content type in this container."),
+                _(u"You Cannot add this content type in this container."),
                 content)
         return None
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     @comethod
     def copier(self):
 
@@ -139,6 +141,7 @@ class ContainerManager(grok.Adapter):
                 result = make_copy(content)
             content = yield result
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     @comethod
     def mover(self):
         any_moves = False
@@ -173,6 +176,7 @@ class ContainerManager(grok.Adapter):
         if any_moves:
             notifyContainerModified(self.context)
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     @comethod
     def renamer(self):
         any_renames = False
@@ -222,6 +226,7 @@ class ContainerManager(grok.Adapter):
         if any_renames:
             notifyContainerModified(self.context)
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     @comethod
     def ghoster(self):
         content = yield
@@ -237,6 +242,7 @@ class ContainerManager(grok.Adapter):
 
             content = yield result
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     @comethod
     def deleter(self):
         to_delete = []

@@ -10,6 +10,7 @@ from five import grok
 from DateTime import DateTime
 from datetime import datetime
 
+from silva.core import conf as silvaconf
 from silva.core.interfaces import IVersion
 from silva.core.interfaces import IVersionedContent
 from silva.core.interfaces import IPublicationWorkflow, PublicationError
@@ -21,10 +22,12 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
     grok.implements(IPublicationWorkflow)
     grok.provides(IPublicationWorkflow)
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     def new_version(self):
         self.context.create_copy()
         return True
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     def request_approval(self, message=None):
         if message is None:
             message = u"Request immediate publication of this content. " + \
@@ -32,6 +35,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.request_version_approval(message)
         return True
 
+    @silvaconf.protect('silva.ChangeSilvaContent')
     def withdraw_request(self, message=None):
         if message is None:
             message = u"Approval was withdrawn " + \
@@ -39,6 +43,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.withdraw_version_approval(message)
         return True
 
+    @silvaconf.protect('silva.ApproveSilvaContent')
     def reject_request(self, message=None):
         if message is None:
             message = u"Approval was rejected " +\
@@ -46,10 +51,12 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.reject_version_approval(message)
         return True
 
+    @silvaconf.protect('silva.ApproveSilvaContent')
     def revoke_approval(self):
         self.context.unapprove_version()
         return True
 
+    @silvaconf.protect('silva.ApproveSilvaContent')
     def approve(self, time=None):
         if self.context.get_unapproved_version() is None:
             raise PublicationError(
@@ -64,6 +71,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.approve_version()
         return True
 
+    @silvaconf.protect('silva.ApproveSilvaContent')
     def publish(self):
         # Do the same job than approve, but works on closed content as
         # well.
@@ -80,6 +88,7 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.approve_version()
         return True
 
+    @silvaconf.protect('silva.ApproveSilvaContent')
     def close(self):
         self.context.close_version()
         return True

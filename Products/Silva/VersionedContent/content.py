@@ -7,7 +7,8 @@
 from five import grok
 
 # Zope 2
-from AccessControl import ClassSecurityInfo, getSecurityManager
+from AccessControl import ClassSecurityInfo
+from AccessControl.security import checkPermission
 from App.class_init import InitializeClass
 from OFS.Folder import Folder as BaseFolder
 
@@ -151,8 +152,7 @@ class VersionedContent(Versioning, Content, BaseFolder):
                 it's not approved
 
         """
-        check_permission = getSecurityManager().checkPermission
-        if not check_permission('Approve Silva content', self):
+        if not checkPermission('silva.ApproveSilvaContent', self):
             if self.is_published():
                 raise ContentError(
                     _(u"Content is published."),
