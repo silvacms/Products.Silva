@@ -25,15 +25,24 @@ class VersionedContentPublicationWorkflow(grok.Adapter):
         self.context.create_copy()
         return True
 
-    def request_approval(self, message):
+    def request_approval(self, message=None):
+        if message is None:
+            message = u"Request immediate publication of this content. " + \
+                u"(automatically generated message)."
         self.context.request_version_approval(message)
         return True
 
-    def withdraw_request(self, message):
+    def withdraw_request(self, message=None):
+        if message is None:
+            message = u"Approval was withdrawn " + \
+                u"(automatically generated message)."
         self.context.withdraw_version_approval(message)
         return True
 
-    def reject_request(self, message):
+    def reject_request(self, message=None):
+        if message is None:
+            message = u"Approval was rejected " +\
+                u"(automatically generated message)."
         self.context.reject_version_approval(message)
         return True
 
