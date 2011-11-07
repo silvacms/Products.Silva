@@ -23,7 +23,7 @@ from OFS.subscribers import compatibilityCall
 from Products.Silva import helpers, mangle
 from Products.Silva.Ghost import ghost_factory
 
-from infrae.comethods import comethod
+from infrae.comethods import cofunction
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerManager, IOrderManager
 from silva.core.interfaces import IAddableContents
@@ -123,7 +123,7 @@ class ContainerManager(grok.Adapter):
         return None
 
     @silvaconf.protect('silva.ChangeSilvaContent')
-    @comethod
+    @cofunction
     def copier(self):
 
         def make_copy(content):
@@ -142,7 +142,7 @@ class ContainerManager(grok.Adapter):
             content = yield result
 
     @silvaconf.protect('silva.ChangeSilvaContent')
-    @comethod
+    @cofunction
     def mover(self):
         any_moves = False
 
@@ -177,7 +177,7 @@ class ContainerManager(grok.Adapter):
             notifyContainerModified(self.context)
 
     @silvaconf.protect('silva.ChangeSilvaContent')
-    @comethod
+    @cofunction
     def renamer(self):
         any_renames = False
         ordering = IOrderManager(self.context, None)
@@ -227,7 +227,7 @@ class ContainerManager(grok.Adapter):
             notifyContainerModified(self.context)
 
     @silvaconf.protect('silva.ChangeSilvaContent')
-    @comethod
+    @cofunction
     def ghoster(self):
         content = yield
         while content is not None:
@@ -243,7 +243,7 @@ class ContainerManager(grok.Adapter):
             content = yield result
 
     @silvaconf.protect('silva.ChangeSilvaContent')
-    @comethod
+    @cofunction
     def deleter(self):
         to_delete = []
         container_ids = set(self.context.objectIds())
