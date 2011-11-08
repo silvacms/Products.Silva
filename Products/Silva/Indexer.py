@@ -38,8 +38,9 @@ class IndexerReferenceValue(WeakReferenceValue):
             raise TypeError('Indexer only accepts IIndexer as source')
 
     def cleanup(self):
-        super(IndexerReferenceValue, self).cleanup()
-        self.source._remove_reference_related_entries(self)
+        source = super(IndexerReferenceValue, self).cleanup()
+        if source is not None:
+            source._remove_reference_related_entries(self)
 
 
 class Indexer(Content, SimpleItem):

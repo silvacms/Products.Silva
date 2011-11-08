@@ -7,8 +7,8 @@ import unittest
 from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
-from silva.core.interfaces import IPublicationWorkflow
 from Products.Silva.testing import FunctionalLayer
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.interfaces import IIndexer
 from silva.core.references.interfaces import IReferenceService
 
@@ -59,6 +59,8 @@ class IndexerTestCase(unittest.TestCase):
         self.resolver = resolver
 
     def test_indexer(self):
+        """Verify interface.
+        """
         self.assertTrue(verifyObject(IIndexer, self.root.folder.indexer))
 
     def test_get_index_names(self):
@@ -84,6 +86,9 @@ class IndexerTestCase(unittest.TestCase):
              (u'Kappa', self.resolver(folder.ghost), 'anchor_kappa')])
 
     def test_remove_entry_when_remove_object(self):
+        """Verify that a corresponding entry is removed when the
+        object is removed.
+        """
         folder = self.root.folder
 
         self.assertItemsEqual(
@@ -95,6 +100,12 @@ class IndexerTestCase(unittest.TestCase):
         self.assertItemsEqual(
             folder.indexer.get_index_entry('Anchor Alpha'),
             [])
+
+    def test_remove_everything(self):
+        """Verify that can remove everything without errors.
+        """
+        self.root.manage_delObjects(['folder'])
+        self.assertFalse('folder' in self.root.objectIds())
 
 
 def test_suite():
