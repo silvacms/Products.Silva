@@ -23,7 +23,7 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login(self.user)
+        self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('source', 'Source Folder')
@@ -36,6 +36,8 @@ class AuthorFolderMovingTestCase(unittest.TestCase):
         factory.manage_addFolder('folder', 'Folder')
 
         IPublicationWorkflow(self.root.source.published_link).publish()
+
+        self.layer.login(self.user)
 
     def test_move_content(self):
         """Move a single item.

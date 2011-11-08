@@ -21,7 +21,7 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login(self.user)
+        self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
@@ -32,6 +32,8 @@ class AuthorFolderRenameTestCase(unittest.TestCase):
         factory.manage_addLink('published_link', 'Published Link')
 
         IPublicationWorkflow(self.root.folder.published_link).publish()
+
+        self.layer.login(self.user)
 
     def test_rename_id_and_title(self):
         """Rename identifier and title for a single non-publishable item.

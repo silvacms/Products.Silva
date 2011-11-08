@@ -18,7 +18,7 @@ class VersionManagerTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login('author')
+        self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('test', 'Test Content')
@@ -27,6 +27,8 @@ class VersionManagerTestCase(unittest.TestCase):
         for version_id in range(1, 5):
             publisher.publish()
             publisher.new_version()
+
+        self.layer.login('author')
 
     def test_implementation(self):
         published = self.root.test.get_viewable()
@@ -135,8 +137,14 @@ class VersionManagerTestCase(unittest.TestCase):
         yet not published version. This will not work.
         """
         content = self.root.test
+
+        self.layer.login('editor')
+
         publisher = IPublicationWorkflow(content)
         publisher.approve(DateTime() + 50)
+
+        self.layer.login('author')
+
         manager = IVersionManager(content.get_mockup_version(1))
         with self.assertRaises(VersioningError):
             manager.make_editable()

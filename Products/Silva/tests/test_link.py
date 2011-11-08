@@ -18,7 +18,7 @@ class LinkTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login('author')
+        self.layer.login('editor')
 
     def test_link(self):
         """Test that link triggers events.

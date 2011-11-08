@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from Products.Silva.testing import FunctionalLayer
 
 from silva.core.interfaces import (IPublicationWorkflow,
-    VersioningError, PublicationError, IVersion)
+                                   VersioningError, IVersion)
 from zope.interface.verify import verifyObject
 
 

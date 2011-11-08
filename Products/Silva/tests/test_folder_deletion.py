@@ -20,7 +20,7 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login(self.user)
+        self.layer.login('editor')
 
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
@@ -34,6 +34,8 @@ class AuthorFolderDeletionTestCase(unittest.TestCase):
         factory.manage_addLink('published_link', 'Published Link')
 
         IPublicationWorkflow(self.root.folder.published_link).publish()
+
+        self.layer.login(self.user)
 
     def test_implementation(self):
         manager = IContainerManager(self.root.folder, None)
