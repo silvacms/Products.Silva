@@ -4,13 +4,13 @@
 
 # Zope 3
 from five import grok
+from five.localsitemanager import make_site
 from zope import schema, interface, component
 from zope.event import notify
 from zope.lifecycleevent import ObjectAddedEvent
 from zope.lifecycleevent import ObjectCreatedEvent
 from zope.site.hooks import setSite, setHooks
 from zope.traversing.browser import absoluteURL
-from five.localsitemanager import make_site
 
 # Zope 2
 from AccessControl import ClassSecurityInfo, getSecurityManager
@@ -19,6 +19,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Application import Application
 from zExceptions import Unauthorized
 import Globals
+import transaction
 
 # Silva
 from Products.Silva.ExtensionService import install_documentation
@@ -101,7 +102,9 @@ class ZopeWelcomePage(silvaforms.ZMIForm):
             factory.manage_addSilvaFind('search', 'Search this site')
 
         if data.getDefault('add_documentation'):
-            # install the user documentation .zexp
+            transaction.commit() # Be sure everything in the site is
+                                 # in the DB before.  install the user
+                                 # documentation .zexp
             install_documentation(root, self.request)
 
         self.redirect(absoluteURL(root, self.request) + '/edit')

@@ -2,13 +2,13 @@
 # See also LICENSE.txt
 # $Id$
 
-# Zope 3
-from zope import interface, schema
-from five import grok
-
 from datetime import datetime
 import os.path
 import logging
+
+# Zope 3
+from zope import interface, schema
+from five import grok
 
 # Zope 2
 from AccessControl import ClassSecurityInfo
