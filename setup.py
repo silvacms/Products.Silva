@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0a1dev'
+version = '3.0b1'
 
 tests_require = [
     'infrae.testing',
@@ -41,7 +41,6 @@ setup(name='Products.Silva',
       zip_safe=False,
       install_requires=[
         'PIL',
-        'Products.Formulator',
         'Products.SilvaMetadata',
         'Sprout',
         'ZODB3 >= 3.9',
@@ -53,12 +52,14 @@ setup(name='Products.Silva',
         'silva.core.conf',
         'silva.core.interfaces',
         'silva.core.layout',
+        'silva.core.messages',
         'silva.core.references',
         'silva.core.services',
         'silva.core.smi',
         'silva.core.upgrade',
         'silva.core.views',
         'silva.translations',
+        'silva.ui',
         'silvatheme.standardissue',
         'zeam.form.silva',
         'zope.annotation',

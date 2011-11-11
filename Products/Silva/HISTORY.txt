@@ -1,6 +1,35 @@
 Changes
 =======
 
+Silva 3.0b1 (2011/11/11)
+------------------------
+
+Main changes:
+
+- Base the SMI on top of ``silva.ui``. Most of screens are implemented
+  in ``silva.core.smi`` and no longer here.
+
+- Major cleanup of the APIs, all methods used by the old SMI have been
+  removed. When need, adapters provides the functionality now.
+
+- Silva root creation process have been reviewed, as a suite of
+  events. This makes possible to have extension that plugs actions at
+  that moment. There is no longer a large install method.
+
+- Built-in Kupu support have been removed.
+
+- XSLT support have been removed, and the renderer registry.
+
+- SilvaViews, FileSystemSite are no longer used and supported.
+
+- Old unused fake adapters have been removed.
+
+- ``view`` and ``preview`` methods on SilvaObject have been
+  removed. It is now the job of the layout system to render them.
+
+- Update code for Zope 2.13 and Python 2.7.
+
+
 Silva 2.3.1 (unreleased)
 ------------------------
 
