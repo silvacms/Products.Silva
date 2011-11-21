@@ -8,6 +8,7 @@ import os
 version = '3.0dev'
 
 tests_require = [
+    'silva.pas.base',
     'infrae.testing',
     'infrae.testbrowser',
     'infrae.wsgi [test]',
