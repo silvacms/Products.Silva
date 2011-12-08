@@ -48,7 +48,9 @@ table.sticky tbody h5 {
   name="silvaObjects"
   tal:define="model request/model;
               global service nocall:model/service_sticky_content/aq_inner;
-              atThisLevel python:service.aq_parent == model">
+              atThisLevel python:service.aq_parent == model;
+              helper nocall:model/stickyserviceviewhelper;
+              issite helper/is_localsite">
 <table class="columns columns2">
   <tbody>
     <tr>
@@ -125,18 +127,22 @@ table.sticky tbody h5 {
       ___container DOES NOT have a sticky content service___
     </tal:block>
     <tal:cond condition="not:atThisLevel">
-     <tr>
-      <th class="listing-left">
-       Create Local Sticky Content Service
-      </th>
-     </tr>
-     <tr class="even">
-      <td>This container does not have a <i>sticky content service</i>.<br />
-        To manage sticky content <i>in this container</i>, please <a style="display:inline" tal:attributes="href string:tab_sticky_content_create"><b>create</b></a> a <i>sticky
-        content service</i>.<br />
-        <tal:cond condition="not:model/implements_root">Or, <a style="display:inline" tal:attributes="href string:${model/aq_parent/service_sticky_content/aq_parent/absolute_url}/edit/tab_sticky_content"><b>jump</b></a> to the nearest container with a <i>sticky content service</i>.</tal:cond>
-      </td>
-     </tr>
+      <tr>
+       <th class="listing-left">
+        Create Local Sticky Content Service
+       </th>
+      </tr>
+      <tr class="even">
+        <td tal:condition="not:issite" style="font-size: 120%;font-weight: bold;">This container is missing a sticky content service.  Before creating the service, first make this container a <a tal:attributes="href string:${model/absolute_url}/edit/tab_localsite">local site</a>.
+         </td>
+      </tr>
+      <tr class="even" tal:condition="issite">
+       <td>This container does not have a <i>sticky content service</i>.<br />
+         To manage sticky content <i>in this container</i>, please <a style="display:inline" tal:attributes="href string:tab_sticky_content_create"><b>create</b></a> a <i>sticky
+         content service</i>.<br />
+         <tal:cond condition="not:model/implements_root">Or, <a style="display:inline" tal:attributes="href string:${model/aq_parent/service_sticky_content/aq_parent/absolute_url}/edit/tab_sticky_content"><b>jump</b></a> to the nearest container with a <i>sticky content service</i>.</tal:cond>
+       </td>
+      </tr>
     </tal:cond>
 
   </tbody>
@@ -154,9 +160,14 @@ table.sticky tbody h5 {
           name="tab_sticky_content_create:method"
           value="create"
           title="create sticky content service"
-          tal:condition="not:atThisLevel"
+          tal:condition="python:not atThisLevel and issite"
           i18n:attributes="title" />
         &nbsp;
+        <a class="button transporter" style="float-right"
+           type="submit"
+           tal:condition="not:issite"
+           tal:attributes="href string:${model/absolute_url}/edit/tab_localsite"
+           >make local site</a>
       </td>
     </tr>
   </tfoot>

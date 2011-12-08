@@ -1,6 +1,13 @@
 Changes
 =======
 
+Silva 2.3.2-bethel.3 (unreleased)
+---------------------------------
+
+- Adjusted the sticky content service smi tab to provider information and a jump
+  point to create a local site first, since that is required to have a sticky 
+  service
+
 Silva 2.3.2-bethel.2 (2011-11-14)
 ---------------------------------
 
