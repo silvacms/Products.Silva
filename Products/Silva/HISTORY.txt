@@ -1,7 +1,7 @@
 Changes
 =======
 
-Silva 2.3.2-bethel.3 (unreleased)
+Silva 2.3.2-bethel.3 (2011-12-15)
 ---------------------------------
 
 - Adjusted the sticky content service smi tab to provider information and a jump
