@@ -73,7 +73,7 @@ def initialize_icons():
         ('video/x-msvideo', 'file_quicktime.png'),
         ]
     for mimetype, icon_name in mimeicons:
-        registry.registerIcon(
+        registry.register(
             ('mime_type', mimetype),
             '++resource++silva.icons/%s' % icon_name)
 
@@ -85,7 +85,7 @@ def initialize_icons():
         ('ghost', 'link_broken', 'silvaghost_broken.png'),
     ]
     for klass, kind, icon_name in misc_icons:
-        registry.registerIcon(
+        registry.register(
             (klass, kind),
             '++resource++silva.icons/%s' % icon_name)
 

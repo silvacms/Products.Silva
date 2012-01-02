@@ -22,9 +22,9 @@ class IconRegistry(object):
     grok.implements(interfaces.IIconRegistry)
 
     def __init__(self):
-        self.__icons = {}
+        self._icons = {}
 
-    def getIcon(self, content):
+    def get_icon(self, content):
         if interfaces.IGhost.providedBy(content):
             identifier = ('ghost', 'link_ok')
         elif interfaces.IGhostFolder.providedBy(content):
@@ -49,20 +49,20 @@ class IconRegistry(object):
             if meta_type is None:
                 raise ValueError(u"No icon for unknown object %r" % content)
             identifier = ('meta_type', meta_type)
-        return self.getIconByIdentifier(identifier)
+        return self.get_icon_by_identifier(identifier)
 
-    def getIconByIdentifier(self, identifier):
-        icon = self.__icons.get(identifier, None)
+    def get_icon_by_identifier(self, identifier):
+        icon = self._icons.get(identifier, None)
         if icon is None:
             raise ValueError(u"No icon for %r" % repr(identifier))
         return icon
 
-    def registerIcon(self, identifier, icon_name):
+    def register(self, identifier, icon_name):
         """Register an icon.
 
         NOTE: this will overwrite previous icon declarations
         """
-        self.__icons[identifier] = icon_name
+        self._icons[identifier] = icon_name
 
 
 registry = IconRegistry()
@@ -87,7 +87,7 @@ class IconResolver(grok.Adapter):
 
     def get_content(self, content):
         try:
-            return registry.getIcon(content)
+            return registry.get_icon(content)
         except ValueError:
             return '++static++/silva.icons/silvageneric.gif'
 
