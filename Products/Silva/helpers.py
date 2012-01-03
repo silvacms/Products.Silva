@@ -165,13 +165,13 @@ class SwitchClass(object):
 
         # Update container
         if parent is not None:
-            parent._objects = [
+            parent._objects = tuple([
                 {'id': oid, 'meta_type': omt}
                 if oid != obj.getId()
                 else {'id': oid, 'meta_type': obj.meta_type}
                 for oid, omt in map(
                     lambda d: (d['id'], d['meta_type']),
-                    parent._objects)]
+                    parent._objects)])
             parent._setOb(obj.getId(), obj)
 
         notify(ObjectModifiedEvent(obj))
