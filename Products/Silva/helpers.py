@@ -8,10 +8,17 @@ import os
 import urllib
 
 # Zope
+from Acquisition import aq_parent
+from zope.component import getUtility
+from zope.event import notify
+from zope.interface import alsoProvides
+from zope.intid.interfaces import IIntIds
+from zope.lifecycleevent import ObjectModifiedEvent
 import zope.deferredimport
 
 # Silva core
 from silva.core import interfaces
+from silva.core.layout.interfaces import ICustomizableTag
 
 # Load mime.types
 mimetypes.init()
@@ -118,11 +125,6 @@ def unapprove_close_helper(object):
 # here when Folder._to_folder_or_publication_helper began using it.
 class SwitchClass(object):
     """This class can be used to switch an instances class.
-       This was used when SilvaDocument was moved to it's own
-       product, to switch instances of SilvaDocument and Silva
-       Document Version from Products.Silva.Document.Document and
-       Products.Silva.Document.DocumentVersion to Products.SilvaDocument.
-       Document.Document and DocumentVersion.
 
        This is also used by Folder._to_folder_or_publication_helper
        to switch a container between folders and publications
@@ -131,24 +133,49 @@ class SwitchClass(object):
        call class.upgrade(obj) to upgrade obj, and the upgraded
        obj is returned"""
 
-    def __init__(self, new_class, args=(), kwargs={}):
-        self.new_class = new_class
-        self.args = args
-        self.kwargs = kwargs
+    def __init__(self, cls):
+        self.cls = cls
 
     def upgrade(self, obj):
-        obj_id = obj.getId()
-        new_obj = self.new_class(obj_id, *self.args, **self.kwargs)
-        new_obj.__dict__.update(obj.__dict__)
-        container = obj.aq_parent
-        #remove old object (since this is
-        # just replacing the object, we can suppress events)
-        container._delObject(obj_id, suppress_events=True)
-        #make sure _setObject is used, and not setattr,
-        # as ObjectManagers maintain extra data structures
-        # about contained objects
-        container._setObject(obj_id, new_obj, suppress_events=True)
-        return getattr(container, obj_id)
+        # XXX The code here is not valid if you have a reference in
+        # the ZODB at an another place than in its folder, because of
+        # how the ZODB works. However, in Zope 2, this is never done,
+        # because of how the acquisition would not work in that case.
+        parent = aq_parent(obj)
+
+        service = getUtility(IIntIds)
+        intid = service.queryId(obj)
+        if intid is not None:
+            reference = service.refs[intid]
+
+        obj.__class__ = self.cls
+        obj._p_changed = True
+        if '__provides__' in obj.__dict__:
+            # Clean up markers UI.
+            provided = list(obj.__dict__['__provides__'].interfaces())
+            del obj.__dict__['__provides__']
+            for iface in provided:
+                if iface.extends(ICustomizableTag):
+                    alsoProvides(obj, iface)
+
+        if intid is not None:
+            # This repickle the reference, with the obj class
+            service.refs[intid] = reference
+            assert reference.object.__class__ == self.cls
+
+        # Update container
+        if parent is not None:
+            parent._objects = [
+                {'id': oid, 'meta_type': omt}
+                if oid != obj.getId()
+                else {'id': oid, 'meta_type': obj.meta_type}
+                for oid, omt in map(
+                    lambda d: (d['id'], d['meta_type']),
+                    parent._objects)]
+            parent._setOb(obj.getId(), obj)
+
+        notify(ObjectModifiedEvent(obj))
+        return obj
 
     def __repr__(self):
-        return "<SwitchClass %r>" % self.new_class
+        return "<SwitchClass %r>" % self.cls

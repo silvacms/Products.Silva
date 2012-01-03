@@ -5,17 +5,21 @@
 
 import unittest
 
-from zope.interface import Interface, alsoProvides, noLongerProvides
+from zope.interface import alsoProvides, noLongerProvides
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
-from silva.core.interfaces import IFolder, IPublication
 from zope.interface.verify import verifyObject
+
+from silva.core.interfaces import IFolder, IPublication
+from silva.core.layout.interfaces import ICustomizableTag
+from silva.core.services.interfaces import ICatalogService
+
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.testing import assertTriggersEvents
 
 
-class IAdditionalMarker(Interface):
+class IAdditionalMarker(ICustomizableTag):
     pass
 
 
@@ -44,8 +48,8 @@ class FolderConvertionTestCase(unittest.TestCase):
         with assertTriggersEvents('ObjectModifiedEvent'):
             self.root.folder.to_publication()
 
-        self.assertFalse('folder' in self.root.get_listing('Silva Folder'))
-        self.assertTrue('folder' in self.root.get_listing('Silva Publication'))
+        self.assertFalse('folder' in self.get_listing('Silva Folder'))
+        self.assertTrue('folder' in self.get_listing('Silva Publication'))
         self.assertTrue(verifyObject(IPublication, self.root.folder))
         self.assertTrue('index' in self.root.folder.objectIds())
         self.assertEqual(folder_id, self.get_id(self.root.folder))
@@ -116,11 +120,33 @@ class FolderConvertionTestCase(unittest.TestCase):
         with assertTriggersEvents('ObjectModifiedEvent'):
             self.root.folder.to_publication()
 
-        self.assertFalse('folder' in self.root.get_listing('Silva Folder'))
-        self.assertTrue('folder' in self.root.get_listing('Silva Publication'))
+        self.assertFalse('folder' in self.get_listing('Silva Folder'))
+        self.assertTrue('folder' in self.get_listing('Silva Publication'))
         self.assertTrue(verifyObject(IPublication, self.root.folder))
         self.assertTrue('index' in self.root.folder.objectIds())
         self.assertEqual(folder_id, self.get_id(self.root.folder))
+
+    def test_publication_to_folder_catalog(self):
+        """Verify that the catalog is updated when the conversion is done.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+
+        catalog = getUtility(ICatalogService)
+        brains = catalog(meta_type='Silva Folder')
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getObject(), self.root.folder)
+        brains = catalog(meta_type='Silva Publication')
+        self.assertEqual(len(brains), 0)
+
+        with assertTriggersEvents('ObjectModifiedEvent'):
+            self.root.folder.to_publication()
+
+        brains = catalog(meta_type='Silva Folder')
+        self.assertEqual(len(brains), 0)
+        brains = catalog(meta_type='Silva Publication')
+        self.assertEqual(len(brains), 1)
+        self.assertEqual(brains[0].getObject(), self.root.folder)
 
 
 def test_suite():
