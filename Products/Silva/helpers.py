@@ -3,18 +3,15 @@
 # $Id$
 
 # Python
-import mimetypes
 import os
 import urllib
 
 # Zope
 import zope.deferredimport
+from zope.component import getUtility
 
 # Silva core
 from silva.core import interfaces
-
-# Load mime.types
-mimetypes.init()
 
 _ENCODING_MIMETYPE_TO_ENCODING = {
     'application/x-gzip': 'gzip',
@@ -49,7 +46,8 @@ def create_new_filename(file, basename):
                 content_encoding = _EXT_CONTENT_ENCODING[extension]
             basename, extension = os.path.splitext(basename)
 
-    guessed_extension = mimetypes.guess_extension(content_type)
+    guessed_extension = getUtility(
+        interfaces.IMimeTypeClassifier).guess_extension(content_type)
     # Compression extension are not reconized by mimetypes use an
     # extra table for them.
     if guessed_extension is None:

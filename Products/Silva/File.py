@@ -55,12 +55,11 @@ try:                                             #
 except:                                          # available for import
     FILESYSTEM_STORAGE_AVAILABLE = 0             #
 
-from Products.Silva.magic import MagicGuess
-
 from silva.core import conf as silvaconf
 from silva.core import interfaces
-from silva.core.conf.interfaces import ITitledContent
 from silva.core.conf import schema as silvaschema
+from silva.core.conf.interfaces import ITitledContent
+from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
 from silva.core.upgrade import upgrade
@@ -75,7 +74,6 @@ from zeam.form.base import NO_VALUE
 
 CHUNK_SIZE = 1<<16              # 64K
 DEFAULT_MIMETYPE = 'application/octet-stream'
-MAGIC = MagicGuess()
 
 
 class FDIterator(object):
@@ -368,7 +366,8 @@ class ZODBFile(File):
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
-        content_type, content_encoding = MAGIC.guess(
+        content_type, content_encoding = component.getUtility(
+            IMimeTypeClassifier).guess_type(
             id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
             default=DEFAULT_MIMETYPE)
@@ -423,7 +422,8 @@ class BlobFile(File):
         id  = getattr(file, 'filename', self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
-        self._content_type, self._content_encoding = MAGIC.guess(
+        self._content_type, self._content_encoding = component.getUtility(
+            IMimeTypeClassifier).guess_type(
             id=id,
             filename=blob_filename,
             default=content_type)
