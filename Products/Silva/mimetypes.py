@@ -222,5 +222,5 @@ def MimeTypeClassifierFactory():
             raise RuntimeError(
                 u"Cannot find a mime.types file. "
                 u"Please add a configuration entry pointing to one.")
-    logger.info('Using mime.types from %s', mime_types)
+    logger.warn('Using mime.types from %s', mime_types)
     return MimeTypeClassifier(mime_types)
