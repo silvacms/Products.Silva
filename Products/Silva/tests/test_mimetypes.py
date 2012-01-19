@@ -69,8 +69,8 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         test_file = self.create_test_file('images.tar.gz')
 
         guess_filename = queryUtility(IMimeTypeClassifier).guess_filename
-        self.assertEqual(guess_filename(test_file, 'files'), 'files.gz')
-        self.assertEqual(test_file.get_filename(), 'files.gz')
+        self.assertEqual(guess_filename(test_file, 'files'), 'files.tar.gz')
+        self.assertEqual(test_file.get_filename(), 'files.tar.gz')
 
     def test_tar_gz_filename_with_partial_extension(self):
         test_file = self.create_test_file('images.tar.gz')

@@ -55,8 +55,9 @@ class NonDefaultMimeTypes(mimetypes.MimeTypes):
 class BaseMimeTypeClassifier(object):
     implements(IMimeTypeClassifier)
 
-    def __init__(self, mimes_file='/etc/mime.types'):
-        self.types = NonDefaultMimeTypes(mimes_file)
+    def __init__(self, **options):
+        self.types = NonDefaultMimeTypes(
+            options.get('mime_types', '/etc/mime.types'))
 
     def guess_filename(self, asset, basename):
         # This function is here to be usable by File and Image
@@ -106,20 +107,20 @@ class BaseMimeTypeClassifier(object):
             if mimetype is not None:
                 return mimetype, encoding
         if filename is not None:
-            mimetype = self.guess_file_type(filename)
+            mimetype, encoding = self.guess_file_type(filename)
         elif buffer is not None:
-            mimetype = self.guess_buffer_type(buffer)
+            mimetype, encoding = self.guess_buffer_type(buffer)
         if mimetype is not None:
-            return mimetype, None
+            return mimetype, encoding
         if default is not None:
             return default, None
         return 'application/octet-stream', None
 
     def guess_buffer_type(self, buffer):
-        return None
+        return None, None
 
     def guess_file_type(self, filename):
-        return None
+        return None, None
 
 try:
 
@@ -173,24 +174,39 @@ try:
     magic_load.errcheck = error_check
 
     MAGIC_MIME = 0x000010 # Return a mime string
+    MAGIC_COMPRESS = 0x000004
     HAVE_MAGIC = True
 
     class MimeTypeClassifier(BaseMimeTypeClassifier):
 
-        def __init__(self, mimes_file='/etc/mime.types', magic_file=None):
-            super(MimeTypeClassifier, self).__init__(mimes_file)
-            flags = MAGIC_MIME
-            self.cookie = magic_open(flags)
-            magic_load(self.cookie, magic_file)
+        def __init__(self, **options):
+            super(MimeTypeClassifier, self).__init__(**options)
+            magic_file = options.get('magic_file')
+            magic_flags = MAGIC_MIME
+            self.options = magic_open(magic_flags)
+            self.compressed_options = magic_open(magic_flags | MAGIC_COMPRESS)
+            magic_load(self.options, magic_file)
+            magic_load(self.compressed_options, magic_file)
 
-        def guess_buffer_type(self, buf):
-            return magic_buffer(self.cookie, buf, len(buf))
+        def guess_buffer_type(self, buffer):
+            mimetype = magic_buffer(self.options, buffer, len(buffer))
+            encoding = None
+            if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
+                encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
+                mimetype = magic_buffer(
+                    self.compressed_options, buffer, len(buffer))
+            return mimetype, encoding
 
         def guess_file_type(self, filename):
             if not os.path.exists(filename):
                 raise IOError("File does not exist: " + filename)
 
-            return magic_file(self.cookie, filename)
+            mimetype = magic_file(self.options, filename)
+            encoding = None
+            if mimetype in _ENCODING_MIMETYPE_TO_ENCODING:
+                encoding = _ENCODING_MIMETYPE_TO_ENCODING[mimetype]
+                mimetype = magic_file(self.compressed_options, filename)
+            return mimetype, encoding
 
 except (OSError, ImportError, AttributeError):
 
@@ -200,10 +216,10 @@ except (OSError, ImportError, AttributeError):
 
         def guess_buffer_type(self, buf):
             if str(buf)[:5] == '%PDF-':
-                return 'application/pdf'
+                return 'application/pdf', None
             elif buf.startswith('<?xml'):
-                return 'text/xml'
-            return 'application/octet-stream'
+                return 'text/xml', None
+            return 'application/octet-stream', None
 
         def guess_file_type(self, filename):
             fd = open(filename)
@@ -213,6 +229,7 @@ def MimeTypeClassifierFactory():
     zconf = getattr(getConfiguration(), 'product_config', {})
     config = zconf.get('silva', {})
     mime_types = config.get('mime_types')
+    magic_file = config.get('magic_file')
     if mime_types is None:
         for candidate in _DEFAULT_MIME_TYPES:
             if os.path.isfile(candidate):
@@ -223,4 +240,4 @@ def MimeTypeClassifierFactory():
                 u"Cannot find a mime.types file. "
                 u"Please add a configuration entry pointing to one.")
     logger.warn('Using mime.types from %s', mime_types)
-    return MimeTypeClassifier(mime_types)
+    return MimeTypeClassifier(mime_types=mime_types, magic_file=magic_file)
