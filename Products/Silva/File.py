@@ -15,8 +15,8 @@ logger = logging.getLogger('silva.file')
 # Zope 3
 from ZODB import blob
 from five import grok
-from zope import component
 from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.component import getUtility
 from zope.datetime import time as time_from_datetime
 from zope.event import notify
 from zope.interface import directlyProvides
@@ -44,7 +44,6 @@ from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.Image import ImageStorageConverter
 from Products.Silva.helpers import fix_content_type_header
-from Products.Silva.helpers import create_new_filename
 from Products.Silva.converters import get_converter_for_mimetype
 
 # Storages
@@ -246,7 +245,8 @@ class File(Asset):
     def can_edit_text(self):
         mt = self.get_mime_type()
         if ((mt.startswith('text/') and mt != 'text/rtf') or \
-                mt in ('application/x-javascript',)):
+                mt in ('application/x-javascript', 'application/xml',
+                       'application/xhtml+xml')):
             return self.content_encoding() is None
         return False
 
@@ -366,7 +366,7 @@ class ZODBFile(File):
     def _set_file_data_helper(self, file):
         data, size = self._file._read_data(file)
         filename = getattr(file, 'filename', self.id)
-        content_type, content_encoding = component.getUtility(
+        content_type, content_encoding = getUtility(
             IMimeTypeClassifier).guess_type(
             id=filename,
             buffer=hasattr(data, 'data') and data.data or data,
@@ -422,7 +422,7 @@ class BlobFile(File):
         id  = getattr(file, 'filename', self.id)
         blob_filename = self._file._p_blob_uncommitted or \
             self._file._p_blob_committed
-        self._content_type, self._content_encoding = component.getUtility(
+        self._content_type, self._content_encoding = getUtility(
             IMimeTypeClassifier).guess_type(
             id=id,
             filename=blob_filename,
@@ -627,8 +627,7 @@ def file_factory(self, id, content_type, file):
     id.cook()
     if not id.isValid():
         return None
-    service_files = component.getUtility(interfaces.IFilesService)
-    return service_files.new_file(str(id))
+    return getUtility(interfaces.IFilesService).new_file(str(id))
 
 
 class FilesService(SilvaService):
@@ -775,15 +774,15 @@ contentObjectFactoryRegistry.registerFactory(
 
 @grok.subscribe(
     interfaces.IFile, zope.lifecycleevent.interfaces.IObjectModifiedEvent)
-def file_changed(file, event):
-    create_new_filename(file, file.getId())
-    file.update_quota()
-    ICataloging(file).reindex()
+def file_changed(content, event):
+    getUtility(IMimeTypeClassifier).guess_filename(content, content.getId())
+    content.update_quota()
+    ICataloging(content).reindex()
 
 
 @grok.subscribe(
     interfaces.IFile, zope.container.interfaces.IObjectMovedEvent)
-def file_added(file, event):
-    if file is not event.object or event.newName is None:
+def file_added(content, event):
+    if content is not event.object or event.newName is None:
         return
-    create_new_filename(file, event.newName)
+    getUtility(IMimeTypeClassifier).guess_filename(content, event.newName)

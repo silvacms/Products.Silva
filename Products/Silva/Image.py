@@ -16,8 +16,7 @@ logger = logging.getLogger('silva.image')
 
 # Zope 3
 from five import grok
-from zope import component
-from zope.component import getMultiAdapter
+from zope.component import getMultiAdapter, getUtility
 from zope.event import notify
 from zope.i18n import translate
 from zope.interface import Interface
@@ -33,18 +32,18 @@ from App.class_init import InitializeClass
 from Products.Silva import assetregistry
 from Products.Silva import mangle, SilvaPermissions
 from Products.Silva.Asset import Asset
-from Products.Silva.helpers import create_new_filename
 from Products.Silva.ContentObjectFactoryRegistry import (
     contentObjectFactoryRegistry)
 
-from silva.core.conf.interfaces import ITitledContent
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.conf import schema as silvaschema
+from silva.core.conf.interfaces import ITitledContent
+from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
 from silva.core.views.traverser import SilvaPublishTraverse
 from silva.translations import translate as _
-from silva.core.views.interfaces import ISilvaURL, INonCachedLayer
 
 from zeam.form import silva as silvaforms
 from zeam.form.base import NO_VALUE
@@ -559,14 +558,13 @@ class Image(Asset):
         return False, image
 
     def _image_factory(self, image_id, image_file, content_type=None):
-        service_files = component.getUtility(interfaces.IFilesService)
-        new_image = service_files.new_file(image_id)
+        new_image = getUtility(interfaces.IFilesService).new_file(image_id)
         setattr(self, image_id, new_image)
         new_image = getattr(self, image_id)
         new_image.set_file_data(image_file)
         if content_type is not None:
             new_image.set_content_type(content_type)
-        create_new_filename(new_image, self.getId())
+        getUtility(IMimeTypeClassifier).guess_filename(new_image, self.getId())
         return new_image
 
     def _get_image_and_src(self, hires=0, thumbnail=0):
@@ -722,8 +720,9 @@ contentObjectFactoryRegistry.registerFactory(
 def image_added(image, event):
     if image is not event.object or event.newName is None:
         return
+    guess_filename = getUtility(IMimeTypeClassifier).guess_filename
     for file_id in ('hires_image', 'image', 'thumbnail_image'):
         image_file = getattr(image, file_id, None)
         if image_file is None:
             continue
-        create_new_filename(image_file, event.newName)
+        guess_filename(image_file, event.newName)

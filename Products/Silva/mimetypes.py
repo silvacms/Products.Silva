@@ -2,6 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
+from __future__ import absolute_import
+
+
 import logging
 import os.path
 import mimetypes
@@ -13,7 +16,7 @@ from zope.interface import implements
 
 logger = logging.getLogger('silva.core')
 
-default_mime_types = [
+_DEFAULT_MIME_TYPES = [
     '/etc/mime.types',
     "/usr/local/etc/mime.types",
     "/etc/httpd/mime.types",
@@ -24,6 +27,19 @@ default_mime_types = [
     "/usr/local/lib/netscape/mime.types",
     "/usr/local/etc/httpd/conf/mime.types",
     ]
+
+_ENCODING_MIMETYPE_TO_ENCODING = {
+    'application/x-gzip': 'gzip',
+    'application/x-bzip2': 'bzip2',
+    }
+_CONTENT_ENCODING_EXT = {
+    'gzip': '.gz',
+    'bzip2': '.bz'
+    }
+_EXT_CONTENT_ENCODING = {
+    '.gz': 'gzip',
+    '.bz': 'bzip2'
+    }
 
 
 class NonDefaultMimeTypes(mimetypes.MimeTypes):
@@ -42,20 +58,59 @@ class BaseMimeTypeClassifier(object):
     def __init__(self, mimes_file='/etc/mime.types'):
         self.types = NonDefaultMimeTypes(mimes_file)
 
+    def guess_filename(self, asset, basename):
+        # This function is here to be usable by File and Image
+        if not asset.get_file_size():
+            return None
+
+        extension = None
+        content_type = asset.content_type()
+        content_encoding = asset.content_encoding()
+
+        if '.' in basename:
+            basename, extension = os.path.splitext(basename)
+            if extension in _EXT_CONTENT_ENCODING and '.' in basename:
+                if content_encoding is None:
+                    content_encoding = _EXT_CONTENT_ENCODING[extension]
+                basename, extension = os.path.splitext(basename)
+
+        guessed_extension = self.guess_extension(content_type)
+        # Compression extension are not reconized by mimetypes use an
+        # extra table for them.
+        if guessed_extension is None:
+            if (content_type in _ENCODING_MIMETYPE_TO_ENCODING and
+                content_encoding is None):
+                # Compression extension often are used with some other
+                # extension. Unfortunately, at this point we might have
+                # lost that other extension. The editor has to rename
+                # properly the file.
+                content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
+        elif guessed_extension is not None:
+            extension = guessed_extension
+        if content_encoding is not None:
+            if content_encoding in _CONTENT_ENCODING_EXT:
+                if extension is None:
+                    extension = ''
+                extension += _CONTENT_ENCODING_EXT[content_encoding]
+        if extension is not None:
+            basename += extension
+        asset.set_filename(basename)
+        return basename
+
     def guess_extension(self, content_type):
         return self.types.guess_extension(content_type)
 
     def guess_type(self, id=None, filename=None, buffer=None, default=None):
         if id:
-            type, enc = self.types.guess_type(id)
-            if type is not None:
-                return type, enc
+            mimetype, encoding = self.types.guess_type(id)
+            if mimetype is not None:
+                return mimetype, encoding
         if filename is not None:
-            type = self.guess_file_type(filename)
+            mimetype = self.guess_file_type(filename)
         elif buffer is not None:
-            type = self.guess_buffer_type(buffer)
-        if type is not None:
-            return type, None
+            mimetype = self.guess_buffer_type(buffer)
+        if mimetype is not None:
+            return mimetype, None
         if default is not None:
             return default, None
         return 'application/octet-stream', None
@@ -159,7 +214,7 @@ def MimeTypeClassifierFactory():
     config = zconf.get('silva', {})
     mime_types = config.get('mime_types')
     if mime_types is None:
-        for candidate in default_mime_types:
+        for candidate in _DEFAULT_MIME_TYPES:
             if os.path.isfile(candidate):
                 mime_types = candidate
                 break
