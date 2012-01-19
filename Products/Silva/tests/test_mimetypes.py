@@ -34,22 +34,22 @@ class MimetypeClassifierTestCase(unittest.TestCase):
 
     def test_guess_type(self):
         guess_type = queryUtility(IMimeTypeClassifier).guess_type
-        self.assertEqual(guess_type(id='image.jpeg'), ('image/jpeg', None))
-        self.assertEqual(guess_type(id='image.bmp'), ('image/bmp', None))
-        self.assertEqual(guess_type(id='page.html'), ('text/html', None))
-        self.assertEqual(guess_type(id='page.htm'), ('text/html', None))
-        self.assertEqual(
-            guess_type(id='page.xhtml'),
-            ('application/xhtml+xml', None))
         self.assertEqual(
             guess_type(id='document.doc'),
             ('application/msword', None))
+        self.assertEqual(
+            guess_type(id='page.xhtml'),
+            ('application/xhtml+xml', None))
         self.assertEqual(
             guess_type(id='archive.tgz'),
             ('application/x-tar', 'gzip'))
         self.assertEqual(
             guess_type(id='archive.zip'),
             ('application/zip', None))
+        self.assertEqual(guess_type(id='image.jpeg'), ('image/jpeg', None))
+        self.assertEqual(guess_type(id='image.bmp'), ('image/bmp', None))
+        self.assertEqual(guess_type(id='page.html'), ('text/html', None))
+        self.assertEqual(guess_type(id='page.htm'), ('text/html', None))
 
     def test_image_png_filename(self):
         test_file = self.create_test_file('photo.tif')
