@@ -729,10 +729,9 @@ class StorageConverterHelper(object):
         return context
 
 
-class FileStorageConverter(object):
+class FileStorageConverter(upgrade.BaseUpgrader):
     """Convert storage for a file.
     """
-    grok.implements(interfaces.IUpgrader)
 
     def __init__(self, service):
         self.service = service
@@ -746,21 +745,20 @@ class FileStorageConverter(object):
         return True
 
     def upgrade(self, content):
-        data = content.get_content_fd()
-        id = content.getId()
-        title = content.get_title()
-        content_type = content.content_type()
-        content_encoding = content.content_encoding()
+        identifier = content.getId()
 
-        new_file = self.service.new_file(id)
+        tmp_identifier = identifier + '__conv_storage'
+        new_file = self.service.new_file(identifier)
         container = content.aq_parent
-        setattr(container, id, new_file)
-        new_file = getattr(container, id)
-        new_file.set_title(title)
-        new_file.set_file_data(data)
-        new_file.set_content_type(content_type)
-        new_file.set_content_encoding(content_encoding)
-
+        container._setObject(tmp_identifier, new_file)
+        new_file = container._getOb(tmp_identifier)
+        self.replace_references(content, new_file)
+        self.replace(content, new_file)
+        new_file.set_file_data(content.get_content_fd())
+        new_file.set_content_type(content.content_type())
+        new_file.set_content_encoding(content.content_encoding())
+        container._delObject(identifier)
+        container.manage_renameObject(tmp_identifier, identifier)
         logger.info("File %s migrated" %
                     '/'.join(new_file.getPhysicalPath()))
         return new_file

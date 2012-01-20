@@ -123,7 +123,6 @@ class BaseMimeTypeClassifier(object):
         return None, None
 
 try:
-
     import ctypes
     import ctypes.util
     from ctypes import c_char_p, c_int, c_size_t, c_void_p
