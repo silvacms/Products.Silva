@@ -65,6 +65,7 @@ class BaseMimeTypeClassifier(object):
             return None
 
         extension = None
+        guessed_extension = None
         content_type = asset.content_type()
         content_encoding = asset.content_encoding()
 
@@ -75,7 +76,9 @@ class BaseMimeTypeClassifier(object):
                     content_encoding = _EXT_CONTENT_ENCODING[extension]
                 basename, extension = os.path.splitext(basename)
 
-        guessed_extension = self.guess_extension(content_type)
+        # application/octet-stream is the default, we ignore it.
+        if content_type != 'application/octet-stream':
+            guessed_extension = self.guess_extension(content_type)
         # Compression extension are not reconized by mimetypes use an
         # extra table for them.
         if guessed_extension is None:
@@ -87,14 +90,17 @@ class BaseMimeTypeClassifier(object):
                 # properly the file.
                 content_encoding = _ENCODING_MIMETYPE_TO_ENCODING[content_type]
         elif guessed_extension is not None:
-            extension = guessed_extension
-        if content_encoding is not None:
-            if content_encoding in _CONTENT_ENCODING_EXT:
-                if extension is None:
-                    extension = ''
-                extension += _CONTENT_ENCODING_EXT[content_encoding]
+            # If we didn't have an extension, or the extension is not
+            # a compatible one with the previous one, update it.
+            if (extension is None or
+                (extension != guessed_extension and
+                 extension not in self.types.guess_all_extension(content_type))):
+                extension = guessed_extension
         if extension is not None:
             basename += extension
+        if (content_encoding is not None and
+            content_encoding in _CONTENT_ENCODING_EXT):
+            basename += _CONTENT_ENCODING_EXT[content_encoding]
         if basename != asset.get_filename():
             asset.set_filename(basename)
         return basename
