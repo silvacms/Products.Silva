@@ -51,19 +51,35 @@ class MimetypeClassifierTestCase(unittest.TestCase):
         self.assertEqual(guess_type(id='page.html'), ('text/html', None))
         self.assertEqual(guess_type(id='page.htm'), ('text/html', None))
 
-    def test_image_png_filename(self):
+    def test_image_tiff_filename(self):
         test_file = self.create_test_file('photo.tif')
 
         guess_filename = queryUtility(IMimeTypeClassifier).guess_filename
         self.assertEqual(guess_filename(test_file, 'image'), 'image.tiff')
         self.assertEqual(test_file.get_filename(), 'image.tiff')
 
-    def test_image_png_filename_with_extension(self):
+    def test_image_tiff_filename_with_extension(self):
         test_file = self.create_test_file('photo.tif')
 
         guess_filename = queryUtility(IMimeTypeClassifier).guess_filename
         self.assertEqual(guess_filename(test_file, 'image.jpg'), 'image.tiff')
         self.assertEqual(test_file.get_filename(), 'image.tiff')
+
+    def test_image_jpg_filename(self):
+        test_file = self.create_test_file('torvald.jpg')
+        guess_filename = queryUtility(IMimeTypeClassifier).guess_filename
+
+        # We use by default already set filename, in lower case if none specified
+        test_file.set_filename('IMAGE.JPG')
+        self.assertEqual(guess_filename(test_file, 'photo'), 'photo.jpg')
+        self.assertEqual(test_file.get_filename(), 'photo.jpg')
+
+        # Or the one given if it is compatible
+        self.assertEqual(guess_filename(test_file, 'photo.JPEG'), 'photo.jpeg')
+        self.assertEqual(test_file.get_filename(), 'photo.jpeg')
+
+        self.assertEqual(guess_filename(test_file, 'photo.exe'), 'photo.jpeg')
+        self.assertEqual(test_file.get_filename(), 'photo.jpeg')
 
     def test_tar_gz_filename(self):
         test_file = self.create_test_file('images.tar.gz')
