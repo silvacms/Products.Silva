@@ -101,7 +101,7 @@ class BaseMimeTypeClassifier(object):
             # a compatible one with the previous one, update it.
             if (extension is None or
                 (extension != guessed_extension and
-                 extension not in self.types.guess_all_extensions(content_type))):
+                 extension not in self.guess_all_extensions(content_type))):
                 extension = guessed_extension
         if extension is not None:
             basename += extension
@@ -114,6 +114,9 @@ class BaseMimeTypeClassifier(object):
 
     def guess_extension(self, content_type):
         return self.types.guess_extension(content_type)
+
+    def guess_all_extensions(self, content_type):
+        return self.types.guess_all_extensions(content_type)
 
     def guess_type(self, id=None, filename=None, buffer=None, default=None):
         if id:
