@@ -82,6 +82,8 @@ class BaseMimeTypeClassifier(object):
                 if content_encoding is None:
                     content_encoding = _EXT_CONTENT_ENCODING[extension]
                 tmp_name, extension = os.path.splitext(tmp_name)
+        if extension:
+            extension = extension.lower()
 
         # application/octet-stream is the default, we ignore it.
         if content_type != 'application/octet-stream':
