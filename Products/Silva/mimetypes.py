@@ -95,7 +95,8 @@ class BaseMimeTypeClassifier(object):
                 extension += _CONTENT_ENCODING_EXT[content_encoding]
         if extension is not None:
             basename += extension
-        asset.set_filename(basename)
+        if basename != asset.get_filename():
+            asset.set_filename(basename)
         return basename
 
     def guess_extension(self, content_type):
