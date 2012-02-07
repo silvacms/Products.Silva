@@ -94,7 +94,7 @@ class BaseMimeTypeClassifier(object):
             # a compatible one with the previous one, update it.
             if (extension is None or
                 (extension != guessed_extension and
-                 extension not in self.types.guess_all_extension(content_type))):
+                 extension not in self.types.guess_all_extensions(content_type))):
                 extension = guessed_extension
         if extension is not None:
             basename += extension
