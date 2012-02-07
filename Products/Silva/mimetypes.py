@@ -66,6 +66,7 @@ class BaseMimeTypeClassifier(object):
 
         extension = None
         guessed_extension = None
+        original_name = asset.get_filename()
         content_type = asset.content_type()
         content_encoding = asset.content_encoding()
 
@@ -75,6 +76,12 @@ class BaseMimeTypeClassifier(object):
                 if content_encoding is None:
                     content_encoding = _EXT_CONTENT_ENCODING[extension]
                 basename, extension = os.path.splitext(basename)
+        elif '.' in original_name:
+            tmp_name, extension = os.path.splitext(original_name)
+            if extension in _EXT_CONTENT_ENCODING and '.' in tmp_name:
+                if content_encoding is None:
+                    content_encoding = _EXT_CONTENT_ENCODING[extension]
+                tmp_name, extension = os.path.splitext(tmp_name)
 
         # application/octet-stream is the default, we ignore it.
         if content_type != 'application/octet-stream':
@@ -101,7 +108,7 @@ class BaseMimeTypeClassifier(object):
         if (content_encoding is not None and
             content_encoding in _CONTENT_ENCODING_EXT):
             basename += _CONTENT_ENCODING_EXT[content_encoding]
-        if basename != asset.get_filename():
+        if basename != original_name:
             asset.set_filename(basename)
         return basename
 
