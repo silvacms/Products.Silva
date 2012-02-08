@@ -57,7 +57,7 @@ except:                                          # available for import
 from silva.core import conf as silvaconf
 from silva.core import interfaces
 from silva.core.conf import schema as silvaschema
-from silva.core.conf.interfaces import ITitledContent, IContainer
+from silva.core.conf.interfaces import ITitledContent
 from silva.core.interfaces import IMimeTypeClassifier
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import ICataloging
@@ -750,7 +750,7 @@ class FileStorageConverter(upgrade.BaseUpgrader):
         tmp_identifier = identifier + '__conv_storage'
         new_file = self.service.new_file(identifier)
         container = content.aq_parent
-        if not IContainer.providedBy(container):
+        if not interfaces.IContainer.providedBy(container):
             # Self-autodestruct file.
             container._delObject(identifier)
             raise StopIteration
