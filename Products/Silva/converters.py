@@ -25,81 +25,118 @@ PDF_TO_TEXT_AVAILABLE = have_command('pdftotext')
 WORD_TO_TEXT_AVAILABLE = have_command('antiword')
 
 
-def get_converter_for_mimetype(mimetype):
+def get_converter_for_mimetype(mimetype, request):
     """Return the given converter for a given mimetype.
     """
-    converter = {
+    factory = {
         'text/plain': TextConverter,
-        'application/pdf':PDFConverter,
-        'application/msword':WordConverter
+        'application/pdf': PDFConverter,
+        'application/msword': WordConverter
     }.get(mimetype)
 
-    if converter is None:
-        return
-    return converter()
+    if factory is None:
+        return None
+    converter = factory(request)
+    if not converter.available():
+        return None
+    return converter
 
 
-class WordConverter(object):
+class Converter(object):
+
+    def __init__(self, request):
+        self.request = request
+
+    def available(self):
+        return True
+
+    def convert_file(self, filename):
+        raise NotImplementedError
+
+    def convert_string(self, data):
+        raise NotImplementedError
+
+
+class WordConverter(Converter):
     """Convert a word document to fulltext using antiword.
     """
 
-    def convert(self, data, request):
-        if not WORD_TO_TEXT_AVAILABLE:
-            return
-        fname = tempfile.mktemp('.doc', 'silva_')
-        fp = open(fname, 'w+b')
+    def available(self):
+        return WORD_TO_TEXT_AVAILABLE
+
+    def convert_file(self, filename):
+        converted, errors = execute('antiword "%s"' % filename)
+        if errors:
+            self.request.form['message_type'] = 'feedback'
+            self.request.form['message'] = "The file was uploaded successfully " \
+                "but could not be indexed properly for the search."
+        if converted:
+            try:
+                return unicode(converted, 'utf8')
+            except UnicodeDecodeError:
+                pass
+        return None
+
+    def convert_string(self, data):
+        filename = tempfile.mktemp('.doc', 'silva_')
+        fp = open(filename, 'w+b')
         fp.write(data)
         fp.close()
-        converted, err = execute('antiword "%s"' % fname)
-        os.unlink(fname)
-        if err:
-            request.form['message_type'] = 'feedback'
-            request.form['message'] = "The file was uploaded successfully " \
-                "but could not be indexed properly for the search."
         try:
-            if converted:
-                decoded = unicode(converted, 'utf8')
-                return decoded
-            return None
-        except UnicodeDecodeError:
-            return None
+            return self.convert_file(filename)
+        finally:
+            os.unlink(filename)
 
 
-class PDFConverter(object):
+class PDFConverter(Converter):
     """Converter for pdf files, which extract the text of a PDF file
     using pdftotext.
     """
 
-    def convert(self, data, request):
-        if not PDF_TO_TEXT_AVAILABLE:
-            return
-        fname = tempfile.mktemp('.pdf', 'silva_')
-        fp = open(fname, 'w+b')
+    def available(self):
+        return PDF_TO_TEXT_AVAILABLE
+
+    def convert_file(self, filename):
+        converted, errors = execute('pdftotext -enc UTF-8 "%s" -' % filename)
+        if errors:
+            self.request.form['message_type'] = 'feedback'
+            self.request.form['message'] = "The file was uploaded successfully " \
+                "but could not be indexed properly for the search."
+        if converted:
+            try:
+                return unicode(converted, 'utf8')
+            except UnicodeDecodeError:
+                pass
+        return None
+
+    def convert_string(self, data):
+        filename = tempfile.mktemp('.pdf', 'silva_')
+        fp = open(filename, 'w+b')
         fp.write(data)
         fp.close()
-        converted, err = execute('pdftotext -enc UTF-8 "%s" -' % fname)
-        os.unlink(fname)
-        if err:
-            request.form['message_type'] = 'feedback'
-            request.form['message'] = "The file was uploaded successfully " \
-                "but could not be indexed properly for the search."
         try:
-            if converted:
-                decoded = unicode(converted, 'utf8')
-                return decoded
-            return None
-        except UnicodeDecodeError:
-            return None
+            return self.convert_file(filename)
+        finally:
+            os.unlink(filename)
 
 
-class TextConverter(object):
+class TextConverter(Converter):
     """Fallback convert for text file, which does nothing.
     """
 
-    def convert(self, data, request):
+    def convert_file(self, filename):
+        fp = None
         try:
-            decoded = unicode(data, 'utf8')
-            return decoded
+            fp = open(filename, 'r')
+            return unicode(fp.read(), 'utf-8')
+        except (OSError, UnicodeDecodeError):
+            return None
+        finally:
+            fp.clone()
+
+    def convert_data(self, data):
+        try:
+            return unicode(data, 'utf8')
         except UnicodeDecodeError:
             return None
 

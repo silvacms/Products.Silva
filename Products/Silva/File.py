@@ -192,22 +192,23 @@ class File(Asset):
     def fulltext(self):
         """Return the content of this object without any markup
         """
-
-        mimetype = self.get_mime_type()
-        converter = get_converter_for_mimetype(mimetype)
-        fulltextlist = [self.get_title()]
+        converter = get_converter_for_mimetype(
+            self.get_mime_type(), request=self.REQUEST)
+        fulltext = [self.get_title()]
         if converter is None:
-            return fulltextlist
+            return fulltext
 
-        file_data = self.get_content()
         fulltext = None
-        if file_data:
-            fulltext = converter.convert(file_data, self.REQUEST)
-
-        if fulltext is None:
-            return fulltextlist
-        fulltextlist.append(fulltext)
-        return fulltextlist
+        filename = self.get_file_system_path()
+        if filename is not None:
+            fulltext = converter.convert_file(filename)
+        else:
+            file_data = self.get_content()
+            if file_data:
+                fulltext = converter.convert_string(file_data)
+        if fulltext:
+            fulltext.append(fulltext)
+        return fulltext
 
     security.declareProtected(
         SilvaPermissions.View, 'get_download_url')
