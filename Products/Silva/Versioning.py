@@ -299,7 +299,8 @@ class Versioning(object):
                 (info.requester,
                  publication_date_str, expiration_date_str, message)
         self._send_message_to_editors(info.requester,
-                                      'Approval requested', text)
+                                      'Approval Requested: %s - %s'%(info.requester, self.absolute_url_path()),
+                                      text)
         # XXX inform user, too (?)
         self._send_message(info.requester, last_author.userid(),
                            'Approval requested', text)
@@ -332,9 +333,11 @@ class Versioning(object):
         text = u"\nRequest for approval was withdrawn by %s.\nMessage:\n%s" \
                % (info.requester, message)
         self._send_message_to_editors(info.requester,
-                                      'Approval withdrawn by author', text)
+                                      'Approval Withdrawn: %s - %s'%(info.requester, self.absolute_url_path()),
+                                      text)
         self._send_message(info.requester, orginal_requester,
-                           'Approval withdrawn by author', text)
+                           'Approval Withdrawn: %s - %s'%(info.requester, self.absolute_url_path()),
+                           text)
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'reject_version_approval')
@@ -361,10 +364,10 @@ class Versioning(object):
         notify(events.ContentApprovalRequestRefusedEvent(
                 getattr(self, self._unapproved_version[0])))
         # send message back to requester
-        text = u"Request for approval was rejected by %s.\nMessage:\n%s" \
+        text = u"Request for approval was withdrawn by %s.\nMessage:\n%s" \
                % (info.requester, message)
         self._send_message(info.requester, original_requester,
-                           "Approval rejected by editor", text)
+                           "Approval Request Withdrawn - %s"%(self.absolute_url_path()), text)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'set_unapproved_version_publication_datetime')

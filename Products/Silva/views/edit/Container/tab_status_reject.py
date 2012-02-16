@@ -37,7 +37,7 @@ def action(obj, fullPath, argv):
         return (False, (fullPath, _('no unapproved version')))
     if not obj.is_version_approval_requested():
         return (False, (fullPath, _('no approval requested')))
-    message = ('Request for approval was rejected via a bulk operation in '
+    message = ('Request for approval was withdrawn via a bulk operation in '
                 'the publish screen of /%s (automatically generated message)'
                 ) % model.absolute_url(1)
     obj.reject_version_approval(message)
