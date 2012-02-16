@@ -1,7 +1,7 @@
 Changes
 =======
 
-Silva 2.3.2-bethel.4 (unreleased)
+Silva 2.3.2-bethel.4 (2012-02-16)
 ---------------------------------
 
 - Adjust publication request email subjects so gmail doesn't group
