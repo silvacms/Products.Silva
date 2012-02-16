@@ -4,7 +4,8 @@ Changes
 Silva 2.3.2-bethel.4 (unreleased)
 ---------------------------------
 
--
+- Adjust publication request email subjects so gmail doesn't group
+  them all into one conversation.
 
 Silva 2.3.2-bethel.3 (2011-12-15)
 ---------------------------------
