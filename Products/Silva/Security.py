@@ -9,12 +9,13 @@ from App.class_init import InitializeClass
 from DateTime import DateTime
 
 from zope.component import getUtility
+from five import grok
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.Membership import noneMember
 
-from silva.core.interfaces import IVersion
+from silva.core.interfaces import IVersion, ISecurity
 from silva.core.services.interfaces import IMemberService
 
 from Products.SilvaMetadata.interfaces import IMetadataService
@@ -34,6 +35,7 @@ class Security(object):
     Methods prefixed with sec_ so as not to disrupt similarly named
     Zope's security methods. (ugly..)
     """
+    grok.implements(ISecurity)
     security = ClassSecurityInfo()
 
     _last_author_userid = None
