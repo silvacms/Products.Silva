@@ -91,7 +91,7 @@ class Versioning(object):
 
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'approve_version')
-    def approve_version(self):
+    def approve_version(self, publish_past=False):
         """Aprove the current unapproved version.
         """
         self._update_publication_status()
@@ -106,7 +106,8 @@ class Versioning(object):
                   _('Cannot approve version without publication datetime.')
         # turn any publication dates in the past into now
         # this is to avoid odd caching behavior
-        if not self._unapproved_version[1].isFuture():
+                
+        if not self._unapproved_version[1].isFuture() and not publish_past:
             publish_now = 1
             self._unapproved_version = (self._unapproved_version[0],
                                         DateTime(),

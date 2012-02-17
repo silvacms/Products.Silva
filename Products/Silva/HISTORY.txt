@@ -1,6 +1,11 @@
 Changes
 =======
 
+Silva 2.3.2-bethel.5(unlreleased)
+--------------------------------
+
+- Add optional parameter to enable publishing in the past
+
 Silva 2.3.2-bethel.4 (2012-02-16)
 ---------------------------------
 
