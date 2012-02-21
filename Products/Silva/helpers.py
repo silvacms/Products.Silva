@@ -48,8 +48,16 @@ def create_new_filename(file, basename):
             if content_encoding is None:
                 content_encoding = _EXT_CONTENT_ENCODING[extension]
             basename, extension = os.path.splitext(basename)
-
+    
     guessed_extension = mimetypes.guess_extension(content_type)
+    # guess_extension blindly returns the first item in a list of possible
+    # extension types. Because of this, .xls files that were being uploaded
+    # were sometimes being given an .xlb file extension. Because there is no 
+    # way to control which extension is applied, or set a preferred
+    # extenion for a certain mime-type, we need to change .xlb to .xls here.
+    if guessed_extension == '.xlb': 
+        guessed_extension = '.xls'
+    
     # Compression extension are not reconized by mimetypes use an
     # extra table for them.
     if guessed_extension is None:

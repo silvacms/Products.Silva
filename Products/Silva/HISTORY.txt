@@ -5,6 +5,9 @@ Silva 2.3.2-bethel.5(unlreleased)
 --------------------------------
 
 - Add optional parameter to enable publishing in the past
+- .xls files being uploaded were sometimes given a .xlb file
+  extension. There is no way to specificy a preferred extension for 
+  a given mime type, so set any .xlb extension to .xls
 
 Silva 2.3.2-bethel.4 (2012-02-16)
 ---------------------------------
