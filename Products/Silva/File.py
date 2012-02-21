@@ -198,16 +198,16 @@ class File(Asset):
         if converter is None:
             return fulltext
 
-        fulltext = None
+        text = None
         filename = self.get_file_system_path()
         if filename is not None:
-            fulltext = converter.convert_file(filename)
+            text = converter.convert_file(filename)
         else:
             file_data = self.get_content()
             if file_data:
-                fulltext = converter.convert_string(file_data)
-        if fulltext:
-            fulltext.append(fulltext)
+                text = converter.convert_string(file_data)
+        if text:
+            fulltext.append(text)
         return fulltext
 
     security.declareProtected(
