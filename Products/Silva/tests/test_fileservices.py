@@ -32,6 +32,7 @@ class FileServicesTest(TestCase):
         root/folder2
         """
         self.root = self.layer.get_application()
+        self.layer.login('manager')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder1', 'Folder 1')
         factory.manage_addFolder('folder2', 'Folder 2')
