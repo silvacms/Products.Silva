@@ -70,7 +70,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertEquals(content.content_type(), 'image/tiff')
         self.assertEquals(content.content_encoding(), None)
         self.assertEquals(content.get_file_size(), self.file_size)
-        self.assertEquals(content.get_filename(), 'photo.tiff')
+        self.assertEquals(content.get_filename(), 'photo.tif')
         self.assertEquals(content.get_mime_type(), 'image/tiff')
         self.assertHashEqual(content.get_content(), self.file_data)
         self.failUnless(content.get_download_url() is not None)
@@ -172,7 +172,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=photo.tiff')
+                          'inline;filename=photo.tif')
         self.failUnless('Last-Modified' in headers)
 
     def test_not_modified(self):
@@ -198,7 +198,7 @@ class DefaultFileImplementationTestCase(TestCase):
         self.assertEquals(int(headers['Content-Length']), self.file_size)
         self.assertEquals(headers['Content-Type'], 'image/tiff')
         self.assertEquals(headers['Content-Disposition'],
-                          'inline;filename=photo.tiff')
+                          'inline;filename=photo.tif')
         self.failUnless('Last-Modified' in headers)
         self.assertEquals(len(response.getBody()), 0)
 
