@@ -132,7 +132,7 @@ class TextConverter(Converter):
         except (OSError, UnicodeDecodeError):
             return None
         finally:
-            fp.clone()
+            fp.close()
 
     def convert_string(self, data):
         try:
