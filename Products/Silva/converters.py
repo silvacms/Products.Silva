@@ -134,7 +134,7 @@ class TextConverter(Converter):
         finally:
             fp.clone()
 
-    def convert_data(self, data):
+    def convert_string(self, data):
         try:
             return unicode(data, 'utf8')
         except UnicodeDecodeError:
