@@ -1,13 +1,27 @@
 Changes
 =======
 
-Silva 2.3.6 (unreleased)
+Silva 2.3.6 (2012/02/23)
 ------------------------
 
 - Improve tools support in Kupu to support more complex widget (used
   in Silva news).
 
-- fixed type in the code for the service_messages zmi screen, so that 
+- Improve mimetype support for Files, and extension computation. Don't
+  rely on Python standard library, as they have faulty defaults. Make
+  possible to provide a mime.types and a magic file in order to have
+  correct computation on system that provides funky defaults.
+
+- Improve File converter to be more efficiant: you don't need to
+  create a file with the Silva File content, if the Silva File content
+  is already in a file on the file system.
+
+- Compressed Silva File should not be editable even if they are text.
+
+- Don't loose references and metadata while converting Silva File
+  storage.
+
+- Fixed type in the code for the service_messages zmi screen, so that
   enabling the service will actually enable the service.  IF you use
   the message service in Silva 2.3 (for emailing publication messages),
   you need to go back into the zmi screen and re-enable.  The screen

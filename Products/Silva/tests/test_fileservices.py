@@ -3,6 +3,7 @@
 # $Id$
 
 import unittest
+import transaction
 
 from zope import component
 from zope.interface.verify import verifyObject
@@ -121,6 +122,7 @@ class FileServicesTest(TestCase):
             (self.root.service_files, self.root.REQUEST),
             name='manage_settings').subforms[1]
 
+        transaction.commit()
         # Convert to Blobs
         self.root.service_files.storage = File.BlobFile
         form.convert()
