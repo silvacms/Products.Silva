@@ -6,10 +6,29 @@ from cStringIO import StringIO
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from five import grok
+from zope.interface import Interface
+from zope import schema
+
 from silva.core import interfaces
+from silva.translations import translate as _
+
 import transaction
 
 from Products.Silva.silvaxml import xmlexport
+
+
+class IExportOptions(Interface):
+    include_sub_publications = schema.Bool(
+        title=_(u"Include sub publications?"),
+        description=_(u"Check to export all sub publications. "),
+        default=False,
+        required=False)
+
+    export_newest_version_only = schema.Bool(
+        title=_(u"Export only newest versions?"),
+        description=_(u"If not checked all versions are exported."),
+        default=True,
+        required=False)
 
 
 class ZipFileExportAdapter(grok.Adapter):
@@ -23,8 +42,15 @@ class ZipFileExportAdapter(grok.Adapter):
 
     name = "Full Media (zip)"
     extension = "zip"
+    options = IExportOptions
 
-    def export(self, settings=None):
+    def export(self, **options):
+        settings = xmlexport.ExportSettings()
+        settings.setWithSubPublications(
+            options['include_sub_publications'])
+        settings.setLastVersion(
+            options['export_newest_version_only'])
+
         archive_file = StringIO()
         archive = ZipFile(archive_file, "w", ZIP_DEFLATED)
 
