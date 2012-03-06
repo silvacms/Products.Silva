@@ -41,7 +41,7 @@ setup(name='Products.Silva',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-        'PILwoTk',
+        'PIL',
         'Products.SilvaMetadata',
         'Sprout',
         'ZODB3 >= 3.9',
