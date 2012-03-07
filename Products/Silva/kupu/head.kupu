@@ -9,7 +9,7 @@
 
   <kupu:part name="jsincludes">
     <script type="text/javascript" src="sarissa.js"
-            tal:attributes="src string:${root_url}/service_kupu_silva/sarissa.js"> </script>
+            tal:attributes="src string:${root_url}/service_kupu/sarissa.js"> </script>
     <script type="text/javascript" src="kupuhelpers.js"
             tal:attributes="src string:${root_url}/service_kupu/kupuhelpers.js"> </script>
     <script type="text/javascript" src="kupunoi18n.js"

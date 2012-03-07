@@ -56,8 +56,13 @@ function initialize_i18n() {
     var i18nblock = document.getElementById('kupui18nblock');
     if (!i18nblock) {
         return;
-    }
+    };
     var messages = i18nblock.getElementsByTagName('message');
+    if (messages.canHaveChildren == false) {
+        var xmlstring= messages.innerHTML;
+        var parser = new DOMParser();
+        messages = parser.parseFromString(xmlstring,"text/xml");
+    };
     for (var i=0; i < messages.length; i++) {
         var id = messages[i].getElementsByTagName('id')[0]
             .childNodes[0].nodeValue;
