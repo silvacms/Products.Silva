@@ -4,6 +4,7 @@
 # $Id$
 
 import operator
+from itertools import imap
 
 from five import grok
 
@@ -19,6 +20,8 @@ class AddableContents(grok.Adapter):
     grok.context(IFolder)
     grok.implements(IAddableContents)
     grok.provides(IAddableContents)
+
+    REQUIRES = [ISilvaObject]
 
     def __init__(self, context):
         self.context = context
@@ -44,9 +47,13 @@ class AddableContents(grok.Adapter):
 
     def get_all_addables(self, require=None):
         addables = filter(self._is_addable, extensionRegistry.get_addables())
+        requires = list(self.REQUIRES)
         if require is not None:
-            addables = filter(lambda a: require.implementedBy(a['instance']), addables)
-        return map(operator.itemgetter('name'), addables)
+            requires.append(require)
+        test = lambda cls: any(imap(lambda i: i.implementedBy(cls), requires))
+        return map(
+            operator.itemgetter('name'),
+            filter(lambda a: test(a['instance']), addables))
 
     def _get_locally_addables(self):
         container = self.context
@@ -59,8 +66,6 @@ class AddableContents(grok.Adapter):
 
     def _is_addable(self, addable):
         if 'instance' in addable:
-            if not ISilvaObject.implementedBy(addable['instance']):
-                return False
             if IRoot.implementedBy(addable['instance']):
                 return False
 
