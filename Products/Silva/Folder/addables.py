@@ -46,7 +46,7 @@ class AddableContents(grok.Adapter):
         return all_addables
 
     def get_all_addables(self, require=None):
-        addables = filter(self._is_addable, extensionRegistry.get_addables())
+        addables = filter(self._is_installed, extensionRegistry.get_addables())
         if require is not None:
             if isinstance(require, (list, tuple)):
                 requires = list(require)
@@ -68,13 +68,13 @@ class AddableContents(grok.Adapter):
             container = aq_parent(container)
         return None
 
-    def _is_addable(self, addable):
-        if 'instance' in addable:
-            if IRoot.implementedBy(addable['instance']):
+    def _is_installed(self, content):
+        if 'instance' in content:
+            if IRoot.implementedBy(content['instance']):
                 return False
 
             return (
-                not self._is_forbidden(addable['name']) and
-                extensionRegistry.is_installed(addable['product'], self.root))
+                not self._is_forbidden(content['name']) and
+                extensionRegistry.is_installed(content['product'], self.root))
 
         return False
