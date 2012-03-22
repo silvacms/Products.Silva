@@ -3,10 +3,11 @@
 # $Id$
 
 from bisect import insort_right
+from itertools import imap
+import email
 import os.path
 import pkg_resources
 import types
-import email
 
 from five import grok
 from silva.core import interfaces
@@ -18,6 +19,20 @@ from silva.core.interfaces.events import InstalledExtensionEvent
 from silva.core.interfaces import ISilvaObject
 
 import Products
+
+
+def filter_types_for_interfaces(types, requires, excepts):
+    """Filter Zope meta_types to require or prevent one implementing
+    an interface.
+    """
+    filter_type = lambda cls, ifcs: imap(lambda i: i.implementedBy(cls), ifcs)
+
+    def filter_types(cls):
+        cls = cls['instance']
+        return ((not requires or any(filter_type(cls, requires))) and
+                not (excepts and any(filter_type(cls, excepts))))
+
+    return filter(filter_types, types)
 
 
 def meta_types_for_interface(interface):
@@ -306,11 +321,17 @@ class ExtensionRegistry(object):
                 return self._extensions_by_module[module].name
         return None
 
-    def get_addables(self):
-        return [addable.meta_type for addable in self._silva_addables]
+    def get_addables(self, requires=None, excepts=None):
+        addables =  [addable.meta_type for addable in self._silva_addables]
+        if any((requires, excepts)):
+            return filter_types_for_interfaces(addables, requires, excepts)
+        return addables
 
-    def get_contents(self):
-        return [addable.content_type for addable in self._silva_addables]
+    def get_contents(self, requires=None, excepts=None):
+        contents = [addable.content_type for addable in self._silva_addables]
+        if any((requires, excepts)):
+            return filter_types_for_interfaces(contents, requires, excepts)
+        return contents
 
     def get_addable(self, content_type):
         for addable in self._silva_addables:

@@ -4,7 +4,6 @@
 # $Id$
 
 import operator
-from itertools import imap
 
 from five import grok
 
@@ -14,13 +13,6 @@ from Acquisition import aq_parent
 
 from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IRoot, ISilvaObject, IFolder
-
-
-def filter_contents(source, requires):
-    test = lambda cls: any(imap(lambda i: i.implementedBy(cls), requires))
-    return map(
-        operator.itemgetter('name'),
-        filter(lambda a: test(a['instance']), source))
 
 
 class AddableContents(grok.Adapter):
@@ -58,9 +50,10 @@ class AddableContents(grok.Adapter):
                 requires = list(require)
         else:
             requires = list(self.REQUIRES)
-        return filter_contents(
-            filter(self._is_installed, extensionRegistry.get_addables()),
-            requires)
+        return map(
+            operator.itemgetter('name'),
+            filter(self._is_installed,
+                   extensionRegistry.get_addables(requires=requires)))
 
     def _get_locally_addables(self):
         container = self.context
