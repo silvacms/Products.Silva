@@ -46,8 +46,10 @@ class AddableContents(grok.Adapter):
 
     def get_all_addables(self, require=None):
         if require is not None:
-            if isinstance(require, (list, tuple)):
+            if not isinstance(require, (list, tuple)):
                 requires = list(require)
+            else:
+                requires = require
         else:
             requires = list(self.REQUIRES)
         return map(
