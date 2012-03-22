@@ -47,7 +47,11 @@ class AddableContents(grok.Adapter):
 
     def get_all_addables(self, require=None):
         addables = filter(self._is_addable, extensionRegistry.get_addables())
-        requires = list(self.REQUIRES)
+        if require is not None:
+            if isinstance(require, (list, tuple)):
+                requires = list(require)
+        else:
+            requires = list(self.REQUIRES)
         if require is not None:
             requires.append(require)
         test = lambda cls: any(imap(lambda i: i.implementedBy(cls), requires))
