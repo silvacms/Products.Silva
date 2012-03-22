@@ -6,6 +6,7 @@
 import operator
 
 from five import grok
+from zope.interface.interfaces import IInterface
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from AccessControl import getSecurityManager
@@ -46,8 +47,8 @@ class AddableContents(grok.Adapter):
 
     def get_all_addables(self, require=None):
         if require is not None:
-            if not isinstance(require, (list, tuple)):
-                requires = list(require)
+            if IInterface.providedBy(require):
+                requires = [require,]
             else:
                 requires = require
         else:
