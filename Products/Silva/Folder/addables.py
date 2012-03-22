@@ -16,6 +16,13 @@ from silva.core.interfaces import IAddableContents
 from silva.core.interfaces import IRoot, ISilvaObject, IFolder
 
 
+def filter_contents(source, requires):
+    test = lambda cls: any(imap(lambda i: i.implementedBy(cls), requires))
+    return map(
+        operator.itemgetter('name'),
+        filter(lambda a: test(a['instance']), source))
+
+
 class AddableContents(grok.Adapter):
     grok.context(IFolder)
     grok.implements(IAddableContents)
@@ -46,18 +53,14 @@ class AddableContents(grok.Adapter):
         return all_addables
 
     def get_all_addables(self, require=None):
-        addables = filter(self._is_installed, extensionRegistry.get_addables())
         if require is not None:
             if isinstance(require, (list, tuple)):
                 requires = list(require)
         else:
             requires = list(self.REQUIRES)
-        if require is not None:
-            requires.append(require)
-        test = lambda cls: any(imap(lambda i: i.implementedBy(cls), requires))
-        return map(
-            operator.itemgetter('name'),
-            filter(lambda a: test(a['instance']), addables))
+        return filter_contents(
+            filter(self._is_installed, extensionRegistry.get_addables()),
+            requires)
 
     def _get_locally_addables(self):
         container = self.context
