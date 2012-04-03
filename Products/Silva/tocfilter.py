@@ -8,6 +8,7 @@ from silva.core import conf as silvaconf
 from silva.core.interfaces import ISilvaObject
 from silva.core.services.base import SilvaService
 from silva.core.services.interfaces import IContentFilteringService
+from silva.core.views.interfaces import IDisableNavigationTag
 
 _filters = []
 
@@ -29,6 +30,7 @@ def hideFromTOC(context):
             viewable, 'silva-extra', 'hide_from_tocs') == 'hide')
 
 
+_filters.append(IDisableNavigationTag.providedBy)
 _filters.append(hideFromTOC)
 
 
