@@ -21,7 +21,8 @@ from Products.Silva import SilvaPermissions
 
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
-from silva.core.interfaces import IIndexEntries, IIndexer, IPublishable
+from silva.core.interfaces import IIndexEntries, IIndexer
+from silva.core.interfaces import IContent, IPublishable
 from silva.core.references.interfaces import IReferenceService, IReferenceValue
 from silva.core.references.reference import WeakReferenceValue
 from silva.core.services.utils import advanced_walk_silva_tree
@@ -102,6 +103,10 @@ class Indexer(Content, SimpleItem):
                 break
             want_next = content.is_published()
             if not want_next:
+                continue
+
+            if IContent.providedBy(content) and content.is_default():
+                # We skip default contents.
                 continue
 
             indexable = IIndexEntries(content)
